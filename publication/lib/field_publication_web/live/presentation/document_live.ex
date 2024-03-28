@@ -85,7 +85,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     # The patch will then get handled by another handle_params/3 above.
 
     publication = List.last(publications)
-    language = List.first(publication.languages)
+
+    language =
+      if Gettext.get_locale(FieldPublicationWeb.Gettext) in publication.languages do
+        Gettext.get_locale(FieldPublicationWeb.Gettext)
+      else
+        List.first(publication.languages)
+      end
 
     {
       :noreply,

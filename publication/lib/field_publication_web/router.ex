@@ -4,6 +4,7 @@ defmodule FieldPublicationWeb.Router do
   alias FieldPublicationWeb.Cantaloupe
 
   import FieldPublicationWeb.UserAuth
+  import FieldPublicationWeb.Gettext.Plug
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,6 +14,7 @@ defmodule FieldPublicationWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug :fetch_locale
   end
 
   pipeline :api do
@@ -35,6 +37,7 @@ defmodule FieldPublicationWeb.Router do
       live "/log_in", UserLoginLive, :new
     end
 
+    get "/select_language", UILanguageController, :selection
     post "/log_in", UserSessionController, :create
   end
 

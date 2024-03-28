@@ -54,6 +54,7 @@ defmodule FieldPublicationWeb do
       use Phoenix.LiveView,
         layout: {FieldPublicationWeb.Layouts, :app}
 
+      on_mount FieldPublicationWeb.Gettext
       unquote(html_helpers())
     end
   end

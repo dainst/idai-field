@@ -48,6 +48,15 @@
           </.link>
         </a>
       <% end %>
+      <div>
+        <a>
+          <.link href={~p"/select_language"}>
+            <.icon name="hero-globe-alt" class="h-6 w-6 mr-1" /><%= Gettext.get_locale(
+              FieldPublicationWeb.Gettext
+            ) %>
+          </.link>
+        </a>
+      </div>
     </div>
   </div>
 </header>

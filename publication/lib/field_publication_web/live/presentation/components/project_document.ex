@@ -18,12 +18,12 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
       <div class="flex flex-row">
         <div class="basis-2/3 m-5">
           <.header>
-            About this project
+            <%= gettext("project_doc_about_project") %>
           </.header>
           <I18n.markdown values={Data.get_field_values(@doc, "description")} lang={@lang} />
 
           <.header>
-            About this publication
+            <%= gettext("project_doc_about_publication") %>
           </.header>
           <I18n.markdown values={@publication_comments} lang={@lang} />
         </div>
@@ -31,19 +31,19 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
         <div class="basis-1/3 m-5">
           <dl>
             <dt class="font-semibold">
-              <I18n.text values={Data.get_field_labels(@doc, "institution")} lang="en" />
+              <I18n.text values={Data.get_field_labels(@doc, "institution")} />
             </dt>
             <dd class="ml-2">
               <%= Data.get_field_values(@doc, "institution") %>
             </dd>
             <dt class="font-semibold">
-              <I18n.text values={Data.get_field_labels(@doc, "projectSupervisor")} lang="en" />
+              <I18n.text values={Data.get_field_labels(@doc, "projectSupervisor")} />
             </dt>
             <dd class="ml-2">
               <%= Data.get_field_values(@doc, "projectSupervisor") %>
             </dd>
             <dt class="font-semibold">
-              <I18n.text values={Data.get_field_labels(@doc, "contactPerson")} lang="en" />
+              <I18n.text values={Data.get_field_labels(@doc, "contactPerson")} />
             </dt>
             <dd class="ml-2">
               <%= Data.get_field_values(@doc, "contactPerson") %> (<%= Data.get_field_values(

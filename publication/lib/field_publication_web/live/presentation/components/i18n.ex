@@ -40,9 +40,9 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
   end
 
   defp fallback(val) do
-    # English is the primary fallback, if it is not present
-    # we fallback to the first key found in the map.
-    case Map.get(val, "en") do
+    # Try the current application language setting as a fallback.
+    # Otherwise, we fallback to the first key found in the map.
+    case Map.get(val, Gettext.get_locale(FieldPublicationWeb.Gettext)) do
       nil ->
         first_key =
           Map.keys(val)
@@ -50,8 +50,8 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
 
         Map.get(val, first_key, "No value")
 
-      english ->
-        english
+      application_lang_text ->
+        application_lang_text
     end
   end
 end

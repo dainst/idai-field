@@ -2,8 +2,10 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
   use Phoenix.Component
 
   alias FieldPublicationWeb.Presentation.Components.{
+    I18n,
     Image,
-    IIIFViewer
+    IIIFViewer,
+    GenericField
   }
 
   alias FieldPublication.Publications.Data
@@ -13,9 +15,28 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
   def render(assigns) do
     ~H"""
     <div>
-      <.document_heading><%= Data.get_field_values(@doc, "identifier") %></.document_heading>
-      <div>
-        <%= Data.get_field_values(@doc, "shortDescription") %>
+      <.document_heading>
+        <%= Data.get_field_values(@doc, "identifier") %>
+      </.document_heading>
+
+      <div class="grid grid-cols-4 gap-4">
+        <%= for group <- @doc["groups"] do %>
+          <div>
+            <.group_heading>
+              <I18n.text values={group["labels"]} />
+            </.group_heading>
+            <dl>
+              <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key == "identifier" end)  do %>
+                <GenericField.render
+                  values={field["values"]}
+                  labels={field["labels"]}
+                  lang={@lang}
+                  type={field["type"]}
+                />
+              <% end %>
+            </dl>
+          </div>
+        <% end %>
       </div>
       <div class="flex flex-row">
         <div class="basis-1/3 m-5">

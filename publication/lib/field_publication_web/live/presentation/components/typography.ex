@@ -8,4 +8,12 @@ defmodule FieldPublicationWeb.Presentation.Components.Typography do
     </h1>
     """
   end
+
+  def group_heading(assigns) do
+    ~H"""
+    <h2 class="text-2xl mt-3">
+      <%= render_slot(@inner_block) %>
+    </h2>
+    """
+  end
 end

@@ -2,6 +2,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications
+  alias FieldPublication.Publications.Data
 
   alias FieldPublicationWeb.Presentation.Components.{
     ProjectDocument,
@@ -40,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.publication_date) == date
       end)
 
-    doc = Publications.Data.get_document(uuid, current_publication)
+    doc = Publications.Data.get_document(uuid, current_publication) |> IO.inspect()
 
     {
       :noreply,
@@ -63,7 +64,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.publication_date) == date
       end)
 
-    project_doc = Publications.Data.get_document("project", current_publication) |> IO.inspect()
+    project_doc = Publications.Data.get_document("project", current_publication)
 
     {
       :noreply,

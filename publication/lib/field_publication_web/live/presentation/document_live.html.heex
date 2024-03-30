@@ -23,11 +23,26 @@
         options={@publication.languages}
         value={@selected_lang}
       />
+      <div class="mt-4 ml-3">
+        /
+        <.link patch={"/#{@project_name}/#{@publication.publication_date}/#{@selected_lang}"}>
+          <.icon
+            class={"ml-1 mb-1 #{if Data.get_field_values(@doc, "category") == "Project", do: "bg-indigo-500", else: ""}"}
+            name="hero-home-solid"
+          />
+        </.link>
+      </div>
+      <%= if Data.get_field_values(@doc, "category") != "Project" do %>
+        <div class="mt-4 ml-2 mr-2">/</div>
+        <div class="mt-4 text-indigo-500">
+          <%= Data.get_field_values(@doc, "identifier") %>
+        </div>
+      <% end %>
     </div>
   </form>
 
-  <%= case String.downcase(@doc["category"]["values"]) do
-    "project" ->
+  <%= case Data.get_field_values(@doc, "category") do
+    "Project" ->
       ProjectDocument.render(%{
         project_name: @project_name,
         publication_date: @publication.publication_date,

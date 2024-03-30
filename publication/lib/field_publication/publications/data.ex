@@ -149,6 +149,12 @@ defmodule FieldPublication.Publications.Data do
     |> List.first()
   end
 
+  def get_group(doc, name) do
+    doc
+    |> Map.get("groups", [])
+    |> Enum.find(fn %{"key" => key} -> key == name end)
+  end
+
   def get_relation_by_name(doc, name) do
     Enum.find(doc["relations"], fn relation ->
       relation["key"] == name

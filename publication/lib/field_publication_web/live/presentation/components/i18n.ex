@@ -3,9 +3,7 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
 
   def text(assigns) do
     ~H"""
-    <span>
-      <%= select_translation(assigns) %>
-    </span>
+    <%= select_translation(assigns) %>
     """
   end
 
@@ -44,11 +42,17 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
     # Otherwise, we fallback to the first key found in the map.
     case Map.get(val, Gettext.get_locale(FieldPublicationWeb.Gettext)) do
       nil ->
-        first_key =
-          Map.keys(val)
-          |> List.first()
+        case Map.get(val, "en") do
+          nil ->
+            first_key =
+              Map.keys(val)
+              |> List.first()
 
-        Map.get(val, first_key, "No value")
+            Map.get(val, first_key, "No value")
+
+          english ->
+            english
+        end
 
       application_lang_text ->
         application_lang_text

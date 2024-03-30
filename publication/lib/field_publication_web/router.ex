@@ -37,7 +37,7 @@ defmodule FieldPublicationWeb.Router do
       live "/log_in", UserLoginLive, :new
     end
 
-    get "/select_language", UILanguageController, :selection
+    get "/select_locale", UILanguageController, :selection
     post "/log_in", UserSessionController, :create
   end
 

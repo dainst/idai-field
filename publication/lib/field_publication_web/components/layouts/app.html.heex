@@ -49,13 +49,24 @@
         </a>
       <% end %>
       <div>
-        <a>
-          <.link href={~p"/select_language"}>
-            <.icon name="hero-globe-alt" class="h-6 w-6 mr-1" /><%= Gettext.get_locale(
-              FieldPublicationWeb.Gettext
-            ) %>
-          </.link>
-        </a>
+        <form action={~p"/select_locale"} id="locale_form">
+          <.icon name="hero-globe-alt" class="h-6 w-6 mr-1" />
+          <select
+            name="locale"
+            id="locale-select"
+            phx-change={JS.dispatch("submit", to: "#locale_form")}
+          >
+            <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Gettext) do %>
+              <option
+                value={lang}
+                selected={Gettext.get_locale(FieldPublicationWeb.Gettext) == lang}
+              >
+                <%= Map.get(FieldPublicationWeb.Gettext.get_locale_labels(), lang, lang) %>
+              </option>
+            <% end %>
+          </select>
+          <input type="hidden" name="return_to" value={@current_path} />
+        </form>
       </div>
     </div>
   </div>

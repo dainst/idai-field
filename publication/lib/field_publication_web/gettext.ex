@@ -24,10 +24,41 @@ defmodule FieldPublicationWeb.Gettext do
     otp_app: :field_publication,
     default_locale: "en"
 
-  def on_mount(:default, _params, %{"locale" => locale} = _session, socket) do
+  def on_mount(
+        :default,
+        _params,
+        %{"locale" => locale} = _session,
+        socket
+      ) do
     Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
+
+    # Put the current path into the assigns of any live view in the application. This is required for the
+    # `return_to` parameter in the UI switch form (see app.html.heex).
+    socket =
+      Phoenix.LiveView.attach_hook(
+        socket,
+        :put_path_in_assigns,
+        :handle_params,
+        fn _params, url, socket ->
+          {:cont, Phoenix.Component.assign(socket, :current_path, URI.parse(url).path)}
+        end
+      )
+
     {:cont, socket}
   end
+
+  def get_locale_labels(),
+    do: %{
+      "de" => "Deutsch",
+      "en" => "English",
+      "el" => "Έλληνικά",
+      "es" => "Español",
+      "fr" => "Français",
+      "it" => "Italiano",
+      "pt" => "Português",
+      "tr" => "Türkçe",
+      "uk" => "Українська"
+    }
 end
 
 defmodule FieldPublicationWeb.Gettext.Plug do
@@ -43,13 +74,17 @@ defmodule FieldPublicationWeb.Gettext.Plug do
           |> get_req_header("accept-language")
           |> select_best_match_accept_language_header()
 
-        Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
-        put_session(conn, :locale, locale)
+        set_locale(conn, locale)
 
       locale ->
         Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
         conn
     end
+  end
+
+  def set_locale(conn, locale) do
+    Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
+    put_session(conn, :locale, locale)
   end
 
   defp select_best_match_accept_language_header([]) do

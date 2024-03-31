@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.publication_date) == date
       end)
 
-    doc = Publications.Data.get_document(uuid, current_publication) |> IO.inspect()
+    doc = Publications.Data.get_document(uuid, current_publication)
 
     {
       :noreply,
@@ -49,6 +49,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:doc, doc)
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
+      |> assign(:uuid, uuid)
     }
   end
 
@@ -107,9 +108,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         %{"_target" => ["project_language_selection"], "project_language_selection" => lang},
         %{assigns: %{project_name: project_name, publication: publication}} = socket
       ) do
+    uuid = Map.get(socket.assigns, :uuid, "")
+
     {
       :noreply,
-      push_patch(socket, to: ~p"/#{project_name}/#{publication.publication_date}/#{lang}")
+      push_patch(socket, to: ~p"/#{project_name}/#{publication.publication_date}/#{lang}/#{uuid}")
     }
   end
 
@@ -118,9 +121,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         %{"_target" => ["project_date_selection"], "project_date_selection" => date},
         %{assigns: %{project_name: project_name, selected_lang: lang}} = socket
       ) do
+    uuid = Map.get(socket.assigns, :uuid, "")
+
     {
       :noreply,
-      push_patch(socket, to: ~p"/#{project_name}/#{date}/#{lang}")
+      push_patch(socket, to: ~p"/#{project_name}/#{date}/#{lang}/#{uuid}")
     }
   end
 end

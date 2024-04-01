@@ -6,7 +6,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   alias FieldPublicationWeb.Presentation.Components.{
     ProjectDocument,
-    GenericDocument
+    GenericDocument,
+    ImageDocument
   }
 
   def mount(%{"project_id" => project_name}, _session, socket) do
@@ -43,6 +44,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     doc = Publications.Data.get_document(uuid, current_publication)
 
+    image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
+
     {
       :noreply,
       socket
@@ -50,6 +53,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
       |> assign(:uuid, uuid)
+      |> assign(:image_categories, image_categories)
     }
   end
 
@@ -73,6 +77,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:doc, project_doc)
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
+      |> assign(:uuid, "")
     }
   end
 

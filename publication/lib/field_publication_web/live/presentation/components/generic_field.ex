@@ -21,6 +21,17 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
+  def render(%{type: "boolean"} = assigns) do
+    ~H"""
+    <dt class="font-bold"><I18n.text values={@labels} /></dt>
+    <dd class="ml-4">
+      <%= if @values,
+        do: Gettext.gettext(FieldPublicationWeb.Gettext, "Yes"),
+        else: Gettext.gettext(FieldPublicationWeb.Gettext, "No") %>
+    </dd>
+    """
+  end
+
   def render(assigns) do
     Logger.warning("Unhandled field type: #{inspect(assigns)}")
 

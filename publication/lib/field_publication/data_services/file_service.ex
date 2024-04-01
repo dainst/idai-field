@@ -7,6 +7,10 @@ defmodule FieldPublication.FileService do
     "#{@file_store_path}/raw/#{project_name}"
   end
 
+  def get_raw_image_data_path(project_name) when is_binary(project_name) do
+    "#{get_raw_data_path(project_name)}/image"
+  end
+
   def get_web_images_path(project_name) do
     "#{@file_store_path}/web_images/#{project_name}"
   end

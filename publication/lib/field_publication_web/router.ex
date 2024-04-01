@@ -27,6 +27,12 @@ defmodule FieldPublicationWeb.Router do
     },
     upstream: &Cantaloupe.url/0
 
+  scope "/api", FieldPublicationWeb.Api do
+    pipe_through :api
+
+    get "/image/:project_name/:uuid", Image, :show
+  end
+
   # If user is already logged but tries to access '/log_in' we redirects to the user's
   # last known route or falls back on '/' .
   scope "/", FieldPublicationWeb do
@@ -96,11 +102,6 @@ defmodule FieldPublicationWeb.Router do
 
     delete "/log_out", UserSessionController, :delete
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", FieldPublicationWeb do
-  #   pipe_through :api
-  # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:field_publication, :dev_routes) do

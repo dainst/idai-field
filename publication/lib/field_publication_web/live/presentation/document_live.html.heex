@@ -41,8 +41,9 @@
     </div>
   </form>
 
-  <%= case Data.get_field_values(@doc, "category") do
-    "Project" ->
+  <% category = Data.get_field_values(@doc, "category") %>
+  <%= cond do
+    category == "Project" ->
       ProjectDocument.render(%{
         project_name: @project_name,
         publication_date: @publication.publication_date,
@@ -54,7 +55,21 @@
         lang: @selected_lang
       })
 
-    _ ->
-      GenericDocument.render(%{doc: @doc, project_name: @project_name, lang: @selected_lang})
+    category in @image_categories ->
+      ImageDocument.render(%{
+        doc: @doc,
+        project_name: @project_name,
+        publication_date: @publication.publication_date,
+        lang: @selected_lang,
+        uuid: @uuid
+      })
+
+    true ->
+      GenericDocument.render(%{
+        doc: @doc |> IO.inspect(),
+        project_name: @project_name,
+        publication_date: @publication.publication_date,
+        lang: @selected_lang
+      })
   end %>
 </div>

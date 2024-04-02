@@ -27,6 +27,7 @@ export module ValuelistUtil {
 
         const itemsNotIncludedInValuelist = valuesToCheck
             .filter(isDefined)
+            .filter(value => value.length)
             .filter(isNot(includedIn(Object.keys(valuelist.values))));
 
         return itemsNotIncludedInValuelist.length > 0 ? itemsNotIncludedInValuelist : undefined;

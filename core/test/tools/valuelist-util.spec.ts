@@ -19,6 +19,8 @@ describe('ValuelistUtil', () => {
             .toBeUndefined();
         expect(ValuelistUtil.getValuesNotIncludedInValuelist([{ measurementPosition: 'value1' }], valuelist))
             .toBeUndefined();
+        expect(ValuelistUtil.getValuesNotIncludedInValuelist([{ measurementPosition: '' }], valuelist))
+            .toBeUndefined();
 
         expect(ValuelistUtil.getValuesNotIncludedInValuelist('value3', valuelist)).toEqual(['value3'])
         expect(ValuelistUtil.getValuesNotIncludedInValuelist(['value1', 'value2', 'value3'], valuelist))

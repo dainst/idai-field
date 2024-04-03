@@ -9,7 +9,7 @@
 </div>
 
 <div class="modal-body warnings-modal-body row bg-light">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <select id="warning-filter-select" class="form-control"
                 (change)="selectWarningFilter($event.target.value)">
             <option *ngFor="let warningFilter of warningFilters"
@@ -33,7 +33,7 @@
                         (documentSelected)="selectDocument($event)"
                         (documentDoubleClicked)="openDoceditModal()"></document-picker>
     </div>
-    <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-6">
+    <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-7">
         <div id="document-warnings-header">
             <document-teaser [document]="selectedDocument"></document-teaser>
         </div>

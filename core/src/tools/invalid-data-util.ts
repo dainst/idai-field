@@ -27,7 +27,7 @@ export module InvalidDataUtil {
         } else if (isObject(value)) {
             return generateObjectLabel(value, labels);
         } else {
-            return value;
+            return value.toString();
         }
     }
 

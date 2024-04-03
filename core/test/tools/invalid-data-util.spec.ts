@@ -30,6 +30,7 @@ describe('InvalidDataUtil', () => {
         ).toBe('field1: value1/value2, field2: value3/value4');
 
         expect(InvalidDataUtil.generateLabel('value', labels)).toBe('value');
+        expect(InvalidDataUtil.generateLabel(7, labels)).toBe('7');
         expect(InvalidDataUtil.generateLabel(['value1', 'value2'], labels)).toBe('value1<hr>value2');
         expect(InvalidDataUtil.generateLabel({}, labels)).toBe('');
         expect(InvalidDataUtil.generateLabel([{}, {}], labels)).toBe('');

@@ -12,6 +12,7 @@ import { DeleteModalPage } from './delete-modal.page';
 import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
+import { FixOutliersModalPage } from './fix-outliers-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -529,14 +530,14 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
 
-        expect(await WarningsModalPage.getFixOutliersModalHeading()).toContain('braun');
-        await WarningsModalPage.clickSelectValueInFixOutliersModal('Gerät');
-        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
-        expect(await WarningsModalPage.getFixOutliersModalHeading()).toContain('haselnuss');
-        await WarningsModalPage.clickSelectValueInFixOutliersModal('Löffel');
-        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
+        expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
+        await FixOutliersModalPage.clickSelectValue('Löffel');
+        await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
@@ -571,8 +572,8 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
-        await WarningsModalPage.clickSelectValueInFixOutliersModal('Person 1');
-        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
+        await FixOutliersModalPage.clickSelectValue('Person 1');
+        await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -664,8 +665,8 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
-        await WarningsModalPage.clickSelectValueInFixOutliersModal('Maximale Ausdehnung');
-        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
+        await FixOutliersModalPage.clickSelectValue('Maximale Ausdehnung');
+        await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());

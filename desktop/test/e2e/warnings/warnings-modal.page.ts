@@ -56,18 +56,6 @@ export class WarningsModalPage {
     }
 
 
-    public static async clickSelectValueInFixOutliersModal(valueLabel: string) {
-
-        return selectSearchableSelectOption('#fix-outliers-modal-body searchable-select', valueLabel);
-    }
-
-
-    public static clickConfirmReplacementInFixOutliersModalButton() {
-
-        return click('#confirm-replacement-button');
-    }
-
-
     public static clickConfirmCleanUpInModalButton() {
 
         return click('#confirm-clean-up-button');
@@ -155,11 +143,5 @@ export class WarningsModalPage {
     public static async getSelectedResourceIdentifier() {
 
         return getText(await getLocator('#document-warnings-header .document-teaser .title'));
-    }
-
-
-    public static async getFixOutliersModalHeading() {
-
-        return getText('#fix-outliers-modal-header h5');
     }
 }

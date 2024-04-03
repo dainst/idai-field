@@ -125,6 +125,7 @@ test.describe('warnings --', () => {
             await ResourcesPage.performCreateResource(identifier, 'place');
             await ResourcesPage.openEditByDoubleClickResource(identifier);
             await DoceditPage.clickCheckbox(completeFieldName, 0);
+            await DoceditPage.clickCheckbox(completeFieldName, 1);
             await DoceditPage.clickSaveDocument();
         }
 
@@ -488,8 +489,9 @@ test.describe('warnings --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('1');
         const outlierValues = await DoceditPage.getOutlierValues('test:field');
-        expect(await outlierValues.count()).toBe(1);
+        expect(await outlierValues.count()).toBe(2);
 
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
         await DoceditPage.clickRemoveOutlierValue('test:field', 0);
         expect(await outlierValues.count()).toBe(0);
 
@@ -498,7 +500,7 @@ test.describe('warnings --', () => {
     });
 
 
-    test('solve warning for outlier values via warnings modal', async () => {
+    test('solve warning for outlier values by editing via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
         await createOutlierValuesWarnings(['1'], 'field');
@@ -506,11 +508,33 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await expectResourcesInWarningsModal(['1']);
-        await expectSectionTitles(['Ungültiger Wert im Feld test:field']);
+        await expectSectionTitles(['Ungültige Werte im Feld test:field']);
 
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.clickRemoveOutlierValue('test:field', 0);
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
         await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for outlier values by replacing values via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Ungültige Werte im Feld test:field']);
+
+        await WarningsModalPage.clickFixOutliersButton(0);
+        await WarningsModalPage.clickSelectValueInFixOutliersModal('Gerät');
+        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
+        await WarningsModalPage.clickSelectValueInFixOutliersModal('Löffel');
+        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());

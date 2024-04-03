@@ -1,4 +1,4 @@
-import { click, getLocator, getText, selectOption } from '../app';
+import { click, getLocator, getText, selectOption, selectSearchableSelectOption } from '../app';
 
 
 /**
@@ -46,6 +46,25 @@ export class WarningsModalPage {
 
         const section = await this.getSection(sectionIndex);
         return click(section.locator('.clean-up-relation-button'));
+    }
+
+
+    public static async clickFixOutliersButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.fix-outliers-button'));
+    }
+
+
+    public static async clickSelectValueInFixOutliersModal(valueLabel: string) {
+
+        return selectSearchableSelectOption('#fix-outliers-modal-body searchable-select', valueLabel);
+    }
+
+
+    public static clickConfirmReplacementInFixOutliersModalButton() {
+
+        return click('#confirm-replacement-button');
     }
 
 

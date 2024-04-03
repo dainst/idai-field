@@ -167,6 +167,7 @@ export class WarningsModalComponent {
             if (!completed) break;
 
             changed = true;
+            if (!this.selectedDocument.resource[section.fieldName]) break;
         }
 
         if (changed) await this.update();

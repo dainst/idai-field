@@ -14,6 +14,12 @@ export class FixOutliersModalPage {
     }
 
 
+    public static clickReplaceAllSwitch() {
+
+        return click('#replace-all-switch .switch');
+    }
+
+
     public static clickConfirmReplacementButton() {
 
         return click('#confirm-replacement-button');

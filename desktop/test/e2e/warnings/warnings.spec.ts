@@ -577,6 +577,32 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve multiple warnings for outlier values by replacing values via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1', '2'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
+        await FixOutliersModalPage.clickSelectValue('Löffel');
+        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for project outlier values by editing via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

@@ -33,5 +33,4 @@ export class FixOutliersModalPage {
 
         return getText('#fix-outliers-modal-header h5');
     }
-    
 }

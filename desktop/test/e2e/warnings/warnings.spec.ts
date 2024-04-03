@@ -577,6 +577,27 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for outlier values by deleting values via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('braun');
+        await DeleteModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
+
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('haselnuss');
+        await DeleteModalPage.clickConfirmButton();
+        
+        await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve multiple warnings for outlier values by replacing values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -598,6 +619,29 @@ test.describe('warnings --', () => {
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve multiple warnings for outlier values by deleting values via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1', '2'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('braun');
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
+
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('haselnuss');
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickConfirmButton();
+        
+        await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
     });
@@ -632,6 +676,21 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickFixOutliersButton(0);
         await FixOutliersModalPage.clickSelectValue('Person 1');
         await FixOutliersModalPage.clickConfirmReplacementButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for project outlier values by deleting values via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createProjectOutlierValuesWarning('1');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -731,6 +790,21 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for outlier values in dimension field by deleting value via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDimensionOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        await DeleteModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for outlier values in dropdownRange field via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -784,6 +858,22 @@ test.describe('warnings --', () => {
         expect(await FixOutliersModalPage.getHeading()).toContain('Spätbronzezeitlich');
         await FixOutliersModalPage.clickSelectValue('Phase IV');
         await FixOutliersModalPage.clickConfirmReplacementButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for outlier values in dropdownRange field by deleting value via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDropdownRangeOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('Frühbronzezeitlich');
+        await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());

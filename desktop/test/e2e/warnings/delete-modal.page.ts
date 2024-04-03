@@ -1,4 +1,4 @@
-import { click, typeIn } from '../app';
+import { click, getText, typeIn } from '../app';
 
 
 /**
@@ -31,5 +31,13 @@ export class DeleteModalPage {
     public static async typeInConfirmFieldName(fieldName: string) {
 
         return typeIn('#confirm-field-name-input', fieldName);
+    }
+
+
+    // get
+
+    public static async getHeading(modalName: string) {
+
+        return getText('#' + modalName + '-modal-header h5');
     }
 }

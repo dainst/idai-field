@@ -56,6 +56,13 @@ export class WarningsModalPage {
     }
 
 
+    public static async clickDeleteOutliersButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.delete-outliers-button'));
+    }
+
+
     public static clickConfirmCleanUpInModalButton() {
 
         return click('#confirm-clean-up-button');
@@ -122,6 +129,12 @@ export class WarningsModalPage {
     public static getFixingDataInProgressModal() {
 
         return getLocator('#fixing-data-in-progress-modal');
+    }
+
+
+    public static getDeletionInProgressModal() {
+
+        return getLocator('#deletion-in-progress-modal');
     }
 
 

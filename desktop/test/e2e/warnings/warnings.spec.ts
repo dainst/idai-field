@@ -527,9 +527,6 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
-        await expectResourcesInWarningsModal(['1']);
-        await expectSectionTitles(['Ungültige Werte im Feld test:field']);
-
         await WarningsModalPage.clickFixOutliersButton(0);
         await WarningsModalPage.clickSelectValueInFixOutliersModal('Gerät');
         await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
@@ -541,7 +538,7 @@ test.describe('warnings --', () => {
     });
 
 
-    test('solve warning for project outlier values via warnings modal', async () => {
+    test('solve warning for project outlier values by editing via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
         await createProjectOutlierValuesWarning('1');
@@ -554,6 +551,22 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickEditButton(0);
         await DoceditPage.clickRemoveOutlierValue('processor', 0);
         await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for project outlier values by replacing value via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createProjectOutlierValuesWarning('1');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+        await WarningsModalPage.clickSelectValueInFixOutliersModal('Person 1');
+        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());

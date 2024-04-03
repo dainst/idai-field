@@ -8,7 +8,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
       when single_value in ["input", "unsignedInt", "date", "radio", "text"] do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
-    <dd class="ml-4"><%= @values %></dd>
+    <dd class="ml-4"><I18n.text values={@values} /></dd>
     """
   end
 

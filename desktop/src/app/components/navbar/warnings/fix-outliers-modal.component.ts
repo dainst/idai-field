@@ -142,12 +142,10 @@ export class FixOutliersModalComponent {
             } else if (this.field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.ENDVALUE] === this.outlierValue) {
                 entry.endValue = this.selectedValue;
-            } else {
-                return entry;
             }
-        } else {
-            return entry;
         }
+        
+        return entry;
     }
 
 

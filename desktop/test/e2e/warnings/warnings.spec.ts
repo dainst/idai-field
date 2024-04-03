@@ -13,6 +13,7 @@ import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-mo
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
 import { FixOutliersModalPage } from './fix-outliers-modal.page';
+import { ConvertFieldDataModalPage } from './convert-field-data-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -90,23 +91,24 @@ test.describe('warnings --', () => {
     };
 
 
-    async function createInvalidFieldDataWarnings(resourceIdentifiers: string[], fieldName: string) {
+    async function createInvalidFieldDataWarnings(resourceIdentifiers: string[], fieldName: string,
+                                                  inputValue: string, inputType: Field.InputType) {
 
         await navigateTo('configuration');
-        await createField(fieldName);
+        await createField(fieldName, Field.InputType.INPUT, undefined, true);
 
         const completeFieldName: string =  'test:' + fieldName;
 
         await NavbarPage.clickCloseNonResourcesTab();
         for (let identifier of resourceIdentifiers) {
-            await ResourcesPage.performCreateResource(identifier, 'place', completeFieldName, 'Text');
+            await ResourcesPage.performCreateResource(identifier, 'place', completeFieldName, inputValue);
         }
 
         await navigateTo('configuration');
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
         await ConfigurationPage.clickContextMenuEditOption();
-        await EditConfigurationPage.clickInputTypeSelectOption('int', 'field');
+        await EditConfigurationPage.clickInputTypeSelectOption(inputType, 'field');
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();
 
@@ -283,7 +285,8 @@ test.describe('warnings --', () => {
     }
 
 
-    async function createField(fieldName: string, inputType?: Field.InputType, valuelistName?: string) {
+    async function createField(fieldName: string, inputType?: Field.InputType, valuelistName?: string,
+                               disableMultiLanguageSupport: boolean = false) {
         
         await CategoryPickerPage.clickSelectCategory('Place');
         await ConfigurationPage.clickAddFieldButton();
@@ -291,6 +294,7 @@ test.describe('warnings --', () => {
         await AddFieldModalPage.clickCreateNewField();
 
         if (inputType) await EditConfigurationPage.clickInputTypeSelectOption(inputType, 'field');
+        if (disableMultiLanguageSupport) await EditConfigurationPage.clickToggleMultiLanguageSlider();
         if (valuelistName) {
             await EditConfigurationPage.clickAddValuelist();
             await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
@@ -415,7 +419,7 @@ test.describe('warnings --', () => {
     test('solve warning for invalid field data via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1'], 'field');
+        await createInvalidFieldDataWarnings(['1'], 'field', 'Text', Field.InputType.INT);
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await ResourcesPage.openEditByDoubleClickResource('1');
@@ -429,7 +433,7 @@ test.describe('warnings --', () => {
     test('solve warning for invalid field data via editing in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1'], 'field');
+        await createInvalidFieldDataWarnings(['1'], 'field', 'Text', Field.InputType.INT);
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
@@ -445,10 +449,61 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve single warning for invalid field data via conversion in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'true', Field.InputType.BOOLEAN);
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1', '2']);
+
+        await WarningsModalPage.clickConvertFieldDataButton(0);
+        await ConvertFieldDataModalPage.clickConfirmConversionButton();
+        await waitForExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
+    test('solve multiple warnings for invalid field data via conversion in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'true', Field.InputType.BOOLEAN);
+        
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickConvertFieldDataButton(0);
+        await ConvertFieldDataModalPage.clickConvertAllSwitch();
+        await ConvertFieldDataModalPage.clickConfirmConversionButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('do not show conversion button in warnings modal if conversion of invalid data is not possible', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1'], 'field', 'Text', Field.InputType.INT);
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await waitForNotExist(await WarningsModalPage.getConvertFieldDataButton(0));
+
+        await WarningsModalPage.clickCloseButton();
+    });
+
+
     test('solve single warning for invalid field data via deletion in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1', '2'], 'field');
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'Text', Field.InputType.INT);
 
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
@@ -467,7 +522,7 @@ test.describe('warnings --', () => {
     test('solve multiple warnings for invalid field data via deletion in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1', '2'], 'field');
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'Text', Field.InputType.INT);
         
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
@@ -485,7 +540,7 @@ test.describe('warnings --', () => {
     test('only delete invalid data while solving multiple invalid field data warnings', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1'], 'field');
+        await createInvalidFieldDataWarnings(['1'], 'field', 'Text', Field.InputType.INT);
 
         await ResourcesPage.performCreateResource('2', 'place', 'test:field', '10');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
@@ -1031,7 +1086,7 @@ test.describe('warnings --', () => {
     test('filter resources in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1'], 'invalidField');
+        await createInvalidFieldDataWarnings(['1'], 'invalidField', 'Text', Field.InputType.INT);
         await createUnconfiguredFieldWarnings(['2', '3'], 'unconfiguredField');
         await createOutlierValuesWarnings(['4', '5', '6'], 'outliersField');
         await createMissingIdentifierPrefixWarning('7');

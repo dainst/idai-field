@@ -35,6 +35,12 @@ export class WarningsModalPage {
     }
 
 
+    public static async clickConvertFieldDataButton(sectionIndex: number) {
+
+        return click(await this.getConvertFieldDataButton(sectionIndex));
+    }
+
+
     public static async clickDeleteFieldDataButton(sectionIndex: number) {
 
         const section = await this.getSection(sectionIndex);
@@ -123,6 +129,13 @@ export class WarningsModalPage {
     public static getFilterOptions() {
 
         return getLocator('#warning-filter-select option');
+    }
+
+
+    public static async getConvertFieldDataButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return section.locator('.convert-field-data-button');
     }
 
 

@@ -459,7 +459,7 @@ export class WarningsModalComponent {
             section.unconfiguredCategoryName = document.resource.category;
         } else if (document.resource.category !== 'Configuration') {
             section.category = this.projectConfiguration.getCategory(document.resource.category);
-            if (fieldName && type !== 'unconfiguredFields') {
+            if (fieldName && type !== 'unconfiguredFields' && type !== 'missingRelationTargets') {
                 section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
             }
         };
@@ -467,7 +467,7 @@ export class WarningsModalComponent {
         if (type === 'invalidFields' || type === 'unconfiguredFields') {
             section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
         } else if (type === 'missingIdentifierPrefix') {
-            section.dataLabel = document.resource.identifier
+            section.dataLabel = document.resource.identifier;
         }
 
         if (type === 'outliers') {

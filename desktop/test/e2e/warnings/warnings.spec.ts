@@ -528,11 +528,17 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
+
+        expect(await WarningsModalPage.getFixOutliersModalHeading()).toContain('braun');
         await WarningsModalPage.clickSelectValueInFixOutliersModal('Gerät');
         await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        expect(await WarningsModalPage.getFixOutliersModalHeading()).toContain('haselnuss');
         await WarningsModalPage.clickSelectValueInFixOutliersModal('Löffel');
         await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
 
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
     });

@@ -125,9 +125,15 @@ export class WarningsModalPage {
     }
 
 
-    public static async getFilterOptions() {
+    public static getFilterOptions() {
 
-        return await getLocator('#warning-filter-select option');
+        return getLocator('#warning-filter-select option');
+    }
+
+
+    public static getFixingDataInProgressModal() {
+
+        return getLocator('#fixing-data-in-progress-modal');
     }
 
 
@@ -149,5 +155,11 @@ export class WarningsModalPage {
     public static async getSelectedResourceIdentifier() {
 
         return getText(await getLocator('#document-warnings-header .document-teaser .title'));
+    }
+
+
+    public static async getFixOutliersModalHeading() {
+
+        return getText('#fix-outliers-modal-header h5');
     }
 }

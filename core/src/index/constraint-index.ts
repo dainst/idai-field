@@ -472,7 +472,7 @@ export module ConstraintIndex {
 
     function addToIndex(index: any, document: Document, path: string, target: string) {
 
-        target = target.toLowerCase();
+        target = target.toString().toLowerCase();
         if (!index[path][target]) index[path][target] = {};
         index[path][target][document.resource.id] = true;
     }

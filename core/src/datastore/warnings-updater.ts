@@ -1,4 +1,4 @@
-import { is, on, to } from 'tsfun';
+import { equal, is, on, set, to } from 'tsfun';
 import { Document } from '../model/document';
 import { Named } from '../tools/named';
 import { CategoryForm } from '../model/configuration/category-form';
@@ -6,15 +6,16 @@ import { Field } from '../model/configuration/field';
 import { ValuelistUtil } from '../tools/valuelist-util';
 import { Resource } from '../model/resource';
 import { ImageResource } from '../model/image-resource';
-import { MissingRelationTargetWarnings, Warnings } from '../model/warnings';
+import { MissingRelationTargetWarnings, OutlierWarnings, Warnings } from '../model/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
 import { Query } from '../model/query';
 import { DocumentCache } from './document-cache';
-import { FieldResource, Valuelist } from '../model';
 import { Hierarchy } from '../services/utilities/hierarchy';
 import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
+import { FieldResource } from '../model/field-resource';
+import { Valuelist } from '../model/configuration/valuelist';
 
 
 /**
@@ -62,7 +63,7 @@ export module WarningsUpdater {
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
-        await updateProjectFieldOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
+        await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
             datastore, updateAll);
     }
 
@@ -75,7 +76,7 @@ export module WarningsUpdater {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             if (!document.warnings.nonUniqueIdentifier) {
                 document.warnings.nonUniqueIdentifier = true;
-                updateIndex(indexFacade, document, 'nonUniqueIdentifier:exist');
+                updateIndex(indexFacade, document, ['nonUniqueIdentifier:exist']);
                 if (updateAll) {
                     await updateNonUniqueIdentifierWarnings(
                         datastore, indexFacade, document.resource.identifier
@@ -85,7 +86,7 @@ export module WarningsUpdater {
         } else if (document.warnings?.nonUniqueIdentifier) {
             delete document.warnings.nonUniqueIdentifier;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            updateIndex(indexFacade, document, 'nonUniqueIdentifier:exist');
+            updateIndex(indexFacade, document, ['nonUniqueIdentifier:exist']);
         }
         
         if (updateAll && previousIdentifier && previousIdentifier !== document.resource.identifier
@@ -106,12 +107,12 @@ export module WarningsUpdater {
         if (category.resourceLimit && indexFacade.find(query).length  > category.resourceLimit) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.resourceLimitExceeded = true;
-            updateIndex(indexFacade, document, 'resourceLimitExceeded:exist');
+            updateIndex(indexFacade, document, ['resourceLimitExceeded:exist']);
             if (updateAll) await updateResourceLimitWarnings(datastore, indexFacade, category);
         } else if (document.warnings?.resourceLimitExceeded) {
             delete document.warnings.resourceLimitExceeded;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            updateIndex(indexFacade, document, 'resourceLimitExceeded:exist');
+            updateIndex(indexFacade, document, ['resourceLimitExceeded:exist']);
         }
     }
 
@@ -146,11 +147,11 @@ export module WarningsUpdater {
         if (warnings.relationNames.length > 0) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.missingRelationTargets = warnings;
-            updateIndex(indexFacade, document, 'missingRelationTargets:exist');
+            updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
         } else if (document.warnings?.missingRelationTargets) {
             delete document.warnings.missingRelationTargets;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            updateIndex(indexFacade, document, 'missingRelationTargets:exist');
+            updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
         }
 
         if (updateRelationTargets) {
@@ -159,17 +160,16 @@ export module WarningsUpdater {
     }
 
 
-    export async function updateProjectFieldOutlierWarning(document: Document,
-                                                           projectConfiguration: ProjectConfiguration,
-                                                           category: CategoryForm, indexFacade: IndexFacade,
-                                                           documentCache: DocumentCache, datastore?: Datastore,
-                                                           updateAll: boolean = false) {
+    export async function updateOutlierWarning(document: Document,
+                                               projectConfiguration: ProjectConfiguration,
+                                               category: CategoryForm, indexFacade: IndexFacade,
+                                               documentCache: DocumentCache, datastore?: Datastore,
+                                               updateAll: boolean = false) {
 
         const fields: Array<Field> = CategoryForm.getFields(category).filter(field => {
-            return field.valuelistFromProjectField && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType);
+            return Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType);
         });
-        const fieldNames: string[] = fields.map(to(Named.NAME));
-        const outlierValues: string[] = [];
+        const outlierWarnings: OutlierWarnings = { fields: {}, values: [] };
 
         for (let field of fields) {
             const fieldContent: any = document.resource[field.name];
@@ -180,22 +180,26 @@ export module WarningsUpdater {
                 documentCache.get('project'),
                 await Hierarchy.getParentResource(id => Promise.resolve(documentCache.get(id)), document.resource)
             );
+            if (!valuelist) continue;
 
-            if (valuelist && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist)) {
-                outlierValues.push(field.name);
+            const outlierValues: string[] = ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist);
+
+            if (outlierValues) {
+                outlierWarnings.fields[field.name] = set(outlierValues);
+                outlierWarnings.values = set(outlierWarnings.values.concat(outlierValues))
             }
         }
 
-        if (outlierValues.length) {
-            if (!document.warnings) document.warnings = Warnings.createDefault();
-            document.warnings.outlierValues = outlierValues;
-            updateIndex(indexFacade, document, 'outlierValues:exist');
-        } else if (document.warnings?.outlierValues.find(fieldName => fieldNames.includes(fieldName))) {
-            document.warnings.outlierValues = document.warnings.outlierValues.filter(fieldName => {
-                return !fieldNames.includes(fieldName);
-            });
-            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            updateIndex(indexFacade, document, 'outlierValues:exist');
+        if (!equal(outlierWarnings as any, document.warnings?.outliers ?? { fieldNames: [], values: [] } as any)) {
+            if (outlierWarnings.values.length) {
+                if (!document.warnings) document.warnings = Warnings.createDefault();
+                document.warnings.outliers = outlierWarnings;
+                updateIndex(indexFacade, document, ['outliers:exist', 'outlierValues:contain']);
+            } else if (document.warnings?.outliers) {
+                delete document.warnings.outliers;
+                if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
+                updateIndex(indexFacade, document, ['outliers:exist', 'outlierValues:contain']);
+            }
         }
 
         if (document.resource.category === 'Project' && updateAll) {
@@ -244,9 +248,7 @@ export module WarningsUpdater {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
             if (!category) continue;
 
-            await updateProjectFieldOutlierWarning(
-                document, projectConfiguration, category, indexFacade, documentCache, datastore
-            );
+            await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache, datastore);
         }
     }
 
@@ -290,17 +292,13 @@ export module WarningsUpdater {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
-        }  else if (Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType)
-                && !field.valuelistFromProjectField
-                && ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, field.valuelist)) {
-            warnings.outlierValues.push(fieldName);
         }
     }
 
 
-    function updateIndex(indexFacade: IndexFacade, document: Document, indexName: string) {
+    function updateIndex(indexFacade: IndexFacade, document: Document, indexNames: string[]) {
 
-        indexFacade.putToSingleIndex(document, indexName);
+        indexNames.forEach(indexName => indexFacade.putToSingleIndex(document, indexName));
         indexFacade.putToSingleIndex(document, 'warnings:exist');
     }
 }

@@ -13,6 +13,8 @@ import { ProjectsComponent } from './projects.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { CleanUpRelationModalComponent } from './warnings/clean-up-relation-modal.component';
 import { DeleteResourceModalComponent } from './warnings/delete-resource-modal.component';
+import { FixOutliersModalComponent } from './warnings/fix-outliers-modal.component';
+import { FixingDataInProgressModalComponent } from './warnings/fixing-data-in-progress-modal.component';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { DeleteResourceModalComponent } from './warnings/delete-resource-modal.c
         DeleteResourceModalComponent,
         DeleteFieldDataModalComponent,
         CleanUpRelationModalComponent,
+        FixOutliersModalComponent,
+        FixingDataInProgressModalComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent

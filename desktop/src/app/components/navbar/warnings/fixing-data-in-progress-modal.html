@@ -1,0 +1,9 @@
+<div id="deletion-in-progress-modal" class="modal-body process-modal">
+    <div class="process-modal-container">
+          <div class="spinner"></div>
+          <div *ngIf="!multiple" class="process-info"
+               i18n="@@widgets.fixingDataInProgress.single">Ressource wird angepasst...</div>
+          <div *ngIf="multiple" class="process-info"
+               i18n="@@widgets.fixingDataInProgress.multiple">Ressourcen werden angepasst...</div>
+    </div>
+</div>

@@ -28,27 +28,6 @@ describe('WarningsUpdater', () => {
                         {
                             name: 'number',
                             inputType: Field.InputType.FLOAT
-                        },
-                        {
-                            name: 'dropdown',
-                            inputType: Field.InputType.DROPDOWN,
-                            valuelist: {
-                                values: { 'valueDropdown': {} }
-                            }
-                        },
-                        {
-                            name: 'checkboxes',
-                            inputType: Field.InputType.CHECKBOXES,
-                            valuelist: {
-                                values: { 'valueCheckboxes': {} }
-                            }
-                        },
-                        {
-                            name: 'dimension',
-                            inputType: Field.InputType.DIMENSION,
-                            valuelist: {
-                                values: { 'valueDimension': {} }
-                            }
                         }
                     ]
                 }
@@ -63,18 +42,12 @@ describe('WarningsUpdater', () => {
         documents[0]._conflicts = ['123'];
         documents[0].resource.identifier = '1';
         documents[0].resource.number = 'text';
-        documents[0].resource.dropdown = 'outlierValue';
-        documents[0].resource.checkboxes = ['outlierValue'];
-        documents[0].resource.dimension = [{ measurementPosition: 'outlierValue', inputValue: 1, inputUnit: 'cm' }];
         documents[0].resource.unconfiguredField = 'text';
 
         documents[1].resource.identifier = 'C2';
 
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
-        documents[2].resource.dropdown = 'valueDropdown';
-        documents[2].resource.checkboxes = ['valueCheckboxes'];
-        documents[2].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
 
         const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory'])
         mockProjectConfiguration.getCategory.and.returnValues(categoryDefinition, undefined, categoryDefinition);
@@ -86,14 +59,12 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings).toEqual({
             unconfiguredFields: ['unconfiguredField'],
             invalidFields: ['number'],
-            outlierValues: ['dropdown', 'checkboxes', 'dimension'],
             conflicts: true,
             missingIdentifierPrefix: true
         });
         expect(documents[1].warnings).toEqual({
             unconfiguredFields: [],
             invalidFields: [],
-            outlierValues: [],
             unconfiguredCategory: true
         });
         expect(documents[2].warnings).toBeUndefined();
@@ -330,7 +301,7 @@ describe('WarningsUpdater', () => {
     });
 
 
-    it('set outlier warnings for valuelists from project field', async done => {
+    it('set outlier warnings', async done => {
 
         const categoryDefinition = {
             name: 'category',
@@ -342,6 +313,27 @@ describe('WarningsUpdater', () => {
                             name: 'editor',
                             inputType: Field.InputType.CHECKBOXES,
                             valuelistFromProjectField: 'staff'
+                        },
+                        {
+                            name: 'dropdown',
+                            inputType: Field.InputType.DROPDOWN,
+                            valuelist: {
+                                values: { 'valueDropdown': {} }
+                            }
+                        },
+                        {
+                            name: 'checkboxes',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelist: {
+                                values: { 'valueCheckboxes': {} }
+                            }
+                        },
+                        {
+                            name: 'dimension',
+                            inputType: Field.InputType.DIMENSION,
+                            valuelist: {
+                                values: { 'valueDimension': {} }
+                            }
                         }
                     ]
                 }
@@ -355,7 +347,10 @@ describe('WarningsUpdater', () => {
 
         documents[0].resource.staff = ['Person'];
 
-        documents[1].resource.editor = ['outlierValue'];
+        documents[1].resource.editor = ['outlierValue1'];
+        documents[1].resource.dropdown = 'outlierValue2';
+        documents[1].resource.checkboxes = ['outlierValue3'];
+        documents[1].resource.dimension = [{ measurementPosition: 'outlierValue4', inputValue: 1, inputUnit: 'cm' }];
 
         const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory', 'getCategories'])
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
@@ -368,19 +363,28 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        await WarningsUpdater.updateProjectFieldOutlierWarning(
+        await WarningsUpdater.updateOutlierWarning(
             documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 
-        expect(documents[1].warnings?.outlierValues).toEqual(['editor']);
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:exist');
+        expect(documents[1].warnings?.outliers?.fields)
+            .toEqual({
+                editor: ['outlierValue1'],
+                dropdown: ['outlierValue2'],
+                checkboxes: ['outlierValue3'],
+                dimension: ['outlierValue4']
+            });
+        expect(documents[1].warnings?.outliers?.values)
+            .toEqual(['outlierValue1', 'outlierValue2', 'outlierValue3', 'outlierValue4']);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();
     });
 
 
-    it('remove outlier warnings for valuelists from project field', async done => {
+    it('remove outlier warnings', async done => {
 
         const categoryDefinition = {
             name: 'category',
@@ -392,6 +396,27 @@ describe('WarningsUpdater', () => {
                             name: 'editor',
                             inputType: Field.InputType.CHECKBOXES,
                             valuelistFromProjectField: 'staff'
+                        },
+                        {
+                            name: 'dropdown',
+                            inputType: Field.InputType.DROPDOWN,
+                            valuelist: {
+                                values: { 'valueDropdown': {} }
+                            }
+                        },
+                        {
+                            name: 'checkboxes',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelist: {
+                                values: { 'valueCheckboxes': {} }
+                            }
+                        },
+                        {
+                            name: 'dimension',
+                            inputType: Field.InputType.DIMENSION,
+                            valuelist: {
+                                values: { 'valueDimension': {} }
+                            }
                         }
                     ]
                 }
@@ -400,19 +425,25 @@ describe('WarningsUpdater', () => {
 
         const documents = [
             createDocument('project', 'Project'),
-            createDocument('1'),
-            createDocument('2')
+            createDocument('1')
         ];
 
         documents[0].resource.staff = ['Person'];
 
         documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.outlierValues = ['editor'];
+        documents[1].warnings.outliers = {
+            fields: {
+                editor: ['outlierValue'],
+                dropdown: ['outlierValue'],
+                checkboxes: ['outlierValue'],
+                dimension: ['outlierValue']
+            },
+            values: ['outlierValue']
+        };
         documents[1].resource.editor = ['Person'];
-
-        documents[2].warnings = Warnings.createDefault();
-        documents[2].warnings.outlierValues = ['editor', 'otherField'];
-        documents[2].resource.editor = ['Person'];
+        documents[1].resource.dropdown = 'valueDropdown';
+        documents[1].resource.checkboxes = ['valueCheckboxes'];
+        documents[1].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
 
         const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory', 'getCategories'])
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
@@ -425,21 +456,14 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        await WarningsUpdater.updateProjectFieldOutlierWarning(
+        await WarningsUpdater.updateOutlierWarning(
             documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
         );
 
         expect(documents[1].warnings).toBeUndefined();
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        await WarningsUpdater.updateProjectFieldOutlierWarning(
-            documents[2], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
-        );
-
-        expect(documents[2].warnings?.outlierValues).toEqual(['otherField'])
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outlierValues:exist');
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'warnings:exist');
 
         done();
     });
@@ -457,6 +481,13 @@ describe('WarningsUpdater', () => {
                             name: 'editor',
                             inputType: Field.InputType.CHECKBOXES,
                             valuelistFromProjectField: 'staff'
+                        },
+                        {
+                            name: 'checkboxes',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelist: {
+                                values: { 'valueCheckboxes': {} }
+                            }
                         }
                     ]
                 }
@@ -473,15 +504,20 @@ describe('WarningsUpdater', () => {
         documents[0].resource.staff = ['Person'];
 
         documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.outlierValues = ['editor'];
+        documents[1].warnings.outliers = { fields: { editor: ['outlierValue'] }, values: ['outlierValue'] };
         documents[1].resource.editor = ['Person'];
 
         documents[2].warnings = Warnings.createDefault();
-        documents[2].warnings.outlierValues = ['editor', 'otherField'];
+        documents[2].warnings.outliers = {
+            fields: { editor: ['outlierValue'], checkboxes: ['outlierValue'] },
+            values: ['outlierValue']
+        };
         documents[2].resource.editor = ['Person'];
+        documents[2].resource.checkboxes = ['outlierValue'];
 
         documents[3].warnings = Warnings.createDefault();
-        documents[3].warnings.outlierValues = ['otherField'];
+        documents[3].warnings.outliers = { fields: { checkboxes: ['outlierValue'] }, values: ['outlierValue'] };
+        documents[3].resource.checkboxes = ['outlierValue'];
 
         const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
             ['getCategory', 'getCategories']);
@@ -498,21 +534,27 @@ describe('WarningsUpdater', () => {
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1], documents[2], documents[3]] }));
 
-        await WarningsUpdater.updateProjectFieldOutlierWarning(
+        await WarningsUpdater.updateOutlierWarning(
             documents[0], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache,
             mockDatastore, true
         );
 
         expect(documents[1].warnings).toBeUndefined();
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
-        expect(documents[2].warnings?.outlierValues).toEqual(['otherField']);
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outlierValues:exist');
+        expect(documents[2].warnings?.outliers?.fields).toEqual({ checkboxes: ['outlierValue'] });
+        expect(documents[2].warnings?.outliers?.values).toEqual(['outlierValue']);
+
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outliers:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'warnings:exist');
 
-        expect(documents[3].warnings?.outlierValues).toEqual(['otherField']);
-        expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outlierValues:exist');
+        expect(documents[3].warnings?.outliers?.fields).toEqual({ checkboxes: ['outlierValue'] });
+        expect(documents[3].warnings?.outliers?.values).toEqual(['outlierValue']);
+        expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outliers:exist');
+        expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'warnings:exist');
 
         done();

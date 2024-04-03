@@ -50,9 +50,9 @@ export module WarningFilters {
             },
             {
                 label: translations.getTranslation('warnings.outlierValues'),
-                constraintName: 'outlierValues:exist',
+                constraintName: 'outliers:exist',
                 count: 0,
-                type: 'outlierValues'
+                type: 'outliers'
             },
             {
                 label: translations.getTranslation('warnings.missingRelationTargets'),

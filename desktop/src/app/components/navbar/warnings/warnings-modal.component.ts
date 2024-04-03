@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, isArray, isObject, nop } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
-    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, ValuelistUtil, Valuelist, Tree,
-    MissingRelationTargetWarnings, InvalidDataUtil, Document, Hierarchy } from 'idai-field-core';
+import { Map, nop } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
+    WarningType, ConfigReader, Group, Resource, Field, Tree, MissingRelationTargetWarnings, InvalidDataUtil,
+    OutlierWarnings } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -20,6 +20,7 @@ import { getInputTypeLabel } from '../../../util/get-input-type-label';
 import { CleanUpRelationModalComponent } from './clean-up-relation-modal.component';
 import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
 import { DeleteResourceModalComponent } from './delete-resource-modal.component';
+import { FixOutliersModalComponent } from './fix-outliers-modal.component';
 
 
 type WarningSection = {
@@ -138,6 +139,21 @@ export class WarningsModalComponent {
 
         this.selectedDocument = document;
         this.updateSections(document);
+    }
+
+
+    public async fixOutliers(section: WarningSection) {
+
+        let changed: boolean = false;
+
+        for (let outlierValue of section.outlierValues) {
+            const completed: boolean = await this.openFixOutliersModal(section, outlierValue);
+            if (!completed) break;
+
+            changed = true;
+        }
+
+        if (changed) await this.update();
     }
 
 
@@ -333,17 +349,31 @@ export class WarningsModalComponent {
         } else {
             this.sections = [];
             for (let type of Object.keys(document.warnings)) {
-                if (isArray(document.warnings[type])) {
-                    this.sections = this.sections.concat(
-                        await this.createSections(type as WarningType, document, document.warnings[type] as string[])
-                    );
-                } else if (isObject(document.warnings[type])) {
-                    this.sections = this.sections.concat(await this.createSections(
-                        type as WarningType, document,
-                        (document.warnings[type] as MissingRelationTargetWarnings).relationNames
-                    ));
-                } else {
-                    this.sections = this.sections.concat([await this.createSection(type as WarningType, document)]);
+                switch (type) {
+                    case 'unconfiguredFields':
+                    case 'invalidFields':
+                        this.sections = this.sections.concat(
+                            await this.createSections(
+                                type as WarningType, document, document.warnings[type] as string[]
+                            )
+                        );
+                        break;
+                    case 'missingRelationTargets':
+                        this.sections = this.sections.concat(await this.createSections(
+                            type as WarningType, document,
+                            (document.warnings[type] as MissingRelationTargetWarnings).relationNames
+                        ));
+                        break;
+                    case 'outliers':
+                        this.sections = this.sections.concat(await this.createSections(
+                            type as WarningType, document,
+                            Object.keys((document.warnings[type] as OutlierWarnings).fields)
+                        ));
+                        break;
+                    default:
+                        this.sections = this.sections.concat([
+                            await this.createSection(type as WarningType, document)
+                        ]);
                 }
             }
         }
@@ -385,23 +415,11 @@ export class WarningsModalComponent {
             section.dataLabel = document.resource.identifier
         }
 
-        if (type === 'outlierValues') {
-            section.outlierValues = await this.getOutlierValues(document, fieldName, section.category);
+        if (type === 'outliers') {
+            section.outlierValues = document.warnings.outliers.fields[fieldName];
         }
 
         return section;
-    }
-
-
-    private async getOutlierValues(document: FieldDocument, fieldName: string, category: CategoryForm): Promise<string[]> {
-
-        const field: Field = CategoryForm.getField(category, fieldName);
-        const projectDocument: Document = await this.datastore.get('project');
-        const parentResource: Resource = await Hierarchy.getParentResource(this.datastore.get, document.resource);
-
-        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, parentResource);
-
-        return ValuelistUtil.getValuesNotIncludedInValuelist(document.resource[fieldName], valuelist);
     }
 
 
@@ -439,6 +457,34 @@ export class WarningsModalComponent {
         componentInstance.activeGroup = 'conflicts';
 
         await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private async openFixOutliersModal(section: WarningSection, outlierValue: string): Promise<boolean> {
+
+        const [result, componentInstance] = this.modals.make<FixOutliersModalComponent>(
+            FixOutliersModalComponent,
+            MenuContext.MODAL
+        );
+
+        const field: Field = CategoryForm.getField(section.category, section.fieldName);
+    
+        componentInstance.document = this.selectedDocument;
+        componentInstance.field = field;
+        componentInstance.outlierValue = outlierValue;
+        await componentInstance.initialize();
+
+        let completed: boolean;
+
+        await this.modals.awaitResult(
+            result,
+            () => completed = true,
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+
+        return completed;
     }
 
 

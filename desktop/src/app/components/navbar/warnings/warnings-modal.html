@@ -53,11 +53,11 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.invalidField">
                             Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && section.outlierValues.length === 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && section.outlierValues.length > 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length > 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.multiple">
                             Ungültige Werte im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
@@ -107,12 +107,12 @@
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && section.outlierValues.length === 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
                             Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten ist.
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && section.outlierValues.length > 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length > 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.multiple">
                             Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
@@ -161,7 +161,7 @@
                         <div *ngIf="!section.dataLabel" class="data-info-content"
                              i18n="@@navbar.taskbar.warnings.fieldData.none"><i>Keine</i></div>
                     </div>
-                    <div *ngIf="section.type === 'outlierValues'" class="data-info">
+                    <div *ngIf="section.type === 'outliers'" class="data-info">
                         <div *ngIf="section.outlierValues.length === 1">
                             <b i18n="@@navbar.taskbar.warnings.outlierValues.single">Ungültiger Wert:</b>
                         </div>
@@ -184,8 +184,16 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
+                    <span *ngIf="section.type == 'outliers'">
+                        <button class="btn btn-primary fix-outliers-button"
+                                (click)="fixOutliers(section)">
+                            <span class="mdi mdi-wrench"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.fix">Korrigieren</span>
+                        </button>
+                    </span>
                     <span *ngIf="section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outlierValues' || section.type === 'nonUniqueIdentifier'">
+                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>

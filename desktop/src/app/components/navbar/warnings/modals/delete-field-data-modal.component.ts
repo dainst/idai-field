@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Datastore, Document, Labels, WarningType } from 'idai-field-core';
-import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
+import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 
 
 @Component({

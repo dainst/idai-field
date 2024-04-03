@@ -6,16 +6,16 @@ import { NavbarComponent } from './navbar.component';
 import { TaskbarComponent } from './taskbar.component';
 import { TaskbarWarningsComponent } from './warnings/taskbar-warnings.component';
 import { WarningsModalComponent } from './warnings/warnings-modal.component';
-import { DeleteFieldDataModalComponent } from './warnings/delete-field-data-modal.component';
+import { DeleteFieldDataModalComponent } from './warnings/modals/delete-field-data-modal.component';
 import { TaskbarSyncStatusComponent } from './taskbar-sync-status.component';
 import { TaskbarUpdateComponent } from './taskbar-update.component';
 import { ProjectsComponent } from './projects.component';
 import { WidgetsModule } from '../widgets/widgets.module';
-import { CleanUpRelationModalComponent } from './warnings/clean-up-relation-modal.component';
-import { DeleteResourceModalComponent } from './warnings/delete-resource-modal.component';
-import { FixOutliersModalComponent } from './warnings/fix-outliers-modal.component';
-import { FixingDataInProgressModalComponent } from './warnings/fixing-data-in-progress-modal.component';
-import { DeleteOutliersModalComponent } from './warnings/delete-outliers-modal.component';
+import { CleanUpRelationModalComponent } from './warnings/modals/clean-up-relation-modal.component';
+import { DeleteResourceModalComponent } from './warnings/modals/delete-resource-modal.component';
+import { FixOutliersModalComponent } from './warnings/modals/fix-outliers-modal.component';
+import { FixingDataInProgressModalComponent } from './warnings/modals/fixing-data-in-progress-modal.component';
+import { DeleteOutliersModalComponent } from './warnings/modals/delete-outliers-modal.component';
 
 
 @NgModule({

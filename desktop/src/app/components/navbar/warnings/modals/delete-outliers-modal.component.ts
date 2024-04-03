@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isArray, isObject, isString } from 'tsfun';
 import { CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
-import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
+import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 
 
 @Component({

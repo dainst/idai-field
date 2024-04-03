@@ -14,14 +14,14 @@ import { ConfigurationConflictsModalComponent } from '../../configuration/confli
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { Settings } from '../../../services/settings/settings';
-import { DeleteFieldDataModalComponent } from './delete-field-data-modal.component';
+import { DeleteFieldDataModalComponent } from './modals/delete-field-data-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../util/get-input-type-label';
-import { CleanUpRelationModalComponent } from './clean-up-relation-modal.component';
+import { CleanUpRelationModalComponent } from './modals/clean-up-relation-modal.component';
 import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
-import { DeleteResourceModalComponent } from './delete-resource-modal.component';
-import { FixOutliersModalComponent } from './fix-outliers-modal.component';
-import { DeleteOutliersModalComponent } from './delete-outliers-modal.component';
+import { DeleteResourceModalComponent } from './modals/delete-resource-modal.component';
+import { FixOutliersModalComponent } from './modals/fix-outliers-modal.component';
+import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.component';
 
 
 type WarningSection = {

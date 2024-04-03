@@ -19,7 +19,7 @@ export module ValuelistUtil {
         if (!fieldContent || !valuelist) return undefined;
         
         const valuesToCheck: string[] = isArray(fieldContent)
-            ? fieldContent.map(entry => entry[Dimension.MEASUREMENTPOSITION] ?? entry)
+            ? fieldContent.map(entry => entry?.[Dimension.MEASUREMENTPOSITION] ?? entry)
                 .filter(entry => isString(entry))
             : fieldContent[OptionalRange.VALUE]
                 ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]

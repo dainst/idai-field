@@ -135,13 +135,13 @@ export class FixOutliersModalComponent {
         } else if (isObject(entry)) {
             if (this.field.inputType === Field.InputType.DIMENSION
                     && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {
-                entry.measurementPosition = this.outlierValue;
+                entry.measurementPosition = this.selectedValue;
             } else if (this.field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.VALUE] === this.outlierValue) {
-                entry.value = this.outlierValue;
+                entry.value = this.selectedValue;
             } else if (this.field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.ENDVALUE] === this.outlierValue) {
-                entry.endValue = this.outlierValue;
+                entry.endValue = this.selectedValue;
             } else {
                 return entry;
             }

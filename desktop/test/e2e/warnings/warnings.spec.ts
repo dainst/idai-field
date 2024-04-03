@@ -631,7 +631,7 @@ test.describe('warnings --', () => {
     });
 
 
-    test('solve warning for outlier values in dimension field via warnings modal', async () => {
+    test('solve warning for outlier values in dimension field by editing via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
         await createDimensionOutlierValuesWarnings(['1'], 'field');
@@ -648,6 +648,23 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
     });
+
+
+    test('solve warning for outlier values in dimension field by replacing value via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDimensionOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+        await WarningsModalPage.clickSelectValueInFixOutliersModal('Maximale Ausdehnung');
+        await WarningsModalPage.clickConfirmReplacementInFixOutliersModalButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
 
 
     test('solve warning for missing relation targets via warnings modal', async () => {

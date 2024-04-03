@@ -198,6 +198,38 @@ test.describe('warnings --', () => {
     };
 
 
+    async function createDropdownRangeOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
+
+        await navigateTo('configuration');
+        await createField(fieldName, 'dropdownRange', 'periods-default-1');
+
+        const completeFieldName: string =  'test:' + fieldName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place');
+            await ResourcesPage.openEditByDoubleClickResource(identifier);
+            await DoceditPage.clickSelectOption(completeFieldName, 'Frühbronzezeitlich', 0);
+            await DoceditPage.clickDropdownRangeActivateEndButton(completeFieldName);
+            await DoceditPage.clickSelectOption(completeFieldName, 'Spätbronzezeitlich', 1);
+            await DoceditPage.clickSaveDocument();
+        }
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-meninx-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('periods-meninx-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
     async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
 
         await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
@@ -672,6 +704,64 @@ test.describe('warnings --', () => {
         await waitForNotExist(await NavbarPage.getWarnings());
     });
 
+
+    test('solve warning for outlier values in dropdownRange field via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDropdownRangeOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        const outlierValues = await DoceditPage.getOutlierValues('test:field');
+        expect(await outlierValues.count()).toBe(2);
+
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
+        expect(await outlierValues.count()).toBe(0);
+
+        await DoceditPage.clickSaveDocument();
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for outlier values in dropdownRange field by editing via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDropdownRangeOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Ungültige Werte im Feld test:field']);
+
+        await WarningsModalPage.clickEditButton(0);
+        await DoceditPage.clickRemoveOutlierValue('test:field', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for outlier values in dropdownRange field by replacing value via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createDropdownRangeOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+        expect(await FixOutliersModalPage.getHeading()).toContain('Frühbronzezeitlich');
+        await FixOutliersModalPage.clickSelectValue('Phase III');
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('Spätbronzezeitlich');
+        await FixOutliersModalPage.clickSelectValue('Phase IV');
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
 
 
     test('solve warning for missing relation targets via warnings modal', async () => {

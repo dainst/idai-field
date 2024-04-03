@@ -6,10 +6,10 @@
     </div>
 
     <searchable-select [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['value']"
-                        [values]="getValues()"
-                        [getLabel]="getLabel"
-                        [closeOnClear]="showEndElements()"
-                        (onValueSelected)="setValue($event)"></searchable-select>
+                       [values]="getValues()"
+                       [getLabel]="getLabel"
+                       [closeOnClear]="showEndElements()"
+                       (onValueSelected)="setValue($event)"></searchable-select>
 
     <label *ngIf="showEndElements()" class="dropdown-range-end-label">
         <span i18n="@@docedit.forms.dropdownRange.to">bis</span>
@@ -30,7 +30,7 @@
                 i18n-ngbTooltip="@@docedit.forms.dropdownRange.tooltip"
                 placement="left"
                 container="body"
-                class="btn btn-outline-primary"
+                class="btn btn-outline-primary dropdown-range-activate-end-button"
                 type="button"
                 (click)="activateEnd()">
             <span class="mdi mdi-arrow-expand-horizontal"></span>

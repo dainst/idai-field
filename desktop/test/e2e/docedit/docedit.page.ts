@@ -143,9 +143,13 @@ export class DoceditPage {
     }
 
 
-    public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
+    public static async clickSelectOption(fieldName: string, optionValueLabel: string,
+                                          selectElementIndex: number = 0) {
 
-        return selectSearchableSelectOption((await this.getField(fieldName)), optionValueLabel);
+        const field = await this.getField(fieldName);
+        const element = await (await field.locator('searchable-select')).nth(selectElementIndex);
+
+        return selectSearchableSelectOption(element, optionValueLabel);
     }
 
 
@@ -215,6 +219,15 @@ export class DoceditPage {
             (await this.getField(fieldName)).locator('.measurement-position-select'),
             optionValue
         );
+    }
+
+
+    public static async clickDropdownRangeActivateEndButton(fieldName: string) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        return click(await field.locator('.dropdown-range-activate-end-button'));
     }
 
 

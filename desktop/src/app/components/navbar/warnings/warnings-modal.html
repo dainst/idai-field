@@ -184,7 +184,7 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type == 'outliers'">
+                    <span *ngIf="section.type === 'outliers'">
                         <button class="btn btn-primary fix-outliers-button"
                                 (click)="fixOutliers(section)">
                             <span class="mdi mdi-wrench"></span>

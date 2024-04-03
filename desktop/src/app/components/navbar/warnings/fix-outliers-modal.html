@@ -6,7 +6,7 @@
 
 <div *ngIf="valuelist" id="fix-outliers-modal-body" class="modal-body">
     <div id="fix-outliers-info" i18n="@@navbar.taskbar.fixOutliers.info">
-        Bitte wählen Sie einen Wert aus der Werteliste aus.
+        Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
     </div>
 
     <searchable-select [selectedValue]="selectedValue"
@@ -37,7 +37,7 @@
 </div>
 
 <div class="modal-footer">
-    <div id="confirm-deletion-button" class="btn btn-primary"
+    <div id="confirm-replacement-button" class="btn btn-primary"
          [ngClass]="{ 'disabled': !selectedValue }"
          (click)="performReplacement()">
         <span i18n="@@buttons.ok">OK</span>

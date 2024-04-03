@@ -84,7 +84,7 @@ export class FixOutliersModalComponent {
 
     private async replaceSingle() {
 
-        this.replaceValue(this.document, this.field.name);
+        this.replaceValue(this.document, this.field);
 
         await this.datastore.update(this.document);
     }
@@ -106,7 +106,7 @@ export class FixOutliersModalComponent {
                 if (!document.warnings.outliers.fields[fieldName].includes(this.outlierValue)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (equal(valuelist, this.valuelist)) {
-                    this.replaceValue(document, fieldName);
+                    this.replaceValue(document, field);
                     if (!changedDocuments.includes(document)) changedDocuments.push(document);
                 }
             }
@@ -116,30 +116,30 @@ export class FixOutliersModalComponent {
     }
 
 
-    private replaceValue(document: Document, fieldName: string) {
+    private replaceValue(document: Document, field: Field) {
 
-        const fieldContent: any = document.resource[fieldName];
+        const fieldContent: any = document.resource[field.name];
 
         if (isArray(fieldContent)) {
-            document.resource[fieldName] = set(fieldContent.map(entry => this.getReplacement(entry)));
+            document.resource[field.name] = set(fieldContent.map(entry => this.getReplacement(entry, field)));
         } else {
-            document.resource[fieldName] = this.getReplacement(fieldContent);
+            document.resource[field.name] = this.getReplacement(fieldContent, field);
         }
     }
 
 
-    private getReplacement(entry: any): any {
+    private getReplacement(entry: any, field: Field): any {
 
         if (isString(entry) && entry === this.outlierValue) {
             return this.selectedValue;
         } else if (isObject(entry)) {
-            if (this.field.inputType === Field.InputType.DIMENSION
+            if (field.inputType === Field.InputType.DIMENSION
                     && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {
                 entry.measurementPosition = this.selectedValue;
-            } else if (this.field.inputType === Field.InputType.DROPDOWNRANGE
+            } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.VALUE] === this.outlierValue) {
                 entry.value = this.selectedValue;
-            } else if (this.field.inputType === Field.InputType.DROPDOWNRANGE
+            } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.ENDVALUE] === this.outlierValue) {
                 entry.endValue = this.selectedValue;
             }

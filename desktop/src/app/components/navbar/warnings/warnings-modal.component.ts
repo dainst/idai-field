@@ -22,6 +22,8 @@ import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
 import { DeleteResourceModalComponent } from './modals/delete-resource-modal.component';
 import { FixOutliersModalComponent } from './modals/fix-outliers-modal.component';
 import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.component';
+import { ConvertDataUtil } from '../../../util/convert-data-util';
+import { ConvertFieldDataModalComponent } from './modals/convert-field-data-modal.component';
 
 
 type WarningSection = {
@@ -29,6 +31,7 @@ type WarningSection = {
     category?: CategoryForm;
     unconfiguredCategoryName?: string;
     fieldName?: string;
+    inputType?: Field.InputType;
     dataLabel?: string;
     outlierValues?: string[];
 }
@@ -103,8 +106,7 @@ export class WarningsModalComponent {
 
     public getInputTypeLabel(section: WarningSection): string {
 
-        const inputType: Field.InputType = CategoryForm.getField(section.category, section.fieldName).inputType;
-        return getInputTypeLabel(inputType, this.utilTranslations);
+        return getInputTypeLabel(section.inputType, this.utilTranslations);
     }
 
 
@@ -140,6 +142,15 @@ export class WarningsModalComponent {
 
         this.selectedDocument = document;
         this.updateSections(document);
+    }
+
+
+    public isConvertible(section: WarningSection): boolean {
+
+        return ConvertDataUtil.isConvertible(
+            this.selectedDocument.resource[section.fieldName],
+            section.inputType
+        );
     }
 
 
@@ -229,6 +240,30 @@ export class WarningsModalComponent {
         );
 
         componentInstance.document = this.selectedDocument;
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openConvertFieldDataModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<ConvertFieldDataModalComponent>(
+            ConvertFieldDataModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.fieldName = section.fieldName;
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
+        componentInstance.category = section.category;
+        componentInstance.inputType = section.inputType;
+        componentInstance.inputTypeLabel = this.getInputTypeLabel(section);
 
         await this.modals.awaitResult(
             result,
@@ -424,6 +459,9 @@ export class WarningsModalComponent {
             section.unconfiguredCategoryName = document.resource.category;
         } else if (document.resource.category !== 'Configuration') {
             section.category = this.projectConfiguration.getCategory(document.resource.category);
+            if (fieldName && type !== 'unconfiguredFields') {
+                section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
+            }
         };
 
         if (type === 'invalidFields' || type === 'unconfiguredFields') {

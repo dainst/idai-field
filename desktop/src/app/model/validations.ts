@@ -529,7 +529,7 @@ export module Validations {
     }
 
 
-    function validateNumberAsString(value: string|number, inputType: string): boolean {
+    export function validateNumberAsString(value: string|number, inputType: string): boolean {
 
         if (typeof value === 'number') value = value.toString();
 

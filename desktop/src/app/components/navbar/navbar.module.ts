@@ -16,6 +16,7 @@ import { DeleteResourceModalComponent } from './warnings/modals/delete-resource-
 import { FixOutliersModalComponent } from './warnings/modals/fix-outliers-modal.component';
 import { FixingDataInProgressModalComponent } from './warnings/modals/fixing-data-in-progress-modal.component';
 import { DeleteOutliersModalComponent } from './warnings/modals/delete-outliers-modal.component';
+import { ConvertFieldDataModalComponent } from './warnings/modals/convert-field-data-modal.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { DeleteOutliersModalComponent } from './warnings/modals/delete-outliers-
         TaskbarWarningsComponent,
         WarningsModalComponent,
         DeleteResourceModalComponent,
+        ConvertFieldDataModalComponent,
         DeleteFieldDataModalComponent,
         CleanUpRelationModalComponent,
         FixOutliersModalComponent,

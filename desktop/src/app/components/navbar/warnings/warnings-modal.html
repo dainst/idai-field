@@ -193,6 +193,14 @@
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
                         </button>
                     </span>
+                    <span *ngIf="section.type === 'invalidFields' && isConvertible(section)">
+                        <button class="btn btn-primary convert-field-data-button"
+                                (click)="openConvertFieldDataModal(section)">
+                            <span class="mdi mdi-auto-fix"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.convertFieldData">Felddaten konvertieren</span>
+                        </button>
+                    </span>
                     <span *ngIf="section.type === 'outliers'">
                         <button class="btn btn-primary fix-outliers-button"
                                 (click)="fixOutliers(section)">

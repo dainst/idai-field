@@ -822,10 +822,10 @@ test.describe('warnings --', () => {
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('2');
         await expectSectionTitles(['Unkonfiguriertes Feld test:unconfiguredField']);
 
-        await WarningsModalPage.clickFilterOption('outlierValues:exist');
+        await WarningsModalPage.clickFilterOption('outliers:exist');
         await expectResourcesInWarningsModal(['4', '5', '6']);
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('4');
-        await expectSectionTitles(['Ungültiger Wert im Feld test:outliersField']);
+        await expectSectionTitles(['Ungültige Werte im Feld test:outliersField']);
 
         await WarningsModalPage.clickFilterOption('invalidFields:exist');
         await expectResourcesInWarningsModal(['1']);

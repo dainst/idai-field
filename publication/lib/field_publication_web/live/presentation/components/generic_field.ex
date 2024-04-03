@@ -5,10 +5,18 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   alias FieldPublicationWeb.Presentation.Components.I18n
 
   def render(%{type: single_value} = assigns)
-      when single_value in ["input", "unsignedInt", "date", "radio", "text"] do
+      when single_value in ["input", "text"] do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
     <dd class="ml-4"><I18n.text values={@values} /></dd>
+    """
+  end
+
+  def render(%{type: single_value} = assigns)
+      when single_value in ["unsignedInt", "date", "radio"] do
+    ~H"""
+    <dt class="font-bold"><I18n.text values={@labels} /></dt>
+    <dd class="ml-4"><%= @values %></dd>
     """
   end
 

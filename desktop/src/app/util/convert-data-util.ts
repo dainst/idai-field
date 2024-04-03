@@ -9,10 +9,10 @@ import { Validations } from '../model/validations';
 export module ConvertDataUtil {
 
     export function isConvertible(fieldContent: any, inputType: Field.InputType): boolean {
-        
+
         switch (inputType) {
             case Field.InputType.BOOLEAN:
-                return ['true', 'false'].includes(fieldContent.toLowerCase());
+                return ['true', 'false'].includes(fieldContent.toString().toLowerCase());
             case Field.InputType.CHECKBOXES:
                 return isString(fieldContent);
             case Field.InputType.INT:

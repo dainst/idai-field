@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Api.Image do
+defmodule FieldPublicationWeb.Api.Raw.Image do
   alias FieldPublication.FileService
   use FieldPublicationWeb, :controller
 

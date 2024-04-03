@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Router do
   scope "/api", FieldPublicationWeb.Api do
     pipe_through :api
 
-    get "/image/:project_name/:uuid", Image, :show
+    get "/raw/image/:project_name/:uuid", Raw.Image, :show
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's

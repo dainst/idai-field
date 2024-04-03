@@ -56,15 +56,27 @@ defmodule FieldPublicationWeb.Presentation.Components.ImageDocument do
             </section>
           <% end %>
           <hr class="mt-4" />
-          <a class="mb-1" href={~p"/api/image/#{@project_name}/#{@uuid}"}>
+
+          <.group_heading>
+            Raw data
+          </.group_heading>
+          <a class="mb-1" target="_blank" href={~p"/api/raw/image/#{@project_name}/#{@uuid}"}>
             <.icon name="hero-photo-solid" /> Download original
           </a>
           <br />
-          <a class="mb-1" href={~p"/api/csv/#{@project_name}/#{@publication_date}/#{@uuid}"}>
+          <a
+            class="mb-1"
+            target="_blank"
+            href={~p"/api/raw/csv/#{@project_name}/#{@publication_date}/#{@uuid}"}
+          >
             <.icon name="hero-table-cells-solid" /> Download CSV
           </a>
           <br />
-          <a class="mb-1" href={~p"/api/csv/#{@project_name}/#{@publication_date}/#{@uuid}"}>
+          <a
+            class="mb-1"
+            target="_blank"
+            href={~p"/api/raw/json/#{@project_name}/#{@publication_date}/#{@uuid}"}
+          >
             <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
           </a>
         </div>

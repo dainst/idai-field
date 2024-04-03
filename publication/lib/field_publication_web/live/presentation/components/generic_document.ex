@@ -1,5 +1,6 @@
 defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
   use Phoenix.Component
+  use FieldPublicationWeb, :verified_routes
 
   alias FieldPublicationWeb.Presentation.Components.{
     I18n,
@@ -10,6 +11,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
 
   alias FieldPublication.Publications.Data
 
+  import FieldPublicationWeb.CoreComponents
   import FieldPublicationWeb.Presentation.Components.Typography
 
   def render(assigns) do
@@ -72,6 +74,24 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
               <% end %>
             </div>
           <% end %>
+          <.group_heading>
+            Raw data
+          </.group_heading>
+          <a
+            class="mb-1"
+            target="_blank"
+            href={~p"/api/raw/csv/#{@project_name}/#{@publication_date}/#{@uuid}"}
+          >
+            <.icon name="hero-table-cells-solid" /> Download CSV
+          </a>
+          <br />
+          <a
+            class="mb-1"
+            target="_blank"
+            href={~p"/api/raw/json/#{@project_name}/#{@publication_date}/#{@uuid}"}
+          >
+            <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
+          </a>
         </div>
       </div>
     </div>

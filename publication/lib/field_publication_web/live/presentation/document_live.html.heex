@@ -66,10 +66,11 @@
 
     true ->
       GenericDocument.render(%{
-        doc: @doc |> IO.inspect(),
+        doc: @doc,
         project_name: @project_name,
         publication_date: @publication.publication_date,
-        lang: @selected_lang
+        lang: @selected_lang,
+        uuid: @uuid
       })
   end %>
 </div>

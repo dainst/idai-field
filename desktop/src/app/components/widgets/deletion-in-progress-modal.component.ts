@@ -13,6 +13,6 @@ export class DeletionInProgressModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
 
-    public mode: 'resource'|'image'|'field';
+    public mode: 'resource'|'image'|'field'|'value';
     public multiple: boolean;
 }

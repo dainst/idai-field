@@ -1,5 +1,11 @@
 #delete-resource-modal-body,
-#delete-field-data-modal-body {
+#delete-field-data-modal-body,
+#delete-outliers-modal-body {
+  span,
+  div {
+    user-select: none;
+  }
+
   #delete-all-switch {
     margin-top: 15px;
   }

@@ -21,6 +21,7 @@ import { CleanUpRelationModalComponent } from './clean-up-relation-modal.compone
 import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
 import { DeleteResourceModalComponent } from './delete-resource-modal.component';
 import { FixOutliersModalComponent } from './fix-outliers-modal.component';
+import { DeleteOutliersModalComponent } from './delete-outliers-modal.component';
 
 
 type WarningSection = {
@@ -148,6 +149,21 @@ export class WarningsModalComponent {
 
         for (let outlierValue of section.outlierValues) {
             const completed: boolean = await this.openFixOutliersModal(section, outlierValue);
+            if (!completed) break;
+
+            changed = true;
+        }
+
+        if (changed) await this.update();
+    }
+
+
+    public async deleteOutliers(section: WarningSection) {
+
+        let changed: boolean = false;
+
+        for (let outlierValue of section.outlierValues) {
+            const completed: boolean = await this.openDeleteOutliersModal(section, outlierValue);
             if (!completed) break;
 
             changed = true;
@@ -474,17 +490,45 @@ export class WarningsModalComponent {
         componentInstance.outlierValue = outlierValue;
         await componentInstance.initialize();
 
-        let completed: boolean;
+        let changed: boolean;
 
         await this.modals.awaitResult(
             result,
-            () => completed = true,
+            () => changed = true,
             nop
         );
 
         AngularUtility.blurActiveElement();
 
-        return completed;
+        return changed;
+    }
+
+
+    private async openDeleteOutliersModal(section: WarningSection, outlierValue: string): Promise<boolean> {
+
+        const [result, componentInstance] = this.modals.make<DeleteOutliersModalComponent>(
+            DeleteOutliersModalComponent,
+            MenuContext.MODAL
+        );
+
+        const field: Field = CategoryForm.getField(section.category, section.fieldName);
+    
+        componentInstance.document = this.selectedDocument;
+        componentInstance.field = field;
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
+        componentInstance.outlierValue = outlierValue;
+
+        let changed: boolean;
+
+        await this.modals.awaitResult(
+            result,
+            () => changed = true,
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+
+        return changed;
     }
 
 

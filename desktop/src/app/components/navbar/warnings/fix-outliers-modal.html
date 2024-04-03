@@ -1,6 +1,6 @@
 <div id="fix-outliers-modal-header" class="modal-header">
     <h5 class="modal-title" i18n="@@navbar.taskbar.fixOutliers.header">
-        Wert <b>{{getValueLabel(outlierValue)}}</b> korrigieren
+        Wert <b>{{outlierValue}}</b> korrigieren
     </h5>
 </div>
 
@@ -30,7 +30,7 @@
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.fixOutliers.all.info">
             Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{getValueLabel(outlierValue)}}</b> in sämtlichen Feldern aller Ressourcen durch den
+            <b>{{outlierValue}}</b> in sämtlichen Feldern aller Ressourcen durch den
             ausgewählten Wert <b>{{getValueLabel(selectedValue)}}</b> ersetzt.
         </div>
     </div>

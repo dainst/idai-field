@@ -184,14 +184,6 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'outliers'">
-                        <button class="btn btn-primary fix-outliers-button"
-                                (click)="fixOutliers(section)">
-                            <span class="mdi mdi-wrench"></span>
-                            <span class="button-label"
-                                  i18n="@@navbar.taskbar.warnings.fix">Korrigieren</span>
-                        </button>
-                    </span>
                     <span *ngIf="section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'
                             || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary edit-button"
@@ -199,6 +191,16 @@
                             <span class="mdi mdi-pencil"></span>
                             <span class="button-label"
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'outliers'">
+                        <button class="btn btn-primary fix-outliers-button"
+                                (click)="fixOutliers(section)">
+                            <span class="mdi mdi-wrench"></span>
+                            <span *ngIf="section.outlierValues.length === 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.fixValues.single">Wert korrigieren</span>
+                            <span *ngIf="section.outlierValues.length > 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.fixValues.multiple">Werte korrigieren</span>
                         </button>
                     </span>
                     <span *ngIf="section.type === 'unconfiguredCategory'">
@@ -223,6 +225,16 @@
                             <span class="mdi mdi-delete"></span>
                             <span class="button-label"
                                   i18n="@@navbar.taskbar.warnings.cleanUpRelaton">Relation bereinigen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'outliers'">
+                        <button class="btn btn-danger delete-outliers-button"
+                                (click)="deleteOutliers(section)">
+                            <span class="mdi mdi-delete"></span>
+                            <span *ngIf="section.outlierValues.length === 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteValues.single">Wert löschen</span>
+                            <span *ngIf="section.outlierValues.length > 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteValues.multiple">Werte löschen</span>
                         </button>
                     </span>
                 </div>

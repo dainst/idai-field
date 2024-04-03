@@ -15,6 +15,7 @@ import { CleanUpRelationModalComponent } from './warnings/clean-up-relation-moda
 import { DeleteResourceModalComponent } from './warnings/delete-resource-modal.component';
 import { FixOutliersModalComponent } from './warnings/fix-outliers-modal.component';
 import { FixingDataInProgressModalComponent } from './warnings/fixing-data-in-progress-modal.component';
+import { DeleteOutliersModalComponent } from './warnings/delete-outliers-modal.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { FixingDataInProgressModalComponent } from './warnings/fixing-data-in-pr
         CleanUpRelationModalComponent,
         FixOutliersModalComponent,
         FixingDataInProgressModalComponent,
+        DeleteOutliersModalComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent

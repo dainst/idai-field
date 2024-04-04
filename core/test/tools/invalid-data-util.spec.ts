@@ -1,3 +1,4 @@
+import { Field } from '../../src/model/configuration/field';
 import { InvalidDataUtil } from '../../src/tools/invalid-data-util';
 
 
@@ -12,6 +13,33 @@ describe('InvalidDataUtil', () => {
     beforeAll(() => {
 
         labels = jasmine.createSpyObj('labels', ['getFromI18NString']);
+    });
+
+
+    it('detect field data as convertible', () => {
+
+        expect (InvalidDataUtil.isConvertible('true', Field.InputType.BOOLEAN)).toBe(true);
+        expect (InvalidDataUtil.isConvertible('True', Field.InputType.BOOLEAN)).toBe(true);
+        expect (InvalidDataUtil.isConvertible('false', Field.InputType.BOOLEAN)).toBe(true);
+        expect (InvalidDataUtil.isConvertible('False', Field.InputType.BOOLEAN)).toBe(true);
+        expect (InvalidDataUtil.isConvertible('value', Field.InputType.CHECKBOXES)).toBe(true);
+    });
+
+
+    it('detect field data as non-convertible', () => {
+
+        expect (InvalidDataUtil.isConvertible('value', Field.InputType.BOOLEAN)).toBe(false);
+        expect (InvalidDataUtil.isConvertible({ field: 'value' }, Field.InputType.CHECKBOXES)).toBe(false);
+    });
+
+
+    it('convert field data', () => {
+
+        expect (InvalidDataUtil.convert('true', Field.InputType.BOOLEAN)).toBe(true);
+        expect (InvalidDataUtil.convert('True', Field.InputType.BOOLEAN)).toBe(true);
+        expect (InvalidDataUtil.convert('false', Field.InputType.BOOLEAN)).toBe(false);
+        expect (InvalidDataUtil.convert('False', Field.InputType.BOOLEAN)).toBe(false);
+        expect (InvalidDataUtil.convert('value', Field.InputType.CHECKBOXES)).toEqual(['value']);
     });
 
 
@@ -38,7 +66,7 @@ describe('InvalidDataUtil', () => {
     });
 
 
-    it('Get label from I18N strings when generating label for invalid field data', () => {
+    it('get label from I18N strings when generating label for invalid field data', () => {
 
         labels.getFromI18NString.and.returnValues(undefined, 'value1');
 

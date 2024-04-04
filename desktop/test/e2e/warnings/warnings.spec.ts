@@ -1008,8 +1008,8 @@ test.describe('warnings --', () => {
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
         await FixOutliersModalPage.clickSelectValue('Gerät');
         await FixOutliersModalPage.clickConfirmReplacementButton();
-        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
 
@@ -1018,6 +1018,26 @@ test.describe('warnings --', () => {
         expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 0)).toBe('Gerät');
         expect(await FieldsViewPage.getCompositeSubfieldName(0, 0, 0, 1)).toBe('subfield2');
         expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 1)).toBe('braun');
+    });
+
+
+    test('solve warning for outlier values in composite field by deleting value via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createCompositeOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('braun');
+        await DeleteModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await ResourcesPage.clickSelectResource('1');
+        expect(await FieldsViewPage.getCompositeSubfieldName(0, 0, 0, 0)).toBe('subfield2');
+        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 0)).toBe('braun');
     });
 
 

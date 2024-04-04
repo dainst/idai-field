@@ -249,6 +249,13 @@ export class DoceditPage {
     }
 
 
+    public static async clickEditCompositeEntryButton(fieldName: string, entryIndex: 0) {
+        
+        return click((await this.getField(fieldName)).locator('.composite-entry:nth-child(' + (entryIndex + 1) + ') '
+            + '.edit-composite-entry'));
+    }
+
+
     public static async clickRemoveOutlierValue(fieldName: string, outlierValueIndex: number) {
 
         const outlierValues = await this.getOutlierValues(fieldName);
@@ -349,6 +356,13 @@ export class DoceditPage {
         if (disabled) locatorString += '.disabled';
 
         return getLocator(locatorString);
+    }
+
+
+    public static async getCompositeEntryWarningIcon(fieldName: string, entryIndex: 0) {
+        
+        return (await this.getField(fieldName)).locator('.composite-entry:nth-child(' + (entryIndex + 1) + ') '
+            + '.composite-entry-warning');
     }
 
 

@@ -35,11 +35,19 @@ export class DoceditCompositeEntryModalPage {
     }
 
 
+    public static async clickRemoveOutlierValue(fieldIndex: number, outlierValueIndex: number) {
+
+        const outlierValues = await this.getOutlierValues(fieldIndex);
+        const valueToRemove = await outlierValues.nth(outlierValueIndex);
+        return click(valueToRemove.locator('.remove-outlier-button'));
+    }
+
+
     // get text
 
     public static async getSubfieldLabel(fieldIndex: number) {
 
-        const element = await getLocator('.subfield-section').nth(fieldIndex);
+        const element = await getLocator('.docedit-subfield-section').nth(fieldIndex);
         return getText(await element.locator('.composite-entry-modal-subfield-label'));
     }
 
@@ -48,14 +56,21 @@ export class DoceditCompositeEntryModalPage {
 
     public static async getSubfieldInputElement(fieldIndex: number, inputType: string) {
 
-        const element = await getLocator('.subfield-section').nth(fieldIndex);
+        const element = await getLocator('.docedit-subfield-section').nth(fieldIndex);
         return element.locator('form-field-' + inputType);
     }
 
 
     public static async getSubfieldSelectOption(fieldIndex: number, optionValueLabel: string) {
 
-        const element = await getLocator('.subfield-section').nth(fieldIndex);
+        const element = await getLocator('.docedit-subfield-section').nth(fieldIndex);
         return getSearchableSelectOption(element, optionValueLabel);
+    }
+
+
+    public static async getOutlierValues(fieldIndex: number) {
+
+        const element = await getLocator('.docedit-subfield-section').nth(fieldIndex);
+        return element.locator('.outlier');
     }
 }

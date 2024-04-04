@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document, Field, Labels } from 'idai-field-core';
+import { CategoryForm, Datastore, Document, Field, InvalidDataUtil, Labels } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
-import { ConvertDataUtil } from '../../../../util/convert-data-util';
 
 
 @Component({
@@ -84,7 +83,7 @@ export class ConvertFieldDataModalComponent {
         const documents = (await this.datastore.find({
             categories: [this.category.name],
             constraints: { ['invalidFields:contain']: this.fieldName }
-        })).documents;
+        })).documents.filter(document => this.isConvertible(document));
 
         documents.forEach(document => this.convert(document));
 
@@ -92,9 +91,18 @@ export class ConvertFieldDataModalComponent {
     }
 
 
+    private isConvertible(document: Document): boolean {
+
+        return InvalidDataUtil.isConvertible(
+            document.resource[this.fieldName],
+            this.inputType
+        );
+    }
+
+
     private convert(document: Document) {
 
-        document.resource[this.fieldName] = ConvertDataUtil.convert(
+        document.resource[this.fieldName] = InvalidDataUtil.convert(
             document.resource[this.fieldName],
             this.inputType
         );

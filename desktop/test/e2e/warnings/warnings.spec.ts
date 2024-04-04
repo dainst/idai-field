@@ -1041,6 +1041,59 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve multiple warnings for outlier values in composite & checkboxes fields by replacing value via warnings modal',
+            async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field1');
+        await createCompositeOutlierValuesWarnings(['2', '3'], 'field2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
+        await FixOutliersModalPage.clickSelectValue('Löffel');
+        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve multiple warnings for outlier values in composite & checkboxes fields by deleting value via warnings modal',
+            async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field1');
+        await createCompositeOutlierValuesWarnings(['2', '3'], 'field2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('braun');
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
+
+        expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('haselnuss');
+        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing relation targets via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

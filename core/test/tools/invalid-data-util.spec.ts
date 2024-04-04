@@ -23,6 +23,8 @@ describe('InvalidDataUtil', () => {
         expect (InvalidDataUtil.isConvertible('false', Field.InputType.BOOLEAN)).toBe(true);
         expect (InvalidDataUtil.isConvertible('False', Field.InputType.BOOLEAN)).toBe(true);
         expect (InvalidDataUtil.isConvertible('value', Field.InputType.CHECKBOXES)).toBe(true);
+        expect (InvalidDataUtil.isConvertible(['value'], Field.InputType.DROPDOWN)).toBe(true);
+        expect (InvalidDataUtil.isConvertible(['value'], Field.InputType.RADIO)).toBe(true);
     });
 
 
@@ -30,6 +32,10 @@ describe('InvalidDataUtil', () => {
 
         expect (InvalidDataUtil.isConvertible('value', Field.InputType.BOOLEAN)).toBe(false);
         expect (InvalidDataUtil.isConvertible({ field: 'value' }, Field.InputType.CHECKBOXES)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.DROPDOWN)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.RADIO)).toBe(false);
+        expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.DROPDOWN)).toBe(false);
+        expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.RADIO)).toBe(false);
     });
 
 
@@ -40,6 +46,8 @@ describe('InvalidDataUtil', () => {
         expect (InvalidDataUtil.convert('false', Field.InputType.BOOLEAN)).toBe(false);
         expect (InvalidDataUtil.convert('False', Field.InputType.BOOLEAN)).toBe(false);
         expect (InvalidDataUtil.convert('value', Field.InputType.CHECKBOXES)).toEqual(['value']);
+        expect (InvalidDataUtil.convert(['value'], Field.InputType.DROPDOWN)).toEqual('value');
+        expect (InvalidDataUtil.convert(['value'], Field.InputType.RADIO)).toEqual('value');
     });
 
 

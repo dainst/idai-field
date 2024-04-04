@@ -16,6 +16,9 @@ export module InvalidDataUtil {
                 return ['true', 'false'].includes(fieldContent.toString().toLowerCase());
             case Field.InputType.CHECKBOXES:
                 return isString(fieldContent);
+            case Field.InputType.DROPDOWN:
+            case Field.InputType.RADIO:
+                return isArray(fieldContent) && fieldContent.length === 1 && isString(fieldContent[0]);
             default:
                 return false;
         }
@@ -29,6 +32,9 @@ export module InvalidDataUtil {
                 return fieldContent.toLowerCase() === 'true';
             case Field.InputType.CHECKBOXES:
                 return [fieldContent]
+            case Field.InputType.DROPDOWN:
+            case Field.InputType.RADIO:
+                return fieldContent[0];
             default:
                 return fieldContent;
         }

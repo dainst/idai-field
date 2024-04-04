@@ -1021,6 +1021,23 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for outlier values in composite field by editing via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createCompositeOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickEditCompositeEntryButton('test:field', 0);
+        await DoceditCompositeEntryModalPage.clickRemoveOutlierValue(0, 0);
+        await DoceditCompositeEntryModalPage.clickConfirm();
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for outlier values in composite field by replacing value via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

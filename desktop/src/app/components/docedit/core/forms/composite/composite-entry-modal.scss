@@ -48,8 +48,19 @@
     }
 
     input:not([type]),
-    input[type="text"] {
+    input[type="text"],
+    .btn-danger {
       height: 33px;
+    }
+
+    .btn-danger {
+      width: 34px;
+    }
+
+    .mdi-delete {
+      position: relative;
+      bottom: 3px;
+      right: 5px;
     }
   }  
  }

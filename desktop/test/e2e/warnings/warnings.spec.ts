@@ -14,6 +14,7 @@ import { FieldsViewPage } from '../widgets/fields-view.page';
 import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
 import { FixOutliersModalPage } from './fix-outliers-modal.page';
 import { ConvertFieldDataModalPage } from './convert-field-data-modal.page';
+import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -225,6 +226,67 @@ test.describe('warnings --', () => {
         await ManageValuelistsModalPage.typeInSearchFilterInput('periods-meninx-1');
         await ManageValuelistsModalPage.clickSelectValuelist('periods-meninx-1');
         await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    };
+
+
+    async function createCompositeOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput(fieldName);
+        await AddFieldModalPage.clickCreateNewField();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        
+        await EditConfigurationPage.typeInNewSubfield('subfield1');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-color-default');
+        await ManageValuelistsModalPage.clickSelectValuelist('Wood-color-default');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.typeInNewSubfield('subfield2');
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-color-default');
+        await ManageValuelistsModalPage.clickSelectValuelist('Wood-color-default');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        const completeFieldName: string =  'test:' + fieldName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place');
+            await ResourcesPage.openEditByDoubleClickResource(identifier);
+            await DoceditPage.clickCreateCompositeEntry(completeFieldName);
+            await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(0, 'braun');
+            await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(1, 'braun');
+            await DoceditCompositeEntryModalPage.clickConfirm();
+            await DoceditPage.clickSaveDocument();
+        }
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickEditSubfield(0);
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('Wood-objectType-default');
+        await ManageValuelistsModalPage.clickSelectValuelist('Wood-objectType-default');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();
 
@@ -932,6 +994,30 @@ test.describe('warnings --', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for outlier values in composite field by replacing value via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createCompositeOutlierValuesWarnings(['1'], 'field');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await ResourcesPage.clickSelectResource('1');
+        expect(await FieldsViewPage.getCompositeSubfieldName(0, 0, 0, 0)).toBe('subfield1');
+        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 0)).toBe('Gerät');
+        expect(await FieldsViewPage.getCompositeSubfieldName(0, 0, 0, 1)).toBe('subfield2');
+        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 1)).toBe('braun');
     });
 
 

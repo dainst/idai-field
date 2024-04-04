@@ -8,7 +8,13 @@ export class DoceditCompositeEntryModalPage {
 
     // click
 
-    public static async clickCancel() {
+    public static clickConfirm() {
+
+        return click('#confirm-button');
+    }
+
+
+    public static clickCancel() {
 
         return click('#cancel-button');
     }

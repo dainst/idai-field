@@ -22,7 +22,6 @@ import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
 import { DeleteResourceModalComponent } from './modals/delete-resource-modal.component';
 import { FixOutliersModalComponent } from './modals/fix-outliers-modal.component';
 import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.component';
-import { ConvertDataUtil } from '../../../util/convert-data-util';
 import { ConvertFieldDataModalComponent } from './modals/convert-field-data-modal.component';
 
 
@@ -147,7 +146,7 @@ export class WarningsModalComponent {
 
     public isConvertible(section: WarningSection): boolean {
 
-        return ConvertDataUtil.isConvertible(
+        return InvalidDataUtil.isConvertible(
             this.selectedDocument.resource[section.fieldName],
             section.inputType
         );

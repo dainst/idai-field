@@ -127,6 +127,8 @@ export class ValuelistSelectorComponent implements OnChanges {
         if (!valuelistId) return;
         
         let valuelist: Valuelist = clone(this.clonedConfigurationDocument.resource.valuelists[valuelistId]);
+        if (!valuelist) return;
+
         valuelist.id = valuelistId;
 
         if (valuelist.extendedValuelist) {

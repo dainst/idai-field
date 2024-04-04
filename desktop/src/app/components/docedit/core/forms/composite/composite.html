@@ -1,5 +1,9 @@
 <div *ngFor="let entry of resource[field.name]; index as i"  class="mb-2">
-	<div class="input-group mb-2">
+	<div class="input-group mb-2" [class.with-outliers]="hasOutliers(entry)">
+		<span class="mdi mdi-alert"
+			  ngbTooltip="Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind."
+			  i18n-ngbTooltip="@@docedit.forms.composite.outliers.tooltip"
+			  container="body"></span>
 		<input value="{{entryLabels[i]}}" type="text" disabled class="form-control">
 		<div class="input-group-append">
             <button class="btn btn-danger" (click)="removeEntryAtIndex(i)">

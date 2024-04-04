@@ -1,0 +1,22 @@
+form-field-composite {
+  .input-group {
+    .mdi-alert {
+      display: none;
+    }
+
+    &.with-outliers {
+      input {
+        padding-left: 25px;
+      }
+
+      .mdi-alert {
+        display: inline;
+        position: absolute;
+        left: 6px;
+        top: 5px;
+        z-index: 1;
+        color: #dc3545;
+      }
+    }
+  }
+}

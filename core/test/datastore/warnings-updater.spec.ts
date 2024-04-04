@@ -334,6 +334,30 @@ describe('WarningsUpdater', () => {
                             valuelist: {
                                 values: { 'valueDimension': {} }
                             }
+                        },
+                        {
+                            name: 'composite',
+                            inputType: Field.InputType.COMPOSITE,
+                            subfields: [
+                                {
+                                    name: 'dropdown',
+                                    inputType: Field.InputType.DROPDOWN,
+                                    valuelist: {
+                                        values: { 'valueSubfieldDropdown': {} }
+                                    }
+                                },
+                                {
+                                    name: 'checkboxes',
+                                    inputType: Field.InputType.CHECKBOXES,
+                                    valuelist: {
+                                        values: { 'valueSubfieldCheckboxes': {} }
+                                    }
+                                },
+                                {
+                                    name: 'url',
+                                    inputType: Field.InputType.URL
+                                }
+                            ]
                         }
                     ]
                 }
@@ -351,6 +375,9 @@ describe('WarningsUpdater', () => {
         documents[1].resource.dropdown = 'outlierValue2';
         documents[1].resource.checkboxes = ['outlierValue3'];
         documents[1].resource.dimension = [{ measurementPosition: 'outlierValue4', inputValue: 1, inputUnit: 'cm' }];
+        documents[1].resource.composite = [
+            { dropdown: 'outlierValue5', checkboxes: ['outlierValue6'], url: 'http://www.example.de' }
+        ];
 
         const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory', 'getCategories'])
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
@@ -372,10 +399,12 @@ describe('WarningsUpdater', () => {
                 editor: ['outlierValue1'],
                 dropdown: ['outlierValue2'],
                 checkboxes: ['outlierValue3'],
-                dimension: ['outlierValue4']
+                dimension: ['outlierValue4'],
+                composite: ['outlierValue5', 'outlierValue6']
             });
         expect(documents[1].warnings?.outliers?.values)
-            .toEqual(['outlierValue1', 'outlierValue2', 'outlierValue3', 'outlierValue4']);
+            .toEqual(['outlierValue1', 'outlierValue2', 'outlierValue3', 'outlierValue4', 'outlierValue5',
+                'outlierValue6']);
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
@@ -417,6 +446,26 @@ describe('WarningsUpdater', () => {
                             valuelist: {
                                 values: { 'valueDimension': {} }
                             }
+                        },
+                        {
+                            name: 'composite',
+                            inputType: Field.InputType.COMPOSITE,
+                            subfields: [
+                                {
+                                    name: 'dropdown',
+                                    inputType: Field.InputType.DROPDOWN,
+                                    valuelist: {
+                                        values: { 'valueSubfieldDropdown': {} }
+                                    }
+                                },
+                                {
+                                    name: 'checkboxes',
+                                    inputType: Field.InputType.CHECKBOXES,
+                                    valuelist: {
+                                        values: { 'valueSubfieldCheckboxes': {} }
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }
@@ -444,6 +493,9 @@ describe('WarningsUpdater', () => {
         documents[1].resource.dropdown = 'valueDropdown';
         documents[1].resource.checkboxes = ['valueCheckboxes'];
         documents[1].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
+        documents[1].resource.composite = [
+            { dropdown: 'valueSubfieldDropdown', checkboxes: ['valueSubfieldCheckboxes'] }
+        ];
 
         const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory', 'getCategories'])
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);

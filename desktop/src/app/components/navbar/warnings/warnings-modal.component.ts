@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, nop } from 'tsfun';
+import { Map, flatten, isArray, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
     WarningType, ConfigReader, Group, Resource, Field, Tree, MissingRelationTargetWarnings, InvalidDataUtil,
     OutlierWarnings } from 'idai-field-core';
@@ -470,7 +470,10 @@ export class WarningsModalComponent {
         }
 
         if (type === 'outliers') {
-            section.outlierValues = document.warnings.outliers.fields[fieldName];
+            const outlierValues: Map<string[]>|string[] = document.warnings.outliers.fields[fieldName];
+            section.outlierValues = isArray(outlierValues)
+                ? outlierValues
+                : flatten(Object.values(outlierValues));
         }
 
         return section;

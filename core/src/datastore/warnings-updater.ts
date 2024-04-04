@@ -1,4 +1,4 @@
-import { equal, is, isArray, isObject, on, set, to } from 'tsfun';
+import { equal, is, isArray, isObject, on, set, to, Map } from 'tsfun';
 import { Document } from '../model/document';
 import { Named } from '../tools/named';
 import { CategoryForm } from '../model/configuration/category-form';
@@ -176,13 +176,19 @@ export module WarningsUpdater {
         const outlierWarnings: OutlierWarnings = { fields: {}, values: [] };
 
         for (let field of fields) {
-            const outlierValues: string[] = getOutlierValues(
+            const outlierValues: Map<string[]>|string[] = getOutlierValues(
                 document.resource, field, documentCache.get('project'), parentResource
             );
+            if (isArray(outlierValues) && !outlierValues.length) continue;
+            if (isObject(outlierValues) && !Object.keys(outlierValues).length) continue;
             
-            if (outlierValues.length) {
-                outlierWarnings.fields[field.name] = set(outlierValues);
-                outlierWarnings.values = set(outlierWarnings.values.concat(outlierValues))
+            outlierWarnings.fields[field.name] = outlierValues;
+            if (isArray(outlierValues)) {
+                outlierWarnings.values = outlierWarnings.values.concat(outlierValues);
+            } else {
+                outlierWarnings.values = Object.values(outlierValues).reduce((result, values) => {
+                    return result.concat(values);
+                }, outlierWarnings.values);
             }
         }
 
@@ -205,7 +211,7 @@ export module WarningsUpdater {
 
 
     function getOutlierValues(fieldContainer: any, field: BaseField, projectDocument: Document,
-                              parentResource: Resource): string[] {
+                              parentResource: Resource): Map<string[]>|string[] {
 
         const fieldContent: any = fieldContainer[field.name];
         if (!fieldContent) return [];
@@ -216,26 +222,33 @@ export module WarningsUpdater {
 
         const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, parentResource);
         return valuelist
-            ? (ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])
+            ? set(ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])
             : [];
     }
 
 
     function getOutlierValuesForCompositeField(field: Field, fieldContent: any, projectDocument: Document,
-                                               parentResource: Resource): string[] {
+                                               parentResource: Resource): Map<string[]> {
 
-        if (!isArray(fieldContent)) return [];
+        if (!isArray(fieldContent)) return {};
 
-        let outliers: string[] = [];
+        let outliers: Map<string[]> = {};
 
         for (let entry of fieldContent) {
             if (!isObject(entry)) continue;
 
             for (let subfield of field.subfields) {
                 if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(subfield.inputType)) continue;
-                outliers = outliers.concat(
-                    getOutlierValues(entry, subfield, projectDocument, parentResource)
-                );
+
+                const subfieldOutliers: string[] = getOutlierValues(
+                    entry, subfield, projectDocument, parentResource
+                ) as string[];
+
+                if (outliers[subfield.name]) {
+                    outliers[subfield.name] = set(outliers[subfield.name].concat(subfieldOutliers));
+                } else {
+                    outliers[subfield.name] = subfieldOutliers;
+                }
             }
         }
 

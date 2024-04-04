@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { isArray, isObject, isString } from 'tsfun';
-import { CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
+import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
+import { BaseField, CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 
 
@@ -69,7 +69,7 @@ export class DeleteOutliersModalComponent {
 
     private async deleteSingle() {
 
-        this.deleteValue(this.document, this.field);
+        this.deleteValue(this.document, this.document.resource, this.field);
 
         await this.datastore.update(this.document);
     }
@@ -87,9 +87,9 @@ export class DeleteOutliersModalComponent {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
-                if (!document.warnings.outliers.fields[fieldName].includes(this.outlierValue)) continue;
                 const field: Field = CategoryForm.getField(category, fieldName);
-                this.deleteValue(document, field);
+                if (!this.hasOutlierValue(document, field)) continue;
+                this.deleteValue(document, document.resource, field);
                 if (!changedDocuments.includes(document)) changedDocuments.push(document);
             }
         }
@@ -98,19 +98,19 @@ export class DeleteOutliersModalComponent {
     }
 
 
-    private deleteValue(document: Document, field: Field) {
+    private deleteValue(document: Document, fieldContainer: any, field: BaseField) {
 
-        const fieldContent: any = document.resource[field.name];
+        const fieldContent: any = fieldContainer[field.name];
 
         if (isArray(fieldContent)) {
-            document.resource[field.name] = this.removeValueFromArray(fieldContent, field);
-            if (document.resource[field.name].length === 0) delete document.resource[field.name];
+            fieldContainer[field.name] = this.removeValueFromArray(fieldContent, field, document);
+            if (fieldContainer[field.name].length === 0) delete fieldContainer[field.name];
         } else {
             if (isString(fieldContent) && fieldContent === this.outlierValue) {
-                delete document.resource[field.name]
+                delete fieldContainer[field.name]
             } else if (isObject(fieldContent) && field.inputType === Field.InputType.DROPDOWNRANGE) {
                 if (fieldContent.value === this.outlierValue) {
-                    delete document.resource[field.name];
+                    delete fieldContainer[field.name];
                 } else if (fieldContent.endValue === this.outlierValue) {
                     delete fieldContent.endValue;
                 }
@@ -119,15 +119,37 @@ export class DeleteOutliersModalComponent {
     }
 
     
-    private removeValueFromArray(array: any[], field: Field): any[] {
+    private removeValueFromArray(array: any[], field: BaseField, document: Document): any[] {
 
         if (field.inputType === Field.InputType.DIMENSION) {
             array.forEach((entry: Dimension) => {
                 if (entry.measurementPosition === this.outlierValue) delete entry.measurementPosition;
             });
             return array;
+        } else if (field.inputType === Field.InputType.COMPOSITE) {
+            array.forEach(entry => this.removeValueFromCompositeEntry(entry, field, document));
+            return array.filter(entry => !isEmpty(entry));
         } else {
             return array.filter(entry => entry !== this.outlierValue);
         }
+    }
+
+
+    private removeValueFromCompositeEntry(entry: any, field: Field, document: Document) {
+
+        field.subfields.filter(subfield => {
+            return (document.warnings.outliers.fields[field.name][subfield.name])
+                ?.includes(this.outlierValue);
+        }).forEach(subfield => this.deleteValue(document, entry, subfield));
+    }
+
+
+    private hasOutlierValue(document: Document, field: Field): boolean {
+
+        const outlierValues: string[] = field.inputType === Field.InputType.COMPOSITE
+            ?  flatten(Object.values(document.warnings.outliers.fields[field.name]))
+            : (document.warnings.outliers.fields[field.name]);
+
+        return outlierValues.includes(this.outlierValue);
     }
 }

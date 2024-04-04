@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { equal, isArray, isObject, isString, set } from 'tsfun';
+import { equal, flatten, isArray, isObject, isString, set, Map } from 'tsfun';
 import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
-     Valuelist, ValuelistUtil } from 'idai-field-core';
+     Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 
 
@@ -84,7 +84,7 @@ export class FixOutliersModalComponent {
 
     private async replaceSingle() {
 
-        this.replaceValue(this.document, this.field);
+        this.replaceValue(this.document, this.document.resource, this.field);
 
         await this.datastore.update(this.document);
     }
@@ -103,10 +103,10 @@ export class FixOutliersModalComponent {
 
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
-                if (!document.warnings.outliers.fields[fieldName].includes(this.outlierValue)) continue;
+                if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (equal(valuelist, this.valuelist)) {
-                    this.replaceValue(document, field);
+                    this.replaceValue(document, document.resource, field);
                     if (!changedDocuments.includes(document)) changedDocuments.push(document);
                 }
             }
@@ -116,19 +116,19 @@ export class FixOutliersModalComponent {
     }
 
 
-    private replaceValue(document: Document, field: Field) {
+    private replaceValue(document: Document, fieldContainer: any, field: BaseField) {
 
-        const fieldContent: any = document.resource[field.name];
+        const fieldContent: any = fieldContainer[field.name];
 
         if (isArray(fieldContent)) {
-            document.resource[field.name] = set(fieldContent.map(entry => this.getReplacement(entry, field)));
+            fieldContainer[field.name] = set(fieldContent.map(entry => this.getReplacement(document, entry, field)));
         } else {
-            document.resource[field.name] = this.getReplacement(fieldContent, field);
+            fieldContainer[field.name] = this.getReplacement(document, fieldContent, field);
         }
     }
 
 
-    private getReplacement(entry: any, field: Field): any {
+    private getReplacement(document: Document, entry: any, field: Field): any {
 
         if (isString(entry) && entry === this.outlierValue) {
             return this.selectedValue;
@@ -142,17 +142,44 @@ export class FixOutliersModalComponent {
             } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.ENDVALUE] === this.outlierValue) {
                 entry.endValue = this.selectedValue;
+            } else if (field.inputType === Field.InputType.COMPOSITE) {
+                this.replaceValueInCompositeEntry(document, entry, field);
             }
         }
         
         return entry;
     }
 
+    
+    private replaceValueInCompositeEntry(document: Document, entry: any, field: Field) {
+
+        field.subfields.filter(subfield => {
+            return subfield.valuelist
+                && equal(subfield.valuelist, this.valuelist)
+                && (document.warnings.outliers.fields[field.name][subfield.name])?.includes(this.outlierValue);
+        }).forEach(subfield => this.replaceValue(document, entry, subfield));
+    }
+
+
+    private hasOutlierValue(document: Document, field: Field): boolean {
+
+        const outlierValues: string[] = field.inputType === Field.InputType.COMPOSITE
+            ?  flatten(Object.values(document.warnings.outliers.fields[field.name]))
+            : (document.warnings.outliers.fields[field.name]);
+
+        return outlierValues.includes(this.outlierValue);
+    }
+
 
     private async getValuelist(document: Document, field: Field): Promise<Valuelist> {
 
+        const valuelistField: BaseField = field.inputType === Field.InputType.COMPOSITE
+            ? field.subfields.find(subfield => {
+                return (document.warnings.outliers.fields[field.name][subfield.name])?.includes(this.outlierValue);
+            }) : field;
+
         return ValuelistUtil.getValuelist(
-            field,
+            valuelistField,
             this.projectDocument, 
             await Hierarchy.getParentResource(this.datastore.get, document.resource)
         );

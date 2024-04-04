@@ -1,3 +1,6 @@
+import { Map } from 'tsfun';
+
+
 export type WarningType = 'unconfiguredCategory'
     |'unconfiguredFields'
     |'invalidFields'
@@ -25,7 +28,7 @@ export interface Warnings {
 
 export interface OutlierWarnings {
 
-    fields: { [name: string]: string[] };
+    fields: Map<string[]|Map<string[]>>;
     values: string[];
 }
 

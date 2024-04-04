@@ -400,7 +400,7 @@ describe('WarningsUpdater', () => {
                 dropdown: ['outlierValue2'],
                 checkboxes: ['outlierValue3'],
                 dimension: ['outlierValue4'],
-                composite: ['outlierValue5', 'outlierValue6']
+                composite: { dropdown: ['outlierValue5'], checkboxes: ['outlierValue6'] }
             });
         expect(documents[1].warnings?.outliers?.values)
             .toEqual(['outlierValue1', 'outlierValue2', 'outlierValue3', 'outlierValue4', 'outlierValue5',
@@ -485,7 +485,8 @@ describe('WarningsUpdater', () => {
                 editor: ['outlierValue'],
                 dropdown: ['outlierValue'],
                 checkboxes: ['outlierValue'],
-                dimension: ['outlierValue']
+                dimension: ['outlierValue'],
+                composite: { dropdown: ['outlierValue'], checkboxes: ['outlierValue'] }
             },
             values: ['outlierValue']
         };

@@ -1,4 +1,4 @@
-import { intersect, isArray } from 'tsfun';
+import { intersect, isArray, isObject } from 'tsfun';
 import { Valuelist } from '.';
 import { I18N } from '../tools/i18n';
 import { Field, Subfield } from './configuration/field';
@@ -10,6 +10,8 @@ import { Field, Subfield } from './configuration/field';
 export module Composite {
 
     export function isValid(entry: any, subfields: Array<Subfield>): boolean {
+
+        if (!entry || !isObject(entry)) return false;
 
         return Object.keys(entry).find(subfieldName => {
             const subfieldDefinition: Subfield = subfields.find(subfield => subfield.name === subfieldName);

@@ -175,4 +175,23 @@ defmodule FieldHub.CouchServiceTest do
              }
            ] = CouchService.get_docs_by_category(@project, ["Image", "Drawing"]) |> Enum.to_list()
   end
+
+  test "get_last_5_changes/1 return up to 5 last changes" do
+    assert [
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" =>_},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" =>_},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" =>_},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" =>_},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" =>_}
+           ] = CouchService.get_last_5_changes(@project)
+  end
+
+  test "get_last_change_date/2 return date and author of a change" do
+    # assert {"2023-01-05T10:32:09.2"<>_<>" (edited by sample_data)"} = CouchService.get_last_change_date(List.first(CouchService.get_last_5_changes(@project)),@project)
+    assert ["2023-01-05T10:32:09.",_] = [
+      String.split(
+        CouchService.get_last_change_date(List.first(CouchService.get_last_5_changes(@project)),@project), "."),
+    ]
+
+  end
 end

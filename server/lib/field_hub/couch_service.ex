@@ -340,44 +340,70 @@ defmodule FieldHub.CouchService do
   end
 
   @doc """
-  Returns the information about the last change for the specified project.
-  Otherwise, it returns a map representing the last change if it exists.
+  Returns up to five last changes for the specified project.
+  If the project has less than five changes or is new, less or no change would be returned.
 
   __Parameters__
   - `project_identifier` - The name of the project.
 
   ## Example
-  iex> get_last_change_info("development")
-  %{
-    "seq" => "68-89221cbd0e434ddf10a997c068b293b6",
-    "id" => "project",
-    "changes" => [%{"rev" => "2-ed2a74eb95293ba7be1f66b070fe278e"}]
-  }
-  """
-  def get_last_change_info(project_identifier) do
-    changes =
-      HTTPoison.get!(
-        "#{base_url()}/#{project_identifier}/_changes?style=all_docs",
-        get_user_credentials()
-        |> headers()
-      )
-      |> Map.get(:body)
-      |> Jason.decode!()
-      |> IO.inspect()
-
-    last_sequence = Map.get(changes, "last_seq")
-
-    case changes do
-      %{"results" => []} ->
-        %{
-          "seq" => last_sequence,
-          "id" => "project",
-          "changes" => []
+  iex> get_last_5_changes("development")
+  [
+    %{
+      "changes" => [%{"rev" => "2-4f773e67d44d4bc99008713d9f9d164f"}],
+      "doc" => %{
+        "_id" => "988d0107-952f-4eaf-8c1f-4a25a0c5b15c",
+        "_rev" => "2-4f773e67d44d4bc99008713d9f9d164f",
+        "created" => %{
+          "date" => "2023-10-17T14:56:31.120Z",
+          "user" => "anonymous"
+        },
+        "modified" => [
+          %{"date" => "2023-10-17T14:57:55.929Z", "user" => "anonymous"}
+        ],
+        "resource" => %{
+          "category" => "Survey",
+          "id" => "988d0107-952f-4eaf-8c1f-4a25a0c5b15c",
+          "identifier" => "area 190",
+          "relations" => %{}
         }
+      },
+      "id" => "988d0107-952f-4eaf-8c1f-4a25a0c5b15c",
+      "seq" => "6-g1AAAACLeJzLYWBgYMpgTmHgzcvPy09JdcjLz8gvLskBCScyJNX___8_K4M5kTkXKMBuYW5iaZpkgK4Yh_Y8FiDJ0ACk_qOaYpJmlpSSiq4nCwA51yqW"
+    }
+  ]
 
-      %{"results" => result} ->
-        Enum.find(result, fn map -> map["seq"] == last_sequence end)
-    end
+  """
+  def get_last_5_changes(project_identifier) do
+    HTTPoison.get!(
+      "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=100&include_docs=true",
+      get_user_credentials()
+      |> headers()
+    )
+    |> Map.get(:body)
+    |> Jason.decode!()
+    |> Map.get("results")
+    |> Enum.filter(fn change -> Map.get(change, "doc") end)
+    |> Enum.sort_by(fn change ->
+      modification_date =
+        case change["doc"]["modified"] do
+          %{"date" => date} -> DateTime.from_iso8601(date)
+          _ -> nil
+        end
+
+      creation_date =
+        case change["doc"]["created"]["date"] do
+          %{"date" => date} -> DateTime.from_iso8601(date)
+          _ -> nil
+        end
+
+      case {modification_date, creation_date} do
+        {nil, nil} -> nil
+        {nil, created} -> created
+        {modified, created} -> max(modified, created)
+      end
+    end)
+    |> Enum.take(5)
   end
 
   @doc """
@@ -389,7 +415,7 @@ defmodule FieldHub.CouchService do
 
   ## Example
   iex> get_last_change_date("development")
-  "2024-02-29 (edited by André Leroi-Gourhan)"
+  "2024-02-29 (edited by anonymous)"
   """
   def get_last_change_date(changes_data, project_identifier) do
     case Map.get(changes_data, "id") do

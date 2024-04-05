@@ -25,6 +25,7 @@ defmodule FieldHubWeb.ProjectShowLive do
     # access via websocket. In the normal application flow this will be unnesseary
     # because the http plug will already have caught unauthorized access before switching protocols.
     # See https://hexdocs.pm/phoenix_live_view/security-model.html#mounting-considerations
+
     user_name =
       user_token
       |> UserAuth.get_user_by_session_token()

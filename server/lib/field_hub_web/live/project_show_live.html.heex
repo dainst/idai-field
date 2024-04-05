@@ -55,16 +55,25 @@
                             database: %{
                                 doc_count: db_doc_count,
                                 file_size: db_file_size,
-                                last_update_seq: last_update_seq,
-                                last_update_id: last_update_id,
-                                last_update_date: last_update_date
+                                last_5_updates: last_5_updates
                             },
                             files: files
                         } -> %>
-                            <section>Database documents: <%= db_doc_count %></section>
-                            <section>Last sequence: <%= last_update_seq %></section>
-                            <section>Last change id: <%= last_update_id %></section>
-                            <section>Last change date:  <%= last_update_date %></section>
+                            <section>Database documents: <%= db_doc_count %></section>                      
+                            <section>
+                                <tr>
+                                    <td>Last changes</td>
+                                    <td> 
+                                        <%= for update <- last_5_updates do %>
+                                            <div>
+                                            <%= CouchService.get_last_change_date(update, @project) %>
+                                            <br />
+                                            id: <%= update["id"] %>
+                                            </div>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                            </section>
                             <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
                             <%= case files do %>
                                 <% :enoent -> %>

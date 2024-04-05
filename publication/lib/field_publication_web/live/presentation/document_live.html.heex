@@ -52,6 +52,7 @@
           |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
           |> Enum.into(%{}),
         doc: @doc,
+        publication: @publication,
         lang: @selected_lang
       })
 

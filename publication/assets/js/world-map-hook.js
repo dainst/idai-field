@@ -37,7 +37,7 @@ const stylesHighlighted = {
     }),
 }
 
-export default getOpenLayersHook = () => {
+export default getWorldMapHook = () => {
     return {
         highlighted: null,
         map: null,
@@ -129,7 +129,6 @@ export default getOpenLayersHook = () => {
                 const extent = vectorSource.getExtent();
                 this.map.getView().fit(extent, { padding: [50, 50, 50, 50] });
             } else if (features.length == 1 && features[0].geometry.type == "Point") {
-                console.log(features[0].geometry.coordinates)
                 this.map.getView().setCenter(fromLonLat(features[0].geometry.coordinates))
                 this.map.getView().setZoom(5)
             }

@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.OpenLayersMap do
+defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
   use FieldPublicationWeb, :live_component
 
   @impl true
@@ -10,7 +10,7 @@ defmodule FieldPublicationWeb.Presentation.Components.OpenLayersMap do
       centerLon={@centerLon}
       centerLat={@centerLat}
       zoom={@zoom}
-      phx-hook="OpenLayersMap"
+      phx-hook="WorldMap"
     >
     </div>
     """

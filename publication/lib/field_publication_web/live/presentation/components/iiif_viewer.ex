@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
       :ok,
       socket
       |> assign(:id, id)
-      |> assign(url: url)
+      |> assign(:url, url)
       |> assign(:height, height)
     }
   end

@@ -21,31 +21,42 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
         {publication, Publications.Data.get_project_info(publication)}
       end)
       |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, doc}} ->
-        %{
+        longitude =
+          Data.get_field_values(
+            doc,
+            "longitude"
+          )
+
+        latitude =
+          Data.get_field_values(
+            doc,
+            "latitude"
+          )
+
+        metadata = %{
           name: project_name,
-          doc: doc,
-          coordinates: %{
-            longitude:
-              Data.get_field_values(
-                doc,
-                "longitude"
-              ),
-            latitude:
-              Data.get_field_values(
-                doc,
-                "latitude"
-              )
-          }
+          doc: doc
         }
+
+        if !is_nil(latitude) and !is_nil(longitude) do
+          Map.put(metadata, :coordinates, %{longitude: longitude, latitude: latitude})
+        else
+          metadata
+        end
       end)
 
     features =
-      Enum.map(
-        published_projects,
-        fn %{coordinates: coordinates, name: name} ->
-          create_home_marker(coordinates, name)
+      published_projects
+      |> Enum.map(fn doc ->
+        case doc do
+          %{coordinates: coordinates, name: name} ->
+            create_home_marker(coordinates, name)
+
+          _ ->
+            nil
         end
-      )
+      end)
+      |> Enum.reject(fn val -> is_nil(val) end)
 
     {:ok,
      socket

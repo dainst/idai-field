@@ -60,7 +60,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
               <I18n.text values={Data.get_field_labels(@doc, "institution")} />
             </dt>
             <dd class="ml-2">
-              <%= Data.get_field_values(@doc, "institution") %>
+              <I18n.text values={Data.get_field_values(@doc, "institution")} />
             </dd>
             <dt class="font-semibold">
               <I18n.text values={Data.get_field_labels(@doc, "projectSupervisor")} />

@@ -8,7 +8,7 @@ defmodule FieldPublicationWeb.Cantaloupe do
       cond do
         Plug.Conn.request_url(conn)
         |> String.ends_with?(".json") ->
-          %{}
+          Jason.encode!(%{"error" => "Unknown image information requested."})
 
         true ->
           # As default we assume an image was requested and we return the fallback png.
@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.Cantaloupe do
 
     Plug.Conn.resp(
       conn,
-      :not_found,
+      404,
       response_body
     )
   end

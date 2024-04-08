@@ -129,13 +129,25 @@ defmodule FieldPublication.Publications.Data do
   def get_field_values(doc, name) do
     doc
     |> get_field(name)
-    |> Map.get("values")
+    |> case do
+      nil ->
+        nil
+
+      field ->
+        Map.get(field, "values")
+    end
   end
 
   def get_field_labels(doc, name) do
     doc
     |> get_field(name)
-    |> Map.get("labels")
+    |> case do
+      nil ->
+        nil
+
+      field ->
+        Map.get(field, "labels")
+    end
   end
 
   def get_field(doc, name) do

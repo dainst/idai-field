@@ -5,40 +5,6 @@ import TileLayer from 'ol/layer/Tile.js';
 import View from 'ol/View.js';
 import { createEmpty, extend } from 'ol/extent.js';
 
-import OSM from 'ol/source/OSM.js';
-
-
-
-function construct_iiif_url(project, uuid) {
-    return `/api/iiif/image/iiif/3/${project}%2F${uuid}.jp2/info.json`
-}
-
-function get_extent(georeference) {
-    return [
-        georeference.bottomLeftCoordinates[1],
-        georeference.bottomLeftCoordinates[0],
-        georeference.topRightCoordinates[1],
-        georeference.topRightCoordinates[0]
-    ]
-}
-
-function get_resolutions(extent, tileSize, height, width) {
-
-    const portraitFormat = height > width;
-
-    const result = [];
-    const layerSize = extent[portraitFormat ? 3 : 2] - extent[portraitFormat ? 1 : 0];
-    const imageSize = portraitFormat ? height : width;
-
-    let scale = 1;
-    while (tileSize < imageSize / scale) {
-        result.push(layerSize / imageSize * scale);
-        scale *= 2;
-    }
-    result.push(layerSize / imageSize * scale);
-
-    return result.reverse();
-};
 
 export default getProjectMapHook = () => {
     return {
@@ -68,8 +34,7 @@ export default getProjectMapHook = () => {
                     await fetch(`/api/iiif/image/iiif/3/${project}%2F${relation["resource"]["id"]}.jp2/info.json`)
                 ).json()
 
-                let options = new IIIFInfo(imageInfo).getTileSourceOptions()
-                options.zDirection = -1;
+                let options = new IIIFInfo(imageInfo).getTileSourceOptions();
 
                 const geoReference = relation["resource"]["georeference"]
 
@@ -89,8 +54,12 @@ export default getProjectMapHook = () => {
 
                 aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
             }
-
-            this.map.getView().fit(aggregatedExtent);
+            this.map.setView(
+                new View({
+                    extent: aggregatedExtent
+                })
+            );
+            this.map.getView().fit(aggregatedExtent)
         }
     }
 }

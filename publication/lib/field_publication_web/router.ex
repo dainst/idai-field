@@ -34,7 +34,7 @@ defmodule FieldPublicationWeb.Router do
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's
-  # last known route or falls back on '/' .
+  # last known route or fall back on '/'.
   scope "/", FieldPublicationWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
@@ -43,7 +43,6 @@ defmodule FieldPublicationWeb.Router do
       live "/log_in", UserLoginLive, :new
     end
 
-    get "/select_locale", UILanguageController, :selection
     post "/log_in", UserSessionController, :create
   end
 
@@ -92,6 +91,9 @@ defmodule FieldPublicationWeb.Router do
   scope "/", FieldPublicationWeb do
     pipe_through [:browser]
 
+    get "/select_locale", UILanguageController, :selection
+    delete "/log_out", UserSessionController, :delete
+
     live_session :mount_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :mount_current_user}] do
       live "/", Presentation.HomeLive
@@ -99,8 +101,6 @@ defmodule FieldPublicationWeb.Router do
       live "/:project_id/:publication_date/:language", Presentation.DocumentLive
       live "/:project_id/:publication_date/:language/:uuid", Presentation.DocumentLive
     end
-
-    delete "/log_out", UserSessionController, :delete
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

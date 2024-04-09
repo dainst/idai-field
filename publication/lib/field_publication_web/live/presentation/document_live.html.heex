@@ -5,7 +5,7 @@
         <%= @project_name %> /
       </div>
       <%= if Enum.count(@publication_dates) == 1 do %>
-        <div class="mt-4 mr-2">
+        <div class="mt-4">
           <%= List.first(@publication_dates) %>
         </div>
       <% else %>
@@ -17,12 +17,18 @@
         />
       <% end %>
       <div class="mt-4 ml-2 mr-2">/</div>
-      <.input
-        type="select"
-        name="project_language_selection"
-        options={@publication.languages}
-        value={@selected_lang}
-      />
+      <%= if Enum.count(@publication.languages) == 1 do %>
+        <div class="mt-4">
+          <%= List.first(@publication.languages) %>
+        </div>
+      <% else %>
+        <.input
+          type="select"
+          name="project_language_selection"
+          options={@publication.languages}
+          value={@selected_lang}
+        />
+      <% end %>
       <div class="mt-4 ml-3">
         /
         <.link patch={"/#{@project_name}/#{@publication.publication_date}/#{@selected_lang}"}>

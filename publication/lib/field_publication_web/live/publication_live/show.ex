@@ -224,7 +224,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def get_version_options() do
-    %{"Intial release" => :initial, "Full release" => :major, "Revision" => :revision}
+    %{"Full publication" => :major, "Revision" => :revision}
   end
 
   defp start_data_state_evaluation(%Publication{} = publication) do

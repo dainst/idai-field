@@ -3,7 +3,6 @@ defmodule FieldPublication.Schemas.Publication do
 
   import Ecto.Changeset
 
-  alias FieldPublication.CouchService
   alias FieldPublication.Projects
   alias FieldPublication.Schemas
 
@@ -27,7 +26,7 @@ defmodule FieldPublication.Schemas.Publication do
     field(:configuration_doc, :string)
     field(:database, :string)
     field(:languages, {:array, :string}, default: [])
-    field(:version, Ecto.Enum, values: [:initial, :major, :revision], default: :initial)
+    field(:version, Ecto.Enum, values: [:major, :revision], default: :major)
     embeds_many(:comments, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
     embeds_many(:processing_logs, LogEntry, on_replace: :delete)
@@ -61,8 +60,7 @@ defmodule FieldPublication.Schemas.Publication do
       :database,
       :version
     ])
-    |> validate_project_exists()
-    |> validate_version()
+    |> ensure_project_exists()
     |> Schemas.validate_doc_type(@doc_type)
   end
 
@@ -70,7 +68,7 @@ defmodule FieldPublication.Schemas.Publication do
     @doc_type
   end
 
-  defp validate_project_exists(changeset) do
+  defp ensure_project_exists(changeset) do
     name = get_field(changeset, :project_name)
 
     Projects.get(name)
@@ -80,31 +78,6 @@ defmodule FieldPublication.Schemas.Publication do
 
       {:error, :not_found} ->
         add_error(changeset, :project_name, "Project #{name} document not found.")
-    end
-  end
-
-  defp validate_version(changeset) do
-    version = get_field(changeset, :version)
-
-    if version != :initial do
-      changeset
-    else
-      project_name = get_field(changeset, :project_name)
-      draft_date = get_field(changeset, :draft_date)
-
-      CouchService.get_document_stream(%{
-        selector: %{doc_type: doc_type(), project_name: project_name}
-      })
-      |> Enum.find(fn publication ->
-        publication[:level] == :initial and publication[:draft_date] != draft_date
-      end)
-      |> case do
-        nil ->
-          changeset
-
-        _existing_publication ->
-          put_change(changeset, :version, :major)
-      end
     end
   end
 end

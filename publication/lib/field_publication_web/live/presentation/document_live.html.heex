@@ -1,46 +1,52 @@
 <div>
   <form id="project_options" phx-change="project_options_changed">
     <div class="flex flex-row">
-      <div class="mt-4 mr-2">
+      <div class="mt-4">
+        <.link navigate="/">
+          <.icon class="ml-1 mb-1" name="hero-globe-europe-africa-solid" />
+        </.link>
+        /
+      </div>
+
+      <div class=" ml-2 mt-4">
         <%= @project_name %> /
       </div>
-      <%= if Enum.count(@publication_dates) == 1 do %>
-        <div class="mt-4">
-          <%= List.first(@publication_dates) %>
-        </div>
-      <% else %>
-        <.input
-          type="select"
-          name="project_date_selection"
-          options={@publication_dates}
-          value={@publication.publication_date}
-        />
-      <% end %>
-      <div class="mt-4 ml-2 mr-2">/</div>
-      <%= if Enum.count(@publication.languages) == 1 do %>
-        <div class="mt-4">
-          <%= List.first(@publication.languages) %>
-        </div>
-      <% else %>
-        <.input
-          type="select"
-          name="project_language_selection"
-          options={@publication.languages}
-          value={@selected_lang}
-        />
-      <% end %>
-      <div class="mt-4 ml-3">
+      <div class="ml-2">
+        <%= if Enum.count(@publication_dates) == 1 do %>
+          <div class="mt-4">
+            <%= List.first(@publication_dates) %>
+          </div>
+        <% else %>
+          <.input
+            type="select"
+            name="project_date_selection"
+            options={@publication_dates}
+            value={@publication.publication_date}
+          />
+        <% end %>
+      </div>
+      <div class="mt-4 ml-2">/</div>
+      <div class="ml-2">
+        <%= if Enum.count(@publication.languages) == 1 do %>
+          <div class="mt-4"><%= List.first(@publication.languages) %></div>
+        <% else %>
+          <.input
+            type="select"
+            name="project_language_selection"
+            options={@publication.languages}
+            value={@selected_lang}
+          />
+        <% end %>
+      </div>
+      <div class="mt-4 ml-2">
         /
         <.link patch={"/#{@project_name}/#{@publication.publication_date}/#{@selected_lang}"}>
-          <.icon
-            class={"ml-1 mb-1 #{if Data.get_field_values(@doc, "category") == "Project", do: "bg-indigo-500", else: ""}"}
-            name="hero-home-solid"
-          />
+          <.icon class="mb-1" name="hero-home-solid" />
         </.link>
       </div>
       <%= if Data.get_field_values(@doc, "category") != "Project" do %>
-        <div class="mt-4 ml-2 mr-2">/</div>
-        <div class="mt-4 text-indigo-500">
+        <div class="mt-4 ml-2">/</div>
+        <div class="mt-4 ml-2">
           <%= Data.get_field_values(@doc, "identifier") %>
         </div>
       <% end %>

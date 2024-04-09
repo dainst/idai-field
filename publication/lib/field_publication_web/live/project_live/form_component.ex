@@ -29,22 +29,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
             <.input field={@form[:name]} type="text" label="Project key" />
           <% _ -> %>
         <% end %>
-        <.input field={@form[:hidden]} type="checkbox" label="Hidden" />
-        <.input
-          field={@form[:editors]}
-          type="select"
-          multiple={true}
-          options={@users}
-          label="Editors"
-        />
-        <a
-          phx-click="clear_editors"
-          phx-target={@myself}
-          type="button"
-          class="cursor-pointer block !mt-0 w-full text-center p-1 bg-zinc-900 hover:bg-zinc-700 rounded-b-md text-white"
-        >
-          Clear
-        </a>
+        <.checkgroup field={@form[:editors]} label="Editors" options={@users} />
         <:actions>
           <.button phx-disable-with="Saving...">Save Project</.button>
         </:actions>
@@ -56,7 +41,9 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
   @impl true
   def update(%{project: project} = assigns, socket) do
     changeset = Project.changeset(project)
-    users = User.list() |> Enum.map(fn %{name: name} -> name end)
+
+    # TODO: Extend users to show better labels. First item in tuple is used as label in the checkbox.
+    users = User.list() |> Enum.map(fn %{name: name} -> {name, name} end)
 
     {
       :ok,
@@ -69,28 +56,34 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"project" => form_params}, socket) do
+    IO.inspect(form_params)
+
     changeset =
       socket.assigns.project
       |> Project.changeset(form_params)
       |> Map.put(:action, :validate)
+      |> IO.inspect()
 
     {:noreply, assign_form(socket, changeset)}
   end
 
   def handle_event("save", %{"project" => project_params}, socket) do
+    IO.inspect(project_params)
     save_project(socket, socket.assigns.action, project_params)
   end
 
-  def handle_event("clear_editors", _, socket) do
+  def handle_event("clear_editors", params, socket) do
+    IO.inspect(params)
+    IO.inspect(socket.assigns.form)
+
     changeset =
       socket.assigns.project
-      |> Project.changeset(%{editors: []})
-      |> Map.put(:action, :update)
+      |> Project.changeset(%{"editors" => []})
+      |> IO.inspect()
 
     {
       :noreply,
-      socket
-      |> assign_form(changeset)
+      assign_form(socket, changeset)
     }
   end
 
@@ -103,7 +96,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project updated successfully")
-          |> push_navigate(to: ~p"/edit")
+          |> push_navigate(to: ~p"/edit/#{updated_project}")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->

@@ -1,5 +1,5 @@
 <.header>
-  Project '<%= @project.name %>' <%= if @project.hidden, do: "(currently hidden)" %>
+  Project '<%= @project.name %>'
   <:actions>
     <.link navigate={~p"/edit/#{@project.name}/publication/new"}>
       <.button>Draft new publication</.button>
@@ -54,7 +54,7 @@
   :if={@live_action == :edit}
   id="project-modal"
   show
-  on_cancel={JS.patch(~p"/edit/#{@project.name}")}
+  on_cancel={JS.patch(~p"/edit/#{@project}")}
 >
   <.live_component
     module={FieldPublicationWeb.ProjectLive.FormComponent}
@@ -62,7 +62,7 @@
     title={@page_title}
     action={@live_action}
     project={@project}
-    patch={~p"/edit/#{@project.name}"}
+    patch={~p"/edit/#{@project}"}
   />
 </.modal>
 
@@ -70,14 +70,14 @@
   :if={@live_action == :draft_publication}
   id="draft-modal"
   show
-  on_cancel={JS.patch(~p"/edit/#{@project.name}")}
+  on_cancel={JS.patch(~p"/edit/#{@project}")}
 >
   <.live_component
     module={FieldPublicationWeb.PublicationLive.ReplicationFormComponent}
     id="publication_draft"
     action={:new}
     project_name={@project.name}
-    patch={~p"/edit/#{@project.name}"}
+    patch={~p"/edit/#{@project}"}
     current_user={@current_user}
   />
 </.modal>

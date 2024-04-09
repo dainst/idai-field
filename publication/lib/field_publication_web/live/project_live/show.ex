@@ -24,6 +24,12 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   end
 
   @impl true
+  def handle_params(%{"project_id" => _project}, _uri, socket) do
+    # Closing the edit modal triggers a url patch that has to be handled by handle_params, because we do not
+    {:noreply, assign(socket, :page_title, page_title(socket.assigns.live_action))}
+  end
+
+  @impl true
   def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do
     {:noreply, assign(socket, :project, project)}
   end

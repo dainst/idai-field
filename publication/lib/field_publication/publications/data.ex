@@ -90,16 +90,21 @@ defmodule FieldPublication.Publications.Data do
 
     category_configuration["groups"]
     |> Enum.map(fn group ->
-      extended_fields =
-        group["fields"]
-        |> Enum.map(&extend_field(&1, keys))
-        |> Enum.reject(fn val -> val == nil end)
-        |> Enum.map(fn %{"key" => key} = map ->
-          Map.put(map, "values", resource[key])
-        end)
+      group["fields"]
+      |> Enum.map(&extend_field(&1, keys))
+      |> Enum.reject(fn val -> val == nil end)
+      |> Enum.map(fn %{"key" => key} = map ->
+        Map.put(map, "values", resource[key])
+      end)
+      |> case do
+        [] ->
+          nil
 
-      %{"key" => group["name"], "labels" => group["label"], "fields" => extended_fields}
+        fields_with_data ->
+          %{"key" => group["name"], "labels" => group["label"], "fields" => fields_with_data}
+      end
     end)
+    |> Enum.reject(fn group -> is_nil(group) end)
   end
 
   defp extend_field(field, keys) do

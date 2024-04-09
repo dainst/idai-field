@@ -4,7 +4,7 @@
     </h5>
 </div>
 
-<div *ngIf="valuelist" id="fix-outliers-modal-body" class="modal-body">
+<div *ngIf="valuelist" id="fix-outliers-modal-body" class="modal-body warnings-tool-modal-body">
     <div id="fix-outliers-info" i18n="@@navbar.taskbar.fixOutliers.info">
         Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
     </div>
@@ -14,7 +14,7 @@
                        [getLabel]="getValueLabel"
                        (onValueSelected)="selectedValue = $event"></searchable-select>
 
-    <div *ngIf="selectedValue" id="replace-all-switch" class="row">
+    <div *ngIf="selectedValue" id="multiple-switch" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse dieses Werts ersetzen</span>
         </div>

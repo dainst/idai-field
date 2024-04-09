@@ -14,9 +14,9 @@ export class DeleteModalPage {
     }
 
 
-    public static async clickDeleteAllSwitch() {
+    public static async clickMultipleSwitch() {
 
-        return click('#delete-all-switch label');
+        return click('#multiple-switch label');
     }
 
 

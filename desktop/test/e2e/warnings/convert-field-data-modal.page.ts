@@ -8,9 +8,9 @@ export class ConvertFieldDataModalPage {
 
     // click
 
-    public static clickConvertAllSwitch() {
+    public static clickMultipleSwitch() {
 
-        return click('#convert-all-switch .switch');
+        return click('#multiple-switch .switch');
     }
 
 

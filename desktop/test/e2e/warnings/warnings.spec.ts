@@ -431,7 +431,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteResourceButton(0);
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.typeInConfirmCategoryName('Test:CustomCategory');
         await DeleteModalPage.clickConfirmButton();
 
@@ -469,7 +469,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.typeInConfirmFieldName('test:field');
         await DeleteModalPage.clickConfirmButton();
 
@@ -539,7 +539,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickConvertFieldDataButton(0);
-        await ConvertFieldDataModalPage.clickConvertAllSwitch();
+        await ConvertFieldDataModalPage.clickMultipleSwitch();
         await ConvertFieldDataModalPage.clickConfirmConversionButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
@@ -590,7 +590,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.typeInConfirmFieldName('test:field');
         await DeleteModalPage.clickConfirmButton();
 
@@ -609,7 +609,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.typeInConfirmFieldName('test:field');
         await DeleteModalPage.clickConfirmButton();
 
@@ -726,13 +726,13 @@ test.describe('warnings --', () => {
 
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
         await FixOutliersModalPage.clickSelectValue('Gerät');
-        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
         expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
         await FixOutliersModalPage.clickSelectValue('Löffel');
-        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
@@ -750,12 +750,12 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteOutliersButton(0);
         expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('braun');
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.clickConfirmButton();
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
 
         expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('haselnuss');
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.clickConfirmButton();
         
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
@@ -1095,13 +1095,13 @@ test.describe('warnings --', () => {
 
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
         await FixOutliersModalPage.clickSelectValue('Gerät');
-        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
         expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
         await FixOutliersModalPage.clickSelectValue('Löffel');
-        await FixOutliersModalPage.clickReplaceAllSwitch();
+        await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
@@ -1121,12 +1121,12 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteOutliersButton(0);
         expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('braun');
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.clickConfirmButton();
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
 
         expect(await DeleteModalPage.getHeading('delete-outliers')).toContain('haselnuss');
-        await DeleteModalPage.clickDeleteAllSwitch();
+        await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());

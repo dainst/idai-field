@@ -2,10 +2,7 @@
 @import 'taskbar-sync-status';
 @import 'warnings/taskbar-warnings';
 @import 'warnings/warnings-modal';
-@import 'warnings/modals/delete-modals';
-@import 'warnings/modals/clean-up-relation-modal';
-@import 'warnings/modals/fix-outliers-modal';
-@import 'warnings/modals/convert-field-data-modal';
+@import 'warnings/modals/warnings-tool-modals';
 
 .taskbar {
   margin-top: 2px;

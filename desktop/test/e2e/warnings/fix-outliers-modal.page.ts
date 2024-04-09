@@ -14,9 +14,9 @@ export class FixOutliersModalPage {
     }
 
 
-    public static clickReplaceAllSwitch() {
+    public static clickMultipleSwitch() {
 
-        return click('#replace-all-switch .switch');
+        return click('#multiple-switch .switch');
     }
 
 

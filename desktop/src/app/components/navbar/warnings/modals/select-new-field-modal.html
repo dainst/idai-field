@@ -2,11 +2,11 @@
     <h5 class="modal-title" i18n="@@navbar.taskbar.selectNewField.header">Neues Feld auswählen</h5>
 </div>
 
-<div id="select-new-field-modal-body" class="modal-body">
-    <span i18n="@@navbar.taskbar.selectNewField.confirmation">
+<div id="select-new-field-modal-body" class="modal-body warnings-tool-modal-body">
+    <div class="warnings-tool-info" i18n="@@navbar.taskbar.selectNewField.confirmation">
         Bitte wählen Sie das Feld aus, in das die im Feld <span [innerHTML]="getFieldLabelHTML(fieldName)"></span>
         eingetragenen Daten übertragen werden sollen.
-    </span>
+    </div>
 
     <select (change)="selectedFieldName = $event.target.value"
             class="form-control">

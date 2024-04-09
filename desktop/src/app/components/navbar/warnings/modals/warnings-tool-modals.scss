@@ -1,0 +1,34 @@
+.warnings-tool-modal-body {
+  span,
+  div {
+    user-select: none;
+  }
+
+  .warnings-tool-info {
+    margin-bottom: 5px;
+  }
+
+  #multiple-switch {
+    margin-top: 15px;
+
+    &:last-child {
+      height: 24px;
+    }
+  }
+
+  input {
+    margin-top: 10px;
+  }
+
+  span {
+    user-select: none;
+  }
+
+  b {
+    font-weight: 600;
+  }
+
+  .alert-warning {
+    margin-bottom: 0;
+  }
+}

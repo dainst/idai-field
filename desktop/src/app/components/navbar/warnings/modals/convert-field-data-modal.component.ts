@@ -42,9 +42,7 @@ export class ConvertFieldDataModalComponent {
     }
 
 
-
     public async performConversion() {
-
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
         

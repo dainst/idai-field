@@ -71,12 +71,18 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     project_doc = Publications.Data.get_document("project", current_publication)
 
+    publication_comments =
+      current_publication.comments
+      |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
+      |> Enum.into(%{})
+
     {
       :noreply,
       socket
       |> assign(:doc, project_doc)
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
+      |> assign(:publication_comments, publication_comments)
       |> assign(:uuid, "")
     }
   end

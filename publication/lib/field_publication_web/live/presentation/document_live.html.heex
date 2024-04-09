@@ -53,10 +53,7 @@
       ProjectDocument.render(%{
         project_name: @project_name,
         publication_date: @publication.publication_date,
-        publication_comments:
-          @publication.comments
-          |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
-          |> Enum.into(%{}),
+        publication_comments: @publication_comments,
         doc: @doc,
         publication: @publication,
         lang: @selected_lang

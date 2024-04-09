@@ -45,6 +45,8 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
               <% end %>
             </div>
           <% end %>
+
+        <div class="basis-1/3 m-5">
           <% map_layers = Data.get_relation_by_name(@doc, "hasMapLayer") %>
           <%= if map_layers do %>
             <.live_component
@@ -98,25 +100,33 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
                 type={bibliographic_references["type"]}
               />
             <% end %>
+
+            <% contact_mail = Data.get_field(@doc, "contactMail") %>
+            <% contact_person = Data.get_field(@doc, "contactPerson") %>
+            <%= if contact_mail do %>
+              <dt class="font-bold"><I18n.text values={contact_person["labels"]} lang={@lang} /></dt>
+              <dd class="ml-4">
+                <a href={"mailto:#{contact_mail["values"]}"}>
+                  <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
+                  <%= if contact_person do %>
+                    <%= contact_person["values"] %>
+                  <% else %>
+                    <%= gettext("contact_email") %>
+                  <% end %>
+                </a>
+              </dd>
+            <% end %>
+
+            <% url = Data.get_field_values(@doc, "projectURI") %>
+            <%= if url do %>
+              <dt class="font-bold"><%= gettext("further_links") %></dt>
+              <dd class="ml-4">
+                <a href={url}>
+                  <.icon name="hero-link" class="h-6 w-6 mr-1" /><%= gettext("project_home_page") %>
+                </a>
+              </dd>
+            <% end %>
           </dl>
-
-          <% contact_mail = Data.get_field_values(@doc, "contactMail") %>
-          <%= if contact_mail do %>
-            <div class="mt-2">
-              <a href={"mailto:#{contact_mail}"}>
-                <.icon name="hero-envelope" class="h-6 w-6 mr-1" /><%= gettext("contact") %>
-              </a>
-            </div>
-          <% end %>
-
-          <% url = Data.get_field_values(@doc, "projectURI") %>
-          <%= if url do %>
-            <div class="mt-2">
-              <a href={url}>
-                <.icon name="hero-link" class="h-6 w-6 mr-1" /><%= gettext("project_home_page") %>
-              </a>
-            </div>
-          <% end %>
         </div>
       </div>
     </div>

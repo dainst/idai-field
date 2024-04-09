@@ -24,7 +24,7 @@
     <% else %>
       <.publication_list :let={publication} entries={@publications} date={@today}>
         <.link
-          class="inline-flex items-center"
+          class="inline-flex items-center text-black"
           navigate={~p"/edit/#{@project.name}/publication/#{publication.draft_date}"}
         >
           <svg

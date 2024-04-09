@@ -59,7 +59,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
             />
           <% end %>
           <dl>
-            <% institution = Data.get_field(@doc, "institution") |> IO.inspect() %>
+            <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
               <GenericField.render
                 values={institution["values"]}

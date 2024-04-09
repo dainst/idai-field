@@ -240,7 +240,7 @@ function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
 
 function replaceValuelistIdWithValuelist(field: TransientFieldDefinition, valuelists: Map<Valuelist>) {
 
-    if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType)) {
+    if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType as Field.InputType)) {
         delete field.valuelist;
         delete field.valuelistId;
         return;

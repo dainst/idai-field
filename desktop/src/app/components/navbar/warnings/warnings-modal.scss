@@ -64,6 +64,10 @@
         .card-block {
           font-size: 15px !important;
         }
+        
+        .card-block {
+          padding-bottom: 0 !important;
+        }
 
         .card-header {
           padding-top: 6px;
@@ -101,6 +105,7 @@
         button {
           height: 34px;
           margin-right: 10px;
+          margin-bottom: 10px;
           padding: 0 14px 0 10px;
 
           .button-label {

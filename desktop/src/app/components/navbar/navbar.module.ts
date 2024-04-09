@@ -17,6 +17,7 @@ import { FixOutliersModalComponent } from './warnings/modals/fix-outliers-modal.
 import { FixingDataInProgressModalComponent } from './warnings/modals/fixing-data-in-progress-modal.component';
 import { DeleteOutliersModalComponent } from './warnings/modals/delete-outliers-modal.component';
 import { ConvertFieldDataModalComponent } from './warnings/modals/convert-field-data-modal.component';
+import { SelectNewFieldModalComponent } from './warnings/modals/select-new-field-modal.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ConvertFieldDataModalComponent } from './warnings/modals/convert-field-
         FixOutliersModalComponent,
         FixingDataInProgressModalComponent,
         DeleteOutliersModalComponent,
+        SelectNewFieldModalComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent

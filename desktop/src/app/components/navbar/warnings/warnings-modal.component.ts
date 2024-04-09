@@ -23,6 +23,7 @@ import { DeleteResourceModalComponent } from './modals/delete-resource-modal.com
 import { FixOutliersModalComponent } from './modals/fix-outliers-modal.component';
 import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.component';
 import { ConvertFieldDataModalComponent } from './modals/convert-field-data-modal.component';
+import { SelectNewFieldModalComponent } from './modals/select-new-field-modal.component';
 
 
 type WarningSection = {
@@ -146,6 +147,9 @@ export class WarningsModalComponent {
 
     public isConvertible(section: WarningSection): boolean {
 
+        const fieldData: any = this.selectedDocument.resource[section.fieldName];
+        if (fieldData === undefined) return false;
+
         return InvalidDataUtil.isConvertible(
             this.selectedDocument.resource[section.fieldName],
             section.inputType
@@ -263,6 +267,30 @@ export class WarningsModalComponent {
         componentInstance.category = section.category;
         componentInstance.inputType = section.inputType;
         componentInstance.inputTypeLabel = this.getInputTypeLabel(section);
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openSelectNewFieldModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<SelectNewFieldModalComponent>(
+            SelectNewFieldModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.fieldName = section.fieldName;
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
+        componentInstance.category = section.category;
+        componentInstance.warningType = section.type;
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
@@ -496,7 +524,7 @@ export class WarningsModalComponent {
             settings.selectedProject,
             settings.username
         );
-        componentInstance.initialize();
+        await componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
     }

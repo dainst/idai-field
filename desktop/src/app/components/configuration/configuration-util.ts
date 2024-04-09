@@ -4,7 +4,7 @@ import { validateReferences } from './validation/validate-references';
 
 
 export type InputType = {
-    name: string;
+    name: Field.InputType;
     searchable?: boolean;
     customFields?: boolean;
 };

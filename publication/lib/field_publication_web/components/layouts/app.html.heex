@@ -8,12 +8,9 @@
         Field Publication v<%= Application.spec(:field_publication, :vsn) %>
       </p>
     </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
+    <div class="flex items-center gap-4 font-semibold leading-6">
       <%= if @current_user do %>
-        <.link
-          href="/edit"
-          class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-        >
+        <.link href="/edit" class="text-[0.8125rem] leading-6 font-semibold ">
           Publishing
         </.link>
 
@@ -22,32 +19,31 @@
             <.link
               href={~p"/admin/users"}
               method="get"
-              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+              class="text-[0.8125rem] leading-6 font-semibold "
             >
               Users
             </.link>
           </a>
         <% end %>
-        <%= @current_user %>
         <a>
           <.link
             href={~p"/log_out"}
             method="delete"
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            class="text-[0.8125rem] leading-6 font-semibold"
           >
             Log out
           </.link>
         </a>
       <% else %>
         <a>
-          <.link
-            href={~p"/log_in"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
+          <.link href={~p"/log_in"} class="text-[0.8125rem] leading-6 font-semibold">
             Log in
           </.link>
         </a>
       <% end %>
+      <span class="text-[0.8125rem] leading-6">
+        <%= @current_user %>
+      </span>
       <div>
         <form action={~p"/select_locale"} id="locale_form">
           <.icon name="hero-globe-alt" class="h-6 w-6 mr-1" />

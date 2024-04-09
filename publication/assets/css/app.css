@@ -22,128 +22,128 @@
 }
 
 /* This file is for your main application CSS */
-.markdown {
+/* .markdown { */
 
-    body {
-        margin: 0;
-        font-family: var(--font-body);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background-color: var(--main-bg-color);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: var(--font-headings);
-    }
-
-    h1 {
-        font-size: 1.5rem;
-        /* 24px */
-        line-height: 2rem;
-        /* 32px */
-
-        margin-bottom: 1.5rem;
-    }
-
-    h2 {
-        margin-top: 1.5rem;
-        font-size: 1.25rem;
-        /* 20px */
-        line-height: 1.75rem;
-        /* 28px */
-        margin-bottom: 1rem;
-    }
-
-    h3 {
-        font-size: 1.125rem;
-        /* 18px */
-        line-height: 1.75rem;
-        /* 28px */
-        margin-top: 1rem;
-        margin-bottom: 0.75rem;
-    }
-
-    ul {
-        list-style-type: disc;
-        margin-left: 2rem;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-
-    code {
-        font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-    }
-
-    a {
-        color: var(--main-link-color);
-    }
-
-    a:hover {
-        color: var(--main-link-color-hover);
-        text-decoration: none;
-    }
-
-    .card {
-        border-radius: 0;
-        border: 0;
-        margin: 15px 0;
-        flex: 0 0 auto;
-    }
-
-    .card-header {
-        background-color: var(--secondary-bg-color);
-        border-bottom: 4px dotted var(--main-bg-color);
-    }
-
-    .card-header h1,
-    .card-header h2,
-    .card-header h3,
-    .card-header h4,
-    .card-header h5,
-    .card-header h6 {
-        margin: .5rem 0;
-    }
-
-    .navbar-brand {
-        font-family: var(--font-headings);
-    }
-
-    .navbar-dark .navbar-nav .nav-link a {
-        color: rgba(255, 255, 255, .5);
-    }
-
-    .navbar-dark .navbar-nav .nav-link a:focus,
-    .navbar-dark .navbar-nav .nav-link a:hover {
-        color: rgba(255, 255, 255, .75);
-    }
-
-    .navbar-dark .btn-link {
-        color: rgb(255, 255, 255);
-        padding: 1px 6px;
-        line-height: 1;
-        border: 0;
-        vertical-align: baseline;
-    }
-
-    .navbar-dark .btn-link:focus,
-    .navbar-dark .btn-link:hover {
-        text-decoration: none;
-        color: rgba(255, 255, 255, 1) !important;
-    }
-
-    .form-control {
-        border-radius: 0;
-    }
-
-    input.form-control:focus[type=text] {
-        box-shadow: none;
-    }
-
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--main-bg-color);
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-headings);
+}
+
+h1 {
+    font-size: 1.5rem;
+    /* 24px */
+    line-height: 2rem;
+    /* 32px */
+
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+    /* 20px */
+    line-height: 1.75rem;
+    /* 28px */
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.125rem;
+    /* 18px */
+    line-height: 1.75rem;
+    /* 28px */
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+a {
+    color: var(--main-link-color);
+}
+
+a:hover {
+    color: var(--main-link-color-hover);
+    text-decoration: none;
+}
+
+.card {
+    border-radius: 0;
+    border: 0;
+    margin: 15px 0;
+    flex: 0 0 auto;
+}
+
+.card-header {
+    background-color: var(--secondary-bg-color);
+    border-bottom: 4px dotted var(--main-bg-color);
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3,
+.card-header h4,
+.card-header h5,
+.card-header h6 {
+    margin: .5rem 0;
+}
+
+.navbar-brand {
+    font-family: var(--font-headings);
+}
+
+.navbar-dark .navbar-nav .nav-link a {
+    color: rgba(255, 255, 255, .5);
+}
+
+.navbar-dark .navbar-nav .nav-link a:focus,
+.navbar-dark .navbar-nav .nav-link a:hover {
+    color: rgba(255, 255, 255, .75);
+}
+
+.navbar-dark .btn-link {
+    color: rgb(255, 255, 255);
+    padding: 1px 6px;
+    line-height: 1;
+    border: 0;
+    vertical-align: baseline;
+}
+
+.navbar-dark .btn-link:focus,
+.navbar-dark .btn-link:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1) !important;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+input.form-control:focus[type=text] {
+    box-shadow: none;
+}
+
+/* } */
 
 /* TODO: Rest of markdown */

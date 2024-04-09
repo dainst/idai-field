@@ -73,21 +73,21 @@
                 </td>
                 <td class="text-center">
                   <%= if @web_images_processing? do %>
-                    <button
+                    <.link
                       class="font-semibold font-mono"
                       type="button"
                       phx-click="stop_web_images_processing"
                     >
                       Stop
-                    </button>
+                    </.link>
                   <% else %>
-                    <button
+                    <.link
                       class="font-semibold font-mono"
                       type="button"
                       phx-click="start_web_images_processing"
                     >
                       Start
-                    </button>
+                    </.link>
                   <% end %>
                 </td>
               </tr>

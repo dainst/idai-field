@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id={@id} url={@url} style={"height:#{@height}"} phx-hook="IIIFViewer"></div>
+    <div id={@id} url={@url} style={"height:#{@height}"} class="shadow" phx-hook="IIIFViewer"></div>
     """
   end
 

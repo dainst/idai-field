@@ -45,6 +45,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
               <% end %>
             </div>
           <% end %>
+        </div>
 
         <div class="basis-1/3 m-5">
           <% map_layers = Data.get_relation_by_name(@doc, "hasMapLayer") %>
@@ -52,16 +53,13 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
             <.live_component
               module={FieldPublicationWeb.Presentation.Components.ProjectMap}
               id="project_map"
-              style="width:100%; height:75vh;"
+              style="width:100%; height:300px;"
               layers={Map.get(map_layers, "values", [])}
               publication={@publication}
             />
           <% end %>
-        </div>
-
-        <div class="basis-1/3 m-5">
           <dl>
-            <% institution = Data.get_field(@doc, "institution") %>
+            <% institution = Data.get_field(@doc, "institution") |> IO.inspect() %>
             <%= if institution do %>
               <GenericField.render
                 values={institution["values"]}

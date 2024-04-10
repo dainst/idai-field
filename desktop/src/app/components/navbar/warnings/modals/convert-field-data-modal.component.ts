@@ -42,6 +42,14 @@ export class ConvertFieldDataModalComponent {
     }
 
 
+    public getFieldLabelHTML(): string {
+
+        return this.fieldLabel
+            ? '<span><b>' + this.fieldLabel + '</b> (<code>' + this.fieldName + '</code>)</span>'
+            : '<code>' + this.fieldName + '</code>';
+    }
+
+
     public async performConversion() {
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();

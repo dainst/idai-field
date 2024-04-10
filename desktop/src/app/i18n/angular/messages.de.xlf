@@ -485,6 +485,22 @@
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.value.single" datatype="html">
+        <source>Wert wird gelöscht...</source>
+        <target state="final">Wert wird gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.deletionInProgressModal.info.value.multiple" datatype="html">
+        <source>Werte werden gelöscht...</source>
+        <target state="final">Werte werden gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
         <source>Datensätze werden eingelesen...</source>
         <target state="final">Datensätze werden eingelesen...</target>
@@ -1186,7 +1202,7 @@
         <target state="final"> Feldbezeichnung </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">117</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.component.ts</context>
@@ -1198,7 +1214,7 @@
         <target state="final"> Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> erstellen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.showField" datatype="html">
@@ -1905,6 +1921,14 @@
           <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.forms.composite.outliers.tooltip" datatype="html">
+        <source>Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind.</source>
+        <target state="final">Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
+          <context context-type="linenumber">84,95</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.oneLinkedImage" datatype="html">
         <source>Ein verknüpftes Bild</source>
         <target state="final">Ein verknüpftes Bild</target>
@@ -2014,7 +2038,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">145</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.component.ts</context>
@@ -2157,95 +2181,143 @@
         <source>Relation bereinigen?</source>
         <target state="final">Relation bereinigen?</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/clean-up-relation-modal.component.ts</context>
-          <context context-type="linenumber">41,50</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.component.ts</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.withLabel" datatype="html">
-        <source> Möchten Sie die Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{relationLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{relationName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>) wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
-        <target state="final"> Möchten Sie die Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{relationLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{relationName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>) wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </target>
+      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation" datatype="html">
+        <source> Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
+        <target state="final"> Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/clean-up-relation-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.component.ts</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.withoutLabel" datatype="html">
-        <source> Möchten Sie die Relation <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{relationName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
-        <target state="final"> Möchten Sie die Relation <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{relationName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </target>
+      <trans-unit id="navbar.taskbar.convertFieldData.header" datatype="html">
+        <source>Felddaten konvertieren?</source>
+        <target state="final">Felddaten konvertieren?</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/clean-up-relation-modal.html</context>
-          <context context-type="linenumber">28,13</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.component.ts</context>
+          <context context-type="linenumber">45,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.convertFieldData.info" datatype="html">
+        <source> Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> entsprechen. </source>
+        <target state="final"> Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> entsprechen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.component.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.convertFieldData.all" datatype="html">
+        <source>In allen Ressourcen dieser Kategorie konvertieren</source>
+        <target state="final">In allen Ressourcen dieser Kategorie konvertieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
+          <context context-type="linenumber">26,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.convertFieldData.all.info" datatype="html">
+        <source> Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> konvertiert (falls möglich). </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> konvertiert (falls möglich). </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
+          <context context-type="linenumber">43,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.header" datatype="html">
         <source>Felddaten löschen?</source>
         <target state="final">Felddaten löschen?</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteFieldData.confirmation" datatype="html">
+        <source> Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten wirklich löschen? </source>
+        <target state="final"> Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten wirklich löschen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.component.ts</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie löschen</source>
         <target state="final">Bei allen Ressourcen dieser Kategorie löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.deleteFieldData.confirmation.withLabel" datatype="html">
-        <source> Möchten Sie die im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{fieldLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>) eingetragenen Daten wirklich löschen? </source>
-        <target state="final"> Möchten Sie die im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{fieldLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>) eingetragenen Daten wirklich löschen? </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
-          <context context-type="linenumber">104</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.deleteFieldData.confirmation.withoutLabel" datatype="html">
-        <source> Möchten Sie die im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> eingetragenen Daten wirklich löschen? </source>
-        <target state="final"> Möchten Sie die im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> eingetragenen Daten wirklich löschen? </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
-          <context context-type="linenumber">28,11</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.confirmInfo" datatype="html">
         <source> Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen. </source>
         <target state="final"> Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
-          <context context-type="linenumber">28,35</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> gelöscht. Gültige Daten bleiben erhalten. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
-          <context context-type="linenumber">56,36</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.unconfigured" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> gelöscht. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{fieldName}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> gelöscht. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
-          <context context-type="linenumber">63,30</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteOutliers.header" datatype="html">
+        <source> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen </source>
+        <target state="final"> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteOutliers.confirmation" datatype="html">
+        <source> Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </source>
+        <target state="final"> Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">27,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteOutliers.all" datatype="html">
+        <source>Alle Vorkommnisse dieses Werts löschen</source>
+        <target state="final">Alle Vorkommnisse dieses Werts löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">28,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteOutliers.all.info" datatype="html">
+        <source> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen gelöscht. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen gelöscht. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">44,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.header" datatype="html">
         <source>Ressource löschen?</source>
         <target state="final">Ressource löschen?</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
-          <context context-type="linenumber">45,57</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.component.ts</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.confirmation" datatype="html">
         <source> Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </source>
         <target state="final"> Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.component.ts</context>
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
@@ -2253,24 +2325,112 @@
         <source>Alle Ressourcen dieser Kategorie löschen</source>
         <target state="final">Alle Ressourcen dieser Kategorie löschen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
-          <context context-type="linenumber">24,32</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.confirmInfo" datatype="html">
         <source> Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen. </source>
         <target state="final"> Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
-          <context context-type="linenumber">45,52</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.info" datatype="html">
         <source> Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gelöscht. </source>
         <target state="final"> Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gelöscht. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
-          <context context-type="linenumber">52,26</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.fixOutliers.header" datatype="html">
+        <source> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> korrigieren </source>
+        <target state="final"> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> korrigieren </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.component.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.fixOutliers.info" datatype="html">
+        <source> Bitte wählen Sie den korrekten Wert aus der Werteliste aus. </source>
+        <target state="final"> Bitte wählen Sie den korrekten Wert aus der Werteliste aus. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.fixOutliers.all" datatype="html">
+        <source>Alle Vorkommnisse dieses Werts ersetzen</source>
+        <target state="final">Alle Vorkommnisse dieses Werts ersetzen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.fixOutliers.all.info" datatype="html">
+        <source> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{getValueLabel(selectedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ersetzt. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{getValueLabel(selectedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ersetzt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">50,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.fixingDataInProgress.single" datatype="html">
+        <source>Ressource wird angepasst...</source>
+        <target state="final">Ressource wird angepasst...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fixing-data-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.fixingDataInProgress.multiple" datatype="html">
+        <source>Ressourcen werden angepasst...</source>
+        <target state="final">Ressourcen werden angepasst...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fixing-data-in-progress-modal.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewField.header" datatype="html">
+        <source>Neues Feld auswählen</source>
+        <target state="final">Neues Feld auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.component.ts</context>
+          <context context-type="linenumber">39,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewField.confirmation" datatype="html">
+        <source> Bitte wählen Sie das Feld aus, in das die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten übertragen werden sollen. </source>
+        <target state="final"> Bitte wählen Sie das Feld aus, in das die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten übertragen werden sollen. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.component.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewField.all" datatype="html">
+        <source>Bei allen Ressourcen dieser Kategorie durchführen</source>
+        <target state="final">Bei allen Ressourcen dieser Kategorie durchführen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
+          <context context-type="linenumber">59,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewField.multiple.info.invalid" datatype="html">
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. Gültige Daten verbleiben im ursprünglichen Feld. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. Gültige Daten verbleiben im ursprünglichen Feld. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
+          <context context-type="linenumber">66,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewField.multiple.info.unconfigured" datatype="html">
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
+          <context context-type="linenumber">66,38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.header" datatype="html">
@@ -2278,7 +2438,7 @@
         <target state="final">Warnungen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredCategory" datatype="html">
@@ -2286,7 +2446,7 @@
         <target state="final"> Unkonfigurierte Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredField" datatype="html">
@@ -2294,7 +2454,7 @@
         <target state="final"> Unkonfiguriertes Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">57,50</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidField" datatype="html">
@@ -2398,7 +2558,7 @@
         <target state="final"> Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.outlierValues.single" datatype="html">
@@ -2510,7 +2670,7 @@
         <target state="final">Leer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">202,207</context>
+          <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.cancelModal.header" datatype="html">
@@ -3983,11 +4143,43 @@
         <target state="final">Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">229</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.convertFieldData" datatype="html">
+        <source>Felddaten konvertieren</source>
+        <target state="final">Felddaten konvertieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">242,248</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.selectNewField" datatype="html">
+        <source>Neues Feld auswählen</source>
+        <target state="final">Neues Feld auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">257,261</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.fixValues.single" datatype="html">
+        <source>Wert korrigieren</source>
+        <target state="final">Wert korrigieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">261</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.fixValues.multiple" datatype="html">
+        <source>Werte korrigieren</source>
+        <target state="final">Werte korrigieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteResource" datatype="html">
@@ -3995,7 +4187,7 @@
         <target state="final">Ressource löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteFieldData" datatype="html">
@@ -4003,7 +4195,7 @@
         <target state="final">Felddaten löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.cleanUpRelaton" datatype="html">
@@ -4011,7 +4203,23 @@
         <target state="final">Relation bereinigen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">261</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.deleteValues.single" datatype="html">
+        <source>Wert löschen</source>
+        <target state="final">Wert löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">261</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.deleteValues.multiple" datatype="html">
+        <source>Werte löschen</source>
+        <target state="final">Werte löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
@@ -7945,16 +8153,32 @@
           <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/clean-up-relation-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
           <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
@@ -8377,16 +8601,32 @@
           <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/clean-up-relation-modal.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>

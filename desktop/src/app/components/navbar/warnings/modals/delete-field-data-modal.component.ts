@@ -42,6 +42,14 @@ export class DeleteFieldDataModalComponent {
     }
 
 
+    public getFieldLabelHTML(): string {
+
+        return this.fieldLabel
+            ? '<span><b>' + this.fieldLabel + '</b> (<code>' + this.fieldName + '</code>)</span>'
+            : '<code>' + this.fieldName + '</code>';
+    }
+
+
     public isDeletionAllowed(): boolean {
 
         return !this.deleteAll

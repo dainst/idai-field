@@ -3,12 +3,9 @@
 </div>
 
 <div id="delete-field-data-modal-body" class="modal-body warnings-tool-modal-body">
-    <span *ngIf="fieldLabel" i18n="@@navbar.taskbar.deleteFieldData.confirmation.withLabel">
-        Möchten Sie die im Feld <b>{{fieldLabel}}</b> (<code>{{fieldName}}</code>) eingetragenen
+    <span i18n="@@navbar.taskbar.deleteFieldData.confirmation">
+        Möchten Sie die im Feld <span [innerHTML]="getFieldLabelHTML()"></span> eingetragenen
         Daten wirklich löschen?
-    </span>
-    <span *ngIf="!fieldLabel" i18n="@@navbar.taskbar.deleteFieldData.confirmation.withoutLabel">
-        Möchten Sie die im Feld <code>{{fieldName}}</code> eingetragenen Daten wirklich löschen?
     </span>
 
     <div id="multiple-switch" class="row">
@@ -28,13 +25,13 @@
              i18n="@@navbar.taskbar.deleteFieldData.all.info.unconfigured">
             Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche eingetragenen Daten im
-            Feld <code>{{fieldName}}</code> gelöscht.
+            Feld <span [innerHTML]="getFieldLabelHTML()"></span> gelöscht.
         </div>
         <div *ngIf="warningType === 'invalidFields'" class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.deleteFieldData.all.info.invalid">
             Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche ungültigen Daten im
-            Feld <code>{{fieldName}}</code> gelöscht. Gültige Daten bleiben erhalten.
+            Feld <span [innerHTML]="getFieldLabelHTML()"></span> gelöscht. Gültige Daten bleiben erhalten.
         </div>
         <span i18n="@@navbar.taskbar.deleteFieldData.all.confirmInfo">
             Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.

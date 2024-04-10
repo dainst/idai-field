@@ -34,6 +34,14 @@ export class CleanUpRelationModalComponent {
     }
 
 
+    public getRelationLabelHTML(): string {
+
+        return this.relationLabel
+            ? '<span><b>' + this.relationLabel + '</b> (<code>' + this.relationName + '</code>)</span>'
+            : '<code>' + this.relationName + '</code>';
+    }
+
+
     public async cleanUp() {
 
         const relations = this.document.resource.relations

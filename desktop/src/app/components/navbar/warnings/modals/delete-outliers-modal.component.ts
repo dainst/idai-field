@@ -39,6 +39,14 @@ export class DeleteOutliersModalComponent {
     }
 
 
+    public getFieldLabelHTML(): string {
+
+        return this.fieldLabel
+            ? '<span><b>' + this.fieldLabel + '</b> (<code>' + this.field.name + '</code>)</span>'
+            : '<code>' + this.field.name + '</code>';
+    }
+
+
     public async performDeletion() {
 
         const deletionInProgressModal: NgbModalRef = this.openDeletionInProgressModal();

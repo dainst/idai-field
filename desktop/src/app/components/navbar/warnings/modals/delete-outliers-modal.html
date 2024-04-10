@@ -6,7 +6,7 @@
 
 <div id="delete-outliers-modal-body" class="modal-body warnings-tool-modal-body">
     <div class="warnings-tool-info" i18n="@@navbar.taskbar.deleteOutliers.confirmation">
-        Möchten Sie den im Feld <b>{{fieldLabel}}</b> (<code>{{field.name}}</code>) eingetragenen
+        Möchten Sie den im Feld <span [innerHTML]="getFieldLabelHTML()"></span> eingetragenen
         Wert <b>{{outlierValue}}</b> wirklich löschen?
     </div>
 

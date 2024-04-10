@@ -4,7 +4,7 @@
 
 <div id="convert-field-data-modal-body" class="modal-body warnings-tool-modal-body">
     <span i18n="@@navbar.taskbar.convertFieldData.info">
-        Die im Feld <b>{{fieldLabel}}</b> (<code>{{fieldName}}</code>) eingetragenen Daten können automatisch
+        Die im Feld <span [innerHTML]="getFieldLabelHTML()"></span> eingetragenen Daten können automatisch
         konvertiert werden, so dass sie dem Eingabetyp <b>{{inputTypeLabel}}</b> entsprechen.
     </span>
 
@@ -25,7 +25,7 @@
              i18n="@@navbar.taskbar.convertFieldData.all.info">
             Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> ungültige Daten im
-            Feld <code>{{fieldName}}</code> konvertiert (falls möglich).
+            Feld <span [innerHTML]="getFieldLabelHTML()"></span> konvertiert (falls möglich).
         </div>
     </div>
 </div>

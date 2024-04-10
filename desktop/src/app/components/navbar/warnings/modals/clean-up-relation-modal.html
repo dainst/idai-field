@@ -4,13 +4,8 @@
 </div>
 
 <div id="clean-up-relation-modal-body" class="modal-body warnings-tool-modal-body">
-    <span *ngIf="relationLabel" i18n="@@navbar.taskbar.cleanUpRelation.confirmation.withLabel">
-        Möchten Sie die Relation <b>{{relationLabel}}</b> (<code>{{relationName}}</code>) wirklich bereinigen?
-        Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.
-    </span>
-    <span *ngIf="!relationLabel"
-          i18n="@@navbar.taskbar.cleanUpRelation.confirmation.withoutLabel">
-        Möchten Sie die Relation <code>{{relationName}}</code> wirklich bereinigen?
+    <span i18n="@@navbar.taskbar.cleanUpRelation.confirmation">
+        Möchten Sie die Relation <span [innerHTML]="getRelationLabelHTML()"></span> wirklich bereinigen?
         Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.
     </span>
 </div>

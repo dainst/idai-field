@@ -15,7 +15,7 @@ import { AddCategoryFormModalPage } from '../configuration/add-category-form-mod
 import { FixOutliersModalPage } from './fix-outliers-modal.page';
 import { ConvertFieldDataModalPage } from './convert-field-data-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
-import { SelectNewFieldModalPage } from './select-new-field-modal.page';
+import { SelectModalPage } from './select-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -59,7 +59,6 @@ test.describe('warnings --', () => {
         for (let identifier of resourceIdentifiers) {
             await ResourcesPage.performCreateResource(identifier, 'feature-' + completeCategoryName);
         }
-        await NavbarPage.clickTab('project');
 
         await navigateTo('configuration');
         await ConfigurationPage.deleteCategory(completeCategoryName, 'Feature', true);
@@ -403,7 +402,7 @@ test.describe('warnings --', () => {
     }
 
 
-    test('solve single warning for unconfigured category via warnings modal', async () => {
+    test('solve single warning for unconfigured category via deletion in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
         await createUnconfiguredCategoryWarnings(['1', '2'], 'CustomCategory');
@@ -423,7 +422,7 @@ test.describe('warnings --', () => {
     });
 
 
-    test('solve multiple warnings for unconfigured category via warnings modal', async () => {
+    test('solve multiple warnings for unconfigured category via deletion in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
         await createUnconfiguredCategoryWarnings(['1', '2'], 'CustomCategory');
@@ -438,6 +437,54 @@ test.describe('warnings --', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+    
+    test('solve single warning for unconfigured category by selecting new category in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredCategoryWarnings(['1', '2'], 'CustomCategory');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickSelectNewCategoryButton(0);
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await SelectModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.clickSelectResource('1');
+        expect(await FieldsViewPage.getFieldName(0, 0)).toBe('Kategorie');
+        expect(await FieldsViewPage.getFieldValue(0, 0)).toBe('Erdbefund');
+    });
+
+
+    test('solve multiple warnings for unconfigured category by selecting new category in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredCategoryWarnings(['1', '2'], 'CustomCategory');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickSelectNewCategoryButton(0);
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await SelectModalPage.clickMultipleSwitch();
+        await SelectModalPage.clickConfirmButton();
+        
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await ResourcesPage.clickSelectResource('1');
+        expect(await FieldsViewPage.getFieldName(0, 0)).toBe('Kategorie');
+        expect(await FieldsViewPage.getFieldValue(0, 0)).toBe('Erdbefund');
+
+        await ResourcesPage.clickSelectResource('2');
+        expect(await FieldsViewPage.getFieldName(0, 0)).toBe('Kategorie');
+        expect(await FieldsViewPage.getFieldValue(0, 0)).toBe('Erdbefund');
     });
 
 
@@ -578,8 +625,8 @@ test.describe('warnings --', () => {
         await expectResourcesInWarningsModal(['1', '2']);
 
         await WarningsModalPage.clickSelectNewFieldButton(0);
-        await SelectNewFieldModalPage.clickSelectField('test:newField');
-        await SelectNewFieldModalPage.clickConfirmButton();
+        await SelectModalPage.clickSelectField('test:newField');
+        await SelectModalPage.clickConfirmButton();
         await waitForNotExist(await WarningsModalPage.getResource('1'));
 
         await WarningsModalPage.clickCloseButton();
@@ -606,9 +653,9 @@ test.describe('warnings --', () => {
         await expectResourcesInWarningsModal(['1', '2']);
 
         await WarningsModalPage.clickSelectNewFieldButton(0);
-        await SelectNewFieldModalPage.clickSelectField('test:newField');
-        await SelectNewFieldModalPage.clickMultipleSwitch();
-        await SelectNewFieldModalPage.clickConfirmButton();
+        await SelectModalPage.clickSelectField('test:newField');
+        await SelectModalPage.clickMultipleSwitch();
+        await SelectModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());

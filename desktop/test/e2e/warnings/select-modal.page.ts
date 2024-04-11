@@ -4,7 +4,7 @@ import { click, selectOption } from '../app';
 /**
  * @author Thomas Kleinke
  */
-export class SelectNewFieldModalPage {
+export class SelectModalPage {
 
     // click
 

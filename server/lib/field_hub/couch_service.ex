@@ -340,14 +340,14 @@ defmodule FieldHub.CouchService do
   end
 
   @doc """
-  Returns up to five last changes for the specified project.
-  If the project has less than five changes or is new, less or no change would be returned.
+  Returns up to n last changes for the specified project.
+  If the project has less than n changes or is new, less or no change would be returned.
 
   __Parameters__
   - `project_identifier` - The name of the project.
 
   ## Example
-  iex> get_last_5_changes("development")
+  iex> get_n_last_changes("project_a",1)
   [
     %{
       "changes" => [%{"rev" => "2-4f773e67d44d4bc99008713d9f9d164f"}],
@@ -388,128 +388,33 @@ defmodule FieldHub.CouchService do
       Map.has_key?(doc, "_deleted")
     end)
     |> Enum.sort_by(
-      &extract_most_recent_date/1,
-      &compare_datetimes/2
+      &extract_most_recent_change_info/1,
+      &compare_change_info/2
     )
     |> Enum.take(n)
   end
 
-  def extract_most_recent_date(change) do
-    modification_dates =
-      Map.get(change["doc"], "modified", [])
-
-    last_modified =
-      modification_dates
-      |> List.last(%{})
-      |> Map.get("date", nil)
-      |> case do
-        nil ->
-          nil
-
-        date_string ->
-          {:ok, datetime, _seconds} = DateTime.from_iso8601(date_string)
-          datetime
-      end
-
+  def extract_most_recent_change_info(%{"doc" => %{"modified" => []}} = change) do
     {:ok, creation_date, _seconds} = DateTime.from_iso8601(change["doc"]["created"]["date"])
+    user_name = change["doc"]["created"]["user"]
 
-    case {last_modified, creation_date} do
-      {nil, created} ->
-        created
-
-      {modified, _created} ->
-        modified
-    end
+    {:created, creation_date, user_name}
   end
 
-  def extract_most_recent_user(change) do
-    modification_dates =
-      Map.get(change["doc"], "modified", [])
+  def extract_most_recent_change_info(change) do
+    last_modification = List.last(change["doc"]["modified"])
 
-    last_modified =
-      modification_dates
-      |> List.last(%{})
-      |> Map.get("user", nil)
-      |> case do
-        nil ->
-          nil
+    {:ok, modification_date, _seconds} = DateTime.from_iso8601(last_modification["date"])
+    user_name = last_modification["user"]
 
-        user_name ->
-          user_name
-      end
-
-    creator = change["doc"]["created"]["user"]
-
-    case {last_modified, creator} do
-      {nil, created} ->
-        created
-
-      {modified, _created} ->
-        modified
-    end
+    {:modified, modification_date, user_name}
   end
 
-  defp compare_datetimes(a, b) do
+  defp compare_change_info({_, a, _}, {_, b, _}) do
     if DateTime.compare(a, b) == :gt do
       true
     else
       false
-    end
-  end
-
-  @doc """
-  Returns a formatted string representing the date and author of the last change in a given project.
-  If the file has been deleted the date and the author can't be identified.
-
-  __Parameters__
-  - `project_identifier` - The name of the project.
-
-  ## Example
-  iex> get_last_change_date("development")
-  "2024-02-29 (edited by anonymous)"
-  """
-  def get_last_change_date(changes_data, project_identifier) do
-    case Map.get(changes_data, "id") do
-      nil ->
-        :no_changes_found
-
-      result ->
-        HTTPoison.get!(
-          "#{base_url()}/#{project_identifier}/#{result}",
-          get_user_credentials()
-          |> headers()
-        )
-        |> case do
-          %{status_code: 200, body: body} = _ ->
-            body
-            |> Jason.decode()
-            |> case do
-              {:ok, result} ->
-                result
-                |> Map.fetch("modified")
-                |> case do
-                  {:ok, []} ->
-                    result["created"]["date"] <>
-                      " (created by " <> result["created"]["user"] <> ")"
-
-                  {:ok, time_stamp} ->
-                    ts = List.last(time_stamp)
-                    Map.get(ts, "date") <> " (edited by " <> Map.get(ts, "user") <> ")"
-                end
-            end
-
-          %{status_code: 404, body: body} = _ ->
-            body
-            |> Jason.decode()
-            |> case do
-              {:ok, reason} ->
-                Map.fetch(reason, "reason")
-                |> case do
-                  {:ok, "deleted"} -> "Unknown (the file has been deleted)"
-                  _ -> "unknown"
-                end
-            end
-        end
     end
   end
 

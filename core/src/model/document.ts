@@ -84,6 +84,7 @@ export module Document {
 
         if (!document.resource) return false;
         if (!document.resource.id && !newDocument) return false;
+        if (!document.resource.category) return false;
         if (!document.resource.relations) return false;
         if (!newDocument && !(document as Document).created) return false;
         if (!newDocument && !(document as Document).modified) return false;

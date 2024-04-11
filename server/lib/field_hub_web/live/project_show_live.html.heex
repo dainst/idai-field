@@ -64,13 +64,19 @@
                                 <tr>
                                     <td>Last changes</td>
                                     <td> 
-                                        <%= for update <- last_5_updates do %>
-                                            <div>
-                                            <%= extract_change_user(update) %> (<%= extract_change_date(update) %>)
-                                            <br />
-                                            id: <%= update["doc"]["resource"]["identifier"] %>
-                                            </div>
-                                        <% end %>
+                                        <table>
+                                            <%= for update <- last_5_updates do %> 
+                                                <%{type, date_time, user_name} = CouchService.extract_most_recent_change_info(update) %>
+                                                <tr> 
+                                                    <td>
+                                                        '<%= update["doc"]["resource"]["identifier"] %>' 
+                                                        <br />
+                                                        <%= type %> by user: <i><%= user_name %></i>
+                                                    </td>
+                                                    <td><%= Calendar.strftime(date_time, "%c") %></td>                    
+                                                </tr>
+                                            <% end %>                                            
+                                        </table>
                                     </td>
                                 </tr>
                             </section>

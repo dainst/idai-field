@@ -66,9 +66,9 @@
                                     <td> 
                                         <%= for update <- last_5_updates do %>
                                             <div>
-                                            <%= CouchService.get_last_change_date(update, @project) %>
+                                            <%= extract_change_user(update) %> (<%= extract_change_date(update) %>)
                                             <br />
-                                            id: <%= update["id"] %>
+                                            id: <%= update["doc"]["resource"]["identifier"] %>
                                             </div>
                                         <% end %>
                                     </td>

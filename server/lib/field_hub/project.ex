@@ -202,14 +202,14 @@ defmodule FieldHub.Project do
         file_statistics = evaluate_file_store(project_identifier)
 
         # changes = CouchService.get_last_change_info(project_identifier)
-        changes5 = CouchService.get_last_5_changes(project_identifier)
+        changes = CouchService.get_n_last_changes(project_identifier)
 
         db_statistics =
           db_statistics
           # |> Map.put(:last_update_seq, String.slice(Map.get(changes, "seq"), 0..27) <> "[...]")
           # |> Map.put(:last_update_id, Map.get(changes, "id"))
           # |> Map.put(:last_update_date, CouchService.get_last_change_date(changes, project_identifier))
-          |> Map.put(:last_5_updates, changes5)
+          |> Map.put(:last_5_updates, changes)
 
         %{
           name: project_identifier,

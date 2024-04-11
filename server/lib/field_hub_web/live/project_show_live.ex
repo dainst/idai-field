@@ -312,4 +312,13 @@ defmodule FieldHubWeb.ProjectShowLive do
     |> assign(:contact, contact)
     |> assign(:staff, staff)
   end
+
+  defp extract_change_user(change) do
+    CouchService.extract_most_recent_user(change)
+  end
+
+  defp extract_change_date(change) do
+    CouchService.extract_most_recent_date(change)
+    |> Calendar.strftime("%c")
+  end
 end

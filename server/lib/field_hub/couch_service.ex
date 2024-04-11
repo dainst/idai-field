@@ -374,7 +374,7 @@ defmodule FieldHub.CouchService do
   ]
 
   """
-  def get_last_5_changes(project_identifier) do
+  def get_n_last_changes(project_identifier, n \\ 5) do
     HTTPoison.get!(
       "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=100&include_docs=true",
       get_user_credentials()
@@ -383,27 +383,78 @@ defmodule FieldHub.CouchService do
     |> Map.get(:body)
     |> Jason.decode!()
     |> Map.get("results")
-    |> Enum.filter(fn change -> Map.get(change, "doc") end)
-    |> Enum.sort_by(fn change ->
-      modification_date =
-        case change["doc"]["modified"] do
-          %{"date" => date} -> DateTime.from_iso8601(date)
-          _ -> nil
-        end
-
-      creation_date =
-        case change["doc"]["created"]["date"] do
-          %{"date" => date} -> DateTime.from_iso8601(date)
-          _ -> nil
-        end
-
-      case {modification_date, creation_date} do
-        {nil, nil} -> nil
-        {nil, created} -> created
-        {modified, created} -> max(modified, created)
-      end
+    |> Enum.reject(fn change ->
+      doc = change["doc"]
+      Map.has_key?(doc, "_deleted")
     end)
-    |> Enum.take(5)
+    |> Enum.sort_by(
+      &extract_most_recent_date/1,
+      &compare_datetimes/2
+    )
+    |> Enum.take(n)
+  end
+
+  def extract_most_recent_date(change) do
+    modification_dates =
+      Map.get(change["doc"], "modified", [])
+
+    last_modified =
+      modification_dates
+      |> List.last(%{})
+      |> Map.get("date", nil)
+      |> case do
+        nil ->
+          nil
+
+        date_string ->
+          {:ok, datetime, _seconds} = DateTime.from_iso8601(date_string)
+          datetime
+      end
+
+    {:ok, creation_date, _seconds} = DateTime.from_iso8601(change["doc"]["created"]["date"])
+
+    case {last_modified, creation_date} do
+      {nil, created} ->
+        created
+
+      {modified, _created} ->
+        modified
+    end
+  end
+
+  def extract_most_recent_user(change) do
+    modification_dates =
+      Map.get(change["doc"], "modified", [])
+
+    last_modified =
+      modification_dates
+      |> List.last(%{})
+      |> Map.get("user", nil)
+      |> case do
+        nil ->
+          nil
+
+        user_name ->
+          user_name
+      end
+
+    creator = change["doc"]["created"]["user"]
+
+    case {last_modified, creator} do
+      {nil, created} ->
+        created
+
+      {modified, _created} ->
+        modified
+    end
+  end
+
+  defp compare_datetimes(a, b) do
+    if DateTime.compare(a, b) == :gt do
+      true
+    else
+      false
+    end
   end
 
   @doc """

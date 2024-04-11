@@ -24,6 +24,7 @@ import { FixOutliersModalComponent } from './modals/fix-outliers-modal.component
 import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.component';
 import { ConvertFieldDataModalComponent } from './modals/convert-field-data-modal.component';
 import { SelectNewFieldModalComponent } from './modals/select-new-field-modal.component';
+import { SelectNewCategoryModalComponent } from './modals/select-new-category-modal.component';
 
 
 type WarningSection = {
@@ -290,6 +291,26 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openSelectNewCategoryModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<SelectNewCategoryModalComponent>(
+            SelectNewCategoryModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
         componentInstance.initialize();
 
         await this.modals.awaitResult(

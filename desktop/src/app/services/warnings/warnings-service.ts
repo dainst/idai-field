@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 import { nop } from 'tsfun';
-import { Datastore, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
+import { Datastore, FieldDocument, IndexFacade, ObserverUtil, SyncService, SyncStatus } from 'idai-field-core';
 import { WarningFilter, WarningFilters } from './warning-filters';
 import { UtilTranslations } from '../../util/util-translations';
 import { Modals } from '../modals';
@@ -17,6 +18,8 @@ export class WarningsService {
 
     public filters: Array<WarningFilter>;
     public hasConfigurationConflict: boolean = false;
+
+    private categoryChangedObservers: Array<Observer<void>> = [];
 
 
     constructor(private datastore: Datastore,
@@ -44,6 +47,13 @@ export class WarningsService {
             }
         });
     }
+
+
+    public categoryChangedNotifications = (): Observable<void> =>
+        ObserverUtil.register(this.categoryChangedObservers);
+
+
+    public reportCategoryChange = () => ObserverUtil.notify(this.categoryChangedObservers, undefined);
 
 
     public async openModal(preselectedDocument?: FieldDocument) {

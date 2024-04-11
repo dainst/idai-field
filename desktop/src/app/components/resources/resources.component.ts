@@ -20,6 +20,7 @@ import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
+import { WarningsService } from '../../services/warnings/warnings-service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class ResourcesComponent implements OnDestroy {
     private populateDocumentsSubscription: Subscription;
     private changedDocumentFromRemoteSubscription: Subscription;
     private selectViaResourceLinkSubscription: Subscription;
+    private categoryChangedSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -60,7 +62,8 @@ export class ResourcesComponent implements OnDestroy {
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
-                private storagePlaceScanner: StoragePlaceScanner) {
+                private storagePlaceScanner: StoragePlaceScanner,
+                private warningsService: WarningsService) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();
@@ -103,6 +106,7 @@ export class ResourcesComponent implements OnDestroy {
         if (this.populateDocumentsSubscription) this.populateDocumentsSubscription.unsubscribe();
         if (this.changedDocumentFromRemoteSubscription) this.changedDocumentFromRemoteSubscription.unsubscribe();
         if (this.selectViaResourceLinkSubscription) this.selectViaResourceLinkSubscription.unsubscribe();
+        if (this.categoryChangedSubscription) this.categoryChangedSubscription.unsubscribe();
     }
 
 
@@ -417,6 +421,11 @@ export class ResourcesComponent implements OnDestroy {
                 if (!this.isSelected(document as FieldDocument)) {
                     await this.select(document as FieldDocument);
                 }
+            });
+        
+        this.categoryChangedSubscription =
+            this.warningsService.categoryChangedNotifications().subscribe(async () => {
+                await this.viewFacade.populateDocumentList();
             });
     }
 

@@ -1,0 +1,20 @@
+#select-new-category-modal-body {
+  #new-category-picker-container {
+    max-height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #eee;
+
+    span:first-child .list-group-item{
+      border-top: none !important;
+    }
+
+    .abstract-category {
+      cursor: not-allowed;
+      font-style: italic;
+    }
+  
+    .abstract-category ul {
+      font-style: normal;
+    }
+  }
+}

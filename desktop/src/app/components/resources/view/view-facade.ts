@@ -21,15 +21,14 @@ export class ViewFacade {
     private ready: boolean;
 
 
-    constructor(
-        datastore: Datastore,
-        remoteChangesStream: ChangesStream,
-        private resourcesStateManager: ResourcesStateManager,
-        loading: Loading,
-        indexFacade: IndexFacade,
-        private messages: Messages,
-        private syncService: SyncService
-    ) {
+    constructor(datastore: Datastore,
+                remoteChangesStream: ChangesStream,
+                private resourcesStateManager: ResourcesStateManager,
+                loading: Loading,
+                indexFacade: IndexFacade,
+                private messages: Messages,
+                private syncService: SyncService) {
+
         this.documentsManager = new DocumentsManager(
             datastore,
             remoteChangesStream,

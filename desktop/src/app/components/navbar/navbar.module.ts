@@ -18,6 +18,7 @@ import { FixingDataInProgressModalComponent } from './warnings/modals/fixing-dat
 import { DeleteOutliersModalComponent } from './warnings/modals/delete-outliers-modal.component';
 import { ConvertFieldDataModalComponent } from './warnings/modals/convert-field-data-modal.component';
 import { SelectNewFieldModalComponent } from './warnings/modals/select-new-field-modal.component';
+import { SelectNewCategoryModalComponent } from './warnings/modals/select-new-category-modal.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { SelectNewFieldModalComponent } from './warnings/modals/select-new-field
         FixingDataInProgressModalComponent,
         DeleteOutliersModalComponent,
         SelectNewFieldModalComponent,
+        SelectNewCategoryModalComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent

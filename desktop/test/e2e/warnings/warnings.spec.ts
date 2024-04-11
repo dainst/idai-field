@@ -15,6 +15,7 @@ import { AddCategoryFormModalPage } from '../configuration/add-category-form-mod
 import { FixOutliersModalPage } from './fix-outliers-modal.page';
 import { ConvertFieldDataModalPage } from './convert-field-data-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
+import { SelectNewFieldModalPage } from './select-new-field-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -559,6 +560,66 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getConvertFieldDataButton(0));
 
         await WarningsModalPage.clickCloseButton();
+    });
+
+
+    test('solve single warning for invalid field data by selecting new field in warnings modal', async () => {
+
+        await navigateTo('configuration');
+        await createField('newField', Field.InputType.INPUT, undefined, true);
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'Text', Field.InputType.INT);
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1', '2']);
+
+        await WarningsModalPage.clickSelectNewFieldButton(0);
+        await SelectNewFieldModalPage.clickSelectField('test:newField');
+        await SelectNewFieldModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.clickSelectResource('1');
+        expect(await FieldsViewPage.getFieldName(0, 1)).toBe('test:newField');
+        expect(await FieldsViewPage.getFieldValue(0, 1)).toBe('Text');
+    });
+
+
+    test('solve multiple warnings for invalid field data by selecting new field in warnings modal', async () => {
+
+        await navigateTo('configuration');
+        await createField('newField', Field.InputType.INPUT, undefined, true);
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'Text', Field.InputType.INT);
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1', '2']);
+
+        await WarningsModalPage.clickSelectNewFieldButton(0);
+        await SelectNewFieldModalPage.clickSelectField('test:newField');
+        await SelectNewFieldModalPage.clickMultipleSwitch();
+        await SelectNewFieldModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await ResourcesPage.clickSelectResource('1');
+        expect(await FieldsViewPage.getFieldName(0, 1)).toBe('test:newField');
+        expect(await FieldsViewPage.getFieldValue(0, 1)).toBe('Text');
+
+        await ResourcesPage.clickSelectResource('2');
+        expect(await FieldsViewPage.getFieldName(0, 1)).toBe('test:newField');
+        expect(await FieldsViewPage.getFieldValue(0, 1)).toBe('Text');
     });
 
 

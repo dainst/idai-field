@@ -8,7 +8,8 @@
         eingetragenen Daten übertragen werden sollen.
     </div>
 
-    <select (change)="selectedFieldName = $event.target.value"
+    <select id="new-field-select"
+            (change)="selectedFieldName = $event.target.value"
             class="form-control">
         <option value=""></option>
         <option *ngFor="let field of availableFields"

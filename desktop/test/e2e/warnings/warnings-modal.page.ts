@@ -41,6 +41,13 @@ export class WarningsModalPage {
     }
 
 
+    public static async clickSelectNewFieldButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.select-new-field-button'));
+    }
+
+
     public static async clickDeleteFieldDataButton(sectionIndex: number) {
 
         const section = await this.getSection(sectionIndex);

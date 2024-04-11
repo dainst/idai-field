@@ -3,26 +3,70 @@ import { Document } from '../../src/model/document';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('Document', () => {
 
-    it('removeFields', () => {
+    const buildDocument = () => {
 
-        const d: Document = {
+        return {
             _id: '1',
             resource: {
                 identifier: '',
-                category: 'a',
                 id: '1',
+                category: 'a',
                 relations: {}
             },
             modified: [],
             created: { user: 'a', date: new Date() }
         };
+    }
 
-        expect(d.resource.category).not.toBeUndefined();
-        const d0 = Document.removeFields(['category'])(d);
-        expect(d0.resource.category).toBeUndefined();
+    it('detect valid documents', () => {
+
+        expect(Document.isValid(buildDocument())).toBe(true);
+
+        const document: any = buildDocument();
+        delete document.resource.id;
+        expect(Document.isValid(document, true)).toBe(true);
+    });
+
+
+    it('detect invalid documents', () => {
+
+        let document: any = buildDocument();
+        delete document.resource;
+        expect(Document.isValid(document)).toBe(false);
+
+        document = buildDocument();
+        delete document.resource.id;
+        expect(Document.isValid(document)).toBe(false);
+
+        document = buildDocument();
+        delete document.resource.category;
+        expect(Document.isValid(document)).toBe(false);
+
+        document = buildDocument();
+        delete document.resource.relations;
+        expect(Document.isValid(document)).toBe(false);
+
+        document = buildDocument();
+        delete document.modified;
+        expect(Document.isValid(document)).toBe(false);
+
+        document = buildDocument();
+        delete document.created;
+        expect(Document.isValid(document)).toBe(false);
+    });
+
+
+    it('remove fields', () => {
+
+        const document: Document = buildDocument();
+
+        expect(document.resource.category).not.toBeUndefined();
+        const document2 = Document.removeFields(['category'])(document);
+        expect(document2.resource.category).toBeUndefined();
     });
 
 

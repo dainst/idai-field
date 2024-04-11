@@ -524,7 +524,7 @@ test.describe('warnings --', () => {
 
         await WarningsModalPage.clickConvertFieldDataButton(0);
         await ConvertFieldDataModalPage.clickConfirmConversionButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
@@ -635,7 +635,7 @@ test.describe('warnings --', () => {
 
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteModalPage.clickConfirmButton();
-        await waitForExist(await WarningsModalPage.getResource('1'));
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');

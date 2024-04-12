@@ -58,6 +58,31 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
+  def render(%{type: "dimension"} = assigns) do
+    ~H"""
+    <dt class="font-bold"><I18n.text values={@labels} /></dt>
+    <%= for value <- @values do %>
+      <dd class="ml-4 mb-1">
+        <%= value["inputValue"] %> <%= value["inputUnit"] %>
+        <%= if value["isImprecise"] do %>
+          <small>(<%= Gettext.gettext(FieldPublicationWeb.Gettext, "imprecise") %>)</small>
+        <% end %>
+        <%= if Map.get(value, "measurementComment", "") != "" do %>
+          <br />
+          <%= value["measurementComment"] %>
+        <% end %>
+
+        <%= if Map.get(value, "measurementPosition", "") != "" do %>
+          <br />
+          <%= Gettext.gettext(FieldPublicationWeb.Gettext, "measurementPosition") %>: <%= value[
+            "measurementPosition"
+          ] %>
+        <% end %>
+      </dd>
+    <% end %>
+    """
+  end
+
   def render(assigns) do
     Logger.warning("Unhandled field type: #{inspect(assigns)}")
 

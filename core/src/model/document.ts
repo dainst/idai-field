@@ -4,6 +4,10 @@ import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
 import { Labels, ProjectConfiguration } from '../services';
 import { Warnings } from './warnings';
+import { CategoryForm } from './configuration/category-form';
+import { Relation } from './configuration/relation';
+import { Named } from '../tools/named';
+
 
 export type RevisionId = string;
 export type DocumentId = string;
@@ -89,6 +93,40 @@ export module Document {
         if (!newDocument && !(document as Document).created) return false;
         if (!newDocument && !(document as Document).modified) return false;
 
+        return true;
+    }
+
+
+    export async function isValidParent(document: Document, parentDocument: Document,
+                                        projectConfiguration: ProjectConfiguration): Promise<boolean> {
+        
+        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+
+        if (!Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN)
+                && (projectConfiguration.getRegularCategories().map(Named.toName).includes(document.resource.category))) {
+            return false;
+        }
+
+        if (!Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN) && category.mustLieWithin) {
+            return false;
+        }
+
+        if (!parentDocument) return true;
+
+        if (Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN) &&
+                !projectConfiguration.isAllowedRelationDomainCategory(
+                    category.name, parentDocument.resource.category, Relation.Hierarchy.RECORDEDIN
+                )) {
+            return false;
+        }
+
+        if (Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN) &&
+                !projectConfiguration.isAllowedRelationDomainCategory(
+                    category.name, parentDocument.resource.category, Relation.Hierarchy.LIESWITHIN
+                )) {
+            return false;
+        }
+    
         return true;
     }
 

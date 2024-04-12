@@ -2,6 +2,7 @@ import { WarningsUpdater } from '../../src/datastore/warnings-updater';
 import { Warnings } from '../../src/model/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
+import { CategoryForm } from '../../src/model/configuration/category-form';
 
 
 const createDocument = (id: string, category: string = 'category') =>
@@ -296,6 +297,81 @@ describe('WarningsUpdater', () => {
         expect(documents[1].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('set invalid parent warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].resource.relations['isRecordedIn'] = ['2'];
+
+        const categoryDefinition: CategoryForm = {
+            name: 'category',
+            mustLieWithin: true,
+            groups: []
+        } as CategoryForm;
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory']);
+        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+
+        await WarningsUpdater.updateInvalidParentWarning(
+            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
+        );
+
+        expect(documents[0].warnings?.invalidParent).toBe(true);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('remove invalid parent warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].resource.relations['isRecordedIn'] = ['2'];
+        documents[0].warnings = Warnings.createDefault();
+        documents[0].warnings.invalidParent = true;
+
+        const categoryDefinition: CategoryForm = {
+            name: 'category',
+            groups: []
+        } as CategoryForm;
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory']);
+        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+
+        await WarningsUpdater.updateInvalidParentWarning(
+            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
+        );
+
+        expect(documents[0].warnings).toBeUndefined();
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
         done();
     });

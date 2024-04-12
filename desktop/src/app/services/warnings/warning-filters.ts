@@ -61,6 +61,12 @@ export module WarningFilters {
                 type: 'missingRelationTargets'
             },
             {
+                label: translations.getTranslation('warnings.invalidParent'),
+                constraintName: 'invalidParent:exist',
+                count: 0,
+                type: 'invalidParent'
+            },
+            {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
                 constraintName: 'missingIdentifierPrefix:exist',
                 count: 0,

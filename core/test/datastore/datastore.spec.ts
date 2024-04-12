@@ -58,7 +58,7 @@ describe('Datastore', () => {
         mockdb.bulkFetch.and.returnValue(new Promise(resolve => resolve([])));
 
         mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
-            ['find', 'put', 'remove', 'getCount']);
+            ['find', 'put', 'remove', 'getCount', 'putToSingleIndex']);
         mockIndexFacade.find.and.callFake(() => ['1']);
         mockIndexFacade.put.and.callFake(function(document) {
             return Promise.resolve(document);

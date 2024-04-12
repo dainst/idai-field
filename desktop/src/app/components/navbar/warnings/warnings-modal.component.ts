@@ -303,7 +303,7 @@ export class WarningsModalComponent {
     }
 
 
-    public async openSelectNewCategoryModal(section: WarningSection) {
+    public async openSelectNewCategoryModal() {
 
         const [result, componentInstance] = this.modals.make<SelectNewCategoryModalComponent>(
             SelectNewCategoryModalComponent,

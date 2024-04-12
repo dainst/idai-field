@@ -63,6 +63,7 @@ export module WarningsUpdater {
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
+        await updateInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache);
         await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
             datastore, updateAll);
     }
@@ -156,6 +157,28 @@ export module WarningsUpdater {
 
         if (updateRelationTargets) {
             await updateRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.id);
+        }
+    }
+
+
+    export async function updateInvalidParentWarning(document: Document, projectConfiguration: ProjectConfiguration,
+                                                     indexFacade: IndexFacade, documentCache: DocumentCache) {
+
+        const parentDocument: Document = await Hierarchy.getParentDocument(
+            (id: string) => Promise.resolve(documentCache[id]),
+            document
+        );
+
+        const hasValidParent: boolean = await Document.isValidParent(document, parentDocument, projectConfiguration);
+
+        if (!hasValidParent) {
+            if (!document.warnings) document.warnings = Warnings.createDefault();
+            document.warnings.invalidParent = true;
+            updateIndex(indexFacade, document, ['invalidParent:exist']);
+        } else if (document.warnings?.invalidParent) {
+            delete document.warnings.invalidParent;
+            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
+            updateIndex(indexFacade, document, ['invalidParent:exist']);
         }
     }
 

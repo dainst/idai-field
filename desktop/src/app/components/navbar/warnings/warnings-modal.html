@@ -69,6 +69,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple">
                             Fehlende Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
                         </span>
+                        <span *ngIf="section.type === 'invalidParent'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidParent">
+                            Fehlende übergeordnete Ressource
+                        </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.conflict">
                             Konflikt
@@ -128,6 +132,11 @@
                             Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden.
                             Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
                             vollständig abgeschlossen.
+                        </span>
+                        <span *ngIf="section.type === 'invalidParent'"
+                              i18n="@@navbar.taskbar.warnings.info.invalidParent">
+                            Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit
+                            nicht angezeigt.
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.info.conflict">
@@ -211,7 +220,7 @@
                     </span>
                     <span *ngIf="section.type === 'unconfiguredCategory'">
                         <button class="btn btn-primary select-new-category-button"
-                                (click)="openSelectNewCategoryModal(section)">
+                                (click)="openSelectNewCategoryModal()">
                             <span class="mdi mdi-wrench"></span>
                             <span class="button-label"
                                   i18n="@@navbar.taskbar.warnings.selectNewCategory">Neue Kategorie auswählen</span>
@@ -227,7 +236,7 @@
                                   i18n="@@navbar.taskbar.warnings.fixValues.multiple">Werte korrigieren</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'unconfiguredCategory'">
+                    <span *ngIf="section.type === 'unconfiguredCategory' || section.type === 'invalidParent'">
                         <button class="btn btn-danger delete-resource-button"
                                 (click)="openDeleteResourceModal()">
                             <span class="mdi mdi-delete"></span>

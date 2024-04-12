@@ -9,7 +9,8 @@ export type WarningType = 'unconfiguredCategory'
     |'conflicts'
     |'missingIdentifierPrefix'
     |'nonUniqueIdentifier'
-    |'resourceLimitExceeded';
+    |'resourceLimitExceeded'
+    |'invalidParent';
 
 
 export interface Warnings {
@@ -23,6 +24,7 @@ export interface Warnings {
     missingIdentifierPrefix?: boolean;
     nonUniqueIdentifier?: boolean;
     resourceLimitExceeded?: boolean;
+    invalidParent?: boolean;
 }
 
 
@@ -55,7 +57,8 @@ export module Warnings {
             || warnings.conflicts
             || warnings.missingIdentifierPrefix
             || warnings.nonUniqueIdentifier
-            || warnings.resourceLimitExceeded;
+            || warnings.resourceLimitExceeded
+            || warnings.invalidParent;
     }
 
 

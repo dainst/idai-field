@@ -117,18 +117,23 @@ describe('subsystem/datastore', () => {
 
     it('update non-unique identifier warnings', async done => {
 
-        let document1 = doc('sd1', '1', 'Find', 'id1');
+        let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
         let document2 = doc('sd2', '1', 'Find', 'id2');
+        let document3 = doc('sd3', '1', 'Find', 'id3');
+
+        document2.resource.relations.isRecordedIn = ['id1'];
+        document3.resource.relations.isRecordedIn = ['id1'];
 
         document1 = await app.datastore.create(document1);
         document2 = await app.datastore.create(document2);
+        document3 = await app.datastore.create(document3);
 
-        expect(document1.warnings?.nonUniqueIdentifier).toBe(true);
         expect(document2.warnings?.nonUniqueIdentifier).toBe(true);
+        expect(document3.warnings?.nonUniqueIdentifier).toBe(true);
 
-        const clonedDocument2 = Document.clone(document2);
-        clonedDocument2.resource.identifier = '2';
-        await app.datastore.update(clonedDocument2);
+        const clonedDocument3 = Document.clone(document3);
+        clonedDocument3.resource.identifier = '2';
+        await app.datastore.update(clonedDocument3);
         
         expect(document1.warnings).toBeUndefined();
         expect(document2.warnings).toBeUndefined();

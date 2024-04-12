@@ -56,35 +56,16 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"project" => form_params}, socket) do
-    IO.inspect(form_params)
-
     changeset =
       socket.assigns.project
       |> Project.changeset(form_params)
       |> Map.put(:action, :validate)
-      |> IO.inspect()
 
     {:noreply, assign_form(socket, changeset)}
   end
 
   def handle_event("save", %{"project" => project_params}, socket) do
-    IO.inspect(project_params)
     save_project(socket, socket.assigns.action, project_params)
-  end
-
-  def handle_event("clear_editors", params, socket) do
-    IO.inspect(params)
-    IO.inspect(socket.assigns.form)
-
-    changeset =
-      socket.assigns.project
-      |> Project.changeset(%{"editors" => []})
-      |> IO.inspect()
-
-    {
-      :noreply,
-      assign_form(socket, changeset)
-    }
   end
 
   defp save_project(socket, :edit, project_params) do

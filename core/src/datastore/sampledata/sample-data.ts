@@ -372,14 +372,14 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'topLeftCoordinates': [39.1412672328, 27.1892609283],
                 'topRightCoordinates': [39.1412672328, 27.1893859555]
             },
-            "draughtsmen": [
-                "Person 1"
+            'draughtsmen': [
+                sampleDataLabels[locale]['person'] + ' 1'
             ],
-            "imageRights": {
-                "en": "© Archaeological Example Association",
-                "de": "© Archaeological Example Association",
-                "it": "© Archaeological Example Association",
-                "uk": "© Archaeological Example Association"
+            'imageRights': {
+                'en': '© Archaeological Example Association',
+                'de': '© Archaeological Example Association',
+                'it': '© Archaeological Example Association',
+                'uk': '© Archaeological Example Association'
             }
         }
     },
@@ -400,14 +400,14 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'topLeftCoordinates': [39.1413672328, 27.1893609283],
                 'topRightCoordinates': [39.1413672328, 27.1894859555]
             },
-            "draughtsmen": [
-                "Person 2"
+            'draughtsmen': [
+                sampleDataLabels[locale]['person'] + ' 2'
             ],
-            "imageRights": {
-                "en": "© Archaeological Example Association",
-                "de": "© Archaeological Example Association",
-                "it": "© Archaeological Example Association",
-                "uk": "© Archaeological Example Association"
+            'imageRights': {
+                'en': '© Archaeological Example Association',
+                'de': '© Archaeological Example Association',
+                'it': '© Archaeological Example Association',
+                'uk': '© Archaeological Example Association'
             }
         }
     },

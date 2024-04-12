@@ -22,7 +22,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
       </.document_heading>
 
       <div class="flex flex-row">
-        <div class="basis-2/3 m-5">
+        <div class="basis-2/3">
           <%= for group <- @doc["groups"] do %>
             <section>
               <.group_heading>
@@ -44,7 +44,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
             </section>
           <% end %>
         </div>
-        <div class="basis-1/3">
+        <div class="basis-1/3 ml-2">
           <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>

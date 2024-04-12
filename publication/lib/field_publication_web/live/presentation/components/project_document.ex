@@ -31,32 +31,39 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
           <div class="bg-slate-50 p-2 rounded">
             <I18n.markdown values={@publication_comments} lang={@lang} />
           </div>
+        </div>
+
+        <div class="basis-1/3 m-5">
+          <% map_layers = Data.get_relation_by_name(@doc, "hasMapLayer") %>
+          <%= if map_layers do %>
+            <div class="mb-4">
+              <.live_component
+                module={FieldPublicationWeb.Presentation.Components.ProjectMap}
+                id="project_map"
+                style="width:100%; height:300px;"
+                layers={Map.get(map_layers, "values", [])}
+                publication={@publication}
+              />
+            </div>
+          <% end %>
 
           <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>
               <I18n.text values={depicted_in["labels"]} />
             </.group_heading>
-            <div class="grid grid-cols-3 gap-1 mt-2">
-              <%= for uuid <- depicted_in["values"] do %>
-                <.link patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{uuid}"} class="p-1">
-                  <Image.show size="300," project={@project_name} uuid={uuid} />
+            <div class="overflow-x-scroll overscroll-contain flex flex-row max-w-[400px] mt-2 mb-2">
+              <%= for preview_doc <- depicted_in["values"] do %>
+                <.link
+                  patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
+                  class="p-1"
+                >
+                  <div class="w-[300px] m-2">
+                    <Image.show size="300," project={@project_name} uuid={preview_doc["id"]} />
+                  </div>
                 </.link>
               <% end %>
             </div>
-          <% end %>
-        </div>
-
-        <div class="basis-1/3 m-5">
-          <% map_layers = Data.get_relation_by_name(@doc, "hasMapLayer") %>
-          <%= if map_layers do %>
-            <.live_component
-              module={FieldPublicationWeb.Presentation.Components.ProjectMap}
-              id="project_map"
-              style="width:100%; height:300px;"
-              layers={Map.get(map_layers, "values", [])}
-              publication={@publication}
-            />
           <% end %>
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>

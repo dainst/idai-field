@@ -62,7 +62,7 @@ export class SelectNewCategoryModalComponent {
             await this.performSingle();
         }
 
-        this.warningsService.reportCategoryChange();
+        this.warningsService.reportWarningsResolved();
 
         fixingDataInProgressModal.close();
         this.activeModal.close();

@@ -19,7 +19,7 @@ export class WarningsService {
     public filters: Array<WarningFilter>;
     public hasConfigurationConflict: boolean = false;
 
-    private categoryChangedObservers: Array<Observer<void>> = [];
+    private warningsResolvedObservers: Array<Observer<void>> = [];
 
 
     constructor(private datastore: Datastore,
@@ -49,11 +49,11 @@ export class WarningsService {
     }
 
 
-    public categoryChangedNotifications = (): Observable<void> =>
-        ObserverUtil.register(this.categoryChangedObservers);
+    public warningsResolvedNotifications = (): Observable<void> =>
+        ObserverUtil.register(this.warningsResolvedObservers);
 
 
-    public reportCategoryChange = () => ObserverUtil.notify(this.categoryChangedObservers, undefined);
+    public reportWarningsResolved = () => ObserverUtil.notify(this.warningsResolvedObservers, undefined);
 
 
     public async openModal(preselectedDocument?: FieldDocument) {

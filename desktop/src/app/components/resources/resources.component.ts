@@ -45,7 +45,7 @@ export class ResourcesComponent implements OnDestroy {
     private populateDocumentsSubscription: Subscription;
     private changedDocumentFromRemoteSubscription: Subscription;
     private selectViaResourceLinkSubscription: Subscription;
-    private categoryChangedSubscription: Subscription;
+    private warningsResolvedSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -106,7 +106,7 @@ export class ResourcesComponent implements OnDestroy {
         if (this.populateDocumentsSubscription) this.populateDocumentsSubscription.unsubscribe();
         if (this.changedDocumentFromRemoteSubscription) this.changedDocumentFromRemoteSubscription.unsubscribe();
         if (this.selectViaResourceLinkSubscription) this.selectViaResourceLinkSubscription.unsubscribe();
-        if (this.categoryChangedSubscription) this.categoryChangedSubscription.unsubscribe();
+        if (this.warningsResolvedSubscription) this.warningsResolvedSubscription.unsubscribe();
     }
 
 
@@ -423,8 +423,8 @@ export class ResourcesComponent implements OnDestroy {
                 }
             });
         
-        this.categoryChangedSubscription =
-            this.warningsService.categoryChangedNotifications().subscribe(async () => {
+        this.warningsResolvedSubscription =
+            this.warningsService.warningsResolvedNotifications().subscribe(async () => {
                 await this.viewFacade.populateDocumentList();
             });
     }

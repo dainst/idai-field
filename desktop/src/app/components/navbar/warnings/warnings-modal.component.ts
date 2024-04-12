@@ -25,7 +25,8 @@ import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.com
 import { ConvertFieldDataModalComponent } from './modals/convert-field-data-modal.component';
 import { SelectNewFieldModalComponent } from './modals/select-new-field-modal.component';
 import { SelectNewCategoryModalComponent } from './modals/select-new-category-modal.component';
-import { MoveModalComponent } from '../../widgets/move-modal/move-modal.component';
+import { MoveModalComponent, MoveResult } from '../../widgets/move-modal/move-modal.component';
+import { WarningsService } from '../../../services/warnings/warnings-service';
 
 
 type WarningSection = {
@@ -72,6 +73,7 @@ export class WarningsModalComponent {
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
                 private labels: Labels,
+                private warningsService: WarningsService,
                 private i18n: I18n) {}
 
         
@@ -335,7 +337,12 @@ export class WarningsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            () => this.update(),
+            (result: MoveResult) => {
+                if (result.success) {
+                    this.warningsService.reportWarningsResolved();
+                    this.update();
+                }
+            },
             nop
         );
 

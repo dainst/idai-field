@@ -53,7 +53,7 @@ export module InvalidDataUtil {
 
     function generateValueLabel(value: any, labels: Labels): string {
 
-        if (value === undefined) {
+        if (value === undefined || value === null) {
             return '';
         } else if (isArray(value)) {
             return generateArrayLabel(value, labels);

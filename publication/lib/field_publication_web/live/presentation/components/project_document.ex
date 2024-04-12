@@ -22,13 +22,13 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
           <.header>
             <%= gettext("project_doc_about_project") %>
           </.header>
-          <div class="bg-slate-100 p-2 rounded">
+          <div class="bg-slate-50 p-2 rounded">
             <I18n.markdown values={Data.get_field_values(@doc, "description")} lang={@lang} />
           </div>
           <.header class="mt-3">
             <%= gettext("project_doc_about_publication") %>
           </.header>
-          <div class="bg-slate-100 p-2 rounded">
+          <div class="bg-slate-50 p-2 rounded">
             <I18n.markdown values={@publication_comments} lang={@lang} />
           </div>
 

@@ -87,8 +87,22 @@ defmodule FieldPublication.Publications do
     publication
   end
 
-  def get!(%Publication{project_name: project_name, draft_date: draft_date}) do
+  def get!(%Publication{project_name: project_name, draft_date: draft_date})
+      when not is_nil(draft_date) do
     get!(project_name, draft_date)
+  end
+
+  def get!(%Publication{project_name: project_name, publication_date: publication_date}) do
+    # TODO: This is not very efficient?
+
+    run_search(%{
+      selector: %{
+        doc_type: Publication.doc_type(),
+        project_name: project_name,
+        publication_date: publication_date
+      }
+    })
+    |> List.first()
   end
 
   def get_current_published(project_name) when is_binary(project_name) do

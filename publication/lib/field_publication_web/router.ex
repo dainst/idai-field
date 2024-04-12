@@ -31,6 +31,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through :api
 
     get "/raw/image/:project_name/:uuid", Raw.Image, :show
+    get "/raw/json/:project_name/:publication_date/:uuid", Raw.JSON, :show
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's

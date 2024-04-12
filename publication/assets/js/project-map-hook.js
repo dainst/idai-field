@@ -3,7 +3,7 @@ import IIIFInfo from 'ol/format/IIIFInfo.js';
 import Map from 'ol/Map.js';
 import TileLayer from 'ol/layer/Tile.js';
 import View from 'ol/View.js';
-import { createEmpty, extend } from 'ol/extent.js';
+import { createEmpty, extend, getCenter } from 'ol/extent.js';
 
 
 export default getProjectMapHook = () => {
@@ -29,37 +29,43 @@ export default getProjectMapHook = () => {
             let aggregatedExtent = createEmpty();
 
             for (let relation of relations) {
-                let currentLayer = new TileLayer()
-                let imageInfo = await (
-                    await fetch(`/api/iiif/image/iiif/3/${project}%2F${relation["resource"]["id"]}.jp2/info.json`)
-                ).json()
+                try {
+                    let currentLayer = new TileLayer()
+                    const raw = await fetch(`/api/iiif/image/iiif/3/${project}%2F${relation["resource"]["id"]}.jp2/info.json`)
+                    const imageInfo = await raw.json()
 
-                let options = new IIIFInfo(imageInfo).getTileSourceOptions();
+                    console.log(relation)
 
-                const geoReference = relation["resource"]["georeference"]
+                    let options = new IIIFInfo(imageInfo).getTileSourceOptions();
 
-                options.extent = [
-                    geoReference.bottomLeftCoordinates[1],
-                    geoReference.bottomLeftCoordinates[0],
-                    geoReference.topRightCoordinates[1],
-                    geoReference.topRightCoordinates[0]
-                ];
+                    const geoReference = relation["resource"]["georeference"]
 
-                console.log(options)
+                    options.extent = [
+                        geoReference.bottomLeftCoordinates[1],
+                        geoReference.bottomLeftCoordinates[0],
+                        geoReference.topRightCoordinates[1],
+                        geoReference.topRightCoordinates[0]
+                    ];
 
-                const source = new IIIF(options)
+                    const source = new IIIF(options)
 
-                currentLayer.setSource(source);
-                this.map.addLayer(currentLayer);
+                    currentLayer.setSource(source);
+                    this.map.addLayer(currentLayer);
 
-                aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
+                    aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
+
+                } catch {
+                    console.error(`Image server does not know UUID '${relation["resource"]["id"]}', unable to setup background layer.`)
+                }
             }
+
             this.map.setView(
                 new View({
-                    extent: aggregatedExtent
+                    extent: aggregatedExtent,
+                    center: getCenter(aggregatedExtent),
                 })
             );
-            this.map.getView().fit(aggregatedExtent)
+            this.map.getView().fit(aggregatedExtent, { padding: [100, 100, 100, 100], constrainResolution: false, size: this.map.getSize() })
         }
     }
 }

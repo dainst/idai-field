@@ -3,7 +3,7 @@ import { to } from 'tsfun';
 import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
-import { MoveUtility } from '../actions/move/move-utility';
+import { MoveUtility } from '../../widgets/move-modal/move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
 
 

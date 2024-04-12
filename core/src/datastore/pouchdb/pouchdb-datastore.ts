@@ -168,7 +168,7 @@ export class PouchdbDatastore {
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
-        const fetchedDocument = await this.fetch(document.resource.id);
+        const fetchedDocument = await this.fetch(document.resource.id, undefined, true);
 
         const clonedDocument = Document.clone(document);
         clonedDocument.created = fetchedDocument.created;
@@ -234,23 +234,23 @@ export class PouchdbDatastore {
     /**
      * @param resourceId
      * @param options
-     * @param skipValidationAncDateConversion
+     * @param skipValidation
      * @throws [DOCUMENT_NOT_FOUND]
      * @throws [INVALID_DOCUMENT] if not Document.isValid
      * @returns Document. It is made sure that it isValid and the dates are converted to type Date.
      */
     public fetch(resourceId: string,
-                 options: any = { conflicts: true }, skipValidationAncDateConversion = false): Promise<Document> {
+                 options: any = { conflicts: true }, skipValidation: boolean = false): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
 
         return this.db.get(resourceId, options)
             .then(
                 (result: any) => {
-                    if (!skipValidationAncDateConversion) {
+                    if (!skipValidation) {
                         if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
-                        PouchdbDatastore.convertDates(result);
                     }
+                    PouchdbDatastore.convertDates(result);
                     return Promise.resolve(result as Document);
                 },
                 (_: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))

@@ -1,8 +1,8 @@
 import { flatten, intersection, set, to } from 'tsfun';
 import { Document, ProjectConfiguration, RelationsManager,
     FieldDocument, IndexFacade, Constraint, CategoryForm, Relation, Named, Datastore } from 'idai-field-core';
-import { M } from '../../../messages/m';
-import { UtilTranslations } from '../../../../util/util-translations';
+import { M } from '../../messages/m';
+import { UtilTranslations } from '../../../util/util-translations';
 
 
 /**

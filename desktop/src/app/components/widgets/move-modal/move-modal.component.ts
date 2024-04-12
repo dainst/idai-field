@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager, ProjectConfiguration,
     Datastore} from 'idai-field-core';
-import { Messages } from '../../../messages/messages';
-import { Loading } from '../../../widgets/loading';
+import { Messages } from '../../messages/messages';
+import { Loading } from '../loading';
 import { MoveUtility } from './move-utility';
-import { UtilTranslations } from '../../../../util/util-translations';
+import { UtilTranslations } from '../../../util/util-translations';
 
 
 export interface MoveResult {

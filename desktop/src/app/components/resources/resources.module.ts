@@ -29,7 +29,7 @@ import { LayerManager } from './map/map/layers/layer-manager';
 import { LayerMenuComponent } from './map/map/layers/layer-menu.component';
 import { MapComponent } from './map/map/map.component';
 import { ResourcesMapComponent } from './map/resources-map.component';
-import { MoveModalComponent } from './actions/move/move-modal.component';
+import { MoveModalComponent } from '../widgets/move-modal/move-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PlusButtonComponent } from './plus-button.component';
 import { ResourcesComponent } from './resources.component';

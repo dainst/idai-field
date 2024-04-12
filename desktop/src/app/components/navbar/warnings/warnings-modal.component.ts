@@ -25,6 +25,7 @@ import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.com
 import { ConvertFieldDataModalComponent } from './modals/convert-field-data-modal.component';
 import { SelectNewFieldModalComponent } from './modals/select-new-field-modal.component';
 import { SelectNewCategoryModalComponent } from './modals/select-new-category-modal.component';
+import { MoveModalComponent } from '../../widgets/move-modal/move-modal.component';
 
 
 type WarningSection = {
@@ -312,6 +313,25 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openMoveModal() {
+
+        const [result, componentInstance] = this.modals.make<MoveModalComponent>(
+            MoveModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.initialize([this.selectedDocument]);
 
         await this.modals.awaitResult(
             result,

@@ -236,6 +236,14 @@
                                   i18n="@@navbar.taskbar.warnings.fixValues.multiple">Werte korrigieren</span>
                         </button>
                     </span>
+                    <span *ngIf="section.type === 'invalidParent'">
+                        <button class="btn btn-primary select-new-parent-button"
+                                (click)="openMoveModal()">
+                            <span class="mdi mdi-file-tree"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.selectNewParent">Übergeordnete Ressource neu setzen</span>
+                        </button>
+                    </span>
                     <span *ngIf="section.type === 'unconfiguredCategory' || section.type === 'invalidParent'">
                         <button class="btn btn-danger delete-resource-button"
                                 (click)="openDeleteResourceModal()">

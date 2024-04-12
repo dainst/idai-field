@@ -7,7 +7,7 @@ import { Loading } from '../widgets/loading';
 import { Routing } from '../../services/routing';
 import { DoceditLauncher } from './service/docedit-launcher';
 import { M } from '../messages/m';
-import { MoveModalComponent, MoveResult } from './actions/move/move-modal.component';
+import { MoveModalComponent, MoveResult } from '../widgets/move-modal/move-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { TabManager } from '../../services/tabs/tab-manager';

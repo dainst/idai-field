@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
               </.group_heading>
 
               <dl class="grid grid-cols-2 gap-1 mt-2">
-                <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category"] end)  do %>
+                <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category", "geometry"] end)  do %>
                   <div class="border-2 p-0.5">
                     <GenericField.render
                       values={field["values"]}

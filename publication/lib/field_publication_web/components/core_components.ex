@@ -790,7 +790,6 @@ defmodule FieldPublicationWeb.CoreComponents do
       assigns
       |> assign(:multiple, true)
       |> assign(:type, "checkgroup")
-      |> IO.inspect()
 
     input(new_assigns)
   end

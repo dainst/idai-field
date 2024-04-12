@@ -21,7 +21,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectMap do
   def update(%{id: id, layers: layers, publication: publication} = assigns, socket) do
     assigns = set_defaults(assigns)
 
-    layers = Enum.map(layers, &Data.get_document(&1["id"], publication, true)) |> IO.inspect()
+    layers = Enum.map(layers, &Data.get_document(&1["id"], publication, true))
 
     socket =
       socket

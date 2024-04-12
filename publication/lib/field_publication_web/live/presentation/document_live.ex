@@ -14,7 +14,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     publications =
       project_name
       |> Publications.list()
-      |> Enum.filter(fn pub -> pub.publication_date != nil end)
+      |> Stream.filter(fn pub -> pub.publication_date != nil end)
+      |> Enum.reject(fn pub -> Date.after?(pub.publication_date, Date.utc_today()) end)
 
     publication_dates =
       Enum.map(publications, fn pub ->

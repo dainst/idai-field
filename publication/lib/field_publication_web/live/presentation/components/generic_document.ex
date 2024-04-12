@@ -29,7 +29,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
                 <I18n.text values={group["labels"]} />
               </.group_heading>
 
-              <dl class="grid grid-cols-4 gap-1 mt-2">
+              <dl class="grid grid-cols-2 gap-1 mt-2">
                 <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category"] end)  do %>
                   <div class="border-2 p-0.5">
                     <GenericField.render
@@ -50,10 +50,18 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
             <.group_heading>
               <I18n.text values={depicted_in["labels"]} />
             </.group_heading>
-            <div class="grid grid-cols-3 gap-1 mt-2">
-              <%= for uuid <- depicted_in["values"] do %>
-                <.link patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{uuid}"} class="p-1">
-                  <Image.show size="300," project={@project_name} uuid={uuid} />
+            <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 h-[300px] mb-5">
+              <%= for preview_doc <- depicted_in["values"] do %>
+                <.link
+                  patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
+                  class="p-1"
+                >
+                  <Image.show
+                    style="max-width: 250px"
+                    size="250,"
+                    project={@project_name}
+                    uuid={preview_doc["id"]}
+                  />
                 </.link>
               <% end %>
             </div>
@@ -63,13 +71,13 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
             <.group_heading>
               <I18n.text values={other_relation["labels"]} />
             </.group_heading>
-            <div class="grid grid-cols-3 gap-1 mt-2">
-              <%= for uuid <- other_relation["values"] do %>
+            <div class="overflow-auto overscroll-contain max-h-[200px] grid grid-cols-3 gap-1 mt-2">
+              <%= for preview_doc <- other_relation["values"] do %>
                 <DocumentLink.show
                   project={@project_name}
                   date={@publication_date}
                   lang={@lang}
-                  uuid={uuid}
+                  preview_doc={preview_doc}
                 />
               <% end %>
             </div>

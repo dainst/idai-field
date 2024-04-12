@@ -33,7 +33,36 @@ defmodule FieldPublication.Publications.Data do
     if raw do
       raw_data
     else
-      apply_project_configuration(raw_data, config)
+      apply_project_configuration(raw_data, config, publication)
+    end
+  end
+
+  def get_documents(uuids, %Publication{database: db} = publication, raw \\ false) do
+    config = get_configuration(publication)
+
+    raw_data =
+      CouchService.get_documents(uuids, db)
+      |> then(fn {:ok, %{body: body}} ->
+        Jason.decode!(body)
+        |> Map.get("results", [])
+      end)
+      |> Enum.map(fn %{"docs" => docs} ->
+        Enum.map(docs, fn doc ->
+          case doc do
+            %{"ok" => doc} ->
+              doc
+
+            other ->
+              {:error, other}
+          end
+        end)
+      end)
+      |> List.flatten()
+
+    if raw do
+      raw_data
+    else
+      Enum.map(raw_data, &apply_project_configuration(&1, config, publication))
     end
   end
 
@@ -44,7 +73,7 @@ defmodule FieldPublication.Publications.Data do
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
     end)
-    |> apply_project_configuration(config)
+    |> apply_project_configuration(config, publication)
   end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
@@ -71,17 +100,21 @@ defmodule FieldPublication.Publications.Data do
     )
   end
 
-  def apply_project_configuration(%{"resource" => resource}, configuration) do
+  def apply_project_configuration(%{"resource" => resource}, configuration, publication) do
     category_configuration = search_category_tree(configuration, resource["category"])
 
     %{
-      "category" => %{
-        "labels" => category_configuration["item"]["categoryLabel"],
-        "color" => category_configuration["item"]["color"],
-        "values" => resource["category"]
-      },
+      "category" => extent_category(category_configuration["item"], resource),
       "groups" => extend_field_groups(category_configuration["item"], resource),
-      "relations" => extend_relations(category_configuration["item"], resource)
+      "relations" => extend_relations(category_configuration["item"], resource, publication)
+    }
+  end
+
+  defp extent_category(category_configuration, resource) do
+    %{
+      "labels" => category_configuration["item"]["categoryLabel"],
+      "color" => category_configuration["item"]["color"],
+      "values" => resource["category"]
     }
   end
 
@@ -115,17 +148,17 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  defp extend_relations(category_configuration, resource) do
+  defp extend_relations(category_configuration, resource, %Publication{} = publication) do
     relations = Map.get(resource, "relations", %{})
     keys = Map.keys(relations)
 
     category_configuration["groups"]
     |> Enum.map(fn group ->
       group["fields"]
-      |> Enum.map(&extend_field(&1, keys))
-      |> Enum.reject(fn val -> val == nil end)
+      |> Stream.map(&extend_field(&1, keys))
+      |> Stream.reject(fn val -> val == nil end)
       |> Enum.map(fn %{"key" => key} = map ->
-        Map.put(map, "values", relations[key])
+        Map.put(map, "values", get_doc_previews(publication, relations[key]))
       end)
     end)
     |> List.flatten()
@@ -186,6 +219,18 @@ defmodule FieldPublication.Publications.Data do
 
   defp run_query(query, database) do
     CouchService.get_document_stream(query, database)
+  end
+
+  def get_doc_previews(%Publication{} = publication, uuid_list) when is_list(uuid_list) do
+    uuid_list
+    |> get_documents(publication, true)
+    |> Enum.map(fn %{"resource" => res} = _doc ->
+      %{
+        "id" => res["id"],
+        "category" => res["category"],
+        "identifier" => res["identifier"]
+      }
+    end)
   end
 
   defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_categories}) do

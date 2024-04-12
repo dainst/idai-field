@@ -302,6 +302,16 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
+  def get_documents(doc_ids, database_name \\ @core_database) do
+    Finch.build(
+      :post,
+      "#{local_url()}/#{database_name}/_bulk_get",
+      headers(),
+      Jason.encode!(%{docs: Enum.map(doc_ids, fn id -> %{id: id} end)})
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   @doc """
   Post a document
 

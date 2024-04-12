@@ -26,12 +26,12 @@ defmodule FieldPublicationWeb.Presentation.Components.ImageDocument do
           <% depicts = Data.get_relation_by_name(@doc, "depicts") %>
           <%= if depicts do %>
             <I18n.text values={depicts["labels"]} />:
-            <%= for uuid <- depicts["values"] do %>
+            <%= for preview_doc <- depicts["values"] do %>
               <DocumentLink.show
                 project={@project_name}
                 date={@publication_date}
                 lang={@lang}
-                uuid={uuid}
+                preview_doc={preview_doc}
               />
             <% end %>
           <% end %>

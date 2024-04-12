@@ -56,12 +56,9 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
                   patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
                   class="p-1"
                 >
-                  <Image.show
-                    style="max-width: 250px"
-                    size="250,"
-                    project={@project_name}
-                    uuid={preview_doc["id"]}
-                  />
+                  <div class="max-w-[250px]">
+                    <Image.show size="250," project={@project_name} uuid={preview_doc["id"]} />
+                  </div>
                 </.link>
               <% end %>
             </div>

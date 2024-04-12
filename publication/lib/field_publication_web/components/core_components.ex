@@ -754,14 +754,14 @@ defmodule FieldPublicationWeb.CoreComponents do
     ~H"""
     <%= for publication <- @entries do %>
       <% color =
-        case publication.publication_date do
-          nil ->
+        cond do
+          publication.publication_date == nil ->
             "bg-yellow-200"
 
-          date when date > @date ->
+          Date.before?(@date, publication.publication_date) ->
             "bg-green-300"
 
-          _ ->
+          true ->
             "bg-green-500"
         end %>
 

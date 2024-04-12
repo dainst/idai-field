@@ -25,7 +25,7 @@
       <.publication_list :let={publication} entries={@publications} date={@today}>
         <.link
           class="inline-flex items-center text-black"
-          navigate={~p"/edit/#{@project.name}/publication/#{publication.draft_date}"}
+          navigate={~p"/edit/#{@project}/publication/#{publication.draft_date}"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

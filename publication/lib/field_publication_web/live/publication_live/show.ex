@@ -9,7 +9,8 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
   alias FieldPublication.Schemas.{
     Publication,
-    LogEntry
+    LogEntry,
+    Translation
   }
 
   alias FieldPublication.Processing
@@ -35,9 +36,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
         type == :web_images
       end)
 
+    initialized_comments = initialize_comments(publication)
+
     publication_form =
       publication
-      |> Publication.changeset(%{})
+      |> Publication.changeset(%{comments: initialized_comments})
       |> to_form
 
     {
@@ -93,25 +96,65 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def handle_event(
-        "publication_version_selected",
-        %{"publication-version" => new_version},
+        "validate",
+        %{
+          "_target" => ["publication", "version"],
+          "publication" => %{"version" => new_version}
+        },
         %{assigns: %{publication: publication}} = socket
       ) do
-    {:ok, updated_publication} =
-      Publications.put(publication, %{"version" => new_version})
+    case Publications.put(publication, %{"version" => new_version}) do
+      {:ok, updated_publication} ->
+        {:noreply, assign(socket, :publication, updated_publication)}
 
-    {:noreply, assign(socket, :publication, updated_publication)}
+      {:error, changeset} ->
+        {:noreply, assign(socket, :publication_form, to_form(changeset))}
+    end
   end
 
   def handle_event(
-        "publication_date_selected",
-        %{"publication-date" => date_string},
+        "validate",
+        %{
+          "_target" => ["publication", "publication_date"],
+          "publication" => %{"publication_date" => date_string}
+        },
         %{assigns: %{publication: publication}} = socket
       ) do
-    {:ok, updated_publication} =
-      Publications.put(publication, %{"publication_date" => date_string})
+    case Publications.put(publication, %{"publication_date" => date_string}) do
+      {:ok, updated_publication} ->
+        {:noreply, assign(socket, :publication, updated_publication)}
 
-    {:noreply, assign(socket, :publication, updated_publication)}
+      {:error, changeset} ->
+        {:noreply, assign(socket, :publication_form, to_form(changeset))}
+    end
+  end
+
+  def handle_event(
+        "validate",
+        %{
+          "_target" => ["publication", "comments", _translation_index, "text"],
+          "publication" => %{"comments" => comment_form_parameters}
+        },
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    # Because the comment interface is implemented with inputs_for/1 Phoenix also returns an index for the
+    # element that was changed. Instead of making use of this and updating a single comment within the publication,
+    # we rewrite the complete list of comments. For that we discard the index information.
+    comments =
+      comment_form_parameters
+      |> Enum.map(fn {_index, parameters} ->
+        parameters
+      end)
+
+    case Publications.put(publication, %{"comments" => comments}) do
+      {:ok, updated_publication} ->
+        {:noreply, assign(socket, :publication, updated_publication)}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, :publication_form, to_form(changeset))}
+    end
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -210,19 +253,6 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     }
   end
 
-  def handle_info(
-        {:updated_translations, "publication_comments", translations},
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    # TODO: Catch _rev error if somebody else worked on the same publication document concurrently and this update got rejected.
-    {:ok, updated_publication} = Publications.update_comments(publication, translations)
-
-    {
-      :noreply,
-      assign(socket, :publication, updated_publication)
-    }
-  end
-
   def get_version_options() do
     %{"Full publication" => :major, "Revision" => :revision}
   end
@@ -237,6 +267,26 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
         }
         # TODO: Add elastic search and tiling state evaluation.
       }
+    end)
+  end
+
+  defp initialize_comments(%Publication{} = publication) do
+    # If there are already comments for every project added, this simply
+    # returns them as changeset parameters. For every language that is missing
+    # a parameters for the language and an empty text is created.
+    publication_languages = publication.languages
+
+    Enum.map(publication_languages, fn project_lang ->
+      Enum.find(publication.comments, fn %Translation{language: lang} ->
+        lang == project_lang
+      end)
+      |> case do
+        nil ->
+          %{"language" => project_lang, "text" => ""}
+
+        %Translation{language: language, text: text} ->
+          %{"language" => language, "text" => text}
+      end
     end)
   end
 end

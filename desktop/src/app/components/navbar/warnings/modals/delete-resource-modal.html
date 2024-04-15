@@ -19,22 +19,23 @@
         </div>
     </div>
     
-    <div *ngIf="deleteAll">
-        <div class="text-center alert alert-warning"
-             i18n="@@navbar.taskbar.deleteResource.all.info">
-            Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten
-            Kategorie <b>{{document.resource.category}}</b> gelöscht.
-        </div>
-        <span i18n="@@navbar.taskbar.deleteResource.all.confirmInfo">
-            Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.
-        </span>
-        <div>
-            <input type="text"
-                   id="confirm-category-name-input"
-                   class="form-control"
-                   [(ngModel)]="confirmCategoryName"
-                   (keydown)="$event.key !== 'Enter' || performDeletion()" />
-        </div>
+    <div *ngIf="deleteAll" class="text-center alert alert-warning"
+            i18n="@@navbar.taskbar.deleteResource.all.info">
+        Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten
+        Kategorie <b>{{document.resource.category}}</b> gelöscht.
+    </div>
+    <span *ngIf="deleteAll" i18n="@@navbar.taskbar.deleteResource.all.confirmInfo">
+        Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.
+    </span>
+    <span *ngIf="!deleteAll"i18n="@@navbar.taskbar.deleteResource.single.confirmInfo">
+        Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.
+    </span>
+    <div>
+        <input type="text"
+                id="confirm-deletion-input"
+                class="form-control"
+                [(ngModel)]="confirmValue"
+                (keydown)="$event.key !== 'Enter' || performDeletion()" />
     </div>
 </div>
 

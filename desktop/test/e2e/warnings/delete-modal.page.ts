@@ -22,15 +22,9 @@ export class DeleteModalPage {
 
     // Type
 
-    public static async typeInConfirmCategoryName(fieldName: string) {
+    public static async typeInConfirmValue(fieldName: string) {
 
-        return typeIn('#confirm-category-name-input', fieldName);
-    }
-
-
-    public static async typeInConfirmFieldName(fieldName: string) {
-
-        return typeIn('#confirm-field-name-input', fieldName);
+        return typeIn('#confirm-value-input', fieldName);
     }
 
 

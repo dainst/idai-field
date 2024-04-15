@@ -19,7 +19,7 @@ export class DeleteResourceModalComponent {
     public warningType: WarningType;
     
     public deleteAll: boolean;
-    public confirmCategoryName: string;
+    public confirmValue: string;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -42,7 +42,11 @@ export class DeleteResourceModalComponent {
 
     public isDeletionAllowed(): boolean {
 
-        return !this.deleteAll || this.confirmCategoryName === this.document.resource.category;
+        if (this.deleteAll) {
+            return this.confirmValue === this.document.resource.category;
+        } else {
+            return this.confirmValue === this.document.resource.identifier;
+        }
     }
 
 

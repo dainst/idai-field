@@ -432,7 +432,7 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteResourceButton(0);
         await DeleteModalPage.clickMultipleSwitch();
-        await DeleteModalPage.typeInConfirmCategoryName('Test:CustomCategory');
+        await DeleteModalPage.typeInConfirmValue('Test:CustomCategory');
         await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
@@ -518,7 +518,7 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteModalPage.clickMultipleSwitch();
-        await DeleteModalPage.typeInConfirmFieldName('test:field');
+        await DeleteModalPage.typeInConfirmValue('test:field');
         await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
@@ -699,7 +699,7 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteModalPage.clickMultipleSwitch();
-        await DeleteModalPage.typeInConfirmFieldName('test:field');
+        await DeleteModalPage.typeInConfirmValue('test:field');
         await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
@@ -718,7 +718,7 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteModalPage.clickMultipleSwitch();
-        await DeleteModalPage.typeInConfirmFieldName('test:field');
+        await DeleteModalPage.typeInConfirmValue('test:field');
         await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());

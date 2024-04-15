@@ -61,17 +61,14 @@ defmodule FieldPublication.Processing.Image do
     doc_id = Publications.get_doc_id(publication)
 
     existing_raw_files
-    |> Task.async_stream(
-      fn uuid ->
-        convert_file(
-          "#{raw_root}/image/#{uuid}",
-          "#{web_root}/#{uuid}.jp2",
-          counter_pid,
-          doc_id
-        )
-      end,
-      timeout: 1000 * 60 * 5
-    )
+    |> Enum.map(fn uuid ->
+      convert_file(
+        "#{raw_root}/image/#{uuid}",
+        "#{web_root}/#{uuid}.jp2",
+        counter_pid,
+        doc_id
+      )
+    end)
     |> Enum.to_list()
   end
 

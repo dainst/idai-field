@@ -29,7 +29,7 @@ defmodule FieldPublication.Processing.OpenSearch do
 
         %{
           counter: counter,
-          percentage: (counter + 1) / doc_count * 100,
+          percentage: counter / doc_count * 100,
           overall: doc_count
         }
     end
@@ -92,5 +92,6 @@ defmodule FieldPublication.Processing.OpenSearch do
     |> Enum.to_list()
 
     OpensearchService.switch_active_index(publication_id)
+    OpensearchService.clear_inactive_index(publication_id)
   end
 end

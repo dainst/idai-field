@@ -1261,6 +1261,25 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for missing or invalid parent via deletion in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createWarningViaAppController('createMissingOrInvalidParentWarning');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Fehlende oder ungültige übergeordnete Ressource']);
+
+        await WarningsModalPage.clickDeleteResourceButton(0);
+        await DeleteModalPage.typeInConfirmValue('1');
+        await DeleteModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing identifier prefix via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

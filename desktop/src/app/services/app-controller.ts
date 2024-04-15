@@ -66,6 +66,11 @@ export class AppController {
             await this.createMissingRelationTargetWarning();
             this.messages.add([M.APP_CONTROLLER_SUCCESS]);
         });
+
+        ipcRenderer.on('createMissingOrInvalidParentWarning', async () => {
+            await this.createMissingOrInvalidParentWarning();
+            this.messages.add([M.APP_CONTROLLER_SUCCESS]);
+        });
     }
 
 
@@ -119,8 +124,26 @@ export class AppController {
 
     private async createMissingRelationTargetWarning() {
 
-        let document: Document = this.createDocument();
+        const document: Document = this.createDocument();
         document.resource.relations.liesWithin = ['missing'];
+        await this.pouchdbDatastore.create(document, 'test');
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.pouchdbDatastore.getDb(),
+            this.documentCache,
+            new DocumentConverter(this.projectConfiguration),
+            this.projectConfiguration,
+            false
+        );
+    }
+
+
+    private async createMissingOrInvalidParentWarning() {
+
+        const document: Document = this.createDocument();
+        document.resource.category = 'Feature';
+
         await this.pouchdbDatastore.create(document, 'test');
 
         await Indexer.reindex(

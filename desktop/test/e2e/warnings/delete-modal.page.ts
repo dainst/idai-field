@@ -24,7 +24,7 @@ export class DeleteModalPage {
 
     public static async typeInConfirmValue(fieldName: string) {
 
-        return typeIn('#confirm-value-input', fieldName);
+        return typeIn('#confirm-deletion-input', fieldName);
     }
 
 

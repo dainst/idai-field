@@ -426,7 +426,6 @@ test.describe('resources/state --', () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
-        await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchBarPage.clickChooseCategoryFilter('feature');
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');

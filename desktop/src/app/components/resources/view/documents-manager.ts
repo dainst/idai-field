@@ -392,11 +392,15 @@ export class DocumentsManager {
         const constraints = clone(customConstraints);
 
         if (!isInExtendedSearchMode) {
-            if (liesWithinId) constraints[CHILDOF_CONTAIN] = liesWithinId;
-            else if (operationId) constraints[CHILDOF_CONTAIN] = operationId as any;
-            else constraints[CHILDOF_EXIST] = UNKNOWN;
+            if (liesWithinId) {
+                constraints[CHILDOF_CONTAIN] = liesWithinId;
+            } else if (operationId) {
+                constraints[CHILDOF_CONTAIN] = operationId;
+            } else {
+                constraints[CHILDOF_EXIST] = UNKNOWN;
+            }
         } else {
-            if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
+            if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true };
         }
         return constraints;
     }

@@ -98,7 +98,7 @@ describe('Import/Subsystem', () => {
             ' }'
         );
 
-        const result = await datastore.find({ categories: ['Trench']});
+        const result = await datastore.find({ categories: ['Trench'] });
         expect(result.documents.length).toBe(1);
         const resource = result.documents[0].resource;
         expect(resource.identifier).toEqual('t1');
@@ -169,16 +169,30 @@ describe('Import/Subsystem', () => {
         await datastore.create({
             resource:
                 {
+                    id: 't1',
+                    identifier: 't1',
+                    category: 'Trench',
+                    relations: {}
+                }
+            }
+        );
+
+        await datastore.create({
+            resource:
+                {
                     identifier: 'f1',
                     category: 'Find',
                     shortDescription: 'originalSD',
-                    relations: {},
+                    relations: {
+                        isRecordedIn: ['t1']
+                    },
                     dating: [
                         { type: 'single', end: { year: -2000, inputYear: 2000, inputType: 'bce' } },
                         { type: 'single', end: { year: -3000, inputYear: 3000, inputType: 'bce' } }
                     ]
                 }
-            });
+            }
+        );
 
         const t: CategoryForm = {
             name: 'Find',
@@ -434,7 +448,8 @@ describe('Import/Subsystem', () => {
 
     it('create one find, connect to existing operation', async done => {
 
-        const stored = await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+        const stored = await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench',
+            shortDescription: 'Our Trench 1', relations: {} } });
 
         await parseAndImport(
             {
@@ -458,7 +473,7 @@ describe('Import/Subsystem', () => {
 
         const resourceId = (await datastore.create(
             { resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {} } }
-            )).resource.id;
+        )).resource.id;
 
         const importReport = await parseAndImport(
             {
@@ -483,7 +498,8 @@ describe('Import/Subsystem', () => {
     it('update field', async done => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
-        await datastore.create({ resource: { identifier: 'F1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
+        await datastore.create({ resource: { identifier: 'F1', category: 'Feature', shortDescription: 'feature1',
+            relations: { isRecordedIn: ['a'] } } });
 
         await parseAndImport(
             {
@@ -635,9 +651,12 @@ describe('Import/Subsystem', () => {
 
     it('ignore unmatched items on merge', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: {} } });
+        await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench',
+            shortDescription: 'feature1', relations: {} } });
+        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1',
+            relations: { isRecordedIn: ['a' ]} } });
 
-        const importReport = await parseAndImport(
+        await parseAndImport(
             {
                 separator: '',
                 sourceType: '',
@@ -659,7 +678,8 @@ describe('Import/Subsystem', () => {
 
     it('import trench not allowed, when import into operation is activated', async done => {
 
-        await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
+        await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench',
+            shortDescription: 'Our trench 1', relations: {} } });
 
         const importReport = await parseAndImport(
             {
@@ -683,7 +703,8 @@ describe('Import/Subsystem', () => {
 
     it('postprocess documents', async done => {
 
-        await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
+        await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', category: 'Trench',
+        shortDescription: 'Our trench 1', relations: {} } });
 
         await parseAndImport(
             {
@@ -755,8 +776,7 @@ describe('Import/Subsystem', () => {
                 identifier: 'feature1',
                 category: 'Feature',
                 shortDescription: 'original',
-                relations: { "isAfter": ["100"]} // this is broken (a previously generated id)
-                                             // the target is not there (yet)
+                relations: { isAfter: ['100'], isRecordedIn: ['tr1'] }
             });
 
         await parseAndImport(
@@ -769,12 +789,12 @@ describe('Import/Subsystem', () => {
                 selectedOperationId: 'tr1'
             },
 
-            // This one gets ignored, exept for its relation
+            // This one gets ignored, except for its relation
             '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
 
             // Consider only this one.
             // The inverse relation is only implicit. In a full import, it is supposed
-            // to be generated from the 'feature1' record of the importfile. We
+            // to be generated from the 'feature1' record of the import file. We
             // reconstruct this behaviour here also in the differential import case.
             + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new" }'
         );
@@ -783,10 +803,7 @@ describe('Import/Subsystem', () => {
         const feature2 = (await helpers.getDocument('101')).resource;
         expect(feature1.shortDescription).toBe('original');
         expect(feature2.shortDescription).toBe('new');
-        expect(feature1.relations['isAfter']).toEqual(
-            ['100', // this is still broken, TODO we may want to clean this up
-            '101']  // this is ok
-            );
+        expect(feature1.relations['isAfter']).toEqual(['100','101']);
         expect(feature2.relations['isBefore']).toEqual(['99']);
         done();
     });

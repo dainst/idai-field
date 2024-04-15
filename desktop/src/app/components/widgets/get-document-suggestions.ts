@@ -1,8 +1,8 @@
 import { Datastore, Document, Query } from 'idai-field-core';
 
 
-export async function getDocumentSuggestions(datastore: Datastore,
-                                             query: Query): Promise<Array<Document>> {
+export async function getDocumentSuggestions(datastore: Datastore, query: Query,
+                                             includeResourcesWithInvalidParent: boolean): Promise<Array<Document>> {
 
     return (await datastore
         .find(
@@ -15,7 +15,8 @@ export async function getDocumentSuggestions(datastore: Datastore,
                         subtract: true
                     }
                 }
-            }
-        ))
-        .documents;
+            },
+            { includeResourcesWithoutValidParent: includeResourcesWithInvalidParent }
+        )
+    ).documents;
 }

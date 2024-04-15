@@ -11,6 +11,11 @@ import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
 
 
+export type FindOptions = {
+    includeResourcesWithoutValidParent?: boolean;
+};
+
+
 /**
  * This datastore provides everything necessary
  * to power a idai-field application:
@@ -214,7 +219,12 @@ export class Datastore {
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public find: Datastore.Find = async (query: Query): Promise<Datastore.FindResult> => {
+    public find: Datastore.Find = async (query: Query, options: FindOptions = {}): Promise<Datastore.FindResult> => {
+
+        if (!options.includeResourcesWithoutValidParent) {
+            if (!query.constraints) query.constraints = {};
+            query.constraints['invalidParent:exist'] = 'UNKNOWN';
+        }
 
         const { ids } = this.findIds(query);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
@@ -392,7 +402,7 @@ export namespace Datastore {
 
     export type Get = (id: string, options?: { skipCache?: boolean, conflicts?: boolean }) => Promise<Document>;
 
-    export type Find = (query: Query) => Promise<FindResult>;
+    export type Find = (query: Query, options?: FindOptions) => Promise<FindResult>;
 
     export type FindIds = (query: Query) => FindIdsResult;
 

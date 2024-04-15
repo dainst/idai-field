@@ -27,7 +27,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() showConfigurationOption: boolean = false;
     @Input() showInventoryRegisterOption: boolean = false;
     @Input() showLoadingIcon: boolean = false;
-    @Input() includeUnconfiguredCategories: boolean = false;
+    @Input() includeBrokenDocuments: boolean = false;
     @Input() limit: number = 50;
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
@@ -179,7 +179,7 @@ export class DocumentPickerComponent implements OnChanges {
         const constraints = this.getConstraints ? await this.getConstraints() : undefined;
         const query = tsfun.update('constraints', constraints, this.query);
         try {
-            const documents = await getDocumentSuggestions(this.datastore, query);
+            const documents = await getDocumentSuggestions(this.datastore, query, this.includeBrokenDocuments);
             if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents as Array<Document>);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -197,7 +197,7 @@ export class DocumentPickerComponent implements OnChanges {
                 : [category.name];
         }));
 
-        return this.includeUnconfiguredCategories
+        return this.includeBrokenDocuments
             ? result.concat(['UNCONFIGURED'])
             : result;
     }

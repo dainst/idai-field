@@ -120,6 +120,7 @@ describe('subsystem/relations-manager', () => {
         d6.resource.relations['depicts'] = ['id4', 'id7'];
 
         const d7 = doc('', 'identifierid7', 'Find', 'id7');
+        d7.resource.relations['isRecordedIn'] = ['id1'];
         d7.resource.relations['isDepictedIn'] = ['d6'];
 
         await app.datastore.create(d1);
@@ -150,10 +151,10 @@ describe('subsystem/relations-manager', () => {
 
         const [d1, _] = await createTestResourcesForRemoveTests();
 
-        expect((await app.datastore.find({})).totalCount).toBe(7);
+        expect((await app.datastore.find({}, { includeResourcesWithoutValidParent: true })).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true });
 
-        await helpers.expectDocuments('id5', 'id6', 'id7');
+        await helpers.expectDocuments('id5', 'id6');
         done();
     });
 
@@ -162,10 +163,10 @@ describe('subsystem/relations-manager', () => {
 
         const [d1, _, d3] = await createTestResourcesForRemoveTests();
 
-        expect((await app.datastore.find({})).totalCount).toBe(7);
+        expect((await app.datastore.find({}, { includeResourcesWithoutValidParent: true })).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true, descendantsToKeep: [d3] });
 
-        await helpers.expectDocuments('id3', 'id5', 'id6', 'id7');
+        await helpers.expectDocuments('id3', 'id5', 'id6');
         done();
     });
 });

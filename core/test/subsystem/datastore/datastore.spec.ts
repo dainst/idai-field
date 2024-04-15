@@ -79,8 +79,10 @@ describe('subsystem/datastore', () => {
         await app.datastore.create(doc2);
         await app.datastore.create(doc3);
 
-        const { documents: documents1, totalCount: totalCount1 } =
-            await app.datastore.find({ q: 'B-100', sort: { mode: 'default' }});
+        const { documents: documents1, totalCount: totalCount1 } = await app.datastore.find(
+            { q: 'B-100', sort: { mode: 'default' } },
+            { includeResourcesWithoutValidParent: true }
+        );
 
         expect(documents1.length).toBe(2);
         expect(totalCount1).toBe(2);
@@ -88,8 +90,10 @@ describe('subsystem/datastore', () => {
         expect(documents1[0].resource.id).toBe('1');
         expect(documents1[1].resource.id).toBe('2');
 
-        const { documents: documents2, totalCount: totalCount2 } =
-            await app.datastore.find({ q: 'B-100', sort: { mode: 'exactMatchFirst' }});
+        const { documents: documents2, totalCount: totalCount2 } = await app.datastore.find(
+            { q: 'B-100', sort: { mode: 'exactMatchFirst' } },
+            { includeResourcesWithoutValidParent: true }
+        );
 
         expect(documents2.length).toBe(2);
         expect(totalCount2).toBe(2);

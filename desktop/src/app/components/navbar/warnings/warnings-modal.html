@@ -29,7 +29,7 @@
                         [showConfigurationOption]="isConfigurationOptionVisible()"
                         [showNoQueryMessage]="false"
                         [showLoadingIcon]="warningFilters[0].count >= 1000"
-                        [includeUnconfiguredCategories]="true"
+                        [includeBrokenDocuments]="true"
                         (documentSelected)="selectDocument($event)"
                         (documentDoubleClicked)="openDoceditModal()"></document-picker>
     </div>

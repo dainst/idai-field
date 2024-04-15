@@ -414,6 +414,7 @@ test.describe('warnings --', () => {
         await expectSectionTitles(['Unkonfigurierte Kategorie Test:CustomCategory']);
 
         await WarningsModalPage.clickDeleteResourceButton(0);
+        await DeleteModalPage.typeInConfirmValue('1');
         await DeleteModalPage.clickConfirmButton();
         await waitForNotExist(await WarningsModalPage.getResource('1'));
 

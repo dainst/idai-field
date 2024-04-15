@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.PublicationLive.Show do
+  alias FieldPublication.Processing.OpenSearch
   alias FieldPublication.Processing.Image
   use FieldPublicationWeb, :live_view
 
@@ -29,10 +30,16 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     end
 
     # Check if web images are currently processed for the publication.
+
+    processing_tasks_running = Processing.show(publication)
+
     web_images_processing? =
-      publication
-      |> Processing.show()
-      |> Enum.any?(fn {_task_ref, type, _publication_id} ->
+      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
+        type == :web_images
+      end)
+
+    search_indexing? =
+      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
         type == :web_images
       end)
 
@@ -54,6 +61,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
+      |> assign(:search_indexing?, search_indexing?)
       |> assign(:publication_form, publication_form)
     }
   end
@@ -91,6 +99,26 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
         %{assigns: %{publication: publication}} = socket
       ) do
     Processing.stop(publication, :web_images)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "start_search_indexing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.start(publication, :search_index)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "stop_search_indexing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.stop(publication, :search_index)
 
     {:noreply, socket}
   end
@@ -204,9 +232,11 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     start_data_state_evaluation(publication)
 
     # Update the form to reflect the final document revision, otherwise making changes based on an old revision will fail.
+    initialized_comments = initialize_comments(publication)
+
     publication_form =
       publication
-      |> Publication.changeset(%{})
+      |> Publication.changeset(%{comments: initialized_comments})
       |> to_form
 
     {
@@ -225,12 +255,12 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   end
 
   def handle_info(
-        {:web_image_processing_count, _summary},
+        {processing_feedback, _summary},
         %{assigns: %{data_state: nil}} = socket
-      ) do
-    # The web image processing state an update, but we just mounted the socket and and have
-    # not yet evaluated the overall data state: Ignore the progress update for now.
-    # TODO: Re-evaluate a better pattern
+      )
+      when processing_feedback in [:web_image_processing_count, :search_index_processing_count] do
+    # This handles situations, where a processing task starts sending updates, while the interface is not ready yet. While
+    # our view's data_state is nil, we just ignore any incoming update and thereby waiting for start_data_state_evaluation/1 to finish.
     {:noreply, socket}
   end
 
@@ -253,6 +283,30 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
     }
   end
 
+  def handle_info({:processing_started, :search_index}, socket) do
+    {
+      :noreply,
+      assign(socket, :search_indexing?, true)
+    }
+  end
+
+  def handle_info(
+        {:search_index_processing_count, count},
+        %{assigns: %{data_state: data_state}} = socket
+      ) do
+    updated_data_state =
+      Map.put(data_state, :search_index, count)
+
+    {:noreply, assign(socket, :data_state, updated_data_state)}
+  end
+
+  def handle_info({:processing_stopped, :search_index}, socket) do
+    {
+      :noreply,
+      assign(socket, :search_indexing?, false)
+    }
+  end
+
   def get_version_options() do
     %{"Full publication" => :major, "Revision" => :revision}
   end
@@ -263,9 +317,10 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
       {
         :data_state_evaluation,
         %{
-          images: Image.evaluate_web_images_state(publication)
+          images: Image.evaluate_web_images_state(publication),
+          search_index: OpenSearch.evaluate_state(publication)
         }
-        # TODO: Add elastic search and tiling state evaluation.
+        # TODO: Add tiling state evaluation?
       }
     end)
   end

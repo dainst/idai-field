@@ -20,7 +20,7 @@ defmodule FieldPublication.DataServices.OpensearchService do
       end
 
     Finch.build(
-      :put,
+      :post,
       url,
       headers(),
       Jason.encode!(doc)
@@ -133,7 +133,7 @@ defmodule FieldPublication.DataServices.OpensearchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  defp get_inactive_index(index_alias) when is_binary(index_alias) do
+  def get_inactive_index(index_alias) when is_binary(index_alias) do
     index_alias
     |> get_active_index()
     |> case do
@@ -149,7 +149,7 @@ defmodule FieldPublication.DataServices.OpensearchService do
     end
   end
 
-  defp get_active_index(index_alias) when is_binary(index_alias) do
+  def get_active_index(index_alias) when is_binary(index_alias) do
     Finch.build(
       :get,
       "#{@base_url}/_alias/#{index_alias}",
@@ -165,6 +165,19 @@ defmodule FieldPublication.DataServices.OpensearchService do
       _ ->
         :none
     end
+  end
+
+  def get_doc_count(index_name) do
+    Finch.build(
+      :get,
+      "#{@base_url}/#{index_name}/_count",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+    |> then(fn {:ok, %{status: 200, body: body}} ->
+      Jason.decode!(body)
+      |> Map.get("count", 0)
+    end)
   end
 
   defp headers() do

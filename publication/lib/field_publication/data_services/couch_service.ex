@@ -192,62 +192,13 @@ defmodule FieldPublication.CouchService do
     end
   end
 
-  @doc """
-  Search for documents in the CouchDB instance.
-
-  Returns a Elixir `Stream` (lazy enumerable) that can be used to pull all documents that match a query. See also
-  https://docs.couchdb.org/en/stable/api/database/find.html.
-
-  __Parameters__
-  - `query`, a `Map` describing a valid Mango query.
-  - `database` (optional), name of the database to query.
-  """
-  def get_document_stream(query, database \\ @core_database)
-      when is_map(query) and is_binary(database) do
-    batch_size = 500
-
-    Stream.resource(
-      fn ->
-        query
-        |> Map.put(:limit, batch_size)
-      end,
-      fn payload ->
-        Finch.build(
-          :post,
-          "#{local_url()}/#{database}/_find",
-          headers(),
-          Jason.encode!(payload)
-        )
-        |> Finch.request(FieldPublication.Finch)
-        |> case do
-          {:ok, %{status: 200, body: body}} ->
-            body
-            |> Jason.decode!()
-            |> case do
-              %{"docs" => []} ->
-                {:halt, :ok}
-
-              %{"docs" => docs, "bookmark" => bookmark} ->
-                {
-                  docs,
-                  Map.put(payload, :bookmark, bookmark)
-                }
-            end
-
-          error ->
-            {:halt, {:error, error}}
-        end
-      end,
-      fn final_payload ->
-        case final_payload do
-          {:error, error} ->
-            throw(error)
-
-          _ ->
-            :ok
-        end
-      end
+  def get_database(name) do
+    Finch.build(
+      :get,
+      "#{local_url()}/#{name}",
+      headers()
     )
+    |> Finch.request(FieldPublication.Finch)
   end
 
   @doc """
@@ -310,6 +261,64 @@ defmodule FieldPublication.CouchService do
       Jason.encode!(%{docs: Enum.map(doc_ids, fn id -> %{id: id} end)})
     )
     |> Finch.request(FieldPublication.Finch)
+  end
+
+  @doc """
+  Search for documents in the CouchDB instance.
+
+  Returns a Elixir `Stream` (lazy enumerable) that can be used to pull all documents that match a query. See also
+  https://docs.couchdb.org/en/stable/api/database/find.html.
+
+  __Parameters__
+  - `query`, a `Map` describing a valid Mango query.
+  - `database` (optional), name of the database to query.
+  """
+  def get_document_stream(query, database \\ @core_database)
+      when is_map(query) and is_binary(database) do
+    batch_size = 500
+
+    Stream.resource(
+      fn ->
+        query
+        |> Map.put(:limit, batch_size)
+      end,
+      fn payload ->
+        Finch.build(
+          :post,
+          "#{local_url()}/#{database}/_find",
+          headers(),
+          Jason.encode!(payload)
+        )
+        |> Finch.request(FieldPublication.Finch)
+        |> case do
+          {:ok, %{status: 200, body: body}} ->
+            body
+            |> Jason.decode!()
+            |> case do
+              %{"docs" => []} ->
+                {:halt, :ok}
+
+              %{"docs" => docs, "bookmark" => bookmark} ->
+                {
+                  docs,
+                  Map.put(payload, :bookmark, bookmark)
+                }
+            end
+
+          error ->
+            {:halt, {:error, error}}
+        end
+      end,
+      fn final_payload ->
+        case final_payload do
+          {:error, error} ->
+            throw(error)
+
+          _ ->
+            :ok
+        end
+      end
+    )
   end
 
   @doc """

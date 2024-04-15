@@ -107,6 +107,31 @@
                     <% end %>
                   </td>
                 </tr>
+                <tr class="border-2">
+                  <td class="text-center">Search index</td>
+                  <td>
+                    <.progress_bar state={@data_state.search_index}></.progress_bar>
+                  </td>
+                  <td class="text-center">
+                    <%= if @search_indexing? do %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="stop_search_indexing"
+                      >
+                        Stop
+                      </.link>
+                    <% else %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="start_search_indexing"
+                      >
+                        Start
+                      </.link>
+                    <% end %>
+                  </td>
+                </tr>
               </tbody>
             </table>
           <% else %>

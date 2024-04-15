@@ -1,3 +1,4 @@
+import { clone } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
 import { Document } from '../model/document';
 import { NewDocument } from '../model/document';
@@ -221,13 +222,14 @@ export class Datastore {
      */
     public find: Datastore.Find = async (query: Query, options: FindOptions = {}): Promise<Datastore.FindResult> => {
 
+        const clonedQuery: Query = clone(query);
         if (!options.includeResourcesWithoutValidParent) {
-            if (!query.constraints) query.constraints = {};
-            query.constraints['invalidParent:exist'] = 'UNKNOWN';
+            if (!clonedQuery.constraints) clonedQuery.constraints = {};
+            clonedQuery.constraints['invalidParent:exist'] = 'UNKNOWN';
         }
 
-        const { ids } = this.findIds(query);
-        const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
+        const { ids } = this.findIds(clonedQuery);
+        const { documents, totalCount } = await this.getDocumentsForIds(ids, clonedQuery.limit, clonedQuery.offset);
 
         return {
             documents: documents,

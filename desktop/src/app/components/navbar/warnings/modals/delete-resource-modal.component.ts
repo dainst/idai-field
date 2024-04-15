@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, Document, RelationsManager } from 'idai-field-core';
+import { Datastore, Document, RelationsManager, WarningType } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 
 
@@ -16,6 +16,7 @@ import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-p
 export class DeleteResourceModalComponent {
 
     public document: Document;
+    public warningType: WarningType;
     
     public deleteAll: boolean;
     public confirmCategoryName: string;
@@ -25,6 +26,9 @@ export class DeleteResourceModalComponent {
                 private modalService: NgbModal,
                 private datastore: Datastore,
                 private relationsManager: RelationsManager) {}
+
+
+    public isMultipleSwitchAvailable = () => this.warningType === 'unconfiguredCategory';
 
 
     public cancel = () => this.activeModal.dismiss('cancel');

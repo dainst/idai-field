@@ -246,7 +246,7 @@
                     </span>
                     <span *ngIf="section.type === 'unconfiguredCategory' || section.type === 'missingOrInvalidParent'">
                         <button class="btn btn-danger delete-resource-button"
-                                (click)="openDeleteResourceModal()">
+                                (click)="openDeleteResourceModal(section)">
                             <span class="mdi mdi-delete"></span>
                             <span class="button-label"
                                   i18n="@@navbar.taskbar.warnings.deleteResource">Ressource löschen</span>

@@ -7,7 +7,7 @@
         Möchten Sie die Ressource <b>{{document.resource.identifier}}</b> wirklich löschen?
     </span>
 
-    <div id="multiple-switch" class="row">
+    <div *ngIf="isMultipleSwitchAvailable()" id="multiple-switch" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.deleteResource.all">Alle Ressourcen dieser Kategorie löschen</span>
         </div>

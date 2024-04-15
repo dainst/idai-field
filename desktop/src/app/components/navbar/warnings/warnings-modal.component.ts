@@ -210,7 +210,7 @@ export class WarningsModalComponent {
     public async openDoceditModal(section?: WarningSection) {
 
         if (this.sections.find(section => {
-            return section.type === 'unconfiguredCategory' || section.type === 'invalidParent';
+            return section.type === 'unconfiguredCategory' || section.type === 'missingOrInvalidParent';
         })) return;
 
         const [result, componentInstance] = this.modals.make<DoceditComponent>(
@@ -241,7 +241,7 @@ export class WarningsModalComponent {
     }
 
 
-    public async openDeleteResourceModal() {
+    public async openDeleteResourceModal(section: WarningSection) {
 
         const [result, componentInstance] = this.modals.make<DeleteResourceModalComponent>(
             DeleteResourceModalComponent,
@@ -249,6 +249,7 @@ export class WarningsModalComponent {
         );
 
         componentInstance.document = this.selectedDocument;
+        componentInstance.warningType = section.type;
 
         await this.modals.awaitResult(
             result,

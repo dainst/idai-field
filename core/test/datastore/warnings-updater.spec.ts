@@ -327,12 +327,12 @@ describe('WarningsUpdater', () => {
         const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory']);
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
 
-        await WarningsUpdater.updateInvalidParentWarning(
+        await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
         );
 
-        expect(documents[0].warnings?.invalidParent).toBe(true);
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidParent:exist');
+        expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
         done();
@@ -348,7 +348,7 @@ describe('WarningsUpdater', () => {
 
         documents[0].resource.relations['isRecordedIn'] = ['2'];
         documents[0].warnings = Warnings.createDefault();
-        documents[0].warnings.invalidParent = true;
+        documents[0].warnings.missingOrInvalidParent = true;
 
         const categoryDefinition: CategoryForm = {
             name: 'category',
@@ -365,12 +365,12 @@ describe('WarningsUpdater', () => {
         const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory']);
         mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
 
-        await WarningsUpdater.updateInvalidParentWarning(
+        await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
         );
 
         expect(documents[0].warnings).toBeUndefined();
-        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
         done();

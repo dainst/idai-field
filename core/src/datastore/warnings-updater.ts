@@ -63,7 +63,7 @@ export module WarningsUpdater {
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
-        await updateInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache);
+        await updateMissingOrInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache);
         await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
             datastore, updateAll);
     }
@@ -161,8 +161,9 @@ export module WarningsUpdater {
     }
 
 
-    export async function updateInvalidParentWarning(document: Document, projectConfiguration: ProjectConfiguration,
-                                                     indexFacade: IndexFacade, documentCache: DocumentCache) {
+    export async function updateMissingOrInvalidParentWarning(document: Document,
+                                                              projectConfiguration: ProjectConfiguration,
+                                                              indexFacade: IndexFacade, documentCache: DocumentCache) {
 
         const parentDocument: Document = await Hierarchy.getParentDocument(
             (id: string) => Promise.resolve(documentCache[id]),
@@ -173,12 +174,12 @@ export module WarningsUpdater {
 
         if (!hasValidParent) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
-            document.warnings.invalidParent = true;
-            updateIndex(indexFacade, document, ['invalidParent:exist']);
-        } else if (document.warnings?.invalidParent) {
-            delete document.warnings.invalidParent;
+            document.warnings.missingOrInvalidParent = true;
+            updateIndex(indexFacade, document, ['missingOrInvalidParent:exist']);
+        } else if (document.warnings?.missingOrInvalidParent) {
+            delete document.warnings.missingOrInvalidParent;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            updateIndex(indexFacade, document, ['invalidParent:exist']);
+            updateIndex(indexFacade, document, ['missingOrInvalidParent:exist']);
         }
     }
 

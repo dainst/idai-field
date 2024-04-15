@@ -69,9 +69,9 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple">
                             Fehlende Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'invalidParent'"
-                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidParent">
-                            Fehlende übergeordnete Ressource
+                        <span *ngIf="section.type === 'missingOrInvalidParent'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingOrInvalidParent">
+                            Fehlende oder ungültige übergeordnete Ressource
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.conflict">
@@ -133,8 +133,8 @@
                             Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
                             vollständig abgeschlossen.
                         </span>
-                        <span *ngIf="section.type === 'invalidParent'"
-                              i18n="@@navbar.taskbar.warnings.info.invalidParent">
+                        <span *ngIf="section.type === 'missingOrInvalidParent'"
+                              i18n="@@navbar.taskbar.warnings.info.missingOrInvalidParent">
                             Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit
                             nicht angezeigt.
                         </span>
@@ -236,7 +236,7 @@
                                   i18n="@@navbar.taskbar.warnings.fixValues.multiple">Werte korrigieren</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalidParent'">
+                    <span *ngIf="section.type === 'missingOrInvalidParent'">
                         <button class="btn btn-primary select-new-parent-button"
                                 (click)="openMoveModal()">
                             <span class="mdi mdi-file-tree"></span>
@@ -244,7 +244,7 @@
                                   i18n="@@navbar.taskbar.warnings.selectNewParent">Übergeordnete Ressource neu setzen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'unconfiguredCategory' || section.type === 'invalidParent'">
+                    <span *ngIf="section.type === 'unconfiguredCategory' || section.type === 'missingOrInvalidParent'">
                         <button class="btn btn-danger delete-resource-button"
                                 (click)="openDeleteResourceModal()">
                             <span class="mdi mdi-delete"></span>

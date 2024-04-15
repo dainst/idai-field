@@ -156,8 +156,8 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.missingRelationTargets', value: 'Fehlende Zielressourcen von Relationen' })
         );
         this.utilTranslations.addTranslation(
-            'warnings.invalidParent',
-            this.i18n({ id: 'util.warnings.invalidParent', value: 'Fehlende übergeordnete Ressource' })
+            'warnings.missingOrInvalidParent',
+            this.i18n({ id: 'util.warnings.missingOrInvalidParent', value: 'Fehlende oder ungültige übergeordnete Ressource' })
         );
         this.utilTranslations.addTranslation(
             'warnings.missingIdentifierPrefixes',

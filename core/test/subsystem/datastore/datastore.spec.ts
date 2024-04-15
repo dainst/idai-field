@@ -142,6 +142,33 @@ describe('subsystem/datastore', () => {
     });
 
 
+    it('return documents without valid parent resource in find result if datastore option is enabled', async done => {
+
+        let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
+        let document2 = doc('sd2', '1', 'Find', 'id2');
+        let document3 = doc('sd3', '2', 'Find', 'id3');
+
+        document2.resource.relations.isRecordedIn = ['id1'];
+
+        document1 = await app.datastore.create(document1);
+        document2 = await app.datastore.create(document2);
+        document3 = await app.datastore.create(document3);
+
+        expect(document3.warnings?.missingOrInvalidParent).toBe(true);
+
+        const result = await app.datastore.find(
+            { categories: ['Find'] },
+            { includeResourcesWithoutValidParent: true }
+        );
+        
+        expect(result.documents.length).toBe(2);
+        expect(result.documents[0].resource.id).toBe('id2');
+        expect(result.documents[1].resource.id).toBe('id3');
+
+        done();
+    });
+
+
     it('update non-unique identifier warnings', async done => {
 
         let document1 = doc('sd1', 'Trench', 'Trench', 'id1');

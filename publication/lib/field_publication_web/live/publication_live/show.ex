@@ -40,7 +40,7 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
 
     search_indexing? =
       Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
-        type == :web_images
+        type == :search_index
       end)
 
     initialized_comments = initialize_comments(publication)
@@ -320,7 +320,6 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
           images: Image.evaluate_web_images_state(publication),
           search_index: OpenSearch.evaluate_state(publication)
         }
-        # TODO: Add tiling state evaluation?
       }
     end)
   end

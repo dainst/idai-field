@@ -12,6 +12,7 @@ import { ImageRowPage } from '../images/image-row.page';
 import { ImageViewModalPage } from '../image-view-modal.page';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { ProjectLanguagesModalPage } from '../configuration/project-languages-modal.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -486,10 +487,10 @@ test.describe('resources --', () => {
 
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        await MoveModalPage.typeInSearchBarInput('S2');
         await pause(2000);
-        await ResourcesPage.clickResourceListItemInMoveModal('S2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('S2');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         await pause(2000);
         const label = await NavbarPage.getActiveNavLinkLabel();
@@ -516,27 +517,27 @@ test.describe('resources --', () => {
         await ResourcesPage.performCreateResource('P1', 'place');
         await ResourcesPage.clickOpenContextMenu('S1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('P');
+        await MoveModalPage.typeInSearchBarInput('P');
 
-        let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        let labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(0))).not.toEqual('Projekt');
         }
 
-        await ResourcesPage.typeInMoveModalSearchBarInput('P1');
-        await ResourcesPage.clickResourceListItemInMoveModal('P1');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('P1');
+        await MoveModalPage.clickResourceListItem('P1');
+        await waitForNotExist(await MoveModalPage.getModal());
         let elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
         await ResourcesPage.clickOpenContextMenu('S1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('P');
-        labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        await MoveModalPage.typeInSearchBarInput('P');
+        labels = await MoveModalPage.getResourceIdentifierLabels();
         expect(await getText(labels.nth(0))).toEqual('Projekt');
 
-        await ResourcesPage.clickResourceListItemInMoveModal('Projekt');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('Projekt');
+        await waitForNotExist(await MoveModalPage.getModal());
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(5);
     });
@@ -555,7 +556,7 @@ test.describe('resources --', () => {
         expect(await getText(labels.nth(2))).toEqual('Stratigraphische Einheit');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickOpenContextMenu('S1');
@@ -566,7 +567,7 @@ test.describe('resources --', () => {
         expect(await getText(labels.nth(0))).toEqual('Ort');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
 
         await ResourcesPage.clickHierarchyButton('B1');
         await ResourcesPage.clickHierarchyButton('R1');
@@ -583,7 +584,7 @@ test.describe('resources --', () => {
         expect(await getText(labels.nth(3))).toEqual('Raum');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 
@@ -593,23 +594,23 @@ test.describe('resources --', () => {
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('operation-trench', 'modal');
 
-        let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        let labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(i))).not.toEqual('S1');
         }
 
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
         await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenContextMenu('testf1');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
 
-        labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(i))).not.toEqual('SE0');
         }
 
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 
@@ -625,13 +626,13 @@ test.describe('resources --', () => {
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
 
-        const labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        const labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(i))).not.toEqual('SE-D1');
             expect(await getText(labels.nth(i))).not.toEqual('SE-D2');
         }
 
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 
@@ -647,8 +648,8 @@ test.describe('resources --', () => {
         await ResourcesPage.clickOpenContextMenu('BW1');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('operation-survey', 'modal');
-        await ResourcesPage.clickResourceListItemInMoveModal('A1');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('A1');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         await NavbarPage.awaitAlert('kann nicht verschoben werden', false);
     });

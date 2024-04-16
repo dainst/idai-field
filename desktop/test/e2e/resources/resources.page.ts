@@ -135,18 +135,6 @@ export class ResourcesPage {
     }
 
 
-    public static clickResourceListItemInMoveModal(identifier: string) {
-
-        return click('#document-picker-resource-' + identifier);
-    }
-
-
-    public static clickCancelInMoveModal() {
-
-        return click('#move-modal-cancel-button');
-    }
-
-
     public static clickListEditButton(identifier: string) {
 
         return click(this.getListButton('edit', identifier));
@@ -325,18 +313,6 @@ export class ResourcesPage {
     }
 
 
-    public static getMoveModal() {
-
-        return getLocator('#move-modal');
-    }
-
-
-    public static getResourceIdentifierLabelsInMoveModal() {
-
-        return getLocator('#move-modal document-teaser .title');
-    }
-
-
     public static getListRows() {
 
         return getLocator('.row-wrapper');
@@ -387,12 +363,6 @@ export class ResourcesPage {
     public static async typeInIdentifierInConfirmDeletionInputField(identifier: string) {
 
         return typeIn(await this.getConfirmDeletionInputField(), identifier);
-    }
-
-
-    public static typeInMoveModalSearchBarInput(identifier: string) {
-
-        return typeIn('#move-modal .search-bar-input', identifier);
     }
 
 

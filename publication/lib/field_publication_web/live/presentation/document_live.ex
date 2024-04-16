@@ -111,7 +111,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       :noreply,
       socket
       |> assign(:publication, publication)
-      |> push_patch(to: ~p"/#{project_name}/#{publication.publication_date}/#{language}")
+      |> push_patch(
+        to: ~p"/#{project_name}/#{publication.publication_date}/#{language}",
+        replace: true
+      )
     }
   end
 

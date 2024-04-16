@@ -19,6 +19,7 @@ import { DeleteOutliersModalComponent } from './warnings/modals/delete-outliers-
 import { ConvertFieldDataModalComponent } from './warnings/modals/convert-field-data-modal.component';
 import { SelectNewFieldModalComponent } from './warnings/modals/select-new-field-modal.component';
 import { SelectNewCategoryModalComponent } from './warnings/modals/select-new-category-modal.component';
+import { InvalidResourceViewComponent } from './warnings/widgets/invalid-resource-view.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { SelectNewCategoryModalComponent } from './warnings/modals/select-new-ca
         DeleteOutliersModalComponent,
         SelectNewFieldModalComponent,
         SelectNewCategoryModalComponent,
+        InvalidResourceViewComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent

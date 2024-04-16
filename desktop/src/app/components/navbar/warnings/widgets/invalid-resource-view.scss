@@ -1,0 +1,15 @@
+invalid-resource-view {
+  .invalid-resource-field {
+    .invalid-resource-field-name {
+      font-weight: 600;
+    }
+
+    .data-info-content {
+      margin-top: 5px !important;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}

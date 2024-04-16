@@ -16,6 +16,7 @@ import { FixOutliersModalPage } from './fix-outliers-modal.page';
 import { ConvertFieldDataModalPage } from './convert-field-data-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 import { SelectModalPage } from './select-modal.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -1278,6 +1279,29 @@ test.describe('warnings --', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for missing or invalid parent by setting new parent in warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createWarningViaAppController('createMissingOrInvalidParentWarning');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Fehlende oder ungültige übergeordnete Ressource']);
+
+        await WarningsModalPage.clickSelectNewParentButton(0);
+        await MoveModalPage.typeInSearchBarInput('S1');
+        await MoveModalPage.clickResourceListItem('S1');
+
+        await waitForNotExist(await MoveModalPage.getModal());
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await ResourcesPage.clickHierarchyButton('S1');
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
     });
 
 

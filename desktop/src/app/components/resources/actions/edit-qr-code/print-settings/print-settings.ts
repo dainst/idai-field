@@ -6,8 +6,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 const FILE_PATH = remote.getGlobal('appDataPath') + '/print-settings.json';
 
 
-
-
 export interface PrintSettings {
     profiles: Array<PrintSettingsProfile>;
     selectedProfile: string;

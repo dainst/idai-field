@@ -15,6 +15,7 @@ export interface PrintSettingsProfile {
     scale: number;
     marginLeft: number;
     marginTop: number;
+    fontWeight: '500'|'600'|'700';
 }
 
 
@@ -40,6 +41,12 @@ export module PrintSettingsProfile {
                     + 'left: ' + processedProfile.marginLeft + 'mm;'
                     + 'transform: scale(' + processedProfile.scale + ');'
                 + '}'
+                + '#qr-code-string, #qr-code-identifier, .print-label-field {'
+                    + 'font-weight: ' + processedProfile.fontWeight + ';'
+                +'}'
+                + '#qr-code-container b {'
+                    + 'font-weight: ' + (parseInt(processedProfile.fontWeight) + 100) + ';'
+                + '}'
         + '}';
     }
 
@@ -52,7 +59,8 @@ export module PrintSettingsProfile {
             pageHeight: DEFAULT_PAGE_HEIGHT,
             scale: DEFAULT_SCALE,
             marginLeft: 0,
-            marginTop: 0
+            marginTop: 0,
+            fontWeight: '600'
         };
     }
 
@@ -66,7 +74,8 @@ export module PrintSettingsProfile {
             && validateValue(profile.marginTop)
             && profile.pageWidth > 0
             && profile.pageHeight > 0
-            && profile.scale > 0;
+            && profile.scale > 0
+            && ['500', '600', '700'].includes(profile.fontWeight);
     }
 
 

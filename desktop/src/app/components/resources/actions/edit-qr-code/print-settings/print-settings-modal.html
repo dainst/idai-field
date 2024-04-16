@@ -73,6 +73,15 @@
         <label i18n="@@resources.printSettingsModal.scaling">Skalierung (Prozent)</label>
         <input type="number" class="form-control" [(ngModel)]="selectedProfile.scale">
     </div>
+
+    <div class="mb-3">
+        <label i18n="@@resources.printSettingsModal.fontWeight">Schriftstärke</label>
+        <select class="form-control" [(ngModel)]="selectedProfile.fontWeight">
+            <option [value]="500" i18n="resources.printSettingsModal.fontWeight.light">Leicht</option>
+            <option [value]="600" i18n="resources.printSettingsModal.fontWeight.default">Standard</option>
+            <option [value]="700" i18n="resources.printSettingsModal.fontWeight.bold">Fett</option>
+        </select>
+    </div>
 </div>
 
 <div *ngIf="settings" class="modal-footer">

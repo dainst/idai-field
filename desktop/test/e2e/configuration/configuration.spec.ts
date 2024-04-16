@@ -10,6 +10,7 @@ import { AddFieldModalPage } from './add-field-modal.page';
 import { AddGroupModalPage } from './add-group-modal.page';
 import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -230,11 +231,11 @@ test.describe('configuration --', () => {
 
         await ResourcesPage.clickOpenContextMenu('Find1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('Feature');
-        const labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        await MoveModalPage.typeInSearchBarInput('Feature');
+        const labels = await MoveModalPage.getResourceIdentifierLabels();
         expect(await getText(labels.nth(0))).toEqual('Feature1');
 
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 

@@ -9,6 +9,7 @@ import { ResourcesSearchBarPage } from './resources-search-bar.page';
 import { SearchConstraintsPage } from '../widgets/search-constraints.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { ImageViewPage } from '../images/image-view.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -584,9 +585,9 @@ test.describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenContextMenu('testf1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('S-New');
-        await ResourcesPage.clickResourceListItemInMoveModal('S-New');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('S-New');
+        await MoveModalPage.clickResourceListItem('S-New');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(2);
@@ -603,9 +604,9 @@ test.describe('resources/state --', () => {
 
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        await ResourcesPage.clickResourceListItemInMoveModal('S2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('S2');
+        await MoveModalPage.clickResourceListItem('S2');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(1);

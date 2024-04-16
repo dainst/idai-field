@@ -6,6 +6,7 @@ import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
 import { DoceditTypeRelationsPage } from '../docedit/docedit-type-relations.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -126,9 +127,9 @@ test.describe('resources/types --', () => {
         await ResourcesGridListPage.clickGridElement('TC1');
         await ResourcesGridListPage.clickOpenContextMenu('T1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('TC2');
-        await ResourcesPage.clickResourceListItemInMoveModal('TC2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('TC2');
+        await MoveModalPage.clickResourceListItem('TC2');
+        await waitForNotExist(await MoveModalPage.getModal());
         await waitForExist(await ResourcesGridListPage.getGridElement('T1'));
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();
@@ -151,9 +152,9 @@ test.describe('resources/types --', () => {
 
         await ResourcesGridListPage.clickOpenContextMenu('T1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('TC2');
-        await ResourcesPage.clickResourceListItemInMoveModal('TC2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('TC2');
+        await MoveModalPage.clickResourceListItem('TC2');
+        await waitForNotExist(await MoveModalPage.getModal());
         await waitForExist(await ResourcesGridListPage.getGridElement('T1'));
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();

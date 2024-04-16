@@ -3,6 +3,7 @@ import { click, clickWithControlKey, clickWithShiftKey, getText, navigateTo, res
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from './resources.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -58,9 +59,9 @@ test.describe('resources/multi-select --', () => {
 
         await ResourcesPage.clickOpenContextMenu('1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        await ResourcesPage.clickResourceListItemInMoveModal('S2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('S2');
+        await MoveModalPage.clickResourceListItem('S2');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         expect(await NavbarPage.getActiveNavLinkLabel()).toContain('S2');
         await waitForExist(await ResourcesPage.getListItemEl('1'));
@@ -142,7 +143,7 @@ test.describe('resources/multi-select --', () => {
         expect(await getText(labels.nth(1))).toEqual('Ort');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
 
         await click(await ResourcesPage.getListItemEl('B1'));
         await clickWithShiftKey(await ResourcesPage.getListItemEl('B2'));
@@ -154,7 +155,7 @@ test.describe('resources/multi-select --', () => {
         expect(await getText(labels.nth(0))).toEqual('Ort');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
         
         await clickWithShiftKey(await ResourcesPage.getListItemEl('SE0'));
         await ResourcesPage.clickOpenContextMenu('SE0');

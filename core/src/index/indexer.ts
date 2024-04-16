@@ -34,7 +34,7 @@ import { ProjectConfiguration } from '../services';
 
         try {
             if (keepCachedInstances) {
-                documents = documents.filter(document => !documentCache.get(document.resource.id));
+                documents = documents.filter(document => !documentCache.get(document.resource?.id));
             }
             documents = convertDocuments(documents, converter);
             documents.forEach(document => {

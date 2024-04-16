@@ -1,7 +1,7 @@
 
 <div class="modal-header">
     <h5 *ngIf="documents.length === 1" class="modal-title" i18n="@@resources.deleteModal.header.single">
-        Ressource {{documents[0].resource.identifier}} löschen?
+        Ressource <b>{{documents[0].resource.identifier}}</b> löschen?
     </h5>
     <h5 *ngIf="documents.length > 1" class="modal-title" i18n="@@resources.deleteModal.header.multiple">
         {{documents.length}} Ressourcen löschen?

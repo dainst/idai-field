@@ -45,9 +45,9 @@ Run the application from the directory containing both files with:
 docker-compose up
 ```
 
-This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser browser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDB's webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
+This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDB's webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
 
-You can now run [CLI](https://github.com/dainst/idai-field/wiki/FieldHub#manual) scripts in a second terminal, for example to finalize the CouchDB setup.
+You can now run [CLI](https://github.com/dainst/idai-field/wiki/FieldHub#manual) scripts in a second terminal to finalize the CouchDB setup.
 
 ```
 docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.setup()'
@@ -83,34 +83,19 @@ Use the `uid` to set the owner for `FILE_DIRECTORY`.
 ```
 sudo chown 65534 files/
 ```
-### Creating a project using the interface
+### Creating a project
 
-Open http://localhost and login with the CouchDB admin credentials as defined in your .env file. You should be able to create new projects in your browser.
+Open http://localhost and login with the CouchDB admin credentials as defined in your .env file. You should be able to create new projects in your browser. Create a project `my_first_project`, you can set a custom password or have Field Hub generate one for you.
 
-### Creating a project using the CLI
-Next we create a project with a random password. 
-```
-docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.create_project("my_first_project")'
-```
+After project creation, your `FILE_DIRECTORY` you should now have a directory with the name `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`. Both the database and the file directories are empty at this point.
 
-The result should look something like this:
-```
-2023-01-18 12:47:54.879 [info] Creating project my_first_project.
-2023-01-18 12:47:55.309 [info] Created project database 'my_first_project'.
-2023-01-18 12:47:55.317 [info] Created directory for 'original_image'.
-2023-01-18 12:47:55.317 [info] Created directory for 'thumbnail_image'.
-2023-01-18 12:47:55.381 [info] Created user 'my_first_project' with password 'U/Sk/B6xjPLHP8gY+g35UITmOci8vS8L'.
-2023-01-18 12:47:55.455 [info] Set user 'my_first_project' as member to project 'my_first_project'.
-2023-01-18 12:47:55.456 [info] Project creation done.
-```
+You can now create a `my_first_project` project in your Field Desktop application and should then be able to sync a Field Client with the server given the correct credentials and the servers domain or IP. Of course, if you already have a Field Desktop project you can instead repeat the steps above but replace `my_first_project` with the project key of your Field Desktop project.
 
-If you want to set the password yourself, just add a second parameter (also see [CLI documentation](https://github.com/dainst/idai-field/wiki/FieldHub#manual)). In your `FILE_DIRECTORY` you should now have a directory called `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`.
+### Collaborating
 
-### Using the newly created project
+After you have created and setup `my_first_project` in your Field Desktop application and synced it to your Field Hub instance on a server, others can use the "Download project" option in Field Desktop to get the project and start collaborating. They __must__ use "Download project", __not__ create a new project `my_first_project` on their own, because the latter will cause data conflicts.
 
-You should now be able to sync a Field Client with the server giving the above credentials and the servers domain or IP.
-
-## Run the application in production
+## Using the application in production
 
 To run the application in production, you should do (atleast) 3 things:
 1. Uncomment the restart policy parts in the docker-compose file

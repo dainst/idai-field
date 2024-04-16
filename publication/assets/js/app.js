@@ -37,7 +37,11 @@ Hooks.HoverHighlightMapFeature = {
     // This hook allows arbitrary DOM elements to trigger highlights on a target open layers map on mousemove events.
     mounted() {
         this.el.addEventListener("mousemove", (_) => {
-            window.dispatchEvent(new CustomEvent(`phx:map-highlight-feature-${this.el.getAttribute("target")}`, { detail: { feature_id: this.el.id } }));
+            window.dispatchEvent(
+                new CustomEvent(`phx:map-highlight-feature-${this.el.getAttribute("target")}`, {
+                    detail: { feature_id: this.el.getAttribute("referenced_project") }
+                })
+            );
         });
         this.el.addEventListener("mouseleave", (_) => {
             window.dispatchEvent(new CustomEvent(`phx:map-clear-highlights-${this.el.getAttribute("target")}`));

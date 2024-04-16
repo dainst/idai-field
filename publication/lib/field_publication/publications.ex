@@ -82,9 +82,17 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get!(project_name, draft_date) do
-    {:ok, publication} = get(project_name, draft_date)
-    publication
+  def get!(publication_id) when is_binary(publication_id) do
+    CouchService.get_document(publication_id)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        json_doc = Jason.decode!(body)
+
+        apply_changes(Publication.changeset(%Publication{}, json_doc))
+
+      {:ok, %{status: 404}} ->
+        {:error, :not_found}
+    end
   end
 
   def get!(%Publication{project_name: project_name, draft_date: draft_date})
@@ -103,6 +111,11 @@ defmodule FieldPublication.Publications do
       }
     })
     |> List.first()
+  end
+
+  def get!(project_name, draft_date) do
+    {:ok, publication} = get(project_name, draft_date)
+    publication
   end
 
   def get_current_published(project_name) when is_binary(project_name) do

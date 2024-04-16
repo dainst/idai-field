@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.HomeLive do
+  alias FieldPublication.Publications.Search
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -8,7 +9,8 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.Publications.Data
 
   alias FieldPublicationWeb.Presentation.Components.{
-    I18n
+    I18n,
+    DocumentLink
   }
 
   def mount(_assigns, _session, socket) do
@@ -58,14 +60,17 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       end)
       |> Enum.reject(fn val -> is_nil(val) end)
 
-    {:ok,
-     socket
-     |> assign(
-       :published_projects,
-       published_projects
-     )
-     |> assign(:highlighted, nil)
-     |> assign(:features, features)}
+    {
+      :ok,
+      socket
+      |> assign(
+        :published_projects,
+        published_projects
+      )
+      |> assign(:highlighted, nil)
+      |> assign(:features, features)
+      |> assign(:search_results, [])
+    }
   end
 
   def handle_event("home_marker_hover", project_identifier, socket) do
@@ -89,6 +94,26 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
   def handle_event("project_selected", %{"id" => project_identifier}, socket) do
     {:noreply, push_navigate(socket, to: "/#{project_identifier}")}
+  end
+
+  def handle_event("search", %{"search_input" => query}, socket) do
+    results =
+      Search.general_search(query)
+      |> Stream.map(fn %{publication_id: id} = result ->
+        Map.put(result, :publication, Publications.get!(id))
+      end)
+      |> Enum.map(fn %{doc: %{"resource" => res}} = result ->
+        Map.put(result, :doc, %{
+          "id" => res["id"],
+          "category" => res["category"],
+          "identifier" => res["identifier"]
+        })
+      end)
+
+    {
+      :noreply,
+      assign(socket, :search_results, results)
+    }
   end
 
   defp create_home_marker(%{longitude: lon, latitude: lat}, project_name) do

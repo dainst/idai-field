@@ -190,4 +190,14 @@ defmodule FieldPublication.DataServices.OpensearchService do
       {"Authorization", "Basic #{credentials}"}
     ]
   end
+
+  def run_search(index_name, query) do
+    Finch.build(
+      :post,
+      "#{@base_url}/#{index_name}/_search",
+      headers(),
+      Jason.encode!(query)
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
 end

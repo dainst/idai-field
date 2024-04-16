@@ -1,5 +1,5 @@
 import { clone } from 'tsfun';
-import { validateInt } from 'idai-field-core';
+import { validateFloat } from 'idai-field-core';
 
 
 const DEFAULT_PAGE_WIDTH = 76;          // mm
@@ -74,7 +74,7 @@ export module PrintSettingsProfile {
 
         return value !== undefined
             && value !== null
-            && validateInt(value.toString());
+            && validateFloat(value.toString());
     }
 
 

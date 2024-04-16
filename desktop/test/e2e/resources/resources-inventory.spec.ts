@@ -5,6 +5,7 @@ import { SearchBarPage } from '../widgets/search-bar.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -81,8 +82,8 @@ test.describe('resources/inventory --', () => {
         await ResourcesGridListPage.clickOpenContextMenu('SP2');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.typeInSearchField('SP3');
-        await ResourcesPage.clickResourceListItemInMoveModal('SP3');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('SP3');
+        await waitForNotExist(await MoveModalPage.getModal());
         await waitForExist(await ResourcesGridListPage.getGridElement('SP2'));
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();
@@ -99,8 +100,8 @@ test.describe('resources/inventory --', () => {
         await ResourcesGridListPage.clickOpenContextMenu('SP2');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('inventoryregister', 'modal');
-        await ResourcesPage.clickResourceListItemInMoveModal('Inventarverzeichnis');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('Inventarverzeichnis');
+        await waitForNotExist(await MoveModalPage.getModal());
         await waitForExist(await ResourcesGridListPage.getGridElement('SP2'));
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();

@@ -1,3 +1,18 @@
+<div class="modal-header">
+    <h5 *ngIf="documents.length > 1" class="modal-title"
+        i18n="@@resources.moveModal.header.move.multiple">
+        <b>{{documents.length}} Ressourcen</b> verschieben?
+    </h5>
+    <h5 *ngIf="documents.length === 1 && hasValidParent()" class="modal-title"
+        i18n="@@resources.moveModal.header.move.single">
+        Ressource <b>{{documents[0].resource.identifier}}</b> verschieben?
+    </h5>
+    <h5 *ngIf="documents.length === 1 && !hasValidParent()" class="modal-title"
+        i18n="@@resources.moveModal.header.setNewParent">
+        Übergeordnete Ressource neu setzen
+    </h5>
+</div>
+
 <div id="move-modal" class="modal-body">
     <div *ngIf="!isLoading()">
         <p *ngIf="documents.length === 1" i18n="@@resources.moveModal.chooseParentResource.single">

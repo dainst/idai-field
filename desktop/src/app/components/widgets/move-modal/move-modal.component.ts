@@ -45,6 +45,8 @@ export class MoveModalComponent {
 
     public isLoading = () => this.loading.isLoading('moveModal');
 
+    public hasValidParent = () => this.documents.length > 1 || !this.documents[0].warnings?.missingOrInvalidParent;
+
 
     public getConstraints = () => {
 

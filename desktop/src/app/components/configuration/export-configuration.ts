@@ -12,7 +12,7 @@ export async function exportConfiguration(configurationDocument: ConfigurationDo
                                           getTranslation: (id: string) => string) {
 
     const filePath: string = await chooseFilepath(projectName, getTranslation);
-    if (!filePath) return;
+    if (!filePath) throw 'canceled';
 
     const content: string = getContent(configurationDocument);
 

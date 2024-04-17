@@ -663,8 +663,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             );
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch (errWithParams) {
-            console.error(errWithParams);
-            this.messages.add(errWithParams);
+            if (errWithParams !== 'canceled') {
+                this.messages.add(errWithParams);
+            }
         }
     }
 

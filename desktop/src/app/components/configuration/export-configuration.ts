@@ -41,11 +41,12 @@ async function chooseFilepath(projectName: string, getTranslation: (id: string) 
 function getContent(configurationDocument: ConfigurationDocument): string {
 
     const serializationObject = {
+        version: remote.app.getVersion(),
         forms: configurationDocument.resource.forms,
         languages: configurationDocument.resource.languages,
         order: configurationDocument.resource.order,
         valuelists: configurationDocument.resource.valuelists,
-        projectLanguages: configurationDocument.resource.projectLanguages,
+        projectLanguages: configurationDocument.resource.projectLanguages
     };
 
     return Buffer.from(JSON.stringify(serializationObject)).toString('base64');

@@ -13,7 +13,7 @@
           <%= if @search_results != [] do %>
             <div class="bg-slate-50 mt-1">
               <%= for result <- @search_results do %>
-                <div class="grid relative mt-1">
+                <div class="grid relative">
                   <div>
                     <DocumentLink.show
                       project={result.publication.project_name}
@@ -29,7 +29,7 @@
                     />
                   </div>
                   <div
-                    class={"p-0.5 text-xs absolute bottom-1 right-1 rounded cursor-pointer #{if @highlighted == result.publication.project_name do "bg-indigo-500" else "bg-slate-300" end}"}
+                    class={"p-0.5 text-xs absolute bottom-1.5 right-1 rounded cursor-pointer #{if @highlighted == result.publication.project_name do "bg-indigo-500" else "bg-slate-300" end}"}
                     phx-click="project_selected"
                     phx-value-id={result.publication.project_name}
                   >

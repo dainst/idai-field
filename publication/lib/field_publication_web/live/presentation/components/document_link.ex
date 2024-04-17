@@ -7,7 +7,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
 
   def show(assigns) do
     ~H"""
-    <div class="flex">
+    <div class="flex mb-[2px]">
       <div
         class="p-2 rounded-tl rounded-bl"
         style={"background-color: #{@preview_doc["category"]["color"]}; filter: saturate(50%);"}

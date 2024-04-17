@@ -50,7 +50,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
             <.group_heading>
               <I18n.text values={depicted_in["labels"]} />
             </.group_heading>
-            <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 h-[300px] mb-5">
+            <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for preview_doc <- depicted_in["values"] do %>
                 <.link
                   patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}

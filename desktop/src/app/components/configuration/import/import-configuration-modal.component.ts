@@ -4,6 +4,7 @@ import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
+import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
@@ -25,7 +26,9 @@ export class ImportConfigurationModalComponent {
     public applyChanges: (configurationDocument: ConfigurationDocument,
         reindexConfiguration?: boolean) => Promise<void>;
 
+    public source: 'file'|'project' = 'file';
     public selectedProject: string;
+    public selectedFile: any;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -39,18 +42,42 @@ export class ImportConfigurationModalComponent {
     public getProjects = () => this.settingsProvider.getSettings().dbs.slice(1).filter(db => db !== 'test');
 
 
+    public isConfirmButtonEnabled(): boolean {
+        
+        return (this.source === 'file' && this.selectedFile)
+            || (this.source === 'project' && this.selectedProject);
+    }
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
 
+    public selectFile(event: any) {
+
+        this.selectedFile = event.target.files?.length ? event.target.files[0] : undefined;
+    }
+
+
+    public reset() {
+
+        this.selectedFile = undefined;
+        this.selectedProject = undefined;
+    }
+
+
     public async confirm() {
 
-        if (!this.selectedProject) return;
+        if (!this.isConfirmButtonEnabled()) return;
 
         try {
-            await this.performImport();
+            if (this.source === 'file') {
+                await this.performImportFromFile();
+            } else {
+                await this.performImportFromProject();
+            }
             this.activeModal.close();
         } catch (err) {
             this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
@@ -58,7 +85,7 @@ export class ImportConfigurationModalComponent {
     }
 
 
-    private async performImport(): Promise<void> {
+    private async performImportFromProject() {
 
         const configurationDocumentToImport: ConfigurationDocument
             = await this.fetchConfigurationDocument(this.selectedProject);
@@ -66,6 +93,22 @@ export class ImportConfigurationModalComponent {
         const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource = configurationDocumentToImport.resource;
         
+        return await this.applyChanges(clonedConfigurationDocument, true);
+    }
+
+
+    private async performImportFromFile() {
+
+        const fileContent: string = await getAsynchronousFs().readFile(this.selectedFile.path, 'utf-8');
+        const deserializedObject = JSON.parse(Buffer.from(fileContent, 'base64').toString());
+
+        const clonedConfigurationDocument = Document.clone(this.configurationDocument);
+        clonedConfigurationDocument.resource.forms = deserializedObject.forms;
+        clonedConfigurationDocument.resource.languages = deserializedObject.languages;
+        clonedConfigurationDocument.resource.order = deserializedObject.order;
+        clonedConfigurationDocument.resource.valuelists = deserializedObject.valuelists;
+        clonedConfigurationDocument.resource.projectLanguages = deserializedObject.projectLanguages;
+
         return await this.applyChanges(clonedConfigurationDocument, true);
     }
 

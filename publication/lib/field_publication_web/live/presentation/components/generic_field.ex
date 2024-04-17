@@ -12,20 +12,21 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{type: single_value} = assigns)
-      when single_value in ["unsignedInt", "date", "radio"] do
-    ~H"""
-    <dt class="font-bold"><I18n.text values={@labels} /></dt>
-    <dd class="ml-4"><%= @values %></dd>
-    """
-  end
-
-  def render(%{type: type} = assigns) when type in ["checkboxes", "simpleMultiInput"] do
+  def render(%{type: type, values: values} = assigns)
+      when type in ["checkboxes", "simpleMultiInput"] and is_list(values) do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
     <%= for value <- @values do %>
       <dd class="ml-4"><%= value %></dd>
     <% end %>
+    """
+  end
+
+  def render(%{type: single_value} = assigns)
+      when single_value in ["unsignedInt", "date", "radio", "checkboxes"] do
+    ~H"""
+    <dt class="font-bold"><I18n.text values={@labels} /></dt>
+    <dd class="ml-4"><%= @values %></dd>
     """
   end
 

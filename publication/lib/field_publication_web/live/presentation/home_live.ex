@@ -83,6 +83,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
         Map.put(result, :doc, %{
           "id" => res["id"],
           "category" => res["category"],
+          "groups" => res["groups"],
           "identifier" => res["identifier"]
         })
       end)

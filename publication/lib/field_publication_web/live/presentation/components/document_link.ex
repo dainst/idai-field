@@ -25,9 +25,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       >
         <div>
           <%= @preview_doc["identifier"] %>
-          <small class="ml-2 text-slate-600">
-            <I18n.text values={Data.get_field_values(@preview_doc, "shortDescription")} />
-          </small>
+          <% shortdescription = Data.get_field(@preview_doc, "shortDescription") %>
+          <%= if shortdescription do %>
+            <small class="ml-2 text-slate-600">
+              <I18n.text values={shortdescription["values"]} />
+            </small>
+          <% end %>
         </div>
       </.link>
     </div>

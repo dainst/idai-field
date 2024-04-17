@@ -131,7 +131,7 @@ defmodule FieldPublication.Publications.Data do
     }
   end
 
-  defp extend_field_groups(category_configuration, resource) do
+  def extend_field_groups(category_configuration, resource) do
     keys = Map.keys(resource)
 
     category_configuration["groups"]
@@ -201,8 +201,8 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def get_field(doc, name) do
-    Enum.map(doc["groups"], fn group ->
+  def get_field(%{"groups" => groups} = _doc, name) do
+    Enum.map(groups, fn group ->
       Enum.find(group["fields"], fn %{"key" => key} ->
         key == name
       end)
@@ -216,6 +216,11 @@ defmodule FieldPublication.Publications.Data do
     end)
     |> Enum.reject(fn val -> val == nil end)
     |> List.first()
+  end
+
+  # Better solution if doc is used without groups?
+  def get_field(_, _) do
+    nil
   end
 
   def get_group(doc, name) do

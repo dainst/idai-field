@@ -7,6 +7,8 @@ defmodule FieldPublication.Processing.OpenSearch do
   alias FieldPublication.Publications.Data
   alias FieldPublication.Schemas.Publication
 
+  require Logger
+
   def evaluate_state(%Publication{} = publication) do
     publication_id = Publications.get_doc_id(publication)
 
@@ -70,9 +72,22 @@ defmodule FieldPublication.Processing.OpenSearch do
     |> Task.async_stream(
       fn %{"resource" => res} = doc ->
         category_configuration = Data.search_category_tree(config, res["category"])
-        res = Map.put(res, "category", Data.extend_category(category_configuration["item"], res))
-        doc = Map.put(doc, "resource", res)
-        OpensearchService.put(publication_id, doc)
+
+        if category_configuration == :not_found do
+          Logger.warning(
+            "Unable to find configuration for category '#{res["category"]}', document: "
+          )
+
+          Logger.warning(inspect(doc))
+        else
+          res =
+            res
+            |> Map.put("category", Data.extend_category(category_configuration["item"], res))
+            |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
+
+          doc = Map.put(doc, "resource", res)
+          OpensearchService.put(publication_id, doc)
+        end
 
         updated_state =
           Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->

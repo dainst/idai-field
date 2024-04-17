@@ -245,6 +245,7 @@ defmodule FieldPublication.Publications.Data do
       %{
         "id" => res["id"],
         "category" => extend_category(category_configuration["item"], res),
+        "groups" => extend_field_groups(category_configuration["item"], res),
         "identifier" => res["identifier"]
       }
     end)

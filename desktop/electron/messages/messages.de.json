@@ -40,6 +40,7 @@
     "menu.configuration.projectLanguages": "Projektsprachen auswählen...",
     "menu.configuration.valuelistManagement": "Wertelistenverwaltung",
     "menu.configuration.importConfiguration": "Konfiguration importieren...",
+    "menu.configuration.exportConfiguration": "Konfiguration exportieren...",
     "menu.configuration.showHiddenFields": "Versteckte Felder anzeigen",
     "menu.configuration.highlightProjectSpecificElements": "Eigene Kategorien/Felder hervorheben",
     "menu.view": "Anzeige",

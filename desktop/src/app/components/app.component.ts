@@ -271,6 +271,9 @@ export class AppComponent {
             'inputTypes.identifier',
             this.i18n({ id: 'config.inputType.identifier', value: 'Bezeichner' })
         );
+        this.utilTranslations.addTranslation(
+            'configurationFile', this.i18n({ id: 'config.configurationFile', value: 'Field-Konfigurationsdatei' })
+        );
     }
 
 

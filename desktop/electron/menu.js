@@ -302,6 +302,10 @@ const getTemplate = (mainWindow, context, config) => {
                 click: () => mainWindow.webContents.send('menuItemClicked', 'importConfiguration'),
                 enabled: isDefaultContext(context)
             }, {
+                label: messages.get('menu.configuration.exportConfiguration'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'exportConfiguration'),
+                enabled: isDefaultContext(context)
+            }, {
                 type: 'separator'
             }, {
                 type: 'checkbox',

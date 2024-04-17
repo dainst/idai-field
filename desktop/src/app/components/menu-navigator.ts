@@ -64,6 +64,7 @@ export class MenuNavigator {
             case 'projectLanguages':
             case 'valuelists':
             case 'importConfiguration':
+            case 'exportConfiguration':
                 await this.zone.run(() => ObserverUtil.notify(this.configurationMenuObservers, menuItem));
                 break;
             default:

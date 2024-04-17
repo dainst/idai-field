@@ -35,6 +35,9 @@ import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
+import { exportConfiguration } from './export-configuration';
+import { UtilTranslations } from '../../util/util-translations';
+import { M } from '../messages/m';
 
 
 @Component({
@@ -129,6 +132,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private documentConverter: DocumentConverter,
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
+                private utilTranslations: UtilTranslations,
                 private i18n: I18n) {}
 
 
@@ -212,14 +216,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         switch (menuItem) {
             case 'projectLanguages':
-                this.openProjectLanguagesModal();
+                await this.openProjectLanguagesModal();
                 break;
             case 'valuelists':
                 await AngularUtility.refresh();
-                this.openValuelistsManagementModal();
+                await this.openValuelistsManagementModal();
                 break;
             case 'importConfiguration':
-                this.openImportConfigurationModal();
+                await this.openImportConfigurationModal();
+                break;
+            case 'exportConfiguration':
+                await this.exportConfiguration();
                 break;
         }
     }
@@ -643,6 +650,22 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.applyChanges = this.applyChanges;
 
         await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private async exportConfiguration() {
+
+        try {
+            await exportConfiguration(
+                this.configurationDocument,
+                this.settingsProvider.getSettings().selectedProject,
+                (id: string) => this.utilTranslations.getTranslation(id)
+            );
+            this.messages.add([M.EXPORT_SUCCESS]);
+        } catch (errWithParams) {
+            console.error(errWithParams);
+            this.messages.add(errWithParams);
+        }
     }
 
 

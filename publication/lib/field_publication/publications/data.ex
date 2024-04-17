@@ -14,11 +14,23 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def get_configuration(%Publication{configuration_doc: config_name}) do
-    CouchService.get_document(config_name)
-    |> then(fn {:ok, %{body: body}} ->
-      Jason.decode!(body)
-    end)
-    |> Map.get("config", [])
+    Cachex.get(:configuration_docs, config_name)
+    |> case do
+      {:ok, nil} ->
+        config =
+          CouchService.get_document(config_name)
+          |> then(fn {:ok, %{body: body}} ->
+            Jason.decode!(body)
+          end)
+          |> Map.get("config", [])
+
+        Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
+
+        config
+
+      {:ok, cached} ->
+        cached
+    end
   end
 
   def get_document(uuid, %Publication{database: db} = publication, raw \\ false) do

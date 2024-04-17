@@ -78,6 +78,7 @@ export class ImportConfigurationModalComponent {
             } else {
                 await this.performImportFromProject();
             }
+            this.messages.add([M.CONFIGURATION_SUCCESS_IMPORT]);
             this.activeModal.close();
         } catch (err) {
             this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);

@@ -257,6 +257,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static PROJECT_CREATION_ERROR_NAME_LENGTH = 'projectCreation.error.nameLength';
 
     // Configuration Package
+    public static CONFIGURATION_SUCCESS_IMPORT = 'configuration.success.import';
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
     public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
@@ -1686,6 +1687,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.'
             }),
             level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_SUCCESS_IMPORT] = {
+            content: i18n({
+                id: 'messages.configuration.success.import',
+                value: 'Die Projektkonfiguration wurde erfolgreich importiert.'
+            }),
+            level: 'success'
         };
         this.msgs[M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST] = {
             content: i18n({

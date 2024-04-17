@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { compareVersions } from 'compare-versions';
+import { isString } from 'tsfun';
 import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
@@ -7,6 +9,7 @@ import { Messages } from '../../messages/messages';
 import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 @Component({
@@ -81,7 +84,11 @@ export class ImportConfigurationModalComponent {
             this.messages.add([M.CONFIGURATION_SUCCESS_IMPORT]);
             this.activeModal.close();
         } catch (err) {
-            this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
+            if (isString(err)) {
+                this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
+            } else {
+                this.messages.add(err);
+            }
         }
     }
 
@@ -102,6 +109,9 @@ export class ImportConfigurationModalComponent {
 
         const fileContent: string = await getAsynchronousFs().readFile(this.selectedFile.path, 'utf-8');
         const deserializedObject = JSON.parse(Buffer.from(fileContent, 'base64').toString());
+        if (!this.isCompatibleVersion(deserializedObject.version)) {
+            throw [M.CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION, deserializedObject.version];
+        }
 
         const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource.forms = deserializedObject.forms;
@@ -124,5 +134,11 @@ export class ImportConfigurationModalComponent {
             project,
             this.settingsProvider.getSettings().username
         );
+    }
+
+
+    private isCompatibleVersion(version: string): boolean {
+
+        return compareVersions(remote.app.getVersion(), version) !== -1;
     }
 }

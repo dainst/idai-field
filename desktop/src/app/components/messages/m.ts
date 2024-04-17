@@ -268,6 +268,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER = 'configuration.error.invalidResourceLimit.notANumber';
     public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW = 'configuration.error.invalidResourceLimit.tooLow';
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
+    public static CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION = 'configuration.error.unsupportedVersion';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
 
     public msgs : { [id: string]: MessageTemplate } = {};
@@ -1762,6 +1763,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.configuration.error.importFailure',
                 value: 'Die Projektkonfiguration konnte nicht importiert werden.'
+            }),
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION] = {
+            content: i18n({
+                id: 'messages.configuration.error.unsupportedVersion',
+                value: 'Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.'
             }),
             level: 'danger'
         };

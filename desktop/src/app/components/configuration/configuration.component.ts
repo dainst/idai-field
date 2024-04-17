@@ -315,8 +315,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public selectCategory(category: CategoryForm) {
 
-        this.selectedCategory = this.clonedProjectConfiguration.getCategory(category.name);
-        this.configurationState.setSelectedCategoryName(this.selectedCategory.name);
+        if (!category) {
+            this.selectedCategory = undefined;
+        } else {
+            this.selectedCategory = this.clonedProjectConfiguration.getCategory(category.name);
+            this.configurationState.setSelectedCategoryName(this.selectedCategory.name);
+        }
     }
 
 

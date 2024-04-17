@@ -80,7 +80,7 @@
                 </button>
             </div>
         </div>
-        <div id="project-configuration-content" class="row">
+        <div id="project-configuration-content" class="row" [class.no-selected-category]="!selectedCategory">
             <div class="col-2 sidebar">
                 <div id="category-picker-container">
                     <category-picker *ngIf="filteredTopLevelCategoriesArray"

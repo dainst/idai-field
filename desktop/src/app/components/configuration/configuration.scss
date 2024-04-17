@@ -63,6 +63,10 @@
 
   #project-configuration-content {
     font-size: 15px;
+
+    &.no-selected-category {
+      background-color: white;
+    }
   }
 
   code {

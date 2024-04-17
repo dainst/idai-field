@@ -454,6 +454,55 @@
       "Modern History"
     ]
   },
+  "color-archaeodox-intensity": {
+    "creationDate": "",
+    "createdBy": "",
+    "values": {
+      "sehr hell": {},
+      "hell": {},
+      "mittel": {},
+      "dunkel": {},
+      "sehr dunkel": {},
+      "leuchtend": {},
+      "blass": {},
+      "fahl": {},
+      "schmutzig": {}
+    }
+  },
+  "color-archaeodox-tendency": {
+    "creationDate": "",
+    "createdBy": "",
+    "values": {
+      "blau-": {},
+      "braun-": {},
+      "gelb-": {},
+      "grün-": {},
+      "rot-": {},
+      "grau-": {},
+      "violett-": {},
+      "orange-": {},
+      "oliv-": {},
+      "türkis-": {},
+      "ocker-": {}
+    }
+  },
+  "color-archaeodox-base": {
+    "creationDate": "",
+    "createdBy": "",
+    "values": {
+      "schwarz": {},
+      "weiß": {},
+      "blau": {},
+      "braun": {},
+      "gelb": {},
+      "grün": {},
+      "rot": {},
+      "grau": {},
+      "violett": {},
+      "orange": {},
+      "ocker": {}
+    }
+  },
   "colors-default-1": {
     "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
@@ -26070,6 +26119,34 @@
     },
     "references": [
       "http://uri.gbv.de/terminology/amh_befunde/"
+    ]
+  },
+  "Feature-coloration-archaeoDox": {
+    "createdBy": "Archäologisches Museum Hamburg",
+    "creationDate": "",
+    "values": {
+      "marmoriert": {},
+      "gefleckt": {},
+      "gebändert": {},
+      "geadert": {}
+    }
+  },
+  "Feature-amount-archaeoDox": {
+    "createdBy": "Archäologisches Museum Hamburg",
+    "creationDate": "",
+    "values": {
+      "ausschließlich": {},
+      "hauptsächlich": {},
+      "stark": {},
+      "mittel": {},
+      "gering": {}
+    },
+    "order": [
+      "ausschließlich",
+      "hauptsächlich",
+      "stark",
+      "mittel",
+      "gering"
     ]
   }
 }

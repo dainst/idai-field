@@ -649,7 +649,15 @@
         "period": "period-archaeoDox",
         "archaeoDox:distinguishingCriterium": "Layer-distinguishingCriteria-default",
         "archaeoDox:soilType": "Layer-soilType-default",
-        "archaeoDox:consistency": "Layer-consistency-default"
+        "archaeoDox:consistency": "Layer-consistency-default",
+        "archaeoDox:coloration": "Feature-coloration-archaeoDox",
+        "archaeoDox:humusAmount": "Feature-amount-archaeoDox",
+        "archaeoDox:organicAmount": "Feature-amount-archaeoDox",
+        "archaeoDox:color": {
+          "intensity": "color-archaeodox-intensity",
+          "tendency": "color-archaeodox-tendency",
+          "baseColor": "color-archaeodox-base"
+        }
       },
       "fields": {
         "shortDescription": {
@@ -677,13 +685,39 @@
         "archaeoDox:isArchaeologicallyIrrelevant": {
           "inputType": "boolean",
           "constraintIndexed": true
+        },
+        "archaeoDox:coloration": {
+          "inputType": "dropdown"
+        },
+        "archaeoDox:humusAmount": {
+          "inputType": "dropdown"
+        },
+        "archaeoDox:organicAmount": {
+          "inputType": "dropdown"
+        },
+        "archaeoDox:color": {
+          "inputType": "composite",
+          "subfields": [
+            {
+              "name": "intensity",
+              "inputType": "dropdown"
+            },
+            {
+              "name": "tendency",
+              "inputType": "dropdown"
+            },
+            {
+              "name": "baseColor",
+              "inputType": "dropdown"
+            }
+          ]
         }
       },
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum", "archaeoDox:documentationUnit",
-            "processor", "date", "diary", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "shortDescriptionAddendum",
+            "archaeoDox:documentationUnit", "processor", "date", "diary", "isSameAs"]
         },
         {
           "name": "hierarchy",
@@ -691,8 +725,10 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "featureForm", "featureBorders", "archaeoDox:distinguishingCriterium", "archaeoDox:isNatural",
-            "archaeoDox:soilType", "archaeoDox:consistency", "archaeoDox:isArchaeologicallyIrrelevant", "comparison"]
+          "fields": ["description", "featureForm", "featureBorders", "archaeoDox:distinguishingCriterium",
+            "archaeoDox:isNatural", "archaeoDox:soilType", "archaeoDox:consistency",
+            "archaeoDox:isArchaeologicallyIrrelevant", "comparison", "archaeoDox:color", "archaeoDox:coloration",
+            "archaeoDox:humusAmount", "archaeoDox:organicAmount"]
         },
         {
           "name": "time",

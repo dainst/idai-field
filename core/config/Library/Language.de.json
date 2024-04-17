@@ -1675,6 +1675,29 @@
         },
         "archaeoDox:isArchaeologicallyIrrelevant": {
           "label": "Ohne archäologische Relevanz"
+        },
+        "archaeoDox:coloration": {
+          "label": "Farbverteilung"
+        },
+        "archaeoDox:humusAmount": {
+          "label": "Humusanteil"
+        },
+        "archaeoDox:organicAmount": {
+          "label": "Organikanteil (nicht humifiziert)"
+        },
+        "archaeoDox:color": {
+          "label": "Farbe",
+          "subfields": {
+            "intensity": {
+              "label": "Intensität"
+            },
+            "tendency": {
+              "label": "Tendenz"
+            },
+            "baseColor": {
+              "label": "Grundfarbe"
+            }
+          }
         }
       }
     },

@@ -104,16 +104,17 @@ defmodule FieldPublication.Publications.Data do
     category_configuration = search_category_tree(configuration, resource["category"])
 
     %{
-      "category" => extent_category(category_configuration["item"], resource),
+      "id" => resource["id"],
+      "category" => extend_category(category_configuration["item"], resource),
       "groups" => extend_field_groups(category_configuration["item"], resource),
       "relations" => extend_relations(category_configuration["item"], resource, publication)
     }
   end
 
-  defp extent_category(category_configuration, resource) do
+  def extend_category(category_configuration, resource) do
     %{
-      "labels" => category_configuration["item"]["categoryLabel"],
-      "color" => category_configuration["item"]["color"],
+      "labels" => category_configuration["label"],
+      "color" => category_configuration["color"],
       "values" => resource["category"]
     }
   end
@@ -222,12 +223,16 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def get_doc_previews(%Publication{} = publication, uuid_list) when is_list(uuid_list) do
+    config = get_configuration(publication)
+
     uuid_list
     |> get_documents(publication, true)
     |> Enum.map(fn %{"resource" => res} = _doc ->
+      category_configuration = search_category_tree(config, res["category"])
+
       %{
         "id" => res["id"],
-        "category" => res["category"],
+        "category" => extend_category(category_configuration["item"], res),
         "identifier" => res["identifier"]
       }
     end)
@@ -238,7 +243,7 @@ defmodule FieldPublication.Publications.Data do
     |> List.flatten()
   end
 
-  defp search_category_tree(configuration, category_name) do
+  def search_category_tree(configuration, category_name) do
     configuration
     |> Stream.map(&search_category_branch(&1, category_name))
     |> Enum.filter(fn val -> val != :not_found end)

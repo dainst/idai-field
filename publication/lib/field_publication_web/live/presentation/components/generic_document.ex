@@ -68,7 +68,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
             <.group_heading>
               <I18n.text values={other_relation["labels"]} />
             </.group_heading>
-            <div class="overflow-auto overscroll-contain max-h-[200px] grid grid-cols-3 gap-1 mt-2">
+            <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for preview_doc <- other_relation["values"] do %>
                 <DocumentLink.show
                   project={@project_name}

@@ -16,7 +16,6 @@ defmodule FieldPublication.Publications.Search do
           body = Jason.decode!(body)
 
           body["hits"]["hits"]
-          |> IO.inspect()
           |> Enum.map(fn %{"_index" => index, "_source" => doc} ->
             publication_id = publication_id_from_index(index)
 

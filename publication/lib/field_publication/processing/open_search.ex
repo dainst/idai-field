@@ -4,6 +4,7 @@ defmodule FieldPublication.Processing.OpenSearch do
   alias FieldPublication.CouchService
   alias FieldPublication.DataServices.OpensearchService
   alias FieldPublication.Publications
+  alias FieldPublication.Publications.Data
   alias FieldPublication.Schemas.Publication
 
   def evaluate_state(%Publication{} = publication) do
@@ -38,6 +39,8 @@ defmodule FieldPublication.Processing.OpenSearch do
   def index(%Publication{} = publication) do
     publication_id = Publications.get_doc_id(publication)
 
+    config = Data.get_configuration(publication)
+
     OpensearchService.initialize_indices_for_alias(publication_id)
     OpensearchService.clear_inactive_index(publication_id)
 
@@ -65,7 +68,10 @@ defmodule FieldPublication.Processing.OpenSearch do
       |> Map.delete("_id")
     end)
     |> Task.async_stream(
-      fn doc ->
+      fn %{"resource" => res} = doc ->
+        category_configuration = Data.search_category_tree(config, res["category"])
+        res = Map.put(res, "category", Data.extend_category(category_configuration["item"], res))
+        doc = Map.put(doc, "resource", res)
         OpensearchService.put(publication_id, doc)
 
         updated_state =

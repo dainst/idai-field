@@ -51,7 +51,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
           <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>
-              <I18n.text values={depicted_in["labels"]} />
+              <I18n.text values={depicted_in["labels"]} /> (<%= Enum.count(depicted_in["values"]) %>)
             </.group_heading>
             <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for preview_doc <- depicted_in["values"] do %>
@@ -70,6 +70,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
                   |> Enum.reject(fn %{"key" => key} -> key in ["isDepictedIn"] end)  do %>
             <.group_heading>
               <I18n.text values={other_relation["labels"]} />
+              (<%= Enum.count(other_relation["values"]) %>)
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for preview_doc <- other_relation["values"] do %>

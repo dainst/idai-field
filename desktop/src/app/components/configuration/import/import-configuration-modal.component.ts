@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { compareVersions } from 'compare-versions';
-import { isString } from 'tsfun';
+import { isArray } from 'tsfun';
 import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
@@ -84,10 +84,10 @@ export class ImportConfigurationModalComponent {
             this.messages.add([M.CONFIGURATION_SUCCESS_IMPORT]);
             this.activeModal.close();
         } catch (err) {
-            if (isString(err)) {
-                this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
+            if (isArray(err)) {
+                this.messages.add(err as string[]);
             } else {
-                this.messages.add(err);
+                this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
             }
         }
     }

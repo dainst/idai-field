@@ -18,7 +18,10 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
     ~H"""
     <div>
       <.document_heading>
-        <%= Data.get_field_values(@doc, "identifier") %>
+        <%= Data.get_field_values(
+          @doc,
+          "identifier"
+        ) %> (<I18n.text values={@doc["category"]["labels"]} />)
       </.document_heading>
 
       <div class="flex flex-row">

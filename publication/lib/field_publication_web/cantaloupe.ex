@@ -1,6 +1,6 @@
 defmodule FieldPublicationWeb.Cantaloupe do
   def url() do
-    Application.get_env(:field_publication, :cantaloupe_url)
+    "#{Application.get_env(:field_publication, :cantaloupe_url)}/iiif"
   end
 
   def handle_404(conn, _plug_info) do

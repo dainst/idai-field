@@ -44,7 +44,7 @@ export class GeoreferenceViewComponent {
                 private i18n: I18n) {}
 
 
-    public exportWldFile = () => downloadWldFile(this.document);
+    public exportWldFile = () => downloadWldFile(this.document, this.appState);
 
 
     public toggle() {

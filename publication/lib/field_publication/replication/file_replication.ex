@@ -103,16 +103,10 @@ defmodule FieldPublication.Replication.FileReplication do
          parameters
        ) do
     file_list
-    |> Stream.chunk_every(100)
-    |> Enum.map(fn chunk ->
-      chunk
-      |> Stream.map(
-        &Task.async(fn ->
-          copy_file(&1, variant, base_file_url, headers, parameters)
-        end)
-      )
-      |> Enum.map(&Task.await(&1, 1000 * 60 * 5))
-    end)
+    |> Task.async_stream(&copy_file(&1, variant, base_file_url, headers, parameters),
+      timeout: 1000 * 60 * 5
+    )
+    |> Enum.to_list()
   end
 
   # TODO: Refactor messy parameters

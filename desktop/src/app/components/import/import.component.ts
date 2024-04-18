@@ -379,6 +379,7 @@ export class ImportComponent implements OnInit {
             remote.getCurrentWindow(),
             {
                 properties: ['openFile'],
+                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
                 filters: this.getFileFilters()
             }
         );

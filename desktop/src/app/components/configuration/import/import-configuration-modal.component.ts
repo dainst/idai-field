@@ -66,6 +66,7 @@ export class ImportConfigurationModalComponent {
             remote.getCurrentWindow(),
             {
                 properties: ['openFile'],
+                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
                 filters: [
                     {
                         name: this.i18n({ id: 'configuration.importModal.filters.configuration', value: 'Field-Konfiguration' }),

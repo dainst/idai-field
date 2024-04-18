@@ -3,6 +3,8 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
 
   alias FieldPublication.Schemas.Project
   alias FieldPublication.Projects
+  alias FieldPublication.Publications
+  alias FieldPublication.Processing
 
   @impl true
   def mount(_params, _session, socket) do
@@ -54,6 +56,16 @@ defmodule FieldPublicationWeb.ProjectLive.Index do
     {:ok, _} = Projects.delete(project)
 
     {:noreply, assign(socket, :projects, Projects.list())}
+  end
+
+  def handle_event("reindex_all_search_indices", _, socket) do
+    Projects.list()
+    |> Stream.map(fn %{name: name} -> name end)
+    |> Stream.map(&Publications.get_current_published(&1))
+    |> Stream.reject(fn val -> val == :none end)
+    |> Enum.each(&Processing.start(&1, :search_index))
+
+    {:noreply, socket}
   end
 
   def publication_stats(publications) do

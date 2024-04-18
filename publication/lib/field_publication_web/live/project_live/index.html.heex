@@ -2,6 +2,10 @@
   Listing Projects
   <:actions>
     <%= if FieldPublication.User.is_admin?(@current_user) do %>
+      <.link phx-click="reindex_all_search_indices">
+        <.button>Reindex all search indices</.button>
+      </.link>
+
       <.link patch={~p"/admin/projects/new"}>
         <.button>New Project</.button>
       </.link>

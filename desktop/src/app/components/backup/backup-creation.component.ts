@@ -53,14 +53,16 @@ export class BackupCreationComponent {
 
         if (this.running) return;
 
-        const filePath = await this.dialogProvider.chooseFilepath(this.appState);
+        const projectName: string = this.settingsProvider.getSettings().selectedProject;
+
+        const filePath = await this.dialogProvider.chooseFilepath(projectName, this.appState);
         if (!filePath) return;
 
         this.running = true;
         this.menuService.setContext(MenuContext.MODAL);
         this.openModal();
 
-        await this.writeBackupFile(filePath);
+        await this.writeBackupFile(filePath, projectName);
 
         this.running = false;
         this.menuService.setContext(MenuContext.DEFAULT);
@@ -68,10 +70,10 @@ export class BackupCreationComponent {
     }
 
 
-    private async writeBackupFile(filePath: string) {
+    private async writeBackupFile(filePath: string, projectName: string) {
 
         try {
-            await this.backupProvider.dump(filePath, this.settingsProvider.getSettings().selectedProject);
+            await this.backupProvider.dump(filePath, projectName);
             this.messages.add([M.BACKUP_WRITE_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);

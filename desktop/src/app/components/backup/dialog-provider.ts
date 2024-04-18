@@ -10,5 +10,8 @@ import { AppState } from '../../services/app-state';
  */
 export class DialogProvider {
 
-    public chooseFilepath = (appState?: AppState): Promise<string> => { return Promise.resolve(''); }
+    public chooseFilepath(_: string, __?: AppState): Promise<string> {
+
+        return Promise.resolve('');
+    }
 }

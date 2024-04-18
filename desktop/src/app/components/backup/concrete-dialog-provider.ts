@@ -5,12 +5,13 @@ const { dialog } = typeof window !== 'undefined' ? window.require('@electron/rem
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ConcreteDialogProvider {
 
-    public async chooseFilepath(appState?: AppState): Promise<string> {
+    public async chooseFilepath(projectName: string, appState?: AppState): Promise<string> {
 
-        const defaultPath: string = appState?.getFolderPath('backupCreation');
+        const defaultPath: string = this.getDefaultPath(projectName, appState);
 
         const saveDialogReturnValue = await dialog.showSaveDialog(
             {
@@ -29,5 +30,16 @@ export class ConcreteDialogProvider {
         } else {
             return undefined;
         }
+    }
+
+
+    private getDefaultPath(projectName: string, appState?: AppState): string {
+
+        const folderPath: string = appState?.getFolderPath('backupCreation');
+        const fileName: string = projectName + '.jsonl';
+
+        return folderPath
+            ? folderPath + '/' + fileName
+            : fileName;
     }
 }

@@ -202,6 +202,9 @@ defmodule FieldPublication.Replication do
     # The reconstructed project configuration does not retain a simple list of the languages used for the
     # publication. We read that information from the "configuration" document (pre-reconstruction) and save it
     # in our `Publication` document as a shorthand.
+
+    language_default = ["en"]
+
     languages =
       CouchService.get_document("configuration", publication.database)
       |> case do
@@ -209,10 +212,10 @@ defmodule FieldPublication.Replication do
           body
           |> Jason.decode!()
           |> Map.get("resource", %{})
-          |> Map.get("projectLanguages", [])
+          |> Map.get("projectLanguages", language_default)
 
         _ ->
-          []
+          language_default
       end
 
     log(parameters, :info, "Replication finished.")

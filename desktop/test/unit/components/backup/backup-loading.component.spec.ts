@@ -43,7 +43,8 @@ describe('BackupLoadingComponent', () => {
             settingsService,
             backupProvider,
             tabManager,
-            menuService
+            menuService,
+            undefined
         );
 
         settingsProvider.getSettings.and.returnValue({ dbs: ['selectedproject'] } as any);

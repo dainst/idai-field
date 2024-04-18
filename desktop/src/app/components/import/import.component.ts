@@ -116,6 +116,7 @@ export class ImportComponent implements OnInit {
 
     public async onImportButtonClick() {
 
+        AngularUtility.blurActiveElement();
         if (!this.isReady()) return;
 
         this.running = true;

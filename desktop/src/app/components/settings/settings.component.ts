@@ -10,6 +10,7 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { SettingsErrors } from '../../services/settings/settings-errors';
+import { AngularUtility } from '../../angular/angular-utility';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -92,6 +93,8 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
 
     public async save() {
+
+        AngularUtility.blurActiveElement();
 
         this.saving = true;
         const languagesChanged: boolean

@@ -21,6 +21,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { InvalidField } from './csv/csv-export';
 import { AppState } from '../../services/app-state';
+import { AngularUtility } from '../../angular/angular-utility';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -144,6 +145,7 @@ export class ExportComponent implements OnInit {
     public async startExport() {
 
         this.messages.removeAllMessages();
+        AngularUtility.blurActiveElement();
 
         const filePath: string = await this.chooseFilepath();
         if (!filePath) return;

@@ -530,6 +530,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             return false;
         } finally {
             this.menus.setContext(MenuContext.CONFIGURATION);
+            AngularUtility.blurActiveElement();
         }
     }
 

@@ -10,6 +10,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 @Component({
@@ -56,6 +57,7 @@ export class BackupCreationComponent {
         const projectName: string = this.settingsProvider.getSettings().selectedProject;
 
         const filePath = await this.dialogProvider.chooseFilepath(projectName, this.appState);
+        AngularUtility.blurActiveElement();
         if (!filePath) return;
 
         this.running = true;

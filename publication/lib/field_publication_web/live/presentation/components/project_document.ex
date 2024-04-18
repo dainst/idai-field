@@ -23,6 +23,21 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
             <%= gettext("project_doc_about_project") %>
           </.header>
           <div class="bg-slate-50 p-2 rounded">
+            <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
+            <%= if depicted_in do %>
+              <div class="float-left overflow-auto overscroll-contain max-h-[400px] mr-3 mb-2">
+                <%= for preview_doc <- depicted_in["values"] do %>
+                  <.link
+                    patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
+                    class="p-1"
+                  >
+                    <div class="w-[300px]">
+                      <Image.show size="300," project={@project_name} uuid={preview_doc["id"]} />
+                    </div>
+                  </.link>
+                <% end %>
+              </div>
+            <% end %>
             <I18n.markdown values={Data.get_field_values(@doc, "description")} lang={@lang} />
           </div>
           <.header class="mt-3">
@@ -44,25 +59,6 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
                 layers={Map.get(map_layers, "values", [])}
                 publication={@publication}
               />
-            </div>
-          <% end %>
-
-          <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
-          <%= if depicted_in do %>
-            <.group_heading>
-              <I18n.text values={depicted_in["labels"]} />
-            </.group_heading>
-            <div class="overflow-x-scroll overscroll-contain flex flex-row max-w-[400px] mt-2 mb-2">
-              <%= for preview_doc <- depicted_in["values"] do %>
-                <.link
-                  patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
-                  class="p-1"
-                >
-                  <div class="w-[300px] m-2">
-                    <Image.show size="300," project={@project_name} uuid={preview_doc["id"]} />
-                  </div>
-                </.link>
-              <% end %>
             </div>
           <% end %>
           <dl>

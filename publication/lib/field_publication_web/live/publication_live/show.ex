@@ -126,18 +126,40 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
   def handle_event(
         "validate",
         %{
+          "publication" => publication_form_parameters
+        },
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    {
+      :noreply,
+      assign(
+        socket,
+        :publication_form,
+        publication
+        |> Publication.changeset(publication_form_parameters)
+        |> to_form()
+      )
+    }
+  end
+
+  def handle_event(
+        "validate",
+        %{
           "_target" => ["publication", "version"],
           "publication" => %{"version" => new_version}
         },
         %{assigns: %{publication: publication}} = socket
       ) do
-    case Publications.put(publication, %{"version" => new_version}) do
-      {:ok, updated_publication} ->
-        {:noreply, assign(socket, :publication, updated_publication)}
-
-      {:error, changeset} ->
-        {:noreply, assign(socket, :publication_form, to_form(changeset))}
-    end
+    {
+      :noreply,
+      assign(
+        socket,
+        :publication_form,
+        publication
+        |> Publication.changeset(%{"version" => new_version})
+        |> to_form()
+      )
+    }
   end
 
   def handle_event(
@@ -148,13 +170,16 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
         },
         %{assigns: %{publication: publication}} = socket
       ) do
-    case Publications.put(publication, %{"publication_date" => date_string}) do
-      {:ok, updated_publication} ->
-        {:noreply, assign(socket, :publication, updated_publication)}
-
-      {:error, changeset} ->
-        {:noreply, assign(socket, :publication_form, to_form(changeset))}
-    end
+    {
+      :noreply,
+      assign(
+        socket,
+        :publication_form,
+        publication
+        |> Publication.changeset(%{"publication_date" => date_string})
+        |> to_form()
+      )
+    }
   end
 
   def handle_event(
@@ -174,15 +199,40 @@ defmodule FieldPublicationWeb.PublicationLive.Show do
         parameters
       end)
 
-    case Publications.put(publication, %{"comments" => comments}) do
+    {
+      :noreply,
+      assign(
+        socket,
+        :publication_form,
+        publication
+        |> Publication.changeset(%{"comments" => comments})
+        |> to_form()
+      )
+    }
+  end
+
+  def handle_event(
+        "save",
+        %{"publication" => publication_form_params},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    case Publications.put(publication, publication_form_params) do
       {:ok, updated_publication} ->
-        {:noreply, assign(socket, :publication, updated_publication)}
+        {
+          :noreply,
+          socket
+          |> assign(:publication, updated_publication)
+          |> assign(
+            :publication_form,
+            updated_publication
+            |> Publication.changeset()
+            |> to_form
+          )
+        }
 
       {:error, changeset} ->
         {:noreply, assign(socket, :publication_form, to_form(changeset))}
     end
-
-    {:noreply, socket}
   end
 
   @impl true

@@ -68,7 +68,7 @@ export class ImportConfigurationModalComponent {
             remote.getCurrentWindow(),
             {
                 properties: ['openFile'],
-                defaultPath: this.appState.getFolderPath('importConfiguration'),
+                defaultPath: this.appState.getFolderPath('configurationImport'),
                 buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
                 filters: [
                     {
@@ -81,7 +81,7 @@ export class ImportConfigurationModalComponent {
 
         if (result.filePaths.length) {
             this.filePath = result.filePaths[0];
-            this.appState.setFolderPath(this.filePath, 'importConfiguration');
+            this.appState.setFolderPath(this.filePath, 'configurationImport');
         }
     }
 

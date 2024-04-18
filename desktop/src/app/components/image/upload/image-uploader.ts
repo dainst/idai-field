@@ -73,6 +73,7 @@ export class ImageUploader {
             const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
             if (!metadata) return uploadResult;
 
+            const menuContext: MenuContext = this.menuService.getContext();
             this.menuService.setContext(MenuContext.MODAL);
             const uploadModalRef = this.modalService.open(
                 UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
@@ -81,7 +82,7 @@ export class ImageUploader {
                 filePaths, metadata, uploadResult, depictsRelationTarget
             );
             uploadModalRef.close();
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.menuService.setContext(menuContext);
         }
 
         const wldFilePaths: string[] = filePaths.filter(filePath =>
@@ -114,6 +115,7 @@ export class ImageUploader {
 
         this.projectConfiguration.getCategory('Image');
 
+        const menuContext: MenuContext = this.menuService.getContext();
         this.menuService.setContext(MenuContext.MODAL);
         const modal: NgbModalRef = this.modalService.open(
             ImageUploadMetadataModalComponent, { backdrop: 'static', keyboard: false, animation: false }
@@ -127,7 +129,7 @@ export class ImageUploader {
         } catch (err) {
             return undefined;
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.menuService.setContext(menuContext);
         }
     }
 

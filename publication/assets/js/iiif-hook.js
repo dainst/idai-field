@@ -17,15 +17,24 @@ export default getIIIFHook = () => {
         },
 
         async initialize() {
+            const response = await fetch(this.el.getAttribute("url"));
+            if (response.status == 404) {
+                this.el.innerHTML = "No image data";
+                return;
+            }
+
             this.layer = new TileLayer();
             this.map = new Map({
                 layers: [this.layer],
                 target: this.el.getAttribute("id")
             })
+            console.log(response);
 
-            const imageInfo = await (await fetch(this.el.getAttribute("url"))).json()
+            const imageInfo = await (response).json()
 
             const options = new IIIFInfo(imageInfo).getTileSourceOptions();
+
+
             options.zDirection = -1;
             const iiifTileSource = new IIIF(options);
             this.layer.setSource(iiifTileSource);

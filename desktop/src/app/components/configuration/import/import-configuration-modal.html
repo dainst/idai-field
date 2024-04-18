@@ -24,20 +24,18 @@
         </div>
 
         <div *ngIf="source === 'file'">
-            <label i18n="@@configuration.importModal.file">Datei</label>
+            <label i18n="@@import.path">Pfad</label>
             <div class="input-group">
-                <input [ngModel]="selectedFile ? selectedFile.path : ''"
+                <input id="file-path-input"
+                       [ngModel]="filePath"
                        class="form-control"
                        placeholder="Datei auswählen..."
                        i18n-placeholder="@@import.chooseFile"
                        disabled>
-                <input id="import-file-input"
-                       type="file"
-                       class="file-input"
-                       accept=".configuration"
-                       (change)="selectFile($event)">
                 <div class="input-group-append">
-                    <label for="import-file-input" class="btn btn-secondary file-input-label">
+                    <label for="file-path-input"
+                           class="btn btn-secondary file-input-label"
+                           (click)="selectFile()">
                         <span class="mdi mdi-folder"></span>
                     </label>
                 </div>

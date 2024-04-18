@@ -11,12 +11,13 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 
 const UTF8 = 'utf-8';
 
+
 /**
  * @author Daniel de Oliveira
  */
 export class CatalogFilesystemReader implements Reader {
 
-    constructor(private file: any,
+    constructor(private filePath: string,
                 private settings: Settings,
                 private imagestore: ImageStore) {}
 
@@ -36,7 +37,7 @@ export class CatalogFilesystemReader implements Reader {
             if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
 
             try {
-                await getAsynchronousFs().extractZip(this.file.path, tmpDir);
+                await getAsynchronousFs().extractZip(this.filePath, tmpDir);
 
                 const idGenerator = new IdGenerator();
                 const replacementMap: Map<string> = {};

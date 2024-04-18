@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take, to } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
@@ -20,6 +21,9 @@ import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
+
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const path = typeof window !== 'undefined' ? window.require('path') : require('path');
 
 
 @Component({
@@ -62,7 +66,8 @@ export class ImportComponent implements OnInit {
                 private idGenerator: IdGenerator,
                 private tabManager: TabManager,
                 private menuService: Menus,
-                private labels: Labels) {
+                private labels: Labels,
+                private i18n: I18n) {
 
         this.resetOperationIfNecessary();
     }
@@ -129,7 +134,7 @@ export class ImportComponent implements OnInit {
             && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
             && (this.importState.format !== 'csv' || this.importState.selectedCategory)
             && (this.importState.sourceType === 'file'
-                ? this.importState.file !== undefined
+                ? this.importState.filePath !== undefined
                 : this.importState.url !== undefined);
     }
 
@@ -137,7 +142,7 @@ export class ImportComponent implements OnInit {
     public reset(): void {
 
         this.messages.removeAllMessages();
-        this.importState.file = undefined;
+        this.importState.filePath = undefined;
         this.importState.format = undefined;
         this.importState.url = undefined;
         this.importState.mergeMode = false;
@@ -146,25 +151,22 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public selectFile(event: any) {
+    public async selectFile() {
+
+        const result: any = await this.showOpenFileDialog();
 
         this.reset();
-
         this.importState.typeFromFileName = false;
+        if (result.filePaths.length) this.importState.filePath = result.filePaths[0];
 
-        const files = event.target.files;
-        this.importState.file = !files || files.length === 0
-            ? undefined
-            : files[0];
-
-        if (this.importState.file) {
+        if (this.importState.filePath) {
             this.updateFormat();
             if (!this.importState.format) {
                 this.messages.add([M.IMPORT_ERROR_INVALID_FILE_FORMAT, this.allowedFileExtensions]);
                 return;
             }
 
-            this.importState.selectedCategory = this.getCategoryFromFileName(this.importState.file.name);
+            this.importState.selectedCategory = this.getCategoryFromFileName(path.basename(this.importState.filePath));
             if (this.importState.selectedCategory) this.importState.typeFromFileName = true;
         }
     }
@@ -181,8 +183,8 @@ export class ImportComponent implements OnInit {
     public updateFormat() {
 
         this.importState.format = ImportComponent.getImportFormat(
-            this.importState.file
-                ? this.importState.file.name
+            this.importState.filePath
+                ? path.basename(this.importState.filePath)
                 : this.importState.url
         );
     }
@@ -368,6 +370,49 @@ export class ImportComponent implements OnInit {
         }
 
         return undefined;
+    }
+
+
+    private async showOpenFileDialog(): Promise<any> {
+
+        return remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile'],
+                filters: this.getFileFilters()
+            }
+        );
+    }
+
+
+    private getFileFilters(): any[] {
+
+        return [
+            {
+                name: this.i18n({ id: 'import.selectFile.filters.all', value: 'Alle unterstützten Formate' }),
+                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog']
+            },
+            {
+                name: 'CSV',
+                extensions: ['csv']
+            },
+            {
+                name: 'JSON Lines',
+                extensions: ['jsonl']
+            },
+            {
+                name: 'GeoJSON',
+                extensions: ['geojson', 'json']
+            },
+            {
+                name: 'Shapefile',
+                extensions: ['shp']
+            },
+            {
+                name: this.i18n({ id: 'import.selectFile.filters.catalog', value: 'Field-Typenkatalog' }),
+                extensions: ['catalog']
+            }
+        ];
     }
 
 

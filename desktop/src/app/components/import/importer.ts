@@ -38,7 +38,7 @@ export interface ImporterOptions {
     selectedCategory?: CategoryForm|undefined;
     separator: string;
     sourceType: string;
-    file?: any|undefined;
+    filePath?: string|undefined;
     url?: string|undefined;
     ignoreUnconfiguredFields?: boolean;
 }
@@ -193,9 +193,9 @@ export module Importer {
                           options: ImporterOptions): Reader|undefined {
 
         if (options.sourceType !== 'file') return new HttpReader(options.url, http);
-        if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.file);
-        if (options.format === 'catalog') return new CatalogFilesystemReader(options.file, settings, imagestore);
-        return new FilesystemReader(options.file);
+        if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.filePath);
+        if (options.format === 'catalog') return new CatalogFilesystemReader(options.filePath, settings, imagestore);
+        return new FilesystemReader(options.filePath);
     }
 
 

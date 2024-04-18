@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { compareVersions } from 'compare-versions';
 import { isArray } from 'tsfun';
 import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
@@ -31,13 +32,14 @@ export class ImportConfigurationModalComponent {
 
     public source: 'file'|'project' = 'file';
     public selectedProject: string;
-    public selectedFile: any;
+    public filePath: string;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private configReader: ConfigReader,
                 private settingsProvider: SettingsProvider,
-                private messages: Messages) {}
+                private messages: Messages,
+                private i18n: I18n) {}
 
 
     public selectProject = (project: string) => this.selectedProject = project;
@@ -47,8 +49,8 @@ export class ImportConfigurationModalComponent {
 
     public isConfirmButtonEnabled(): boolean {
         
-        return (this.source === 'file' && this.selectedFile)
-            || (this.source === 'project' && this.selectedProject);
+        return (this.source === 'file' && this.filePath !== undefined)
+            || (this.source === 'project' && this.selectedProject !== undefined);
     }
 
 
@@ -58,15 +60,28 @@ export class ImportConfigurationModalComponent {
     }
 
 
-    public selectFile(event: any) {
+    public async selectFile() {
 
-        this.selectedFile = event.target.files?.length ? event.target.files[0] : undefined;
+        const result: any = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile'],
+                filters: [
+                    {
+                        name: this.i18n({ id: 'configuration.importModal.filters.configuration', value: 'Field-Konfiguration' }),
+                        extensions: ['configuration']
+                    }
+                ]
+            }
+        );
+
+        if (result.filePaths.length) this.filePath = result.filePaths[0];
     }
 
 
     public reset() {
 
-        this.selectedFile = undefined;
+        this.filePath = undefined;
         this.selectedProject = undefined;
     }
 
@@ -107,7 +122,7 @@ export class ImportConfigurationModalComponent {
 
     private async performImportFromFile() {
 
-        const fileContent: string = await getAsynchronousFs().readFile(this.selectedFile.path, 'utf-8');
+        const fileContent: string = await getAsynchronousFs().readFile(this.filePath, 'utf-8');
         const deserializedObject = JSON.parse(Buffer.from(fileContent, 'base64').toString());
         if (!this.isCompatibleVersion(deserializedObject.version)) {
             throw [M.CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION, deserializedObject.version];

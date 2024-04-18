@@ -28,22 +28,21 @@
 
                     <div *ngIf="importState.sourceType === 'file'" class="form-group">
                         <label class="control-label col-form-label" i18n="@@import.path">Pfad</label>
-
                         <div class="input-group">
-                            <input [ngModel]="importState.file ? importState.file.path : ''" class="form-control"
+                            <input id="file-path-input"
+                                   [ngModel]="importState.filePath"
+                                   class="form-control"
                                    placeholder="Datei auswählen..."
                                    i18n-placeholder="@@import.chooseFile"
                                    disabled>
-                            <input id="import-file-input" class="file-input" type="file"
-                                   accept="{{allowedFileExtensions}}"
-                                   (change)="selectFile($event)">
                             <div class="input-group-append">
-                                <label for="import-file-input" class="btn btn-secondary file-input-label">
+                                <label for="file-path-input"
+                                       class="btn btn-secondary file-input-label"
+                                       (click)="selectFile()">
                                     <span class="mdi mdi-folder"></span>
                                 </label>
                             </div>
                         </div>
-
                     </div>
 
                     <div *ngIf="importState.sourceType === 'http'" class="form-group">
@@ -153,7 +152,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" *ngIf="importState.format === 'csv' && importState.file && !importState.typeFromFileName">
+                    <div class="form-group" *ngIf="importState.format === 'csv' && importState.filePath && !importState.typeFromFileName">
                         <label class="control-label col-form-label"
                                for="importTypeSelect"
                                i18n="@@import.format.importCategorySelect">Kategorie</label>

@@ -13,16 +13,16 @@ import { ReaderErrors } from './reader-errors';
  */
 export class FilesystemReader implements Reader {
 
-    constructor(private file: any) {}
+    constructor(private filePath: string) {}
 
 
     public async go(): Promise<string> {
 
         try {
-            return await getAsynchronousFs().readFile(this.file.path, 'utf-8');
+            return await getAsynchronousFs().readFile(this.filePath, 'utf-8');
         } catch (err) {
-            console.error('Error while trying to read file: ' + this.file.path, err);
-            throw [ReaderErrors.FILE_UNREADABLE, this.file.path];
+            console.error('Error while trying to read file: ' + this.filePath, err);
+            throw [ReaderErrors.FILE_UNREADABLE, this.filePath];
         }
     }
 }

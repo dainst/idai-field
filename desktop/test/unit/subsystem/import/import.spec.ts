@@ -72,7 +72,7 @@ describe('Import/Subsystem', () => {
         );
 
         const options: ImporterOptions = {
-            file: undefined,
+            filePath: undefined,
             separator: '',
             sourceType: undefined,
             url: undefined,
@@ -210,7 +210,7 @@ describe('Import/Subsystem', () => {
         }] as any;
 
         const options: ImporterOptions = {
-            file: undefined,
+            filePath: undefined,
             selectedCategory: t,
             separator: ',',
             sourceType: '',
@@ -243,7 +243,7 @@ describe('Import/Subsystem', () => {
 
         await parseAndImport(
             {
-                file: undefined,
+                filePath: undefined,
                 selectedCategory: undefined,
                 separator: '',
                 sourceType: '',

@@ -36,22 +36,30 @@
 
                     <br>
                     <br>
-                    <label i18n="@@backup.loading.path">Pfad</label>
-                    <div class="input-group">
-                        <input [(ngModel)]="path" class="form-control">
-                        <input id="path-file-input" class="file-input" type="file"
-                               (change)="path = $event.target.files[0].path"
-                               style="display: none">
-                        <div class="input-group-append">
-                            <label for="path-file-input" class="btn btn-secondary file-input-label">
-                                <span class="mdi mdi-folder"></span>
-                            </label>
+                    <div class="form-group">
+                        <label i18n="@@backup.loading.path">Pfad</label>
+                        <div class="input-group">
+                            <input id="file-path-input"
+                                [ngModel]="path"
+                                class="form-control"
+                                placeholder="Datei auswählen..."
+                                i18n-placeholder="@@import.chooseFile"
+                                disabled>
+                            <div class="input-group-append">
+                                <label for="file-path-input"
+                                    class="btn btn-secondary file-input-label"
+                                    (click)="selectFile()">
+                                    <span class="mdi mdi-folder"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
-                    <label i18n="@@project.identifier">Projektkennung</label>
-                    <input type="text" class="form-control" id="projectIdentifier"
-                           [(ngModel)]="projectIdentifier" name="projectIdentifier">
+                    <div class="form-group">
+                        <label i18n="@@project.identifier">Projektkennung</label>
+                        <input type="text" class="form-control" id="projectIdentifier"
+                            [(ngModel)]="projectIdentifier" name="projectIdentifier">
+                    </div>
                 </div>
             </div>
         </div>

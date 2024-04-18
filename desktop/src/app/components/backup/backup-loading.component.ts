@@ -14,6 +14,8 @@ import { MsgWithParams } from '../messages/msg-with-params';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
 
 @Component({
     templateUrl: './backup-loading.html',
@@ -50,6 +52,25 @@ export class BackupLoadingComponent {
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
+    }
+
+
+    public async selectFile() {
+
+        const result: any = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile'],
+                filters: [
+                    {
+                        name: 'JSON Lines',
+                        extensions: ['jsonl']
+                    }
+                ]
+            }
+        );
+
+        if (result.filePaths.length) this.path = result.filePaths[0];
     }
 
 

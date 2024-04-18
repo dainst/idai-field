@@ -16,6 +16,9 @@ import { ImageMetadata, extendMetadataByFileData } from '../../../services/image
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 import { ImagesState } from '../overview/view/images-state';
+import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+
+const path = typeof window !== 'undefined' ? window.require('path') : require('path');
 
 
 export interface ImageUploadResult {
@@ -49,11 +52,10 @@ export class ImageUploader {
 
 
     /**
-     * @param event The event containing the images to upload (can be drag event or event from file input element)
      * @param depictsRelationTarget If this parameter is set, each of the newly created image documents will contain
      *  a depicts relation to the specified document.
      */
-    public async startUpload(event: Event, depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+    public async startUpload(filePaths: string[], depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
 
@@ -62,14 +64,13 @@ export class ImageUploader {
             return uploadResult;
         }
 
-        const files = ImageUploader.getFiles(event);
-        const message: string[]|undefined = this.checkForUnsupportedFileTypes(files);
+        const message: string[]|undefined = this.checkForUnsupportedFileTypes(filePaths);
         if (message) uploadResult.messages.push(message);
 
-        const imageFiles = files.filter(file =>
-            ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
-        if (imageFiles.length) {
-            const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFiles.length, depictsRelationTarget);
+        const imageFilePaths: string[] = filePaths.filter(filePath =>
+            ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
+        if (imageFilePaths.length) {
+            const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
             if (!metadata) return uploadResult;
 
             this.menuService.setContext(MenuContext.MODAL);
@@ -77,26 +78,26 @@ export class ImageUploader {
                 UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
             );
             uploadResult = await this.uploadImageFiles(
-                imageFiles, metadata, uploadResult, depictsRelationTarget
+                filePaths, metadata, uploadResult, depictsRelationTarget
             );
             uploadModalRef.close();
             this.menuService.setContext(MenuContext.DEFAULT);
         }
 
-        const wldFiles = files.filter(file =>
-            ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(file.name)));
-        if (wldFiles.length) {
-            uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFiles));
+        const wldFilePaths: string[] = filePaths.filter(filePath =>
+            ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
+        if (wldFilePaths.length) {
+            uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFilePaths));
         }
 
         return uploadResult;
     }
 
 
-    private checkForUnsupportedFileTypes(files: Array<File>): string[]|undefined {
+    private checkForUnsupportedFileTypes(filePaths: string[]): string[]|undefined {
 
         const supportedFileTypes = ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes);
-        const result = ExtensionUtil.reportUnsupportedFileTypes(files, supportedFileTypes);
+        const result = ExtensionUtil.reportUnsupportedFileTypes(filePaths, supportedFileTypes);
         if (result[1]) {
             return [
                 M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS,
@@ -131,26 +132,26 @@ export class ImageUploader {
     }
 
 
-    private async uploadImageFiles(files: Array<File>, metadata: ImageMetadata, uploadResult: ImageUploadResult,
+    private async uploadImageFiles(filePaths: string[], metadata: ImageMetadata, uploadResult: ImageUploadResult,
                                    depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
-        if (!files) return uploadResult;
+        if (!filePaths) return uploadResult;
 
-        this.uploadStatus.setTotalImages(files.length);
+        this.uploadStatus.setTotalImages(filePaths.length);
         this.uploadStatus.setHandledImages(0);
 
         const duplicateFilenames: string[] = [];
 
-        for (const file of files) {
-            if (ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedImageFileTypes)) {
+        for (const filePath of filePaths) {
+            if (ExtensionUtil.ofUnsupportedExtension(path.basename(filePath), ImageUploader.supportedImageFileTypes)) {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
             } else {
                 try {
-                    const result = await this.findImageByFilename(file.name);
+                    const result = await this.findImageByFilename(path.basename(filePath));
                     if (result.totalCount > 0) {
-                        duplicateFilenames.push(file.name);
+                        duplicateFilenames.push(path.basename(filePath));
                     } else {
-                        await this.uploadFile(file, metadata, depictsRelationTarget);
+                        await this.uploadFile(filePath, metadata, depictsRelationTarget);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch (e) {
@@ -170,30 +171,32 @@ export class ImageUploader {
     }
 
 
-    private async uploadWldFiles(files: File[]) {
+    private async uploadWldFiles(filePaths: string[]) {
 
         const messages: string[][] = [];
         const unmatchedWldFiles = [];
 
-        outer: for (const file of files) {
+        outer: for (const filePath of filePaths) {
             for (const extension of ImageUploader.supportedImageFileTypes) {
-                const candidateName = ExtensionUtil.replaceExtension(file.name, extension);
+                const candidateName = ExtensionUtil.replaceExtension(path.basename(filePath), extension);
                 const result = await this.findImageByFilename(candidateName);
                 if (result.totalCount > 0) {
                     try {
-                        await this.saveWldFile(file, result.documents[0]);
+                        await this.saveWldFile(filePath, result.documents[0]);
                         continue outer;
                     } catch (e) {
                         messages.push(e);
                     }
                 }
             }
-            unmatchedWldFiles.push(file.name);
+            unmatchedWldFiles.push(path.basename(filePath));
         }
 
-        if (unmatchedWldFiles.length > 0) messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
+        if (unmatchedWldFiles.length > 0) {
+            messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
+        }
 
-        const matchedFiles = files.length - unmatchedWldFiles.length;
+        const matchedFiles = filePaths.length - unmatchedWldFiles.length;
         if (matchedFiles === 1) messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
         if (matchedFiles > 1) messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
 
@@ -201,9 +204,9 @@ export class ImageUploader {
     }
 
 
-    private async saveWldFile(file: File, document: Document) {
+    private async saveWldFile(filePath: string, document: Document) {
 
-        document.resource.georeference = await readWldFile(file, document);
+        document.resource.georeference = await readWldFile(filePath, document);
         await this.relationsManager.update(document);
     }
 
@@ -218,20 +221,23 @@ export class ImageUploader {
     }
 
 
-    private async uploadFile(file: File, metadata: ImageMetadata, depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(filePath: string, metadata: ImageMetadata,
+                             depictsRelationTarget?: Document): Promise<any> {
 
-        const buffer: Buffer = await this.readFile(file);
+        const buffer: Buffer = await this.readFile(filePath);
         
         let document: ImageDocument;
         
         try {
-            document = await this.createImageDocument(file.name, buffer, metadata, depictsRelationTarget);
+            document = await this.createImageDocument(
+                path.basename(filePath), buffer, metadata, depictsRelationTarget
+            );
         } catch (err) {
             if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
-                throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, file.name, err[1]];
+                throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, path.basename(filePath), err[1]];
             } else {
                 console.error(err);
-                throw [M.IMAGESTORE_ERROR_UPLOAD, file.name];
+                throw [M.IMAGESTORE_ERROR_UPLOAD, path.basename(filePath)];
             }
         }
 
@@ -241,30 +247,19 @@ export class ImageUploader {
             await createDisplayVariant(document, this.imagestore, buffer);
         } catch (err) {
             console.error(err);
-            throw [M.IMAGESTORE_ERROR_WRITE, file.name];
+            throw [M.IMAGESTORE_ERROR_WRITE, path.basename(filePath)];
         }
     }
 
 
-    private async readFile(file: File): Promise<Buffer> {
+    private async readFile(filePath: string): Promise<Buffer> {
 
-        return new Promise<any>((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onloadend = (() => {
-                const buffer: Buffer = Buffer.from(reader.result);
-                resolve(buffer);
-            });
-
-            reader.onerror = () => {
-                return (error: any) => {
-                    console.error(error);
-                    reject([M.IMAGES_ERROR_FILEREADER, file.name]);
-                };
-            };
-
-            reader.readAsArrayBuffer(file);
-        });
+        try {
+            return (await getAsynchronousFs().readFile(filePath));
+        } catch (err) {
+            console.error(err);
+            throw [M.IMAGES_ERROR_FILEREADER, path.basename(filePath)];
+        }
     }
 
 
@@ -315,22 +310,5 @@ export class ImageUploader {
         if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;
         }
-    }
-
-
-    private static getFiles(e: Event): Array<File> {
-
-        const event = e as any;
-
-        if (!event) return [];
-        let files = [];
-
-        if (event.dataTransfer) {
-            if (event.dataTransfer.files) files = event.dataTransfer.files;
-        } else if (event.srcElement) {
-            if (event.srcElement.files) files = event.srcElement.files;
-        }
-
-        return Array.from(files);
     }
 }

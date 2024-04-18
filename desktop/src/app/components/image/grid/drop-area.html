@@ -1,19 +1,11 @@
 <div class="droparea"
      (dragover)="onDragOver($event)"
      (dragleave)="onDragLeave($event)"
-     (drop)="onDrop($event)">
-    <input #fileInput
-           class="file"
-           type="file"
-           name="files[]"
-           id="file"
-           multiple
-           accept="{{getSupportedFileExtensions()}}"
-           (change)="onSelectImages($event)">
-    <label for="file"
-           ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü."
+     (drop)="onDrop($event)"
+     (click)="selectFiles($event)">
+    <label ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü."
            i18n-ngbTooltip="@@imageGrid.dropArea.tooltip"
            placement="bottom">
-        <span class="mdi mdi-48px mdi-plus-circle "></span>
+        <span class="mdi mdi-48px mdi-plus-circle"></span>
     </label>
 </div>

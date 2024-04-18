@@ -1,4 +1,5 @@
 import { ImageGeoreference, Document } from 'idai-field-core';
+import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
 
 
 export enum Errors {
@@ -7,38 +8,35 @@ export enum Errors {
 }
 
 
-export function readWldFile(file: File, doc: Document): Promise<ImageGeoreference> {
+export async function readWldFile(filePath: string, document: Document): Promise<ImageGeoreference> {
 
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            try {
-                resolve(importWldFile(reader.result as string, doc));
-            } catch (err) {
-                reject(err);
-            }
-        };
-        reader.onerror = () => reject(Errors.FileReaderError);
-        reader.readAsText(file);
-    });
+    let fileContent: string;
+    try {
+        fileContent = await getAsynchronousFs().readFile(filePath, 'utf-8');
+    } catch (err) {
+        console.error(err);
+        throw Errors.FileReaderError;
+    }
+
+    return importWldFile(fileContent, document);
 }
 
 
-function importWldFile(wldfileContent: string, doc: Document): ImageGeoreference {
+function importWldFile(wldfileContent: string, document: Document): ImageGeoreference {
 
     const cleanedWldfileContent = removeEmptyLines(wldfileContent.split('\n'));
     if (worldFileContentIsValid(cleanedWldfileContent)) {
-        return createGeoreference(cleanedWldfileContent, doc);
+        return createGeoreference(cleanedWldfileContent, document);
     } else {
         throw Errors.InvalidWldFileError;
     }
 }
 
 
-function createGeoreference(worldfileContent: string[], doc: Document): ImageGeoreference {
+function createGeoreference(worldfileContent: string[], document: Document): ImageGeoreference {
 
-    const width: number = parseInt(doc.resource.width);
-    const height: number = parseInt(doc.resource.height);
+    const width: number = parseInt(document.resource.width);
+    const height: number = parseInt(document.resource.height);
 
     const topLeftCoordinates: [number, number] = computeLatLng(0, 0, worldfileContent);
     const topRightCoordinates: [number, number] = computeLatLng(width - 1, 0, worldfileContent);

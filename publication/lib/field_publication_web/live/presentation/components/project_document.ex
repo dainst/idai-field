@@ -76,6 +76,22 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
               />
             <% end %>
 
+            <% contact_mail = Data.get_field(@doc, "contactMail") %>
+            <% contact_person = Data.get_field(@doc, "contactPerson") %>
+            <%= if contact_mail do %>
+              <dt class="font-bold"><I18n.text values={contact_person["labels"]} lang={@lang} /></dt>
+              <dd class="ml-4">
+                <a href={"mailto:#{contact_mail["values"]}"}>
+                  <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
+                  <%= if contact_person do %>
+                    <%= contact_person["values"] %>
+                  <% else %>
+                    <%= gettext("contact_email") %>
+                  <% end %>
+                </a>
+              </dd>
+            <% end %>
+
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
               <GenericField.render
@@ -105,23 +121,6 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
                 type={bibliographic_references["type"]}
               />
             <% end %>
-
-            <% contact_mail = Data.get_field(@doc, "contactMail") %>
-            <% contact_person = Data.get_field(@doc, "contactPerson") %>
-            <%= if contact_mail do %>
-              <dt class="font-bold"><I18n.text values={contact_person["labels"]} lang={@lang} /></dt>
-              <dd class="ml-4">
-                <a href={"mailto:#{contact_mail["values"]}"}>
-                  <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
-                  <%= if contact_person do %>
-                    <%= contact_person["values"] %>
-                  <% else %>
-                    <%= gettext("contact_email") %>
-                  <% end %>
-                </a>
-              </dd>
-            <% end %>
-
             <% url = Data.get_field_values(@doc, "projectURI") %>
             <%= if url do %>
               <dt class="font-bold"><%= gettext("further_links") %></dt>

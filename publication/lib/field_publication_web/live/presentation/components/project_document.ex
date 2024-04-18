@@ -25,13 +25,13 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
           <div class="bg-slate-50 p-2 rounded">
             <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
             <%= if depicted_in do %>
-              <div class="float-left overflow-auto overscroll-contain max-h-[400px] mr-3 mb-2">
+              <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
                 <%= for preview_doc <- depicted_in["values"] do %>
                   <.link
                     patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
                     class="p-1"
                   >
-                    <div class="w-[300px]">
+                    <div class="w-[300px] pr-1">
                       <Image.show size="300," project={@project_name} uuid={preview_doc["id"]} />
                     </div>
                   </.link>

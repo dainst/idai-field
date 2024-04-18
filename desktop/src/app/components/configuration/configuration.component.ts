@@ -36,6 +36,7 @@ import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
 import { exportConfiguration } from './export-configuration';
+import { AppState } from '../../services/app-state';
 import { UtilTranslations } from '../../util/util-translations';
 import { M } from '../messages/m';
 
@@ -133,6 +134,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private utilTranslations: UtilTranslations,
+                private appState: AppState,
                 private i18n: I18n) {}
 
 
@@ -663,6 +665,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             await exportConfiguration(
                 this.configurationDocument,
                 this.settingsProvider.getSettings().selectedProject,
+                this.appState,
                 (id: string) => this.utilTranslations.getTranslation(id)
             );
             this.messages.add([M.EXPORT_SUCCESS]);

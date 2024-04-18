@@ -9,6 +9,7 @@ import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { AppState } from '../../services/app-state';
 
 
 @Component({
@@ -30,15 +31,14 @@ export class BackupCreationComponent {
     private static TIMEOUT: number = 200;
 
 
-    constructor(
-        private dialogProvider: DialogProvider,
-        private modalService: NgbModal,
-        private messages: Messages,
-        private settingsProvider: SettingsProvider,
-        private backupProvider: BackupProvider,
-        private tabManager: TabManager,
-        private menuService: Menus
-    ) {}
+    constructor(private dialogProvider: DialogProvider,
+                private modalService: NgbModal,
+                private messages: Messages,
+                private settingsProvider: SettingsProvider,
+                private backupProvider: BackupProvider,
+                private tabManager: TabManager,
+                private menuService: Menus,
+                private appState: AppState) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -53,7 +53,7 @@ export class BackupCreationComponent {
 
         if (this.running) return;
 
-        const filePath = await this.dialogProvider.chooseFilepath();
+        const filePath = await this.dialogProvider.chooseFilepath(this.appState);
         if (!filePath) return;
 
         this.running = true;

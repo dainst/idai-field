@@ -8,6 +8,7 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { AppState } from '../../../services/app-state';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -39,6 +40,7 @@ export class ImportConfigurationModalComponent {
                 private configReader: ConfigReader,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
+                private appState: AppState,
                 private i18n: I18n) {}
 
 
@@ -66,6 +68,7 @@ export class ImportConfigurationModalComponent {
             remote.getCurrentWindow(),
             {
                 properties: ['openFile'],
+                defaultPath: this.appState.getFolderPath('importConfiguration'),
                 buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
                 filters: [
                     {
@@ -76,7 +79,10 @@ export class ImportConfigurationModalComponent {
             }
         );
 
-        if (result.filePaths.length) this.filePath = result.filePaths[0];
+        if (result.filePaths.length) {
+            this.filePath = result.filePaths[0];
+            this.appState.setFolderPath(this.filePath, 'importConfiguration');
+        }
     }
 
 

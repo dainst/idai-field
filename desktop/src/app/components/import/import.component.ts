@@ -20,6 +20,7 @@ import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
+import { AppState } from '../../services/app-state';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -66,6 +67,7 @@ export class ImportComponent implements OnInit {
                 private idGenerator: IdGenerator,
                 private tabManager: TabManager,
                 private menuService: Menus,
+                private appState: AppState,
                 private labels: Labels,
                 private i18n: I18n) {
 
@@ -153,11 +155,12 @@ export class ImportComponent implements OnInit {
 
     public async selectFile() {
 
-        const result: any = await this.showOpenFileDialog();
+        const filePath: string = await this.showOpenFileDialog();
+        if (!filePath) return;
 
         this.reset();
         this.importState.typeFromFileName = false;
-        if (result.filePaths.length) this.importState.filePath = result.filePaths[0];
+        this.importState.filePath = filePath;
 
         if (this.importState.filePath) {
             this.updateFormat();
@@ -373,16 +376,24 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private async showOpenFileDialog(): Promise<any> {
+    private async showOpenFileDialog(): Promise<string> {
 
-        return remote.dialog.showOpenDialog(
+        const result = await remote.dialog.showOpenDialog(
             remote.getCurrentWindow(),
             {
                 properties: ['openFile'],
+                defaultPath: this.appState.getFolderPath('import'),
                 buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
                 filters: this.getFileFilters()
             }
         );
+
+        if (result.filePaths.length) {
+            await this.appState.setFolderPath(result.filePaths[0], 'import');
+            return result.filePaths[0];
+        } else {
+            return undefined;
+        }
     }
 
 

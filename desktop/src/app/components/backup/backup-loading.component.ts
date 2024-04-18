@@ -14,6 +14,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { MsgWithParams } from '../messages/msg-with-params';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { AppState } from '../../services/app-state';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -46,6 +47,7 @@ export class BackupLoadingComponent {
                 private backupProvider: BackupProvider,
                 private tabManager: TabManager,
                 private menuService: Menus,
+                private appState: AppState,
                 private i18n: I18n) {}
 
 
@@ -63,6 +65,7 @@ export class BackupLoadingComponent {
             remote.getCurrentWindow(),
             {
                 properties: ['openFile'],
+                defaultPath: this.appState.getFolderPath('backupLoading'),
                 buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
                 filters: [
                     {
@@ -73,7 +76,10 @@ export class BackupLoadingComponent {
             }
         );
 
-        if (result.filePaths.length) this.path = result.filePaths[0];
+        if (result.filePaths.length) {
+            this.path = result.filePaths[0];
+            this.appState.setFolderPath(this.path, 'backupLoading');
+        }
     }
 
 

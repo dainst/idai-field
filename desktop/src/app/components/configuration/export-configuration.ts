@@ -1,5 +1,6 @@
 import { ConfigurationDocument } from 'idai-field-core';
 import { getAsynchronousFs } from '../../services/getAsynchronousFs';
+import { AppState } from '../../services/app-state';
 import { M } from '../messages/m';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -9,9 +10,9 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
  * @author Thomas Kleinke
  */
 export async function exportConfiguration(configurationDocument: ConfigurationDocument, projectName: string,
-                                          getTranslation: (id: string) => string) {
+                                          appState: AppState, getTranslation: (id: string) => string) {
 
-    const filePath: string = await chooseFilepath(projectName, getTranslation);
+    const filePath: string = await chooseFilepath(projectName, appState, getTranslation);
     if (!filePath) throw 'canceled';
 
     const content: string = getContent(configurationDocument);
@@ -20,7 +21,8 @@ export async function exportConfiguration(configurationDocument: ConfigurationDo
 }
 
 
-async function chooseFilepath(projectName: string, getTranslation: (id: string) => string): Promise<string> {
+async function chooseFilepath(projectName: string, appState: AppState,
+                              getTranslation: (id: string) => string): Promise<string> {
 
     const options = {
         filters: [
@@ -29,12 +31,28 @@ async function chooseFilepath(projectName: string, getTranslation: (id: string) 
                 extensions: ['configuration']
             }
         ],
-        defaultPath: projectName + '.configuration'
+        defaultPath: getDefaultPath(appState.getFolderPath('exportConfiguration'), projectName)
     };
 
     const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
+    const filePath: string = saveDialogReturnValue.filePath;
 
-    return saveDialogReturnValue.filePath;
+    if (filePath) {
+        appState.setFolderPath(filePath, 'exportConfiguration');
+        return filePath;
+    } else {
+        return undefined;
+    }
+}
+
+
+function getDefaultPath(defaultFolderPath: string, projectName: string): string {
+
+    const fileName: string = projectName + '.configuration';
+
+    return defaultFolderPath
+        ? defaultFolderPath + '/' + fileName
+        : fileName;
 }
 
 

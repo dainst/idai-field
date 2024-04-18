@@ -100,12 +100,10 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
 
             <% staff = Data.get_field(@doc, "staff") %>
             <%= if staff do %>
-              <GenericField.render
-                values={staff["values"]}
-                labels={staff["labels"]}
-                lang={@lang}
-                type={staff["type"]}
-              />
+              <dt class="font-bold"><I18n.text values={staff["labels"]} lang={@lang} /></dt>
+              <dd class="ml-4">
+                <%= Enum.join(staff["values"], ", ") %>
+              </dd>
             <% end %>
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>

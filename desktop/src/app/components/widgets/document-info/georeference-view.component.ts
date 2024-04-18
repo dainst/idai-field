@@ -103,7 +103,7 @@ export class GeoreferenceViewComponent {
 
         if (result.filePaths.length) {
             const filePath: string = result.filePaths[0];
-            this.appState.setFolderPath(filePath, 'worldfileImport');
+            await this.appState.setFolderPath(filePath, 'worldfileImport');
             return filePath;
         } else {
             return undefined;

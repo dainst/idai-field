@@ -34,7 +34,9 @@ export class StandardStateSerializer extends StateSerializer {
 
     public async store(stateObject: any, stateType: StateType): Promise<void> {
 
-        if (this.settingsProvider.getSettings().selectedProject === 'test') return;
+        if (this.settingsProvider.getSettings().selectedProject === 'test' && stateType !== 'app-state' ) {
+            return;
+        }
 
         return getAsynchronousFs().writeFile(this.getFilePath(stateType), JSON.stringify(stateObject));
     }

@@ -11,8 +11,6 @@ Field Publication is the publication plattform for Field projects.
 
 ## 1. Starting auxiliary services with docker
 
-
-## 2. Setup the  
 Field Publication relies on several services:
 - [OpenSearch](https://opensearch.org/) as the search engine.
 - [CouchDB](https://couchdb.apache.org) as the database.

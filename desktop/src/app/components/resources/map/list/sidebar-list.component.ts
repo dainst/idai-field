@@ -246,7 +246,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     private isScrolledToBottomElement(): boolean {
 
-        if (!this.lastSelectedDocument) return false;
+        if (!this.lastSelectedDocument || !this.selectedDocument) return false;
         
         const lastSelectedDocumentIndex: number = this.viewFacade.getDocuments().findIndex(document => {
             return document.resource.id === this.lastSelectedDocument.resource.id; }

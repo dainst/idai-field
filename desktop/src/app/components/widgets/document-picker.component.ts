@@ -12,7 +12,10 @@ import { scrollTo } from '../../angular/scrolling';
 
 @Component({
     selector: 'document-picker',
-    templateUrl: './document-picker.html'
+    templateUrl: './document-picker.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Sebastian Cuy
@@ -32,6 +35,7 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
     @Input() autoSelect: boolean = false;
+    @Input() allowKeyboardNavigation: boolean = false;
     @Input() showNoQueryMessage: boolean = true;
     @Input() preselectedDocumentId: string;
 
@@ -68,6 +72,20 @@ export class DocumentPickerComponent implements OnChanges {
 
         this.query.categories = this.getAllAvailableCategoryNames();
         await this.updateResultList();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (!this.isKeyboardNavigationEnabled()) return;
+
+        if (event.key === 'ArrowUp') {
+            this.selectPrevious();
+            await this.scrollToDocument(this.selectedDocument);
+        } else if (event.key === 'ArrowDown') {
+            this.selectNext();
+            await this.scrollToDocument(this.selectedDocument, true);
+        }
     }
 
 
@@ -160,11 +178,41 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private async scrollToDocument(scrollTarget: Document) {
+    private selectPrevious() {
+
+        if (!this.selectedDocument) return this.selectFirst();
+
+        let index: number = this.documents.indexOf(this.selectedDocument) - 1;
+        if (index < 0) index = this.documents.length - 1;
+        
+        this.select(this.documents[index]);
+    }
+
+
+    private selectNext() {
+
+        if (!this.selectedDocument) return this.selectFirst();
+
+        let index: number = this.documents.indexOf(this.selectedDocument) + 1;
+        if (index >= this.documents.length) index = 0;
+        
+        this.select(this.documents[index]);
+    }
+
+
+    private selectFirst() {
+
+        if (!this.documents.length) return;
+        
+        return this.select(this.documents[0]);
+    }
+
+
+    private async scrollToDocument(scrollTarget: Document, bottomElement: boolean = false) {
 
         await AngularUtility.refresh();
         const index: number = this.documents.indexOf(scrollTarget);
-        await scrollTo(index, this.getElementId(scrollTarget), this.scrollViewport);
+        await scrollTo(index, this.getElementId(scrollTarget), 58, this.scrollViewport, bottomElement);
     }
 
 
@@ -288,5 +336,11 @@ export class DocumentPickerComponent implements OnChanges {
                 return !this.showProjectOption || !['Project'].includes(document.resource.category);
             })
         );
+    }
+
+
+    private isKeyboardNavigationEnabled(): boolean {
+
+        return this.allowKeyboardNavigation && !document.getElementById('filter-menu');
     }
 }

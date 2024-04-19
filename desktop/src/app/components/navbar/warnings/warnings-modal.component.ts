@@ -79,6 +79,8 @@ export class WarningsModalComponent {
         
     public getSections = () => this.sections.filter(section => this.isSectionVisible(section));
 
+    public isModalOpened = () => this.menus.getContext() !== MenuContext.WARNINGS;
+
 
     public initialize() {
 

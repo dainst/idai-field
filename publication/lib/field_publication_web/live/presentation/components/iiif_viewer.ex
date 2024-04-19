@@ -12,7 +12,7 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
   def update(%{id: id, project: project, uuid: uuid} = assigns, socket) do
     url = "/api/iiif/image/3/#{project}%2F#{uuid}.jp2/info.json"
 
-    height = Map.get(assigns, :height, "500px")
+    height = Map.get(assigns, :height, "50vh")
 
     {
       :ok,

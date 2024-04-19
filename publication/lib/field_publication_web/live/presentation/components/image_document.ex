@@ -26,14 +26,16 @@ defmodule FieldPublicationWeb.Presentation.Components.ImageDocument do
           <% depicts = Data.get_relation_by_name(@doc, "depicts") %>
           <%= if depicts do %>
             <I18n.text values={depicts["labels"]} />:
-            <%= for preview_doc <- depicts["values"] do %>
-              <DocumentLink.show
-                project={@project_name}
-                date={@publication_date}
-                lang={@lang}
-                preview_doc={preview_doc}
-              />
-            <% end %>
+            <div class="overflow-auto overscroll-contain max-h-[190px]">
+              <%= for preview_doc <- depicts["values"] do %>
+                <DocumentLink.show
+                  project={@project_name}
+                  date={@publication_date}
+                  lang={@lang}
+                  preview_doc={preview_doc}
+                />
+              <% end %>
+            </div>
           <% end %>
           <%= for group <- @doc["groups"] do %>
             <section>

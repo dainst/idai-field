@@ -181,7 +181,7 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'inputTypes.multiInput',
-            this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' })
+            this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text (Liste)' })
         );
         this.utilTranslations.addTranslation(
             'inputTypes.text',

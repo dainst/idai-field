@@ -117,7 +117,7 @@ defmodule FieldPublication.Processing do
     publication_id = Publications.get_doc_id(publication)
 
     Enum.any?(running_tasks, fn {_task, type, context} ->
-      publication_id == context and type == :search_index
+      publication_id == context and type == :web_images
     end)
     |> if do
       # The `:web_images` task is already running for the given publication, keep the state as-is and return a

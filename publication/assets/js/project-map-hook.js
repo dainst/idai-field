@@ -4,6 +4,47 @@ import Map from 'ol/Map.js';
 import TileLayer from 'ol/layer/Tile.js';
 import View from 'ol/View.js';
 import { createEmpty, extend, getCenter } from 'ol/extent.js';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
+import { OSM, Vector as VectorSource } from 'ol/source.js';
+import GeoJSON from 'ol/format/GeoJSON.js';
+import { Vector as VectorLayer } from 'ol/layer.js';
+import { Projection } from 'ol/proj';
+
+const image = new CircleStyle({
+    radius: 5,
+    fill: null,
+    stroke: new Stroke({ color: 'red', width: 1 }),
+});
+
+const styles = {
+    'Point': new Style({
+        image: image,
+    })
+}
+
+const geojsonObject = {
+    'type': 'FeatureCollection',
+    // 'crs': {
+    //     'type': 'name',
+    //     'properties': {
+    //         'name': 'EPSG:3857',
+    //     },
+    // },
+    'features': [
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [
+                    1194.25,
+                    765.6875
+                ],
+            },
+        },
+    ],
+};
+
+
 
 
 export default getProjectMapHook = () => {
@@ -29,43 +70,70 @@ export default getProjectMapHook = () => {
             let aggregatedExtent = createEmpty();
 
             for (let relation of relations) {
+                console.log(relation)
                 try {
                     let currentLayer = new TileLayer()
-                    const raw = await fetch(`/api/iiif/image/iiif/3/${project}%2F${relation["resource"]["id"]}.jp2/info.json`)
+                    const raw = await fetch(`/api/iiif/image/3/${project}%2F${relation["resource"]["id"]}.jp2/info.json`)
                     const imageInfo = await raw.json()
 
-                    console.log(relation)
-
                     let options = new IIIFInfo(imageInfo).getTileSourceOptions();
+                    console.log(options)
+                    // const geoReference = relation["resource"]["georeference"];
 
-                    const geoReference = relation["resource"]["georeference"]
+                    // extentWidth = geoReference.topRightCoordinates[1] - geoReference.bottomLeftCoordinates[1];
+                    // extentHeight = geoReference.topRightCoordinates[0] - geoReference.bottomLeftCoordinates[0];
+                    // options.extent = [
+                    //     geoReference.bottomLeftCoordinates[1],
+                    //     geoReference.bottomLeftCoordinates[0],
+                    //     geoReference.topRightCoordinates[1],
+                    //     geoReference.topRightCoordinates[0]
+                    // ];
 
-                    options.extent = [
-                        geoReference.bottomLeftCoordinates[1],
-                        geoReference.bottomLeftCoordinates[0],
-                        geoReference.topRightCoordinates[1],
-                        geoReference.topRightCoordinates[0]
-                    ];
+                    const projection = new Projection({
+                        units: 'pixels',
+                        extent: [
+                            geoReference.bottomLeftCoordinates[1],
+                            geoReference.bottomLeftCoordinates[0],
+                            geoReference.topRightCoordinates[1],
+                            geoReference.topRightCoordinates[0]
+                        ]
+                    });
 
+                    options.source = projection;
                     const source = new IIIF(options)
 
+
+
                     currentLayer.setSource(source);
+
+                    // currentLayer.setExtent(extent)
                     this.map.addLayer(currentLayer);
 
-                    aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
+                    // aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
+                    aggregatedExtent = source.getTileGrid().getExtent()
 
                 } catch {
                     console.error(`Image server does not know UUID '${relation["resource"]["id"]}', unable to setup background layer.`)
                 }
             }
 
+            const source = new VectorSource({
+                features: new GeoJSON().readFeatures(geojsonObject),
+            });
+
+            const layer = new VectorLayer({
+                source: source,
+                style: styles["Point"],
+            });
+
+            this.map.addLayer(layer)
             this.map.setView(
                 new View({
                     extent: aggregatedExtent,
-                    center: getCenter(aggregatedExtent),
                 })
             );
-            this.map.getView().fit(aggregatedExtent, { padding: [100, 100, 100, 100], constrainResolution: false, size: this.map.getSize() })
+            this.map.getView().fit(aggregatedExtent, { padding: [100, 100, 100, 100] })
+            console.log(aggregatedExtent);
         }
     }
 }

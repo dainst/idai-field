@@ -1,44 +1,45 @@
-# FieldPublication
+# Field Publication
 
-## Getting started
+Field Publication is the publication plattform for Field projects. 
 
-### Docker containers
+# Development
 
+## Prerequisites
+
+* [Docker](https://www.docker.com/)
+* [Elixir](https://elixir-lang.org/) >= 1.14
+
+## 1. Starting auxiliary services with docker
+
+
+## 2. Setup the  
+Field Publication relies on several services:
+- [OpenSearch](https://opensearch.org/) as the search engine.
+- [CouchDB](https://couchdb.apache.org) as the database.
+- [Cantaloupe](https://cantaloupe-project.github.io/) as the [IIIF](https://iiif.io/) image server.
+
+The [docker-compose.yml](docker-compose.yml) defines all three services for development. For starting the dockerized services run:
 ```
-$ docker-compose up elasticsearch
-$ docker-compose up api
-```
-
-### Phoenix server
-
-To start your Phoenix server:
-
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Troubleshooting
-
-### Problem with MacOS Sonoma
-
-Problem: `$ mix setup` responded with `zsh: bus error  mix setup`.
-
-Remedy is doing
-
-```
-export KERL_CONFIGURE_OPTIONS="--disable-jit"
-asdf install erlang 25.3.2.6
+docker-compose up
 ```
 
-Solution found [here](https://github.com/erlang/otp/issues/7687#issuecomment-1737297515).
+## 2. Running the setup
 
-## Learn more
+We define a mix command `alias` for the setup (see [mix.exs](mix.exs)):
+```
+mix setup
+```
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## 3. Running the application
+Now you may start the Phoenix application with either
+```
+mix phx.server
+```
+
+or, if you want to use Elixir's interactive `iex` REPL to interact with the application directly from the command line
+
+```
+iex -S mix phx.server
+```
+
+Now you can visit [`localhost:4001`](http://localhost:4001) in your browser and should see the landing page. The next step would be to login as the COUCHDB_USER as defined in the [docker-compose.yml](docker-compose.yml). 

@@ -23,7 +23,7 @@ const setUp = async (mainWindow) => {
             parent: mainWindow,
             modal: true,
             width: 450,
-            height: 510,
+            height: 572,
             frame: false,
             transparent: true,
             resizable: false,
@@ -41,6 +41,7 @@ const setUp = async (mainWindow) => {
                 'document.getElementById("release-notes").innerHTML = "' + '<h2>Field Desktop ' + updateVersion + '</h2>' + updateInfo.releaseNotes.replace(/"/g, '\\"').replace(/\n/g, '') + '"; ' +
                 'document.getElementById("yes-button").textContent = "' + messages.get('autoUpdate.available.yes') + '"; ' +
                 'document.getElementById("no-button").textContent = "' + messages.get('autoUpdate.available.no') + '"; ' +
+                'document.getElementById("update-warning").textContent = "' + messages.get('autoUpdate.available.warning') + '";' +
                 'document.getElementById("info-message").textContent = "' + messages.get('autoUpdate.available.question') + '";' +
                 (process.platform !== 'darwin'
                     ? 'document.getElementById("modal-container").classList.add("with-border");'

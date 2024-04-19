@@ -1,6 +1,7 @@
 {
     "autoUpdate.available.title": "Update verfügbar",
     "autoUpdate.available.info": "Eine neue Version von Field Desktop ist verfügbar.",
+    "autoUpdate.available.warning": "Wichtig: Bitte legen Sie ein Backup aller wichtigen Projekte an, bevor Sie das Update durchführen.",
     "autoUpdate.available.question": "Möchten Sie die neue Version herunterladen und installieren?",
     "autoUpdate.available.yes": "Ja",
     "autoUpdate.available.no": "Nein",

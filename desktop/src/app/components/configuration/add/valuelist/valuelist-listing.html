@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport itemSize="40" id="valuelist-listing-viewport">
+<cdk-virtual-scroll-viewport [itemSize]="itemSize" id="valuelist-listing-viewport">
     <ul class="bg-light listing">
         <li  *cdkVirtualFor="let valuelist of filteredValuelists; trackBy: trackValuelist"
             [id]="getValuelistId(valuelist)"

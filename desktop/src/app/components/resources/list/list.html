@@ -28,7 +28,7 @@
             <div id="header-placeholder" class="list-header-field"></div>
         </div>
         <div id="list-body">
-            <cdk-virtual-scroll-viewport itemSize="41">
+            <cdk-virtual-scroll-viewport [itemSize]="itemSize">
                 <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
                     <row [document]="document"
                          [category]="getCategory(document)"

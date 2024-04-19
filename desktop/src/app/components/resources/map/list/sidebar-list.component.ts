@@ -34,6 +34,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
+    public readonly itemSize: number = 58;
+
     private lastSelectedDocument: FieldDocument|undefined;
 
 
@@ -69,8 +71,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     ngOnChanges() {
 
         this.resourcesComponent.additionalSelectedDocuments = [];
-        this.lastSelectedDocument = undefined;
-        this.scrollTo(this.selectedDocument);
+        this.scrollTo(this.selectedDocument, this.isScrolledToBottomElement());
+        this.lastSelectedDocument = this.selectedDocument;
     }
 
 
@@ -239,5 +241,23 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 ? undefined
                 : navigationPath.segments[newSegmentIndex].document
         );
+    }
+
+
+    private isScrolledToBottomElement(): boolean {
+
+        if (!this.lastSelectedDocument) return false;
+        
+        const lastSelectedDocumentIndex: number = this.viewFacade.getDocuments().findIndex(document => {
+            return document.resource.id === this.lastSelectedDocument.resource.id; }
+        );
+        const selectedDocumentIndex: number = this.viewFacade.getDocuments().findIndex(document => {
+            return document.resource.id === this.selectedDocument.resource.id; }
+        );
+
+        const indexDifference: number = selectedDocumentIndex - lastSelectedDocumentIndex;
+        const numberOfDisplayedItems: number = Math.floor(this.scrollViewport.getViewportSize() / this.itemSize);
+
+        return indexDifference > 0 && indexDifference <= numberOfDisplayedItems;
     }
 }

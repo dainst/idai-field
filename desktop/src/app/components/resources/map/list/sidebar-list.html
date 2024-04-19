@@ -6,7 +6,7 @@
 <popover-menu *ngIf="selectedDocument" [document]="selectedDocument"
               (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
-<cdk-virtual-scroll-viewport itemSize="58" id="sidebar-viewport">
+<cdk-virtual-scroll-viewport [itemSize]="itemSize" id="sidebar-viewport">
     <ul #sidebar id="sidebar" class="resources-listing"
         tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
         <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"

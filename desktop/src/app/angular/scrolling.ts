@@ -1,12 +1,19 @@
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 
-export function scrollTo(index: number, elementId: string, scrollViewport: CdkVirtualScrollViewport) {
+export function scrollTo(index: number, elementId: string, elementHeight: number,
+                         scrollViewport: CdkVirtualScrollViewport, bottomElement: boolean = false) {
 
     if (!scrollViewport) return;
 
     setTimeout(() => {
         if (!isVisible(elementId, scrollViewport)) {
+            if (bottomElement) {
+                const viewportSize: number = scrollViewport.getViewportSize();
+                const numberOfElements: number = Math.floor(viewportSize / elementHeight);
+                index = index - numberOfElements + 1;
+            }
+
             scrollViewport.scrollToIndex(index, 'auto');
         }
     }, 0);

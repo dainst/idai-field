@@ -1,4 +1,4 @@
-import { click, doubleClick, getLocator, getValue, navigateTo, typeIn, uploadInFileInput, waitForExist,
+import { click, doubleClick, getLocator, getValue, navigateTo, selectFile, typeIn, waitForExist,
     waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 
@@ -101,19 +101,11 @@ export module ImageOverviewPage {
     }
 
 
-    // mouse moves
-
-    export function clickUploadArea() {
-
-        return click('.droparea');
-    }
-
-
-    // send keys
+    // upload image
 
     export function uploadImage(filePath) {
 
-        return uploadInFileInput('#file', filePath);
+        return selectFile('.droparea', filePath);
     }
 
 

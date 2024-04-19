@@ -61,7 +61,7 @@ export async function getUrl(): Promise<string> {
 }
 
 
-export async function navigateTo(menu) {
+export function navigateTo(menu) {
 
     return window.evaluate((menuOption) => {
         require('@electron/remote').getCurrentWindow().webContents
@@ -245,10 +245,13 @@ export async function getValue(element) {
 }
 
 
-export async function uploadInFileInput(element, filePath) {
+export async function selectFile(element, filePath) {
 
-    if (isString(element)) element = await getLocator(element);
-    return element.setInputFiles(filePath);
+    await electronApp.evaluate(({ dialog }, path) => {
+        dialog.showOpenDialog = (_, __) => Promise.resolve({ filePaths: [path] });
+    }, filePath);
+
+    return click(element);
 }
 
 

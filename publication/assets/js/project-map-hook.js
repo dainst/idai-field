@@ -89,28 +89,23 @@ export default getProjectMapHook = () => {
                     //     geoReference.topRightCoordinates[0]
                     // ];
 
-                    const projection = new Projection({
-                        units: 'pixels',
-                        extent: [
-                            geoReference.bottomLeftCoordinates[1],
-                            geoReference.bottomLeftCoordinates[0],
-                            geoReference.topRightCoordinates[1],
-                            geoReference.topRightCoordinates[0]
-                        ]
-                    });
+                    // const projection = new Projection({
+                    //     units: 'pixels',
+                    //     extent: [
+                    //         geoReference.bottomLeftCoordinates[1],
+                    //         geoReference.bottomLeftCoordinates[0],
+                    //         geoReference.topRightCoordinates[1],
+                    //         geoReference.topRightCoordinates[0]
+                    //     ]
+                    // });
 
-                    options.source = projection;
+                    //                    options.source = projection;
                     const source = new IIIF(options)
 
-
-
                     currentLayer.setSource(source);
-
-                    // currentLayer.setExtent(extent)
                     this.map.addLayer(currentLayer);
 
-                    // aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
-                    aggregatedExtent = source.getTileGrid().getExtent()
+                    aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
 
                 } catch {
                     console.error(`Image server does not know UUID '${relation["resource"]["id"]}', unable to setup background layer.`)

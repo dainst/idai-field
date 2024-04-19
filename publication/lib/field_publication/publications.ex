@@ -27,6 +27,7 @@ defmodule FieldPublication.Publications do
         source_url: source_url,
         source_project_name: source_project_name,
         configuration_doc: "configuration_#{project_name}_#{draft_date}",
+        hierarchy_doc: "hierarchy_#{project_name}_#{draft_date}",
         database: "publication_#{project_name}_#{draft_date}",
         draft_date: draft_date,
         drafted_by: drafted_by
@@ -186,6 +187,7 @@ defmodule FieldPublication.Publications do
          doc_id <- get_doc_id(publication),
          {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
+         {:ok, %{status: 201}} <- CouchService.put_document(publication.hierarchy_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(publication, :_rev, rev)}
@@ -241,6 +243,8 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
+           delete_hierarchy_doc(publication),
+         {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_database(database) do
       {:ok, :deleted}
     else
@@ -250,6 +254,22 @@ defmodule FieldPublication.Publications do
   end
 
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
+    CouchService.get_document(doc_id)
+    |> case do
+      {:ok, %{status: 404}} = response ->
+        response
+
+      {:ok, %{status: 200, body: body}} ->
+        rev =
+          body
+          |> Jason.decode!()
+          |> Map.get("_rev")
+
+        CouchService.delete_document(doc_id, rev)
+    end
+  end
+
+  defp delete_hierarchy_doc(%Publication{hierarchy_doc: doc_id}) do
     CouchService.get_document(doc_id)
     |> case do
       {:ok, %{status: 404}} = response ->

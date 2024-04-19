@@ -33,6 +33,28 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
+  def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
+    Cachex.get(:configuration_docs, hierarchy_doc_name)
+    |> case do
+      {:ok, nil} ->
+        hierarchy =
+          CouchService.get_document(hierarchy_doc_name)
+          |> then(fn {:ok, %{body: body}} ->
+            Jason.decode!(body)
+          end)
+          |> Map.get("hierarchy", [])
+
+        Cachex.put(:configuration_docs, hierarchy_doc_name, hierarchy,
+          ttl: 1000 * 60 * 60 * 24 * 7
+        )
+
+        hierarchy
+
+      {:ok, cached} ->
+        cached
+    end
+  end
+
   def get_document(uuid, %Publication{database: db} = publication, raw \\ false) do
     config = get_configuration(publication)
 

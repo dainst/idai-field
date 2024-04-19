@@ -24,6 +24,7 @@ defmodule FieldPublication.Schemas.Publication do
     field(:replication_finished, :utc_datetime)
     field(:publication_date, :date)
     field(:configuration_doc, :string)
+    field(:hierarchy_doc, :string)
     field(:database, :string)
     field(:languages, {:array, :string}, default: [])
     field(:version, Ecto.Enum, values: [:major, :revision], default: :major)
@@ -44,6 +45,7 @@ defmodule FieldPublication.Schemas.Publication do
       :replication_finished,
       :publication_date,
       :configuration_doc,
+      :hierarchy_doc,
       :database,
       :languages,
       :version
@@ -57,6 +59,7 @@ defmodule FieldPublication.Schemas.Publication do
       :source_project_name,
       :draft_date,
       :configuration_doc,
+      :hierarchy_doc,
       :database,
       :version
     ])

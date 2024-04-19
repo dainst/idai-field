@@ -62,7 +62,8 @@
         publication_comments: @publication_comments,
         doc: @doc,
         publication: @publication,
-        lang: @selected_lang
+        lang: @selected_lang,
+        top_level_docs: @child_doc_previews
       })
 
     category in @image_categories ->
@@ -80,7 +81,8 @@
         project_name: @project_name,
         publication_date: @publication.publication_date,
         lang: @selected_lang,
-        uuid: @uuid
+        uuid: @uuid,
+        child_doc_previews: @child_doc_previews
       })
   end %>
 </div>

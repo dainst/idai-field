@@ -47,6 +47,22 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
 
+    child_uuids =
+      Publications.Data.get_hierarchy(current_publication)
+      |> Enum.find(fn {key, _values} ->
+        key == uuid
+      end)
+      |> case do
+        nil ->
+          # Document is not part of the hierarchy, for example images.
+          []
+
+        {_key, value} ->
+          value["children"]
+      end
+
+    child_doc_previews = Data.get_doc_previews(current_publication, child_uuids)
+
     {
       :noreply,
       socket
@@ -55,6 +71,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:selected_lang, language)
       |> assign(:uuid, uuid)
       |> assign(:image_categories, image_categories)
+      |> assign(:child_doc_previews, child_doc_previews)
     }
   end
 
@@ -72,6 +89,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     project_doc = Publications.Data.get_document("project", current_publication)
 
+    top_level_uuids =
+      Publications.Data.get_hierarchy(current_publication)
+      |> Enum.filter(fn {_key, values} ->
+        Map.get(values, "parent") == nil
+      end)
+      |> Enum.map(fn {key, _values} ->
+        key
+      end)
+
+    child_doc_previews = Data.get_doc_previews(current_publication, top_level_uuids)
+
     publication_comments =
       current_publication.comments
       |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
@@ -84,6 +112,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
       |> assign(:publication_comments, publication_comments)
+      |> assign(:child_doc_previews, child_doc_previews)
       |> assign(:uuid, "")
     }
   end

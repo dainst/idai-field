@@ -1,5 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
-  use Phoenix.Component
+  use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublicationWeb.Presentation.Components.{
@@ -33,7 +33,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
               </.group_heading>
 
               <dl class="grid grid-cols-2 gap-1 mt-2">
-                <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category", "geometry"] end)  do %>
+                <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category"] end)  do %>
                   <div class="border-2 p-0.5">
                     <GenericField.render
                       values={field["values"]}
@@ -83,6 +83,22 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
               <% end %>
             </div>
           <% end %>
+          <%= if @child_doc_previews != [] do %>
+            <.group_heading>
+              <%= gettext("Contains") %> (<%= Enum.count(@child_doc_previews) %>)
+            </.group_heading>
+            <div class="overflow-auto overscroll-contain max-h-[400px]">
+              <%= for doc <- @child_doc_previews do %>
+                <DocumentLink.show
+                  project={@project_name}
+                  date={@publication_date}
+                  lang={@lang}
+                  preview_doc={doc}
+                />
+              <% end %>
+            </div>
+          <% end %>
+
           <.group_heading>
             Raw data
           </.group_heading>

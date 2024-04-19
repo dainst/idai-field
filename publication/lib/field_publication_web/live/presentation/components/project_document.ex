@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
+  alias FieldPublicationWeb.Presentation.Components.DocumentLink
   use FieldPublicationWeb, :html
 
   alias FieldPublicationWeb.Presentation.Components.{
@@ -125,6 +126,18 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
               </dd>
             <% end %>
           </dl>
+
+          <.group_heading>
+            <%= gettext("Main documents") %>
+          </.group_heading>
+          <%= for doc <- @top_level_docs do %>
+            <DocumentLink.show
+              project={@project_name}
+              date={@publication_date}
+              lang={@lang}
+              preview_doc={doc}
+            />
+          <% end %>
         </div>
       </div>
     </div>

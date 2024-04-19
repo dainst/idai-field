@@ -4,6 +4,7 @@ defmodule FieldPublication.Replication do
   require Logger
 
   alias FieldPublication.Processing
+  alias FieldPublication.Publications.Data
   alias Phoenix.PubSub
 
   alias FieldPublication.{
@@ -199,6 +200,8 @@ defmodule FieldPublication.Replication do
     # TODO: Move these final steps into their own task, so if something fails the genserver does not crash.
     {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
 
+    create_hierarchy_doc(publication)
+
     # The reconstructed project configuration does not retain a simple list of the languages used for the
     # publication. We read that information from the "configuration" document (pre-reconstruction) and save it
     # in our `Publication` document as a shorthand.
@@ -331,6 +334,69 @@ defmodule FieldPublication.Replication do
       end)
 
     CouchService.put_document(configuration_doc_name, full_config)
+  end
+
+  defp create_hierarchy_doc(%Publication{} = publication) do
+    hierarchy_mapping =
+      publication
+      |> Data.get_doc_stream_for_all()
+      |> Enum.reduce(%{}, fn doc, acc ->
+        uuid = doc["_id"]
+
+        {_key, [parent_uuid]} =
+          Enum.find(doc["resource"]["relations"], nil, fn {key, _val} ->
+            key == "liesWithin"
+          end)
+          |> case do
+            nil ->
+              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
+                key == "isRecordedIn"
+              end)
+
+            val ->
+              val
+          end
+
+        # Update or initialize self
+        acc =
+          Map.update(acc, doc["_id"], %{children: [], parent: parent_uuid}, fn existing ->
+            Map.put(existing, :parent, parent_uuid)
+          end)
+
+        # Update or initialize the parent
+        if parent_uuid != nil do
+          Map.update(
+            acc,
+            parent_uuid,
+            %{children: [uuid], parent: nil},
+            fn %{
+                 children: existing_children
+               } = existing ->
+              Map.put(existing, :children, existing_children ++ [uuid])
+            end
+          )
+        else
+          acc
+        end
+      end)
+      |> Enum.reject(fn {_key, value} ->
+        value[:parent] == nil and value[:children] == []
+      end)
+      |> Enum.into(%{})
+
+    document_content =
+      CouchService.get_document(publication.hierarchy_doc)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          doc = Jason.decode!(body)
+          Map.put(doc, "_rev", doc["_rev"])
+          Map.put(doc, "hierarchy", hierarchy_mapping)
+
+        _ ->
+          %{"hierarchy" => hierarchy_mapping}
+      end
+
+    CouchService.put_document(publication.hierarchy_doc, document_content)
   end
 
   defp cleanup(ref, running_replications) do

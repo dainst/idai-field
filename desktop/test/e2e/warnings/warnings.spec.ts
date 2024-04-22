@@ -1,7 +1,7 @@
 import { Field } from 'idai-field-core';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { navigateTo, resetApp, sendMessageToAppController, start, stop, waitForExist, waitForNotExist } from '../app';
+import { navigateTo, pause, resetApp, sendMessageToAppController, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
@@ -382,6 +382,8 @@ test.describe('warnings --', () => {
 
 
     async function expectResourcesInWarningsModal(identifiers: string[]) {
+
+        await pause(500);
         
         const resources = await WarningsModalPage.getResources();
         expect(await resources.count()).toBe(identifiers.length);
@@ -1359,6 +1361,7 @@ test.describe('warnings --', () => {
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
+        await pause(500);
         expect(await (await WarningsModalPage.getResources()).count()).toBe(2);
         expect(await (await WarningsModalPage.getResource('1')).count()).toBe(2);
         await expectSectionTitles(['Uneindeutiger Bezeichner']);

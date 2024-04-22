@@ -111,7 +111,7 @@
         </div>
         <label class="printed-fields-header"
                [class.disabled]="!isScanCodeUsageActivated()"
-               i18n="@@configuration.qrCodes.printedFields">Felder des Drucketiketts:</label>
+               i18n="@@configuration.qrCodes.printedFields">Zu druckende Felder:</label>
         <div *ngFor="let index of [0, 1, 2]">
             <div *ngIf="printedFields.length >= index" class="form-group row">
                 <div class="col-md-9"

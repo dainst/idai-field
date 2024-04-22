@@ -7350,8 +7350,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.unconfigured" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </source>
-        <target state="needs-translation"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </source>
+        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">63,30</context>
@@ -7574,8 +7574,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="needs-translation"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
+        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">56,36</context>
@@ -8687,6 +8687,221 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.configurationFile" datatype="html">
+        <source>Field-Konfigurationsdatei</source>
+        <target state="needs-translation">Field-Konfigurationsdatei</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="openFileDialog.select" datatype="html">
+        <source>Auswählen</source>
+        <target state="needs-translation">Auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/document-info/georeference-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.deleteResource.single.confirmInfo" datatype="html">
+        <source>Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.</source>
+        <target state="needs-translation">Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewCategory.header" datatype="html">
+        <source>Neue Kategorie auswählen</source>
+        <target state="needs-translation">Neue Kategorie auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.component.ts</context>
+          <context context-type="linenumber">38,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewCategory.confirmation" datatype="html">
+        <source>Bitte wählen Sie die Kategorie aus, die für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt werden soll. </source>
+        <target state="needs-translation">Bitte wählen Sie die Kategorie aus, die für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt werden soll. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.component.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewCategory.all" datatype="html">
+        <source>Bei allen Ressourcen dieser Kategorie durchführen</source>
+        <target state="needs-translation">Bei allen Ressourcen dieser Kategorie durchführen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingOrInvalidParent" datatype="html">
+        <source>Fehlende oder ungültige übergeordnete Ressource</source>
+        <target state="needs-translation">Fehlende oder ungültige übergeordnete Ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">82,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.missingOrInvalidParent" datatype="html">
+        <source>Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit nicht angezeigt.</source>
+        <target state="needs-translation">Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit nicht angezeigt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">172,181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d0316eaa98dd3ad7639362e83e8b8a23e43f29b6" datatype="html">
+        <source>Leicht</source>
+        <target state="needs-translation">Leicht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <note priority="1" from="description">resources.printSettingsModal.fontWeight.light</note>
+      </trans-unit>
+      <trans-unit id="55d2c659d583048ef273f0d8b69fd38e2c09a500" datatype="html">
+        <source>Standard</source>
+        <target state="needs-translation">Standard</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <note priority="1" from="description">resources.printSettingsModal.fontWeight.default</note>
+      </trans-unit>
+      <trans-unit id="10215be9d1a4f18d93c902d65470f2e75bc4aae3" datatype="html">
+        <source>Fett</source>
+        <target state="needs-translation">Fett</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <note priority="1" from="description">resources.printSettingsModal.fontWeight.bold</note>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.selectNewCategory" datatype="html">
+        <source>Neue Kategorie auswählen</source>
+        <target state="needs-translation">Neue Kategorie auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">293</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.warnings.missingOrInvalidParent" datatype="html">
+        <source>Fehlende oder ungültige übergeordnete Ressource</source>
+        <target state="needs-translation">Fehlende oder ungültige übergeordnete Ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.importModal.filters.configuration" datatype="html">
+        <source>Field-Konfiguration</source>
+        <target state="needs-translation">Field-Konfiguration</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.selectFile.filters.all" datatype="html">
+        <source>Alle unterstützten Formate</source>
+        <target state="needs-translation">Alle unterstützten Formate</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.selectFile.filters.catalog" datatype="html">
+        <source>Field-Typenkatalog</source>
+        <target state="needs-translation">Field-Typenkatalog</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.moveModal.header.setNewParent" datatype="html">
+        <source>Übergeordnete Ressource neu setzen</source>
+        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
+          <context context-type="linenumber">22,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.selectNewCategory.multiple.info" datatype="html">
+        <source>Bitte beachten Sie: Durch diese Aktion wird für alle Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(selectedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_2" equiv-text="{{selectedCategory.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>) gesetzt. </source>
+        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion wird für alle Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(selectedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_2" equiv-text="{{selectedCategory.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>) gesetzt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
+          <context context-type="linenumber">52,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.fontWeight" datatype="html">
+        <source>Schriftstärke</source>
+        <target state="needs-translation">Schriftstärke</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.selectNewParent" datatype="html">
+        <source>Übergeordnete Ressource neu setzen</source>
+        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">293</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.success.import" datatype="html">
+        <source>Die Projektkonfiguration wurde erfolgreich importiert.</source>
+        <target state="needs-translation">Die Projektkonfiguration wurde erfolgreich importiert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.unsupportedVersion" datatype="html">
+        <source>Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</source>
+        <target state="needs-translation">Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
+        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.moveModal.header.move.single" datatype="html">
+        <source>Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
+        <target state="needs-translation">Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
+          <context context-type="linenumber">20,8</context>
         </context-group>
       </trans-unit>
     </body>

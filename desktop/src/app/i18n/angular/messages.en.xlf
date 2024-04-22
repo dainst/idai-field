@@ -8063,7 +8063,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.printFieldLabels" datatype="html">
         <source>Feldbezeichnung drucken</source>
-        <target state="needs-translation">Feldbezeichnung drucken</target>
+        <target state="translated">Print field label</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">136,141</context>
@@ -8091,7 +8091,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettings" datatype="html">
         <source>Etikettendruck einrichten</source>
-        <target state="needs-translation">Etikettendruck einrichten</target>
+        <target state="translated">Set up label printing</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">50,65</context>
@@ -8219,7 +8219,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.showWarnings" datatype="html">
         <source>Warnungen anzeigen</source>
-        <target state="needs-translation">Warnungen anzeigen</target>
+        <target state="translated">Show warnings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -8331,7 +8331,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteResource" datatype="html">
         <source>Ressource löschen</source>
-        <target state="needs-translation">Ressource löschen</target>
+        <target state="translated">Delete resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">218</context>
@@ -8363,7 +8363,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unconfiguredCategories" datatype="html">
         <source>Unkonfigurierte Kategorien</source>
-        <target state="needs-translation">Unkonfigurierte Kategorien</target>
+        <target state="translated">Unconfigured categories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8371,7 +8371,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unconfiguredFields" datatype="html">
         <source>Unkonfigurierte Felder</source>
-        <target state="needs-translation">Unkonfigurierte Felder</target>
+        <target state="translated">Unconfigured fields</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8467,7 +8467,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewField" datatype="html">
         <source>Neues Feld auswählen</source>
-        <target state="needs-translation">Neues Feld auswählen</target>
+        <target state="translated">Select new field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">257,261</context>
@@ -8475,7 +8475,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fixValues.multiple" datatype="html">
         <source>Werte korrigieren</source>
-        <target state="needs-translation">Werte korrigieren</target>
+        <target state="translated">Fix values</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8659,7 +8659,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.convertFieldData" datatype="html">
         <source>Felddaten konvertieren</source>
-        <target state="needs-translation">Felddaten konvertieren</target>
+        <target state="translated">Convert field data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">242,248</context>
@@ -8667,7 +8667,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fixValues.single" datatype="html">
         <source>Wert korrigieren</source>
-        <target state="needs-translation">Wert korrigieren</target>
+        <target state="translated">Fix value</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8675,7 +8675,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteValues.single" datatype="html">
         <source>Wert löschen</source>
-        <target state="needs-translation">Wert löschen</target>
+        <target state="translated">Delete value</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8683,7 +8683,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteValues.multiple" datatype="html">
         <source>Werte löschen</source>
-        <target state="needs-translation">Werte löschen</target>
+        <target state="translated">Delete values</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8755,7 +8755,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewCategory" datatype="html">
         <source>Neue Kategorie auswählen</source>
-        <target state="needs-translation">Neue Kategorie auswählen</target>
+        <target state="translated">Select new category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">293</context>
@@ -8763,7 +8763,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewParent" datatype="html">
         <source>Übergeordnete Ressource neu setzen</source>
-        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <target state="translated">Set new parent resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">293</context>
@@ -8879,7 +8879,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.fontWeight.light" datatype="html">
         <source>Leicht</source>
-        <target state="needs-translation">Leicht</target>
+        <target state="translated">Light</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8887,7 +8887,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.fontWeight.default" datatype="html">
         <source>Standard</source>
-        <target state="needs-translation">Standard</target>
+        <target state="translated">Default</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8895,7 +8895,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.fontWeight.bold" datatype="html">
         <source>Fett</source>
-        <target state="needs-translation">Fett</target>
+        <target state="translated">Bold</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>

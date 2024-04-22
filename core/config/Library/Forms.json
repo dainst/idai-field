@@ -617,7 +617,7 @@
         },
         {
           "name": "hierarchy",
-          "fields": ["hasChildren", "isPresentIn"]
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -634,7 +634,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn"]
         },
         {
           "name": "time",
@@ -691,7 +691,7 @@
         },
         {
           "name": "hierarchy",
-          "fields": ["hasChildren", "isPresentIn"]
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -709,7 +709,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry"]
+          "fields": ["geometry", "isPresentIn"]
         }
       ]
     },
@@ -726,7 +726,7 @@
         },
         {
           "name": "hierarchy",
-          "fields": ["hasChildren", "isPresentIn"]
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -738,7 +738,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn"]
         },
         {
           "name": "time",
@@ -773,7 +773,7 @@
         },
         {
           "name": "hierarchy",
-          "fields": ["hasChildren", "isPresentIn"]
+          "fields": ["hasChildren"]
         },
         {
           "name": "properties",
@@ -785,7 +785,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry"]
+          "fields": ["geometry", "isPresentIn"]
         }
       ]
     },
@@ -801,10 +801,6 @@
             "endDate", "isSameAs"]
         },
         {
-          "name": "hierarchy",
-          "fields": ["isPresentIn"]
-        },
-        {
           "name": "properties",
           "fields": ["description", "hasDisturbance", "featureSegmentForm", "featureSegmentBorders", "comparison"]
         },
@@ -814,7 +810,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn"]
         },
         {
           "name": "time",
@@ -844,10 +840,6 @@
             "processor", "date", "diary", "isSameAs"]
         },
         {
-          "name": "hierarchy",
-          "fields": ["isPresentIn"]
-        },
-        {
           "name": "properties",
           "fields": ["description", "featureSegmentForm", "featureSegmentBorders", "comparison"]
         },
@@ -857,7 +849,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry"]
+          "fields": ["geometry", "isPresentIn"]
         }
       ]
     },
@@ -1599,10 +1591,6 @@
             "beginningDate", "endDate"]
         },
         {
-          "name": "hierarchy",
-          "fields": ["includesStratigraphicalUnits"]
-        },
-        {
           "name": "properties",
           "fields": ["description"]
         },
@@ -1612,7 +1600,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "orientation"]
+          "fields": ["geometry", "dimensionVerticalExtent", "orientation", "includesStratigraphicalUnits"]
         },
         {
           "name": "time",
@@ -1638,16 +1626,12 @@
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
         },
         {
-          "name": "hierarchy",
-          "fields": ["includesStratigraphicalUnits"]
-        },
-        {
           "name": "properties",
           "fields": ["description", "archaeoDox:viewingDirection"]
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         }
       ]
     },
@@ -1663,10 +1647,6 @@
             "beginningDate", "endDate"]
         },
         {
-          "name": "hierarchy",
-          "fields": ["includesStratigraphicalUnits"]
-        },
-        {
           "name": "properties",
           "fields": ["description"]
         },
@@ -1676,7 +1656,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         },
         {
           "name": "time",
@@ -1695,16 +1675,12 @@
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
         },
         {
-          "name": "hierarchy",
-          "fields": ["includesStratigraphicalUnits"]
-        },
-        {
           "name": "properties",
           "fields": ["description"]
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent"]
+          "fields": ["geometry", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         }
       ]
     }

@@ -4138,32 +4138,29 @@
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d0316eaa98dd3ad7639362e83e8b8a23e43f29b6" datatype="html">
+      <trans-unit id="resources.printSettingsModal.fontWeight.light" datatype="html">
         <source>Leicht</source>
         <target state="final">Leicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
-        <note priority="1" from="description">resources.printSettingsModal.fontWeight.light</note>
       </trans-unit>
-      <trans-unit id="55d2c659d583048ef273f0d8b69fd38e2c09a500" datatype="html">
+      <trans-unit id="resources.printSettingsModal.fontWeight.default" datatype="html">
         <source>Standard</source>
         <target state="final">Standard</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
-        <note priority="1" from="description">resources.printSettingsModal.fontWeight.default</note>
       </trans-unit>
-      <trans-unit id="10215be9d1a4f18d93c902d65470f2e75bc4aae3" datatype="html">
+      <trans-unit id="resources.printSettingsModal.fontWeight.bold" datatype="html">
         <source>Fett</source>
         <target state="final">Fett</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
-        <note priority="1" from="description">resources.printSettingsModal.fontWeight.bold</note>
       </trans-unit>
       <trans-unit id="resources.qrCodeEditorModal.header" datatype="html">
         <source> QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/></source>

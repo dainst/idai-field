@@ -70,6 +70,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoStratigraphyTab() {
+
+        return click('#edit-form-goto-stratigraphy');
+    }
+
+
     public static clickGotoPositionTab() {
 
         return click('#edit-form-goto-position');

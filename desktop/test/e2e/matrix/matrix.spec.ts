@@ -88,7 +88,7 @@ test.describe('matrix --', () => {
     test('edit relations and show updated matrix', async () => {
 
         await MatrixPage.clickNode('si1');
-        await DoceditPage.clickGotoPositionTab();
+        await DoceditPage.clickGotoStratigraphyTab();
         await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isAbove', 1);
 
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isAbove');

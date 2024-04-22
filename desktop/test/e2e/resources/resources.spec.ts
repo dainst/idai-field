@@ -730,7 +730,7 @@ test.describe('resources --', () => {
 
         await ResourcesPage.performCreateResource('P1', 'profile');
         await ResourcesPage.openEditByDoubleClickResource('SE0');
-        await DoceditPage.clickGotoHierarchyTab();
+        await DoceditPage.clickGotoPositionTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isPresentIn');
         await DoceditRelationsPage.typeInRelation('isPresentIn', 'P1');
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);

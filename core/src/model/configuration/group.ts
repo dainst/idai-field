@@ -20,6 +20,7 @@ export module Groups {
     export const INVENTORY = 'inventory';
     export const PROPERTIES = 'properties';
     export const HIERARCHY = 'hierarchy';
+    export const STRATIGRAPHY = 'stratigraphy';
     export const OTHER = 'other';
 }
 

@@ -624,13 +624,17 @@
           "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
         },
         {
+          "name": "stratigraphy",
+          "fields": ["isAbove", "isBelow", "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy",
+            "bondsWith", "borders"]
+        },
+        {
           "name": "dimension",
           "fields": ["area", "dimensionLength", "dimensionWidth"]
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isAbove", "isBelow",
-            "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith", "borders"]
+          "fields": ["geometry", "dimensionVerticalExtent"]
         },
         {
           "name": "time",
@@ -695,13 +699,17 @@
             "archaeoDox:soilType", "archaeoDox:consistency", "archaeoDox:isArchaeologicallyIrrelevant", "comparison"]
         },
         {
+          "name": "stratigraphy",
+          "fields": ["isAbove", "isBelow", "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy",
+            "bondsWith", "borders"]
+        },
+        {
           "name": "time",
           "fields": ["period", "dating", "phase", "isAfter", "isBefore", "isContemporaryWith"]
         },
         {
           "name": "position",
-          "fields": ["geometry", "isAbove", "isBelow", "cuts", "isCutBy",
-            "fills", "isFilledBy", "abuts", "isAbuttedBy", "bondsWith", "borders"]
+          "fields": ["geometry"]
         }
       ]
     },

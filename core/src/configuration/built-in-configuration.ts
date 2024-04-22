@@ -620,9 +620,13 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren', 'isPresentIn']
                     },
                     {
+                        name: Groups.STRATIGRAPHY,
+                        fields: ['isAbove', 'isBelow', 'cuts', 'isCutBy', 'fills', 'isFilledBy', 'abuts',
+                        'isAbuttedBy', 'bondsWith', 'borders']
+                    },
+                    {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'isAbove', 'isBelow', 'cuts', 'isCutBy', 'fills', 'isFilledBy', 'abuts',
-                            'isAbuttedBy', 'bondsWith', 'borders']
+                        fields: ['geometry']
                     },
                     {
                         name: Groups.TIME,

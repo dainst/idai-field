@@ -8741,15 +8741,6 @@
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="55d2c659d583048ef273f0d8b69fd38e2c09a500" datatype="html">
-        <source>Standard</source>
-        <target state="needs-translation">Standard</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-        <note priority="1" from="description">resources.printSettingsModal.fontWeight.default</note>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewCategory" datatype="html">
         <source>Neue Kategorie auswählen</source>
         <target state="needs-translation">Neue Kategorie auswählen</target>
@@ -8880,6 +8871,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.fontWeight.light" datatype="html">
+        <source>Leicht</source>
+        <target state="needs-translation">Leicht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.fontWeight.default" datatype="html">
+        <source>Standard</source>
+        <target state="needs-translation">Standard</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.printSettingsModal.fontWeight.bold" datatype="html">
+        <source>Fett</source>
+        <target state="needs-translation">Fett</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
     </body>

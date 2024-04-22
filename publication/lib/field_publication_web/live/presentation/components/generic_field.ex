@@ -5,7 +5,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   alias FieldPublicationWeb.Presentation.Components.I18n
 
   def render(%{type: single_value} = assigns)
-      when single_value in ["input", "text", "simpleInput"] do
+      when single_value in ["input", "text", "simpleInput", "dropdown"] do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
     <dd class="ml-4"><I18n.text values={@values} /></dd>
@@ -17,7 +17,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
     <%= for value <- @values do %>
-      <dd class="ml-4"><%= value %></dd>
+      <dd class="ml-4"><I18n.text values={value} /></dd>
     <% end %>
     """
   end

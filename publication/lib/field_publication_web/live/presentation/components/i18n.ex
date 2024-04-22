@@ -3,14 +3,31 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
 
   def text(assigns) do
     ~H"""
-    <%= select_translation(assigns) %>
+    <% {status, text} = select_translation(assigns) %>
+    <%= text %>
+    <%= if status == :fallback do %>
+      <span class="group">
+        <sup>
+          <span class="bg-yellow-100 pl-0.5 pr-0.5 text-xs rounded hidden group-hover:inline">
+            No translation for your current selection
+          </span>
+          <span class="hero-information-circle h-4 w-4 group-hover:hidden"></span>
+        </sup>
+      </span>
+    <% end %>
     """
   end
 
   def markdown(assigns) do
     ~H"""
+    <% {status, text} = select_translation(assigns) %>
+    <%= if status == :fallback do %>
+      <span class="bg-yellow-100 pl-0.5 pr-0.5 text-xs rounded">
+        No translation for your current selection
+      </span>
+    <% end %>
     <span class="markdown">
-      <%= select_translation(assigns)
+      <%= text
       |> Earmark.as_html!()
       |> Phoenix.HTML.raw() %>
     </span>
@@ -27,13 +44,20 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
 
     case translations do
       nil ->
-        "No value"
+        {:not_translated, "No value"}
 
       val when is_binary(val) ->
-        val
+        {:not_translated, val}
 
       val when is_map(val) ->
-        Map.get(val, lang, fallback(val))
+        Map.get(val, lang)
+        |> case do
+          nil ->
+            fallback(val)
+
+          text ->
+            {:ok, text}
+        end
     end
   end
 
@@ -48,14 +72,14 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
               Map.keys(val)
               |> List.first()
 
-            Map.get(val, first_key, "No value")
+            {:fallback, Map.get(val, first_key, "No value")}
 
           english ->
-            english
+            {:fallback, english}
         end
 
       application_lang_text ->
-        application_lang_text
+        {:ui_lang, application_lang_text}
     end
   end
 end

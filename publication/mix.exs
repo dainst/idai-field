@@ -42,7 +42,7 @@ defmodule FieldPublication.MixProject do
       {:geo, "~> 3.6"},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.2.2", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
       # httpoison is required for reverse_proxy_plug, otherwise it duplicates finch

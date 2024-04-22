@@ -396,16 +396,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
-        <source>Keine Suchkriterien angegeben</source>
-        <target state="translated">Arama kriteri belirtilmedi</target>
+        <source>Keine Suchkriterien angegeben.</source>
+        <target state="translated">Arama kriteri belirtilmedi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
-        <source>Keine Ziele gefunden</source>
-        <target state="translated">Hedef bulunamadı</target>
+        <source>Keine Ressourcen gefunden.</source>
+        <target state="translated">Girdi bulunamadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -7331,7 +7331,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.header" datatype="html">
         <source>Warnungen</source>
-        <target state="needs-translation">Warnungen</target>
+        <target state="translated">Uyarılar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
           <context context-type="linenumber">58,64</context>
@@ -7363,7 +7363,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.conflict" datatype="html">
         <source>Konflikt</source>
-        <target state="needs-translation">Konflikt</target>
+        <target state="translated">Çakışma</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">75,80</context>
@@ -7427,7 +7427,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.conflict" datatype="html">
         <source>Bei dieser Ressource ist ein Konflikt aufgetreten.</source>
-        <target state="needs-translation">Bei dieser Ressource ist ein Konflikt aufgetreten.</target>
+        <target state="needs-translation">Bu girdide çakışma oluştu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">154,162</context>
@@ -7467,7 +7467,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.conflicts" datatype="html">
         <source>Konflikte</source>
-        <target state="needs-translation">Konflikte</target>
+        <target state="translated">Çakışmalar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7507,7 +7507,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.resourceLimitExceeded" datatype="html">
         <source>Ressourcenlimit überschritten</source>
-        <target state="needs-translation">Ressourcenlimit überschritten</target>
+        <target state="translated">Girdi sınırı aşıldı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7530,16 +7530,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="needs-translation"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
+        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">56,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.unconfigured" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </source>
-        <target state="needs-translation"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </source>
+        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">63,30</context>
@@ -7587,7 +7587,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.all" datatype="html">
         <source>Alle</source>
-        <target state="needs-translation">Alle</target>
+        <target state="translated">Tümü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7611,7 +7611,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes" datatype="html">
         <source>QR-Codes</source>
-        <target state="needs-translation">QR-Codes</target>
+        <target state="needs-translation">Kare kodları</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">57,62</context>
@@ -7619,7 +7619,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.enable" datatype="html">
         <source>QR-Codes zur Identifikation verwenden</source>
-        <target state="needs-translation">QR-Codes zur Identifikation verwenden</target>
+        <target state="needs-translation">Tanımlama için kare kodları kullan</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">77,85</context>
@@ -7675,7 +7675,7 @@
       </trans-unit>
       <trans-unit id="resources.gridList.types" datatype="html">
         <source>Typen</source>
-        <target state="needs-translation">Typen</target>
+        <target state="translated">Tipler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">65,72</context>
@@ -7891,7 +7891,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditor.delete.header" datatype="html">
         <source>QR-Code löschen?</source>
-        <target state="needs-translation">QR-Code löschen?</target>
+        <target state="translated">Kare kodu sil?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -7915,7 +7915,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.addQrCode" datatype="html">
         <source>QR-Code hinzufügen</source>
-        <target state="needs-translation">QR-Code hinzufügen</target>
+        <target state="translated">Kare kodu ekle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">106,115</context>
@@ -8027,7 +8027,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.derivedRelation" datatype="html">
         <source>Abgeleitete Relation</source>
-        <target state="needs-translation">Abgeleitete Relation</target>
+        <target state="needs-translation">Türetilmiş ilişki</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8035,7 +8035,7 @@
       </trans-unit>
       <trans-unit id="qrCode.printedFields.liesWithin" datatype="html">
         <source>Übergeordnete Ressource</source>
-        <target state="needs-translation">Übergeordnete Ressource</target>
+        <target state="translated">Ana girdi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8087,7 +8087,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.size.width" datatype="html">
         <source>Breite (mm)</source>
-        <target state="needs-translation">Breite (mm)</target>
+        <target state="translated">Genişlik (mm)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8095,7 +8095,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.size.height" datatype="html">
         <source>Höhe (mm)</source>
-        <target state="needs-translation">Höhe (mm)</target>
+        <target state="translated">Yükseklik (mm)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8111,7 +8111,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.borderMargin.left" datatype="html">
         <source>Links (mm)</source>
-        <target state="needs-translation">Links (mm)</target>
+        <target state="translated">Sol (mm)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8135,7 +8135,7 @@
       </trans-unit>
       <trans-unit id="configuration.autoCreationOptionDisabled" datatype="html">
         <source>Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</source>
-        <target state="needs-translation">Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</target>
+        <target state="needs-translation">Bu seçeneği kullanabilmeniz için "Tanımlama için kare kodları kullan", seçeneğini etkinleştirin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8167,7 +8167,7 @@
       </trans-unit>
       <trans-unit id="configuration.cannotDisableParentOption" datatype="html">
         <source>Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.</source>
-        <target state="needs-translation">Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.</target>
+        <target state="needs-translation">Bu seçenek üst kategori için etkinleştirilmiş ve geçerli kategori için etkisizleştirilemez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8191,7 +8191,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.showWarnings" datatype="html">
         <source>Warnungen anzeigen</source>
-        <target state="needs-translation">Warnungen anzeigen</target>
+        <target state="translated">Uyarıları göster</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -8199,7 +8199,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.resource.single" datatype="html">
         <source>Ressource wird gelöscht...</source>
-        <target state="needs-translation">Ressource wird gelöscht...</target>
+        <target state="translated">Girdi siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8207,7 +8207,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.resource.multiple" datatype="html">
         <source>Ressourcen werden gelöscht...</source>
-        <target state="needs-translation">Ressourcen werden gelöscht...</target>
+        <target state="translated">Girdiler siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8215,7 +8215,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.image.single" datatype="html">
         <source>Bild wird gelöscht...</source>
-        <target state="needs-translation">Bild wird gelöscht...</target>
+        <target state="translated">Görüntü siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8223,7 +8223,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.image.multiple" datatype="html">
         <source>Bilder werden gelöscht...</source>
-        <target state="needs-translation">Bilder werden gelöscht...</target>
+        <target state="translated">Görüntüler siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8231,7 +8231,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.field.single" datatype="html">
         <source>Feld wird gelöscht...</source>
-        <target state="needs-translation">Feld wird gelöscht...</target>
+        <target state="translated">Alan siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8239,7 +8239,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.field.multiple" datatype="html">
         <source>Felder werden gelöscht...</source>
-        <target state="needs-translation">Felder werden gelöscht...</target>
+        <target state="translated">Alanlar siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8247,7 +8247,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.header" datatype="html">
         <source>Ressource löschen?</source>
-        <target state="needs-translation">Ressource löschen?</target>
+        <target state="translated">Girdi silinsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
           <context context-type="linenumber">45,57</context>
@@ -8263,7 +8263,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all" datatype="html">
         <source>Alle Ressourcen dieser Kategorie löschen</source>
-        <target state="needs-translation">Alle Ressourcen dieser Kategorie löschen</target>
+        <target state="translated">Bu kategorideki tüm girdileri sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">24,32</context>
@@ -8439,7 +8439,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.outlierValue.empty" datatype="html">
         <source>Leer</source>
-        <target state="needs-translation">Leer</target>
+        <target state="translated">Boş</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">202,207</context>
@@ -8447,7 +8447,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.value.single" datatype="html">
         <source>Wert wird gelöscht...</source>
-        <target state="needs-translation">Wert wird gelöscht...</target>
+        <target state="translated">Değer siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8455,7 +8455,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.value.multiple" datatype="html">
         <source>Werte werden gelöscht...</source>
-        <target state="needs-translation">Werte werden gelöscht...</target>
+        <target state="translated">Değerler siliniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8519,7 +8519,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.info" datatype="html">
         <source>Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</source>
-        <target state="needs-translation">Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</target>
+        <target state="translated">Lütfen değer listesinden doğru değeri seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">50</context>
@@ -8551,7 +8551,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.header" datatype="html">
         <source>Neues Feld auswählen</source>
-        <target state="needs-translation">Neues Feld auswählen</target>
+        <target state="needs-translation">Yeni alanı seç</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.component.ts</context>
           <context context-type="linenumber">39,55</context>

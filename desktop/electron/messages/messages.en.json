@@ -49,5 +49,6 @@
   "menu.window.minimize": "Minimize",
   "menu.help": "Help",
   "info.close": "Close",
-  "menu.tools.inventory": "Inventory"
+  "menu.tools.inventory": "Inventory",
+  "menu.configuration.exportConfiguration": "Export configuration..."
 }

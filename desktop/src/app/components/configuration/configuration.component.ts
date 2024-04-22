@@ -104,6 +104,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'geometry'  },
         { name: 'instanceOf' },
         { name: 'relation' },
+        { name: 'derivedRelation' },
         { name: 'category' },
         { name: 'identifier' }
     ];

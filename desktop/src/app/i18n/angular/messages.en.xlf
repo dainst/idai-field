@@ -8753,15 +8753,6 @@
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="55d2c659d583048ef273f0d8b69fd38e2c09a500" datatype="html">
-        <source>Standard</source>
-        <target state="translated">Default</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-        <note priority="1" from="description">resources.printSettingsModal.fontWeight.default</note>
-      </trans-unit>
       <trans-unit id="10215be9d1a4f18d93c902d65470f2e75bc4aae3" datatype="html">
         <source>Fett</source>
         <target state="needs-translation">Fett</target>
@@ -8886,15 +8877,6 @@
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">172,181</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="d0316eaa98dd3ad7639362e83e8b8a23e43f29b6" datatype="html">
-        <source>Leicht</source>
-        <target state="translated">Light</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-        <note priority="1" from="description">resources.printSettingsModal.fontWeight.light</note>
       </trans-unit>
       <trans-unit id="import.selectFile.filters.catalog" datatype="html">
         <source>Field-Typenkatalog</source>

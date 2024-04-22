@@ -8051,8 +8051,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.qrCodes.printedFields" datatype="html">
-        <source>Felder des Drucketiketts:</source>
-        <target state="needs-translation">Felder des Drucketiketts:</target>
+        <source>Zu druckende Felder:</source>
+        <target state="needs-translation">Zu druckende Felder:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">120,125</context>

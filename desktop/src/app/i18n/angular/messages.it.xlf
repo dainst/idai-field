@@ -1272,8 +1272,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.multiInput" datatype="html">
-        <source>Einzeiliger Text mit Mehrfachauswahl</source>
-        <target state="translated">Testo a riga singola con selezione multipla</target>
+        <source>Einzeiliger Text (Liste)</source>
+        <target state="translated">Testo a riga singola (lista)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1508,16 +1508,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.importModal.warning" datatype="html">
-        <source> Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt. </source>
-        <target state="translated">Si prega di notare che tutte le modifiche alla configurazione (incluse le liste di valori) vengono perse durante l'importazione. La configurazione del progetto verrà completamente sostituita dalla configurazione del progetto selezionato.</target>
+        <source>Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die importierte Konfiguration ersetzt.</source>
+        <target state="translated">Si prega di notare che tutte le modifiche alla configurazione (incluse le liste di valori) vengono perse durante l'importazione. La configurazione del progetto verrà completamente sostituita dalla configurazione importata.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.importModal.project" datatype="html">
-        <source>Projekt:</source>
-        <target state="translated">Progetto:</target>
+        <source>Projekt</source>
+        <target state="translated">Progetto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -7639,7 +7639,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.enable" datatype="html">
         <source>QR-Codes zur Identifikation verwenden</source>
-        <target state="needs-translation">QR-Codes zur Identifikation verwenden</target>
+        <target state="translated">Utilizzare i codici QR per l'identificazione</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">77,85</context>
@@ -7879,7 +7879,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes" datatype="html">
         <source>QR-Codes</source>
-        <target state="needs-translation">QR-Codes</target>
+        <target state="translated">Codici QR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">57,62</context>
@@ -7887,7 +7887,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.autoCreate" datatype="html">
         <source>Für neue Ressourcen automatisch erzeugen</source>
-        <target state="needs-translation">Für neue Ressourcen automatisch erzeugen</target>
+        <target state="translated">Generare automaticamente per le nuove risorse</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">100,109</context>
@@ -7999,7 +7999,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.derivedRelation" datatype="html">
         <source>Abgeleitete Relation</source>
-        <target state="needs-translation">Abgeleitete Relation</target>
+        <target state="translated">Relazione derivata</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8007,7 +8007,7 @@
       </trans-unit>
       <trans-unit id="qrCode.printedFields.liesWithin" datatype="html">
         <source>Übergeordnete Ressource</source>
-        <target state="needs-translation">Übergeordnete Ressource</target>
+        <target state="translated">Risorse sovraordinate</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8015,7 +8015,7 @@
       </trans-unit>
       <trans-unit id="configuration.autoCreationOptionDisabled" datatype="html">
         <source>Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</source>
-        <target state="needs-translation">Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</target>
+        <target state="translated">Si prega di attivare l'opzione "Usa codici QR per l'identificazione" per utilizzare questa opzione.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8023,7 +8023,7 @@
       </trans-unit>
       <trans-unit id="configuration.printedFieldSlotDisabled" datatype="html">
         <source>Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.</source>
-        <target state="needs-translation">Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.</target>
+        <target state="translated">Questo campo è stato selezionato per la categoria sovraordinata e non può essere modificato per la categoria corrente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8031,7 +8031,7 @@
       </trans-unit>
       <trans-unit id="configuration.printedFieldUnselected" datatype="html">
         <source>Wählen Sie ein Feld aus, um diese Option zu verwenden.</source>
-        <target state="needs-translation">Wählen Sie ein Feld aus, um diese Option zu verwenden.</target>
+        <target state="translated">Selezionare un campo per utilizzare questa opzione.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8211,7 +8211,7 @@
       </trans-unit>
       <trans-unit id="configuration.cannotDisableParentOption" datatype="html">
         <source>Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.</source>
-        <target state="needs-translation">Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.</target>
+        <target state="needs-translation">Questa opzione è attivata per la categoria sovraordinata e non può essere disattivata per la categoria corrente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8227,7 +8227,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.resource.single" datatype="html">
         <source>Ressource wird gelöscht...</source>
-        <target state="needs-translation">Ressource wird gelöscht...</target>
+        <target state="translated">Cancellazione della risorsa in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8235,7 +8235,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.resource.multiple" datatype="html">
         <source>Ressourcen werden gelöscht...</source>
-        <target state="needs-translation">Ressourcen werden gelöscht...</target>
+        <target state="translated">Cancellazione delle risorse in corso..</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8243,7 +8243,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.image.single" datatype="html">
         <source>Bild wird gelöscht...</source>
-        <target state="needs-translation">Bild wird gelöscht...</target>
+        <target state="translated">Cancellazione dell'immagine in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8251,7 +8251,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.image.multiple" datatype="html">
         <source>Bilder werden gelöscht...</source>
-        <target state="needs-translation">Bilder werden gelöscht...</target>
+        <target state="translated">Cancellazione delle immagini in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8259,7 +8259,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.field.single" datatype="html">
         <source>Feld wird gelöscht...</source>
-        <target state="needs-translation">Feld wird gelöscht...</target>
+        <target state="translated">Cancellazione del campo in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8267,7 +8267,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.field.multiple" datatype="html">
         <source>Felder werden gelöscht...</source>
-        <target state="needs-translation">Felder werden gelöscht...</target>
+        <target state="translated">Cancellazione dei campi in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8451,7 +8451,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.composite.outliers.tooltip" datatype="html">
         <source>Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind.</source>
-        <target state="needs-translation">Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind.</target>
+        <target state="translated">Un sottocampo di questa voce contiene valori non inclusi nell'elenco dei valori configurati.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">84,95</context>
@@ -8531,7 +8531,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.value.single" datatype="html">
         <source>Wert wird gelöscht...</source>
-        <target state="needs-translation">Wert wird gelöscht...</target>
+        <target state="translated">Cancellazione del valore in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8539,7 +8539,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.value.multiple" datatype="html">
         <source>Werte werden gelöscht...</source>
-        <target state="needs-translation">Werte werden gelöscht...</target>
+        <target state="translated">Cancellazione dei valori in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -8691,7 +8691,7 @@
       </trans-unit>
       <trans-unit id="config.configurationFile" datatype="html">
         <source>Field-Konfigurationsdatei</source>
-        <target state="needs-translation">Field-Konfigurationsdatei</target>
+        <target state="needs-translation">File di configurazione di Field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8699,7 +8699,7 @@
       </trans-unit>
       <trans-unit id="openFileDialog.select" datatype="html">
         <source>Auswählen</source>
-        <target state="needs-translation">Auswählen</target>
+        <target state="translated">Selezionare</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">1</context>

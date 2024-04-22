@@ -23,7 +23,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   end
 
   def render(%{type: single_value} = assigns)
-      when single_value in ["unsignedInt", "date", "radio", "checkboxes"] do
+      when single_value in ["unsignedInt", "unsignedFloat", "date", "radio", "checkboxes"] do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
     <dd class="ml-4"><%= @values %></dd>

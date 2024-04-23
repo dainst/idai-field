@@ -6,7 +6,10 @@
     "position": "Розташування / Контекст",
     "dimension": "Розміри",
     "identification": "Призначення",
-    "other": "Інші"
+    "other": "Інші",
+    "hierarchy": "Ієрархія",
+    "stratigraphy": "Стратиграфія",
+    "inventory": "Інвентаризація"
   },
   "commons": {
     "dimensionLength": {

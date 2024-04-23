@@ -194,7 +194,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
         for (let field of this.category.scanCodes.printedFields) {
             const relationTarget: Document|undefined = await this.getRelationTarget(field.name);
-            const contentLabel: string = this.getFieldContentLabel(field.name, relationTarget);
+            const contentLabel: string = await this.getFieldContentLabel(field.name, relationTarget);
             if (contentLabel) {
                 printedFields.push({
                     label: field.printLabel ? this.getFieldLabel(field.name, relationTarget) : '',
@@ -221,7 +221,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    private getFieldContentLabel(fieldName: string, relationTarget?: Document): string|undefined {
+    private async getFieldContentLabel(fieldName: string, relationTarget?: Document): Promise<string|undefined> {
 
         if (fieldName === Resource.CATEGORY) {
             return this.labels.get(this.category);
@@ -231,8 +231,9 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
         const field: Field = CategoryForm.getField(this.category, fieldName);
         const fieldContent: any = this.document.resource[fieldName];
-        const fieldsViewField: FieldsViewField
-            = FieldsViewUtil.makeField(field, fieldContent, this.projectConfiguration, {}, this.labels);
+        const fieldsViewField: FieldsViewField = await FieldsViewUtil.makeField(
+            field, fieldContent, this.document.resource, this.projectConfiguration, {}, this.labels, this.datastore
+        );
 
         return FieldsViewUtil.getLabel(
             fieldsViewField,

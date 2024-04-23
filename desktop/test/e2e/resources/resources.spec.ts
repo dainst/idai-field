@@ -745,7 +745,7 @@ test.describe('resources --', () => {
     });
 
 
-    test('sort values of checkbox fields in fields view', async () => {
+    test('sort values of checkbox field in fields view', async () => {
 
         await ResourcesPage.performCreateResource('Pottery1', 'find-pottery');
         await ResourcesPage.openEditByDoubleClickResource('Pottery1');
@@ -762,5 +762,20 @@ test.describe('resources --', () => {
         expect(await FieldsViewPage.getFieldValue(1, 0, 1)).toBe('Dünnwandig');
         expect(await FieldsViewPage.getFieldValue(1, 0, 2)).toBe('Gebrannt');
         expect(await FieldsViewPage.getFieldValue(1, 0, 3)).toBe('Hart gebrannt');
+    });
+
+
+    test('sort values of checkbox field with valuelist from project document in fields view', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('Trench1', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('Trench1');
+        await DoceditPage.clickCheckbox('processor', 1);
+        await DoceditPage.clickCheckbox('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('Trench1');;
+        expect(await FieldsViewPage.getFieldValue(0, 1, 0)).toBe('Person 1');
+        expect(await FieldsViewPage.getFieldValue(0, 1, 1)).toBe('Person 2');
     });
 });

@@ -316,6 +316,8 @@ export class BuiltInConfiguration {
             }
         },
         Place: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {
                 gazId: {
                     inputType: Field.InputType.UNSIGNEDINT,
@@ -1185,8 +1187,8 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['Operation:inherit', 'Place'],
-            range: ['Place'],
+            domain: ['Operation:inherit', 'Place:inherit'],
+            range: ['Place:inherit'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1638,7 +1640,7 @@ export class BuiltInConfiguration {
                 name: 'wasFoundIn',
                 inverse: 'hasFinds',
                 domain: ['Find:inherit'],
-                range: ['Building', 'Place', 'Survey', 'Trench'],
+                range: ['Building', 'Place:inherit', 'Survey', 'Trench'],
                 editable: true,
                 inputType: 'relation'
             });
@@ -1646,7 +1648,7 @@ export class BuiltInConfiguration {
             this.builtInRelations.push({
                 name: 'hasFinds',
                 inverse: 'wasFoundIn',
-                domain: ['Building', 'Place', 'Survey', 'Trench'],
+                domain: ['Building', 'Place:inherit', 'Survey', 'Trench'],
                 range: ['Find:inherit'],
                 editable: true,
                 inputType: 'relation'

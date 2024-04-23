@@ -743,4 +743,24 @@ test.describe('resources --', () => {
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Umfasst stratigraphische Einheiten')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
     });
+
+
+    test('sort values of checkbox fields in fields view', async () => {
+
+        await ResourcesPage.performCreateResource('Pottery1', 'find-pottery');
+        await ResourcesPage.openEditByDoubleClickResource('Pottery1');
+        await DoceditPage.clickGotoPropertiesTab();
+        await DoceditPage.clickCheckbox('manufacturing', 2);
+        await DoceditPage.clickCheckbox('manufacturing', 0);
+        await DoceditPage.clickCheckbox('manufacturing', 3);
+        await DoceditPage.clickCheckbox('manufacturing', 1);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('Pottery1');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getFieldValue(1, 0, 0)).toBe('Dickwandig');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 1)).toBe('Dünnwandig');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 2)).toBe('Gebrannt');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 3)).toBe('Hart gebrannt');
+    });
 });

@@ -27,10 +27,11 @@ export class FieldsViewPage {
     };
 
 
-    public static getFieldValue(cardIndex, index) {
+    public static getFieldValue(cardIndex, index, entryIndex?) {
 
         return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body '
-            + 'div:nth-child(' + (index + 1) + ') .field-value');
+            + 'div:nth-child(' + (index + 1) + ') .field-value'
+            + (entryIndex !== undefined ? (':nth-child(' + (entryIndex + 1) + ')') : ''));
     };
 
 

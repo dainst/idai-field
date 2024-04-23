@@ -243,7 +243,10 @@
       "Lochziegel/Hohlziegel": "Дірчаста цегла/порожниста цегла",
       "Tegula": "Плитка",
       "Tonrohr": "Глиняна труба",
-      "Wandziegel": "Стінова цегла"
+      "Wandziegel": "Стінова цегла",
+      "Kalyptere": "Каліптер",
+      "Later": "Later",
+      "Stroter": "Stroter"
     }
   },
   "Brick-brickUsage-default": {
@@ -255,7 +258,8 @@
       "Gewölbedecke": "Перекриття склепінням",
       "Türrahmen": "Дверна рама",
       "Türsturz": "Дверна балка",
-      "Wandverkleidung": "Стінна обшивка"
+      "Wandverkleidung": "Стінна обшивка",
+      "Klosterformat": "Формат цегини \"монастирський\""
     }
   },
   "Brick-decorationTechnique-default": {
@@ -1535,12 +1539,27 @@
       "Tierflasche": "Пляшка для тварин",
       "Vierkantflasche": "Прямокутна пляшка",
       "zylindrische Flasche": "циліндрична пляшка",
-      "zarte Rippenschale": "ніжна реберна раковина"
+      "zarte Rippenschale": "ніжна реберна раковина",
+      "Alabastron": "Алабастрон",
+      "Amphoriskos": "Амфорископи",
+      "Aryballos": "Арібаллос",
+      "Balsamarium": "Бальзамарій",
+      "Kopfflasche": "Пляшка у вигляді голови",
+      "Unguentarium": "Унгуентарій"
     }
   },
   "Mollusk-classification-default": {
     "values": {
-      "Muschelschale (Bivalvia)": "Раковина мідії (Bivalvia)"
+      "Muschelschale (Bivalvia)": "Раковина мідії (Bivalvia)",
+      "Schuppe": "Луска",
+      "Schneckenhaus (Gastropoda)": "Раковина равлика (черевоногі молюски)"
+    }
+  },
+  "Brick-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": "обертання (на вертушці)",
+      "gegossen": "відлитий",
+      "gepresst": "витиснуто"
     }
   }
 }

@@ -8175,7 +8175,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeSaved" datatype="html">
         <source>Der neu generierte QR-Code wurde erfolgreich gespeichert.</source>
-        <target state="needs-translation">Der neu generierte QR-Code wurde erfolgreich gespeichert.</target>
+        <target state="translated">The newly generated QR code has been saved successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8187,7 +8187,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeDeleted" datatype="html">
         <source>Der QR-Code wurde erfolgreich gelöscht.</source>
-        <target state="needs-translation">Der QR-Code wurde erfolgreich gelöscht.</target>
+        <target state="translated">The QR code has been deleted successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8195,7 +8195,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.default" datatype="html">
         <source>Standard</source>
-        <target state="needs-translation">Standard</target>
+        <target state="translated">Default</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8203,7 +8203,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.hasChildren" datatype="html">
         <source>Untergeordnete Ressourcen</source>
-        <target state="needs-translation">Untergeordnete Ressourcen</target>
+        <target state="translated">Child resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8211,7 +8211,7 @@
       </trans-unit>
       <trans-unit id="settings.languageInfo.tr" datatype="html">
         <source>Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</source>
-        <target state="needs-translation">Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</target>
+        <target state="translated">For questions and comments on the Turkish translation, please contact: idai.field-turkce@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8419,7 +8419,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValue" datatype="html">
         <source>Ungültiger Kompositfeld-Eintrag im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültiger Kompositfeld-Eintrag im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Invalid entry in composite field '[1]' of a resource of category '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8427,7 +8427,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValues" datatype="html">
         <source>Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Invalid composite field entries in the following fields of a resource of category '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8771,7 +8771,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.missingOrInvalidParent" datatype="html">
         <source>Fehlende oder ungültige übergeordnete Ressource</source>
-        <target state="needs-translation">Fehlende oder ungültige übergeordnete Ressource</target>
+        <target state="translated">Missing or invalid parent resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8779,7 +8779,7 @@
       </trans-unit>
       <trans-unit id="configuration.importModal.filters.configuration" datatype="html">
         <source>Field-Konfiguration</source>
-        <target state="needs-translation">Field-Konfiguration</target>
+        <target state="translated">Field configuration</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8787,7 +8787,7 @@
       </trans-unit>
       <trans-unit id="import.selectFile.filters.all" datatype="html">
         <source>Alle unterstützten Formate</source>
-        <target state="needs-translation">Alle unterstützten Formate</target>
+        <target state="translated">All supported formats</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8799,7 +8799,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.success.import" datatype="html">
         <source>Die Projektkonfiguration wurde erfolgreich importiert.</source>
-        <target state="needs-translation">Die Projektkonfiguration wurde erfolgreich importiert.</target>
+        <target state="translated">The project configuration has been imported successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8807,7 +8807,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.unsupportedVersion" datatype="html">
         <source>Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</source>
-        <target state="needs-translation">Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</target>
+        <target state="translated">The configuration file was created with a newer version of Field Desktop (Version [0]) and therefore cannot be loaded. Please update the application and then restart the import process.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8815,7 +8815,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <target state="translated">Move <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> resources<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
           <context context-type="linenumber">48</context>
@@ -8823,7 +8823,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.single" datatype="html">
         <source>Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation">Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <target state="translated">Move resource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">20,8</context>
@@ -8831,7 +8831,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.setNewParent" datatype="html">
         <source>Übergeordnete Ressource neu setzen</source>
-        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <target state="translated">Set new parent resource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">22,28</context>
@@ -8871,7 +8871,7 @@
       </trans-unit>
       <trans-unit id="import.selectFile.filters.catalog" datatype="html">
         <source>Field-Typenkatalog</source>
-        <target state="needs-translation">Field-Typenkatalog</target>
+        <target state="translated">Field type catalog</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">1</context>

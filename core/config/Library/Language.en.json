@@ -7,7 +7,9 @@
     "dimension": "Dimensions",
     "identification": "Identification",
     "other": "Other",
-    "inventory": "Inventory"
+    "inventory": "Inventory",
+    "hierarchy": "Hierarchy",
+    "stratigraphy": "Stratigraphy"
   },
   "commons": {
     "dimensionLength": {

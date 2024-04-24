@@ -39,7 +39,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.Show do
 
   @impl true
   def handle_info(
-        {FieldPublicationWeb.PublicationLive.ReplicationFormComponent,
+        {FieldPublicationWeb.Publishing.PublicationLive.ReplicationFormComponent,
          {%ReplicationInput{} = params, %Publication{} = publication}},
         socket
       ) do

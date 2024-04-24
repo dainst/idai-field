@@ -54,6 +54,7 @@ export class DimensionComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
+            this.projectConfiguration,
             await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
         );
     }

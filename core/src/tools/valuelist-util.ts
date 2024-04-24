@@ -5,7 +5,8 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { OptionalRange } from '../model/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
-import { Dimension } from '../model';
+import { CategoryForm, Dimension } from '../model';
+import { ProjectConfiguration } from '../services';
 
 
 /**
@@ -36,14 +37,19 @@ export module ValuelistUtil {
 
     export function getValuelist(field: Field, 
                                  projectDocument: Document,
+                                 projectConfiguration: ProjectConfiguration,
                                  parentResource?: Resource): Valuelist {
 
         const valuelist: Valuelist|string[] = field.valuelist
             ? field.valuelist
             : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
 
+        const parentCategory: CategoryForm = parentResource ?
+            projectConfiguration.getCategory(parentResource.category)
+            : undefined;
+
         return field.allowOnlyValuesOfParent && parentResource
-                && parentResource[field.name] !== undefined
+                && CategoryForm.getFields(parentCategory).find(field => field.name === field.name)
             ? getValuesOfParentField(valuelist, field.name, parentResource)
             : valuelist;
     }

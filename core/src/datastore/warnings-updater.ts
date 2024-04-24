@@ -201,7 +201,7 @@ export module WarningsUpdater {
 
         for (let field of fields) {
             const outlierValues: Map<string[]>|string[] = getOutlierValues(
-                document.resource, field, documentCache.get('project'), parentResource
+                document.resource, field, documentCache.get('project'), parentResource, projectConfiguration
             );
             if (isArray(outlierValues) && !outlierValues.length) continue;
             if (isObject(outlierValues) && !Object.keys(outlierValues).length) continue;
@@ -235,16 +235,21 @@ export module WarningsUpdater {
 
 
     function getOutlierValues(fieldContainer: any, field: BaseField, projectDocument: Document,
-                              parentResource: Resource): Map<string[]>|string[] {
+                              parentResource: Resource,
+                              projectConfiguration: ProjectConfiguration): Map<string[]>|string[] {
 
         const fieldContent: any = fieldContainer[field.name];
         if (!fieldContent) return [];
 
         if (field.inputType === Field.InputType.COMPOSITE) {
-            return getOutlierValuesForCompositeField(field, fieldContent, projectDocument, parentResource);
+            return getOutlierValuesForCompositeField(
+                field, fieldContent, projectDocument, parentResource, projectConfiguration
+            );
         }
 
-        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, parentResource);
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(
+            field, projectDocument, projectConfiguration, parentResource
+        );
         return valuelist
             ? set(ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])
             : [];
@@ -252,7 +257,8 @@ export module WarningsUpdater {
 
 
     function getOutlierValuesForCompositeField(field: Field, fieldContent: any, projectDocument: Document,
-                                               parentResource: Resource): Map<string[]> {
+                                               parentResource: Resource,
+                                               projectConfiguration: ProjectConfiguration): Map<string[]> {
 
         if (!isArray(fieldContent)) return {};
 
@@ -265,7 +271,7 @@ export module WarningsUpdater {
                 if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(subfield.inputType)) continue;
 
                 const subfieldOutliers: string[] = getOutlierValues(
-                    entry, subfield, projectDocument, parentResource
+                    entry, subfield, projectDocument, parentResource, projectConfiguration
                 ) as string[];
 
                 if (outliers[subfield.name]) {

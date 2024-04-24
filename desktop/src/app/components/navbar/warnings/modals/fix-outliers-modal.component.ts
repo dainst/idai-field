@@ -180,7 +180,8 @@ export class FixOutliersModalComponent {
 
         return ValuelistUtil.getValuelist(
             valuelistField,
-            this.projectDocument, 
+            this.projectDocument,
+            this.projectConfiguration,
             await Hierarchy.getParentResource(this.datastore.get, document.resource)
         );
     }

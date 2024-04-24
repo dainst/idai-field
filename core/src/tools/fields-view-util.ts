@@ -146,6 +146,7 @@ export module FieldsViewUtil {
         const valuelist: Valuelist = ValuelistUtil.getValuelist(
             field,
             await datastore.get('project'),
+            projectConfiguration,
             await Hierarchy.getParentResource(datastore.get, resource)
         );
 

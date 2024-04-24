@@ -5,8 +5,19 @@ import { doc } from '../test-helpers';
 import { CategoryForm } from '../../src/model/configuration/category-form';
 
 
-const createDocument = (id: string, category: string = 'category') =>
-    doc('sd', 'identifier' + id, category, id);
+const createDocument = (id: string, category: string = 'Category') => doc('sd', 'identifier' + id, category, id);
+
+
+function getMockProjectConfiguration(categoryDefinition) {
+
+    const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory', 'getCategories']);
+    mockProjectConfiguration.getCategory.and.callFake(categoryName => {
+        return categoryName === 'Category' ? categoryDefinition : undefined;
+    });
+    mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
+
+    return mockProjectConfiguration;
+}
 
 
 /**
@@ -17,7 +28,7 @@ describe('WarningsUpdater', () => {
     it('update index independent warnings', () => {
 
         const categoryDefinition = {
-            name: 'category',
+            name: 'Category',
             identifierPrefix: 'C',
             groups: [
                 {
@@ -46,12 +57,12 @@ describe('WarningsUpdater', () => {
         documents[0].resource.unconfiguredField = 'text';
 
         documents[1].resource.identifier = 'C2';
+        delete documents[1].resource.category;
 
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
 
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory'])
-        mockProjectConfiguration.getCategory.and.returnValues(categoryDefinition, undefined, categoryDefinition);
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
 
         WarningsUpdater.updateIndexIndependentWarnings(documents[0], mockProjectConfiguration);
         WarningsUpdater.updateIndexIndependentWarnings(documents[1], mockProjectConfiguration);
@@ -136,7 +147,7 @@ describe('WarningsUpdater', () => {
     it('set resource limit warnings', async done => {
 
         const categoryDefinition = {
-            name: 'category',
+            name: 'Category',
             resourceLimit: 1
         } as any;
 
@@ -169,7 +180,7 @@ describe('WarningsUpdater', () => {
     it('remove resource limit warnings', async done => {
 
         const categoryDefinition = {
-            name: 'category',
+            name: 'Category',
             resourceLimit: 2
         } as any;
 
@@ -312,7 +323,7 @@ describe('WarningsUpdater', () => {
         documents[0].resource.relations['isRecordedIn'] = ['2'];
 
         const categoryDefinition: CategoryForm = {
-            name: 'category',
+            name: 'Category',
             mustLieWithin: true,
             groups: []
         } as CategoryForm;
@@ -324,8 +335,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory']);
-        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
@@ -351,7 +361,7 @@ describe('WarningsUpdater', () => {
         documents[0].warnings.missingOrInvalidParent = true;
 
         const categoryDefinition: CategoryForm = {
-            name: 'category',
+            name: 'Category',
             groups: []
         } as CategoryForm;
 
@@ -362,8 +372,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory']);
-        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
@@ -380,7 +389,7 @@ describe('WarningsUpdater', () => {
     it('set outlier warnings', async done => {
 
         const categoryDefinition = {
-            name: 'category',
+            name: 'Category',
             identifierPrefix: 'C',
             groups: [
                 {
@@ -455,10 +464,7 @@ describe('WarningsUpdater', () => {
             { dropdown: 'outlierValue5', checkboxes: ['outlierValue6'], url: 'http://www.example.de' }
         ];
 
-        const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory', 'getCategories'])
-        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
-        mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
-
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
@@ -492,7 +498,7 @@ describe('WarningsUpdater', () => {
     it('remove outlier warnings', async done => {
 
         const categoryDefinition = {
-            name: 'category',
+            name: 'Category',
             identifierPrefix: 'C',
             groups: [
                 {
@@ -574,10 +580,7 @@ describe('WarningsUpdater', () => {
             { dropdown: 'valueSubfieldDropdown', checkboxes: ['valueSubfieldCheckboxes'] }
         ];
 
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getCategory', 'getCategories'])
-        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
-        mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
-
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
@@ -601,7 +604,7 @@ describe('WarningsUpdater', () => {
     it('remove outlier warnings for valuelists from project field after updating project document', async done => {
 
         const categoryDefinition = {
-            name: 'category',
+            name: 'Category',
             identifierPrefix: 'C',
             groups: [
                 {
@@ -648,10 +651,7 @@ describe('WarningsUpdater', () => {
         documents[3].warnings.outliers = { fields: { checkboxes: ['outlierValue'] }, values: ['outlierValue'] };
         documents[3].resource.checkboxes = ['outlierValue'];
 
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
-            ['getCategory', 'getCategories']);
-        mockProjectConfiguration.getCategory.and.returnValue(categoryDefinition);
-        mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
 
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
 

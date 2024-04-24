@@ -273,7 +273,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public async getValuelist(field: Field): Promise<Valuelist> {
 
-        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
+        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'), this.projectConfiguration);
     }
 
 

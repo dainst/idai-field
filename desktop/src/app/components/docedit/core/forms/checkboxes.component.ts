@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource, Field } from 'idai-field-core';
+import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource, Field,
+    ProjectConfiguration } from 'idai-field-core';
 
 @Component({
     selector: 'form-field-checkboxes',
@@ -21,7 +22,8 @@ export class CheckboxesComponent implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     async ngOnChanges() {
@@ -29,6 +31,7 @@ export class CheckboxesComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
+            this.projectConfiguration,
             await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
         );
     }

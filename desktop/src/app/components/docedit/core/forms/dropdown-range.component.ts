@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { isUndefinedOrEmpty } from 'tsfun';
-import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
+import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy, ProjectConfiguration } from 'idai-field-core';
 
 
 const PROJECT = 'project';
@@ -26,7 +26,8 @@ export class DropdownRangeComponent {
 
 
     constructor(private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
@@ -41,6 +42,7 @@ export class DropdownRangeComponent {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get(PROJECT),
+            this.projectConfiguration,
             await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
         );
     }

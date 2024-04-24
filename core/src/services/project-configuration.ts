@@ -182,12 +182,18 @@ export class ProjectConfiguration {
     }
 
 
-    public getInventoryCategories(): Array<CategoryForm> {
+    public getCategoryWithSubcategories(categoryName: string): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('StoragePlace'),
+            filterTrees(categoryName),
             Tree.flatten
         );
+    }
+
+
+    public getInventoryCategories(): Array<CategoryForm> {
+
+        return this.getCategoryWithSubcategories('StoragePlace');
     }
 
 
@@ -201,22 +207,19 @@ export class ProjectConfiguration {
 
     public getImageCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Image'),
-            Tree.flatten
-        );
+        return this.getCategoryWithSubcategories('Image');
     }
 
 
     public getFeatureCategories(): Array<CategoryForm> {
 
-        return this.getSuperCategories('Feature');
+        return this.getCategoryWithSubcategories('Feature');
     }
 
 
     public getOperationCategories(): Array<CategoryForm> {
 
-        return this.getSuperCategories('Operation');
+        return this.getCategoryWithSubcategories('Operation');
     }
 
 
@@ -280,14 +283,5 @@ export class ProjectConfiguration {
                     this.relations, domainCategoryName, category.parentCategory.name, relationName
                 ));
             });
-    }
-
-
-    private getSuperCategories(superCategoryName: string) {
-
-        return flow(
-            this.categoryForms,
-            filterTrees(superCategoryName),
-            Tree.flatten);
     }
 }

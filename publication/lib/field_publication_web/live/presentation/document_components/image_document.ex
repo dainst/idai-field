@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.ImageDocument do
+defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
   use Phoenix.Component
   use FieldPublicationWeb, :verified_routes
 

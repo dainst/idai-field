@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
+defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
   alias FieldPublicationWeb.Presentation.Components.DocumentLink
   use FieldPublicationWeb, :html
 
@@ -50,7 +50,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectDocument do
         </div>
 
         <div class="basis-1/3 m-5">
-          <% map_layers = Data.get_relation_by_name(@doc, "hasDefaultMapLayer") %>
+          <% map_layers = Data.get_relation_by_name(@doc, "hasMapLayer") %>
           <%= if map_layers do %>
             <div class="mb-4">
               <.live_component

@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.ProjectLive.Show do
+defmodule FieldPublicationWeb.Publishing.ProjectLive.Show do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -30,7 +30,10 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
   end
 
   @impl true
-  def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, project}}, socket) do
+  def handle_info(
+        {FieldPublicationWeb.Publishing.ProjectLive.FormComponent, {:saved, project}},
+        socket
+      ) do
     {:noreply, assign(socket, :project, project)}
   end
 
@@ -50,7 +53,7 @@ defmodule FieldPublicationWeb.ProjectLive.Show do
       socket
       |> put_flash(:info, "Publication created")
       |> push_navigate(
-        to: ~p"/edit/#{publication.project_name}/publication/#{publication.draft_date}"
+        to: ~p"/publishing/#{publication.project_name}/publication/#{publication.draft_date}"
       )
     }
   end

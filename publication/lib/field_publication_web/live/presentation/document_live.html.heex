@@ -56,7 +56,7 @@
   <% category = Data.get_field_values(@doc, "category") %>
   <%= cond do
     category == "Project" ->
-      ProjectDocument.render(%{
+      DocumentComponents.Project.render(%{
         project_name: @project_name,
         publication_date: @publication.publication_date,
         publication_comments: @publication_comments,
@@ -66,8 +66,19 @@
         top_level_docs: @child_doc_previews
       })
 
+    # category == "Type" ->
+    # TODO
+
+    # category == "TypeCatalogue" ->
+    # TODO
+
+    # category == "Trench" ->
+    # TODO
+
+    # ...
+
     category in @image_categories ->
-      ImageDocument.render(%{
+      DocumentComponents.Image.render(%{
         doc: @doc,
         project_name: @project_name,
         publication_date: @publication.publication_date,
@@ -76,7 +87,7 @@
       })
 
     true ->
-      GenericDocument.render(%{
+      DocumentComponents.Generic.render(%{
         doc: @doc,
         project_name: @project_name,
         publication_date: @publication.publication_date,

@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.ProjectLive.Index do
+defmodule FieldPublicationWeb.Publishing.ProjectLive.Index do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schemas.Project

@@ -6,7 +6,7 @@
         <.button>Reindex all search indices</.button>
       </.link>
 
-      <.link patch={~p"/admin/projects/new"}>
+      <.link patch={~p"/publishing/projects/new"}>
         <.button>New Project</.button>
       </.link>
     <% end %>
@@ -28,12 +28,12 @@
           <td>
             <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
               <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-                <.link navigate={~p"/edit/#{project.name}"}>Show</.link>
+                <.link navigate={~p"/publishing/#{project.name}"}>Show</.link>
               </span>
               <%= if FieldPublication.User.is_admin?(@current_user) do %>
                 <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
                   <.link
-                    navigate={~p"/admin/projects/#{project.name}/edit"}
+                    navigate={~p"/publishing/projects/#{project.name}/edit"}
                     phx-click={JS.push_focus()}
                   >
                     Edit
@@ -65,7 +65,7 @@
   :if={@live_action in [:new, :edit]}
   id="project-modal"
   show
-  on_cancel={JS.patch(~p"/edit")}
+  on_cancel={JS.patch(~p"/publishing")}
 >
   <%= if FieldPublication.User.is_admin?(@current_user) do %>
     <.live_component

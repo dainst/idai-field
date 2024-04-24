@@ -53,11 +53,29 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-      live "/edit", ProjectLive.Index, :index
+      live "/publishing", Publishing.ProjectLive.Index, :index
     end
   end
 
-  scope "/edit", FieldPublicationWeb do
+  # Routes that require the admin user to be logged in.
+  scope "/publishing", FieldPublicationWeb do
+    pipe_through [:browser, :require_administrator]
+
+    live_session :require_administrator,
+      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
+      live "/users", Publishing.UserLive.Management, :index
+      live "/users/new", Publishing.UserLive.Management, :new
+      live "/users/:name/new_password", Publishing.UserLive.Management, :new_password
+
+      live "/projects/new", Publishing.ProjectLive.Index, :new
+      live "/projects/:project_id/delete", Publishing.ProjectLive.Index, :delete
+      live "/projects/:project_id/edit", Publishing.ProjectLive.Index, :edit
+      live "/projects/:project_id/show/edit", Publishing.ProjectLive.Show, :edit
+    end
+  end
+
+  # Routes that require a user with access to a specific project
+  scope "/publishing", FieldPublicationWeb do
     pipe_through [:browser, :require_project_access]
 
     live_session :require_project_access,
@@ -65,26 +83,9 @@ defmodule FieldPublicationWeb.Router do
         {FieldPublicationWeb.UserAuth, :ensure_authenticated},
         {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
       ] do
-      live "/:project_id", ProjectLive.Show, :show
-      live "/:project_id/publication/new", ProjectLive.Show, :draft_publication
-      live "/:project_id/publication/:draft_date", PublicationLive.Show
-    end
-  end
-
-  # Routes that require the admin user to be logged in.
-  scope "/admin", FieldPublicationWeb do
-    pipe_through [:browser, :require_administrator]
-
-    live_session :require_administrator,
-      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-      live "/users", AdminLive.UserManagement, :index
-      live "/users/new", AdminLive.UserManagement, :new
-      live "/users/:name/new_password", AdminLive.UserManagement, :new_password
-
-      live "/projects/new", ProjectLive.Index, :new
-      live "/projects/:project_id/delete", ProjectLive.Index, :delete
-      live "/projects/:project_id/edit", ProjectLive.Index, :edit
-      live "/projects/:project_id/show/edit", ProjectLive.Show, :edit
+      live "/:project_id", Publishing.ProjectLive.Show, :show
+      live "/:project_id/publication/new", Publishing.ProjectLive.Show, :draft_publication
+      live "/:project_id/publication/:draft_date", Publishing.PublicationLive.Show
     end
   end
 

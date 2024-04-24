@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.ProjectLive.FormComponent do
+defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.Schemas.Project
@@ -77,7 +77,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project updated successfully")
-          |> push_navigate(to: ~p"/edit/#{updated_project}")
+          |> push_navigate(to: ~p"/publishing/#{updated_project}")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -94,7 +94,7 @@ defmodule FieldPublicationWeb.ProjectLive.FormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project created successfully")
-          |> push_navigate(to: ~p"/edit/#{created_project.name}")
+          |> push_navigate(to: ~p"/publishing/#{created_project.name}")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->

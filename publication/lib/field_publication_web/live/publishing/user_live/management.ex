@@ -1,7 +1,8 @@
-defmodule FieldPublicationWeb.AdminLive.UserManagement do
+defmodule FieldPublicationWeb.Publishing.UserLive.Management do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.User
+  alias FieldPublicationWeb.Publishing.UserLive.FormComponent
 
   @impl true
   def render(assigns) do
@@ -9,7 +10,7 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
     <.header>
       Listing Users
       <:actions>
-        <.link patch={~p"/admin/users/new"}>
+        <.link patch={~p"/publishing/users/new"}>
           <.button>New User</.button>
         </.link>
       </:actions>
@@ -29,7 +30,9 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
             <td>
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
                 <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-                  <.link navigate={~p"/admin/users/#{user.name}/new_password"}>New password</.link>
+                  <.link navigate={~p"/publishing/users/#{user.name}/new_password"}>
+                    New password
+                  </.link>
                 </span>
                 <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
                   <.link
@@ -52,15 +55,15 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
       :if={@live_action in [:new, :new_password]}
       id="user-modal"
       show
-      on_cancel={JS.patch(~p"/admin/users")}
+      on_cancel={JS.patch(~p"/publishing/users")}
     >
       <.live_component
-        module={FieldPublicationWeb.AdminLive.UserFormComponent}
+        module={FormComponent}
         id={@user.name || :new}
         title={@page_title}
         action={@live_action}
         user={@user}
-        patch={~p"/admin/users"}
+        patch={~p"/publishing/users"}
       />
     </.modal>
     """
@@ -107,7 +110,7 @@ defmodule FieldPublicationWeb.AdminLive.UserManagement do
   end
 
   @impl true
-  def handle_info({FieldPublicationWeb.AdminLive.UserFormComponent, {:saved, _user}}, socket) do
+  def handle_info({FormComponent, {:saved, _user}}, socket) do
     {:noreply, assign(socket, :users, User.list())}
   end
 end

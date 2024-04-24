@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.GenericDocument do
+defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
   use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 

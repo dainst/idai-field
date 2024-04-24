@@ -21,9 +21,7 @@
                              (contextmenu)="select(document, $event, false)"
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
-            <list-button-group [document]="document"
-                               [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id">
-            </list-button-group>
+            <list-button-group [document]="document"></list-button-group>
         </li>
         <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">
             <div id="document-limit-info" (click)="resourcesComponent.removeLimit()"

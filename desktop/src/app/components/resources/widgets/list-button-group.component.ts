@@ -16,7 +16,6 @@ import { ResourcesComponent } from '../resources.component';
 export class ListButtonGroupComponent {
 
     @Input() document: FieldDocument;
-    @Input() isDocumentSelected: boolean;
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,

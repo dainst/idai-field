@@ -215,7 +215,6 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         
         return !this.category.isAbstract
             && (this.category.name === 'Place'
-                || this.category.parentCategory?.name === 'Place'
                 || this.category.parentCategory?.name === 'Operation');
     }
 

@@ -10,11 +10,17 @@ const createDocument = (id: string, category: string = 'Category') => doc('sd', 
 
 function getMockProjectConfiguration(categoryDefinition) {
 
-    const mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategory', 'getCategories']);
+    const mockProjectConfiguration = jasmine.createSpyObj(
+        'projectConfiguration',
+        ['getCategory', 'getCategories', 'getCategoryWithSubcategories']
+    );
     mockProjectConfiguration.getCategory.and.callFake(categoryName => {
         return categoryName === 'Category' ? categoryDefinition : undefined;
     });
     mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
+    mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
+        return categoryName === 'Category' ? [categoryDefinition] : [];
+    });
 
     return mockProjectConfiguration;
 }
@@ -159,11 +165,13 @@ describe('WarningsUpdater', () => {
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
 
         await WarningsUpdater.updateResourceLimitWarning(
-            documents[0], categoryDefinition, mockIndexFacade, mockDatastore, true
+            documents[0], categoryDefinition, mockIndexFacade, mockProjectConfiguration, mockDatastore, true
         );
 
         expect(documents[0].warnings?.resourceLimitExceeded).toBe(true);
@@ -197,10 +205,129 @@ describe('WarningsUpdater', () => {
         const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
 
-        await WarningsUpdater.updateResourceLimitWarnings(mockDatastore, mockIndexFacade, categoryDefinition);
+        await WarningsUpdater.updateResourceLimitWarnings(
+            mockDatastore, mockIndexFacade, mockProjectConfiguration, categoryDefinition
+        );
+
+        expect(documents[0].warnings).toBeUndefined();
+        expect(documents[1].warnings).toBeUndefined();
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('set resource limit warnings for limit in parent category', async done => {
+
+        const parentCategoryDefinition = {
+            name: 'ParentCategory',
+            resourceLimit: 1
+        } as any;
+
+        const categoryDefinition = {
+            name: 'Category',
+            parentCategory: parentCategoryDefinition
+        } as any;
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
+        mockIndexFacade.find.and.returnValue(['1', '2']);
+
+        const mockProjectConfiguration = jasmine.createSpyObj(
+            'projectConfiguration', ['getCategory', 'getCategories', 'getCategoryWithSubcategories']
+        );
+        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
+            if (categoryName === 'Category') return categoryDefinition;
+            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
+        });
+        mockProjectConfiguration.getCategories.and.returnValue([{
+            item: parentCategoryDefinition, trees: [
+                { item: categoryDefinition, trees: [] }
+            ] }
+        ]);
+        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
+            if (categoryName === 'Category') return [categoryDefinition];
+            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
+        });
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
+
+        await WarningsUpdater.updateResourceLimitWarning(
+            documents[0], categoryDefinition, mockIndexFacade, mockProjectConfiguration, mockDatastore, true
+        );
+
+        expect(documents[0].warnings?.resourceLimitExceeded).toBe(true);
+        expect(documents[1].warnings?.resourceLimitExceeded).toBe(true);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('remove resource limit warnings for limit in parent category', async done => {
+
+        const parentCategoryDefinition = {
+            name: 'ParentCategory',
+            resourceLimit: 2
+        } as any;
+
+        const categoryDefinition = {
+            name: 'Category',
+            parentCategory: parentCategoryDefinition
+        } as any;
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].warnings = Warnings.createDefault();
+        documents[0].warnings.resourceLimitExceeded = true;
+        documents[1].warnings = Warnings.createDefault();
+        documents[1].warnings.resourceLimitExceeded = true;
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
+        mockIndexFacade.find.and.returnValue(['1', '2']);
+
+        const mockProjectConfiguration = jasmine.createSpyObj(
+            'projectConfiguration', ['getCategory', 'getCategories', 'getCategoryWithSubcategories']
+        );
+        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
+            if (categoryName === 'Category') return categoryDefinition;
+            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
+        });
+        mockProjectConfiguration.getCategories.and.returnValue([{
+            item: parentCategoryDefinition, trees: [
+                { item: categoryDefinition, trees: [] }
+            ] }
+        ]);
+        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
+            if (categoryName === 'Category') return [categoryDefinition];
+            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
+        });
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
+
+        await WarningsUpdater.updateResourceLimitWarnings(
+            mockDatastore, mockIndexFacade, mockProjectConfiguration, categoryDefinition
+        );
 
         expect(documents[0].warnings).toBeUndefined();
         expect(documents[1].warnings).toBeUndefined();

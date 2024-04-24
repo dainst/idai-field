@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { to } from 'tsfun';
 import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
     PouchdbDatastore } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
@@ -220,7 +221,10 @@ export class PlusButtonComponent implements OnChanges {
         }
 
         if (category.resourceLimit) {
-            const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
+            const parentCategoryName: string = category.parentCategory?.name ?? category.name;
+            const categoryNames: string[] = this.projectConfiguration.getCategoryWithSubcategories(parentCategoryName)
+                .map(to(Named.NAME));
+            const resourcesCount: number = await this.datastore.findIds({ categories: categoryNames }).totalCount;
             if (resourcesCount >= category.resourceLimit) return false;
         }
 

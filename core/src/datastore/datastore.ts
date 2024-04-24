@@ -158,6 +158,7 @@ export class Datastore {
         await WarningsUpdater.updateResourceLimitWarnings(
             this,
             this.indexFacade,
+            this.projectConfiguration,
             this.projectConfiguration.getCategory(document.resource.category)
         );
     }

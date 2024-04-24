@@ -62,9 +62,11 @@ describe('ChangesStream', () => {
         datastore = jasmine.createSpyObj('MockDatastore', ['find'])
         datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
 
-        projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'], ['getCategory', 'getRegularCategories']);
+        projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'],
+            ['getCategory', 'getRegularCategories', 'getCategoryWithSubcategories']);
         projectConfiguration.getCategory.and.returnValue({ name: 'Object', groups: [] });
         projectConfiguration.getRegularCategories.and.returnValue([]);
+        projectConfiguration.getCategoryWithSubcategories.and.returnValue([{ name: 'Object', groups: [] }]);
 
         rcs = new ChangesStream(
             pouchdbDatastore,

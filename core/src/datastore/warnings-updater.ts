@@ -61,7 +61,7 @@ export module WarningsUpdater {
         if (!category) return;
 
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
-        await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
+        await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
         await updateMissingOrInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache);
         await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
@@ -98,18 +98,24 @@ export module WarningsUpdater {
 
 
     export async function updateResourceLimitWarning(document: Document, category: CategoryForm,
-                                                     indexFacade: IndexFacade, datastore?: Datastore,
-                                                     updateAll: boolean = false) {
+                                                     indexFacade: IndexFacade,
+                                                     projectConfiguration: ProjectConfiguration,
+                                                     datastore?: Datastore, updateAll: boolean = false) {
     
         if (!category) return;
 
-        const query: Query = { categories: [category.name] };
+        const resourceLimit: number = category.parentCategory?.resourceLimit ?? category.resourceLimit;
+        const parentCategoryName: string = category.parentCategory?.name ?? category.name;
 
-        if (category.resourceLimit && indexFacade.find(query).length  > category.resourceLimit) {
+        const query: Query = {
+            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME))
+        };
+
+        if (resourceLimit !== undefined && indexFacade.find(query).length  > resourceLimit) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.resourceLimitExceeded = true;
             updateIndex(indexFacade, document, ['resourceLimitExceeded:exist']);
-            if (updateAll) await updateResourceLimitWarnings(datastore, indexFacade, category);
+            if (updateAll) await updateResourceLimitWarnings(datastore, indexFacade, projectConfiguration, category);
         } else if (document.warnings?.resourceLimitExceeded) {
             delete document.warnings.resourceLimitExceeded;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
@@ -119,13 +125,24 @@ export module WarningsUpdater {
 
 
     export async function updateResourceLimitWarnings(datastore: Datastore, indexFacade: IndexFacade,
+                                                      projectConfiguration: ProjectConfiguration,
                                                       category: CategoryForm) {
 
         if (!category) return;
-        const documents: Array<Document> = (await datastore.find({ categories: [category.name] })).documents;
+
+        const parentCategoryName: string = category.parentCategory?.name ?? category.name;
+
+        const documents: Array<Document> = (await datastore.find({
+            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME))
+        })).documents;
 
         for (let document of documents) {
-            await updateResourceLimitWarning(document, category, indexFacade);
+            await updateResourceLimitWarning(
+                document,
+                projectConfiguration.getCategory(document.resource.category),
+                indexFacade,
+                projectConfiguration
+            );
         }
     }
 

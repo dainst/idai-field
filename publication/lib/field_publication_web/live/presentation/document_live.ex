@@ -5,6 +5,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   alias FieldPublication.Publications.Data
 
   alias FieldPublicationWeb.Presentation.DocumentComponents
+  alias FieldPublicationWeb.Presentation.Components.PublicationSelection
 
   def mount(%{"project_id" => project_name}, _session, socket) do
     publications =

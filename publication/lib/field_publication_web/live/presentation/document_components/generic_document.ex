@@ -10,6 +10,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
   }
 
   alias FieldPublication.Publications.Data
+  alias FieldPublicationWeb.Presentation.Components.ViewSelection
 
   import FieldPublicationWeb.CoreComponents
   import FieldPublicationWeb.Presentation.Components.Typography
@@ -17,6 +18,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
   def render(assigns) do
     ~H"""
     <div>
+      <ViewSelection.render
+        project={@project_name}
+        date={@publication_date}
+        lang={@lang}
+        uuid={@uuid}
+      />
       <.document_heading>
         <%= Data.get_field_values(
           @doc,

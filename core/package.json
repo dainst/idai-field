@@ -31,6 +31,7 @@
         "express-pouchdb": "^4.2.0",
         "jasmine": "2.5.2",
         "jasmine-core": "~3.5.0",
+        "node-gyp": "^10.1.0",
         "nodemon": "^2.0.12",
         "pouchdb-node": "8.0.1",
         "rimraf": "2.6.2",

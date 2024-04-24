@@ -290,6 +290,7 @@ export module WarningsUpdater {
                 const subfieldOutliers: string[] = getOutlierValues(
                     entry, subfield, projectDocument, parentResource, projectConfiguration
                 ) as string[];
+                if (!subfieldOutliers.length) continue;
 
                 if (outliers[subfield.name]) {
                     outliers[subfield.name] = set(outliers[subfield.name].concat(subfieldOutliers));

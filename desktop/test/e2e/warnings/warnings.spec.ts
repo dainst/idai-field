@@ -169,6 +169,26 @@ test.describe('warnings --', () => {
     }
 
 
+    async function createParentOutlierValuesWarning(parentResourceIdentifier: string, childResourceIdentifier: string) {
+
+        await ResourcesPage.performCreateResource(parentResourceIdentifier, 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource(parentResourceIdentifier);
+        await DoceditPage.clickCheckbox('campaign', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickHierarchyButton(parentResourceIdentifier);
+        await ResourcesPage.performCreateResource(childResourceIdentifier, 'feature');
+        await ResourcesPage.openEditByDoubleClickResource(childResourceIdentifier);
+        await DoceditPage.clickCheckbox('campaign', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.openEditByDoubleClickResource(parentResourceIdentifier);
+        await DoceditPage.clickCheckbox('campaign', 0);
+        await DoceditPage.clickSaveDocument();
+    }
+
+
     async function createDimensionOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
 
         await navigateTo('configuration');
@@ -960,6 +980,20 @@ test.describe('warnings --', () => {
         await DoceditPage.clickSelectGroup('properties');
         await DoceditPage.typeInMultiInputField('staff', 'Person 1');
         await DoceditPage.clickAddMultiInputEntry('staff');
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for parent outlier values by updating parent document', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createParentOutlierValuesWarning('1', '2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickCheckbox('campaign', 0);
         await DoceditPage.clickSaveDocument();
 
         await waitForNotExist(await NavbarPage.getWarnings());

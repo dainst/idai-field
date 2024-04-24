@@ -43,7 +43,7 @@ export module ValuelistUtil {
             : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
 
         return field.allowOnlyValuesOfParent && parentResource
-                && parentResource.category !== 'Place'
+                && parentResource[field.name] !== undefined
             ? getValuesOfParentField(valuelist, field.name, parentResource)
             : valuelist;
     }

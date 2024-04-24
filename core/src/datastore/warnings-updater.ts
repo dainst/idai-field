@@ -245,8 +245,13 @@ export module WarningsUpdater {
             }
         }
 
-        if (document.resource.category === 'Project' && updateAll) {
-            await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
+        if (updateAll) {
+            if (document.resource.category === 'Project') {
+                await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
+            }
+            await updateOutlierWarningsForChildren(
+                document, datastore, documentCache, indexFacade, projectConfiguration
+            );
         }
     }
 
@@ -339,6 +344,23 @@ export module WarningsUpdater {
         }).map(to(Named.NAME));
 
         const documents: Array<Document> = (await datastore.find({ categories: categoryNames })).documents;
+
+        for (let document of documents) {
+            const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+            if (!category) continue;
+
+            await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache, datastore);
+        }
+    }
+
+
+    async function updateOutlierWarningsForChildren(document: Document, datastore: Datastore,
+                                                    documentCache: DocumentCache, indexFacade: IndexFacade,
+                                                    projectConfiguration: ProjectConfiguration) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: { 'isChildOf:contain': document.resource.id }
+        })).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);

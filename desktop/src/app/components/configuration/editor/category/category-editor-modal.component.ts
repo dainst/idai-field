@@ -214,7 +214,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public isResourceLimitAvailable(): boolean {
         
         return !this.category.isAbstract
-            && (this.category.name === 'Place' || this.category.parentCategory?.name === 'Operation');
+            && (this.category.name === 'Place'
+                || this.category.parentCategory?.name === 'Place'
+                || this.category.parentCategory?.name === 'Operation');
     }
 
 

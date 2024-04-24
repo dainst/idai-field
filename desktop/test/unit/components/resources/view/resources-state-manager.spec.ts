@@ -28,8 +28,10 @@ describe('ResourcesStateManager', () => {
         mockDatastore.get.and.returnValue({ resource: { identifier: 'test' }});
         
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
-            ['getCategoryForest', 'getInventoryCategories']);
+            ['getCategoryForest', 'getInventoryCategories', 'getCategoryWithSubcategories']
+        );
         mockProjectConfiguration.getInventoryCategories.and.returnValue([]);
+        mockProjectConfiguration.getCategoryWithSubcategories.and.returnValue([{ name: 'Place' }]);
 
         mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
         mockIndexFacade.getCount.and.callFake(getCount);

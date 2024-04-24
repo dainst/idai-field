@@ -321,7 +321,9 @@ export class ResourcesStateManager {
 
     private getValidNonRecordedInCategories(): string[] {
 
-        return ['Place', 'TypeCatalog'].concat(this.projectConfiguration.getInventoryCategories().map(to(Named.NAME)));
+        return ['TypeCatalog']
+            .concat(this.projectConfiguration.getCategoryWithSubcategories('Place').map(to(Named.NAME)))
+            .concat(this.projectConfiguration.getInventoryCategories().map(to(Named.NAME)));
     }
 
 

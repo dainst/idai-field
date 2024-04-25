@@ -201,17 +201,17 @@ defmodule FieldHub.Project do
       db_statistics ->
         file_statistics = evaluate_file_store(project_identifier)
 
-      changes = CouchService.get_n_last_changes(project_identifier, nb_changes_to_display)
+        changes = CouchService.get_n_last_changes(project_identifier, nb_changes_to_display)
 
-      db_statistics =
-        db_statistics
-        |> Map.put(:last_n_changes, changes)
+        db_statistics =
+          db_statistics
+          |> Map.put(:last_n_changes, changes)
 
-      %{
-        name: project_identifier,
-        database: db_statistics,
-        files: file_statistics
-      }
+        %{
+          name: project_identifier,
+          database: db_statistics,
+          files: file_statistics
+        }
     end
   end
 

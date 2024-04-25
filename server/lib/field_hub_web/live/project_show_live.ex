@@ -124,13 +124,13 @@ defmodule FieldHubWeb.ProjectShowLive do
 
     stats = Project.evaluate_project(socket.assigns.project, n_integer)
 
-    socket = socket
+    socket =
+      socket
       |> assign(:stats, stats)
       |> assign(:nb_changes_to_display, n_integer)
 
-      {:noreply, socket}
+    {:noreply, socket}
   end
-
 
   def handle_event("delete_cache", _values, %{assigns: %{project: project}} = socket) do
     {:ok, true} = FieldHub.FileStore.clear_cache(project)

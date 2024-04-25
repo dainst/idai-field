@@ -232,8 +232,6 @@ nav {
   width: 100%;
 }
 .slider {
-  /* -webkit-appearance: none;   */
-  /* appearance: none; */
   width: 100%;  
   background: #cdcccc; 
   outline: none; 
@@ -242,7 +240,6 @@ nav {
   transition: opacity .2s;
   accent-color:#0069d9;
 }
-
 .slider:hover {
   opacity: 1; 
 }

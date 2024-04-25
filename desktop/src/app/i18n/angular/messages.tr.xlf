@@ -8027,7 +8027,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.derivedRelation" datatype="html">
         <source>Abgeleitete Relation</source>
-        <target state="needs-translation">Türetilmiş ilişki</target>
+        <target state="translated">Türetilmiş ilişki</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8135,7 +8135,7 @@
       </trans-unit>
       <trans-unit id="configuration.autoCreationOptionDisabled" datatype="html">
         <source>Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</source>
-        <target state="needs-translation">Bu seçeneği kullanabilmeniz için "Tanımlama için kare kodları kullan", seçeneğini etkinleştirin.</target>
+        <target state="translated">Bu seçeneği kullanabilmeniz için "Tanımlama için kare kodları kullan", seçeneğini etkinleştirin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>

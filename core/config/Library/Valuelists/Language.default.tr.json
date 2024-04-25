@@ -2197,14 +2197,14 @@
   },
   "viewingDirection-default": {
     "values": {
-      "N": "",
-      "NE": "",
-      "E": "",
-      "SE": "",
-      "S": "",
-      "SW": "",
-      "W": "",
-      "NW": ""
+      "N": "K",
+      "NE": "KD",
+      "E": "D",
+      "SE": "GD",
+      "S": "G",
+      "SW": "GB",
+      "W": "B",
+      "NW": "KB"
     }
   },
   "Photo-originalFormat-default": {

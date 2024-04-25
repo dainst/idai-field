@@ -6,7 +6,10 @@
     "position": "Pozisyon / Kontekst",
     "dimension": "Ölçüleri",
     "identification": "Tanılama",
-    "other": "Diğer"
+    "other": "Diğer",
+    "hierarchy": "Hiyerarşi",
+    "stratigraphy": "Stratigrafi",
+    "inventory": "Envanter"
   },
   "commons": {
     "dimensionLength": {

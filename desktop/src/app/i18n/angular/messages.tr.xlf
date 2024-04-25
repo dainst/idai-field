@@ -7247,7 +7247,7 @@
       </trans-unit>
       <trans-unit id="configuration.resourceLimit" datatype="html">
         <source>Ressourcenlimit</source>
-        <target state="needs-translation">Ressourcenlimit</target>
+        <target state="translated">Girdi sınırı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">97,103</context>
@@ -7627,7 +7627,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.autoCreate" datatype="html">
         <source>Für neue Ressourcen automatisch erzeugen</source>
-        <target state="needs-translation">Für neue Ressourcen automatisch erzeugen</target>
+        <target state="translated">Yeni girdiler için otomatik olarak oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">100,109</context>
@@ -7891,7 +7891,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditor.delete.header" datatype="html">
         <source>QR-Code löschen?</source>
-        <target state="translated">Kare kodu sil?</target>
+        <target state="translated">QR kodu sil?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -7915,7 +7915,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.addQrCode" datatype="html">
         <source>QR-Code hinzufügen</source>
-        <target state="translated">Kare kodu ekle</target>
+        <target state="translated">QR kodu ekle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">106,115</context>
@@ -8479,7 +8479,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.all" datatype="html">
         <source>In allen Ressourcen dieser Kategorie konvertieren</source>
-        <target state="needs-translation">In allen Ressourcen dieser Kategorie konvertieren</target>
+        <target state="translated">Bu kategorideki tüm girdiler için dönüştür</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">26,35</context>
@@ -8503,7 +8503,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.all" datatype="html">
         <source>Alle Vorkommnisse dieses Werts löschen</source>
-        <target state="needs-translation">Alle Vorkommnisse dieses Werts löschen</target>
+        <target state="translated">Bu değerin tüm oluşumlarını sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">28,37</context>

@@ -374,7 +374,7 @@ defmodule FieldHub.CouchService do
   ]
 
   """
-  def get_n_last_changes(project_identifier, n \\ 5) do
+  def get_n_last_changes(project_identifier, n) do
     HTTPoison.get!(
       "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=100&include_docs=true",
       get_user_credentials()

@@ -191,7 +191,7 @@ defmodule FieldHub.Project do
         name: "development"
       }
   """
-  def evaluate_project(project_identifier) do
+  def evaluate_project(project_identifier, nb_changes_to_display \\ 2) do
     project_identifier
     |> evaluate_database()
     |> case do
@@ -201,23 +201,17 @@ defmodule FieldHub.Project do
       db_statistics ->
         file_statistics = evaluate_file_store(project_identifier)
 
-        # changes = CouchService.get_last_change_info(project_identifier)
-        changes = CouchService.get_n_last_changes(project_identifier)
+      changes = CouchService.get_n_last_changes(project_identifier, nb_changes_to_display)
 
-        db_statistics =
-          db_statistics
-          # |> Map.put(:last_update_seq, String.slice(Map.get(changes, "seq"), 0..27) <> "[...]")
-          # |> Map.put(:last_update_id, Map.get(changes, "id"))
-          # |> Map.put(:last_update_date, CouchService.get_last_change_date(changes, project_identifier))
-          |> Map.put(:last_5_updates, changes)
+      db_statistics =
+        db_statistics
+        |> Map.put(:last_n_changes, changes)
 
-        %{
-          name: project_identifier,
-          database: db_statistics,
-          files: file_statistics
-        }
-
-        # IO.inspect(db_statistics)
+      %{
+        name: project_identifier,
+        database: db_statistics,
+        files: file_statistics
+      }
     end
   end
 

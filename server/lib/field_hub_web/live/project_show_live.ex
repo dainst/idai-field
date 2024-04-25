@@ -48,6 +48,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
+          |> assign(:nb_changes_to_display, 2)
           |> read_project_doc()
         }
 
@@ -60,9 +61,9 @@ defmodule FieldHubWeb.ProjectShowLive do
         :update_overview,
         %{assigns: %{project: project}} = socket
       ) do
-    stats = Project.evaluate_project(project)
+    stats = Project.evaluate_project(project, socket.assigns.nb_changes_to_display)
 
-    # Process.send_after(self(), :update_overview, 10000)
+    Process.send_after(self(), :update_overview, 10000)
 
     {
       :noreply,
@@ -117,6 +118,19 @@ defmodule FieldHubWeb.ProjectShowLive do
   def handle_event("update", %{"password" => password} = _values, socket) do
     {:noreply, assign(socket, :new_password, password)}
   end
+
+  def handle_event("last_changes", %{"n-last-changes" => n} = _values, socket) do
+    {n_integer, _remainder} = Integer.parse(n)
+
+    stats = Project.evaluate_project(socket.assigns.project, n_integer)
+
+    socket = socket
+      |> assign(:stats, stats)
+      |> assign(:nb_changes_to_display, n_integer)
+
+      {:noreply, socket}
+  end
+
 
   def handle_event("delete_cache", _values, %{assigns: %{project: project}} = socket) do
     {:ok, true} = FieldHub.FileStore.clear_cache(project)

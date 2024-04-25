@@ -787,7 +787,7 @@
       }
     },
     "FeatureSegment": {
-      "label": "",
+      "label": "Stratigrafik birimin kesiti",
       "fields": {
         "comparison": {
           "label": "Karşılaştırma(lar)",

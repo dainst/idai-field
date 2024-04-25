@@ -7611,7 +7611,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes" datatype="html">
         <source>QR-Codes</source>
-        <target state="needs-translation">Kare kodları</target>
+        <target state="translated">Kare kodları</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">57,62</context>
@@ -8143,7 +8143,7 @@
       </trans-unit>
       <trans-unit id="configuration.printedFieldUnselected" datatype="html">
         <source>Wählen Sie ein Feld aus, um diese Option zu verwenden.</source>
-        <target state="needs-translation">Wählen Sie ein Feld aus, um diese Option zu verwenden.</target>
+        <target state="translated">Bu seçeneği kullanmak için bir alan seçiniz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8175,7 +8175,7 @@
       </trans-unit>
       <trans-unit id="configuration.printedFieldSlotDisabled" datatype="html">
         <source>Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.</source>
-        <target state="needs-translation">Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.</target>
+        <target state="translated">Bu alan üst kategori için konfigüre edilmiştir ve mevcut kategori için değiştirilemez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>

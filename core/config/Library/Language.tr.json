@@ -773,7 +773,7 @@
         },
         "featureForm": {
           "label": "Stratigrafik birimin şekli",
-          "description": "Alan veya profildeki stratigrafik birimin formu: Hangi belirgin form tanımlanabilir?"
+          "description": "Alan veya profildeki stratigrafik birimin şekli: Hangi belirgin şekil tanımlanabilir?"
         }
       }
     },
@@ -795,15 +795,15 @@
         },
         "hasDisturbance": {
           "label": "Tahribat",
-          "description": ""
+          "description": "Stratigrafik birimin kesitinde tahribat var mı?"
         },
         "featureSegmentBorders": {
-          "label": "",
-          "description": ""
+          "label": "Stratigrafik birimin kesit sınırları",
+          "description": "Stratigrafik birimin kesit sınırlarının açıklaması"
         },
         "featureSegmentForm": {
-          "label": "",
-          "description": ""
+          "label": "Stratigrafik birimin kesit şekli",
+          "description": "Alan veya profildeki stratigrafik birim kesitinin şekli: Hangi belirgin şekil tanımlanabilir?"
         }
       }
     },
@@ -1053,10 +1053,10 @@
           "label": "Bezeme karşılaştırma özetinin detayı"
         },
         "ApplicationComparisonCompendia": {
-          "label": ""
+          "label": "Bezeme Karşılaştırma Özeti"
         },
         "ApplicationComparisonCompendiadetail": {
-          "label": ""
+          "label": "Bezeme Karşılaştırma Özeti Açıklama"
         },
         "Drawing": {
           "label": "Mevcut çizim"
@@ -1583,6 +1583,27 @@
           "label": "Değerlendirme ölçütü"
         }
       }
+    },
+    "StoragePlace": {
+      "label": "Depolama Yeri"
+    },
+    "StorageBuilding": {
+      "label": "Bina"
+    },
+    "StorageRoom": {
+      "label": "Oda"
+    },
+    "StorageShelf": {
+      "label": "Raf"
+    },
+    "StorageCompartment": {
+      "label": "Bölme"
+    },
+    "StorageBox": {
+      "label": "Kasa"
+    },
+    "StorageBag": {
+      "label": "Poşet"
     }
   },
   "forms": {
@@ -1624,7 +1645,7 @@
       }
     },
     "Feature:archaeoDox": {
-      "label": "",
+      "label": "Bulgu/buluntu/tabaka",
       "fields": {
         "shortDescription": {
           "label": "Kısa açıklama (Sınıflandırma)"

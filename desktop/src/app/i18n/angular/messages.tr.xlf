@@ -7255,7 +7255,7 @@
       </trans-unit>
       <trans-unit id="configuration.resourceLimit.warning" datatype="html">
         <source>Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass bereits angelegte Ressourcen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch entfernt werden. </source>
-        <target state="needs-translation">Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass bereits angelegte Ressourcen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch entfernt werden. </target>
+        <target state="translated">Bu kategorideki <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> girdiler zaten oluşturulmuş. Daha önce oluşturulmuş girdilerin otomatik olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>kaldırılmadığını<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> lütfen unutmayın. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">103,98</context>
@@ -7307,7 +7307,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.header" datatype="html">
         <source>Relation bereinigen?</source>
-        <target state="needs-translation">Relation bereinigen?</target>
+        <target state="translated">İlişki kaldırılsın mı?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/clean-up-relation-modal.component.ts</context>
           <context context-type="linenumber">41,50</context>
@@ -7315,7 +7315,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.header" datatype="html">
         <source>Felddaten löschen?</source>
-        <target state="needs-translation">Felddaten löschen?</target>
+        <target state="translated">Alan verisi silinsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">43,56</context>
@@ -7323,7 +7323,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie löschen</source>
-        <target state="needs-translation">Bei allen Ressourcen dieser Kategorie löschen</target>
+        <target state="translated">Bu kategorideki tüm girdileri sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">83,86</context>
@@ -7523,23 +7523,23 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.</source>
-        <target state="needs-translation">Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.</target>
+        <target state="translated">İşlemi onaylamak için lütfen alanın adını girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">28,35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </target>
+        <source>Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
+        <target state="translated">Lütfen unutmayın: Bu eylem, tüm <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdileri için <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanındaki tüm geçersiz verileri silecektir. Geçerli veriler korunur. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">56,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.unconfigured" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </target>
+        <source>Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </source>
+        <target state="translated">Lütfen unutmayın: Bu eylem, tüm <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdileri için <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen tüm verileri silecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">63,30</context>
@@ -7611,7 +7611,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes" datatype="html">
         <source>QR-Codes</source>
-        <target state="translated">Kare kodları</target>
+        <target state="translated">QR Kodları</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">57,62</context>
@@ -7619,7 +7619,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.enable" datatype="html">
         <source>QR-Codes zur Identifikation verwenden</source>
-        <target state="needs-translation">Tanımlama için kare kodları kullan</target>
+        <target state="translated">Tanımlama için QR kodları kullan</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">77,85</context>
@@ -8151,7 +8151,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.printedFields" datatype="html">
         <source>Zu druckende Felder:</source>
-        <target state="needs-translation">Zu druckende Felder:</target>
+        <target state="translated">Yazdırılacak etiket alanları:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">120,125</context>
@@ -8159,7 +8159,7 @@
       </trans-unit>
       <trans-unit id="configuration.qrCodes.printFieldLabels" datatype="html">
         <source>Feldbezeichnung drucken</source>
-        <target state="needs-translation">Feldbezeichnung drucken</target>
+        <target state="translated">Alan başlığını yazdır</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">136,141</context>
@@ -8463,7 +8463,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.composite.outliers.tooltip" datatype="html">
         <source>Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind.</source>
-        <target state="needs-translation">Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind.</target>
+        <target state="translated">Bu girişin bir alt alanı, konfigüre edilmiş değerler listesine dahil olmayan değerler içeriyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">84,95</context>
@@ -8471,7 +8471,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.header" datatype="html">
         <source>Felddaten konvertieren?</source>
-        <target state="needs-translation">Felddaten konvertieren?</target>
+        <target state="translated">Alan verisi dönüştürülsün mü?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.component.ts</context>
           <context context-type="linenumber">45,55</context>
@@ -8487,7 +8487,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> konvertiert (falls möglich). </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> konvertiert (falls möglich). </target>
+        <target state="translated">Lütfen unutmayın: Bu eylem, tüm <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdilerindeki <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanındaki geçersiz verileri (mümkünse) dönüştürecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">43,27</context>
@@ -8495,7 +8495,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.confirmation" datatype="html">
         <source>Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Daten wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Daten wirklich löschen? </target>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen verileri gerçekten silmek istiyor musunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">84</context>
@@ -8623,7 +8623,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation" datatype="html">
         <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
-        <target state="needs-translation">Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </target>
+        <target state="translated">İlişkiyi <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gerçekten kaldırmak istiyor musunuz? Mevcut olmayan girdilere yapılan tüm referanslar kaldırılacaktır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -8631,7 +8631,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.info" datatype="html">
         <source>Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> entsprechen. </source>
-        <target state="needs-translation">Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> entsprechen. </target>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen veriler, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> giriş tipine karşılık gelecek şekilde otomatik olarak dönüştürülebilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.component.ts</context>
           <context context-type="linenumber">91</context>
@@ -8639,7 +8639,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.header" datatype="html">
         <source>Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen </source>
-        <target state="needs-translation">Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> değerini sil </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -8647,7 +8647,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.confirmation" datatype="html">
         <source>Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> değerini gerçekten silmek istiyor musunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">27,9</context>
@@ -8687,7 +8687,7 @@
       </trans-unit>
       <trans-unit id="config.configurationFile" datatype="html">
         <source>Field-Konfigurationsdatei</source>
-        <target state="needs-translation">Field-Konfigurationsdatei</target>
+        <target state="translated">Alan Konfigürasyon Verisi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>

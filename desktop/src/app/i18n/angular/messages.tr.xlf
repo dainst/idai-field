@@ -8255,7 +8255,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.confirmation" datatype="html">
         <source>Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisini silmek istediğinizden emin misiniz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
           <context context-type="linenumber">84</context>
@@ -8271,7 +8271,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.</source>
-        <target state="needs-translation">Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.</target>
+        <target state="translated">İşlemi onaylamak için lütfen kategori adını girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">45,52</context>
@@ -8327,7 +8327,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gelöscht. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gelöscht. </target>
+        <target state="translated">Lütfen unutmayın: Bu eylem, konfigüre edilmemiş tüm <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> kategorisinin girdilerini silecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">52,26</context>
@@ -8503,7 +8503,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.all" datatype="html">
         <source>Alle Vorkommnisse dieses Werts löschen</source>
-        <target state="translated">Bu değerin tüm oluşumlarını sil</target>
+        <target state="translated">Bu değerin tüm terkrarlarını sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">28,37</context>
@@ -8511,7 +8511,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.header" datatype="html">
         <source>Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> korrigieren </source>
-        <target state="needs-translation">Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> korrigieren </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> değerini düzeltin </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.component.ts</context>
           <context context-type="linenumber">47</context>
@@ -8527,7 +8527,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.all" datatype="html">
         <source>Alle Vorkommnisse dieses Werts ersetzen</source>
-        <target state="needs-translation">Alle Vorkommnisse dieses Werts ersetzen</target>
+        <target state="translated">Bu değerin tüm tekrarlarını değiştir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">50</context>
@@ -8655,7 +8655,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> in sämtlichen Feldern aller Ressourcen gelöscht. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> in sämtlichen Feldern aller Ressourcen gelöscht. </target>
+        <target state="translated">Lütfen unutmayın: Bu işlem, tüm girdilerin tüm alanlarındaki değer listesinde bulunmayan <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> değerini silecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">44,29</context>
@@ -8719,7 +8719,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.single.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.</source>
-        <target state="needs-translation">Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.</target>
+        <target state="translated">İşlemi onaylamak için lütfen girdinin tanımlayıcısını girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
           <context context-type="linenumber">53</context>

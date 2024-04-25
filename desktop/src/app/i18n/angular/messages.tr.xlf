@@ -7827,7 +7827,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.header" datatype="html">
         <source>QR-Code scannen</source>
-        <target state="needs-translation">QR-Code scannen</target>
+        <target state="translated">QR-Kodu Tarayın</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">53,66</context>
@@ -7835,7 +7835,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.cameraNotFound" datatype="html">
         <source>Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</source>
-        <target state="needs-translation">Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</target>
+        <target state="translated">Kamera bulunamadı. Lütfen cihazınızda kamera olup olmadığını ve gerekli izinlerin verilip verilmediğini kontrol ediniz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">123,149</context>
@@ -7843,7 +7843,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html">
         <source>Kamera auswählen:</source>
-        <target state="needs-translation">Kamera auswählen:</target>
+        <target state="translated">Kamera Seçiniz:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">149</context>
@@ -8167,7 +8167,7 @@
       </trans-unit>
       <trans-unit id="configuration.cannotDisableParentOption" datatype="html">
         <source>Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.</source>
-        <target state="needs-translation">Bu seçenek üst kategori için etkinleştirilmiş ve geçerli kategori için etkisizleştirilemez.</target>
+        <target state="translated">Bu seçenek üst kategori için etkinleştirilmiş ve geçerli kategori için etkisizleştirilemez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8695,7 +8695,7 @@
       </trans-unit>
       <trans-unit id="openFileDialog.select" datatype="html">
         <source>Auswählen</source>
-        <target state="needs-translation">Auswählen</target>
+        <target state="translated">Seçiniz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">1</context>

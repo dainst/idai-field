@@ -112,8 +112,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   def handle_event("search", %{"search_input" => query}, socket) do
     {
       :noreply,
-      socket
-      |> push_patch(to: ~p"/?q=#{query}")
+      push_patch(socket, to: ~p"/?q=#{query}")
     }
   end
 end

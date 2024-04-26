@@ -1583,6 +1583,12 @@
           "label": "Критерії"
         }
       }
+    },
+    "StoragePlace": {
+      "label": "Місце зберігання"
+    },
+    "StorageBuilding": {
+      "label": "Споруда/Будівля"
     }
   },
   "forms": {

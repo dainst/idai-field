@@ -32,7 +32,6 @@ services:
     volumes:
       - "./data/file_store/web_images:/image_root"
       - "./data/file_store/raw:/source_images"
-      - "./config/cantaloupe.properties.sample:/cantaloupe/cantaloupe.properties"
 
   couchdb:
     image: couchdb:3.3.2

@@ -21,7 +21,7 @@ RUN curl --silent --fail -OL https://github.com/medusa-project/cantaloupe/releas
     && chown -R cantaloupe /cantaloupe-$CANTALOUPE_VERSION /var/log/cantaloupe /var/cache/cantaloupe \
     && cp -rs /cantaloupe/deps/Linux-x86-64/* /usr/
 
-RUN cp /cantaloupe/cantaloupe.properties.sample /cantaloupe/cantaloupe.properties
+COPY ./cantaloupe.properties /cantaloupe/cantaloupe.properties
 
 RUN sed -i 's#FilesystemSource.BasicLookupStrategy.path_prefix = /home/myself/images/#FilesystemSource.BasicLookupStrategy.path_prefix = /image_root/#' /cantaloupe/cantaloupe.properties
 RUN sed -i 's#log.application.level = debug#log.application.level = info#' /cantaloupe/cantaloupe.properties

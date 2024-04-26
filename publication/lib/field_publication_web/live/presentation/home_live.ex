@@ -47,19 +47,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
         end
       end)
 
-    features =
-      published_projects
-      |> Enum.map(fn doc ->
-        case doc do
-          %{coordinates: coordinates, name: name} ->
-            create_home_marker(coordinates, name)
-
-          _ ->
-            nil
-        end
-      end)
-      |> Enum.reject(fn val -> is_nil(val) end)
-
     {
       :ok,
       socket
@@ -68,7 +55,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
         published_projects
       )
       |> assign(:highlighted, nil)
-      |> assign(:features, features)
       |> assign(:search_results, [])
     }
   end
@@ -128,21 +114,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       :noreply,
       socket
       |> push_patch(to: ~p"/?q=#{query}")
-    }
-  end
-
-  defp create_home_marker(%{longitude: lon, latitude: lat}, project_name) do
-    %{
-      type: "Feature",
-      properties: %{
-        style: "homeMarker",
-        hover_event: "home_marker_hover",
-        click_event: "project_selected",
-        id: project_name
-      },
-      geometry: %Geo.Point{
-        coordinates: {lon, lat}
-      }
     }
   end
 end

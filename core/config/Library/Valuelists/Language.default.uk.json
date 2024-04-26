@@ -293,12 +293,22 @@
   },
   "Burial-amountIndividuals-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Dreifachbestattung": "Потрійне захоронення",
+      "Mehrfachbestattung": "Багаторазове поховання",
+      "Doppelbestattung": "Подвійне захоронення",
+      "Einzelbestattung": "Індивідуальне поховання",
+      "Grabdeponat": "Могильний склад",
+      "Kollektivbestattung": "Колективне поховання",
+      "Massengrab": "Масове поховання",
+      "Wiedergängerbestattung": "Перепоховання"
     }
   },
   "Burial-burialCharacteristic-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Primäre Bestattung": "Первинне поховання",
+      "Sekundäre Bestattung": "Вторинне захоронення"
     }
   },
   "Burial-burialDocumentation-default": {
@@ -306,22 +316,39 @@
       "Endoskopie": "Ендоскопія",
       "Foto": "Фотографія",
       "Histologie": "Гістологія",
-      "Röntgen": "Рентген"
+      "Röntgen": "Рентген",
+      "LM": "LM",
+      "REM": "REM"
     }
   },
   "Burial-positionArms-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "ungleichmäßig": "нерівномірно",
+      "am Kinn": "на підборідді",
+      "an den Seiten": "з боків",
+      "auf dem Bauch": "на животі",
+      "auf dem Becken": "на тазу",
+      "auf der Brust": "на грудній клітці"
     }
   },
   "Burial-positionLegs-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Beinhocker": "Підставка для ніг",
+      "Beine angewinkelt": "Ноги зігнуті в колінах",
+      "Extremhocker": "Екстремальний стільчик",
+      "Hocker": "Табуретка",
+      "gestreckt": "розтягнуте"
     }
   },
   "Burial-positioningIndividuals-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Rückenlage": "Положення лежачи на спині",
+      "Bauchlage": "Положення лежачи на животі",
+      "Seitenlage, links": "Бокове положення, ліворуч",
+      "Seitenlage, rechts": "Seitenlage, rechts"
     }
   },
   "Building-architecturalOrders-default": {
@@ -329,7 +356,8 @@
       "Ionische Ordnung": "Доричний ордер",
       "Komposite Ordnung": "Композитний ордер",
       "Korinthische Ordnung": "Коринфський ордер",
-      "Toskanische Ordnung": "Тосканський ордер"
+      "Toskanische Ordnung": "Тосканський ордер",
+      "Dorische Ordnung": "Доричний ордер"
     }
   },
   "Building-buildingCategory-default": {
@@ -351,7 +379,9 @@
       "Therme": "Термальні ванни",
       "Toranlage": "Оборонні ворота",
       "Turm": "Вежа",
-      "Wohnbau": "Житлова споруда"
+      "Wohnbau": "Житлова споруда",
+      "Nymphäum": "Німфей",
+      "Odeion": "Одейон"
     }
   },
   "Building-buildingCategorySpecific-default": {
@@ -623,7 +653,9 @@
       "grob behauen": "грубо обтесаний",
       "grob geglättet": "грубо згладжений",
       "scharriert": "рифлений",
-      "unbehauen": "необтесаний"
+      "unbehauen": "необтесаний",
+      "bossiert": "рельєфний/випуклий",
+      "gestockt": "накладений"
     }
   },
   "Architecture-brickwork-default": {
@@ -1293,7 +1325,75 @@
       "Kolchis": "Колхіда",
       "Konstantinopel": "Константинопіль",
       "Makedonien": "Македонія",
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Vindobona": "Віндобона",
+      "Thurioi": "Туріой",
+      "Thessalonica": "Тессалоніки",
+      "Südgallische Münzstätte": "південно-галльський монетний двір",
+      "Sizilien 2 (Republican period)": "Сицилія 2 (республіканський період)",
+      "Persien": "Персія",
+      "Ostia Antica": "Остія Антична",
+      "Mittelitalien": "Центральна Італія",
+      "Pergamon": "Пергамон",
+      "Peloponnes": "Пелопоннес",
+      "Paros": "Paros",
+      "Oreus": "Орія",
+      "Oria": "Орія",
+      "Olbia": "Ольвія",
+      "Nikomedia": "Нікомедія",
+      "Nisibis": "Нісібіс",
+      "Nuceria": "Нуцерія",
+      "Nessebar": "Несебир",
+      "Neapel": "Неаполь",
+      "Narbo": "Нарбо",
+      "Naxos": "Наксос",
+      "Myrina": "Міріна",
+      "Milet": "Мілет",
+      "Messina": "Мессіна",
+      "Metapont": "Метапонт",
+      "Milas": "Мілаше",
+      "Marseille": "Марсель",
+      "Thrakien": "Фракія",
+      "Thiva": "Тіве",
+      "Thessaloniki": "Салоніки",
+      "Thessalische Liga": "Фессалійська ліга",
+      "Thasos": "Тасос",
+      "Tessin": "Тічино",
+      "Terina": "Теріна",
+      "Teos": "Teoс",
+      "Temnus": "Темнус",
+      "Tarsus": "Тарсусе",
+      "Tarraco": "Таррако",
+      "Syrien": "Сирія",
+      "Syrakus": "Сиракузи",
+      "Sybaris": "Сибаріс",
+      "Susa (Persien)": "Суза (Персія)",
+      "Sofia": "Софія",
+      "Soloi": "Солої",
+      "Sosopol": "Созополь",
+      "Sizilisch-Punisch": "Сицилійсько-пунічний",
+      "Smyrna": "Смірна",
+      "Sizilien": "Сицилія",
+      "Sisak": "Сисак",
+      "Sirmium": "Сірмій",
+      "Sardinien": "Сардинія",
+      "Samos": "Самос",
+      "Rom": "Рим",
+      "Rhodos": "Родос",
+      "Republik Zypern": "Республіка Кіпр",
+      "Reggio Calabria": "Регіон-Калабрія",
+      "Ravenna": "Равенна",
+      "Priene": "Прієне",
+      "Äetolien": "Етолія",
+      "Äegina": "Егіна",
+      "Äeneas": "Еней",
+      "Tyros": "Тирос",
+      "Tripoli (Libanon)": "Триполі (Ліван)",
+      "Viminatium": "Вімінація",
+      "Warna": "Варна",
+      "Zancle": "Занкл",
+      "Trier": "Tрiр",
+      "Thyrrheium": "Тиррей"
     }
   },
   "Coin-stampPositioning-default": {
@@ -1319,7 +1419,9 @@
       "Privatbesitz": "Приватна власність",
       "Regionalverwaltung": "Обласна адміністрація",
       "Restaurierungswerkstatt": "Реставраційна майстерня",
-      "Staatsbesitz": "Державна власність"
+      "Staatsbesitz": "Державна власність",
+      "Museum Bergama": "Бергамський музей",
+      "Pergamon Depot": "Пергамське депо"
     }
   },
   "storagePlace-default": {
@@ -1369,7 +1471,8 @@
       "Gußtechnik": "Техніка лиття",
       "Prägearbeit": "Техніка тиснення",
       "Schmiedetechnik": "Техніка кування",
-      "Ziehtechnik": "Техніка малювання за допомогою розтягування"
+      "Ziehtechnik": "Техніка малювання за допомогою розтягування",
+      "Getrieben": "Захоплений"
     }
   },
   "Metal-objectType-default": {
@@ -1421,7 +1524,11 @@
       "Wasserleitung": "Водопровід",
       "Weinheber": "Винопідйомник",
       "Werkzeug": "Інструмент",
-      "Zierbeschlag": "Декоративна завіса/фурнітура"
+      "Zierbeschlag": "Декоративна завіса/фурнітура",
+      "Gerät": "Прилад",
+      "Spinnwirtel": "шпиндельний виток веретена",
+      "Schlüssel": "Ключ",
+      "Nadel": "Голка"
     }
   },
   "Metal-vesselFormSpecific-default": {
@@ -1432,7 +1539,17 @@
       "Sprenkler": "Шринклер",
       "Vierkantflasche": "Чотирикутна пляшка",
       "hexagonale Flasche": "Шестигранна пляшка",
-      "zylindrische Flasche": "Циліндрична пляшка"
+      "zylindrische Flasche": "Циліндрична пляшка",
+      "Schliffrillenschale": "Чаша з шліфованими канавками",
+      "Rippenschale": "Чаша з ребристою оболонкою",
+      "Balsamarium": "Бальзамарій",
+      "Faltenbecher": "Складне горнятко",
+      "Dattelflasche": "Фінікова пляшка",
+      "Glockenbecher": "Горнятко у формі дзвіночка",
+      "Krater": "Кратер",
+      "Kragenschale": "Чаша з ковніром",
+      "Kopfflasche": "Пляшка у формі голови",
+      "Stamnos": "Стамнос"
     }
   },
   "Sample-sampleType-default": {
@@ -1545,7 +1662,9 @@
       "Aryballos": "Арібаллос",
       "Balsamarium": "Бальзамарій",
       "Kopfflasche": "Пляшка у вигляді голови",
-      "Unguentarium": "Унгуентарій"
+      "Unguentarium": "Унгуентарій",
+      "Skyphos": "Скифос",
+      "Stamnos": "Стамнос"
     }
   },
   "Mollusk-classification-default": {
@@ -1559,7 +1678,81 @@
     "values": {
       "gedreht (auf Drehscheibe)": "обертання (на вертушці)",
       "gegossen": "відлитий",
-      "gepresst": "витиснуто"
+      "gepresst": "витиснуто",
+      "handgeformt": "ручної роботи"
+    }
+  },
+  "Brick-specificType-default": {
+    "values": {
+      "Tonrohr": "Глиняна труба",
+      "Abschläge": "Залишки",
+      "Berg": "Гора",
+      "Bodenziegel": "Підлогова плитка",
+      "Bruchstein": "Необроблений кар'єрний камінь",
+      "Dachziegel": "Черепиця",
+      "Geröll": "Осипний камінь",
+      "Hohlziegel": "Пустотна цегла",
+      "Hypokaustziegel": "Цегла гіпокаусту",
+      "Kanalziegel": "Канальна плитка",
+      "Platten": "Плити",
+      "Quader": "Кубоподібний камінь",
+      "Variierend": "Змінюється",
+      "Wandziegel": "Цегла для стін",
+      "Ziegelbruch": "Розбита цегла"
+    }
+  },
+  "Brick-temper-default": {
+    "values": {
+      "Glimmer": "Слюда",
+      "Mineralische Partikel": "Мінеральні частинки",
+      "Kalk": "Вапно",
+      "Organische Partikel": "Органічні частинки",
+      "Quarz": "Кварц",
+      "Schamotte": "Шамот",
+      "Sonstige": "Інші",
+      "Steinchen": "Камінець",
+      "Stroh/Spreu": "Солома/полова",
+      "Vulkanische Partikel": "Вулканічні частинки"
+    }
+  },
+  "Burial-graveFeature-default": {
+    "values": {
+      "Teil-Körperbestattung": "Часткове поховання тіла",
+      "Brandbestattung": "Кремаційне поховання",
+      "Kenotaph": "Кенотаф",
+      "Körperbestattung": "Поховання тіла"
+    }
+  },
+  "Coin-mintingRuler-default": {
+    "values": {
+      "Kaiser Nero": "Імператор Нерон",
+      "Türkische Republick": "Турецька Республіка",
+      "Traian": "Траян",
+      "Konstantin": "Константин",
+      "Domitian": "Доміціан",
+      "Licinius": "Ліциній",
+      "Constans": "Констанс"
+    }
+  },
+  "Photo-originalFormat-default": {
+    "values": {
+      "Farbe": "Колір",
+      "S/W": "Ч/Б",
+      "Dia": "Слайд",
+      "Analog": "Фоторгафія (відбиток на папері)",
+      "Digital": "цифрова"
+    }
+  },
+  "viewingDirection-default": {
+    "values": {
+      "NW": "Пів.Зах.",
+      "W": "Зах.",
+      "SW": "Пів.Зах.",
+      "S": "Півд.",
+      "SE": "Півд.Сх.",
+      "E": "Сх.",
+      "NE": "Півн.Сх.",
+      "N": "Півн."
     }
   }
 }

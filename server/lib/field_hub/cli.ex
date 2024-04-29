@@ -141,7 +141,7 @@ defmodule FieldHub.CLI do
 
   By default will only delete the database and will leave the files in your file system intact:
 
-  The reason being that databases are always fully synchronized, but files are not necessarily. Your FieldHub
+  The reason being that databases are always fully synchronized, but files are not necessarily. Your Field Hub
   installation may be the only node in your project's syncing network that still retains certain high
   resolution images of colleagues that have left the project.
 

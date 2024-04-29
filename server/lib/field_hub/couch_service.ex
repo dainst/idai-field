@@ -300,7 +300,7 @@ defmodule FieldHub.CouchService do
 
   @doc """
   Returns a list of all databases the application user has access to. This excludes internal databases like
-  `_security` or `_users` and databases within the CouchDB instance that are not associated with FieldHub.
+  `_security` or `_users` and databases within the CouchDB instance that are not associated with Field Hub.
   """
   def get_all_databases() do
     "#{base_url()}/_all_dbs"

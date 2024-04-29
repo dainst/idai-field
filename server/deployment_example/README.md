@@ -1,6 +1,6 @@
 # Example deployment guide
 
-This is a tutorial guide for deploying FieldHub. __This describes a very basic installation, so be aware that depending on your local hosting infrastructure, it may be useful or even be required to make adjustments. Using TLS is not covered in this guide and is highly recommended for security reasons.__
+This is a tutorial guide for deploying Field Hub. __This describes a very basic installation, so be aware that depending on your local hosting infrastructure, it may be useful or even be required to make adjustments. Using TLS is not covered in this guide and is highly recommended for security reasons.__
 
 ## Prerequisites
 
@@ -17,8 +17,8 @@ For more details please refer to the Docker/docker-compose documentation.
 Alongside this README, you will find a simple [docker-compose.yml](docker-compose.yml). You may copy that file to your server (or desktop PC/laptop if you just want to try it out locally).
 
 The docker-compose file describes 2 services: 
-1. [CouchDB](https://couchdb.apache.org/), the database software FieldHub uses. CouchDB provides its own Docker images: https://hub.docker.com/_/couchdb
-2. FieldHub, the application itself.
+1. [CouchDB](https://couchdb.apache.org/), the database software Field Hub uses. CouchDB provides its own Docker images: https://hub.docker.com/_/couchdb
+2. Field Hub, the application itself.
 
 Additionally, an [.env](.env) file sets up some environment variables for docker-compose:
 
@@ -68,7 +68,7 @@ The result should look something like this:
 
 Next you can add a first project.
 
-First, make sure the FieldHub user (within the container) owns the `FILE_DIRECTORY` on your host machine (see .env file). __This is only necessary after the first startup, not each time you add a new project.__
+First, make sure the Field Hub user (within the container) owns the `FILE_DIRECTORY` on your host machine (see .env file). __This is only necessary after the first startup, not each time you add a new project.__
 
 ```
 docker exec field-hub-app id

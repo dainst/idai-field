@@ -57,7 +57,7 @@ defmodule FieldHub.CouchServiceTest do
   end
 
   test "get_all_databases/0 does not return internal databases or databases without application user" do
-    # Without the app user (see config.exs) added to the database, this database is considered outside of FieldHub:
+    # Without the app user (see config.exs) added to the database, this database is considered outside of Field Hub:
     # `FieldHub.Project.create/1` would additionally call `CouchService.update_user_role_in_project/3`.
     outside_project = "outside_field_hub"
 

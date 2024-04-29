@@ -22,9 +22,9 @@ jobs:
         working-directory: server
       - name: Sleep to await CouchDB startup
         run: sleep 15s
-      - name: Install FieldHub dependencies and run setup
+      - name: Install Field Hub dependencies and run setup
         run: mix setup
         working-directory: server
-      - name: Run FieldHub tests
+      - name: Run Field Hub tests
         run: mix test
         working-directory: server

@@ -1028,7 +1028,10 @@
       "Oinochoe": "Ойнохое",
       "Alabastron": "Алабастроне",
       "Kragenschale": "Миска з декорованим ковніром",
-      "Lutrophore": "Лютрофор"
+      "Lutrophore": "Лютрофор",
+      "Miscellanea": "Міскеланея",
+      "Pelike": "Пеліке",
+      "Pithos": "Пітос"
     }
   },
   "Grave-graveType-default": {
@@ -1335,7 +1338,8 @@
     "values": {
       "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
       "Medaillon": "Медальйон",
-      "Silber-Mehrfaches": "Срібло кратне"
+      "Silber-Mehrfaches": "Срібло кратне",
+      "Victoriatus": "Вікторіатус"
     }
   },
   "Coin-manufacturingMethod-default": {
@@ -1565,7 +1569,28 @@
       "Archaiischer Bund": "Архаїчна ліга",
       "Kolophon": "Колофон",
       "Harran": "Харран",
-      "Colonia Patricia": "Кельн Патріція"
+      "Colonia Patricia": "Кельн Патріція",
+      "Argos": "Аргос",
+      "Apollonia": "Аполлонія",
+      "Antiochia": "Антіохія",
+      "Amphipolis": "Амфіполіс",
+      "Ambracia": "Амбрація",
+      "Alexandria Troas": "Олександрія Троада",
+      "Alexandria": "Олександрія",
+      "Chalkidiki": "Халкідіки",
+      "Chalkida": "Халкіда",
+      "Camulodunum (Colchester)": "Камулодунум (Колчестер)",
+      "Caesaraugusta": "Цезаря Августа",
+      "Böotien": "Беотія",
+      "Byblos": "Бібльос",
+      "Bozcaada": "Боцкаада",
+      "Astibus": "Астібус",
+      "Assos": "Ассос",
+      "Aspendos": "Аспендос",
+      "Arpi": "Арпі",
+      "Aruad": "Аруад",
+      "Argos Amphilochicum": "Аргос Амфілохікум",
+      "Larissa": "Ларисо"
     }
   },
   "Coin-stampPositioning-default": {
@@ -1901,7 +1926,8 @@
       "Steinchen": "Камінець",
       "Stroh/Spreu": "Солома/полова",
       "Vulkanische Partikel": "Вулканічні частинки",
-      "Vacua": "Вакуа"
+      "Vacua": "Вакуа",
+      "Muschelgrus": "Кераміка з дрібно подрібнених ракушок"
     }
   },
   "Burial-graveFeature-default": {
@@ -2026,12 +2052,23 @@
       "Infans I (0-7)": "Немовлята І (0-7)",
       "Infans II (7-13)": "Діти II (7-13)",
       "Juvenil (13-18/20)": "Неповнолітні (13-18/20)",
-      "Matur (40-60)": "Зрілі (40-60)"
+      "Matur (40-60)": "Зрілі (40-60)",
+      "Fetus/Neonatus": "Плід/новонароджений"
     }
   },
   "Architecture-mark-default": {
     "values": {
       "A": "А"
+    }
+  },
+  "Terracotta-vesselFormSpecific-default": {
+    "values": {
+      "Amphoriskos": "Амфорискос",
+      "Aryballos": "Арібаллос",
+      "Balsamarium": "Бальзамарій",
+      "Faltenbecher": "Складний стаканчик",
+      "Alabastron": "Алабастрон",
+      "Dattelflasche": "Фінікова пляшка"
     }
   }
 }

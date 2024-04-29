@@ -10,7 +10,7 @@ defmodule FieldHubWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "FieldHub"
+    assert html_response(conn, 200) =~ "Field Hub"
   end
 
   describe "Test user -" do

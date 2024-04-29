@@ -21,13 +21,13 @@
   "orientation-default-1": {
     "values": {
       "N-S": "Пн.- Пд.",
-      "NNO - SSW": "Пн.Пн.Сх. - Пд.Пд.Зх.",
-      "NNW-SSO": "Пн.Пн.Зх. - Пд.Пд.Сх.",
-      "NO-SW": "Пн.Сх. - Пд.Зх.",
-      "NW-SO": "Пн.Зх. - Пд.Сх.",
+      "NNO - SSW": "ПнПнСх - ПдПдЗх",
+      "NNW-SSO": "ПнПнЗх - ПдПдСх",
+      "NO-SW": "ПнСх - ПдЗх",
+      "NW-SO": "ПнЗх - ПдСх",
       "W-O": "Зх. - Сх.",
-      "WNW-OSO": "Зх.Пн.Зх - Сх.Пд.Сх.",
-      "WSW-ONO": "Зх.Пд.Зх. - Сх.Пн.Сх."
+      "WNW-OSO": "ЗхПнЗх - СхПдСх",
+      "WSW-ONO": "ЗхПдЗх - СхПнСх"
     }
   },
   "provenance-default-1": {
@@ -130,7 +130,7 @@
       "violett": "фіолетовий",
       "weiß": "білий"
     },
-    "description": "Набір кольорів 1, різне застосування; ІТ-відділ, 2019 р."
+    "description": "Набір кольорів 1, різне застосування; ІТ-відділ, 2019"
   },
   "colors-default-2": {
     "values": {
@@ -245,8 +245,8 @@
       "Tonrohr": "Глиняна труба",
       "Wandziegel": "Стінова цегла",
       "Kalyptere": "Каліптер",
-      "Later": "Later",
-      "Stroter": "Stroter"
+      "Later": "Латер",
+      "Stroter": "Стротер"
     }
   },
   "Brick-brickUsage-default": {
@@ -317,8 +317,8 @@
       "Foto": "Фотографія",
       "Histologie": "Гістологія",
       "Röntgen": "Рентген",
-      "LM": "LM",
-      "REM": "REM"
+      "LM": "ЛM",
+      "REM": "РEM"
     }
   },
   "Burial-positionArms-default": {
@@ -404,7 +404,17 @@
       "griechisches Theater": "Грецький театр",
       "römisches Theater": "Римський театр",
       "vierschiffig": "чотирьохнавовий",
-      "zweischiffig": "двонавовий"
+      "zweischiffig": "двонавовий",
+      "Peripteros": "Периптер",
+      "Peripteros sine portico": "Периптер з портиком",
+      "Pseudo-Dipteros": "Псевдо-диптерос",
+      "Pseudo-Peripteros": "Псевдопериптер",
+      "Rednertribüne": "Трибуна доповідача",
+      "Villa": "Вілла",
+      "Tumulus": "Тумулюс",
+      "Tholos": "Толос",
+      "Palästra": "Палестра",
+      "Peristylhaus": "Будинок з перистилем"
     }
   },
   "Building-buildingTechnique-default": {
@@ -560,7 +570,7 @@
       "Löffel": "Ложка",
       "Mobiliar": "Меблі",
       "Plastik/Skulptur": "Пластика/скульптура",
-      "Produktionsrest": "Залишок від виробництва ",
+      "Produktionsrest": "Залишок від виробництва",
       "Ring": "Перстень/Кільце",
       "Sarkophag": "Саркофаг",
       "Schmuck": "Саркофаг",
@@ -741,7 +751,8 @@
       "Wein- bzw. Ölpresse": "Винний або олійний прес",
       "einzelnes Steindenkmal": "Єдиний кам'яний пам'ятник",
       "ländliches Gebäude": "Сільська споруда",
-      "urbanes Gebäude": "Міська споруда"
+      "urbanes Gebäude": "Міська споруда",
+      "Einzelmauer": "Одинарна стіна"
     }
   },
   "Place-siteClassification-default": {
@@ -774,7 +785,8 @@
       "sehr weich": "дуже м'ягке",
       "stark bindend": "сильно зв'язуючи",
       "steif": "пругий",
-      "weich": "м'ягкий"
+      "weich": "м'ягкий",
+      "gut formbar": "легко піддається формуванню"
     }
   },
   "Layer-distinguishingCriteria-default": {
@@ -800,7 +812,7 @@
       "Feinstsand": "Дрібнісінький пісок",
       "Grobsand": "Грубший пісок",
       "Lehm": "Глина",
-      "Lehmiger Sand": "Суглинистий пісок ",
+      "Lehmiger Sand": "Суглинистий пісок",
       "Lehmiger Schluff": "Суглинистий мул",
       "Lehmiger Ton": "Глина суглиниста",
       "Mergel": "Мергель",
@@ -837,7 +849,8 @@
       "unklar": "не ясно",
       "unregelmäßig": "нерегулярний",
       "verwaschen": "розмитий",
-      "wellig": "хвилястий"
+      "wellig": "хвилястий",
+      "regelmäßig": "регулярно"
     }
   },
   "Feature-featureForm-default": {
@@ -878,7 +891,7 @@
       "Alltäglicher Gebrauch": "Щоденне використання",
       "Bauinschrift": "Будівельний напис",
       "Ehreninschrift": "Почесний напис",
-      "Grabinschrift (Inschrift im Grabkontext)": "Надгробний напис (напис у надгробному контексті)",
+      "Grabinschrift (Inschrift im Grabkontext)": "Надгробний напис (у надгробному контексті)",
       "Private Ausstattung": "Приватне інвентар/меблі",
       "Sakrale Ausstattung": "Сакральний інвентар",
       "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
@@ -894,13 +907,16 @@
       "2 (Fingernagel ritzt)": "2 (подряпини нігтями)",
       "3 (Messerspitze ritzt leicht)": "легкі подряпини кінчиком ножа",
       "4 (Messerspitze ritzt)": "подряпини кінчиком ножа",
-      "5 (Messerspitze ritzt schwer)": "глибокі подряпини кінчиком ножа"
+      "5 (Messerspitze ritzt schwer)": "глибокі подряпини кінчиком ножа",
+      "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": "6 (віконне скло тяжко дряпається, сталевий напильник дряпає)",
+      "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)": "7-10 (Віконне скло буде подряпане, сталь іскриться)"
     }
   },
   "Pottery-coatInside-default": {
     "values": {
       "Glasur": "Глазур/інвертріатура",
-      "Schwarzfirnis": "Чорний лак "
+      "Schwarzfirnis": "Чорний лак",
+      "Tongrundig": "Глинистий грунт"
     }
   },
   "Pottery-coatInsideType-default": {
@@ -910,7 +926,8 @@
       "Geglättet": "Розрівняний",
       "Glasur": "Глазур",
       "Poliert": "Полірований",
-      "Überzug": "покриття"
+      "Überzug": "покриття",
+      "Verstrichen": "Пройшло/Минуло"
     }
   },
   "Pottery-decorationTechnique-default": {
@@ -922,7 +939,8 @@
       "Ritzungen": "Подряпини",
       "Stempel": "Відбиток",
       "Stempeldekor": "штамповий декор",
-      "Tupfendekor": "Губковий декор"
+      "Tupfendekor": "Губковий декор",
+      "Warzendekor": "Декор бородавками"
     }
   },
   "Pottery-objectType-default": {
@@ -947,7 +965,10 @@
       "Spielstein": "Іграшковий жетон/фігура",
       "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
       "Webgewicht": "вага плетіння",
-      "Werkzeug": "Інструмент"
+      "Werkzeug": "Інструмент",
+      "Antefix": "Антефікс",
+      "Becken": "Басейн",
+      "Spinnwirtel": "шпиндельний виток веретена"
     }
   },
   "Pottery-vesselForm-default": {
@@ -972,7 +993,8 @@
       "Teller/Untersatz": "Тарілка/підставка",
       "Topf": "Горщик",
       "Unbestimmt": "невизначений",
-      "Vorratsgefäß": "Посуд для зберігання"
+      "Vorratsgefäß": "Посуд для зберігання",
+      "Schale": "Чаша/Миска"
     }
   },
   "Pottery-vesselFormSpecific-default": {
@@ -988,12 +1010,30 @@
       "Tränenfläschchen": "Слізна пляшечка",
       "Vierkantflasche": "прямокутна пляшка",
       "hexagonale Flasche": "шестигранна пляшка",
-      "zylindrische Flasche": "циліндрична пляшка"
+      "zylindrische Flasche": "циліндрична пляшка",
+      "Amphoriskos": "Амфорискос",
+      "Aryballos": "Арібаллос",
+      "Balsamarium": "Бальзамарій",
+      "Kopfflasche": "Пляшка у формі голови",
+      "Krater": "Кратер",
+      "Skyphos": "Скифос",
+      "Stamnos": "Стамнос",
+      "Tierflasche": "Пляшка для тварин",
+      "Tischamphore": "Настільна амфора",
+      "Hydria": "Гідрія",
+      "Kylix": "Кайлікс",
+      "Lekane": "Лекане",
+      "Lekythos": "Лекітос",
+      "Luterion": "Лютіон",
+      "Oinochoe": "Ойнохое",
+      "Alabastron": "Алабастроне",
+      "Kragenschale": "Миска з декорованим ковніром",
+      "Lutrophore": "Лютрофор"
     }
   },
   "Grave-graveType-default": {
     "values": {
-      "Baumsargbestattung": "Поховання деревною труною ",
+      "Baumsargbestattung": "Поховання деревною труною",
       "Erdgrab": "Земляна могила",
       "Felsgrab": "скельна могила",
       "Flachgrab": "неглибока могила",
@@ -1004,7 +1044,16 @@
       "Hügelgrab": "Курган",
       "Mausoleum": "Мавзолей",
       "Megalithgrab": "мегалітична гробниця",
-      "Schachthöhlengrab": "Шахтова печерна гробниця"
+      "Schachthöhlengrab": "Шахтова печерна гробниця",
+      "Brandschüttung": "Звалище від пожежі",
+      "Gruft": "Склеп",
+      "Kistengrab": "Коробкова могила",
+      "Steineinfassung": "Кам'яна окантовка",
+      "Steinplattengrab": "Могила з кам'яних плит",
+      "Urnengrab": "Могила для урни",
+      "Brandgrubengrab": "Могила у ямі для випічки",
+      "Felsnischengrab": "Висічена у скелі гробниця",
+      "Ziegelplattengrab": "Могила з цегляних плиток"
     }
   },
   "Grave-tombBuilding-default": {
@@ -1284,7 +1333,9 @@
   },
   "Coin-denomination-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено"
+      "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
+      "Medaillon": "Медальйон",
+      "Silber-Mehrfaches": "Срібло кратне"
     }
   },
   "Coin-manufacturingMethod-default": {
@@ -1393,7 +1444,128 @@
       "Warna": "Варна",
       "Zancle": "Занкл",
       "Trier": "Tрiр",
-      "Thyrrheium": "Тиррей"
+      "Thyrrheium": "Тиррей",
+      "Erythrai": "Еритрея",
+      "Aquileia": "Аквілея",
+      "Apulien": "Апулія",
+      "Alexandrien": "Олександрія",
+      "Akanthus": "Акантус",
+      "Aitolischer Bund": "Айтолійська ліга",
+      "Agrigent": "Аґрідженто",
+      "Abydos": "Абідос",
+      "Ephesos": "Ефес",
+      "Elea": "Елея",
+      "Colonia Agrippina (Köln)": "Колонія Агріппіна (Кельн)",
+      "Chalcedon": "Халцедон",
+      "Catania": "Катанія",
+      "Carthago (Tunis)": "Карфаген (Туніс)",
+      "Carnuntum": "Карнунтум",
+      "Caesarea in Kappadokien": "Кесарія в Каппадокії",
+      "Byzantion": "Візантійська імперія",
+      "Beirut": "Бейрут",
+      "Empüries": "Емпюрі",
+      "Emerita": "Емерита",
+      "Elis": "Еліс",
+      "Ekbatana": "Екбатана",
+      "Dyrrhachium": "Диррахій",
+      "Dionysopolis": "Діонісополіс",
+      "Crotone": "Кротон",
+      "Comitatenses": "Комітатенс",
+      "Colchester": "Колчестер",
+      "Lefkada": "Лефкада",
+      "Lentini": "Лентіні",
+      "Lete": "Лете",
+      "Locri": "Локрі",
+      "Lapta": "Лапта",
+      "Laodikeia am Lykos": "Лаодикія на Лікосі",
+      "Lampsakos": "Лампсакос",
+      "Köln": "Кьольн",
+      "Kydonia": "Кідонія",
+      "Korinth": "Коринф",
+      "Knidos": "Кнідос",
+      "Karthago": "Карфаген",
+      "Italien (Südosten)": "Італія (Південно-Східна)",
+      "Ibiza": "Ібіца",
+      "Homs": "Хомс",
+      "Histria": "Істрія",
+      "Hispanien-Punisch": "Іберійський-пунічний",
+      "Hispanien": "Іберійський",
+      "Herakleia": "Гераклея",
+      "Heraclea": "Геракліда",
+      "Halikarnassos": "Галікарнас",
+      "Gallien": "Галлія",
+      "Etrurien": "Етрурія",
+      "Kyzikos": "Кицікус",
+      "Kyrene": "Сірена",
+      "Kyrenaika": "Киренаїка",
+      "Kos": "Кос",
+      "Korfu": "Корфу",
+      "Klazomenai": "Клазоменай",
+      "Kelenderis": "Келендеріс",
+      "Karystos": "Каристос",
+      "Karien": "Карія",
+      "Kamarina": "Камаріна",
+      "Kabile": "Кабіле",
+      "Idalion": "Ідаліон",
+      "Himera": "Гімера",
+      "Gortyn": "Ґортин",
+      "Germe": "Герме",
+      "Gela": "Гела",
+      "Euböa": "Евбея",
+      "Phanagoria": "Фанагорія",
+      "Paphos": "Пафос",
+      "Ouranoupolis": "Урануполіс",
+      "Myriandrus": "Миріандрус",
+      "Makedonien (1. Region)": "Македонія (1-й регіон)",
+      "Mainz": "Майнц",
+      "Magnesia am Mäander": "Магнезія на меандрі",
+      "Phaselis": "Фазеліс",
+      "Perge": "Перж",
+      "Pella": "Пелло",
+      "Parion": "Паріон",
+      "Paestum": "Паестум",
+      "Mytilini": "Мітілен",
+      "Mithymna": "Мітімна",
+      "Messene": "Мессен",
+      "Memphis": "Мемфіс",
+      "Megalopoli": "Мегаполіс",
+      "Mediolanum": "Медіоланум",
+      "Maroneia": "Маронея",
+      "Marmetini": "Марметіні",
+      "Mangalia": "Мангалія",
+      "Lyttos": "Літтос",
+      "Lysimacheia": "Лизімахея",
+      "Lykien": "Лікія",
+      "Lydien": "Лідіє",
+      "Lugdunum": "Лугдунум",
+      "Lucera": "Люцера",
+      "Londinium": "Лондініум",
+      "Sinop": "Синоп",
+      "Tanagra": "Танаґра",
+      "Taras": "Тарасе",
+      "Tegea": "Тегеа",
+      "Seleukia am Tigris": "Селевкія на Тигрі",
+      "Seleukia Pieria": "Селевкія Перія",
+      "Sikyon": "Сікйон",
+      "Sidon": "Сідон",
+      "Sestos": "Сестос",
+      "Selinus": "Селінус",
+      "Segesta": "Сегеста",
+      "Sardes": "Сардіс",
+      "Salamis": "Саламін",
+      "Rouen": "Руан",
+      "Phokis": "Фокіс",
+      "Latakia": "Латакія",
+      "Larnaka": "Ларнака",
+      "Korinthischer Bund": "Коринфська ліга",
+      "Herakleia Pontike": "Гераклея Понтійська",
+      "Eretria": "Еретрія",
+      "Diesseitiges Gallian / Norditalien": "По цей бічна Галлія / Північна Італія",
+      "Barcino (Barcelona)": "Барсіно (Барселона)",
+      "Archaiischer Bund": "Архаїчна ліга",
+      "Kolophon": "Колофон",
+      "Harran": "Харран",
+      "Colonia Patricia": "Кельн Патріція"
     }
   },
   "Coin-stampPositioning-default": {
@@ -1501,7 +1673,7 @@
       "Perle": "Перлина",
       "Pfeilspitze": "Наконечник стріли",
       "Plastik/Skulptur": "Пластика/скульптура",
-      "Produktionsfragment": "Виробничий фрагмент ",
+      "Produktionsfragment": "Виробничий фрагмент",
       "Projektil": "Cнаряд",
       "Reibe": "Терка",
       "Ring": "Перстень/Кільце",
@@ -1528,7 +1700,8 @@
       "Gerät": "Прилад",
       "Spinnwirtel": "шпиндельний виток веретена",
       "Schlüssel": "Ключ",
-      "Nadel": "Голка"
+      "Nadel": "Голка",
+      "Stabbarren": "Злиток"
     }
   },
   "Metal-vesselFormSpecific-default": {
@@ -1549,7 +1722,16 @@
       "Krater": "Кратер",
       "Kragenschale": "Чаша з ковніром",
       "Kopfflasche": "Пляшка у формі голови",
-      "Stamnos": "Стамнос"
+      "Stamnos": "Стамнос",
+      "Aryballos": "Арібалос",
+      "Skyphos": "Старечий (60 <)",
+      "Luterion": "Лютіон",
+      "Pelike": "Пеліке",
+      "Oinochoe": "Ойнохое",
+      "Lekythos": "Лекітос",
+      "Kylix": "Кайлікс",
+      "Kotyle": "Котиле",
+      "Hydria": "Гідрія"
     }
   },
   "Sample-sampleType-default": {
@@ -1664,7 +1846,13 @@
       "Kopfflasche": "Пляшка у вигляді голови",
       "Unguentarium": "Унгуентарій",
       "Skyphos": "Скифос",
-      "Stamnos": "Стамнос"
+      "Stamnos": "Стамнос",
+      "Kylix": "Кайлікс",
+      "Lekythos": "Лекітос",
+      "Luterion": "Лютіон",
+      "Oinochoe": "Ойнохое",
+      "Pelike": "Пеліка",
+      "Kotyle": "Котиле"
     }
   },
   "Mollusk-classification-default": {
@@ -1712,7 +1900,8 @@
       "Sonstige": "Інші",
       "Steinchen": "Камінець",
       "Stroh/Spreu": "Солома/полова",
-      "Vulkanische Partikel": "Вулканічні частинки"
+      "Vulkanische Partikel": "Вулканічні частинки",
+      "Vacua": "Вакуа"
     }
   },
   "Burial-graveFeature-default": {
@@ -1731,7 +1920,9 @@
       "Konstantin": "Константин",
       "Domitian": "Доміціан",
       "Licinius": "Ліциній",
-      "Constans": "Констанс"
+      "Constans": "Констанс",
+      "Valentianus III": "Валентіан III",
+      "Myrina": "Міріна"
     }
   },
   "Photo-originalFormat-default": {
@@ -1753,6 +1944,94 @@
       "E": "Сх.",
       "NE": "Півн.Сх.",
       "N": "Півн."
+    }
+  },
+  "Pottery-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": "виготовлений (на вертушці)",
+      "gegossen": "відлитий",
+      "gepresst": "тиснутий",
+      "handgeformt": "ручного формування",
+      "nachgedreht (überdreht)": "затягнутий (перезатягнутий)",
+      "in Form gedreht": "скручений у форму"
+    }
+  },
+  "Pottery-materialType-default": {
+    "values": {
+      "Feinkeramik (Feine Ware)": "Тонка кераміка (вишуканий виріб)",
+      "Gebrauchskeramik (Grobe Ware)": "Побутова кераміка (грубий виріб)"
+    }
+  },
+  "Pottery-specificType-default": {
+    "values": {
+      "Arretina schwarz": "Арретина чорна",
+      "Attisch farbig aufgehöhte Schwarzglanzton Ware": "Чорний глянцевий виріб в атиковому кольорі",
+      "Attische Keramik": "Аттикова кераміка",
+      "Attische Schwarzfigurige Keramik": "Аттикова чорнофігурна кераміка",
+      "Attische Schwarzglanzton Ware": "Аттиковий чорні глянцевий виріб",
+      "Bemalte Keramik": "Розписна кераміка",
+      "Bichrome Ware": "Біхромний виріб",
+      "Dünnwandige Feinkeramik": "Тонкостінна дрібноштучна кераміка",
+      "Firnisware": "Лакофарбовий виріб",
+      "Glattwandige Ware": "Гладкостінний виріб",
+      "Hand": "Рука",
+      "Korinthische Keramik": "Коринфська кераміка",
+      "Küchenware": "Кухонне приладдя",
+      "Ostgriechische Keramik": "Східногрецька кераміка",
+      "Schlichte Ware": "Виріб повсякденного вжитку",
+      "Red Slip Ware": "Red-Slip-Виріб",
+      "Schwarzglanzton Ware": "Чорний глянцевий виріб",
+      "Terra sigilata": "Терра сігілата (глина з відбитками)",
+      "Bemalte Ware (linear)": "Розмальований виріб (лінійно)",
+      "Glasierte Keramik": "Глазурована кераміка",
+      "Prähistorische Keramik": "Доісторична кераміка",
+      "Attische Rotfigurige Keramik": "Аттикова червонофігурна кераміка",
+      "Bemalte Ware (floral)": "Розписний виріб (флористично)"
+    }
+  },
+  "Pottery-temperAmount-default": {
+    "values": {
+      "Mittel": "Середній",
+      "Nicht erkennbar": "Не розпізнати",
+      "Sehr Viel": "Дуже багато/сильно",
+      "Vereinzelt": "Окремі",
+      "Viel": "Багато",
+      "Wenig": "Мало",
+      "Keine Einschlüsse": "Без вкраплень"
+    }
+  },
+  "Pottery-temperParticles-default": {
+    "values": {
+      "fein": "дрібні",
+      "grob": "грубо",
+      "mittel": "середньо",
+      "mittelfein": "середньо-дрібний",
+      "sehr grob": "дуже грубий",
+      "sehr fein": "дуже дрібний"
+    }
+  },
+  "Grave-specificType-default": {
+    "values": {
+      "Amphorenbestattung": "Поховання в амфорі",
+      "In Krug": "У глечику",
+      "In Dinos": "У діносі",
+      "ziegelgemauertes Grab": "Могила, вимурувана цегляною стіною",
+      "bruchsteingemauertes Grab": "Могила, вимурувана з залишкового каменю",
+      "quadergemauertes Grab": "могила, вимурувана з обробленого каменю"
+    }
+  },
+  "Bone-biologicalAge-default": {
+    "values": {
+      "Adult (18/20-40)": "Повнолітні (18/20-40)",
+      "Infans I (0-7)": "Немовлята І (0-7)",
+      "Infans II (7-13)": "Діти II (7-13)",
+      "Juvenil (13-18/20)": "Неповнолітні (13-18/20)",
+      "Matur (40-60)": "Зрілі (40-60)"
+    }
+  },
+  "Architecture-mark-default": {
+    "values": {
+      "A": "А"
     }
   }
 }

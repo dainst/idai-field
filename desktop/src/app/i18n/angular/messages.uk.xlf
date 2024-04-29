@@ -857,7 +857,7 @@
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">Експортуватися будуть геометрія та поля &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&amp;gt;Ідентифікатор&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (показник-iндентифікатор), &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&gt;Короткий опис&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (зтислий опис) і &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&gt;Категорія&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (category) відповідних ресурсів. </target>
+        <target state="translated">Експортуватися будуть геометрія та поля &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&amp;gt;Ідентифікатор&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (показник-iндентифікатор), &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&gt;Короткий опис&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (зтислий опис) і &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&gt;Категорія&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (category) відповідних ресурсів.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -7855,7 +7855,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.isStoragePlaceOf" datatype="html">
         <source>Verknüpfte Objekte</source>
-        <target state="needs-translation">Verknüpfte Objekte</target>
+        <target state="translated">Пов'язані об'єкти</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7863,7 +7863,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.isStoredIn" datatype="html">
         <source>Verknüpfter Aufbewahrungsort</source>
-        <target state="needs-translation">Verknüpfter Aufbewahrungsort</target>
+        <target state="translated">Пов'язане місце зберігання</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7871,7 +7871,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.header" datatype="html">
         <source>QR-Code scannen</source>
-        <target state="needs-translation">QR-Code scannen</target>
+        <target state="translated">Відскануйте QR-код</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">53,66</context>
@@ -7879,7 +7879,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.cameraNotFound" datatype="html">
         <source>Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</source>
-        <target state="needs-translation">Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</target>
+        <target state="translated">Не вдалося знайти камеру. Будь ласка, перевірте, чи має ваш пристрій камеру і чи надані необхідні дозволи.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">123,149</context>
@@ -7887,7 +7887,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html">
         <source>Kamera auswählen:</source>
-        <target state="needs-translation">Kamera auswählen:</target>
+        <target state="translated">Виберіть камеру:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">149</context>
@@ -8007,7 +8007,7 @@
       </trans-unit>
       <trans-unit id="settings.languageInfo.tr" datatype="html">
         <source>Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</source>
-        <target state="needs-translation">Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</target>
+        <target state="translated">Якщо у вас виникли запитання або коментарі щодо турецького перекладу, будь ласка, зв'яжіться з: idai.field-turkce@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8155,7 +8155,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.hasChildren" datatype="html">
         <source>Untergeordnete Ressourcen</source>
-        <target state="needs-translation">Untergeordnete Ressourcen</target>
+        <target state="translated">Підпорядковані ресурси</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8775,7 +8775,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.setNewParent" datatype="html">
         <source>Übergeordnete Ressource neu setzen</source>
-        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <target state="translated">Наново створити батьківський ресурс</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">22,28</context>
@@ -8863,7 +8863,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ресурси<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> перемістити? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
           <context context-type="linenumber">48</context>
@@ -8871,7 +8871,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.single" datatype="html">
         <source>Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation">Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <target state="translated">Ресурси <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> перемістити? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">20,8</context>

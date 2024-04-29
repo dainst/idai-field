@@ -149,7 +149,7 @@
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="eturn this._max"/></source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="*    * Supp"/> % </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="*    * Supp"/>%</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/progressbar/progressbar.ts</context>
           <context context-type="linenumber">28</context>
@@ -396,16 +396,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
-        <source>Keine Suchkriterien angegeben</source>
-        <target state="translated">Критерії пошуку не вказано</target>
+        <source>Keine Suchkriterien angegeben.</source>
+        <target state="translated">Критерії пошуку не вказано.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
-        <source>Keine Ziele gefunden</source>
-        <target state="translated">Цілей не знайдено</target>
+        <source>Keine Ressourcen gefunden.</source>
+        <target state="translated">Цілей не знайдено.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -856,8 +856,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
-        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">Експортуватися будуть геометрія та поля x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/&gt;Ідентифікатор<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Короткий опис<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Категорія<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) відповідних ресурсів. </target>
+        <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="translated">Експортуватися будуть геометрія та поля &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&amp;gt;Ідентифікатор&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (показник-iндентифікатор), &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&gt;Короткий опис&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (зтислий опис) і &lt;x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;em&amp;gt;"/&gt;Категорія&lt;x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;lt;/em&amp;gt;"/&gt; (category) відповідних ресурсів. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">157</context>
@@ -1516,8 +1516,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.importModal.project" datatype="html">
-        <source>Projekt:</source>
-        <target state="translated">Проект:</target>
+        <source>Projekt</source>
+        <target state="translated">Проект</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -1861,7 +1861,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
-        <target state="translated">Версія <x id="INTERPOLATION" equiv-text="{{version}}"/> буде завантажена… </target>
+        <target state="translated">Версія <x id="INTERPOLATION" equiv-text="{{version}}"/> буде завантажена…</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.component.ts</context>
           <context context-type="linenumber">41</context>
@@ -1873,7 +1873,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="translated">Версія <x id="INTERPOLATION" equiv-text="{{version}}"/> була записана та буде встановлена після перезавантаження </target>
+        <target state="translated">Версія <x id="INTERPOLATION" equiv-text="{{version}}"/> була записана та буде встановлена після перезавантаження</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">28</context>
@@ -1881,7 +1881,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
         <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
-        <target state="translated">Завантаження версії <x id="INTERPOLATION" equiv-text="{{version}}"/> було перервано. Перезапустіть програму, щоб повторити спробу. </target>
+        <target state="translated">Завантаження версії <x id="INTERPOLATION" equiv-text="{{version}}"/> було перервано. Перезапустіть програму, щоб повторити спробу.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">37</context>
@@ -1889,7 +1889,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
         <source>Beim Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von https://field.idai.world/download herunter.</source>
-        <target state="translated">При завантаженні версії <x id="INTERPOLATION" equiv-text="{{version}}"/> cталася помилка. Будь ласка, запишіть/завантажте останню версію з https://field.idai.world/download. </target>
+        <target state="translated">При завантаженні версії <x id="INTERPOLATION" equiv-text="{{version}}"/> cталася помилка. Будь ласка, запишіть/завантажте останню версію з https://field.idai.world/download.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">46</context>
@@ -2962,7 +2962,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemove" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated">Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє відображення спочатку було обмежене на <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> ресурси. Натисніть тут, щоб завантажити весь результат. </target>
+        <target state="translated">Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє відображення спочатку було обмежене на <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> ресурси. Натисніть тут, щоб завантажити весь результат.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">33</context>
@@ -3026,7 +3026,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
         <source>Bitte wählen Sie eine Kategorie aus.</source>
-        <target state="translated">Виберіть категорію</target>
+        <target state="translated">Виберіть категорію.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">61</context>
@@ -3066,7 +3066,7 @@
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
         <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
-        <target state="translated">Ви хочете категорію <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/> <x id="INTERPOLATION" equiv-text="{{category.name}}"/> <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> видалити? </target>
+        <target state="translated">Ви хочете категорію <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/> <x id="INTERPOLATION" equiv-text="{{category.name}}"/> <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> видалити?</target>
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
@@ -3311,7 +3311,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated">Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє представництво спочатку було <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> обмежене ресурсами. Натисніть тут, щоб завантажити весь результат. </target>
+        <target state="translated">Відображення дуже великих результатів пошуку може зайняти багато часу залежно від пристрою та кількості звернень. Тому нинішнє представництво спочатку було <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> обмежене ресурсами. Натисніть тут, щоб завантажити весь результат.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -3375,7 +3375,7 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Ілюстрації приєднати </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Ілюстрації приєднати</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.component.ts</context>
           <context context-type="linenumber">117</context>
@@ -3383,7 +3383,7 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Ілюстрації приєднати як фон/підоснову карти </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Ілюстрації приєднати як фон/підоснову карти</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
           <context context-type="linenumber">38</context>
@@ -4017,16 +4017,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
-        <source> Name der Benutzerin/des Benutzers </source>
-        <target state="needs-translation">Name der Benutzerin/des Benutzers</target>
+        <source>Name der Benutzerin/des Benutzers</source>
+        <target state="translated">Ім'я користувача/ки</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
-        <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. </source>
-        <target state="needs-translation">Це ім’я зберігається в історії редагування, щоб зміни в записах можна було приписати окремій особі.</target>
+        <source>Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können.</source>
+        <target state="translated">Це ім’я зберігається в історії редагування, для того щоб зміни в записах можна було приписати окремій особі.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -4350,7 +4350,7 @@
       </trans-unit>
       <trans-unit id="util.dating.ce" datatype="html">
         <source>n. Chr.</source>
-        <target state="translated">н. ери</target>
+        <target state="translated">н. ери.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4486,7 +4486,7 @@
       </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForProjectFields" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</source>
-        <target state="translated">Пошук по полю неможливий для полів проектової категорії</target>
+        <target state="translated">Пошук по полю неможливий для полів проектної категорії.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4518,7 +4518,7 @@
       </trans-unit>
       <trans-unit id="configuration.newValue" datatype="html">
         <source>Neuer Wert</source>
-        <target state="translated">Нове значення.</target>
+        <target state="translated">Нове значення</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4630,7 +4630,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.deletedResource" datatype="html">
         <source>Gelöschte Ressource</source>
-        <target state="translated">Видалений ресурс.</target>
+        <target state="translated">Видалений ресурс</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4770,7 +4770,7 @@
       </trans-unit>
       <trans-unit id="messages.settings.error.malformedAddress" datatype="html">
         <source>Bitte geben Sie als Adresse eine gültige URL ein.</source>
-        <target state="needs-translation">Bitte geben Sie als Adresse eine gültige URL ein.</target>
+        <target state="translated">Будь ласка, введіть дійсну URL-адресу.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5354,7 +5354,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidFields" datatype="html">
         <source>Fehlende Felddefinitionen für die Felder '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="translated">Відсутність польових визначень для полів '[1]' ресурсу категорії [0]'</target>
+        <target state="translated">Відсутність польових визначень для полів '[1]' ресурсу категорії [0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6034,7 +6034,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.delete" datatype="html">
         <source>Fehler beim Löschen des Bilds '[0]'.</source>
-        <target state="translated">Помилка видалення ілюстрації '[0]'</target>
+        <target state="translated">Помилка видалення ілюстрації '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6578,7 +6578,7 @@
       </trans-unit>
       <trans-unit id="configuration.newCategory" datatype="html">
         <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="translated">Нову категорію <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/> <x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/> <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> створити </target>
+        <target state="translated">Нову категорію <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/> <x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/> <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> створити</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/category-listing.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -7243,7 +7243,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.resourceLimitExceeded" datatype="html">
         <source>In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</source>
-        <target state="needs-translation">In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</target>
+        <target state="translated">У цьому проекті може бути створено максимум [1] ресурс категорії ''0''.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7279,7 +7279,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.notANumber" datatype="html">
         <source>Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</source>
-        <target state="needs-translation">Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</target>
+        <target state="translated">Будь ласка, введіть числове значення в якості ліміту ресурсу.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7287,7 +7287,7 @@
       </trans-unit>
       <trans-unit id="messages.settings.error.missingUsername" datatype="html">
         <source>Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.</source>
-        <target state="needs-translation">Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.</target>
+        <target state="translated">Будь ласка, введіть своє ім'я в полі "Ім'я користувача".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7319,7 +7319,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.tooLow" datatype="html">
         <source>Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</source>
-        <target state="needs-translation">Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</target>
+        <target state="translated">Будь ласка, введіть число більше 0 як ліміт ресурсів.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7327,7 +7327,7 @@
       </trans-unit>
       <trans-unit id="messages.app.appControllerSuccess" datatype="html">
         <source>Erfolgreich ausgeführt.</source>
-        <target state="needs-translation">Erfolgreich ausgeführt.</target>
+        <target state="translated">Успішно виконано.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7343,7 +7343,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.conflicts" datatype="html">
         <source>Konflikte</source>
-        <target state="needs-translation">Konflikte</target>
+        <target state="translated">Конфлікти</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7351,7 +7351,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.missingRelationTargets" datatype="html">
         <source>Fehlende Zielressourcen von Relationen</source>
-        <target state="needs-translation">Fehlende Zielressourcen von Relationen</target>
+        <target state="translated">Відсутні цільові ресурси взаємовідносин</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7359,7 +7359,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.missingIdentifierPrefixes" datatype="html">
         <source>Fehlende Bezeichner-Präfixe</source>
-        <target state="needs-translation">Fehlende Bezeichner-Präfixe</target>
+        <target state="translated">Відсутні префікси ідентифікаторів</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7367,7 +7367,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.nonUniqueIdentifiers" datatype="html">
         <source>Uneindeutige Bezeichner</source>
-        <target state="needs-translation">Uneindeutige Bezeichner</target>
+        <target state="translated">Нечіткі ідентифікатори</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7375,7 +7375,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.resourceLimitExceeded" datatype="html">
         <source>Ressourcenlimit überschritten</source>
-        <target state="needs-translation">Ressourcenlimit überschritten</target>
+        <target state="translated">Перевищено ліміт ресурсів</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7519,7 +7519,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.invalidFieldData" datatype="html">
         <source>Ungültige Felddaten</source>
-        <target state="needs-translation">Ungültige Felddaten</target>
+        <target state="translated">Невірні дані поля</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7527,7 +7527,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.outlierValues" datatype="html">
         <source>Nicht in Werteliste enthaltene Werte</source>
-        <target state="needs-translation">Nicht in Werteliste enthaltene Werte</target>
+        <target state="translated">Значення, не включені до списку значень</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7551,7 +7551,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.all" datatype="html">
         <source>Alle</source>
-        <target state="needs-translation">Alle</target>
+        <target state="translated">Всі</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7559,7 +7559,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="translated">Зверніть увагу: Ця дія видаляє для всіх ресурсів у категорії<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> всі невірні дані в поліs x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]="getFieldLabelHTML()"&gt;"/&gt;<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Дійсні дані зберігаються. </target>
+        <target state="translated">Зверніть увагу: Ця дія видаляє для всіх ресурсів у категорії<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> всі невірні дані в поліs x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]="getFieldLabelHTML()"&gt;"/&gt;<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Дійсні дані зберігаються. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">56,36</context>
@@ -7583,7 +7583,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier" datatype="html">
         <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Bezeichner<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Неоднозначний<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/> <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ідентифікатор<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated">Неоднозначний<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ідентифікатор<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">87,77</context>
@@ -7623,7 +7623,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.body" datatype="html">
         <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
-        <target state="needs-translation">Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</target>
+        <target state="translated">Ви дійсно хочете поле <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> видалити?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -7639,7 +7639,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.header.single" datatype="html">
         <source>Bisherigen Aufbewahrungsort ersetzen?</source>
-        <target state="needs-translation">Bisherigen Aufbewahrungsort ersetzen?</target>
+        <target state="translated">Замінити попереднє місце зберігання?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -7807,7 +7807,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.qrCode" datatype="html">
         <source>QR-Code</source>
-        <target state="needs-translation">QR-Code</target>
+        <target state="translated">QR-код</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7815,7 +7815,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">
         <source>Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
-        <target state="needs-translation">Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
+        <target state="translated">Місце зберігання [1] успішно збережено для ресурсу [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7823,7 +7823,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.single" datatype="html">
         <source>Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</source>
-        <target state="needs-translation">Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</target>
+        <target state="translated">Для ресурсу [0] вже встановлено місце зберігання [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7831,7 +7831,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.multiple" datatype="html">
         <source>Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</source>
-        <target state="needs-translation">Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</target>
+        <target state="translated">Для вибраних ресурсів [0] вже встановлено місце зберігання [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7839,7 +7839,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeScanningFailure" datatype="html">
         <source>Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</target>
+        <target state="translated">Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7847,7 +7847,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeAlreadyAssigned" datatype="html">
         <source>Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.</source>
-        <target state="needs-translation">Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.</target>
+        <target state="translated">Відсканований QR-код вже приписаний до іншого ресурсу.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7919,7 +7919,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.header.multiple" datatype="html">
         <source>Bisherige Aufbewahrungsorte ersetzen?</source>
-        <target state="needs-translation">Bisherige Aufbewahrungsorte ersetzen?</target>
+        <target state="translated">Замінити попередні місця зберігання?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -7927,7 +7927,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.singleStoragePlace" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt. </source>
-        <target state="needs-translation">Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt. </target>
+        <target state="translated">Для ресурсу <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> місце зберігання <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> вже визначено. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -7959,7 +7959,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.multiple" datatype="html">
         <source>Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
-        <target state="needs-translation">Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
+        <target state="translated">Сховище (місце зберігання) [1] успішно збережено для ресурсів [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7967,7 +7967,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeResourceNotFound" datatype="html">
         <source>Für diesen QR-Code konnte keine Ressource gefunden werden.</source>
-        <target state="needs-translation">Für diesen QR-Code konnte keine Ressource gefunden werden.</target>
+        <target state="translated">Для цього QR-коду не було знайдено жодного ресурсу.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7975,7 +7975,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.inventory" datatype="html">
         <source>Inventarisierung</source>
-        <target state="needs-translation">Inventarisierung</target>
+        <target state="translated">Інвентаризація</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7983,7 +7983,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noStoragePlaceCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</source>
-        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</target>
+        <target state="translated">Ресурс [0] категорії [1] є недійсним місцем зберігання.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7999,7 +7999,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.default" datatype="html">
         <source>Standard</source>
-        <target state="needs-translation">Standard</target>
+        <target state="translated">Стандарт</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8075,7 +8075,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.settingsProfile" datatype="html">
         <source>Einstellungsprofil</source>
-        <target state="needs-translation">Einstellungsprofil</target>
+        <target state="translated">Профіль налаштування</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">86,103</context>
@@ -8083,7 +8083,7 @@
       </trans-unit>
       <trans-unit id="resources.deletePrintSettingsProfile" datatype="html">
         <source>Einstellungsprofil löschen</source>
-        <target state="needs-translation">Einstellungsprofil löschen</target>
+        <target state="translated">Видалення профілю налаштувань</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8147,7 +8147,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeDeleted" datatype="html">
         <source>Der QR-Code wurde erfolgreich gelöscht.</source>
-        <target state="needs-translation">Der QR-Code wurde erfolgreich gelöscht.</target>
+        <target state="translated">QR-код успішно видалено.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8207,7 +8207,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeSaved" datatype="html">
         <source>Der neu generierte QR-Code wurde erfolgreich gespeichert.</source>
-        <target state="needs-translation">Der neu generierte QR-Code wurde erfolgreich gespeichert.</target>
+        <target state="translated">Новостворений QR-код успішно збережено.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8315,7 +8315,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unconfiguredCategories" datatype="html">
         <source>Unkonfigurierte Kategorien</source>
-        <target state="needs-translation">Unkonfigurierte Kategorien</target>
+        <target state="translated">Ненастроєні категорії</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8323,7 +8323,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unconfiguredFields" datatype="html">
         <source>Unkonfigurierte Felder</source>
-        <target state="needs-translation">Unkonfigurierte Felder</target>
+        <target state="translated">Неналаштовані поля</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8395,7 +8395,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.header.single" datatype="html">
         <source>Bild importieren</source>
-        <target state="needs-translation">Bild importieren</target>
+        <target state="translated">Імпортувати зображення</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.component.ts</context>
           <context context-type="linenumber">109,120</context>
@@ -8403,7 +8403,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.header.multiple" datatype="html">
         <source>Bilder importieren</source>
-        <target state="needs-translation">Bilder importieren</target>
+        <target state="translated">Імпортувати зображення</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.component.ts</context>
           <context context-type="linenumber">124</context>
@@ -8411,7 +8411,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValue" datatype="html">
         <source>Ungültiger Kompositfeld-Eintrag im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültiger Kompositfeld-Eintrag im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Неправильний запис складеного поля в полі ''1'' ресурсу категорії ''0''.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8427,7 +8427,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValues" datatype="html">
         <source>Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Неправильні значення складних полів у наступних полях ресурсу категорії '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8739,7 +8739,7 @@
       </trans-unit>
       <trans-unit id="configuration.importModal.filters.configuration" datatype="html">
         <source>Field-Konfiguration</source>
-        <target state="needs-translation">Field-Konfiguration</target>
+        <target state="translated">Field-конфігурація</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8747,7 +8747,7 @@
       </trans-unit>
       <trans-unit id="import.selectFile.filters.all" datatype="html">
         <source>Alle unterstützten Formate</source>
-        <target state="needs-translation">Alle unterstützten Formate</target>
+        <target state="translated">Усі формати, що підтримуються</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8759,7 +8759,7 @@
       </trans-unit>
       <trans-unit id="import.selectFile.filters.catalog" datatype="html">
         <source>Field-Typenkatalog</source>
-        <target state="needs-translation">Field-Typenkatalog</target>
+        <target state="translated">Field-Каталог типів</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8767,7 +8767,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.success.import" datatype="html">
         <source>Die Projektkonfiguration wurde erfolgreich importiert.</source>
-        <target state="needs-translation">Die Projektkonfiguration wurde erfolgreich importiert.</target>
+        <target state="translated">Конфігурацію проекту успішно імпортовано.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8847,7 +8847,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.missingOrInvalidParent" datatype="html">
         <source>Fehlende oder ungültige übergeordnete Ressource</source>
-        <target state="needs-translation">Fehlende oder ungültige übergeordnete Ressource</target>
+        <target state="translated">Відсутній або недійсний батьківський ресурс</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8855,7 +8855,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.unsupportedVersion" datatype="html">
         <source>Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</source>
-        <target state="needs-translation">Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</target>
+        <target state="translated">Файл конфігурації було створено у більш пізній версії Field Desktop (версія [0]), тому його не вдасться завантажити. Будь ласка, оновіть програму, а потім перезапустіть процес імпорту.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -113,7 +113,10 @@ export class SelectNewFieldModalComponent {
         ] as Array<Field.InputType>);
 
         return CategoryForm.getFields(this.category)
-            .filter(field => !forbiddenInputTypes.includes(field.inputType));
+            .filter(field => {
+                return !forbiddenInputTypes.includes(field.inputType)
+                    && this.document.resource[field.name] === undefined;
+            });
     }
 
 

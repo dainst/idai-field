@@ -337,7 +337,7 @@ the text filter.
 
 <p align="center"><img src="images/en/search/criteria_search.png" alt="Field specific search criteria"/></p>
 
-In case of a text field, just enter the search term directly; for fields with value lists, choose the term
+In case of a text field, just enter the search term directly; for fields with valuelists, choose the term
 from a list of all allowed values in a dropdown menu. 
 
 **Important**: In contrast to the search filter, no prefix search is performed in this case. The chosen search
@@ -405,11 +405,7 @@ If a connection has been successfully established, the icon shows a checkmark. W
 
 Conflicts can occur when a resource is edited at the same time on multiple computers or when two databases synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *current version* (which is displayed in resource management and other areas of the application) and the *competing version* (which is stored in the background, but is not shown without taking further steps). The two versions can differ in the number of filled-in fields, but also by having different values in the same fields.
 
-Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navigation bar, indicating the number of conflicts within the current project.
-
-<p align="center"><img src="images/en/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
-
-Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
+A warning is shown for each resource with conflicts (see chapter *Warnings*). You can clean up an affected resource in the **Conflicts** tab of the resource editor.
 
 To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
 
@@ -679,11 +675,11 @@ Use the text field above the list to filter the valuelists based on any search t
 Please note that all changes made in the valuelist management window must subsequently be confirmed by clicking on the "Save" button of the configuration editor before they are applied to the project.
 
 
-#### Create and expand valuelists
+#### Create and extend valuelists
 
 To create a new valuelist, enter the desired identifier in the text field and select the "Create new valuelist" option. The valuelist editor will open, where you can enter the desired values and make further settings (see section *Edit valuelists*).
 
-Instead of creating a completely new valuelist, you can alternatively extend an already existing one. To do this, right-click on the corresponding list entry to open the context menu, select the *Expand valuelist* option and enter an identifier for your expansion list. All values of the selected valuelist are taken over and can now be supplemented by additional values in the editor. You also have the option to hide existing values and adjust their order. Please note that extension lists as well as project specific lists cannot be extended.
+Instead of creating a completely new valuelist, you can alternatively extend an already existing one. To do this, right-click on the corresponding list entry to open the context menu, select the *Extend valuelist* option and enter an identifier for your extension list. All values of the selected valuelist are taken over and can now be supplemented by additional values in the editor. You also have the option to hide existing values and adjust their order. Please note that extension lists as well as project specific lists cannot be extended.
 
 
 #### Manage project specific valuelists
@@ -812,3 +808,128 @@ from the current selection:
   still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a
   fast way to check if two units are connected across multiple relations/resources.
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
+
+
+## Warnings
+
+For various reasons, such as changes to the project configuration, inconsistent or otherwise incorrect data may occur in a project. In these cases, the application displays a warning and provides options for solving the problem. Faulty resources are marked with a red bar next to the list entry of the corresponding resource. Furthermore, an icon is displayed in the navigation bar at the top right, indicating the number of resources for which there are warnings due to data problems:
+
+<p align="center"><img src="images/en/warnings/warnings_icon.png" alt="Warnings icon"/></p>
+
+Clicking the icon or using the context menu of an affected resource takes you to the menu "Warnings", where you can view the list of faulty resources and filter by warning type. There are also options for filtering by identifier and short description (via text input) as well as by category.
+
+Select one of the displayed resources to view the list of existing warnings for that resource. For most warnings, tools are provided that can be used to resolve the errors; many warnings can also be resolved by adjusting the project configuration. In any case, please create a **backup** of the project in advance via the menu "Project" ➝ "Create backup...". Further information on the causes and possible solutions for the individual warning types can be found below.
+
+### Warning types
+#### Conflict
+There are multiple versions of the resource that are in conflict with each other.
+
+##### Possible causes
+* The resource was edited on different computers at the same time with an existing synchronization connection.
+* The resource was edited on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+##### Possible solutions
+* Button *Resolve conflict*: Resolve the conflicts in the resource editor (see section *Conflicts* of chapter *Synchronization*).
+
+#### Unconfigured category
+A category is set for the resource that cannot be found in the project configuration. The resource is therefore not displayed.
+
+##### Possible causes
+* The category has been deleted in the configuration editor.
+
+##### Possible solutions
+* Button *Select new category*: Select one of the categories configured for the project. The selected category is then set for the affected resource. Optionally, you can set the new category for all resources for which the same unconfigured category is specified.
+* Button *Delete resource*: The affected resource is deleted completely.
+* Add a category with the same name in the configuration editor.
+
+#### Unconfigured field
+Data has been entered in a field that cannot be found in the project configuration. The entered data is therefore not displayed.
+
+##### Possible causes
+* The field has been deleted in the configuration editor.
+
+##### Possible solutions
+* Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which data has been entered in the same unconfigured field.
+* Button *Delete field data*: The data entered in the field is deleted completely. Optionally, you can delete the field data for all resources for which data has been entered in the same unconfigured field.
+* Add a field with the same name for the category of the affected resource in the configuration editor.
+
+#### Invalid field data
+The data entered in a field does not correspond to the input type selected for the field.
+
+##### Possible causes
+* The input type of the field has been changed in the configuration editor.
+
+##### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to remove the invalid field data and re-enter it if necessary.
+* Button *Convert field data*: The data is automatically converted to the correct format for the respective input type. Optionally, you can have the data converted for all resources where invalid data has been entered in the same field. Please note that automatic conversion is not possible in all cases and this button is therefore not always available.
+* Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which invalid data has been entered in the same field (valid data remains in the original field).
+
+#### Value not included in valuelist
+One or more values are entered in a field that are not contained in the valuelist configured for the field.
+
+##### Possible causes
+* The valuelist of the field has been replaced with a different one in the configuration editor.
+* Values have been removed from a project-specific valuelist in the valuelist editor.
+* The input type of the field has been changed in the configuration editor from an input type that allows the free entry of text to an input type with a valuelist.
+* For fields that use the values entered in the fields *Staff* and *Campaigns* of the project properties: Entries have been removed from the corresponding field in the project properties.
+* For the field *Campaign*: Values have been removed from the field of the same name in the parent resource (only values that have been set in the parent resource may be selected for the field *Campaign*).
+
+##### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to remove the values not included in the valuelist and replace them with other values if necessary.
+* Button *Fix value*: Select a new value from the valuelist configured for the field. The previous value is replaced by the selected value. Optionally, you can set the new value for all fields of all resources in which the same value is entered and which use the same valuelist.
+* Button *Delete value*: The value entered in the field is deleted completely. Optionally, you can delete the value from all fields of all resources in which the same value is entered.
+* Replace the valuelist in the configuration editor with a valuelist that contains the corresponding value.
+* Add the missing value to the valuelist configured for the field. For non-project-specific valuelists, you must first create an extension list for the valuelist using the option *Extend valuelist* (see section *Create and extend valuelists* in chapter *Project configuration*).
+* For fields that are based on the values entered in the *Staff* and *Campaigns* fields of the project properties: Add the missing value to the corresponding field in the project properties.
+* For the field *Campaign*: Set the value in the parent resource if it does not already exist there.
+
+#### Missing target resource of a relation
+A resource specified as the target of a relation cannot be found.
+
+##### Possible causes
+* A synchronization process has not been fully completed.
+
+##### Possible solutions
+* Make sure that the data of all team members working with the Field project is synchronized.
+* Button *Clean up relation*: All references to non-existent resources are deleted from the relation.
+
+#### Missing or invalid parent resource
+The resource does not have a valid parent resource. This can either mean that no parent resource has been set for the resource, that the specified parent resource cannot be found or that it is not a valid parent resource due to its category. The resource is therefore not displayed.
+
+##### Possible causes
+* A synchronization process has not been fully completed.
+* The resource was created with an outdated version of Field Desktop.
+
+##### Possible solutions
+* Make sure that the data of all team members working with the Field project is synchronized.
+* Button *Set new parent resource*: Select a new resource as the parent resource. The resource is moved to the context of the selected resource.
+* Button *Delete resource*: The affected resource is deleted completely.
+
+#### Missing identifier prefix
+The identifier of the resource does not contain the prefix configured for the corresponding category.
+
+##### Possible causes
+* The resource was created before the identifier prefix was configured.
+
+##### Possible solutions
+* Button *Edit*: Open the resource editor to re-enter the identifier.
+
+#### Ambiguous identifier
+The identifier of the resource is also used by one or more other resources. Therefore, errors can occur when importing and exporting data.
+
+##### Possible causes
+* The identifiers were entered on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+##### Possible solutions
+* Button *Edit*: Open the resource editor to enter a new identifier.
+
+#### Resource limit exceeded
+There are more resources of a particular category than the resource limit configured for this category allows.
+
+##### Possible causes
+* The resources were created before the resource limit was configured.
+* The resources were created on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+##### Possible solutions
+* Delete resources of the corresponding category until the resource limit is met.
+* Increase the resource limit in the configuration editor.

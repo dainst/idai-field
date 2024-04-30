@@ -417,11 +417,7 @@ Konnte die Verbindung erfolgreich hergestellt werden, zeigt das Icon einen Haken
 
 Zu Konflikten kann es kommen, wenn eine Ressource gleichzeitig auf mehreren Computern bearbeitet wird oder wenn sich zwei Datenbanken miteinander synchronisieren, in denen zuvor die gleiche Ressource bearbeitet wurde. In solchen Fällen stehen sich zwei unterschiedliche Versionen der Ressource gegenüber: die *aktuelle Version* (die in der Ressourcenverwaltung und anderen Bereichen der Anwendung angezeigt wird) und die *konkurrierende Version* (die im Hintergrund gespeichert bleibt, aber vorerst nicht angezeigt wird). Die Versionen können sich in der Anzahl der ausgefüllten Felder unterscheiden; möglicherweise wurden auch verschiedene Werte in die gleichen Felder eingetragen.
 
-Ressourcen mit Konflikten werden in der Liste mit einer roten Linie markiert. Darüber hinaus erscheint in der Navigationsleiste ein Icon, das die Anzahl der Konflikte im Projekt mitteilt:
-
-<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Konflikte-Icon"/></p>
-
-Klicken Sie auf das Icon, um eine Liste sämtlicher Ressourcen mit Konflikten zu öffnen. Wenn Sie eine der Ressourcen anwählen, gelangen Sie in den **Konflikte**-Tab des Editors, wo Sie die Ressource bereinigen können.
+Für jede Ressource mit Konflikten wird eine Warnung angezeigt (siehe Kapitel *Warnungen*). Im **Konflikte**-Tab des Ressourceneditors können Sie eine betroffene Ressource bereinigen.
 
 Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 
 
@@ -834,3 +830,131 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
   schnelle Weise zu prüfen, ob zwei Einheiten über mehrere Relationen/Ressourcen hinweg miteinander
   verknüpft sind.
 * *Matrix neu laden*: Die ursprüngliche Matrix mit allen stratigraphischen Einheiten des gewählten Schnitts wird wiederhergestellt.
+
+
+<hr>
+
+
+## Warnungen
+
+Aus verschiedenen Gründen, etwa Änderungen der Projektkonfiguration, können in einem Projekt inkonsistente oder anderweitig fehlerhafte Daten entstehen. In diesen Fällen zeigt die Anwendung eine Warnung an und stellt Möglichkeiten zur Behebung des Problems bereit. Fehlerhafte Ressourcen werden mit einem roten Balken neben dem Listeneintrag der entsprechenden Ressource markiert. In der Navigationsleiste oben rechts wird zudem ein Icon angezeigt, das die Anzahl der Ressourcen angibt, für die Warnungen aufgrund von Datenproblemen vorliegen:
+
+<p align="center"><img src="images/de/warnings/warnings_icon.png" alt="Warnungen-Icon"/></p>
+
+Mit einem Klick auf das Icon oder über das Kontextmenü einer betroffenen Ressource gelangen Sie in das Menü "Warnungen", wo Sie die Liste der fehlerhaften Ressourcen einsehen und nach dem Typ der Warnung filtern können. Es stehen darüber hinaus Möglichkeiten zum Filtern nach Bezeichner und Kurzbeschreibung (per Texteingabe) sowie nach Kategorie bereit.
+
+Wählen Sie eine der angezeigten Ressourcen aus, um die Liste der vorliegenden Warnungen für diese Ressource einzusehen. Für die meisten Warnungen werden Tools angeboten, mit denen sich die Fehler beheben lassen; viele Warnungen können außerdem durch eine Anpassung der Projektkonfiguration gelöst werden. Legen Sie bitte in jedem Fall im Vorfeld ein **Backup** des Projekts über das Menü "Projekt" ➝ "Backup erstellen..." an. Nähere Informationen zu den Ursachen und Lösungsmöglichkeiten der einzelnen Warnungstypen finden Sie im Folgenden.
+
+### Warnungstypen
+#### Konflikt
+Es existieren mehrere Versionen der Ressource, die miteinander in Konflikt stehen.
+
+##### Mögliche Ursachen
+* Die Ressource wurde auf verschiedenen Rechern gleichzeitig bei bestehender Synchronisationsverbindung   bearbeitet.
+* Die Ressource wurde auf verschiedenen Rechern ohne bestehende Synchronisationsverbindung bearbeitet; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+##### Mögliche Lösungen
+* Button *Konflikt lösen*: Lösen Sie die Konflikte im Ressourceneditor (siehe Abschnitt *Konflikte* des Kapitels *Synchronisation*).
+
+#### Unkonfigurierte Kategorie
+Für die Ressource ist eine Kategorie eingetragen, die nicht in der Projektkonfiguration gefunden werden kann. Die Ressource wird daher nicht angezeigt.
+
+##### Mögliche Ursachen
+* Die Kategorie wurde im Konfigurationseditor gelöscht.
+
+##### Mögliche Lösungen
+* Button *Neue Kategorie auswählen*: Wählen Sie eine der für das Projekt konfigurierten Kategorien aus. Die gewählte Kategorie wird anschließend für die betroffene Ressource gesetzt. Optional können Sie die neue Kategorie für alle Ressourcen setzen, bei denen die gleiche unkonfigurierte Kategorie eingetragen ist.
+* Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
+* Fügen Sie im Konfigurationseditor eine Kategorie gleichen Namens hinzu.
+
+#### Unkonfiguriertes Feld
+Es wurden Daten in ein Feld eingetragen, das in der Projektkonfiguration nicht gefunden werden kann. Die eingetragenen Daten werden daher nicht angezeigt.
+
+##### Mögliche Ursachen
+* Das Feld wurde im Konfigurationseditor gelöscht.
+
+##### Mögliche Lösungen
+* Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld übertragen. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
+* Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht. Optional können Sie die Felddaten bei allen Ressourcen löschen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
+* Fügen Sie im Konfigurationseditor für die Kategorie der betroffenen Ressource ein Feld gleichen Namens hinzu.
+
+#### Ungültige Felddaten
+Die in ein Feld eingetragenen Daten entsprechen nicht dem Eingabetyp, der für das Feld gewählt wurde.
+
+##### Mögliche Ursachen
+* Der Eingabetyp des Feldes wurde im Konfigurationseditor geändert.
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die ungültigen Felddaten zu entfernen und gegebenenfalls neu einzutragen.
+* Button *Felddaten konvertieren*: Die Daten werden automatisch in das korrekte Format des jeweiligen Eingabetyps konvertiert. Optional können Sie die Daten bei allen Ressourcen konvertieren lassen, bei denen im gleichen Feld ungültige Daten eingetragen sind. Bitte beachten Sie, dass eine automatische Konvertierung nicht in allen Fällen möglich ist und dieser Button daher nicht immer zur Verfügung steht.
+* Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld verschoben. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen im gleichen Feld ungültige Daten eingetragen sind (gültige Daten verbleiben im ursprünglichen Feld).
+
+#### Nicht in Werteliste enthaltener Wert
+In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
+
+##### Mögliche Ursachen
+* Die Werteliste des Feldes wurde im Konfigurationseditor durch eine andere ausgetauscht.
+* Werte wurden im Wertelisten-Editor aus einer projektspezifischen Werteliste entfernt.
+* Der Eingabetyp des Feldes wurde im Konfigurationseditor von einem Eingabetyp, der die freie Eingabe von Text erlaubt, zu einem Eingabetyp mit Werteliste geändert.
+* Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Es wurden Einträge aus dem entsprechenden Feld in den Projekteigenschaften entfernt.
+* Beim Feld *Kampagne*: Werte wurden aus dem gleichnamigen Feld der übergeordneten Ressource entfernt (für das Feld *Kampagne* dürfen lediglich Werte ausgewählt werden, die in der übergeordneten Ressource gesetzt wurden).
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die nicht in der Werteliste enthaltenen Werte zu entfernen und gegebenenfalls durch andere Werte zu ersetzen.
+* Button *Wert korrigieren*: Wählen Sie aus der für das Feld konfigurierten Werteliste einen neuen Wert aus. Der bisherige Wert wird durch den ausgewählten Wert ersetzt. Optional können Sie den neuen Wert bei allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist und die die gleiche Werteliste verwenden.
+* Button *Wert löschen*: Der im Feld eingetragene Wert wird vollständig gelöscht. Optional können Sie den Wert aus allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist.
+* Wechseln Sie die Werteliste im Konfigurationseditor durch eine Werteliste aus, die den entsprechenden Wert enthält.
+* Fügen Sie der für das Feld konfigurierten Werteliste den fehlenden Wert hinzu. Bei nicht projektspezifischen Wertelisten müssen Sie für die Werteliste dazu mit der Option *Werteliste erweitern* zunächst eine Erweiterungsliste anlegen (siehe Abschnitt *Erstellen und Erweitern von Wertelisten* im Kapitel *Projektkonfiguration*).
+* Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Fügen Sie den fehlenden Wert dem entsprechenden Feld in den Projekteigenschaften hinzu.
+* Beim Feld *Kampagne*: Setzen Sie den Wert bei der übergeordneten Ressource, falls dort noch nicht vorhanden.
+
+#### Fehlende Zielressource einer Relation
+Eine als Ziel einer Relation angegebene Ressource kann nicht gefunden werden.
+
+##### Mögliche Ursachen
+* Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
+
+##### Mögliche Lösungen
+* Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
+* Button *Relation bereinigen*: Alle Verweise auf nicht existierende Ressourcen werden aus der Relation gelöscht.
+
+#### Fehlende oder ungültige übergeordnete Ressource
+Die Ressource besitzt keine gültige übergeordnete Ressource. Dies kann entweder bedeuten, dass für die Ressource keine übergeordnete Ressource gesetzt wurde, dass die angegebene übergeordnete Ressource nicht gefunden werden kann oder dass sie aufgrund ihrer Kategorie keine gültige übergeordnete Ressource ist. Die Ressource wird daher nicht angezeigt.
+
+##### Mögliche Ursachen
+* Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
+* Die Ressource wurde mit einer veralteten Version von Field Desktop angelegt.
+
+##### Mögliche Lösungen
+* Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
+* Button *Übergeordnete Ressource neu setzen*: Wählen Sie eine neue Ressource als übergeordnete Ressource aus. Die Ressource wird in den Kontext der gewählten Ressource verschoben.
+* Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
+
+#### Fehlendes Bezeichner-Präfix
+Der Bezeichner der Ressource enthält nicht das für die entsprechende Kategorie konfigurierte Präfix.
+
+##### Mögliche Ursachen
+* Die Ressource wurde angelegt, bevor das Bezeichner-Präfix konfiguriert wurde.
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Bezeichner neu einzutragen.
+
+#### Uneindeutiger Bezeichner
+Der Bezeichner der Ressource wird auch von einer oder mehreren anderen Ressourcen verwendet. Es kann daher zu Fehlern beim Import und Export von Daten kommen.
+
+##### Mögliche Ursachen
+* Die Bezeichner wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung eingetragen; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um einen neuen Bezeichner einzutragen.
+
+#### Ressourcenlimit überschritten
+Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konfigurierte Ressourcenlimit erlaubt.
+
+##### Mögliche Ursachen
+* Die Ressourcen wurden angelegt, bevor das Ressourcenlimit konfiguriert wurde.
+* Die Ressourcen wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung angelegt; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+##### Mögliche Lösungen
+* Löschen Sie Ressourcen der entsprechenden Kategorie, bis das Ressourcenlimit eingehalten wird.
+* Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.

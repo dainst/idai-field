@@ -1,21 +1,14 @@
 ## First steps
 
-After starting the Field Desktop application for the first time, the test project will be active, allowing
-you to experiment with the application's functionality using a set of sample data. Please note that as long as the
-test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting
-the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for
-the test project.  
+The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on  data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (MacOS) or "Tools" (Windows).
+
+Initially, the test project will be active, allowing you to experiment with the application's functionality using a set of sample data. Please note that as long as the test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for the test project.  
 
 In order to work with Field Desktop productively and create your own project, you should first follow these steps:
 
-1. The submenu **Settings**, which is accessible via the menu "Field" (MacOS) respectively "Tools"
-(Windows), allows you to change some basic settings applied to all projects. As a first step, please enter
-your editor name. This name will be stored in the database along with every change you make. It is strongly
-recommended to fill in this field, especially if data is going to be synchronized.  
+1. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
 
-2. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
-
-3. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
+2. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
 these lists at any time.
 
@@ -358,8 +351,6 @@ criterion to remove.
 ## Synchronization
 
 In order to collaborate on a single project, data can be synchronized between multiple Field Desktop installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources as well as added or deleted images) coming from an Field Desktop application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline – in that case the databases will be synchronized as soon as the network connection is established again.
-
-Please make sure to fill in the field **Editor name** before setting up the configuration.
 
 
 ### Download project

@@ -72,16 +72,20 @@ Ressourcen in der Liste können per Klick ausgewählt werden. Bei gedrückter St
 sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf eine oder mehrere ausgewählte
 Ressourcen öffnet sich ein Kontextmenü, das die folgenden Optionen bereitstellt:
 
+* *Warnungen anzeigen*: Zeigt die für diese Ressource vorliegenden Warnungen an (nur verfügbar für Ressourcen mit Warnungen, siehe Kapitel *Warnungen*)
 * *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
 erreichbar)
-* *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können.
+* *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können
+* *QR-Code hinzufügen*: Öffnet ein Fenster, in dem ein neuer QR-Code für die Ressource generiert werden bzw. ein bestehender QR-Code per Kamera-Scan übernommen werden kann
+* *QR-Code verwalten*: Zeigt den QR-Code der Ressource an und erlaubt den Druck eines QR-Code-Etiketts (alternativ auch über den QR-Code-Button rechts im Listenelement der Ressource erreichbar)
 * *Verschieben*: Erlaubt es, Ressourcen aus ihrem aktuellen Kontext zu entfernen und einer anderen
 Ressource unterzuordnen
 * *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
 die ausschließlich mit den zu löschenden Ressourcen verknüpft sind)
+* *Aufbewahrungsort scannen*: Setzt einen neuen Aufbewahrungsort für die Ressource, indem der QR-Code des Aufbewahrungsortes per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorien "Fund", "Fundkollektion" und "Probe" sowie der entsprechenden Unterkategorien)
 
 Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit. Bitte beachten Sie,
-dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind.
+dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind. Optionen zum Hinzufügen oder Verwalten von QR-Codes sind ausschließlich verfügbar, wenn die Verwendung von QR-Codes für die entsprechende Kategorie im Konfigurationseditor eingerichtet wurde (siehe Abschnitt *Kategorien bearbeiten* im Kapitel *Konfiguration*).
 
 <p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
 
@@ -477,12 +481,27 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 
 * *Kategoriebezeichnung*: Der Anzeigename der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Farbe*: Die Farbe des Kategorie-Symbols sowie der Geometrien, die für Ressourcen dieser Kategorie auf der Karte angezeigt werden.
+* *QR-Codes*: Ermöglicht die Verwendung von QR-Codes bei Ressourcen dieser Kategorie (siehe Abschnitt *QR-Codes*).
 * *Bezeichner-Präfix*: Geben Sie hier optional einen Text ein, mit dem der Bezeichner von Ressourcen dieser Kategorie stets beginnen soll. Beachten Sie dabei, dass bereits bestehende Bezeichner nicht automatisch angepasst werden.
 * *Ressourcenlimit*: Geben Sie hier optional eine Zahl ein, um die maximale Anzahl von Ressourcen festzulegen, die für diese Kategorie angelegt werden können. Bleibt das Feld leer, können beliebig viele Ressourcen angelegt werden. Diese Option steht nur für Maßnahmenkategorien und die Kategorie "Ort" zur Verfügung.
 
 Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hinaus folgende Eigenschaften festlegen:
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, in welchen Kontexten die Kategorie verwendet werden sollte.
 * *Verweise*: Geben Sie hier URLs an, wenn Sie auf weitere Informationen zur Kategorie oder Kategoriedefinitionen in anderen Systemen verweisen möchten.
+
+
+##### QR-Codes
+
+Ist die Verwendung von QR-Codes für eine Kategorie aktiviert, kann jeder Ressource der Kategorie ein einzigartiger QR-Code zugewiesen werden. Es können dabei sowohl neue Codes generiert als auch bestehende Codes per Kamera-Scan übernommen und mit der jeweiligen Ressource verknüpft werden. Der QR-Code kann anschließend auf verschiedene Arten eingesetzt werden:
+* Aufrufen der Ressource per Kamera-Scan (über den QR-Code-Button der Suchleiste)
+* Druck von QR-Code-Etiketten (über das Kontextmenü der Ressource)
+* Setzen des Aufbewahrungsortes einer Ressource per Kamera-Scan des mit dem Aufbewahrungsort verknüpften QR-Codes (über das Kontextmenü der Ressource)
+Bitte beachten Sie, dass QR-Codes nur für die Kategorien "Fund", "Fundkollektion", "Probe" und "Aufbewahrungsort" sowie die jeweiligen Unterkategorien verwendet werden können.
+
+Zur Konfiguration von QR-Codes stehen im Kategorieeditor folgende Optionen bereit:
+* *QR-Codes zur Identifikation verwenden*: Aktivieren Sie diese Option, um die Verwendung von QR-Codes für Ressourcen der Kategorie zu erlauben
+* *Für neue Ressourcen automatisch erzeugen*: Aktivieren Sie diese Option, wenn für jede neu angelegte Ressource automatisch ein QR-Code generiert werden soll
+* *Zu druckende Felder*: Wählen Sie bis zu drei Felder aus, die zusätzlich zum Ressourcen-Bezeichner auf dem QR-Code-Etikett gedruckt werden sollen. Aktivieren Sie jeweils die Option "Feldbezeichnung drucken", wenn die Feldbezeichnung vor dem Feldinhalt auf dem Etikett erscheinen soll.
 
 
 #### Hierarchie

@@ -71,14 +71,18 @@ Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd 
 can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
 providing the following options:
 
+* *Show warnings*: Displays the warnings available for this resource (only available for resources with warnings, see chapter *Warnings*)
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed.
+* *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed
+* *Add QR code*: Opens a window in which a new QR code can be generated for the resource or an existing QR code can be linked via camera scan
+* *Manage QR code*: Displays the QR code of the resource and allows printing a QR code label (alternatively also accessible via the QR code button on the right side of the list element of the resource)
 * *Move*: Allows removing resources from their current context and assigning them to another parent resource
 * *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
 exclusively linked to the resources you want to delete)
+* *Scan storage place*: Sets a new storage place for the resource by scanning the QR code of the storage place via camera scan (only available for resources of the categories "Find", "Find collection" and "Sample" as well as the respective subcategories)
 
 Furthermore, the context menu contains options for creating and editing geometries. Please note that when
-multiple resources are selected, only the *Move* and *Delete* options are available.
+multiple resources are selected, only the *Move* and *Delete* options are available. Options for adding or managing QR codes are only available if the use of QR codes has been set up for the corresponding category in the configuration editor (see section *Edit categories* in chapter *Configuration*).
 
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
 
@@ -465,12 +469,26 @@ Via the context menu or by double-clicking on an entry in the category list, the
 
 * *Category label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
 * *Color*: The color of the category icon as well as the geometries displayed for resources of this category on the map.
+* *QR codes*: Enables the use of QR codes for resources of this category (see section *QR codes*).
 * *Identifier prefix*: Optionally enter here a text with which the identifier of resources of this category should always start. Please note that already existing identifiers will not be adjusted automatically.
 * *Resource limit*: Optionally enter a number here to specify the maximum number of resources that can be created for this category. If the input field is left blank, any number of resources can be created. This option is only available for operation categories and the category "Place".
 
 You can also specify the following properties for project-specific categories:
 * *Description*: A description text that informs in which contexts the category should be used.
 * *References*: Specify URLs here if you want to reference more information about the category or category definitions in other systems.
+
+##### QR codes
+
+If the use of QR codes is enabled for a category, a unique QR code can be assigned to each resource of the category. Either a new code can be generated or an existing code can be read by camera scan and linked to the respective resource. The QR code can then be used in various ways:
+* Accessing the resource by camera scan (via the QR code button in the search bar)
+* Printing QR code labels (via the context menu of the resource)
+* Setting the storage location of a resource via camera scan of the QR code linked to the storage location (via the context menu of the resource)
+Please note that QR codes can only be used for the categories "Find", "Find collection", "Sample" and "Storage location" as well as the respective subcategories.
+
+The following options are available in the category editor for configuring QR codes:
+* *Use QR codes for identification*: Enable this option to allow the use of QR codes for resources of the category
+* *Automatically create for new resources*: Enable this option if a QR code should be generated automatically for every newly created resource
+* *Fields to print*: Select up to three fields to be printed on the QR code label in addition to the resource identifier. Activate the option "Print field label" if you want the field label to appear before the field content on the label.
 
 
 #### Hierarchy

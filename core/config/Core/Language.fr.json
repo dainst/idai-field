@@ -9,6 +9,9 @@
     },
     "shortDescription": {
       "label": "Description sommaire"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Inclus les unités stratigraphiques"
     }
   },
   "categories": {
@@ -17,6 +20,9 @@
       "fields": {
         "coordinateReferenceSystem": {
           "label": "Système de référence de coordonnées"
+        },
+        "shortName": {
+          "label": "Nom du projet"
         }
       }
     },
@@ -37,7 +43,7 @@
       "label": "Enregistré pendant l'opération"
     },
     "liesWithin": {
-      "label": "Dans"
+      "label": "Se trouve dans"
     },
     "includes": {
       "label": "Inclut"
@@ -49,7 +55,7 @@
       "label": "Sous"
     },
     "isSameAs": {
-      "label": "Le même que"
+      "label": "Identique à"
     },
     "cuts": {
       "label": "Coupe"
@@ -64,13 +70,13 @@
       "label": "Remplit"
     },
     "borders": {
-      "label": "Borde"
+      "label": "Adjacent à"
     },
     "isAfter": {
-      "label": "Après"
+      "label": "Chronologiquement postérieure à"
     },
     "isBefore": {
-      "label": "Avant"
+      "label": "Chronologiquement antérieure à"
     },
     "isContemporaryWith": {
       "label": "Contemporaine à"
@@ -92,6 +98,12 @@
     },
     "hasInstance": {
       "label": "Découvertes associées"
+    },
+    "isPresentIn": {
+      "label": "Est inclus dans le profil/plan"
+    },
+    "abuts": {
+      "label": "Bute contre"
     }
   }
 }

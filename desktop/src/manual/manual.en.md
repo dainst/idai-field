@@ -44,20 +44,13 @@ up right) in order to open a new tab for the operation.
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
 Depending on the category of the operation, resources of different categories can be created within an
-operation tab via the plus button (e. g. stratigraphical units within a trench or rooms within a building).
+operation tab via the plus button (e.g. stratigraphical units within a trench or rooms within a building).
 
 
 ### Hierarchical ordering
 
-Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphical unit.
-Use the button "Show child resources" (Symbol: rectangular arrow down right) to show a list of all resources
-that are subordinate to the selected resource. This list is initially empty for a newly created resource.
-
-<p align="center"><img src="images/en/resources/open_collection.png" alt="Open collection"/></p>
-
-By clicking "Open collection" you can switch to the lower level of the hierarchy, which means that now the
-subordinated resources are shown (e. g. the finds of a stratigraphical unit).
-Usage of the plus button will now lead to all resources getting created at that level. 
+Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphic unit. Use the button 
+"Show child resources" (symbol: rectangular arrow down right) to switch to the lower hierarchy level. The child resources are now displayed (e.g. the finds of a stratigraphic unit), and resources that are newly created via the plus button appear at this hierarchy level accordingly.
 
 The navigation path above the resources list indicates the currently selected hierarchy level. You can always
 switch to another level by clicking one of the buttons of the navigation path.
@@ -224,9 +217,9 @@ management**, all images shown in the grid are affected by the search filter.
 <p align="center"><img src="images/en/search/filter_menu.png" alt="Category filter selection"/></p>
 
 The category filter button allows you to choose a resource category. There are supercategories and
-subcategories: If you choose a subcategory (e. g. "Layer"), only the resources of the respective category are
-shown. In contrast, if you choose a supercategory (e. g. "Stratigraphical unit"), the resources of the
-selected category as well as all of its subcategories (e. g. "Layer", "Grave", "Architecture", "Floor" etc.)
+subcategories: If you choose a subcategory (e.g. "Layer"), only the resources of the respective category are
+shown. In contrast, if you choose a supercategory (e.g. "Stratigraphical unit"), the resources of the
+selected category as well as all of its subcategories (e.g. "Layer", "Grave", "Architecture", "Floor" etc.)
 are included. Click again to select only the supercategory itself.
 
 The current context decides which categories are available: In the overview you can choose operation

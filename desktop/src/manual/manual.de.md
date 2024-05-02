@@ -50,15 +50,9 @@ oder Räume innerhalb eines Gebäudes).
 
 Ressourcen können in hierarchischen Strukturen angeordnet werden, beispielsweise um Funde einer
 stratigraphischen Einheit zuzuweisen. Benutzen Sie den Button "Untergeordnete Ressourcen anzeigen"
-(Symbol: rechtwinkliger Pfeil nach rechts unten), um eine Liste aller Ressourcen anzuzeigen, die der
-ausgewählten Ressource untergeordnet wurden. Bei einer neu angelegten Ressource ist diese Liste zunächst leer.
-
-<p align="center"><img src="images/de/resources/open_collection.png" alt="Kollektion öffnen"/></p>
-
-Per Klick auf **Kollektion öffnen** kann auf die tiefere Hierarchieebene gewechselt werden, sodass nun die
-untergeordneten Ressourcen angezeigt werden (etwa die Funde einer stratigraphischen Einheit).
-Die Verwendung des Plus-Buttons führt jetzt dazu, dass Ressourcen entsprechend auf dieser Ebene angelegt
-werden.
+(Symbol: rechtwinkliger Pfeil nach rechts unten), um auf die tiefere Hierarchieebene zu wechseln. Es werden
+nun die untergeordneten Ressourcen angezeigt (etwa die Funde einer stratigraphischen Einheit), und über den
+Plus-Button neu erstellte Ressourcen werden entsprechend auf dieser Ebene angelegt.
 
 Der Navigationspfad oberhalb der Ressourcenliste zeigt die gerade ausgewählte Hierarchieebene an. Sie können
 jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere Ebene wechseln.

@@ -6,6 +6,14 @@
      [style.left]="contextMenu.position.x + 'px'"
      [style.top]="contextMenu.position.y + 'px'"
      [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
+     <div *ngIf="isWarningsOptionAvailable()" id="context-menu-warnings-button"
+          class="dropdown-item" (click)="selectAction('warnings')">
+        <span class="mdi mdi-alert"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.showWarnings">Warnungen anzeigen</span>
+    </div>
+
+    <hr *ngIf="isWarningsOptionAvailable()">
+
     <div *ngIf="isEditOptionAvailable()"
          id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
         <span class="mdi mdi-pencil"></span>
@@ -35,11 +43,6 @@
          id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
         <span class="mdi mdi-delete"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.delete">Löschen</span>
-    </div>
-    <div *ngIf="isWarningsOptionAvailable()"
-         id="context-menu-warnings-button" class="dropdown-item" (click)="selectAction('warnings')">
-        <span class="mdi mdi-alert"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.showWarnings">Warnungen anzeigen</span>
     </div>
 
     <hr *ngIf="isCreateGeometryOptionAvailable() || isEditGeometryOptionAvailable()">

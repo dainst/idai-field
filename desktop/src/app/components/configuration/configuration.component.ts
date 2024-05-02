@@ -707,7 +707,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         if (reindexConfiguration) {
             await this.configurationIndex.rebuild(this.configurationDocument, this.clonedProjectConfiguration);
         }
-        if (!this.clonedProjectConfiguration.getCategory(this.selectedCategory.name)) {
+        if (this.selectedCategory && !this.clonedProjectConfiguration.getCategory(this.selectedCategory.name)) {
             this.selectedCategory = undefined;
         }
         await this.loadCategories();

@@ -100,7 +100,7 @@ Bilder können auf zwei verschiedene Arten in die Anwendung importiert werden: �
 
 <p align="center"><img src="images/de/images/droparea.png" alt="Import-Button"/></p>
 
-Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen.
+Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen. Sie können außerdem den Inhalt des Feldes "Bildersteller/Bilderstellerin" wahlweise automatisch aus den Metadaten der Bilddatei auslesen lassen oder manuell setzen. Zur Auswahl stehen dabei die im Feld "Team" der Projekteigenschaften eingetragenen Personennamen. Das Erstellungsdatum sowie Höhe und Breite des Bildes werden in jedem Fall automatisch aus den Datei-Metadaten ausgelesen.
 
 Unterstützte Bildformate sind *jpg/jpeg*, *png* und *tif/tiff*.
 

@@ -278,15 +278,19 @@ describe('Datastore', () => {
 
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
-        mockdb.bulkFetch.and.returnValues(Promise.resolve([
-            {
-                resource: {
-                    id: '1',
-                    category: 'Find',
-                    relations: {}
+        mockdb.bulkFetch.and.returnValues(
+            Promise.resolve([
+                {
+                    resource: {
+                        id: '1',
+                        category: 'Find',
+                        relations: {}
+                    }
                 }
-            }
-        ]), Promise.resolve([]));
+            ]),
+            Promise.resolve([]),
+            Promise.resolve([])
+        );
 
         const { documents, totalCount } = await datastore.find({});
         expect(documents.length).toBe(1);

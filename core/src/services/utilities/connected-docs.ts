@@ -105,7 +105,6 @@ export namespace ConnectedDocs {
 
         const connectedDocuments: Array<Document> = [];
         for (let id of ids) {
-
             try {
                 connectedDocuments.push(await datastore.get(id));
             } catch {

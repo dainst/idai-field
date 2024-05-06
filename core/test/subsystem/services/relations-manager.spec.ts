@@ -121,7 +121,7 @@ describe('subsystem/relations-manager', () => {
 
         const d7 = doc('', 'identifierid7', 'Find', 'id7');
         d7.resource.relations['isRecordedIn'] = ['id1'];
-        d7.resource.relations['isDepictedIn'] = ['d6'];
+        d7.resource.relations['isDepictedIn'] = ['id6'];
 
         await app.datastore.create(d1);
         await app.datastore.create(d2);

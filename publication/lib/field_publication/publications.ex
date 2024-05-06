@@ -119,16 +119,18 @@ defmodule FieldPublication.Publications do
     publication
   end
 
-  def get_current_published(project_name) when is_binary(project_name) do
-    project_name
-    |> list()
-    |> Enum.reject(fn %Publication{publication_date: date} ->
-      date == nil or Date.before?(Date.utc_today(), date)
+  def get_current_published() do
+    list()
+    |> Enum.group_by(fn val -> val.project_name end)
+    |> Stream.map(fn {_project_name, publications} ->
+      publications
+      |> Stream.reject(fn %Publication{} = pub -> pub.publication_date == nil end)
+      |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
+        Date.compare(a, b) in [:eq, :gt]
+      end)
+      |> List.first(:none)
     end)
-    |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
-      Date.compare(a, b) in [:eq, :gt]
-    end)
-    |> List.first(:none)
+    |> Enum.reject(fn val -> val == :none end)
   end
 
   def list() do

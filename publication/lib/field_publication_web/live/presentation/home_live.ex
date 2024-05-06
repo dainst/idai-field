@@ -2,7 +2,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.Publications.Search
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Projects
   alias FieldPublication.Publications
   alias FieldPublication.Schemas.Publication
 
@@ -13,12 +12,11 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     DocumentLink
   }
 
+  require Logger
+
   def mount(_assigns, _session, socket) do
     published_projects =
-      Projects.list()
-      |> Stream.map(fn %{name: name} -> name end)
-      |> Stream.map(&Publications.get_current_published(&1))
-      |> Enum.reject(fn val -> val == :none end)
+      Publications.get_current_published()
       |> Task.async_stream(fn publication ->
         {publication, Publications.Data.get_project_info(publication)}
       end)

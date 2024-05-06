@@ -79,6 +79,7 @@ export class ImageSyncService {
 
         if (variant in this.schedules) {
             clearTimeout(this.schedules[variant]);
+            if (this.inProcess[variant]) delete this.inProcess[variant];
         }
 
         this.status[variant] = SyncStatus.Offline;

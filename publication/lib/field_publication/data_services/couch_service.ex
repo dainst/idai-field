@@ -43,6 +43,43 @@ defmodule FieldPublication.CouchService do
       code when 199 < code and code < 300 ->
         Logger.info("Created application database `#{@core_database}`.")
     end
+
+    put_db_indices()
+    |> Enum.each(fn {:ok, {:ok, %Finch.Response{body: body}}} ->
+      response = Jason.decode!(body)
+
+      case response do
+        %{"result" => "created", "name" => name} ->
+          Logger.info("Created database index '#{name}'.")
+
+        %{"result" => "exists", "name" => name} ->
+          Logger.warning("Database index '#{name}' already exists.")
+      end
+
+      response
+    end)
+  end
+
+  defp put_db_indices() do
+    [
+      %{
+        index: %{
+          fields: ["doc_type"]
+        },
+        name: "doc_type-index",
+        type: "json"
+      }
+    ]
+    |> Enum.map(fn definition ->
+      Finch.build(
+        :post,
+        "#{local_url()}/#{@core_database}/_index",
+        headers(),
+        Jason.encode!(definition)
+      )
+    end)
+    |> Task.async_stream(&Finch.request(&1, FieldPublication.Finch))
+    |> Enum.to_list()
   end
 
   @doc """

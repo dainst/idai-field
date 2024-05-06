@@ -133,6 +133,16 @@ defmodule FieldPublication.Publications do
     |> Enum.reject(fn val -> val == :none end)
   end
 
+  def get_current_published(project_name) do
+    list(project_name)
+    |> Stream.reject(fn %Publication{} = pub -> pub.publication_date == nil end)
+    |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
+      Date.compare(a, b) in [:eq, :gt]
+    end)
+    |> List.first(:none)
+    |> Enum.reject(fn val -> val == :none end)
+  end
+
   def list() do
     run_search(%{selector: %{doc_type: Publication.doc_type()}})
   end

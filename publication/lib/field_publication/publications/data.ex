@@ -150,6 +150,7 @@ defmodule FieldPublication.Publications.Data do
 
     %{
       "id" => resource["id"],
+      "identifier" => resource["identifier"],
       "category" => extend_category(category_configuration["item"], resource),
       "groups" => extend_field_groups(category_configuration["item"], resource),
       "relations" => extend_relations(category_configuration["item"], resource, publication)
@@ -282,9 +283,9 @@ defmodule FieldPublication.Publications.Data do
 
       %{
         "id" => res["id"],
+        "identifier" => res["identifier"],
         "category" => extend_category(category_configuration["item"], res),
-        "groups" => extend_field_groups(category_configuration["item"], res),
-        "identifier" => res["identifier"]
+        "groups" => extend_field_groups(category_configuration["item"], res)
       }
     end)
   end

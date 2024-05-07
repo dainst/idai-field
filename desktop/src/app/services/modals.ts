@@ -18,7 +18,12 @@ export class Modals {
                 private menuService: Menus) {}
 
 
-    public initialize = (menuContext: MenuContext) => this.menuContextsStack = [menuContext];
+    public initialize(menuContext: MenuContext) {
+
+        if (!this.menuContextsStack.includes(menuContext)) {
+            this.menuContextsStack = [menuContext];
+        }
+    }
 
 
     /**

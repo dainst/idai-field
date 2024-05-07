@@ -119,6 +119,14 @@ defmodule FieldPublication.Publications do
     publication
   end
 
+  def get_published(project_name) do
+    list(project_name)
+    |> Stream.reject(fn %Publication{} = pub -> pub.publication_date == nil end)
+    |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
+      Date.compare(a, b) in [:eq, :gt]
+    end)
+  end
+
   def get_current_published() do
     list()
     |> Enum.group_by(fn val -> val.project_name end)
@@ -134,11 +142,8 @@ defmodule FieldPublication.Publications do
   end
 
   def get_current_published(project_name) do
-    list(project_name)
-    |> Stream.reject(fn %Publication{} = pub -> pub.publication_date == nil end)
-    |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
-      Date.compare(a, b) in [:eq, :gt]
-    end)
+    project_name
+    |> get_published()
     |> List.first(:none)
     |> Enum.reject(fn val -> val == :none end)
   end

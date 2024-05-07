@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.UserAuth do
+  alias FieldPublication.Publications
   use FieldPublicationWeb, :verified_routes
 
   import Plug.Conn
@@ -272,6 +273,38 @@ defmodule FieldPublicationWeb.UserAuth do
       |> put_flash(:error, "You are not allowed to access that page.")
       |> redirect(to: ~p"/")
       |> halt()
+    end
+  end
+
+  @doc """
+  Before forwarding image requests to the Cantaloupe image server, check that the requested image was
+  at some point part of an already published publication.
+  """
+  def ensure_image_published(
+        %{path_info: [_api, _iiif, _image, _api_version, image_name | _everything_afterwards]} =
+          conn,
+        _opts
+      ) do
+    # We may want to optimize lookups by caching?
+    [project_name, uuid] =
+      image_name
+      |> String.replace_suffix(".jp2", "")
+      |> String.split("%2F")
+
+    publication =
+      Publications.get_published(project_name)
+      |> Enum.find(fn pub ->
+        Publications.Data.document_exists?(uuid, pub)
+      end)
+
+    case publication do
+      nil ->
+        conn
+        |> resp(403, "The image you requested has not been published.")
+        |> halt()
+
+      _ ->
+        conn
     end
   end
 

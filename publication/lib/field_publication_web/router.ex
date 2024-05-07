@@ -21,11 +21,15 @@ defmodule FieldPublicationWeb.Router do
     plug :accepts, ["json"]
   end
 
-  forward "/api/iiif/image", ReverseProxyPlug,
-    status_callbacks: %{
-      404 => &Cantaloupe.handle_404/2
-    },
-    upstream: &Cantaloupe.url/0
+  scope "/api/iiif/image" do
+    pipe_through :ensure_image_published
+
+    forward "/", ReverseProxyPlug,
+      status_callbacks: %{
+        404 => &Cantaloupe.handle_404/2
+      },
+      upstream: &Cantaloupe.url/0
+  end
 
   scope "/api", FieldPublicationWeb.Api do
     pipe_through :api

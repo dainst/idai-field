@@ -55,6 +55,17 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
+  def document_exists?(uuid, %Publication{database: db}) do
+    CouchService.head_document(uuid, db)
+    |> case do
+      {:ok, %{status: 200}} ->
+        true
+
+      _ ->
+        false
+    end
+  end
+
   def get_document(uuid, %Publication{database: db} = publication, raw \\ false) do
     config = get_configuration(publication)
 

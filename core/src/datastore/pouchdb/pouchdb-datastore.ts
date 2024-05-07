@@ -216,8 +216,7 @@ export class PouchdbDatastore {
 
         this.deletedOnes.push(document.resource.id as never);
 
-        const fetchedDocument = await this.fetch(
-            document.resource.id, { conflicts: true }, true) as any;
+        const fetchedDocument = await this.fetch(document.resource.id, {}, true) as any;
 
         if (fetchedDocument._conflicts && fetchedDocument._conflicts.length > 0) {
             await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument._conflicts);
@@ -239,10 +238,11 @@ export class PouchdbDatastore {
      * @throws [INVALID_DOCUMENT] if not Document.isValid
      * @returns Document. It is made sure that it isValid and the dates are converted to type Date.
      */
-    public fetch(resourceId: string,
-                 options: any = { conflicts: true }, skipValidation: boolean = false): Promise<Document> {
+    public fetch(resourceId: string, options: any = {}, skipValidation: boolean = false): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
+
+        options.conflicts = true;
 
         return this.db.get(resourceId, options)
             .then(
@@ -257,10 +257,13 @@ export class PouchdbDatastore {
     }
 
 
-    public async bulkFetch(resourceIds: string[], options: any = { conflicts: true }): Promise<Array<Document>> {
+    public async bulkFetch(resourceIds: string[]): Promise<Array<Document>> {
 
-        options.keys = resourceIds;
-        options.include_docs = true;
+        const options = {
+            keys: resourceIds,
+            conflicts: true,
+            include_docs: true
+        };
 
         return (await this.db.allDocs(options)).rows.map((row: any) => {
             if (!row.doc) {

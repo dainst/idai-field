@@ -74,7 +74,6 @@ export class WarningsService {
     }
 
 
-
     private async update() {
 
         this.hasConfigurationConflict = await WarningFilters.hasConfigurationConflict(this.datastore);

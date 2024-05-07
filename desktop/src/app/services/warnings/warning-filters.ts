@@ -95,7 +95,7 @@ export module WarningFilters {
     export async function hasConfigurationConflict(datastore: Datastore): Promise<boolean> {
 
         try {
-            const configurationDocument: Document = await datastore.get('configuration', { conflicts: true });
+            const configurationDocument: Document = await datastore.get('configuration');
             return configurationDocument._conflicts !== undefined;
         } catch (_) {
             // No configuration document in database

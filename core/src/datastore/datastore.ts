@@ -169,13 +169,12 @@ export class Datastore {
      * 
      * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
-     * @param options.conflicts: boolean
      * @param options to control implementation specific behaviour
      * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean, conflicts?: boolean })
+    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean })
             : Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
@@ -188,7 +187,7 @@ export class Datastore {
             }
         }
 
-        let document = await this.datastore.fetch(id, options?.conflicts);
+        const document = await this.datastore.fetch(id, options);
         await this.convert(document);
 
         if (document.warnings?.unconfiguredCategory) {

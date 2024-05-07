@@ -18,7 +18,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
     ~H"""
     <div>
       <.document_heading>
-        <%= Data.get_field_values(@doc, "identifier") %>
+        <DocumentLink.show
+          project={@project_name}
+          date={@publication_date}
+          lang={@lang}
+          preview_doc={@doc}
+        />
       </.document_heading>
 
       <div class="flex flex-row">

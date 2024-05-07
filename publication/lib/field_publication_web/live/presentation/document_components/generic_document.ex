@@ -25,10 +25,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
         uuid={@uuid}
       />
       <.document_heading>
-        <%= Data.get_field_values(
-          @doc,
-          "identifier"
-        ) %> (<I18n.text values={@doc["category"]["labels"]} />)
+        <DocumentLink.show
+          project={@project_name}
+          date={@publication_date}
+          lang={@lang}
+          preview_doc={@doc}
+        />
       </.document_heading>
 
       <div class="flex flex-row">

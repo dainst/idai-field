@@ -299,7 +299,8 @@ const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: P
     try {
         await createDisplayVariant(
             await db.get(imageId),
-            imagestore
+            imagestore,
+            await imagestore.getData(imageId, ImageVariant.ORIGINAL)
         );
     } catch (err) {
         console.warn('Failed to create display variant for image ' + imageId, err);

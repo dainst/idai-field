@@ -8,14 +8,14 @@ import { ImageManipulation } from './image-manipulation';
  * @returns A buffer containing data of a newly created display variant, or undefined if no display variant is needed.
  */
 export async function createDisplayVariant(document: ImageDocument, imagestore: ImageStore,
-                                           originalData?: Buffer): Promise<Buffer|undefined> {
-
+                                           originalData: Buffer): Promise<Buffer|undefined> {
+    
     const imageId: string = document.resource.id;
     const fileExtension: string = ImageDocument.getOriginalFileExtension(document);
     const width: number = document.resource.width;
     const height: number = document.resource.height;
 
-    const sharpImageHandle =  ImageManipulation.getSharpImage(originalData);
+    const sharpImageHandle = ImageManipulation.getSharpImage(originalData);
 
     const convertToJpeg: boolean = await shouldConvertToJpeg(
         width * height, fileExtension, sharpImageHandle

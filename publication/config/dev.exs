@@ -19,17 +19,6 @@ config :field_publication, FieldPublicationWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
-config :field_publication,
-  dev_routes: true,
-  couchdb_url: "http://localhost:5985",
-  couchdb_admin_name: "couch_admin",
-  couchdb_admin_password: "couch_admin_password",
-  opensearch_url: "http://localhost:9200",
-  known_data_sources: ["http://localhost:4000"],
-  file_store_directory_root: "data/file_store",
-  web_images_directory_root: "data/cantaloupe",
-  cantaloupe_url: "http://localhost:8182"
-
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

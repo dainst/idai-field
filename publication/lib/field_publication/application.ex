@@ -19,10 +19,6 @@ defmodule FieldPublication.Application do
         id: :user_tokens_cache
       ),
       Supervisor.child_spec(
-        {Cachex, name: Application.get_env(:field_publication, :reduced_docs_cache_name)},
-        id: :reduced_docs_cache
-      ),
-      Supervisor.child_spec(
         {Cachex, name: :configuration_docs},
         id: :configuration_docs
       ),

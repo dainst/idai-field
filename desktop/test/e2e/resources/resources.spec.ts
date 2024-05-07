@@ -279,6 +279,23 @@ test.describe('resources --', () => {
     });
 
 
+    test('do not restrict values of campaign field if the category of the parent resource does not include the field',
+            async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('place', 'place');
+        await ResourcesPage.clickHierarchyButton('place');
+        await ResourcesPage.performCreateResource('trench', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('trench');
+        const checkboxes = await DoceditPage.getCheckboxes('campaign');
+        expect(await checkboxes.count()).toBe(2);
+        expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
+        expect(await getText(checkboxes.nth(1))).toEqual('Testkampagne 2');
+
+        await DoceditPage.clickCloseEdit();
+    });
+
+
     test('edit i18n field values', async () => {
 
         await ResourcesPage.clickCreateResource();

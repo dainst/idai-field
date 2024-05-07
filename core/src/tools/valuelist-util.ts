@@ -35,9 +35,7 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelist(field: Field, 
-                                 projectDocument: Document,
-                                 projectConfiguration: ProjectConfiguration,
+    export function getValuelist(field: Field,  projectDocument: Document, projectConfiguration: ProjectConfiguration,
                                  parentResource?: Resource): Valuelist {
 
         const valuelist: Valuelist|string[] = field.valuelist
@@ -49,14 +47,13 @@ export module ValuelistUtil {
             : undefined;
 
         return field.allowOnlyValuesOfParent && parentResource
-                && CategoryForm.getFields(parentCategory).find(field => field.name === field.name)
+                && CategoryForm.getFields(parentCategory).find(parentField => parentField.name === field.name)
             ? getValuesOfParentField(valuelist, field.name, parentResource)
             : valuelist;
     }
 
 
-    export function getValuelistFromProjectField(fieldName: string,
-                                                 projectDocument: Document): Valuelist {
+    export function getValuelistFromProjectField(fieldName: string, projectDocument: Document): Valuelist {
 
         const id = 'project-' + fieldName;
         const field: string[]|undefined = projectDocument.resource[fieldName];
@@ -72,9 +69,7 @@ export module ValuelistUtil {
     }
 
 
-    function getValuesOfParentField(valuelist: Valuelist, 
-                                    fieldName: string,
-                                    parentResource: Resource): Valuelist {
+    function getValuesOfParentField(valuelist: Valuelist,  fieldName: string, parentResource: Resource): Valuelist {
 
         const parentValues: string[] = parentResource[fieldName] ?? [];
 

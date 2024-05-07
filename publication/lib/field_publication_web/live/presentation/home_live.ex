@@ -54,6 +54,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       )
       |> assign(:highlighted, nil)
       |> assign(:search_results, [])
+      |> assign(:page_title, "Overview")
     }
   end
 

@@ -34,7 +34,7 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
     """
   end
 
-  defp select_translation(%{values: translations} = assigns) do
+  def select_translation(%{values: translations} = assigns) do
     lang =
       if Map.has_key?(assigns, :lang) do
         assigns[:lang]

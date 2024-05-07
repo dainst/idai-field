@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
+  alias FieldPublicationWeb.Presentation.Components.I18n
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications
@@ -69,6 +70,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:uuid, uuid)
       |> assign(:image_categories, image_categories)
       |> assign(:child_doc_previews, child_doc_previews)
+      |> assign(
+        :page_title,
+        get_page_title(doc)
+      )
     }
   end
 
@@ -110,6 +115,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:selected_lang, language)
       |> assign(:publication_comments, publication_comments)
       |> assign(:child_doc_previews, child_doc_previews)
+      |> assign(
+        :page_title,
+        get_page_title(project_doc)
+      )
       |> assign(:uuid, "")
     }
   end
@@ -168,5 +177,28 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       :noreply,
       push_patch(socket, to: ~p"/#{project_name}/#{date}/#{lang}/#{uuid}")
     }
+  end
+
+  defp get_page_title(%{"id" => "project"} = doc) do
+    {_, short_description} =
+      I18n.select_translation(%{values: Data.get_field_values(doc, "shortName")})
+
+    short_description
+  end
+
+  defp get_page_title(doc) do
+    short_descriptions =
+      Data.get_field_values(doc, "shortDescription")
+      |> case do
+        nil ->
+          Data.get_field_values(doc, "identifier")
+
+        values ->
+          values
+      end
+
+    {_translation_info, value} = I18n.select_translation(%{values: short_descriptions})
+
+    value
   end
 end

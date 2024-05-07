@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         class="rounded-tl pl-2 rounded-bl"
         style={"background-color: #{@preview_doc["category"]["color"]}; filter: saturate(50%); border-color: #{@preview_doc["category"]["color"]}; border-width: 1px 0px 1px 0px;"}
       >
-        <div class="h-full bg-white/60 pl-2 pr-2 pt-3 font-thin">
+        <div class="h-full bg-white/60 pl-2 pr-2 pt-3 pb-3 font-thin">
           <I18n.text values={@preview_doc["category"]["labels"]} />
         </div>
       </div>

@@ -512,6 +512,40 @@ test.describe('warnings --', () => {
     });
 
 
+    test('remove invalid parent warnings when selecting new category for parent resource', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('1', 'feature-floor');
+        await ResourcesPage.clickHierarchyButton('1');
+        await ResourcesPage.performCreateResource('2', 'Find');
+
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('trench');
+        await ConfigurationPage.deleteCategory('Floor', 'Feature', true);
+        await waitForNotExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
+        await ConfigurationPage.save();
+        await NavbarPage.clickCloseNonResourcesTab();
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+        await NavbarPage.clickWarningsButton();
+        await waitForExist(await WarningsModalPage.getResource('1'));
+        await waitForExist(await WarningsModalPage.getResource('2'));
+
+        await WarningsModalPage.clickResource('2');
+        await expectSectionTitles(['Fehlende oder ungültige übergeordnete Ressource']);
+
+        await WarningsModalPage.clickResource('1');
+        await WarningsModalPage.clickSelectNewCategoryButton(0);
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await SelectModalPage.clickConfirmButton();
+        
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve single warning for unconfigured field via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

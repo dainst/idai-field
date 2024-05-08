@@ -101,6 +101,8 @@ export module Document {
                                         projectConfiguration: ProjectConfiguration): Promise<boolean> {
         
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+        if (!category) return true;
+
         const hasIsRecordedIn: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN);
         const hasLiesWithin: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN);
 

@@ -12,7 +12,7 @@ function getMockProjectConfiguration(categoryDefinition) {
 
     const mockProjectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategory', 'getCategories', 'getCategoryWithSubcategories']
+        ['getCategory', 'getCategories', 'getCategoryWithSubcategories', 'isAllowedRelationDomainCategory']
     );
     mockProjectConfiguration.getCategory.and.callFake(categoryName => {
         return categoryName === 'Category' ? categoryDefinition : undefined;
@@ -21,6 +21,7 @@ function getMockProjectConfiguration(categoryDefinition) {
     mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
         return categoryName === 'Category' ? [categoryDefinition] : [];
     });
+    mockProjectConfiguration.isAllowedRelationDomainCategory.and.returnValue(true);
 
     return mockProjectConfiguration;
 }

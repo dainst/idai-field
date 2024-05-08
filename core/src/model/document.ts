@@ -97,33 +97,34 @@ export module Document {
     }
 
 
-    export async function isValidParent(document: Document, parentDocument: Document,
+    export async function isValidParent(document: Document, parent: Document, recordedInTarget: Document,
                                         projectConfiguration: ProjectConfiguration): Promise<boolean> {
         
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+        const hasIsRecordedIn: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN);
+        const hasLiesWithin: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN);
 
-        if (!Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN)
+        if (!parent && (hasIsRecordedIn || hasLiesWithin)) return false;
+        if (!recordedInTarget && hasIsRecordedIn) return false;
+
+        if (!hasIsRecordedIn
                 && (projectConfiguration.getRegularCategories().map(Named.toName).includes(document.resource.category))) {
             return false;
         }
 
-        if (!Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN) && category.mustLieWithin) {
+        if (!hasLiesWithin && category.mustLieWithin) return false;
+
+        if (!parent) return true;
+
+        if (hasIsRecordedIn && !projectConfiguration.isAllowedRelationDomainCategory(
+                category.name, recordedInTarget.resource.category, Relation.Hierarchy.RECORDEDIN
+        )) {
             return false;
         }
 
-        if (!parentDocument) return true;
-
-        if (Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN) &&
-                !projectConfiguration.isAllowedRelationDomainCategory(
-                    category.name, parentDocument.resource.category, Relation.Hierarchy.RECORDEDIN
-                )) {
-            return false;
-        }
-
-        if (Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN) &&
-                !projectConfiguration.isAllowedRelationDomainCategory(
-                    category.name, parentDocument.resource.category, Relation.Hierarchy.LIESWITHIN
-                )) {
+        if (hasLiesWithin && !projectConfiguration.isAllowedRelationDomainCategory(
+                category.name, parent.resource.category, Relation.Hierarchy.LIESWITHIN
+        )) {
             return false;
         }
     

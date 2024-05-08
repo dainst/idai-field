@@ -16,6 +16,7 @@ import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
+import { Relation } from '../model';
 
 
 /**
@@ -182,12 +183,18 @@ export module WarningsUpdater {
                                                               projectConfiguration: ProjectConfiguration,
                                                               indexFacade: IndexFacade, documentCache: DocumentCache) {
 
-        const parentDocument: Document = await Hierarchy.getParentDocument(
-            (id: string) => Promise.resolve(documentCache[id]),
+        const parent: Document = await Hierarchy.getParentDocument(
+            (id: string) => Promise.resolve(documentCache.get(id)),
             document
         );
 
-        const hasValidParent: boolean = await Document.isValidParent(document, parentDocument, projectConfiguration);
+        const recordedInTargetIds: string[] = document.resource.relations[Relation.Hierarchy.RECORDEDIN];
+        const recordedInTargetId: string = recordedInTargetIds?.length ? recordedInTargetIds[0] : undefined;
+        const recordedInTarget: Document = recordedInTargetId ? documentCache.get(recordedInTargetId) : undefined;
+
+        const hasValidParent: boolean = await Document.isValidParent(
+            document, parent, recordedInTarget, projectConfiguration
+        );
 
         if (!hasValidParent) {
             if (!document.warnings) document.warnings = Warnings.createDefault();

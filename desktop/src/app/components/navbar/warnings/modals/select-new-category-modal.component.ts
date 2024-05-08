@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document, Labels, ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, Datastore, Document, DocumentCache, IndexFacade, Labels, ProjectConfiguration,
+    WarningsUpdater } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
 
@@ -28,7 +29,9 @@ export class SelectNewCategoryModalComponent {
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
                 private labels: Labels,
-                private warningsService: WarningsService) {}
+                private warningsService: WarningsService,
+                private indexFacade: IndexFacade,
+                private documentCache: DocumentCache) {}
 
     
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
@@ -62,6 +65,8 @@ export class SelectNewCategoryModalComponent {
             await this.performSingle();
         }
 
+        await this.updateInvalidParentWarnings();
+
         this.warningsService.reportWarningsResolved();
 
         fixingDataInProgressModal.close();
@@ -78,7 +83,7 @@ export class SelectNewCategoryModalComponent {
 
     private async performMultiple() {
 
-        const documents = (await this.datastore.find({
+        const documents: Array<Document> = (await this.datastore.find({
             categories: ['UNCONFIGURED'],
         })).documents;
 
@@ -86,6 +91,20 @@ export class SelectNewCategoryModalComponent {
             .forEach(document => document.resource.category = this.selectedCategory.name);
 
         await this.datastore.bulkUpdate(documents);
+    }
+
+    
+    private async updateInvalidParentWarnings() {
+
+        const documents: Array<Document> = (await this.datastore.find({
+            constraints: { 'missingOrInvalidParent:exist': 'KNOWN' }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of documents) {
+            await WarningsUpdater.updateMissingOrInvalidParentWarning(
+                document, this.projectConfiguration, this.indexFacade, this.documentCache
+            );
+        }
     }
 
 

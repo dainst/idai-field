@@ -1289,7 +1289,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await expectResourcesInWarningsModal(['1']);
-        await expectSectionTitles(['Fehlende Zielressource der Relation Liegt in']);
+        await expectSectionTitles(['Fehlende Zielressource der Relation Wird gezeigt in']);
 
         await WarningsModalPage.clickCleanUpRelationButton(0);
         await WarningsModalPage.clickConfirmCleanUpInModalButton();

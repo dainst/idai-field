@@ -111,7 +111,7 @@ describe('subsystem/relations-manager', () => {
         d3.resource.relations['liesWithin'] = ['id2'];
         const d4 = doc('', 'identifierid4', 'Find', 'id4') as FieldDocument;
         d4.resource.relations['isRecordedIn'] = ['id1'];
-        d4.resource.relations['liesWithin'] = ['id3'];
+        d4.resource.relations['liesWithin'] = ['id2'];
         d4.resource.relations['isDepictedIn'] = ['id5', 'id6'];
 
         const d5 = doc('', 'identifierid5', 'Image', 'id5');

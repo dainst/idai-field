@@ -6037,14 +6037,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.resources.error.categoryNotFound" datatype="html">
-        <source>Die Kategoriedefinition für '[0]' fehlt in der Datei Fields.json.</source>
-        <target state="needs-translation">Die Kategoriedefinition für '[0]' fehlt in der Datei Fields.json.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.resources.error.oneProjectMustExist" datatype="html">
         <source>Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</source>
         <target state="needs-translation">Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</target>

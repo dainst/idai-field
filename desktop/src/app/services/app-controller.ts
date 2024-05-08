@@ -125,7 +125,7 @@ export class AppController {
     private async createMissingRelationTargetWarning() {
 
         const document: Document = this.createDocument();
-        document.resource.relations.liesWithin = ['missing'];
+        document.resource.relations.isDepictedIn = ['missing'];
         await this.pouchdbDatastore.create(document, 'test');
 
         await Indexer.reindex(

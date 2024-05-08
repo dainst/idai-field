@@ -247,6 +247,7 @@ export class PouchdbDatastore {
         return this.db.get(resourceId, options)
             .then(
                 (result: any) => {
+                    PouchdbDatastore.autoFixCategory(result);
                     if (!skipValidation) {
                         if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
                     }
@@ -270,6 +271,7 @@ export class PouchdbDatastore {
                 console.warn('Document not found: ' + row.key);
                 return undefined;
             }
+            PouchdbDatastore.autoFixCategory(row.doc);
             if (!Document.isValid(row.doc)) {
                 console.warn('Invalid document', row.doc);
                 return undefined;
@@ -412,5 +414,12 @@ export class PouchdbDatastore {
 
         const clonedDocument = Document.clone(document);
         return Document.removeEmptyRelationArrays(clonedDocument);
+    }
+
+
+    private static autoFixCategory(document: Document) {
+
+        if (document.resource.id === 'project') document.resource.category = 'Project';
+        if (document.resource.id === 'configuration') document.resource.category = 'Configuration';
     }
 }

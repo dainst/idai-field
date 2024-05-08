@@ -1,8 +1,7 @@
 import { isUndefined, not } from 'tsfun';
 import { IndexFacade } from './index-facade';
-import { DocumentConverter, DatastoreErrors, DocumentCache } from '../datastore';
+import { DocumentConverter, DocumentCache } from '../datastore';
 import { Document } from '../model/document';
-import { CategoryForm } from '../model/configuration/category-form';
 import { WarningsUpdater } from '../datastore/warnings-updater';
 import { ProjectConfiguration } from '../services';
 
@@ -39,7 +38,7 @@ import { ProjectConfiguration } from '../services';
             documents = convertDocuments(documents, converter);
             documents.forEach(document => {
                 WarningsUpdater.updateIndexIndependentWarnings(document, projectConfiguration);
-                documentCache.set(document)
+                documentCache.set(document);
             });
 
             if (keepCachedInstances) {
@@ -93,7 +92,9 @@ import { ProjectConfiguration } from '../services';
 
         for (let i = 0; i < documents.length; i++) {
             const document: Document = documents[i];
-            WarningsUpdater.updateIndexDependentWarnings(document, indexFacade, documentCache, projectConfiguration);
+            await WarningsUpdater.updateIndexDependentWarnings(
+                document, indexFacade, documentCache, projectConfiguration
+            );
 
             if (setProgress && (i % 250 === 0 || i === documents.length)) {
                 await setProgress(documents.length * 0.75 + i * 0.25);

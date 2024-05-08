@@ -1,4 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output,
+    ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { to } from 'tsfun';
 import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
     PouchdbDatastore } from 'idai-field-core';
@@ -22,7 +24,7 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class PlusButtonComponent implements OnChanges {
+export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
@@ -44,6 +46,9 @@ export class PlusButtonComponent implements OnChanges {
     public selectedCategory: string|undefined;
     public toplevelCategoriesArray: Array<CategoryForm>;
 
+    private clickEventSubscription: Subscription;
+    private changesSubscription: Subscription;
+
 
     constructor(private elementRef: ElementRef,
                 private resourcesComponent: ResourcesComponent,
@@ -52,25 +57,34 @@ export class PlusButtonComponent implements OnChanges {
                 private viewFacade: ViewFacade,
                 private datastore: Datastore,
                 private i18n: I18n,
-                pouchdbDatastore: PouchdbDatastore) {
+                private pouchdbDatastore: PouchdbDatastore) {}
 
-        this.resourcesComponent.listenToClickEvents().subscribe(event => {
+
+    public isGeometryCategory = (category: Name) => this.projectConfiguration.isGeometryCategory(category);
+
+
+    ngOnInit() {
+        
+        this.clickEventSubscription = this.resourcesComponent.listenToClickEvents().subscribe(event => {
             this.handleClick(event);
         });
 
-        pouchdbDatastore.changesNotifications().subscribe(() => {
+        this.changesSubscription = this.pouchdbDatastore.changesNotifications().subscribe(() => {
             this.initializeSelectableCategoriesArray(this.projectConfiguration);
         });
     }
 
 
-    public isGeometryCategory = (category: Name) =>
-        this.projectConfiguration.isGeometryCategory(category);
-
-
     ngOnChanges() {
 
         this.initializeSelectableCategoriesArray(this.projectConfiguration);
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.clickEventSubscription) this.clickEventSubscription.unsubscribe();
+        if (this.changesSubscription) this.changesSubscription.unsubscribe();
     }
 
 

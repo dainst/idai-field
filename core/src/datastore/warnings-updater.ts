@@ -154,7 +154,11 @@ export module WarningsUpdater {
     
         const warnings: MissingRelationTargetWarnings = { relationNames: [], targetIds: [] };
 
-        for (let relationName of Object.keys(document.resource.relations)) {
+        const relationNames: string[] = Object.keys(document.resource.relations).filter(relationName => {
+            return !Relation.Hierarchy.ALL.includes(relationName);
+        });
+
+        for (let relationName of relationNames) {
             for (let targetId of document.resource.relations[relationName]) {
                 if (!documentCache.get(targetId)) {
                     if (!warnings.relationNames.includes(relationName)) warnings.relationNames.push(relationName);

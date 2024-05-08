@@ -234,7 +234,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE = 'resources.info.storagePlaceAlreadySet.multiple';
     public static RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY = 'resources.error.noStoragePlaceCategory';
     public static RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME = 'resources.error.projectIdentifierNotSame';
-    public static RESOURCES_ERROR_CATEGORY_NOT_FOUND = 'resources.error.categoryNotFound';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
     public static RESOURCES_ERROR_RESOURCE_DELETED = 'resources.error.resourceDeleted';
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
@@ -1555,13 +1554,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.'
             }),
             level: 'warning'
-        };
-        this.msgs[M.RESOURCES_ERROR_CATEGORY_NOT_FOUND] = {
-            content: i18n({
-                id: 'messages.resources.error.categoryNotFound',
-                value: 'Die Kategoriedefinition für \'[0]\' fehlt in der Datei Fields.json.'
-            }),
-            level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST] = {
             content: i18n({

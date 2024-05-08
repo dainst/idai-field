@@ -165,11 +165,7 @@ export class PlusButtonComponent implements OnChanges {
 
         if (this.preselectedCategory) {
             const category: CategoryForm = projectConfiguration.getCategory(this.preselectedCategory);
-            if (category) {
-                this.toplevelCategoriesArray.push(category);
-            } else {
-                this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
-            }
+            if (category) this.toplevelCategoriesArray.push(category);
         } else {
             for (let category of Tree.flatten(projectConfiguration.getCategories())) {
                 if (await this.isAllowedCategory(category, projectConfiguration)

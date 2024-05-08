@@ -63,7 +63,6 @@ export module MoveUtility {
     }
 
 
-
     export function isProjectOptionAllowed(documents: Array<FieldDocument>, projectConfiguration: ProjectConfiguration): boolean {
 
         return documents.filter(document => {

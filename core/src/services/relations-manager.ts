@@ -149,7 +149,7 @@ export class RelationsManager {
                 }
             }
         };
-        return this.datastore.find(query);
+        return this.datastore.find(query, { includeResourcesWithoutValidParent: true });
     }
 
 

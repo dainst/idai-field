@@ -15,7 +15,7 @@
         </category-picker>
     </div>
 
-    <div *ngIf="selectedCategory" id="multiple-switch" class="row">
+    <div *ngIf="selectedCategory && document.resource.category" id="multiple-switch" class="row">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.selectNewCategory.all">Bei allen Ressourcen dieser Kategorie durchführen</span>
         </div>

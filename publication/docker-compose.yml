@@ -30,8 +30,7 @@ services:
     ports:
       - "8182:8182"
     volumes:
-      - "./data/file_store/web_images:/image_root"
-      - "./data/file_store/raw:/source_images"
+      - "./data/file_store:/files"
 
   couchdb:
     image: couchdb:3.3.2

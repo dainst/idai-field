@@ -23,17 +23,15 @@ RUN curl --silent --fail -OL https://github.com/medusa-project/cantaloupe/releas
 
 COPY ./cantaloupe.properties /cantaloupe/cantaloupe.properties
 
-RUN sed -i 's#FilesystemSource.BasicLookupStrategy.path_prefix = /home/myself/images/#FilesystemSource.BasicLookupStrategy.path_prefix = /image_root/#' /cantaloupe/cantaloupe.properties
+RUN sed -i 's#FilesystemSource.BasicLookupStrategy.path_prefix = /image_root/#FilesystemSource.BasicLookupStrategy.path_prefix = /files/web_images/#' /cantaloupe/cantaloupe.properties
 RUN sed -i 's#log.application.level = debug#log.application.level = info#' /cantaloupe/cantaloupe.properties
 
 COPY imagemagick-policy.xml /usr/share/ImageMagick-6/policy.xml
 
-RUN mkdir /image_root
-RUN mkdir /source_images
+RUN mkdir -p /files/web_images
+RUN mkdir -p /files/raw
 
-RUN chown cantaloupe /image_root
-
-VOLUME /image_root
+RUN chown cantaloupe /files/web_images
 
 USER cantaloupe
 

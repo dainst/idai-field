@@ -80,7 +80,7 @@ defmodule FieldPublication.Processing.Image do
 
       {"", 0} =
         System.shell(
-          "docker exec -u root:root field_publication_cantaloupe convert /source_images/#{input_file_path} /image_root/#{target_file_path}"
+          "docker exec -u root:root field_publication_cantaloupe convert /files/#{input_file_path} /files/#{target_file_path}"
         )
     else
       System.cmd("convert", [input_file_path, target_file_path])

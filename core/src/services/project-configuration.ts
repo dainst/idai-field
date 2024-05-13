@@ -45,6 +45,7 @@ export class ProjectConfiguration {
     private typeManagementCategories: Array<CategoryForm>;
     private typeManagementSupercategories: Array<CategoryForm>;
     private typeCategories: Array<CategoryForm>;
+    private categoriesWithSubcategories: Map<Array<CategoryForm>>;
 
 
     constructor(rawConfiguration: RawProjectConfiguration) {
@@ -172,10 +173,7 @@ export class ProjectConfiguration {
 
     public getCategoryWithSubcategories(categoryName: string): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees(categoryName),
-            Tree.flatten
-        );
+        return this.categoriesWithSubcategories[categoryName] ?? [];
     }
 
 
@@ -284,6 +282,7 @@ export class ProjectConfiguration {
         this.typeManagementCategories = this.filterTypeManagementCategories();
         this.typeManagementSupercategories = this.filterTypeManagementSupercategories();
         this.typeCategories = this.filterTypeCategories();
+        this.categoriesWithSubcategories = this.filterCategoriesWithSubcategories();
     }
 
 
@@ -355,6 +354,26 @@ export class ProjectConfiguration {
 
         return flow(this.categoryForms,
             filterTrees(TYPE),
+            Tree.flatten
+        );
+    }
+
+
+    private filterCategoriesWithSubcategories(): Map<Array<CategoryForm>> {
+
+        return Tree.flatten(this.categoryForms)
+            .filter(category => !category.parentCategory)
+            .reduce((result, category) => {
+                result[category.name] = this.filterCategoryWithSubcategories(category.name);
+                return result;
+            }, {});
+    }
+
+
+    private filterCategoryWithSubcategories(categoryName: string): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees(categoryName),
             Tree.flatten
         );
     }

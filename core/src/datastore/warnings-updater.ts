@@ -11,7 +11,6 @@ import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
 import { Query } from '../model/query';
 import { DocumentCache } from './document-cache';
-import { Hierarchy } from '../services/utilities/hierarchy';
 import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/field-resource';
@@ -187,11 +186,7 @@ export module WarningsUpdater {
                                                               projectConfiguration: ProjectConfiguration,
                                                               indexFacade: IndexFacade, documentCache: DocumentCache) {
 
-        const parent: Document = await Hierarchy.getParentDocument(
-            (id: string) => Promise.resolve(documentCache.get(id)),
-            document
-        );
-
+        const parent: Document = getParentDocument(document, documentCache);
         const recordedInTargetIds: string[] = document.resource.relations[Relation.Hierarchy.RECORDEDIN];
         const recordedInTargetId: string = recordedInTargetIds?.length ? recordedInTargetIds[0] : undefined;
         const recordedInTarget: Document = recordedInTargetId ? documentCache.get(recordedInTargetId) : undefined;
@@ -222,14 +217,12 @@ export module WarningsUpdater {
             return Field.InputType.VALUELIST_INPUT_TYPES.concat([Field.InputType.COMPOSITE])
                 .includes(field.inputType);
         });
-        const parentResource: Resource = await Hierarchy.getParentResource(
-            id => Promise.resolve(documentCache.get(id)), document.resource
-        );
+        const parent: Document = getParentDocument(document, documentCache);
         const outlierWarnings: OutlierWarnings = { fields: {}, values: [] };
 
         for (let field of fields) {
             const outlierValues: Map<string[]>|string[] = getOutlierValues(
-                document.resource, field, documentCache.get('project'), parentResource, projectConfiguration
+                document.resource, field, documentCache.get('project'), parent?.resource, projectConfiguration
             );
             if (isArray(outlierValues) && !outlierValues.length) continue;
             if (isObject(outlierValues) && !Object.keys(outlierValues).length) continue;
@@ -429,5 +422,15 @@ export module WarningsUpdater {
 
         indexNames.forEach(indexName => indexFacade.putToSingleIndex(document, indexName));
         indexFacade.putToSingleIndex(document, 'warnings:exist');
+    }
+
+
+    function getParentDocument(document: Document, documentCache: DocumentCache): Document {
+
+        return Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN)
+            ? documentCache.get(document.resource.relations.liesWithin[0])
+            : Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN)
+                ? documentCache.get(document.resource.relations.isRecordedIn[0])
+                : undefined;
     }
 }

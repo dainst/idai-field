@@ -97,11 +97,14 @@ export module Document {
     }
 
 
-    export async function isValidParent(document: Document, parent: Document, recordedInTarget: Document,
-                                        projectConfiguration: ProjectConfiguration): Promise<boolean> {
-        
+    export function isValidParent(document: Document, parent: Document, recordedInTarget: Document,
+                                  projectConfiguration: ProjectConfiguration): boolean {
+    
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
         if (!category) return true;
+
+        if (parent && !projectConfiguration.getCategory(parent.resource.category)) return false;
+        if (recordedInTarget && !projectConfiguration.getCategory(recordedInTarget.resource.category)) return false;
 
         const hasIsRecordedIn: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN);
         const hasLiesWithin: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN);

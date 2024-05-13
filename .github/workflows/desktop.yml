@@ -61,7 +61,7 @@ jobs:
       matrix:
         os:
           - { name: 'Linux', version: 'ubuntu-latest' }
-          - { name: 'MacOS', version: 'macos-latest' }
+          - { name: 'MacOS', version: 'macos-12' }
           - { name: 'Windows', version: 'windows-latest' }
       fail-fast: false
     runs-on: ${{ matrix.os.version }}

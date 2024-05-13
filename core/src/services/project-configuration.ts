@@ -37,6 +37,7 @@ export class ProjectConfiguration {
     private relations: Array<Relation>;
     private projectLanguages: string[];
 
+    private categoriesMap: Map<CategoryForm>;
     private regularCategories: Array<CategoryForm>;
     private fieldCategories: Array<CategoryForm>;
     private overviewCategories: Array<CategoryForm>;
@@ -53,7 +54,7 @@ export class ProjectConfiguration {
         this.categoryForms = rawConfiguration.forms;
         this.relations = rawConfiguration.relations || [];
         this.projectLanguages = rawConfiguration.projectLanguages;
-
+        this.categoriesMap = this.createCategoriesMap();
         this.updateFilteredCategories();
     }
 
@@ -63,7 +64,7 @@ export class ProjectConfiguration {
         this.categoryForms = newProjectConfiguration.categoryForms;
         this.relations = newProjectConfiguration.relations;
         this.projectLanguages = newProjectConfiguration.projectLanguages;
-        
+        this.categoriesMap = this.createCategoriesMap();
         this.updateFilteredCategories();
     }
 
@@ -84,11 +85,11 @@ export class ProjectConfiguration {
         
         if (arg === undefined) return undefined;
 
-        const name = isString(arg) 
+        const name: string = isString(arg) 
             ? (arg as Name) 
             : (arg as Document).resource.category;
-        
-        return Tree.find(this.categoryForms, category => category.name === name)?.item;
+
+        return this.categoriesMap[name];
     }
 
 
@@ -269,6 +270,16 @@ export class ProjectConfiguration {
                     this.relations, domainCategoryName, category.parentCategory.name, relationName
                 ));
             });
+    }
+
+
+    private createCategoriesMap(): Map<CategoryForm> {
+
+        return Tree.flatten(this.categoryForms)
+            .reduce((result, category) => {
+                result[category.name] = category;
+                return result;
+            }, {});
     }
 
 

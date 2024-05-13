@@ -37,12 +37,23 @@ export class ProjectConfiguration {
     private relations: Array<Relation>;
     private projectLanguages: string[];
 
+    private regularCategories: Array<CategoryForm>;
+    private fieldCategories: Array<CategoryForm>;
+    private overviewCategories: Array<CategoryForm>;
+    private concreteOverviewCategories: Array<CategoryForm>;
+    private overviewTopLevelCategories: Array<CategoryForm>;
+    private typeManagementCategories: Array<CategoryForm>;
+    private typeManagementTopLevelCategories: Array<CategoryForm>;
+    private typeCategories: Array<CategoryForm>;
+
 
     constructor(rawConfiguration: RawProjectConfiguration) {
 
         this.categoryForms = rawConfiguration.forms;
         this.relations = rawConfiguration.relations || [];
         this.projectLanguages = rawConfiguration.projectLanguages;
+
+        this.updateFilteredCategories();
     }
 
 
@@ -51,6 +62,8 @@ export class ProjectConfiguration {
         this.categoryForms = newProjectConfiguration.categoryForms;
         this.relations = newProjectConfiguration.relations;
         this.projectLanguages = newProjectConfiguration.projectLanguages;
+        
+        this.updateFilteredCategories();
     }
 
 
@@ -111,74 +124,49 @@ export class ProjectConfiguration {
 
     public getRegularCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Image', 'Operation'),
-            Tree.flatten
-        );
+        return this.regularCategories;
     }
 
 
     public getFieldCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace'),
-            Tree.flatten
-        );
+        return this.fieldCategories;
     }
 
 
     public getOverviewCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
-            Tree.flatten
-        );
+        return this.overviewCategories;
     }
 
 
     public getConcreteOverviewCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
-            Tree.flatten,
-            remove(Named.onName(is('Operation')))
-        ) as any;
+        return this.concreteOverviewCategories;
     }
 
 
     public getOverviewTopLevelCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
-            Tree.flatten,
-            filter(Named.onName(includedIn(['Operation', 'Place']))) as any
-        );
+        return this.overviewTopLevelCategories;
     }
 
 
     public getTypeManagementCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees(TYPE, TYPE_CATALOG),
-            Tree.flatten
-        );
+        return this.typeManagementCategories;
     }
 
 
     public getTypeManagementTopLevelCategories(): Array<CategoryForm> {
 
-        return flow(this.getTypeManagementCategories(),
-            filter(Named.onName(includedIn([TYPE, TYPE_CATALOG]))) as any
-        );
+        return this.typeManagementTopLevelCategories;
     }
 
 
     public getTypeCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees(TYPE),
-            Tree.flatten
-        );
+        return this.typeCategories;
     }
 
 
@@ -283,5 +271,91 @@ export class ProjectConfiguration {
                     this.relations, domainCategoryName, category.parentCategory.name, relationName
                 ));
             });
+    }
+
+
+    private updateFilteredCategories() {
+
+        this.regularCategories = this.filterRegularCategories();
+        this.fieldCategories = this.filterFieldCategories();
+        this.overviewCategories = this.filterOverviewCategories();
+        this.concreteOverviewCategories = this.filterConcreteOverviewCategories();
+        this.overviewTopLevelCategories = this.filterOverviewTopLevelCategories();
+        this.typeManagementCategories = this.filterTypeManagementCategories();
+        this.typeManagementTopLevelCategories = this.filterTypeManagementTopLevelCategories();
+        this.typeCategories = this.filterTypeCategories();
+    }
+
+
+    private filterRegularCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Image', 'Operation'),
+            Tree.flatten
+        );
+    }
+
+
+    private filterFieldCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace'),
+            Tree.flatten
+        );
+    }
+
+
+    private filterOverviewCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten
+        );
+    }
+
+
+    private filterConcreteOverviewCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten,
+            remove(Named.onName(is('Operation')))
+        ) as any;
+    }
+
+
+    private filterOverviewTopLevelCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten,
+            filter(Named.onName(includedIn(['Operation', 'Place']))) as any
+        );
+    }
+
+
+    private filterTypeManagementCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees(TYPE, TYPE_CATALOG),
+            Tree.flatten
+        );
+    }
+
+
+    private filterTypeManagementTopLevelCategories(): Array<CategoryForm> {
+
+        return flow(this.filterTypeManagementCategories(),
+            filter(Named.onName(includedIn([TYPE, TYPE_CATALOG]))) as any
+        );
+    }
+
+
+    private filterTypeCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees(TYPE),
+            Tree.flatten
+        );
     }
 }

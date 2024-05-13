@@ -161,6 +161,7 @@ export class Datastore {
             this.projectConfiguration,
             this.projectConfiguration.getCategory(document.resource.category)
         );
+        this.indexFacade.notifyObservers();
     }
 
 
@@ -396,6 +397,7 @@ export class Datastore {
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
             previousIdentifier, true
         );
+        this.indexFacade.notifyObservers();
     }
 }
 

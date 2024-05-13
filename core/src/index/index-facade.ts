@@ -57,11 +57,14 @@ export class IndexFacade {
     }
 
 
+    /**
+     * This does not notify observers of IndexFacade notifications. notifyObservers has to be called after all changes
+     * to the index have been completed.
+     */
     public putToSingleIndex(document: Document, constraintIndexName: string) {
 
         const adjustedDocument: Document = adjustIsChildOf(document);
         ConstraintIndex.put(this.constraintIndex, adjustedDocument, false, constraintIndexName);
-        ObserverUtil.notify(this.observers, adjustedDocument);
     }
 
 
@@ -131,6 +134,12 @@ export class IndexFacade {
     public addConstraintIndexDefinitionsForField(field: Field) {
 
         ConstraintIndex.addIndexDefinitionsForField(this.constraintIndex, field);
+    }
+
+
+    public notifyObservers() {
+
+        ObserverUtil.notify(this.observers, undefined);
     }
 
 

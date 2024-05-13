@@ -105,6 +105,7 @@ export class SelectNewCategoryModalComponent {
                 document, this.projectConfiguration, this.indexFacade, this.documentCache
             );
         }
+        this.indexFacade.notifyObservers();
     }
 
 

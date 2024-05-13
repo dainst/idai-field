@@ -100,6 +100,8 @@ import { ProjectConfiguration } from '../services';
                 await setProgress(documents.length * 0.75 + i * 0.25);
             }
         };
+
+        indexFacade.notifyObservers();
     }
 
 

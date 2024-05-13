@@ -43,7 +43,8 @@ describe('ChangesStream', () => {
 
         spyOn(console, 'warn'); // suppress console.warn
 
-        indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'putToSingleIndex', 'get', 'remove', 'getCount']);
+        indexFacade = jasmine.createSpyObj('MockIndexFacade',
+            ['put', 'putToSingleIndex', 'get', 'remove', 'getCount', 'notifyObservers']);
         documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
 

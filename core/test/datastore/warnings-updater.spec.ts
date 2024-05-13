@@ -27,6 +27,15 @@ function getMockProjectConfiguration(categoryDefinition) {
 }
 
 
+function getMockIndexFacade() {
+
+    return jasmine.createSpyObj(
+        'mockIndexFacade',
+        ['putToSingleIndex', 'getCount', 'notifyObservers', 'find']
+    );
+}
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -97,7 +106,7 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'getCount']);
+        const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.getCount.and.returnValue(2);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
@@ -130,7 +139,7 @@ describe('WarningsUpdater', () => {
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.nonUniqueIdentifier = true;
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'getCount']);
+        const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.getCount.and.returnValue(1);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
@@ -163,7 +172,7 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
+        const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
@@ -203,7 +212,7 @@ describe('WarningsUpdater', () => {
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.resourceLimitExceeded = true;
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
+        const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
@@ -243,7 +252,7 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
+        const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const mockProjectConfiguration = jasmine.createSpyObj(
@@ -303,7 +312,7 @@ describe('WarningsUpdater', () => {
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.resourceLimitExceeded = true;
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex', 'find']);
+        const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
         const mockProjectConfiguration = jasmine.createSpyObj(
@@ -352,7 +361,7 @@ describe('WarningsUpdater', () => {
         documents[0].resource.relations['relation2'] = ['missing1'];
         documents[0].resource.relations['relation3'] = ['missing2'];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        const mockIndexFacade = getMockIndexFacade();
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -419,7 +428,7 @@ describe('WarningsUpdater', () => {
 
         documents[1].resource.relations['relation'] = ['1'];
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        const mockIndexFacade = getMockIndexFacade();
     
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -456,7 +465,7 @@ describe('WarningsUpdater', () => {
             groups: []
         } as CategoryForm;
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        const mockIndexFacade = getMockIndexFacade();
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -493,7 +502,7 @@ describe('WarningsUpdater', () => {
             groups: []
         } as CategoryForm;
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        const mockIndexFacade = getMockIndexFacade();
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -593,7 +602,7 @@ describe('WarningsUpdater', () => {
         ];
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        const mockIndexFacade = getMockIndexFacade();
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -709,7 +718,7 @@ describe('WarningsUpdater', () => {
         ];
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        const mockIndexFacade = getMockIndexFacade();
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
@@ -781,7 +790,7 @@ describe('WarningsUpdater', () => {
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        const mockIndexFacade = getMockIndexFacade();
 
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {

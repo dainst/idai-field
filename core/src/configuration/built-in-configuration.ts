@@ -831,24 +831,6 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.UNSIGNEDINT,
                     editable: false
                 },
-                // The originalFilename gets used as an inital resource.identifier
-                // when the image gets uploaded. However, users can change the identifier,
-                // which is why we store the originalFilename separately
-                originalFilename: {
-                    inputType: Field.InputType.SIMPLE_INPUT,
-                    visible: false,
-                    editable: false
-                },
-                georeference: {
-                    inputType: Field.InputType.NONE,
-                    visible: false,
-                    editable: false
-                },
-                featureVectors: {
-                    inputType: Field.InputType.NONE,
-                    visible: false,
-                    editable: false
-                },
                 draughtsmen: {
                     inputType: Field.InputType.CHECKBOXES,
                     valuelistFromProjectField: 'staff',

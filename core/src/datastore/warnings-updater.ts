@@ -186,14 +186,26 @@ export module WarningsUpdater {
                                                               projectConfiguration: ProjectConfiguration,
                                                               indexFacade: IndexFacade, documentCache: DocumentCache) {
 
-        const parent: Document = getParentDocument(document, documentCache);
-        const recordedInTargetIds: string[] = document.resource.relations[Relation.Hierarchy.RECORDEDIN];
-        const recordedInTargetId: string = recordedInTargetIds?.length ? recordedInTargetIds[0] : undefined;
-        const recordedInTarget: Document = recordedInTargetId ? documentCache.get(recordedInTargetId) : undefined;
+        let ancestors: Array<Document>;
+        let hasValidParent: boolean = true;
+        try {
+            ancestors = getAncestorDocuments(document, documentCache);
+        } catch (_) {
+            ancestors = [];
+            hasValidParent = false;
+        }
 
-        const hasValidParent: boolean = await Document.isValidParent(
-            document, parent, recordedInTarget, projectConfiguration
-        );
+        for (let i = 0; i <= ancestors.length; i++) {
+            const baseDocument: Document = i ? ancestors[i - 1] : document;
+            const parentDocument: Document = i < ancestors.length ? ancestors[i] : undefined;
+            const recordedInTargetIds: string[] = baseDocument.resource.relations[Relation.Hierarchy.RECORDEDIN];
+            const recordedInTargetId: string = recordedInTargetIds?.length ? recordedInTargetIds[0] : undefined;
+            const recordedInTarget: Document = recordedInTargetId ? documentCache.get(recordedInTargetId) : undefined;
+            if (!Document.isValidParent(baseDocument, parentDocument, recordedInTarget, projectConfiguration)) {
+                hasValidParent = false;
+                break;
+            }
+        }
 
         if (!hasValidParent) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
@@ -422,6 +434,23 @@ export module WarningsUpdater {
 
         indexNames.forEach(indexName => indexFacade.putToSingleIndex(document, indexName));
         indexFacade.putToSingleIndex(document, 'warnings:exist');
+    }
+
+
+    function getAncestorDocuments(document: Document, documentCache): Array<Document> {
+
+        const result: Array<Document> = [];
+        let parent: Document;
+
+        do {
+            parent = getParentDocument(parent ?? document, documentCache);
+            if (parent) {
+                if (result.includes(parent)) throw 'Circular relations';
+                result.push(parent);
+            }
+        } while (parent);
+
+        return result;
     }
 
 

@@ -12,7 +12,8 @@ function getMockProjectConfiguration(categoryDefinition) {
 
     const mockProjectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategory', 'getCategories', 'getCategoryWithSubcategories', 'isAllowedRelationDomainCategory']
+        ['getCategory', 'getCategories', 'getCategoryWithSubcategories', 'isAllowedRelationDomainCategory',
+        'getRegularCategories']
     );
     mockProjectConfiguration.getCategory.and.callFake(categoryName => {
         return categoryName === 'Category' ? categoryDefinition : undefined;
@@ -22,6 +23,7 @@ function getMockProjectConfiguration(categoryDefinition) {
         return categoryName === 'Category' ? [categoryDefinition] : [];
     });
     mockProjectConfiguration.isAllowedRelationDomainCategory.and.returnValue(true);
+    mockProjectConfiguration.getRegularCategories.and.returnValue([categoryDefinition]);
 
     return mockProjectConfiguration;
 }
@@ -458,6 +460,12 @@ describe('WarningsUpdater', () => {
         ];
 
         documents[0].resource.relations['isRecordedIn'] = ['2'];
+        documents[1].resource.category = 'ParentCategory';
+
+        const parentCategoryDefinition: CategoryForm = {
+            name: 'ParentCategory',
+            groups: []
+        } as CategoryForm;
 
         const categoryDefinition: CategoryForm = {
             name: 'Category',
@@ -473,6 +481,83 @@ describe('WarningsUpdater', () => {
         });
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
+            if (categoryName === 'Category') return categoryDefinition;
+            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
+        });
+        mockProjectConfiguration.getCategories.and.returnValue([{
+            item: parentCategoryDefinition, trees: [
+                { item: categoryDefinition, trees: [] }
+            ] }
+        ]);
+        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
+            if (categoryName === 'Category') return [categoryDefinition];
+            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
+        });
+
+        await WarningsUpdater.updateMissingOrInvalidParentWarning(
+            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
+        );
+
+        expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('set invalid parent warnings for invalid ancestors', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2'),
+            createDocument('3'),
+            createDocument('4'),
+            createDocument('5')
+        ];
+
+        documents[0].resource.relations['liesWithin'] = ['2'];
+        documents[0].resource.relations['isRecordedIn'] = ['5'];
+        documents[1].resource.relations['liesWithin'] = ['3'];
+        documents[1].resource.relations['isRecordedIn'] = ['5'];
+        documents[2].resource.relations['liesWithin'] = ['4'];
+        documents[2].resource.relations['isRecordedIn'] = ['5'];
+        documents[3].resource.relations['isRecordedIn'] = ['5'];
+        documents[3].resource.category = 'UnconfiguredCategory';
+        documents[4].resource.category = 'ParentCategory';
+
+        const parentCategoryDefinition: CategoryForm = {
+            name: 'ParentCategory',
+            groups: []
+        } as CategoryForm;
+
+        const categoryDefinition: CategoryForm = {
+            name: 'Category',
+            groups: []
+        } as CategoryForm;
+
+        const mockIndexFacade = getMockIndexFacade();
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
+            if (categoryName === 'Category') return categoryDefinition;
+            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
+        });
+        mockProjectConfiguration.getCategories.and.returnValue([{
+            item: parentCategoryDefinition, trees: [
+                { item: categoryDefinition, trees: [] }
+            ] }
+        ]);
+        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
+            if (categoryName === 'Category') return [categoryDefinition];
+            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
+        });
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
@@ -496,6 +581,12 @@ describe('WarningsUpdater', () => {
         documents[0].resource.relations['isRecordedIn'] = ['2'];
         documents[0].warnings = Warnings.createDefault();
         documents[0].warnings.missingOrInvalidParent = true;
+        documents[1].resource.category = 'ParentCategory';
+
+        const parentCategoryDefinition: CategoryForm = {
+            name: 'ParentCategory',
+            groups: []
+        } as CategoryForm;
 
         const categoryDefinition: CategoryForm = {
             name: 'Category',
@@ -510,6 +601,19 @@ describe('WarningsUpdater', () => {
         });
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
+            if (categoryName === 'Category') return categoryDefinition;
+            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
+        });
+        mockProjectConfiguration.getCategories.and.returnValue([{
+            item: parentCategoryDefinition, trees: [
+                { item: categoryDefinition, trees: [] }
+            ] }
+        ]);
+        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
+            if (categoryName === 'Category') return [categoryDefinition];
+            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
+        });
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache

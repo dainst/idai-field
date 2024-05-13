@@ -1,4 +1,4 @@
-import { is, isArray, isString, and, isObject } from 'tsfun';
+import { is, isArray, isString, and, isObject, to } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite } from 'idai-field-core';
@@ -425,6 +425,11 @@ export module Validations {
             { name: 'id' } as Field,
             { name: 'scanCode' } as Field
         ];
+        if (projectConfiguration.getImageCategories().map(to(Named.NAME)).includes(resource.category)) {
+            defaultFields.push({ name: 'originalFilename' } as Field);
+            defaultFields.push({ name: 'georeference' } as Field);
+            defaultFields.push({ name: 'featureVectors' } as Field);
+        }
 
         const definedFields: Array<Field> = projectFields.concat(defaultFields);
         const invalidFields: string[] = [];

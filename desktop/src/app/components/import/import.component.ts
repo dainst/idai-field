@@ -87,7 +87,8 @@ export class ImportComponent implements OnInit {
 
     public shouldDisplayPermitDeletionsOption = () => this.isDefaultFormat() && this.importState.mergeMode === true;
 
-    public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
+    public shouldDisplayImportIntoOperation = () =>
+        Importer.importIntoOperationAvailable(this.importState, this.projectConfiguration);
 
     public getSeparator = () => this.importState.separator;
 

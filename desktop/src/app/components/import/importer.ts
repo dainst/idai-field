@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { to } from 'tsfun';
 import { ProjectConfiguration, RelationsManager, ImageStore, CategoryForm, Document, Datastore,
-    Name, Relation } from 'idai-field-core';
+    Name, Relation, Named } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { FieldConverter } from './field-converter';
 import { buildImportCatalog } from './import/import-catalog';
@@ -75,9 +75,14 @@ export module Importer {
     }
 
 
-    export function importIntoOperationAvailable(options: ImporterOptions) {
+    export function importIntoOperationAvailable(options: ImporterOptions,
+                                                 projectConfiguration: ProjectConfiguration) {
 
-        return (options.format === 'native' || options.format === 'csv') && !options.mergeMode;
+        return (options.format === 'native' || options.format === 'csv')
+            && !options.mergeMode
+            && (!options.selectedCategory ||
+                projectConfiguration.getRegularCategories().map(to(Named.NAME))
+                    .includes(options.selectedCategory.name));
     }
 
 

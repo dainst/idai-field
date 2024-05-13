@@ -114,17 +114,6 @@ export class Routing {
 
         const viewName: 'project'|'types'|'inventory'|string = this.getViewName(documentToSelect);
 
-        if (!['project', 'types', 'inventory'].includes(viewName)) {
-            try {
-                await this.datastore.get(viewName);
-            } catch (errWithParams) {
-                if (errWithParams.length === 2 && errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
-                    throw [M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY, errWithParams[1]];
-                } else {
-                    throw errWithParams;
-                }
-            }
-        }
         if (!this.router.url.startsWith('/resources/') || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {

@@ -140,11 +140,7 @@ export class ViewFacade {
         } catch (errWithParams) {
             await this.populateDocumentList();
             await this.rebuildNavigationPath();
-            if (errWithParams.length === 2 && errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
-                this.messages.add([M.RESOURCES_ERROR_PARENT_RESOURCE_UNKNOWN_CATEGORY, errWithParams[1]]);
-            } else {
-                this.messages.add([this.getMissingResourceMessage()]);
-            }
+            this.messages.add([this.getMissingResourceMessage()]);
         }
     }
 

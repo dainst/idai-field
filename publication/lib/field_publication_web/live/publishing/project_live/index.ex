@@ -46,7 +46,10 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.Index do
   end
 
   @impl true
-  def handle_info({FieldPublicationWeb.ProjectLive.FormComponent, {:saved, _project}}, socket) do
+  def handle_info(
+        {FieldPublicationWeb.Publishing.ProjectLive.FormComponent, {:saved, _project}},
+        socket
+      ) do
     {:noreply, assign(socket, :projects, Projects.list())}
   end
 

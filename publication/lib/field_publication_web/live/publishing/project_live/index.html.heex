@@ -69,7 +69,7 @@
 >
   <%= if FieldPublication.User.is_admin?(@current_user) do %>
     <.live_component
-      module={FieldPublicationWeb.ProjectLive.FormComponent}
+      module={FieldPublicationWeb.Publishing.ProjectLive.FormComponent}
       id={@project.name || :new}
       title={@page_title}
       action={@live_action}

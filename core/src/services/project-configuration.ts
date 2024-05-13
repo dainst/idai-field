@@ -41,9 +41,9 @@ export class ProjectConfiguration {
     private fieldCategories: Array<CategoryForm>;
     private overviewCategories: Array<CategoryForm>;
     private concreteOverviewCategories: Array<CategoryForm>;
-    private overviewTopLevelCategories: Array<CategoryForm>;
+    private overviewSupercategories: Array<CategoryForm>;
     private typeManagementCategories: Array<CategoryForm>;
-    private typeManagementTopLevelCategories: Array<CategoryForm>;
+    private typeManagementSupercategories: Array<CategoryForm>;
     private typeCategories: Array<CategoryForm>;
 
 
@@ -146,9 +146,9 @@ export class ProjectConfiguration {
     }
 
 
-    public getOverviewTopLevelCategories(): Array<CategoryForm> {
+    public getOverviewSupercategories(): Array<CategoryForm> {
 
-        return this.overviewTopLevelCategories;
+        return this.overviewSupercategories;
     }
 
 
@@ -158,9 +158,9 @@ export class ProjectConfiguration {
     }
 
 
-    public getTypeManagementTopLevelCategories(): Array<CategoryForm> {
+    public getTypeManagementSupercategories(): Array<CategoryForm> {
 
-        return this.typeManagementTopLevelCategories;
+        return this.typeManagementSupercategories;
     }
 
 
@@ -185,7 +185,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getInventoryTopLevelCategories(): Array<CategoryForm> {
+    public getInventorySupercategories(): Array<CategoryForm> {
 
         return flow(this.getInventoryCategories(),
             filter(Named.onName(includedIn(['StoragePlace']))) as any
@@ -280,9 +280,9 @@ export class ProjectConfiguration {
         this.fieldCategories = this.filterFieldCategories();
         this.overviewCategories = this.filterOverviewCategories();
         this.concreteOverviewCategories = this.filterConcreteOverviewCategories();
-        this.overviewTopLevelCategories = this.filterOverviewTopLevelCategories();
+        this.overviewSupercategories = this.filterOverviewSupercategories();
         this.typeManagementCategories = this.filterTypeManagementCategories();
-        this.typeManagementTopLevelCategories = this.filterTypeManagementTopLevelCategories();
+        this.typeManagementSupercategories = this.filterTypeManagementSupercategories();
         this.typeCategories = this.filterTypeCategories();
     }
 
@@ -324,7 +324,7 @@ export class ProjectConfiguration {
     }
 
 
-    private filterOverviewTopLevelCategories(): Array<CategoryForm> {
+    private filterOverviewSupercategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
             filterTrees('Operation', 'Place'),
@@ -343,7 +343,7 @@ export class ProjectConfiguration {
     }
 
 
-    private filterTypeManagementTopLevelCategories(): Array<CategoryForm> {
+    private filterTypeManagementSupercategories(): Array<CategoryForm> {
 
         return flow(this.filterTypeManagementCategories(),
             filter(Named.onName(includedIn([TYPE, TYPE_CATALOG]))) as any

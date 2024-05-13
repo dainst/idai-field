@@ -110,15 +110,22 @@ describe('Validations', () => {
                 ]}]
             }, []],
             [{
-                    name: 'T3',
-                    groups: [{ name: 'stem', fields: [
-                        { name: 'id' },
-                        { name: 'category' },
-                        { name: 'dating' },
-                        { name: 'period', inputType: 'dropdownRange' }
-                    ]}]
-                }, []]
-            ] as any),
+                name: 'T3',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'category' },
+                    { name: 'dating' },
+                    { name: 'period', inputType: 'dropdownRange' }
+                ]}]
+            }, []],
+            [{
+                name: 'Image',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'category' }
+                ]}]
+            }, []],
+        ] as any),
         categories: {},
         relations: [
             {
@@ -212,6 +219,27 @@ describe('Validations', () => {
 
         const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
         expect(undefinedFields).toContain('isBelow');
+    });
+
+
+    it('validate defined fields - detect default image fields as valid', () => {
+
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'Image',
+                originalFilename: 'a',
+                georeference: 'b',
+                featureVectors: 'c',
+                relations: {},
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
+        expect(undefinedFields.length).toBe(0);
     });
 
 

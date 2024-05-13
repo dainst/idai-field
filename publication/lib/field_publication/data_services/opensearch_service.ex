@@ -1,6 +1,5 @@
 defmodule FieldPublication.DataServices.OpensearchService do
   require Logger
-  @base_url Application.compile_env(:field_publication, :opensearch_url)
 
   @doc """
   Post a document
@@ -14,9 +13,9 @@ defmodule FieldPublication.DataServices.OpensearchService do
   def put(index_alias, doc, use_inactive \\ true) do
     url =
       if use_inactive do
-        "#{@base_url}/#{get_inactive_index(index_alias)}/_doc/#{doc["id"]}"
+        "#{base_url()}/#{get_inactive_index(index_alias)}/_doc/#{doc["id"]}"
       else
-        "#{@base_url}/#{index_alias}/_doc/#{doc["id"]}"
+        "#{base_url()}/#{index_alias}/_doc/#{doc["id"]}"
       end
 
     Finch.build(
@@ -32,14 +31,14 @@ defmodule FieldPublication.DataServices.OpensearchService do
     {:ok, %{status: code}} =
       Finch.build(
         :put,
-        "#{@base_url}/#{index_alias}__a__",
+        "#{base_url()}/#{index_alias}__a__",
         headers()
       )
       |> Finch.request(FieldPublication.Finch)
 
     Finch.build(
       :put,
-      "#{@base_url}/#{index_alias}__b__",
+      "#{base_url()}/#{index_alias}__b__",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -57,7 +56,7 @@ defmodule FieldPublication.DataServices.OpensearchService do
   def delete_index(index_alias) do
     Finch.build(
       :delete,
-      "#{@base_url}/#{index_alias}",
+      "#{base_url()}/#{index_alias}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -79,14 +78,14 @@ defmodule FieldPublication.DataServices.OpensearchService do
 
     Finch.build(
       :delete,
-      "#{@base_url}/#{inactive_index_name}",
+      "#{base_url()}/#{inactive_index_name}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
 
     Finch.build(
       :put,
-      "#{@base_url}/#{inactive_index_name}",
+      "#{base_url()}/#{inactive_index_name}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -126,7 +125,7 @@ defmodule FieldPublication.DataServices.OpensearchService do
 
     Finch.build(
       :post,
-      "#{@base_url}/_aliases",
+      "#{base_url()}/_aliases",
       headers(),
       Jason.encode!(payload)
     )
@@ -152,7 +151,7 @@ defmodule FieldPublication.DataServices.OpensearchService do
   def get_active_index(index_alias) when is_binary(index_alias) do
     Finch.build(
       :get,
-      "#{@base_url}/_alias/#{index_alias}",
+      "#{base_url()}/_alias/#{index_alias}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -170,7 +169,7 @@ defmodule FieldPublication.DataServices.OpensearchService do
   def get_doc_count(index_name) do
     Finch.build(
       :get,
-      "#{@base_url}/#{index_name}/_count",
+      "#{base_url()}/#{index_name}/_count",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -194,10 +193,14 @@ defmodule FieldPublication.DataServices.OpensearchService do
   def run_search(index_name, query) do
     Finch.build(
       :post,
-      "#{@base_url}/#{index_name}/_search",
+      "#{base_url()}/#{index_name}/_search",
       headers(),
       Jason.encode!(query)
     )
     |> Finch.request(FieldPublication.Finch)
+  end
+
+  defp base_url() do
+    Application.get_env(:field_publication, :opensearch_url)
   end
 end

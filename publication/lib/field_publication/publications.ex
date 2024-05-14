@@ -145,7 +145,6 @@ defmodule FieldPublication.Publications do
     project_name
     |> get_published()
     |> List.first(:none)
-    |> Enum.reject(fn val -> val == :none end)
   end
 
   def list() do

@@ -36,6 +36,7 @@ services:
       - default
     deploy:
       labels:
+      # Exposing the CouchDB to the web is optional. This is just for being able to use Fauxton to tinker with the databases as administrator.
       - "traefik.docker.network=web"
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:db.${HOST}"

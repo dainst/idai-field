@@ -418,6 +418,16 @@ test.describe('map --', () => {
     });
 
 
+    test('create a geometry with an opened document info popover', async () => {
+
+        await ResourcesPage.performCreateResource('1');
+        await ResourcesPage.clickSelectResource('1');
+        await GeometryViewPage.clickCreateGeometry('1', 'polygon').then(setPolygon);
+        await MapPage.clickMapOption('ok');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('1')).toContain('Polygon');
+    });
+
+
     test('remove and add layers in layer menu', async () => {
 
         await NavbarPage.clickTab('project');

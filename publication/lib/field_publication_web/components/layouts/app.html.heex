@@ -50,7 +50,7 @@
           <select
             name="locale"
             id="locale-select"
-            phx-change={JS.dispatch("submit", to: "#locale_form")}
+            phx-change={JS.dispatch("click", to: "#submit_language_selection")}
           >
             <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Gettext) do %>
               <option
@@ -62,6 +62,7 @@
             <% end %>
           </select>
           <input type="hidden" name="return_to" value={@current_path} />
+          <button class="hidden" id="submit_language_selection"></button>
         </form>
       </div>
     </div>

@@ -14,6 +14,6 @@ defmodule FieldPublicationWeb.Presentation.Components.Image do
     rotation = Map.get(assigns, :rotation, "0")
     quality = Map.get(assigns, :quality, "default")
 
-    "/api/iiif/image/3/#{project}%2F#{uuid}.jp2/#{region}/#{size}/#{rotation}/#{quality}.jpg"
+    "/api/image/iiif/3/#{project}%2F#{uuid}.jp2/#{region}/#{size}/#{rotation}/#{quality}.jpg"
   end
 end

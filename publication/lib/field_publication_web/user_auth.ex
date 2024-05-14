@@ -281,31 +281,63 @@ defmodule FieldPublicationWeb.UserAuth do
   at some point part of an already published publication.
   """
   def ensure_image_published(
-        %{path_info: [_api, _iiif, _image, _api_version, image_name | _everything_afterwards]} =
+        %{
+          path_info: ["api", "image", "iiif", "3", image_name | _everything_afterwards]
+        } =
           conn,
         _opts
       ) do
-    # We may want to optimize lookups by caching?
-    [project_name, uuid] =
-      image_name
-      |> String.replace_suffix(".jp2", "")
-      |> String.split("%2F")
+    case Cachex.get(:published_images, image_name) do
+      {:ok, true} ->
+        conn
 
-    publication =
-      Publications.get_published(project_name)
-      |> Enum.find(fn pub ->
-        Publications.Data.document_exists?(uuid, pub)
-      end)
-
-    case publication do
-      nil ->
+      {:ok, false} ->
         conn
         |> resp(403, "The image you requested has not been published.")
         |> halt()
 
       _ ->
+        [project_name, uuid] =
+          image_name
+          |> String.replace_suffix(".jp2", "")
+          |> String.split("%2F")
+
+        publication =
+          Publications.get_published(project_name)
+          |> Enum.find(fn pub ->
+            Publications.Data.document_exists?(uuid, pub)
+          end)
+
+        case publication do
+          nil ->
+            # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
+            Cachex.put(:published_images, image_name, false, ttl: 1000 * 60 * 60)
+
+            conn
+            |> resp(403, "The image you requested has not been published.")
+            |> halt()
+
+          _ ->
+            Cachex.put(:published_images, image_name, true)
+            conn
+        end
+    end
+  end
+
+  def forward_headers(conn, _options) do
+    # TODO: This might break if we change the runtime.exs or dev.exs/test.exs
+    FieldPublicationWeb.Endpoint.config(:url)
+    |> Keyword.get(:port)
+    |> case do
+      nil ->
+        # Development/test case
+        Plug.Conn.put_req_header(conn, "x-forwarded-port", "4001")
+
+      _ ->
+        # Release case
         conn
     end
+    |> Plug.Conn.put_req_header("x-forwarded-path", "/api/image/")
   end
 
   defp put_token_in_session(conn, token) do

@@ -14,6 +14,12 @@ defmodule FieldPublication.Application do
       {Phoenix.PubSub, name: FieldPublication.PubSub},
       # Start Finch
       {Finch, name: FieldPublication.Finch},
+      # Start the Endpoint (http/https)
+      FieldPublicationWeb.Endpoint,
+      {Task.Supervisor, name: FieldPublication.TaskSupervisor},
+      {Task.Supervisor, name: FieldPublication.ProcessingSupervisor},
+      {FieldPublication.Replication, %{}},
+      {FieldPublication.Processing, []},
       Supervisor.child_spec(
         {Cachex, name: Application.get_env(:field_publication, :user_tokens_cache_name)},
         id: :user_tokens_cache
@@ -22,12 +28,10 @@ defmodule FieldPublication.Application do
         {Cachex, name: :configuration_docs},
         id: :configuration_docs
       ),
-      # Start the Endpoint (http/https)
-      FieldPublicationWeb.Endpoint,
-      {Task.Supervisor, name: FieldPublication.TaskSupervisor},
-      {Task.Supervisor, name: FieldPublication.ProcessingSupervisor},
-      {FieldPublication.Replication, %{}},
-      {FieldPublication.Processing, []}
+      Supervisor.child_spec(
+        {Cachex, name: :published_images},
+        id: :published_images
+      )
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -8,20 +8,37 @@ import { CategoryForm } from '../../src/model/configuration/category-form';
 const createDocument = (id: string, category: string = 'Category') => doc('sd', 'identifier' + id, category, id);
 
 
-function getMockProjectConfiguration(categoryDefinition) {
+function getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition?) {
 
     const mockProjectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
         ['getCategory', 'getCategories', 'getCategoryWithSubcategories', 'isAllowedRelationDomainCategory',
         'getRegularCategories']
     );
+
     mockProjectConfiguration.getCategory.and.callFake(categoryName => {
-        return categoryName === 'Category' ? categoryDefinition : undefined;
+        if (categoryName === 'Category') return categoryDefinition;
+        if (categoryName === 'ParentCategory') return parentCategoryDefinition;
     });
-    mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
+
+    if (parentCategoryDefinition) {
+        mockProjectConfiguration.getCategories.and.returnValue([{
+            item: parentCategoryDefinition, trees: [
+                { item: categoryDefinition, trees: [] }
+            ] }
+        ]);
+    } else {
+        mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
+    }
+
     mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
-        return categoryName === 'Category' ? [categoryDefinition] : [];
+        if (categoryName === 'Category') return [categoryDefinition];
+        if (categoryName === 'ParentCategory' && parentCategoryDefinition) {
+            return [parentCategoryDefinition, categoryDefinition];
+        }
+        return [];
     });
+
     mockProjectConfiguration.isAllowedRelationDomainCategory.and.returnValue(true);
     mockProjectConfiguration.getRegularCategories.and.returnValue([categoryDefinition]);
 
@@ -257,22 +274,7 @@ describe('WarningsUpdater', () => {
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
-        const mockProjectConfiguration = jasmine.createSpyObj(
-            'projectConfiguration', ['getCategory', 'getCategories', 'getCategoryWithSubcategories']
-        );
-        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
-            if (categoryName === 'Category') return categoryDefinition;
-            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
-        });
-        mockProjectConfiguration.getCategories.and.returnValue([{
-            item: parentCategoryDefinition, trees: [
-                { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
-        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
-            if (categoryName === 'Category') return [categoryDefinition];
-            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
-        });
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
@@ -317,22 +319,7 @@ describe('WarningsUpdater', () => {
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
-        const mockProjectConfiguration = jasmine.createSpyObj(
-            'projectConfiguration', ['getCategory', 'getCategories', 'getCategoryWithSubcategories']
-        );
-        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
-            if (categoryName === 'Category') return categoryDefinition;
-            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
-        });
-        mockProjectConfiguration.getCategories.and.returnValue([{
-            item: parentCategoryDefinition, trees: [
-                { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
-        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
-            if (categoryName === 'Category') return [categoryDefinition];
-            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
-        });
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
@@ -480,20 +467,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
-        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
-            if (categoryName === 'Category') return categoryDefinition;
-            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
-        });
-        mockProjectConfiguration.getCategories.and.returnValue([{
-            item: parentCategoryDefinition, trees: [
-                { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
-        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
-            if (categoryName === 'Category') return [categoryDefinition];
-            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
-        });
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
@@ -544,20 +518,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
-        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
-            if (categoryName === 'Category') return categoryDefinition;
-            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
-        });
-        mockProjectConfiguration.getCategories.and.returnValue([{
-            item: parentCategoryDefinition, trees: [
-                { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
-        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
-            if (categoryName === 'Category') return [categoryDefinition];
-            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
-        });
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
@@ -605,20 +566,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
-        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
-            if (categoryName === 'Category') return categoryDefinition;
-            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
-        });
-        mockProjectConfiguration.getCategories.and.returnValue([{
-            item: parentCategoryDefinition, trees: [
-                { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
-        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
-            if (categoryName === 'Category') return [categoryDefinition];
-            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
-        });
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
@@ -661,20 +609,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
-        mockProjectConfiguration.getCategory.and.callFake(categoryName => {
-            if (categoryName === 'Category') return categoryDefinition;
-            if (categoryName === 'ParentCategory') return parentCategoryDefinition;
-        });
-        mockProjectConfiguration.getCategories.and.returnValue([{
-            item: parentCategoryDefinition, trees: [
-                { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
-        mockProjectConfiguration.getCategoryWithSubcategories.and.callFake(categoryName => {
-            if (categoryName === 'Category') return [categoryDefinition];
-            if (categoryName === 'ParentCategory') return [parentCategoryDefinition, categoryDefinition];
-        });
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
             documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache

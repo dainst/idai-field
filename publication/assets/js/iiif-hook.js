@@ -5,7 +5,7 @@ import IIIFInfo from 'ol/format/IIIFInfo.js';
 import Map from 'ol/Map.js';
 import TileLayer from 'ol/layer/Tile.js';
 import View from 'ol/View.js';
-
+import { FullScreen, defaults as defaultControls } from 'ol/control.js';
 
 export default getIIIFHook = () => {
     return {
@@ -25,10 +25,10 @@ export default getIIIFHook = () => {
 
             this.layer = new TileLayer();
             this.map = new Map({
+                controls: defaultControls().extend([new FullScreen()]),
                 layers: [this.layer],
                 target: this.el.getAttribute("id")
             })
-            console.log(response);
 
             const imageInfo = await (response).json()
 

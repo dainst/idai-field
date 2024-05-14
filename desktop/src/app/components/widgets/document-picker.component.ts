@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
@@ -68,7 +68,9 @@ export class DocumentPickerComponent implements OnChanges {
     public getHeight = () => this.documents.length * 58;
 
 
-    async ngOnChanges() {
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (Object.keys(changes).length === 1 && changes['allowKeyboardNavigation'] !== undefined) return;
 
         this.query.categories = this.getAllAvailableCategoryNames();
         await this.updateResultList();

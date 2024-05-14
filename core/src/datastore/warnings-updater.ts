@@ -186,14 +186,9 @@ export module WarningsUpdater {
                                                               projectConfiguration: ProjectConfiguration,
                                                               indexFacade: IndexFacade, documentCache: DocumentCache) {
 
-        let ancestors: Array<Document>;
         let hasValidParent: boolean = true;
-        try {
-            ancestors = getAncestorDocuments(document, documentCache);
-        } catch (_) {
-            ancestors = [];
-            hasValidParent = false;
-        }
+        
+        const ancestors: Array<Document> = getAncestorDocuments(document, documentCache);
 
         for (let i = 0; i <= ancestors.length; i++) {
             const baseDocument: Document = i ? ancestors[i - 1] : document;
@@ -445,7 +440,7 @@ export module WarningsUpdater {
         do {
             parent = getParentDocument(parent ?? document, documentCache);
             if (parent) {
-                if (result.includes(parent)) throw 'Circular relations';
+                if (result.includes(parent)) return [];
                 result.push(parent);
             }
         } while (parent);

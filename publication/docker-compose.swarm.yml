@@ -20,7 +20,14 @@ services:
     volumes:
       - db-data:/opt/couchdb/data
     networks:
+      - web
       - default
+    deploy:
+      labels:
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:db.${HOST}"
+      - "traefik.port=5984"
 
   app:
     image: "ghcr.io/dainst/field_publication:${FIELD_PUBLICATION_VERSION}"
@@ -28,10 +35,14 @@ services:
       - HOST
       - SECRET_KEY_BASE
       - COUCHDB_URL=http://couchdb:5984
+      - OPENSEARCH_URL=http://opensearch:9200
+      - CANTALOUPE_URL=http://cantaloupe:8182
       - COUCHDB_ADMIN_NAME=${COUCHDB_ADMIN_NAME}
       - COUCHDB_ADMIN_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
     depends_on:
       - "couchdb"
+      - "opensearch"
+      - "cantaloupe"
     volumes:
       - file-data:/files
     networks:
@@ -49,17 +60,12 @@ services:
     environment:
       - discovery.type=single-node
       - plugins.security.ssl.http.enabled=false
-      - bootstrap.memory_lock=true # Disable JVM heap memory swapping
+      - "bootstrap.memory_lock=true" # Disable JVM heap memory swapping
       - "OPENSEARCH_JAVA_OPTS=-Xms4g -Xmx4g" # Set min and max JVM heap sizes to at least 50% of system RAM
     ulimits:
       memlock:
-        # Set memlock to unlimited (no soft or hard limit)
-        soft: -1 
+        soft: -1
         hard: -1
-      nofile:
-        # Maximum number of open files for the opensearch user - set to at least 65536
-        soft: 65536 
-        hard: 65536
 
 volumes:
   file-data:

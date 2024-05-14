@@ -1,4 +1,4 @@
-import { isArray, isObject, isString } from 'tsfun';
+import { isArray, isNumber, isObject, isString } from 'tsfun';
 import { Labels } from '../services/labels';
 import { StringUtils } from './string-utils';
 import { Field } from '../model/configuration/field';
@@ -19,6 +19,9 @@ export module InvalidDataUtil {
             case Field.InputType.DROPDOWN:
             case Field.InputType.RADIO:
                 return isArray(fieldContent) && fieldContent.length === 1 && isString(fieldContent[0]);
+            case Field.InputType.INPUT:
+            case Field.InputType.SIMPLE_INPUT:
+                return isNumber(fieldContent);
             default:
                 return false;
         }
@@ -35,6 +38,9 @@ export module InvalidDataUtil {
             case Field.InputType.DROPDOWN:
             case Field.InputType.RADIO:
                 return fieldContent[0];
+            case Field.InputType.INPUT:
+            case Field.InputType.SIMPLE_INPUT:
+                return fieldContent.toString();
             default:
                 return fieldContent;
         }

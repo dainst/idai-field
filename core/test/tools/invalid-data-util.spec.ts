@@ -25,6 +25,8 @@ describe('InvalidDataUtil', () => {
         expect (InvalidDataUtil.isConvertible('value', Field.InputType.CHECKBOXES)).toBe(true);
         expect (InvalidDataUtil.isConvertible(['value'], Field.InputType.DROPDOWN)).toBe(true);
         expect (InvalidDataUtil.isConvertible(['value'], Field.InputType.RADIO)).toBe(true);
+        expect (InvalidDataUtil.isConvertible(777, Field.InputType.INPUT)).toBe(true);
+        expect (InvalidDataUtil.isConvertible(777, Field.InputType.SIMPLE_INPUT)).toBe(true);
     });
 
 
@@ -36,6 +38,8 @@ describe('InvalidDataUtil', () => {
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.RADIO)).toBe(false);
         expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.DROPDOWN)).toBe(false);
         expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.RADIO)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.INPUT)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.SIMPLE_INPUT)).toBe(false);
     });
 
 
@@ -48,6 +52,8 @@ describe('InvalidDataUtil', () => {
         expect (InvalidDataUtil.convert('value', Field.InputType.CHECKBOXES)).toEqual(['value']);
         expect (InvalidDataUtil.convert(['value'], Field.InputType.DROPDOWN)).toEqual('value');
         expect (InvalidDataUtil.convert(['value'], Field.InputType.RADIO)).toEqual('value');
+        expect (InvalidDataUtil.convert(777, Field.InputType.INPUT)).toEqual('777');
+        expect (InvalidDataUtil.convert(777, Field.InputType.SIMPLE_INPUT)).toEqual('777');
     });
 
 

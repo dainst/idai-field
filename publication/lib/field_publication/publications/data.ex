@@ -136,6 +136,18 @@ defmodule FieldPublication.Publications.Data do
     run_query(query, database)
   end
 
+  def get_doc_stream_for_georeferenced(%Publication{database: database}) do
+    query = %{
+      selector: %{
+        "resource.georeference": %{
+          "$ne": nil
+        }
+      }
+    }
+
+    run_query(query, database)
+  end
+
   def get_doc_stream_for_all(%Publication{database: database}) do
     run_query(
       %{

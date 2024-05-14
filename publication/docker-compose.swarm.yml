@@ -3,7 +3,7 @@ version: '3.5'
 services:
 
   cantaloupe:
-    image: "ghcr.io/dainst/field_publication_cantaloupe:latest"
+    image: "ghcr.io/dainst/field_publication_cantaloupe:1.0.0"
     environment:
       LOG_APPLICATION_LEVEL: warn
       LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"

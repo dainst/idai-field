@@ -33,8 +33,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  host = System.fetch_env!("HOST")
 
   config :field_publication, FieldPublicationWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
@@ -44,9 +43,16 @@ if config_env() == :prod do
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
+      port: 4000
     ],
     secret_key_base: secret_key_base
+
+  config :field_publication,
+    couchdb_url: System.fetch_env!("COUCHDB_URL"),
+    couchdb_admin_name: System.fetch_env!("COUCHDB_ADMIN_NAME"),
+    couchdb_admin_password: System.fetch_env!("COUCHDB_ADMIN_PASSWORD"),
+    opensearch_url: System.fetch_env!("OPENSEARCH_URL"),
+    cantaloupe_url: System.fetch_env!("CANTALOUPE_URL")
 
   # ## SSL Support
   #

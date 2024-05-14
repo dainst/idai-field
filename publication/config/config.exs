@@ -21,14 +21,8 @@ config :field_publication,
   user_tokens_cache_name: :user_tokens,
   dev_routes: true,
   file_variants_to_replicate: ["original_image"],
-  couchdb_url: "http://localhost:5985",
-  couchdb_admin_name: "couch_admin",
-  couchdb_admin_password: "couch_admin_password",
   core_database: "field_publication",
-  opensearch_url: "http://localhost:9200",
-  cantaloupe_url: "http://localhost:8182",
-  file_store_directory_root: "data/file_store",
-  web_images_directory_root: "data/cantaloupe"
+  file_store_directory_root: "data/file_store"
 
 # Configures the mailer
 #

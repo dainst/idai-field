@@ -18,4 +18,5 @@ config :logger, level: :info
 # of environment variables, is done on config/runtime.exs.
 
 config :field_publication,
-  dev_routes: false
+  dev_routes: false,
+  file_store_directory_root: "/files"

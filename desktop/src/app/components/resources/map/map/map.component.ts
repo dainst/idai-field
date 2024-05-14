@@ -525,7 +525,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private static isUpdateNecessary(changes: SimpleChanges) {
 
-        if (changes['paddingLeft'] && !changes['selectedDocument']) return false;
+        if (changes['paddingLeft'] && (!changes['selectedDocument'] && !changes['isEditing'])) return false;
 
         if (Object.keys(changes).length === 1
                 && changes['additionalSelectedDocuments']

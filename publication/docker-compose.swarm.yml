@@ -2,6 +2,18 @@ version: '3.5'
 
 services:
 
+  opensearch: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
+    image: opensearchproject/opensearch:2.11.1 # Specifying the latest available image - modify if you want a specific version
+    environment:
+      - discovery.type=single-node
+      - plugins.security.ssl.http.enabled=false
+      - "bootstrap.memory_lock=true" # Disable JVM heap memory swapping
+      - "OPENSEARCH_JAVA_OPTS=-Xms4g -Xmx4g" # Set min and max JVM heap sizes to at least 50% of system RAM
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
   cantaloupe:
     image: "ghcr.io/dainst/field_publication_cantaloupe:1.0.0"
     environment:
@@ -54,18 +66,6 @@ services:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:${HOST}"
       - "traefik.port=4000"
-
-  opensearch: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
-    image: opensearchproject/opensearch:2.11.1 # Specifying the latest available image - modify if you want a specific version
-    environment:
-      - discovery.type=single-node
-      - plugins.security.ssl.http.enabled=false
-      - "bootstrap.memory_lock=true" # Disable JVM heap memory swapping
-      - "OPENSEARCH_JAVA_OPTS=-Xms4g -Xmx4g" # Set min and max JVM heap sizes to at least 50% of system RAM
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
 
 volumes:
   file-data:

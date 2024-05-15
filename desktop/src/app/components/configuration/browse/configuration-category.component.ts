@@ -125,11 +125,14 @@ export class ConfigurationCategoryComponent implements OnChanges {
     }
 
 
-    public selectGroup(groupName: string) {
+    public selectGroup(groupName: string, confirmExistence: boolean = true) {
 
         if (!this.category) return;
-        const group: Group = this.category.groups.find(on(Named.NAME, is(groupName)));
-        groupName = group?.name ?? this.category.groups[0].name;
+        
+        if (confirmExistence) {
+            const group: Group = this.category.groups.find(on(Named.NAME, is(groupName)));
+            groupName = group?.name ?? this.category.groups[0].name;
+        }
 
         this.selectedGroup = groupName;
         this.openedFieldName = undefined;
@@ -151,7 +154,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         componentInstance.initialize();
 
         await this.modals.awaitResult(result,
-            groupName => this.selectGroup(groupName),
+            groupName => this.selectGroup(groupName, false),
             nop
         );
     }

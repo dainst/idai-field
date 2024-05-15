@@ -1,8 +1,8 @@
 {
   "loading1": "Projet",
-  "loading2": "",
-  "restart": "",
-  "loadTestProject": "",
+  "loading2": "Projet en cours de chargement ...",
+  "restart": "Redémarrage",
+  "loadTestProject": "Téléchargement du projet de test",
   "phase/processingImages": "",
   "alreadyOpenError": "",
   "databaseError": "",

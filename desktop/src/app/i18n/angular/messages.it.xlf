@@ -8627,7 +8627,7 @@
       </trans-unit>
       <trans-unit id="widgets.fixingDataInProgress.single" datatype="html">
         <source>Ressource wird angepasst...</source>
-        <target state="translated">La risorsa è adattata...</target>
+        <target state="translated">Adattamento della risorsa in corso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fixing-data-in-progress-modal.component.ts</context>
           <context context-type="linenumber">18</context>

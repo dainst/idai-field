@@ -80,7 +80,7 @@ export module MapComponentHelper {
 
         return (changes['selectedDocument'] || changes['additionalSelectedDocuments'])
             && !changes['documents'] && !changes['parentDocument']
-            && !changes['coordinateReferenceSystem'];
+            && !changes['coordinateReferenceSystem'] && !changes['update'];
     }
 
 

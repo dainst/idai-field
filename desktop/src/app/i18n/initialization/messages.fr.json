@@ -7,7 +7,7 @@
   "alreadyOpenError": "L'application n'a pas pu être démarrée. Veuillez vérifier si Field Desktop n'est pas déjà ouvert dans une autre fenêtre.",
   "databaseError": "Une erreur est survenue : La base de données du projet n'a pas pu être chargée.",
   "configurationError": "Une erreur est survenue : La configuration du projet n'a pas pu être chargée.",
-  "fetchDocumentsError": "",
+  "fetchDocumentsError": "Une erreur s'est produite : Les ressources du projet n'ont pas pu être lues à partir de la base de données.",
   "indexingError": "",
   "oneConfigurationError": "",
   "multipleConfigurationErrors": "",

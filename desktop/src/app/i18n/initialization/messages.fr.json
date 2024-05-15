@@ -16,7 +16,7 @@
   "configuration/error/missingFieldName": "Un champ défini dans la configuration de projet n'a pas de nom.",
   "configuration/error/missingRelationCategory": "La catégorie \"[0]\" spécifiée dans une définition de relation n'a pas été trouvée.",
   "configuration/fields/custom/parentNotDefined": "",
-  "configuration/fields/custom/tryingToSubtypeANonExtendableCategory": "",
+  "configuration/fields/custom/tryingToSubtypeANonExtendableCategory": "Aucune sous-catégorie ne peut être créée pour la catégorie \"[0]\".",
   "configuration/fields/custom/commonFieldValuelistFromProjectDocNotToBeOverwritten": "",
   "configuration/buildProjectCategories/duplicationInSelection": "",
   "configuration/buildProjectCategories/mustHaveParent": "",

@@ -8619,7 +8619,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.all" datatype="html">
         <source>Alle Vorkommnisse dieses Werts ersetzen</source>
-        <target state="needs-translation">Alle Vorkommnisse dieses Werts ersetzen</target>
+        <target state="translated">Sostituire tutte le occorrenze di questo valore</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">50</context>
@@ -8627,7 +8627,7 @@
       </trans-unit>
       <trans-unit id="widgets.fixingDataInProgress.single" datatype="html">
         <source>Ressource wird angepasst...</source>
-        <target state="needs-translation">Ressource wird angepasst...</target>
+        <target state="translated">La risorsa è adattata...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fixing-data-in-progress-modal.component.ts</context>
           <context context-type="linenumber">18</context>

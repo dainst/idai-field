@@ -2248,16 +2248,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.informationModal.originals" datatype="html">
-        <source> Original-Bilddateien: </source>
-        <target state="translated">File di immagini originali:</target>
+        <source>Original-Bilddateien:</source>
+        <target state="translated">File delle immagini originali:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
-        <source> Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
-        <target state="translated">Sincronizzare le immagini di anteprima</target>
+        <source>Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
+        <target state="translated">Sincronizzare le anteprime delle immagini </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">227</context>
@@ -2296,16 +2296,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.linkInfo.single" datatype="html">
-        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
-        <target state="translated">L'immagine trasferita sarà collegata alla risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.</target>
+        <source>Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="translated">L'immagine importata sarà collegata alla risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.linkInfo.multiple" datatype="html">
-        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
-        <target state="translated">Le immagini trasferite saranno collegate alle risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>.</target>
+        <source>Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verknüpft. </source>
+        <target state="translated">Le immagini importate saranno collegate alle risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -2372,16 +2372,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.resources.single" datatype="html">
-        <source> Im Projekt existiert eine Ressource dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein wird. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, wird die Ressource wieder angezeigt werden. </source>
-        <target state="translated">Nel progetto esiste una risorsa di questa categoria che non sarà più visibile in seguito all'eliminazione. Se la categoria verrà di nuovo aggiunta in un secondo momento, la risorsa verrà visualizzata di nuovo.</target>
+        <source>Im Projekt existiert eine Ressource dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein wird. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, wird die Ressource wieder angezeigt werden.</source>
+        <target state="translated">Nel progetto esiste una risorsa di questa categoria che non sarà più visibile in seguito all'eliminazione. Se la categoria verrà aggiunta di nuovo in un secondo momento, la risorsa verrà visualizzata di nuovo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.warning.resources.multiple" datatype="html">
-        <source> Im Projekt existieren <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> Ressourcen dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, werden die Ressourcen wieder angezeigt werden. </source>
-        <target state="translated">Nel progetto esistono <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> risorse di questa categoria che non saranno più visibili in seguito all'eliminazione. Se la categoria verrà di nuovo aggiunta in un secondo momento, le risorse verranno visualizzate di nuovo. </target>
+        <source>Im Projekt existieren <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> Ressourcen dieser Kategorie, die nach dem Löschen nicht mehr sichtbar sein werden. Wenn Sie die Kategorie zu einem späteren Zeitpunkt erneut hinzufügen, werden die Ressourcen wieder angezeigt werden. </source>
+        <target state="translated">Nel progetto esistono <x id="INTERPOLATION" equiv-text="{{resourceCount}}"/> risorse di questa categoria che non saranno più visibili in seguito all'eliminazione. Se la categoria verrà aggiunta di nuovo in un secondo momento, le risorse verranno visualizzate di nuovo. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">56</context>
@@ -2420,8 +2420,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="90026491151501a7c5b791694c673a36d810e3cb" datatype="html">
-        <source> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
-        <target state="translated">Volete eliminare davvero il gruppo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
+        <source>Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
+        <target state="translated">Sei sicuro di voler eliminare il gruppo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>? </target>
         <note priority="1" from="description">configuration.deleteGroup.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
@@ -2445,8 +2445,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.body" datatype="html">
-        <source> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
-        <target state="translated">Volete eliminare davvero la lista di valori <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>? </target>
+        <source>Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen? </source>
+        <target state="translated">Sei sicuro di voler eliminare la lista di valori <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -2653,16 +2653,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
-        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden soll: </source>
-        <target state="translated">Selezionare una nuova risorsa sovraordinata alla quale assegnare la risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
+        <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden soll: </source>
+        <target state="translated">Selezionare una nuova risorsa principale alla quale assegnare la risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
-        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden sollen: </source>
-        <target state="translated">Selezionare una nuova risorsa sovraordinata, alla quale assegnare le risorse selezionate <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>{{documents[0].resource.identifier}}<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>:</target>
+        <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden sollen: </source>
+        <target state="translated">Selezionare una nuova risorsa principale, alla quale assegnare le risorse selezionate <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>{{documents[0].resource.identifier}}<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -7607,7 +7607,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.body" datatype="html">
         <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
-        <target state="needs-translation">Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</target>
+        <target state="translated">Sei sicuro di voler eliminare il campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -8047,7 +8047,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.storagePlaces" datatype="html">
         <source>Davon Aufbewahrungsorte: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </source>
-        <target state="translated">Di cui luoghi di deposito: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </target>
+        <target state="translated">Di cui depositi: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">38,29</context>
@@ -8387,7 +8387,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.readFromMetadata" datatype="html">
         <source>Aus Bild-Metadaten auslesen</source>
-        <target state="needs-translation">Aus Bild-Metadaten auslesen</target>
+        <target state="translated">Seleziona dai metadati delle immagini</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
           <context context-type="linenumber">52,64</context>

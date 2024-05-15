@@ -518,7 +518,7 @@ test.describe('configuration --', () => {
         await AddGroupModalPage.typeInSearchFilterInput('newGroup');
         await AddGroupModalPage.clickSelectGroup('test:newGroup');
         await AddGroupModalPage.clickConfirmSelection();
-        await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));
+        await waitForExist(await ConfigurationPage.getActiveGroup('test:newGroup'));
 
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.clickSelectField('dimensionDiameter');

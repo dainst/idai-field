@@ -97,6 +97,12 @@ export class ConfigurationPage {
     }
 
 
+    public static getActiveGroup(groupName: string) {
+
+        return getLocator('#group-' + groupName.replace(':', '-') + '.active');
+    }
+
+
     public static getFields() {
 
         return getLocator('configuration-field');

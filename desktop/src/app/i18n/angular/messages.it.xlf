@@ -2693,8 +2693,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Eliminare le risorse?</target>
+        <source><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
+        <target state="translated">Eliminare <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> risorse? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -2741,16 +2741,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
-        <source> Bitte beachten Sie, dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
-        <target state="translated">Notare che quando si cancellano i cataloghi, tutti i tipi contenuti così come le assegnazioni di reperti ai tipi del catalogo vengono rimossi.</target>
+        <source>Bitte beachten Sie, dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie Zuordnungen von Funden zu Typen des Katalogs entfernt werden.</source>
+        <target state="translated">Si tenga presente che quando si cancellano i cataloghi, tutti i tipi contenuti così come le assegnazioni di reperti ai tipi del catalogo vengono rimossi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
-        <source> Bitte beachten Sie, dass beim Löschen von Typen sämtliche Untertypen sowie Zuordnungen von Funden zu Typen und Untertypen entfernt werden. </source>
-        <target state="translated">Notare che la cancellazione dei tipi comporta la rimozione di tutti i sottotipi e delle assegnazioni di reperti a tipi e sottotipi.</target>
+        <source>Bitte beachten Sie, dass beim Löschen von Typen sämtliche Untertypen sowie Zuordnungen von Funden zu Typen und Untertypen entfernt werden.</source>
+        <target state="translated">Si tenga presente che la cancellazione dei tipi comporta la rimozione di tutti i sottotipi e delle assegnazioni di reperti a tipi e sottotipi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -2809,8 +2809,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
-        <source> Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen? </source>
-        <target state="translated">Si è sicuri di voler eliminare i dati di georeferenziazione memorizzati per questa immagine?</target>
+        <source>Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?</source>
+        <target state="translated">Sicuro di voler eliminare i dati di georeferenziazione memorizzati per questa immagine?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -2882,7 +2882,7 @@
       </trans-unit>
       <trans-unit id="widgets.saveModal.question" datatype="html">
         <source>Möchten Sie die Änderungen speichern?</source>
-        <target state="translated">Volete salvare le modifiche?</target>
+        <target state="translated">Vuoi salvare le modifiche?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -2890,7 +2890,7 @@
       </trans-unit>
       <trans-unit id="widgets.saveModal.applyQuestion" datatype="html">
         <source>Möchten Sie die Änderungen übernehmen?</source>
-        <target state="translated">Volete applicare le modifiche?</target>
+        <target state="translated">Vuoi applicare le modifiche?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -7243,7 +7243,7 @@
       </trans-unit>
       <trans-unit id="settings.updateUserNameModal.body.welcome" datatype="html">
         <source>Herzlich Willkommen bei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Field Desktop<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>! </source>
-        <target state="needs-translation">Herzlich Willkommen bei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Field Desktop<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>! </target>
+        <target state="translated">Benvenuti in <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Field Desktop<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>! </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/update-username-modal.component.ts</context>
           <context context-type="linenumber">69</context>
@@ -7695,7 +7695,7 @@
       </trans-unit>
       <trans-unit id="resources.navigation.storagePlaces" datatype="html">
         <source>Aufbewahrungsorte</source>
-        <target state="translated">Luoghi di deposito</target>
+        <target state="translated">Luoghi di archiviazione</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">109,123</context>
@@ -7727,7 +7727,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditorModal.header" datatype="html">
         <source>QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated">Codice QR della risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -7927,7 +7927,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditor.delete.question" datatype="html">
         <source>Möchten Sie den QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie den QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <target state="translated">Sicuro di voler eliminare il codice QR della risorsa<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -8151,7 +8151,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.scaling" datatype="html">
         <source>Skalierung (Prozent)</source>
-        <target state="needs-translation">Skalierung (Prozent)</target>
+        <target state="translated">Ridimensionamento (percentuale)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8823,7 +8823,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.fontWeight" datatype="html">
         <source>Schriftstärke</source>
-        <target state="needs-translation">Schriftstärke</target>
+        <target state="translated">Spessore del carattere</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8871,7 +8871,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.fontWeight.bold" datatype="html">
         <source>Fett</source>
-        <target state="needs-translation">Fett</target>
+        <target state="translated">Grassetto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8887,7 +8887,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.fontWeight.light" datatype="html">
         <source>Leicht</source>
-        <target state="needs-translation">Leicht</target>
+        <target state="translated">Leggero</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>

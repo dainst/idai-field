@@ -7415,7 +7415,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingRelationTargets.single" datatype="html">
         <source>Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</source>
-        <target state="translated">Non è possibile trovare una risorsa specificata come risorsa di destinazione della relazione. È possibile che un processo di sincronizzazione non sia stato completamente eseguito su un altro computer.</target>
+        <target state="translated">Non è possibile trovare la risorsa specificata come risorsa di destinazione della relazione. È possibile che un processo di sincronizzazione non sia stato eseguito del tutto su un altro computer.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">115,125</context>

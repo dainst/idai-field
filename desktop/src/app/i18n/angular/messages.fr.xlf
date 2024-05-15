@@ -605,7 +605,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields" datatype="html">
         <source>Nicht konfigurierte Felder ignorieren</source>
-        <target state="needs-translation">Nicht konfigurierte Felder ignorieren</target>
+        <target state="translated">Ignorer les champs non configurés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">100</context>
@@ -613,7 +613,7 @@
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields.info" datatype="html">
         <source>Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen.</source>
-        <target state="needs-translation">Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen.</target>
+        <target state="translated">Si cette option est activée, les champs du fichier d'importation qui ne font pas partie de la configuration du projet sont ignorés lors de l'importation. Dans le cas contraire, l'importation est interrompue.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">111</context>
@@ -621,7 +621,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source>Vorhandene Ressource ergänzen</source>
-        <target state="needs-translation">Vorhandene Ressource ergänzen</target>
+        <target state="translated">Actualiser les ressources existantes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">88</context>

@@ -7235,7 +7235,7 @@
       </trans-unit>
       <trans-unit id="settings.updateUserNameModal.heading.change" datatype="html">
         <source>Name der Benutzerin/des Benutzers ändern</source>
-        <target state="needs-translation">Name der Benutzerin/des Benutzers ändern</target>
+        <target state="translated">Modificare il nome dell'utente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/update-username-modal.component.ts</context>
           <context context-type="linenumber">69</context>
@@ -7299,7 +7299,7 @@
       </trans-unit>
       <trans-unit id="settings.updateUserNameModal.body.request" datatype="html">
         <source>Bitte geben Sie Ihren Namen ein.</source>
-        <target state="needs-translation">Bitte geben Sie Ihren Namen ein.</target>
+        <target state="translated">Si prega di inserire il proprio nome.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/update-username-modal.html</context>
           <context context-type="linenumber">27</context>
@@ -7311,7 +7311,7 @@
       </trans-unit>
       <trans-unit id="settings.updateUserNameModal.body.info" datatype="html">
         <source>Diese Angabe wird verwendet, um die gemeinsame Bearbeitung von Datensätzen in einem Projekt zu erleichtern.</source>
-        <target state="needs-translation">Diese Angabe wird verwendet, um die gemeinsame Bearbeitung von Datensätzen in einem Projekt zu erleichtern.</target>
+        <target state="translated">Questa specificazione viene utilizzata per facilitare la modifica congiunta dei record di dati in un progetto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/update-username-modal.html</context>
           <context context-type="linenumber">45</context>
@@ -7711,7 +7711,7 @@
       </trans-unit>
       <trans-unit id="resources.gridList.storedObjects" datatype="html">
         <source>Enthaltene Objekte</source>
-        <target state="needs-translation">Enthaltene Objekte</target>
+        <target state="translated">Oggetti inclusi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">167,179</context>
@@ -7743,7 +7743,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditorModal.addQrCode.generate" datatype="html">
         <source>Neuen Code generieren</source>
-        <target state="needs-translation">Neuen Code generieren</target>
+        <target state="translated">Generare un nuovo code</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
           <context context-type="linenumber">60,62</context>
@@ -8055,7 +8055,7 @@
       </trans-unit>
       <trans-unit id="resources.createPrintSettingsProfile" datatype="html">
         <source>Neues Einstellungsprofil erstellen</source>
-        <target state="needs-translation">Neues Einstellungsprofil erstellen</target>
+        <target state="translated">Creare un nuovo profilo di impostazioni</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
           <context context-type="linenumber">43</context>
@@ -8067,7 +8067,7 @@
       </trans-unit>
       <trans-unit id="resources.createPrintSettingsProfileModal.info" datatype="html">
         <source>Bitte geben Sie einen Namen für das neue Profil ein.</source>
-        <target state="needs-translation">Bitte geben Sie einen Namen für das neue Profil ein.</target>
+        <target state="translated">Inserire un nome per il nuovo profilo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/create-print-settings-profile-modal.component.ts</context>
           <context context-type="linenumber">43</context>
@@ -8075,7 +8075,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettings" datatype="html">
         <source>Etikettendruck einrichten</source>
-        <target state="needs-translation">Etikettendruck einrichten</target>
+        <target state="translated">Impostare la stampa di etichette</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">50,65</context>
@@ -8087,7 +8087,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.settingsProfile" datatype="html">
         <source>Einstellungsprofil</source>
-        <target state="needs-translation">Einstellungsprofil</target>
+        <target state="translated">Profilo di impostazione</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">86,103</context>
@@ -8095,7 +8095,7 @@
       </trans-unit>
       <trans-unit id="resources.deletePrintSettingsProfile" datatype="html">
         <source>Einstellungsprofil löschen</source>
-        <target state="needs-translation">Einstellungsprofil löschen</target>
+        <target state="translated">Cancellare il profilo di impostazione</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8103,7 +8103,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.size" datatype="html">
         <source>Etikettgröße</source>
-        <target state="needs-translation">Etikettgröße</target>
+        <target state="translated">Dimensione dell'etichetta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8111,7 +8111,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.size.width" datatype="html">
         <source>Breite (mm)</source>
-        <target state="needs-translation">Breite (mm)</target>
+        <target state="translated">Larghezza (mm)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8119,7 +8119,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.size.height" datatype="html">
         <source>Höhe (mm)</source>
-        <target state="needs-translation">Höhe (mm)</target>
+        <target state="translated">Altezza (mm)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8127,7 +8127,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.borderMargin" datatype="html">
         <source>Abstand vom Rand</source>
-        <target state="needs-translation">Abstand vom Rand</target>
+        <target state="translated">Distanza dal bordo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8135,7 +8135,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.borderMargin.left" datatype="html">
         <source>Links (mm)</source>
-        <target state="needs-translation">Links (mm)</target>
+        <target state="translated">Sinistra (mm)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>
@@ -8143,7 +8143,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.borderMargin.top" datatype="html">
         <source>Oben (mm)</source>
-        <target state="needs-translation">Oben (mm)</target>
+        <target state="translated">Top (mm)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">118</context>

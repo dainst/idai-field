@@ -12,6 +12,9 @@
     },
     "includesStratigraphicalUnits": {
       "label": "Inclus les unités stratigraphiques"
+    },
+    "hasChildren": {
+      "label": "Ressources subordonnées"
     }
   },
   "categories": {
@@ -104,6 +107,12 @@
     },
     "abuts": {
       "label": "Bute contre"
+    },
+    "isStoredIn": {
+      "label": "Conservé à"
+    },
+    "isStoragePlaceOf": {
+      "label": "Est le lieu de conservation de"
     }
   }
 }

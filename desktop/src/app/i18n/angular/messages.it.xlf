@@ -7383,7 +7383,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.conflict" datatype="html">
         <source>Konflikt</source>
-        <target state="needs-translation">Konflikt</target>
+        <target state="translated">Conflitto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">75,80</context>
@@ -7391,7 +7391,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier" datatype="html">
         <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Bezeichner<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Bezeichner<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Identificatore<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ambiguo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">87,77</context>
@@ -7415,7 +7415,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingRelationTargets.single" datatype="html">
         <source>Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</source>
-        <target state="needs-translation">Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</target>
+        <target state="translated">Non è possibile trovare una risorsa specificata come risorsa di destinazione della relazione. È possibile che un processo di sincronizzazione non sia stato completamente eseguito su un altro computer.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">115,125</context>
@@ -8331,7 +8331,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField" datatype="html">
         <source>Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </source>
-        <target state="needs-translation">Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
+        <target state="translated">I dati inseriti in questo campo non corrispondono al tipo di input configurato <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,105</context>
@@ -8379,7 +8379,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unconfiguredField.2" datatype="html">
         <source>Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.</source>
-        <target state="needs-translation">Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.</target>
+        <target state="translated">I dati inseriti in questo campo non vengono quindi visualizzati.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">109,115</context>
@@ -8643,7 +8643,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.header" datatype="html">
         <source>Neues Feld auswählen</source>
-        <target state="needs-translation">Neues Feld auswählen</target>
+        <target state="translated">Seleziona un nuovo campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.component.ts</context>
           <context context-type="linenumber">39,55</context>
@@ -8659,7 +8659,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie durchführen</source>
-        <target state="needs-translation">Bei allen Ressourcen dieser Kategorie durchführen</target>
+        <target state="translated">Eseguire per tutte le risorse di questa categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
           <context context-type="linenumber">59,66</context>
@@ -8739,7 +8739,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewCategory.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie durchführen</source>
-        <target state="needs-translation">Bei allen Ressourcen dieser Kategorie durchführen</target>
+        <target state="translated">Eseguire per tutte le risorse di questa categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
           <context context-type="linenumber">52</context>

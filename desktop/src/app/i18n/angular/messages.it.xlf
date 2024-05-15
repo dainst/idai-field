@@ -2257,7 +2257,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
         <source>Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
-        <target state="translated">Sincronizzare le anteprime delle immagini </target>
+        <target state="translated">Sincronizzare le anteprime delle immagini</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">227</context>
@@ -7887,7 +7887,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.header.single" datatype="html">
         <source>Bisherigen Aufbewahrungsort ersetzen?</source>
-        <target state="needs-translation">Bisherigen Aufbewahrungsort ersetzen?</target>
+        <target state="translated">Sostituire il luogo di deposito precedente?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -8395,7 +8395,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.header.single" datatype="html">
         <source>Bild importieren</source>
-        <target state="needs-translation">Bild importieren</target>
+        <target state="translated">Importare l'immagine</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.component.ts</context>
           <context context-type="linenumber">109,120</context>
@@ -8403,7 +8403,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.header.multiple" datatype="html">
         <source>Bilder importieren</source>
-        <target state="needs-translation">Bilder importieren</target>
+        <target state="translated">Importare le immagini</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.component.ts</context>
           <context context-type="linenumber">124</context>

@@ -8547,7 +8547,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteValues.multiple" datatype="html">
         <source>Werte löschen</source>
-        <target state="needs-translation">Werte löschen</target>
+        <target state="translated">Cancellare i valori</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>

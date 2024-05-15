@@ -7319,7 +7319,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.header" datatype="html">
         <source>Felddaten löschen?</source>
-        <target state="translated">Cancellare i dati sul campo?</target>
+        <target state="translated">Cancellare i dati del campo?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">43,56</context>
@@ -7327,7 +7327,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie löschen</source>
-        <target state="translated">Cancellare in tutte le risorse di questa categoria</target>
+        <target state="translated">Cancellare per tutte le risorse di questa categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">83,86</context>
@@ -7351,7 +7351,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.header" datatype="html">
         <source>Warnungen</source>
-        <target state="translated">Avvisi</target>
+        <target state="translated">Avvertenze</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
           <context context-type="linenumber">58,64</context>

@@ -4,6 +4,7 @@ import { equal, flatten, isArray, isObject, isString, set, Map } from 'tsfun';
 import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
      Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -58,6 +59,8 @@ export class FixOutliersModalComponent {
     public async performReplacement() {
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
+
+        await AngularUtility.refresh();
         
         if (this.replaceAll) {
             await this.replaceMultiple();

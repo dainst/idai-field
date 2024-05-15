@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
 import { BaseField, CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -50,6 +51,8 @@ export class DeleteOutliersModalComponent {
     public async performDeletion() {
 
         const deletionInProgressModal: NgbModalRef = this.openDeletionInProgressModal();
+
+        await AngularUtility.refresh();
         
         if (this.deleteAll) {
             await this.deleteMultiple();

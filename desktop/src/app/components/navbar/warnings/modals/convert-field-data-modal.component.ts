@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Datastore, Document, Field, InvalidDataUtil, Labels } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -53,6 +54,8 @@ export class ConvertFieldDataModalComponent {
     public async performConversion() {
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
+
+        await AngularUtility.refresh();
         
         if (this.convertAll) {
             await this.convertMultiple();

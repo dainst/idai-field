@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Datastore, Document, Labels, WarningType } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -63,6 +64,8 @@ export class DeleteFieldDataModalComponent {
         if (!this.isDeletionAllowed()) return;
 
         const deletionInProgressModal: NgbModalRef = this.openDeletionInProgressModal();
+
+        await AngularUtility.refresh();
         
         if (this.deleteAll) {
             await this.deleteMultiple();

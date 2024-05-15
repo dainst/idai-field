@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Datastore, Document, Field, Labels, WarningType } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -67,6 +68,8 @@ export class SelectNewFieldModalComponent {
         if (!this.selectedFieldName) return;
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
+
+        await AngularUtility.refresh();
 
         if (this.multiple) {
             await this.moveMultiple();

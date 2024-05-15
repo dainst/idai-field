@@ -4,6 +4,7 @@ import { CategoryForm, Datastore, Document, DocumentCache, IndexFacade, Labels, 
     WarningsUpdater } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -58,6 +59,8 @@ export class SelectNewCategoryModalComponent {
         if (!this.selectedCategory) return;
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
+
+        await AngularUtility.refresh();
 
         if (this.multiple) {
             await this.performMultiple();

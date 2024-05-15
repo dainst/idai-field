@@ -7439,7 +7439,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.conflict" datatype="html">
         <source>Bei dieser Ressource ist ein Konflikt aufgetreten.</source>
-        <target state="needs-translation">Bei dieser Ressource ist ein Konflikt aufgetreten.</target>
+        <target state="translated">Si è verificato un conflitto con questa risorsa.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">154,162</context>
@@ -7455,7 +7455,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.outlierValues.single" datatype="html">
         <source>Ungültiger Wert:</source>
-        <target state="needs-translation">Ungültiger Wert:</target>
+        <target state="translated">Valore non valido:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">166,171</context>
@@ -7471,7 +7471,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.outlierValues.multiple" datatype="html">
         <source>Ungültige Werte:</source>
-        <target state="needs-translation">Ungültige Werte:</target>
+        <target state="translated">Valori non validi:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">180,186</context>
@@ -8047,7 +8047,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.storagePlaces" datatype="html">
         <source>Davon Aufbewahrungsorte: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </source>
-        <target state="needs-translation">Davon Aufbewahrungsorte: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </target>
+        <target state="translated">Di cui luoghi di deposito: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">38,29</context>
@@ -8435,7 +8435,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.outlierValue.empty" datatype="html">
         <source>Leer</source>
-        <target state="needs-translation">Leer</target>
+        <target state="translated">Vuoto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">202,207</context>

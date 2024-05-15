@@ -8563,7 +8563,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.all" datatype="html">
         <source>In allen Ressourcen dieser Kategorie konvertieren</source>
-        <target state="translated">Convertire a tutte le risorse di questa categoria</target>
+        <target state="translated">Convertire in tutte le risorse di questa categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">26,35</context>

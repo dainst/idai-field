@@ -7663,7 +7663,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.remove" datatype="html">
         <source>Entfernen</source>
-        <target state="needs-translation">Entfernen</target>
+        <target state="translated">Rimuovere</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">53,57</context>
@@ -7671,7 +7671,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.keep" datatype="html">
         <source>Beibehalten</source>
-        <target state="needs-translation">Beibehalten</target>
+        <target state="translated">Conservare</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">57</context>
@@ -7679,7 +7679,7 @@
       </trans-unit>
       <trans-unit id="resources.gridList.types" datatype="html">
         <source>Typen</source>
-        <target state="needs-translation">Typen</target>
+        <target state="translated">Tipi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">65,72</context>
@@ -7687,7 +7687,7 @@
       </trans-unit>
       <trans-unit id="resources.gridList.subtypes" datatype="html">
         <source>Untertypen</source>
-        <target state="needs-translation">Untertypen</target>
+        <target state="translated">Sottotipi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">83,89</context>
@@ -7695,7 +7695,7 @@
       </trans-unit>
       <trans-unit id="resources.navigation.storagePlaces" datatype="html">
         <source>Aufbewahrungsorte</source>
-        <target state="needs-translation">Aufbewahrungsorte</target>
+        <target state="translated">Luoghi di deposito</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">109,123</context>

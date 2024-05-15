@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
         <source>Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
-        <target state="needs-translation">Folie <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
+        <target state="translated">Diapositive <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -157,7 +157,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-hours" datatype="html">
         <source>Increment hours</source>
-        <target state="needs-translation">Stunden erhöhen</target>
+        <target state="translated">Augmenter les heures</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">67</context>
@@ -181,7 +181,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-hours" datatype="html">
         <source>Decrement hours</source>
-        <target state="needs-translation">Stunden verringern</target>
+        <target state="translated">Réduire les heures</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">74</context>
@@ -189,7 +189,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-minutes" datatype="html">
         <source>Increment minutes</source>
-        <target state="needs-translation">Minuten erhöhen</target>
+        <target state="translated">Augmenter les minutes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">82</context>
@@ -213,7 +213,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-minutes" datatype="html">
         <source>Decrement minutes</source>
-        <target state="needs-translation">Minuten verringern</target>
+        <target state="translated">Réduire les minutes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">89</context>
@@ -221,7 +221,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-seconds" datatype="html">
         <source>Increment seconds</source>
-        <target state="needs-translation">Sekunden erhöhen</target>
+        <target state="translated">Augmenter les secondes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">115</context>
@@ -245,7 +245,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-seconds" datatype="html">
         <source>Decrement seconds</source>
-        <target state="needs-translation">Sekunden verringern</target>
+        <target state="translated">Réduire les secondes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">143</context>
@@ -441,7 +441,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.resource.multiple" datatype="html">
         <source>Ressourcen werden gelöscht...</source>
-        <target state="needs-translation">Ressourcen werden gelöscht...</target>
+        <target state="translated">Suppression des ressources...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -497,7 +497,7 @@
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
         <source>Datensätze werden eingelesen...</source>
-        <target state="needs-translation">Datensätze werden eingelesen...</target>
+        <target state="translated">Importation de jeux de données...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/upload-modal.component.ts</context>
           <context context-type="linenumber">16</context>
@@ -505,7 +505,7 @@
       </trans-unit>
       <trans-unit id="import.startImport" datatype="html">
         <source>Import starten</source>
-        <target state="needs-translation">Import starten</target>
+        <target state="translated">démarrer l'importation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">60</context>
@@ -513,7 +513,7 @@
       </trans-unit>
       <trans-unit id="import.source" datatype="html">
         <source>Quelle</source>
-        <target state="needs-translation">Quelle</target>
+        <target state="translated">Source</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">130</context>
@@ -525,7 +525,7 @@
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
         <source>Datei</source>
-        <target state="needs-translation">Datei</target>
+        <target state="translated">Fichier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -557,7 +557,7 @@
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
         <source>Datei auswählen...</source>
-        <target state="needs-translation">Datei auswählen...</target>
+        <target state="translated">Choisir un fichier...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">64</context>
@@ -589,7 +589,7 @@
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
         <source>Neue Ressourcen importieren</source>
-        <target state="needs-translation">Neue Ressourcen importieren</target>
+        <target state="translated">Importer de nouvelles ressources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">70</context>

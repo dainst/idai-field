@@ -8267,7 +8267,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.header" datatype="html">
         <source>Ressource löschen?</source>
-        <target state="needs-translation">Ressource löschen?</target>
+        <target state="translated">Cancellare la risorsa?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
           <context context-type="linenumber">45,57</context>
@@ -8355,7 +8355,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all" datatype="html">
         <source>Alle Ressourcen dieser Kategorie löschen</source>
-        <target state="needs-translation">Alle Ressourcen dieser Kategorie löschen</target>
+        <target state="translated">Cancellare tutte le risorse di questa categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">24,32</context>

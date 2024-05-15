@@ -7703,7 +7703,7 @@
       </trans-unit>
       <trans-unit id="resources.gridList.linkedFinds" datatype="html">
         <source>Zugeordnete Funde</source>
-        <target state="needs-translation">Zugeordnete Funde</target>
+        <target state="translated">Reperti pertinenti</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">143,155</context>
@@ -7719,7 +7719,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditor.delete.header" datatype="html">
         <source>QR-Code löschen?</source>
-        <target state="needs-translation">QR-Code löschen?</target>
+        <target state="translated">Cancellare il codice QR?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -7735,7 +7735,7 @@
       </trans-unit>
       <trans-unit id="buttons.print" datatype="html">
         <source>Drucken</source>
-        <target state="needs-translation">Drucken</target>
+        <target state="translated">Stampare</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
           <context context-type="linenumber">15,19</context>
@@ -7751,7 +7751,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditorModal.addQrCode.setExisting" datatype="html">
         <source>Existierenden Code übernehmen</source>
-        <target state="needs-translation">Existierenden Code übernehmen</target>
+        <target state="translated">Adottare il code esistente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
           <context context-type="linenumber">62</context>
@@ -8667,7 +8667,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewField" datatype="html">
         <source>Neues Feld auswählen</source>
-        <target state="needs-translation">Neues Feld auswählen</target>
+        <target state="translated">Seleziona un nuovo campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">257,261</context>

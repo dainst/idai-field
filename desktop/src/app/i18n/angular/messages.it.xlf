@@ -8715,7 +8715,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.single.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.</source>
-        <target state="translated">Inserire un identificatore della risorsa per confermare l'operazione.</target>
+        <target state="translated">Si prega di inserire un identificatore della risorsa per confermare l'operazione.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
           <context context-type="linenumber">53</context>

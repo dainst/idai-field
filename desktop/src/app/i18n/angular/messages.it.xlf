@@ -8507,7 +8507,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.convertFieldData" datatype="html">
         <source>Felddaten konvertieren</source>
-        <target state="needs-translation">Felddaten konvertieren</target>
+        <target state="translated">Convertire i dati di campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">242,248</context>
@@ -8515,7 +8515,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fixValues.multiple" datatype="html">
         <source>Werte korrigieren</source>
-        <target state="needs-translation">Werte korrigieren</target>
+        <target state="translated">Correggere i valori</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8667,7 +8667,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewField" datatype="html">
         <source>Neues Feld auswählen</source>
-        <target state="translated">Seleziona un nuovo campo</target>
+        <target state="translated">Selezionare un nuovo campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">257,261</context>
@@ -8675,7 +8675,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fixValues.single" datatype="html">
         <source>Wert korrigieren</source>
-        <target state="needs-translation">Wert korrigieren</target>
+        <target state="translated">Correggere il valore</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8763,7 +8763,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewCategory" datatype="html">
         <source>Neue Kategorie auswählen</source>
-        <target state="needs-translation">Neue Kategorie auswählen</target>
+        <target state="translated">Selezionare una nuova categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">293</context>
@@ -8831,7 +8831,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.selectNewParent" datatype="html">
         <source>Übergeordnete Ressource neu setzen</source>
-        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <target state="translated">Reimpostare la risorsa padre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">293</context>

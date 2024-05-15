@@ -7895,7 +7895,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.header.multiple" datatype="html">
         <source>Bisherige Aufbewahrungsorte ersetzen?</source>
-        <target state="needs-translation">Bisherige Aufbewahrungsorte ersetzen?</target>
+        <target state="translated">Sostituire i luoghi di deposito precedenti?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>

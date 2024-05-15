@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output,
     SimpleChanges } from '@angular/core';
-import { FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration, Labels } from 'idai-field-core';
 import { FieldPolyline } from './field-polyline';
 import { FieldPolygon } from './field-polygon';
 import { FieldMarker } from './field-marker';
@@ -50,6 +50,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
 
     constructor(protected projectConfiguration: ProjectConfiguration,
+                protected labels: Labels,
                 protected zone: NgZone) {}
 
 
@@ -297,7 +298,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const marker: FieldMarker = L.circleMarker(latLng, this.getMarkerOptions(document));
         marker.document = document;
 
-        marker.bindTooltip(Helper.getTooltipText(document.resource), {
+        marker.bindTooltip(Helper.getTooltipText(document.resource, this.labels, this.projectConfiguration), {
             direction: 'top',
             opacity: 1.0
         });
@@ -369,7 +370,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         path.setStyle(style);
 
-        path.bindTooltip(Helper.getTooltipText(document.resource), {
+        path.bindTooltip(Helper.getTooltipText(document.resource, this.labels, this.projectConfiguration), {
             direction: 'center',
             opacity: 1.0
         });

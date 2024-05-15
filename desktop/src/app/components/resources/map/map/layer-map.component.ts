@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@angular/core';
 import L from 'leaflet';
 import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore, ProjectConfiguration,
-    Document } from 'idai-field-core';
+    Document, Labels } from 'idai-field-core';
 import { MenuContext } from '../../../../services/menu-context';
 import { Menus } from '../../../../services/menus';
 import { ImageContainer } from '../../../../services/imagestore/image-container';
@@ -34,6 +34,7 @@ export class LayerMapComponent extends MapComponent {
 
 
     constructor(projectConfiguration: ProjectConfiguration,
+                labels: Labels,
                 private layerManager: LayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
@@ -43,7 +44,7 @@ export class LayerMapComponent extends MapComponent {
                 private datastore: PouchdbDatastore,
                 private menuService: Menus) {
 
-        super(projectConfiguration, zone);
+        super(projectConfiguration, labels, zone);
 
         this.layerManager.reset();
         this.datastore.changesNotifications().subscribe(document => this.reloadLayersOnChange(document));

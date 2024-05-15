@@ -7743,7 +7743,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditorModal.addQrCode.generate" datatype="html">
         <source>Neuen Code generieren</source>
-        <target state="translated">Generare un nuovo code</target>
+        <target state="translated">Generare un nuovo codice</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
           <context context-type="linenumber">60,62</context>
@@ -7751,7 +7751,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditorModal.addQrCode.setExisting" datatype="html">
         <source>Existierenden Code übernehmen</source>
-        <target state="translated">Adottare il code esistente</target>
+        <target state="translated">Adottare un codice esistente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
           <context context-type="linenumber">62</context>

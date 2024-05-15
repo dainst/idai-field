@@ -21,7 +21,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.previous" datatype="html">
         <source>Previous</source>
-        <target state="needs-translation">Zurück</target>
+        <target state="translated">Retour</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">130</context>
@@ -29,7 +29,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.next" datatype="html">
         <source>Next</source>
-        <target state="needs-translation">Weiter</target>
+        <target state="translated">Suivant</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">148</context>
@@ -37,7 +37,7 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.previous-month" datatype="html">
         <source>Previous month</source>
-        <target state="needs-translation">Vorheriger Monat</target>
+        <target state="translated">Mois précédent</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/datepicker/datepicker-navigation.ts</context>
           <context context-type="linenumber">13</context>
@@ -49,7 +49,7 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.next-month" datatype="html">
         <source>Next month</source>
-        <target state="needs-translation">Nächster Monat</target>
+        <target state="translated">Mois suivant</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/datepicker/datepicker-navigation.ts</context>
           <context context-type="linenumber">35</context>
@@ -61,7 +61,7 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.select-month" datatype="html">
         <source>Select month</source>
-        <target state="needs-translation">Monat auswählen</target>
+        <target state="translated">Choisir le mois</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/datepicker/datepicker-navigation-select.ts</context>
           <context context-type="linenumber">29</context>
@@ -73,7 +73,7 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.select-year" datatype="html">
         <source>Select year</source>
-        <target state="needs-translation">Jahr auswählen</target>
+        <target state="translated">Choisir l'année</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/datepicker/datepicker-navigation-select.ts</context>
           <context context-type="linenumber">63</context>
@@ -93,7 +93,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.first-aria" datatype="html">
         <source>First</source>
-        <target state="needs-translation">Erste</target>
+        <target state="translated">Premier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">186</context>
@@ -109,7 +109,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.previous-aria" datatype="html">
         <source>Previous</source>
-        <target state="needs-translation">Vorherige</target>
+        <target state="translated">Précédent</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">195</context>
@@ -125,7 +125,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.next-aria" datatype="html">
         <source>Next</source>
-        <target state="needs-translation">Nächste</target>
+        <target state="translated">Suivant</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">205</context>
@@ -141,7 +141,7 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.last-aria" datatype="html">
         <source>Last</source>
-        <target state="needs-translation">Letzte</target>
+        <target state="translated">Dernier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/pagination/pagination.ts</context>
           <context context-type="linenumber">213</context>
@@ -173,7 +173,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.hours" datatype="html">
         <source>Hours</source>
-        <target state="needs-translation">Stunden</target>
+        <target state="translated">Heures</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">47</context>
@@ -205,7 +205,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.minutes" datatype="html">
         <source>Minutes</source>
-        <target state="needs-translation">Minuten</target>
+        <target state="translated">Minutes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">61</context>
@@ -237,7 +237,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.seconds" datatype="html">
         <source>Seconds</source>
-        <target state="needs-translation">Sekunden</target>
+        <target state="translated">secondes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">103</context>
@@ -269,7 +269,7 @@
       </trans-unit>
       <trans-unit id="ngb.toast.close-aria" datatype="html">
         <source>Close</source>
-        <target state="needs-translation">Schließen</target>
+        <target state="translated">Fermer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/toast/toast.ts</context>
           <context context-type="linenumber">70</context>
@@ -277,7 +277,7 @@
       </trans-unit>
       <trans-unit id="boolean.yes" datatype="html">
         <source>Ja</source>
-        <target state="needs-translation">Ja</target>
+        <target state="translated">Oui</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
           <context context-type="linenumber">52</context>
@@ -297,7 +297,7 @@
       </trans-unit>
       <trans-unit id="boolean.no" datatype="html">
         <source>Nein</source>
-        <target state="needs-translation">Nein</target>
+        <target state="translated">Non</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
           <context context-type="linenumber">67</context>
@@ -317,7 +317,7 @@
       </trans-unit>
       <trans-unit id="components.documents.documentTeaser.newResource" datatype="html">
         <source>Neue Ressource</source>
-        <target state="needs-translation">Neue Ressource</target>
+        <target state="translated">Nouvelle ressource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-teaser.component.ts</context>
           <context context-type="linenumber">22</context>
@@ -325,7 +325,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
         <source>Polygon</source>
-        <target state="needs-translation">Polygon</target>
+        <target state="translated">Polygone</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -333,7 +333,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
         <source>Multipolygon</source>
-        <target state="needs-translation">Multipolygon</target>
+        <target state="translated">Multipolygone</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -341,7 +341,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
         <source>Polyline</source>
-        <target state="needs-translation">Polyline</target>
+        <target state="translated">Polyligne</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -349,7 +349,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
         <source>Multipolyline</source>
-        <target state="needs-translation">Multipolyline</target>
+        <target state="translated">Multipolyligne</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -357,7 +357,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.point" datatype="html">
         <source>Punkt</source>
-        <target state="needs-translation">Punkt</target>
+        <target state="translated">Point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -365,7 +365,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
         <source>Multipunkt</source>
-        <target state="needs-translation">Multipunkt</target>
+        <target state="translated">Multipoint</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -373,7 +373,7 @@
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
         <source>Keine</source>
-        <target state="needs-translation">Keine</target>
+        <target state="translated">Aucun</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -381,7 +381,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
         <source>Keine Suchkriterien angegeben.</source>
-        <target state="needs-translation">Keine Suchkriterien angegeben.</target>
+        <target state="translated">Aucun critère de recherche spécifié.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">60</context>
@@ -389,7 +389,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
         <source>Keine Ressourcen gefunden.</source>
-        <target state="needs-translation">Keine Ressourcen gefunden.</target>
+        <target state="translated">Aucune ressource trouvée.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">94</context>
@@ -397,7 +397,7 @@
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
         <source>Suchen...</source>
-        <target state="needs-translation">Suchen...</target>
+        <target state="translated">Rechercher...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-bar.component.ts</context>
           <context context-type="linenumber">30</context>
@@ -413,7 +413,7 @@
       </trans-unit>
       <trans-unit id="widgets.searchBar.categoryFilter" datatype="html">
         <source>Nach Kategorie filtern:</source>
-        <target state="needs-translation">Nach Kategorie filtern:</target>
+        <target state="translated">Filtrer par catégorie :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
           <context context-type="linenumber">97</context>
@@ -425,7 +425,7 @@
       </trans-unit>
       <trans-unit id="widgets.categoryPicker.allCategories" datatype="html">
         <source>Alle Kategorien</source>
-        <target state="needs-translation">Alle Kategorien</target>
+        <target state="translated">Toutes les catégories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
           <context context-type="linenumber">51</context>
@@ -433,7 +433,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.resource.single" datatype="html">
         <source>Ressource wird gelöscht...</source>
-        <target state="needs-translation">Ressource wird gelöscht...</target>
+        <target state="translated">Suppression de la ressource en cours...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -449,7 +449,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.image.single" datatype="html">
         <source>Bild wird gelöscht...</source>
-        <target state="needs-translation">Bild wird gelöscht...</target>
+        <target state="translated">Suppression de l'image...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -457,7 +457,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.image.multiple" datatype="html">
         <source>Bilder werden gelöscht...</source>
-        <target state="needs-translation">Bilder werden gelöscht...</target>
+        <target state="translated">Suppression des images...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -465,7 +465,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.field.single" datatype="html">
         <source>Feld wird gelöscht...</source>
-        <target state="needs-translation">Feld wird gelöscht...</target>
+        <target state="translated">Suppression du champ...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -473,7 +473,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.field.multiple" datatype="html">
         <source>Felder werden gelöscht...</source>
-        <target state="needs-translation">Felder werden gelöscht...</target>
+        <target state="translated">Suppression des champs...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -481,7 +481,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.value.single" datatype="html">
         <source>Wert wird gelöscht...</source>
-        <target state="needs-translation">Wert wird gelöscht...</target>
+        <target state="translated">Suppression de la valeur...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -489,7 +489,7 @@
       </trans-unit>
       <trans-unit id="widgets.deletionInProgressModal.info.value.multiple" datatype="html">
         <source>Werte werden gelöscht...</source>
-        <target state="needs-translation">Werte werden gelöscht...</target>
+        <target state="translated">Suppression des valeurs...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/deletion-in-progress-modal.component.ts</context>
           <context context-type="linenumber">19</context>

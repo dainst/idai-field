@@ -7423,7 +7423,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.nonUniqueIdentifier" datatype="html">
         <source>Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es können dadurch Fehler beim Import und Export von Daten auftreten.</source>
-        <target state="needs-translation">Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es können dadurch Fehler beim Import und Export von Daten auftreten.</target>
+        <target state="translated">L'identificatore di questa risorsa viene utilizzato più volte e non è quindi univoco. Ciò può causare errori durante l'importazione e l'esportazione dei dati.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">136,144</context>
@@ -7431,7 +7431,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.enteredData" datatype="html">
         <source>Eingetragene Daten:</source>
-        <target state="needs-translation">Eingetragene Daten:</target>
+        <target state="translated">Dati registrati:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">150,154</context>
@@ -8755,7 +8755,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingOrInvalidParent" datatype="html">
         <source>Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit nicht angezeigt.</source>
-        <target state="needs-translation">Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit nicht angezeigt.</target>
+        <target state="translated">Per questa risorsa non è stata impostata alcuna risorsa padre valida. Pertanto, la risorsa non è attualmente visualizzata.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">172,181</context>

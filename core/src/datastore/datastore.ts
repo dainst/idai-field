@@ -10,6 +10,7 @@ import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
+import { Indexer } from '../index';
 
 
 export type FindOptions = {
@@ -112,9 +113,15 @@ export class Datastore {
 
         documents.forEach(document => delete document.warnings);
 
-        const resultDocuments: Array<Document> = [];
-        for (let document of await this.datastore.bulkUpdate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document));
+        let resultDocuments: Array<Document> = [];
+        const updatedDocuments: Array<Document> = await this.datastore.bulkUpdate(documents, this.getUser());
+        if (updatedDocuments.length < 100) {
+            for (let document of updatedDocuments) {
+                resultDocuments.push(await this.updateIndex(document));
+            }
+            this.indexFacade.notifyObservers();
+        } else {
+            resultDocuments = await this.updateIndexWithFullReindexing(updatedDocuments);
         }
 
         return resultDocuments;
@@ -123,13 +130,39 @@ export class Datastore {
 
     private async updateIndex(document: Document): Promise<Document> {
 
-        const previousVersion: Document =  this.documentCache.get(document.resource.id);
+        const previousVersion: Document = this.documentCache.get(document.resource.id);
 
-        await this.convert(document);
+        await this.convert(document, false);
 
         return !previousVersion
             ? this.documentCache.set(document)
             : this.documentCache.reassign(document);
+    }
+
+
+    private async updateIndexWithFullReindexing(documents: Array<Document>): Promise<Array<Document>> {
+
+        const resultDocuments: Array<Document> = [];
+
+        for (let document of documents) {
+            const previousVersion: Document = this.documentCache.get(document.resource.id);
+            this.documentConverter.convert(document);
+            const updatedDocument: Document = !previousVersion
+                ? this.documentCache.set(document)
+                : this.documentCache.reassign(document);
+            resultDocuments.push(updatedDocument);
+        }
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.datastore.getDb(),
+            this.documentCache,
+            this.documentConverter,
+            this.projectConfiguration,
+            true
+        );
+
+        return resultDocuments;
     }
 
 
@@ -240,10 +273,10 @@ export class Datastore {
     }
 
 
-    public convert: Datastore.Convert = async (document: Document) => {
+    public convert: Datastore.Convert = async (document: Document, notifyObservers: boolean = true) => {
         
         this.documentConverter.convert(document);
-        await this.updateWarnings(document);
+        await this.updateWarnings(document, notifyObservers);
     }  
 
 
@@ -384,7 +417,7 @@ export class Datastore {
     }
 
 
-    private async updateWarnings(document: Document) {
+    private async updateWarnings(document: Document, notifyObservers: boolean) {
 
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
 
@@ -397,7 +430,7 @@ export class Datastore {
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
             previousIdentifier, true
         );
-        this.indexFacade.notifyObservers();
+        if (notifyObservers) this.indexFacade.notifyObservers();
     }
 }
 
@@ -412,7 +445,7 @@ export namespace Datastore {
 
     export type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 
-    export type Convert = (document: Document) => void;
+    export type Convert = (document: Document, notifyObservers?: boolean) => void;
 
 
     export interface FindIdsResult {

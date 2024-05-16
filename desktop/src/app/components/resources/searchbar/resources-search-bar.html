@@ -1,13 +1,13 @@
-<form id="search-bar">
+<form *ngIf="visible" id="search-bar">
     <div class="input-group">
         <div *ngIf="isQrCodeScannerButtonVisible()" class="input-group-prepend">
             <button id="qr-code-scanner-button"
-                class="btn btn-primary"
-                ngbTooltip="QR-Code scannen"
-                i18n-ngbTooltip="@@resources.searchBar.qrCodeScanner.tooltip"
-                placement="left" container="body"
-                (click)="scanQrCode()">
-            <span class="mdi mdi-qrcode-scan"></span>
+                    class="btn btn-primary"
+                    ngbTooltip="QR-Code scannen"
+                    i18n-ngbTooltip="@@resources.searchBar.qrCodeScanner.tooltip"
+                    placement="left" container="body"
+                    (click)="scanQrCode()">
+                <span class="mdi mdi-qrcode-scan"></span>
             </button>
         </div>
         <input #searchInput

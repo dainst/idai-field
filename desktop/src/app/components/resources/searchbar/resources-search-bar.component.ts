@@ -1,8 +1,10 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Document, ProjectConfiguration } from 'idai-field-core';
 import { SearchBarComponent } from '../../widgets/search-bar.component';
 import { QrCodeService } from '../service/qr-code-service';
 import { Routing } from '../../../services/routing';
+import { ViewFacade } from '../view/view-facade';
 
 
 @Component({
@@ -16,19 +18,32 @@ import { Routing } from '../../../services/routing';
  * @author Thomas Kleinke
  * @author Danilo Guzzo
  */
-export class ResourcesSearchBarComponent extends SearchBarComponent {
+export class ResourcesSearchBarComponent extends SearchBarComponent implements OnDestroy {
 
     @Input() extendedSearch: boolean;
 
     public suggestionsVisible: boolean = false;
+    public visible: boolean = false;
+
+    private populateDocumentsSubscription: Subscription;
 
 
     constructor(private elementRef: ElementRef,
                 private qrCodeService: QrCodeService,
                 private projectConfiguration: ProjectConfiguration,
-                private routingService: Routing) {
+                private routingService: Routing,
+                viewFacade: ViewFacade) {
 
         super();
+
+        this.populateDocumentsSubscription = viewFacade.populateDocumentsNotifications()
+            .subscribe((_) => this.visible = true);
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.populateDocumentsSubscription) this.populateDocumentsSubscription.unsubscribe();
     }
 
 

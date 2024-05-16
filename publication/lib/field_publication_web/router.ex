@@ -21,23 +21,27 @@ defmodule FieldPublicationWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api/image/iiif" do
+  scope "/api/image" do
     pipe_through :ensure_image_published
-    pipe_through :forward_headers
 
-    forward "/", ReverseProxyPlug,
-      status_callbacks: %{
-        404 => &Cantaloupe.handle_404/2
-      },
-      upstream: &Cantaloupe.url/0,
-      preserve_host_header: true
+    scope "/iiif" do
+      pipe_through :forward_headers
+
+      forward("/", ReverseProxyPlug,
+        status_callbacks: %{
+          404 => &Cantaloupe.handle_404/2
+        },
+        upstream: &Cantaloupe.url/0,
+        preserve_host_header: true
+      )
+    end
+
+    get "/raw/:project_name/:uuid", FieldPublicationWeb.Api.Image, :raw
+    get "/tile/:project_name/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile
   end
 
-  scope "/api", FieldPublicationWeb.Api do
-    pipe_through :api
-
-    get "/raw/image/:project_name/:uuid", Raw.Image, :show
-    get "/raw/json/:project_name/:publication_date/:uuid", Raw.JSON, :show
+  scope "/api/json" do
+    get "/raw/:project_name/:publication_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's

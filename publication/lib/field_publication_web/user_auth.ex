@@ -276,18 +276,11 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  @doc """
-  Before forwarding image requests to the Cantaloupe image server, check that the requested image was
-  at some point part of an already published publication.
-  """
   def ensure_image_published(
-        %{
-          path_info: ["api", "image", "iiif", "3", image_name | _everything_afterwards]
-        } =
-          conn,
-        _opts
+        %{params: %{"project_name" => project_name, "uuid" => uuid}} = conn,
+        _options
       ) do
-    case Cachex.get(:published_images, image_name) do
+    case Cachex.get(:published_images, {project_name, uuid}) do
       {:ok, true} ->
         conn
 
@@ -297,30 +290,52 @@ defmodule FieldPublicationWeb.UserAuth do
         |> halt()
 
       _ ->
-        [project_name, uuid] =
-          image_name
-          |> String.replace_suffix(".jp2", "")
-          |> String.split("%2F")
+        if is_image_published?(project_name, uuid) do
+          Cachex.put(:published_images, {project_name, uuid}, true)
+          conn
+        else
+          # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
+          Cachex.put(:published_images, {project_name, uuid}, false, ttl: 1000 * 60 * 60)
 
-        publication =
-          Publications.get_published(project_name)
-          |> Enum.find(fn pub ->
-            Publications.Data.document_exists?(uuid, pub)
-          end)
-
-        case publication do
-          nil ->
-            # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
-            Cachex.put(:published_images, image_name, false, ttl: 1000 * 60 * 60)
-
-            conn
-            |> resp(403, "The image you requested has not been published.")
-            |> halt()
-
-          _ ->
-            Cachex.put(:published_images, image_name, true)
-            conn
+          conn
+          |> resp(403, "The image you requested has not been published.")
+          |> halt()
         end
+    end
+  end
+
+  def ensure_image_published(
+        %{
+          path_info: ["api", "image", "iiif", "3", image_name | _everything_afterwards]
+        } =
+          conn,
+        _opts
+      ) do
+    # This is the variant of ensure_image_published/2 that is used for the reverse proxy routes of the
+    # cantaloupe image server. We can not extract project_name and uuid beforehand, so we parse the requested
+    # image name and call the default function above by setting :params manually.
+    [project_name, uuid] =
+      image_name
+      |> String.replace_suffix(".jp2", "")
+      |> String.split("%2F")
+
+    Map.put(conn, :params, %{"project_name" => project_name, "uuid" => uuid})
+    |> ensure_image_published(%{})
+  end
+
+  defp is_image_published?(project_name, uuid) do
+    publication =
+      Publications.get_published(project_name)
+      |> Enum.find(fn pub ->
+        Publications.Data.document_exists?(uuid, pub)
+      end)
+
+    case publication do
+      nil ->
+        false
+
+      _ ->
+        true
     end
   end
 

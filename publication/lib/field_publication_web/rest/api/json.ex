@@ -1,11 +1,11 @@
-defmodule FieldPublicationWeb.Api.Raw.JSON do
+defmodule FieldPublicationWeb.Api.JSON do
   use FieldPublicationWeb, :controller
 
   alias FieldPublication.Publications.Data
   alias FieldPublication.Schemas.Publication
   alias FieldPublication.Publications
 
-  def show(
+  def raw(
         conn,
         %{"project_name" => name, "publication_date" => publication_date, "uuid" => uuid} =
           _params

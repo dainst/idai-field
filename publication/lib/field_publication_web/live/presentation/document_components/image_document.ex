@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           <.group_heading>
             Raw data
           </.group_heading>
-          <a class="mb-1" target="_blank" href={~p"/api/raw/image/#{@project_name}/#{@uuid}"}>
+          <a class="mb-1" target="_blank" href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
             <.icon name="hero-photo-solid" /> Download original
           </a>
           <br />

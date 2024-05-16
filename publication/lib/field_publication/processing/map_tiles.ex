@@ -111,8 +111,9 @@ defmodule FieldPublication.Processing.MapTiles do
               end
             end
           )
+          |> Enum.to_list()
 
-          File.rm(temp_image_path)
+          File.rm(original_temp_image_path)
         end)
       else
         Logger.error("")

@@ -4,7 +4,8 @@
     "time": "Temps",
     "position": "Position / Contexte",
     "dimension": "Dimensions",
-    "identification": "Identification"
+    "identification": "Identification",
+    "properties": "Propriétés"
   },
   "commons": {
     "dimensionLength": {

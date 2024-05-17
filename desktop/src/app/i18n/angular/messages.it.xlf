@@ -6112,14 +6112,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.resources.error.parentResourceUnknownCategory" datatype="html">
-        <source>Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht konfigurierten Kategorie "[0]" untergeordnet ist. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.</source>
-        <target state="translated">La risorsa non è accessibile perché è subordinata a una risorsa della categoria non configurata "[0]". Si prega di aggiungere la categoria alla configurazione del progetto per accedere alla risorsa.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.resources.error.parentOperationUnknownCategory" datatype="html">
         <source>Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht konfigurierten Kategorie "[0]" angehört. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.</source>
         <target state="translated">La risorsa non è accessibile perché appartiene ad un'operazione della categoria non configurata "[0]". Si prega di aggiungere la categoria alla configurazione del progetto per accedere alla risorsa.</target>

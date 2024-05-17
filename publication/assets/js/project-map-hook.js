@@ -1,51 +1,33 @@
-import IIIF from 'ol/source/IIIF.js';
-import IIIFInfo from 'ol/format/IIIFInfo.js';
+
 import Map from 'ol/Map.js';
 import TileLayer from 'ol/layer/Tile.js';
+import TileGrid from 'ol/tilegrid/TileGrid';
 import View from 'ol/View.js';
-import { createEmpty, extend, getCenter } from 'ol/extent.js';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
-import { OSM, Vector as VectorSource } from 'ol/source.js';
-import GeoJSON from 'ol/format/GeoJSON.js';
-import { Vector as VectorLayer } from 'ol/layer.js';
-import { Projection } from 'ol/proj';
+import { createEmpty, extend } from 'ol/extent.js';
+import { TileImage } from 'ol/source.js';
 
-const image = new CircleStyle({
-    radius: 5,
-    fill: null,
-    stroke: new Stroke({ color: 'red', width: 1 }),
-});
+function getResolutions(
+    extent,
+    tileSize,
+    width, height) {
 
-const styles = {
-    'Point': new Style({
-        image: image,
-    })
-}
+    const portraitFormat = height > width;
 
-const geojsonObject = {
-    'type': 'FeatureCollection',
-    // 'crs': {
-    //     'type': 'name',
-    //     'properties': {
-    //         'name': 'EPSG:3857',
-    //     },
-    // },
-    'features': [
-        {
-            'type': 'Feature',
-            'geometry': {
-                'type': 'Point',
-                'coordinates': [
-                    1194.25,
-                    765.6875
-                ],
-            },
-        },
-    ],
+    const result = [];
+    const layerSize = extent[portraitFormat ? 3 : 2] - extent[portraitFormat ? 1 : 0];
+    const imageSize = portraitFormat ? height : width;
+
+    let scale = 1;
+    while (tileSize < imageSize / scale) {
+        result.push(layerSize / imageSize * scale);
+        scale *= 2;
+    }
+    result.push(layerSize / imageSize * scale);
+
+    return result.reverse();
 };
 
-
-
+const tileSize = 256;
 
 export default getProjectMapHook = () => {
     return {
@@ -66,69 +48,65 @@ export default getProjectMapHook = () => {
 
         },
         async setupIIIFTiles(project, relations) {
-
             let aggregatedExtent = createEmpty();
 
-            for (let relation of relations) {
-                console.log(relation)
-                try {
-                    let currentLayer = new TileLayer()
-                    const raw = await fetch(`/api/iiif/image/3/${project}%2F${relation["resource"]["id"]}.jp2/info.json`)
-                    const imageInfo = await raw.json()
+            counter = 1;
 
-                    let options = new IIIFInfo(imageInfo).getTileSourceOptions();
-                    console.log(options)
-                    // const geoReference = relation["resource"]["georeference"];
+            try {
 
-                    // extentWidth = geoReference.topRightCoordinates[1] - geoReference.bottomLeftCoordinates[1];
-                    // extentHeight = geoReference.topRightCoordinates[0] - geoReference.bottomLeftCoordinates[0];
-                    // options.extent = [
-                    //     geoReference.bottomLeftCoordinates[1],
-                    //     geoReference.bottomLeftCoordinates[0],
-                    //     geoReference.topRightCoordinates[1],
-                    //     geoReference.topRightCoordinates[0]
-                    // ];
+                for (let relation of relations) {
 
-                    // const projection = new Projection({
-                    //     units: 'pixels',
-                    //     extent: [
-                    //         geoReference.bottomLeftCoordinates[1],
-                    //         geoReference.bottomLeftCoordinates[0],
-                    //         geoReference.topRightCoordinates[1],
-                    //         geoReference.topRightCoordinates[0]
-                    //     ]
-                    // });
+                    const geoReference = relation["resource"]["georeference"];
 
-                    //                    options.source = projection;
-                    const source = new IIIF(options)
 
-                    currentLayer.setSource(source);
+                    const extent = [
+                        geoReference.bottomLeftCoordinates[1],
+                        geoReference.bottomLeftCoordinates[0],
+                        geoReference.topRightCoordinates[1],
+                        geoReference.topRightCoordinates[0]
+                    ];
+
+                    const pathTemplate = `/api/image/tile/${project}/${relation["resource"]["id"]}/{z}/{x}/{y}`;
+
+                    const resolutions = getResolutions(extent, tileSize, relation["resource"]["width"], relation["resource"]["height"])
+
+                    let source = new TileImage({
+                        tileGrid: new TileGrid({
+                            extent,
+                            origin: [extent[0], extent[3]],
+                            resolutions,
+                            tileSize
+                        }),
+                        tileUrlFunction: (tileCoord) => {
+                            return pathTemplate
+                                .replace('{z}', String(tileCoord[0]))
+                                .replace('{x}', String(tileCoord[1]))
+                                .replace('{y}', String(tileCoord[2]));
+                        }
+                    });
+
+                    let currentLayer = new TileLayer({
+                        source: source,
+                        extent
+                    });
+
                     this.map.addLayer(currentLayer);
 
-                    aggregatedExtent = extend(aggregatedExtent, source.getTileGrid().getExtent());
-
-                } catch {
-                    console.error(`Image server does not know UUID '${relation["resource"]["id"]}', unable to setup background layer.`)
+                    aggregatedExtent = extend(aggregatedExtent, extent);
+                    counter += 1;
                 }
+            } catch (e) {
+                console.error(e)
             }
 
-            const source = new VectorSource({
-                features: new GeoJSON().readFeatures(geojsonObject),
-            });
+            console.log(aggregatedExtent)
+            const view = new View({
+                extent: aggregatedExtent
+            })
 
-            const layer = new VectorLayer({
-                source: source,
-                style: styles["Point"],
-            });
-
-            this.map.addLayer(layer)
-            this.map.setView(
-                new View({
-                    extent: aggregatedExtent,
-                })
-            );
+            this.map.setView(view);
             this.map.getView().fit(aggregatedExtent, { padding: [100, 100, 100, 100] })
-            console.log(aggregatedExtent);
+            this.map.setView(view);
         }
     }
 }

@@ -2189,7 +2189,8 @@
   },
   "Architecture-mark-default": {
     "values": {
-      "A": ""
+      "A": "A",
+      "AC": "AC"
     }
   },
   "Damage-condition-default": {

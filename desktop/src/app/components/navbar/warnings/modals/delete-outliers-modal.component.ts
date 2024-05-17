@@ -90,7 +90,7 @@ export class DeleteOutliersModalComponent {
 
         const documents = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         const changedDocuments: Array<Document> = [];
 

@@ -88,7 +88,7 @@ export class SelectNewCategoryModalComponent {
 
         const documents: Array<Document> = (await this.datastore.find({
             categories: ['UNCONFIGURED'],
-        })).documents;
+        },  { includeResourcesWithoutValidParent: true })).documents;
 
         documents.filter(document => document.resource.category === this.document.resource.category)
             .forEach(document => document.resource.category = this.selectedCategory.name);

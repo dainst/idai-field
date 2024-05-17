@@ -94,7 +94,7 @@ export class SelectNewFieldModalComponent {
         const documents = (await this.datastore.find({
             categories: [this.category.name],
             constraints: { [this.warningType + ':contain']: this.fieldName }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         documents.forEach(document => this.moveDataToNewField(document));
 

@@ -91,8 +91,10 @@ export class DeleteResourceModalComponent {
 
     private async deleteMultiple() {
 
-        const documents = (await this.datastore.find({ categories: ['UNCONFIGURED'] })).documents
-            .filter(document => document.resource.category === this.document.resource.category);
+        const documents = (await this.datastore.find(
+            { categories: ['UNCONFIGURED'] },
+            { includeResourcesWithoutValidParent: true }
+        )).documents.filter(document => document.resource.category === this.document.resource.category);
         
         for (let document of documents) {
             await this.relationsManager.remove(document);

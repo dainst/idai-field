@@ -97,7 +97,7 @@ export class FixOutliersModalComponent {
 
         const documents = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         const changedDocuments: Array<Document> = [];
 
@@ -114,6 +114,8 @@ export class FixOutliersModalComponent {
                 }
             }
         }
+
+        console.log('changed documents:', changedDocuments);
 
         await this.datastore.bulkUpdate(documents);
     }

@@ -103,7 +103,7 @@ export class DeleteFieldDataModalComponent {
         const documents = (await this.datastore.find({
             categories: [this.category.name],
             constraints: { [this.warningType + ':contain']: this.fieldName }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         documents.forEach(document => {
             delete document.resource[this.fieldName];

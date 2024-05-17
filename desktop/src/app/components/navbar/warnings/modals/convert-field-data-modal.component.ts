@@ -92,7 +92,8 @@ export class ConvertFieldDataModalComponent {
         const documents = (await this.datastore.find({
             categories: [this.category.name],
             constraints: { ['invalidFields:contain']: this.fieldName }
-        })).documents.filter(document => this.isConvertible(document));
+        }, { includeResourcesWithoutValidParent: true })).documents
+            .filter(document => this.isConvertible(document));
 
         documents.forEach(document => this.convert(document));
 

@@ -6128,14 +6128,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.resources.error.parentOperationUnknownCategory" datatype="html">
-        <source>Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht konfigurierten Kategorie "[0]" angehört. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.</source>
-        <target state="translated">Неможливо отримати доступ до ресурсу, оскільки він належить до дії неналаштованої категорії "[0]". Додайте категорію до конфігурації проекту, щоб відновити доступ до ресурсу.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.resources.error.parentResourceDeleted" datatype="html">
         <source>Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
         <target state="translated">Ресурс неможливо створити, оскільки тим часом інший користувач видалив вищий ресурс.</target>

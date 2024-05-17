@@ -25,5 +25,9 @@ invalid-field-data {
       margin-top: 5px;
       margin-bottom: 5px;
     }
+    
+    &.no-data {
+      user-select: none;
+    }
   }
 }

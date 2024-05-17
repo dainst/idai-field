@@ -16,6 +16,7 @@ export class InvalidFieldDataComponent implements OnChanges {
 
     public fieldsViewField: FieldsViewField;
     public fieldDataLabel: string;
+    public ready: boolean = false;
 
 
     constructor(private labels: Labels) {}
@@ -24,6 +25,7 @@ export class InvalidFieldDataComponent implements OnChanges {
     async ngOnChanges() {
 
         this.fieldDataLabel = InvalidDataUtil.generateLabel(this.resource[this.field.name], this.labels);
+        this.ready = true;
     }
 
 

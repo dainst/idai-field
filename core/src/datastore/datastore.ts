@@ -214,19 +214,11 @@ export class Datastore {
         const cachedDocument = this.documentCache.get(id);
 
         if ((!options || !options.skipCache) && cachedDocument) {
-            if (cachedDocument.warnings?.unconfiguredCategory) {
-                throw [DatastoreErrors.UNKNOWN_CATEGORY, cachedDocument.resource.category];
-            } else {
-                return cachedDocument;
-            }
+            return cachedDocument;
         }
 
         const document = await this.datastore.fetch(id, options);
         await this.convert(document);
-
-        if (document.warnings?.unconfiguredCategory) {
-            throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
-        }
 
         return cachedDocument
             ? this.documentCache.reassign(document)

@@ -1,22 +1,14 @@
 ## Erste Schritte
 
-Nach dem ersten Start der Anwendung befinden Sie sich zunächst im Testprojekt, das es
-Ihnen ermöglicht, die Funktionen des Programms anhand einiger Beispieldaten auszuprobieren.
-Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
-gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
-Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
+Beim ersten Start der Anwendung werden Sie dazu aufgefordert, Ihren Namen einzugeben. Empfohlen wird, Vor- und Nachnamen anzugeben. Der eingetragene Name wird bei allen von Ihnen vorgenommenen Änderungen in der Datenbank hinterlegt und erleichtert die gemeinsame Bearbeitung von Datensätzen im Projekt, indem bei der Datensynchronisation Änderungen eindeutig zugeordnet werden können. Per Klick auf den Namen oben rechts in der Navigationsleiste oder über das Untermenü **Einstellungen**, das Sie über das Menü "Field" (MacOS) bzw. "Werkzeuge" (Windows) erreichen, können Sie den Namen der Benutzerin/des Benutzers zu einem späteren Zeitpunkt ändern.
+
+Sie befinden sich zunächst im Testprojekt, das es Ihnen ermöglicht, die Funktionen des Programms anhand einiger Beispieldaten auszuprobieren. Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist. Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
 
 Um mit Field Desktop produktiv zu arbeiten und ein eigenes Projekt anzulegen, sollten Sie zunächst die folgenden Schritte durchführen:
 
-1. Im Untermenü **Einstellungen**, das Sie über das Menü "Field" (MacOS) bzw. "Werkzeuge" (Windows)
-erreichen, können Sie grundlegende Einstellungen vornehmen, die für sämtliche Projekte gelten. Legen Sie hier
-bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Name wird bei allen von Ihnen
-vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
-Daten synchronisiert werden sollen.
+1. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf, um ein eigenes Projekt anzulegen. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen. Geben Sie zuletzt die gewünschte Projektkennung sowie optional einen Projektnamen für jede der ausgewählten Sprachen ein.
 
-2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf, um ein eigenes Projekt anzulegen. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen. Geben Sie zuletzt die gewünschte Projektkennung sowie optional einen Projektnamen für jede der ausgewählten Sprachen ein.
-
-3. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
+2. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
 Verwenden Sie das Untermenü **Backup erstellen...**, das Sie über das Menü "Projekt" erreichen, um regelmäßig
 Sicherungen Ihrer Projektdaten anzulegen.
@@ -58,15 +50,9 @@ oder Räume innerhalb eines Gebäudes).
 
 Ressourcen können in hierarchischen Strukturen angeordnet werden, beispielsweise um Funde einer
 stratigraphischen Einheit zuzuweisen. Benutzen Sie den Button "Untergeordnete Ressourcen anzeigen"
-(Symbol: rechtwinkliger Pfeil nach rechts unten), um eine Liste aller Ressourcen anzuzeigen, die der
-ausgewählten Ressource untergeordnet wurden. Bei einer neu angelegten Ressource ist diese Liste zunächst leer.
-
-<p align="center"><img src="images/de/resources/open_collection.png" alt="Kollektion öffnen"/></p>
-
-Per Klick auf **Kollektion öffnen** kann auf die tiefere Hierarchieebene gewechselt werden, sodass nun die
-untergeordneten Ressourcen angezeigt werden (etwa die Funde einer stratigraphischen Einheit).
-Die Verwendung des Plus-Buttons führt jetzt dazu, dass Ressourcen entsprechend auf dieser Ebene angelegt
-werden.
+(Symbol: rechtwinkliger Pfeil nach rechts unten), um auf die tiefere Hierarchieebene zu wechseln. Es werden
+nun die untergeordneten Ressourcen angezeigt (etwa die Funde einer stratigraphischen Einheit), und über den
+Plus-Button neu erstellte Ressourcen werden entsprechend auf dieser Ebene angelegt.
 
 Der Navigationspfad oberhalb der Ressourcenliste zeigt die gerade ausgewählte Hierarchieebene an. Sie können
 jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere Ebene wechseln.
@@ -80,16 +66,20 @@ Ressourcen in der Liste können per Klick ausgewählt werden. Bei gedrückter St
 sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf eine oder mehrere ausgewählte
 Ressourcen öffnet sich ein Kontextmenü, das die folgenden Optionen bereitstellt:
 
+* *Warnungen anzeigen*: Zeigt die für diese Ressource vorliegenden Warnungen an (nur verfügbar für Ressourcen mit Warnungen, siehe Kapitel *Warnungen*)
 * *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
 erreichbar)
-* *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können.
+* *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können
+* *QR-Code hinzufügen*: Öffnet ein Fenster, in dem ein neuer QR-Code für die Ressource generiert werden bzw. ein bestehender QR-Code per Kamera-Scan übernommen werden kann
+* *QR-Code verwalten*: Zeigt den QR-Code der Ressource an und erlaubt den Druck eines QR-Code-Etiketts (alternativ auch über den QR-Code-Button rechts im Listenelement der Ressource erreichbar)
 * *Verschieben*: Erlaubt es, Ressourcen aus ihrem aktuellen Kontext zu entfernen und einer anderen
 Ressource unterzuordnen
 * *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
 die ausschließlich mit den zu löschenden Ressourcen verknüpft sind)
+* *Aufbewahrungsort scannen*: Setzt einen neuen Aufbewahrungsort für die Ressource, indem der QR-Code des Aufbewahrungsortes per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorien "Fund", "Fundkollektion" und "Probe" sowie der entsprechenden Unterkategorien)
 
 Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit. Bitte beachten Sie,
-dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind.
+dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind. Optionen zum Hinzufügen oder Verwalten von QR-Codes sind ausschließlich verfügbar, wenn die Verwendung von QR-Codes für die entsprechende Kategorie im Konfigurationseditor eingerichtet wurde (siehe Abschnitt *Kategorien bearbeiten* im Kapitel *Konfiguration*).
 
 <p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
 
@@ -110,7 +100,7 @@ Bilder können auf zwei verschiedene Arten in die Anwendung importiert werden: �
 
 <p align="center"><img src="images/de/images/droparea.png" alt="Import-Button"/></p>
 
-Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen.
+Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen. Sie können außerdem den Inhalt des Feldes "Bildersteller/Bilderstellerin" wahlweise automatisch aus den Metadaten der Bilddatei auslesen lassen oder manuell setzen. Zur Auswahl stehen dabei die im Feld "Team" der Projekteigenschaften eingetragenen Personennamen. Das Erstellungsdatum sowie Höhe und Breite des Bildes werden in jedem Fall automatisch aus den Datei-Metadaten ausgelesen.
 
 Unterstützte Bildformate sind *jpg/jpeg*, *png* und *tif/tiff*.
 
@@ -369,8 +359,6 @@ Suchkriterien auch nachträglich wieder entfernen, indem Sie das Menü durch ein
 
 Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen Field-Desktop-Installationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen sowie hinzugefügte oder gelöschte Bilder), die auf einem anderen Rechner in Field Desktop vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
 
-Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall das Feld **Name des Bearbeiters/der Bearbeiterin** in den Einstellungen ausgefüllt sein sollte.
-
 
 ### Projekt herunterladen
 
@@ -417,11 +405,7 @@ Konnte die Verbindung erfolgreich hergestellt werden, zeigt das Icon einen Haken
 
 Zu Konflikten kann es kommen, wenn eine Ressource gleichzeitig auf mehreren Computern bearbeitet wird oder wenn sich zwei Datenbanken miteinander synchronisieren, in denen zuvor die gleiche Ressource bearbeitet wurde. In solchen Fällen stehen sich zwei unterschiedliche Versionen der Ressource gegenüber: die *aktuelle Version* (die in der Ressourcenverwaltung und anderen Bereichen der Anwendung angezeigt wird) und die *konkurrierende Version* (die im Hintergrund gespeichert bleibt, aber vorerst nicht angezeigt wird). Die Versionen können sich in der Anzahl der ausgefüllten Felder unterscheiden; möglicherweise wurden auch verschiedene Werte in die gleichen Felder eingetragen.
 
-Ressourcen mit Konflikten werden in der Liste mit einer roten Linie markiert. Darüber hinaus erscheint in der Navigationsleiste ein Icon, das die Anzahl der Konflikte im Projekt mitteilt:
-
-<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Konflikte-Icon"/></p>
-
-Klicken Sie auf das Icon, um eine Liste sämtlicher Ressourcen mit Konflikten zu öffnen. Wenn Sie eine der Ressourcen anwählen, gelangen Sie in den **Konflikte**-Tab des Editors, wo Sie die Ressource bereinigen können.
+Für jede Ressource mit Konflikten wird eine Warnung angezeigt (siehe Kapitel *Warnungen*). Im **Konflikte**-Tab des Ressourceneditors können Sie eine betroffene Ressource bereinigen.
 
 Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 
 
@@ -491,12 +475,27 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 
 * *Kategoriebezeichnung*: Der Anzeigename der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Farbe*: Die Farbe des Kategorie-Symbols sowie der Geometrien, die für Ressourcen dieser Kategorie auf der Karte angezeigt werden.
+* *QR-Codes*: Ermöglicht die Verwendung von QR-Codes bei Ressourcen dieser Kategorie (siehe Abschnitt *QR-Codes*).
 * *Bezeichner-Präfix*: Geben Sie hier optional einen Text ein, mit dem der Bezeichner von Ressourcen dieser Kategorie stets beginnen soll. Beachten Sie dabei, dass bereits bestehende Bezeichner nicht automatisch angepasst werden.
 * *Ressourcenlimit*: Geben Sie hier optional eine Zahl ein, um die maximale Anzahl von Ressourcen festzulegen, die für diese Kategorie angelegt werden können. Bleibt das Feld leer, können beliebig viele Ressourcen angelegt werden. Diese Option steht nur für Maßnahmenkategorien und die Kategorie "Ort" zur Verfügung.
 
 Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hinaus folgende Eigenschaften festlegen:
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, in welchen Kontexten die Kategorie verwendet werden sollte.
 * *Verweise*: Geben Sie hier URLs an, wenn Sie auf weitere Informationen zur Kategorie oder Kategoriedefinitionen in anderen Systemen verweisen möchten.
+
+
+##### QR-Codes
+
+Ist die Verwendung von QR-Codes für eine Kategorie aktiviert, kann jeder Ressource der Kategorie ein einzigartiger QR-Code zugewiesen werden. Es können dabei sowohl neue Codes generiert als auch bestehende Codes per Kamera-Scan übernommen und mit der jeweiligen Ressource verknüpft werden. Der QR-Code kann anschließend auf verschiedene Arten eingesetzt werden:
+* Aufrufen der Ressource per Kamera-Scan (über den QR-Code-Button der Suchleiste)
+* Druck von QR-Code-Etiketten (über das Kontextmenü der Ressource)
+* Setzen des Aufbewahrungsortes einer Ressource per Kamera-Scan des mit dem Aufbewahrungsort verknüpften QR-Codes (über das Kontextmenü der Ressource)
+Bitte beachten Sie, dass QR-Codes nur für die Kategorien "Fund", "Fundkollektion", "Probe" und "Aufbewahrungsort" sowie die jeweiligen Unterkategorien verwendet werden können.
+
+Zur Konfiguration von QR-Codes stehen im Kategorieeditor folgende Optionen bereit:
+* *QR-Codes zur Identifikation verwenden*: Aktivieren Sie diese Option, um die Verwendung von QR-Codes für Ressourcen der Kategorie zu erlauben
+* *Für neue Ressourcen automatisch erzeugen*: Aktivieren Sie diese Option, wenn für jede neu angelegte Ressource automatisch ein QR-Code generiert werden soll
+* *Zu druckende Felder*: Wählen Sie bis zu drei Felder aus, die zusätzlich zum Ressourcen-Bezeichner auf dem QR-Code-Etikett gedruckt werden sollen. Aktivieren Sie jeweils die Option "Feldbezeichnung drucken", wenn die Feldbezeichnung vor dem Feldinhalt auf dem Etikett erscheinen soll.
 
 
 #### Hierarchie
@@ -834,3 +833,131 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
   schnelle Weise zu prüfen, ob zwei Einheiten über mehrere Relationen/Ressourcen hinweg miteinander
   verknüpft sind.
 * *Matrix neu laden*: Die ursprüngliche Matrix mit allen stratigraphischen Einheiten des gewählten Schnitts wird wiederhergestellt.
+
+
+<hr>
+
+
+## Warnungen
+
+Aus verschiedenen Gründen, etwa Änderungen der Projektkonfiguration, können in einem Projekt inkonsistente oder anderweitig fehlerhafte Daten entstehen. In diesen Fällen zeigt die Anwendung eine Warnung an und stellt Möglichkeiten zur Behebung des Problems bereit. Fehlerhafte Ressourcen werden mit einem roten Balken neben dem Listeneintrag der entsprechenden Ressource markiert. In der Navigationsleiste oben rechts wird zudem ein Icon angezeigt, das die Anzahl der Ressourcen angibt, für die Warnungen aufgrund von Datenproblemen vorliegen:
+
+<p align="center"><img src="images/de/warnings/warnings_icon.png" alt="Warnungen-Icon"/></p>
+
+Mit einem Klick auf das Icon oder über das Kontextmenü einer betroffenen Ressource gelangen Sie in das Menü "Warnungen", wo Sie die Liste der fehlerhaften Ressourcen einsehen und nach dem Typ der Warnung filtern können. Es stehen darüber hinaus Möglichkeiten zum Filtern nach Bezeichner und Kurzbeschreibung (per Texteingabe) sowie nach Kategorie bereit.
+
+Wählen Sie eine der angezeigten Ressourcen aus, um die Liste der vorliegenden Warnungen für diese Ressource einzusehen. Für die meisten Warnungen werden Tools angeboten, mit denen sich die Fehler beheben lassen; viele Warnungen können außerdem durch eine Anpassung der Projektkonfiguration gelöst werden. Legen Sie bitte in jedem Fall im Vorfeld ein **Backup** des Projekts über das Menü "Projekt" ➝ "Backup erstellen..." an. Nähere Informationen zu den Ursachen und Lösungsmöglichkeiten der einzelnen Warnungstypen finden Sie im Folgenden.
+
+### Warnungstypen
+#### Konflikt
+Es existieren mehrere Versionen der Ressource, die miteinander in Konflikt stehen.
+
+##### Mögliche Ursachen
+* Die Ressource wurde auf verschiedenen Rechern gleichzeitig bei bestehender Synchronisationsverbindung   bearbeitet.
+* Die Ressource wurde auf verschiedenen Rechern ohne bestehende Synchronisationsverbindung bearbeitet; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+##### Mögliche Lösungen
+* Button *Konflikt lösen*: Lösen Sie die Konflikte im Ressourceneditor (siehe Abschnitt *Konflikte* des Kapitels *Synchronisation*).
+
+#### Unkonfigurierte Kategorie
+Für die Ressource ist eine Kategorie eingetragen, die nicht in der Projektkonfiguration gefunden werden kann. Die Ressource wird daher nicht angezeigt.
+
+##### Mögliche Ursachen
+* Die Kategorie wurde im Konfigurationseditor gelöscht.
+
+##### Mögliche Lösungen
+* Button *Neue Kategorie auswählen*: Wählen Sie eine der für das Projekt konfigurierten Kategorien aus. Die gewählte Kategorie wird anschließend für die betroffene Ressource gesetzt. Optional können Sie die neue Kategorie für alle Ressourcen setzen, bei denen die gleiche unkonfigurierte Kategorie eingetragen ist.
+* Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
+* Fügen Sie im Konfigurationseditor eine Kategorie gleichen Namens hinzu.
+
+#### Unkonfiguriertes Feld
+Es wurden Daten in ein Feld eingetragen, das in der Projektkonfiguration nicht gefunden werden kann. Die eingetragenen Daten werden daher nicht angezeigt.
+
+##### Mögliche Ursachen
+* Das Feld wurde im Konfigurationseditor gelöscht.
+
+##### Mögliche Lösungen
+* Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld übertragen. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
+* Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht. Optional können Sie die Felddaten bei allen Ressourcen löschen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
+* Fügen Sie im Konfigurationseditor für die Kategorie der betroffenen Ressource ein Feld gleichen Namens hinzu.
+
+#### Ungültige Felddaten
+Die in ein Feld eingetragenen Daten entsprechen nicht dem Eingabetyp, der für das Feld gewählt wurde.
+
+##### Mögliche Ursachen
+* Der Eingabetyp des Feldes wurde im Konfigurationseditor geändert.
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die ungültigen Felddaten zu entfernen und gegebenenfalls neu einzutragen.
+* Button *Felddaten konvertieren*: Die Daten werden automatisch in das korrekte Format des jeweiligen Eingabetyps konvertiert. Optional können Sie die Daten bei allen Ressourcen konvertieren lassen, bei denen im gleichen Feld ungültige Daten eingetragen sind. Bitte beachten Sie, dass eine automatische Konvertierung nicht in allen Fällen möglich ist und dieser Button daher nicht immer zur Verfügung steht.
+* Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld verschoben. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen im gleichen Feld ungültige Daten eingetragen sind (gültige Daten verbleiben im ursprünglichen Feld).
+
+#### Nicht in Werteliste enthaltener Wert
+In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
+
+##### Mögliche Ursachen
+* Die Werteliste des Feldes wurde im Konfigurationseditor durch eine andere ausgetauscht.
+* Werte wurden im Wertelisten-Editor aus einer projektspezifischen Werteliste entfernt.
+* Der Eingabetyp des Feldes wurde im Konfigurationseditor von einem Eingabetyp, der die freie Eingabe von Text erlaubt, zu einem Eingabetyp mit Werteliste geändert.
+* Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Es wurden Einträge aus dem entsprechenden Feld in den Projekteigenschaften entfernt.
+* Beim Feld *Kampagne*: Werte wurden aus dem gleichnamigen Feld der übergeordneten Ressource entfernt (für das Feld *Kampagne* dürfen lediglich Werte ausgewählt werden, die in der übergeordneten Ressource gesetzt wurden).
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die nicht in der Werteliste enthaltenen Werte zu entfernen und gegebenenfalls durch andere Werte zu ersetzen.
+* Button *Wert korrigieren*: Wählen Sie aus der für das Feld konfigurierten Werteliste einen neuen Wert aus. Der bisherige Wert wird durch den ausgewählten Wert ersetzt. Optional können Sie den neuen Wert bei allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist und die die gleiche Werteliste verwenden.
+* Button *Wert löschen*: Der im Feld eingetragene Wert wird vollständig gelöscht. Optional können Sie den Wert aus allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist.
+* Wechseln Sie die Werteliste im Konfigurationseditor durch eine Werteliste aus, die den entsprechenden Wert enthält.
+* Fügen Sie der für das Feld konfigurierten Werteliste den fehlenden Wert hinzu. Bei nicht projektspezifischen Wertelisten müssen Sie für die Werteliste dazu mit der Option *Werteliste erweitern* zunächst eine Erweiterungsliste anlegen (siehe Abschnitt *Erstellen und Erweitern von Wertelisten* im Kapitel *Projektkonfiguration*).
+* Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Fügen Sie den fehlenden Wert dem entsprechenden Feld in den Projekteigenschaften hinzu.
+* Beim Feld *Kampagne*: Setzen Sie den Wert bei der übergeordneten Ressource, falls dort noch nicht vorhanden.
+
+#### Fehlende Zielressource einer Relation
+Eine als Ziel einer Relation angegebene Ressource kann nicht gefunden werden.
+
+##### Mögliche Ursachen
+* Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
+
+##### Mögliche Lösungen
+* Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
+* Button *Relation bereinigen*: Alle Verweise auf nicht existierende Ressourcen werden aus der Relation gelöscht.
+
+#### Fehlende oder ungültige übergeordnete Ressource
+Die Ressource besitzt keine gültige übergeordnete Ressource. Dies kann entweder bedeuten, dass für die Ressource keine übergeordnete Ressource gesetzt wurde, dass die angegebene übergeordnete Ressource nicht gefunden werden kann oder dass sie aufgrund ihrer Kategorie keine gültige übergeordnete Ressource ist. Die Ressource wird daher nicht angezeigt.
+
+##### Mögliche Ursachen
+* Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
+* Die Ressource wurde mit einer veralteten Version von Field Desktop angelegt.
+
+##### Mögliche Lösungen
+* Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
+* Button *Übergeordnete Ressource neu setzen*: Wählen Sie eine neue Ressource als übergeordnete Ressource aus. Die Ressource wird in den Kontext der gewählten Ressource verschoben.
+* Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
+
+#### Fehlendes Bezeichner-Präfix
+Der Bezeichner der Ressource enthält nicht das für die entsprechende Kategorie konfigurierte Präfix.
+
+##### Mögliche Ursachen
+* Die Ressource wurde angelegt, bevor das Bezeichner-Präfix konfiguriert wurde.
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Bezeichner neu einzutragen.
+
+#### Uneindeutiger Bezeichner
+Der Bezeichner der Ressource wird auch von einer oder mehreren anderen Ressourcen verwendet. Es kann daher zu Fehlern beim Import und Export von Daten kommen.
+
+##### Mögliche Ursachen
+* Die Bezeichner wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung eingetragen; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+##### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um einen neuen Bezeichner einzutragen.
+
+#### Ressourcenlimit überschritten
+Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konfigurierte Ressourcenlimit erlaubt.
+
+##### Mögliche Ursachen
+* Die Ressourcen wurden angelegt, bevor das Ressourcenlimit konfiguriert wurde.
+* Die Ressourcen wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung angelegt; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+##### Mögliche Lösungen
+* Löschen Sie Ressourcen der entsprechenden Kategorie, bis das Ressourcenlimit eingehalten wird.
+* Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.

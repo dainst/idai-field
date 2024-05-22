@@ -40,7 +40,6 @@ export class ChangesStream {
         pouchDbDatastore.changesNotifications().subscribe(async document => {
 
             if (isProjectDocument(document)) {
-                await this.datastore.convert(document);
                 ObserverUtil.notify(this.projectDocumentObservers, document);
             }
 

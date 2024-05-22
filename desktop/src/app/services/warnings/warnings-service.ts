@@ -8,6 +8,8 @@ import { Modals } from '../modals';
 import { Menus } from '../menus';
 import { WarningsModalComponent } from '../../components/navbar/warnings/warnings-modal.component';
 import { MenuContext } from '../menu-context';
+import { SettingsProvider } from '../settings/settings-provider';
+import { Settings } from '../settings/settings';
 
 
 @Injectable()
@@ -28,7 +30,8 @@ export class WarningsService {
                 private utilTranslations: UtilTranslations,
                 private modals: Modals,
                 private menus: Menus,
-                private syncService: SyncService) {
+                private syncService: SyncService,
+                private settingsProvider: SettingsProvider) {
 
         this.update();
 
@@ -58,6 +61,8 @@ export class WarningsService {
 
     public async openModal(preselectedDocument?: FieldDocument) {
 
+        this.syncService.stopSync();
+
         this.modals.initialize(this.menus.getContext());
         const [result, componentInstance] = this.modals.make<WarningsModalComponent>(
             WarningsModalComponent,
@@ -71,6 +76,10 @@ export class WarningsService {
         componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
+
+        if (Settings.isSynchronizationActive(this.settingsProvider.getSettings())) {
+            this.syncService.startSync();
+        }
     }
 
 

@@ -73,11 +73,11 @@ export module ValuelistUtil {
 
         const parentValues: string[] = parentResource[fieldName] ?? [];
 
-        const result: Valuelist = clone(valuelist);
-        result.values = filter((_, key: string) => {
-            return parentValues.includes(key);
-        })(valuelist.values) as { [key: string]: ValuelistValue };
-
-        return result;
+        return {
+            id: valuelist.id,
+            values: filter((_, key: string) => {
+                return parentValues.includes(key);
+            })(valuelist.values) as { [key: string]: ValuelistValue }
+        };
     }
 }

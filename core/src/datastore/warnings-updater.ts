@@ -108,7 +108,8 @@ export module WarningsUpdater {
         const parentCategoryName: string = category.parentCategory?.name ?? category.name;
 
         const query: Query = {
-            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME))
+            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
+            sort: { mode: 'none' }
         };
 
         if (resourceLimit !== undefined && indexFacade.find(query).length  > resourceLimit) {
@@ -133,7 +134,8 @@ export module WarningsUpdater {
         const parentCategoryName: string = category.parentCategory?.name ?? category.name;
 
         const documents: Array<Document> = (await datastore.find({
-            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME))
+            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
+            sort: { mode: 'none' }
         })).documents;
 
         for (let document of documents) {
@@ -324,7 +326,8 @@ export module WarningsUpdater {
                                                      identifier: string) {
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'identifier:match': identifier }
+            constraints: { 'identifier:match': identifier },
+            sort: { mode: 'none' }
         })).documents;
 
         for (let document of documents) {
@@ -337,7 +340,8 @@ export module WarningsUpdater {
                                                 indexFacade: IndexFacade, id: string) {
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'missingRelationTargetIds:contain': id }
+            constraints: { 'missingRelationTargetIds:contain': id },
+            sort: { mode: 'none' }
         })).documents;
 
         for (let document of documents) {
@@ -354,7 +358,9 @@ export module WarningsUpdater {
             return CategoryForm.getFields(category).find(field => field.valuelistFromProjectField);
         }).map(to(Named.NAME));
 
-        const documents: Array<Document> = (await datastore.find({ categories: categoryNames })).documents;
+        const documents: Array<Document> = (await datastore.find(
+            { categories: categoryNames, sort: { mode: 'none' } }
+        )).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
@@ -370,7 +376,8 @@ export module WarningsUpdater {
                                                     projectConfiguration: ProjectConfiguration) {
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'isChildOf:contain': document.resource.id }
+            constraints: { 'isChildOf:contain': document.resource.id },
+            sort: { mode: 'none' }
         })).documents;
 
         for (let document of documents) {

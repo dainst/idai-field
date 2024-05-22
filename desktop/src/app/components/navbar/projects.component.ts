@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ChangesStream } from 'idai-field-core';
 import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ProjectLabelProvider } from '../../services/project-label-provider';
@@ -22,7 +21,6 @@ export class ProjectsComponent {
     constructor(private settingsProvider: SettingsProvider,
                 private menuModalLauncher: MenuModalLauncher,
                 private projectLabelProvider: ProjectLabelProvider,
-                private changesStream: ChangesStream,
                 private changeDetectorRef: ChangeDetectorRef) {
 
         this.username = this.settingsProvider.getSettings().username;
@@ -30,8 +28,8 @@ export class ProjectsComponent {
 
         this.settingsProvider.settingsChangesNotifications().subscribe(settings => {
             this.username = settings.username;
+            this.updateProjectLabel();
         });
-        this.changesStream.projectDocumentNotifications().subscribe(() => this.updateProjectLabel());
     }
 
 

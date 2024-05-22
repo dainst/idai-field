@@ -21,7 +21,9 @@ import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
 import { UploadModalComponent } from './upload-modal.component';
 import { AppState } from '../../services/app-state';
+import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
+
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const path = typeof window !== 'undefined' ? window.require('path') : require('path');
@@ -239,7 +241,9 @@ export class ImportComponent implements OnInit {
         } catch (errWithParams) {
             this.messages.add(MessagesConversion.convertMessage(errWithParams));
         }
-        await this.synchronizationService.startSync();
+        if (Settings.isSynchronizationActive(this.settingsProvider.getSettings())) {
+            await this.synchronizationService.startSync();
+        }
 
         uploadModalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);

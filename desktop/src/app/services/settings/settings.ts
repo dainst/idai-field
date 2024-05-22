@@ -43,4 +43,17 @@ export module Settings {
             && username.trim().length > 0
             && username !== 'anonymous';
     }
+
+
+    export function getSyncTarget(settings: Settings): SyncTarget {
+
+        return settings.syncTargets ? settings.syncTargets[settings.selectedProject] : undefined;
+    }
+
+
+    export function isSynchronizationActive(settings: Settings): boolean {
+
+        const syncTarget: SyncTarget = Settings.getSyncTarget(settings);
+        return syncTarget?.isSyncActive;
+    }
 }

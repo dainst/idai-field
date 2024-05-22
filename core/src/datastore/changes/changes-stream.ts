@@ -10,7 +10,6 @@ import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from '../warnings-updater';
 import { Datastore } from '../datastore';
 import { ProjectConfiguration } from '../../services/project-configuration';
-import { CategoryForm } from '../../model/configuration/category-form';
 
 
 /**

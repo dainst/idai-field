@@ -1,7 +1,7 @@
 {
   "name": "idai-field-client",
   "description": "Field Desktop",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "main": "electron/main.js",
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",

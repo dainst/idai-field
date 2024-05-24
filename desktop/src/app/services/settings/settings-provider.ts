@@ -65,7 +65,7 @@ export class SettingsProvider {
     public async selectProjectAndSerialize(project: Name) {
 
         this.settings.dbs = set([project].concat(this.settings.dbs));
-        await this.serialize();
+        await this.serialize(false);
     }
 
 
@@ -106,10 +106,10 @@ export class SettingsProvider {
     }
 
 
-    private async serialize() {
+    private async serialize(notifyObservers: boolean = true) {
 
         await this.settingsSerializer.store(this.settings);
-        ObserverUtil.notify(this.settingsChangesObservers, this.getSettings());
+        if (notifyObservers) ObserverUtil.notify(this.settingsChangesObservers, this.getSettings());
     }
 
 

@@ -1,6 +1,6 @@
 {
   "loading1": "Proje",
-  "loading2": "projesi yükleniyor...",
+  "loading2": "yükleniyor...",
   "restart": "Yeniden başlat",
   "loadTestProject": "Test projesini başlat",
   "phase/processingImages": "Görüntüler ön izleme için optimize ediliyor.\nBu adım bir kez gerçekleştirilir ve birkaç dakika sürebilir.",

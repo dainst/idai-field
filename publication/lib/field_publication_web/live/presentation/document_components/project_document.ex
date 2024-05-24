@@ -50,7 +50,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
         </div>
 
         <div class="basis-1/3 m-5">
-          <% map_layers = Data.get_relation_by_name(@doc, "hasMapLayer") %>
+          <% map_layers = Data.get_relation_by_name(@doc, "hasDefaultMapLayer") %>
           <%= if map_layers do %>
             <div class="mb-4">
               <.live_component

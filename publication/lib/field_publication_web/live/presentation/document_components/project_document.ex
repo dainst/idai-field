@@ -57,8 +57,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
                 module={FieldPublicationWeb.Presentation.Components.ProjectMap}
                 id="project_map"
                 style="width:100%; height:300px;"
-                layers={Map.get(map_layers, "values", [])}
-                publication={@publication}
+                project_layer_documents={@project_map_layers}
+                additional_layer_documents={[]}
+                highlighted_geometry_documents={[]}
+                additional_geometry_documents={[]}
+                project_name={@project_name}
               />
             </div>
           <% end %>

@@ -57,6 +57,21 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <% end %>
         </div>
         <div class="basis-1/3 ml-2">
+          <% geometry = Data.get_field(@doc, "geometry") %>
+          <%= if geometry do %>
+            <div class="mb-4">
+              <.live_component
+                module={FieldPublicationWeb.Presentation.Components.ProjectMap}
+                id="project_map"
+                style="width:100%; height:500px;"
+                project_layer_documents={@project_map_layers}
+                additional_layer_documents={[]}
+                highlighted_geometry_documents={[@doc]}
+                additional_geometry_documents={@child_doc_previews ++ @relations_with_geometry}
+                project_name={@project_name}
+              />
+            </div>
+          <% end %>
           <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>

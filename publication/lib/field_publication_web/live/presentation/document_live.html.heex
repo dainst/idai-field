@@ -20,7 +20,8 @@
         doc: @doc,
         publication: @publication,
         lang: @selected_lang,
-        top_level_docs: @child_doc_previews
+        top_level_docs: @child_doc_previews,
+        project_map_layers: @project_map_layers
       })
 
     # category == "Type" ->
@@ -46,11 +47,13 @@
     true ->
       DocumentComponents.Generic.render(%{
         doc: @doc,
-        project_name: @project_name,
+        project_name: @publication.project_name,
         publication_date: @publication.publication_date,
         lang: @selected_lang,
         uuid: @uuid,
-        child_doc_previews: @child_doc_previews
+        child_doc_previews: @child_doc_previews,
+        relations_with_geometry: @relations_with_geometry,
+        project_map_layers: @project_map_layers
       })
   end %>
 </div>

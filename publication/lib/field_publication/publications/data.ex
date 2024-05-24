@@ -157,6 +157,20 @@ defmodule FieldPublication.Publications.Data do
     )
   end
 
+  def get_project_map_layers(%Publication{database: database}) do
+    %{
+      selector: %{
+        "resource.relations.isMapLayerOf": %{
+          "$elemMatch": %{
+            "$eq": "project"
+          }
+        }
+      }
+    }
+    |> run_query(database)
+    |> Enum.to_list()
+  end
+
   def apply_project_configuration(%{"resource" => resource}, configuration, publication) do
     category_configuration = search_category_tree(configuration, resource["category"])
 

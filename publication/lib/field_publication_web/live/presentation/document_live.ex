@@ -43,6 +43,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     doc = Publications.Data.get_document(uuid, current_publication)
 
+    project_map_layers =
+      Publications.Data.get_project_map_layers(current_publication)
+
     image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
 
     child_uuids =
@@ -61,6 +64,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     child_doc_previews = Data.get_doc_previews(current_publication, child_uuids)
 
+    relations_with_geometry =
+      Map.get(doc, "relations", [])
+      |> Enum.map(fn %{"values" => rel_docs} ->
+        rel_docs
+      end)
+      |> List.flatten()
+      |> List.flatten(child_doc_previews)
+      |> Enum.filter(fn rel ->
+        Data.get_field(rel, "geometry") != nil
+      end)
+
     {
       :noreply,
       socket
@@ -70,6 +84,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:uuid, uuid)
       |> assign(:image_categories, image_categories)
       |> assign(:child_doc_previews, child_doc_previews)
+      |> assign(:relations_with_geometry, relations_with_geometry)
+      |> assign(:project_map_layers, project_map_layers)
       |> assign(
         :page_title,
         get_page_title(doc)
@@ -90,6 +106,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       end)
 
     project_doc = Publications.Data.get_document("project", current_publication)
+
+    project_map_layers =
+      Publications.Data.get_project_map_layers(current_publication)
 
     top_level_uuids =
       Publications.Data.get_hierarchy(current_publication)
@@ -115,6 +134,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:selected_lang, language)
       |> assign(:publication_comments, publication_comments)
       |> assign(:child_doc_previews, child_doc_previews)
+      |> assign(:project_map_layers, project_map_layers)
       |> assign(
         :page_title,
         get_page_title(project_doc)

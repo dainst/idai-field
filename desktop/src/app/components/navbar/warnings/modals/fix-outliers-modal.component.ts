@@ -58,6 +58,8 @@ export class FixOutliersModalComponent {
 
     public async performReplacement() {
 
+        if (!this.selectedValue) return;
+
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
 
         await AngularUtility.refresh();

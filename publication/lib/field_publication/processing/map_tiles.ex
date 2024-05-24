@@ -63,7 +63,7 @@ defmodule FieldPublication.Processing.MapTiles do
           )
 
           Logger.debug(
-            "Creating tiles for image #{uuid} in project #{publication.project_name} with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
+            "Creating tiles for image `#{uuid}` in project `#{publication.project_name}` with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
           )
 
           System.shell(

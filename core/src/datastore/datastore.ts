@@ -53,9 +53,6 @@ export class Datastore {
     }
 
 
-    public suppressWait = false;
-
-
     /**
      * Persists a given document. If document.resource.id is not set,
      * it will be set to a generated value. In case of an error it remains undefined.

@@ -68,7 +68,7 @@ export class AppState {
         };
 
         if (this.codeScannerCameraId) {
-            result[this.codeScannerCameraId] = this.codeScannerCameraId;
+            result.codeScannerCameraId = this.codeScannerCameraId;
         }
 
         return result;

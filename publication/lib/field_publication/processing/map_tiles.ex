@@ -5,14 +5,13 @@ defmodule FieldPublication.Processing.MapTiles do
 
   require Logger
 
-  @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
-  @dev_mode Application.compile_env(:field_publication, :dev_routes)
-
   @tile_size 256
 
   def start_tile_creation(publication) do
     raw_root = FileService.get_raw_data_path(publication.project_name)
     tiles_root = FileService.get_map_tiles_path(publication.project_name)
+
+    # TODO: Check if already files present
 
     File.mkdir_p!(tiles_root)
 
@@ -26,49 +25,21 @@ defmodule FieldPublication.Processing.MapTiles do
         |> Enum.map(fn %{scaled_size: scaled_size, z_index: z_index, xy_info: _xy_info} ->
           original_z_index_path = "#{tiles_root}/#{uuid}/#{z_index}"
 
-          {raw_image_path, z_index_path, base_cmd, args} =
-            if @dev_mode do
-              input_file_path =
-                "/files/#{String.replace(raw_image_path, "#{@filestore_root}/", "")}"
-
-              temp_image_path =
-                "/files/#{String.replace(original_z_index_path, "#{@filestore_root}/", "")}"
-
-              {input_file_path, temp_image_path, "docker",
-               ["exec", "-u", "root:root", "field_publication_cantaloupe", "convert"]}
-            else
-              {raw_image_path, original_z_index_path, "convert", []}
-            end
-
-          File.mkdir_p!(original_z_index_path)
-
-          temp_image_path = "#{z_index_path}/temp.png"
-
           next_multiple =
             @tile_size * Float.ceil(scaled_size / @tile_size)
 
-          System.cmd(
-            base_cmd,
-            args ++
-              [
-                raw_image_path,
-                "-background",
-                "none",
-                "-scale",
-                "#{scaled_size}x#{scaled_size}",
-                "-extent",
-                "#{next_multiple}x#{next_multiple}",
-                temp_image_path
-              ]
+          FieldPublication.Processing.Imagemagick.create_tiling_temp_file(
+            raw_image_path,
+            original_z_index_path,
+            scaled_size,
+            next_multiple
           )
 
           Logger.debug(
             "Creating tiles for image `#{uuid}` in project `#{publication.project_name}` with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
           )
 
-          System.shell(
-            "docker exec -w #{z_index_path} -uroot:root field_publication_cantaloupe convert temp.png -crop #{@tile_size}x#{@tile_size} -background transparent -extent #{@tile_size}x#{@tile_size} -set 'filename:tile' '%[fx:page.x/#{@tile_size}]_%[fx:page.y/#{@tile_size}]' +repage +adjoin 'tile_%[filename:tile].png'"
-          )
+          FieldPublication.Processing.Imagemagick.create_tiles(original_z_index_path, @tile_size)
 
           File.rm!("#{original_z_index_path}/temp.png")
 

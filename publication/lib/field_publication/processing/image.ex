@@ -8,9 +8,6 @@ defmodule FieldPublication.Processing.Image do
     Publication
   }
 
-  @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)
-  @dev_mode Application.compile_env(:field_publication, :dev_routes)
-
   def evaluate_web_images_state(%Publication{project_name: project_name} = publication) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
 
@@ -62,47 +59,30 @@ defmodule FieldPublication.Processing.Image do
 
     existing_raw_files
     |> Enum.map(fn uuid ->
-      convert_file(
+      FieldPublication.Processing.Imagemagick.create_jp2(
         "#{raw_root}/image/#{uuid}",
-        "#{web_root}/#{uuid}.jp2",
-        counter_pid,
-        doc_id
+        "#{web_root}/#{uuid}.jp2"
+      )
+
+      updated_state =
+        Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+          state =
+            state
+            |> Map.put(:counter, counter + 1)
+            |> Map.put(:percentage, (counter + 1) / overall * 100)
+
+          {state, state}
+        end)
+
+      PubSub.broadcast(
+        FieldPublication.PubSub,
+        doc_id,
+        {
+          :web_image_processing_count,
+          updated_state
+        }
       )
     end)
     |> Enum.to_list()
-  end
-
-  @dialyzer {:nowarn_function, convert_file: 4}
-  defp convert_file(input_file_path, target_file_path, counter_pid, channel) do
-    if @dev_mode do
-      input_file_path = String.replace(input_file_path, "#{@filestore_root}/raw/", "")
-      target_file_path = String.replace(target_file_path, "#{@filestore_root}/web_images/", "")
-
-      {"", 0} =
-        System.shell(
-          "docker exec -u root:root field_publication_cantaloupe convert /files/#{input_file_path} /files/#{target_file_path}"
-        )
-    else
-      System.cmd("convert", [input_file_path, target_file_path])
-    end
-
-    updated_state =
-      Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
-        state =
-          state
-          |> Map.put(:counter, counter + 1)
-          |> Map.put(:percentage, (counter + 1) / overall * 100)
-
-        {state, state}
-      end)
-
-    PubSub.broadcast(
-      FieldPublication.PubSub,
-      channel,
-      {
-        :web_image_processing_count,
-        updated_state
-      }
-    )
   end
 end

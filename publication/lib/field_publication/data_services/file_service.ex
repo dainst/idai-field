@@ -81,4 +81,8 @@ defmodule FieldPublication.FileService do
   def list_web_image_files(project_name) do
     File.ls!(get_web_images_path(project_name))
   end
+
+  def list_tile_image_directories(project_name) do
+    File.ls!(get_map_tiles_path(project_name))
+  end
 end

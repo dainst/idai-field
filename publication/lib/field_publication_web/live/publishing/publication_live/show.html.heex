@@ -108,6 +108,31 @@
                   </td>
                 </tr>
                 <tr class="border-2">
+                  <td class="text-center">Map tile images</td>
+                  <td>
+                    <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
+                  </td>
+                  <td class="text-center">
+                    <%= if @tile_images_processing? do %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="stop_tile_images_processing"
+                      >
+                        Stop
+                      </.link>
+                    <% else %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="start_tile_images_processing"
+                      >
+                        Start
+                      </.link>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr class="border-2">
                   <td class="text-center">Search index</td>
                   <td>
                     <.progress_bar state={@data_state.search_index}></.progress_bar>

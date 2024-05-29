@@ -1,21 +1,54 @@
 defmodule FieldPublication.Processing.MapTiles do
   alias FieldPublication.FileService
+  alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
   alias FieldPublication.Schemas.Publication
-
+  alias Phoenix.PubSub
   require Logger
 
   @tile_size 256
 
-  def start_tile_creation(publication) do
+  def evaluate_state(%Publication{} = publication) do
+    existing_tiles = FileService.list_tile_image_directories(publication.project_name)
+
+    georeferenced_docs =
+      Data.get_doc_stream_for_georeferenced(publication)
+      |> Enum.to_list()
+
+    missing =
+      Enum.reject(georeferenced_docs, fn %{"_id" => uuid} ->
+        uuid in existing_tiles
+      end)
+
+    overall_count = Enum.count(georeferenced_docs)
+    existing_count = Enum.count(existing_tiles)
+
+    %{
+      existing: existing_tiles,
+      missing: missing,
+      summary: %{
+        overall: overall_count,
+        counter: existing_count,
+        percentage: if(overall_count > 0, do: existing_count / overall_count * 100, else: 0)
+      }
+    }
+  end
+
+  def start_tile_creation(%Publication{} = publication) do
     raw_root = FileService.get_raw_data_path(publication.project_name)
     tiles_root = FileService.get_map_tiles_path(publication.project_name)
 
-    # TODO: Check if already files present
+    %{missing: missing, summary: summary} =
+      evaluate_state(publication)
 
     File.mkdir_p!(tiles_root)
 
-    Data.get_doc_stream_for_georeferenced(%Publication{} = publication)
+    {:ok, counter_pid} =
+      Agent.start_link(fn -> summary end)
+
+    doc_id = Publications.get_doc_id(publication)
+
+    missing
     |> Enum.map(fn %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
       if FileService.raw_data_file_exists?(publication.project_name, uuid, :image) do
         derivate_info = calcuate_derivate_info(width, height, @tile_size)
@@ -58,6 +91,25 @@ defmodule FieldPublication.Processing.MapTiles do
             File.rm!("#{original_z_index_path}/#{file_name}")
           end)
         end)
+
+        updated_state =
+          Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+            state =
+              state
+              |> Map.put(:counter, counter + 1)
+              |> Map.put(:percentage, (counter + 1) / overall * 100)
+
+            {state, state}
+          end)
+
+        PubSub.broadcast(
+          FieldPublication.PubSub,
+          doc_id,
+          {
+            :tile_image_processing_count,
+            updated_state
+          }
+        )
       else
         Logger.error("Todo")
       end

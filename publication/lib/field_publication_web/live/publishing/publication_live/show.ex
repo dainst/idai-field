@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
+  alias FieldPublication.Processing.MapTiles
   alias FieldPublication.Processing.OpenSearch
   alias FieldPublication.Processing.Image
   use FieldPublicationWeb, :live_view
@@ -38,6 +39,11 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
         type == :web_images
       end)
 
+    tile_images_processing? =
+      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
+        type == :tile_images
+      end)
+
     search_indexing? =
       Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
         type == :search_index
@@ -61,6 +67,7 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
+      |> assign(:tile_images_processing?, tile_images_processing?)
       |> assign(:search_indexing?, search_indexing?)
       |> assign(:publication_form, publication_form)
     }
@@ -99,6 +106,26 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
         %{assigns: %{publication: publication}} = socket
       ) do
     Processing.stop(publication, :web_images)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "start_tile_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.start(publication, :tile_images)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "stop_tile_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.stop(publication, :tile_images)
 
     {:noreply, socket}
   end
@@ -308,7 +335,11 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
         {processing_feedback, _summary},
         %{assigns: %{data_state: nil}} = socket
       )
-      when processing_feedback in [:web_image_processing_count, :search_index_processing_count] do
+      when processing_feedback in [
+             :web_image_processing_count,
+             :search_index_processing_count,
+             :tile_image_processing_count
+           ] do
     # This handles situations, where a processing task starts sending updates, while the interface is not ready yet. While
     # our view's data_state is nil, we just ignore any incoming update and thereby waiting for start_data_state_evaluation/1 to finish.
     {:noreply, socket}
@@ -330,6 +361,32 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
     {
       :noreply,
       assign(socket, :web_images_processing?, false)
+    }
+  end
+
+  def handle_info({:processing_started, :tile_images}, socket) do
+    {
+      :noreply,
+      assign(socket, :tile_images_processing?, true)
+    }
+  end
+
+  def handle_info(
+        {:tile_image_processing_count, summary},
+        %{assigns: %{data_state: data_state}} = socket
+      ) do
+    updated_data_state =
+      Map.update!(data_state, :tiles, fn old_image_state ->
+        Map.put(old_image_state, :summary, summary)
+      end)
+
+    {:noreply, assign(socket, :data_state, updated_data_state)}
+  end
+
+  def handle_info({:processing_stopped, :tile_images}, socket) do
+    {
+      :noreply,
+      assign(socket, :tile_images_processing?, false)
     }
   end
 
@@ -368,6 +425,7 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
         :data_state_evaluation,
         %{
           images: Image.evaluate_web_images_state(publication),
+          tiles: MapTiles.evaluate_state(publication),
           search_index: OpenSearch.evaluate_state(publication)
         }
       }

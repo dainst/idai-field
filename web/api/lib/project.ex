@@ -95,13 +95,6 @@ defmodule Api.Project do
               "publications",
               Map.put(publications, publication_name, replication_result)
             )
-          {:error, _} ->
-
-            CouchService.store_document(
-              project_name,
-              "publications",
-              %{publication_name => replication_result}
-            )
         end
     end
   end

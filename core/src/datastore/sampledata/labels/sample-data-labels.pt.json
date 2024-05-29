@@ -22,5 +22,6 @@
   "building": "Building",
   "buildingShort": "B",
   "room": "Room",
-  "roomShort": "R"
+  "roomShort": "R",
+  "mapLayer": "Mapa de fundo"
 }

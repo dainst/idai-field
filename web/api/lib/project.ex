@@ -10,7 +10,7 @@ defmodule Api.Project do
   def index(user_name) do
     project_databases = CouchService.get_project_databases()
 
-    if user_name == Application.get_env(:api, :couchdb_admin_name) do
+    if user_name != Application.get_env(:api, :couchdb_admin_name) do
       project_databases
     else
       project_databases

@@ -84,7 +84,7 @@ defmodule Api.Services.CouchService do
   - `password` the user's password.
   """
   def create_user(name, password) do
-    HTTPoison.put(
+    HTTPoison.put!(
       "#{local_url()}/_users/org.couchdb.user:#{name}",
       Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
       headers()
@@ -137,12 +137,12 @@ defmodule Api.Services.CouchService do
 
   def add_application_user(project_identifier) do
 
-    HTTPoison.get(
+    HTTPoison.get!(
       "#{local_url()}/#{project_identifier}/_security",
       headers()
     )
     |> case do
-      {:ok, %{status_code: 200, body: body}} ->
+      %{status_code: 200, body: body} ->
         %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
 
         updated_names =
@@ -158,13 +158,13 @@ defmodule Api.Services.CouchService do
         }
         |> Jason.encode!()
 
-        HTTPoison.put(
+        HTTPoison.put!(
           "#{local_url()}/#{project_identifier}/_security",
           updated_payload,
           headers()
         )
 
-      {:ok, %{status_code: 404}} = res ->
+      %{status_code: 404} = res ->
         {:unknown_project, res}
     end
   end

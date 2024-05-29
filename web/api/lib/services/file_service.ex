@@ -50,12 +50,7 @@ defmodule Api.Services.FileService do
         file_path = "#{project_directory}/#{variant_name}/#{uuid}"
 
         unless File.exists?(file_path) do
-          HTTPoison.get(
-            "#{url}/#{uuid}?type=#{variant_name}",
-            headers, [
-            timeout: 1000 * 20,
-            recv_timeout: 1000 * 20
-          ])
+          HTTPoison.get("#{url}/#{uuid}?type=#{variant_name}", headers)
           |> case do
             {:ok, %{status_code: 200, body: data}} ->
               File.mkdir_p!("#{project_directory}/#{variant_name}")

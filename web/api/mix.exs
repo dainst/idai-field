@@ -47,8 +47,8 @@ defmodule Api.MixProject do
     [
       setup: [
         "deps.get",
-        "cmd npm install --prefix priv/publication_enricher",
-        "cmd npm run build --prefix priv/publication_enricher",
+        "cmd npm install --prefix priv/project_enricher",
+        "cmd npm run build --prefix priv/project_enricher",
         "run --eval 'Api.Services.CouchService.initial_setup()'"
       ]
     ]

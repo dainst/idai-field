@@ -8,14 +8,8 @@ defmodule FieldPublicationWeb.Presentation.Components.ViewSelection do
       <.link navigate={~p"/#{@project}/#{@date}/#{@lang}/#{@uuid}"}>
         <span class="hero-table-cells"></span> Details
       </.link>
-      <.link navigate={~p"/#{@project}/#{@date}/#{@lang}/map/#{@uuid}"}>
-        <span class="hero-map"></span> Map
-      </.link>
       <.link navigate={~p"/#{@project}/#{@date}/#{@lang}/hierarchy/#{@uuid}"}>
         <span class="hero-view-columns"></span> Hierarchy
-      </.link>
-      <.link navigate={~p"/#{@project}/#{@date}/#{@lang}/search/#{@uuid}"}>
-        <span class="hero-magnifying-glass"></span> Search
       </.link>
     </div>
     """

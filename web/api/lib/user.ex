@@ -53,7 +53,7 @@ defmodule Api.User do
       {:ok, %{body: body, status_code: 200}} ->
         body
         |> Jason.decode()
-      {:ok, %{status_code: 404}} ->
+      {:ok, %{body: body, status_code: 404}} ->
         {:error, :unknown_user}
       end
   end

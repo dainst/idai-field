@@ -190,46 +190,31 @@ defmodule FieldPublication.Replication do
 
   # Handle result of FileReplication task, finish up by reconstructing the project configuration.
   def handle_info({_ref, {:ok, {publication_id, :file_replication}}}, running_replications) do
+    {_finished_task, parameters} =
+      Map.get(running_replications, publication_id)
+
+    task =
+      Task.Supervisor.async_nolink(
+        FieldPublication.TaskSupervisor,
+        fn ->
+          final_steps(parameters)
+        end
+      )
+
+    {:noreply, Map.put(running_replications, publication_id, {task, parameters})}
+  end
+
+  def handle_info(
+        {_ref, {:ok, {publication_id, final_publication, :final_steps}}},
+        running_replications
+      ) do
     {_finished_task,
      %{
-       publication: %Publication{} = publication,
        input: %{processing: start_processing_immediately}
      } = parameters} =
       Map.get(running_replications, publication_id)
 
-    # TODO: Move these final steps into their own task, so if something fails the genserver does not crash.
-    {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
-
-    create_hierarchy_doc(publication)
-
-    # The reconstructed project configuration does not retain a simple list of the languages used for the
-    # publication. We read that information from the "configuration" document (pre-reconstruction) and save it
-    # in our `Publication` document as a shorthand.
-
-    language_default = ["en"]
-
-    languages =
-      CouchService.get_document("configuration", publication.database)
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
-          body
-          |> Jason.decode!()
-          |> Map.get("resource", %{})
-          |> Map.get("projectLanguages", language_default)
-
-        _ ->
-          language_default
-      end
-
     log(parameters, :info, "Replication finished.")
-
-    {:ok, final_publication} =
-      publication
-      |> Publications.get!()
-      |> Publications.put(%{
-        "replication_finished" => DateTime.utc_now(),
-        "languages" => languages
-      })
 
     if start_processing_immediately do
       Processing.start(final_publication)
@@ -302,6 +287,47 @@ defmodule FieldPublication.Replication do
     |> Publications.put(%{})
 
     PubSub.broadcast(FieldPublication.PubSub, publication_id, {:replication_log, log_entry})
+  end
+
+  defp final_steps(
+         %{
+           publication: %Publication{} = publication,
+           id: id
+         } = _parameters
+       ) do
+    # TODO: Move these final steps into their own task, so if something fails the genserver does not crash.
+    {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
+
+    create_hierarchy_doc(publication)
+
+    # The reconstructed project configuration does not retain a simple list of the languages used for the
+    # publication. We read that information from the "configuration" document (pre-reconstruction) and save it
+    # in our `Publication` document as a shorthand.
+
+    language_default = ["en"]
+
+    languages =
+      CouchService.get_document("configuration", publication.database)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("resource", %{})
+          |> Map.get("projectLanguages", language_default)
+
+        _ ->
+          language_default
+      end
+
+    {:ok, final_publication} =
+      publication
+      |> Publications.get!()
+      |> Publications.put(%{
+        "replication_finished" => DateTime.utc_now(),
+        "languages" => languages
+      })
+
+    {:ok, {id, final_publication, :final_steps}}
   end
 
   defp reconstruct_project_configuraton(%Publication{

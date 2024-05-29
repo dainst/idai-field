@@ -36,24 +36,30 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
       <div class="flex flex-row">
         <div class="basis-2/3">
           <%= for group <- @doc["groups"] do %>
-            <section>
-              <.group_heading>
-                <I18n.text values={group["labels"]} />
-              </.group_heading>
+            <% fields =
+              Enum.reject(group["fields"], fn %{"key" => key} ->
+                key in ["identifier", "category", "geometry"]
+              end) %>
+            <%= unless fields == [] do %>
+              <section>
+                <.group_heading>
+                  <I18n.text values={group["labels"]} />
+                </.group_heading>
 
-              <dl class="grid grid-cols-2 gap-1 mt-2">
-                <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category"] end)  do %>
-                  <div class="border-2 p-0.5">
-                    <GenericField.render
-                      values={field["values"]}
-                      labels={field["labels"]}
-                      lang={@lang}
-                      type={field["type"]}
-                    />
-                  </div>
-                <% end %>
-              </dl>
-            </section>
+                <dl class="grid grid-cols-2 gap-1 mt-2">
+                  <%= for field <- fields do %>
+                    <div class="border-2 p-0.5">
+                      <GenericField.render
+                        values={field["values"]}
+                        labels={field["labels"]}
+                        lang={@lang}
+                        type={field["type"]}
+                      />
+                    </div>
+                  <% end %>
+                </dl>
+              </section>
+            <% end %>
           <% end %>
         </div>
         <div class="basis-1/3 ml-2">

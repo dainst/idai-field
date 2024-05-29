@@ -110,7 +110,7 @@ export class FixOutliersModalComponent {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
-                if (equal(valuelist, this.valuelist)) {
+                if (valuelist && equal(valuelist, this.valuelist)) {
                     this.replaceValue(document, document.resource, field);
                     if (!changedDocuments.includes(document)) changedDocuments.push(document);
                 }

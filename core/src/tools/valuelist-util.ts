@@ -35,12 +35,15 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelist(field: Field,  projectDocument: Document, projectConfiguration: ProjectConfiguration,
+    export function getValuelist(field: Field, projectDocument: Document, projectConfiguration: ProjectConfiguration,
                                  parentResource?: Resource): Valuelist {
 
         const valuelist: Valuelist|string[] = field.valuelist
             ? field.valuelist
-            : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
+            : field.valuelistFromProjectField
+                ? getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument)
+                : undefined;
+        if (!valuelist) return undefined;
 
         const parentCategory: CategoryForm = parentResource ?
             projectConfiguration.getCategory(parentResource.category)

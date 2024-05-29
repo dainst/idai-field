@@ -30,6 +30,7 @@ export class FieldViewComponent {
         this.onJumpToResource.emit(document);
     }
 
+
     public getSubfields(field: FieldsViewField, entry: any) {
 
         return field.subfields.filter(subfield => entry[subfield.definition.name] !== undefined);

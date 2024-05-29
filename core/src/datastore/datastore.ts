@@ -51,7 +51,7 @@ export class Datastore {
                 private projectConfiguration: ProjectConfiguration,
                 private getUser: () => Name) {
     }
-
+    
 
     /**
      * Persists a given document. If document.resource.id is not set,

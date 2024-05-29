@@ -47,7 +47,7 @@ defmodule FieldPublication.Projects do
 
     with {:ok, project} <- apply_action(changeset, :create),
          id <- get_document_id(project),
-         [:ok, :ok] <- FileService.initialize(project.name),
+         [:ok, :ok, :ok] <- FileService.initialize(project.name),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(id, project) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(project, :_rev, rev)}

@@ -44,20 +44,12 @@ defmodule Api.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-
-    seed_project_name = "test"
-
     [
       setup: [
         "deps.get",
         "cmd npm install --prefix priv/publication_enricher",
         "cmd npm run build --prefix priv/publication_enricher",
         "run --eval 'Api.Services.CouchService.initial_setup()'"
-      ],
-      "seed-desktop-test": [
-        "run --eval 'Api.Project.create(\"#{seed_project_name}\")'",
-        # TODO: Password via config?
-        "run --eval 'Api.Project.initialize_publication(\"#{seed_project_name}\", \"http://localhost:3000\", \"#{seed_project_name}\", \"#{seed_project_name}\", \"sync_test\")'"
       ]
     ]
   end

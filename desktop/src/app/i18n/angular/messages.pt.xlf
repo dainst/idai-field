@@ -243,16 +243,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
-        <source>Keine Suchkriterien angegeben</source>
-        <target state="translated">Nenhum critério de pesquisa especificado</target>
+        <source>Keine Suchkriterien angegeben.</source>
+        <target state="translated">Nenhum critério de pesquisa especificado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
-        <source>Keine Ziele gefunden</source>
-        <target state="translated">Sem resultados</target>
+        <source>Keine Ressourcen gefunden.</source>
+        <target state="translated">Sem resultados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -1183,8 +1183,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.importModal.project" datatype="html">
-        <source>Projekt:</source>
-        <target state="translated">Projeto:</target>
+        <source>Projekt</source>
+        <target state="translated">Projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">85</context>

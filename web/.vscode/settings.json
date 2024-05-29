@@ -1,0 +1,10 @@
+{
+    "elixir.projectPath": "api",
+    "editor.rulers": [
+        120
+    ],
+    "elixirLS.projectDir": "api",
+    "eslint.workingDirectories": [
+        "ui"
+    ]
+}

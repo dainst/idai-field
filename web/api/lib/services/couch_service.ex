@@ -25,6 +25,7 @@ defmodule Api.Services.CouchService do
   def get_all_databases() do
     "#{local_url()}/_all_dbs"
     |> HTTPoison.get!(headers())
+    |> IO.inspect()
     |> Map.get(:body)
     |> Jason.decode!()
     |> Stream.reject(fn val ->
@@ -71,6 +72,7 @@ defmodule Api.Services.CouchService do
       }
       |> Jason.encode!()
 
+    # TODO: Handle the long replication duration other than setting timeout :infinity or random high number.
     HTTPoison.post(
       "#{local_url()}/_replicate",
       payload,

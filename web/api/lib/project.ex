@@ -51,7 +51,7 @@ defmodule Api.Project do
              source_user,
              source_password,
              target_project_name
-           ),
+           ) |> IO.inspect(),
          :ok <- create_project_metadata(target_project_name) do
       %{
         couch_status: :ok,

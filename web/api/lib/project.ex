@@ -7,18 +7,33 @@ defmodule Api.Project do
 
   require Logger
 
-  def index(user_name) do
-    project_databases = CouchService.get_project_databases()
+  @translation_db_suffix "_translations"
+  @styles_db_suffix "_styles"
 
-    if user_name != Application.get_env(:api, :couchdb_admin_name) do
-      project_databases
-    else
-      project_databases
-      |> Enum.filter(fn(project_name) ->
-        check_project_authorization(project_name, user_name) == :grantend
+  @date_pattern ~r/^(?<db>.*)-(?<version>\d{4}-\d{2}-\d{2})$/
+
+  def index() do
+    CouchService.get_all_databases()
+    |> Stream.filter(fn name ->
+      cond do
+        String.ends_with?(name, @translation_db_suffix) ->
+          false
+
+        String.ends_with?(name, @styles_db_suffix) ->
+          false
+
+        true ->
+          true
+      end
+    end)
+    |> Stream.map(fn name ->
+      Regex.named_captures(@date_pattern, name)
+    end)
+    |> Enum.reduce(%{}, fn %{"db" => database_name, "version" => version}, acc ->
+      Map.update(acc, database_name, %{versions: [version]}, fn versions ->
+        versions ++ [version]
       end)
-    end
-    |> IO.inspect()
+    end)
   end
 
   def create(project_name) do
@@ -99,17 +114,6 @@ defmodule Api.Project do
     end
   end
 
-  def get_publications(project_name) do
-    project_name
-    |> get_project_document("publications")
-    |> case do
-      {:ok, data} ->
-        {:ok, data}
-      {:error, :document_not_found} ->
-        {:ok, []}
-    end
-  end
-
   defp get_project_document(project_name, doc_id) do
     CouchService.retrieve_document(project_name, doc_id)
     |> case do
@@ -117,7 +121,7 @@ defmodule Api.Project do
         body
         |> Jason.decode()
       {:ok, %{status_code: 404}} ->
-        {:error, :document_not_found}
+        {:error, :unknown_project}
       end
   end
 end

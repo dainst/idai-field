@@ -63,8 +63,7 @@ defmodule Api.Project do
         Logger.error(error)
         :conflict
 
-      error ->
-        Logger.error(error)
+      _ ->
         :error
     end
   end

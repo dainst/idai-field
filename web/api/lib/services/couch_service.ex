@@ -3,13 +3,6 @@ defmodule Api.Services.CouchService do
 
   @system_databases ["_users", "_replicator"]
 
-  # We trigger replication using a long running POST on the local CouchDB
-  # in order to wait for the replication to finish, we extend the default
-  # timeouts of HTTPoison to 10 minutes.
-  @replication_timeout 1000 * 60 * 10
-
-  require Logger
-
   @doc """
   Creates CouchDB's internal databases `_users` and `_replicator`.
 
@@ -52,9 +45,6 @@ defmodule Api.Services.CouchService do
   end
 
   def replicate(source_url, source_user, source_password, target_project_name) do
-
-    Logger.debug("Replicating database #{source_url} as #{target_project_name}")
-
     payload =
       %{
         create_target: true,
@@ -73,15 +63,7 @@ defmodule Api.Services.CouchService do
       |> Jason.encode!()
 
     # TODO: Handle the long replication duration other than setting timeout :infinity or random high number.
-    HTTPoison.post(
-      "#{local_url()}/_replicate",
-      payload,
-      [{"Content-Type", "application/json"}],
-      [
-        timeout: @replication_timeout,
-        recv_timeout: @replication_timeout
-      ]
-    )
+    HTTPoison.post("#{local_url()}/_replicate", payload, [{"Content-Type", "application/json"}])
   end
 
   defp headers() do

@@ -60,7 +60,7 @@
   on_cancel={JS.patch(~p"/publishing/#{@project}")}
 >
   <.live_component
-    module={FieldPublicationWeb.ProjectLive.FormComponent}
+    module={FieldPublicationWeb.Publishing.ProjectLive.FormComponent}
     id={@project.name}
     title={@page_title}
     action={@live_action}

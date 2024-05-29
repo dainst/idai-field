@@ -7,7 +7,6 @@ config :logger, :console,
 config :tesla, :adapter, Tesla.Adapter.Ibrowse
 
 config :api,
-  port: 4001,
-  field_user_db: "field_users"
+  port: 4001
 
 import_config "#{Mix.env()}.exs"

@@ -3,8 +3,6 @@ defmodule Api.Services.CouchService do
 
   @system_databases ["_users", "_replicator"]
 
-  @field_users_db Application.compile_env(:api, :field_user_db)
-
   # We trigger replication using a long running POST on the local CouchDB
   # in order to wait for the replication to finish, we extend the default
   # timeouts of HTTPoison to 10 minutes.
@@ -13,82 +11,12 @@ defmodule Api.Services.CouchService do
   require Logger
 
   @doc """
-  Creates CouchDB's internal databases `_users` and `_replicator` and `_field_publication_users`.
+  Creates CouchDB's internal databases `_users` and `_replicator`.
 
-  Returns a tuple with three #{HTTPoison.Response} for each creation attempt.
+  Returns a tuple with two #{HTTPoison.Response} for each creation attempt.
   """
   def initial_setup() do
-    [
-      {_, %{status_code: status_code_user}},
-      {_, %{status_code: status_code_replicator}},
-    ] = Enum.map(@system_databases, &create_database/1)
-
-    case status_code_user do
-      412 ->
-        Logger.warning(
-          "System database '_users' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
-
-      code when 199 < code and code < 300 ->
-        Logger.info("Created system database `_users`.")
-    end
-
-    case status_code_replicator do
-      412 ->
-        Logger.warning(
-          "System database '_replicator' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
-
-      code when 199 < code and code < 300 ->
-          Logger.info("Created system database `_replicator`.")
-    end
-
-    {_, %{status_code: status_code_field_publication_users}} = create_database(@field_users_db)
-
-    case status_code_field_publication_users do
-      412 ->
-        Logger.warning(
-          "Application database '#{@field_users_db}' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
-
-      code when 199 < code and code < 300 ->
-          Logger.info("Created application database `#{@field_users_db}`.")
-    end
-
-    app_user = Application.get_env(:api, :couchdb_user_name)
-
-    create_user(
-      app_user,
-      Application.get_env(:api, :couchdb_user_password)
-    )
-    |> then(fn(%{status_code: status_code}) -> status_code end)
-    |> case do
-      201 ->
-        Logger.info("Created application user '#{app_user}'.")
-
-      409 ->
-        Logger.warning("Application user '#{app_user}' already exists.")
-    end
-
-    add_application_user(@field_users_db)
-  end
-
-
-  @doc """
-  Creates a CouchDB user.
-
-  Returns the #{HTTPoison.Response} for the creation attempt.
-
-  __Parameters__
-  - `name` the user's name.
-  - `password` the user's password.
-  """
-  def create_user(name, password) do
-    HTTPoison.put!(
-      "#{local_url()}/_users/org.couchdb.user:#{name}",
-      Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
-      headers()
-    )
+    Enum.map(@system_databases, &create_database/1)
   end
 
   @doc """
@@ -118,55 +46,8 @@ defmodule Api.Services.CouchService do
     HTTPoison.put(
       "#{local_url()}/#{database_name}/#{doc_id}",
       Jason.encode!(document),
-      headers(
-        Application.get_env(:api, :couchdb_user_name),
-        Application.get_env(:api, :couchdb_user_password)
-      )
-    )
-  end
-
-  def retrieve_document(database_name, doc_id) do
-    HTTPoison.get(
-      "#{local_url()}/#{database_name}/#{doc_id}",
-      headers(
-        Application.get_env(:api, :couchdb_user_name),
-        Application.get_env(:api, :couchdb_user_password)
-      )
-    )
-  end
-
-  def add_application_user(project_identifier) do
-
-    HTTPoison.get!(
-      "#{local_url()}/#{project_identifier}/_security",
       headers()
     )
-    |> case do
-      %{status_code: 200, body: body} ->
-        %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
-
-        updated_names =
-          (Map.get(existing_members, "names", []) ++ [Application.get_env(:api, :couchdb_user_name)])
-          |> Enum.uniq()
-
-        updated_payload = %{
-          admins: existing_admins,
-          members: %{
-            names: updated_names,
-            roles: existing_members["roles"]
-          }
-        }
-        |> Jason.encode!()
-
-        HTTPoison.put!(
-          "#{local_url()}/#{project_identifier}/_security",
-          updated_payload,
-          headers()
-        )
-
-      %{status_code: 404} = res ->
-        {:unknown_project, res}
-    end
   end
 
   def replicate(source_url, source_user, source_password, target_project_name) do

@@ -5,7 +5,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   alias FieldPublicationWeb.Presentation.Components.I18n
 
   def render(%{type: type, values: values} = assigns)
-      when type in ["checkboxes", "simpleMultiInput"] and is_list(values) do
+      when type in ["checkboxes", "simpleMultiInput", "dropdown"] and is_list(values) do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
     <%= for value <- @values do %>

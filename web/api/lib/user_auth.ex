@@ -1,10 +1,7 @@
 defmodule Api.UserAuth do
   import Plug.Conn
 
-  alias Api.{
-    User,
-    Project
-  }
+  alias Api.User
 
   @doc """
   Validates `conn` with basic access authentication for the project provided in `conn.params`.
@@ -14,7 +11,7 @@ defmodule Api.UserAuth do
     case Plug.BasicAuth.parse_basic_auth(conn) do
       {name, password} ->
         case User.authenticate(name, password) do
-          :granted ->
+          :success ->
             conn
             |> assign(:current_user, name)
 

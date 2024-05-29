@@ -143,7 +143,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <a
             class="mb-1"
             target="_blank"
-            href={~p"/api/raw/json/#{@project_name}/#{@publication_date}/#{@uuid}"}
+            href={~p"/api/json/raw/#{@project_name}/#{@publication_date}/#{@uuid}"}
           >
             <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
           </a>

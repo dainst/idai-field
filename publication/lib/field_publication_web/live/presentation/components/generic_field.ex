@@ -4,14 +4,6 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   require Logger
   alias FieldPublicationWeb.Presentation.Components.I18n
 
-  def render(%{type: single_value} = assigns)
-      when single_value in ["input", "text", "simpleInput", "dropdown"] do
-    ~H"""
-    <dt class="font-bold"><I18n.text values={@labels} /></dt>
-    <dd class="ml-4"><I18n.text values={@values} /></dd>
-    """
-  end
-
   def render(%{type: type, values: values} = assigns)
       when type in ["checkboxes", "simpleMultiInput"] and is_list(values) do
     ~H"""
@@ -19,6 +11,14 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     <%= for value <- @values do %>
       <dd class="ml-4"><I18n.text values={value} /></dd>
     <% end %>
+    """
+  end
+
+  def render(%{type: single_value} = assigns)
+      when single_value in ["input", "text", "simpleInput", "dropdown", "dropdownRange"] do
+    ~H"""
+    <dt class="font-bold"><I18n.text values={@labels} /></dt>
+    <dd class="ml-4"><I18n.text values={@values} /></dd>
     """
   end
 

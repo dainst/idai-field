@@ -111,7 +111,9 @@ defmodule FieldPublication.Processing.MapTiles do
           }
         )
       else
-        Logger.error("Todo")
+        Logger.error(
+          "No raw image file `#{uuid}` for project `#{publication.project_name}`. Unable to create tiles..."
+        )
       end
     end)
   end

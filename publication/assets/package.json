@@ -1,0 +1,8 @@
+{
+  "name": "field_publication",
+  "version": "1.0.0",
+  "description": "Node dependencies for the field_publication Phoenix app.",
+  "dependencies": {
+    "ol": "^9.0.0"
+  }
+}

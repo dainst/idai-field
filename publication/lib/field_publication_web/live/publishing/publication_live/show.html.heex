@@ -1,0 +1,210 @@
+<.header>
+  Publication draft '<%= @publication.draft_date %>' for project '<%= @publication.project_name %>'
+</.header>
+
+<div>
+  <.form for={@publication_form} phx-change="validate" phx-submit="save">
+    <.list>
+      <:item title="Source URL"><%= @publication.source_url %></:item>
+      <:item title="Source project name"><%= @publication.source_project_name %></:item>
+      <:item title="Draft date"><%= @publication.draft_date %></:item>
+      <:item title="Drafted by"><%= @publication.drafted_by %></:item>
+      <:item title="Data replication">
+        <%= if @publication.replication_finished do %>
+          <div>Replication finished <%= @publication.replication_finished %>.</div>
+        <% else %>
+          <.log_entry_list logs={@replication_logs} />
+          <%= if @replication_progress_state do %>
+            <.progress_bar state={@replication_progress_state}></.progress_bar>
+          <% end %>
+          <button
+            class="font-bold font-mono float-right"
+            type="button"
+            phx-click="stop_replication"
+          >
+            Stop replication
+          </button>
+        <% end %>
+      </:item>
+    </.list>
+    <%= if @publication.replication_finished do %>
+      <.list>
+        <:item title="Version type">
+          <.input
+            type="select"
+            field={@publication_form[:version]}
+            options={get_version_options()}
+          />
+        </:item>
+        <:item title="Comments">
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th>Language</th>
+                <th>Text</th>
+              </tr>
+            </thead>
+            <tbody>
+              <.inputs_for :let={translation} field={@publication_form[:comments]}>
+                <tr>
+                  <td class="text-center">
+                    <.input field={translation[:language]} type="hidden" />
+                    <%= translation[:language].value %>
+                  </td>
+                  <td>
+                    <.input field={translation[:text]} type="textarea" phx-debounce="2000" />
+                  </td>
+                </tr>
+              </.inputs_for>
+            </tbody>
+          </table>
+        </:item>
+        <:item title="Data processing">
+          <%= if @data_state do %>
+            <table class="w-full">
+              <thead class="bg-slate-700">
+                <tr class="text-slate-50">
+                  <th class="w-1/6">Type</th>
+                  <th class="w-4/6">Info</th>
+                  <th class="w-1/6">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-2 text-center">
+                  <td>Missing raw files</td>
+                  <td><%= Enum.count(@data_state.images.missing_raw_files) %></td>
+                  <td>
+                    <.link
+                      class="font-semibold font-mono"
+                      navigate={~p"/publishing/#{@publication.project_name}/publication/new"}
+                    >
+                      Redraft publication
+                    </.link>
+                  </td>
+                </tr>
+                <tr class="border-2">
+                  <td class="text-center">Web images</td>
+                  <td>
+                    <.progress_bar state={@data_state.images.summary}></.progress_bar>
+                  </td>
+                  <td class="text-center">
+                    <%= if @web_images_processing? do %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="stop_web_images_processing"
+                      >
+                        Stop
+                      </.link>
+                    <% else %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="start_web_images_processing"
+                      >
+                        Start
+                      </.link>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr class="border-2">
+                  <td class="text-center">Map tile images</td>
+                  <td>
+                    <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
+                  </td>
+                  <td class="text-center">
+                    <%= if @tile_images_processing? do %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="stop_tile_images_processing"
+                      >
+                        Stop
+                      </.link>
+                    <% else %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="start_tile_images_processing"
+                      >
+                        Start
+                      </.link>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr class="border-2">
+                  <td class="text-center">Search index</td>
+                  <td>
+                    <.progress_bar state={@data_state.search_index}></.progress_bar>
+                  </td>
+                  <td class="text-center">
+                    <%= if @search_indexing? do %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="stop_search_indexing"
+                      >
+                        Stop
+                      </.link>
+                    <% else %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="start_search_indexing"
+                      >
+                        Start
+                      </.link>
+                    <% end %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          <% else %>
+            <div class="inline-flex items-center">
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                >
+                </circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                >
+                </path>
+              </svg>
+              Evaluating data...
+            </div>
+          <% end %>
+        </:item>
+        <:item title="Publication date">
+          <%= if @publication.publication_date && @publication.publication_date <= @today do %>
+            <.link
+              class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+              navigate={
+                ~p"/#{@publication.project_name}/#{@publication.publication_date}/#{List.first(@publication.languages)}"
+              }
+            >
+              <.icon name="hero-folder-open" class="h-4 w-4" /> <%= @publication.publication_date %>
+            </.link>
+          <% else %>
+            <.input type="date" field={@publication_form[:publication_date]} min={@today} />
+          <% end %>
+        </:item>
+      </.list>
+      <.button class="mt-3 w-full">Save changes</.button>
+    <% end %>
+  </.form>
+</div>
+
+<.back navigate={~p"/publishing/#{@publication.project_name}"}>Back to project</.back>

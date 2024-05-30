@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+
+  opensearch: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
+    image: opensearchproject/opensearch:2.11.1 # Specifying the latest available image - modify if you want a specific version
+    container_name: "field_publication_opensearch"
+    environment:
+      - discovery.type=single-node
+      - plugins.security.ssl.http.enabled=false
+      - bootstrap.memory_lock=true # Disable JVM heap memory swapping
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
+    ulimits:
+      memlock:
+        soft: -1 # Set memlock to unlimited (no soft or hard limit)
+        hard: -1
+      nofile:
+        soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
+        hard: 65536
+    ports:
+      - 9200:9200 # REST API
+      - 9600:9600 # Performance Analyzer
+
+  cantaloupe:
+    image: "ghcr.io/dainst/field_publication_cantaloupe:1.0.0"
+    container_name: "field_publication_cantaloupe"
+    environment:
+      LOG_APPLICATION_LEVEL: warn
+      LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
+    ports:
+      - "8182:8182"
+    volumes:
+      - "./data/file_store:/files"
+
+  couchdb:
+    image: couchdb:3.3.2
+    container_name: "field_publication_couchdb"
+    ports:
+      - "5985:5984"
+    environment:
+      - 'COUCHDB_USER=couch_admin' # see dev.exs
+      - 'COUCHDB_PASSWORD=couch_admin_password' # see dev.exs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

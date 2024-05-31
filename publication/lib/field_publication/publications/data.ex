@@ -261,7 +261,7 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def get_field(%{"groups" => groups} = _doc, name) do
+  def get_field(%{"groups" => groups} = _doc, name) when is_list(groups) do
     Enum.map(groups, fn group ->
       Enum.find(group["fields"], fn %{"key" => key} ->
         key == name

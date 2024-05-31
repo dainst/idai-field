@@ -65,26 +65,27 @@ export default getProjectMapHook = () => {
     return {
         map: null,
         mounted() {
+            this.initialize();
             this.handleEvent(
                 `map-set-background-layers-${this.el.id}`,
                 ({ project_layers: layers, project: project, highlighted_geometry_info: highlightedGeometryInfo, additional_geometry_info: additionalGeometryInfo }) => this.setup(project, layers, highlightedGeometryInfo, additionalGeometryInfo)
             )
         },
-        async setup(project, layers, highlightedGeometryInfo, additionalGeometryInfo) {
+
+        initialize() {
             const _this = this;
-            if (this.map == null) {
 
-                this.map = new Map({
-                    target: this.el.getAttribute("id"),
-                    view: new View()
-                })
-                this.map.on('pointermove', function (e) {
-                    _this.map.forEachFeatureAtPixel(e.pixel, function (feature) {
-                        console.log(feature.getProperties())
-                    });
+            this.map = new Map({
+                target: this.el.getAttribute("id"),
+                view: new View()
+            })
+            this.map.on('pointermove', function (e) {
+                _this.map.forEachFeatureAtPixel(e.pixel, function (feature) {
+                    console.log(feature.getProperties())
                 });
-            }
-
+            });
+        },
+        async setup(project, layers, highlightedGeometryInfo, additionalGeometryInfo) {
             let aggregatedExtent = createEmpty();
 
             try {

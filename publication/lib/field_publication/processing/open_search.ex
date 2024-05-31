@@ -83,7 +83,9 @@ defmodule FieldPublication.Processing.OpenSearch do
           res =
             res
             |> Map.put("category", Data.extend_category(category_configuration["item"], res))
-            |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
+
+          # TODO: Groups extented in the default way will cause field mapping conflicts between each other
+          # |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
 
           doc = Map.put(doc, "resource", res)
           OpensearchService.put(publication_id, doc)

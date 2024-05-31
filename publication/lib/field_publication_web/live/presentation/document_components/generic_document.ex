@@ -68,7 +68,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             <div class="mb-4">
               <.live_component
                 module={FieldPublicationWeb.Presentation.Components.ProjectMap}
-                id="project_map"
+                id="generic_doc_map"
                 style="width:100%; height:500px;"
                 project_layer_documents={@project_map_layers}
                 additional_layer_documents={[]}

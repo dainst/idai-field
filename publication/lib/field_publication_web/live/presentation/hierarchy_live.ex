@@ -27,20 +27,23 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
             do: Data.get_field_values(@current_doc, "identifier")
         }
       />
-      <ViewSelection.render
+    </div>
+    <.document_heading>
+      <DocumentLink.show
         project={@project_name}
         date={@publication_date}
         lang={@lang}
-        uuid={@uuid}
+        preview_doc={@current_doc}
       />
-    </div>
-    <.document_heading>
-      Hierarchy for <%= Data.get_field_values(
-        @current_doc,
-        "identifier"
-      ) %> (<I18n.text values={@current_doc["category"]["labels"]} />)
     </.document_heading>
 
+    <ViewSelection.render
+      project={@project_name}
+      date={@publication_date}
+      lang={@lang}
+      uuid={@uuid}
+      current={:hierarchy}
+    />
     <% description = Data.get_field(@current_doc, "description") %>
     <%= if description do %>
       <GenericField.render

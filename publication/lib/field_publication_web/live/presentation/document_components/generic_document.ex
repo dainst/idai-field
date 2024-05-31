@@ -18,12 +18,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
   def render(assigns) do
     ~H"""
     <div>
-      <ViewSelection.render
-        project={@project_name}
-        date={@publication_date}
-        lang={@lang}
-        uuid={@uuid}
-      />
       <.document_heading>
         <DocumentLink.show
           project={@project_name}
@@ -35,6 +29,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
 
       <div class="flex flex-row">
         <div class="basis-2/3">
+          <ViewSelection.render
+            project={@project_name}
+            date={@publication_date}
+            lang={@lang}
+            uuid={@uuid}
+            current={:detail}
+          />
+
           <%= for group <- @doc["groups"] do %>
             <% fields =
               Enum.reject(group["fields"], fn %{"key" => key} ->

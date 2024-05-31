@@ -2,8 +2,8 @@ version: "3.7"
 
 services:
 
-  opensearch: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
-    image: opensearchproject/opensearch:2.14.0 # Specifying the latest available image - modify if you want a specific version
+  opensearch:
+    image: opensearchproject/opensearch:2.14.0 
     container_name: "field_publication_opensearch"
     environment:
       - discovery.type=single-node

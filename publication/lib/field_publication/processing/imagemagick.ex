@@ -54,7 +54,8 @@ defmodule FieldPublication.Processing.Imagemagick do
       )
     else
       System.shell(
-        "convert temp.png -crop #{tile_size}x#{tile_size} -background transparent -extent #{tile_size}x#{tile_size} -set 'filename:tile' '%[fx:page.x/#{tile_size}]_%[fx:page.y/#{tile_size}]' +repage +adjoin 'tile_%[filename:tile].png'"
+        "convert temp.png -crop #{tile_size}x#{tile_size} -background transparent -extent #{tile_size}x#{tile_size} -set 'filename:tile' '%[fx:page.x/#{tile_size}]_%[fx:page.y/#{tile_size}]' +repage +adjoin 'tile_%[filename:tile].png'",
+        cd: directory_path
       )
     end
   end

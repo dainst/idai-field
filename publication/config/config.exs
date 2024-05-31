@@ -22,7 +22,13 @@ config :field_publication,
   dev_routes: true,
   file_variants_to_replicate: ["original_image"],
   core_database: "field_publication",
-  file_store_directory_root: "data/file_store"
+  file_store_directory_root: "data/file_store",
+  couchdb_url: "http://localhost:5985",
+  couchdb_admin_name: "couch_admin",
+  couchdb_admin_password: "couch_admin_password",
+  opensearch_url: "http://localhost:9200",
+  opensearch_admin_password: "Test123!",
+  cantaloupe_url: "http://localhost:8182"
 
 # Configures the mailer
 #

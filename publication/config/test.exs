@@ -10,14 +10,6 @@ config :field_publication, FieldPublicationWeb.Endpoint,
 # In test we don't send emails.
 config :field_publication, FieldPublication.Mailer, adapter: Swoosh.Adapters.Test
 
-config :field_publication,
-  dev_routes: true,
-  couchdb_url: "http://localhost:5985",
-  couchdb_admin_name: "couch_admin",
-  couchdb_admin_password: "couch_admin_password",
-  core_database: "field_publication_test",
-  file_store_directory_root: "test/file_store"
-
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
 

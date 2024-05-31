@@ -52,7 +52,7 @@ if config_env() == :prod do
     couchdb_admin_name: System.fetch_env!("COUCHDB_ADMIN_NAME"),
     couchdb_admin_password: System.fetch_env!("COUCHDB_ADMIN_PASSWORD"),
     opensearch_url: System.fetch_env!("OPENSEARCH_URL"),
-    opensearch_admin_password: System.fetch_env!("OPENSEARCH_URL"),
+    opensearch_admin_password: System.fetch_env!("OPENSEARCH_ADMIN_PASSWORD"),
     cantaloupe_url: System.fetch_env!("CANTALOUPE_URL")
 
   # ## SSL Support

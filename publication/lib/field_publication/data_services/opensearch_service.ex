@@ -180,8 +180,10 @@ defmodule FieldPublication.DataServices.OpensearchService do
   end
 
   defp headers() do
+    pw = Application.get_env(:field_publication, :opensearch_admin_password)
+
     credentials =
-      "admin:admin"
+      "admin:#{pw}"
       |> Base.encode64()
 
     [

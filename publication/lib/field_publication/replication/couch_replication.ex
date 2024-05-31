@@ -212,6 +212,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     |> Stream.map(&legacy_fix_period/1)
     |> Stream.map(&legacy_remove_attachment/1)
     |> Stream.map(&legacy_resolve_gazetteer_id/1)
+    |> Stream.map(&legacy_remove_empty_relations/1)
     |> Task.async_stream(
       # Put the documents back into the CouchDB
       fn %{"_id" => id} = doc ->
@@ -315,6 +316,26 @@ defmodule FieldPublication.Replication.CouchReplication do
   end
 
   defp legacy_resolve_gazetteer_id(doc) do
+    doc
+  end
+
+  defp legacy_remove_empty_relations(
+         %{"resource" => %{"relations" => relations} = resource} = doc
+       ) do
+    # In some old projects relations were deleted but the corresponding key was not, resulting in a relation key
+    # that contains an empty list, which is considered legacy data.
+    updated_relations =
+      Enum.reject(relations, fn {_relation_name, uuids} ->
+        uuids == []
+      end)
+      |> Enum.into(%{})
+
+    updated_resource = Map.put(resource, "relations", updated_relations)
+
+    Map.put(doc, "resource", updated_resource)
+  end
+
+  defp legacy_remove_empty_relations(doc) do
     doc
   end
 

@@ -38,7 +38,16 @@ defmodule FieldPublication.CouchService do
         Logger.info("Created application database `#{@core_database}`.")
     end
 
-    put_db_indices()
+    [
+      %{
+        index: %{
+          fields: ["doc_type"]
+        },
+        name: "doc_type-index",
+        type: "json"
+      }
+    ]
+    |> put_design_documents()
     |> Enum.each(fn {:ok, {:ok, %Finch.Response{body: body}}} ->
       response = Jason.decode!(body)
 
@@ -54,20 +63,12 @@ defmodule FieldPublication.CouchService do
     end)
   end
 
-  defp put_db_indices() do
-    [
-      %{
-        index: %{
-          fields: ["doc_type"]
-        },
-        name: "doc_type-index",
-        type: "json"
-      }
-    ]
+  def put_design_documents(design_documents, database \\ @core_database) do
+    design_documents
     |> Enum.map(fn definition ->
       Finch.build(
         :post,
-        "#{local_url()}/#{@core_database}/_index",
+        "#{local_url()}/#{database}/_index",
         headers(),
         Jason.encode!(definition)
       )

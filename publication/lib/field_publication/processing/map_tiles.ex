@@ -9,6 +9,8 @@ defmodule FieldPublication.Processing.MapTiles do
   @tile_size 256
 
   def evaluate_state(%Publication{} = publication) do
+    FileService.initialize(publication.project_name)
+
     existing_tiles = FileService.list_tile_image_directories(publication.project_name)
 
     georeferenced_docs =
@@ -61,15 +63,15 @@ defmodule FieldPublication.Processing.MapTiles do
           next_multiple =
             @tile_size * Float.ceil(scaled_size / @tile_size)
 
+          Logger.debug(
+            "Creating tiles for image `#{uuid}` in project `#{publication.project_name}` with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
+          )
+
           FieldPublication.Processing.Imagemagick.create_tiling_temp_file(
             raw_image_path,
             original_z_index_path,
             scaled_size,
             next_multiple
-          )
-
-          Logger.debug(
-            "Creating tiles for image `#{uuid}` in project `#{publication.project_name}` with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
           )
 
           FieldPublication.Processing.Imagemagick.create_tiles(original_z_index_path, @tile_size)

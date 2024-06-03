@@ -367,6 +367,7 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,

@@ -24,7 +24,7 @@ export class DeleteFieldDataModalComponent {
 
     public deleteAll: boolean;
     public confirmFieldName: string;
-
+    public countAffected: Number;
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
@@ -40,6 +40,15 @@ export class DeleteFieldDataModalComponent {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+    public async initialize() {
+
+        this.countAffected = await this.datastore.find({
+            categories: [this.category.name],
+            constraints: { [this.warningType + ':contain']: this.fieldName }
+        }, { includeResourcesWithoutValidParent: true }).then(res => res.totalCount)
+
     }
 
 

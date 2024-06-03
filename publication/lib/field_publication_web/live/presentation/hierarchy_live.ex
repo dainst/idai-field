@@ -7,7 +7,6 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
     DocumentLink,
     ViewSelection,
     PublicationSelection,
-    I18n,
     GenericField
   }
 

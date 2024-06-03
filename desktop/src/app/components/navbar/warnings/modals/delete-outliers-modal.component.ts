@@ -23,6 +23,7 @@ export class DeleteOutliersModalComponent {
     public outlierValue: string;
 
     public deleteAll: boolean;
+    public countAffected: Number;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -37,6 +38,14 @@ export class DeleteOutliersModalComponent {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+    public async initialize() {
+
+        this.countAffected = await this.datastore.find({
+            constraints: { ['outlierValues:contain']: this.outlierValue }
+        }, { includeResourcesWithoutValidParent: true }).then(res => res.totalCount)
+
     }
 
 

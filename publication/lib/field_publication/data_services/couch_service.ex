@@ -14,9 +14,7 @@ defmodule FieldPublication.CouchService do
 
     case status_code_user do
       412 ->
-        Logger.warning(
-          "System database '_users' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
+        Logger.info("System database '_users' already present.")
 
       code when 199 < code and code < 300 ->
         Logger.info("Created system database `_users`.")
@@ -24,9 +22,7 @@ defmodule FieldPublication.CouchService do
 
     case status_code_replicator do
       412 ->
-        Logger.warning(
-          "System database '_replicator' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
+        Logger.info("System database '_replicator' already present.")
 
       code when 199 < code and code < 300 ->
         Logger.info("Created system database `_replicator`.")
@@ -36,9 +32,7 @@ defmodule FieldPublication.CouchService do
 
     case status_code_core_database do
       412 ->
-        Logger.warning(
-          "Application database '#{@core_database}' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
+        Logger.info("Application database '#{@core_database}' already present.")
 
       code when 199 < code and code < 300 ->
         Logger.info("Created application database `#{@core_database}`.")
@@ -53,7 +47,7 @@ defmodule FieldPublication.CouchService do
           Logger.info("Created database index '#{name}'.")
 
         %{"result" => "exists", "name" => name} ->
-          Logger.warning("Database index '#{name}' already exists.")
+          Logger.info("  Index '#{name}' already present.")
       end
 
       response

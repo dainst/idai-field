@@ -74,8 +74,7 @@ defmodule FieldPublication.MixProject do
         "assets.setup",
         "assets.build",
         "cmd npm install --prefix priv/publication_enricher",
-        "cmd npm run build --prefix priv/publication_enricher",
-        "run --eval 'FieldPublication.CouchService.initial_setup()'"
+        "cmd npm run build --prefix priv/publication_enricher"
       ],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "tailwind open_layers", "esbuild default"],

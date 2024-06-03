@@ -2,6 +2,7 @@ defmodule FieldPublication.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  alias FieldPublication.CouchService
 
   use Application
 
@@ -37,7 +38,13 @@ defmodule FieldPublication.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: FieldPublication.Supervisor]
-    Supervisor.start_link(children, opts)
+
+    supervisor_startup = Supervisor.start_link(children, opts)
+
+    # Once all child processes are started, run the CouchDB setup.
+    CouchService.initial_setup()
+
+    supervisor_startup
   end
 
   # Tell Phoenix to update the endpoint configuration

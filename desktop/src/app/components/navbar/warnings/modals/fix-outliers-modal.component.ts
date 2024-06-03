@@ -25,6 +25,7 @@ export class FixOutliersModalComponent {
     public valuelist: Valuelist;
     public selectedValue: string;
     public replaceAll: boolean;
+    public countAffected: Number;
 
     private projectDocument: Document;
 
@@ -39,7 +40,7 @@ export class FixOutliersModalComponent {
     public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
 
     public getValueLabel = (value: string) => this.labels.getValueLabel(this.valuelist, value);
-
+    
     public cancel = () => this.activeModal.dismiss('cancel');
 
 
@@ -53,6 +54,9 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
+        this.countAffected = await this.datastore.find({
+            constraints: { ['outlierValues:contain']: this.outlierValue }
+        }, { includeResourcesWithoutValidParent: true }).then(res => res.totalCount)
     }
 
 

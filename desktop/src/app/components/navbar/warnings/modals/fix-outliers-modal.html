@@ -18,7 +18,7 @@
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse dieses Werts ersetzen</span>
         </div>
-        <div class="col-auto">
+        <div class="col-auto"> 
             <label class="switch">
                 <input type="checkbox" [checked]="replaceAll" (change)="replaceAll = !replaceAll">
                 <span class="slider round"></span>
@@ -30,7 +30,7 @@
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.fixOutliers.all.info">
             Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{outlierValue}}</b> in sämtlichen Feldern aller Ressourcen durch den
+            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected}}</b> Ressourcen durch den
             ausgewählten Wert <b>{{getValueLabel(selectedValue)}}</b> ersetzt.
         </div>
     </div>

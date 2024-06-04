@@ -5,6 +5,7 @@ import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels,
      Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import test from '@playwright/test';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class FixOutliersModalComponent {
     public selectedValue: string;
     public replaceAll: boolean;
     public countAffected: Number;
+    public affectedDocuments: Document[];
 
     private projectDocument: Document;
 
@@ -54,9 +56,12 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
-        this.countAffected = await this.datastore.find({
+        const findResult = await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true }).then(res => res.totalCount)
+        }, { includeResourcesWithoutValidParent: true })
+        this.affectedDocuments = findResult.documents
+        this.countAffected = findResult.totalCount
+        
     }
 
 
@@ -101,13 +106,9 @@ export class FixOutliersModalComponent {
 
     private async replaceMultiple() {
 
-        const documents = (await this.datastore.find({
-            constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true })).documents;
-
         const changedDocuments: Array<Document> = [];
 
-        for (let document of documents) {
+        for (let document of this.affectedDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {

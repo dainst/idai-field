@@ -25,6 +25,7 @@ export class DeleteFieldDataModalComponent {
     public deleteAll: boolean;
     public confirmFieldName: string;
     public countAffected: Number;
+    public affectedDocuments: Document[];
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
@@ -44,10 +45,12 @@ export class DeleteFieldDataModalComponent {
 
     public async initialize() {
 
-        this.countAffected = await this.datastore.find({
+        const findResult = await this.datastore.find({
             categories: [this.category.name],
             constraints: { [this.warningType + ':contain']: this.fieldName }
-        }, { includeResourcesWithoutValidParent: true }).then(res => res.totalCount)
+        }, { includeResourcesWithoutValidParent: true })
+        this.countAffected = findResult.totalCount
+        this.affectedDocuments = findResult.documents
 
     }
 
@@ -109,15 +112,10 @@ export class DeleteFieldDataModalComponent {
 
     private async deleteMultiple() {
 
-        const documents = (await this.datastore.find({
-            categories: [this.category.name],
-            constraints: { [this.warningType + ':contain']: this.fieldName }
-        }, { includeResourcesWithoutValidParent: true })).documents;
-
-        documents.forEach(document => {
+        this.affectedDocuments.forEach(document => {
             delete document.resource[this.fieldName];
         });
 
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(this.affectedDocuments);
     }
 }

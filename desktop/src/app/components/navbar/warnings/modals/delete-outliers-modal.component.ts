@@ -24,6 +24,7 @@ export class DeleteOutliersModalComponent {
 
     public deleteAll: boolean;
     public countAffected: Number;
+    public affectedDocuments: Document[];
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -42,9 +43,12 @@ export class DeleteOutliersModalComponent {
 
     public async initialize() {
 
-        this.countAffected = await this.datastore.find({
+
+        const findResult = await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true }).then(res => res.totalCount)
+        }, { includeResourcesWithoutValidParent: true })
+        this.affectedDocuments = findResult.documents
+        this.countAffected = findResult.totalCount
 
     }
 
@@ -97,13 +101,9 @@ export class DeleteOutliersModalComponent {
 
     private async deleteMultiple() {
 
-        const documents = (await this.datastore.find({
-            constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true })).documents;
-
         const changedDocuments: Array<Document> = [];
 
-        for (let document of documents) {
+        for (let document of this.affectedDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {

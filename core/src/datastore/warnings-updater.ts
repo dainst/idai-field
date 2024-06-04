@@ -336,7 +336,7 @@ export module WarningsUpdater {
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'identifier:match': identifier },
             sort: { mode: 'none' }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             await updateNonUniqueIdentifierWarning(document, indexFacade);
@@ -350,7 +350,7 @@ export module WarningsUpdater {
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'missingRelationTargetIds:contain': id },
             sort: { mode: 'none' }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             await updateRelationTargetWarning(document, indexFacade, documentCache, datastore);
@@ -367,7 +367,8 @@ export module WarningsUpdater {
         }).map(to(Named.NAME));
 
         const documents: Array<Document> = (await datastore.find(
-            { categories: categoryNames, sort: { mode: 'none' } }
+            { categories: categoryNames, sort: { mode: 'none' } },
+            { includeResourcesWithoutValidParent: true }
         )).documents;
 
         for (let document of documents) {
@@ -386,7 +387,7 @@ export module WarningsUpdater {
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'isChildOf:contain': document.resource.id },
             sort: { mode: 'none' }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);

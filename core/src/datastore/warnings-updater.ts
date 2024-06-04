@@ -61,7 +61,7 @@ export module WarningsUpdater {
         if (!category) return;
 
         if (previousWarnings?.unconfiguredCategory && updateAll) {
-            await updateMissingOrInvalidParentWarningsForChildren(
+            await updateMissingOrInvalidParentWarningsForDescendants(
                 document, datastore, documentCache, indexFacade, projectConfiguration
             );
         }
@@ -221,7 +221,7 @@ export module WarningsUpdater {
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingOrInvalidParent:exist']);
             if (updateAll) {
-                await updateMissingOrInvalidParentWarningsForChildren(
+                await updateMissingOrInvalidParentWarningsForDescendants(
                     document, datastore, documentCache, indexFacade, projectConfiguration
                 );
             }
@@ -402,9 +402,10 @@ export module WarningsUpdater {
     }
 
 
-    async function updateMissingOrInvalidParentWarningsForChildren(document: Document, datastore: Datastore,
-                                                                   documentCache: DocumentCache, indexFacade: IndexFacade,
-                                                                   projectConfiguration: ProjectConfiguration) {
+    async function updateMissingOrInvalidParentWarningsForDescendants(document: Document, datastore: Datastore,
+                                                                      documentCache: DocumentCache,
+                                                                      indexFacade: IndexFacade,
+                                                                      projectConfiguration: ProjectConfiguration) {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'isChildOf:contain': { value: document.resource.id, searchRecursively: true } },

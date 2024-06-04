@@ -676,13 +676,14 @@ describe('WarningsUpdater', () => {
 
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({
-            documents: [documents[2], documents[3], documents[4], documents[5]]
+            documents: [documents[1], documents[2], documents[3], documents[4], documents[5]]
         }));
 
         await WarningsUpdater.updateMissingOrInvalidParentWarning(
-            documents[1], mockProjectConfiguration, mockIndexFacade, mockDocumentCache, mockDatastore, true
+            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache, mockDatastore, true
         );
 
+        expect(documents[0].warnings).toBeUndefined();
         expect(documents[1].warnings).toBeUndefined();
         expect(documents[2].warnings).toBeUndefined();
         expect(documents[3].warnings).toBeUndefined();

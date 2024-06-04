@@ -214,11 +214,12 @@ export module WarningsUpdater {
             delete document.warnings.missingOrInvalidParent;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingOrInvalidParent:exist']);
-            if (updateAll) {
-                await updateMissingOrInvalidParentWarningsForDescendants(
-                    document, datastore, documentCache, indexFacade, projectConfiguration
-                );
-            }
+        }
+
+        if (updateAll) {
+            await updateMissingOrInvalidParentWarningsForDescendants(
+                document, datastore, documentCache, indexFacade, projectConfiguration
+            );
         }
     }
 
@@ -402,7 +403,10 @@ export module WarningsUpdater {
                                                                       projectConfiguration: ProjectConfiguration) {
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'isChildOf:contain': { value: document.resource.id, searchRecursively: true } },
+            constraints: {
+                'isChildOf:contain': { value: document.resource.id, searchRecursively: true },
+                'missingOrInvalidParent:exist': 'KNOWN'
+            },
             sort: { mode: 'none' }
         }, { includeResourcesWithoutValidParent: true })).documents;
 

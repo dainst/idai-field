@@ -75,16 +75,17 @@ export class ChangesStream {
 
         const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
         const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        if (previousVersion) {
+            document = this.documentCache.reassign(document);
+        } else {
+            this.documentCache.set(document);
+        }
+
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
             previousIdentifier, true
         );
-
-        if (previousVersion) {
-            this.documentCache.reassign(document);
-        } else {
-            this.documentCache.set(document);
-        }
 
         ObserverUtil.notify(this.remoteChangesObservers, document);
     }

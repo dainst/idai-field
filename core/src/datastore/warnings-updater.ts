@@ -63,7 +63,8 @@ export module WarningsUpdater {
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);
         await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
-        await updateMissingOrInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache);
+        await updateMissingOrInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache,
+            datastore, updateAll);
         await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
             datastore, updateAll);
     }
@@ -186,7 +187,8 @@ export module WarningsUpdater {
 
     export async function updateMissingOrInvalidParentWarning(document: Document,
                                                               projectConfiguration: ProjectConfiguration,
-                                                              indexFacade: IndexFacade, documentCache: DocumentCache) {
+                                                              indexFacade: IndexFacade, documentCache: DocumentCache,
+                                                              datastore?: Datastore, updateAll: boolean = false) {
 
         let hasValidParent: boolean = true;
         
@@ -212,6 +214,11 @@ export module WarningsUpdater {
             delete document.warnings.missingOrInvalidParent;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingOrInvalidParent:exist']);
+            if (updateAll) {
+                await updateMissingOrInvalidParentWarningsForChildren(
+                    document, datastore, documentCache, indexFacade, projectConfiguration
+                );
+            }
         }
     }
 
@@ -385,6 +392,23 @@ export module WarningsUpdater {
             if (!category) continue;
 
             await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache, datastore);
+        }
+    }
+
+
+    async function updateMissingOrInvalidParentWarningsForChildren(document: Document, datastore: Datastore,
+                                                                   documentCache: DocumentCache, indexFacade: IndexFacade,
+                                                                   projectConfiguration: ProjectConfiguration) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: { 'isChildOf:contain': { value: document.resource.id, searchRecursively: true } },
+            sort: { mode: 'none' }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of documents) {
+            await updateMissingOrInvalidParentWarning(
+                document, projectConfiguration, indexFacade, documentCache, datastore
+            );
         }
     }
 

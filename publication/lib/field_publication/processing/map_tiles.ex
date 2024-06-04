@@ -9,6 +9,8 @@ defmodule FieldPublication.Processing.MapTiles do
   @tile_size 256
 
   def evaluate_state(%Publication{} = publication) do
+    FileService.initialize(publication.project_name)
+
     existing_tiles = FileService.list_tile_image_directories(publication.project_name)
 
     georeferenced_docs =
@@ -35,6 +37,7 @@ defmodule FieldPublication.Processing.MapTiles do
   end
 
   def start_tile_creation(%Publication{} = publication) do
+    # TODO: Construct all paths in FileService module.
     raw_root = FileService.get_raw_data_path(publication.project_name)
     tiles_root = FileService.get_map_tiles_path(publication.project_name)
 
@@ -51,25 +54,25 @@ defmodule FieldPublication.Processing.MapTiles do
     missing
     |> Enum.map(fn %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
       if FileService.raw_data_file_exists?(publication.project_name, uuid, :image) do
-        derivate_info = calcuate_derivate_info(width, height, @tile_size)
+        scalings_for_z_indices = get_scalings_for_z_indices(width, height, @tile_size)
         raw_image_path = "#{raw_root}/image/#{uuid}"
 
-        derivate_info
-        |> Enum.map(fn %{scaled_size: scaled_size, z_index: z_index, xy_info: _xy_info} ->
+        scalings_for_z_indices
+        |> Enum.map(fn %{scaled_size: scaled_size, z_index: z_index} ->
           original_z_index_path = "#{tiles_root}/#{uuid}/#{z_index}"
 
           next_multiple =
             @tile_size * Float.ceil(scaled_size / @tile_size)
+
+          Logger.debug(
+            "Creating tiles for image `#{uuid}` in project `#{publication.project_name}` with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
+          )
 
           FieldPublication.Processing.Imagemagick.create_tiling_temp_file(
             raw_image_path,
             original_z_index_path,
             scaled_size,
             next_multiple
-          )
-
-          Logger.debug(
-            "Creating tiles for image `#{uuid}` in project `#{publication.project_name}` with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
           )
 
           FieldPublication.Processing.Imagemagick.create_tiles(original_z_index_path, @tile_size)
@@ -118,68 +121,28 @@ defmodule FieldPublication.Processing.MapTiles do
     end)
   end
 
-  def calcuate_derivate_info(width, height, tile_size) do
-    image_size = Enum.max([width, height])
+  defp get_scalings_for_z_indices(width, height, tile_size) do
+    max = Enum.max([width, height])
 
-    Stream.unfold(
-      image_size,
-      fn current_size ->
+    Stream.unfold(max, fn current_size ->
+      if current_size * 2 < tile_size do
+        # The previous size was already smaller than the tile size,
+        # so stop generating new values.
+        nil
+      else
         {
-          {
-            # our "rescale"
-            current_size,
-            # our "entries"
-            calculate_derivate(current_size, tile_size)
-          },
+          current_size,
           current_size / 2
         }
       end
-    )
-    |> Stream.take_while(fn {current_size, _} -> current_size * 2 > tile_size end)
-    |> Stream.map(fn {scaled_size, info} ->
-      %{scaled_size: scaled_size, xy_info: info}
     end)
     |> Enum.reverse()
-    # index will be our "z"
-    |> Enum.with_index()
-    |> Enum.map(fn {info, index} ->
-      Map.put(info, :z_index, index)
+    |> Stream.with_index()
+    |> Enum.map(fn {scaled_size, index} ->
+      %{
+        z_index: index,
+        scaled_size: scaled_size
+      }
     end)
-  end
-
-  defp calculate_derivate(current_size, tile_size) do
-    fit_times =
-      Integer.floor_div(floor(current_size), tile_size) +
-        if Integer.mod(floor(current_size), tile_size) != 0 do
-          1
-        else
-          0
-        end
-
-    Enum.reduce(
-      0..(fit_times - 1),
-      [],
-      fn x_val, x_acc ->
-        x_acc ++
-          [
-            Enum.reduce(
-              0..(fit_times - 1),
-              [],
-              fn y_val, y_acc ->
-                y_acc ++
-                  [
-                    %{
-                      x_index: x_val,
-                      y_index: y_val,
-                      x_pos: x_val * tile_size,
-                      y_pos: y_val * tile_size
-                    }
-                  ]
-              end
-            )
-          ]
-      end
-    )
-    |> List.flatten()
   end
 end

@@ -1,7 +1,7 @@
 {
   "autoUpdate.available.title": "Atualização disponível",
-  "autoUpdate.available.yes": " Sim ",
-  "autoUpdate.available.no": " Não ",
+  "autoUpdate.available.yes": "Sim",
+  "autoUpdate.available.no": "Não",
   "autoUpdate.downloaded.title": "Instalar atualização",
   "autoUpdate.downloaded.message.1": "Versão ",
   "autoUpdate.downloaded.message.2": " do Field Desktop foi descarregada. Por favor reinicie a aplicação para instalar.",

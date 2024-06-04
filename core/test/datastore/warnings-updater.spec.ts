@@ -623,6 +623,86 @@ describe('WarningsUpdater', () => {
     });
 
 
+    it('remove invalid parent warnings for descendants', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2'),
+            createDocument('3'),
+            createDocument('4'),
+            createDocument('5'),
+            createDocument('6')
+        ];
+
+        documents[0].resource.category = 'ParentCategory';
+        documents[1].resource.relations['isRecordedIn'] = ['1'];
+        documents[1].warnings = Warnings.createDefault();
+        documents[1].warnings.missingOrInvalidParent = true;
+        documents[2].resource.relations['liesWithin'] = ['2'];
+        documents[2].resource.relations['isRecordedIn'] = ['1'];
+        documents[2].warnings = Warnings.createDefault();
+        documents[2].warnings.missingOrInvalidParent = true;
+        documents[3].resource.relations['liesWithin'] = ['2'];
+        documents[3].resource.relations['isRecordedIn'] = ['1'];
+        documents[3].warnings = Warnings.createDefault();
+        documents[3].warnings.missingOrInvalidParent = true;
+        documents[4].resource.relations['liesWithin'] = ['3'];
+        documents[4].resource.relations['isRecordedIn'] = ['1'];
+        documents[4].warnings = Warnings.createDefault();
+        documents[4].warnings.missingOrInvalidParent = true;
+        documents[5].resource.relations['liesWithin'] = ['4'];
+        documents[5].resource.relations['isRecordedIn'] = ['1'];
+        documents[5].warnings = Warnings.createDefault();
+        documents[5].warnings.missingOrInvalidParent = true;
+
+        const parentCategoryDefinition: CategoryForm = {
+            name: 'ParentCategory',
+            groups: []
+        } as CategoryForm;
+
+        const categoryDefinition: CategoryForm = {
+            name: 'Category',
+            groups: []
+        } as CategoryForm;
+
+        const mockIndexFacade = getMockIndexFacade();
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({
+            documents: [documents[2], documents[3], documents[4], documents[5]]
+        }));
+
+        await WarningsUpdater.updateMissingOrInvalidParentWarning(
+            documents[1], mockProjectConfiguration, mockIndexFacade, mockDocumentCache, mockDatastore, true
+        );
+
+        expect(documents[1].warnings).toBeUndefined();
+        expect(documents[2].warnings).toBeUndefined();
+        expect(documents[3].warnings).toBeUndefined();
+        expect(documents[4].warnings).toBeUndefined();
+        expect(documents[5].warnings).toBeUndefined();
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingOrInvalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'missingOrInvalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[3], 'missingOrInvalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[3], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[4], 'missingOrInvalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[4], 'warnings:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[5], 'missingOrInvalidParent:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[5], 'warnings:exist');
+
+        done();
+    });
+
+
     it('set outlier warnings', async done => {
 
         const categoryDefinition = {

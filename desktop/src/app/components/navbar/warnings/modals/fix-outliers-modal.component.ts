@@ -121,9 +121,7 @@ export class FixOutliersModalComponent {
             }
         }
 
-        console.log('changed documents:', changedDocuments);
-
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(changedDocuments);
     }
 
 

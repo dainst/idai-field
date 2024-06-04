@@ -1,4 +1,4 @@
-import { clone, Map } from 'tsfun';
+import { clone } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
 import { Document } from '../model/document';
 import { NewDocument } from '../model/document';
@@ -11,7 +11,6 @@ import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Indexer } from '../index';
-import { Warnings } from '../model';
 
 
 export type FindOptions = {
@@ -78,10 +77,8 @@ export class Datastore {
 
         const resultDocuments: Array<Document> = [];
         for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document, false));
+            resultDocuments.push(await this.updateIndex(document));
         }
-
-        this.indexFacade.notifyObservers();
 
         return resultDocuments;
     }
@@ -103,31 +100,21 @@ export class Datastore {
      */
     public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
-        const previousWarnings: Warnings = document.warnings;
         delete document.warnings;
 
-        return this.updateIndex(
-            await this.datastore.update(document, this.getUser(), squashRevisionsIds),
-            true,
-            previousWarnings
-        );
+        return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
     }
 
 
     public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
 
-        const previousWarnings: Map<Warnings> = {};
-
-        documents.forEach(document => {
-            previousWarnings[document.resource.id] = document.warnings;
-            delete document.warnings;
-        });
+        documents.forEach(document => delete document.warnings);
 
         let resultDocuments: Array<Document> = [];
         const updatedDocuments: Array<Document> = await this.datastore.bulkUpdate(documents, this.getUser());
         if (updatedDocuments.length < 100) {
             for (let document of updatedDocuments) {
-                resultDocuments.push(await this.updateIndex(document, false, previousWarnings[document.resource.id]));
+                resultDocuments.push(await this.updateIndex(document));
             }
             this.indexFacade.notifyObservers();
         } else {
@@ -138,12 +125,11 @@ export class Datastore {
     }
 
 
-    private async updateIndex(document: Document, notifyObservers: boolean = true,
-                              previousWarnings?: Warnings): Promise<Document> {
+    private async updateIndex(document: Document): Promise<Document> {
 
         const previousVersion: Document = this.documentCache.get(document.resource.id);
 
-        await this.convert(document, notifyObservers, previousWarnings);
+        await this.convert(document, false);
 
         return !previousVersion
             ? this.documentCache.set(document)
@@ -276,11 +262,10 @@ export class Datastore {
     }
 
 
-    public convert: Datastore.Convert = async (document: Document, notifyObservers: boolean = true,
-                                               previousWarnings?: Warnings) => {
+    public convert: Datastore.Convert = async (document: Document, notifyObservers: boolean = true) => {
         
         this.documentConverter.convert(document);
-        await this.updateWarnings(document, notifyObservers, previousWarnings);
+        await this.updateWarnings(document, notifyObservers);
     }  
 
 
@@ -421,9 +406,8 @@ export class Datastore {
     }
 
 
-    private async updateWarnings(document: Document, notifyObservers: boolean, previousWarnings?: Warnings) {
+    private async updateWarnings(document: Document, notifyObservers: boolean) {
 
-        if (!previousWarnings) previousWarnings = document.warnings;
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
 
         this.indexFacade.put(document);
@@ -433,7 +417,7 @@ export class Datastore {
 
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
-            previousIdentifier, previousWarnings, true
+            previousIdentifier, true
         );
         if (notifyObservers) this.indexFacade.notifyObservers();
     }
@@ -450,7 +434,7 @@ export namespace Datastore {
 
     export type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 
-    export type Convert = (document: Document, notifyObservers?: boolean, previousWarnings?: Warnings) => void;
+    export type Convert = (document: Document, notifyObservers?: boolean) => void;
 
 
     export interface FindIdsResult {

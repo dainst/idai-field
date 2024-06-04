@@ -55,16 +55,10 @@ export module WarningsUpdater {
                                                        documentCache: DocumentCache,
                                                        projectConfiguration: ProjectConfiguration,
                                                        datastore?: Datastore, previousIdentifier?: string,
-                                                       previousWarnings?: Warnings, updateAll: boolean = false) {
-        
+                                                       updateAll: boolean = false) {
+
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
         if (!category) return;
-
-        if (previousWarnings?.unconfiguredCategory && updateAll) {
-            await updateMissingOrInvalidParentWarningsForDescendants(
-                document, datastore, documentCache, indexFacade, projectConfiguration
-            );
-        }
 
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);

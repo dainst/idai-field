@@ -105,7 +105,7 @@ export class DeleteOutliersModalComponent {
             }
         }
 
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(changedDocuments);
     }
 
 

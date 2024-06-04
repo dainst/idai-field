@@ -90,10 +90,12 @@ export class SelectNewCategoryModalComponent {
             categories: ['UNCONFIGURED'],
         },  { includeResourcesWithoutValidParent: true })).documents;
 
-        documents.filter(document => document.resource.category === this.document.resource.category)
-            .forEach(document => document.resource.category = this.selectedCategory.name);
+        const documentsToChange: Array<Document> = documents.filter(document => {
+            return document.resource.category === this.document.resource.category;
+        });
+        documentsToChange.forEach(document => document.resource.category = this.selectedCategory.name);
 
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(documentsToChange);
     }
 
     

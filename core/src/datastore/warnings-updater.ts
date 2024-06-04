@@ -173,10 +173,12 @@ export module WarningsUpdater {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.missingRelationTargets = warnings;
             updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['missingRelationTargetIds:contain']);
         } else if (document.warnings?.missingRelationTargets) {
             delete document.warnings.missingRelationTargets;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['missingRelationTargetIds:contain']);
         }
 
         if (updateRelationTargets) {

@@ -47,6 +47,7 @@ describe('ChangesStream', () => {
             ['put', 'putToSingleIndex', 'get', 'remove', 'getCount', 'notifyObservers']);
         documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
+        documentCache.reassign.and.callFake(document => document);
 
         getUsername = () => 'localuser';
         documentConverter.convert.and.returnValue(doc);
@@ -205,7 +206,13 @@ describe('ChangesStream', () => {
         indexFacade.getCount.and.returnValue(2);
         datastore.find.and.returnValue(Promise.resolve({ documents: [doc2] }));
         documentCache.reassign.and.callFake(document => {
-            document.id === 'id1' ? doc = document : doc2 = document;
+            if (document.id === 'id1') {
+                doc = document;
+                return doc;
+             } else {
+                doc2 = document;
+                return doc2;
+             }
         });
 
         await onChange(doc);

@@ -77,8 +77,10 @@ export class Datastore {
 
         const resultDocuments: Array<Document> = [];
         for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document));
+            resultDocuments.push(await this.updateIndex(document, false));
         }
+
+        this.indexFacade.notifyObservers();
 
         return resultDocuments;
     }
@@ -102,7 +104,10 @@ export class Datastore {
 
         delete document.warnings;
 
-        return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
+        return this.updateIndex(
+            await this.datastore.update(document, this.getUser(), squashRevisionsIds),
+            true
+        );
     }
 
 
@@ -114,7 +119,7 @@ export class Datastore {
         const updatedDocuments: Array<Document> = await this.datastore.bulkUpdate(documents, this.getUser());
         if (updatedDocuments.length < 100) {
             for (let document of updatedDocuments) {
-                resultDocuments.push(await this.updateIndex(document));
+                resultDocuments.push(await this.updateIndex(document, false));
             }
             this.indexFacade.notifyObservers();
         } else {
@@ -125,11 +130,11 @@ export class Datastore {
     }
 
 
-    private async updateIndex(document: Document): Promise<Document> {
+    private async updateIndex(document: Document, notifyObservers: boolean = true): Promise<Document> {
 
         const previousVersion: Document = this.documentCache.get(document.resource.id);
 
-        await this.convert(document, false);
+        await this.convert(document, notifyObservers);
 
         return !previousVersion
             ? this.documentCache.set(document)

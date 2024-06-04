@@ -10,6 +10,7 @@ import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from '../warnings-updater';
 import { Datastore } from '../datastore';
 import { ProjectConfiguration } from '../../services/project-configuration';
+import { Warnings } from '../../model/warnings';
 
 
 /**
@@ -70,6 +71,7 @@ export class ChangesStream {
     private async welcomeDocument(document: Document) {
 
         this.documentConverter.convert(document);
+        const previousWarnings: Warnings = document.warnings;
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
         this.indexFacade.put(document);
 
@@ -77,7 +79,7 @@ export class ChangesStream {
         const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
-            previousIdentifier, true
+            previousIdentifier, previousWarnings, true
         );
 
         if (previousVersion) {

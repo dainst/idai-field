@@ -364,6 +364,7 @@ describe('WarningsUpdater', () => {
             targetIds: ['missing1', 'missing2']
         });
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
         done();
@@ -396,6 +397,7 @@ describe('WarningsUpdater', () => {
 
         expect(documents[0].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
         done();
@@ -433,6 +435,7 @@ describe('WarningsUpdater', () => {
 
         expect(documents[1].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();

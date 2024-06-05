@@ -1,5 +1,5 @@
 import { click, clickWithControlKey, clickWithShiftKey, getText, navigateTo, resetApp, start, stop,
-    waitForExist, waitForNotExist } from '../app';
+    waitForExist, waitForNotExist, scrollTo } from '../app';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from './resources.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
@@ -160,5 +160,53 @@ test.describe('resources/multi-select --', () => {
         await clickWithShiftKey(await ResourcesPage.getListItemEl('SE0'));
         await ResourcesPage.clickOpenContextMenu('SE0');
         await waitForNotExist(await ResourcesPage.getContextMenuMoveButton());
+    });
+
+
+    test('contextMenu/moveModal - do not suggest a common parent resource of selected resources', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickSwitchHierarchyMode();
+
+        await click(await ResourcesPage.getListItemEl('SE1'));
+        await clickWithControlKey(await ResourcesPage.getListItemEl('SE2'));
+        await ResourcesPage.clickOpenContextMenu('SE1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await MoveModalPage.typeInSearchBarInput('S2');
+        await waitForNotExist(MoveModalPage.getNoResourcesFoundInfo());
+
+        await MoveModalPage.clickCancel();
+    });
+
+
+    test('contextMenu/moveModal - allow moving resources if at least one resource has a different parent', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('1');
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S2');
+        await ResourcesPage.performCreateResource('2');
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickSwitchHierarchyMode();
+
+        await click(await ResourcesPage.getListItemEl('1'));
+        await clickWithControlKey(await ResourcesPage.getListItemEl('2'));
+        await ResourcesPage.clickOpenContextMenu('1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await MoveModalPage.typeInSearchBarInput('S2');
+        await MoveModalPage.clickResourceListItem('S2');
+        await waitForNotExist(await MoveModalPage.getModal());
+
+        expect(await NavbarPage.getActiveNavLinkLabel()).toContain('S2');
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
+        await waitForExist(await ResourcesPage.getListItemEl('2'));
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await waitForNotExist(await ResourcesPage.getListItemEl('1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('2'));
     });
 });

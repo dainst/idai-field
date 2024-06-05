@@ -6,10 +6,12 @@ import { Messages } from '../../messages/messages';
 import { Loading } from '../loading';
 import { MoveUtility } from './move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
+import { MsgWithParams } from '../../messages/msg-with-params';
 
 
 export interface MoveResult {
     success: boolean;
+    errorMessages: Array<MsgWithParams>;
     newParent?: FieldDocument;
 }
 
@@ -82,7 +84,10 @@ export class MoveModalComponent {
         if (this.isLoading()) return;
         this.loading.start('moveModal');
 
-        const result: MoveResult = { success: false };
+        const result: MoveResult = {
+            success: false,
+            errorMessages: []
+        };
 
         for (let document of this.documents) {
             try {
@@ -97,8 +102,7 @@ export class MoveModalComponent {
                 result.success = true;
                 result.newParent = newParent;
             } catch (msgWithParams) {
-                console.error(msgWithParams);
-                this.messages.add(msgWithParams);
+                result.errorMessages.push(msgWithParams);
             }
         }
 

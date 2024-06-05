@@ -16,6 +16,8 @@ export module MoveUtility {
                                        projectConfiguration: ProjectConfiguration,
                                        datastore: Datastore) {
 
+        if (getParentId(document) === newParent.resource.id) return;
+
         if (!(await checkForSameOperationRelations(document, newParent, projectConfiguration))) {
             throw [M.RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS, document.resource.identifier];
         }
@@ -107,8 +109,7 @@ export module MoveUtility {
         if (newParent.resource.category === 'Project' || newParent.resource.category === 'InventoryRegister') {
             document.resource.relations['isRecordedIn'] = [];
             document.resource.relations['liesWithin'] = [];
-        } else if (isRecordedInTargetCategories.map(category => category.name)
-            .includes(newParent.resource.category)) {
+        } else if (isRecordedInTargetCategories.map(to(Named.NAME)).includes(newParent.resource.category)) {
             document.resource.relations['isRecordedIn'] = [newParent.resource.id];
             document.resource.relations['liesWithin'] = [];
         } else {

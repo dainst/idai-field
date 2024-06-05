@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document, DocumentCache, IndexFacade, Labels, ProjectConfiguration,
-    WarningsUpdater } from 'idai-field-core';
+import { CategoryForm, Datastore, Document, DocumentCache, IndexFacade, Labels,
+    ProjectConfiguration } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -68,8 +68,6 @@ export class SelectNewCategoryModalComponent {
             await this.performSingle();
         }
 
-        await this.updateInvalidParentWarnings();
-
         this.warningsService.reportWarningsResolved();
 
         fixingDataInProgressModal.close();
@@ -96,21 +94,6 @@ export class SelectNewCategoryModalComponent {
         documentsToChange.forEach(document => document.resource.category = this.selectedCategory.name);
 
         await this.datastore.bulkUpdate(documentsToChange);
-    }
-
-    
-    private async updateInvalidParentWarnings() {
-
-        const documents: Array<Document> = (await this.datastore.find({
-            constraints: { 'missingOrInvalidParent:exist': 'KNOWN' }
-        }, { includeResourcesWithoutValidParent: true })).documents;
-
-        for (let document of documents) {
-            await WarningsUpdater.updateMissingOrInvalidParentWarning(
-                document, this.projectConfiguration, this.indexFacade, this.documentCache
-            );
-        }
-        this.indexFacade.notifyObservers();
     }
 
 

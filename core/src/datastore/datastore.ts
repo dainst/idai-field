@@ -44,6 +44,9 @@ export type FindOptions = {
  */
 export class Datastore {
 
+    public updating: boolean = false;
+
+
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
@@ -69,20 +72,32 @@ export class Datastore {
      */
     public async create(document: NewDocument): Promise<Document> {
 
-        return this.updateIndex(await this.datastore.create(document, this.getUser()));
+        this.updating = true;
+
+        try {
+            return await this.updateIndex(await this.datastore.create(document, this.getUser()));
+        } finally {
+            this.updating = false;
+        }
     }
 
 
     public async bulkCreate(documents: Array<NewDocument>): Promise<Array<Document>> {
 
-        const resultDocuments: Array<Document> = [];
-        for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document, false));
+        this.updating = true;
+
+        try {
+            const resultDocuments: Array<Document> = [];
+            for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
+                resultDocuments.push(await this.updateIndex(document, false));
+            }
+
+            this.indexFacade.notifyObservers();
+
+            return resultDocuments;
+        } finally {
+            this.updating = false;
         }
-
-        this.indexFacade.notifyObservers();
-
-        return resultDocuments;
     }
 
 
@@ -102,31 +117,42 @@ export class Datastore {
      */
     public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
+        this.updating = true;
         delete document.warnings;
 
-        return this.updateIndex(
-            await this.datastore.update(document, this.getUser(), squashRevisionsIds),
-            true
-        );
+        try {
+            return await this.updateIndex(
+                await this.datastore.update(document, this.getUser(), squashRevisionsIds),
+                true
+            );
+        } finally {
+            this.updating = false;
+        }
     }
 
 
     public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
 
+        this.updating = true;
+
         documents.forEach(document => delete document.warnings);
 
-        let resultDocuments: Array<Document> = [];
-        const updatedDocuments: Array<Document> = await this.datastore.bulkUpdate(documents, this.getUser());
-        if (updatedDocuments.length < 100) {
-            for (let document of updatedDocuments) {
-                resultDocuments.push(await this.updateIndex(document, false));
+        try {
+            let resultDocuments: Array<Document> = [];
+            const updatedDocuments: Array<Document> = await this.datastore.bulkUpdate(documents, this.getUser());
+            if (updatedDocuments.length < 100) {
+                for (let document of updatedDocuments) {
+                    resultDocuments.push(await this.updateIndex(document, false));
+                }
+                this.indexFacade.notifyObservers();
+            } else {
+                resultDocuments = await this.updateIndexWithFullReindexing(updatedDocuments);
             }
-            this.indexFacade.notifyObservers();
-        } else {
-            resultDocuments = await this.updateIndexWithFullReindexing(updatedDocuments);
-        }
 
-        return resultDocuments;
+            return resultDocuments;
+        } finally {
+            this.updating = false;
+        }
     }
 
 

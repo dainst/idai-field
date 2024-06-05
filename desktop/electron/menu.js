@@ -90,7 +90,7 @@ const getTemplate = (mainWindow, context, config) => {
                 label: messages.get('menu.project.exit'),
                 accelerator: 'CmdOrCtrl+Q',
                 click: () => {
-                    app.quit();
+                    mainWindow.webContents.send('requestClose');
                 }
             }]
     }, {

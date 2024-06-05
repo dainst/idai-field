@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Datastore } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -42,7 +43,8 @@ export class AppComponent {
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
-                private menuModalLauncher: MenuModalLauncher) {
+                private menuModalLauncher: MenuModalLauncher,
+                private datastore: Datastore) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -66,6 +68,7 @@ export class AppComponent {
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
+        this.handleCloseRequests();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
             this.menuModalLauncher.openUpdateUsernameModal(true);
@@ -80,6 +83,14 @@ export class AppComponent {
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
             this.changeDetectorRef.detectChanges();
+        });
+    }
+
+
+    private handleCloseRequests() {
+
+        ipcRenderer.on('requestClose', () => {
+            if (!this.datastore.updating) ipcRenderer.send('close');
         });
     }
 

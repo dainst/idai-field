@@ -14,12 +14,12 @@ describe('convertCsvRows', () => {
 
         const struct = convertCsvRows(',')(
             'identifier,shortDescription,custom\n' +
-            '10,zehn,bla');
+            '10,abc,def');
 
         expect(struct.length).toBe(1);
         expect(struct[0]['identifier']).toBe('10');
-        expect(struct[0]['shortDescription']).toBe('zehn');
-        expect(struct[0]['custom']).toBe('bla');
+        expect(struct[0]['shortDescription']).toBe('abc');
+        expect(struct[0]['custom']).toBe('def');
     });
 
 
@@ -118,22 +118,22 @@ describe('convertCsvRows', () => {
     it('parse empty fields on different levels', () => {
 
         const struct = convertCsvRows(',')(
-            'a\n' +
-            '""');
+            'identifier,a\n' +
+            '"1",""');
 
         expect(struct.length).toBe(1);
         expect(struct[0]['a']).toBeNull();
 
         const struct1 = convertCsvRows(',')(
-            'a.a,a.b\n' +
-            '"",""');
+            'identifier,a.a,a.b\n' +
+            '"1","",""');
 
         expect(struct1.length).toBe(1);
         expect(struct1[0]['a']['b']).toBeNull();
 
         const struct2 = convertCsvRows(',')(
-            'a.b.d,a.b.c\n' +
-            '"",""');
+            'identifier,a.b.d,a.b.c\n' +
+            '"1","",""');
 
         expect(struct2.length).toBe(1);
         expect(struct2[0]['a']['b']['c']).toBeNull();
@@ -154,7 +154,8 @@ describe('convertCsvRows', () => {
     it('can set array entry to null', () => {
 
         const struct = convertCsvRows(',')(
-            'a.0\n' + '""');
+            'identifier,a.0\n'
+            + '"1",""');
 
         expect(struct.length).toBe(1);
         expect(struct[0]['a'].length).toBe(1);
@@ -311,5 +312,20 @@ describe('convertCsvRows', () => {
         expect(struct[0]['a']).toBe('Value 1');
         expect(struct[1]['a']).toBe('Value 2');
         expect(struct[2]['a']).toBe('Value 3');
+    });
+
+
+    it('ignore empty rows', () => {
+
+        const struct = convertCsvRows(',')(
+            'identifier,shortDescription,custom\n' +
+            '1,abc,def\n' +
+            ',,\n' +
+            '"","",""');
+
+        expect(struct.length).toBe(1);
+        expect(struct[0]['identifier']).toBe('1');
+        expect(struct[0]['shortDescription']).toBe('abc');
+        expect(struct[0]['custom']).toBe('def');
     });
 });

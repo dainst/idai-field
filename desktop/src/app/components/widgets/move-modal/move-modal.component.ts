@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager, ProjectConfiguration,
     Datastore} from 'idai-field-core';
-import { Messages } from '../../messages/messages';
 import { Loading } from '../loading';
 import { MoveUtility } from './move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -38,7 +37,6 @@ export class MoveModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private relationsManager: RelationsManager,
                 private indexFacade: IndexFacade,
-                private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
                 private loading: Loading,

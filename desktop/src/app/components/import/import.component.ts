@@ -446,6 +446,8 @@ export class ImportComponent implements OnInit {
 
     private async testReadingGeopackage() {
 
+        console.log('Test importing geopackage file from path:', this.importState.filePath);
+
         const returnValue = await ipcRenderer.invoke('readGeopackage', this.importState.filePath);
 
         if (returnValue.error) {

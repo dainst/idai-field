@@ -15,7 +15,12 @@ electron.ipcMain.handle('readGeopackage', async (_, path) => {
 
 async function readGeopackage(filePath) {
 
-    setCanvasKitWasmLocateFile(fileName => global.toolsPath + '/' + fileName);
+    console.log('Reading geopackage file:', filePath);
+
+    setCanvasKitWasmLocateFile(fileName => {
+        console.log('Path to canvas kit wasm file:', global.toolsPath + '/' + fileName);
+        return global.toolsPath + '/' + fileName
+    });
 
     const geoPackage = await GeoPackageAPI.open(filePath);
     const featureTablesNames = geoPackage.getFeatureTables();

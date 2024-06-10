@@ -109,19 +109,19 @@
                 <%= "None." %>
             <% issue_groups -> %>
                 <%= for {{type, severity}, issues} <- issue_groups do %>
-                <section id={"#{type}-issue-group"} class="issue-group hide">
-                <h3 class={issue_classes(severity)}>
-                    <span class="show-toggle folder-icon" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
-                        <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
-                    </span>
-                    <span class="hide-toggle open-folder-icon" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
-                        <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
-                    </span>
-                </h3>
+                    <section id={"#{type}-issue-group"} class="issue-group hide">
+                        <h3 class={issue_classes(severity)}>
+                            <div class="show-toggle" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
+                                <img src="/images/hero-icons/folder.svg"/><%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                            </div>
+                            <div class="hide-toggle" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
+                                <img src="/images/hero-icons/folder-open.svg"/><%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                            </div>
+                        </h3>
 
-                <.live_component module={ProjectShowLiveIssues} id={type} issues={issues} project={@project} />
+                        <.live_component module={ProjectShowLiveIssues} id={type} issues={issues} project={@project} />
 
-                </section>
+                    </section>
                 <% end %>
         <% end %>
     </section>

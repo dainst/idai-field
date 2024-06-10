@@ -1,5 +1,9 @@
 'use strict';
 
+const log = require('electron-log');
+log.transports.file.level = 'debug';
+Object.assign(console, log.functions);
+
 const electron = require('electron');
 const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');

@@ -58,7 +58,7 @@
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
       "asarUnpack": [
-        "node_modules/@ngageoint/**"
+        "node_modules/better-sqlite3/**"
       ]
     },
     "win": {
@@ -80,7 +80,7 @@
       "category": "Science",
       "asarUnpack": [
         "node_modules/sharp/**",
-        "node_modules/@ngageoint/**"
+        "node_modules/better-sqlite3/**"
       ]
     },
     "npmRebuild": false,

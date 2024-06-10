@@ -55,9 +55,9 @@ export module Dating {
     const VALID_FIELDS = [TYPE, BEGIN, END, MARGIN, SOURCE, IS_IMPRECISE, IS_UNCERTAIN, LABEL];
     const VALID_ELEMENT_FIELDS = [YEAR, INPUT_YEAR, INPUT_TYPE];
     export const VALID_DATING_TYPES = ['bce','ce','bp'];
-    export const VALID_TYPES = ['range','exact','before','after','scientific']
+    export const VALID_TYPES = ['range','single','before','after','scientific']
 
-    export type Types = 'range'|'exact'|'before'|'after'|'scientific'
+    export type Types = 'range'|'single'|'before'|'after'|'scientific'
     export type Translations = 'bce'|'ce'|'bp'|'before'|'after';
 
 
@@ -75,7 +75,7 @@ export module Dating {
             if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
         }
         if (dating.label) return true; // Support datings in deprecated format
-        if (!dating.type || !['range', 'exact', 'after', 'before', 'scientific'].includes(dating.type)) {
+        if (!dating.type || !['range', 'single', 'after', 'before', 'scientific'].includes(dating.type)) {
             return false;
         }
         return true;
@@ -86,7 +86,7 @@ export module Dating {
 
         if (dating.label) return true; // Support datings in deprecated format
         if (['range', 'after', 'scientific'].includes(dating.type) && !dating.begin) return false;
-        if (['range', 'exact', 'before', 'scientific'].includes(dating.type) && !dating.end) return false;
+        if (['range', 'single', 'before', 'scientific'].includes(dating.type) && !dating.end) return false;
         if (dating.type === 'scientific' && !dating.margin) return false;
 
         if (dating.begin && (!dating.begin.inputYear || !dating.begin.inputType
@@ -142,7 +142,7 @@ export module Dating {
                 year = generateLabelForDate(dating.begin, getTranslation) + ' – '
                     + generateLabelForDate(dating.end, getTranslation);
             }
-            if (dating.type === 'before' || dating.type == 'exact') {
+            if (dating.type === 'before' || dating.type == 'single') {
                 year = generateLabelForDate(dating.end, getTranslation);
             }
             if (dating.type === 'after') year = generateLabelForDate(dating.begin, getTranslation);

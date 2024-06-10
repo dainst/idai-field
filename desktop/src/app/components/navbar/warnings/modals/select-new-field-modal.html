@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@navbar.taskbar.selectNewField.header">Neues Feld auswählen</h5>
+</div>
+
+<div id="select-new-field-modal-body" class="modal-body warnings-tool-modal-body">
+    <div class="warnings-tool-info" i18n="@@navbar.taskbar.selectNewField.confirmation">
+        Bitte wählen Sie das Feld aus, in das die im Feld <span [innerHTML]="getFieldLabelHTML(fieldName)"></span>
+        eingetragenen Daten übertragen werden sollen.
+    </div>
+
+    <select id="new-field-select"
+            (change)="selectedFieldName = $event.target.value"
+            class="form-control">
+        <option value=""></option>
+        <option *ngFor="let field of availableFields"
+                value="{{field.name}}"
+                [selected]="selectedFieldName === field.name">
+            {{getFieldLabel(field)}}
+        </option>
+    </select>
+
+    <div *ngIf="selectedFieldName" id="multiple-switch" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@navbar.taskbar.selectNewField.all">Bei allen Ressourcen dieser Kategorie durchführen</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch">
+                <input type="checkbox" [checked]="multiple" (change)="multiple = !multiple">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    
+    <div *ngIf="selectedFieldName && multiple">
+        <div *ngIf="warningType === 'unconfiguredFields'"
+             class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.selectNewField.multiple.info.unconfigured">
+            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Kategorie <b>{{getCategoryLabel()}}</b> sämtliche eingetragenen Daten aus dem Feld
+            <span [innerHTML]="getFieldLabelHTML(fieldName)"></span> in das Feld
+            <span [innerHTML]="getFieldLabelHTML(selectedFieldName)"></span> verschoben.
+        </div>
+        <div *ngIf="warningType === 'invalidFields'"
+            class="text-center alert alert-warning"
+            i18n="@@navbar.taskbar.selectNewField.multiple.info.invalid">
+            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Kategorie <b>{{getCategoryLabel()}}</b> ungültige Daten aus dem Feld
+            <span [innerHTML]="getFieldLabelHTML(fieldName)"></span> in das Feld
+            <span [innerHTML]="getFieldLabelHTML(selectedFieldName)"></span> verschoben.
+            Gültige Daten verbleiben im ursprünglichen Feld.
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div id="confirm-button"
+         class="btn btn-primary"
+         [ngClass]="{ 'disabled': !selectedFieldName }"
+         (click)="perform()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

@@ -4,6 +4,7 @@ import { assertFieldsAreValid } from '../field/assert-fields-are-valid';
 import { ConfigurationErrors } from '../../boot/configuration-errors';
 import { BaseFormDefinition } from './base-form-definition';
 import { CustomFieldDefinition, VALID_CUSTOM_FIELD_PROPERTIES } from '../field/custom-field-definition';
+import { ScanCodeConfiguration } from '../../../model/configuration/scan-code-configuration';
 
 
 /**
@@ -18,11 +19,13 @@ export interface CustomFormDefinition extends BaseFormDefinition {
     color?: string;
     identifierPrefix?: string;
     resourceLimit?: number;
+    scanCodes?: ScanCodeConfiguration;
 }
 
 
 const VALID_CUSTOM_FORM_PROPERTIES = [
-    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix', 'resourceLimit'
+    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix', 'resourceLimit',
+    'scanCodes'
 ];
 
 

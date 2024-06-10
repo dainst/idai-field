@@ -1,0 +1,39 @@
+#qr-code-scanner-modal-body {
+  height: 383px;
+
+  #qr-code-scanner-container {
+    width: 100%;
+    min-height: 274px;
+
+    &.no-camera {
+      height: 100%;
+    }
+
+    loading-icon {
+      position: absolute;
+      top: 216px;
+    }
+
+    video {
+      width: 100%;
+    }
+
+    .alert {
+      position: absolute;
+      margin: 20px;
+    }
+
+    .scan-region-highlight-svg {
+      stroke: #fff !important;
+    }
+  }
+
+  #camera-select {
+    margin-top: 10px;
+    user-select: none;
+
+    select {
+      margin-top: 5px;
+    }
+  }
+}

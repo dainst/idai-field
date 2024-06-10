@@ -35,7 +35,7 @@ describe('CSVExpansion', () => {
             [
                 ['l', 'abc', 'r'],
                 [
-                    ['l1', [{ a: 'A', b: { de: 'B1', en: 'B2' } }], null],
+                    ['l1', [{ a: 'A', b: { de: 'B1', en: 'B2' } }], null],
                     ['l2', [{ a: 'A' }], null]
                 ]
             ] as any,

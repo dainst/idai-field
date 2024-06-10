@@ -11,7 +11,7 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  */
 export class ShapefileFilesystemReader implements Reader {
 
-    constructor(private file: any) {}
+    constructor(private filePath: string) {}
 
 
     public async go(): Promise<string> {
@@ -36,7 +36,7 @@ export class ShapefileFilesystemReader implements Reader {
 
     private getArguments(): string {
 
-        return '"convert" "' + this.file.path + '" "' + ShapefileFilesystemReader.getTempFilePath() + '"';
+        return '"convert" "' + this.filePath + '" "' + ShapefileFilesystemReader.getTempFilePath() + '"';
     }
 
 

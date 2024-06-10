@@ -87,15 +87,14 @@ const RenderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
         onMouseEnter?: (categories: string[]) => void, level: number = 1): ReactNode => {
 
     const key_ = key === 'resource.category.name' ? 'category' : key;
-    const [onHoover, setOnHoover] = useState<boolean>(false);
+    const isSelected: boolean = bucket.item.value.name === category;
 
     return <React.Fragment key={ bucket.item.value.name }>
         <Dropdown.Item
                 as={ Link }
-                style={ filterValueStyle(level, bucket.item.value.name, category, onHoover ) }
+                className={ getFilterValueClasses(isSelected) }
+                style={ getFilterValueStyle(level) }
                 onMouseOver={ () => onMouseEnter && onMouseEnter(getCategoryAndSubcategoryNames(bucket)) }
-                onMouseEnter={ () => setOnHoover(true) }
-                onMouseLeave={ () => setOnHoover(false) }
                 to={ ((projectId && projectView) ? `/project/${projectId}/${projectView}?` : '/?')
                             + (isFilterValueInParams(params, key_, bucket.item.value.name)
                                 ? deleteFilterFromParams(params, key_, bucket.item.value.name)
@@ -111,7 +110,8 @@ const RenderFilterValue = (key: string, bucket: FilterBucketTreeNode, params: UR
                     </Col>
                 }
             </Row>
-        </Dropdown.Item>        { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
+        </Dropdown.Item>
+        { bucket.trees && bucket.trees.map((b: FilterBucketTreeNode) =>
             RenderFilterValue(key_, b, params, filters, category, projectId, projectView,
                 onMouseEnter, level + 1))
         }
@@ -127,18 +127,15 @@ const getCategoryAndSubcategoryNames = (bucket: FilterBucketTreeNode): string[] 
 };
 
 
-const filterValueStyle = (level: number, name: string, category: string|undefined,
-                          onHoover: boolean): CSSProperties => {
-    const style = { paddingLeft: `${level * 1.2}em` } as CSSProperties;
-    // By default if you click a category, it gets color #eceeef
-    // If you reload the page or come from outside to a route
-    // where a category is already selected, it does not have that background color.
-    // Since it is not clear to me, by which magic it gets the color when you click the category,
-    // I set it here manually if the category is selected. (ET)
-    const isSelected = category === name;
-    style.backgroundColor = isSelected || onHoover ? '#eceeef' : 'white';
-    // -
-    return style;
+const getFilterValueStyle = (level: number): CSSProperties => {
+
+    return { paddingLeft: `${level * 1.2}em` };
+};
+
+
+const getFilterValueClasses = (isSelected: boolean): string => {
+
+    return 'filter' + (isSelected ? ' selected-filter' : '');
 };
 
 
@@ -156,7 +153,7 @@ const categoryCountStyle: CSSProperties = {
 
 
 // https://stackoverflow.com/a/17485300
-const urlDecode = (param: string) => param ? decodeURIComponent( param.replace(/\+/g, '%20') ) : undefined;
+const urlDecode = (param: string) => param ? decodeURIComponent(param.replace(/\+/g, '%20')) : undefined;
 
 
 const extractFiltersFromSearchParams = (searchParams: URLSearchParams) =>

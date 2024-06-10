@@ -181,7 +181,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         await this.modals.awaitResult(
             result,
-            editedValue => this.getClonedValuelistDefinition().values[valueId] = editedValue,
+            editedValue => {
+                this.getClonedValuelistDefinition().values[valueId] = editedValue;
+                if (!this.order.includes(valueId)) this.order.push(valueId);
+            },
             nop
         );
     }
@@ -191,7 +194,6 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         this.newValueId = '';
         await this.editValue(valueId, true);
-        this.order.push(valueId);
     }
 
 

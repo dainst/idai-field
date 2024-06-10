@@ -24,4 +24,9 @@
   top: 3px;
   font-size: 13px;
   line-height: 16px;
+  font-weight: 500;
+
+  &.high-dpi {
+    font-weight: 400;
+  }
 }

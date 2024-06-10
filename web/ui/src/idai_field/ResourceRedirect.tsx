@@ -44,7 +44,7 @@ const fetchDocument = async (project: string, identifier: string, token: string)
 
 const getParent = (document: ResultDocument): string => {
 
-    return document.resource.parentId || 'root';
+    return document.resource.parentId || 'root';
 };
 
 

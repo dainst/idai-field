@@ -79,6 +79,7 @@ export class ImageSyncService {
 
         if (variant in this.schedules) {
             clearTimeout(this.schedules[variant]);
+            if (this.inProcess[variant]) delete this.inProcess[variant];
         }
 
         this.status[variant] = SyncStatus.Offline;
@@ -98,7 +99,6 @@ export class ImageSyncService {
     private triggerUpdate() {
 
         this.active.forEach(preference => {
-            clearTimeout(this.schedules[preference.variant]);            
             this.scheduleNextSync(preference, this.shortIntervalDuration);
         });
     }
@@ -108,6 +108,7 @@ export class ImageSyncService {
 
         if (!this.isVariantSyncActive(preference.variant)) return;
 
+        if (this.schedules[preference.variant]) clearTimeout(this.schedules[preference.variant]);
         this.schedules[preference.variant] = setTimeout(this.sync.bind(this), duration, preference);
     }
 

@@ -7,6 +7,7 @@ import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
 import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -79,7 +80,7 @@ test.describe('resources/list --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickMapModeButton();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
 
         expect(await FieldsViewPage.getFieldValue(0, 1)).toEqual('Changed resource 1');
     });
@@ -142,9 +143,9 @@ test.describe('resources/list --', () => {
     test('move a resource', async () => {
 
         await ResourcesPage.clickListMoveButton('SE0');
-        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        await ResourcesPage.clickResourceListItemInMoveModal('S2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('S2');
+        await MoveModalPage.clickResourceListItem('S2');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         expect(await NavbarPage.getActiveNavLinkLabel()).toContain('S2');
         

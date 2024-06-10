@@ -1,6 +1,6 @@
 import { SimpleChanges } from '@angular/core';
 import { flatten, subtract } from 'tsfun';
-import { FieldDocument, FieldGeometry, FieldResource } from 'idai-field-core';
+import { FieldDocument, FieldGeometry, FieldResource, Labels, ProjectConfiguration, Resource } from 'idai-field-core';
 import { CoordinatesUtility } from './coordinates-utility';
 
 
@@ -65,14 +65,14 @@ export module MapComponentHelper {
     }
 
 
-    export function getTooltipText(resource: FieldResource) {
+    export function getTooltipText(resource: FieldResource, labels: Labels,
+                                   projectConfiguration: ProjectConfiguration) {
 
-        let shortDescription = resource.identifier;
-        if (resource.shortDescription && resource.shortDescription.length > 0) {
-            shortDescription += ' | ' + resource.shortDescription;
-        }
+        let tooltipText: string = resource.identifier;
+        const shortDescription: string = Resource.getShortDescriptionLabel(resource, labels, projectConfiguration);
+        if (shortDescription?.length) tooltipText += ' | ' + shortDescription;
 
-        return shortDescription;
+        return tooltipText;
     }
 
 
@@ -80,7 +80,7 @@ export module MapComponentHelper {
 
         return (changes['selectedDocument'] || changes['additionalSelectedDocuments'])
             && !changes['documents'] && !changes['parentDocument']
-            && !changes['coordinateReferenceSystem'];
+            && !changes['coordinateReferenceSystem'] && !changes['update'];
     }
 
 

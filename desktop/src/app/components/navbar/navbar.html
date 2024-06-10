@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand navbar-dark bg-primary" [class.mac-margin]="isRunningOnMac()"
-     [class.in-resources-view]="isActiveRoute('/resources') && !isActiveRoute('/resources/types')"
+     [class.in-resources-view]="isInDefaultResourcesView()"
      (dragover)="false" (dragleave)="false" (drop)="false">
     <div id="navbarSupportedContent" class="navbar-collapse">
-        <ul #tabSpace id="resources-tabs" *ngIf="isActiveRoute('/resources') && !isActiveRoute('/resources/types')"
+        <ul #tabSpace id="resources-tabs" *ngIf="isInDefaultResourcesView()"
             class="nav navbar-nav navbar-tabbed mr-auto">
             <li id="navbar-project" class="nav-item tab" [class.active]="isActiveRoute('/resources/project')">
                 <a class="nav-link" 
@@ -35,7 +35,7 @@
             </li>
         </ul>
 
-        <ul *ngIf="!isActiveRoute('/resources') || isActiveRoute('/resources/types')"
+        <ul *ngIf="!isInDefaultResourcesView()"
             id="non-resources-tab" class="nav navbar-nav navbar-tabbed mr-auto">
             <span class="form-inline">
                 <button class="btn btn-link"

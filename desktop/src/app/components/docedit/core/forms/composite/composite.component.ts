@@ -1,9 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Map, clone } from 'tsfun';
-import { Field, Labels, Resource, Composite, I18N, Valuelist} from 'idai-field-core';
+import { Field, Labels, Resource, Composite, I18N, Valuelist, ValuelistUtil} from 'idai-field-core';
 import { Language } from '../../../../../services/languages';
 import { UtilTranslations } from '../../../../../util/util-translations';
-import { Messages } from '../../../../messages/messages';
 import { Modals } from '../../../../../services/modals';
 import { CompositeEntryModalComponent as CompositeEntryModalComponent } from './composite-entry-modal.component';
 import { MenuContext } from '../../../../../services/menu-context';
@@ -32,7 +31,6 @@ export class CompositeComponent implements OnInit, OnChanges {
 
     constructor(private labels: Labels,
                 private utilTranslations: UtilTranslations,
-                private messages: Messages,
                 private menus: Menus,
                 private modals: Modals) {}
 
@@ -50,6 +48,20 @@ export class CompositeComponent implements OnInit, OnChanges {
 
         this.updateLabelsAndDescriptions();
         this.updateEntryLabels();
+    }
+
+
+    public hasOutliers(entry: any): boolean {
+
+        for (let subfield of this.field.subfields) {
+            if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(subfield.inputType) || !entry[subfield.name]) continue;
+            
+            if (ValuelistUtil.getValuesNotIncludedInValuelist(
+                entry[subfield.name], subfield.valuelist
+            ) !== undefined) {
+                return true;
+            }
+        }
     }
 
 

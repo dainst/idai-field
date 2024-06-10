@@ -31,6 +31,7 @@ export class SearchBarComponent implements OnChanges {
     @ViewChild('p', { static: false }) protected popover: any;
     @ViewChild('searchInput', { static: false }) fulltextSearchInput: ElementRef;
 
+    public selectedCategories: string[];
     public focused: boolean = false;
 
     private emitQueryTimeout: any = undefined;
@@ -40,10 +41,8 @@ export class SearchBarComponent implements OnChanges {
 
 
     ngOnChanges() {
-
-        if ((!this.categories || this.categories.length === 0) && this.filterOptions.length === 1) {
-            this.categories = [this.filterOptions[0].name];
-        }
+        
+        this.selectedCategories = this.getSelectedCategories();
     }
 
 
@@ -71,13 +70,13 @@ export class SearchBarComponent implements OnChanges {
             ? CategoryForm.getNamesOfCategoryAndSubcategories(category)
             : undefined;
 
-        if (newCategories && newCategories.length > 1 && this.categories
-                && sameset(this.categories)(newCategories)) {
+        if (newCategories && newCategories.length > 1 && this.selectedCategories
+                && sameset(this.selectedCategories)(newCategories)) {
             newCategories = [category.name];
         }
 
-        this.categories = newCategories;
-        this.onCategoriesChanged.emit(this.categories);
+        this.selectedCategories = newCategories;
+        this.onCategoriesChanged.emit(this.selectedCategories);
     }
 
 
@@ -95,6 +94,16 @@ export class SearchBarComponent implements OnChanges {
             return target.id && (target.id.includes('filter-button') || target.id.includes('filter-menu'));
         })) {
             this.popover.close();
+        }
+    }
+
+
+    private getSelectedCategories(): string[] {
+
+        if ((!this.categories || this.categories.length === 0) && this.filterOptions.length === 1) {
+            return [this.filterOptions[0].name];
+        } else {
+            return this.categories;
         }
     }
 }

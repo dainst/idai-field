@@ -33,7 +33,7 @@ jobs:
       - name: Run desktop unit tests
         run: npm run test
         working-directory: desktop
-      - name: Run FieldHub integration tests
+      - name: Run Field Hub integration tests
         run: npm run test:hub-integration
         working-directory: desktop
       - name: Run Java tools tests
@@ -61,7 +61,7 @@ jobs:
       matrix:
         os:
           - { name: 'Linux', version: 'ubuntu-latest' }
-          - { name: 'MacOS', version: 'macos-latest' }
+          - { name: 'MacOS', version: 'macos-12' }
           - { name: 'Windows', version: 'windows-latest' }
       fail-fast: false
     runs-on: ${{ matrix.os.version }}

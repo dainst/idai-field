@@ -1,5 +1,5 @@
 import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
-    selectSearchableSelectOption } from '../app';
+    selectSearchableSelectOption, selectOption } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -64,6 +64,18 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoInventoryTab() {
+
+        return click('#edit-form-goto-inventory');
+    }
+
+
+    public static clickGotoStratigraphyTab() {
+
+        return click('#edit-form-goto-stratigraphy');
+    }
+
+
     public static clickGotoPositionTab() {
 
         return click('#edit-form-goto-position');
@@ -73,6 +85,12 @@ export class DoceditPage {
     public static clickGotoDimensionTab() {
 
         return click('#edit-form-goto-dimension');
+    }
+
+
+    public static clickGotoHierarchyTab() {
+
+        return click('#edit-form-goto-hierarchy');
     }
 
 
@@ -131,9 +149,13 @@ export class DoceditPage {
     }
 
 
-    public static async clickSelectOption(fieldName: string, optionValueLabel: string) {
+    public static async clickSelectOption(fieldName: string, optionValueLabel: string,
+                                          selectElementIndex: number = 0) {
 
-        return selectSearchableSelectOption((await this.getField(fieldName)), optionValueLabel);
+        const field = await this.getField(fieldName);
+        const element = await (await field.locator('searchable-select')).nth(selectElementIndex);
+
+        return selectSearchableSelectOption(element, optionValueLabel);
     }
 
 
@@ -157,6 +179,64 @@ export class DoceditPage {
     }
 
 
+    public static async clickAddMultiInputEntry(fieldName: string) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await field.locator('.add-multi-input-entry');
+        return click(element);
+    }
+
+
+    public static async clickDeleteMultiInputEntry(fieldName: string, entryIndex: number) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('.delete-multi-input-entry').nth(entryIndex));
+        return click(element);
+    }
+
+
+    public static async clickCreateNewDimensionButton(fieldName: string) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await field.locator('.create-new-dimension-button');
+        return click(element);
+    }
+
+
+    public static async clickSaveDimensionButton(fieldName: string) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await field.locator('.save-dimension-button');
+        return click(element);
+    }
+
+
+    public static async clickDimensionMeasurementPositionOption(fieldName: string, optionValue: string) {
+
+        return selectOption(
+            (await this.getField(fieldName)).locator('.measurement-position-select'),
+            optionValue
+        );
+    }
+
+
+    public static async clickDropdownRangeActivateEndButton(fieldName: string) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        return click(await field.locator('.dropdown-range-activate-end-button'));
+    }
+
+
     public static async clickDeleteInvalidFieldDataButton(fieldName: string) {
 
         return click((await this.getField(fieldName).locator('.delete-invalid-field-data-button')));
@@ -172,6 +252,13 @@ export class DoceditPage {
     public static async clickCreateCompositeEntry(fieldName: string) {
 
         return click((await this.getField(fieldName)).locator('.create-composite-entry-button'));
+    }
+
+
+    public static async clickEditCompositeEntryButton(fieldName: string, entryIndex: 0) {
+        
+        return click((await this.getField(fieldName)).locator('.composite-entry:nth-child(' + (entryIndex + 1) + ') '
+            + '.edit-composite-entry'));
     }
 
 
@@ -278,6 +365,13 @@ export class DoceditPage {
     }
 
 
+    public static async getCompositeEntryWarningIcon(fieldName: string, entryIndex: 0) {
+        
+        return (await this.getField(fieldName)).locator('.composite-entry:nth-child(' + (entryIndex + 1) + ') '
+            + '.composite-entry-warning');
+    }
+
+
     public static async getOutlierValues(fieldName: string) {
 
         return (await this.getField(fieldName)).locator('.outlier');
@@ -289,6 +383,21 @@ export class DoceditPage {
     public static async typeInInputField(fieldName: string, text: string) {
 
         return typeIn((await this.getField(fieldName)).locator('input'), text);
+    }
+
+
+    public static async typeInMultiInputField(fieldName: string, text: string) {
+
+        const elements = await (await this.getField(fieldName)).locator('input');
+        const element = await elements.nth(await elements.count() - 1);
+
+        return typeIn(element, text);
+    }
+
+
+    public static async typeInDimensionInputValue(fieldName: string, text: string) {
+
+        return typeIn((await this.getField(fieldName)).locator('.value-input'), text);
     }
 
 

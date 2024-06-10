@@ -20,9 +20,9 @@ export interface ChangeEvent {
 
 
 export interface Resource {
-    category: LabeledValue;
+    category: CategoryValue;
     id: string;
-    identifier: I18N.String;
+    identifier: string;
     shortDescription: I18N.String;
     shortName?: I18N.String;
     groups: FieldGroup[];
@@ -105,6 +105,11 @@ export interface LabeledValue {
 export function isLabeledValue(labeledValue: unknown): labeledValue is LabeledValue {
 
     return isObject(labeledValue) && labeledValue['label'] && labeledValue['name'];
+}
+
+
+export interface CategoryValue extends LabeledValue {
+    parent: string;
 }
 
 

@@ -136,7 +136,9 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     end
 
     test "authorized user can see monitoring page", %{conn: conn} do
-      {:ok, view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+      {:ok, %{pid: pid} = view, html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      :erlang.trace(pid, true, [:receive])
 
       assert html_on_mount =~ "<h1>Project <i>#{@project}</i></h1>"
       assert html_on_mount =~ "No supervisor found in project document."
@@ -146,6 +148,8 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       assert html_on_mount =~
                "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
+
+      assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
 
       html = render(view)
 
@@ -158,7 +162,9 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     end
 
     test "user can trigger issue evaluation", %{conn: conn} do
-      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+      {:ok, %{pid: pid} = view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+
+      :erlang.trace(pid, true, [:receive])
 
       TestHelper.delete_document(@project, "project")
 
@@ -169,25 +175,8 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       assert html =~ "Evaluating issues, for big projects this may take several minutes..."
 
-      # Elixir/Erlang kinda deep dive:
-      #
-      # In general, the ProjectShowLive's `handle_info/3` and `handle_event/3` communicate via events/messages
-      # that they send to the view process.
-      #
-      # The `render_click/1` above sends a event "evaluate_issues" to the view process.
-      # The handle_event function itself then sends another message (:update_issues) and updates the
-      # socket's :issue_status to :evaluating. It then returns the socket.
-      #
-      # The views state at this point in the test: :issue_status is :evaluating (and HTML reflects that),
-      # but there are no issues evaluated yet, because the :update_issues message has not been handled by
-      # the view yet.
-      #
-      # In order to wait for the evaluation result, we call the following function:
-      _ = :sys.get_state(view.pid)
-      # Because all messages are handled sequentially by the process, we 'wait' for all
-      # previous messages to be completed by sending one of our own (`get_state/1`). As soon as we get
-      # a result for `get_state/1` we know that all other messages in the queue have been processed
-      # (including :update_issues) and we should have our issues visible in the HTML.
+      assert_receive {:trace, ^pid, :receive, {_ref, {:issues_task, _list_of_issues}}}
+
       html =
         view
         |> render()
@@ -424,10 +413,13 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     end
 
     test "file index cache can be deleted through the interface", %{conn: conn} do
-      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+      {:ok, %{pid: pid} = view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
-      # TODO: evaluate why we have to do this
-      render(view)
+      # We wait until the overview task has completed and the result is received by the view process, because the
+      # overview evaluation will create a cached index.
+      :erlang.trace(pid, true, [:receive])
+      assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
+
       assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)
 
       html =

@@ -1,25 +1,34 @@
-<form id="search-bar">
+<form *ngIf="visible" id="search-bar">
     <div class="input-group">
+        <div *ngIf="isQrCodeScannerButtonVisible()" class="input-group-prepend">
+            <button id="qr-code-scanner-button"
+                    class="btn btn-primary"
+                    ngbTooltip="QR-Code scannen"
+                    i18n-ngbTooltip="@@resources.searchBar.qrCodeScanner.tooltip"
+                    placement="left" container="body"
+                    (click)="scanQrCode()">
+                <span class="mdi mdi-qrcode-scan"></span>
+            </button>
+        </div>
         <input #searchInput
-            class="form-control search-bar-input"
-            [class.small-search-input]="extendedSearch"
-            [class.big-search-input]="!isFilterMenuAvailable()"
-            [(ngModel)]="q"
-            (keyup)="onKeyUp($event)"
-            (focus)="focused = true; showSuggestions();"
-            (blur)="focused = false"
-            name="searchInput"
-            type="text"
-            placeholder="Suchen..."
-            i18n-placeholder="@@widgets.searchBar.placeholder">
+                class="form-control search-bar-input"
+                [class.small-search-input]="extendedSearch"
+                [class.big-search-input]="!isFilterMenuAvailable()"
+                [(ngModel)]="q"
+                (keyup)="onKeyUp($event)"
+                (focus)="focused = true; showSuggestions();"
+                (blur)="focused = false"
+                name="searchInput"
+                type="text"
+                placeholder="Suchen..."
+                i18n-placeholder="@@widgets.searchBar.placeholder" />
         <search-suggestions [maxSuggestions]="5"
                             [visible]="suggestionsVisible">
         </search-suggestions>
 
-        <div *ngIf="isFilterMenuAvailable()"
-             class="input-group-append">
+        <div *ngIf="isFilterMenuAvailable()" class="input-group-append">
             <resources-search-constraints *ngIf="extendedSearch"
-                    [category]="getSelectedCategory()">
+                                          [category]="getSelectedCategory()">
             </resources-search-constraints>
             <button id="resources-search-bar-filter-button"
                     class="btn btn-primary search-filter"
@@ -33,7 +42,7 @@
                     placement="bottom-right">
                 <span *ngIf="!isCategorySelected()" class="mdi mdi-filter"></span>
                 <span *ngIf="isCategorySelected()">
-                    <category-icon [category]="categories[0]" size="24"></category-icon>
+                    <category-icon [category]="selectedCategories[0]" size="24"></category-icon>
                 </span>
             </button>
             <ng-template #filterMenu>
@@ -42,14 +51,13 @@
                         <span i18n="@@widgets.searchBar.categoryFilter">Nach Kategorie filtern:</span>
                     </div>
                     <category-picker [topLevelCategoriesArray]="filterOptions"
-                                    [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
-                                    [selectedCategories]="categories"
-                                    [allowPickingAbstractCategories]="true"
-                                    (onCategoryPicked)="chooseCategoryFilter($event)">
+                                     [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
+                                     [selectedCategories]="selectedCategories"
+                                     [allowPickingAbstractCategories]="true"
+                                     (onCategoryPicked)="chooseCategoryFilter($event)">
                     </category-picker>
                 </div>
             </ng-template>
         </div>
-
     </div>
 </form>

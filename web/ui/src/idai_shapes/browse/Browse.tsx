@@ -35,13 +35,15 @@ export default function Browse(): ReactElement {
     const [breadcrumbs, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
     const [tabKey, setTabKey] = useState<string>('children');
 
-    const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) => {
+    const getChunk = async (newOffset: number) => {
 
-        const promise = documentId
-            ? getChildren(documentId, newOffset, loginData.token)
-            : searchDocuments(searchParams, newOffset, loginData.token);
-        promise.then(result => setDocuments(oldDocs => oldDocs.concat(result.documents)));
-    });
+        const result = documentId
+            ? await getChildren(documentId, newOffset, loginData.token)
+            : await searchDocuments(searchParams, newOffset, loginData.token);
+        setDocuments(oldDocs => oldDocs.concat(result.documents));
+    };
+
+    const { onScroll, resetScrollOffset } = useGetChunkOnScroll(getChunk);
 
     useEffect(() => {
 

@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h5 *ngIf="fileCount === 1" class="modal-title" i18n="@@imageUpload.header.single">
+        Bild importieren
+    </h5>
+    <h5 *ngIf="fileCount > 1" class="modal-title" i18n="@@imageUpload.header.multiple">
+        Bilder importieren
+    </h5>
+</div>
+
+<div class="modal-body" id="image-upload-metadata-modal-body">
+    <div *ngIf="fileCount >= 100" class="text-center alert alert-warning"
+        i18n="@@imageUpload.imageMetadataModal.warning">
+        Bitte beachten Sie, dass das Einlesen von {{fileCount}} Bilddateien einige Zeit in Anspruch nehmen kann.
+    </div>
+    <div *ngIf="depictsRelationTarget" class="text-center alert alert-info">
+        <span *ngIf="fileCount == 1" i18n="@@imageUpload.imageMetadataModal.linkInfo.single">
+            Das importierte Bild wird mit der Ressource <b>{{depictsRelationTarget.resource.identifier}}</b> verknüpft.
+        </span>
+        <span *ngIf="fileCount > 1" i18n="@@imageUpload.imageMetadataModal.linkInfo.multiple">
+            Die importierten Bilder werden mit der Ressource <b>{{depictsRelationTarget.resource.identifier}}</b>
+            verknüpft.
+        </span>
+    </div>
+    <div *ngIf="hasImageChildCategories()"
+         id="category-section-title"
+         i18n="@@import.format.importCategorySelect">Kategorie</div>
+    <category-picker [topLevelCategoriesArray]="topLevelCategories"
+                     [selectedCategories]="getSelectedCategoryNames()"
+                     (onCategoryPicked)="setCategory($event)"></category-picker>
+
+    <div *ngIf="isFieldConfigured('Image', 'draughtsmen') && projectStaff.length > 0">
+        <div id="draughtsmen-section-title">
+            {{getFieldLabel('Image', 'draughtsmen')}}
+        </div>
+        <div id="draughtsmen-switch">
+            <span class="draughtsmen-switch-label"
+                  i18n="@@imageUpload.imageMetadataModal.readFromMetadata">Aus Bild-Metadaten auslesen</span> 
+            <label class="switch">
+                <input type="checkbox"
+                        [checked]="getParseFileMetadata('draughtsmen')"
+                        (change)="toggleParseFileMetadata('draughtsmen')">
+                <span class="slider round"></span>
+            </label>
+        </div>
+            
+        <div *ngIf="!getParseFileMetadata('draughtsmen')" id="draughtsmen-options">
+            <div *ngFor="let person of projectStaff" class="checkbox form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input"
+                           value="{{person}}"
+                           type="checkbox"
+                           [checked]="metadata.draughtsmen.includes(person)"
+                           (click)="toggleDraughtsman(person)">
+                    <span>{{person}}</span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="confirmUploadButton" type="button" class="btn btn-primary"
+        (click)="activeModal.close(metadata)">
+        <span i18n="@@buttons.ok">OK</span>
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

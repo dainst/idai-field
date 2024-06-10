@@ -24,7 +24,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('hi', async done => {
+    it('create document', async done => {
 
         await app.datastore.create(doc1('abc', 'Abc', 'Trench'));
 
@@ -33,7 +33,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('DocumentDatastore - do not throw and return everything with all categories', async done => {
+    it('do not throw and return everything with all categories', async done => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -51,7 +51,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('DocumentDatastore - return everything when called without categories', async done => {
+    it('return everything when called without categories', async done => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -69,7 +69,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('sort mode', async done => {
+    it('sort documents in different sort modes', async done => {
 
         const doc1 = doc('sd1', 'A-B-100', 'Find', '1');
         const doc2 = doc('sd2', 'B-100', 'Find', '2');
@@ -79,8 +79,10 @@ describe('subsystem/datastore', () => {
         await app.datastore.create(doc2);
         await app.datastore.create(doc3);
 
-        const { documents: documents1, totalCount: totalCount1 } =
-            await app.datastore.find({ q: 'B-100', sort: { mode: 'default' }});
+        const { documents: documents1, totalCount: totalCount1 } = await app.datastore.find(
+            { q: 'B-100', sort: { mode: 'default' } },
+            { includeResourcesWithoutValidParent: true }
+        );
 
         expect(documents1.length).toBe(2);
         expect(totalCount1).toBe(2);
@@ -88,8 +90,10 @@ describe('subsystem/datastore', () => {
         expect(documents1[0].resource.id).toBe('1');
         expect(documents1[1].resource.id).toBe('2');
 
-        const { documents: documents2, totalCount: totalCount2 } =
-            await app.datastore.find({ q: 'B-100', sort: { mode: 'exactMatchFirst' }});
+        const { documents: documents2, totalCount: totalCount2 } = await app.datastore.find(
+            { q: 'B-100', sort: { mode: 'exactMatchFirst' } },
+            { includeResourcesWithoutValidParent: true }
+        );
 
         expect(documents2.length).toBe(2);
         expect(totalCount2).toBe(2);
@@ -100,7 +104,7 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('isChildOf', async done => {
+    it('use isChildOf constraint', async done => {
 
         await helpers.createDocuments([
             ['id1', 'Trench', ['id2']],
@@ -115,20 +119,75 @@ describe('subsystem/datastore', () => {
     });
 
 
-    it('update non-unique identifier warnings', async done => {
+    it('do not return documents without valid parent resource in find result', async done => {
 
-        let document1 = doc('sd1', '1', 'Find', 'id1');
+        let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
         let document2 = doc('sd2', '1', 'Find', 'id2');
+        let document3 = doc('sd3', '2', 'Find', 'id3');
+
+        document2.resource.relations.isRecordedIn = ['id1'];
 
         document1 = await app.datastore.create(document1);
         document2 = await app.datastore.create(document2);
+        document3 = await app.datastore.create(document3);
 
-        expect(document1.warnings?.nonUniqueIdentifier).toBe(true);
+        expect(document3.warnings?.missingOrInvalidParent).toBe(true);
+
+        const result = await app.datastore.find({ categories: ['Find'] });
+        
+        expect(result.documents.length).toBe(1);
+        expect(result.documents[0].resource.id).toBe('id2');
+
+        done();
+    });
+
+
+    it('return documents without valid parent resource in find result if datastore option is enabled', async done => {
+
+        let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
+        let document2 = doc('sd2', '1', 'Find', 'id2');
+        let document3 = doc('sd3', '2', 'Find', 'id3');
+
+        document2.resource.relations.isRecordedIn = ['id1'];
+
+        document1 = await app.datastore.create(document1);
+        document2 = await app.datastore.create(document2);
+        document3 = await app.datastore.create(document3);
+
+        expect(document3.warnings?.missingOrInvalidParent).toBe(true);
+
+        const result = await app.datastore.find(
+            { categories: ['Find'] },
+            { includeResourcesWithoutValidParent: true }
+        );
+        
+        expect(result.documents.length).toBe(2);
+        expect(result.documents[0].resource.id).toBe('id2');
+        expect(result.documents[1].resource.id).toBe('id3');
+
+        done();
+    });
+
+
+    it('update non-unique identifier warnings', async done => {
+
+        let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
+        let document2 = doc('sd2', '1', 'Find', 'id2');
+        let document3 = doc('sd3', '1', 'Find', 'id3');
+
+        document2.resource.relations.isRecordedIn = ['id1'];
+        document3.resource.relations.isRecordedIn = ['id1'];
+
+        document1 = await app.datastore.create(document1);
+        document2 = await app.datastore.create(document2);
+        document3 = await app.datastore.create(document3);
+
         expect(document2.warnings?.nonUniqueIdentifier).toBe(true);
+        expect(document3.warnings?.nonUniqueIdentifier).toBe(true);
 
-        const clonedDocument2 = Document.clone(document2);
-        clonedDocument2.resource.identifier = '2';
-        await app.datastore.update(clonedDocument2);
+        const clonedDocument3 = Document.clone(document3);
+        clonedDocument3.resource.identifier = '2';
+        await app.datastore.update(clonedDocument3);
         
         expect(document1.warnings).toBeUndefined();
         expect(document2.warnings).toBeUndefined();

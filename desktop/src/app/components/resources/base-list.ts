@@ -23,6 +23,8 @@ export class BaseList {
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
     public navigationPath: NavigationPath;
+    
+    public readonly itemSize: number;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -65,17 +67,20 @@ export class BaseList {
     }
 
 
-    protected scrollTo(doc: FieldDocument|undefined) {
+    protected scrollTo(scrollTarget: FieldDocument|undefined, bottomElement: boolean = false) {
 
-        if (!doc) return;
+        if (!scrollTarget) return;
 
         const index = this.viewFacade.getDocuments()
-            .findIndex(document => document.resource.id === doc.resource.id);
+            .findIndex(document => document.resource.id === scrollTarget.resource.id);
 
         if (!this.scrollViewport) {
-            setTimeout(() => this.scrollTo(doc), 100);
+            setTimeout(() => this.scrollTo(scrollTarget, bottomElement), 100);
         } else {
-            scrollTo(index, 'resource-' + doc.resource.identifier, this.scrollViewport);   
+            scrollTo(
+                index, 'resource-' + scrollTarget.resource.identifier, this.itemSize,
+                this.scrollViewport, bottomElement
+            );
         }
     }
 }

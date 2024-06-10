@@ -18,6 +18,7 @@
 @import 'core/forms/multi-input';
 @import 'core/forms/identifier';
 @import 'core/forms/type-relation/type-relation';
+@import 'core/forms/composite/composite';
 @import 'core/forms/widgets/outliers';
 @import 'core/forms/widgets/empty-valuelist-info';
 @import 'core/forms/widgets/invalid-field-data';
@@ -25,7 +26,7 @@
 @import 'dialog/duplicate-modal';
 
 #document-edit-wrapper {
-  height: calc(100vh - 56px);
+  height: calc(100vh - 84px);
   overflow-y: hidden;
 
   .form-group.card {
@@ -42,12 +43,14 @@
   }
 
   header {
-    padding: 7px;
+    padding: 7px 7px 6px 7px;
     border-bottom: 1px solid #ccc;
     user-select: none;
     background-color: $modal-header-background-color;
 
     #category-switcher-button-container {
+      position: relative;
+      top: 2px;
       min-width: 55px;
       padding: 4px;
     }
@@ -56,6 +59,7 @@
       font-size: 25px;
       line-height: 24px;
       margin: 0;
+      padding-left: 1px;
       padding-right: 15px;
       flex: 1;
       min-height: 55px;
@@ -119,6 +123,7 @@
 
   #document-edit-button-dropdown {
     margin-left: 1px;
+    border-left: 1px solid #e7e7e7;
 
     &:focus {
       box-shadow: none;

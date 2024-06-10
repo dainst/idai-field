@@ -1,3 +1,6 @@
+import { AppState } from '../../services/app-state';
+
+
 /**
  * This "interface" exists for the sole reason that the unit test should not see
  * the require from the concrete-dialog-provider which is to be resolved only in context with electron.
@@ -7,5 +10,8 @@
  */
 export class DialogProvider {
 
-    public chooseFilepath = (): Promise<string> => { return Promise.resolve(''); }
+    public chooseFilepath(_: string, __?: AppState): Promise<string> {
+
+        return Promise.resolve('');
+    }
 }

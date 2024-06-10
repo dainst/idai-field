@@ -774,7 +774,7 @@
       "ohne Schalen/keine durchgehenden Lagen": "senza paramento/senza filari continui",
       "ohne Schalen/nur durchgehende Lagen": "senza paramento/solo filari continui",
       "zweischalig": "a due paramenti",
-      "zweischalig mit Binderlagen": "a due paramenti con blocchi di testa "
+      "zweischalig mit Binderlagen": "a due paramenti con blocchi di testa"
     }
   },
   "Architecture-mortarBinder-default": {
@@ -2189,7 +2189,8 @@
   },
   "Architecture-mark-default": {
     "values": {
-      "A": ""
+      "A": "A",
+      "AC": "AC"
     }
   },
   "Damage-condition-default": {

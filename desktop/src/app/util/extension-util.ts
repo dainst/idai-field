@@ -1,3 +1,6 @@
+const path = typeof window !== 'undefined' ? window.require('path') : require('path');
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -12,17 +15,16 @@ export module ExtensionUtil {
      *   [0] if there are no files to import, after considering unsupported extensions
      *   [count,extensionsAsJoinedString] if there are files to import and also unsupported extensions
      */
-    export function reportUnsupportedFileTypes(files: Array<File>,
-                                              supportedFileTypes: Array<string>): Array<any> {
+    export function reportUnsupportedFileTypes(filePaths: string[], supportedFileTypes: string[]): any[] {
 
-        const uniqueUnsupportedExts = getUnsupportedExts(files, supportedFileTypes)
+        const uniqueUnsupportedExts = getUnsupportedExts(filePaths, supportedFileTypes)
             .reduce(function(c, p) {
                 if (c.indexOf(p as never) < 0) c.push(p as never);
                 return c;
             }, []);
 
         let result: Array<any>
-            = [(files.length - getUnsupportedExts(files, supportedFileTypes).length)];
+            = [(filePaths.length - getUnsupportedExts(filePaths, supportedFileTypes).length)];
         if (uniqueUnsupportedExts.length > 0) {
             result.push(uniqueUnsupportedExts.join(', '));
         }
@@ -30,9 +32,9 @@ export module ExtensionUtil {
     }
 
 
-    export function ofUnsupportedExtension(file: File, supportedFileTypes: Array<string>) {
+    export function ofUnsupportedExtension(fileName: string, supportedFileTypes: string[]) {
 
-        let ext = file.name.split('.').pop();
+        let ext = fileName.split('.').pop();
         if (!ext) return undefined;
         if (supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
@@ -48,12 +50,12 @@ export module ExtensionUtil {
         (/(?:\.([^.]+))?$/.exec(fileName)?.[1] ?? '').toLowerCase();
 
 
-    export function getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {
+    export function getUnsupportedExts(filePaths: string[], supportedFileTypes: string[]) {
 
         let unsupportedExts: Array<string> = [];
-        for (let file of files) {
+        for (let filePath of filePaths) {
             let ext;
-            if ((ext = ofUnsupportedExtension(file, supportedFileTypes)) != undefined) {
+            if ((ext = ofUnsupportedExtension(path.basename(filePath), supportedFileTypes)) != undefined) {
                 unsupportedExts.push('"*.' + ext + '"');
             }
         }

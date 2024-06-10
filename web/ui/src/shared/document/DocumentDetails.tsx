@@ -14,7 +14,7 @@ import { Result, ResultDocument } from '../../api/result';
 import { ImageCarousel } from '../image/ImageCarousel';
 import { getLabel, getNumberOfUndisplayedLabels, getTranslation } from '../languages';
 import { LoginContext } from '../login';
-import { getDocumentLink } from './document-utils';
+import { getDocumentLink, getSupercategoryName } from './document-utils';
 import DocumentTeaser from './DocumentTeaser';
 
 const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
@@ -170,9 +170,10 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
 const renderGroups = (document: Document, t: TFunction, baseUrl: string): ReactNode => {
 
     return document.resource.groups.map(
-        renderGroup(t, document.project,
-        baseUrl,
-        TYPES_WITH_HIDDEN_RELATIONS.includes(document.resource.category.name))
+        renderGroup(
+            t, document.project, baseUrl,
+            TYPES_WITH_HIDDEN_RELATIONS.includes(getSupercategoryName(document))
+        )
     );
 };
 

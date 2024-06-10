@@ -84,7 +84,7 @@ export class MatrixState {
     }
 
 
-    public async store() {
+    private async store() {
 
         await this.stateSerializer.store(this.createSerializationObject(), 'matrix-state');
     }

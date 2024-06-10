@@ -107,7 +107,7 @@ describe('ConfigurationIndex', () => {
             }
         ];
         const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
-        index.createSubIndices([], categories, [], [], []);
+        index.createSubIndices([], categories, [], [], []);
 
         expect(index.findFields('', 'A')[0].name).toEqual('field1');
         expect(index.findFields('field', 'A')[0].name).toEqual('field1');
@@ -180,11 +180,11 @@ describe('ConfigurationIndex', () => {
                 groups: [
                     {
                         name: 'blueGroup',
-                        label: { de: 'Blaue Gruppe', en: 'Blue group' }
+                        label: { de: 'Blaue Gruppe', en: 'Blue group' }
                     },
                     {
                         name: 'redGroup',
-                        label: { de: 'Rote Gruppe', en: 'Red group' }
+                        label: { de: 'Rote Gruppe', en: 'Red group' }
                     }
                 ]
             },
@@ -195,11 +195,11 @@ describe('ConfigurationIndex', () => {
                 groups: [
                     {
                         name: 'blueGroup',
-                        label: { de: 'Blaue Gruppe', en: 'Blue group' }
+                        label: { de: 'Blaue Gruppe', en: 'Blue group' }
                     },
                     {
                         name: 'yellowGroup',
-                        label: { de: 'Gelbe Gruppe', en: 'Yellow group' }
+                        label: { de: 'Gelbe Gruppe', en: 'Yellow group' }
                     }
                 ]
             }

@@ -8,7 +8,7 @@ import { ProjectConfiguration } from './project-configuration'
 import { ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/query'
 import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
-import { childrenOf } from '../base-config';
+import { childrenOf } from '../basic-index-configuration';
 import { Name, Named } from '../tools/named';
 
 
@@ -93,8 +93,9 @@ export class RelationsManager {
         const updated = await this.persistIt(document, revs);
 
         await ConnectedDocs.updateForUpdate(
-            this.datastore.update, this.datastore.get, this.datastore.convert,
-            this.getRelationNames(), this.getInverseRelationsMap(), updated, [oldVersion].concat(revisionsToSquash));
+            this.datastore, this.getRelationNames(), this.getInverseRelationsMap(), updated,
+            [oldVersion].concat(revisionsToSquash)
+        );
         return updated as Document;
     }
 
@@ -102,7 +103,8 @@ export class RelationsManager {
     private async removeWithConnectedDocuments(document: Document) {
 
         await ConnectedDocs.updateForRemove(
-            this.datastore.update, this.datastore.get, this.getRelationNames(), this.getInverseRelationsMap(), document);
+            this.datastore, this.getRelationNames(), this.getInverseRelationsMap(), document
+        );
         await this.datastore.remove(document);
     }
 
@@ -132,8 +134,8 @@ export class RelationsManager {
         return document.resource.id
             ? this.datastore.update(
                 document as Document,
-                squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
-            : this.datastore.create(document);
+                squashRevisionIds.length === 0 ? undefined : squashRevisionIds
+            ) : this.datastore.create(document);
     }
 
 
@@ -147,14 +149,13 @@ export class RelationsManager {
                 }
             }
         };
-        return this.datastore.find(query);
+        return this.datastore.find(query, { includeResourcesWithoutValidParent: true });
     }
 
 
     private getInverseRelationsMap(): Relation.InverseRelationsMap {
 
         return Relation.makeInverseRelationsMap(this.projectConfiguration.getRelations());
-
     }
 
 

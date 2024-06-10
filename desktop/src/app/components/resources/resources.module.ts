@@ -17,8 +17,7 @@ import { Messages } from '../messages/messages';
 import { Loading } from '../widgets/loading';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { BaseList } from './base-list';
-import { DeletionInProgressModalComponent } from './deletion/deletion-in-progress-modal.component';
-import { ResourceDeletion } from './deletion/resource-deletion';
+import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { ListComponent } from './list/list.component';
 import { RowComponent } from './list/row.component';
 import { GeometryViewComponent } from './map/list/geometry-view.component';
@@ -30,7 +29,7 @@ import { LayerManager } from './map/map/layers/layer-manager';
 import { LayerMenuComponent } from './map/map/layers/layer-menu.component';
 import { MapComponent } from './map/map/map.component';
 import { ResourcesMapComponent } from './map/resources-map.component';
-import { MoveModalComponent } from './move-modal.component';
+import { MoveModalComponent } from '../widgets/move-modal/move-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PlusButtonComponent } from './plus-button.component';
 import { ResourcesComponent } from './resources.component';
@@ -38,21 +37,27 @@ import { ResourcesSearchBarComponent } from './searchbar/resources-search-bar.co
 import { ResourcesSearchConstraintsComponent } from './searchbar/resources-search-constraints.component';
 import { SearchSuggestionsComponent } from './searchbar/search-suggestions.component';
 import { DoceditLauncher } from './service/docedit-launcher';
-import { TypeGridElementComponent } from './types/type-grid-element.component';
-import { TypeGridComponent } from './types/type-grid.component';
-import { TypeIconComponent } from './types/type-icon.component';
-import { TypesComponent } from './types/types.component';
+import { GridItemComponent } from './grid-list/grid-item.component';
+import { GridComponent } from './grid-list/grid.component';
+import { GridItemIconComponent } from './grid-list/grid-item-icon.component';
+import { GridListComponent } from './grid-list/grid-list.component';
 import { ResourcesContextMenuComponent } from './widgets/resources-context-menu.component';
 import { ListButtonGroupComponent } from './widgets/list-button-group.component';
-import { ChildrenViewComponent } from './widgets/popovermenu/children-view.component';
-import { PopoverMenuComponent } from './widgets/popovermenu/popover-menu.component';
+import { PopoverMenuComponent } from './widgets/popover-menu.component';
 import { Routing } from '../../services/routing';
 import { StandardStateSerializer } from '../../services/standard-state-serializer';
 import { StateSerializer } from '../../services/state-serializer';
 import { SettingsProvider } from '../../services/settings/settings-provider';
-
+import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
+import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-code-modal.component';
+import { QrCodeService } from './service/qr-code-service';
+import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
+import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
+import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
+import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
 
 @NgModule({
     imports: [
@@ -73,10 +78,10 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
-        TypesComponent,
-        TypeGridComponent,
-        TypeGridElementComponent,
-        TypeIconComponent,
+        GridListComponent,
+        GridComponent,
+        GridItemComponent,
+        GridItemIconComponent,
         LayerMenuComponent,
         ListComponent,
         RowComponent,
@@ -90,9 +95,12 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         SearchSuggestionsComponent,
         ResourcesContextMenuComponent,
         MoveModalComponent,
-        DeletionInProgressModalComponent,
-        ChildrenViewComponent,
-        BaseList
+        BaseList,
+        QrCodeEditorModalComponent,
+        PrintSettingsModalComponent,
+        CreatePrintSettingsProfileModalComponent,
+        DeleteQrCodeModalComponent,
+        ScanStoragePlaceModalComponent,
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
@@ -101,6 +109,8 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         LayerManager,
         LayerImageProvider,
         ResourceDeletion,
+        QrCodeService,
+        StoragePlaceScanner,
         {
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration,
@@ -175,8 +185,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         GeometryViewComponent
     ],
     entryComponents: [
-        MoveModalComponent,
-        DeletionInProgressModalComponent
+        MoveModalComponent
     ]
 })
 

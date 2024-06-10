@@ -3,7 +3,6 @@ import { DoceditPage} from '../docedit/docedit.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { ResourcesPage } from './resources.page';
 import { NavbarPage } from '../navbar.page';
-import { DetailSidebarPage } from '../widgets/detail-sidebar.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
@@ -12,6 +11,8 @@ import { ImageViewPage } from '../images/image-view.page';
 import { ImageRowPage } from '../images/image-row.page';
 import { ImageViewModalPage } from '../image-view-modal.page';
 import { ConfigurationPage } from '../configuration/configuration.page';
+import { ProjectLanguagesModalPage } from '../configuration/project-languages-modal.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -114,7 +115,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- save changes via dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('save');
 
@@ -126,7 +127,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- discard changes via dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('discard');
 
@@ -137,7 +138,7 @@ test.describe('resources --', () => {
     test('creation/docedit/savedialog -- cancel dialog modal', async () => {
 
         await ResourcesPage.performCreateResource('1');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.typeInInputField('identifier', '2');
         await DoceditPage.clickCloseEdit('cancel');
         await expect(await DoceditPage.getIdentifierInputFieldValue()).toEqual('2');
@@ -177,7 +178,7 @@ test.describe('resources --', () => {
     test('fields', async () => {
 
         await ResourcesPage.performCreateResource('1', 'feature-architecture', 'diary', '100');
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
 
         const fieldName = await FieldsViewPage.getFieldName(0, 1);
         expect(fieldName).toBe('Tagebuch');
@@ -191,7 +192,7 @@ test.describe('resources --', () => {
     test('relations', async () => {
 
         await ResourcesPage.performCreateLink();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         await FieldsViewPage.clickAccordionTab(1);
 
         let relationValue = await FieldsViewPage.getRelationValue(1, 0);
@@ -201,7 +202,7 @@ test.describe('resources --', () => {
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(1);
 
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         relationValue = await FieldsViewPage.getRelationValue(1, 0);
         expect(relationValue).toBe('1');
         relationName = await FieldsViewPage.getRelationName(1, 0);
@@ -209,18 +210,18 @@ test.describe('resources --', () => {
 
         // docedit
         await ResourcesPage.openEditByDoubleClickResource('1');
-        expect(await DoceditRelationsPage.getRelationButtonText('isAfter')).toEqual('2');
+        expect(await DoceditRelationsPage.getRelationButtonIdentifier('isAfter')).toEqual('2');
         await DoceditPage.clickCloseEdit();
         await ResourcesPage.openEditByDoubleClickResource('2');
-        expect(await DoceditRelationsPage.getRelationButtonText('isBefore')).toEqual('1');
+        expect(await DoceditRelationsPage.getRelationButtonIdentifier('isBefore')).toEqual('1');
 
         // deletion
         await DoceditRelationsPage.clickRelationDeleteButtonByIndices('isBefore');
         await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         let tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1);
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1);
     });
@@ -234,14 +235,14 @@ test.describe('resources --', () => {
 
         await ResourcesPage.performCreateResource('1', 'feature-architecture');
         await ResourcesPage.performCreateResource('2', 'feature-architecture');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickGotoTimeTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isContemporaryWith');
         await DoceditRelationsPage.typeInRelation('isContemporaryWith', '2');
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickCloseEdit('discard');
 
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         await waitForExist('#popover-menu');
         const tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1); // Only core
@@ -278,6 +279,23 @@ test.describe('resources --', () => {
     });
 
 
+    test('do not restrict values of campaign field if the category of the parent resource does not include the field',
+            async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('place', 'place');
+        await ResourcesPage.clickHierarchyButton('place');
+        await ResourcesPage.performCreateResource('trench', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('trench');
+        const checkboxes = await DoceditPage.getCheckboxes('campaign');
+        expect(await checkboxes.count()).toBe(2);
+        expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
+        expect(await getText(checkboxes.nth(1))).toEqual('Testkampagne 2');
+
+        await DoceditPage.clickCloseEdit();
+    });
+
+
     test('edit i18n field values', async () => {
 
         await ResourcesPage.clickCreateResource();
@@ -300,6 +318,10 @@ test.describe('resources --', () => {
     test('show string value in unspecifiedLanguage tab after changing input type from simpleInput to input', async () => {
 
         await navigateTo('configuration');
+        await waitForExist(await ConfigurationPage.getConfigurationEditor());
+        await navigateTo('projectLanguages');
+        await ProjectLanguagesModalPage.clickDeleteLanguage('it');
+        await ProjectLanguagesModalPage.clickConfirm();
         await ConfigurationPage.changeMultiLanguageSetting('shortDescription', 'Feature');
         await ConfigurationPage.save();
 
@@ -326,7 +348,7 @@ test.describe('resources --', () => {
         expect(await getText(languageTabs.nth(0))).toEqual('Ohne Sprachangabe');
         expect(await getText(languageTabs.nth(1))).toEqual('Deutsch');
         expect(await getText(languageTabs.nth(2))).toEqual('Englisch');
-        expect(await getText(languageTabs.nth(3))).toEqual('Italienisch');
+        expect(await getText(languageTabs.nth(3))).toEqual('Türkisch');
         expect(await getText(languageTabs.nth(4))).toEqual('Ukrainisch');
         
         await DoceditPage.removeTextFromInputField('shortDescription');
@@ -340,7 +362,7 @@ test.describe('resources --', () => {
         expect(await languageTabs.count()).toBe(4);
         expect(await getText(languageTabs.nth(0))).toEqual('Deutsch');
         expect(await getText(languageTabs.nth(1))).toEqual('Englisch');
-        expect(await getText(languageTabs.nth(2))).toEqual('Italienisch');
+        expect(await getText(languageTabs.nth(2))).toEqual('Türkisch');
         expect(await getText(languageTabs.nth(3))).toEqual('Ukrainisch');
         await DoceditPage.clickCloseEdit();
     });
@@ -367,7 +389,7 @@ test.describe('resources --', () => {
         await waitForNotExist(await ResourcesPage.getListItemEl('2'));
 
         // relations
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         const tabs = await FieldsViewPage.getTabs();
         expect(await tabs.count()).toBe(1); // Only core
     });
@@ -376,7 +398,7 @@ test.describe('resources --', () => {
     test('do not reflect changes in list while editing resource', async () => {
 
         await ResourcesPage.performCreateResource('1a');
-        await DetailSidebarPage.doubleClickEditDocument('1a');
+        await ResourcesPage.openEditByDoubleClickResource('1a');
         await DoceditPage.typeInInputField('identifier', '1b');
         const identifier = await ResourcesPage.getSelectedListItemIdentifierText();
         expect(identifier).toBe('1a');
@@ -388,17 +410,17 @@ test.describe('resources --', () => {
 
         // toggleRangeOnOff to child category
         await ResourcesPage.performCreateResource('1', 'feature');
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature-architecture');
         await waitForNotExist('#message-0');
         await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         const categoryLabel = await FieldsViewPage.getFieldValue(0, 0);
         expect(categoryLabel).toEqual('Architektur');
 
         // delete invalid fields when changing the category of a resource to its parent category
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
 
         await DoceditPage.clickGotoPropertiesTab();
         await DoceditPage.clickSelectOption('wallType', 'Außenmauer');
@@ -407,7 +429,7 @@ test.describe('resources --', () => {
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getFieldValue(1, 0)).toEqual('Außenmauer');
 
-        await DetailSidebarPage.doubleClickEditDocument('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature');
         await NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
@@ -482,10 +504,10 @@ test.describe('resources --', () => {
 
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        await MoveModalPage.typeInSearchBarInput('S2');
         await pause(2000);
-        await ResourcesPage.clickResourceListItemInMoveModal('S2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('S2');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         await pause(2000);
         const label = await NavbarPage.getActiveNavLinkLabel();
@@ -496,7 +518,6 @@ test.describe('resources --', () => {
         await pause(2000);
 
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
@@ -513,27 +534,27 @@ test.describe('resources --', () => {
         await ResourcesPage.performCreateResource('P1', 'place');
         await ResourcesPage.clickOpenContextMenu('S1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('P');
+        await MoveModalPage.typeInSearchBarInput('P');
 
-        let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        let labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(0))).not.toEqual('Projekt');
         }
 
-        await ResourcesPage.typeInMoveModalSearchBarInput('P1');
-        await ResourcesPage.clickResourceListItemInMoveModal('P1');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('P1');
+        await MoveModalPage.clickResourceListItem('P1');
+        await waitForNotExist(await MoveModalPage.getModal());
         let elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
         await ResourcesPage.clickOpenContextMenu('S1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('P');
-        labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        await MoveModalPage.typeInSearchBarInput('P');
+        labels = await MoveModalPage.getResourceIdentifierLabels();
         expect(await getText(labels.nth(0))).toEqual('Projekt');
 
-        await ResourcesPage.clickResourceListItemInMoveModal('Projekt');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('Projekt');
+        await waitForNotExist(await MoveModalPage.getModal());
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(5);
     });
@@ -552,7 +573,7 @@ test.describe('resources --', () => {
         expect(await getText(labels.nth(2))).toEqual('Stratigraphische Einheit');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickOpenContextMenu('S1');
@@ -563,11 +584,10 @@ test.describe('resources --', () => {
         expect(await getText(labels.nth(0))).toEqual('Ort');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
 
         await ResourcesPage.clickHierarchyButton('B1');
         await ResourcesPage.clickHierarchyButton('R1');
-        await ResourcesPage.clickOpenChildCollectionButton();
         await ResourcesPage.performCreateResource('Floor1', 'roomfloor');
         await ResourcesPage.clickOpenContextMenu('Floor1');
         await ResourcesPage.clickContextMenuMoveButton();
@@ -581,7 +601,7 @@ test.describe('resources --', () => {
         expect(await getText(labels.nth(3))).toEqual('Raum');
 
         await SearchBarPage.clickCategoryFilterButton('modal');
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 
@@ -591,31 +611,31 @@ test.describe('resources --', () => {
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('operation-trench', 'modal');
 
-        let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        let labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(i))).not.toEqual('S1');
         }
 
-        await ResourcesPage.clickCancelInMoveModal();
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await MoveModalPage.clickCancel();
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenContextMenu('testf1');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
 
-        labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(i))).not.toEqual('SE0');
         }
 
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 
     test('contextMenu/moveModal - do not suggest descendants of current resource', async () => {
 
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.performCreateResource('SE-D1', 'feature');
-        await ResourcesPage.performDescendHierarchy('SE-D1');
+        await ResourcesPage.clickHierarchyButton('SE-D1');
         await ResourcesPage.performCreateResource('SE-D2', 'feature');
 
         await ResourcesPage.clickOperationNavigationButton();
@@ -623,13 +643,13 @@ test.describe('resources --', () => {
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
 
-        const labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        const labels = await MoveModalPage.getResourceIdentifierLabels();
         for (let i = 0; i < await labels.count(); i++) {
             expect(await getText(labels.nth(i))).not.toEqual('SE-D1');
             expect(await getText(labels.nth(i))).not.toEqual('SE-D2');
         }
 
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 
@@ -639,15 +659,14 @@ test.describe('resources --', () => {
         await ResourcesPage.clickHierarchyButton('B1');
         await ResourcesPage.performCreateResource('BW1', 'buildingpart');
         await ResourcesPage.clickHierarchyButton('BW1');
-        await ResourcesPage.clickOpenChildCollectionButton();
         await ResourcesPage.performCreateResource('R2', 'room');
 
         await ResourcesPage.clickOperationNavigationButton();
         await ResourcesPage.clickOpenContextMenu('BW1');
         await ResourcesPage.clickContextMenuMoveButton();
         await SearchBarPage.clickChooseCategoryFilter('operation-survey', 'modal');
-        await ResourcesPage.clickResourceListItemInMoveModal('A1');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.clickResourceListItem('A1');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         await NavbarPage.awaitAlert('kann nicht verschoben werden', false);
     });
@@ -657,7 +676,7 @@ test.describe('resources --', () => {
 
         // create links for images
         await addTwoImages('SE0');
-        await ResourcesPage.clickSelectResource('SE0', 'info');
+        await ResourcesPage.clickSelectResource('SE0');
         await ResourcesPage.clickThumbnail();
         let images = await ImageRowPage.getImages();
         expect(await images.count()).toBe(2);
@@ -696,5 +715,84 @@ test.describe('resources --', () => {
         await ImageViewModalPage.clickCloseButton();
 
         await waitForNotExist(await ResourcesPage.getThumbnail());
+    });
+
+
+    test('show children in fields view', async () => {
+
+        await ResourcesPage.clickSelectResource('SE0');
+        await FieldsViewPage.clickAccordionTab(1);
+        let relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Untergeordnete Ressourcen')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('testf1');
+
+        await NavbarPage.clickTab('project');
+
+        await ResourcesPage.clickSelectResource('S2');
+        await FieldsViewPage.clickAccordionTab(1);
+        relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(6);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Untergeordnete Ressourcen')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE1');
+        expect(await FieldsViewPage.getRelationValue(1, 1)).toBe('SE2');
+        expect(await FieldsViewPage.getRelationValue(1, 2)).toBe('SE3');
+        expect(await FieldsViewPage.getRelationValue(1, 3)).toBe('SE4');
+        expect(await FieldsViewPage.getRelationValue(1, 4)).toBe('SE5');
+        expect(await FieldsViewPage.getRelationValue(1, 5)).toBe('SE6');
+    });
+
+
+    test('show stratigraphical units present in profile', async () => {
+
+        await ResourcesPage.performCreateResource('P1', 'profile');
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickGotoPositionTab();
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isPresentIn');
+        await DoceditRelationsPage.typeInRelation('isPresentIn', 'P1');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('P1');
+        await FieldsViewPage.clickAccordionTab(1);
+        let relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Umfasst stratigraphische Einheiten')
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
+    });
+
+
+    test('sort values of checkbox field in fields view', async () => {
+
+        await ResourcesPage.performCreateResource('Pottery1', 'find-pottery');
+        await ResourcesPage.openEditByDoubleClickResource('Pottery1');
+        await DoceditPage.clickGotoPropertiesTab();
+        await DoceditPage.clickCheckbox('manufacturing', 2);
+        await DoceditPage.clickCheckbox('manufacturing', 0);
+        await DoceditPage.clickCheckbox('manufacturing', 3);
+        await DoceditPage.clickCheckbox('manufacturing', 1);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('Pottery1');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getFieldValue(1, 0, 0)).toBe('Dickwandig');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 1)).toBe('Dünnwandig');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 2)).toBe('Gebrannt');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 3)).toBe('Hart gebrannt');
+    });
+
+
+    test('sort values of checkbox field with valuelist from project document in fields view', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('Trench1', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('Trench1');
+        await DoceditPage.clickCheckbox('processor', 1);
+        await DoceditPage.clickCheckbox('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('Trench1');;
+        expect(await FieldsViewPage.getFieldValue(0, 1, 0)).toBe('Person 1');
+        expect(await FieldsViewPage.getFieldValue(0, 1, 1)).toBe('Person 2');
     });
 });

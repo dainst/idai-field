@@ -1,7 +1,8 @@
 defmodule FieldHub.FileStoreTest do
   alias FieldHub.FileStore
 
-  use ExUnit.Case, async: true
+  # use ExUnit.Case, async: true
+  use ExUnit.Case
 
   @cache_name Application.compile_env(:field_hub, :file_index_cache_name)
   @root_directory Application.compile_env(:field_hub, :file_directory_root)

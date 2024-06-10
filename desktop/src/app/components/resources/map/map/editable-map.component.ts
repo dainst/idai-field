@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone
     SimpleChanges } from '@angular/core';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
-import { FieldDocument, FieldGeometry, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, FieldGeometry, Labels, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
@@ -56,6 +56,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
 
     constructor(projectConfiguration: ProjectConfiguration,
+                labels: Labels,
                 layerManager: LayerManager,
                 layerImageProvider: LayerImageProvider,
                 messages: Messages,
@@ -65,7 +66,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef) {
 
-        super(projectConfiguration, layerManager, layerImageProvider, messages, settingsProvider, zone,
+        super(projectConfiguration, labels, layerManager, layerImageProvider, messages, settingsProvider, zone,
             changeDetectorRef, datastore, menuService);
     }
 

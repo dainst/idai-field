@@ -85,9 +85,21 @@ export class ConfigurationPage {
     
     // get
 
+    public static getConfigurationEditor() {
+
+        return getLocator('.project-configuration');
+    }
+
+
     public static getGroup(groupName: string) {
 
         return getLocator('#group-' + groupName.replace(':', '-'));
+    }
+
+
+    public static getActiveGroup(groupName: string) {
+
+        return getLocator('#group-' + groupName.replace(':', '-') + '.active');
     }
 
 
@@ -161,5 +173,16 @@ export class ConfigurationPage {
         await ConfigurationPage.clickContextMenuEditOption();
         await EditConfigurationPage.clickToggleMultiLanguageSlider();
         await EditConfigurationPage.clickConfirm();
+    }
+
+
+    public static async enableQRCodes(categoriesFilter: string, categoryName: string, supercategoryName?: string) {
+
+        await ConfigurationPage.clickSelectCategoriesFilter(categoriesFilter);
+        await CategoryPickerPage.clickOpenContextMenu(categoryName, supercategoryName);
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickToggleScanCodesSlider();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
     }
 }

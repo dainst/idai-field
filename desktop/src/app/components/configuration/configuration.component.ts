@@ -35,6 +35,10 @@ import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { ConfigurationState } from './configuration-state';
 import { ImportConfigurationModalComponent } from './import/import-configuration-modal.component';
 import { ProjectLanguagesModalComponent } from './languages/project-languages-modal.component';
+import { exportConfiguration } from './export-configuration';
+import { AppState } from '../../services/app-state';
+import { UtilTranslations } from '../../util/util-translations';
+import { M } from '../messages/m';
 
 
 @Component({
@@ -72,7 +76,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauwerk' }) },
         { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
         { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
-        { name: 'types', label: this.i18n({ id: 'configuration.categoriesFilter.types', value: 'Typenverwaltung' }) }
+        { name: 'types', label: this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' }) },
+        { name: 'inventory', label: this.i18n({ id: 'navbar.tabs.inventory', value: 'Inventarisierung' }) }
     ];
 
     public availableInputTypes: Array<InputType> = [
@@ -99,6 +104,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'geometry'  },
         { name: 'instanceOf' },
         { name: 'relation' },
+        { name: 'derivedRelation' },
         { name: 'category' },
         { name: 'identifier' }
     ];
@@ -128,6 +134,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private documentConverter: DocumentConverter,
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
+                private utilTranslations: UtilTranslations,
+                private appState: AppState,
                 private i18n: I18n) {}
 
 
@@ -211,14 +219,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         switch (menuItem) {
             case 'projectLanguages':
-                this.openProjectLanguagesModal();
+                await this.openProjectLanguagesModal();
                 break;
             case 'valuelists':
                 await AngularUtility.refresh();
-                this.openValuelistsManagementModal();
+                await this.openValuelistsManagementModal();
                 break;
             case 'importConfiguration':
-                this.openImportConfigurationModal();
+                await this.openImportConfigurationModal();
+                break;
+            case 'exportConfiguration':
+                await this.exportConfiguration();
                 break;
         }
     }
@@ -307,8 +318,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public selectCategory(category: CategoryForm) {
 
-        this.selectedCategory = this.clonedProjectConfiguration.getCategory(category.name);
-        this.configurationState.setSelectedCategoryName(this.selectedCategory.name);
+        if (!category) {
+            this.selectedCategory = undefined;
+        } else {
+            this.selectedCategory = this.clonedProjectConfiguration.getCategory(category.name);
+            this.configurationState.setSelectedCategoryName(this.selectedCategory.name);
+        }
     }
 
 
@@ -366,6 +381,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.category = category;
         componentInstance.numberOfCategoryResources = await this.datastore.findIds({ categories: [category.name] }).totalCount;
         componentInstance.initialize();
@@ -447,7 +463,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteCategoryModalComponent>(
             DeleteCategoryModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.category = category;
@@ -468,7 +485,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteGroupModalComponent>(
             DeleteGroupModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.group = group;
@@ -484,7 +502,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<DeleteFieldModalComponent>(
             DeleteFieldModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.field = field;
@@ -512,6 +531,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             return false;
         } finally {
             this.menus.setContext(MenuContext.CONFIGURATION);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -598,7 +618,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ProjectLanguagesModalComponent>(
             ProjectLanguagesModalComponent,
-            MenuContext.CONFIGURATION_MANAGEMENT
+            MenuContext.CONFIGURATION_MANAGEMENT,
+            undefined, undefined, false
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
@@ -629,13 +650,32 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [result, componentInstance] = this.modals.make<ImportConfigurationModalComponent>(
             ImportConfigurationModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.applyChanges = this.applyChanges;
 
         await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private async exportConfiguration() {
+
+        try {
+            await exportConfiguration(
+                this.configurationDocument,
+                this.settingsProvider.getSettings().selectedProject,
+                this.appState,
+                (id: string) => this.utilTranslations.getTranslation(id)
+            );
+            this.messages.add([M.EXPORT_SUCCESS]);
+        } catch (errWithParams) {
+            if (errWithParams !== 'canceled') {
+                this.messages.add(errWithParams);
+            }
+        }
     }
 
 
@@ -667,7 +707,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         if (reindexConfiguration) {
             await this.configurationIndex.rebuild(this.configurationDocument, this.clonedProjectConfiguration);
         }
-        if (!this.clonedProjectConfiguration.getCategory(this.selectedCategory.name)) {
+        if (this.selectedCategory && !this.clonedProjectConfiguration.getCategory(this.selectedCategory.name)) {
             this.selectedCategory = undefined;
         }
         await this.loadCategories();
@@ -693,7 +733,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         const [, componentInstance] = this.modals.make<SaveProcessModalComponent>(
             SaveProcessModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            undefined, undefined, false
         );
 
         try {
@@ -724,7 +765,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private async fetchConfigurationDocument(): Promise<ConfigurationDocument> {
 
         return await ConfigurationDocument.getConfigurationDocument(
-            (id: string) => this.datastore.get(id, { skipCache: true }),
+            (id: string) => this.datastore.get(id, { skipCache: true }),
             this.configReader,
             this.settingsProvider.getSettings().selectedProject,
             this.settingsProvider.getSettings().username

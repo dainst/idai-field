@@ -6,7 +6,10 @@
     "position": "Position / Context",
     "dimension": "Dimensions",
     "identification": "Identification",
-    "other": "Other"
+    "other": "Other",
+    "inventory": "Inventory",
+    "hierarchy": "Hierarchy",
+    "stratigraphy": "Stratigraphy"
   },
   "commons": {
     "dimensionLength": {
@@ -1427,6 +1430,27 @@
           "label": "Criterion"
         }
       }
+    },
+    "StoragePlace": {
+      "label": "Storage place"
+    },
+    "StorageBuilding": {
+      "label": "Building"
+    },
+    "StorageRoom": {
+      "label": "Room"
+    },
+    "StorageShelf": {
+      "label": "Shelf"
+    },
+    "StorageCompartment": {
+      "label": "Compartment"
+    },
+    "StorageBox": {
+      "label": "Box"
+    },
+    "StorageBag": {
+      "label": "Bag"
     }
   },
   "forms": {

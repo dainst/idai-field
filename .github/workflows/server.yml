@@ -15,16 +15,16 @@ jobs:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: 24.3
-          elixir-version: 1.13.4
-      - name: Install inotify-tools
-        run: sudo apt-get install inotify-tools
+          otp-version: 26.0
+          elixir-version: 1.16.0
       - name: Start CouchDB
-        run: docker-compose -f docker-compose.yml --env-file .env_template up -d &
+        run: docker-compose -f docker-compose.yml --env-file .env_template up -d
         working-directory: server
-      - name: Setup server
+      - name: Sleep to await CouchDB startup
+        run: sleep 15s
+      - name: Install Field Hub dependencies and run setup
         run: mix setup
         working-directory: server
-      - name: Run server tests
+      - name: Run Field Hub tests
         run: mix test
         working-directory: server

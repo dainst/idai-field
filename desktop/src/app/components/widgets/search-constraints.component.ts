@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
 import { CategoryForm, ConstraintIndex, Datastore, Field, ProjectConfiguration, Valuelist,
-    ValuelistUtil, Labels } from 'idai-field-core';
+    ValuelistUtil, Labels, IndexType } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
 
 
@@ -203,6 +203,22 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
+    public getExistIndexSearchTermLabel(searchTerm: string): string {
+
+        if (searchTerm === 'KNOWN') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.anyValue',
+                value: 'Beliebiger Wert'
+            });
+        } else {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.noValue',
+                value: 'Kein Wert'
+            });
+        }
+    }
+
+
     public getFieldLabel(field: Field): string {
 
         if (field.name.endsWith('.value')) {
@@ -257,7 +273,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public async getValuelist(field: Field): Promise<Valuelist> {
 
-        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
+        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'), this.projectConfiguration);
     }
 
 
@@ -445,22 +461,6 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getExistIndexSearchTermLabel(searchTerm: string): string {
-
-        if (searchTerm === 'KNOWN') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.anyValue',
-                value: 'Beliebiger Wert'
-            });
-        } else {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.noValue',
-                value: 'Kein Wert'
-            });
-        }
-    }
-
-
     private getField(fieldName: string): Field|undefined {
 
         const defaultField: Field|undefined = this.getDefaultField(fieldName);
@@ -493,11 +493,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private getIndexType(field: Field, searchTerm: string) {
+    private getIndexType(field: Field, searchTerm: string): IndexType {
 
-        return this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
-            ? 'exist'
-            : ConstraintIndex.getIndexType(field);
+        return field.name === 'isChildOf'
+            ? 'contained'
+            : this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
+                ? 'exist'
+                : ConstraintIndex.getIndexType(field);
     }
 
 

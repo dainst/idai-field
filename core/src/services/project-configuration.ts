@@ -37,12 +37,25 @@ export class ProjectConfiguration {
     private relations: Array<Relation>;
     private projectLanguages: string[];
 
+    private categoriesMap: Map<CategoryForm>;
+    private regularCategories: Array<CategoryForm>;
+    private fieldCategories: Array<CategoryForm>;
+    private overviewCategories: Array<CategoryForm>;
+    private concreteOverviewCategories: Array<CategoryForm>;
+    private overviewSupercategories: Array<CategoryForm>;
+    private typeManagementCategories: Array<CategoryForm>;
+    private typeManagementSupercategories: Array<CategoryForm>;
+    private typeCategories: Array<CategoryForm>;
+    private categoriesWithSubcategories: Map<Array<CategoryForm>>;
+
 
     constructor(rawConfiguration: RawProjectConfiguration) {
 
         this.categoryForms = rawConfiguration.forms;
         this.relations = rawConfiguration.relations || [];
         this.projectLanguages = rawConfiguration.projectLanguages;
+        this.categoriesMap = this.createCategoriesMap();
+        this.updateFilteredCategories();
     }
 
 
@@ -51,6 +64,8 @@ export class ProjectConfiguration {
         this.categoryForms = newProjectConfiguration.categoryForms;
         this.relations = newProjectConfiguration.relations;
         this.projectLanguages = newProjectConfiguration.projectLanguages;
+        this.categoriesMap = this.createCategoriesMap();
+        this.updateFilteredCategories();
     }
 
 
@@ -70,11 +85,11 @@ export class ProjectConfiguration {
         
         if (arg === undefined) return undefined;
 
-        const name = isString(arg) 
+        const name: string = isString(arg) 
             ? (arg as Name) 
             : (arg as Document).resource.category;
-        
-        return Tree.find(this.categoryForms, category => category.name === name)?.item;
+
+        return this.categoriesMap[name];
     }
 
 
@@ -111,96 +126,94 @@ export class ProjectConfiguration {
 
     public getRegularCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
-            Tree.flatten
-        );
-    }
-
-
-    public getConcreteFieldCategories(): Array<CategoryForm> {
-
-        return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
-            Tree.flatten
-        );
+        return this.regularCategories;
     }
 
 
     public getFieldCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            removeTrees('Image', 'Project'),
-            Tree.flatten
-        );
+        return this.fieldCategories;
     }
 
 
     public getOverviewCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
-            Tree.flatten
-        );
+        return this.overviewCategories;
     }
 
 
     public getConcreteOverviewCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
-            Tree.flatten,
-            remove(Named.onName(is('Operation')))
-        ) as any;
+        return this.concreteOverviewCategories;
     }
 
 
-    public getOverviewToplevelCategories(): Array<CategoryForm> {
+    public getOverviewSupercategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
-            Tree.flatten,
-            filter(Named.onName(includedIn(['Operation', 'Place']))) as any
-        );
+        return this.overviewSupercategories;
     }
 
 
     public getTypeManagementCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees(TYPE, TYPE_CATALOG),
-            Tree.flatten
-        );
+        return this.typeManagementCategories;
+    }
+
+
+    public getTypeManagementSupercategories(): Array<CategoryForm> {
+
+        return this.typeManagementSupercategories;
     }
 
 
     public getTypeCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees(TYPE),
-            Tree.flatten
+        return this.typeCategories;
+    }
+
+
+    public getCategoryWithSubcategories(categoryName: string): Array<CategoryForm> {
+
+        return this.categoriesWithSubcategories[categoryName] ?? [];
+    }
+
+
+    public getInventoryCategories(): Array<CategoryForm> {
+
+        return this.getCategoryWithSubcategories('StoragePlace');
+    }
+
+
+    public getInventorySupercategories(): Array<CategoryForm> {
+
+        return flow(this.getInventoryCategories(),
+            filter(Named.onName(includedIn(['StoragePlace']))) as any
         );
     }
 
 
     public getImageCategories(): Array<CategoryForm> {
 
-        return flow(this.categoryForms,
-            filterTrees('Image'),
-            Tree.flatten
-        );
+        return this.getCategoryWithSubcategories('Image');
     }
 
 
     public getFeatureCategories(): Array<CategoryForm> {
 
-        return this.getSuperCategories('Feature');
+        return this.getCategoryWithSubcategories('Feature');
     }
 
 
     public getOperationCategories(): Array<CategoryForm> {
 
-        return this.getSuperCategories('Operation');
+        return this.getCategoryWithSubcategories('Operation');
+    }
+
+
+    public getQrCodeCategories(): Array<CategoryForm> {
+
+        return Tree.flatten(this.categoryForms)
+            .filter(categoryForm => categoryForm.scanCodes !== undefined);
     }
 
 
@@ -260,11 +273,119 @@ export class ProjectConfiguration {
     }
 
 
-    private getSuperCategories(superCategoryName: string) {
+    private createCategoriesMap(): Map<CategoryForm> {
 
-        return flow(
-            this.categoryForms,
-            filterTrees(superCategoryName),
-            Tree.flatten);
+        return Tree.flatten(this.categoryForms)
+            .reduce((result, category) => {
+                result[category.name] = category;
+                return result;
+            }, {});
+    }
+
+
+    private updateFilteredCategories() {
+
+        this.regularCategories = this.filterRegularCategories();
+        this.fieldCategories = this.filterFieldCategories();
+        this.overviewCategories = this.filterOverviewCategories();
+        this.concreteOverviewCategories = this.filterConcreteOverviewCategories();
+        this.overviewSupercategories = this.filterOverviewSupercategories();
+        this.typeManagementCategories = this.filterTypeManagementCategories();
+        this.typeManagementSupercategories = this.filterTypeManagementSupercategories();
+        this.typeCategories = this.filterTypeCategories();
+        this.categoriesWithSubcategories = this.filterCategoriesWithSubcategories();
+    }
+
+
+    private filterRegularCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Image', 'Operation'),
+            Tree.flatten
+        );
+    }
+
+
+    private filterFieldCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace'),
+            Tree.flatten
+        );
+    }
+
+
+    private filterOverviewCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten
+        );
+    }
+
+
+    private filterConcreteOverviewCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten,
+            remove(Named.onName(is('Operation')))
+        ) as any;
+    }
+
+
+    private filterOverviewSupercategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees('Operation', 'Place'),
+            Tree.flatten,
+            filter(Named.onName(includedIn(['Operation', 'Place']))) as any
+        );
+    }
+
+
+    private filterTypeManagementCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees(TYPE, TYPE_CATALOG),
+            Tree.flatten
+        );
+    }
+
+
+    private filterTypeManagementSupercategories(): Array<CategoryForm> {
+
+        return flow(this.filterTypeManagementCategories(),
+            filter(Named.onName(includedIn([TYPE, TYPE_CATALOG]))) as any
+        );
+    }
+
+
+    private filterTypeCategories(): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees(TYPE),
+            Tree.flatten
+        );
+    }
+
+
+    private filterCategoriesWithSubcategories(): Map<Array<CategoryForm>> {
+
+        return Tree.flatten(this.categoryForms)
+            .filter(category => !category.parentCategory)
+            .reduce((result, category) => {
+                result[category.name] = this.filterCategoryWithSubcategories(category.name);
+                return result;
+            }, {});
+    }
+
+
+    private filterCategoryWithSubcategories(categoryName: string): Array<CategoryForm> {
+
+        return flow(this.categoryForms,
+            filterTrees(categoryName),
+            Tree.flatten
+        );
     }
 }

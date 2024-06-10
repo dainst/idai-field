@@ -148,7 +148,8 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress) => {
 
     const projectIdentifier = settings.dbs[0];
-    const projectName = new Labels(new Languages().get).getFromI18NString(settings.projectNames?.[projectIdentifier]);
+    const labels: Labels = new Labels(new Languages().get, null);
+    const projectName = labels.getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
     await progress.setProjectName(
         projectName ?? projectIdentifier,
@@ -298,7 +299,8 @@ const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: P
     try {
         await createDisplayVariant(
             await db.get(imageId),
-            imagestore
+            imagestore,
+            await imagestore.getData(imageId, ImageVariant.ORIGINAL)
         );
     } catch (err) {
         console.warn('Failed to create display variant for image ' + imageId, err);

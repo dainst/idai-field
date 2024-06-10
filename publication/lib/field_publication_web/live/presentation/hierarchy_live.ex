@@ -1,0 +1,214 @@
+defmodule FieldPublicationWeb.Presentation.HierarchyLive do
+  alias FieldPublication.Publications
+  alias FieldPublication.Publications.Data
+  use FieldPublicationWeb, :live_view
+
+  alias FieldPublicationWeb.Presentation.Components.{
+    DocumentLink,
+    ViewSelection,
+    PublicationSelection,
+    GenericField
+  }
+
+  import FieldPublicationWeb.Presentation.Components.Typography
+
+  def render(assigns) do
+    ~H"""
+    <div>
+      <PublicationSelection.render
+        project_name={@project_name}
+        publication_dates={@publication_dates}
+        selected_date={@publication.publication_date}
+        languages={@publication.languages}
+        selected_lang={@lang}
+        identifier={
+          if Data.get_field_values(@current_doc, "category") != "Project",
+            do: Data.get_field_values(@current_doc, "identifier")
+        }
+      />
+    </div>
+    <.document_heading>
+      <DocumentLink.show
+        project={@project_name}
+        date={@publication_date}
+        lang={@lang}
+        preview_doc={@current_doc}
+      />
+    </.document_heading>
+
+    <ViewSelection.render
+      project={@project_name}
+      date={@publication_date}
+      lang={@lang}
+      uuid={@uuid}
+      current={:hierarchy}
+    />
+    <% description = Data.get_field(@current_doc, "description") %>
+    <%= if description do %>
+      <GenericField.render
+        values={description["values"]}
+        labels={description["labels"]}
+        lang={@lang}
+        type={description["type"]}
+      />
+    <% end %>
+
+    <div class="grid grid-cols-3 gap-2 justify-center">
+      <div>
+        <.group_heading>Level above</.group_heading>
+        <div class="max-h-[50vh] overflow-auto">
+          <%= for doc <- @level_above do %>
+            <DocumentLink.hierarchy
+              project={@project_name}
+              date={@publication_date}
+              lang={@lang}
+              preview_doc={doc}
+              is_highlighted={doc["id"] == @parent_uuid}
+            />
+          <% end %>
+
+          <%= if @level_above == [] do %>
+            No documents.
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <.group_heading>Same level</.group_heading>
+        <div class="max-h-[50vh] overflow-auto">
+          <%= for sibling_or_self <- @same_level do %>
+            <DocumentLink.hierarchy
+              project={@project_name}
+              date={@publication_date}
+              lang={@lang}
+              preview_doc={sibling_or_self}
+              is_highlighted={sibling_or_self["id"] == @uuid}
+            />
+          <% end %>
+
+          <%= if @same_level == [] do %>
+            No documents.
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <.group_heading>Level below</.group_heading>
+        <div class="max-h-[50vh] overflow-auto">
+          <%= for child <- @level_below do %>
+            <div>
+              <DocumentLink.hierarchy
+                project={@project_name}
+                date={@publication_date}
+                lang={@lang}
+                preview_doc={child}
+              />
+            </div>
+          <% end %>
+
+          <%= if @level_below == [] do %>
+            No documents.
+          <% end %>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  def mount(
+        %{"project_id" => project_name},
+        _session,
+        socket
+      ) do
+    publications =
+      project_name
+      |> Publications.list()
+      |> Stream.filter(fn pub -> pub.publication_date != nil end)
+      |> Enum.reject(fn pub -> Date.after?(pub.publication_date, Date.utc_today()) end)
+
+    publication_dates =
+      Enum.map(publications, fn pub ->
+        Date.to_iso8601(pub.publication_date)
+      end)
+
+    {
+      :ok,
+      assign(socket, :publication_dates, publication_dates)
+    }
+  end
+
+  def handle_params(
+        %{
+          "language" => lang,
+          "project_id" => project_name,
+          "publication_date" => date,
+          "uuid" => uuid
+        },
+        _uri,
+        socket
+      ) do
+    publication = Publications.get!(project_name, date)
+
+    hierarchy = Data.get_hierarchy(publication)
+
+    [current_doc] = Data.get_doc_previews(publication, [uuid])
+
+    parent_uuid = hierarchy[uuid]["parent"]
+
+    level_above =
+      if parent_uuid != nil do
+        parent_hierarchy_entry = hierarchy[parent_uuid]
+
+        if parent_hierarchy_entry["parent"] != nil do
+          Data.get_doc_previews(
+            publication,
+            hierarchy[parent_hierarchy_entry["parent"]]["children"]
+          )
+        else
+          top_level_uuids =
+            hierarchy
+            |> Enum.filter(fn {_key, values} ->
+              Map.get(values, "parent") == nil
+            end)
+            |> Enum.map(fn {key, _values} ->
+              key
+            end)
+
+          Data.get_doc_previews(publication, top_level_uuids)
+        end
+      else
+        []
+      end
+
+    same_level =
+      if parent_uuid != nil do
+        Data.get_doc_previews(publication, hierarchy[parent_uuid]["children"])
+      else
+        top_level_uuids =
+          hierarchy
+          |> Enum.filter(fn {_key, values} ->
+            Map.get(values, "parent") == nil
+          end)
+          |> Enum.map(fn {key, _values} ->
+            key
+          end)
+
+        Data.get_doc_previews(publication, top_level_uuids)
+      end
+
+    level_below = Data.get_doc_previews(publication, hierarchy[uuid]["children"])
+
+    {
+      :noreply,
+      socket
+      |> assign(:lang, lang)
+      |> assign(:publication, publication)
+      |> assign(:project_name, project_name)
+      |> assign(:publication_date, date)
+      |> assign(:uuid, uuid)
+      |> assign(:current_doc, current_doc)
+      |> assign(:parent_uuid, parent_uuid)
+      |> assign(:level_above, level_above)
+      |> assign(:same_level, same_level)
+      |> assign(:level_below, level_below)
+    }
+  end
+end

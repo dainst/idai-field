@@ -1,21 +1,14 @@
 ## First steps
 
-After starting the Field Desktop application for the first time, the test project will be active, allowing
-you to experiment with the application's functionality using a set of sample data. Please note that as long as the
-test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting
-the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for
-the test project.  
+The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on  data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (MacOS) or "Tools" (Windows).
+
+Initially, the test project will be active, allowing you to experiment with the application's functionality using a set of sample data. Please note that as long as the test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for the test project.  
 
 In order to work with Field Desktop productively and create your own project, you should first follow these steps:
 
-1. The submenu **Settings**, which is accessible via the menu "Field" (MacOS) respectively "Tools"
-(Windows), allows you to change some basic settings applied to all projects. As a first step, please enter
-your editor name. This name will be stored in the database along with every change you make. It is strongly
-recommended to fill in this field, especially if data is going to be synchronized.  
+1. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
 
-2. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
-
-3. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
+2. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
 these lists at any time.
 
@@ -51,20 +44,13 @@ up right) in order to open a new tab for the operation.
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
 Depending on the category of the operation, resources of different categories can be created within an
-operation tab via the plus button (e. g. stratigraphical units within a trench or rooms within a building).
+operation tab via the plus button (e.g. stratigraphical units within a trench or rooms within a building).
 
 
 ### Hierarchical ordering
 
-Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphical unit.
-Use the button "Show child resources" (Symbol: rectangular arrow down right) to show a list of all resources
-that are subordinate to the selected resource. This list is initially empty for a newly created resource.
-
-<p align="center"><img src="images/en/resources/open_collection.png" alt="Open collection"/></p>
-
-By clicking "Open collection" you can switch to the lower level of the hierarchy, which means that now the
-subordinated resources are shown (e. g. the finds of a stratigraphical unit).
-Usage of the plus button will now lead to all resources getting created at that level. 
+Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphic unit. Use the button 
+"Show child resources" (symbol: rectangular arrow down right) to switch to the lower hierarchy level. The child resources are now displayed (e.g. the finds of a stratigraphic unit), and resources that are newly created via the plus button appear at this hierarchy level accordingly.
 
 The navigation path above the resources list indicates the currently selected hierarchy level. You can always
 switch to another level by clicking one of the buttons of the navigation path.
@@ -78,14 +64,18 @@ Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd 
 can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
 providing the following options:
 
+* *Show warnings*: Displays the warnings available for this resource (only available for resources with warnings, see chapter *Warnings*)
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed.
+* *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed
+* *Add QR code*: Opens a window in which a new QR code can be generated for the resource or an existing QR code can be linked via camera scan
+* *Manage QR code*: Displays the QR code of the resource and allows printing a QR code label (alternatively also accessible via the QR code button on the right side of the list element of the resource)
 * *Move*: Allows removing resources from their current context and assigning them to another parent resource
 * *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
 exclusively linked to the resources you want to delete)
+* *Scan storage place*: Sets a new storage place for the resource by scanning the QR code of the storage place via camera scan (only available for resources of the categories "Find", "Find collection" and "Sample" as well as the respective subcategories)
 
 Furthermore, the context menu contains options for creating and editing geometries. Please note that when
-multiple resources are selected, only the *Move* and *Delete* options are available.
+multiple resources are selected, only the *Move* and *Delete* options are available. Options for adding or managing QR codes are only available if the use of QR codes has been set up for the corresponding category in the configuration editor (see section *Edit categories* in chapter *Configuration*).
 
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
 
@@ -106,8 +96,7 @@ Images can be imported into the application in two different ways: via the menu 
 
 <p align="center"><img src="images/en/images/droparea.png" alt="Import button"/></p>
 
-To start the import, click the plus button and select the files you want to add to the project. Alternatively, you can drag the files directly from a file manager application to the highlighted area surrounding the plus button. If multiple image categories (i.e. subcategories of the category "Image") are defined for the project, you can then select the desired category from a dropdown menu.
-
+To start the import, click the plus button and select the files you want to add to the project. Alternatively, you can drag the files directly from a file manager application to the highlighted area surrounding the plus button. If multiple image categories (i.e. subcategories of the category "Image") are defined for the project, you can then select the desired category from a dropdown menu. You can also choose to either have the content of the field "Creator" read automatically from the image file metadata or set it manually. The names entered in the field "Team" of the project properties are available for selection. In either case, the creation date as well as the height and width of the image are automatically read from the file metadata.
 Supported image formats are *jpg/jpeg*, *png* and *tif/tiff*.
 
 
@@ -227,9 +216,9 @@ management**, all images shown in the grid are affected by the search filter.
 <p align="center"><img src="images/en/search/filter_menu.png" alt="Category filter selection"/></p>
 
 The category filter button allows you to choose a resource category. There are supercategories and
-subcategories: If you choose a subcategory (e. g. "Layer"), only the resources of the respective category are
-shown. In contrast, if you choose a supercategory (e. g. "Stratigraphical unit"), the resources of the
-selected category as well as all of its subcategories (e. g. "Layer", "Grave", "Architecture", "Floor" etc.)
+subcategories: If you choose a subcategory (e.g. "Layer"), only the resources of the respective category are
+shown. In contrast, if you choose a supercategory (e.g. "Stratigraphical unit"), the resources of the
+selected category as well as all of its subcategories (e.g. "Layer", "Grave", "Architecture", "Floor" etc.)
 are included. Click again to select only the supercategory itself.
 
 The current context decides which categories are available: In the overview you can choose operation
@@ -337,7 +326,7 @@ the text filter.
 
 <p align="center"><img src="images/en/search/criteria_search.png" alt="Field specific search criteria"/></p>
 
-In case of a text field, just enter the search term directly; for fields with value lists, choose the term
+In case of a text field, just enter the search term directly; for fields with valuelists, choose the term
 from a list of all allowed values in a dropdown menu. 
 
 **Important**: In contrast to the search filter, no prefix search is performed in this case. The chosen search
@@ -358,8 +347,6 @@ criterion to remove.
 ## Synchronization
 
 In order to collaborate on a single project, data can be synchronized between multiple Field Desktop installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources as well as added or deleted images) coming from an Field Desktop application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline – in that case the databases will be synchronized as soon as the network connection is established again.
-
-Please make sure to fill in the field **Editor name** before setting up the configuration.
 
 
 ### Download project
@@ -382,7 +369,7 @@ Please note that the download may take a longer time for larger projects. The do
 
 Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
 
-* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a FieldHub server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the FieldHub server of the DAI). 
+* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a Field Hub server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the Field Hub server of the DAI). 
 * *Password*: The password of the project or Field Desktop installation you want to establish the synchronization connection with.
 * *Enable synchronization*: Use this switch to start or interrupt the connection.
 * *Synchronize preview images*: This option is enabled by default. If you have a weak internet connection and want to upload/download as little data as possible, you may want to disable it.
@@ -405,11 +392,7 @@ If a connection has been successfully established, the icon shows a checkmark. W
 
 Conflicts can occur when a resource is edited at the same time on multiple computers or when two databases synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *current version* (which is displayed in resource management and other areas of the application) and the *competing version* (which is stored in the background, but is not shown without taking further steps). The two versions can differ in the number of filled-in fields, but also by having different values in the same fields.
 
-Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navigation bar, indicating the number of conflicts within the current project.
-
-<p align="center"><img src="images/en/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
-
-Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
+A warning is shown for each resource with conflicts (see chapter *Warnings*). You can clean up an affected resource in the **Conflicts** tab of the resource editor.
 
 To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
 
@@ -478,12 +461,26 @@ Via the context menu or by double-clicking on an entry in the category list, the
 
 * *Category label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
 * *Color*: The color of the category icon as well as the geometries displayed for resources of this category on the map.
+* *QR codes*: Enables the use of QR codes for resources of this category (see section *QR codes*).
 * *Identifier prefix*: Optionally enter here a text with which the identifier of resources of this category should always start. Please note that already existing identifiers will not be adjusted automatically.
 * *Resource limit*: Optionally enter a number here to specify the maximum number of resources that can be created for this category. If the input field is left blank, any number of resources can be created. This option is only available for operation categories and the category "Place".
 
 You can also specify the following properties for project-specific categories:
 * *Description*: A description text that informs in which contexts the category should be used.
 * *References*: Specify URLs here if you want to reference more information about the category or category definitions in other systems.
+
+##### QR codes
+
+If the use of QR codes is enabled for a category, a unique QR code can be assigned to each resource of the category. Either a new code can be generated or an existing code can be read by camera scan and linked to the respective resource. The QR code can then be used in various ways:
+* Accessing the resource by camera scan (via the QR code button in the search bar)
+* Printing QR code labels (via the context menu of the resource)
+* Setting the storage location of a resource via camera scan of the QR code linked to the storage location (via the context menu of the resource)
+Please note that QR codes can only be used for the categories "Find", "Find collection", "Sample" and "Storage location" as well as the respective subcategories.
+
+The following options are available in the category editor for configuring QR codes:
+* *Use QR codes for identification*: Enable this option to allow the use of QR codes for resources of the category
+* *Automatically create for new resources*: Enable this option if a QR code should be generated automatically for every newly created resource
+* *Fields to print*: Select up to three fields to be printed on the QR code label in addition to the resource identifier. Activate the option "Print field label" if you want the field label to appear before the field content on the label.
 
 
 #### Hierarchy
@@ -603,7 +600,7 @@ Selection of one or more values from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
 
 ##### Dating
-Specification of one or more datings. Possible dating types are: Period, Exact, Before, After, Scientific.
+Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
 <p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
 
 ##### Date
@@ -679,11 +676,11 @@ Use the text field above the list to filter the valuelists based on any search t
 Please note that all changes made in the valuelist management window must subsequently be confirmed by clicking on the "Save" button of the configuration editor before they are applied to the project.
 
 
-#### Create and expand valuelists
+#### Create and extend valuelists
 
 To create a new valuelist, enter the desired identifier in the text field and select the "Create new valuelist" option. The valuelist editor will open, where you can enter the desired values and make further settings (see section *Edit valuelists*).
 
-Instead of creating a completely new valuelist, you can alternatively extend an already existing one. To do this, right-click on the corresponding list entry to open the context menu, select the *Expand valuelist* option and enter an identifier for your expansion list. All values of the selected valuelist are taken over and can now be supplemented by additional values in the editor. You also have the option to hide existing values and adjust their order. Please note that extension lists as well as project specific lists cannot be extended.
+Instead of creating a completely new valuelist, you can alternatively extend an already existing one. To do this, right-click on the corresponding list entry to open the context menu, select the *Extend valuelist* option and enter an identifier for your extension list. All values of the selected valuelist are taken over and can now be supplemented by additional values in the editor. You also have the option to hide existing values and adjust their order. Please note that extension lists as well as project specific lists cannot be extended.
 
 
 #### Manage project specific valuelists
@@ -812,3 +809,128 @@ from the current selection:
   still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a
   fast way to check if two units are connected across multiple relations/resources.
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
+
+
+## Warnings
+
+For various reasons, such as changes to the project configuration, inconsistent or otherwise incorrect data may occur in a project. In these cases, the application displays a warning and provides options for solving the problem. Faulty resources are marked with a red bar next to the list entry of the corresponding resource. Furthermore, an icon is displayed in the navigation bar at the top right, indicating the number of resources for which there are warnings due to data problems:
+
+<p align="center"><img src="images/en/warnings/warnings_icon.png" alt="Warnings icon"/></p>
+
+Clicking the icon or using the context menu of an affected resource takes you to the menu "Warnings", where you can view the list of faulty resources and filter by warning type. There are also options for filtering by identifier and short description (via text input) as well as by category.
+
+Select one of the displayed resources to view the list of existing warnings for that resource. For most warnings, tools are provided that can be used to resolve the errors; many warnings can also be resolved by adjusting the project configuration. In any case, please create a **backup** of the project in advance via the menu "Project" ➝ "Create backup...". Further information on the causes and possible solutions for the individual warning types can be found below.
+
+### Warning types
+#### Conflict
+There are multiple versions of the resource that are in conflict with each other.
+
+##### Possible causes
+* The resource was edited on different computers at the same time with an existing synchronization connection.
+* The resource was edited on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+##### Possible solutions
+* Button *Resolve conflict*: Resolve the conflicts in the resource editor (see section *Conflicts* of chapter *Synchronization*).
+
+#### Unconfigured category
+A category is set for the resource that cannot be found in the project configuration. The resource is therefore not displayed.
+
+##### Possible causes
+* The category has been deleted in the configuration editor.
+
+##### Possible solutions
+* Button *Select new category*: Select one of the categories configured for the project. The selected category is then set for the affected resource. Optionally, you can set the new category for all resources for which the same unconfigured category is specified.
+* Button *Delete resource*: The affected resource is deleted completely.
+* Add a category with the same name in the configuration editor.
+
+#### Unconfigured field
+Data has been entered in a field that cannot be found in the project configuration. The entered data is therefore not displayed.
+
+##### Possible causes
+* The field has been deleted in the configuration editor.
+
+##### Possible solutions
+* Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which data has been entered in the same unconfigured field.
+* Button *Delete field data*: The data entered in the field is deleted completely. Optionally, you can delete the field data for all resources for which data has been entered in the same unconfigured field.
+* Add a field with the same name for the category of the affected resource in the configuration editor.
+
+#### Invalid field data
+The data entered in a field does not correspond to the input type selected for the field.
+
+##### Possible causes
+* The input type of the field has been changed in the configuration editor.
+
+##### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to remove the invalid field data and re-enter it if necessary.
+* Button *Convert field data*: The data is automatically converted to the correct format for the respective input type. Optionally, you can have the data converted for all resources where invalid data has been entered in the same field. Please note that automatic conversion is not possible in all cases and this button is therefore not always available.
+* Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which invalid data has been entered in the same field (valid data remains in the original field).
+
+#### Value not included in valuelist
+One or more values are entered in a field that are not contained in the valuelist configured for the field.
+
+##### Possible causes
+* The valuelist of the field has been replaced with a different one in the configuration editor.
+* Values have been removed from a project-specific valuelist in the valuelist editor.
+* The input type of the field has been changed in the configuration editor from an input type that allows the free entry of text to an input type with a valuelist.
+* For fields that use the values entered in the fields *Staff* and *Campaigns* of the project properties: Entries have been removed from the corresponding field in the project properties.
+* For the field *Campaign*: Values have been removed from the field of the same name in the parent resource (only values that have been set in the parent resource may be selected for the field *Campaign*).
+
+##### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to remove the values not included in the valuelist and replace them with other values if necessary.
+* Button *Fix value*: Select a new value from the valuelist configured for the field. The previous value is replaced by the selected value. Optionally, you can set the new value for all fields of all resources in which the same value is entered and which use the same valuelist.
+* Button *Delete value*: The value entered in the field is deleted completely. Optionally, you can delete the value from all fields of all resources in which the same value is entered.
+* Replace the valuelist in the configuration editor with a valuelist that contains the corresponding value.
+* Add the missing value to the valuelist configured for the field. For non-project-specific valuelists, you must first create an extension list for the valuelist using the option *Extend valuelist* (see section *Create and extend valuelists* in chapter *Project configuration*).
+* For fields that are based on the values entered in the *Staff* and *Campaigns* fields of the project properties: Add the missing value to the corresponding field in the project properties.
+* For the field *Campaign*: Set the value in the parent resource if it does not already exist there.
+
+#### Missing target resource of a relation
+A resource specified as the target of a relation cannot be found.
+
+##### Possible causes
+* A synchronization process has not been fully completed.
+
+##### Possible solutions
+* Make sure that the data of all team members working with the Field project is synchronized.
+* Button *Clean up relation*: All references to non-existent resources are deleted from the relation.
+
+#### Missing or invalid parent resource
+The resource does not have a valid parent resource. This can either mean that no parent resource has been set for the resource, that the specified parent resource cannot be found or that it is not a valid parent resource due to its category. The resource is therefore not displayed.
+
+##### Possible causes
+* A synchronization process has not been fully completed.
+* The resource was created with an outdated version of Field Desktop.
+
+##### Possible solutions
+* Make sure that the data of all team members working with the Field project is synchronized.
+* Button *Set new parent resource*: Select a new resource as the parent resource. The resource is moved to the context of the selected resource.
+* Button *Delete resource*: The affected resource is deleted completely.
+
+#### Missing identifier prefix
+The identifier of the resource does not contain the prefix configured for the corresponding category.
+
+##### Possible causes
+* The resource was created before the identifier prefix was configured.
+
+##### Possible solutions
+* Button *Edit*: Open the resource editor to re-enter the identifier.
+
+#### Ambiguous identifier
+The identifier of the resource is also used by one or more other resources. Therefore, errors can occur when importing and exporting data.
+
+##### Possible causes
+* The identifiers were entered on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+##### Possible solutions
+* Button *Edit*: Open the resource editor to enter a new identifier.
+
+#### Resource limit exceeded
+There are more resources of a particular category than the resource limit configured for this category allows.
+
+##### Possible causes
+* The resources were created before the resource limit was configured.
+* The resources were created on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+##### Possible solutions
+* Delete resources of the corresponding category until the resource limit is met.
+* Increase the resource limit in the configuration editor.

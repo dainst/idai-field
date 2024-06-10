@@ -1,8 +1,8 @@
+import { Component, Input, OnChanges } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, Map } from 'tsfun';
-import { Dimension, Labels, Field, I18N, ProjectConfiguration } from 'idai-field-core';
+import { Dimension, Labels, Field, I18N, ProjectConfiguration, Valuelist, ValuelistUtil, Datastore, Hierarchy, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../../util/util-translations';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
@@ -19,8 +19,9 @@ type DimensionInEditing = { original: Dimension, clone: Dimension };
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class DimensionComponent {
+export class DimensionComponent implements OnChanges {
 
+    @Input() resource: Resource;
     @Input() fieldContainer: any;
     @Input() field: Field;
     @Input() languages: Map<Language>;
@@ -29,12 +30,15 @@ export class DimensionComponent {
     public dimensionInEditing: DimensionInEditing = undefined;
     public fieldLanguages: Array<Language>;
 
+    public valuelist: Valuelist;
+
 
     constructor(private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
+                private datastore: Datastore,
                 private i18n: I18n) {}
 
     
@@ -43,6 +47,17 @@ export class DimensionComponent {
     public isEditing = (dimension: Dimension) => this.dimensionInEditing?.original === dimension
 
     public isEditingAllowed = () => !this.dimensionInEditing && !this.newDimension;
+
+
+    async ngOnChanges() {
+
+        this.valuelist = ValuelistUtil.getValuelist(
+            this.field,
+            await this.datastore.get('project'),
+            this.projectConfiguration,
+            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
+        );
+    }
 
 
     public createNewDimension() {

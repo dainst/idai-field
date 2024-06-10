@@ -17,5 +17,5 @@ erl_crash.dump
 # Static artifacts
 node_modules
 
-# FieldHub development files directory
+# Field Hub development files directory
 files/

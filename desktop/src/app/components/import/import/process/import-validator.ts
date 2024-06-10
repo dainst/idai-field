@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isnt } from 'tsfun';
+import { isnt, to } from 'tsfun';
 import { Document, Datastore, Relation, NewDocument, Query, Resource, Named, ProjectConfiguration,
      CategoryForm } from 'idai-field-core';
 import { Validations } from '../../../../model/validations';
@@ -78,17 +78,16 @@ export class ImportValidator extends Validator {
     }
 
 
-    public assertIsAllowedCategory(document: Document|NewDocument) {
+    public assertIsAllowedCategory(document: Document|NewDocument, mergeMode: boolean) {
 
-        if (document.resource.category === 'Operation'
-            || document.resource.category === 'Project') {
-
+        if (document.resource.category === 'Operation') {
             throw [E.CATEGORY_NOT_ALLOWED, document.resource.category];
         }
 
-        if (document.resource.category === 'Image' || this.projectConfiguration.isSubcategory(
-                document.resource.category, 'Image')) {
+        if (mergeMode) return;
 
+        if (document.resource.category === 'Project' || document.resource.category === 'Image'
+            || this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
             throw [E.CATEGORY_ONLY_ALLOWED_ON_UPDATE, document.resource.category];
         }
     }
@@ -185,6 +184,7 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfDatingValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfLiteratureValues(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfCompositeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfOptionalRangeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDates(document, this.projectConfiguration);
         Validations.assertCorrectnessOfBeginningAndEndDates(document);
@@ -255,14 +255,19 @@ export class ImportValidator extends Validator {
 
         for (let categoryName of Object.keys(categoryCounts)) {
             const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
-            if (!category.resourceLimit) continue;
+            const resourceLimit: number = category.parentCategory?.resourceLimit ?? category.resourceLimit;
+            if (!resourceLimit) continue;
 
-            const categoryResourceIds: string[] = this.datastore.findIds({ categories: [category.name] })
+            const categoryNames: string[] = this.projectConfiguration.getCategoryWithSubcategories(
+                category.parentCategory?.name ?? category.name
+            ).map(to(Named.NAME));
+
+            const categoryResourceIds: string[] = this.datastore.findIds({categories: categoryNames })
                 .ids.filter(id => !ids.includes(id));
             const totalCategoryCount: number = categoryCounts[categoryName] + categoryResourceIds.length;
 
-            if (totalCategoryCount > category.resourceLimit) {
-                throw [E.RESOURCE_LIMIT_EXCEEDED, category.name, category.resourceLimit];
+            if (totalCategoryCount > resourceLimit) {
+                throw [E.RESOURCE_LIMIT_EXCEEDED, category.parentCategory?.name ?? category.name, resourceLimit];
             }
         }
     }

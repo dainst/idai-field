@@ -2,8 +2,12 @@ import { filter, to, isAssociative, isPrimitive, map, flow, keys, isUndefinedOrE
 import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../tools/object-utils';
-import { Labels } from '../services';
+import { Labels, ProjectConfiguration } from '../services';
 import { Warnings } from './warnings';
+import { CategoryForm } from './configuration/category-form';
+import { Relation } from './configuration/relation';
+import { Named } from '../tools/named';
+
 
 export type RevisionId = string;
 export type DocumentId = string;
@@ -84,6 +88,7 @@ export module Document {
 
         if (!document.resource) return false;
         if (!document.resource.id && !newDocument) return false;
+        if (!document.resource.category) return false;
         if (!document.resource.relations) return false;
         if (!newDocument && !(document as Document).created) return false;
         if (!newDocument && !(document as Document).modified) return false;
@@ -92,11 +97,57 @@ export module Document {
     }
 
 
-    export function getLabel(document: Document, labels: Labels): string {
+    export function isValidParent(document: Document, parent: Document, recordedInTarget: Document,
+                                  projectConfiguration: ProjectConfiguration): boolean {
+    
+        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+        if (!category) return true;
 
-        return (document.resource.shortDescription)
-            ? labels.getFromI18NString(document.resource.shortDescription) + ' (' + document.resource.identifier + ')'
-            : document.resource.identifier;
+        if (parent && !projectConfiguration.getCategory(parent.resource.category)) return false;
+        if (recordedInTarget && !projectConfiguration.getCategory(recordedInTarget.resource.category)) return false;
+
+        const hasIsRecordedIn: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN);
+        const hasLiesWithin: boolean = Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN);
+
+        if (!parent && (hasIsRecordedIn || hasLiesWithin)) return false;
+        if (!recordedInTarget && hasIsRecordedIn) return false;
+
+        if (!hasIsRecordedIn
+                && (projectConfiguration.getRegularCategories().map(Named.toName).includes(document.resource.category))) {
+            return false;
+        }
+
+        if (!hasLiesWithin && category.mustLieWithin) return false;
+
+        if (!parent) return true;
+
+        if (hasIsRecordedIn && !projectConfiguration.isAllowedRelationDomainCategory(
+                category.name, recordedInTarget.resource.category, Relation.Hierarchy.RECORDEDIN
+        )) {
+            return false;
+        }
+
+        if (hasLiesWithin && !projectConfiguration.isAllowedRelationDomainCategory(
+                category.name, parent.resource.category, Relation.Hierarchy.LIESWITHIN
+        )) {
+            return false;
+        }
+    
+        return true;
+    }
+
+
+    export function getLabel(document: Document, labels: Labels, projectConfiguration: ProjectConfiguration): string {
+
+        let label: string = document.resource.identifier;
+
+        if (document.resource.shortDescription) {
+            label += ' ('
+                + Resource.getShortDescriptionLabel(document.resource, labels, projectConfiguration)
+                + ')';
+        }
+
+        return label;
     }
 
 

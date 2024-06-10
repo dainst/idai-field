@@ -1,4 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output,
+    ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { to } from 'tsfun';
 import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
     PouchdbDatastore } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
@@ -21,11 +24,11 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class PlusButtonComponent implements OnChanges {
+export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
-    // undefined when in overview or type management
+    // undefined when in overview, type management or inventory management
     @Input() isRecordedIn: FieldDocument|undefined;
 
     // undefined when current level is operation
@@ -43,6 +46,9 @@ export class PlusButtonComponent implements OnChanges {
     public selectedCategory: string|undefined;
     public toplevelCategoriesArray: Array<CategoryForm>;
 
+    private clickEventSubscription: Subscription;
+    private changesSubscription: Subscription;
+
 
     constructor(private elementRef: ElementRef,
                 private resourcesComponent: ResourcesComponent,
@@ -51,25 +57,34 @@ export class PlusButtonComponent implements OnChanges {
                 private viewFacade: ViewFacade,
                 private datastore: Datastore,
                 private i18n: I18n,
-                pouchdbDatastore: PouchdbDatastore) {
+                private pouchdbDatastore: PouchdbDatastore) {}
 
-        this.resourcesComponent.listenToClickEvents().subscribe(event => {
+
+    public isGeometryCategory = (category: Name) => this.projectConfiguration.isGeometryCategory(category);
+
+
+    ngOnInit() {
+        
+        this.clickEventSubscription = this.resourcesComponent.listenToClickEvents().subscribe(event => {
             this.handleClick(event);
         });
 
-        pouchdbDatastore.changesNotifications().subscribe(() => {
+        this.changesSubscription = this.pouchdbDatastore.changesNotifications().subscribe(() => {
             this.initializeSelectableCategoriesArray(this.projectConfiguration);
         });
     }
 
 
-    public isGeometryCategory = (category: Name) =>
-        this.projectConfiguration.isGeometryCategory(category);
-
-
     ngOnChanges() {
 
         this.initializeSelectableCategoriesArray(this.projectConfiguration);
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.clickEventSubscription) this.clickEventSubscription.unsubscribe();
+        if (this.changesSubscription) this.changesSubscription.unsubscribe();
     }
 
 
@@ -164,11 +179,7 @@ export class PlusButtonComponent implements OnChanges {
 
         if (this.preselectedCategory) {
             const category: CategoryForm = projectConfiguration.getCategory(this.preselectedCategory);
-            if (category) {
-                this.toplevelCategoriesArray.push(category);
-            } else {
-                this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
-            }
+            if (category) this.toplevelCategoriesArray.push(category);
         } else {
             for (let category of Tree.flatten(projectConfiguration.getCategories())) {
                 if (await this.isAllowedCategory(category, projectConfiguration)
@@ -204,13 +215,12 @@ export class PlusButtonComponent implements OnChanges {
                 return false;
             }
         } else {
-            if (!(this.viewFacade.isInOverview()
-                    ? this.projectConfiguration.getConcreteOverviewCategories()
-                        .map(Named.toName).includes(category.name)
-                    : this.projectConfiguration.getTypeManagementCategories()
-                        .map(Named.toName).includes(category.name))) {
-                return false;
-            }
+            const categories: Array<CategoryForm> = this.viewFacade.isInOverview()
+                ? this.projectConfiguration.getConcreteOverviewCategories()
+                : this.viewFacade.isInTypesManagement()
+                    ? this.projectConfiguration.getTypeManagementCategories()
+                    : this.projectConfiguration.getInventoryCategories();
+            if (!categories.map(Named.toName).includes(category.name)) return false;
         }
 
         if (!this.liesWithin) {
@@ -221,7 +231,10 @@ export class PlusButtonComponent implements OnChanges {
         }
 
         if (category.resourceLimit) {
-            const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
+            const parentCategoryName: string = category.parentCategory?.name ?? category.name;
+            const categoryNames: string[] = this.projectConfiguration.getCategoryWithSubcategories(parentCategoryName)
+                .map(to(Named.NAME));
+            const resourcesCount: number = await this.datastore.findIds({ categories: categoryNames }).totalCount;
             if (resourcesCount >= category.resourceLimit) return false;
         }
 

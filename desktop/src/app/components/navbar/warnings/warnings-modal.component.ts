@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, isArray, isObject, nop } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels,
-    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, FieldsViewUtil, FieldsViewSubfield, 
-    Field, ValuelistUtil, Valuelist, Tree, MissingRelationTargetWarnings } from 'idai-field-core';
+import { Map, flatten, isArray, nop } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
+    WarningType, ConfigReader, Group, Resource, Field, Tree, MissingRelationTargetWarnings, InvalidDataUtil,
+    OutlierWarnings } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -15,17 +14,29 @@ import { ConfigurationConflictsModalComponent } from '../../configuration/confli
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { Settings } from '../../../services/settings/settings';
-import { DeleteFieldDataModalComponent } from './delete-field-data-modal.component';
+import { DeleteFieldDataModalComponent } from './modals/delete-field-data-modal.component';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../util/get-input-type-label';
-import { CleanUpRelationModalComponent } from './clean-up-relation-modal.component';
+import { CleanUpRelationModalComponent } from './modals/clean-up-relation-modal.component';
 import { MenuModalLauncher } from '../../../services/menu-modal-launcher';
+import { DeleteResourceModalComponent } from './modals/delete-resource-modal.component';
+import { FixOutliersModalComponent } from './modals/fix-outliers-modal.component';
+import { DeleteOutliersModalComponent } from './modals/delete-outliers-modal.component';
+import { ConvertFieldDataModalComponent } from './modals/convert-field-data-modal.component';
+import { SelectNewFieldModalComponent } from './modals/select-new-field-modal.component';
+import { SelectNewCategoryModalComponent } from './modals/select-new-category-modal.component';
+import { MoveModalComponent, MoveResult } from '../../widgets/move-modal/move-modal.component';
+import { WarningsService } from '../../../services/warnings/warnings-service';
 
 
 type WarningSection = {
     type: WarningType;
     category?: CategoryForm;
+    unconfiguredCategoryName?: string;
     fieldName?: string;
+    inputType?: Field.InputType;
+    dataLabel?: string;
+    outlierValues?: string[];
 }
 
 
@@ -61,12 +72,14 @@ export class WarningsModalComponent {
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
-                private decimalPipe: DecimalPipe,
                 private labels: Labels,
+                private warningsService: WarningsService,
                 private i18n: I18n) {}
 
         
     public getSections = () => this.sections.filter(section => this.isSectionVisible(section));
+
+    public isModalOpened = () => this.menus.getContext() !== MenuContext.WARNINGS;
 
 
     public initialize() {
@@ -93,34 +106,13 @@ export class WarningsModalComponent {
 
     public getFieldLabel(section: WarningSection): string {
         
-        return this.labels.getFieldLabel(
-            this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
-            section.fieldName
-        ) ?? section.fieldName;
-    }
-
-
-    public getDataLabel(section: WarningSection): string {
-
-        const field: FieldsViewSubfield = {
-            name: section.fieldName,
-            valuelist: CategoryForm.getField(section.category, section.fieldName)?.valuelist
-        } as FieldsViewSubfield;
-
-        return FieldsViewUtil.getLabel(
-            field,
-            this.selectedDocument.resource[section.fieldName],
-            this.labels,
-            (key: string) => this.utilTranslations.getTranslation(key),
-            (value: number) => this.decimalPipe.transform(value),
-        );
+        return this.getFieldOrRelationLabel(section) ?? section.fieldName;
     }
 
 
     public getInputTypeLabel(section: WarningSection): string {
 
-        const inputType: Field.InputType = CategoryForm.getField(section.category, section.fieldName).inputType;
-        return getInputTypeLabel(inputType, this.utilTranslations);
+        return getInputTypeLabel(section.inputType, this.utilTranslations);
     }
 
 
@@ -136,20 +128,10 @@ export class WarningsModalComponent {
     }
 
 
-    public getOutlierValues(section: WarningSection): string[] {
-
-        const valuelist: Valuelist = CategoryForm.getField(section.category, section.fieldName).valuelist;
-
-        return ValuelistUtil.getValuesNotIncludedInValuelist(
-            this.selectedDocument.resource[section.fieldName], valuelist
-        );
-    }
-
-
     public getMissingRelationTargetIds(section: WarningSection): string[] {
 
         return this.selectedDocument.resource.relations[section.fieldName]?.filter(targetId => {
-            return this.selectedDocument.warnings.missingRelationTargets.targetIds.includes(targetId);
+            return this.selectedDocument.warnings?.missingRelationTargets?.targetIds.includes(targetId);
         }) ?? [];
     }
 
@@ -169,6 +151,49 @@ export class WarningsModalComponent {
     }
 
 
+    public isConvertible(section: WarningSection): boolean {
+
+        const fieldData: any = this.selectedDocument.resource[section.fieldName];
+        if (fieldData === undefined) return false;
+
+        return InvalidDataUtil.isConvertible(
+            this.selectedDocument.resource[section.fieldName],
+            section.inputType
+        );
+    }
+
+
+    public async fixOutliers(section: WarningSection) {
+
+        let changed: boolean = false;
+
+        for (let outlierValue of section.outlierValues) {
+            const completed: boolean = await this.openFixOutliersModal(section, outlierValue);
+            if (!completed) break;
+
+            changed = true;
+        }
+
+        if (changed) await this.update();
+    }
+
+
+    public async deleteOutliers(section: WarningSection) {
+
+        let changed: boolean = false;
+
+        for (let outlierValue of section.outlierValues) {
+            const completed: boolean = await this.openDeleteOutliersModal(section, outlierValue);
+            if (!completed) break;
+
+            changed = true;
+            if (!this.selectedDocument.resource[section.fieldName]) break;
+        }
+
+        if (changed) await this.update();
+    }
+
+
     public async openConflictResolver() {
 
         if (this.selectedDocument.resource.category === 'Configuration') {
@@ -185,6 +210,10 @@ export class WarningsModalComponent {
 
 
     public async openDoceditModal(section?: WarningSection) {
+
+        if (this.sections.find(section => {
+            return section.type === 'unconfiguredCategory' || section.type === 'missingOrInvalidParent';
+        })) return;
 
         const [result, componentInstance] = this.modals.make<DoceditComponent>(
             DoceditComponent,
@@ -214,6 +243,118 @@ export class WarningsModalComponent {
     }
 
 
+    public async openDeleteResourceModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<DeleteResourceModalComponent>(
+            DeleteResourceModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.warningType = section.type;
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openConvertFieldDataModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<ConvertFieldDataModalComponent>(
+            ConvertFieldDataModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.fieldName = section.fieldName;
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
+        componentInstance.category = section.category;
+        componentInstance.inputType = section.inputType;
+        componentInstance.inputTypeLabel = this.getInputTypeLabel(section);
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openSelectNewFieldModal(section: WarningSection) {
+
+        const [result, componentInstance] = this.modals.make<SelectNewFieldModalComponent>(
+            SelectNewFieldModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.fieldName = section.fieldName;
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
+        componentInstance.category = section.category;
+        componentInstance.warningType = section.type;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openSelectNewCategoryModal() {
+
+        const [result, componentInstance] = this.modals.make<SelectNewCategoryModalComponent>(
+            SelectNewCategoryModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.document = this.selectedDocument;
+        componentInstance.initialize();
+
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openMoveModal() {
+
+        const [result, componentInstance] = this.modals.make<MoveModalComponent>(
+            MoveModalComponent,
+            MenuContext.MODAL
+        );
+
+        componentInstance.initialize([this.selectedDocument]);
+
+        await this.modals.awaitResult(
+            result,
+            (result: MoveResult) => {
+                if (result.success) {
+                    this.warningsService.reportWarningsResolved();
+                    this.update();
+                }
+            },
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
     public async openDeleteFieldDataModal(section: WarningSection) {
 
         const [result, componentInstance] = this.modals.make<DeleteFieldDataModalComponent>(
@@ -223,7 +364,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.fieldName = section.fieldName;
-        componentInstance.fieldLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
 
@@ -246,7 +387,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.relationName = section.fieldName;
-        componentInstance.relationLabel = this.labels.getFieldLabel(section.category, section.fieldName);
+        componentInstance.relationLabel = this.getFieldOrRelationLabel(section);
         componentInstance.invalidTargetIds = this.getMissingRelationTargetIds(section);
 
         await this.modals.awaitResult(
@@ -329,7 +470,7 @@ export class WarningsModalComponent {
     }
 
 
-    private updateSections(document: FieldDocument) {
+    private async updateSections(document: FieldDocument) {
 
         if (!document) {
             this.sections = [];
@@ -338,33 +479,53 @@ export class WarningsModalComponent {
         } else if (!document?.warnings) {
             this.sections = [];
         } else {
-            this.sections = Object.keys(document.warnings).reduce((sections, type: WarningType) => {
-                if (isArray(document.warnings[type])) {
-                    return this.addSections(sections, type, document, document.warnings[type] as string[]);
-                } else if (isObject(document.warnings[type])) {
-                    return this.addSections(
-                        sections, type, document, (document.warnings[type] as MissingRelationTargetWarnings).relationNames
-                    );
-                } else {
-                    return sections.concat([this.createSection(type, document)]);
+            this.sections = [];
+            for (let type of Object.keys(document.warnings)) {
+                switch (type) {
+                    case 'unconfiguredFields':
+                    case 'invalidFields':
+                        this.sections = this.sections.concat(
+                            await this.createSections(
+                                type as WarningType, document, document.warnings[type] as string[]
+                            )
+                        );
+                        break;
+                    case 'missingRelationTargets':
+                        this.sections = this.sections.concat(await this.createSections(
+                            type as WarningType, document,
+                            (document.warnings[type] as MissingRelationTargetWarnings).relationNames
+                        ));
+                        break;
+                    case 'outliers':
+                        this.sections = this.sections.concat(await this.createSections(
+                            type as WarningType, document,
+                            Object.keys((document.warnings[type] as OutlierWarnings).fields)
+                        ));
+                        break;
+                    default:
+                        this.sections = this.sections.concat([
+                            await this.createSection(type as WarningType, document)
+                        ]);
                 }
-            }, []);
+            }
         }
     }
 
 
-    private addSections(sections: Array<WarningSection>, type: WarningType, document: FieldDocument,
-                        fieldNames: string[]): Array<WarningSection> {
+    private async createSections(type: WarningType, document: FieldDocument,
+                                 fieldNames: string[]): Promise<Array<WarningSection>> {
 
-        return sections.concat(
-            fieldNames.map(fieldName => {
-                return this.createSection(type, document, fieldName);
-            })
-        );
+        const newSections: Array<WarningSection> = [];
+
+        for (let fieldName of fieldNames) {
+            newSections.push(await this.createSection(type, document, fieldName));
+        }
+
+        return newSections;
     }
 
 
-    private createSection(type: WarningType, document: FieldDocument, fieldName?: string): WarningSection {
+    private async createSection(type: WarningType, document: FieldDocument, fieldName?: string): Promise<WarningSection> {
 
         const section: WarningSection = { type };
 
@@ -374,9 +535,27 @@ export class WarningsModalComponent {
             section.fieldName = fieldName;
         }
         
-        if (document.resource.category !== 'Configuration') {
+        if (document.warnings.unconfiguredCategory) {
+            section.unconfiguredCategoryName = document.resource.category;
+        } else if (document.resource.category !== 'Configuration') {
             section.category = this.projectConfiguration.getCategory(document.resource.category);
+            if (fieldName && type !== 'unconfiguredFields' && type !== 'missingRelationTargets') {
+                section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
+            }
         };
+
+        if (type === 'invalidFields' || type === 'unconfiguredFields') {
+            section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
+        } else if (type === 'missingIdentifierPrefix') {
+            section.dataLabel = document.resource.identifier;
+        }
+
+        if (type === 'outliers') {
+            const outlierValues: Map<string[]>|string[] = document.warnings.outliers.fields[fieldName];
+            section.outlierValues = isArray(outlierValues)
+                ? outlierValues
+                : flatten(Object.values(outlierValues));
+        }
 
         return section;
     }
@@ -398,7 +577,7 @@ export class WarningsModalComponent {
             settings.selectedProject,
             settings.username
         );
-        componentInstance.initialize();
+        await componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
     }
@@ -416,5 +595,70 @@ export class WarningsModalComponent {
         componentInstance.activeGroup = 'conflicts';
 
         await this.modals.awaitResult(result, nop, nop);
+    }
+
+
+    private async openFixOutliersModal(section: WarningSection, outlierValue: string): Promise<boolean> {
+
+        const [result, componentInstance] = this.modals.make<FixOutliersModalComponent>(
+            FixOutliersModalComponent,
+            MenuContext.MODAL
+        );
+
+        const field: Field = CategoryForm.getField(section.category, section.fieldName);
+    
+        componentInstance.document = this.selectedDocument;
+        componentInstance.field = field;
+        componentInstance.outlierValue = outlierValue;
+        await componentInstance.initialize();
+
+        let changed: boolean;
+
+        await this.modals.awaitResult(
+            result,
+            () => changed = true,
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+
+        return changed;
+    }
+
+
+    private async openDeleteOutliersModal(section: WarningSection, outlierValue: string): Promise<boolean> {
+
+        const [result, componentInstance] = this.modals.make<DeleteOutliersModalComponent>(
+            DeleteOutliersModalComponent,
+            MenuContext.MODAL
+        );
+
+        const field: Field = CategoryForm.getField(section.category, section.fieldName);
+    
+        componentInstance.document = this.selectedDocument;
+        componentInstance.field = field;
+        componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
+        componentInstance.outlierValue = outlierValue;
+
+        let changed: boolean;
+
+        await this.modals.awaitResult(
+            result,
+            () => changed = true,
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+
+        return changed;
+    }
+
+
+    private getFieldOrRelationLabel(section: WarningSection): string {
+
+        return this.labels.getFieldLabel(
+            this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+            section.fieldName
+        ) ?? this.labels.getRelationLabel(section.fieldName)
     }
 }

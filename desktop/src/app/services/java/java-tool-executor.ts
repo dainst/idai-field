@@ -50,6 +50,14 @@ export module JavaToolExecutor {
 
     function getJavaVersion(): Promise<number> {
 
+        exec('whereis java', (error: string, stdout: string, stderr: string) => {
+            console.log('Available java installations:', stdout);
+        });
+
+        exec('which java', (error: string, stdout: string, stderr: string) => {
+            console.log('Using Java installation at path:', stdout);
+        });
+
         return new Promise(resolve => {
             exec('java -version', (error: string, stdout: string, stderr: string) => {
                 resolve(JavaVersionParser.parse(stderr));

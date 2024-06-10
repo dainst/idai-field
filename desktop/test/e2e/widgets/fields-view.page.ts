@@ -3,6 +3,7 @@ import { click, getLocator, getText, waitForExist } from '../app';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class FieldsViewPage {
 
@@ -26,18 +27,35 @@ export class FieldsViewPage {
     };
 
 
-    public static getFieldValue(cardIndex, index) {
+    public static getFieldValue(cardIndex, index, entryIndex?) {
 
-        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
-            'div:nth-child(' + (index + 1) + ') .field-value');
+        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body '
+            + 'div:nth-child(' + (index + 1) + ') .field-value'
+            + (entryIndex !== undefined ? (':nth-child(' + (entryIndex + 1) + ')') : ''));
     };
 
 
     public static getFieldName(cardIndex, index) {
 
-        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
-            'div:nth-child(' + (index + 1) + ') .field-label');
+        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body '
+            + 'div:nth-child(' + (index + 1) + ') .field-label');
     };
+
+
+    public static getCompositeSubfieldValue(cardIndex, fieldIndex, entryIndex, subfieldIndex) {
+
+        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body '
+            + 'div:nth-child(' + (fieldIndex + 1) + ') .composite-field-entry:nth-child(' + (entryIndex + 1) + ') '
+            + '.subfield-section:nth-child(' + (subfieldIndex + 1) + ') .field-value');
+    }
+
+
+    public static getCompositeSubfieldName(cardIndex, fieldIndex, entryIndex, subfieldIndex) {
+
+        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body '
+            + 'div:nth-child(' + (fieldIndex + 1) + ') .composite-field-entry:nth-child(' + (entryIndex + 1) + ') '
+            + '.subfield-section:nth-child(' + (subfieldIndex + 1) + ') .field-label');
+    }
 
 
     public static async getFields(cardIndex) {
@@ -54,7 +72,7 @@ export class FieldsViewPage {
     public static async getRelationValue(cardIndex, index) {
 
         const cardElement = (await getLocator('.card')).nth(cardIndex);
-        const relationElement = (await cardElement.locator('.relation-value .target-document-identifier')).nth(index);
+        const relationElement = (await cardElement.locator('.relation-value .title')).nth(index);
         return getText(relationElement);
     };
 

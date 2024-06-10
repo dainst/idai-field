@@ -31,6 +31,8 @@ export class ValuelistListingComponent implements OnChanges {
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
+    public readonly itemSize: number = 40;
+
 
     constructor(private labels: Labels,
                 private configurationIndex: ConfigurationIndex) {}
@@ -96,6 +98,6 @@ export class ValuelistListingComponent implements OnChanges {
         if (!this.scrollViewport) return;
 
         const index = this.filteredValuelists.findIndex(valuelist => valuelist.id === valuelistId);
-        scrollTo(index, 'valuelist-' + valuelistId.replace(':', '-'), this.scrollViewport);
+        scrollTo(index, 'valuelist-' + valuelistId.replace(':', '-'), this.itemSize, this.scrollViewport);
     }
 }

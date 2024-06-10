@@ -86,7 +86,8 @@ export const buildBackendPostParams = async (query: Query): Promise<BackendParam
 export const buildProjectsOverviewQueryTemplate = (from: number, size: number, excludedTypes: string[]): Query => ({
     size,
     from,
-    not: excludedTypes.map(type => ({ field: 'category', value: type }))
+    not: excludedTypes.map(type => ({ field: 'category', value: type })),
+    sort: 'sort'
 });
 
 
@@ -96,7 +97,8 @@ export const buildProjectQueryTemplate = (id: string, from: number, size: number
     filters: [
         { field: 'project', value: id }
     ],
-    not: excludedTypes.map(type => ({ field: 'category', value: type }))
+    not: excludedTypes.map(type => ({ field: 'category', value: type })),
+    sort: 'sort'
 });
 
 

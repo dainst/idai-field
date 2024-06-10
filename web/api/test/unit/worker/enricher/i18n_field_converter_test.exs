@@ -57,6 +57,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
           fields: [
             %{ inputType: "dating", name: "datingField" },
             %{ inputType: "dating", name: "legacyDatingField" },
+            %{ inputType: "dating", name: "noSourceDatingField" }
           ]
         }
       ]
@@ -67,10 +68,13 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
               name: "Trench"
             },
             datingField: [%{
-              source: %{de: "Eine Datierung", en: "A Dating"}
+              source: %{ de: "Eine Datierung", en: "A Dating" }
             }],
             legacyDatingField: [%{
               source: "Eine Datierung"
+            }],
+            noSourceDatingField: [%{
+              type: "single"
             }]
           }
         },
@@ -80,6 +84,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
 
     assert %{ de: "Eine Datierung", en: "A Dating" } == (List.first resource.datingField).source
     assert %{ unspecifiedLanguage: "Eine Datierung" } == (List.first resource.legacyDatingField).source
+    assert "single" == (List.first resource.noSourceDatingField).type
   end
 
   test "convert dimension" do
@@ -89,6 +94,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
           fields: [
             %{ inputType: "dimension", name: "dimensionField" },
             %{ inputType: "dimension", name: "legacyDimensionField" },
+            %{ inputType: "dimension", name: "noMeasurementCommentDimensionField" }
           ]
         }
       ]
@@ -99,10 +105,13 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
               name: "Trench"
             },
             dimensionField: [%{
-              measurementComment: %{de: "Eine Abmessung", en: "A dimension"}
+              measurementComment: %{ de: "Eine Abmessung", en: "A dimension" }
             }],
             legacyDimensionField: [%{
               measurementComment: "Eine Abmessung"
+            }],
+            noMeasurementCommentDimensionField: [%{
+              inputValue: 2
             }]
           }
         },
@@ -112,6 +121,7 @@ defmodule Api.Worker.Enricher.I18NFieldConverterTest do
 
     assert %{ de: "Eine Abmessung", en: "A dimension" } == (List.first resource.dimensionField).measurementComment
     assert %{ unspecifiedLanguage: "Eine Abmessung" } == (List.first resource.legacyDimensionField).measurementComment
+    assert 2 == (List.first resource.noMeasurementCommentDimensionField).inputValue
   end
 
   test "convert composite field" do

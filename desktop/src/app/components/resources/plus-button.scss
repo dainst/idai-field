@@ -12,6 +12,8 @@
 }
 
 #new-object-menu {
+  min-width: 270px;
+  
   li:last-child {
     border-bottom: 0 !important;
   }
@@ -22,6 +24,8 @@
 }
 
 #geometry-type-selection {
+  user-select: none;
+
   ul {
     border-radius: 0;
   }

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { set } from 'tsfun';
+import { set } from 'tsfun';
 import { FieldDocument, Named, CategoryForm, Tree, ProjectConfiguration, FieldResource, Valuelist, 
     Labels } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
@@ -30,6 +30,8 @@ export class ListComponent extends BaseList implements OnChanges {
     public shortDescriptionValuelists: { [category: string]: { valuelist: Valuelist, values: string[] } };
     public availableLanguages: Array<Language>;
     public selectedLanguage: Language|undefined;
+
+    public readonly itemSize: number = 41;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,

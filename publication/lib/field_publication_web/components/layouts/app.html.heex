@@ -1,0 +1,76 @@
+<header class="px-4 sm:px-6 lg:px-8">
+  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
+    <div class="flex items-center gap-4">
+      <.link navigate={~p"/"}>
+        <img src={~p"/images/logo.svg"} class="h-12" />
+      </.link>
+      <p class="text-cyan-800 rounded-full px-2 font-medium leading-6">
+        Field Publication v<%= Application.spec(:field_publication, :vsn) %>
+      </p>
+    </div>
+    <div class="flex items-center gap-4 font-semibold leading-6">
+      <%= if @current_user do %>
+        <.link href="/publishing" class="text-[0.8125rem] leading-6 font-semibold ">
+          Publishing
+        </.link>
+
+        <%= if FieldPublication.User.is_admin?(@current_user) do %>
+          <a>
+            <.link
+              href={~p"/publishing/users"}
+              method="get"
+              class="text-[0.8125rem] leading-6 font-semibold "
+            >
+              Users
+            </.link>
+          </a>
+        <% end %>
+        <a>
+          <.link
+            href={~p"/log_out"}
+            method="delete"
+            class="text-[0.8125rem] leading-6 font-semibold"
+          >
+            Log out
+          </.link>
+        </a>
+      <% else %>
+        <a>
+          <.link href={~p"/log_in"} class="text-[0.8125rem] leading-6 font-semibold">
+            Log in
+          </.link>
+        </a>
+      <% end %>
+      <span class="text-[0.8125rem] leading-6">
+        <%= @current_user %>
+      </span>
+      <div>
+        <form action={~p"/select_locale"} id="locale_form">
+          <.icon name="hero-globe-alt" class="h-6 w-6 mr-1" />
+          <select
+            name="locale"
+            id="locale-select"
+            phx-change={JS.dispatch("click", to: "#submit_language_selection")}
+          >
+            <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Gettext) do %>
+              <option
+                value={lang}
+                selected={Gettext.get_locale(FieldPublicationWeb.Gettext) == lang}
+              >
+                <%= Map.get(FieldPublicationWeb.Gettext.get_locale_labels(), lang, lang) %>
+              </option>
+            <% end %>
+          </select>
+          <input type="hidden" name="return_to" value={@current_path} />
+          <button class="hidden" id="submit_language_selection"></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="px-4 pt-4 pb-20 sm:px-6 lg:px-8">
+  <div class="mx-auto w-full">
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
+  </div>
+</main>

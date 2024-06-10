@@ -45,12 +45,9 @@
                 <div id="worldfile-upload" class="btn btn-link"  ngbTooltip="World-File laden"
                      data-toggle="tooltip" title=""
                      i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.loadWorldfile"
-                     container="body">
+                     container="body"
+                     (click)="selectFile()">
                     <span class="mdi mdi-file-import"></span>
-                    <input #worldfileInput type="file"
-                           name="files[]"
-                           id="file"
-                           (change)="onSelectFile($event)">
                 </div>
             </div>
         </div>

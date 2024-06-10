@@ -63,7 +63,7 @@ list {
       border: solid 1px rgb(221, 221, 221);
 
       .cdk-virtual-scroll-viewport {
-        height: calc(100vh - 178px);
+        height: calc(100vh - 176px);
         overflow-y: scroll;
       }
 
@@ -83,7 +83,7 @@ list {
   }
 
   #list-background {
-    height: 38px;
+    height: 40px;
 
     #create-document-button .circular-button {
       left: calc(50% - 20px);

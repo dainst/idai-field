@@ -38,7 +38,8 @@
     [fieldContainer]="fieldContainer" [field]="field"></form-field-date>
 
 <form-field-dimension *ngIf="field.inputType === 'dimension'"
-    [fieldContainer]="fieldContainer" [field]="field" [languages]="languages"></form-field-dimension>
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
+    [languages]="languages"></form-field-dimension>
 
 <form-field-literature *ngIf="field.inputType === 'literature'"
     [fieldContainer]="fieldContainer" [field]="field"></form-field-literature>
@@ -50,7 +51,8 @@
     [fieldContainer]="fieldContainer"></form-field-geometry>
 
 <form-field-identifier *ngIf="field.inputType === 'identifier'"
-    [fieldContainer]="fieldContainer" [fieldName]="field.name" [identifierPrefix]="identifierPrefix"></form-field-identifier>
+    [fieldContainer]="fieldContainer" [fieldName]="field.name"
+    [identifierPrefix]="identifierPrefix"></form-field-identifier>
 
 <form-field-type-relation *ngIf="field.inputType === 'instanceOf'"
     [resource]="resource"></form-field-type-relation>

@@ -32,11 +32,11 @@ export class DoceditRelationsPage {
 
     // get text
 
-    public static async getRelationButtonText(relationName, pickerIndex = 0) {
+    public static async getRelationButtonIdentifier(relationName, pickerIndex = 0) {
 
         await DoceditPage.clickGotoTimeTab();
         const element = await this.getRelationElementByName(relationName, pickerIndex);
-        return (await element.locator('.badge')).textContent();
+        return (await element.locator('.title')).textContent();
     };
 
 
@@ -45,7 +45,7 @@ export class DoceditRelationsPage {
     public static async getRelationElementByName(relationName, pickerIndex) {
 
         const relationPickerGroupElement = await getLocator('#edit-form-element-' + relationName);
-        return (await relationPickerGroupElement.locator('#relation-picker')).nth(pickerIndex);
+        return (await relationPickerGroupElement.locator('.relation-picker')).nth(pickerIndex);
     };
 
 

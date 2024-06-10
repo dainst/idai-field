@@ -1,0 +1,92 @@
+<div id="view-modal-header" class="modal-header">
+    <div class="text-truncate heading" i18n="@@resources.printSettings">Etikettendruck einrichten</div>
+</div>
+
+<div *ngIf="settings" id="print-settings-modal-body" class="modal-body bg-light">
+    <div class="mb-3">
+        <label i18n="@@resources.printSettingsModal.settingsProfile">Einstellungsprofil</label>
+        <div class="input-group mb-2">
+            <select [(ngModel)]="settings.selectedProfile"
+                    (change)="updateSelectedProfile()"        
+                    class="form-control">
+                <option *ngFor="let profile of settings.profiles"
+                        [value]="profile.name">
+                    {{getProfileLabel(profile)}}
+                </option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-danger"
+                        type="button"
+                        ngbTooltip="Einstellungsprofil löschen"
+                        i18n-ngbTooltip="@@resources.deletePrintSettingsProfile"
+                        container="body"
+                        placement="top"
+                        (click)="deleteSelectedProfile()">
+                    <span class="mdi mdi-delete"></span>
+                </button>
+            </div>
+        </div>
+        <button id="add-new-profile-button"
+                class="btn btn-success btn-square"
+                ngbTooltip="Neues Einstellungsprofil erstellen"
+                i18n-ngbTooltip="@@resources.createPrintSettingsProfile"
+                container="body"
+                placement="top"
+                (click)="addNewProfile()">
+            <span class="mdi mdi-plus"></span>
+        </button>
+    </div>
+
+    <div class="mb-3">
+        <label i18n="@@resources.printSettingsModal.size">Etikettgröße</label>
+        <div class="row mb-2">
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.size.width">Breite (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.pageWidth">
+            </div>
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.size.height">Höhe (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.pageHeight">
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label i18n="@@resources.printSettingsModal.borderMargin">Abstand vom Rand</label>
+        <div class="row mb-2">
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.borderMargin.left">Links (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.marginLeft">
+            </div>
+            <label class="col-sm-3 col-form-label"
+                   i18n="@@resources.printSettingsModal.borderMargin.top">Oben (mm)</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" [(ngModel)]="selectedProfile.marginTop">
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label i18n="@@resources.printSettingsModal.scaling">Skalierung (Prozent)</label>
+        <input type="number" class="form-control" [(ngModel)]="selectedProfile.scale">
+    </div>
+
+    <div class="mb-3">
+        <label i18n="@@resources.printSettingsModal.fontWeight">Schriftstärke</label>
+        <select class="form-control" [(ngModel)]="selectedProfile.fontWeight">
+            <option [value]="500" i18n="@@resources.printSettingsModal.fontWeight.light">Leicht</option>
+            <option [value]="600" i18n="@@resources.printSettingsModal.fontWeight.default">Standard</option>
+            <option [value]="700" i18n="@@resources.printSettingsModal.fontWeight.bold">Fett</option>
+        </select>
+    </div>
+</div>
+
+<div *ngIf="settings" class="modal-footer">
+    <button type="button" id="print-settings-confirm" class="btn btn-primary"
+            (click)="confirm()" [disabled]="!validate()" i18n="@@buttons.ok">OK</button>
+    <button type="button" id="print-settings-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

@@ -221,13 +221,13 @@ export class SynchronizationModalComponent implements OnInit {
             } else {
                 console.error(err);
             }
-            return; 
+            return;
         }
+
+        this.activeModal.close();
 
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
         await this.settingsService.setupSync();
-
-        this.activeModal.close();
     }
 
 

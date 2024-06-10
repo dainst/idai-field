@@ -1,4 +1,4 @@
-import { click, doubleClick, getLocator, getValue, navigateTo, typeIn, uploadInFileInput, waitForExist,
+import { click, doubleClick, getLocator, getValue, navigateTo, selectFile, typeIn, waitForExist,
     waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 
@@ -23,7 +23,19 @@ export module ImageOverviewPage {
 
     export function chooseImageSubcategory(index) {
 
-        return click('#choose-image-subcategory-option-' + index)
+        return click('#choose-image-subcategory-option-' + index);
+    }
+
+
+    export function clickUploadConfirm() {
+
+        return click('#confirmUploadButton');
+    }
+
+
+    export function selectStaffAsDraughtsmen(name: string) {
+
+        return click(`input[type="checkbox"][value="${name}"]`);
     }
 
 
@@ -89,19 +101,11 @@ export module ImageOverviewPage {
     }
 
 
-    // mouse moves
-
-    export function clickUploadArea() {
-
-        return click('.droparea');
-    }
-
-
-    // send keys
+    // upload image
 
     export function uploadImage(filePath) {
 
-        return uploadInFileInput('#file', filePath);
+        return selectFile('.droparea', filePath);
     }
 
 

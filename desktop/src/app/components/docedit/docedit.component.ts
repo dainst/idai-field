@@ -15,7 +15,6 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
-import { MsgWithParams } from '../messages/msg-with-params';
 
 
 @Component({
@@ -53,15 +52,15 @@ export class DoceditComponent {
     private escapeKeyPressed = false;
 
 
-    constructor(public activeModal: NgbActiveModal,
-                public documentHolder: DocumentHolder,
+    constructor(public documentHolder: DocumentHolder,
+                public projectConfiguration: ProjectConfiguration,
+                private activeModal: NgbActiveModal,
                 private messages: Messages,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                public projectConfiguration: ProjectConfiguration,
+                private labels: Labels,
                 private loading: Loading,
                 private menuService: Menus,
-                public labels: Labels,
                 private i18n: I18n) {}
 
 
@@ -243,9 +242,17 @@ export class DoceditComponent {
             return undefined;
         }
 
-        this.messages.add((errorWithParams.length > 0
-            ? MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels)
-            : [M.DOCEDIT_ERROR_SAVE]) as MsgWithParams);
+        if (errorWithParams.length > 0) {
+            if (errorWithParams[0] === DatastoreErrors.GENERIC_ERROR && errorWithParams.length > 1) {
+                console.error(errorWithParams[1]);
+            }
+            this.messages.add(
+                MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration, this.labels)
+            );
+        } else {
+            console.error(errorWithParams);
+            this.messages.add([M.DOCEDIT_ERROR_SAVE]);
+        }
     }
 
 
@@ -394,8 +401,8 @@ export class DoceditComponent {
         const conflictsBeforeSave: string[] = documentBeforeSave._conflicts;
         const conflictsAfterSave: string[] = documentAfterSave._conflicts;
 
-        if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;
+        if (!conflictsBeforeSave && conflictsAfterSave?.length) return true;
 
         return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) !== undefined;
     }

@@ -3,15 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore } from 'idai-field-core';
+import { Datastore, IdGenerator } from 'idai-field-core';
 import { ProjectConfiguration, RelationsManager } from 'idai-field-core';
 import { DocumentHolder } from '../../components/docedit/document-holder';
 import { Validator } from '../../model/validator';
-import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageGridModule } from '../image/grid/image-grid.module';
 import { ImageRowModule } from '../image/row/image-row.module';
 import { MessagesModule } from '../messages/messages.module';
-import { DeleteModalComponent } from '../resources/deletion/delete-modal.component';
+import { DeleteModalComponent } from '../resources/actions/delete/delete-modal.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { EditFormFieldComponent } from './core/edit-form-field.component';
 import { EditFormGroup } from './core/edit-form-group.component';
@@ -59,14 +58,13 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
             useFactory: (projectConfiguration: ProjectConfiguration,
                          relationsManager: RelationsManager,
                          validator: Validator,
-                         settingsProvider: SettingsProvider,
-                         datastore: Datastore) => {
+                         datastore: Datastore,
+                         idGenerator: IdGenerator) => {
 
                 return new DocumentHolder(projectConfiguration, relationsManager,
-                    validator, datastore);
+                    validator, datastore, idGenerator);
             },
-            deps: [ProjectConfiguration, RelationsManager, Validator,
-                SettingsProvider, Datastore]
+            deps: [ProjectConfiguration, RelationsManager, Validator, Datastore, IdGenerator]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],

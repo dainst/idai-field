@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { compareVersions } from 'compare-versions';
+import { isArray } from 'tsfun';
 import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
+import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { AppState } from '../../../services/app-state';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 @Component({
@@ -25,18 +31,29 @@ export class ImportConfigurationModalComponent {
     public applyChanges: (configurationDocument: ConfigurationDocument,
         reindexConfiguration?: boolean) => Promise<void>;
 
+    public source: 'file'|'project' = 'file';
     public selectedProject: string;
+    public filePath: string;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private configReader: ConfigReader,
                 private settingsProvider: SettingsProvider,
-                private messages: Messages) {}
+                private messages: Messages,
+                private appState: AppState,
+                private i18n: I18n) {}
 
 
     public selectProject = (project: string) => this.selectedProject = project;
 
     public getProjects = () => this.settingsProvider.getSettings().dbs.slice(1).filter(db => db !== 'test');
+
+
+    public isConfirmButtonEnabled(): boolean {
+        
+        return (this.source === 'file' && this.filePath !== undefined)
+            || (this.source === 'project' && this.selectedProject !== undefined);
+    }
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -45,20 +62,60 @@ export class ImportConfigurationModalComponent {
     }
 
 
-    public async confirm() {
+    public async selectFile() {
 
-        if (!this.selectedProject) return;
+        const result: any = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile'],
+                defaultPath: this.appState.getFolderPath('configurationImport'),
+                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                filters: [
+                    {
+                        name: this.i18n({ id: 'configuration.importModal.filters.configuration', value: 'Field-Konfiguration' }),
+                        extensions: ['configuration']
+                    }
+                ]
+            }
+        );
 
-        try {
-            await this.performImport();
-            this.activeModal.close();
-        } catch (err) {
-            this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
+        if (result.filePaths.length) {
+            this.filePath = result.filePaths[0];
+            this.appState.setFolderPath(this.filePath, 'configurationImport');
         }
     }
 
 
-    private async performImport(): Promise<void> {
+    public reset() {
+
+        this.filePath = undefined;
+        this.selectedProject = undefined;
+    }
+
+
+    public async confirm() {
+
+        if (!this.isConfirmButtonEnabled()) return;
+
+        try {
+            if (this.source === 'file') {
+                await this.performImportFromFile();
+            } else {
+                await this.performImportFromProject();
+            }
+            this.messages.add([M.CONFIGURATION_SUCCESS_IMPORT]);
+            this.activeModal.close();
+        } catch (err) {
+            if (isArray(err)) {
+                this.messages.add(err as string[]);
+            } else {
+                this.messages.add([M.CONFIGURATION_ERROR_IMPORT_FAILURE]);
+            }
+        }
+    }
+
+
+    private async performImportFromProject() {
 
         const configurationDocumentToImport: ConfigurationDocument
             = await this.fetchConfigurationDocument(this.selectedProject);
@@ -66,6 +123,25 @@ export class ImportConfigurationModalComponent {
         const clonedConfigurationDocument = Document.clone(this.configurationDocument);
         clonedConfigurationDocument.resource = configurationDocumentToImport.resource;
         
+        return await this.applyChanges(clonedConfigurationDocument, true);
+    }
+
+
+    private async performImportFromFile() {
+
+        const fileContent: string = await getAsynchronousFs().readFile(this.filePath, 'utf-8');
+        const deserializedObject = JSON.parse(Buffer.from(fileContent, 'base64').toString());
+        if (!this.isCompatibleVersion(deserializedObject.version)) {
+            throw [M.CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION, deserializedObject.version];
+        }
+
+        const clonedConfigurationDocument = Document.clone(this.configurationDocument);
+        clonedConfigurationDocument.resource.forms = deserializedObject.forms;
+        clonedConfigurationDocument.resource.languages = deserializedObject.languages;
+        clonedConfigurationDocument.resource.order = deserializedObject.order;
+        clonedConfigurationDocument.resource.valuelists = deserializedObject.valuelists;
+        clonedConfigurationDocument.resource.projectLanguages = deserializedObject.projectLanguages;
+
         return await this.applyChanges(clonedConfigurationDocument, true);
     }
 
@@ -80,5 +156,11 @@ export class ImportConfigurationModalComponent {
             project,
             this.settingsProvider.getSettings().username
         );
+    }
+
+
+    private isCompatibleVersion(version: string): boolean {
+
+        return compareVersions(remote.app.getVersion(), version) !== -1;
     }
 }

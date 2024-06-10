@@ -42,7 +42,7 @@ describe('subsystem/import/importCatalog', () => {
         const documentsLookup = await createDocuments([['tc1', 'TypeCatalog']]);
         await importCatalog([documentsLookup['tc1']]);
 
-        await helpers.expectDocuments('tc1');
+        await helpers.expectDocuments('project', 'tc1');
         done();
     });
 
@@ -50,6 +50,7 @@ describe('subsystem/import/importCatalog', () => {
     it('reimport', async done => {
 
         const documents: NiceDocs = [
+            ['tr1', 'Trench'],
             ['f1', 'Find'],
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
@@ -60,6 +61,9 @@ describe('subsystem/import/importCatalog', () => {
         });
         await helpers.updateDocument('f1', document => {
             document.resource.relations[Relation.Type.INSTANCEOF] = ['t1'];
+        });
+        await helpers.updateDocument('f1', document => {
+            document.resource.relations[Relation.Hierarchy.RECORDEDIN] = ['tr1'];
         });
 
         const documentsLookup = createDocuments(documents, 'imported');
@@ -129,7 +133,7 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.successfulImports).toBe(1);
         expect(result.errors).toEqual([]);
 
-        await helpers.expectDocuments('tc1');
+        await helpers.expectDocuments('project', 'tc1');
         done();
     });
 
@@ -291,6 +295,7 @@ describe('subsystem/import/importCatalog', () => {
     it('will not import on identifier clashes', async done => {
 
         await helpers.createDocuments([
+            ['tr1', 'Trench'],
             ['f1', 'Find']
         ]);
 
@@ -300,6 +305,10 @@ describe('subsystem/import/importCatalog', () => {
         ]);
         // document has different id, but same identifier as the Find
         catalog['t1'].resource.identifier = 'identifierf1';
+
+        await helpers.updateDocument('f1', document => {
+            document.resource.relations[Relation.Hierarchy.RECORDEDIN] = ['tr1'];
+        });
 
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
@@ -313,6 +322,7 @@ describe('subsystem/import/importCatalog', () => {
     it('will not import on identifier clashes - especially not if target document is owned by user', async done => {
 
         await helpers.createDocuments([
+            ['tr1', 'Trench'],
             ['f1', 'Find']
         ]);
 
@@ -320,6 +330,10 @@ describe('subsystem/import/importCatalog', () => {
             ['tc1', 'TypeCatalog', ['f1']],
             ['f1', 'Type']
         ]);
+
+        await helpers.updateDocument('f1', document => {
+            document.resource.relations[Relation.Hierarchy.RECORDEDIN] = ['tr1'];
+        });
 
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);

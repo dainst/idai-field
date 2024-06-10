@@ -1,4 +1,5 @@
 import { Observer, Observable } from 'rxjs';
+import { to } from 'tsfun';
 import { FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named } from 'idai-field-core'
 import { ResourcesState } from './state/resources-state';
 import { StateSerializer } from '../../../services/state-serializer';
@@ -49,11 +50,15 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement();
+    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement() || this.isInInventoryManagement();
 
     public isInOverview = () => this.resourcesState.view === 'project';
 
+    public isInGridListView = () => this.isInTypesManagement() || this.isInInventoryManagement();
+
     public isInTypesManagement = () => this.resourcesState.view === 'types';
+
+    public isInInventoryManagement = () => this.resourcesState.view === 'inventory';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
@@ -61,16 +66,19 @@ export class ResourcesStateManager {
     public getOverviewCategoryNames = (): string[] => this.projectConfiguration
         .getOverviewCategories().map(Named.toName);
 
-    public getConcreteCategoryNames = (): string[] => this.projectConfiguration.getConcreteFieldCategories()
+    public getConcreteFieldCategoryNames = (): string[] => this.projectConfiguration.getFieldCategories()
         .map(Named.toName);
 
-    public getAbstractCategoryNames = (): string[] => this.projectConfiguration.getTypeManagementCategories()
+    public getTypeManagementCategoryNames = (): string[] => this.projectConfiguration.getTypeManagementCategories()
+        .map(Named.toName);
+
+    public getInventoryCategoryNames = (): string[] => this.projectConfiguration.getInventoryCategories()
         .map(Named.toName);
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 
 
-    public async initialize(viewName: 'project'|'types'|string) {
+    public async initialize(viewName: 'project'|'types'|'inventory'|string) {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
@@ -78,11 +86,11 @@ export class ResourcesStateManager {
         }
 
         let currentMode: ResourcesViewMode = this.getMode();
-        if (viewName !== 'types' && currentMode === 'types') currentMode = 'map';
+        if (currentMode === 'grid' && !this.isInGridListView()) currentMode = 'map';
 
         this.resourcesState.view = viewName;
 
-        if (viewName !== 'project' && viewName !== 'types') {
+        if (!this.isInSpecialView()) {
             if (!this.resourcesState.operationViewStates[viewName]) {
                 this.resourcesState.operationViewStates[viewName] = ViewState.build();
             }
@@ -185,9 +193,11 @@ export class ResourcesStateManager {
         const invalidSegment = await NavigationPath.findInvalidSegment(
             this.resourcesState.view,
             ResourcesState.getNavigationPath(this.resourcesState),
+            this.getValidNonRecordedInCategories(),
             (resourceId: string) => {
                 return this.indexFacade.getCount('id:match', resourceId) > 0;
-            });
+            }
+        );
 
         const validatedNavigationPath = invalidSegment
             ? NavigationPath.shorten(ResourcesState.getNavigationPath(this.resourcesState), invalidSegment)
@@ -238,7 +248,10 @@ export class ResourcesStateManager {
         if (segments.length === 0) return await this.moveInto(undefined);
 
         const navPath = NavigationPath.replaceSegmentsIfNecessary(
-            ResourcesState.getNavigationPath(this.resourcesState), segments, segments[segments.length - 1].document.resource.id);
+            ResourcesState.getNavigationPath(this.resourcesState),
+            segments,
+            segments[segments.length - 1].document.resource.id
+        );
 
         ResourcesState.updateNavigationPath(this.resourcesState, navPath);
         this.notifyNavigationPathObservers();
@@ -303,6 +316,14 @@ export class ResourcesStateManager {
             NavigationPath.setSelectedDocument(navigationPath, undefined);
         }
         return navigationPath;
+    }
+
+
+    private getValidNonRecordedInCategories(): string[] {
+
+        return ['TypeCatalog']
+            .concat(this.projectConfiguration.getCategoryWithSubcategories('Place').map(to(Named.NAME)))
+            .concat(this.projectConfiguration.getInventoryCategories().map(to(Named.NAME)));
     }
 
 

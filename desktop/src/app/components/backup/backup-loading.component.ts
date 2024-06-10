@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Backup } from './backup';
 import { SettingsService } from '../../services/settings/settings-service';
 import { BackupLoadingModalComponent } from './backup-loading-modal.component';
@@ -13,6 +14,10 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { MsgWithParams } from '../messages/msg-with-params';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { AppState } from '../../services/app-state';
+import { AngularUtility } from '../../angular/angular-utility';
+
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 @Component({
@@ -42,7 +47,9 @@ export class BackupLoadingComponent {
                 private settingsService: SettingsService,
                 private backupProvider: BackupProvider,
                 private tabManager: TabManager,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private appState: AppState,
+                private i18n: I18n) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -53,7 +60,33 @@ export class BackupLoadingComponent {
     }
 
 
+    public async selectFile() {
+
+        const result: any = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile'],
+                defaultPath: this.appState.getFolderPath('backupLoading'),
+                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                filters: [
+                    {
+                        name: 'JSON Lines',
+                        extensions: ['jsonl']
+                    }
+                ]
+            }
+        );
+
+        if (result.filePaths.length) {
+            this.path = result.filePaths[0];
+            this.appState.setFolderPath(this.path, 'backupLoading');
+        }
+    }
+
+
     public async loadBackup() {
+
+        AngularUtility.blurActiveElement();
 
         if (this.running) return;
 

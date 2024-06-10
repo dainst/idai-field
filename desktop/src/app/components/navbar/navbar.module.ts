@@ -6,12 +6,20 @@ import { NavbarComponent } from './navbar.component';
 import { TaskbarComponent } from './taskbar.component';
 import { TaskbarWarningsComponent } from './warnings/taskbar-warnings.component';
 import { WarningsModalComponent } from './warnings/warnings-modal.component';
-import { DeleteFieldDataModalComponent } from './warnings/delete-field-data-modal.component';
+import { DeleteFieldDataModalComponent } from './warnings/modals/delete-field-data-modal.component';
 import { TaskbarSyncStatusComponent } from './taskbar-sync-status.component';
 import { TaskbarUpdateComponent } from './taskbar-update.component';
 import { ProjectsComponent } from './projects.component';
 import { WidgetsModule } from '../widgets/widgets.module';
-import { CleanUpRelationModalComponent } from './warnings/clean-up-relation-modal.component';
+import { CleanUpRelationModalComponent } from './warnings/modals/clean-up-relation-modal.component';
+import { DeleteResourceModalComponent } from './warnings/modals/delete-resource-modal.component';
+import { FixOutliersModalComponent } from './warnings/modals/fix-outliers-modal.component';
+import { FixingDataInProgressModalComponent } from './warnings/modals/fixing-data-in-progress-modal.component';
+import { DeleteOutliersModalComponent } from './warnings/modals/delete-outliers-modal.component';
+import { ConvertFieldDataModalComponent } from './warnings/modals/convert-field-data-modal.component';
+import { SelectNewFieldModalComponent } from './warnings/modals/select-new-field-modal.component';
+import { SelectNewCategoryModalComponent } from './warnings/modals/select-new-category-modal.component';
+import { InvalidResourceViewComponent } from './warnings/widgets/invalid-resource-view.component';
 
 
 @NgModule({
@@ -26,8 +34,16 @@ import { CleanUpRelationModalComponent } from './warnings/clean-up-relation-moda
         TaskbarComponent,
         TaskbarWarningsComponent,
         WarningsModalComponent,
+        DeleteResourceModalComponent,
+        ConvertFieldDataModalComponent,
         DeleteFieldDataModalComponent,
         CleanUpRelationModalComponent,
+        FixOutliersModalComponent,
+        FixingDataInProgressModalComponent,
+        DeleteOutliersModalComponent,
+        SelectNewFieldModalComponent,
+        SelectNewCategoryModalComponent,
+        InvalidResourceViewComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent

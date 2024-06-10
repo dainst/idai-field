@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@navbar.taskbar.convertFieldData.header">Felddaten konvertieren?</h5>
+</div>
+
+<div id="convert-field-data-modal-body" class="modal-body warnings-tool-modal-body">
+    <span i18n="@@navbar.taskbar.convertFieldData.info">
+        Die im Feld <span [innerHTML]="getFieldLabelHTML()"></span> eingetragenen Daten können automatisch
+        konvertiert werden, so dass sie dem Eingabetyp <b>{{inputTypeLabel}}</b> entsprechen.
+    </span>
+
+    <div id="multiple-switch" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@navbar.taskbar.convertFieldData.all">In allen Ressourcen dieser Kategorie konvertieren</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch">
+                <input type="checkbox" [checked]="convertAll" (change)="convertAll = !convertAll">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    
+    <div *ngIf="convertAll">
+        <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.convertFieldData.all.info">
+            Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der
+            Kategorie <b>{{getCategoryLabel()}}</b> ungültige Daten im
+            Feld <span [innerHTML]="getFieldLabelHTML()"></span> konvertiert (falls möglich).
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div id="confirm-conversion-button" class="btn btn-primary"
+         (click)="performConversion()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

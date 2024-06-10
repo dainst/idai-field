@@ -12,7 +12,7 @@ const CHILDOF_CONTAIN = 'isChildOf:contain';
 
 
 export const DEFAULT_DOCUMENTS_LIMIT: number = 20000;
-export const TYPES_MANAGEMENT_DOCUMENTS_LIMIT: number = 5000;
+export const GRID_LIST_DOCUMENTS_LIMIT: number = 5000;
 
 
 /**
@@ -231,8 +231,7 @@ export class DocumentsManager {
 
     public async createUpdatedDocumentList(): Promise<Datastore.FindResult> {
 
-        const isRecordedInTarget = this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
+        if (!this.resourcesStateManager.isInSpecialView() && !this.makeIsRecordedInTarget() ) {
             return { documents: [], ids: [], totalCount: 0 };
         }
 
@@ -243,21 +242,23 @@ export class DocumentsManager {
         const query = DocumentsManager.buildQuery(
             operationId,
             this.resourcesStateManager,
-            this.getAllowedTypeNames()
+            this.getAllowedCategoryNames()
         );
 
         return (await this.fetchDocuments(query));
     }
 
 
-    private getAllowedTypeNames(): string[] {
+    private getAllowedCategoryNames(): string[] {
 
         return this.resourcesStateManager.isInOverview()
                 && !this.resourcesStateManager.isInExtendedSearchMode()
             ? this.resourcesStateManager.getOverviewCategoryNames()
             : this.resourcesStateManager.isInTypesManagement()
-                ? this.resourcesStateManager.getAbstractCategoryNames()
-                : this.resourcesStateManager.getConcreteCategoryNames();
+                ? this.resourcesStateManager.getTypeManagementCategoryNames()
+                : this.resourcesStateManager.isInInventoryManagement()
+                    ? this.resourcesStateManager.getInventoryCategoryNames()
+                    : this.resourcesStateManager.getConcreteFieldCategoryNames();
     }
 
 
@@ -391,11 +392,15 @@ export class DocumentsManager {
         const constraints = clone(customConstraints);
 
         if (!isInExtendedSearchMode) {
-            if (liesWithinId) constraints[CHILDOF_CONTAIN] = liesWithinId;
-            else if (operationId) constraints[CHILDOF_CONTAIN] = operationId as any;
-            else constraints[CHILDOF_EXIST] = UNKNOWN;
+            if (liesWithinId) {
+                constraints[CHILDOF_CONTAIN] = liesWithinId;
+            } else if (operationId) {
+                constraints[CHILDOF_CONTAIN] = operationId;
+            } else {
+                constraints[CHILDOF_EXIST] = UNKNOWN;
+            }
         } else {
-            if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true } as any;
+            if (operationId) constraints[CHILDOF_CONTAIN] = { value: operationId, searchRecursively: true };
         }
         return constraints;
     }
@@ -410,8 +415,8 @@ export class DocumentsManager {
 
     private static getDocumentsLimit(resourcesStateManager: ResourcesStateManager): number {
 
-        return resourcesStateManager.isInTypesManagement()
-            ? TYPES_MANAGEMENT_DOCUMENTS_LIMIT
+        return resourcesStateManager.isInGridListView()
+            ? GRID_LIST_DOCUMENTS_LIMIT
             : DEFAULT_DOCUMENTS_LIMIT;
     }
 }

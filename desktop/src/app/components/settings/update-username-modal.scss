@@ -5,6 +5,11 @@
 }
 
 #update-username-modal-body {
+  div,
+  p {
+    user-select: none;
+  }
+
   img {
     display: block;
     width: 100px;
@@ -12,7 +17,6 @@
     margin: auto;
     margin-top: 10px;
     -webkit-user-drag: none;
-    user-select: none;
   }
 
   #welcome-text {

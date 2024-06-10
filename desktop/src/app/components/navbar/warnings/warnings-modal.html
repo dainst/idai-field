@@ -9,7 +9,7 @@
 </div>
 
 <div class="modal-body warnings-modal-body row bg-light">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <select id="warning-filter-select" class="form-control"
                 (change)="selectWarningFilter($event.target.value)">
             <option *ngFor="let warningFilter of warningFilters"
@@ -25,14 +25,16 @@
                         [waitForUserInput]="false"
                         [markSelected]="true"
                         [autoSelect]="true"
+                        [allowKeyboardNavigation]="!isModalOpened()"
                         [preselectedDocumentId]="preselectedDocumentId"
                         [showConfigurationOption]="isConfigurationOptionVisible()"
                         [showNoQueryMessage]="false"
                         [showLoadingIcon]="warningFilters[0].count >= 1000"
+                        [includeBrokenDocuments]="true"
                         (documentSelected)="selectDocument($event)"
                         (documentDoubleClicked)="openDoceditModal()"></document-picker>
     </div>
-    <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-6">
+    <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-7">
         <div id="document-warnings-header">
             <document-teaser [document]="selectedDocument"></document-teaser>
         </div>
@@ -40,19 +42,23 @@
             <div *ngFor="let section of getSections()" class="card warnings-section">
                 <div class="card-header h4">
                     <span class="card-title">
-                        <span *ngIf="section.type === 'unconfigured'"
-                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfigured">
+                        <span *ngIf="section.type === 'unconfiguredCategory'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfiguredCategory">
+                            Unkonfigurierte Kategorie <b>{{section.unconfiguredCategoryName}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unconfiguredFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unconfiguredField">
                             Unkonfiguriertes Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'invalid'"
-                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalid">
+                        <span *ngIf="section.type === 'invalidFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidField">
                             Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length === 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length > 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length > 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.multiple">
                             Ungültige Werte im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
@@ -63,6 +69,10 @@
                         <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple">
                             Fehlende Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'missingOrInvalidParent'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingOrInvalidParent">
+                            Fehlende oder ungültige übergeordnete Ressource
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.conflict">
@@ -84,22 +94,30 @@
                 </div>
                 <div class="card-block">
                     <div class="warning-info">
-                        <span *ngIf="section.type === 'unconfigured'"
-                              i18n="@@navbar.taskbar.warnings.info.unconfigured">
-                            Das Feld ist für die Kategorie <i>{{getCategoryLabel(section)}}</i> nicht konfiguriert.
-                            Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
+                        <span *ngIf="section.type === 'unconfiguredCategory'"
+                              i18n="@@navbar.taskbar.warnings.info.unconfiguredCategory">
+                            Die Kategorie <i>{{section.unconfiguredCategoryName}}</i> ist für dieses Projekt nicht
+                            konfiguriert. Die Ressource wird daher nicht angezeigt.
                         </span>
-                        <span *ngIf="section.type === 'invalid'"
-                              i18n="@@navbar.taskbar.warnings.info.invalid">
+                        <span *ngIf="section.type === 'unconfiguredFields'">
+                            <span i18n="@@navbar.taskbar.warnings.info.unconfiguredField.1">
+                                Das Feld ist für die Kategorie <i>{{getCategoryLabel(section)}}</i> nicht konfiguriert.
+                            </span>
+                            <span *ngIf="section.dataLabel" i18n="@@navbar.taskbar.warnings.info.unconfiguredField.2">
+                                Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
+                            </span>
+                        </span>
+                        <span *ngIf="section.type === 'invalidFields'"
+                              i18n="@@navbar.taskbar.warnings.info.invalidField">
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length === 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
                             Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten ist.
                         </span>
-                        <span *ngIf="section.type === 'outlierValues' && getOutlierValues(section).length > 1"
+                        <span *ngIf="section.type === 'outliers' && section.outlierValues.length > 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.multiple">
                             Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
@@ -115,6 +133,11 @@
                             Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden.
                             Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
                             vollständig abgeschlossen.
+                        </span>
+                        <span *ngIf="section.type === 'missingOrInvalidParent'"
+                              i18n="@@navbar.taskbar.warnings.info.missingOrInvalidParent">
+                            Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit
+                            nicht angezeigt.
                         </span>
                         <span *ngIf="section.type === 'conflicts'"
                               i18n="@@navbar.taskbar.warnings.info.conflict">
@@ -141,21 +164,31 @@
                             <i>{{getCategoryLabel(section)}}</i> angelegt werden.
                         </span>
                     </div>
-                    <div *ngIf="section.type === 'unconfigured' || section.type === 'invalid' || section.type === 'missingIdentifierPrefix'"
+                    <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'"
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
-                        <div class="data-info-content">{{getDataLabel(section)}}</div>
+                        <div *ngIf="section.dataLabel" class="data-info-content" [innerHTML]="section.dataLabel"></div>
+                        <div *ngIf="!section.dataLabel" class="data-info-content"
+                             i18n="@@navbar.taskbar.warnings.fieldData.none"><i>Keine</i></div>
                     </div>
-                    <div *ngIf="section.type === 'outlierValues'" class="data-info">
-                        <div *ngIf="getOutlierValues(section).length === 1">
+                    <div *ngIf="section.type === 'unconfiguredCategory'" class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
+                        <div class="data-info-content">
+                            <invalid-resource-view [document]="selectedDocument"></invalid-resource-view>
+                        </div>
+                    </div>
+                    <div *ngIf="section.type === 'outliers'" class="data-info">
+                        <div *ngIf="section.outlierValues.length === 1">
                             <b i18n="@@navbar.taskbar.warnings.outlierValues.single">Ungültiger Wert:</b>
                         </div>
-                        <div *ngIf="getOutlierValues(section).length > 1">
+                        <div *ngIf="section.outlierValues.length > 1">
                             <b i18n="@@navbar.taskbar.warnings.outlierValues.multiple">Ungültige Werte:</b>
                         </div>
                         <div class="data-info-content">
-                            <div *ngFor="let outlierValue of getOutlierValues(section)">
-                                {{outlierValue}}
+                            <div *ngFor="let outlierValue of section.outlierValues">
+                                <span *ngIf="outlierValue">{{outlierValue}}</span>
+                                <i *ngIf="!outlierValue"
+                                   i18n="@@navbar.taskbar.warnings.outlierValue.empty">Leer</i>
                             </div>
                         </div>
                     </div>
@@ -167,8 +200,8 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalid' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outlierValues' || section.type === 'nonUniqueIdentifier'">
+                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'
+                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
@@ -176,7 +209,57 @@
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'unconfigured' || section.type === 'invalid'">
+                    <span *ngIf="section.type === 'invalidFields' && isConvertible(section)">
+                        <button class="btn btn-primary convert-field-data-button"
+                                (click)="openConvertFieldDataModal(section)">
+                            <span class="mdi mdi-auto-fix"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.convertFieldData">Felddaten konvertieren</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'">
+                        <button class="btn btn-primary select-new-field-button"
+                                (click)="openSelectNewFieldModal(section)">
+                            <span class="mdi mdi-wrench"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.selectNewField">Neues Feld auswählen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'unconfiguredCategory'">
+                        <button class="btn btn-primary select-new-category-button"
+                                (click)="openSelectNewCategoryModal()">
+                            <span class="mdi mdi-wrench"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.selectNewCategory">Neue Kategorie auswählen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'outliers'">
+                        <button class="btn btn-primary fix-outliers-button"
+                                (click)="fixOutliers(section)">
+                            <span class="mdi mdi-wrench"></span>
+                            <span *ngIf="section.outlierValues.length === 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.fixValues.single">Wert korrigieren</span>
+                            <span *ngIf="section.outlierValues.length > 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.fixValues.multiple">Werte korrigieren</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'missingOrInvalidParent'">
+                        <button class="btn btn-primary select-new-parent-button"
+                                (click)="openMoveModal()">
+                            <span class="mdi mdi-file-tree"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.selectNewParent">Übergeordnete Ressource neu setzen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'unconfiguredCategory' || section.type === 'missingOrInvalidParent'">
+                        <button class="btn btn-danger delete-resource-button"
+                                (click)="openDeleteResourceModal(section)">
+                            <span class="mdi mdi-delete"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteResource">Ressource löschen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'">
                         <button class="btn btn-danger delete-field-data-button"
                                 (click)="openDeleteFieldDataModal(section)">
                             <span class="mdi mdi-delete"></span>
@@ -189,7 +272,17 @@
                                 (click)="openCleanUpRelationModal(section)">
                             <span class="mdi mdi-delete"></span>
                             <span class="button-label"
-                                  i18n="@@navbar.taskbar.warnings.deleteRelation">Relation bereinigen</span>
+                                  i18n="@@navbar.taskbar.warnings.cleanUpRelaton">Relation bereinigen</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'outliers'">
+                        <button class="btn btn-danger delete-outliers-button"
+                                (click)="deleteOutliers(section)">
+                            <span class="mdi mdi-delete"></span>
+                            <span *ngIf="section.outlierValues.length === 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteValues.single">Wert löschen</span>
+                            <span *ngIf="section.outlierValues.length > 1" class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.deleteValues.multiple">Werte löschen</span>
                         </button>
                     </span>
                 </div>

@@ -7,6 +7,7 @@ import { Dimension } from '../dimension';
 import { Literature } from '../literature';
 import { OptionalRange } from '../optional-range';
 import { Valuelist } from './valuelist';
+import { Composite } from '../composite';
 
 
 /**
@@ -29,6 +30,7 @@ export interface Field extends BaseField {
     maxCharacters?: number;
     source?: Field.SourceType;
     subfields?: Array<Subfield>;
+    constraintName?: string;            // For input type derivedRelation
 }
 
 
@@ -37,6 +39,7 @@ export interface Subfield extends BaseField {
     condition?: SubfieldCondition;
 }
 
+
 export interface BaseField extends I18N.LabeledValue, I18N.Described {
 
     inputType: Field.InputType;
@@ -44,6 +47,7 @@ export interface BaseField extends I18N.LabeledValue, I18N.Described {
     defaultDescription?: I18N.String;
     valuelist?: Valuelist;
 }
+
 
 export interface SubfieldCondition {
 
@@ -77,6 +81,70 @@ export module Field {
         export const COMMON = 'common';
     }
 
+    export function isValidFieldData(fieldData: any, field: BaseField): boolean {
+
+        if (fieldData === null || fieldData === undefined) return false;
+
+        switch (field.inputType) {
+            case InputType.SIMPLE_INPUT:
+            case InputType.DROPDOWN:
+            case InputType.RADIO:
+            case InputType.CATEGORY:
+            case InputType.IDENTIFIER:
+                return isString(fieldData);
+            case InputType.INPUT:
+            case InputType.TEXT:
+                // TODO Improve validation for i18n strings
+                return isString(fieldData) || isObject(fieldData);
+            case InputType.SIMPLE_MULTIINPUT:
+            case InputType.CHECKBOXES:
+                return isArray(fieldData) && fieldData.every(element => isString(element));
+            case InputType.MULTIINPUT:
+                return isArray(fieldData) && fieldData.every(element => isString(element) || isObject(element));
+            case InputType.UNSIGNEDINT:
+                return validateUnsignedInt(fieldData);
+            case InputType.UNSIGNEDFLOAT:
+                return validateUnsignedFloat(fieldData);
+            case InputType.INT:
+                return validateInt(fieldData);
+            case InputType.FLOAT:
+                return validateFloat(fieldData);
+            case InputType.URL:
+                return validateUrl(fieldData);
+            case InputType.BOOLEAN:
+                return fieldData === true || fieldData === false;
+            case InputType.DATE:
+                return !isNaN(parseDate(fieldData)?.getTime());
+            case InputType.DROPDOWNRANGE:
+                return OptionalRange.buildIsOptionalRange(isString)(fieldData);
+            case InputType.DATING:
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Dating.isDating(element) && Dating.isValid(element);
+                });
+            case InputType.DIMENSION:
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Dimension.isDimension(element) && Dimension.isValid(element);
+                });
+            case InputType.LITERATURE:
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Literature.isLiterature(element) && Literature.isValid(element);
+                });
+            case InputType.COMPOSITE:
+                return isArray(fieldData) && fieldData.every(element => {
+                    return Composite.isValid(element, (field as Field).subfields);
+                });
+            case InputType.GEOMETRY:
+                return fieldData.type !== undefined && fieldData.coordinates !== undefined;
+            case InputType.RELATION:
+            case InputType.INSTANCE_OF:
+                return isObject(fieldData) && Object.values(fieldData).every(relationTargets => {
+                    return isArray(relationTargets) && relationTargets.every(element => isString(element));
+                });
+            default:
+                return true;
+        }
+    }
+
 
     export type InputType = 'input'
         |'simpleInput'
@@ -99,11 +167,13 @@ export module Field {
         |'literature'
         |'geometry'
         |'relation'
+        |'derivedRelation'
         |'instanceOf'
         |'default'
         |'category'
         |'identifier'
-        |'composite';
+        |'composite'
+        |'none';
 
 
     export module InputType {
@@ -130,19 +200,22 @@ export module Field {
         export const GEOMETRY = 'geometry';
         export const INSTANCE_OF = 'instanceOf';
         export const RELATION = 'relation';
+        export const DERIVED_RELATION = 'derivedRelation';
         export const CATEGORY = 'category';
         export const IDENTIFIER = 'identifier';
         export const COMPOSITE = 'composite';
         export const NONE = 'none';
         export const DEFAULT = 'default';
 
-        export const VALUELIST_INPUT_TYPES = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
-        export const NUMBER_INPUT_TYPES = [UNSIGNEDINT, UNSIGNEDFLOAT, INT, FLOAT];
-        export const I18N_COMPATIBLE_INPUT_TYPES = [INPUT, SIMPLE_INPUT, TEXT, MULTIINPUT, SIMPLE_MULTIINPUT];
-        export const I18N_INPUT_TYPES = [INPUT, TEXT, MULTIINPUT];
-        export const SIMPLE_INPUT_TYPES = [SIMPLE_INPUT, SIMPLE_MULTIINPUT];
-        export const SUBFIELD_INPUT_TYPES = [INPUT, SIMPLE_INPUT, TEXT, BOOLEAN, DROPDOWN, RADIO, CHECKBOXES,
-            FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
+        export const VALUELIST_INPUT_TYPES: Array<InputType> = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
+        export const NUMBER_INPUT_TYPES: Array<InputType> = [UNSIGNEDINT, UNSIGNEDFLOAT, INT, FLOAT];
+        export const I18N_COMPATIBLE_INPUT_TYPES: Array<InputType> = [INPUT, SIMPLE_INPUT, TEXT, MULTIINPUT,
+            SIMPLE_MULTIINPUT];
+        export const I18N_INPUT_TYPES: Array<InputType> = [INPUT, TEXT, MULTIINPUT];
+        export const SIMPLE_INPUT_TYPES: Array<InputType> = [SIMPLE_INPUT, SIMPLE_MULTIINPUT];
+        export const SUBFIELD_INPUT_TYPES: Array<InputType> = [INPUT, SIMPLE_INPUT, TEXT, BOOLEAN, DROPDOWN, RADIO,
+            CHECKBOXES, FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
+        export const RELATION_INPUT_TYPES: Array<InputType> = [RELATION, INSTANCE_OF, DERIVED_RELATION];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
             [INPUT, SIMPLE_INPUT, TEXT, DROPDOWN, RADIO],
@@ -157,59 +230,6 @@ export module Field {
             });
 
             return alternativeTypes ?? [];
-        }
-
-
-        export function isValidFieldData(fieldData: any, inputType: InputType): boolean {
-
-            switch (inputType) {
-                case SIMPLE_INPUT:
-                case DROPDOWN:
-                case RADIO:
-                case CATEGORY:
-                case IDENTIFIER:
-                    return isString(fieldData);
-                case INPUT:
-                case TEXT:
-                    // TODO Improve validation for i18n strings
-                    return isString(fieldData) || isObject(fieldData);
-                case SIMPLE_MULTIINPUT:
-                case CHECKBOXES:
-                    return isArray(fieldData) && fieldData.every(element => isString(element));
-                case MULTIINPUT:
-                    return isArray(fieldData) && fieldData.every(element => isString(element) || isObject(element));
-                case UNSIGNEDINT:
-                    return validateUnsignedInt(fieldData);
-                case UNSIGNEDFLOAT:
-                    return validateUnsignedFloat(fieldData);
-                case INT:
-                    return validateInt(fieldData);
-                case FLOAT:
-                    return validateFloat(fieldData);
-                case URL:
-                    return validateUrl(fieldData);
-                case BOOLEAN:
-                    return fieldData === true || fieldData === false;
-                case DATE:
-                    return !isNaN(parseDate(fieldData)?.getTime());
-                case DROPDOWNRANGE:
-                    return OptionalRange.buildIsOptionalRange(isString)(fieldData);
-                case DATING:
-                    return isArray(fieldData) && fieldData.every(element => Dating.isDating(element));
-                case DIMENSION:
-                    return isArray(fieldData) && fieldData.every(element => Dimension.isDimension(element));
-                case LITERATURE:
-                    return isArray(fieldData) && fieldData.every(element => Literature.isLiterature(element));
-                case GEOMETRY:
-                    return fieldData.type !== undefined && fieldData.coordinates !== undefined;
-                case RELATION:
-                case INSTANCE_OF:
-                    return isObject(fieldData) && Object.values(fieldData).every(relationTargets => {
-                        return isArray(relationTargets) && relationTargets.every(element => isString(element));
-                    });
-                default:
-                    return true;
-            }
         }
     }
 }

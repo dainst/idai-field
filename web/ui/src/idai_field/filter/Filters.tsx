@@ -40,7 +40,7 @@ const renderFilterPopover = (filters: ResultFilter[], searchParams: URLSearchPar
             { filters.map((filter: ResultFilter) =>
                 filter.name === 'resource.category.name'
                 ? <CategoryFilter filter={ filter } searchParams={ searchParams } projectId={ projectId }
-                                  projectView={ projectView } key={ filter.name }
+                                  projectView={ projectView } key={ filter.name }
                                   onMouseEnter={ categories => onMouseOverCategories
                                     && onMouseOverCategories(categories) }
                                   onMouseLeave={ () => onMouseOverCategories && onMouseOverCategories(null) }

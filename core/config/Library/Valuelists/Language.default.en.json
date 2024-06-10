@@ -116,5 +116,61 @@
       "schwarz": "black",
       "weiß": "white"
     }
+  },
+  "glass-decorationTechnique-default": {
+    "values": {
+      "Diatretdekor": "reticulated / diatretum decoration",
+      "Emaille": "Vitreous enamel"
+    }
+  },
+  "glass-objectType-default": {
+    "values": {
+      "Gemme": "Engraved gem",
+      "Gerät": "Tool",
+      "Einlage": "Inlay",
+      "Armreif": "Wristband",
+      "Glasschlacke": "Glass slag",
+      "Lampe": "Lamp",
+      "Löffel": "Spoon",
+      "Tessera": "Tessera"
+    }
+  },
+  "Brick-decorationTechnique-default": {
+    "values": {
+      "Fingerabdruck": "Fingerprint",
+      "Reliefdekor": "Relief decor"
+    }
+  },
+  "Brick-temper-default": {
+    "values": {
+      "Sonstige": "Other"
+    }
+  },
+  "Burial-burialDocumentation-default": {
+    "values": {
+      "Foto": "Foto"
+    }
+  },
+  "Building-buildingTechnique-default": {
+    "values": {
+      "Bruchsteinmauerwerk": "Quarry stone masonry",
+      "Lehmziegelmauerwerk": "Mudbrick masonry"
+    }
+  },
+  "glass-vesselForm-default": {
+    "values": {
+      "Tasse": "Cup (with vertical handle)"
+    }
+  },
+  "glass-vesselFormSpecific-default": {
+    "values": {
+      "Dattelflasche": "Date-shaped bottle"
+    }
+  },
+  "Building-buildingType-default": {
+    "values": {
+      "Befestigung": "Fortification",
+      "Lager": "Storage building"
+    }
   }
 }

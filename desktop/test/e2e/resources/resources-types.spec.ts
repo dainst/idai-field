@@ -1,11 +1,12 @@
 import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist, pause } from '../app';
 import { ResourcesPage } from './resources.page';
-import { ResourcesTypeGridPage } from './resources-type-grid.page';
+import { ResourcesGridListPage } from './resources-grid-list.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { NavbarPage } from '../navbar.page';
 import { DoceditTypeRelationsPage } from '../docedit/docedit-type-relations.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -26,6 +27,7 @@ test.describe('resources/types --', () => {
         await navigateTo('settings');
         await resetApp();
         await navigateTo('resources/types');
+        await createTypeCatalogAndType();
     });
 
 
@@ -37,16 +39,16 @@ test.describe('resources/types --', () => {
 
     async function createTypeCatalogAndType(typeCatalogIdentifier: string = 'TC1', typeIdentifier: string = 'T1') {
 
-        await ResourcesPage.performCreateResource(typeCatalogIdentifier, 'TypeCatalog', undefined,
+        await ResourcesPage.performCreateResource(typeCatalogIdentifier, undefined, undefined,
             undefined, true, true);
-        await ResourcesTypeGridPage.clickGridElement(typeCatalogIdentifier);
-        return ResourcesPage.performCreateResource(typeIdentifier, 'Type', undefined, undefined, true, true);
+        await ResourcesGridListPage.clickGridElement(typeCatalogIdentifier);
+        return ResourcesPage.performCreateResource(typeIdentifier, undefined, undefined, undefined, true, true);
     }
 
 
     async function linkWithFind() {
 
-        await ResourcesTypeGridPage.clickEditButton();
+        await ResourcesGridListPage.clickEditButton();
         await DoceditPage.clickGotoIdentificationTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('hasInstance');
         await DoceditRelationsPage.typeInRelation('hasInstance', 'testf1');
@@ -57,7 +59,7 @@ test.describe('resources/types --', () => {
 
     async function setCriterion(criterion: string) {
 
-        await ResourcesTypeGridPage.clickEditButton();
+        await ResourcesGridListPage.clickEditButton();
         await DoceditPage.clickGotoIdentificationTab();
         await DoceditPage.clickSelectOption('criterion', criterion);
         return DoceditPage.clickSaveDocument();
@@ -84,92 +86,113 @@ test.describe('resources/types --', () => {
     }
 
 
-    test('Show linked find for type', async () => {
+    test('show linked find for type', async () => {
 
-        await createTypeCatalogAndType();
-
-        await ResourcesTypeGridPage.clickGridElement('T1');
-        await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
+        await ResourcesGridListPage.clickGridElement('T1');
+        await waitForNotExist(await ResourcesGridListPage.getLinkedDocumentsGrid());
 
         await linkWithFind();
 
-        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
-        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
+        await ResourcesGridListPage.clickToggleLinkedDocumentsSectionButton();
+        await waitForExist(await ResourcesGridListPage.getGridElement('testf1'));
 
         await ResourcesPage.clickNavigationButton('TC1');
-        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
+        await waitForExist(await ResourcesGridListPage.getGridElement('testf1'));
 
-        const text = await ResourcesTypeGridPage.getTypeBadgeText('testf1');
+        const text = await ResourcesGridListPage.getLinkedDocumentBadgeText('testf1');
         expect(text).toBe('T1');
     });
 
 
-    test('Do not show linked finds in extended search mode', async () => {
+    test('do not show linked finds in extended search mode', async () => {
 
-        await createTypeCatalogAndType();
-        await ResourcesTypeGridPage.clickGridElement('T1');
+        await ResourcesGridListPage.clickGridElement('T1');
         await linkWithFind();
 
         await ResourcesPage.clickSwitchHierarchyMode();
         await pause(2000);
-        const elements = await ResourcesTypeGridPage.getGridElements();
+        const elements = await ResourcesGridListPage.getGridElements();
         expect(await elements.count()).toBe(2);
 
-        await waitForNotExist(await ResourcesTypeGridPage.getToggleFindsSectionButton());
-        await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
+        await waitForNotExist(await ResourcesGridListPage.getToggleLinkedDocumentsSectionButton());
+        await waitForNotExist(await ResourcesGridListPage.getLinkedDocumentsGrid());
     });
 
 
-    test('Move a type to another catalog', async () => {
+    test('move a type without subtypes to another catalog', async () => {
 
-        await createTypeCatalogAndType();
+        await ResourcesGridListPage.clickNavigationRootButton();
+        await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined, undefined, true, true);
 
-        await ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
-        await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined,
-            undefined, true, true);
-
-        await ResourcesTypeGridPage.clickGridElement('TC1');
-        await ResourcesTypeGridPage.clickOpenContextMenu('T1');
+        await ResourcesGridListPage.clickGridElement('TC1');
+        await ResourcesGridListPage.clickOpenContextMenu('T1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('TC2');
-        await ResourcesPage.clickResourceListItemInMoveModal('TC2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('TC2');
+        await MoveModalPage.clickResourceListItem('TC2');
+        await waitForNotExist(await MoveModalPage.getModal());
+        await waitForExist(await ResourcesGridListPage.getGridElement('T1'));
 
-        await waitForExist(await ResourcesTypeGridPage.getGridElement('T1'));
-
-        expect(await ResourcesTypeGridPage.getActiveNavigationButtonText()).toEqual('TC2');
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('Typenkataloge');
+        expect(await getText(navigationButtons.nth(1))).toEqual('TC2');
+        expect(await ResourcesPage.getActiveNavigationButtonText()).toEqual('TC2');
     });
 
 
-    test('Delete a type', async () => {
+    test('move a type with subtypes to another catalog', async () => {
 
-        await createTypeCatalogAndType();
-        await ResourcesTypeGridPage.clickGridElement('T1');
+        await ResourcesGridListPage.clickNavigationRootButton();
+        await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined, undefined, true, true);
+
+        await ResourcesGridListPage.clickGridElement('TC1');
+        await ResourcesGridListPage.clickGridElement('T1');
+        await ResourcesPage.performCreateResource('T2', 'Type', undefined, undefined, true, true);
+        await ResourcesPage.clickNavigationButton('TC1');
+
+        await ResourcesGridListPage.clickOpenContextMenu('T1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await MoveModalPage.typeInSearchBarInput('TC2');
+        await MoveModalPage.clickResourceListItem('TC2');
+        await waitForNotExist(await MoveModalPage.getModal());
+        await waitForExist(await ResourcesGridListPage.getGridElement('T1'));
+
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(await navigationButtons.count()).toBe(2);
+        expect(await getText(navigationButtons.nth(0))).toEqual('Typenkataloge');
+        expect(await getText(navigationButtons.nth(1))).toEqual('TC2');
+        expect(await ResourcesPage.getActiveNavigationButtonText()).toEqual('TC2');
+        
+        await ResourcesGridListPage.clickGridElement('T1');
+        await waitForExist(await ResourcesGridListPage.getGridElement('T2'));
+    });
+
+
+    test('delete a type', async () => {
+
+        await ResourcesGridListPage.clickGridElement('T1');
         await linkWithFind();
 
         await ResourcesPage.clickNavigationButton('TC1');
 
-        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
-        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
+        await ResourcesGridListPage.clickToggleLinkedDocumentsSectionButton();
+        await waitForExist(await ResourcesGridListPage.getGridElement('testf1'));
 
-        await ResourcesTypeGridPage.clickOpenContextMenu('T1');
+        await ResourcesGridListPage.clickOpenContextMenu('T1');
         await ResourcesPage.clickContextMenuDeleteButton();
         await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('T1');
         await ResourcesPage.clickConfirmDeleteInModal();
 
-        await waitForNotExist(await ResourcesTypeGridPage.getGridElement('T1'));
-        await waitForNotExist(await ResourcesTypeGridPage.getGridElement('testf1'));
+        await waitForNotExist(await ResourcesGridListPage.getGridElement('T1'));
+        await waitForNotExist(await ResourcesGridListPage.getGridElement('testf1'));
     });
 
 
-    test('Link find with type via type relation picker', async () => {
-
-        await createTypeCatalogAndType();
+    test('link find with type via type relation picker', async () => {
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();
@@ -177,29 +200,27 @@ test.describe('resources/types --', () => {
         await DoceditTypeRelationsPage.clickType('T1');
         await DoceditPage.clickSaveDocument();
 
-        await ResourcesPage.clickSelectResource('testf1', 'info');
+        await ResourcesPage.clickSelectResource('testf1');
         await FieldsViewPage.clickAccordionTab(1);
         expect(await FieldsViewPage.getRelationValue(1, 0)).toEqual('T1');
 
         await navigateTo('resources/types');
-        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
-        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
+        await ResourcesGridListPage.clickToggleLinkedDocumentsSectionButton();
+        await waitForExist(await ResourcesGridListPage.getGridElement('testf1'));
     });
 
 
-    test('Filter types in type relation picker by criterion & catalog', async () => {
+    test('filter types in type relation picker by criterion & catalog', async () => {
 
-        await createTypeCatalogAndType();
         await setCriterion('Dekoration');
 
-        await ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
+        await ResourcesGridListPage.clickNavigationRootButton();
         await createTypeCatalogAndType('TC2', 'T2');
         await setCriterion('Form');
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         await ResourcesPage.openEditByDoubleClickResource('testf1');
         await DoceditPage.clickGotoIdentificationTab();

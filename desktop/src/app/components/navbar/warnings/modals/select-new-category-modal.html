@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@navbar.taskbar.selectNewCategory.header">Neue Kategorie auswählen</h5>
+</div>
+
+<div id="select-new-category-modal-body" class="modal-body warnings-tool-modal-body">
+    <div class="warnings-tool-info" i18n="@@navbar.taskbar.selectNewCategory.confirmation">
+        Bitte wählen Sie die Kategorie aus, die für die Ressource <b>{{document.resource.identifier}}</b>
+        gesetzt werden soll.
+    </div>
+
+    <div id="new-category-picker-container">
+        <category-picker [topLevelCategoriesArray]="availableTopLevelCategories"
+                         [selectedCategories]="getSelectedCategoryNames()"
+                         (onCategoryPicked)="selectedCategory = $event">
+        </category-picker>
+    </div>
+
+    <div *ngIf="selectedCategory && document.resource.category" id="multiple-switch" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@navbar.taskbar.selectNewCategory.all">Bei allen Ressourcen dieser Kategorie durchführen</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch">
+                <input type="checkbox" [checked]="multiple" (change)="multiple = !multiple">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    
+    <div *ngIf="selectedCategory && multiple">
+        <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.selectNewCategory.multiple.info">
+            Bitte beachten Sie: Durch diese Aktion wird für alle Ressourcen der unkonfigurierten
+            Kategorie <code>{{document.resource.category}}</code> die Kategorie
+            <b>{{getCategoryLabel(selectedCategory)}}</b> (<code>{{selectedCategory.name}}</code>) gesetzt.
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div id="confirm-button"
+         class="btn btn-primary"
+         [ngClass]="{ 'disabled': !selectedCategory }"
+         (click)="perform()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h5 *ngIf="storagePlaceDocuments.length === 1" class="modal-title"
+        i18n="@@resources.scanStoragePlaceModal.header.single">
+        Bisherigen Aufbewahrungsort ersetzen?
+    </h5>
+    <h5 *ngIf="storagePlaceDocuments.length > 1" class="modal-title"
+        i18n="@@resources.scanStoragePlaceModal.header.multiple">
+        Bisherige Aufbewahrungsorte ersetzen?
+    </h5>
+</div>
+
+<div id="scan-storage-place-modal-body" class="modal-body">
+    <div *ngIf="documents.length === 1 && storagePlaceDocuments.length === 1"
+         i18n="@@resources.scanStoragePlaceModal.editMode.singleDocument.singleStoragePlace">
+        Für die Ressource <b>{{documents[0].resource.identifier}}</b> ist bereits der Aufbewahrungsort
+        <b>{{storagePlaceDocuments[0].resource.identifier}}</b> gesetzt.
+    </div>
+    <div *ngIf="documents.length === 1 && storagePlaceDocuments.length > 1"
+         i18n="@@resources.scanStoragePlaceModal.editMode.singleDocument.multipleStoragePlaces">
+        Für die Ressource <b>{{documents[0].resource.identifier}}</b> sind bereits mehrere Aufbewahrungsorte gesetzt.
+    </div>
+    <div *ngIf="documents.length > 1 && storagePlaceDocuments.length === 1"
+         i18n="@@resources.scanStoragePlaceModal.editMode.multipleDocuments.singleStoragePlace">
+        Für {{documents.length}} Ressourcen ist bereits der Aufbewahrungsort
+        <b>{{storagePlaceDocuments[0].resource.identifier}}</b> gesetzt.
+    </div>
+    <div *ngIf="documents.length > 1 && storagePlaceDocuments.length > 1"
+        i18n="@@resources.scanStoragePlaceModal.editMode.multipleDocuments.multipleStoragePlaces">
+       Für {{documents.length}} Ressourcen sind bereits Aufbewahrungsorte gesetzt.
+    </div>
+    <div *ngIf="storagePlaceDocuments.length === 1"
+         i18n="@@resources.scanStoragePlaceModal.editMode.question.single">
+        Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort
+        <b>{{newStoragePlaceDocument.resource.identifier}}</b> beibehalten?
+    </div>
+    <div *ngIf="storagePlaceDocuments.length > 1"
+         i18n="@@resources.scanStoragePlaceModal.editMode.question.multiple">
+        Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort
+        <b>{{newStoragePlaceDocument.resource.identifier}}</b> beibehalten?
+    </div>
+</div>
+
+<div class="modal-footer" *ngIf="documents">
+    <button id="replace-storage-place-button" class="btn btn-danger" type="button"
+            (click)="selectEditMode('replace')">
+        <span i18n="@@resources.scanStoragePlaceModal.remove">Entfernen</span>
+    </button>
+    <button id="add-storage-place-button" class="btn btn-primary" type="button"
+            (click)="selectEditMode('add')">
+        <span i18n="@@resources.scanStoragePlaceModal.keep">Beibehalten</span>
+    </button>
+    <button id="cancel-scan-storage-place-modal-button" type="button" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

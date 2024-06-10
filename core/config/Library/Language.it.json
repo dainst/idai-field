@@ -6,7 +6,10 @@
     "position": "Posizione",
     "dimension": "Dimensioni",
     "identification": "Definizione",
-    "other": "Altri"
+    "other": "Altri",
+    "hierarchy": "Gerarchia",
+    "stratigraphy": "Stratigrafia",
+    "inventory": "Inventariazione"
   },
   "commons": {
     "dimensionLength": {
@@ -1580,6 +1583,27 @@
           "label": "Criterio"
         }
       }
+    },
+    "StoragePlace": {
+      "label": "Luogo di conservazione"
+    },
+    "StorageBuilding": {
+      "label": "Edificio"
+    },
+    "StorageRoom": {
+      "label": "Ambiente"
+    },
+    "StorageShelf": {
+      "label": "Scaffale"
+    },
+    "StorageCompartment": {
+      "label": "Scomparto"
+    },
+    "StorageBox": {
+      "label": "Cassetta"
+    },
+    "StorageBag": {
+      "label": "Busta"
     }
   },
   "forms": {

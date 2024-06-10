@@ -168,7 +168,7 @@ export class PouchdbDatastore {
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
-        const fetchedDocument = await this.fetch(document.resource.id);
+        const fetchedDocument = await this.fetch(document.resource.id, undefined, true);
 
         const clonedDocument = Document.clone(document);
         clonedDocument.created = fetchedDocument.created;
@@ -216,8 +216,7 @@ export class PouchdbDatastore {
 
         this.deletedOnes.push(document.resource.id as never);
 
-        const fetchedDocument = await this.fetch(
-            document.resource.id, { conflicts: true }, true) as any;
+        const fetchedDocument = await this.fetch(document.resource.id, {}, true) as any;
 
         if (fetchedDocument._conflicts && fetchedDocument._conflicts.length > 0) {
             await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument._conflicts);
@@ -234,39 +233,45 @@ export class PouchdbDatastore {
     /**
      * @param resourceId
      * @param options
-     * @param skipValidationAncDateConversion
+     * @param skipValidation
      * @throws [DOCUMENT_NOT_FOUND]
      * @throws [INVALID_DOCUMENT] if not Document.isValid
      * @returns Document. It is made sure that it isValid and the dates are converted to type Date.
      */
-    public fetch(resourceId: string,
-                 options: any = { conflicts: true }, skipValidationAncDateConversion = false): Promise<Document> {
+    public fetch(resourceId: string, options: any = {}, skipValidation: boolean = false): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
+
+        options.conflicts = true;
 
         return this.db.get(resourceId, options)
             .then(
                 (result: any) => {
-                    if (!skipValidationAncDateConversion) {
+                    PouchdbDatastore.autoFixCategory(result);
+                    if (!skipValidation) {
                         if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
-                        PouchdbDatastore.convertDates(result);
                     }
+                    PouchdbDatastore.convertDates(result);
                     return Promise.resolve(result as Document);
                 },
                 (_: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
     }
 
 
-    public async bulkFetch(resourceIds: string[], options: any = { conflicts: true }): Promise<Array<Document>> {
+    public async bulkFetch(resourceIds: string[]): Promise<Array<Document>> {
 
-        options.keys = resourceIds;
-        options.include_docs = true;
+        const options = {
+            keys: resourceIds,
+            conflicts: true,
+            include_docs: true
+        };
 
         return (await this.db.allDocs(options)).rows.map((row: any) => {
             if (!row.doc) {
                 console.warn('Document not found: ' + row.key);
                 return undefined;
             }
+            PouchdbDatastore.autoFixCategory(row.doc);
             if (!Document.isValid(row.doc)) {
                 console.warn('Invalid document', row.doc);
                 return undefined;
@@ -409,5 +414,12 @@ export class PouchdbDatastore {
 
         const clonedDocument = Document.clone(document);
         return Document.removeEmptyRelationArrays(clonedDocument);
+    }
+
+
+    private static autoFixCategory(document: Document) {
+
+        if (document.resource.id === 'project') document.resource.category = 'Project';
+        if (document.resource.id === 'configuration') document.resource.category = 'Configuration';
     }
 }

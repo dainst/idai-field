@@ -31,28 +31,40 @@ export module WarningFilters {
                 type: 'conflicts'
             },
             {
-                label: translations.getTranslation('warnings.unconfigured'),
-                constraintName: 'unconfigured:exist',
+                label: translations.getTranslation('warnings.unconfiguredCategories'),
+                constraintName: 'unconfiguredCategory:exist',
                 count: 0,
-                type: 'unconfigured'
+                type: 'unconfiguredCategory'
+            },
+            {
+                label: translations.getTranslation('warnings.unconfiguredFields'),
+                constraintName: 'unconfiguredFields:exist',
+                count: 0,
+                type: 'unconfiguredFields'
             },
             {
                 label: translations.getTranslation('warnings.invalidFieldData'),
-                constraintName: 'invalid:exist',
+                constraintName: 'invalidFields:exist',
                 count: 0,
-                type: 'invalid'
+                type: 'invalidFields'
             },
             {
                 label: translations.getTranslation('warnings.outlierValues'),
-                constraintName: 'outlierValues:exist',
+                constraintName: 'outliers:exist',
                 count: 0,
-                type: 'outlierValues'
+                type: 'outliers'
             },
             {
                 label: translations.getTranslation('warnings.missingRelationTargets'),
                 constraintName: 'missingRelationTargets:exist',
                 count: 0,
                 type: 'missingRelationTargets'
+            },
+            {
+                label: translations.getTranslation('warnings.missingOrInvalidParent'),
+                constraintName: 'missingOrInvalidParent:exist',
+                count: 0,
+                type: 'missingOrInvalidParent'
             },
             {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
@@ -83,7 +95,7 @@ export module WarningFilters {
     export async function hasConfigurationConflict(datastore: Datastore): Promise<boolean> {
 
         try {
-            const configurationDocument: Document = await datastore.get('configuration', { conflicts: true });
+            const configurationDocument: Document = await datastore.get('configuration');
             return configurationDocument._conflicts !== undefined;
         } catch (_) {
             // No configuration document in database

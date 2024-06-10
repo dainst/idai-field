@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Datastore } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -11,6 +12,7 @@ import { AppController } from '../services/app-controller';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
+import { AppState } from '../services/app-state';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
@@ -35,12 +37,14 @@ export class AppComponent {
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
+                appState: AppState,
                 private messages: Messages,
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
-                private menuModalLauncher: MenuModalLauncher) {
+                private menuModalLauncher: MenuModalLauncher,
+                private datastore: Datastore) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -55,6 +59,7 @@ export class AppComponent {
             }
         });
 
+        appState.load();
         settingsService.setupSync();
         appController.initialize();
         menuNavigator.initialize();
@@ -63,6 +68,7 @@ export class AppComponent {
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
+        this.handleCloseRequests();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
             this.menuModalLauncher.openUpdateUsernameModal(true);
@@ -77,6 +83,14 @@ export class AppComponent {
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
             this.changeDetectorRef.detectChanges();
+        });
+    }
+
+
+    private handleCloseRequests() {
+
+        ipcRenderer.on('requestClose', () => {
+            if (!this.datastore.updating) ipcRenderer.send('close');
         });
     }
 
@@ -120,10 +134,6 @@ export class AppComponent {
             'to', this.i18n({ id: 'util.optionalRange.to', value: ', bis: ' })
         );
         this.utilTranslations.addTranslation(
-            'includesStratigraphicalUnits',
-            this.i18n({ id: 'util.includesStratigraphicalUnits', value: 'Umfasst stratigraphische Einheiten' })
-        );
-        this.utilTranslations.addTranslation(
             'true', this.i18n({ id: 'boolean.yes', value: 'Ja' })
         );
         this.utilTranslations.addTranslation(
@@ -137,8 +147,12 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.conflicts', value: 'Konflikte' })
         );
         this.utilTranslations.addTranslation(
-            'warnings.unconfigured',
-            this.i18n({ id: 'util.warnings.unconfigured', value: 'Unkonfigurierte Felder' })
+            'warnings.unconfiguredCategories',
+            this.i18n({ id: 'util.warnings.unconfiguredCategories', value: 'Unkonfigurierte Kategorien' })
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unconfiguredFields',
+            this.i18n({ id: 'util.warnings.unconfiguredFields', value: 'Unkonfigurierte Felder' })
         );
         this.utilTranslations.addTranslation(
             'warnings.invalidFieldData',
@@ -153,6 +167,10 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.missingRelationTargets', value: 'Fehlende Zielressourcen von Relationen' })
         );
         this.utilTranslations.addTranslation(
+            'warnings.missingOrInvalidParent',
+            this.i18n({ id: 'util.warnings.missingOrInvalidParent', value: 'Fehlende oder ungültige übergeordnete Ressource' })
+        );
+        this.utilTranslations.addTranslation(
             'warnings.missingIdentifierPrefixes',
             this.i18n({ id: 'util.warnings.missingIdentifierPrefixes', value: 'Fehlende Bezeichner-Präfixe' })
         );
@@ -165,12 +183,16 @@ export class AppComponent {
             this.i18n({ id: 'util.warnings.resourceLimitExceeded', value: 'Ressourcenlimit überschritten' })
         );
         this.utilTranslations.addTranslation(
+            'inventoryRegister',
+            this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' })
+        );
+        this.utilTranslations.addTranslation(
             'inputTypes.input',
             this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' })
         );
         this.utilTranslations.addTranslation(
             'inputTypes.multiInput',
-            this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' })
+            this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text (Liste)' })
         );
         this.utilTranslations.addTranslation(
             'inputTypes.text',
@@ -249,12 +271,19 @@ export class AppComponent {
             this.i18n({ id: 'config.inputType.relation', value: 'Relation' })
         );
         this.utilTranslations.addTranslation(
+            'inputTypes.derivedRelation',
+            this.i18n({ id: 'config.inputType.derivedRelation', value: 'Abgeleitete Relation' })
+        );
+        this.utilTranslations.addTranslation(
             'inputTypes.category',
             this.i18n({ id: 'config.inputType.category', value: 'Kategorie' })
         );
         this.utilTranslations.addTranslation(
             'inputTypes.identifier',
             this.i18n({ id: 'config.inputType.identifier', value: 'Bezeichner' })
+        );
+        this.utilTranslations.addTranslation(
+            'configurationFile', this.i18n({ id: 'config.configurationFile', value: 'Field-Konfigurationsdatei' })
         );
     }
 

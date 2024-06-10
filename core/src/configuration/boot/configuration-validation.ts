@@ -56,7 +56,7 @@ export module ConfigurationValidation {
             for (let fieldName of Object.keys(form.fields)) {
                 const fieldDefinition = form.fields[fieldName];
                 if (!fieldDefinition.hasOwnProperty('inputType')) fieldDefinition.inputType = 'input';
-                if (Field.InputType.VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType) !== -1
+                if (Field.InputType.VALUELIST_INPUT_TYPES.indexOf(fieldDefinition.inputType as Field.InputType) !== -1
                     && !fieldDefinition.valuelistFromProjectField
                     && !isValidValuelist(fieldDefinition.valuelist)) {
                     messages.push([

@@ -25,7 +25,7 @@ describe('ConfigLoader', () => {
             libraryForms,
             {},
             languageConfiguration,
-            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
         configReader.exists.and.returnValue(true);
         configReader.getValuelistsLanguages.and.returnValue({});
@@ -490,7 +490,7 @@ describe('ConfigLoader', () => {
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Find: {
                 fields: {},
-                minimalForm: {
+                minimalForm: {
                     groups: []
                 },
                 userDefinedSubcategoriesAllowed: true,

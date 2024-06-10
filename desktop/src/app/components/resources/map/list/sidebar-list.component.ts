@@ -34,6 +34,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
+    public readonly itemSize: number = 58;
+
     private lastSelectedDocument: FieldDocument|undefined;
 
 
@@ -48,7 +50,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
-            this.resourcesComponent.closePopover();
+            this.resourcesComponent.popoverMenuOpened = false;
         });
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
@@ -69,8 +71,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     ngOnChanges() {
 
         this.resourcesComponent.additionalSelectedDocuments = [];
-        this.lastSelectedDocument = undefined;
-        this.scrollTo(this.selectedDocument);
+        this.scrollTo(this.selectedDocument, this.isScrolledToBottomElement());
+        this.lastSelectedDocument = this.selectedDocument;
     }
 
 
@@ -78,12 +80,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
             await this.viewFacade.navigateDocumentList(event.key === 'ArrowUp' ? 'previous' : 'next');
-            event.preventDefault();
-        }
-
-        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            await this.resourcesComponent
-                .navigatePopoverMenus(event.key === 'ArrowLeft' ? 'previous' : 'next');
             event.preventDefault();
         }
 
@@ -106,12 +102,15 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (event.shiftKey && this.lastSelectedDocument) {
             this.selectBetween(this.lastSelectedDocument, document);
             this.lastSelectedDocument = document;
+            this.resourcesComponent.popoverMenuOpened = false;
         } else if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
             this.resourcesComponent.toggleAdditionalSelected(document, allowDeselection);
             this.lastSelectedDocument = document;
+            this.resourcesComponent.popoverMenuOpened = false;
         } else if (!event.metaKey && !event.ctrlKey && (allowDeselection || !this.isPartOfSelection(document))) {
             this.resourcesComponent.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);
+            if (event.type === 'click') this.resourcesComponent.popoverMenuOpened = true;
         }
     }
 
@@ -132,9 +131,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public async performContextMenuAction(action: ResourcesContextMenuAction) {
 
-        if (this.resourcesComponent.isPopoverMenuOpened() &&
+        if (this.resourcesComponent.popoverMenuOpened &&
                 ['edit-geometry', 'create-polygon', 'create-line-string', 'create-point'].includes(action)) {
-            this.resourcesComponent.closePopover();
+            this.resourcesComponent.popoverMenuOpened = false;
         }
 
         if (!this.selectedDocument) return;
@@ -145,16 +144,22 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 await this.resourcesComponent.editDocument(this.selectedDocument);
                 break;
             case 'move':
-                await this.resourcesComponent.moveDocuments(this.getSelection());
+                await this.resourcesComponent.moveDocuments(this.contextMenu.documents as Array<FieldDocument>);
                 break;
             case 'delete':
-                await this.resourcesComponent.deleteDocument(this.getSelection());
+                await this.resourcesComponent.deleteDocument(this.contextMenu.documents as Array<FieldDocument>);
                 break;
             case 'warnings':
                 await this.warningsService.openModal(this.selectedDocument);
                 break;
             case 'edit-images':
                 await this.resourcesComponent.editImages(this.selectedDocument);
+                break;
+            case 'edit-qr-code':
+                await this.resourcesComponent.editQRCode(this.selectedDocument);
+                break;
+            case 'scan-storage-place':
+                await this.resourcesComponent.scanStoragePlace(this.contextMenu.documents as Array<FieldDocument>);
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
@@ -181,8 +186,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (!this.contextMenu.position) return;
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
-            || rightClick && target.id && target.id.startsWith('resource-'))) {
-
+                || rightClick && target.id && target.id.startsWith('resource-'))) {
             this.contextMenu.close();
         }
     }
@@ -237,5 +241,25 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 ? undefined
                 : navigationPath.segments[newSegmentIndex].document
         );
+    }
+
+
+    private isScrolledToBottomElement(): boolean {
+
+        if (!this.lastSelectedDocument || !this.selectedDocument) return false;
+
+        const documents: Array<FieldDocument> = this.viewFacade.getDocuments();
+        
+        const lastSelectedDocumentIndex: number = documents.findIndex(document => {
+            return document.resource.id === this.lastSelectedDocument.resource.id; }
+        );
+        const selectedDocumentIndex: number = documents.findIndex(document => {
+            return document.resource.id === this.selectedDocument.resource.id; }
+        );
+
+        const indexDifference: number = selectedDocumentIndex - lastSelectedDocumentIndex;
+        const numberOfDisplayedItems: number = Math.floor(this.scrollViewport.getViewportSize() / this.itemSize);
+
+        return indexDifference > 0 && indexDifference <= numberOfDisplayedItems;
     }
 }

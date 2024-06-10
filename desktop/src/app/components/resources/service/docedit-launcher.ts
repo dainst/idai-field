@@ -52,7 +52,7 @@ export class DoceditLauncher {
         await this.viewFacade.populateDocumentList();
         await this.viewFacade.rebuildNavigationPath();
 
-        if (!this.viewFacade.isInTypesManagement()) {
+        if (!this.viewFacade.isInGridListView()) {
             await this.viewFacade.setSelectedDocument(document.resource.id);
         }
     }

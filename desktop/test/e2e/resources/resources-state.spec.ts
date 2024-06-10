@@ -9,6 +9,7 @@ import { ResourcesSearchBarPage } from './resources-search-bar.page';
 import { SearchConstraintsPage } from '../widgets/search-constraints.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { ImageViewPage } from '../images/image-view.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -209,14 +210,14 @@ test.describe('resources/state --', () => {
 
         await checkCategoryIcon();
         await createResourceWithPresetCategory('1', false);
-        await ResourcesPage.clickSelectResource('1', 'info');
+        await ResourcesPage.clickSelectResource('1');
         expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Erdbefund');
 
         await ResourcesPage.clickListModeButton();
         await checkCategoryIcon();
         await createResourceWithPresetCategory('2', true);
         await ResourcesPage.clickMapModeButton();
-        await ResourcesPage.clickSelectResource('2', 'info');
+        await ResourcesPage.clickSelectResource('2');
         expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Erdbefund');
     });
 
@@ -375,6 +376,39 @@ test.describe('resources/state --', () => {
     });
 
 
+    test('search -- perform constraint search for default field "has children"', async () => {
+
+        await ResourcesPage.performCreateResource('S3', 'operation-trench');
+        await ResourcesPage.clickHierarchyButton('S3');
+        await ResourcesPage.performCreateResource('FeatureWithoutChildren', 'feature');
+        await ResourcesPage.performCreateResource('FeatureWithChildren', 'feature');
+        await ResourcesPage.clickHierarchyButton('FeatureWithChildren');
+        await ResourcesPage.performCreateResource('Find', 'find');
+
+        await ResourcesPage.clickSwitchHierarchyMode();
+
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('isChildOf');
+        await SearchConstraintsPage.clickSelectExistsDropdownValue(true);
+        await SearchConstraintsPage.clickAddConstraintButton();
+
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithChildren'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('FeatureWithoutChildren'));
+
+        await SearchConstraintsPage.clickRemoveConstraintButton('isChildOf');
+
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithChildren'));
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithoutChildren'));
+
+        await SearchConstraintsPage.clickSelectConstraintField('isChildOf');
+        await SearchConstraintsPage.clickSelectExistsDropdownValue(false);
+        await SearchConstraintsPage.clickAddConstraintButton();
+
+        await waitForNotExist(await ResourcesPage.getListItemEl('FeatureWithChildren'));
+        await waitForExist(await ResourcesPage.getListItemEl('FeatureWithoutChildren'));
+    });
+
+
     test('search -- remove field from dropdown after adding constraint', async () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
@@ -393,7 +427,6 @@ test.describe('resources/state --', () => {
 
         await ResourcesPage.clickSwitchHierarchyMode();
 
-        await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchBarPage.clickChooseCategoryFilter('feature');
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
@@ -474,16 +507,16 @@ test.describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('S1');
 
         await ResourcesPage.performCreateResource('c2', 'feature');
-        await ResourcesPage.performDescendHierarchy('c2');
+        await ResourcesPage.clickHierarchyButton('c2');
         await ResourcesPage.performCreateResource('c3', 'feature');
         await click((await ResourcesPage.getNavigationButtons()).nth(0));
 
         await ResourcesPage.performCreateResource('c4', 'feature');
-        await ResourcesPage.performDescendHierarchy('c4');
+        await ResourcesPage.clickHierarchyButton('c4');
         await ResourcesPage.performCreateResource('c5', 'feature');
         await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith');
 
-        await ResourcesPage.clickSelectResource('c5', 'info');
+        await ResourcesPage.clickSelectResource('c5');
         await FieldsViewPage.clickAccordionTab(1);
         await FieldsViewPage.clickRelation(1, 0);
 
@@ -501,7 +534,6 @@ test.describe('resources/state --', () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(2);
@@ -525,7 +557,6 @@ test.describe('resources/state --', () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.clickHierarchyButton('SE0');
-        await ResourcesPage.clickOpenChildCollectionButton();
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(2);
@@ -551,12 +582,12 @@ test.describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('S1');
         await ResourcesPage.performCreateResource('S-New', 'feature');
 
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOpenContextMenu('testf1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('S-New');
-        await ResourcesPage.clickResourceListItemInMoveModal('S-New');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('S-New');
+        await MoveModalPage.clickResourceListItem('S-New');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         const navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(2);
@@ -568,14 +599,14 @@ test.describe('resources/state --', () => {
     test('navpath - update when moving a resource to another operation', async () => {
 
         await ResourcesPage.clickHierarchyButton('S1');
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         await ResourcesPage.clickOperationNavigationButton();
 
         await ResourcesPage.clickOpenContextMenu('SE0');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        await ResourcesPage.clickResourceListItemInMoveModal('S2');
-        await waitForNotExist(await ResourcesPage.getMoveModal());
+        await MoveModalPage.typeInSearchBarInput('S2');
+        await MoveModalPage.clickResourceListItem('S2');
+        await waitForNotExist(await MoveModalPage.getModal());
 
         let navigationButtons = await ResourcesPage.getNavigationButtons();
         expect(await navigationButtons.count()).toBe(1);
@@ -594,7 +625,7 @@ test.describe('resources/state --', () => {
         await ResourcesPage.clickHierarchyButton('S1');
 
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');
-        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickHierarchyButton('SE0');
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('testf1');
         await ResourcesPage.clickSwitchHierarchyMode();
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');

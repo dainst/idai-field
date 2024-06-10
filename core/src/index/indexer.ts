@@ -1,8 +1,7 @@
 import { isUndefined, not } from 'tsfun';
 import { IndexFacade } from './index-facade';
-import { DocumentConverter, DatastoreErrors, DocumentCache } from '../datastore';
+import { DocumentConverter, DocumentCache } from '../datastore';
 import { Document } from '../model/document';
-import { CategoryForm } from '../model/configuration/category-form';
 import { WarningsUpdater } from '../datastore/warnings-updater';
 import { ProjectConfiguration } from '../services';
 
@@ -34,17 +33,17 @@ import { ProjectConfiguration } from '../services';
 
         try {
             if (keepCachedInstances) {
-                documents = documents.filter(document => !documentCache.get(document.resource.id));
+                documents = documents.filter(document => !documentCache.get(document.resource?.id));
             }
             documents = convertDocuments(documents, converter);
-            documents.forEach(doc => documentCache.set(doc));
+            documents.forEach(document => {
+                WarningsUpdater.updateIndexIndependentWarnings(document, projectConfiguration);
+                documentCache.set(document);
+            });
 
             if (keepCachedInstances) {
                 documentCache.getAll().forEach(document => {
-                    if (document.resource.category !== 'Configuration') {
-                        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-                        if (category) WarningsUpdater.updateIndexIndependentWarnings(document, category);
-                    }
+                    WarningsUpdater.updateIndexIndependentWarnings(document, projectConfiguration);
                 });
                 documents = documents.concat(documentCache.getAll());
             }
@@ -73,13 +72,12 @@ import { ProjectConfiguration } from '../services';
 
     function convertDocuments(documents: Array<Document>, converter: DocumentConverter): Array<Document> {
 
-        return documents.map(doc => {
+        return documents.map(document => {
             try {
-                return converter.convert(doc);
+                converter.convert(document);
+                return document;
             } catch (err) {
-                if (!err.length || err[0] !== DatastoreErrors.UNKNOWN_CATEGORY) {
-                    console.warn('Error while converting document: ', err);
-                }
+                console.warn('Error while converting document: ', err);
                 return undefined;
             }
         }).filter(not(isUndefined));
@@ -94,13 +92,16 @@ import { ProjectConfiguration } from '../services';
 
         for (let i = 0; i < documents.length; i++) {
             const document: Document = documents[i];
-            const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-            WarningsUpdater.updateIndexDependentWarnings(document, indexFacade, documentCache, category);
+            await WarningsUpdater.updateIndexDependentWarnings(
+                document, indexFacade, documentCache, projectConfiguration
+            );
 
             if (setProgress && (i % 250 === 0 || i === documents.length)) {
                 await setProgress(documents.length * 0.75 + i * 0.25);
             }
         };
+
+        indexFacade.notifyObservers();
     }
 
 

@@ -10,7 +10,6 @@ import PouchDB = require('pouchdb-node');
  */
 describe('BackupLoadingComponent', () => {
 
-    const backupFilePath = 'test/store/backup_test_file.txt';
     const unittestdb = 'unittestdb';
 
     let c: BackupLoadingComponent;
@@ -29,7 +28,6 @@ describe('BackupLoadingComponent', () => {
 
         spyOn(console, 'warn');
 
-        const dialogProvider = jasmine.createSpyObj('dialogProvider', ['chooseFilepath']);
         const modalService = jasmine.createSpyObj('modalService', ['open']);
         messages = jasmine.createSpyObj('messages', ['add']);
         settingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
@@ -45,11 +43,12 @@ describe('BackupLoadingComponent', () => {
             settingsService,
             backupProvider,
             tabManager,
-            menuService
+            menuService,
+            undefined,
+            undefined
         );
 
         settingsProvider.getSettings.and.returnValue({ dbs: ['selectedproject'] } as any);
-        dialogProvider.chooseFilepath.and.returnValue(Promise.resolve(backupFilePath));
     });
 
 

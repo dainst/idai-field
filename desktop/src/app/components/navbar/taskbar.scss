@@ -2,8 +2,9 @@
 @import 'taskbar-sync-status';
 @import 'warnings/taskbar-warnings';
 @import 'warnings/warnings-modal';
-@import 'warnings/delete-field-data-modal';
-@import 'warnings/clean-up-relation-modal';
+@import 'warnings/modals/warnings-tool-modals';
+@import 'warnings/modals/select-new-category-modal';
+@import 'warnings/widgets/invalid-resource-view';
 
 .taskbar {
   margin-top: 2px;

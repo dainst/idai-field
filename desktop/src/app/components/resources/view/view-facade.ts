@@ -8,7 +8,7 @@ import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';
 
 
-export type ResourcesViewMode = 'map'|'list'|'types';
+export type ResourcesViewMode = 'map'|'list'|'grid';
 
 
 /**
@@ -21,15 +21,14 @@ export class ViewFacade {
     private ready: boolean;
 
 
-    constructor(
-        datastore: Datastore,
-        remoteChangesStream: ChangesStream,
-        private resourcesStateManager: ResourcesStateManager,
-        loading: Loading,
-        indexFacade: IndexFacade,
-        private messages: Messages,
-        private syncService: SyncService
-    ) {
+    constructor(datastore: Datastore,
+                remoteChangesStream: ChangesStream,
+                private resourcesStateManager: ResourcesStateManager,
+                loading: Loading,
+                indexFacade: IndexFacade,
+                private messages: Messages,
+                private syncService: SyncService) {
+
         this.documentsManager = new DocumentsManager(
             datastore,
             remoteChangesStream,
@@ -53,6 +52,10 @@ export class ViewFacade {
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
     public isInTypesManagement = () => this.resourcesStateManager.isInTypesManagement();
+
+    public isInInventoryManagement = () => this.resourcesStateManager.isInInventoryManagement();
+
+    public isInGridListView = () => this.resourcesStateManager.isInGridListView();
 
     public getMode = () => this.resourcesStateManager.getMode();
 
@@ -121,7 +124,7 @@ export class ViewFacade {
     public getNavigationPath = () => ResourcesState.getNavigationPath(this.resourcesStateManager.get());
 
 
-    public async selectView(viewName: 'project'|'types'|string): Promise<void> {
+    public async selectView(viewName: 'project'|'types'|'inventory'|string): Promise<void> {
 
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);
@@ -137,11 +140,7 @@ export class ViewFacade {
         } catch (errWithParams) {
             await this.populateDocumentList();
             await this.rebuildNavigationPath();
-            if (errWithParams.length === 2 && errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
-                this.messages.add([M.RESOURCES_ERROR_PARENT_RESOURCE_UNKNOWN_CATEGORY, errWithParams[1]]);
-            } else {
-                this.messages.add([this.getMissingResourceMessage()]);
-            }
+            this.messages.add([this.getMissingResourceMessage()]);
         }
     }
 

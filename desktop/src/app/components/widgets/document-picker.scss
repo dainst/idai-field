@@ -1,5 +1,7 @@
 #document-picker {
   &.has-search-results {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  
     .search-filter {
       border-bottom-right-radius: 0;
       border-top-right-radius: 19px;
@@ -10,7 +12,6 @@
     max-height: calc(100vh - 350px);
     overflow-x: hidden;
     overflow-y: auto;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0;
 
     #document-picker-list {

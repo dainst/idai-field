@@ -12,7 +12,7 @@ defmodule FieldHub.Project do
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
   @moduledoc """
-  Bundles functions concerning Field projects in FieldHub.
+  Bundles functions concerning Field projects in Field Hub.
   """
 
   @doc """
@@ -137,7 +137,7 @@ defmodule FieldHub.Project do
       %{status_code: 200} ->
         true
 
-      # Databases without the FieldHub's application user are considered non-existing
+      # Databases without the Field Hub's application user are considered non-existing
       # by the application.
       %{status_code: 403} ->
         false

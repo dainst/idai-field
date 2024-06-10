@@ -112,21 +112,11 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    it('getFieldCategories', () => {
-
-        expect(
-            sameset(
-                projectConfiguration.getFieldCategories().map(Named.toName),
-                ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place', 'Feature', 'Architecture'])
-        ).toBeTruthy();
-    });
-
-
     it('getConcreteFieldCategories', () => {
 
         expect(
             sameset(
-                projectConfiguration.getConcreteFieldCategories().map(Named.toName),
+                projectConfiguration.getFieldCategories().map(Named.toName),
                 ['Operation', 'Trench', 'Inscription', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -166,7 +156,7 @@ describe('ProjectConfiguration', () => {
 
         expect(
             sameset(
-                projectConfiguration.getOverviewToplevelCategories().map(Named.toName),
+                projectConfiguration.getOverviewSupercategories().map(Named.toName),
                 ['Operation', 'Place'])
         ).toBeTruthy();
     });

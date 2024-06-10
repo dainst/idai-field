@@ -1,8 +1,11 @@
 import { isString } from 'tsfun';
-import { CategoryForm } from '../model';
-import { Valuelist } from '../model';
-import { SortUtil } from '../tools';
 import { I18N } from '../tools/i18n';
+import { Valuelist } from '../model/configuration/valuelist';
+import { ProjectConfiguration } from './project-configuration';
+import { CategoryForm } from '../model/configuration/category-form';
+import { SortUtil } from '../tools/sort-util';
+import { Relation } from '../model/configuration/relation';
+import { Field } from '../model/configuration/field';
 
 
 /**
@@ -10,7 +13,8 @@ import { I18N } from '../tools/i18n';
  */
 export class Labels {
 
-    constructor(private getLanguages: () => string[]) {}
+    constructor(private getLanguages: () => string[],
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {
@@ -22,6 +26,7 @@ export class Labels {
     public getFromI18NString(i18nString: I18N.String|string): string {
 
         if (isString(i18nString)) return i18nString;
+        if (!I18N.isI18NString(i18nString)) return undefined;
 
         const fallbackValue: string|undefined = i18nString && Object.keys(i18nString).length > 0
             ? i18nString[I18N.UNSPECIFIED_LANGUAGE] ?? i18nString[Object.keys(i18nString)[0]]
@@ -55,9 +60,20 @@ export class Labels {
 
     public getFieldLabel(category: CategoryForm, fieldName: string): string {
 
-        const label = CategoryForm.getField(category, fieldName);
-        if (!label) return undefined;
-        return I18N.getLabel(label, this.getLanguages());
+        const field: Field = CategoryForm.getField(category, fieldName);
+        if (!field) return undefined;
+        return I18N.getLabel(field, this.getLanguages());
+    }
+
+
+    public getRelationLabel(relationName: string): string {
+
+        const relation: Relation = this.projectConfiguration.getRelations().find(relation => {
+            return relation.name === relationName;
+        });
+        if (!relation) return undefined;
+
+        return I18N.getLabel(relation, this.getLanguages());
     }
 
 

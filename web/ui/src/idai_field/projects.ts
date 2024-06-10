@@ -11,9 +11,9 @@ export const getProjectLabel = (projectDocument: ResultDocument|Document): strin
     const shortDescription = getTranslation(projectDocument.resource.shortDescription);
     const shortName = getTranslation(projectDocument.resource.shortName);
 
-    return shortName ??
-        (shortDescription
-            && shortDescription.length <= MAX_LABEL_LENGTH
+    return shortName ||
+        ((shortDescription
+            && shortDescription.length <= MAX_LABEL_LENGTH)
                 ? shortDescription
                 : projectDocument.resource.identifier);
 };

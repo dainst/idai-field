@@ -1,4 +1,4 @@
-import { click, getLocator, rightClick, hover, waitForNotExist, doubleClick, getText, typeIn, pressKey,
+import { click, getLocator, rightClick, waitForNotExist, doubleClick, getText, typeIn, pressKey,
     pause, getValue, selectSearchableSelectOption } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
@@ -45,15 +45,27 @@ export class ResourcesPage {
     }
 
 
-    public static clickHierarchyButton(identifier: string) {
+    public static clickContextMenuAddQrCodeButton() {
 
-        return click('#resource-' + identifier + ' .hierarchy-button');
+        return click('#context-menu-add-qr-code-button');
     }
 
 
-    public static clickOpenChildCollectionButton() {
+    public static clickContextMenuEditQrCodeButton() {
 
-        return click('#open-child-collection-button');
+        return click('#context-menu-edit-qr-code-button');
+    }
+
+
+    public static clickContextMenuScanStoragePlaceButton() {
+
+        return click('#context-menu-scan-storage-place-button');
+    }
+
+
+    public static clickHierarchyButton(identifier: string) {
+
+        return click('#resource-' + identifier + ' .hierarchy-button');
     }
 
 
@@ -63,16 +75,9 @@ export class ResourcesPage {
     }
 
 
-    public static async clickSelectResource(identifier: string, tab?: 'info' | 'children') {
+    public static async clickSelectResource(identifier: string) {
 
-        await hover('#resource-' + identifier);
-
-        let buttonClass = '';
-        if (tab) {
-            if (tab === 'info') buttonClass = '.info-button';
-            if (tab === 'children') buttonClass = '.hierarchy-button';
-        }
-        return click('#resource-' + identifier + ' ' + buttonClass);
+        return click('#resource-' + identifier + ' document-teaser');
     }
 
 
@@ -109,7 +114,7 @@ export class ResourcesPage {
 
     public static clickSelectCategory(categoryName: string = 'feature-architecture') {
 
-        return click('#choose-category-option-' + categoryName);
+        return click('#choose-category-option-' + categoryName.replace(':', '-').toLowerCase());
     }
 
 
@@ -127,18 +132,6 @@ export class ResourcesPage {
         if (index !== undefined) locator = await locator.nth(index);
 
         return doubleClick(locator);
-    }
-
-
-    public static clickResourceListItemInMoveModal(identifier: string) {
-
-        return click('#document-picker-resource-' + identifier);
-    }
-
-
-    public static clickCancelInMoveModal() {
-
-        return click('#move-modal-cancel-button');
     }
 
 
@@ -163,6 +156,24 @@ export class ResourcesPage {
     public static clickListSelectOption(identifier: string, optionLabel: string) {
 
         return selectSearchableSelectOption('#resource-' + identifier + ' .dropdown-input-field', optionLabel);
+    }
+
+
+    public static clickConfirmReplacingStoragePlace() {
+
+        return click('#replace-storage-place-button');
+    }
+
+
+    public static clickConfirmAddingStoragePlace() {
+
+        return click('#add-storage-place-button');
+    }
+
+
+    public static clickCancelScanStoragePlaceModal() {
+
+        return click('#cancel-scan-storage-place-modal-button');
     }
 
 
@@ -215,6 +226,12 @@ export class ResourcesPage {
     public static getListSelectValue(identifier: string) {
 
         return getValue('#resource' + identifier + ' .dropdown-input-field select');
+    }
+
+
+    public static getActiveNavigationButtonText() {
+
+        return getText('.navigation-button.root-document');
     }
 
 
@@ -296,18 +313,6 @@ export class ResourcesPage {
     }
 
 
-    public static getMoveModal() {
-
-        return getLocator('#move-modal');
-    }
-
-
-    public static getResourceIdentifierLabelsInMoveModal() {
-
-        return getLocator('#move-modal document-teaser .title');
-    }
-
-
     public static getListRows() {
 
         return getLocator('.row-wrapper');
@@ -327,6 +332,12 @@ export class ResourcesPage {
     public static getContextMenuMoveButton() {
 
         return getLocator('#context-menu-move-button');
+    }
+
+
+    public static getQrCodeScannerModalBody() {
+
+        return getLocator('#qr-code-scanner-modal-body');
     }
 
 
@@ -355,33 +366,20 @@ export class ResourcesPage {
     }
 
 
-    public static typeInMoveModalSearchBarInput(identifier: string) {
-
-        return typeIn('#move-modal .search-bar-input', identifier);
-    }
-
-
     // sequences
 
     public static async performCreateResource(identifier: string, categoryName?: string, inputFieldName?: string,
-                                              inputFieldText?: string, skipTypeSelect?: boolean, skipGeometry?: boolean,
+                                              inputFieldText?: string, skipCategory?: boolean, skipGeometry?: boolean,
                                               waitForModalToClose: boolean = true) {
 
         await this.clickCreateResource();
-        if (!skipTypeSelect) await this.clickSelectCategory(categoryName);
+        if (!skipCategory) await this.clickSelectCategory(categoryName);
         if (!skipGeometry) await this.clickSelectGeometryType();
         await DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {
             await DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
         await DoceditPage.clickSaveDocument(false, waitForModalToClose);
-    }
-
-
-    public static async performDescendHierarchy(identifier: string) {
-
-        await this.clickHierarchyButton(identifier);
-        return click('#open-child-collection-button');
     }
 
 

@@ -30,7 +30,7 @@
 
 .configuration-editor-modal-body {
   @extend .bg-light;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 137px);
   overflow-y: auto;
 
   .configuration-editor-section-title {
@@ -44,6 +44,10 @@
     margin-bottom: 25px;
   }
 
+  .configuration-editor-section.configuration-editor-switch-section:not(:last-child) {
+    margin-bottom: 5px;
+  }
+
   input {
     height: 33.5px;
     font-size: 13px;
@@ -55,8 +59,26 @@
     font-size: 15px;
   }
 
-  .basic-settings > div:last-child .switch,
-  .basic-settings > i18n-switch:last-child .switch {
-    margin-bottom: -6px;
+  .basic-settings-label {
+    width: 330px;
+    float: left;
+    font-size: 15px;
+    user-select: none;
+  }
+  
+  .configuration-editor-switch {
+    width: 370px;
+    
+    div span {
+      user-select: none;
+  
+      &.disabled {
+        color: grey;
+      }
+    }
+  }
+
+  label.disabled {
+    color: grey;
   }
 }

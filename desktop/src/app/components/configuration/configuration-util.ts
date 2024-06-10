@@ -4,7 +4,7 @@ import { validateReferences } from './validation/validate-references';
 
 
 export type InputType = {
-    name: string;
+    name: Field.InputType;
     searchable?: boolean;
     customFields?: boolean;
 };
@@ -54,6 +54,8 @@ export module ConfigurationUtil {
                     return category.name === 'Image';
                 case 'types':
                     return ['Type', 'TypeCatalog'].includes(category.name);
+                case 'inventory':
+                    return category.name === 'StoragePlace';
                 default:
                     return filter.isRecordedInCategory
                         ? Relation.isAllowedRelationDomainCategory(
@@ -64,7 +66,7 @@ export module ConfigurationUtil {
                         )
                         : !projectConfiguration.getRelationsForDomainCategory(category.name)
                                 .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                            && !['Image', 'Type', 'TypeCatalog'].includes(category.name);
+                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace'].includes(category.name);
             }
         });
     }

@@ -147,17 +147,18 @@ export module Resource {
         if (!shortDescription) return undefined;
 
         return isString(shortDescription)
-                ? getShortDescriptionLabelFromString(resource, shortDescription, labels, projectConfiguration)
-                : labels.getFromI18NString(shortDescription);
+            ? getShortDescriptionLabelFromString(resource, shortDescription, labels, projectConfiguration)
+            : labels.getFromI18NString(shortDescription);
     }
 
 
     const getShortDescriptionLabelFromString = (resource: Resource, shortDescription: string, labels: Labels,
                                                 projectConfiguration: ProjectConfiguration): string => {
 
-        const valuelist: Valuelist|undefined = CategoryForm.getShortDescriptionValuelist(
-            projectConfiguration.getCategory(resource.category)
-        );
+        const category: CategoryForm = projectConfiguration.getCategory(resource.category)
+        if (!category) return shortDescription;
+
+        const valuelist: Valuelist|undefined = CategoryForm.getShortDescriptionValuelist(category);
 
         return valuelist
             ? labels.getValueLabel(valuelist, shortDescription)

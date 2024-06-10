@@ -58,10 +58,15 @@ export default function Project(): ReactElement {
     const previousSearchParams = useRef(new URLSearchParams());
     const documentListRef = useRef<HTMLDivElement>();
 
-    const { onScroll, resetScrollOffset } = useGetChunkOnScroll((newOffset: number) => search(
-        buildQuery(projectId, new URLSearchParams(location.search), newOffset), loginData.token)
-            .then(result => setDocuments(oldDocs => oldDocs.concat(result.documents)))
-    );
+    const getChunk = async (newOffset: number) => {
+
+        const result = await search(
+            buildQuery(projectId, new URLSearchParams(location.search), newOffset), loginData.token
+        );
+        setDocuments(oldDocs => oldDocs.concat(result.documents));
+    };
+
+    const { onScroll, resetScrollOffset } = useGetChunkOnScroll(getChunk);
 
     const resetScroll = () => {
 
@@ -159,7 +164,7 @@ export default function Project(): ReactElement {
             highlightedCategories={ mapHighlightedCategories }
             predecessors={ predecessors }
             project={ projectId }
-            projectDocument={ projectDocument }
+            projectDocument={ projectDocument }
             onDeselectFeature={ () => deselectFeature(document, new URLSearchParams(location.search), view, history) }
             spinnerContainerStyle={ mapSpinnerContainerStyle }
             fitOptions={ MAP_FIT_OPTIONS }
@@ -213,7 +218,7 @@ const renderTotal = (total: number, searchParams: URLSearchParams, view: Project
         filters: ResultFilter[], projectId: string,
         setMapHighlightedCategories: (categories: string[]) => void): ReactElement => {
 
-    return <Total key="total" total={ total } searchParams={ searchParams } projectView={ view } asLink={ asLink }
+    return <Total key="total" total={ total } searchParams={ searchParams } projectView={ view } asLink={ asLink }
         filters={ filters } projectId={ projectId } setMapHighlightedCategories={ setMapHighlightedCategories } />;
 };
 

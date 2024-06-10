@@ -86,7 +86,7 @@ export module Assertions {
 
         iterateOverFields(definitions, (formName, _, fieldName, field) => {
 
-            if (Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType ? field.inputType : '')) {
+            if (field.inputType && Field.InputType.VALUELIST_INPUT_TYPES.includes(field.inputType as Field.InputType)) {
                 if (!field.valuelistId && !field.valuelist && !field.valuelistFromProjectField) {
                     throw [[ConfigurationErrors.NO_VALUELIST_PROVIDED, formName, fieldName]];
                 }
@@ -142,7 +142,7 @@ export module Assertions {
                                                   builtInCategories: Map<BuiltInCategoryDefinition>,
                                                   libraryCategories: Map<LibraryCategoryDefinition>) {
 
-        const categoryNames: string[] = Object.keys(builtInCategories).concat(Object.keys(libraryCategories));
+        const categoryNames: string[] = Object.keys(builtInCategories).concat(Object.keys(libraryCategories));
         const assert = LibraryFormDefinition.makeAssertIsValid(categoryNames);
         keysValues(libraryForms).forEach(assert);
     }

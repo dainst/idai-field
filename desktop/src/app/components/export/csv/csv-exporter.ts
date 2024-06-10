@@ -15,7 +15,7 @@ export module CsvExporter {
     /**
      * @param outputFilePath
      */
-    export function performExport(outputFilePath: string, projectLanguages: string[],
+    export function performExport(outputFilePath: string, projectLanguages: string[], separator: string,
                                   combineHierarchicalRelations: boolean): PerformExport {
 
         return (category: CategoryForm, relations: string[]) => {
@@ -24,7 +24,7 @@ export module CsvExporter {
 
                 const result: CSVExportResult = CSVExport.createExportable(
                     resources, CategoryForm.getFields(category), relations, projectLanguages,
-                    combineHierarchicalRelations
+                    separator, combineHierarchicalRelations, category.scanCodes !== undefined
                 );
                 await writeFile(outputFilePath, result.csvData);
 

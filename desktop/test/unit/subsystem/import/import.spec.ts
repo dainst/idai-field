@@ -72,7 +72,7 @@ describe('Import/Subsystem', () => {
         );
 
         const options: ImporterOptions = {
-            file: undefined,
+            filePath: undefined,
             separator: '',
             sourceType: undefined,
             url: undefined,
@@ -98,7 +98,7 @@ describe('Import/Subsystem', () => {
             ' }'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Trench'] });
         expect(result.documents.length).toBe(1);
         const resource = result.documents[0].resource;
         expect(resource.identifier).toEqual('t1');
@@ -147,20 +147,19 @@ describe('Import/Subsystem', () => {
 
         await parseAndImport(
             options,
-            '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear"\n' +
-            '"f1","SD","exact","","","bce","5000"'
+            '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear","scanCode"\n' +
+            '"f1","SD","single","","","bce","5000","1234567"'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents.length).toBe(2);
-        const resource1 = result.documents[0].resource;
-        const resource2 = result.documents[1].resource;
-        const resource = resource1.identifier === 't1' ? resource2 : resource1;
+        const result = await datastore.find({ categories: ['Find']});
+        expect(result.documents.length).toBe(1);
+        const resource = result.documents[0].resource;
         expect(resource.identifier).toEqual('f1');
         expect(resource.category).toEqual('Find');
         expect(resource.shortDescription).toEqual('SD');
-        expect(resource['dating'].length).toBe(1);
-        expect(resource['dating'][0]['end']['year']).toEqual(-5000);
+        expect(resource.dating.length).toBe(1);
+        expect(resource.dating[0].end.year).toEqual(-5000);
+        expect(resource.scanCode).toEqual('1234567');
         done();
     });
 
@@ -170,16 +169,30 @@ describe('Import/Subsystem', () => {
         await datastore.create({
             resource:
                 {
+                    id: 't1',
+                    identifier: 't1',
+                    category: 'Trench',
+                    relations: {}
+                }
+            }
+        );
+
+        await datastore.create({
+            resource:
+                {
                     identifier: 'f1',
                     category: 'Find',
                     shortDescription: 'originalSD',
-                    relations: {},
+                    relations: {
+                        isRecordedIn: ['t1']
+                    },
                     dating: [
-                        { type: 'exact', end: { year: -2000, inputYear: 2000, inputType: 'bce' } },
-                        { type: 'exact', end: { year: -3000, inputYear: 3000, inputType: 'bce' } }
+                        { type: 'single', end: { year: -2000, inputYear: 2000, inputType: 'bce' } },
+                        { type: 'single', end: { year: -3000, inputYear: 3000, inputType: 'bce' } }
                     ]
                 }
-            });
+            }
+        );
 
         const t: CategoryForm = {
             name: 'Find',
@@ -197,7 +210,7 @@ describe('Import/Subsystem', () => {
         }] as any;
 
         const options: ImporterOptions = {
-            file: undefined,
+            filePath: undefined,
             selectedCategory: t,
             separator: ',',
             sourceType: '',
@@ -211,10 +224,10 @@ describe('Import/Subsystem', () => {
         await parseAndImport(
             options,
             '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear","dating.0.margin","dating.0.source","dating.0.isImprecise","dating.0.isUncertain","dating.1.type","dating.1.begin.inputType","dating.1.begin.inputYear","dating.1.end.inputType","dating.1.end.inputYear","dating.1.margin","dating.1.source","dating.1.isImprecise","dating.1.isUncertain"\n' +
-            '"f1","newSD","exact","","","bce","5000","","","","","","","","","","","","",""'
+            '"f1","newSD","single","","","bce","5000","","","","","","","","","","","","",""'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Find'] });
         expect(result.documents.length).toBe(1);
         const resource = result.documents[0].resource;
         expect(resource.identifier).toEqual('f1');
@@ -230,7 +243,7 @@ describe('Import/Subsystem', () => {
 
         await parseAndImport(
             {
-                file: undefined,
+                filePath: undefined,
                 selectedCategory: undefined,
                 separator: '',
                 sourceType: '',
@@ -243,7 +256,7 @@ describe('Import/Subsystem', () => {
             '{ "category": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Trench' ] });
         expect(result.documents.length).toBe(1);
         expect(result.documents[0].resource.identifier).toBe('t1');
         done();
@@ -316,8 +329,8 @@ describe('Import/Subsystem', () => {
         );
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(4);
-        await helpers.expectResources('T1', 'F1', 'Find1', 'Find2');
+        expect(result.documents.length).toBe(5);
+        await helpers.expectResources('testdb', 'T1', 'F1', 'Find1', 'Find2');
 
         const findDocument1 = await helpers.getDocument('101');
         expect(findDocument1.resource.relations['isRecordedIn']).toEqual(['t1']);
@@ -376,8 +389,8 @@ describe('Import/Subsystem', () => {
         );
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(5);
-        await helpers.expectResources('T1', 'F1', 'Find1', 'Find2', 'Find3');
+        expect(result.documents.length).toBe(6);
+        await helpers.expectResources('testdb', 'T1', 'F1', 'Find1', 'Find2', 'Find3');
 
         const findDocument1 = await helpers.getDocument('101');
         expect(findDocument1.resource.relations['isRecordedIn']).toEqual(['t1']);
@@ -435,7 +448,8 @@ describe('Import/Subsystem', () => {
 
     it('create one find, connect to existing operation', async done => {
 
-        const stored = await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+        const stored = await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench',
+            shortDescription: 'Our Trench 1', relations: {} } });
 
         await parseAndImport(
             {
@@ -449,8 +463,8 @@ describe('Import/Subsystem', () => {
         );
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(2);
-        await helpers.expectResources('T1', 'F1');
+        expect(result.documents.length).toBe(3);
+        await helpers.expectResources('testdb', 'T1', 'F1');
         done();
     });
 
@@ -459,7 +473,7 @@ describe('Import/Subsystem', () => {
 
         const resourceId = (await datastore.create(
             { resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {} } }
-            )).resource.id;
+        )).resource.id;
 
         const importReport = await parseAndImport(
             {
@@ -476,7 +490,7 @@ describe('Import/Subsystem', () => {
 
         expect(importReport.errors[0]).toEqual([ImportErrors.INVALID_CATEGORY, 'InvalidCategory']);
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(1); // only the trench
+        expect(result.documents.length).toBe(2); // Trench & Project
         done();
     });
 
@@ -484,7 +498,8 @@ describe('Import/Subsystem', () => {
     it('update field', async done => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
-        await datastore.create({ resource: { identifier: 'F1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
+        await datastore.create({ resource: { identifier: 'F1', category: 'Feature', shortDescription: 'feature1',
+            relations: { isRecordedIn: ['a'] } } });
 
         await parseAndImport(
             {
@@ -498,8 +513,9 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier" : "F1", "shortDescription" : "feature_1" }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.shortDescription).toBe('feature_1');
+        const result = await datastore.find({ categories: ['Feature'] });
+        expect(result.documents.length).toBe(1);
+        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
         done();
     });
 
@@ -635,9 +651,12 @@ describe('Import/Subsystem', () => {
 
     it('ignore unmatched items on merge', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: {} } });
+        await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench',
+            shortDescription: 'feature1', relations: {} } });
+        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1',
+            relations: { isRecordedIn: ['a' ]} } });
 
-        const importReport = await parseAndImport(
+        await parseAndImport(
             {
                 separator: '',
                 sourceType: '',
@@ -650,7 +669,7 @@ describe('Import/Subsystem', () => {
                 + '{ "category": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2" }'
         );
 
-        const result = await datastore.find({});
+        const result = await datastore.find({ categories: ['Feature'] });
         expect(result.documents.length).toBe(1);
         expect(result.documents[0].resource.shortDescription).toBe('feature_1');
         done();
@@ -659,7 +678,8 @@ describe('Import/Subsystem', () => {
 
     it('import trench not allowed, when import into operation is activated', async done => {
 
-        await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
+        await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench',
+            shortDescription: 'Our trench 1', relations: {} } });
 
         const importReport = await parseAndImport(
             {
@@ -683,7 +703,8 @@ describe('Import/Subsystem', () => {
 
     it('postprocess documents', async done => {
 
-        await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
+        await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', category: 'Trench',
+        shortDescription: 'Our trench 1', relations: {} } });
 
         await parseAndImport(
             {
@@ -755,8 +776,7 @@ describe('Import/Subsystem', () => {
                 identifier: 'feature1',
                 category: 'Feature',
                 shortDescription: 'original',
-                relations: { "isAfter": ["100"]} // this is broken (a previously generated id)
-                                             // the target is not there (yet)
+                relations: { isAfter: ['100'], isRecordedIn: ['tr1'] }
             });
 
         await parseAndImport(
@@ -769,12 +789,12 @@ describe('Import/Subsystem', () => {
                 selectedOperationId: 'tr1'
             },
 
-            // This one gets ignored, exept for its relation
+            // This one gets ignored, except for its relation
             '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
 
             // Consider only this one.
             // The inverse relation is only implicit. In a full import, it is supposed
-            // to be generated from the 'feature1' record of the importfile. We
+            // to be generated from the 'feature1' record of the import file. We
             // reconstruct this behaviour here also in the differential import case.
             + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new" }'
         );
@@ -783,10 +803,7 @@ describe('Import/Subsystem', () => {
         const feature2 = (await helpers.getDocument('101')).resource;
         expect(feature1.shortDescription).toBe('original');
         expect(feature2.shortDescription).toBe('new');
-        expect(feature1.relations['isAfter']).toEqual(
-            ['100', // this is still broken, TODO we may want to clean this up
-            '101']  // this is ok
-            );
+        expect(feature1.relations['isAfter']).toEqual(['100','101']);
         expect(feature2.relations['isBefore']).toEqual(['99']);
         done();
     });

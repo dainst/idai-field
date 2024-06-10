@@ -10,6 +10,7 @@ import { AddFieldModalPage } from './add-field-modal.page';
 import { AddGroupModalPage } from './add-group-modal.page';
 import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
+import { MoveModalPage } from '../widgets/move-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -111,48 +112,6 @@ test.describe('configuration --', () => {
     });
 
 
-    test('delete category with existing resources & show warning for liesWithin resources', async () => {
-
-        await NavbarPage.clickCloseNonResourcesTab();
-        await ResourcesPage.clickSwitchHierarchyMode();
-        await waitForExist(await ResourcesPage.getListItemEl('SE4'));
-        
-        await navigateTo('configuration');
-        await ConfigurationPage.clickSelectCategoriesFilter('all');
-        await ConfigurationPage.deleteCategory('Grave', 'Feature', true);
-        await waitForNotExist(await CategoryPickerPage.getCategory('Grave', 'Feature'));
-        await ConfigurationPage.save();
-        
-        await NavbarPage.clickCloseNonResourcesTab();
-        await waitForExist(await ResourcesPage.getListItemEl('SE3'));
-        await waitForNotExist(await ResourcesPage.getListItemEl('SE4'));
-        await ResourcesPage.clickHierarchyButton('SE4-F1');
-        await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht '
-            + 'konfigurierten Kategorie "Grave" untergeordnet ist.', false);
-    });
-
-
-    test('delete operation category with existing resources & show warning for isRecordedIn resources', async () => {
-
-        await NavbarPage.clickCloseNonResourcesTab();
-        await ResourcesPage.clickSwitchHierarchyMode();
-        await waitForExist(await ResourcesPage.getListItemEl('S1'));
-        
-        await navigateTo('configuration');
-        await ConfigurationPage.clickSelectCategoriesFilter('all');
-        await ConfigurationPage.deleteCategory('Trench', 'Operation', true);
-        await waitForNotExist(await CategoryPickerPage.getCategory('Trench', 'Operation'));
-        await ConfigurationPage.save();
-        
-        await NavbarPage.clickCloseNonResourcesTab();
-        await waitForExist(await ResourcesPage.getListItemEl('A1'));
-        await waitForNotExist(await ResourcesPage.getListItemEl('S1'));
-        await ResourcesPage.clickHierarchyButton('SE0');
-        await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht '
-            + 'konfigurierten Kategorie "Trench" angehört.', false);
-    });
-
-
     test('add category from library', async () => {
 
         await ConfigurationPage.clickCreateSubcategory('Feature');
@@ -230,11 +189,11 @@ test.describe('configuration --', () => {
 
         await ResourcesPage.clickOpenContextMenu('Find1');
         await ResourcesPage.clickContextMenuMoveButton();
-        await ResourcesPage.typeInMoveModalSearchBarInput('Feature');
-        const labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        await MoveModalPage.typeInSearchBarInput('Feature');
+        const labels = await MoveModalPage.getResourceIdentifierLabels();
         expect(await getText(labels.nth(0))).toEqual('Feature1');
 
-        await ResourcesPage.clickCancelInMoveModal();
+        await MoveModalPage.clickCancel();
     });
 
 
@@ -559,7 +518,7 @@ test.describe('configuration --', () => {
         await AddGroupModalPage.typeInSearchFilterInput('newGroup');
         await AddGroupModalPage.clickSelectGroup('test:newGroup');
         await AddGroupModalPage.clickConfirmSelection();
-        await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));
+        await waitForExist(await ConfigurationPage.getActiveGroup('test:newGroup'));
 
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.clickSelectField('dimensionDiameter');

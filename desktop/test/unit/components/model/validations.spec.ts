@@ -58,9 +58,47 @@ describe('Validations', () => {
                         { name: 'period2', label: 'period2', inputType: InputType.DROPDOWNRANGE },
                         { name: 'period3', label: 'period3', inputType: InputType.DROPDOWNRANGE },
                         { name: 'period4', label: 'period4', inputType: InputType.DROPDOWNRANGE },
+                        {
+                            name: 'composite1', label: 'composite1', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' }, { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite2', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite3', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite4', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                { name: 'subfield2', inputType: 'int' }
+                            ]
+                        },
+                        {
+                            name: 'composite5', label: 'composite2', inputType: 'composite',
+                            subfields: [
+                                { name: 'subfield1', inputType: 'boolean' },
+                                {
+                                    name: 'subfield2', inputType: 'int',
+                                    condition: { subfieldName: 'subfield1', values: true }
+                                }
+                            ]
+                        },
                         { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
                         { name: 'endDate', label: 'endDate', inputType: 'date' },
-                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 }
+                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
+                        { name: 'isBelow', label: 'isBelow', inputType: 'relation' }
                     ]
 
             }]}, []],
@@ -72,15 +110,22 @@ describe('Validations', () => {
                 ]}]
             }, []],
             [{
-                    name: 'T3',
-                    groups: [{ name: 'stem', fields: [
-                        { name: 'id' },
-                        { name: 'category' },
-                        { name: 'dating' },
-                        { name: 'period', inputType: 'dropdownRange' }
-                    ]}]
-                }, []]
-            ] as any),
+                name: 'T3',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'category' },
+                    { name: 'dating' },
+                    { name: 'period', inputType: 'dropdownRange' }
+                ]}]
+            }, []],
+            [{
+                name: 'Image',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'category' }
+                ]}]
+            }, []],
+        ] as any),
         categories: {},
         relations: [
             {
@@ -119,7 +164,7 @@ describe('Validations', () => {
 
     it('validate defined fields', () => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
         datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
 
         const doc = {
@@ -149,6 +194,47 @@ describe('Validations', () => {
                 dating: 'abc',
                 period: { value: 'abc', endValue: 'de' },
                 relations: { isRecordedIn: ['0'] },
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
+        expect(undefinedFields.length).toBe(0);
+    });
+
+
+    it('validate defined fields - do not allow non-relation fields with the same name as relation fields', () => {
+
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                isBelow: 'test',
+                relations: { isBelow: ['0'] },
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
+        expect(undefinedFields).toContain('isBelow');
+    });
+
+
+    it('validate defined fields - detect default image fields as valid', () => {
+
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
+        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'Image',
+                originalFilename: 'a',
+                georeference: 'b',
+                featureVectors: 'c',
+                relations: {},
             }
         };
 
@@ -394,9 +480,9 @@ describe('Validations', () => {
                 // Incomplete range
                 dating4: [{ type: 'range', begin: { inputYear: 10, inputType: 'ce'} }],
                 // No integer value
-                dating5: [{ type: 'exact', end: { inputYear: 10.5, inputType: 'ce'} }],
+                dating5: [{ type: 'single', end: { inputYear: 10.5, inputType: 'ce'} }],
                 // Negative value
-                dating6: [{ type: 'exact', end: { inputYear: -10, inputType: 'ce'} }],
+                dating6: [{ type: 'single', end: { inputYear: -10, inputType: 'ce'} }],
                 // No array
                 dating7: 'Dating',
                 // Invalid field
@@ -619,6 +705,77 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4, literature5']
+            );
+        }
+        done();
+    });
+
+
+    it('should report invalid composite fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                // Correct composite field value
+                composite1: [{ subfield1: true, subfield2: 10 }],
+                // No array
+                composite2: 'Composite field',
+                // Unconfigured subfield
+                composite3: [{ subfield1: true, subfield2: 10, subfield3: 'ABC' }],
+                // Invalid subfield value
+                composite4: [{ subfield1: true, subfield2: 'ABC' }],
+                // Unfulfilled subfield condition
+                composite5: [{ subfield1: false, subfield2: 10 }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfCompositeValues(doc as any, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3, composite4, composite5']
+            );
+        }
+        done();
+    });
+
+
+    it('should only report newly entered invalid composite fields', async done => {
+
+        const previousVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                composite1: 'ABC',
+                composite2: 'DEF',
+                composite3: [{ subfield1: true, subfield2: 10 }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        const currentVersion: any = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                composite1: 'ABC',
+                composite2: 'GHI',
+                composite3: 'JKL',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfCompositeValues(currentVersion, projectConfiguration, previousVersion);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3']
             );
         }
         done();

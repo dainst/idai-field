@@ -69,8 +69,10 @@ describe('RelationsManager', () => {
 
         spyOn(console, 'warn');
 
-        mockDatastore = jasmine.createSpyObj('mockDatastore',
-            ['get', 'getMultiple', 'putCache', 'find', 'create', 'update', 'convert', 'refresh', 'remove']);
+        mockDatastore = jasmine.createSpyObj(
+            'mockDatastore',
+            ['get', 'getMultiple', 'putCache', 'find', 'findIds', 'create', 'update', 'convert', 'refresh', 'remove']
+        );
 
         const mockSettingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });
@@ -79,6 +81,7 @@ describe('RelationsManager', () => {
 
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
+        mockDatastore.findIds.and.returnValue({ ids: [] });
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
         mockDatastore.create.and.returnValue(Promise.resolve(doc));
         mockDatastore.remove.and.returnValue(Promise.resolve('ok'));

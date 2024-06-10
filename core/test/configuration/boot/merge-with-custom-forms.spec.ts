@@ -31,7 +31,7 @@ describe('mergeWithCustomForms', () => {
                 },
                 minimalForm: {
                     groups: [
-                        { name: 'group1', fields: ['f1'] }
+                        { name: 'group1', fields: ['f1'] }
                     ]
                 }
             }
@@ -47,7 +47,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: {},
                 groups: [
-                    { name: 'group1', fields: ['c1'] }
+                    { name: 'group1', fields: ['c1'] }
                 ]
             }
         };
@@ -61,7 +61,7 @@ describe('mergeWithCustomForms', () => {
                     }
                 },
                 groups: [
-                    { name: 'group1', fields: ['f2', 'f3'] }
+                    { name: 'group1', fields: ['f2', 'f3'] }
                 ]
             }
         };
@@ -94,7 +94,7 @@ describe('mergeWithCustomForms', () => {
                 fields: { f1 },
                 minimalForm: {
                     groups: [
-                        { name: 'group1', fields: ['f1'] }
+                        { name: 'group1', fields: ['f1'] }
                     ]
                 }
             },
@@ -104,7 +104,7 @@ describe('mergeWithCustomForms', () => {
                 fields: { f2 },
                 minimalForm: {
                     groups: [
-                        { name: 'group1', fields: ['f2'] }
+                        { name: 'group1', fields: ['f2'] }
                     ]
                 }
             }
@@ -120,7 +120,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: { f1 },
                 groups: [
-                    { name: 'group1', fields: ['f1'] }
+                    { name: 'group1', fields: ['f1'] }
                 ]
             },
             B: {
@@ -132,7 +132,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: { f1, f2 },
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             }
         };
@@ -141,13 +141,13 @@ describe('mergeWithCustomForms', () => {
             B: {
                 fields: { f4 },
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2', 'f3', 'f4'] }
+                    { name: 'group1', fields: ['f1', 'f2', 'f3', 'f4'] }
                 ]
             },
             A: {
                 fields: { f3 },
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f3'] }
+                    { name: 'group1', fields: ['f1', 'f3'] }
                 ]
             }
         };
@@ -214,7 +214,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: { f1 },
                 groups: [
-                    { name: 'group1', fields: ['f1'] }
+                    { name: 'group1', fields: ['f1'] }
                 ]
             },
             B: {
@@ -236,7 +236,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: { f1, f2 },
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             }
         };
@@ -318,7 +318,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: {},
                 groups: [
-                    { name: 'group1', fields: ['f1'] }
+                    { name: 'group1', fields: ['f1'] }
                 ]
             }
         };
@@ -370,7 +370,7 @@ describe('mergeWithCustomForms', () => {
                 },
                 minimalForm: {
                     groups: [
-                        { name: 'group1', fields: ['f1'] }
+                        { name: 'group1', fields: ['f1'] }
                     ]
                 }
             }
@@ -386,7 +386,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: {},
                 groups: [
-                    { name: 'group1', fields: ['f1'] }
+                    { name: 'group1', fields: ['f1'] }
                 ]
             }
         };
@@ -394,16 +394,16 @@ describe('mergeWithCustomForms', () => {
         const customForms: Map<CustomFormDefinition> = {
             A: {
                 valuelists: { f1: 'custom-valuelist' },
-                fields: {},
+                fields: {},
                 groups: [
-                    { name: 'group1', fields: ['f1'] }
+                    { name: 'group1', fields: ['f1'] }
                 ]
             },
             NewCategory: {
                 parent: 'A',
                 fields: {},
                 groups: [
-                    { name: 'group1', fields: ['f1'] }
+                    { name: 'group1', fields: ['f1'] }
                 ]
             }
         };
@@ -435,7 +435,7 @@ describe('mergeWithCustomForms', () => {
                 },
                 minimalForm: {
                     groups: [
-                        { name: 'group1', fields: ['f1', 'f2'] }
+                        { name: 'group1', fields: ['f1', 'f2'] }
                     ]
                 }
             },
@@ -458,7 +458,7 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: {},
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             },
             B: {
@@ -471,24 +471,24 @@ describe('mergeWithCustomForms', () => {
                 description: {},
                 fields: {},
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             }
         };
 
         const customForms: Map<CustomFormDefinition> = {
             A: {
-                fields: {},
+                fields: {},
                 hidden: ['f1'],
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             },
             B: {
                 fields: {},
                 hidden: ['f2'],
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             },
             NewCategory: {
@@ -496,7 +496,7 @@ describe('mergeWithCustomForms', () => {
                 fields: {},
                 hidden: ['f2'],
                 groups: [
-                    { name: 'group1', fields: ['f1', 'f2'] }
+                    { name: 'group1', fields: ['f1', 'f2'] }
                 ]
             }
         };

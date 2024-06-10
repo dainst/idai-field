@@ -1,11 +1,12 @@
 <div id="projects-badge"
      class="nav-link"
      (click)="openModal()">
-   {{getProjectName()}}
+   {{projectLabel}}
 </div>
 
 <div id="username"
      class="nav-link"
+     [class.high-dpi]="isHighDPIDisplay()"
      (click)="openUsernameModal()">
     {{username}}
 </div>

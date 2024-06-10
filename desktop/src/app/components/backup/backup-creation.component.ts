@@ -9,6 +9,8 @@ import { Messages } from '../messages/messages';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import { AppState } from '../../services/app-state';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 @Component({
@@ -30,15 +32,14 @@ export class BackupCreationComponent {
     private static TIMEOUT: number = 200;
 
 
-    constructor(
-        private dialogProvider: DialogProvider,
-        private modalService: NgbModal,
-        private messages: Messages,
-        private settingsProvider: SettingsProvider,
-        private backupProvider: BackupProvider,
-        private tabManager: TabManager,
-        private menuService: Menus
-    ) {}
+    constructor(private dialogProvider: DialogProvider,
+                private modalService: NgbModal,
+                private messages: Messages,
+                private settingsProvider: SettingsProvider,
+                private backupProvider: BackupProvider,
+                private tabManager: TabManager,
+                private menuService: Menus,
+                private appState: AppState) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -53,14 +54,17 @@ export class BackupCreationComponent {
 
         if (this.running) return;
 
-        const filePath = await this.dialogProvider.chooseFilepath();
+        const projectName: string = this.settingsProvider.getSettings().selectedProject;
+
+        const filePath = await this.dialogProvider.chooseFilepath(projectName, this.appState);
+        AngularUtility.blurActiveElement();
         if (!filePath) return;
 
         this.running = true;
         this.menuService.setContext(MenuContext.MODAL);
         this.openModal();
 
-        await this.writeBackupFile(filePath);
+        await this.writeBackupFile(filePath, projectName);
 
         this.running = false;
         this.menuService.setContext(MenuContext.DEFAULT);
@@ -68,10 +72,10 @@ export class BackupCreationComponent {
     }
 
 
-    private async writeBackupFile(filePath: string) {
+    private async writeBackupFile(filePath: string, projectName: string) {
 
         try {
-            await this.backupProvider.dump(filePath, this.settingsProvider.getSettings().selectedProject);
+            await this.backupProvider.dump(filePath, projectName);
             this.messages.add([M.BACKUP_WRITE_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);

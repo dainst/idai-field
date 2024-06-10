@@ -1,23 +1,16 @@
-<div *ngFor="let entry of resource[field.name]; index as i"  class="mb-2">
-	<div *ngIf="entryLabels[i]" class="input-group mb-2">
+<div *ngFor="let entry of resource[field.name]; index as i"  class="mb-2 composite-entry">
+	<div class="input-group mb-2" [class.with-outliers]="hasOutliers(entry)">
+		<span class="mdi mdi-alert composite-entry-warning"
+			  ngbTooltip="Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind."
+			  i18n-ngbTooltip="@@docedit.forms.composite.outliers.tooltip"
+			  container="body"></span>
 		<input value="{{entryLabels[i]}}" type="text" disabled class="form-control">
 		<div class="input-group-append">
             <button class="btn btn-danger" (click)="removeEntryAtIndex(i)">
 				<span class="mdi mdi-delete"></span>
 			</button>
-            <button class="btn btn-info" (click)="editEntry(entry)">
+            <button class="btn btn-info edit-composite-entry" (click)="editEntry(entry)">
 				<span class="mdi mdi-pencil"></span>
-			</button>
-        </div>
-	</div>
-
-	<div *ngIf="!entryLabels[i]" class="input-group mb-2">
-		<input value="Ungültige Daten. Passen Sie die Konfiguration an oder löschen Sie das Objekt."
-			   i18n-value="@@docedit.forms.composite.invalidData"
-			   type="text" disabled class="form-control invalid-data">
-		<div class="input-group-append">
-            <button class="btn btn-danger" (click)="removeEntryAtIndex(i)">
-				<span class="mdi mdi-delete"></span>
 			</button>
         </div>
 	</div>

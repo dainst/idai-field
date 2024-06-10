@@ -1,0 +1,86 @@
+<.header>
+  Project '<%= @project.name %>'
+  <:actions>
+    <.link navigate={~p"/publishing/#{@project.name}/publication/new"}>
+      <.button>Draft new publication</.button>
+    </.link>
+    <%= if FieldPublication.User.is_admin?(@current_user) do %>
+      <.link
+        navigate={~p"/publishing/projects/#{@project.name}/show/edit"}
+        phx-click={JS.push_focus()}
+      >
+        <.button>Edit project</.button>
+      </.link>
+    <% end %>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Project key"><%= @project.name %></:item>
+  <:item title="Editors">
+    <% combined = Enum.join(@project.editors, ", ") %>
+    <%= if combined != "", do: combined, else: "-" %>
+  </:item>
+  <:item title="Publications">
+    <%= if @publications == [] do %>
+      -
+    <% else %>
+      <.publication_list :let={publication} entries={@publications} date={@today}>
+        <.link
+          class="inline-flex items-center text-black"
+          navigate={~p"/publishing/#{@project}/publication/#{publication.draft_date}"}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            class="w-6 h-6 mr-1"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+            />
+          </svg>
+          <%= publication.draft_date %>
+        </.link>
+      </.publication_list>
+    <% end %>
+  </:item>
+</.list>
+
+<.back navigate={~p"/publishing"}>Back to projects</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="project-modal"
+  show
+  on_cancel={JS.patch(~p"/publishing/#{@project}")}
+>
+  <.live_component
+    module={FieldPublicationWeb.Publishing.ProjectLive.FormComponent}
+    id={@project.name}
+    title={@page_title}
+    action={@live_action}
+    project={@project}
+    patch={~p"/publishing/#{@project}"}
+  />
+</.modal>
+
+<.modal
+  :if={@live_action == :draft_publication}
+  id="draft-modal"
+  show
+  on_cancel={JS.patch(~p"/publishing/#{@project}")}
+>
+  <.live_component
+    module={FieldPublicationWeb.Publishing.PublicationLive.ReplicationFormComponent}
+    id="publication_draft"
+    action={:new}
+    project_name={@project.name}
+    patch={~p"/publishing/#{@project}"}
+    current_user={@current_user}
+  />
+</.modal>

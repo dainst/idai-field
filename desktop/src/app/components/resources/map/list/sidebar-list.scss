@@ -18,16 +18,20 @@ sidebar-list {
 
     .has-warnings {
       border-right: 2px solid red !important;
-      transition: border-right 1s ease;
     }
 
     .new-from-remote {
       background-color: #d7ffd9;
     }
 
-    .selected,
-    .additional-selected {
-      background-color: $list-item-hover-color;
+    li {
+      &.selected,
+      &.additional-selected,
+      &:hover .sidebar-list-button-group .btn,
+      &.selected .sidebar-list-button-group .btn,
+      &.additional-selected .sidebar-list-button-group .btn {
+        background-color: $list-item-hover-color;
+      }
     }
 
     #document-limit-info {

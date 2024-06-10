@@ -38,7 +38,8 @@ describe('BackupCreationComponent', () => {
             settingsService,
             backupProvider,
             tabManager,
-            menuService
+            menuService,
+            undefined
         );
 
         settingsService.getSettings.and.returnValue({ selectedProject: 'selectedproject' } as any);

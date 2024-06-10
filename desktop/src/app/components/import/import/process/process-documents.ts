@@ -36,12 +36,12 @@ export function processDocuments(documents: Array<Document>,
         document.resource.category = finalDocument.resource.category;
 
         if (ignoreUnconfiguredFields) {
-            validator.getUndefinedFields(document).forEach(fieldName => delete document.resource[fieldName]);
+            validator.getUndefinedFields(finalDocument).forEach(fieldName => delete finalDocument.resource[fieldName]);
         } else {
-            validator.assertFieldsDefined(document);
+            validator.assertFieldsDefined(finalDocument);
         }
 
-        if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
+        validator.assertIsAllowedCategory(finalDocument, mergeMode);
 
         validator.assertIdentifierPrefixIsValid(finalDocument);
         validator.assertIsWellformed(finalDocument);

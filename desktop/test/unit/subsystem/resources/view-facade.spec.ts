@@ -60,15 +60,14 @@ describe('ViewFacade/Subsystem', () => {
         trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
         trenchDocument2 = fieldDoc('trench2','trench2','Trench','t2');
 
+        featureDocument1 = fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+
         findDocument1 = fieldDoc('Find 1', 'find1', 'Find', 'find1');
         findDocument1.resource.processor = 'person';
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument2 = fieldDoc('Find 2', 'find2', 'Find', 'find2');
         findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        featureDocument1 = fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        featureDocument1.resource.relations['includes'] = [findDocument1.resource.id,
-            findDocument2.resource.id];
         findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
         findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
@@ -77,10 +76,10 @@ describe('ViewFacade/Subsystem', () => {
 
         await datastore.create(trenchDocument1);
         await datastore.create(trenchDocument2);
-        await datastore.create(findDocument1);
-        await datastore.create(findDocument2);
         await datastore.create(featureDocument1);
         await datastore.create(featureDocument2);
+        await datastore.create(findDocument1);
+        await datastore.create(findDocument2);
 
         changesStream = jasmine.createSpyObj('changesStream', ['notifications']);
         changesStream.notifications.and.returnValue({

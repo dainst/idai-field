@@ -1,0 +1,53 @@
+grid-item {
+  .qr-code-icon {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 22px;
+    height: 22px;
+    padding-top: 11px;
+    padding-left: 2px;
+    color: #fff;
+    background-color: $primary;
+    border-radius: 5px;
+    line-height: 0px;
+    font-size: 18px;
+    z-index: 5;
+  }
+
+  .grid-resource-info {
+    position: absolute;
+    height: 25px;
+    width: 192px;
+    line-height: 25px;
+    text-align: center;
+    font-size: 14px;
+    user-select: none;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      height: auto;
+      overflow-wrap: break-word;
+      white-space: normal;
+      z-index: 5;
+    }
+  }
+
+  .badge {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 10px);
+    cursor: default;
+  }
+}

@@ -9,6 +9,7 @@ import { linkParentAndChildInstances } from '../category-forest';
 import { TransientCategoryDefinition } from '../model/category/transient-category-definition';
 import { applyHiddenForFields } from './hide-fields';
 import { Named } from '../../tools/named';
+import { PrintedField, ScanCodeConfiguration } from '../../model/configuration/scan-code-configuration';
 
 
 const TEMP_FIELDS = 'fields';
@@ -33,7 +34,7 @@ export const makeCategoryForest = (relations: Array<Relation>, categories: Map<T
 
     const parentCategories = flow(
         parentDefs,
-        map(buildCategoryFromDefinition(categories)),
+        map(formDefinition => buildCategoryFromDefinition(formDefinition, categories)),
         Forest.wrap
     );
 
@@ -137,6 +138,8 @@ function getGroupNameForUnassaginedField(fieldName: string): string {
         return Groups.TIME;
     } else if (Relation.Type.ALL.includes(fieldName)) {
         return Groups.IDENTIFICATION;
+    } else if (['hasChildren', 'includesStratigraphicalUnits'].includes(fieldName)) {
+        return Groups.HIERARCHY;
     } else {
         return Groups.OTHER;
     }
@@ -155,57 +158,86 @@ const addChildCategory = (categories: Map<TransientCategoryDefinition>, selected
     });
     if (!found) return categoryTree;
     
-    const { item: _, trees: trees } = found;
+    const { item: parentCategory, trees: trees } = found;
 
-    const childCategory = buildCategoryFromDefinition(categories)(childDefinition);
+    const childCategory = buildCategoryFromDefinition(childDefinition, categories, parentCategory);
     trees.push({ item: childCategory, trees: [] });
 
     return categoryTree;
 }
 
 
-function buildCategoryFromDefinition(categories: Map<TransientCategoryDefinition>) {
+function buildCategoryFromDefinition(formDefinition: TransientFormDefinition,
+                                     categories: Map<TransientCategoryDefinition>,
+                                     parentCategoryForm?: CategoryForm): CategoryForm {
 
-    return function(formDefinition: TransientFormDefinition): CategoryForm {
+    const categoryDefinition: TransientCategoryDefinition|undefined = categories[formDefinition.categoryName];
+    const parentCategoryDefinition: TransientCategoryDefinition
+        = categories[formDefinition.parent ?? categoryDefinition.parent];
+    const category: any = {};
 
-        const categoryDefinition: TransientCategoryDefinition|undefined = categories[formDefinition.categoryName];
-        const parentCategoryDefinition: TransientCategoryDefinition
-            = categories[formDefinition.parent ?? categoryDefinition.parent];
-        const category: any = {};
+    category.name = categoryDefinition ? categoryDefinition.name : formDefinition.categoryName;
+    category.mustLieWithin = parentCategoryDefinition
+        ? parentCategoryDefinition.mustLieWithin : categoryDefinition.mustLieWithin;
+    category.isAbstract = categoryDefinition?.abstract || false;
+    category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
+    category.scanCodesAllowed = categoryDefinition?.scanCodesAllowed || false;
+    category.required = categoryDefinition?.required || false;
 
-        category.name = categoryDefinition ? categoryDefinition.name : formDefinition.categoryName;
-        category.mustLieWithin = parentCategoryDefinition
-            ? parentCategoryDefinition.mustLieWithin : categoryDefinition.mustLieWithin;
-        category.isAbstract = categoryDefinition?.abstract || false;
-        category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
-        category.required = categoryDefinition?.required || false;
-
-        category.libraryId = formDefinition.name;
-        category.label = formDefinition.label;
-        category.categoryLabel = categoryDefinition ? categoryDefinition.label : clone(formDefinition.label);
-        category.source = formDefinition.source;
-        category.customFields = formDefinition.customFields;
-        category.description = formDefinition.description;
-        category.defaultLabel = formDefinition.defaultLabel;
-        category.defaultDescription = formDefinition.defaultDescription;
-        category.groups = [];
-            category.color = formDefinition.color ?? CategoryForm.generateColorForCategory(category.name);
-        category.defaultColor = formDefinition.defaultColor ?? (category.libraryId
-            ? CategoryForm.generateColorForCategory(category.name)
-            : category.color
-        );
-        category.identifierPrefix = formDefinition.identifierPrefix;
-        category.resourceLimit = formDefinition.resourceLimit;
-        category.createdBy = formDefinition.createdBy;
-        category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
-        category.references = formDefinition.references;
-        
-        category.children = [];
-        category[TEMP_FIELDS] = formDefinition.fields || {};
-        Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
-        category[TEMP_GROUPS] = formDefinition.groups || [];
-        category[TEMP_HIDDEN] = formDefinition.hidden || [];
-
-        return category as CategoryForm;
+    category.libraryId = formDefinition.name;
+    category.label = formDefinition.label;
+    category.categoryLabel = categoryDefinition ? categoryDefinition.label : clone(formDefinition.label);
+    category.source = formDefinition.source;
+    category.customFields = formDefinition.customFields;
+    category.description = formDefinition.description;
+    category.defaultLabel = formDefinition.defaultLabel;
+    category.defaultDescription = formDefinition.defaultDescription;
+    category.groups = [];
+        category.color = formDefinition.color ?? CategoryForm.generateColorForCategory(category.name);
+    category.defaultColor = formDefinition.defaultColor ?? (category.libraryId
+        ? CategoryForm.generateColorForCategory(category.name)
+        : category.color
+    );
+    category.identifierPrefix = formDefinition.identifierPrefix;
+    category.resourceLimit = formDefinition.resourceLimit;
+    if (category.scanCodesAllowed || parentCategoryDefinition?.scanCodesAllowed) {
+        category.scanCodes = buildScanCodeConfiguration(formDefinition, parentCategoryForm);
     }
+    category.createdBy = formDefinition.createdBy;
+    category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
+    category.references = formDefinition.references;
+    
+    category.children = [];
+    category[TEMP_FIELDS] = formDefinition.fields || {};
+    Object.keys(category[TEMP_FIELDS]).forEach(fieldName => category[TEMP_FIELDS][fieldName].name = fieldName);
+    category[TEMP_GROUPS] = formDefinition.groups || [];
+    category[TEMP_HIDDEN] = formDefinition.hidden || [];
+
+    return category as CategoryForm;
+}
+
+
+function buildScanCodeConfiguration(formDefinition: TransientFormDefinition,
+                                    parentCategoryForm?: CategoryForm): ScanCodeConfiguration {
+
+    if (!parentCategoryForm?.scanCodes && !formDefinition.scanCodes) return undefined;
+
+    return {
+        type: parentCategoryForm?.scanCodes?.type ?? formDefinition.scanCodes?.type,
+        autoCreate: parentCategoryForm?.scanCodes?.autoCreate === true
+            || formDefinition.scanCodes?.autoCreate === true,
+        printedFields: buildPrintedFields(formDefinition, parentCategoryForm)
+    }
+}
+
+
+function buildPrintedFields(formDefinition: TransientFormDefinition,
+                            parentCategoryForm?: CategoryForm): Array<PrintedField> {
+
+    const parentFields: Array<PrintedField> = parentCategoryForm?.scanCodes?.printedFields ?? [];
+    const formFields: Array<PrintedField> = formDefinition?.scanCodes?.printedFields ?? [];
+
+    const result: Array<PrintedField> = parentFields.concat(formFields);
+
+    return result.length > 3 ? result.slice(0, 3) : result;
 }

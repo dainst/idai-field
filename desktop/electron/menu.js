@@ -90,7 +90,7 @@ const getTemplate = (mainWindow, context, config) => {
                 label: messages.get('menu.project.exit'),
                 accelerator: 'CmdOrCtrl+Q',
                 click: () => {
-                    app.quit();
+                    mainWindow.webContents.send('requestClose');
                 }
             }]
     }, {
@@ -142,6 +142,11 @@ const getTemplate = (mainWindow, context, config) => {
             label: messages.get('menu.tools.types'),
             accelerator: 'CmdOrCtrl+T',
             click: () => mainWindow.webContents.send('menuItemClicked', 'resources/types'),
+            enabled: isDefaultContext(context)
+        }, {
+            label: messages.get('menu.tools.inventory'),
+            accelerator: 'CmdOrCtrl+U',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'resources/inventory'),
             enabled: isDefaultContext(context)
         }, {
             label: messages.get('menu.tools.matrix'),
@@ -268,7 +273,7 @@ const getTemplate = (mainWindow, context, config) => {
 
     if (process.platform === 'darwin') {
         // Remove 'Settings' option & separator from 'Tools' menu
-        template[3].submenu.splice(8, 2);
+        template[3].submenu.splice(9, 2);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);
@@ -295,6 +300,10 @@ const getTemplate = (mainWindow, context, config) => {
             }, {
                 label: messages.get('menu.configuration.importConfiguration'),
                 click: () => mainWindow.webContents.send('menuItemClicked', 'importConfiguration'),
+                enabled: isDefaultContext(context)
+            }, {
+                label: messages.get('menu.configuration.exportConfiguration'),
+                click: () => mainWindow.webContents.send('menuItemClicked', 'exportConfiguration'),
                 enabled: isDefaultContext(context)
             }, {
                 type: 'separator'

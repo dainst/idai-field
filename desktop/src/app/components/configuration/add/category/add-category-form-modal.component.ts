@@ -145,6 +145,7 @@ export class AddCategoryFormModalComponent {
 
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.category = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
         componentInstance.new = true;
         componentInstance.numberOfCategoryResources = 0;
@@ -176,7 +177,7 @@ export class AddCategoryFormModalComponent {
 
     private getEmptyForm(): CategoryForm|undefined {
 
-        if (!this.parentCategory?.userDefinedSubcategoriesAllowed || this.searchTerm.length === 0) return undefined;
+        if (!this.parentCategory?.userDefinedSubcategoriesAllowed || this.searchTerm.length === 0) return undefined;
 
         const name: string = Naming.getCategoryName(this.searchTerm, this.settingsProvider.getSettings().selectedProject);
 

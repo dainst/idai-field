@@ -18,9 +18,9 @@
                     popoverClass="search-bar-filter-popover"
                     placement="bottom-right"
                     container="body">
-                <span *ngIf="!categories || categories.length == 0" class="mdi mdi-filter"></span>
-                <span *ngIf="categories && categories.length > 0">
-                    <category-icon [category]="categories[0]" size="24"></category-icon>
+                <span *ngIf="!selectedCategories || selectedCategories.length == 0" class="mdi mdi-filter"></span>
+                <span *ngIf="selectedCategories && selectedCategories.length > 0">
+                    <category-icon [category]="selectedCategories[0]" size="24"></category-icon>
                 </span>
             </button>
             <ng-template #filterMenu>
@@ -29,10 +29,10 @@
                         <span i18n="@@widgets.searchBar.categoryFilter">Nach Kategorie filtern:</span>
                     </div>
                     <category-picker [topLevelCategoriesArray]="filterOptions"
-                                    [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
-                                    [selectedCategories]="categories"
-                                    [allowPickingAbstractCategories]="true"
-                                    (onCategoryPicked)="chooseCategoryFilter($event)">
+                                     [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
+                                     [selectedCategories]="selectedCategories"
+                                     [allowPickingAbstractCategories]="true"
+                                     (onCategoryPicked)="chooseCategoryFilter($event)">
                     </category-picker>
                 </div>
             </ng-template>

@@ -7,7 +7,7 @@ export const PROJECT_MAPPING = {
     'bourgou': { prefix: 'Bourgou', label: 'Henchir el Bourgu' },
     'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
     'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },
-    'chimtou': { prefix: 'Bourgou', label: 'Chimtou' },
+    'chimtou': { prefix: 'Bourgou', label: 'Chimtou' },
     'elephantine': { prefix: 'Elephantine', label: 'Elephantine' },
     'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
     'goebekli_tepe': { prefix: 'GoebekliTepe', label: 'Göbekli Tepe' },

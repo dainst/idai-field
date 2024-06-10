@@ -38,6 +38,8 @@ export class CategoryIconComponent implements OnChanges {
 
         if (this.category === 'Configuration') {
             this.setValuesForConfigurationCategory();
+        } else if (this.category === 'InventoryRegister') {
+            this.setValuesForInventoryRegisterCategory();
         } else {
             this.determineCharacterForCategory();
             this.determineColorForCategory();
@@ -52,29 +54,27 @@ export class CategoryIconComponent implements OnChanges {
 
     private determineCharacterForCategory() {
 
-        this.character = StringUtils.first(
-            isString(this.category)
-                ? this.labels.get(this.getCategory(this.category))
-                : this.labels.get(this.category)
-        );
+        const category: CategoryForm|undefined = this.getCategory();
+
+        this.character = category
+            ? StringUtils.first(this.labels.get(category))
+            : '?';
     }
 
 
     private determineColorForCategory() {
 
-        this.color = (
-            isString(this.category)
-                ? this.getCategory(this.category)
-                : this.category
-        ).color;
+        this.color = this.getCategory()?.color ?? 'black';
     }
 
 
-    private getCategory(categoryName: string): CategoryForm {
+    private getCategory(): CategoryForm|undefined {
+
+        if (!isString(this.category)) return this.category as CategoryForm;
 
         return this.customProjectConfiguration
-            ? this.customProjectConfiguration.getCategory(categoryName)
-            : this.projectConfiguration.getCategory(categoryName);
+            ? this.customProjectConfiguration.getCategory(this.category)
+            : this.projectConfiguration.getCategory(this.category);
     }
 
 
@@ -82,6 +82,16 @@ export class CategoryIconComponent implements OnChanges {
 
         this.character = this.i18n({
             id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
+        })[0];
+        this.color = 'black';
+        this.textColor = 'white';
+    }
+
+
+    private setValuesForInventoryRegisterCategory() {
+
+        this.character = this.i18n({
+            id: 'util.inventoryRegister', value: 'Inventarverzeichnis'
         })[0];
         this.color = 'black';
         this.textColor = 'white';

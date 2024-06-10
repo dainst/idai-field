@@ -1,10 +1,12 @@
-import { clone, filter, includedIn, isArray, isDefined, isNot } from 'tsfun';
+import { clone, filter, includedIn, isArray, isDefined, isNot, isString } from 'tsfun';
 import { Document } from '../model/document';
 import { Resource } from '../model/resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { OptionalRange } from '../model/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
+import { CategoryForm, Dimension } from '../model';
+import { ProjectConfiguration } from '../services';
 
 
 /**
@@ -18,36 +20,43 @@ export module ValuelistUtil {
         if (!fieldContent || !valuelist) return undefined;
         
         const valuesToCheck: string[] = isArray(fieldContent)
-            ? fieldContent
+            ? fieldContent.map(entry => entry?.[Dimension.MEASUREMENTPOSITION] ?? entry)
+                .filter(entry => isString(entry))
             : fieldContent[OptionalRange.VALUE]
                 ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]
                 : [fieldContent];
 
         const itemsNotIncludedInValuelist = valuesToCheck
             .filter(isDefined)
+            .filter(value => value.length)
             .filter(isNot(includedIn(Object.keys(valuelist.values))));
 
         return itemsNotIncludedInValuelist.length > 0 ? itemsNotIncludedInValuelist : undefined;
     }
 
 
-    export function getValuelist(field: Field, 
-                                 projectDocument: Document,
+    export function getValuelist(field: Field, projectDocument: Document, projectConfiguration: ProjectConfiguration,
                                  parentResource?: Resource): Valuelist {
 
         const valuelist: Valuelist|string[] = field.valuelist
             ? field.valuelist
-            : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
+            : field.valuelistFromProjectField
+                ? getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument)
+                : undefined;
+        if (!valuelist) return undefined;
+
+        const parentCategory: CategoryForm = parentResource ?
+            projectConfiguration.getCategory(parentResource.category)
+            : undefined;
 
         return field.allowOnlyValuesOfParent && parentResource
-                && parentResource.category !== 'Place'
+                && CategoryForm.getFields(parentCategory).find(parentField => parentField.name === field.name)
             ? getValuesOfParentField(valuelist, field.name, parentResource)
             : valuelist;
     }
 
 
-    export function getValuelistFromProjectField(fieldName: string,
-                                                 projectDocument: Document): Valuelist {
+    export function getValuelistFromProjectField(fieldName: string, projectDocument: Document): Valuelist {
 
         const id = 'project-' + fieldName;
         const field: string[]|undefined = projectDocument.resource[fieldName];
@@ -63,17 +72,15 @@ export module ValuelistUtil {
     }
 
 
-    function getValuesOfParentField(valuelist: Valuelist, 
-                                    fieldName: string,
-                                    parentResource: Resource): Valuelist {
+    function getValuesOfParentField(valuelist: Valuelist,  fieldName: string, parentResource: Resource): Valuelist {
 
         const parentValues: string[] = parentResource[fieldName] ?? [];
 
-        const result: Valuelist = clone(valuelist);
-        result.values = filter((_, key: string) => {
-            return parentValues.includes(key);
-        })(valuelist.values) as { [key: string]: ValuelistValue };
-
-        return result;
+        return {
+            id: valuelist.id,
+            values: filter((_, key: string) => {
+                return parentValues.includes(key);
+            })(valuelist.values) as { [key: string]: ValuelistValue }
+        };
     }
 }

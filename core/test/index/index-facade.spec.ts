@@ -18,6 +18,11 @@ describe('IndexFacade', () => {
 
         const createdConstraintIndex = ConstraintIndex.make({
             ... basicIndexConfiguration,
+            'shortDescription:match': {
+                path: 'resource.shortDescription',
+                pathArray: ['resource', 'shortDescription'],
+                type: 'match'
+            },
             'isDepictedIn:links': {
                 path: 'resource.relations.isDepictedIn',
                 pathArray: ['resource', 'relations', 'isDepictedIn'],
@@ -185,6 +190,27 @@ describe('IndexFacade', () => {
 
         const result = indexFacade.find(q);
         expect(result).toEqual(['id2', 'id3']);
+    });
+
+
+    it('should only update single index', () => {
+
+        const document = doc('originalShortDescription', 'originalIdentifier', 'category1', 'id1');
+        indexFacade.put(document);
+
+        document.resource.identifier = 'changedIdentifier';
+        document.resource.shortDescription = 'changedShortDescription';
+
+        indexFacade.putToSingleIndex(document, 'identifier:match');
+
+        expect(indexFacade.find({ q: '', constraints: { 'identifier:match': 'originalIdentifier' } }))
+            .toEqual([]);
+        expect(indexFacade.find({ q: '', constraints: { 'identifier:match': 'changedIdentifier' } }))
+            .toEqual(['id1']);
+        expect(indexFacade.find({ q: '', constraints: { 'shortDescription:match': 'originalShortDescription' } }))
+            .toEqual(['id1']);
+        expect(indexFacade.find({ q: '', constraints: { 'shortDescription:match': 'changedShortDescription' } }))
+            .toEqual([]);
     });
 
 

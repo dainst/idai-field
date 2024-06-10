@@ -1,10 +1,12 @@
 <resources-context-menu *ngIf="contextMenu.isOpen()"
-    [contextMenu]="contextMenu"
-    (onSelectAction)="performContextMenuAction($event)"></resources-context-menu>
+                        [contextMenu]="contextMenu"
+                        (onSelectAction)="performContextMenuAction($event)">
+</resources-context-menu>
 
-<popover-menu [document]="selectedDocument"></popover-menu>
+<popover-menu *ngIf="selectedDocument" [document]="selectedDocument"
+              (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
-<cdk-virtual-scroll-viewport itemSize="58" id="sidebar-viewport">
+<cdk-virtual-scroll-viewport [itemSize]="itemSize" id="sidebar-viewport">
     <ul #sidebar id="sidebar" class="resources-listing"
         tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
         <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
@@ -19,11 +21,7 @@
                              (contextmenu)="select(document, $event, false)"
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
-            <list-button-group [document]="document"
-                            [activePopoverMenu]="resourcesComponent.activePopoverMenu"
-                            [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id"
-                            (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
-            </list-button-group>
+            <list-button-group [document]="document"></list-button-group>
         </li>
         <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">
             <div id="document-limit-info" (click)="resourcesComponent.removeLimit()"

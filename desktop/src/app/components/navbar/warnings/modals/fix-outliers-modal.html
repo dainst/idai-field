@@ -1,0 +1,49 @@
+<div id="fix-outliers-modal-header" class="modal-header">
+    <h5 class="modal-title" i18n="@@navbar.taskbar.fixOutliers.header">
+        Wert <b>{{outlierValue}}</b> korrigieren
+    </h5>
+</div>
+
+<div *ngIf="valuelist" id="fix-outliers-modal-body" class="modal-body warnings-tool-modal-body">
+    <div i18n="@@navbar.taskbar.fixOutliers.info" class="warnings-tool-info">
+        Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
+    </div>
+
+    <searchable-select [selectedValue]="selectedValue"
+                       [values]="getValues()"
+                       [getLabel]="getValueLabel"
+                       (onValueSelected)="selectedValue = $event"></searchable-select>
+
+    <div *ngIf="selectedValue" id="multiple-switch" class="row">
+        <div class="col-auto mr-auto">
+            <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse dieses Werts ersetzen</span>
+        </div>
+        <div class="col-auto">
+            <label class="switch">
+                <input type="checkbox" [checked]="replaceAll" (change)="replaceAll = !replaceAll">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    
+    <div *ngIf="selectedValue && replaceAll">
+        <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.fixOutliers.all.info">
+            Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
+            <b>{{outlierValue}}</b> in sämtlichen Feldern aller Ressourcen durch den
+            ausgewählten Wert <b>{{getValueLabel(selectedValue)}}</b> ersetzt.
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div id="confirm-replacement-button" class="btn btn-primary"
+         [ngClass]="{ 'disabled': !selectedValue }"
+         (click)="performReplacement()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

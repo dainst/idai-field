@@ -76,13 +76,14 @@ async function isDirectory(path: string): Promise<boolean> {
     }
 }
 
+
 async function getFileInfos(paths: string[]): Promise<any> {
 
     return await Promise.all(paths.map(async (path) => {
         const stat = await fsPromises.stat(path);
         const size = stat.size;
         const dirCheck = stat.isDirectory();
-        return {...{size}, ...{isDirectory: dirCheck}};
+        return { ...{ size }, ...{ isDirectory: dirCheck } };
     }));
 }
 

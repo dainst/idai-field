@@ -3,34 +3,22 @@
      (dragleave)="onDragLeave($event)"
      (drop)="onDrop($event)">
 
-    <span id="plus-button"
-          class="mdi mdi-48px mdi-plus-circle"
-          [ngbPopover]="linkOrAddMenu"
-          ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü."
-          i18n-ngbTooltip="@@imageGrid.dropArea.tooltip"
-          placement="bottom"
-          container="body"
-          popoverClass="view-modal-drop-area-popover"
-          #popover="ngbPopover"></span>
+    <label id="plus-button"
+           class="mdi mdi-48px mdi-plus-circle"
+           [ngbPopover]="linkOrAddMenu"
+           ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü."
+           i18n-ngbTooltip="@@imageGrid.dropArea.tooltip"
+           placement="bottom"
+           container="body"
+           popoverClass="view-modal-drop-area-popover"
+           #popover="ngbPopover"></label>
 </div>
 
-<input #fileInput
-       class="file"
-       type="file"
-       hidden
-       name="files[]"
-       id="file"
-       multiple
-       accept="{{getSupportedFileExtensions()}}"
-       (change)="onSelectImages($event)">
-
 <ng-template #linkOrAddMenu>
-    <label for="file"
-           placement="bottom">
-        <span id="add-images-button"
-              class="btn btn-primary"
-              i18n="@@image-view-modal.dropArea.add-images">Neue Bilder hinzufügen</span>
-    </label>
+    <span id="add-images-button"
+      class="btn btn-primary"
+      (click)="selectFiles($event)"
+      i18n="@@image-view-modal.dropArea.add-images">Neue Bilder hinzufügen</span>
     <span class="btn btn-primary"
           id="link-images-button"
           tabindex="-1"

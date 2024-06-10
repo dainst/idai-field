@@ -59,7 +59,7 @@ defmodule Api.Core.Layout do
   defp scan_value(value, config_item = %{ inputType: "composite" }) do
     Enum.map(value, scan_composite_entry(config_item))
   end
-  defp scan_value(value, config_item) do
+  defp scan_value(value, _config_item) do
     Api.Core.Utils.atomize(value)
   end
 
@@ -77,7 +77,7 @@ defmodule Api.Core.Layout do
     end
   end
 
-  defp get_layouted_subfield_value(nil, subfield_definition), do: nil
+  defp get_layouted_subfield_value(nil, _subfield_definition), do: nil
   defp get_layouted_subfield_value(subfield_value, subfield_definition) do
     %{
       name: subfield_definition.name,

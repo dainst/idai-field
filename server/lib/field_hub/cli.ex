@@ -8,6 +8,8 @@ defmodule FieldHub.CLI do
 
   require Logger
 
+  @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
+
   @moduledoc """
   Bundles functions to be called from the command line.
 
@@ -22,32 +24,27 @@ defmodule FieldHub.CLI do
   """
   def setup() do
     HTTPoison.start()
+    Logger.info("Starting setup.")
 
-    Logger.info("Running setup.")
-
-    Logger.info("Running initial CouchDB setup for single node at #{CouchService.base_url()}...")
+    Logger.info(" Initializing CouchDB in 'single node' mode at '#{CouchService.base_url()}'.")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
 
     {users, replicator} = CouchService.initial_setup()
 
     case users do
       %{status_code: 412} ->
-        Logger.warning(
-          "System database '_users' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
+        Logger.info(" System database '_users' already exists.")
 
       %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created system database `_users`.")
+        Logger.info(" Created system database `_users`.")
     end
 
     case replicator do
       %{status_code: 412} ->
-        Logger.warning(
-          "System database '_replicator' already exists. You probably ran the CouchDB setup on an existing instance."
-        )
+        Logger.info(" System database '_replicator' already exists.")
 
       %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info("Created system database `_replicator`.")
+        Logger.info(" Created system database `_replicator`.")
     end
 
     app_user = Application.get_env(:field_hub, :couchdb_user_name)
@@ -58,13 +55,26 @@ defmodule FieldHub.CLI do
     )
     |> case do
       :created ->
-        Logger.info("Created application user '#{app_user}'.")
+        Logger.info(" Created application user '#{app_user}'.")
 
       :already_exists ->
-        Logger.warning("Application user '#{app_user}' already exists.")
+        Logger.info(" Application user '#{app_user}' already exists.")
     end
 
-    Logger.info("Setup done.")
+    tmp_file = "#{@file_directory_root}/.field_hub_test_file"
+
+    with :ok <- File.mkdir_p(@file_directory_root),
+         :ok <- File.write("#{@file_directory_root}/.field_hub_test_file", []) do
+      File.rm(tmp_file)
+      Logger.info(" Application is allowed write in file directory '#{@file_directory_root}'.")
+    else
+      {:error, posix} ->
+        throw(
+          "Application got '#{posix}' posix error for write test in directory '#{@file_directory_root}'!"
+        )
+    end
+
+    Logger.info("Setup finished.")
   end
 
   @doc """
@@ -131,7 +141,7 @@ defmodule FieldHub.CLI do
 
   By default will only delete the database and will leave the files in your file system intact:
 
-  The reason being that databases are always fully synchronized, but files are not necessarily. Your FieldHub
+  The reason being that databases are always fully synchronized, but files are not necessarily. Your Field Hub
   installation may be the only node in your project's syncing network that still retains certain high
   resolution images of colleagues that have left the project.
 

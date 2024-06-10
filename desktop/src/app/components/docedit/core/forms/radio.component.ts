@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy } from 'idai-field-core';
+import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy, ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({
@@ -22,7 +22,8 @@ export class RadioComponent implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
@@ -35,6 +36,7 @@ export class RadioComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
+            this.projectConfiguration,
             await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
         );
     }

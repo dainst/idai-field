@@ -1,5 +1,5 @@
 import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove, on, is } from 'tsfun';
-import { Resource, FieldResource, StringUtils, Relation, Field } from 'idai-field-core';
+import { Resource, FieldResource, StringUtils, Relation, Field, ImageResource } from 'idai-field-core';
 import { CSVMatrixExpansion } from './csv-matrix-expansion';
 import { CsvExportUtils } from './csv-export-utils';
 import { CsvExportConsts, Heading, Headings, HeadingsAndMatrix, Matrix } from './csv-export-consts';
@@ -8,10 +8,14 @@ import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
+const FIELD_NAMES_TO_REMOVE = [Resource.ID, Resource.CATEGORY, FieldResource.GEOMETRY, ImageResource.GEOREFERENCE,
+    ImageResource.ORIGINAL_FILENAME, 'filename', 'featureVectors'];
+
+
 export type CSVExportResult = {
     csvData: string[];
     invalidFields: Array<InvalidField>;
-}
+};
 
 
 export type InvalidField = {
@@ -22,14 +26,10 @@ export type InvalidField = {
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export module CSVExport {
 
-    const SEPARATOR = ',';
-
-    const getUsableFieldNames =
-        remove(includedIn(
-            ['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename', 'featureVectors']));
 
     /**
      * Creates a header line and lines for each record.
@@ -43,14 +43,18 @@ export module CSVExport {
                                      fieldDefinitions: Array<Field>,
                                      relations: Array<string>,
                                      projectLanguages: string[],
-                                     combineHierarchicalRelations: boolean = true) {
+                                     separator: string,
+                                     combineHierarchicalRelations: boolean = true,
+                                     addScanCode: boolean = false) {
 
         fieldDefinitions = fieldDefinitions.filter(field => field.inputType !== Field.InputType.RELATION);
 
-        const headings: string[] = makeHeadings(fieldDefinitions, relations, combineHierarchicalRelations);
+        const headings: string[] = makeHeadings(
+            fieldDefinitions, relations, combineHierarchicalRelations, addScanCode
+        );
         const matrix = resources
             .map(CsvExportUtils.convertToResourceWithFlattenedRelations(combineHierarchicalRelations))
-            .map(toRowsArrangedBy(headings));
+            .map(toRowsArrangedBy(headings, addScanCode));
 
         const invalidFields: Array<InvalidField> = removeInvalidFieldData(
             headings, matrix, fieldDefinitions
@@ -66,23 +70,26 @@ export module CSVExport {
             CSVMatrixExpansion.expandDimension(fieldDefinitions, projectLanguages),
             CSVMatrixExpansion.expandLiterature(fieldDefinitions),
             CSVMatrixExpansion.expandComposite(fieldDefinitions, projectLanguages),
-            combine
+            combine(separator)
         );
 
         return { csvData, invalidFields };
     }
 
 
-    function combine([headings, matrix]: HeadingsAndMatrix) {
+    function combine(separator: string) {
 
-        return [headings].concat(matrix).map(toCsvLine);
+        return ([headings, matrix]: HeadingsAndMatrix) => {
+
+            return [headings].concat(matrix).map(fields => toCsvLine(fields, separator));
+        };
     }
 
 
     function makeHeadings(fieldDefinitions: Array<Field>, relations: string[],
-                          combineHierarchicalRelations: boolean) {
+                          combineHierarchicalRelations: boolean, addScanCode: boolean) {
 
-        const exportableFields: string[] = extractExportableFields(fieldDefinitions);
+        const exportableFields: string[] = extractExportableFields(fieldDefinitions, addScanCode);
 
         return combineHierarchicalRelations
             ? exportableFields.concat(relations.filter(isNot(includedIn(Relation.Hierarchy.ALL)))
@@ -92,11 +99,11 @@ export module CSVExport {
     }
 
 
-    function toRowsArrangedBy(headings: Heading[]) {
+    function toRowsArrangedBy(headings: Heading[], addScanCode: boolean) {
 
         return (resource: FieldResource) => {
 
-            return getUsableFieldNames(Object.keys(resource))
+            return getUsableFieldNames(Object.keys(resource), addScanCode)
                 .reduce((row, fieldName) => {
 
                     const indexOfFoundElement = headings.indexOf(fieldName);
@@ -121,7 +128,7 @@ export module CSVExport {
             if (!field) return;
 
             matrix.filter(row => {
-                return row[index] !== undefined && !Field.InputType.isValidFieldData(row[index], field.inputType);
+                return row[index] !== undefined && !Field.isValidFieldData(row[index], field);
             }).forEach(row => {
                 delete row[index];
                 invalidFields.push({ identifier: row[identifierIndex], fieldName: field.name });
@@ -132,14 +139,17 @@ export module CSVExport {
     }
 
 
-    function extractExportableFields(fieldDefinitions: Array<Field>): string[] {
+    function extractExportableFields(fieldDefinitions: Array<Field>, addScanCode: boolean): string[] {
 
-        let fieldNames = getUsableFieldNames(fieldDefinitions.map(_ => _.name));
+        let fieldNames = fieldDefinitions.map(fieldDefinition => fieldDefinition.name);
+        fieldNames = getUsableFieldNames(fieldNames, addScanCode);
+
         const indexOfShortDescription = fieldNames.indexOf(FieldResource.SHORTDESCRIPTION);
         if (indexOfShortDescription !== -1) {
             fieldNames.splice(indexOfShortDescription, 1);
             fieldNames.unshift(FieldResource.SHORTDESCRIPTION);
         }
+
         fieldNames = fieldNames.filter(isnt(Resource.IDENTIFIER));
         fieldNames.unshift(Resource.IDENTIFIER);
 
@@ -147,17 +157,30 @@ export module CSVExport {
     }
 
 
-    function toCsvLine(fields: string[]): string {
+    function getUsableFieldNames(fieldNames: string[], addScanCode: boolean): string[] {
+
+        if (addScanCode) fieldNames = fieldNames.concat([FieldResource.SCANCODE]);
+        return remove(includedIn(FIELD_NAMES_TO_REMOVE))(fieldNames);
+    }
+
+
+    function toCsvLine(fields: string[], separator: string): string {
 
         return flow(
             fields,
             map(
-                cond(isDefined,
-                    compose(getFieldValue,
-                        StringUtils.append('"'),
-                        StringUtils.prepend('"')),
-                    '""')),
-            StringUtils.join(SEPARATOR));
+                cond(
+                    isDefined,
+                        compose(
+                            getFieldValue,
+                            StringUtils.append('"'),
+                            StringUtils.prepend('"')
+                        ),
+                        '""'
+                    )
+                ),
+            StringUtils.join(separator)
+        );
     }
 
 

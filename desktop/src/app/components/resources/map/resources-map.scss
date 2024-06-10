@@ -5,10 +5,6 @@
   max-width: 300px;
 }
 
-.detail-sidebar-container {
-  max-width: 300px;
-}
-
 .no-zoom-buttons {
   .leaflet-control-zoom {
     display: none;
@@ -21,7 +17,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  height: 94px;
+  height: 97px;
   z-index: 1010;
   opacity: 0.5;
 }
@@ -32,7 +28,7 @@
   background-color: black;
   position: fixed;
   left: 0;
-  top: 94px;
+  top: 97px;
   z-index: 1007;
   opacity: 0.5;
 }

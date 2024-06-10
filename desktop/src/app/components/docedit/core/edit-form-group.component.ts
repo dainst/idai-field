@@ -98,7 +98,7 @@ export class EditFormGroup implements OnChanges {
         const fieldData: any = this.document.resource[field.name];
         const originalFieldData: any = this.originalDocument.resource[field.name];
 
-        const isFieldDataValid: boolean = this.validateFieldData(fieldData, field.inputType);
+        const isFieldDataValid: boolean = this.validateFieldData(fieldData, field);
         
         return Field.InputType.NUMBER_INPUT_TYPES.includes(field.inputType) || field.inputType === Field.InputType.URL
             ? isFieldDataValid || !compare(fieldData, originalFieldData)
@@ -106,11 +106,11 @@ export class EditFormGroup implements OnChanges {
     }
 
 
-    private validateFieldData(fieldData: any, inputType: Field.InputType): boolean {
+    private validateFieldData(fieldData: any, field: Field): boolean {
 
         return fieldData === undefined
             ? true
-            : Field.InputType.isValidFieldData(fieldData, inputType);
+            : Field.isValidFieldData(fieldData, field);
     }
 
 

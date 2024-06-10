@@ -20,6 +20,8 @@ import { ImageRelationsManager } from '../../services/image-relations-manager';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { InvalidField } from './csv/csv-export';
+import { AppState } from '../../services/app-state';
+import { AngularUtility } from '../../angular/angular-utility';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -47,6 +49,7 @@ export class ExportComponent implements OnInit {
     public selectedContext: string = 'project';
     public selectedCatalogId: string;
     public csvExportMode: 'schema'|'complete' = 'complete';
+    public csvSeparator: string = ',';
     public combineHierarchicalRelations: boolean = true;
     
     public invalidFields: Array<InvalidField> = [];
@@ -65,10 +68,13 @@ export class ExportComponent implements OnInit {
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
                 private imageRelationsManager: ImageRelationsManager,
-                private labels: Labels) {}
+                private labels: Labels,
+                private appState: AppState) {}
 
 
-    public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(operation, this.labels);
+    public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(
+        operation, this.labels, this.projectConfiguration
+    );
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 
@@ -125,7 +131,8 @@ export class ExportComponent implements OnInit {
             && !this.initializing
             && !this.running
             && this.categoryCounts.length > 0
-            && (this.format !== 'catalog' || this.catalogs.length > 0);
+            && (this.format !== 'catalog' || this.catalogs.length > 0)
+            && (this.format !== 'csv' || this.csvSeparator?.length === 1);
     }
 
 
@@ -138,6 +145,7 @@ export class ExportComponent implements OnInit {
     public async startExport() {
 
         this.messages.removeAllMessages();
+        AngularUtility.blurActiveElement();
 
         const filePath: string = await this.chooseFilepath();
         if (!filePath) return;
@@ -224,6 +232,7 @@ export class ExportComponent implements OnInit {
                 CsvExporter.performExport(
                     filePath,
                     this.projectConfiguration.getProjectLanguages(),
+                    this.csvSeparator,
                     this.combineHierarchicalRelations
                 )
             );
@@ -236,31 +245,66 @@ export class ExportComponent implements OnInit {
     }
 
 
-    private chooseFilepath(): Promise<string> {
+    private async chooseFilepath(): Promise<string> {
 
-        return new Promise<string>(async resolve => {
+        const options: any = {
+            defaultPath: this.getDefaultPath(),
+            filters: [this.getFileFilter()]
+        };
 
-            const options: any = { filters: [this.getFileFilter()] };
-            if (this.selectedCategory) {
-                if (this.format === 'catalog') {
-                    options.defaultPath = this.getSelectedCatalog().resource.identifier;
-                } else {
-                    options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
-                }
+        const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
+        const filePath: string = saveDialogReturnValue.filePath;
 
-                if (this.format === 'csv') options.defaultPath += '.' + this.selectedCategory.name.toLowerCase().replace(':', '+');
-                if (remote.process.platform === 'linux') { // under linux giving the extensions entries in fileFilter will not automatically add the extensions
-                    let ext = 'csv';
-                    if (this.format === 'shapefile') ext = 'zip';
-                    if (this.format === 'geojson') ext = 'geojson';
-                    if (this.format === 'catalog') ext = 'catalog';
-                    options.defaultPath += '.' + ext;
-                }
-            }
+        if (filePath) {
+            this.appState.setFolderPath(filePath, 'export');
+            return filePath;
+        } else {
+            return undefined;
+        }
+    }
 
-            const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
-            resolve(saveDialogReturnValue.filePath);
-        });
+
+    private getDefaultPath(): string {
+
+        const folderPath: string = this.appState.getFolderPath('export');
+        const fileName: string = this.getFileName();
+
+        return folderPath
+            ? folderPath + '/' + fileName
+            : fileName;
+    }
+
+
+    private getFileName(): string {
+
+        let fileName: string;
+
+        if (this.format === 'catalog') {
+            fileName = this.getSelectedCatalog().resource.identifier;
+        } else {
+            fileName = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
+        }
+
+        if (this.format === 'csv' && this.selectedCategory) {
+            fileName += '.' + this.selectedCategory.name.toLowerCase().replace(':', '+');
+        }
+
+        return fileName + '.' + this.getFileExtension();
+    }
+
+
+    private getFileExtension(): string {
+
+        switch (this.format) {
+            case 'csv':
+                return 'csv';
+            case 'shapefile':
+                return 'zip';
+            case 'geojson':
+                return 'geojson';
+            case 'catalog':
+                return 'catalog';
+        }
     }
 
 

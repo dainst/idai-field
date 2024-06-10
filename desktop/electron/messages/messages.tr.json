@@ -48,5 +48,8 @@
   "menu.window": "Pencere",
   "menu.window.minimize": "Küçült",
   "menu.help": "Yardım",
-  "info.close": "Kapat"
+  "info.close": "Kapat",
+  "menu.tools.inventory": "Envanter",
+  "menu.configuration.exportConfiguration": "Konfigürasyonu dışa aktar...",
+  "autoUpdate.available.warning": "Dikkat: Güncellemeyi gerçekleştirmeden önce tüm önemli projelerin yedeğini oluşturun."
 }

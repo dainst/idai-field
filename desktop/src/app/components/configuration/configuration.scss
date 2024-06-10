@@ -7,7 +7,6 @@
 @import './editor/field/subfield-editor-modal';
 @import './editor/field/widgets/input-type-selector';
 @import './editor/field/widgets/valuelist-selector';
-@import './editor/field/widgets/field-editor-widgets';
 @import './editor/field/widgets/subfields-section';
 @import './editor/category/category-editor-modal';
 @import './editor/valuelist/valuelist-editor-modal';
@@ -36,6 +35,7 @@
 @import './notifications/configuration-change-notification-modal';
 @import './conflicts/configuration-conflicts-modal';
 @import './import/import-configuration-modal';
+@import './save/save-modal';
 
 #configuration-loading-icon-container {
   width: 100%;
@@ -64,6 +64,10 @@
 
   #project-configuration-content {
     font-size: 15px;
+
+    &.no-selected-category {
+      background-color: white;
+    }
   }
 
   code {
@@ -176,7 +180,7 @@
 
     #add-supercategory-button {
       position: absolute;
-      bottom: 6px;
+      bottom: 3px;
       padding-top: 2px;
       transform: translate(-20px, 0);
       left: 50%;

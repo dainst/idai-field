@@ -27,7 +27,7 @@
                     container="body">
                 <span *ngIf="!isCategorySelected()" class="mdi mdi-filter"></span>
                 <span *ngIf="isCategorySelected()">
-                    <category-icon [category]="categories[0]" size="24"></category-icon>
+                    <category-icon [category]="selectedCategories[0]" size="24"></category-icon>
                 </span>
             </button>
 
@@ -38,7 +38,7 @@
                     </div>
                     <category-picker [topLevelCategoriesArray]="filterOptions"
                                     [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
-                                    [selectedCategories]="categories"
+                                    [selectedCategories]="selectedCategories"
                                     [allowPickingAbstractCategories]="true"
                                     (onCategoryPicked)="chooseCategoryFilter($event)">
                     </category-picker>

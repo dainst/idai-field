@@ -21,7 +21,7 @@
     max-height: calc(100vh - 292px);
     overflow-y: auto;
   
-    .subfield-section:not(:last-child) {
+    .docedit-subfield-section:not(:last-child) {
       margin-bottom: 10px;
     }
   
@@ -48,8 +48,19 @@
     }
 
     input:not([type]),
-    input[type="text"] {
+    input[type="text"],
+    .btn-danger {
       height: 33px;
+    }
+
+    .btn-danger {
+      width: 34px;
+    }
+
+    .mdi-delete {
+      position: relative;
+      bottom: 3px;
+      right: 5px;
     }
   }  
  }

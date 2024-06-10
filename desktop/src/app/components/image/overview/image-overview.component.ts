@@ -36,6 +36,7 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
     public filterOptions: Array<CategoryForm> = [];
 
     private selectViaImageLinkSubscription: Subscription;
+    private intitialization: Promise<void>;
 
 
     constructor(route: ActivatedRoute,
@@ -51,7 +52,8 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private routing: Routing) {
 
-        this.imageOverviewFacade.initialize().then(() => this.setUpRouting(route, location));
+        this.intitialization = this.imageOverviewFacade.initialize();
+        this.intitialization.then(() => this.setUpRouting(route, location));
         this.selectViaImageLinkSubscription =
             this.routing.selectViaImageLinkNotifications().subscribe(document => this.showImage(document));
     }
@@ -103,8 +105,10 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
     public hasSelectedImages = () => this.getSelected().length > 0;
 
 
-    ngOnInit() {
+    async ngOnInit() {
 
+        await this.intitialization;
+        
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getNrImagesPerRow();
         this.filterOptions = [this.projectConfiguration.getCategory('Image')];
     }

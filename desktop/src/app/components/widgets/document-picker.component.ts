@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
@@ -12,7 +12,10 @@ import { scrollTo } from '../../angular/scrolling';
 
 @Component({
     selector: 'document-picker',
-    templateUrl: './document-picker.html'
+    templateUrl: './document-picker.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Sebastian Cuy
@@ -25,11 +28,14 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
     @Input() showConfigurationOption: boolean = false;
+    @Input() showInventoryRegisterOption: boolean = false;
     @Input() showLoadingIcon: boolean = false;
+    @Input() includeBrokenDocuments: boolean = false;
     @Input() limit: number = 50;
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
     @Input() autoSelect: boolean = false;
+    @Input() allowKeyboardNavigation: boolean = false;
     @Input() showNoQueryMessage: boolean = true;
     @Input() preselectedDocumentId: string;
 
@@ -48,7 +54,6 @@ export class DocumentPickerComponent implements OnChanges {
     constructor(private datastore: Datastore,
                 private loading: Loading,
                 private messages: Messages,
-                private changeDetectorRef: ChangeDetectorRef,
                 private i18n: I18n) {}
 
 
@@ -63,10 +68,26 @@ export class DocumentPickerComponent implements OnChanges {
     public getHeight = () => this.documents.length * 58;
 
 
-    async ngOnChanges() {
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (Object.keys(changes).length === 1 && changes['allowKeyboardNavigation'] !== undefined) return;
 
         this.query.categories = this.getAllAvailableCategoryNames();
         await this.updateResultList();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (!this.isKeyboardNavigationEnabled()) return;
+
+        if (event.key === 'ArrowUp') {
+            this.selectPrevious();
+            await this.scrollToDocument(this.selectedDocument);
+        } else if (event.key === 'ArrowDown') {
+            this.selectNext();
+            await this.scrollToDocument(this.selectedDocument, true);
+        }
     }
 
 
@@ -159,11 +180,41 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private async scrollToDocument(scrollTarget: Document) {
+    private selectPrevious() {
+
+        if (!this.selectedDocument) return this.selectFirst();
+
+        let index: number = this.documents.indexOf(this.selectedDocument) - 1;
+        if (index < 0) index = this.documents.length - 1;
+        
+        this.select(this.documents[index]);
+    }
+
+
+    private selectNext() {
+
+        if (!this.selectedDocument) return this.selectFirst();
+
+        let index: number = this.documents.indexOf(this.selectedDocument) + 1;
+        if (index >= this.documents.length) index = 0;
+        
+        this.select(this.documents[index]);
+    }
+
+
+    private selectFirst() {
+
+        if (!this.documents.length) return;
+        
+        return this.select(this.documents[0]);
+    }
+
+
+    private async scrollToDocument(scrollTarget: Document, bottomElement: boolean = false) {
 
         await AngularUtility.refresh();
         const index: number = this.documents.indexOf(scrollTarget);
-        await scrollTo(index, this.getElementId(scrollTarget), this.scrollViewport);
+        await scrollTo(index, this.getElementId(scrollTarget), 58, this.scrollViewport, bottomElement);
     }
 
 
@@ -178,7 +229,7 @@ export class DocumentPickerComponent implements OnChanges {
         const constraints = this.getConstraints ? await this.getConstraints() : undefined;
         const query = tsfun.update('constraints', constraints, this.query);
         try {
-            const documents = await getDocumentSuggestions(this.datastore, query);
+            const documents = await getDocumentSuggestions(this.datastore, query, this.includeBrokenDocuments);
             if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents as Array<Document>);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -190,11 +241,15 @@ export class DocumentPickerComponent implements OnChanges {
 
     private getAllAvailableCategoryNames(): string[] {
 
-        return tsfun.union(this.filterOptions.map(category => {
+        const result: string[] = tsfun.union(this.filterOptions.map(category => {
             return category.children
                 ? [category.name].concat(category.children.map(child => child.name))
                 : [category.name];
         }));
+
+        return this.includeBrokenDocuments
+            ? result.concat(['UNCONFIGURED'])
+            : result;
     }
 
 
@@ -222,6 +277,18 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
+    private getInventoryRegisterOption(): ConfigurationDocument {
+
+        return {
+            resource: {
+                id: 'inventoryRegister',
+                identifier: this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' }),
+                category: 'InventoryRegister'
+            }
+        } as any;
+    }
+
+
     private isProjectOptionVisible(): boolean {
 
         return this.showProjectOption
@@ -242,6 +309,16 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
+    private isInventoryRegisterOptionVisible(): boolean {
+
+        return this.showInventoryRegisterOption
+            && this.isCategoryOptionVisible(
+                'InventoryRegister',
+                this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' })
+            );
+    }
+
+
     private isCategoryOptionVisible(categoryName: string, categoryLabel: string): boolean {
 
         return (!this.query.q?.length || categoryLabel.toLowerCase().startsWith(this.query.q.toLowerCase()))
@@ -254,11 +331,18 @@ export class DocumentPickerComponent implements OnChanges {
         const result: Array<Document> = [];
         if (this.isConfigurationOptionVisible()) result.push(this.getConfigurationOption());
         if (this.isProjectOptionVisible()) result.push(this.getProjectOption());
+        if (this.isInventoryRegisterOptionVisible()) result.push(this.getInventoryRegisterOption());
 
         return result.concat(
             documents.filter(document => {
                 return !this.showProjectOption || !['Project'].includes(document.resource.category);
             })
         );
+    }
+
+
+    private isKeyboardNavigationEnabled(): boolean {
+
+        return this.allowKeyboardNavigation && !document.getElementById('filter-menu');
     }
 }

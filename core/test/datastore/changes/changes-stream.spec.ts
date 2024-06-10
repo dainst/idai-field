@@ -6,7 +6,7 @@ import { Document } from '../../../src/model';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('RemoteChangesStream', () => {
+describe('ChangesStream', () => {
 
     let rcs;
     let doc;
@@ -43,13 +43,14 @@ describe('RemoteChangesStream', () => {
 
         spyOn(console, 'warn'); // suppress console.warn
 
-        indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove', 'getCount']);
+        indexFacade = jasmine.createSpyObj('MockIndexFacade',
+            ['put', 'putToSingleIndex', 'get', 'remove', 'getCount', 'notifyObservers']);
         documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
+        documentCache.reassign.and.callFake(document => document);
 
         getUsername = () => 'localuser';
         documentConverter.convert.and.returnValue(doc);
-        indexFacade.put.and.returnValue(doc);
         indexFacade.getCount.and.returnValue(0);
         documentCache.get.and.returnValue({ resource: { id: '1', identifier: '1' } });
 
@@ -63,8 +64,11 @@ describe('RemoteChangesStream', () => {
         datastore = jasmine.createSpyObj('MockDatastore', ['find'])
         datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
 
-        projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'], ['getCategory']);
-        projectConfiguration.getCategory.and.returnValue({ name: 'Object' });
+        projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'],
+            ['getCategory', 'getRegularCategories', 'getCategoryWithSubcategories']);
+        projectConfiguration.getCategory.and.returnValue({ name: 'Object', groups: [] });
+        projectConfiguration.getRegularCategories.and.returnValue([]);
+        projectConfiguration.getCategoryWithSubcategories.and.returnValue([{ name: 'Object', groups: [] }]);
 
         rcs = new ChangesStream(
             pouchdbDatastore,
@@ -183,7 +187,7 @@ describe('RemoteChangesStream', () => {
 
     it('update non-unique identifier warnings', async done => {
 
-        const doc2: Document = {
+        let doc2: Document = {
             resource: {
                 id: 'id2', identifier: '1', category: 'Object', relations: {}
             },
@@ -201,6 +205,15 @@ describe('RemoteChangesStream', () => {
 
         indexFacade.getCount.and.returnValue(2);
         datastore.find.and.returnValue(Promise.resolve({ documents: [doc2] }));
+        documentCache.reassign.and.callFake(document => {
+            if (document.id === 'id1') {
+                doc = document;
+                return doc;
+             } else {
+                doc2 = document;
+                return doc2;
+             }
+        });
 
         await onChange(doc);
         expect(doc.warnings.nonUniqueIdentifier).toBe(true);

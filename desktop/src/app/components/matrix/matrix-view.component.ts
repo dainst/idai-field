@@ -72,7 +72,7 @@ export class MatrixViewComponent implements OnInit {
                 private labels: Labels) {}
 
 
-    public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels);
+    public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels, this.projectConfiguration);
 
     public getCategoryLabel = (categoryName: string) => this.labels.get(
         this.projectConfiguration.getCategory(categoryName)

@@ -8,6 +8,10 @@ defmodule Api.Documents.Index do
   @max_geometries 10000
   @exists_geometries ["resource.geometry"]
   @fields_geometries ["resource.category", "resource.geometry", "resource.identifier", "resource.id", "project"]
+  @fields_search ["resource.category", "resource.identifier", "resource.shortDescription",
+                  "resource.id", "project", "resource.shortName", "resource.geometry_wgs84", "resource.georeference",
+                  "resource.height", "resource.width", "resource.childrenCount", "resource.relations.isDepictedIn",
+                  "resource.relations.hasMapLayer", "resource.relations.hasDefaultMapLayer"]
 
   def get(nil), do: nil
   def get(id) do
@@ -87,6 +91,7 @@ defmodule Api.Documents.Index do
       |> Query.add_must_not(must_not)
       |> Query.add_exists(exists)
       |> Query.add_not_exists(not_exists)
+      |> Query.only_fields(@fields_search)
       |> Query.set_sort(sort)
       |> Query.set_readable_projects(readable_projects)
       |> Query.set_vector_query(vector_query)

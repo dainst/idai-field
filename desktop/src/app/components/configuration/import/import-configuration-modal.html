@@ -5,25 +5,61 @@
 </div>
 
 <div id="import-configuration-modal-body" class="modal-body">
-    <div i18n="@@configuration.importModal.warning" class="text-center alert alert-warning">
-        Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen.
-        Die Projektkonfiguration wird vollständig durch die Konfiguration des ausgewählten Projekts ersetzt.
+    <div class="text-center alert alert-warning">
+        <span i18n="@@configuration.importModal.warning">
+            Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import
+            verloren gehen. Die Projektkonfiguration wird vollständig durch die importierte Konfiguration ersetzt.
+        </span>
     </div>
-    <div i18n="@@configuration.importModal.project">Projekt:</div>
-    <select (change)="selectProject($event.target.value)"
-            class="form-control">
-        <option value="" selected disabled hidden></option>
-        <option *ngFor="let project of getProjects()"
-                value="{{project}}"
-                [selected]="selectedProject === project">
-            {{project}}
-        </option>
-    </select>
+
+    <div id="import-options-container">
+        <div class="form-group">
+            <label i18n="@@import.source">Quelle</label>
+            <select class="form-control"
+                    [(ngModel)]="source"
+                    (change)="reset()">
+                <option value="file" i18n="@@import.file">Datei</option>
+                <option value="project" i18n="@@configuration.importModal.project">Projekt</option>
+            </select>
+        </div>
+
+        <div *ngIf="source === 'file'">
+            <label i18n="@@import.path">Pfad</label>
+            <div class="input-group">
+                <input id="file-path-input"
+                       [ngModel]="filePath"
+                       class="form-control"
+                       placeholder="Datei auswählen..."
+                       i18n-placeholder="@@import.chooseFile"
+                       disabled>
+                <div class="input-group-append">
+                    <label for="file-path-input"
+                           class="btn btn-secondary"
+                           (click)="selectFile()">
+                        <span class="mdi mdi-folder"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="source === 'project'">
+            <label i18n="@@configuration.importModal.project">Projekt</label>
+            <select (change)="selectProject($event.target.value)"
+                    class="form-control">
+                <option value="" selected disabled hidden></option>
+                <option *ngFor="let project of getProjects()"
+                        value="{{project}}"
+                        [selected]="selectedProject === project">
+                    {{project}}
+                </option>
+            </select>
+        </div>
+    </div>
 </div>
 
 <div class="modal-footer">
     <button id="import-configuration-confirm" class="btn btn-primary" type="button"
-            [ngClass]="{ 'disabled': !selectedProject }"
+            [ngClass]="{ 'disabled': !isConfirmButtonEnabled() }"
             (click)="confirm()">
         <span i18n="@@buttons.ok">OK</span>
     </button>

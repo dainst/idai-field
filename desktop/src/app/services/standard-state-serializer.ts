@@ -6,7 +6,7 @@ import { StateSerializer } from './state-serializer';
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
-export type StateType = 'resources-state'|'matrix-state'|'tabs-state'|'configuration-state';
+export type StateType = 'app-state'|'resources-state'|'matrix-state'|'tabs-state'|'configuration-state'|'images-state';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export type StateType = 'resources-state'|'matrix-state'|'tabs-state'|'configura
  */
 export class StandardStateSerializer extends StateSerializer {
 
-    constructor(private settingsProvider: SettingsProvider) {
+    constructor(protected settingsProvider: SettingsProvider) {
 
         super();
     }
@@ -34,7 +34,9 @@ export class StandardStateSerializer extends StateSerializer {
 
     public async store(stateObject: any, stateType: StateType): Promise<void> {
 
-        if (this.settingsProvider.getSettings().selectedProject === 'test') return;
+        if (this.settingsProvider.getSettings().selectedProject === 'test' && stateType !== 'app-state' ) {
+            return;
+        }
 
         return getAsynchronousFs().writeFile(this.getFilePath(stateType), JSON.stringify(stateObject));
     }
@@ -52,9 +54,10 @@ export class StandardStateSerializer extends StateSerializer {
     }
 
 
-    private getFilePath(stateType: StateType): string {
+    protected getFilePath(stateType: StateType): string {
 
-        return remote.getGlobal('appDataPath') + '/' +  stateType + '-'
-            + this.settingsProvider.getSettings().selectedProject + '.json';
+        let filePath: string = remote.getGlobal('appDataPath') + '/' +  stateType;
+        if (stateType !== 'app-state') filePath += '-' + this.settingsProvider.getSettings().selectedProject;
+        return filePath += '.json';
     }
 }

@@ -9,6 +9,12 @@
     },
     "shortDescription": {
       "label": "Kısa açıklama"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Stratigrafik Birimler içerir"
+    },
+    "hasChildren": {
+      "label": "Alt Girdiler"
     }
   },
   "categories": {
@@ -107,6 +113,12 @@
     },
     "bondsWith": {
       "label": "ile bağlı"
+    },
+    "isStoragePlaceOf": {
+      "label": "Depolama yeri-"
+    },
+    "isStoredIn": {
+      "label": "-de saklanır"
     }
   }
 }

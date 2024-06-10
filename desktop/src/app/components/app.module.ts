@@ -2,6 +2,7 @@ import { DecimalPipe, HashLocationStrategy, LocationStrategy, registerLocaleData
 import { HttpClientModule } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
+import localeTr from '@angular/common/locales/tr';
 import localeUk from '@angular/common/locales/uk';
 import { APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -58,6 +59,8 @@ import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { ViewModalLauncher } from './viewmodal/view-modal-launcher';
 import { NavbarModule } from './navbar/navbar.module';
 import { WarningsService } from '../services/warnings/warnings-service';
+import { ProjectLabelProvider } from '../services/project-label-provider';
+import { AppState } from '../services/app-state';
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -65,6 +68,7 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
 
 registerLocaleData(localeDe, 'de');
 registerLocaleData(localeIt, 'it');
+registerLocaleData(localeTr, 'tr');
 registerLocaleData(localeUk, 'uk');
 
 
@@ -100,8 +104,10 @@ registerLocaleData(localeUk, 'uk');
         Languages,
         {
             provide: Labels,
-            useFactory: (languages: Languages) => new Labels(() => languages.get()),
-            deps: [Languages]
+            useFactory: (languages: Languages, projectConfiguration: ProjectConfiguration) => {
+                return new Labels(() => languages.get(), projectConfiguration);
+            },
+            deps: [Languages, ProjectConfiguration]
         },
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
@@ -260,7 +266,9 @@ registerLocaleData(localeUk, 'uk');
         UtilTranslations,
         WarningsService,
         MenuModalLauncher,
-        ViewModalLauncher
+        ViewModalLauncher,
+        ProjectLabelProvider,
+        AppState
     ],
     bootstrap: [AppComponent]
 })

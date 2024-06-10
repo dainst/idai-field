@@ -1,4 +1,4 @@
-import { click, getLocator, getText, selectOption } from '../app';
+import { click, getLocator, getText, selectOption, selectSearchableSelectOption } from '../app';
 
 
 /**
@@ -28,6 +28,40 @@ export class WarningsModalPage {
     }
 
 
+    public static async clickDeleteResourceButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.delete-resource-button'));
+    }
+
+
+    public static async clickConvertFieldDataButton(sectionIndex: number) {
+
+        return click(await this.getConvertFieldDataButton(sectionIndex));
+    }
+
+
+    public static async clickSelectNewCategoryButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.select-new-category-button'));
+    }
+
+
+    public static async clickSelectNewFieldButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.select-new-field-button'));
+    }
+
+
+    public static async clickSelectNewParentButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.select-new-parent-button'));
+    }
+
+
     public static async clickDeleteFieldDataButton(sectionIndex: number) {
 
         const section = await this.getSection(sectionIndex);
@@ -39,6 +73,20 @@ export class WarningsModalPage {
 
         const section = await this.getSection(sectionIndex);
         return click(section.locator('.clean-up-relation-button'));
+    }
+
+
+    public static async clickFixOutliersButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.fix-outliers-button'));
+    }
+
+
+    public static async clickDeleteOutliersButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return click(section.locator('.delete-outliers-button'));
     }
 
 
@@ -99,9 +147,28 @@ export class WarningsModalPage {
     }
 
 
-    public static async getFilterOptions() {
+    public static getFilterOptions() {
 
-        return await getLocator('#warning-filter-select option');
+        return getLocator('#warning-filter-select option');
+    }
+
+
+    public static async getConvertFieldDataButton(sectionIndex: number) {
+
+        const section = await this.getSection(sectionIndex);
+        return section.locator('.convert-field-data-button');
+    }
+
+
+    public static getFixingDataInProgressModal() {
+
+        return getLocator('#fixing-data-in-progress-modal');
+    }
+
+
+    public static getDeletionInProgressModal() {
+
+        return getLocator('#deletion-in-progress-modal');
     }
 
 

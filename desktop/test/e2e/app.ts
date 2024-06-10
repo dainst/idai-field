@@ -3,9 +3,16 @@ import { isString } from 'tsfun';
 
 const fs = require('fs');
 
+
+export interface StartOptions {
+
+    config?: any;
+    fakeVideoPath?: string;
+};
+
+
 let electronApp;
 let window;
-
 
 const defaultConfig = {
     'dbs': ['test'],
@@ -13,16 +20,36 @@ const defaultConfig = {
 };
 
 
-export async function start(config?) {
+/**
+ * Use Playwright to start the Electron application for running e2e tests.
+ * 
+ * @param fakeVideoPath path to a `.mjpeg` that will be used as fake camera input
+ * @returns Promise<any> that will resolve once the application is started.
+ */
+export async function start(options?: StartOptions): Promise<any> {
 
-    resetConfigJson(config);
-    electronApp = await electron.launch({ args: ['.', 'test'] });
+    resetConfigJson(options?.config);
+
+    let args = ['.', 'test'];
+
+    if (options?.fakeVideoPath) {
+        args = args.concat([
+            '--use-fake-device-for-media-stream',
+            `--use-file-for-fake-video-capture=${options.fakeVideoPath}`
+        ]);
+    }
+
+    electronApp = await electron.launch({ args });
     window = await electronApp.firstWindow();
     return waitForExist('router-outlet', 60000);
 }
 
-
-export function stop() {
+/**
+ * Stop the Electron application started by Playwright.
+ * 
+ * @returns Promise<any> that will resolve once the application is stopped.
+ */
+export function stop(): Promise<any> {
 
     return electronApp.close();
 }
@@ -34,7 +61,7 @@ export async function getUrl(): Promise<string> {
 }
 
 
-export async function navigateTo(menu) {
+export function navigateTo(menu) {
 
     return window.evaluate((menuOption) => {
         require('@electron/remote').getCurrentWindow().webContents
@@ -73,11 +100,18 @@ export function getLocator(selector: string) {
     return window.locator(selector);
 }
 
-
-export async function click(element, x?, y?) {
+/**
+ * Use Playwright to simulate a click on a specified element.
+ * 
+ * @param element either a selector (`string`) for the element or an already existing reference to an element.
+ * @param x (optional) position relative to the top left corner of the element padding box.
+ * @param y (optional) position relative to the top left corner of the element padding box.
+ * @returns Promise<any> that will resolve after the click happened.
+ */
+export async function click(element, x?: number, y?: number) {
 
     if (isString(element)) element = await getLocator(element);
-    const options = x && y ? { position: { x, y } } : {};
+    const options = x && y ? { position: { x, y } } : {};
     return element.click(options);
 }
 
@@ -198,6 +232,12 @@ export async function getText(element, trim = true) {
 }
 
 
+export async function getByText(text: string) {
+
+    return window.getByText(text);
+}
+
+
 export async function getValue(element) {
 
     if (isString(element)) element = await getLocator(element);
@@ -205,10 +245,13 @@ export async function getValue(element) {
 }
 
 
-export async function uploadInFileInput(element, filePath) {
+export async function selectFile(element, filePath) {
 
-    if (isString(element)) element = await getLocator(element);
-    return element.setInputFiles(filePath);
+    await electronApp.evaluate(({ dialog }, path) => {
+        dialog.showOpenDialog = (_, __) => Promise.resolve({ filePaths: [path] });
+    }, filePath);
+
+    return click(element);
 }
 
 

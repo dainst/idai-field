@@ -21,7 +21,10 @@
 <div class="input-group" *ngIf="isEditingAllowed()">
 	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dimension.add" type="text" disabled class="form-control">
 	<div class="input-group-append">
-        <button class="btn btn-success" (click)="createNewDimension()"><span class="mdi mdi-plus-circle"></span></button>
+        <button class="btn btn-success create-new-dimension-button"
+			    (click)="createNewDimension()">
+			<span class="mdi mdi-plus-circle"></span>
+	</button>
     </div>
 </div>
 
@@ -30,6 +33,8 @@
                   [ngTemplateOutletContext]="{ dimension: newDimension }">
     </ng-container>
 </div>
+
+<outliers [fieldContainer]="fieldContainer" [field]="field" [valuelist]="valuelist"></outliers>
 
 <ng-template #dimensionFormTemplate let-dimension="dimension">
 	<div class="card object-array-field-widget">
@@ -62,7 +67,7 @@
 			<div class="form-inline form-group">
 				<label i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an</label>
 				<select [(ngModel)]="dimension.measurementPosition"
-						class="ml-2 form-control" name="measurementPositionSelect">
+						class="ml-2 form-control measurement-position-select" >
 					<option value=""></option>
 					<option *ngFor="let value of getPositionValues()" value="{{value}}">
 						{{getPositionValueLabel(value)}}
@@ -90,7 +95,7 @@
 			</div>
 		</div>
 		<div class="card-footer" align="right">
-			<button class="btn btn-primary" [disabled]="!isValid(dimension)"
+			<button class="btn btn-primary save-dimension-button" [disabled]="!isValid(dimension)"
 					(click)="saveDimension(dimension)"
 					i18n="@@buttons.ok">OK</button>
 			<button class="btn btn-secondary" *ngIf="newDimension == dimension"

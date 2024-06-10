@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output,
     SimpleChanges } from '@angular/core';
-import { FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, FieldGeometry, CategoryForm, ProjectConfiguration, Labels } from 'idai-field-core';
 import { FieldPolyline } from './field-polyline';
 import { FieldPolygon } from './field-polygon';
 import { FieldMarker } from './field-marker';
 import { MapComponentHelper as Helper } from './map-component-helper';
+
+
+const DEFAULT_PADDING: number = 10;
 
 
 @Component({
@@ -22,6 +25,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     @Input() additionalSelectedDocuments: Array<FieldDocument>;
     @Input() parentDocument: FieldDocument;
     @Input() coordinateReferenceSystem: string;
+    @Input() paddingLeft: number;
     @Input() update: boolean;
 
     @Output() onSelectDocument: EventEmitter<{ document: FieldDocument|undefined, multiSelect: boolean }>
@@ -46,6 +50,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
 
     constructor(protected projectConfiguration: ProjectConfiguration,
+                protected labels: Labels,
                 protected zone: NgZone) {}
 
 
@@ -63,7 +68,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
             if (!this.map) this.map = this.createMap();
 
             // The promise is necessary to make sure the map is updated based on the current map container size
-            Promise.resolve().then(() => this.updateMap(changes));
+            Promise.resolve().then(() => {
+                if (MapComponent.isUpdateNecessary(changes)) this.updateMap(changes);
+            });
         });
     }
 
@@ -161,7 +168,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         if (Helper.hasGeometries(this.getSelection())) {
             this.focusSelection();
         } else if (this.bounds.length > 1) {
-            this.map.fitBounds(L.latLngBounds(this.bounds));
+            this.map.fitBounds(L.latLngBounds(this.bounds), this.getFitViewOptions());
         } else if (this.bounds.length == 1) {
             this.map.setView(this.bounds[0], 15);
         } else {
@@ -291,7 +298,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const marker: FieldMarker = L.circleMarker(latLng, this.getMarkerOptions(document));
         marker.document = document;
 
-        marker.bindTooltip(Helper.getTooltipText(document.resource), {
+        marker.bindTooltip(Helper.getTooltipText(document.resource, this.labels, this.projectConfiguration), {
             direction: 'top',
             opacity: 1.0
         });
@@ -363,7 +370,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         path.setStyle(style);
 
-        path.bindTooltip(Helper.getTooltipText(document.resource), {
+        path.bindTooltip(Helper.getTooltipText(document.resource, this.labels, this.projectConfiguration), {
             direction: 'center',
             opacity: 1.0
         });
@@ -396,8 +403,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const bounds = Helper.addToBounds(
             this.markers, this.polygons, this.polylines, selection);
 
-        if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);
-        else if (bounds.length > 1) this.map.fitBounds(bounds);
+        if (bounds.length === 1) {
+            this.map.panTo(bounds[0], panOptions);
+        } else if (bounds.length > 1) {
+            this.map.fitBounds(bounds, this.getFitViewOptions());
+        }
     }
 
 
@@ -503,5 +513,28 @@ export class MapComponent implements AfterViewInit, OnChanges {
         return this.polygonsArray.length
             + this.polylinesArray.length
             + this.markersArray.length;
+    }
+
+
+    protected getFitViewOptions(): any {
+
+        return {
+            paddingTopLeft: [DEFAULT_PADDING + this.paddingLeft, DEFAULT_PADDING],
+            paddingBottomRight: [DEFAULT_PADDING, DEFAULT_PADDING]
+        };
+    }
+
+    private static isUpdateNecessary(changes: SimpleChanges) {
+
+        if (changes['paddingLeft'] && (!changes['selectedDocument'] && !changes['isEditing'])) return false;
+
+        if (Object.keys(changes).length === 1
+                && changes['additionalSelectedDocuments']
+                && !changes['additionalSelectedDocuments'].currentValue.length
+                && !changes['additionalSelectedDocuments'].previousValue.length) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -1,17 +1,45 @@
+import { AppState } from '../../services/app-state';
+
 const { dialog } = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ConcreteDialogProvider {
 
-    private chooseFilepath(): Promise<string> {
+    public async chooseFilepath(projectName: string, appState?: AppState): Promise<string> {
 
-        return new Promise<string>(async resolve => {
+        const defaultPath: string = this.getDefaultPath(projectName, appState);
 
-            const saveDialogReturnValue = await dialog.showSaveDialog(
-                { filters: [ { name: 'JSON Lines', extensions: [ 'jsonl' ] } ] });
-            resolve(saveDialogReturnValue.filePath);
-        });
+        const saveDialogReturnValue = await dialog.showSaveDialog(
+            {
+                defaultPath,
+                filters: [
+                    { name: 'JSON Lines', extensions: [ 'jsonl' ] }
+                ]
+            }
+        );
+
+        const filePath: string = saveDialogReturnValue.filePath;
+        
+        if (filePath) {
+            if (appState) appState.setFolderPath(filePath, 'backupCreation');
+            return filePath;
+        } else {
+            return undefined;
+        }
+    }
+
+
+    private getDefaultPath(projectName: string, appState?: AppState): string {
+
+        const folderPath: string = appState?.getFolderPath('backupCreation');
+        const fileName: string = projectName + '.jsonl';
+
+        return folderPath
+            ? folderPath + '/' + fileName
+            : fileName;
     }
 }

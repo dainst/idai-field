@@ -132,7 +132,7 @@ defmodule FieldHubWeb.Api.FileController do
         |> put_status(:request_entity_too_large)
         |> put_view(StatusView)
         |> render(%{
-          error: "Payload to large, maximum of #{Sizeable.filesize(@max_size)} bytes allowed."
+          error: "Payload too large, maximum of #{Sizeable.filesize(@max_size)} bytes allowed."
         })
     end
   end

@@ -12,7 +12,7 @@ remoteMain.initialize();
 
 let menuContext = 'loading';
 
-const mainLanguages = ['de', 'en', 'it', 'uk'];
+const mainLanguages = ['de', 'en', 'it', 'tr', 'uk'];
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
@@ -260,12 +260,18 @@ const createWindow = () => {
         mainWindow.loadURL(global.distUrl + 'index.html');
     }, 100);
 
-    // Emitted when the window is closed.
-    mainWindow.on('closed', () => {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
+    let closed = false;
+    
+    mainWindow.on('close', (event) => {
+        if (closed) return;
+        event.preventDefault();
+        mainWindow.webContents.send('requestClose');
+    });
+
+    electron.ipcMain.on('close', () => {
+        closed = true;
         mainWindow = null;
+        electron.app.quit();
     });
 
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
@@ -323,22 +329,6 @@ electron.app.on('ready', () => {
     });
 });
 
-electron.app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (mainWindow === null) {
-        createWindow();
-    }
-});
-
-// Quit when all windows are closed.
-electron.app.on('window-all-closed', () => {
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-        electron.app.quit();
-    }
-});
 
 electron.ipcMain.on('reload', (event, route) => {
     if (global.mode === 'production') {

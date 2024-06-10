@@ -26,12 +26,11 @@ export async function getGeoreferenceFromGeotiff(buffer: Buffer): Promise<ImageG
 }
 
 
-
 function createGeoreference(boundingBox: any): ImageGeoreference {
 
    return {
-        topLeftCoordinates: [boundingBox[1], boundingBox[0]],
-        topRightCoordinates: [boundingBox[1], boundingBox[2]],
-        bottomLeftCoordinates: [boundingBox[3], boundingBox[0]]
+        topLeftCoordinates: [boundingBox[3], boundingBox[0]],
+        topRightCoordinates: [boundingBox[3], boundingBox[2]],
+        bottomLeftCoordinates: [boundingBox[1], boundingBox[0]]
     };
 }

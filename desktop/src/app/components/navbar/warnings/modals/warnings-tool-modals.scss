@@ -1,0 +1,39 @@
+.warnings-tool-modal-body {
+  span,
+  div {
+    user-select: none;
+  }
+
+  .warnings-tool-info {
+    margin-bottom: 5px;
+  }
+
+  #multiple-switch {
+    margin-top: 15px;
+
+    &:last-child {
+      height: 24px;
+    }
+  }
+
+  .form-control {
+    margin-top: 10px;
+  }
+
+  span {
+    user-select: none;
+  }
+
+  b {
+    font-weight: 600;
+  }
+
+  .alert-warning:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .ng-select .ng-select-container {  
+    height: 33px !important;
+    min-height: 33px;
+  }
+}

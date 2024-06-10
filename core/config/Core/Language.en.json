@@ -9,6 +9,12 @@
     },
     "shortDescription": {
       "label": "Short description"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Includes stratigraphical units"
+    },
+    "hasChildren": {
+      "label": "Child resources"
     }
   },
   "categories": {
@@ -107,6 +113,12 @@
     },
     "hasInstance": {
       "label": "Associated finds"
+    },
+    "isStoredIn": {
+      "label": "Is stored in"
+    },
+    "isStoragePlaceOf": {
+      "label": "Is storage place of"
     }
   }
 }

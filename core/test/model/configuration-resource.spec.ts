@@ -166,7 +166,7 @@ import { ConfigurationResource } from '../../src/model/configuration-resource';
                     values: { value1: {} }
                 },
                 'valuelist-3': {
-                    values: { value1: {} }
+                    values: { value1: {} }
                 }
             },
             order: [],

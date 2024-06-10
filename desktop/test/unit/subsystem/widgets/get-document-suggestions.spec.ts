@@ -8,7 +8,11 @@ describe('subsystem/getDocumentSuggestions', () => {
 
     let datastore;
 
-    const doc = { resource: { id: '1', identifier: 'One', category: 'Feature', relations: {}}, project: undefined }
+    const trenchDocument = { resource: { id: '1', identifier: 'One', category: 'Trench', relations: {}},
+        project: undefined };
+    const featureDocument = { resource: { id: '2', identifier: 'Two', category: 'Feature',
+        relations: { isRecordedIn: ['1'] } }, project: undefined };
+
 
     beforeEach(async done => {
         
@@ -16,16 +20,19 @@ describe('subsystem/getDocumentSuggestions', () => {
         done();
     });
 
+
     afterEach(done => new PouchDB('testdb').destroy().then(() => { done(); }), 5000);
 
 
-    it('getImageSuggestions', async done => {
+    it('get document suggestions', async done => {
 
-        await datastore.create(doc, 'test')
+        await datastore.create(trenchDocument, 'test');
+        await datastore.create(featureDocument, 'test');
 
-        const documents  = await getDocumentSuggestions(
+        const documents = await getDocumentSuggestions(
             datastore,
-            { categories: ['Feature'] }, /* TODO why do we need to specify the category? */
+            { categories: ['Feature'] },
+            false
         );
         expect(documents.length).toBe(1);
         done();
@@ -34,13 +41,29 @@ describe('subsystem/getDocumentSuggestions', () => {
 
     it('exclude documents not owned by the current project', async done => {
 
-        await datastore.create(tsfun.update('project', 'other', doc), 'test')
+        await datastore.create(trenchDocument, 'test');
+        await datastore.create(tsfun.update('project', 'other', featureDocument), 'test');
 
         const documents = await getDocumentSuggestions(
             datastore,
             { categories: ['Feature'] },
+            false
         );
         expect(documents.length).toBe(0);
+        done();
+    });
+
+
+    it('get document suggestions for documents without valid parent', async done => {
+
+        await datastore.create(featureDocument, 'test');
+
+        const documents = await getDocumentSuggestions(
+            datastore,
+            { categories: ['Feature'] },
+            true
+        );
+        expect(documents.length).toBe(1);
         done();
     });
 });

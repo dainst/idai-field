@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { equal } from 'tsfun';
-import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
+import { equal, Map, to } from 'tsfun';
+import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm, CustomFormDefinition, 
+    Field, Labels, PrintedField, Named, ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -23,7 +24,10 @@ import { M } from '../../../messages/m';
  */
 export class CategoryEditorModalComponent extends ConfigurationEditorModalComponent {
 
+    public clonedProjectConfiguration: ProjectConfiguration;
     public numberOfCategoryResources: number;
+    public printedFields: Array<PrintedField> = [];
+    public printableFields: string[] = [];
 
     private currentColor: string;
 
@@ -36,15 +40,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private i18n: I18n) {
+                private i18n: I18n,
+                private labels: Labels) {
 
         super(activeModal, modals, menuService, messages);
     }
 
 
     public isCustomCategory = () => this.category.source === 'custom';
-
-    public isIdentifierPrefixWarningShown = () => this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
 
 
     public initialize() {
@@ -70,6 +73,9 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.getClonedFormDefinition().color = this.currentColor;
             }
         }
+
+        this.printedFields = this.getPrintedFields();
+        this.printableFields = this.getPrintableFields();
 
         if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
     }
@@ -106,6 +112,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             );
         }
 
+        this.updatePrintedFieldsInClonedFormDefinition();
+
         await super.confirm();
     }
 
@@ -118,6 +126,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.hasIdentifierPrefixChanged()
             || this.hasResourceLimitChanged()
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
+            || this.hasScanCodesConfigurationChanged()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }
@@ -140,7 +149,60 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
-    public isIdentifierPrefixAvailable(): boolean {
+    public isIdentifierPrefixWarningShown() {
+        
+        return this.hasIdentifierPrefixChanged() && this.numberOfCategoryResources > 0;
+    }
+
+
+    public isScanCodesOptionEnabled() {
+        
+        return !this.category.parentCategory?.scanCodes;
+    }
+
+    
+    public isScanCodeAutoCreationOptionEnabled(): boolean {
+
+        return this.isScanCodeUsageActivated()
+           && !this.category.parentCategory?.scanCodes?.autoCreate;
+    }
+
+
+    public isPrintedFieldsSlotEnabled(index: number): boolean {
+
+        return this.isScanCodeUsageActivated()
+            && !(this.category.parentCategory?.scanCodes?.printedFields ?? []).includes(this.printedFields[index]);
+    }
+
+
+    public isScanCodeUsageActivated() {
+        
+        return this.getClonedFormDefinition().scanCodes !== undefined
+            || this.category.parentCategory?.scanCodes !== undefined;
+    }
+
+    
+    public isScanCodeAutoCreationActivated() {
+        
+        return this.getClonedFormDefinition().scanCodes?.autoCreate
+            || this.category.parentCategory?.scanCodes?.autoCreate;   
+    }
+
+
+    public isPrintedFieldsSlotActivated(index: number): boolean {
+
+        return this.isPrintedFieldsSlotEnabled(index) && this.printedFields.length > index;
+    }
+
+
+    public isScanCodesOptionAvailable(): boolean {
+        
+        return !this.category.isAbstract
+            && (this.category.scanCodesAllowed || this.category.parentCategory?.scanCodesAllowed);
+    }
+
+
+    public isIdentifierPrefixOptionAvailable(): boolean {
         
         return !this.category.isAbstract
             && this.category.name !== 'Project'
@@ -152,7 +214,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public isResourceLimitAvailable(): boolean {
         
         return !this.category.isAbstract
-            && (this.category.name === 'Place' || this.category.parentCategory?.name === 'Operation');
+            && (this.category.name === 'Place'
+                || this.category.parentCategory?.name === 'Operation');
     }
 
 
@@ -167,6 +230,191 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             return this.numberOfCategoryResources > resourceLimit;
         } catch (_) {
             return false;
+        }
+    }
+
+
+    public toggleScanCodes() {
+        
+        const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+
+        if (clonedFormDefinition.scanCodes) {
+            delete clonedFormDefinition.scanCodes;
+            this.printedFields = [];
+        } else {
+            clonedFormDefinition.scanCodes = {
+                type: 'qr',
+                autoCreate: false,
+                printedFields: []
+            };
+        }
+    }
+
+
+    public toggleAutoCreateScanCodes() {
+
+        const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+        if (clonedFormDefinition.scanCodes) {
+            clonedFormDefinition.scanCodes.autoCreate = !clonedFormDefinition.scanCodes.autoCreate;
+            if (!clonedFormDefinition.scanCodes.autoCreate && this.category.parentCategory.scanCodes) {
+                delete clonedFormDefinition.scanCodes;
+            }
+        } else if (this.category.parentCategory?.scanCodes) {
+            clonedFormDefinition.scanCodes = {
+                type: this.category.parentCategory.scanCodes.type,
+                autoCreate: true,
+                printedFields: []
+            };
+        }
+    }
+
+
+    public setPrintedField(fieldName: string, index: number) {
+
+        if (fieldName) {
+            if (this.printedFields[index]) {
+                this.printedFields[index].name = fieldName;
+            } else {
+                this.printedFields[index] = {
+                    name: fieldName,
+                    printLabel: true
+                };
+            }
+        } else {
+            this.printedFields.splice(index, 1);
+        }
+    }
+
+
+    public isPrintLabelOptionActivated(index: number) {
+
+        return this.printedFields[index]?.printLabel;
+    }
+
+
+    public togglePrintLabelOption(index: number) {
+
+        this.printedFields[index].printLabel = !this.printedFields[index].printLabel;
+    }
+
+    
+    public isSelectedPrintedField(fieldName: string, index: number) {
+
+        return this.printedFields[index]?.name === fieldName;
+    }
+
+
+    public getPrintableFieldsForSlot(index: number): string[] {
+
+        return this.printableFields.filter(fieldName => {
+            return !this.printedFields.map(to(Named.NAME)).includes(fieldName)
+                || this.isSelectedPrintedField(fieldName, index);
+        });
+    }
+
+
+    public getFieldLabel(fieldName: string) {
+
+        switch (fieldName) {
+            case 'isRecordedIn':
+                return this.labels.get(this.clonedProjectConfiguration.getCategory('Operation'));
+            case 'liesWithin':
+                return this.i18n({
+                    id: 'qrCode.printedFields.liesWithin',
+                    value: 'Übergeordnete Ressource'
+                });
+            default:
+                return this.labels.getFieldLabel(this.category, fieldName);
+        }
+    }
+
+
+    public getTooltip(option: 'scanCodes'|'autoCreation'|'printedField'|'printedFieldLabel', index?: number): string {
+
+        if ((option === 'scanCodes' && !this.isScanCodesOptionEnabled()
+                || option === 'autoCreation' && this.category.parentCategory?.scanCodes?.autoCreate)) {
+            return this.i18n({
+                id: 'configuration.cannotDisableParentOption',
+                value: 'Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.'
+            });
+        } else if ((option === 'autoCreation' && !this.isScanCodeAutoCreationOptionEnabled())
+                || ['printedField', 'printedFieldLabel'].includes(option) && !this.isScanCodeUsageActivated()) {
+            return this.i18n({
+                id: 'configuration.autoCreationOptionDisabled',
+                value: 'Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.'
+            });
+        } else if (['printedField', 'printedFieldLabel'].includes(option) && !this.isPrintedFieldsSlotEnabled(index)) {
+            return this.i18n({
+                id: 'configuration.printedFieldSlotDisabled',
+                value: 'Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.'
+            });
+        } else if (option === 'printedFieldLabel' && !this.isPrintedFieldsSlotActivated(index)){
+            return this.i18n({
+                id: 'configuration.printedFieldUnselected',
+                value: 'Wählen Sie ein Feld aus, um diese Option zu verwenden.'
+            });
+        } else {
+            return '';
+        }
+    }
+
+
+    private getPrintedFields(): Array<PrintedField> {
+
+        return (this.category.parentCategory?.scanCodes?.printedFields ?? [])
+            .concat(this.getCustomFormDefinition()?.scanCodes?.printedFields ?? []);
+    }
+
+
+    private getPrintableFields(): string[] {
+
+        const forbiddenInputTypes: Array<Field.InputType> = [
+            Field.InputType.IDENTIFIER,
+            Field.InputType.GEOMETRY,
+            Field.InputType.INSTANCE_OF,
+            Field.InputType.RELATION,
+            Field.InputType.DERIVED_RELATION,
+            Field.InputType.IDENTIFIER,
+            Field.InputType.NONE
+        ];
+
+        const categoryFields = CategoryForm.getFields(this.category)
+            .filter(field => !forbiddenInputTypes.includes(field.inputType))
+            .map(field => field.name);
+
+        return this.getDefaultPrintableFields().concat(categoryFields);
+    }
+
+
+    private getDefaultPrintableFields(): string[] {
+
+        const defaultFields: string[] = ['liesWithin'];
+        if (this.clonedProjectConfiguration.getRegularCategories().includes(this.category)) {
+            defaultFields.push('isRecordedIn');
+        }
+
+        return defaultFields;
+    }
+
+
+    private updatePrintedFieldsInClonedFormDefinition() {
+
+        const parentFieldNames: string[] = this.category.parentCategory?.scanCodes?.printedFields?.map(to(Named.NAME))
+            ?? [];
+        const printedFields: Array<PrintedField>= this.printedFields.filter(field => {
+            return !parentFieldNames.includes(field.name);
+        });
+
+        const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+
+        if (clonedFormDefinition.scanCodes) {
+            clonedFormDefinition.scanCodes.printedFields = printedFields;
+        } else if (printedFields.length > 0) {
+            clonedFormDefinition.scanCodes = {
+                type: 'qr',
+                autoCreate: this.category.parentCategory?.scanCodes?.autoCreate ?? false,
+                printedFields: printedFields
+            };
         }
     }
 
@@ -202,6 +450,16 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return CategoryEditorModalComponent.cleanUpResourceLimit(this.getClonedFormDefinition().resourceLimit)
             !== this.getCustomFormDefinition()?.resourceLimit;
+    }
+
+
+    private hasScanCodesConfigurationChanged(): boolean {
+
+        const clonedScanCodes = (this.getClonedFormDefinition().scanCodes ?? {}) as Map<any>;
+        const customScanCodes = (this.getCustomFormDefinition()?.scanCodes ?? {}) as Map<any>;
+
+        return !equal(clonedScanCodes)(customScanCodes)
+            || !equal(this.printedFields)(this.getPrintedFields());
     }
 
 

@@ -1,3 +1,4 @@
+import { clone } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
 import { Document } from '../model/document';
 import { NewDocument } from '../model/document';
@@ -9,7 +10,12 @@ import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
-import { CategoryForm } from '../model/configuration/category-form';
+import { Indexer } from '../index';
+
+
+export type FindOptions = {
+    includeResourcesWithoutValidParent?: boolean;
+};
 
 
 /**
@@ -38,6 +44,9 @@ import { CategoryForm } from '../model/configuration/category-form';
  */
 export class Datastore {
 
+    public updating: boolean = false;
+
+
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
@@ -45,10 +54,7 @@ export class Datastore {
                 private projectConfiguration: ProjectConfiguration,
                 private getUser: () => Name) {
     }
-
-
-    public suppressWait = false;
-
+    
 
     /**
      * Persists a given document. If document.resource.id is not set,
@@ -66,18 +72,32 @@ export class Datastore {
      */
     public async create(document: NewDocument): Promise<Document> {
 
-        return this.updateIndex(await this.datastore.create(document, this.getUser()));
+        this.updating = true;
+
+        try {
+            return await this.updateIndex(await this.datastore.create(document, this.getUser()));
+        } finally {
+            this.updating = false;
+        }
     }
 
 
     public async bulkCreate(documents: Array<NewDocument>): Promise<Array<Document>> {
 
-        const resultDocuments: Array<Document> = [];
-        for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document));
-        }
+        this.updating = true;
 
-        return resultDocuments;
+        try {
+            const resultDocuments: Array<Document> = [];
+            for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
+                resultDocuments.push(await this.updateIndex(document, false));
+            }
+
+            this.indexFacade.notifyObservers();
+
+            return resultDocuments;
+        } finally {
+            this.updating = false;
+        }
     }
 
 
@@ -97,45 +117,80 @@ export class Datastore {
      */
     public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
+        this.updating = true;
         delete document.warnings;
 
-        return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
+        try {
+            return await this.updateIndex(
+                await this.datastore.update(document, this.getUser(), squashRevisionsIds),
+                true
+            );
+        } finally {
+            this.updating = false;
+        }
     }
 
 
     public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
 
+        this.updating = true;
+
         documents.forEach(document => delete document.warnings);
 
-        const resultDocuments: Array<Document> = [];
-        for (let document of await this.datastore.bulkUpdate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document));
-        }
+        try {
+            let resultDocuments: Array<Document> = [];
+            const updatedDocuments: Array<Document> = await this.datastore.bulkUpdate(documents, this.getUser());
+            if (updatedDocuments.length < 100) {
+                for (let document of updatedDocuments) {
+                    resultDocuments.push(await this.updateIndex(document, false));
+                }
+                this.indexFacade.notifyObservers();
+            } else {
+                resultDocuments = await this.updateIndexWithFullReindexing(updatedDocuments);
+            }
 
-        return resultDocuments;
+            return resultDocuments;
+        } finally {
+            this.updating = false;
+        }
     }
 
 
-    private async updateIndex(document: Document): Promise<Document> {
+    private async updateIndex(document: Document, notifyObservers: boolean = true): Promise<Document> {
 
-        const convertedDocument = this.documentConverter.convert(document);
-        this.indexFacade.put(convertedDocument);
+        const previousVersion: Document = this.documentCache.get(document.resource.id);
 
-        const previousVersion: Document|undefined = this.documentCache.get(convertedDocument.resource.id);
-        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+        await this.convert(document, notifyObservers);
 
-        document = !previousVersion
-            ? this.documentCache.set(convertedDocument)
-            : this.documentCache.reassign(convertedDocument);
-        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+        return !previousVersion
+            ? this.documentCache.set(document)
+            : this.documentCache.reassign(document);
+    }
 
-        await WarningsUpdater.updateNonUniqueIdentifierWarning(
-            document, this.indexFacade, this, previousIdentifier, true
+
+    private async updateIndexWithFullReindexing(documents: Array<Document>): Promise<Array<Document>> {
+
+        const resultDocuments: Array<Document> = [];
+
+        for (let document of documents) {
+            const previousVersion: Document = this.documentCache.get(document.resource.id);
+            this.documentConverter.convert(document);
+            const updatedDocument: Document = !previousVersion
+                ? this.documentCache.set(document)
+                : this.documentCache.reassign(document);
+            resultDocuments.push(updatedDocument);
+        }
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.datastore.getDb(),
+            this.documentCache,
+            this.documentConverter,
+            this.projectConfiguration,
+            true
         );
-        await WarningsUpdater.updateResourceLimitWarning(document, category, this.indexFacade, this, true);
-        await WarningsUpdater.updateRelationTargetWarning(document, this.indexFacade, this.documentCache, this, true);
 
-        return document;
+        return resultDocuments;
     }
 
 
@@ -164,8 +219,10 @@ export class Datastore {
         await WarningsUpdater.updateResourceLimitWarnings(
             this,
             this.indexFacade,
+            this.projectConfiguration,
             this.projectConfiguration.getCategory(document.resource.category)
         );
+        this.indexFacade.notifyObservers();
     }
 
 
@@ -174,13 +231,12 @@ export class Datastore {
      * 
      * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
-     * @param options.conflicts: boolean
      * @param options to control implementation specific behaviour
      * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean, conflicts?: boolean })
+    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean })
             : Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
@@ -189,7 +245,8 @@ export class Datastore {
             return cachedDocument;
         }
 
-        let document = this.documentConverter.convert(await this.datastore.fetch(id, options?.conflicts));
+        const document = await this.datastore.fetch(id, options);
+        await this.convert(document);
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -217,10 +274,16 @@ export class Datastore {
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public find: Datastore.Find = async (query: Query): Promise<Datastore.FindResult> => {
+    public find: Datastore.Find = async (query: Query, options: FindOptions = {}): Promise<Datastore.FindResult> => {
 
-        const { ids } = this.findIds(query);
-        const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
+        const clonedQuery: Query = clone(query);
+        if (!options.includeResourcesWithoutValidParent) {
+            if (!clonedQuery.constraints) clonedQuery.constraints = {};
+            clonedQuery.constraints['missingOrInvalidParent:exist'] = 'UNKNOWN';
+        }
+
+        const { ids } = this.findIds(clonedQuery);
+        const { documents, totalCount } = await this.getDocumentsForIds(ids, clonedQuery.limit, clonedQuery.offset);
 
         return {
             documents: documents,
@@ -230,9 +293,10 @@ export class Datastore {
     }
 
 
-    public convert: Datastore.Convert = (document: Document) => {
+    public convert: Datastore.Convert = async (document: Document, notifyObservers: boolean = true) => {
         
         this.documentConverter.convert(document);
+        await this.updateWarnings(document, notifyObservers);
     }  
 
 
@@ -261,8 +325,9 @@ export class Datastore {
      */
     public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
-        return this.documentConverter.convert(
-            await this.datastore.fetchRevision(docId, revisionId));
+        const revision: Document = await this.datastore.fetchRevision(docId, revisionId);
+        await this.convert(revision);
+        return revision;
     }
 
 
@@ -343,22 +408,16 @@ export class Datastore {
 
     private async getDocumentsFromDatastore(ids: string[]): Promise<Array<Document>> {
 
-        const documents: Array<Document> = [];
-        (await this.datastore.bulkFetch(ids)).forEach(document => {
+        const result: Array<Document> = [];
 
-            try {
-                const convertedDocument = this.documentConverter.convert(document);
-                documents.push(this.documentCache.set(convertedDocument));
-            } catch (errWithParams) {
-                if (errWithParams[0] === DatastoreErrors.UNKNOWN_CATEGORY) {
-                    return; // Ignore documents of categories that are currently not included in configuration
-                } else {
-                    throw errWithParams;
-                }
-            }
-        });
+        const documents: Array<Document> = await this.datastore.bulkFetch(ids);
+        for (let document of documents) {
+            document = this.documentCache.set(document);
+            await this.convert(document);
+            result.push(document);
+        }
 
-        return documents;
+        return result;
     }
 
 
@@ -376,6 +435,23 @@ export class Datastore {
 
         return documents;
     }
+
+
+    private async updateWarnings(document: Document, notifyObservers: boolean) {
+
+        WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
+
+        this.indexFacade.put(document);
+        
+        const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        await WarningsUpdater.updateIndexDependentWarnings(
+            document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
+            previousIdentifier, true
+        );
+        if (notifyObservers) this.indexFacade.notifyObservers();
+    }
 }
 
 
@@ -383,13 +459,13 @@ export namespace Datastore {
 
     export type Get = (id: string, options?: { skipCache?: boolean, conflicts?: boolean }) => Promise<Document>;
 
-    export type Find = (query: Query) => Promise<FindResult>;
+    export type Find = (query: Query, options?: FindOptions) => Promise<FindResult>;
 
     export type FindIds = (query: Query) => FindIdsResult;
 
     export type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 
-    export type Convert = (document: Document) => void;
+    export type Convert = (document: Document, notifyObservers?: boolean) => void;
 
 
     export interface FindIdsResult {

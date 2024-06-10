@@ -178,4 +178,29 @@ describe('processDocuments', () => {
 
         expect(result[0].resource.invalidField).toBeUndefined();
     });
+
+
+    it('ignore invalid fields in merge mode', () => {
+
+        const document: Document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                category: 'Feature',
+                identifier: 'existingFeature',
+                field: 'new',
+                id: '1',
+                invalidField: 'value',
+                relations: {},
+                geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}
+            }
+        };
+
+        validator.getUndefinedFields.and.returnValue(['invalidField']);
+
+        const result = processDocuments([document], { '1': existingFeature } as any, validator, true);
+
+        expect(result[0].resource.invalidField).toBeUndefined();
+    });
 });

@@ -56,7 +56,10 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist"
+      "entitlementsInherit": "entitlements.mac.plist",
+      "asarUnpack": [
+        "node_modules/@ngageoint/**"
+      ]
     },
     "win": {
       "target": "zip",
@@ -76,7 +79,8 @@
       "artifactName": "Field-Desktop-${version}-Linux.${ext}",
       "category": "Science",
       "asarUnpack": [
-        "node_modules/sharp/**"
+        "node_modules/sharp/**",
+        "node_modules/@ngageoint/**"
       ]
     },
     "npmRebuild": false,

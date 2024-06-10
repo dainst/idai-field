@@ -56,7 +56,8 @@
               "src/info",
               "src/config",
               "src/test-data",
-              "src/manual"
+              "src/manual",
+              "src/canvaskit.wasm"
             ],
             "styles": [
               "src/app.scss",

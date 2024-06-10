@@ -26,6 +26,7 @@ import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithou
 
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
 const path = typeof window !== 'undefined' ? window.require('path') : require('path');
 
 
@@ -51,7 +52,7 @@ export class ImportComponent implements OnInit {
     public running: boolean = false;
     public ignoredIdentifiers: string[] = [];
 
-    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog';
+    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog, .gpkg';
     public readonly allowedHttpFileExtensions: string = '.csv, .jsonl, .geojson, .json';
 
 
@@ -263,6 +264,11 @@ export class ImportComponent implements OnInit {
 
     private async doImport() {
 
+        if (this.importState.format === 'geopackage') {
+            this.testReadingGeopackage();
+            return;
+        }
+
         const options = copy(this.importState as any) as unknown as ImporterOptions;
         if (options.mergeMode === true) options.selectedOperationId = '';
 
@@ -408,7 +414,7 @@ export class ImportComponent implements OnInit {
         return [
             {
                 name: this.i18n({ id: 'import.selectFile.filters.all', value: 'Alle unterstützten Formate' }),
-                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog']
+                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog', 'gpkg']
             },
             {
                 name: 'CSV',
@@ -429,8 +435,24 @@ export class ImportComponent implements OnInit {
             {
                 name: this.i18n({ id: 'import.selectFile.filters.catalog', value: 'Field-Typenkatalog' }),
                 extensions: ['catalog']
-            }
+            },
+            {
+                name: 'Geopackage',
+                extensions: ['gpkg']
+            },
         ];
+    }
+
+
+    private async testReadingGeopackage() {
+
+        const returnValue = await ipcRenderer.invoke('readGeopackage', this.importState.filePath);
+
+        if (returnValue.error) {
+            console.error(returnValue.error);
+        } else {
+            console.log('Result:', returnValue.result);
+        }
     }
 
 
@@ -448,6 +470,8 @@ export class ImportComponent implements OnInit {
                 return 'shapefile';
             case 'csv':
                 return 'csv';
+            case 'gpkg':
+                return 'geopackage';
             default:
                 return undefined;
         }

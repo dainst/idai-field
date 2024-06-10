@@ -24,7 +24,7 @@ import { Settings } from '../../services/settings/settings';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
 
 
-export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
+export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog'|'geopackage';
 
 export type ImporterReport = { errors: any[], successfulImports: number, ignoredIdentifiers: string[] };
 

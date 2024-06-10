@@ -21,38 +21,51 @@
           Project: '<%= project.name %>'
         </div>
 
-        <div class="m-4">
-          <p class="font-semibold">Actions</p>
-          <ul>
-            <li>
-              <.link navigate={~p"/publishing/projects/#{project.name}/publication/new"}>
-                Draft new publication
-              </.link>
-            </li>
-            <%= if FieldPublication.User.is_admin?(@current_user) do %>
+        <div class="m-4 grid grid-cols-2">
+          <div>
+            <p class="font-semibold">Actions</p>
+            <ul>
               <li>
-                <.link
-                  navigate={~p"/publishing/projects/#{project.name}/edit"}
-                  phx-click={JS.push_focus()}
-                >
-                  Edit
+                <.link navigate={~p"/publishing/projects/#{project.name}/publication/new"}>
+                  Draft new publication
                 </.link>
               </li>
-              <li>
-                <.link
-                  phx-click={
-                    JS.push("delete", value: %{project_id: project.name})
-                    |> hide("##{project.name}")
-                  }
-                  data-confirm="Are you sure?"
-                >
-                  Delete
-                </.link>
-              </li>
+              <%= if FieldPublication.User.is_admin?(@current_user) do %>
+                <li>
+                  <.link
+                    navigate={~p"/publishing/projects/#{project.name}/edit"}
+                    phx-click={JS.push_focus()}
+                  >
+                    Edit
+                  </.link>
+                </li>
+                <li>
+                  <.link
+                    phx-click={
+                      JS.push("delete", value: %{project_id: project.name})
+                      |> hide("##{project.name}")
+                    }
+                    data-confirm="Are you sure?"
+                  >
+                    Delete
+                  </.link>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <div>
+            <p class="font-semibold">Editors</p>
+            <%= unless project.editors == [] do %>
+              <ul>
+                <%= for editor <- project.editors do %>
+                  <li><%= editor %></li>
+                <% end %>
+              </ul>
+            <% else %>
+              <div class="">-</div>
             <% end %>
-          </ul>
+          </div>
         </div>
-
         <div class="m-4">
           <p class="font-semibold">Publications (<%= Enum.count(publications) %> )</p>
           <%= if publications == [] do %>

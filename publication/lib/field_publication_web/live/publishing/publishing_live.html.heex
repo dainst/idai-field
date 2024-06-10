@@ -14,7 +14,7 @@
 </.header>
 
 <%= if @projects != [] do %>
-  <div class="grid md:grid-cols-2">
+  <div class="grid lg:grid-cols-2">
     <%= for %{project: project, publications: publications} <- @projects do %>
       <div class="bg-slate-100 m-4">
         <div class="bg-slate-200 p-3 m-4 text-center rounded-t text-lg">

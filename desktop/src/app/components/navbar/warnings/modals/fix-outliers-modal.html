@@ -12,7 +12,7 @@
     <searchable-select [selectedValue]="selectedValue"
                        [values]="getValues()"
                        [getLabel]="getValueLabel"
-                       (onValueSelected)="selectedValue = $event"></searchable-select>
+                       (onValueSelected)="updateSelectedValue($event)"></searchable-select>
 
     <div *ngIf="selectedValue" id="multiple-switch" class="row">
         <div class="col-auto mr-auto">

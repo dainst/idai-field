@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { equal, flatten, isArray, isObject, isString, set, Map } from 'tsfun';
 import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
-     Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
+     Valuelist, ValuelistUtil, BaseField, 
+     typeOf} from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import test from '@playwright/test';
@@ -62,6 +63,12 @@ export class FixOutliersModalComponent {
         }, { includeResourcesWithoutValidParent: true }).then(res => res.documents);
         this.countAffected = "";
         this.documentsToChange = [];
+    }
+
+    public updateSelectedValue(event: string) {
+        
+        this.selectedValue = event;
+        this.replaceAll = false;
     }
 
     public async prepareReplaceAll() {

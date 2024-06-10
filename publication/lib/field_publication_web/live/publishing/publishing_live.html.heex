@@ -1,0 +1,133 @@
+<.header>
+  Publishing overview
+  <:actions>
+    <%= if FieldPublication.User.is_admin?(@current_user) do %>
+      <.link phx-click="reindex_all_search_indices">
+        <.button>Reindex all search indices</.button>
+      </.link>
+
+      <.link patch={~p"/publishing/projects/new"}>
+        <.button>New Project</.button>
+      </.link>
+    <% end %>
+  </:actions>
+</.header>
+
+<%= if @projects != [] do %>
+  <div class="grid md:grid-cols-2">
+    <%= for %{project: project, publications: publications} <- @projects do %>
+      <div class="bg-slate-100 m-4">
+        <div class="bg-slate-200 p-3 m-4 text-center rounded-t text-lg">
+          Project: '<%= project.name %>'
+        </div>
+
+        <div class="m-4">
+          <p class="font-semibold">Actions</p>
+          <ul>
+            <li>
+              <.link navigate={~p"/publishing/projects/#{project.name}/publication/new"}>
+                Draft new publication
+              </.link>
+            </li>
+            <%= if FieldPublication.User.is_admin?(@current_user) do %>
+              <li>
+                <.link
+                  navigate={~p"/publishing/projects/#{project.name}/edit"}
+                  phx-click={JS.push_focus()}
+                >
+                  Edit
+                </.link>
+              </li>
+              <li>
+                <.link
+                  phx-click={
+                    JS.push("delete", value: %{project_id: project.name})
+                    |> hide("##{project.name}")
+                  }
+                  data-confirm="Are you sure?"
+                >
+                  Delete
+                </.link>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="m-4">
+          <p class="font-semibold">Publications (<%= Enum.count(publications) %> )</p>
+          <%= if publications == [] do %>
+            -
+          <% else %>
+            <%= for publication <- publications do %>
+              <% state =
+                cond do
+                  publication.publication_date == nil -> :no_release_date
+                  Date.before?(@today, publication.publication_date) -> :upcoming_release_date
+                  true -> :released
+                end %>
+
+              <div class="ml-3">
+                Drafted <.link navigate={
+                  ~p"/publishing/projects/#{project}/publication/#{publication.draft_date}"
+                }>
+                <%= publication.draft_date %>
+              </.link>, drafted by '<%= publication.drafted_by %>'.
+                <%= case state do %>
+                  <% :no_release_date -> %>
+                    <.icon name="hero-folder" class="h-6 w-6 bg-yellow-500" />
+                  <% :upcoming_release_date -> %>
+                    <.icon name="hero-folder" class="h-6 w-6 bg-green-500" />
+                    Upcoming publication <%= publication.publication_date %>
+                  <% :released -> %>
+                    <.link navigate={
+                      ~p"/#{project}/#{publication.publication_date}/#{List.first(publication.languages)}"
+                    }>
+                      <.icon name="hero-folder-open" class="h-6 w-6 bg-green-600" />
+                      Published <%= publication.publication_date %>
+                    </.link>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  There are no projects or you are not added as an editor.
+<% end %>
+
+<.modal
+  :if={@live_action in [:new_project, :edit_project]}
+  id="project-modal"
+  show
+  on_cancel={JS.patch(~p"/publishing")}
+>
+  <%= if FieldPublication.User.is_admin?(@current_user) do %>
+    <.live_component
+      module={FieldPublicationWeb.Publishing.ProjectFormComponent}
+      id={@project.name || :new}
+      title={@page_title}
+      action={@live_action}
+      project={@project}
+    />
+  <% else %>
+    Admin only.
+  <% end %>
+</.modal>
+
+<.modal
+  :if={@live_action == :new_publication}
+  id="publication-modal"
+  show
+  on_cancel={JS.patch(~p"/publishing")}
+>
+  <.live_component
+    module={FieldPublicationWeb.Publishing.PublicationLive.ReplicationFormComponent}
+    id="publication_draft"
+    action={:new}
+    project_name={@project.name}
+    patch={~p"/publishing"}
+    current_user={@current_user}
+  />
+</.modal>

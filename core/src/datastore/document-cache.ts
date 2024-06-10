@@ -35,12 +35,14 @@ export class DocumentCache {
 
     public reassign(document: Document) {
 
-        if (!document._conflicts) delete (this.get(document.resource.id))._conflicts;
-        if (!document.warnings) delete (this.get(document.resource.id)).warnings;
+        const cachedDocument: Document = this.get(document.resource.id);
 
-        Object.assign(this.get(document.resource.id), document);
+        if (!document._conflicts) delete cachedDocument._conflicts;
+        if (!document.warnings) delete cachedDocument.warnings;
 
-        return document;
+        Object.assign(cachedDocument, document);
+
+        return cachedDocument;
     }
 
 

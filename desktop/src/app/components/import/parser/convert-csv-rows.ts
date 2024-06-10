@@ -45,7 +45,8 @@ export function convertCsvRows(separator: string) {
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
 
-        return rows.map(row => row.reduce(insertFieldIntoDocument(headings), {}));
+        return rows.filter(row => !row.every(entry => !entry?.length))
+            .map(row => row.reduce(insertFieldIntoDocument(headings), {}));
     }
 }
 

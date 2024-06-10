@@ -10,7 +10,6 @@ import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from '../warnings-updater';
 import { Datastore } from '../datastore';
 import { ProjectConfiguration } from '../../services/project-configuration';
-import { Warnings } from '../../model/warnings';
 
 
 /**
@@ -71,22 +70,22 @@ export class ChangesStream {
     private async welcomeDocument(document: Document) {
 
         this.documentConverter.convert(document);
-        const previousWarnings: Warnings = document.warnings;
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
         this.indexFacade.put(document);
 
         const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
         const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
-        await WarningsUpdater.updateIndexDependentWarnings(
-            document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
-            previousIdentifier, previousWarnings, true
-        );
 
         if (previousVersion) {
-            this.documentCache.reassign(document);
+            document = this.documentCache.reassign(document);
         } else {
             this.documentCache.set(document);
         }
+
+        await WarningsUpdater.updateIndexDependentWarnings(
+            document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
+            previousIdentifier, true
+        );
 
         ObserverUtil.notify(this.remoteChangesObservers, document);
     }

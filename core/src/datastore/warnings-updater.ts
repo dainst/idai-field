@@ -55,16 +55,10 @@ export module WarningsUpdater {
                                                        documentCache: DocumentCache,
                                                        projectConfiguration: ProjectConfiguration,
                                                        datastore?: Datastore, previousIdentifier?: string,
-                                                       previousWarnings?: Warnings, updateAll: boolean = false) {
-        
+                                                       updateAll: boolean = false) {
+
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
         if (!category) return;
-
-        if (previousWarnings?.unconfiguredCategory && updateAll) {
-            await updateMissingOrInvalidParentWarningsForDescendants(
-                document, datastore, documentCache, indexFacade, projectConfiguration
-            );
-        }
 
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);
@@ -179,10 +173,12 @@ export module WarningsUpdater {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.missingRelationTargets = warnings;
             updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['missingRelationTargetIds:contain']);
         } else if (document.warnings?.missingRelationTargets) {
             delete document.warnings.missingRelationTargets;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['missingRelationTargetIds:contain']);
         }
 
         if (updateRelationTargets) {
@@ -220,11 +216,12 @@ export module WarningsUpdater {
             delete document.warnings.missingOrInvalidParent;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingOrInvalidParent:exist']);
-            if (updateAll) {
-                await updateMissingOrInvalidParentWarningsForDescendants(
-                    document, datastore, documentCache, indexFacade, projectConfiguration
-                );
-            }
+        }
+
+        if (updateAll) {
+            await updateMissingOrInvalidParentWarningsForDescendants(
+                document, datastore, documentCache, indexFacade, projectConfiguration
+            );
         }
     }
 
@@ -341,7 +338,7 @@ export module WarningsUpdater {
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'identifier:match': identifier },
             sort: { mode: 'none' }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             await updateNonUniqueIdentifierWarning(document, indexFacade);
@@ -355,7 +352,7 @@ export module WarningsUpdater {
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'missingRelationTargetIds:contain': id },
             sort: { mode: 'none' }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             await updateRelationTargetWarning(document, indexFacade, documentCache, datastore);
@@ -372,7 +369,8 @@ export module WarningsUpdater {
         }).map(to(Named.NAME));
 
         const documents: Array<Document> = (await datastore.find(
-            { categories: categoryNames, sort: { mode: 'none' } }
+            { categories: categoryNames, sort: { mode: 'none' } },
+            { includeResourcesWithoutValidParent: true }
         )).documents;
 
         for (let document of documents) {
@@ -391,7 +389,7 @@ export module WarningsUpdater {
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'isChildOf:contain': document.resource.id },
             sort: { mode: 'none' }
-        })).documents;
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
@@ -408,7 +406,10 @@ export module WarningsUpdater {
                                                                       projectConfiguration: ProjectConfiguration) {
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'isChildOf:contain': { value: document.resource.id, searchRecursively: true } },
+            constraints: {
+                'isChildOf:contain': { value: document.resource.id, searchRecursively: true },
+                'missingOrInvalidParent:exist': 'KNOWN'
+            },
             sort: { mode: 'none' }
         }, { includeResourcesWithoutValidParent: true })).documents;
 

@@ -83,6 +83,8 @@ export module Field {
 
     export function isValidFieldData(fieldData: any, field: BaseField): boolean {
 
+        if (fieldData === null || fieldData === undefined) return false;
+
         switch (field.inputType) {
             case InputType.SIMPLE_INPUT:
             case InputType.DROPDOWN:

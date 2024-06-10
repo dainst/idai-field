@@ -36,7 +36,8 @@ defmodule FieldPublication.FileService do
   def delete(project_name) do
     [
       get_raw_data_path(project_name),
-      get_web_images_path(project_name)
+      get_web_images_path(project_name),
+      get_map_tiles_path(project_name)
     ]
     |> Enum.map(&File.rm_rf/1)
     |> Enum.reduce_while([], fn result, acc ->

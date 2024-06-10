@@ -1,4 +1,4 @@
-import { flatten, intersection, set, to } from 'tsfun';
+import { flatten, intersection, set, to, isDefined } from 'tsfun';
 import { Document, ProjectConfiguration, RelationsManager,
     FieldDocument, IndexFacade, Constraint, CategoryForm, Relation, Named, Datastore } from 'idai-field-core';
 import { M } from '../../messages/m';
@@ -15,6 +15,8 @@ export module MoveUtility {
                                        isRecordedInTargetCategories: Array<CategoryForm>,
                                        projectConfiguration: ProjectConfiguration,
                                        datastore: Datastore) {
+
+        if (getParentId(document) === newParent.resource.id) return;
 
         if (!(await checkForSameOperationRelations(document, newParent, projectConfiguration))) {
             throw [M.RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS, document.resource.identifier];
@@ -35,7 +37,7 @@ export module MoveUtility {
 
         return {
             'id:match': {
-                value: set(flatten(documents.map(document => getResourceIdsToSubtract(document, indexFacade)))),
+                value: getResourceIdsToSubtract(documents, indexFacade),
                 subtract: true
             }
         };
@@ -107,8 +109,7 @@ export module MoveUtility {
         if (newParent.resource.category === 'Project' || newParent.resource.category === 'InventoryRegister') {
             document.resource.relations['isRecordedIn'] = [];
             document.resource.relations['liesWithin'] = [];
-        } else if (isRecordedInTargetCategories.map(category => category.name)
-            .includes(newParent.resource.category)) {
+        } else if (isRecordedInTargetCategories.map(to(Named.NAME)).includes(newParent.resource.category)) {
             document.resource.relations['isRecordedIn'] = [newParent.resource.id];
             document.resource.relations['liesWithin'] = [];
         } else {
@@ -118,16 +119,23 @@ export module MoveUtility {
     }
 
 
-    function getResourceIdsToSubtract(document: FieldDocument, indexFacade: IndexFacade): string[] {
+    function getResourceIdsToSubtract(documents: Array<FieldDocument>, indexFacade: IndexFacade): string[] {
 
-        const ids = [document.resource.id];
+        let ids: string[] = documents.map(document => document.resource.id);
 
-        const parentId: string|undefined = getParentId(document);
-        if (parentId) ids.push(parentId);
+        const parentIds: string[] = documents.map(document => getParentId(document))
+            .filter(isDefined);
+        if (parentIds.length === 1 || (parentIds.length > 1 && parentIds.every(id => id === parentIds[0]))) {
+            ids.push(parentIds[0]);
+        }
 
-        return ids.concat(indexFacade.getDescendantIds(
-            'isChildOf:contain', document.resource.id
-        ));
+        documents.forEach(document => {
+            ids = ids.concat(indexFacade.getDescendantIds(
+                'isChildOf:contain', document.resource.id
+            ));
+        });
+        
+        return set(ids);
     }
 
 

@@ -231,7 +231,7 @@ export class ResourcesComponent implements OnDestroy {
             } else {
                 await this.viewFacade.populateDocumentList();
             }
-            
+            result.errorMessages.forEach(errWithParams => this.messages.add(errWithParams));
         } catch (msgWithParams) {
             if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams as MsgWithParams);
             // Otherwise, the move modal has been canceled

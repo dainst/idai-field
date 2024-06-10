@@ -297,10 +297,10 @@ defmodule FieldPublication.Replication do
     PubSub.broadcast(FieldPublication.PubSub, publication_id, {:replication_log, log_entry})
   end
 
-  defp reconstruct_project_configuraton(%Publication{
-         database: database_name,
-         configuration_doc: configuration_doc_name
-       }) do
+  def reconstruct_project_configuraton(%Publication{
+        database: database_name,
+        configuration_doc: configuration_doc_name
+      }) do
     configuration_doc =
       configuration_doc_name
       |> CouchService.get_document()
@@ -329,7 +329,7 @@ defmodule FieldPublication.Replication do
     CouchService.put_document(configuration_doc_name, full_config)
   end
 
-  defp create_hierarchy_doc(%Publication{} = publication) do
+  def create_hierarchy_doc(%Publication{} = publication) do
     hierarchy_mapping =
       publication
       |> Data.get_doc_stream_for_all()

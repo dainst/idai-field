@@ -8,6 +8,8 @@ defmodule FieldPublication.Processing.Image do
     Publication
   }
 
+  require Logger
+
   def evaluate_web_images_state(%Publication{project_name: project_name} = publication) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
 
@@ -59,6 +61,10 @@ defmodule FieldPublication.Processing.Image do
 
     existing_raw_files
     |> Enum.map(fn uuid ->
+      Logger.debug(
+        "Creating web image (JPEG 2000) for '#{uuid}' in project '#{publication.project_name}'..."
+      )
+
       FieldPublication.Processing.Imagemagick.create_jp2(
         "#{raw_root}/image/#{uuid}",
         "#{web_root}/#{uuid}.jp2"

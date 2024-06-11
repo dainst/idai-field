@@ -84,6 +84,9 @@ defmodule FieldPublication.MixProject do
         "esbuild default --minify",
         "phx.digest"
       ],
+      seed: [
+        "run seed.exs"
+      ],
       "seed-desktop-test": [
         "run --eval 'FieldPublication.Project.create(\"#{seed_project_name}\")'",
         # TODO: Password via config?

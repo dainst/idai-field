@@ -85,11 +85,15 @@ export class QrCodeScannerModalComponent implements OnInit {
 
     private async initializeCameras() {
 
-        this.cameras = await QrScanner.listCameras(true);
-        if (this.cameras.length > 0) {
-            this.selectedCamera = this.getCameraFromAppState() ?? this.cameras[0];
-        } else {
-            this.cameraNotFound = true;
+        try {
+            this.cameras = await QrScanner.listCameras(true);
+            if (this.cameras.length > 0) {
+                this.selectedCamera = this.getCameraFromAppState() ?? this.cameras[0];
+            } else {
+                this.cameraNotFound = true;
+            }
+        } catch (err) {
+            this.activeModal.dismiss(err);
         }
     }
 

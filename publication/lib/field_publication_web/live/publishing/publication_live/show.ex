@@ -301,7 +301,7 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
   def handle_info({:replication_stopped}, %{assigns: %{publication: publication}} = socket) do
     # Replication was stopped prematurely by a user, the publication got deleted so we redirect the connected
     # user to the parent project.
-    {:noreply, push_navigate(socket, to: ~p"/publishing/#{publication.project_name}")}
+    {:noreply, push_navigate(socket, to: ~p"/publishing/projects/#{publication.project_name}")}
   end
 
   def handle_info({:replication_result, publication}, socket) do

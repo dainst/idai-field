@@ -744,35 +744,6 @@ defmodule FieldPublicationWeb.CoreComponents do
   end
 
   @doc """
-
-  """
-  attr :entries, :list, default: []
-  attr :date, :any, required: true
-  slot :inner_block, required: true
-
-  def publication_list(assigns) do
-    ~H"""
-    <%= for publication <- @entries do %>
-      <% color =
-        cond do
-          publication.publication_date == nil ->
-            "bg-yellow-200"
-
-          Date.before?(@date, publication.publication_date) ->
-            "bg-green-300"
-
-          true ->
-            "bg-green-500"
-        end %>
-
-      <div class={"m-1 p-2 #{color}"}>
-        <%= render_slot(@inner_block, publication) %>
-      </div>
-    <% end %>
-    """
-  end
-
-  @doc """
   Generate a checkbox group for multi-select.
   """
   attr :id, :any

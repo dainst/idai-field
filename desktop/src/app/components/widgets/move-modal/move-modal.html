@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div *ngIf="!isLoading()" class="modal-header">
     <h5 *ngIf="documents.length > 1" class="modal-title"
         i18n="@@resources.moveModal.header.move.multiple">
         <b>{{documents.length}} Ressourcen</b> verschieben?

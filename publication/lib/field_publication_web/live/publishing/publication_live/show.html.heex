@@ -76,7 +76,9 @@
                   <td>
                     <.link
                       class="font-semibold font-mono"
-                      navigate={~p"/publishing/#{@publication.project_name}/publication/new"}
+                      navigate={
+                        ~p"/publishing/projects/#{@publication.project_name}/publication/new"
+                      }
                     >
                       Redraft publication
                     </.link>
@@ -207,4 +209,4 @@
   </.form>
 </div>
 
-<.back navigate={~p"/publishing/#{@publication.project_name}"}>Back to project</.back>
+<.back navigate={~p"/publishing"}>Back to publishing</.back>

@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
+defmodule FieldPublicationWeb.Publishing.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.Schemas.Project
@@ -23,9 +23,9 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
         <.input field={@form[:_rev]} type="hidden" />
 
         <%= case @action do %>
-          <% :edit -> %>
+          <% :edit_project -> %>
             <h1><%= @project.name %></h1>
-          <% :new -> %>
+          <% :new_project -> %>
             <.input field={@form[:name]} type="text" label="Project key" />
           <% _ -> %>
         <% end %>
@@ -68,7 +68,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
     save_project(socket, socket.assigns.action, project_params)
   end
 
-  defp save_project(socket, :edit, project_params) do
+  defp save_project(socket, :edit_project, project_params) do
     case Projects.put(socket.assigns.project, project_params) do
       {:ok, updated_project} ->
         notify_parent({:saved, updated_project})
@@ -77,7 +77,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project updated successfully")
-          |> push_navigate(to: ~p"/publishing/#{updated_project}")
+          |> push_navigate(to: ~p"/publishing")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -85,7 +85,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
     end
   end
 
-  defp save_project(socket, :new, project_params) do
+  defp save_project(socket, :new_project, project_params) do
     case Projects.put(%Project{}, project_params) do
       {:ok, created_project} ->
         notify_parent({:saved, created_project})
@@ -94,7 +94,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project created successfully")
-          |> push_navigate(to: ~p"/publishing/#{created_project.name}")
+          |> push_navigate(to: ~p"/publishing")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->

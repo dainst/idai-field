@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import QrScanner from 'qr-scanner'; 
 import { Loading } from './loading';
@@ -35,7 +35,8 @@ export class QrCodeScannerModalComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal,
                 private loading: Loading,
                 private menus: Menus,
-                private appState: AppState) {}
+                private appState: AppState,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     async ngOnInit() {
@@ -76,6 +77,7 @@ export class QrCodeScannerModalComponent implements OnInit {
 
         await this.initializeCameras();
         if (!this.cameraNotFound) await this.startScanner();
+        this.changeDetectorRef.detectChanges();
 
         this.loading.stop('qrCodeScanner', false);
     }

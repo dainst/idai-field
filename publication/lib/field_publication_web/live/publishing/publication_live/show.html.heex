@@ -30,11 +30,7 @@
     <%= if @publication.replication_finished do %>
       <.list>
         <:item title="Version type">
-          <.input
-            type="select"
-            field={@publication_form[:version]}
-            options={get_version_options()}
-          />
+          <.input type="select" field={@publication_form[:version]} options={[:major, :revision]} />
         </:item>
         <:item title="Comments">
           <table class="w-full">

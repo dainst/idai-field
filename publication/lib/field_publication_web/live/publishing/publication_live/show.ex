@@ -414,10 +414,6 @@ defmodule FieldPublicationWeb.Publishing.PublicationLive.Show do
     }
   end
 
-  def get_version_options() do
-    %{"Full publication" => :major, "Revision" => :revision}
-  end
-
   defp start_data_state_evaluation(%Publication{} = publication) do
     # The result of the async task will get picked up by a `handle_info/2` above.
     Task.async(fn ->

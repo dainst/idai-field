@@ -1,5 +1,5 @@
 <.header>
-  Publishing overview
+  Publishing dashboard
   <:actions>
     <%= if FieldPublication.User.is_admin?(@current_user) do %>
       <.link phx-click="reindex_all_search_indices">
@@ -16,7 +16,7 @@
 <%= if @projects != [] do %>
   <div class="grid lg:grid-cols-2 2xl:grid-cols-3">
     <%= for %{project: project, publications: publications} <- @projects do %>
-      <div class="bg-slate-100 m-4">
+      <div class="bg-slate-100 m-4" id={"project-panel-#{project.name}"}>
         <div class="bg-slate-200 p-3 m-4 text-center rounded-t text-lg">
           Project: '<%= project.name %>'
         </div>
@@ -26,14 +26,14 @@
             <p class="font-semibold">Actions</p>
             <ul>
               <li>
-                <.link navigate={~p"/publishing/projects/#{project.name}/publication/new"}>
+                <.link patch={~p"/publishing/projects/#{project.name}/publication/new"}>
                   Draft new publication
                 </.link>
               </li>
               <%= if FieldPublication.User.is_admin?(@current_user) do %>
                 <li>
                   <.link
-                    navigate={~p"/publishing/projects/#{project.name}/edit"}
+                    patch={~p"/publishing/projects/#{project.name}/edit"}
                     phx-click={JS.push_focus()}
                   >
                     Edit

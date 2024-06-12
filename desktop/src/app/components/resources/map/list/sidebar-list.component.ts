@@ -34,7 +34,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
-    public readonly itemSize: number = 58;
+    public readonly itemSize: number = 59;
 
     private lastSelectedDocument: FieldDocument|undefined;
 

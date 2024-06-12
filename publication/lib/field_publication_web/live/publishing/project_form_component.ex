@@ -77,7 +77,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectFormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project updated successfully")
-          |> push_navigate(to: ~p"/publishing")
+          |> push_patch(to: ~p"/publishing")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -94,7 +94,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectFormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project created successfully")
-          |> push_navigate(to: ~p"/publishing")
+          |> push_patch(to: ~p"/publishing")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -106,5 +106,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectFormComponent do
     assign(socket, :form, to_form(changeset))
   end
 
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+  defp notify_parent(msg) do
+    send(self(), {__MODULE__, msg})
+  end
 end

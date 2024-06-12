@@ -53,7 +53,9 @@ defmodule FieldPublication.Projects do
       {:ok, Map.put(project, :_rev, rev)}
     else
       {:ok, %{status: 409}} ->
-        {:error, Schemas.add_duplicate_doc_error(changeset)}
+        changeset
+        |> add_error(:name, "a project with this name already exists")
+        |> apply_action(:create)
 
       error ->
         error

@@ -10,14 +10,14 @@
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6">
       <%= if @current_user do %>
-        <.link href="/publishing" class="text-[0.8125rem] leading-6 font-semibold ">
-          Publishing
+        <.link href="/management" class="text-[0.8125rem] leading-6 font-semibold ">
+          Management
         </.link>
 
         <%= if FieldPublication.User.is_admin?(@current_user) do %>
           <a>
             <.link
-              href={~p"/publishing/users"}
+              href={~p"/management/users"}
               method="get"
               class="text-[0.8125rem] leading-6 font-semibold "
             >

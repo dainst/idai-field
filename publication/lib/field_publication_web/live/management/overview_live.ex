@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Publishing.PublishingLive do
+defmodule FieldPublicationWeb.Management.OverviewLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schemas.{
@@ -53,7 +53,7 @@ defmodule FieldPublicationWeb.Publishing.PublishingLive do
 
   @impl true
   def handle_info(
-        {FieldPublicationWeb.Publishing.ProjectFormComponent, {:saved, _project}},
+        {FieldPublicationWeb.Management.ProjectFormComponent, {:saved, _project}},
         socket
       ) do
     {:noreply, assign_projects(socket)}
@@ -61,7 +61,7 @@ defmodule FieldPublicationWeb.Publishing.PublishingLive do
 
   @impl true
   def handle_info(
-        {FieldPublicationWeb.Publishing.PublicationLive.ReplicationFormComponent,
+        {FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponent,
          {%ReplicationInput{} = params, %Publication{} = publication}},
         socket
       ) do
@@ -75,7 +75,7 @@ defmodule FieldPublicationWeb.Publishing.PublishingLive do
       socket
       |> push_navigate(
         to:
-          ~p"/publishing/projects/#{publication.project_name}/publication/#{publication.draft_date}"
+          ~p"/management/projects/#{publication.project_name}/publication/#{publication.draft_date}"
       )
     }
   end

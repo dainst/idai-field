@@ -1,8 +1,8 @@
-defmodule FieldPublicationWeb.Publishing.UserLive.Management do
+defmodule FieldPublicationWeb.Management.UserLive.Management do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.User
-  alias FieldPublicationWeb.Publishing.UserLive.FormComponent
+  alias FieldPublicationWeb.Management.UserLive.FormComponent
 
   @impl true
   def render(assigns) do

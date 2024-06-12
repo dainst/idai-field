@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.PublishingLiveTest do
+defmodule FieldPublicationWeb.OverviewLiveTest do
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
   alias FieldPublication.Schemas.Project
@@ -35,7 +35,7 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
     assert {
              :error,
              {:redirect, %{to: _, flash: %{"error" => "You must log in to access this page."}}}
-           } = live(conn, ~p"/publishing")
+           } = live(conn, ~p"/management")
   end
 
   describe "editors" do
@@ -58,30 +58,30 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
       %{conn: conn}
     end
 
-    test "have access to publishing overview, but only for projects where they are editor", %{
+    test "have access to management overview, but only for projects where they are editor", %{
       conn: conn
     } do
-      {:ok, _live_process, html} = live(conn, ~p"/publishing")
+      {:ok, _live_process, html} = live(conn, ~p"/management")
 
-      assert html =~ "Publishing dashboard"
+      assert html =~ "<h1>Projects</h1>"
       assert not (html =~ @test_project_name)
       assert html =~ @new_project_name
     end
 
     test "can access their project's draft form", %{conn: conn} do
-      {:ok, live_process, _html} = live(conn, ~p"/publishing")
+      {:ok, live_process, _html} = live(conn, ~p"/management")
 
       assert live_process
              |> element("#project-panel-#{@new_project_name} a", "Draft new publication")
              |> render_click()
 
-      assert_patch(live_process, ~p"/publishing/projects/#{@new_project_name}/publication/new")
+      assert_patch(live_process, ~p"/management/projects/#{@new_project_name}/publication/new")
 
       assert render(live_process) =~ "Create new publication draft"
     end
 
     test "can neither edit nor delete their project settings", %{conn: conn} do
-      {:ok, live_process, _html} = live(conn, ~p"/publishing")
+      {:ok, live_process, _html} = live(conn, ~p"/management")
 
       assert not has_element?(live_process, "#project-panel-#{@new_project_name} a", "Edit")
       assert not has_element?(live_process, "#project-panel-#{@new_project_name} a", "Delete")
@@ -106,19 +106,19 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
       %{conn: conn}
     end
 
-    test "has access to publishing overview", %{conn: conn, test_project: project} do
-      {:ok, _live_process, html} = live(conn, ~p"/publishing")
+    test "has access to management overview", %{conn: conn, test_project: project} do
+      {:ok, _live_process, html} = live(conn, ~p"/management")
 
-      assert html =~ "Publishing dashboard"
+      assert html =~ "<h1>Projects</h1>"
       assert html =~ project.name
       assert html =~ "Publications (0)"
     end
 
     test "can not create project with the duplicate name", %{conn: conn} do
-      {:ok, live_process, _html} = live(conn, ~p"/publishing")
+      {:ok, live_process, _html} = live(conn, ~p"/management")
 
       assert live_process
-             |> element("a", "New Project")
+             |> element("a", "Create new project")
              |> render_click()
 
       assert live_process
@@ -127,9 +127,9 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
     end
 
     test "can create and delete projects", %{conn: conn} do
-      {:ok, live_process, _html} = live(conn, ~p"/publishing")
+      {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      assert live_process |> element("a", "New Project") |> render_click() =~
+      assert live_process |> element("a", "Create new project") |> render_click() =~
                "Publishing | New Project"
 
       assert live_process
@@ -140,7 +140,7 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
              |> form("#project-form", project: %{"name" => @new_project_name})
              |> render_submit()
 
-      assert_patch(live_process, ~p"/publishing")
+      assert_patch(live_process, ~p"/management")
 
       html = render(live_process)
       assert html =~ "Project created successfully"
@@ -160,7 +160,7 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
     end
 
     test "can add and remove users to project", %{conn: conn} do
-      {:ok, live_process, _html} = live(conn, ~p"/publishing")
+      {:ok, live_process, _html} = live(conn, ~p"/management")
 
       assert not has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user)
 
@@ -168,7 +168,7 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
              |> element("#project-panel-#{@test_project_name} a", "Edit")
              |> render_click() =~ "Publishing | Edit Project"
 
-      assert_patch(live_process, ~p"/publishing/projects/#{@test_project_name}/edit")
+      assert_patch(live_process, ~p"/management/projects/#{@test_project_name}/edit")
 
       assert not (live_process
                   |> element(~s{[for="project[editors][]-test_user"] input})
@@ -184,7 +184,7 @@ defmodule FieldPublicationWeb.PublishingLiveTest do
 
       assert live_process |> form("#project-form") |> render_submit()
 
-      assert_patch(live_process, ~p"/publishing")
+      assert_patch(live_process, ~p"/management")
 
       assert has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user)
 

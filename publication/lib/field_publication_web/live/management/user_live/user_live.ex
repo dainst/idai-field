@@ -9,12 +9,12 @@ defmodule FieldPublicationWeb.Management.UserLive do
     ~H"""
     <h1>Manage users</h1>
 
-    <p class="font-semibold">Actions</p>
+    <p class="font-semibold"><%= gettext("Actions") %></p>
 
     <ul>
       <li>
         <.link patch={~p"/management/users/new"}>
-          Add User
+          <%= gettext("Add user") %>
         </.link>
       </li>
     </ul>
@@ -22,7 +22,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
     <table class="w-full mt-8">
       <thead>
         <tr>
-          <th class="text-left">Username</th>
+          <th class="text-left"><%= gettext("Username") %></th>
           <th class="text-right"><%= gettext("Actions") %></th>
         </tr>
       </thead>
@@ -34,7 +34,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
               <div class="space-x-4">
                 <span>
                   <.link navigate={~p"/management/users/#{user.name}/new_password"}>
-                    New password
+                    <%= gettext("New password") %>
                   </.link>
                 </span>
                 <span>
@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
                     phx-click={JS.push("delete", value: %{name: user.name}) |> hide("##{user.name}")}
                     data-confirm="Are you sure?"
                   >
-                    Delete
+                    <%= gettext("Delete") %>
                   </.link>
                 </span>
               </div>
@@ -52,7 +52,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
       </tbody>
     </table>
 
-    <.back navigate={~p"/management"}>Back to management</.back>
+    <.back navigate={~p"/management"}><%= gettext("Back to management") %></.back>
 
     <.modal
       :if={@live_action in [:new, :new_password]}

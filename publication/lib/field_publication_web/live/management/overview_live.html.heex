@@ -1,4 +1,4 @@
-<%= if FieldPublication.User.is_admin?(@current_user) do %>
+<%= if FieldPublication.Users.is_admin?(@current_user) do %>
   <h1>Administration</h1>
   <div>
     <p class="font-semibold">Actions</p>
@@ -39,7 +39,7 @@
                   Draft new publication
                 </.link>
               </li>
-              <%= if FieldPublication.User.is_admin?(@current_user) do %>
+              <%= if FieldPublication.Users.is_admin?(@current_user) do %>
                 <li>
                   <.link
                     patch={~p"/management/projects/#{project.name}/edit"}
@@ -160,7 +160,7 @@
   show
   on_cancel={JS.patch(~p"/management")}
 >
-  <%= if FieldPublication.User.is_admin?(@current_user) do %>
+  <%= if FieldPublication.Users.is_admin?(@current_user) do %>
     <.live_component
       module={FieldPublicationWeb.Management.ProjectFormComponent}
       id={@project.name || :new}

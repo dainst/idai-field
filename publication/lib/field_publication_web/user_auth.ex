@@ -187,7 +187,7 @@ defmodule FieldPublicationWeb.UserAuth do
   def on_mount(:ensure_is_admin, _params, session, socket) do
     socket = mount_current_user(socket, session)
 
-    if FieldPublication.User.is_admin?(socket.assigns.current_user) do
+    if FieldPublication.Users.is_admin?(socket.assigns.current_user) do
       {:cont, socket}
     else
       socket =
@@ -266,7 +266,7 @@ defmodule FieldPublicationWeb.UserAuth do
   Used for routes exclusive to the CouchDB admin.
   """
   def require_administrator(conn, _opts) do
-    if FieldPublication.User.is_admin?(conn.assigns[:current_user]) do
+    if FieldPublication.Users.is_admin?(conn.assigns[:current_user]) do
       conn
     else
       conn

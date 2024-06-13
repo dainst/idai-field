@@ -1,23 +1,7 @@
-defmodule FieldPublication.User do
+defmodule FieldPublication.Users do
   alias FieldPublication.CouchService
 
-  defmodule InputSchema do
-    use Ecto.Schema
-
-    import Ecto.Changeset
-
-    @derive Jason.Encoder
-    @primary_key {:name, :string, autogenerate: false}
-    embedded_schema do
-      field(:password, :string, redact: true)
-    end
-
-    def changeset(%__MODULE__{} = user, attrs \\ %{}) do
-      user
-      |> cast(attrs, [:name, :password])
-      |> validate_required([:name])
-    end
-  end
+  alias FieldPublication.DocumentSchema.User
 
   @moduledoc """
   Bundles (CouchDB) user related functions.
@@ -32,7 +16,7 @@ defmodule FieldPublication.User do
       {:ok, %{status: 200, body: body}} ->
         %{"name" => name} = Jason.decode!(body)
 
-        %FieldPublication.User.InputSchema{
+        %User{
           name: name
         }
 
@@ -52,8 +36,8 @@ defmodule FieldPublication.User do
   - `password` the user's password.
   """
   def create(params) do
-    %FieldPublication.User.InputSchema{}
-    |> FieldPublication.User.InputSchema.changeset(params)
+    %User{}
+    |> User.changeset(params)
     |> Ecto.Changeset.validate_required(:password)
     |> Ecto.Changeset.apply_action(:create)
     |> case do
@@ -68,7 +52,7 @@ defmodule FieldPublication.User do
 
           {:ok, %{status: 409}} ->
             user_struct
-            |> FieldPublication.User.InputSchema.changeset()
+            |> User.changeset()
             |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
             |> Ecto.Changeset.apply_action(:validate)
         end
@@ -105,7 +89,7 @@ defmodule FieldPublication.User do
   """
   def update(user, params) do
     user
-    |> FieldPublication.User.InputSchema.changeset(params)
+    |> User.changeset(params)
     |> Ecto.Changeset.apply_action(:update)
     |> case do
       {:error, _changeset} = error ->
@@ -121,7 +105,7 @@ defmodule FieldPublication.User do
             {
               :error,
               user
-              |> FieldPublication.User.InputSchema.changeset()
+              |> User.changeset()
               |> Ecto.Changeset.add_error(:name, "name not found.")
             }
         end

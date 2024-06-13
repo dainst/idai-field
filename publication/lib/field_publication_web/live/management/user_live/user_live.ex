@@ -1,7 +1,8 @@
 defmodule FieldPublicationWeb.Management.UserLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.User
+  alias FieldPublication.Users
+  alias FieldPublication.DocumentSchema.User
   alias FieldPublicationWeb.Management.UserLive.FormComponent
 
   @impl true
@@ -76,7 +77,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
   def mount(_params, _session, socket) do
     {
       :ok,
-      assign(socket, :users, User.list())
+      assign(socket, :users, Users.list())
     }
   end
 
@@ -93,27 +94,27 @@ defmodule FieldPublicationWeb.Management.UserLive do
   defp apply_action(socket, :new_password, %{"name" => name}) do
     socket
     |> assign(:page_title, "Edit User '#{name}'")
-    |> assign(:user, User.get(name))
+    |> assign(:user, Users.get(name))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New user")
-    |> assign(:user, %User.InputSchema{})
+    |> assign(:user, %User{})
   end
 
   @impl true
   def handle_event("delete", %{"name" => name}, socket) do
-    User.delete(name)
+    Users.delete(name)
 
     {
       :noreply,
-      socket |> assign(:users, User.list())
+      socket |> assign(:users, Users.list())
     }
   end
 
   @impl true
   def handle_info({FormComponent, {:saved, _user}}, socket) do
-    {:noreply, assign(socket, :users, User.list())}
+    {:noreply, assign(socket, :users, Users.list())}
   end
 end

@@ -2,7 +2,8 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.CouchService
-  alias FieldPublication.User
+  alias FieldPublication.Users
+  alias FieldPublication.DocumentSchema.User
 
   @impl true
   def render(assigns) do
@@ -58,7 +59,7 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
 
   @impl true
   def update(%{user: user} = assigns, socket) do
-    changeset = User.InputSchema.changeset(user)
+    changeset = User.changeset(user)
 
     {
       :ok,
@@ -72,7 +73,7 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
   def handle_event("validate", %{"input_schema" => form_params}, socket) do
     changeset =
       socket.assigns.user
-      |> User.InputSchema.changeset(form_params)
+      |> User.changeset(form_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :form, to_form(changeset))}
@@ -91,7 +92,7 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
   end
 
   defp save_user(socket, :new_password, form_params) do
-    User.update(socket.assigns.user, form_params)
+    Users.update(socket.assigns.user, form_params)
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
@@ -109,7 +110,7 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
   end
 
   defp save_user(socket, :new, form_params) do
-    User.create(form_params)
+    Users.create(form_params)
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}

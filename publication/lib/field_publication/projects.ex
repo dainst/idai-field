@@ -4,7 +4,7 @@ defmodule FieldPublication.Projects do
   alias FieldPublication.DocumentSchema.Base
   alias FieldPublication.DocumentSchema.Project
   alias FieldPublication.CouchService
-  alias FieldPublication.User
+  alias FieldPublication.Users
   alias FieldPublication.FileService
   alias FieldPublication.Publications
 
@@ -83,7 +83,7 @@ defmodule FieldPublication.Projects do
   end
 
   def has_project_access?(project_name, user_name) do
-    if User.is_admin?(user_name) do
+    if Users.is_admin?(user_name) do
       true
     else
       project = get!(project_name)

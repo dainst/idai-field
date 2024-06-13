@@ -2,7 +2,7 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.DocumentSchema.Project
-  alias FieldPublication.User
+  alias FieldPublication.Users
   alias FieldPublication.Projects
 
   @impl true
@@ -43,7 +43,7 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
     changeset = Project.changeset(project)
 
     # TODO: Extend users to show better labels. First item in tuple is used as label in the checkbox.
-    users = User.list() |> Enum.map(fn %{name: name} -> {name, name} end)
+    users = Users.list() |> Enum.map(fn %{name: name} -> {name, name} end)
 
     {
       :ok,

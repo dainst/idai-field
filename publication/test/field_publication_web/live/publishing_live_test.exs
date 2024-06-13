@@ -33,7 +33,7 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
     %{test_project: project}
   end
 
-  test "user has to be logged in to view index or single view", %{
+  test "user has to be logged in to see the management overview", %{
     conn: conn
   } do
     assert {

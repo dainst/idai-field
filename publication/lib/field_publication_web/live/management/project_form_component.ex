@@ -42,8 +42,11 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
   def update(%{project: project} = assigns, socket) do
     changeset = Project.changeset(project)
 
-    # TODO: Extend users to show better labels. First item in tuple is used as label in the checkbox.
-    users = Users.list() |> Enum.map(fn %{name: name} -> {name, name} end)
+    users =
+      Enum.map(
+        Users.list(),
+        fn %{name: name, label: label} -> {label, name} end
+      )
 
     {
       :ok,

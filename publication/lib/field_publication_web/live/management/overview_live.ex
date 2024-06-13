@@ -10,6 +10,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   alias FieldPublication.Projects
   alias FieldPublication.Publications
   alias FieldPublication.Processing
+  alias FieldPublication.Users
 
   @impl true
   def mount(_params, _session, socket) do
@@ -17,6 +18,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       :ok,
       socket
       |> assign_projects()
+      |> assign(:users, Users.list())
       |> assign(:today, Date.utc_today())
       |> assign(:page_title, "Publishing")
     }

@@ -67,7 +67,11 @@
             <%= unless project.editors == [] do %>
               <ul>
                 <%= for editor <- project.editors do %>
-                  <li><%= editor %></li>
+                  <li>
+                    <%= @users
+                    |> Enum.find(%{label: editor}, fn %{name: name} -> name == editor end)
+                    |> Map.get(:label) %>
+                  </li>
                 <% end %>
               </ul>
             <% else %>
@@ -138,7 +142,13 @@
                       <% end %>
                       <tr class="mt-2">
                         <td>Drafted by</td>
-                        <td>'<%= publication.drafted_by %>'</td>
+                        <td>
+                          '<%= @users
+                          |> Enum.find(%{label: publication.drafted_by}, fn %{name: name} ->
+                            name == publication.drafted_by
+                          end)
+                          |> Map.get(:label) %>'
+                        </td>
                       </tr>
                     </tr>
                   </tbody>

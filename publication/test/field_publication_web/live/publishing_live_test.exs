@@ -169,6 +169,16 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
     end
 
     test "can add and remove users to project", %{conn: conn} do
+      on_exit(fn ->
+        case Projects.get(@test_project_name) do
+          {:ok, project} ->
+            Projects.put(project, %{"editors" => []})
+
+          _ ->
+            :ok
+        end
+      end)
+
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
       assert not has_element?(
@@ -200,16 +210,6 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
       assert_patch(live_process, ~p"/management")
 
       assert has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user.label)
-
-      on_exit(fn ->
-        case Projects.get(@test_project_name) do
-          {:ok, project} ->
-            Projects.put(project, %{"editors" => []})
-
-          _ ->
-            :ok
-        end
-      end)
     end
 
     test "can access every projects' draft form", %{conn: conn} do

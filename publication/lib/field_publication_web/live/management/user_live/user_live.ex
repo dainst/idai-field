@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Management.UserLive.Management do
+defmodule FieldPublicationWeb.Management.UserLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.User

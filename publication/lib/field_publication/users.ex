@@ -53,13 +53,16 @@ defmodule FieldPublication.Users do
         CouchService.create_user(user)
         |> case do
           {:ok, %{status: 201}} ->
-            user
+            {:ok, user}
 
           {:ok, %{status: 409}} ->
-            user
-            |> User.changeset()
-            |> Ecto.Changeset.add_error(:user_name, "name '#{name}' already taken.")
-            |> Ecto.Changeset.apply_action(:validate)
+            {
+              :error,
+              user
+              |> User.changeset()
+              |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
+              |> Ecto.Changeset.apply_action(:validate)
+            }
         end
     end
   end

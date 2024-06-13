@@ -84,7 +84,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
   def mount(_params, _session, socket) do
     {
       :ok,
-      assign(socket, :users, Users.list() |> IO.inspect())
+      assign(socket, :users, Users.list())
     }
   end
 

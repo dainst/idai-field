@@ -30,11 +30,7 @@
     <%= if @publication.replication_finished do %>
       <.list>
         <:item title="Version type">
-          <.input
-            type="select"
-            field={@publication_form[:version]}
-            options={get_version_options()}
-          />
+          <.input type="select" field={@publication_form[:version]} options={[:major, :revision]} />
         </:item>
         <:item title="Comments">
           <table class="w-full">
@@ -77,7 +73,7 @@
                     <.link
                       class="font-semibold font-mono"
                       navigate={
-                        ~p"/publishing/projects/#{@publication.project_name}/publication/new"
+                        ~p"/management/projects/#{@publication.project_name}/publication/new"
                       }
                     >
                       Redraft publication
@@ -209,4 +205,4 @@
   </.form>
 </div>
 
-<.back navigate={~p"/publishing"}>Back to publishing</.back>
+<.back navigate={~p"/management"}>Back to publishing</.back>

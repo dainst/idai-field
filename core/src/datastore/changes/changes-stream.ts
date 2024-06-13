@@ -12,13 +12,19 @@ import { Datastore } from '../datastore';
 import { ProjectConfiguration } from '../../services/project-configuration';
 
 
+export type RemoteChangeInfo = {
+    document: Document,
+    new: boolean
+};
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class ChangesStream {
 
-    private remoteChangesObservers: Array<Observer<Document>> = [];
+    private remoteChangesObservers: Array<Observer<RemoteChangeInfo>> = [];
     private remoteConfigurationChangesObservers: Array<Observer<void>> = [];
     private projectDocumentObservers: Array<Observer<Document>> = [];
 
@@ -58,7 +64,7 @@ export class ChangesStream {
 
 
     public remoteChangesNotifications =
-        (): Observable<Document> => ObserverUtil.register(this.remoteChangesObservers);
+        (): Observable<RemoteChangeInfo> => ObserverUtil.register(this.remoteChangesObservers);
 
     public remoteConfigurationChangesNotifications =
         (): Observable<void> => ObserverUtil.register(this.remoteConfigurationChangesObservers);
@@ -87,7 +93,10 @@ export class ChangesStream {
             previousIdentifier, true
         );
 
-        ObserverUtil.notify(this.remoteChangesObservers, document);
+        ObserverUtil.notify(
+            this.remoteChangesObservers,
+            { document, new: previousVersion === undefined }
+        );
     }
 
 

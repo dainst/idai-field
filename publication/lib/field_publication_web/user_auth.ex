@@ -355,7 +355,7 @@ defmodule FieldPublicationWeb.UserAuth do
     |> Plug.Conn.put_req_header("x-forwarded-path", "/api/image/")
   end
 
-  defp put_token_in_session(conn, token) do
+  def put_token_in_session(conn, token) do
     conn
     |> put_session(:user_token, token)
     |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
@@ -369,7 +369,7 @@ defmodule FieldPublicationWeb.UserAuth do
 
   defp signed_in_path(_conn), do: ~p"/"
 
-  defp generate_user_session_token(user) do
+  def generate_user_session_token(user) do
     # Generates a token that will be stored in a signed place,
     # such as session or cookie. As they are signed, those
     # tokens do not need to be hashed.

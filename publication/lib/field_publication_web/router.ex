@@ -63,27 +63,27 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-      live "/publishing", Publishing.PublishingLive, :index
+      live "/management", Management.OverviewLive, :index
     end
   end
 
   # Routes that require the admin user to be logged in.
-  scope "/publishing", FieldPublicationWeb do
+  scope "/management", FieldPublicationWeb do
     pipe_through [:browser, :require_administrator]
 
     live_session :require_administrator,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-      live "/users", Publishing.UserLive.Management, :index
-      live "/users/new", Publishing.UserLive.Management, :new
-      live "/users/:name/new_password", Publishing.UserLive.Management, :new_password
+      live "/users", Management.UserLive.Management, :index
+      live "/users/new", Management.UserLive.Management, :new
+      live "/users/:name/new_password", Management.UserLive.Management, :new_password
 
-      live "/projects/new", Publishing.PublishingLive, :new_project
-      live "/projects/:project_id/edit", Publishing.PublishingLive, :edit_project
+      live "/projects/new", Management.OverviewLive, :new_project
+      live "/projects/:project_id/edit", Management.OverviewLive, :edit_project
     end
   end
 
   # Routes that require a user with access to a specific project
-  scope "/publishing", FieldPublicationWeb do
+  scope "/management", FieldPublicationWeb do
     pipe_through [:browser, :require_project_access]
 
     live_session :require_project_access,
@@ -92,10 +92,10 @@ defmodule FieldPublicationWeb.Router do
         {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
       ] do
       live "/projects/:project_id/publication/new",
-           Publishing.PublishingLive,
+           Management.OverviewLive,
            :new_publication
 
-      live "/projects/:project_id/publication/:draft_date", Publishing.PublicationLive.Show
+      live "/projects/:project_id/publication/:draft_date", Management.PublicationLive.Show
     end
   end
 

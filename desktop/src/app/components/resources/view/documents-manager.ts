@@ -1,7 +1,7 @@
 import { Observable, Observer } from 'rxjs';
 import { clone, isString, set, subtract } from 'tsfun';
 import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource,
-    CHILDOF_EXIST, Constraints, UNKNOWN } from 'idai-field-core';
+    CHILDOF_EXIST, Constraints, UNKNOWN, RemoteChangeInfo } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { Loading } from '../../../components/widgets/loading';
 import { ResourcesStateManager } from './resources-state-manager';
@@ -44,7 +44,7 @@ export class DocumentsManager {
                 private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number) {
         
         changesStream.remoteChangesNotifications()
-            .subscribe(document => this.handleRemoteChange(document));
+            .subscribe(remoteChangeInfo => this.handleRemoteChange(remoteChangeInfo));
     }
 
 
@@ -302,15 +302,17 @@ export class DocumentsManager {
     }
 
 
-    private async handleRemoteChange(changedDocument: Document) {
+    private async handleRemoteChange(remoteChangeInfo: RemoteChangeInfo) {
 
         if (!this.documents) return;
 
-        if (this.documents.find(Document.hasEqualId(changedDocument))) {
+        if (!remoteChangeInfo.new) {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
-        this.newDocumentsFromRemote = set(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
+        this.newDocumentsFromRemote = set(
+            this.newDocumentsFromRemote.concat([remoteChangeInfo.document.resource.id])
+        );
         await this.populateDocumentList(false);
     }
 

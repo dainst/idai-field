@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Publishing.PublishingLive do
+defmodule FieldPublicationWeb.Management.OverviewLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Schemas.{
@@ -53,7 +53,7 @@ defmodule FieldPublicationWeb.Publishing.PublishingLive do
 
   @impl true
   def handle_info(
-        {FieldPublicationWeb.Publishing.ProjectFormComponent, {:saved, _project}},
+        {FieldPublicationWeb.Management.ProjectFormComponent, {:saved, _project}},
         socket
       ) do
     {:noreply, assign_projects(socket)}
@@ -61,7 +61,7 @@ defmodule FieldPublicationWeb.Publishing.PublishingLive do
 
   @impl true
   def handle_info(
-        {FieldPublicationWeb.Publishing.PublicationLive.ReplicationFormComponent,
+        {FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponent,
          {%ReplicationInput{} = params, %Publication{} = publication}},
         socket
       ) do
@@ -75,7 +75,7 @@ defmodule FieldPublicationWeb.Publishing.PublishingLive do
       socket
       |> push_navigate(
         to:
-          ~p"/publishing/projects/#{publication.project_name}/publication/#{publication.draft_date}"
+          ~p"/management/projects/#{publication.project_name}/publication/#{publication.draft_date}"
       )
     }
   end
@@ -96,25 +96,6 @@ defmodule FieldPublicationWeb.Publishing.PublishingLive do
     |> Enum.each(&Processing.start(&1, :search_index))
 
     {:noreply, socket}
-  end
-
-  def publication_stats(publications) do
-    %{
-      draft_count:
-        publications
-        |> Enum.filter(fn pub -> is_nil(pub.publication_date) end)
-        |> Enum.count(),
-      publication_scheduled_count:
-        publications
-        |> Enum.filter(fn pub -> not is_nil(pub.publication_date) end)
-        |> Enum.filter(fn pub -> pub.publication_date < Date.utc_today() end)
-        |> Enum.count(),
-      published_count:
-        publications
-        |> Enum.filter(fn pub -> not is_nil(pub.publication_date) end)
-        |> Enum.filter(fn pub -> pub.publication_date > Date.utc_today() end)
-        |> Enum.count()
-    }
   end
 
   defp assign_projects(socket) do

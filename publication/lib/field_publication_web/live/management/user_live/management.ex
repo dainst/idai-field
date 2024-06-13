@@ -1,8 +1,8 @@
-defmodule FieldPublicationWeb.Publishing.UserLive.Management do
+defmodule FieldPublicationWeb.Management.UserLive.Management do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.User
-  alias FieldPublicationWeb.Publishing.UserLive.FormComponent
+  alias FieldPublicationWeb.Management.UserLive.FormComponent
 
   @impl true
   def render(assigns) do
@@ -10,7 +10,7 @@ defmodule FieldPublicationWeb.Publishing.UserLive.Management do
     <.header>
       Listing Users
       <:actions>
-        <.link patch={~p"/publishing/users/new"}>
+        <.link patch={~p"/management/users/new"}>
           <.button>New User</.button>
         </.link>
       </:actions>
@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Publishing.UserLive.Management do
             <td>
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
                 <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-                  <.link navigate={~p"/publishing/users/#{user.name}/new_password"}>
+                  <.link navigate={~p"/management/users/#{user.name}/new_password"}>
                     New password
                   </.link>
                 </span>
@@ -49,13 +49,13 @@ defmodule FieldPublicationWeb.Publishing.UserLive.Management do
       </tbody>
     </table>
 
-    <.back navigate={~p"/"}>To projects</.back>
+    <.back navigate={~p"/management"}>Back to management</.back>
 
     <.modal
       :if={@live_action in [:new, :new_password]}
       id="user-modal"
       show
-      on_cancel={JS.patch(~p"/publishing/users")}
+      on_cancel={JS.patch(~p"/management/users")}
     >
       <.live_component
         module={FormComponent}
@@ -63,7 +63,7 @@ defmodule FieldPublicationWeb.Publishing.UserLive.Management do
         title={@page_title}
         action={@live_action}
         user={@user}
-        patch={~p"/publishing/users"}
+        patch={~p"/management/users"}
       />
     </.modal>
     """

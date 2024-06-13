@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Publishing.ProjectFormComponent do
+defmodule FieldPublicationWeb.Management.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.Schemas.Project
@@ -69,20 +69,16 @@ defmodule FieldPublicationWeb.Publishing.ProjectFormComponent do
   end
 
   defp save_project(socket, :edit_project, project_params) do
-    case Projects.put(socket.assigns.project, project_params) do
-      {:ok, updated_project} ->
-        notify_parent({:saved, updated_project})
+    {:ok, updated_project} = Projects.put(socket.assigns.project, project_params)
 
-        {
-          :noreply,
-          socket
-          |> put_flash(:info, "Project updated successfully")
-          |> push_patch(to: ~p"/publishing")
-        }
+    notify_parent({:saved, updated_project})
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
+    {
+      :noreply,
+      socket
+      |> put_flash(:info, "Project updated successfully")
+      |> push_patch(to: ~p"/management")
+    }
   end
 
   defp save_project(socket, :new_project, project_params) do
@@ -94,7 +90,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectFormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project created successfully")
-          |> push_patch(to: ~p"/publishing")
+          |> push_patch(to: ~p"/management")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->

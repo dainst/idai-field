@@ -81,7 +81,7 @@
             -
           <% else %>
             <%= for publication <- publications do %>
-              <table class="table-auto w-full mb-8 ml-3">
+              <table class="table-auto w-full mb-8 ml-3 hover:bg-slate-300">
                 <% state =
                   cond do
                     publication.publication_date == nil -> :no_release_date
@@ -90,7 +90,7 @@
                   end %>
 
                 <tbody>
-                  <tr class="mt-2">
+                  <tr class="mt-2 border-b-2">
                     <td>Publication type</td>
                     <td><strong><%= publication.version %></strong></td>
                   </tr>

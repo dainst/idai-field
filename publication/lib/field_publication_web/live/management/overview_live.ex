@@ -1,15 +1,15 @@
 defmodule FieldPublicationWeb.Management.OverviewLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Schemas.{
+  alias FieldPublication.DocumentSchema.{
     Project,
-    Publication
+    Publication,
+    ReplicationInput
   }
 
   alias FieldPublication.Projects
   alias FieldPublication.Publications
   alias FieldPublication.Processing
-  alias FieldPublication.Schemas.ReplicationInput
 
   @impl true
   def mount(_params, _session, socket) do

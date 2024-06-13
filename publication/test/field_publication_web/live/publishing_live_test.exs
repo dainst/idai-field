@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.OverviewLiveTest do
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
-  alias FieldPublication.Schemas.Project
+  alias FieldPublication.DocumentSchema.Project
 
   use FieldPublicationWeb.ConnCase
 

@@ -9,7 +9,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     Replication
   }
 
-  alias FieldPublication.Schemas.ReplicationInput
+  alias FieldPublication.DocumentSchema.ReplicationInput
 
   require Logger
 

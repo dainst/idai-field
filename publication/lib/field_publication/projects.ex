@@ -1,8 +1,8 @@
 defmodule FieldPublication.Projects do
   import Ecto.Changeset
 
-  alias FieldPublication.Schemas
-  alias FieldPublication.Schemas.Project
+  alias FieldPublication.DocumentSchema.Base
+  alias FieldPublication.DocumentSchema.Project
   alias FieldPublication.CouchService
   alias FieldPublication.User
   alias FieldPublication.FileService
@@ -92,6 +92,6 @@ defmodule FieldPublication.Projects do
   end
 
   def get_document_id(%Project{} = struct) do
-    Schemas.construct_doc_id(struct, Project)
+    Base.construct_doc_id(struct, Project)
   end
 end

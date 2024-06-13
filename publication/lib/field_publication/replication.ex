@@ -14,7 +14,7 @@ defmodule FieldPublication.Replication do
     Publications
   }
 
-  alias FieldPublication.Schemas.{
+  alias FieldPublication.DocumentSchema.{
     ReplicationInput,
     Publication,
     LogEntry

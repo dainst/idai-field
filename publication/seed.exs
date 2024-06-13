@@ -4,7 +4,7 @@ defmodule Seeder do
   alias FieldPublication.Replication
   alias FieldPublication.CouchService
   alias FieldPublication.Publications
-  alias FieldPublication.Schemas.ReplicationInput
+  alias FieldPublication.DocumentSchema.ReplicationInput
   alias FieldPublication.Projects
 
   require Logger
@@ -26,7 +26,7 @@ defmodule Seeder do
       |> then(fn %{"resource" => %{"identifier" => identifier}} -> identifier end)
 
     case Projects.get(seed_project_identifier) do
-      {:ok, %FieldPublication.Schemas.Project{} = project} ->
+      {:ok, %FieldPublication.DocumentSchema.Project{} = project} ->
         Logger.info("Recreating seed project '#{seed_project_identifier}'.")
         {:ok, :deleted} = Projects.delete(project)
 
@@ -39,8 +39,8 @@ defmodule Seeder do
   end
 
   def create(identifier, docs) do
-    {:ok, %FieldPublication.Schemas.Project{}} =
-      Projects.put(%FieldPublication.Schemas.Project{}, %{
+    {:ok, %FieldPublication.DocumentSchema.Project{}} =
+      Projects.put(%FieldPublication.DocumentSchema.Project{}, %{
         "name" => identifier
       })
 
@@ -54,7 +54,7 @@ defmodule Seeder do
         "drafted_by" => "mix seed"
       })
 
-    {:ok, %FieldPublication.Schemas.Publication{} = publication} =
+    {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
       Publications.create_from_replication_input(replication_input)
 
     Task.async_stream(docs, fn doc ->
@@ -92,7 +92,7 @@ defmodule Seeder do
 
     {:ok, _} = Processing.OpenSearch.index(publication)
 
-    {:ok, %FieldPublication.Schemas.Publication{} = publication} =
+    {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
       Publications.put(publication, %{
         "publication_date" => Date.utc_today(),
         "comments" => [

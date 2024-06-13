@@ -1,6 +1,6 @@
 defmodule FieldPublication.Publications.Data do
   alias FieldPublication.CouchService
-  alias FieldPublication.Schemas.Publication
+  alias FieldPublication.DocumentSchema.Publication
 
   def get_all_subcategories(publication, category_name) do
     publication

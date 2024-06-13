@@ -691,7 +691,7 @@ defmodule FieldPublicationWeb.CoreComponents do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
 
-  alias FieldPublication.Schemas.LogEntry
+  alias FieldPublication.DocumentSchema.LogEntry
 
   @doc """
   Component for displaying lists of LogEntry schemas.

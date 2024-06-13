@@ -1,22 +1,25 @@
 defmodule FieldPublicationWeb.Management.PublicationLive.Show do
-  alias FieldPublication.Processing.MapTiles
-  alias FieldPublication.Processing.OpenSearch
-  alias FieldPublication.Processing.Image
-  use FieldPublicationWeb, :live_view
+  alias FieldPublication.Processing.{
+    MapTiles,
+    OpenSearch,
+    Image
+  }
 
-  alias Phoenix.PubSub
+  alias FieldPublication.{
+    Publications,
+    Replication,
+    Processing
+  }
 
-  alias FieldPublication.Publications
-  alias FieldPublication.Replication
-
-  alias FieldPublication.Schemas.{
+  alias FieldPublication.DocumentSchema.{
     Publication,
     LogEntry,
     Translation
   }
 
-  alias FieldPublication.Processing
+  alias Phoenix.PubSub
 
+  use FieldPublicationWeb, :live_view
   require Logger
 
   @impl true

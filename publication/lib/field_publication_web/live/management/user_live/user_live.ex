@@ -7,34 +7,37 @@ defmodule FieldPublicationWeb.Management.UserLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.header>
-      Listing Users
-      <:actions>
-        <.link patch={~p"/management/users/new"}>
-          <.button>New User</.button>
-        </.link>
-      </:actions>
-    </.header>
+    <h1>Manage users</h1>
 
-    <table class="w-[40rem] mt-11 sm:w-full">
-      <thead class="text-sm text-left leading-6 text-zinc-500">
+    <p class="font-semibold">Actions</p>
+
+    <ul>
+      <li>
+        <.link patch={~p"/management/users/new"}>
+          Add User
+        </.link>
+      </li>
+    </ul>
+
+    <table class="w-full mt-8">
+      <thead>
         <tr>
-          <th>Username</th>
-          <th class="relative p-0 pb-4"><span class="sr-only"><%= gettext("Actions") %></span></th>
+          <th class="text-left">Username</th>
+          <th class="text-right"><%= gettext("Actions") %></th>
         </tr>
       </thead>
-      <tbody class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700">
+      <tbody class="divide-y border-t">
         <%= for user <- @users do %>
-          <tr class="group hover:bg-zinc-50">
-            <td><%= user.name %></td>
-            <td>
-              <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+          <tr class="group hover:bg-slate-50">
+            <td class="text-left"><%= user.name %></td>
+            <td class="text-right">
+              <div class="space-x-4">
+                <span>
                   <.link navigate={~p"/management/users/#{user.name}/new_password"}>
                     New password
                   </.link>
                 </span>
-                <span class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
+                <span>
                   <.link
                     phx-click={JS.push("delete", value: %{name: user.name}) |> hide("##{user.name}")}
                     data-confirm="Are you sure?"

@@ -9,12 +9,16 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
 
   @core_database Application.compile_env(:field_publication, :core_database)
   @test_project_name "test_project_a"
-  @test_user "test_user"
+  @test_user %FieldPublication.DocumentSchema.User{
+    name: "test_user",
+    password: "pw",
+    label: "Test user"
+  }
   @new_project_name "test_project_b"
 
   setup_all do
     CouchService.put_database(@core_database)
-    CouchService.create_user(@test_user, "pw")
+    CouchService.create_user(@test_user)
 
     Projects.put(%Project{}, %{"name" => @test_project_name})
 
@@ -23,7 +27,7 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
     on_exit(fn ->
       Projects.delete(project)
       CouchService.delete_database(@core_database)
-      CouchService.delete_user(@test_user)
+      CouchService.delete_user(@test_user.name)
     end)
 
     %{test_project: project}
@@ -40,9 +44,9 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
 
   describe "editors" do
     setup %{conn: conn} do
-      conn = log_in_user(conn, @test_user)
+      conn = log_in_user(conn, @test_user.name)
 
-      Projects.put(%Project{}, %{"name" => @new_project_name, "editors" => [@test_user]})
+      Projects.put(%Project{}, %{"name" => @new_project_name, "editors" => [@test_user.name]})
 
       on_exit(fn ->
         Projects.get(@new_project_name)
@@ -162,7 +166,11 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
     test "can add and remove users to project", %{conn: conn} do
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      assert not has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user)
+      assert not has_element?(
+               live_process,
+               "#project-panel-#{@test_project_name}",
+               @test_user.label
+             )
 
       assert live_process
              |> element("#project-panel-#{@test_project_name} a", "Edit")
@@ -175,7 +183,7 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
                   |> render() =~ "checked")
 
       assert live_process
-             |> form("#project-form", project: %{"editors" => [@test_user]})
+             |> form("#project-form", project: %{"editors" => [@test_user.name]})
              |> render_change()
 
       assert live_process
@@ -186,7 +194,7 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
 
       assert_patch(live_process, ~p"/management")
 
-      assert has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user)
+      assert has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user.label)
 
       on_exit(fn ->
         case Projects.get(@test_project_name) do
@@ -197,6 +205,18 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
             :ok
         end
       end)
+    end
+
+    test "can access every projects' draft form", %{conn: conn} do
+      {:ok, live_process, _html} = live(conn, ~p"/management")
+
+      assert live_process
+             |> element("#project-panel-#{@test_project_name} a", "Draft new publication")
+             |> render_click()
+
+      assert_patch(live_process, ~p"/management/projects/#{@test_project_name}/publication/new")
+
+      assert render(live_process) =~ "Create new publication draft"
     end
   end
 end

@@ -101,5 +101,80 @@ defmodule FieldPublicationWeb.UserLiveTest do
                  @added_user_params["password"]
                )
     end
+
+    test "can edit a user label", %{conn: conn} do
+      assert {:ok, live_process, html} = live(conn, ~p"/management/users")
+
+      assert html =~ "<td class=\"text-left\">#{@test_user.label}</td>"
+      assert not (html =~ "<td class=\"text-left\">Test user updated</td>")
+
+      assert live_process
+             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> render_click()
+
+      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+
+      assert live_process
+             |> form("#user-form", %{
+               user: %{label: "Test user updated"}
+             })
+             |> render_submit()
+
+      assert_patch(live_process, ~p"/management/users")
+
+      html = render(live_process)
+
+      assert not (html =~ "<td class=\"text-left\">#{@test_user.label}</td>")
+      assert html =~ "<td class=\"text-left\">Test user updated</td>"
+    end
+
+    test "can set new user password", %{conn: conn} do
+      assert {:ok, live_process, html} = live(conn, ~p"/management/users")
+
+      new_password = "updated_password"
+
+      assert {:ok, :authenticated} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 @test_user.password
+               )
+
+      assert {:error, :unauthorized} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 new_password
+               )
+
+      assert html =~ "<td class=\"text-left\">#{@test_user.label}</td>"
+      assert not (html =~ "<td class=\"text-left\">Test user updated</td>")
+
+      assert live_process
+             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> render_click()
+
+      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+
+      assert live_process
+             |> form("#user-form", %{
+               user: %{password: new_password}
+             })
+             |> render_submit()
+
+      assert_patch(live_process, ~p"/management/users")
+
+      html = render(live_process)
+
+      assert {:ok, :authenticated} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 new_password
+               )
+
+      assert {:error, :unauthorized} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 @test_user.password
+               )
+    end
   end
 end

@@ -1,9 +1,9 @@
-defmodule FieldPublication.Schemas.Project do
+defmodule FieldPublication.DocumentSchema.Project do
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias FieldPublication.Schemas
+  alias FieldPublication.DocumentSchema.Base
 
   @doc_type "project"
   @primary_key false
@@ -19,7 +19,7 @@ defmodule FieldPublication.Schemas.Project do
     project
     |> cast(attrs, [:name, :_rev, :editors])
     |> validate_required([:name])
-    |> Schemas.validate_doc_type(@doc_type)
+    |> Base.validate_doc_type(@doc_type)
   end
 
   def doc_type() do
@@ -27,7 +27,7 @@ defmodule FieldPublication.Schemas.Project do
   end
 end
 
-defimpl Phoenix.Param, for: FieldPublication.Schemas.Project do
+defimpl Phoenix.Param, for: FieldPublication.DocumentSchema.Project do
   def to_param(%{name: name}) do
     name
   end

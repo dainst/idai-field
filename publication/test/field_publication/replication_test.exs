@@ -6,7 +6,7 @@
 #   alias FieldPublication.Projects
 #   alias FieldPublication.Publications
 
-#   alias FieldPublication.Schemas.{
+#   alias FieldPublication.DocumentSchema.{
 #     Project,
 #     Publication,
 #     ReplicationInput,

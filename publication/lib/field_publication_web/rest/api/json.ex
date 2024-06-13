@@ -2,7 +2,7 @@ defmodule FieldPublicationWeb.Api.JSON do
   use FieldPublicationWeb, :controller
 
   alias FieldPublication.Publications.Data
-  alias FieldPublication.Schemas.Publication
+  alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications
 
   def raw(

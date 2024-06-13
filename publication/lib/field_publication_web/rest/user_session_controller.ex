@@ -25,9 +25,6 @@ defmodule FieldPublicationWeb.UserSessionController do
   end
 
   def delete(conn, _params) do
-    conn
-    |> UserAuth.log_out_user()
-    |> put_flash(:info, "Logged out successfully.")
-    |> redirect(to: ~p"/log_in")
+    UserAuth.log_out_user(conn)
   end
 end

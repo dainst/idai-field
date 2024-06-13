@@ -5,7 +5,7 @@ defmodule FieldPublication.Processing.OpenSearch do
   alias FieldPublication.DataServices.OpensearchService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
-  alias FieldPublication.Schemas.Publication
+  alias FieldPublication.DocumentSchema.Publication
 
   require Logger
 

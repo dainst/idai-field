@@ -1,15 +1,13 @@
 defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
-  alias FieldPublication.{
-    Schemas,
-    CouchService
-  }
+  alias FieldPublication.CouchService
 
-  alias FieldPublication.Schemas.{
+  alias FieldPublication.DocumentSchema.{
     ReplicationInput,
     Project,
-    Publication
+    Publication,
+    Base
   }
 
   def create_from_replication_input(%ReplicationInput{
@@ -192,7 +190,7 @@ defmodule FieldPublication.Publications do
         error
 
       {:ok, %{status: 409}} ->
-        {:error, Schemas.add_duplicate_doc_error(changeset)}
+        {:error, Base.add_duplicate_doc_error(changeset)}
     end
   end
 
@@ -212,7 +210,7 @@ defmodule FieldPublication.Publications do
         error
 
       {:ok, %{status: 409}} ->
-        {:error, Schemas.add_duplicate_doc_error(changeset)}
+        {:error, Base.add_duplicate_doc_error(changeset)}
 
       {:ok, %{status: 412}} ->
         {:error,
@@ -306,6 +304,6 @@ defmodule FieldPublication.Publications do
   end
 
   def get_doc_id(publication) do
-    Schemas.construct_doc_id(publication, Publication)
+    Base.construct_doc_id(publication, Publication)
   end
 end

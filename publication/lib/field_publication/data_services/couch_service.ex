@@ -1,4 +1,6 @@
 defmodule FieldPublication.CouchService do
+  alias FieldPublication.DocumentSchema.User
+
   @core_database Application.compile_env(:field_publication, :core_database)
 
   require Logger
@@ -110,20 +112,12 @@ defmodule FieldPublication.CouchService do
   def list_users() do
     Finch.build(
       :get,
-      "#{local_url()}/_users/_all_docs",
+      "#{local_url()}/_users/_all_docs?include_docs=true",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
   end
 
-  @doc """
-  Return the specified user's CouchDB document
-
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the list attempt. See the https://docs.couchdb.org/en/stable/api/server/authn.html for possible responses.
-
-  __Parameters__
-  - `user_name` the user's name.
-  """
   def get_user(name) do
     Finch.build(
       :get,
@@ -133,37 +127,26 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  @doc """
-  Creates a CouchDB user.
-
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the creation attempt. See the https://docs.couchdb.org for possible responses.
-
-  __Parameters__
-  - `name` the user's name.
-  - `password` the user's password.
-  """
-  def create_user(name, password) do
+  def create_user(%User{name: name, password: password, label: label}) do
     Finch.build(
       :put,
       "#{local_url()}/_users/org.couchdb.user:#{name}",
       headers(),
-      Jason.encode!(%{name: name, password: password, roles: [], type: "user"})
+      Jason.encode!(%{
+        name: name,
+        password: password,
+        roles: [],
+        type: "user",
+        label: label
+      })
     )
     |> Finch.request(FieldPublication.Finch)
   end
 
-  @doc """
-  Deletes a CouchDB user.
-
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the deletion attempt. See the https://docs.couchdb.org for possible responses.
-
-  __Parameters__
-  - `name` the user's name.
-  """
-  def delete_user(name) do
+  def delete_user(user_name) do
     Finch.build(
       :get,
-      "#{local_url()}/_users/org.couchdb.user:#{name}",
+      "#{local_url()}/_users/org.couchdb.user:#{user_name}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -175,7 +158,7 @@ defmodule FieldPublication.CouchService do
 
         Finch.build(
           :delete,
-          "#{local_url()}/_users/org.couchdb.user:#{name}",
+          "#{local_url()}/_users/org.couchdb.user:#{user_name}",
           headers() ++ [{"If-Match", rev}]
         )
         |> Finch.request(FieldPublication.Finch)
@@ -186,38 +169,35 @@ defmodule FieldPublication.CouchService do
     end
   end
 
-  @doc """
-  Sets the password for an existing CouchDB user`.
-
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the update attempt. See the https://docs.couchdb.org for possible responses.
-
-  __Parameters__
-  - `name` the user's name.
-  - `new_password` the user's new password.
-  """
-  def update_password(name, new_password) do
+  def update_user(%User{} = user) do
     response =
       Finch.build(
         :get,
-        "#{local_url()}/_users/org.couchdb.user:#{name}",
+        "#{local_url()}/_users/org.couchdb.user:#{user.name}",
         headers()
       )
       |> Finch.request(FieldPublication.Finch)
 
     case response do
       {:ok, %{status: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> case do
-          %{"_rev" => rev} ->
-            Finch.build(
-              :put,
-              "#{local_url()}/_users/org.couchdb.user:#{name}",
-              headers() ++ [{"If-Match", rev}],
-              Jason.encode!(%{name: name, password: new_password, roles: [], type: "user"})
-            )
-            |> Finch.request(FieldPublication.Finch)
-        end
+        %{"_rev" => rev} = Jason.decode!(body)
+
+        payload = %{name: user.name, label: user.label, roles: [], type: "user"}
+
+        payload =
+          if user.password != nil and String.trim(user.password) != "" do
+            Map.put(payload, :password, user.password)
+          else
+            payload
+          end
+
+        Finch.build(
+          :put,
+          "#{local_url()}/_users/org.couchdb.user:#{user.name}",
+          headers() ++ [{"If-Match", rev}],
+          Jason.encode!(payload)
+        )
+        |> Finch.request(FieldPublication.Finch)
 
       {:ok, %{status: 404}} = res ->
         res

@@ -2,7 +2,7 @@ defmodule FieldPublication.Processing.MapTiles do
   alias FieldPublication.FileService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
-  alias FieldPublication.Schemas.Publication
+  alias FieldPublication.DocumentSchema.Publication
   alias Phoenix.PubSub
   require Logger
 

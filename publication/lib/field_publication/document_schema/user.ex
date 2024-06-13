@@ -3,18 +3,17 @@ defmodule FieldPublication.DocumentSchema.User do
 
   import Ecto.Changeset
 
-  @derive Jason.Encoder
-  @primary_key {:name, :string, autogenerate: false}
+  @primary_key false
   embedded_schema do
-    field(:_rev, :string)
-    field(:user_name, :string, primary_key: true)
-    field(:user_password, :string, redact: true)
+    field(:name, :string)
+    field(:password, :string, redact: true)
+    field(:label, :string)
   end
 
   @doc false
   def changeset(%__MODULE__{} = user, attrs \\ %{}) do
     user
-    |> cast(attrs, [:_rev, :user_name, :user_password])
-    |> validate_required([:user_name, :user_password])
+    |> cast(attrs, [:name, :password, :label])
+    |> validate_required([:name, :label])
   end
 end

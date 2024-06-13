@@ -75,7 +75,7 @@ defmodule FieldPublicationWeb.Router do
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
       live "/users", Management.UserLive, :index
       live "/users/new", Management.UserLive, :new
-      live "/users/:name/new_password", Management.UserLive, :new_password
+      live "/users/:name/edit", Management.UserLive, :edit
 
       live "/projects/new", Management.OverviewLive, :new_project
       live "/projects/:project_id/edit", Management.OverviewLive, :edit_project

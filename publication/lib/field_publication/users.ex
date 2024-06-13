@@ -1,6 +1,7 @@
 defmodule FieldPublication.Users do
-  alias FieldPublication.CouchService
+  import Ecto.Changeset
 
+  alias FieldPublication.CouchService
   alias FieldPublication.DocumentSchema.User
 
   @moduledoc """
@@ -14,15 +15,19 @@ defmodule FieldPublication.Users do
     CouchService.get_user(name)
     |> case do
       {:ok, %{status: 200, body: body}} ->
-        %{"name" => name} = Jason.decode!(body)
+        params =
+          body
+          |> Jason.decode!()
 
-        %User{
-          name: name
+        {
+          :ok,
+          %User{}
+          |> User.changeset(params)
+          |> apply_action!(:create)
         }
 
-      {:ok, %{status: 404}} = response ->
-        # User was not found
-        response
+      {:ok, %{status: 404}} = _response ->
+        {:error, :not_found}
     end
   end
 
@@ -32,28 +37,28 @@ defmodule FieldPublication.Users do
   Returns `{:ok, :created}` if successful or `{:error, :already_exists}` a user of that name already exists.
 
   __Parameters__
-  - `name` the user's name.
-  - `password` the user's password.
+  - `user_name` the user's name.
+  - `user_password` the user's password.
   """
   def create(params) do
     %User{}
     |> User.changeset(params)
-    |> Ecto.Changeset.validate_required(:password)
-    |> Ecto.Changeset.apply_action(:create)
+    |> validate_required([:password])
+    |> apply_action(:create)
     |> case do
       {:error, _changeset} = error ->
         error
 
-      {:ok, %{name: name, password: password} = user_struct} ->
-        CouchService.create_user(name, password)
+      {:ok, %User{name: name} = user} ->
+        CouchService.create_user(user)
         |> case do
           {:ok, %{status: 201}} ->
-            user_struct
+            user
 
           {:ok, %{status: 409}} ->
-            user_struct
+            user
             |> User.changeset()
-            |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
+            |> Ecto.Changeset.add_error(:user_name, "name '#{name}' already taken.")
             |> Ecto.Changeset.apply_action(:validate)
         end
     end
@@ -84,22 +89,22 @@ defmodule FieldPublication.Users do
   Returns `{:ok, :updated}` if successful or `{:error, :unknown}` if user is unknown.
 
   __Parameters__
-  - `name` the user's name.
-  - `password` the user's name.
+  - `user_name` the user's name.
+  - `user_password` the user's name.
   """
   def update(user, params) do
     user
     |> User.changeset(params)
-    |> Ecto.Changeset.apply_action(:update)
+    |> apply_action(:update)
     |> case do
       {:error, _changeset} = error ->
         error
 
-      {:ok, %{name: name, password: password} = user_struct} ->
-        CouchService.update_password(name, password)
+      {:ok, user} ->
+        CouchService.update_user(user)
         |> case do
           {:ok, %{status: 201}} ->
-            user_struct
+            {:ok, user}
 
           {:ok, %{status: 404}} ->
             {
@@ -130,9 +135,9 @@ defmodule FieldPublication.Users do
         |> Jason.decode!()
         |> Map.get("rows", [])
         |> Enum.filter(fn doc -> String.starts_with?(doc["id"], "org.couchdb.user:") end)
-        |> Enum.map(fn %{"id" => id} ->
-          "org.couchdb.user:" <> without_prefix = id
-          %{name: without_prefix}
+        |> Enum.map(fn %{"doc" => doc} ->
+          User.changeset(%User{}, doc)
+          |> apply_action!(:create)
         end)
     end
   end

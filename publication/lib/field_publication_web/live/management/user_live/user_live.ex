@@ -20,43 +20,50 @@ defmodule FieldPublicationWeb.Management.UserLive do
       </li>
     </ul>
 
-    <table class="w-full mt-8">
-      <thead>
-        <tr>
-          <th class="text-left"><%= gettext("Username") %></th>
-          <th class="text-right"><%= gettext("Actions") %></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y border-t">
-        <%= for user <- @users do %>
-          <tr class="group hover:bg-slate-50">
-            <td class="text-left"><%= user.name %></td>
-            <td class="text-right">
-              <div class="space-x-4">
-                <span>
-                  <.link navigate={~p"/management/users/#{user.name}/new_password"}>
-                    <%= gettext("New password") %>
-                  </.link>
-                </span>
-                <span>
-                  <.link
-                    phx-click={JS.push("delete", value: %{name: user.name}) |> hide("##{user.name}")}
-                    data-confirm="Are you sure?"
-                  >
-                    <%= gettext("Delete") %>
-                  </.link>
-                </span>
-              </div>
-            </td>
+    <%= if @users != [] do %>
+      <table class="w-full mt-8">
+        <thead>
+          <tr>
+            <th class="text-left"><%= gettext("Name") %></th>
+            <th class="text-left"><%= gettext("Label") %></th>
+            <th class="text-right"><%= gettext("Actions") %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="divide-y border-t">
+          <%= for user <- @users do %>
+            <tr class="group hover:bg-slate-50">
+              <td class="text-left"><%= user.name %></td>
+              <td class="text-left"><%= user.label %></td>
+              <td class="text-right">
+                <div class="space-x-4">
+                  <span>
+                    <.link navigate={~p"/management/users/#{user.name}/edit"}>
+                      <%= gettext("Edit") %>
+                    </.link>
+                  </span>
+                  <span>
+                    <.link
+                      phx-click={
+                        JS.push("delete", value: %{name: user.name})
+                        |> hide("##{user.name}")
+                      }
+                      data-confirm="Are you sure?"
+                    >
+                      <%= gettext("Delete") %>
+                    </.link>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
 
     <.back navigate={~p"/management"}><%= gettext("Back to management") %></.back>
 
     <.modal
-      :if={@live_action in [:new, :new_password]}
+      :if={@live_action in [:new, :edit]}
       id="user-modal"
       show
       on_cancel={JS.patch(~p"/management/users")}
@@ -77,7 +84,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
   def mount(_params, _session, socket) do
     {
       :ok,
-      assign(socket, :users, Users.list())
+      assign(socket, :users, Users.list() |> IO.inspect())
     }
   end
 
@@ -88,13 +95,15 @@ defmodule FieldPublicationWeb.Management.UserLive do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Projects")
+    |> assign(:page_title, "Listing users")
   end
 
-  defp apply_action(socket, :new_password, %{"name" => name}) do
+  defp apply_action(socket, :edit, %{"name" => name}) do
+    {:ok, user} = Users.get(name)
+
     socket
-    |> assign(:page_title, "Edit User '#{name}'")
-    |> assign(:user, Users.get(name))
+    |> assign(:page_title, "Edit user '#{name}'")
+    |> assign(:user, user)
   end
 
   defp apply_action(socket, :new, _params) do

@@ -90,6 +90,11 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
       assert not has_element?(live_process, "#project-panel-#{@new_project_name} a", "Edit")
       assert not has_element?(live_process, "#project-panel-#{@new_project_name} a", "Delete")
     end
+
+    test "has no link to user management", %{conn: conn} do
+      {:ok, live_process, _html} = live(conn, ~p"/management")
+      assert not has_element?(live_process, ~s([href="/management/users"]))
+    end
   end
 
   describe "the administrator" do
@@ -217,6 +222,20 @@ defmodule FieldPublicationWeb.OverviewLiveTest do
       assert_patch(live_process, ~p"/management/projects/#{@test_project_name}/publication/new")
 
       assert render(live_process) =~ "Create new publication draft"
+    end
+
+    test "has link to navigate to user management", %{conn: conn} do
+      {:ok, live_process, _html} = live(conn, ~p"/management")
+
+      {:ok, _view, html} =
+        live_process
+        |> element(~s([href="/management/users"]))
+        |> render_click()
+        |> follow_redirect(conn)
+
+      assert html =~ "Manage users"
+      assert html =~ "<td class=\"text-left\">#{@test_user.name}</td>"
+      assert html =~ "<td class=\"text-left\">#{@test_user.label}</td>"
     end
   end
 end

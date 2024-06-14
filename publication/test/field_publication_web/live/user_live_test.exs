@@ -102,6 +102,58 @@ defmodule FieldPublicationWeb.UserLiveTest do
                )
     end
 
+    test "has to add name, label and password when creating a user", %{conn: conn} do
+      assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
+
+      assert live_process
+             |> element(~s([href="/management/users/new"]))
+             |> render_click()
+
+      assert_patch(live_process, ~p"/management/users/new")
+
+      assert live_process
+             |> form("#user-form", %{user: %{}})
+             |> render_submit()
+
+      assert live_process
+             |> element(~s(div[phx-feedback-for=\"user[name]\"]))
+             |> render() =~ "can&#39;t be blank"
+
+      assert live_process
+             |> element(~s(div[phx-feedback-for=\"user[label]\"]))
+             |> render() =~ "can&#39;t be blank"
+
+      assert live_process
+             |> element(~s(div[phx-feedback-for=\"user[password]\"]))
+             |> render() =~ "can&#39;t be blank"
+    end
+
+    test "can generate new user password when creating a user", %{conn: conn} do
+      assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
+
+      assert live_process
+             |> element(~s([href="/management/users/new"]))
+             |> render_click()
+
+      assert_patch(live_process, ~p"/management/users/new")
+
+      assert not (live_process |> element("#user_password") |> render() =~ "value=")
+
+      assert live_process
+             |> element(~s([phx-click="generate_password"]))
+             |> render_click()
+
+      html = live_process |> element("#user_password") |> render()
+
+      assert html =~ "value="
+
+      # `/U` at the end makes the match ungreedy, meaning the match stops at the first whitespace encounted
+      # instead of matching until the last `" ` occurence in the whole html string.
+      [_all, generated_password] = Regex.run(~r/value=\"(.+)\" /U, html)
+
+      assert String.length(generated_password) == String.length(CouchService.generate_password())
+    end
+
     test "can edit a user label", %{conn: conn} do
       assert {:ok, live_process, html} = live(conn, ~p"/management/users")
 
@@ -166,6 +218,82 @@ defmodule FieldPublicationWeb.UserLiveTest do
                )
 
       assert {:error, :invalid} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 @test_user.password
+               )
+    end
+
+    test "can generate new user password when editing a user", %{conn: conn} do
+      assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
+
+      assert {:ok, :valid} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 @test_user.password
+               )
+
+      assert live_process
+             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> render_click()
+
+      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+
+      assert not (live_process |> element("#user_password") |> render() =~ "value=")
+
+      assert live_process
+             |> element(~s([phx-click="generate_password"]))
+             |> render_click()
+
+      html = live_process |> element("#user_password") |> render()
+
+      assert html =~ "value="
+
+      # `/U` at the end makes the match ungreedy, meaning the match stops at the first whitespace encounted
+      # instead of matching until the last `" ` occurence in the whole html string.
+      [_all, generated_password] = Regex.run(~r/value=\"(.+)\" /U, html)
+
+      assert String.length(generated_password) == String.length(CouchService.generate_password())
+    end
+
+    test "when editing has empty password ignored", %{conn: conn} do
+      assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
+
+      new_password = "   \n\n "
+
+      assert {:ok, :valid} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 @test_user.password
+               )
+
+      assert {:error, :invalid} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 new_password
+               )
+
+      assert live_process
+             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> render_click()
+
+      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+
+      assert live_process
+             |> form("#user-form", %{
+               user: %{password: new_password}
+             })
+             |> render_submit()
+
+      assert_patch(live_process, ~p"/management/users")
+
+      assert {:error, :invalid} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 new_password
+               )
+
+      assert {:ok, :valid} =
                CouchService.authenticate(
                  @test_user.name,
                  @test_user.password

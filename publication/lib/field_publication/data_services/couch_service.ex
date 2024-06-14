@@ -180,22 +180,23 @@ defmodule FieldPublication.CouchService do
 
     case response do
       {:ok, %{status: 200, body: body}} ->
-        %{"_rev" => rev} = Jason.decode!(body)
+        doc =
+          body
+          |> Jason.decode!()
+          |> Map.put("label", user.label)
 
-        payload = %{name: user.name, label: user.label, roles: [], type: "user"}
-
-        payload =
+        doc =
           if user.password != nil and String.trim(user.password) != "" do
-            Map.put(payload, :password, user.password)
+            Map.put(doc, "password", user.password)
           else
-            payload
+            doc
           end
 
         Finch.build(
           :put,
           "#{local_url()}/_users/org.couchdb.user:#{user.name}",
-          headers() ++ [{"If-Match", rev}],
-          Jason.encode!(payload)
+          headers() ++ [{"If-Match", doc["_rev"]}],
+          Jason.encode!(doc)
         )
         |> Finch.request(FieldPublication.Finch)
 

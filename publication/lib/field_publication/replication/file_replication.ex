@@ -89,7 +89,7 @@ defmodule FieldPublication.Replication.FileReplication do
         {file_variant, result}
 
       {:ok, %Finch.Response{status: 401}} ->
-        {:error, :unauthorized}
+        {:error, :invalid}
 
       {:ok, %Finch.Response{status: 404}} ->
         {:error, :not_found}

@@ -82,7 +82,7 @@ defmodule FieldPublication.CouchService do
   @doc """
   Authenticate with credentials.
 
-  Returns {:ok, :authenticated} if credentials are valid, otherwise `{:error, reason}`.
+  Returns {:ok, :valid} if credentials are valid, otherwise `{:error, :invalid}`.
 
   __Parameters__
   - `name` the user's name.
@@ -97,10 +97,10 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
     |> case do
       {:ok, %{status: 200}} ->
-        {:ok, :authenticated}
+        {:ok, :valid}
 
       {:ok, %{status: 401}} ->
-        {:error, :unauthorized}
+        {:error, :invalid}
     end
   end
 

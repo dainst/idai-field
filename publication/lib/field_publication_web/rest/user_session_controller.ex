@@ -11,7 +11,7 @@ defmodule FieldPublicationWeb.UserSessionController do
   defp create(conn, %{"user" => %{"name" => name, "password" => password}} = form_params, info) do
     CouchService.authenticate(name, password)
     |> case do
-      {:ok, :authenticated} ->
+      {:ok, :valid} ->
         conn
         |> put_flash(:info, info)
         |> UserAuth.log_in_user(name, form_params)

@@ -201,7 +201,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         result
 
       {:ok, %{status: 401}} ->
-        {:error, :unauthorized}
+        {:error, :invalid}
 
       {:error, %Mint.TransportError{} = reason} ->
         {:error, reason}

@@ -37,7 +37,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
               <td class="text-right">
                 <div class="space-x-4">
                   <span>
-                    <.link navigate={~p"/management/users/#{user.name}/edit"}>
+                    <.link patch={~p"/management/users/#{user.name}/edit"}>
                       <%= gettext("Edit") %>
                     </.link>
                   </span>

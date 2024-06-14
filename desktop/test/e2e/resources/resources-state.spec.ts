@@ -254,6 +254,7 @@ test.describe('resources/state --', () => {
         await SearchConstraintsPage.clickSelectDropdownValue('Brandschicht');
         await SearchConstraintsPage.clickAddConstraintButton();
         await SearchBarPage.clickSearchBarInputField();
+        await SearchBarPage.typeInSearchField('S');
 
         await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
         const suggestions = await ResourcesSearchBarPage.getSuggestions();

@@ -1,7 +1,9 @@
 import { JavaVersionParser } from './java-version-parser';
 
-const exec = typeof window !== 'undefined' ? window.require('child_process').exec : require('child_process').exec;
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const ipcRenderer = typeof window !== 'undefined'
+  ? window.require('electron').ipcRenderer
+  : require('electron').ipcRenderer;
 
 
 /**
@@ -12,21 +14,18 @@ export module JavaToolExecutor {
     const REQUIRED_JAVA_VERSION: number = 8;
 
 
-    export function executeJavaTool(jarName: string, jarArguments: string): Promise<any> {
+    export async function executeJavaTool(jarName: string, jarArguments: string) {
 
-        return new Promise<any>((resolve, reject) => {
-            exec(getCommand(jarName, jarArguments),
-                (error: string, stdout: string, stderr: string) => {
-                    if (error) {
-                        console.error(error);
-                        reject('Jar execution failed');
-                    } else if (stderr !== '') {
-                        reject(stderr);
-                    } else {
-                        resolve(undefined);
-                    }
-                });
-        });
+        try {
+            const result = await ipcRenderer.invoke('executeChildProcess', getCommand(jarName, jarArguments));
+            if (result.stderr?.length) {
+                console.error(result.stderr);
+                throw 'Jar execution failed';
+            }
+        } catch (err) {
+            console.error(err);
+            throw 'Jar execution failed';
+        }
     }
 
 
@@ -48,21 +47,13 @@ export module JavaToolExecutor {
     }
 
 
-    function getJavaVersion(): Promise<number> {
+    async function getJavaVersion(): Promise<number> {
 
-        exec('whereis java', (error: string, stdout: string, stderr: string) => {
-            console.log('Available java installations:', stdout);
-        });
+        console.log('Available Java installations:', await ipcRenderer.invoke('executeChildProcess', 'whereis java'));
+        console.log('Using Java installation at path:', await ipcRenderer.invoke('executeChildProcess', 'which java', 'whereis java'));
 
-        exec('which java', (error: string, stdout: string, stderr: string) => {
-            console.log('Using Java installation at path:', stdout);
-        });
-
-        return new Promise(resolve => {
-            exec('java -version', (error: string, stdout: string, stderr: string) => {
-                resolve(JavaVersionParser.parse(stderr));
-            });
-        });
+        const result = await ipcRenderer.invoke('executeChildProcess', 'java -version');
+        return JavaVersionParser.parse(result.stderr);
     }
 
 

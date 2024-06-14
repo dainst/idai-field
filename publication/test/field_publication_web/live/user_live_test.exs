@@ -113,7 +113,7 @@ defmodule FieldPublicationWeb.UserLiveTest do
 
       assert live_process
              |> form("#user-form", %{user: %{}})
-             |> render_submit()
+             |> render_change()
 
       assert live_process
              |> element(~s(div[phx-feedback-for=\"user[name]\"]))
@@ -122,6 +122,13 @@ defmodule FieldPublicationWeb.UserLiveTest do
       assert live_process
              |> element(~s(div[phx-feedback-for=\"user[label]\"]))
              |> render() =~ "can&#39;t be blank"
+
+      # The password check is not triggered on edit, but only once we try
+      # to save the new user. TODO: Also evaluate before submit?
+
+      assert live_process
+             |> form("#user-form", %{user: %{}})
+             |> render_submit()
 
       assert live_process
              |> element(~s(div[phx-feedback-for=\"user[password]\"]))

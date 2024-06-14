@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.UserLiveTest do
+defmodule FieldPublicationWeb.Management.UserLiveTest do
   use FieldPublicationWeb.ConnCase
 
   import Phoenix.LiveViewTest

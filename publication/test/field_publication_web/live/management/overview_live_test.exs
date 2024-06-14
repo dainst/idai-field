@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.OverviewLiveTest do
+defmodule FieldPublicationWeb.Management.OverviewLiveTest do
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
   alias FieldPublication.DocumentSchema.Project

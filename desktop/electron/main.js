@@ -7,7 +7,6 @@ const os = require('os');
 const url = require('url');
 const autoUpdate = require('./auto-update.js');
 require('./asynchronous-fs.js');
-require('./child-process');
 
 remoteMain.initialize();
 

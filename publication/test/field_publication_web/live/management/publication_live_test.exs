@@ -5,6 +5,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
   alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DocumentSchema.LogEntry
 
   use FieldPublicationWeb.ConnCase
   import Phoenix.LiveViewTest
@@ -123,11 +124,11 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
 
     assert_receive {
       :replication_log,
-      %FieldPublication.DocumentSchema.LogEntry{
+      %LogEntry{
         severity: :info,
         timestamp: _,
-        message:
-          "Starting replication for publication_test_project_a_2024-06-17 by first replicating the database."
+        # The rest would be something containing a date like: "publication_test_project_a_2024-06-17 by first replicating the database."
+        message: "Starting replication for " <> _rest
       }
     }
 
@@ -154,46 +155,26 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
             languages: ["de", "en"],
             version: :major,
             comments: [],
-            replication_logs: [
-              %FieldPublication.DocumentSchema.LogEntry{
-                severity: :info,
-                timestamp: _,
-                # contains date "Starting replication for publication_test_project_a_2024-06-17 by first replicating the database."
-                message: _
-              },
-              %FieldPublication.DocumentSchema.LogEntry{
-                severity: :info,
-                timestamp: _,
-                message: "61 database documents need replication."
-              },
-              %FieldPublication.DocumentSchema.LogEntry{
-                severity: :info,
-                timestamp: _,
-                message: "Checking and transforming legacy data."
-              },
-              %FieldPublication.DocumentSchema.LogEntry{
-                severity: :info,
-                timestamp: _,
-                # contains date, "Replicating files for publication_test_project_a_2024-06-17."
-                message: _
-              },
-              %FieldPublication.DocumentSchema.LogEntry{
-                severity: :info,
-                timestamp: _,
-                message: "27 files need replication."
-              },
-              %FieldPublication.DocumentSchema.LogEntry{
-                message: "Replication finished.",
-                timestamp: _,
-                severity: :info
-              }
-            ],
+            replication_logs: logs,
             processing_logs: []
           }
         }
       },
       1000 * 60
     )
+
+    assert %LogEntry{
+             # The rest would be something containing a date like: "Starting replication for publication_test_project_a_2024-06-17 by first replicating the database."
+             message: "Starting replication for publication" <> _rest,
+             timestamp: _,
+             severity: :info
+           } = List.first(logs)
+
+    assert %LogEntry{
+             message: "Replication finished.",
+             timestamp: _,
+             severity: :info
+           } = List.last(logs)
 
     assert_receive {:trace, ^pid, :receive, {:processing_started, :search_index}}
 

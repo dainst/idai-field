@@ -50,7 +50,7 @@ defmodule FieldHubHelper do
     |> Enum.map(fn uuid ->
       Finch.build(
         :put,
-        "#{get_url()}/files/#{seed_project_identifier}/uuid?type=original_image",
+        "#{get_url()}/files/#{seed_project_identifier}/#{uuid}?type=original_image",
         headers() ++ [{"Content-Type", "image/x-www-form-urlencoded"}],
         File.read!("test/support/fixtures/seed_project/images/#{uuid}")
       )

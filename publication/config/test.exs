@@ -11,8 +11,7 @@ config :field_publication, FieldPublicationWeb.Endpoint,
 config :field_publication, FieldPublication.Mailer, adapter: Swoosh.Adapters.Test
 
 config :field_publication,
-  core_database: "field_publication_test",
-  file_store_directory_root: "test/tmp/file_store"
+  core_database: "field_publication_test"
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

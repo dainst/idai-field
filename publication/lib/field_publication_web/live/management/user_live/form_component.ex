@@ -91,9 +91,7 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
 
         {
           :noreply,
-          socket
-          |> put_flash(:info, "New user password successfully set.")
-          |> push_patch(to: socket.assigns.patch)
+          push_patch(socket, to: socket.assigns.patch)
         }
     end
   end
@@ -109,9 +107,7 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
 
         {
           :noreply,
-          socket
-          |> put_flash(:info, "User created successfully")
-          |> push_patch(to: socket.assigns.patch)
+          push_patch(socket, to: socket.assigns.patch)
         }
     end
   end

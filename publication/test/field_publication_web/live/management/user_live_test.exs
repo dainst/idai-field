@@ -218,16 +218,16 @@ defmodule FieldPublicationWeb.Management.UserLiveTest do
 
       assert_patch(live_process, ~p"/management/users")
 
-      assert {:ok, :valid} =
-               CouchService.authenticate(
-                 @test_user.name,
-                 new_password
-               )
-
       assert {:error, :invalid} =
                CouchService.authenticate(
                  @test_user.name,
                  @test_user.password
+               )
+
+      assert {:ok, :valid} =
+               CouchService.authenticate(
+                 @test_user.name,
+                 new_password
                )
     end
 

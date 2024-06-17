@@ -35,7 +35,7 @@
     "test:hub-run": "wait-on http-get://localhost:4003/ && jasmine JASMINE_CONFIG_PATH=test/hub-integration/config/jasmine.json",
     "test:hub-teardown": "docker-compose -f test/hub-integration/docker-compose.yml down -v",
     "test:hub-integration": "npm-run-all -s -c test:hub-setup test:hub-run test:hub-teardown",
-    "package:mac": "electron-builder -m",
+    "package:mac": "electron-builder -m --x64 --arm64",
     "package:win": "electron-builder -w nsis --x64 --ia32",
     "package:lnx": "electron-builder -l --x64",
     "i18n": "ng extract-i18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",

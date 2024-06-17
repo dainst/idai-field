@@ -56,7 +56,7 @@
       ],
       "category": "public.app-category.productivity",
       "icon": "img/logo.icns",
-      "artifactName": "Field-Desktop-${version}-MacOS.${ext}",
+      "artifactName": "Field-Desktop-${version}-MacOS-${arch}.${ext}",
       "publish": "github",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,

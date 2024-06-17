@@ -22,7 +22,7 @@ jobs:
         working-directory: publication
       - name: Sleep to await CouchDB startup
         run: sleep 15s
-      - name: Install Field Publcation dependencies and run setup
+      - name: Install Field Publication dependencies and run setup
         run: mix setup
         working-directory: publication
       - name: Run Field Publication tests

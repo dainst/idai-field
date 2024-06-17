@@ -1,8 +1,7 @@
 defmodule FieldPublicationWeb.Management.PublicationLiveTest do
+  alias FieldPublication.FileService
   alias FieldPublication.Processing
   alias FieldPublication.Publications
-  alias FieldPublication.Replication
-  alias FieldPublication.DocumentSchema.ReplicationInput
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
   alias FieldPublication.DocumentSchema.Project
@@ -28,16 +27,15 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     project = Projects.get!(@test_project_name)
 
     on_exit(fn ->
-      publication =
-        Publications.get(@test_project_name, Date.utc_today())
-        |> case do
-          {:ok, publication} ->
-            Publications.delete(publication)
-            Processing.stop(publication)
+      Publications.get(@test_project_name, Date.utc_today())
+      |> case do
+        {:ok, publication} ->
+          Publications.delete(publication)
+          Processing.stop(publication)
 
-          _ ->
-            :ok
-        end
+        _ ->
+          :ok
+      end
 
       Projects.delete(project)
       CouchService.delete_database(@core_database)
@@ -95,6 +93,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     assert html =~ "Create new publication draft"
   end
 
+  @tag timeout: 1000 * 60 * 5
   test "can create a new publication through replicating from FieldHub", %{conn: conn} do
     conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
 
@@ -112,12 +111,124 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
              }
            })
            |> render_submit()
-           |> follow_redirect(conn)
 
     {publication_path, _flash} = assert_redirect(live_process, 5000)
 
     assert {:ok, live_process, html} = live(conn, publication_path)
 
+    pid = live_process.pid
+    :erlang.trace(pid, true, [:receive])
+
     assert html =~ "Publication draft"
+
+    assert_receive {
+      :replication_log,
+      %FieldPublication.DocumentSchema.LogEntry{
+        severity: :info,
+        timestamp: _,
+        message:
+          "Starting replication for publication_test_project_a_2024-06-17 by first replicating the database."
+      }
+    }
+
+    assert_receive(
+      {
+        :trace,
+        ^pid,
+        :receive,
+        {
+          :replication_result,
+          %FieldPublication.DocumentSchema.Publication{
+            _rev: _,
+            doc_type: "publication",
+            project_name: @test_project_name,
+            source_url: _,
+            source_project_name: _,
+            draft_date: _,
+            drafted_by: "couch_admin",
+            replication_finished: _,
+            publication_date: nil,
+            configuration_doc: _config_doc,
+            hierarchy_doc: _hierarchy_doc,
+            database: _database,
+            languages: ["de", "en"],
+            version: :major,
+            comments: [],
+            replication_logs: [
+              %FieldPublication.DocumentSchema.LogEntry{
+                severity: :info,
+                timestamp: _,
+                # contains date "Starting replication for publication_test_project_a_2024-06-17 by first replicating the database."
+                message: _
+              },
+              %FieldPublication.DocumentSchema.LogEntry{
+                severity: :info,
+                timestamp: _,
+                message: "61 database documents need replication."
+              },
+              %FieldPublication.DocumentSchema.LogEntry{
+                severity: :info,
+                timestamp: _,
+                message: "Checking and transforming legacy data."
+              },
+              %FieldPublication.DocumentSchema.LogEntry{
+                severity: :info,
+                timestamp: _,
+                # contains date, "Replicating files for publication_test_project_a_2024-06-17."
+                message: _
+              },
+              %FieldPublication.DocumentSchema.LogEntry{
+                severity: :info,
+                timestamp: _,
+                message: "27 files need replication."
+              },
+              %FieldPublication.DocumentSchema.LogEntry{
+                message: "Replication finished.",
+                timestamp: _,
+                severity: :info
+              }
+            ],
+            processing_logs: []
+          }
+        }
+      },
+      1000 * 60
+    )
+
+    assert_receive {:trace, ^pid, :receive, {:processing_started, :search_index}}
+
+    assert_receive {:trace, ^pid, :receive, {:processing_started, :tile_images}}
+
+    assert_receive {:trace, ^pid, :receive, {:processing_started, :web_images}}
+
+    assert_receive {:trace, ^pid, :receive, {:processing_stopped, :search_index}}, 1000 * 20
+
+    assert_receive {:trace, ^pid, :receive, {:processing_stopped, :tile_images}}, 1000 * 20
+
+    assert_receive {:trace, ^pid, :receive, {:processing_stopped, :web_images}}, 1000 * 20
+
+    %{image: image_uuids} =
+      FileService.list_raw_data_files(@test_project_name)
+
+    raw_images_count = Enum.count(image_uuids)
+
+    web_files_count =
+      @test_project_name
+      |> FileService.list_web_image_files()
+      |> Enum.count()
+
+    tiles_count =
+      @test_project_name
+      |> FileService.list_tile_image_directories()
+      |> Enum.count()
+
+    assert raw_images_count == web_files_count
+    assert tiles_count == 2
+
+    html = render(live_process)
+
+    assert html =~ "Publication draft"
+    # save button is only visible after replication
+    assert html =~ "Save changes"
   end
 end

@@ -7,6 +7,13 @@ defmodule FieldHubHelper do
       System.cmd("docker-compose", [
         "-f",
         "test/support/field_hub/docker-compose.yml",
+        "pull"
+      ])
+
+    {"", 0} =
+      System.cmd("docker-compose", [
+        "-f",
+        "test/support/field_hub/docker-compose.yml",
         "up",
         "-d"
       ])

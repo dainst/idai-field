@@ -2,7 +2,7 @@ defmodule FieldPublication.Processing.OpenSearch do
   alias Phoenix.PubSub
 
   alias FieldPublication.CouchService
-  alias FieldPublication.DataServices.OpensearchService
+  alias FieldPublication.OpensearchService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
   alias FieldPublication.DocumentSchema.Publication
@@ -10,8 +10,6 @@ defmodule FieldPublication.Processing.OpenSearch do
   require Logger
 
   def evaluate_state(%Publication{} = publication) do
-    publication_id = Publications.get_doc_id(publication)
-
     doc_count =
       CouchService.get_database(publication.database)
       |> then(fn {:ok, %{status: 200, body: body}} ->
@@ -23,28 +21,19 @@ defmodule FieldPublication.Processing.OpenSearch do
         if count >= 2, do: count - 2, else: 0
       end)
 
-    case OpensearchService.get_active_index(publication_id) do
-      :none ->
-        %{counter: 0, percentage: 0, overall: doc_count}
+    counter = OpensearchService.get_doc_count(publication)
 
-      index_name ->
-        counter = OpensearchService.get_doc_count(index_name)
-
-        %{
-          counter: counter,
-          percentage: counter / doc_count * 100,
-          overall: doc_count
-        }
-    end
+    %{
+      counter: counter,
+      percentage: counter / doc_count * 100,
+      overall: doc_count
+    }
   end
 
   def index(%Publication{} = publication) do
     publication_id = Publications.get_doc_id(publication)
 
     config = Data.get_configuration(publication)
-
-    OpensearchService.initialize_indices_for_alias(publication_id)
-    OpensearchService.clear_inactive_index(publication_id)
 
     {:ok, counter_pid} =
       Agent.start_link(fn ->
@@ -88,7 +77,7 @@ defmodule FieldPublication.Processing.OpenSearch do
           # |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
 
           doc = Map.put(doc, "resource", res)
-          OpensearchService.put(publication_id, doc)
+          OpensearchService.put(doc, publication)
         end
 
         updated_state =
@@ -114,7 +103,6 @@ defmodule FieldPublication.Processing.OpenSearch do
     )
     |> Enum.to_list()
 
-    OpensearchService.switch_active_index(publication_id)
-    OpensearchService.clear_inactive_index(publication_id)
+    OpensearchService.switch_active_alias(publication)
   end
 end

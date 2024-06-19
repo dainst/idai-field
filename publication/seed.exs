@@ -1,4 +1,5 @@
 defmodule Seeder do
+  alias FieldPublication.OpensearchService
   alias FieldPublication.Processing
   alias FieldPublication.FileService
   alias FieldPublication.Replication
@@ -90,7 +91,9 @@ defmodule Seeder do
       end)
       |> Enum.reject(fn val -> val == :ok end)
 
-    {:ok, _} = Processing.OpenSearch.index(publication)
+    :ok = Processing.OpenSearch.index(publication)
+
+    {:ok, _} = OpensearchService.set_project_alias(publication) |> IO.inspect()
 
     {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
       Publications.put(publication, %{

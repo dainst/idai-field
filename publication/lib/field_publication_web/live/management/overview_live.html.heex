@@ -24,7 +24,7 @@
 <h1>Projects</h1>
 <%= if @projects != [] do %>
   <div class="grid lg:grid-cols-2 2xl:grid-cols-3">
-    <%= for %{project: project, publications: publications} <- @projects do %>
+    <%= for %{project: project, publications: publications, search_aliased_publication: search_aliased_publication} <- @projects do %>
       <div class="bg-slate-100 m-4" id={"project-panel-#{project.name}"}>
         <div class="bg-slate-200 p-3 m-4 text-center rounded-t text-lg">
           Project: '<%= project.name %>'
@@ -79,6 +79,13 @@
             <% end %>
           </div>
         </div>
+
+        <%= if {:error, :alias_not_set} == search_aliased_publication do %>
+          <div class="m-4 p-2 rounded bg-white">
+            <.icon name="hero-exclamation-circle" class="bg-yellow-500 mb-1" />
+            No publication is set to be included in application wide search.
+          </div>
+        <% end %>
         <div class="m-4">
           <p class="font-semibold mb-2 ">Publications (<%= Enum.count(publications) %>)</p>
           <%= if publications == [] do %>
@@ -95,11 +102,11 @@
                     end %>
 
                   <tbody>
-                    <tr class="mt-2 border-b-2">
+                    <tr>
                       <td>Publication type</td>
                       <td><strong><%= publication.version %></strong></td>
                     </tr>
-                    <tr class="mt-2 border-b-2">
+                    <tr>
                       <td>
                         Draft date
                       </td>
@@ -111,14 +118,15 @@
                         </.link>
                       </td>
                     </tr>
-                    <tr class="mt-2 border-b-2">
+                    <tr>
                       <%= if state == :no_release_date do %>
                         <td>
                           Publication date
                         </td>
                         <td><.icon name="hero-eye" class="bg-red-500 mb-1" /> None</td>
                       <% end %>
-
+                    </tr>
+                    <tr>
                       <%= if state == :upcoming_release_date do %>
                         <td>
                           Publication date
@@ -126,7 +134,8 @@
                         <td><.icon name="hero-eye" class="bg-yellow-500 mb-1" />
                           <%= publication.publication_date %></td>
                       <% end %>
-
+                    </tr>
+                    <tr>
                       <%= if state == :released do %>
                         <td>
                           Publication date
@@ -140,16 +149,33 @@
                           </.link>
                         </td>
                       <% end %>
-                      <tr class="mt-2">
-                        <td>Drafted by</td>
-                        <td>
-                          '<%= @users
-                          |> Enum.find(%{label: publication.drafted_by}, fn %{name: name} ->
-                            name == publication.drafted_by
-                          end)
-                          |> Map.get(:label) %>'
-                        </td>
-                      </tr>
+                    </tr>
+                    <tr>
+                      <td>Drafted by</td>
+                      <td>
+                        '<%= @users
+                        |> Enum.find(%{label: publication.drafted_by}, fn %{name: name} ->
+                          name == publication.drafted_by
+                        end)
+                        |> Map.get(:label) %>'
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Used in application wide search</td>
+                      <td>
+                        <%= case search_aliased_publication do %>
+                          <% {:ok, aliased_pub} when aliased_pub.draft_date == publication.draft_date -> %>
+                            <.icon name="hero-check" />
+                          <% _ -> %>
+                            <.link
+                              phx-click="set_project_alias"
+                              phx-value-project_name={publication.project_name}
+                              phx-value-draft_date={publication.draft_date}
+                            >
+                              Set
+                            </.link>
+                        <% end %>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

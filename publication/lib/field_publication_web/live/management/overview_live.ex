@@ -11,6 +11,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   alias FieldPublication.Publications
   alias FieldPublication.Processing
   alias FieldPublication.Users
+  alias FieldPublication.OpensearchService
 
   @impl true
   def mount(_params, _session, socket) do
@@ -100,6 +101,23 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     {:noreply, socket}
   end
 
+  def handle_event(
+        "set_project_alias",
+        %{"draft_date" => draft_date, "project_name" => project_name},
+        %{assigns: %{projects: projects}} = socket
+      ) do
+    Enum.find(projects, fn entry ->
+      entry.project.name == project_name
+    end)
+    |> Map.get(:publications, [])
+    |> Enum.find(fn publication ->
+      Date.to_string(publication.draft_date) == draft_date
+    end)
+    |> OpensearchService.set_project_alias()
+
+    {:noreply, assign_projects(socket)}
+  end
+
   defp assign_projects(socket) do
     projects =
       Projects.list()
@@ -108,10 +126,12 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       end)
       |> Enum.map(fn project ->
         publications = Publications.list(project.name)
+        search_aliased_publication = OpensearchService.get_aliased_publication(project)
 
         %{
           project: project,
-          publications: publications
+          publications: publications,
+          search_aliased_publication: search_aliased_publication
         }
       end)
 

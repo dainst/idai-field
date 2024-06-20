@@ -59,24 +59,10 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   end
 
   def handle_params(%{"q" => query}, _, socket) do
-    results =
-      Search.general_search(query)
-      |> Stream.map(fn %{publication_id: id} = result ->
-        Map.put(result, :publication, Publications.get!(id))
-      end)
-      |> Enum.map(fn %{doc: %{"resource" => res}} = result ->
-        Map.put(result, :doc, %{
-          "id" => res["id"],
-          "category" => res["category"],
-          "groups" => res["groups"],
-          "identifier" => res["identifier"]
-        })
-      end)
-
     {
       :noreply,
       socket
-      |> assign(:search_results, results)
+      |> assign(:search_results, Search.general_search(query))
       |> assign(:current_search, query)
     }
   end

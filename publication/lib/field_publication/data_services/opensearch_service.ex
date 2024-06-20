@@ -56,6 +56,61 @@ defmodule FieldPublication.OpensearchService do
       |> Finch.request(FieldPublication.Finch)
   end
 
+  def reset_inactive_index(%Publication{} = pub) do
+    inactive_index =
+      pub
+      |> get_aliased_publication_index()
+      |> get_inactive()
+
+    Logger.debug("Deleting index '#{inactive_index}' and setting mapping.")
+
+    mapping =
+      %{
+        mappings: %{
+          properties: %{
+            id: %{
+              type: "keyword",
+              store: true
+            },
+            identifier: %{
+              type: "keyword",
+              store: true
+            },
+            category: %{
+              type: "keyword",
+              store: true
+            },
+            project_name: %{
+              type: "keyword",
+              store: true
+            },
+            publication_draft_date: %{
+              type: "date",
+              store: true
+            },
+            full_doc: %{
+              type: "flat_object"
+            }
+          }
+        }
+      }
+
+    Finch.build(
+      :delete,
+      "#{base_url()}/#{inactive_index}",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+
+    Finch.build(
+      :put,
+      "#{base_url()}/#{inactive_index}",
+      headers(),
+      Jason.encode!(mapping)
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   def switch_active_alias(%Publication{} = pub) do
     old_index = get_aliased_publication_index(pub)
 

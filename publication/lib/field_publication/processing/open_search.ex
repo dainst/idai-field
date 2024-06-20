@@ -35,6 +35,8 @@ defmodule FieldPublication.Processing.OpenSearch do
 
     config = Data.get_configuration(publication)
 
+    {:ok, %{status: 200}} = OpensearchService.reset_inactive_index(publication)
+
     {:ok, counter_pid} =
       Agent.start_link(fn ->
         publication
@@ -60,25 +62,52 @@ defmodule FieldPublication.Processing.OpenSearch do
     end)
     |> Task.async_stream(
       fn %{"resource" => res} = doc ->
-        category_configuration = Data.search_category_tree(config, res["category"])
+        full_doc =
+          Data.apply_project_configuration(doc, config, publication)
+          |> Map.delete("relations")
 
-        if category_configuration == :not_found do
-          Logger.warning(
-            "Unable to find configuration for category '#{res["category"]}', document: "
-          )
+        open_search_doc =
+          %{
+            "category" => res["category"],
+            "id" => res["id"],
+            "identifier" => res["identifier"],
+            "publication_draft_date" => publication.draft_date,
+            "project_name" => publication.project_name,
+            "full_doc" => full_doc
+          }
 
-          Logger.warning(inspect(doc))
-        else
-          res =
-            res
-            |> Map.put("category", Data.extend_category(category_configuration["item"], res))
+        OpensearchService.put(open_search_doc, publication)
+        |> case do
+          {:ok, %{status: 201}} ->
+            :ok
 
-          # TODO: Groups extented in the default way will cause field mapping conflicts between each other
-          # |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
+          {:ok, %{status: 400, body: body}} ->
+            body
+            |> Jason.decode!()
+            |> Logger.error()
 
-          doc = Map.put(doc, "resource", res)
-          OpensearchService.put(doc, publication)
+            :error
         end
+
+        #     category_configuration = Data.search_category_tree(config, res["category"])
+
+        #     if category_configuration == :not_found do
+        #       Logger.warning(
+        #         "Unable to find configuration for category '#{res["category"]}', document: "
+        #       )
+
+        #       Logger.warning(inspect(doc))
+        #     else
+        #       res =
+        #         res
+        #         |> Map.put("category", Data.extend_category(category_configuration["item"], res))
+
+        #       # TODO: Groups extented in the default way will cause field mapping conflicts between each other
+        #       # |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
+
+        #       doc = Map.put(doc, "resource", res)
+        #       OpensearchService.put(doc, publication)
+        #     end
 
         updated_state =
           Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->

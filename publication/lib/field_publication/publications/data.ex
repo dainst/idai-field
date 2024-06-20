@@ -283,16 +283,22 @@ defmodule FieldPublication.Publications.Data do
     nil
   end
 
-  def get_group(doc, name) do
-    doc
-    |> Map.get("groups", [])
-    |> Enum.find(fn %{"key" => key} -> key == name end)
+  def get_group(%{"groups" => groups}, name) do
+    Enum.find(groups, fn %{"key" => key} -> key == name end)
   end
 
-  def get_relation_by_name(doc, name) do
-    Enum.find(doc["relations"], fn relation ->
+  def get_group(_, _) do
+    nil
+  end
+
+  def get_relation_by_name(%{"relations" => relations} = _doc, name) do
+    Enum.find(relations, fn relation ->
       relation["key"] == name
     end)
+  end
+
+  def get_relation_by_name(_, _) do
+    nil
   end
 
   defp run_query(query, database) do

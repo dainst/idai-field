@@ -93,7 +93,7 @@ defmodule Seeder do
 
     :ok = Processing.OpenSearch.index(publication)
 
-    {:ok, _} = OpensearchService.set_project_alias(publication) |> IO.inspect()
+    {:ok, _} = OpensearchService.set_project_alias(publication)
 
     {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
       Publications.put(publication, %{

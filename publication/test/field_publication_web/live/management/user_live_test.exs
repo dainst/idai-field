@@ -218,6 +218,11 @@ defmodule FieldPublicationWeb.Management.UserLiveTest do
 
       assert_patch(live_process, ~p"/management/users")
 
+      # It seems couchdb acknowledges the update, but internally does not update/set the password immediately, causing this test
+      # to fail from time to time. Using inspects this also points to the fact that the failure is not a timing/race condition
+      # problem in our test but somehow due to CouchDB.
+      Process.sleep(500)
+
       assert {:error, :invalid} =
                CouchService.authenticate(
                  @test_user.name,

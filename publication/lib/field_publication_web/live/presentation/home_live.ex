@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     published_projects =
       Publications.get_current_published()
       |> Task.async_stream(fn publication ->
-        {publication, Publications.Data.get_project_info(publication)}
+        {publication, Publications.Data.get_document("project", publication)}
       end)
       |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, doc}} ->
         longitude =

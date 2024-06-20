@@ -111,16 +111,6 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def get_project_info(%Publication{database: db} = publication) do
-    config = get_configuration(publication)
-
-    CouchService.get_document("project", db)
-    |> then(fn {:ok, %{body: body}} ->
-      Jason.decode!(body)
-    end)
-    |> apply_project_configuration(config, publication)
-  end
-
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
       when is_list(categories) do
     query =

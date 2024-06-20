@@ -55,14 +55,8 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
     providers: [
         {
             provide: DocumentHolder,
-            useFactory: (projectConfiguration: ProjectConfiguration,
-                         relationsManager: RelationsManager,
-                         validator: Validator,
-                         datastore: Datastore,
-                         idGenerator: IdGenerator) => {
-
-                return new DocumentHolder(projectConfiguration, relationsManager,
-                    validator, datastore, idGenerator);
+            useFactory: (projectConfiguration: ProjectConfiguration, relationsManager: RelationsManager, validator: Validator, datastore: Datastore, idGenerator: IdGenerator) => {
+                return new DocumentHolder(projectConfiguration, relationsManager, validator, datastore, idGenerator);
             },
             deps: [ProjectConfiguration, RelationsManager, Validator, Datastore, IdGenerator]
         },
@@ -121,15 +115,6 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
         DoceditComponent,
         RevisionSelectorComponent,
         MultiLanguageTextFieldComponent
-    ],
-    entryComponents: [
-        DoceditComponent,
-        ConflictDeletedModalComponent,
-        TypeRelationPickerComponent,
-        ImagePickerComponent,
-        DuplicateModalComponent,
-        DeleteModalComponent,
-        CompositeEntryModalComponent
     ]
 })
 

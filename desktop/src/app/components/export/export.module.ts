@@ -16,9 +16,6 @@ import { ExportModalComponent } from './export-modal.component';
     ],
     exports: [
         ExportComponent
-    ],
-    entryComponents: [
-        ExportModalComponent
     ]
 })
 

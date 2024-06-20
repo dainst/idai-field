@@ -22,9 +22,6 @@ import { ImportState } from './import-state';
     ],
     exports: [
         ImportComponent
-    ],
-    entryComponents: [
-        UploadModalComponent
     ]
 })
 

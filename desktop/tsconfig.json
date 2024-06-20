@@ -13,6 +13,7 @@
     "target": "ES5",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "lib": [
       "es2018",
       "dom"

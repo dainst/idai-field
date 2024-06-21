@@ -27,15 +27,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
             <%= if depicted_in do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
-                <%= for preview_doc <- depicted_in["values"] do %>
+                <%= for doc <- depicted_in["values"] do %>
                   <.link
-                    patch={
-                      ~p"/projects/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"
-                    }
+                    patch={~p"/projects/#{@project_name}/#{@publication_date}/#{@lang}/#{doc["id"]}"}
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">
-                      <Image.show size="300," project={@project_name} uuid={preview_doc["id"]} />
+                      <Image.show size="300," project={@project_name} uuid={doc["id"]} />
                     </div>
                   </.link>
                 <% end %>
@@ -140,7 +138,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
               project={@project_name}
               date={@publication_date}
               lang={@lang}
-              preview_doc={doc}
+              doc={doc}
             />
           <% end %>
         </div>

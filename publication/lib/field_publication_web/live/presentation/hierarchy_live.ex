@@ -32,7 +32,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
         project={@project_name}
         date={@publication_date}
         lang={@lang}
-        preview_doc={@current_doc}
+        doc={@current_doc}
       />
     </.document_heading>
 
@@ -62,7 +62,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
               project={@project_name}
               date={@publication_date}
               lang={@lang}
-              preview_doc={doc}
+              doc={doc}
               is_highlighted={doc["id"] == @parent_uuid}
             />
           <% end %>
@@ -80,7 +80,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
               project={@project_name}
               date={@publication_date}
               lang={@lang}
-              preview_doc={sibling_or_self}
+              doc={sibling_or_self}
               is_highlighted={sibling_or_self["id"] == @uuid}
             />
           <% end %>
@@ -99,7 +99,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
                 project={@project_name}
                 date={@publication_date}
                 lang={@lang}
-                preview_doc={child}
+                doc={child}
               />
             </div>
           <% end %>

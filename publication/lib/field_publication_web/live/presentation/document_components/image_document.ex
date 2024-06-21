@@ -18,12 +18,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show
-          project={@project_name}
-          date={@publication_date}
-          lang={@lang}
-          preview_doc={@doc}
-        />
+        <DocumentLink.show project={@project_name} date={@publication_date} lang={@lang} doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-row">
@@ -32,12 +27,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           <%= if depicts do %>
             <I18n.text values={depicts["labels"]} />:
             <div class="overflow-auto overscroll-contain max-h-[190px]">
-              <%= for preview_doc <- depicts["values"] do %>
+              <%= for doc <- depicts["values"] do %>
                 <DocumentLink.show
                   project={@project_name}
                   date={@publication_date}
                   lang={@lang}
-                  preview_doc={preview_doc}
+                  doc={doc}
                 />
               <% end %>
             </div>

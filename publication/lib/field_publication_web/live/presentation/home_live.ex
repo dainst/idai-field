@@ -58,19 +58,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     }
   end
 
-  def handle_params(%{"q" => query}, _, socket) do
-    {
-      :noreply,
-      socket
-      |> assign(:search_results, Search.general_search(query))
-      |> assign(:current_search, query)
-    }
-  end
-
-  def handle_params(_no_params, _uri, socket) do
-    {:noreply, assign(socket, :current_search, "")}
-  end
-
   def handle_event("home_marker_hover", project_identifier, socket) do
     socket = assign(socket, :highlighted, project_identifier)
     {:noreply, socket}
@@ -91,13 +78,24 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   end
 
   def handle_event("project_selected", %{"id" => project_identifier}, socket) do
-    {:noreply, push_navigate(socket, to: "/#{project_identifier}")}
+    {:noreply, push_navigate(socket, to: ~p"/projects/#{project_identifier}")}
   end
 
-  def handle_event("search", %{"search_input" => query}, socket) do
+  def handle_event("preview_search", %{"search_input" => query}, socket) do
     {
       :noreply,
-      push_patch(socket, to: ~p"/?q=#{query}")
+      assign(
+        socket,
+        :search_results,
+        Search.fuzzy_search(query)
+      )
+    }
+  end
+
+  def handle_event("open_search_view", %{"search_input" => query}, socket) do
+    {
+      :noreply,
+      push_navigate(socket, to: ~p"/search?q=#{query}")
     }
   end
 end

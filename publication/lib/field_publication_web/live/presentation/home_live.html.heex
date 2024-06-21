@@ -7,14 +7,8 @@
     <% else %>
       <div>
         Search projects
-        <form phx-change="search">
-          <input
-            class="w-full"
-            type="text"
-            value={@current_search}
-            name="search_input"
-            phx-debounce="500"
-          />
+        <form phx-change="preview_search" phx-submit="open_search_view">
+          <input class="w-full" type="text" name="search_input" phx-debounce="500" />
 
           <%= if @search_results != [] do %>
             <div class="bg-slate-50 mt-1">

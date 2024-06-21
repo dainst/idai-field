@@ -167,7 +167,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:publication, publication)
       |> push_patch(
-        to: ~p"/#{project_name}/#{publication.publication_date}/#{language}",
+        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{language}",
         replace: true
       )
     }
@@ -182,7 +182,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     {
       :noreply,
-      push_patch(socket, to: ~p"/#{project_name}/#{publication.publication_date}/#{lang}/#{uuid}")
+      push_patch(socket,
+        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{lang}/#{uuid}"
+      )
     }
   end
 
@@ -195,7 +197,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     {
       :noreply,
-      push_patch(socket, to: ~p"/#{project_name}/#{date}/#{lang}/#{uuid}")
+      push_patch(socket, to: ~p"/projects/#{project_name}/#{date}/#{lang}/#{uuid}")
     }
   end
 

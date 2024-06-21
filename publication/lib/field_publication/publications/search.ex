@@ -1,27 +1,30 @@
 defmodule FieldPublication.Publications.Search do
   alias FieldPublication.OpensearchService
 
-  def general_search(q, from \\ 0, size \\ 10) do
-    result =
-      OpensearchService.run_search(%{
-        query: %{
-          query_string: %{
-            query: q
-          }
-        },
-        from: from,
-        size: size
-      })
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
-          body = Jason.decode!(body)
+  def fuzzy_search(q, from \\ 0, size \\ 10)
 
-          body["hits"]["hits"]
-          |> Enum.map(fn %{"_source" => doc} ->
-            doc
-          end)
-      end
+  def fuzzy_search(q, from, size) when q != "" and q != "*" do
+    OpensearchService.run_search(%{
+      query: %{
+        query_string: %{
+          query: "#{q}~"
+        }
+      },
+      from: from,
+      size: size
+    })
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        body = Jason.decode!(body)
 
-    result
+        body["hits"]["hits"]
+        |> Enum.map(fn %{"_source" => doc} ->
+          doc
+        end)
+    end
+  end
+
+  def fuzzy_search(_, _, _) do
+    []
   end
 end

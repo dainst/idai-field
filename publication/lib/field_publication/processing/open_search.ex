@@ -89,26 +89,6 @@ defmodule FieldPublication.Processing.OpenSearch do
             :error
         end
 
-        #     category_configuration = Data.search_category_tree(config, res["category"])
-
-        #     if category_configuration == :not_found do
-        #       Logger.warning(
-        #         "Unable to find configuration for category '#{res["category"]}', document: "
-        #       )
-
-        #       Logger.warning(inspect(doc))
-        #     else
-        #       res =
-        #         res
-        #         |> Map.put("category", Data.extend_category(category_configuration["item"], res))
-
-        #       # TODO: Groups extented in the default way will cause field mapping conflicts between each other
-        #       # |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
-
-        #       doc = Map.put(doc, "resource", res)
-        #       OpensearchService.put(doc, publication)
-        #     end
-
         updated_state =
           Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
             state =

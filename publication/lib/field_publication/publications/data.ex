@@ -213,12 +213,12 @@ defmodule FieldPublication.Publications.Data do
     nil
   end
 
-  defp apply_project_configuration(
-         %{"resource" => resource} = _document,
-         configuration,
-         publication,
-         include_relations
-       ) do
+  def apply_project_configuration(
+        %{"resource" => resource} = _document,
+        configuration,
+        publication,
+        include_relations \\ false
+      ) do
     category_configuration = search_category_tree(configuration, resource["category"])
 
     doc =

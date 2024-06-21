@@ -58,7 +58,9 @@ navigation {
     }
 
     #navigation-button-group {
+      width: fit-content;
       max-width: calc(100% - 50px);
+      padding: 0;
     }
 
     .navigation-button {

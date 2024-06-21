@@ -13,7 +13,7 @@
         <div *ngIf="!item.isCategoryHeader">
             <span class="mdi mdi-script-text-outline"></span>
             <code>{{item.form.libraryId}}</code>
-            <div *ngIf="item.form.createdBy" class="badge badge-primary">{{item.form.createdBy}}</div>
+            <div *ngIf="item.form.createdBy" class="badge bg-primary">{{item.form.createdBy}}</div>
         </div>
     </li>
     <li *ngIf="isNewCategoryOptionShown()"

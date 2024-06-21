@@ -53,6 +53,7 @@ $deactivated-button-color: lightgray;
   padding-top: 3px;
 
   #search-bar-container {
+    width: fit-content;
     padding-right: 8px;
 
     #search-bar {
@@ -62,6 +63,9 @@ $deactivated-button-color: lightgray;
   }
 
   #buttons-container {
+    width: fit-content;
+    padding: 0;
+
     .resources-mode-buttons {
       margin-top: 3px;
       margin-right: 8px;

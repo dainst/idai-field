@@ -1,7 +1,7 @@
 <ng-template #editDate let-date="date" let-index="index">
     <input class="form-control year-input" type="number" size="6" min="0" max="100000"
            [(ngModel)]="date.inputYear" value="0" name="year_{{index}}" required>
-    <select class="form-control ml-1 type-select" [(ngModel)]="date.inputType" name="type_{{index}}">
+    <select class="form-control ms-1 type-select" [(ngModel)]="date.inputType" name="type_{{index}}">
         <option value="bce" i18n="@@docedit.forms.dating.bce">v. Chr.</option>
         <option value="ce" i18n="@@docedit.forms.dating.ce">n. Chr.</option>
         <option value="bp" i18n="@@docedit.forms.dating.bp">BP</option>
@@ -9,7 +9,7 @@
 </ng-template>
 
 <ng-template #checkboxes let-dating="dating">
-    <div class="form-group">
+    <div class="mb-3">
         <div class="form-check form-check-inline">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox"
@@ -43,8 +43,8 @@
 
         <div class="card-block">
             <div *ngIf="dating.type === 'range'">
-                <div class="form-group">
-                    <div class="form-inline">
+                <div class="mb-3">
+                    <div class="d-flex flex-row align-items-center flex-wrap">
                         <ng-container [ngTemplateOutlet]="editDate"
                                       [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
                         <span class="until-label" i18n="@@docedit.forms.dating.until">bis</span>
@@ -57,8 +57,8 @@
             </div>
 
             <div *ngIf="dating.type === 'single'">
-                <div class="form-group">
-                    <div class="form-inline">
+                <div class="mb-3">
+                    <div class="d-flex flex-row align-items-center flex-wrap">
                         <ng-container [ngTemplateOutlet]="editDate"
                                       [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                     </div>
@@ -68,8 +68,8 @@
             </div>
 
             <div *ngIf="dating.type === 'before'">
-                <div class="form-group">
-                    <div class="form-inline">
+                <div class="mb-3">
+                    <div class="d-flex flex-row align-items-center flex-wrap">
                         <ng-container [ngTemplateOutlet]="editDate"
                                       [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                     </div>
@@ -79,8 +79,8 @@
             </div>
 
             <div *ngIf="dating.type === 'after'">
-                <div class="form-group">
-                    <div class="form-inline">
+                <div class="mb-3">
+                    <div class="d-flex flex-row align-items-center flex-wrap">
                         <ng-container [ngTemplateOutlet]="editDate"
                                       [ngTemplateOutletContext]="{ date: dating.begin, index: 0 }"></ng-container>
                     </div>
@@ -90,8 +90,8 @@
             </div>
 
             <div *ngIf="dating.type === 'scientific'">
-                <div class="form-group">
-                    <div class="form-inline">
+                <div class="mb-3">
+                    <div class="d-flex flex-row align-items-center flex-wrap">
                         <ng-container [ngTemplateOutlet]="editDate"
                                       [ngTemplateOutletContext]="{ date: dating.end, index: 1 }"></ng-container>
                         <span class="margin-label">&plusmn;</span>
@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label i18n="@@docedit.forms.dating.source">Grundlage:</label>
                 <multi-language-text-field [fieldData]="dating.source" [languages]="fieldLanguages"
                                            (onFieldDataChanged)="updateSource(dating, $event)">
@@ -125,21 +125,17 @@
 <div *ngFor="let dating of fieldContainer[field.name]; index as i"  class="checkbox">
     <div class="input-group mb-2">
         <input value="{{getLabel(dating)}}" type="text" disabled class="form-control">
-        <div class="input-group-append">
-            <button class="btn btn-danger" [disabled]="newDating" type="button" (click)="removeDating(i)">
-                <span class="mdi mdi-delete"></span>
-            </button>
-        </div>
+        <button class="btn btn-danger" [disabled]="newDating" type="button" (click)="removeDating(i)">
+            <span class="mdi mdi-delete"></span>
+        </button>
     </div>
 </div>
 <div *ngIf="!newDating" class="input-group">
     <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dating.add" type="text"
            disabled class="form-control">
-    <div class="input-group-append">
-        <button class="btn btn-success" type="button" (click)="createNewDating()">
-            <span class="mdi mdi-plus-circle"></span>
-        </button>
-    </div>
+    <button class="btn btn-success" type="button" (click)="createNewDating()">
+        <span class="mdi mdi-plus-circle"></span>
+    </button>
 </div>
 <div *ngIf="newDating" class="mt-2">
     <ng-container [ngTemplateOutlet]="editDating"

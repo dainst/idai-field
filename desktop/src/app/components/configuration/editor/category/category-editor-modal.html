@@ -113,7 +113,7 @@
                [class.disabled]="!isScanCodeUsageActivated()"
                i18n="@@configuration.qrCodes.printedFields">Zu druckende Felder:</label>
         <div *ngFor="let index of [0, 1, 2]">
-            <div *ngIf="printedFields.length >= index" class="form-group row">
+            <div *ngIf="printedFields.length >= index" class="row mb-3">
                 <div class="col-md-9"
                      ngbTooltip="{{getTooltip('printedField', index)}}"
                      container="body">

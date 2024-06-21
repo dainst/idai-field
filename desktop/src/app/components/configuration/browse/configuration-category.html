@@ -9,7 +9,7 @@
             <h6>{{label}}</h6>
             <code class="category-name">{{category.name}}</code>
         </div>
-        <div class="col header header-right text-right">
+        <div class="col header header-right text-end">
             <hierarchical-relations-info *ngIf="!category.isAbstract"
                                          [category]="category"
                                          [mode]="'liesWithin'"

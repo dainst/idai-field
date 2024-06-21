@@ -7,10 +7,10 @@
             (onChangeLayersOrder)="updatePaneZIndices()"></layer-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">
-    <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge badge-secondary">
+    <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge bg-secondary">
         <b>X:</b> {{mousePositionCoordinates[0]}}
     </div>
-    <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-y" class="badge badge-secondary">
+    <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-y" class="badge bg-secondary">
         <b>Y:</b> {{mousePositionCoordinates[1]}}
     </div>
     <div *ngIf="(selectedPolygon || selectedPolyline || selectedMarker) && !dragging"

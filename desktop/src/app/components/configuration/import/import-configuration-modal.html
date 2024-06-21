@@ -13,7 +13,7 @@
     </div>
 
     <div id="import-options-container">
-        <div class="form-group">
+        <div class="mb-3">
             <label i18n="@@import.source">Quelle</label>
             <select class="form-control"
                     [(ngModel)]="source"
@@ -32,13 +32,11 @@
                        placeholder="Datei auswählen..."
                        i18n-placeholder="@@import.chooseFile"
                        disabled>
-                <div class="input-group-append">
-                    <label for="file-path-input"
-                           class="btn btn-secondary"
-                           (click)="selectFile()">
-                        <span class="mdi mdi-folder"></span>
-                    </label>
-                </div>
+                <label for="file-path-input"
+                        class="btn btn-secondary"
+                        (click)="selectFile()">
+                    <span class="mdi mdi-folder"></span>
+                </label>
             </div>
         </div>
 

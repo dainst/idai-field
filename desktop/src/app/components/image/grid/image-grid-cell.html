@@ -3,15 +3,15 @@
      [style.maxWidth.px]="cell['calculatedWidth']-15">
 
     <span *ngIf="showLinkBadges">
-        <span *ngIf="cell['document'].resource.relations.depicts.length > 0" class="badge badge-info">
+        <span *ngIf="cell['document'].resource.relations.depicts.length > 0" class="badge bg-info">
              <span class="mdi mdi-link"></span>
         </span>
     </span>
-    <span *ngIf="main && main.resource.id === cell['document'].resource.id" class="badge badge-info">
+    <span *ngIf="main && main.resource.id === cell['document'].resource.id" class="badge bg-info">
         <span class="mdi mdi-star"></span>
     </span>
     <span *ngIf="showGeoIcon && cell['document'].resource.georeference"
-          class="badge badge-dark">
+          class="badge bg-dark">
         <span class="mdi mdi-map"></span>
     </span>
 </div>
@@ -30,7 +30,7 @@
 <div class="title" [class.small]="nrOfColumns > 5">
     <div *ngIf="showLinkBadges && cell['document'].resource.relations.depicts.length > 0" class="p-2" align="right">
         <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
-              id="related-resource-{{resourceId}}" class="badge badge-info mr-1 related-resource-{{resourceId}}">
+              id="related-resource-{{resourceId}}" class="badge bg-info me-1 related-resource-{{resourceId}}">
             <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
         </span>
     </div>

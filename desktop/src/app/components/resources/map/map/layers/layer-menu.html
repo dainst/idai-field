@@ -33,8 +33,7 @@
                           placement="left" container="body"
                           (click)="saveGroup()"></span>
                     <form>
-                        <fieldset class="form-group"
-                                  cdkDropList [cdkDropListData]="layerGroup.layers"
+                        <fieldset cdkDropList [cdkDropListData]="layerGroup.layers"
                                   (cdkDropListDropped)="onDrop($event)">
                             <div *ngIf="isNoLayersInfoVisible(layerGroup)"
                                  i18n="@@resources.map.layerMenu.noLayersInfo"
@@ -45,7 +44,7 @@
                             <div *ngFor="let layer of layerGroup.layers; index as j"
                                 class="layer-entry"
                                 cdkDrag cdkDragLockAxis="y"
-                                cdkDragBoundary=".form-group"
+                                cdkDragBoundary="fieldset"
                                 [cdkDragDisabled]="!isInEditing(layerGroup)"
                                 (cdkDragStarted)="dragging = true"
                                 (cdkDragEnded)="dragging = false"
@@ -102,13 +101,14 @@
                             </div>
                         </fieldset>
                     </form>
-                    <div *ngIf="isInEditing(layerGroup)"
-                            class="btn btn-block btn-outline-success layer-menu-add-button"
-                            ngbTooltip="Kartenhintergrund hinzufügen"
-                            i18n-ngbTooltip="@@resources.map.layerMenu.addLayer"
-                            placement="bottom" container="body"
-                            (click)="addLayers(layerGroup)">
-                        <span class="mdi mdi-plus-circle"></span>
+                    <div *ngIf="isInEditing(layerGroup)" class="d-grid">
+                        <div class="btn btn-outline-success layer-menu-add-button"
+                                ngbTooltip="Kartenhintergrund hinzufügen"
+                                i18n-ngbTooltip="@@resources.map.layerMenu.addLayer"
+                                placement="bottom" container="body"
+                                (click)="addLayers(layerGroup)">
+                            <span class="mdi mdi-plus-circle"></span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
      (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
      (click)="tooltip.close(); toggleConstraintsMenu();">
     <span *ngIf="constraintListItems.length === 0" class="mdi mdi-plus"></span>
-    <span *ngIf="constraintListItems.length > 0" class="badge badge-light">
+    <span *ngIf="constraintListItems.length > 0" class="badge bg-light">
         {{constraintListItems.length}}
     </span>
 </div>
@@ -22,7 +22,7 @@
         <span class="mdi mdi-close-circle"></span>
     </div>
 
-    <div *ngIf="fields && fields.length > 0" class="form-inline">
+    <div *ngIf="fields && fields.length > 0" class="d-flex flex-row align-items-center flex-wrap">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
             <option value="" [selected]="!selectedField" hidden
                     i18n="@@resources.searchBar.constraints.chooseField">Feld wählen</option>

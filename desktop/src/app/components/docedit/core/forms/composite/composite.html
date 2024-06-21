@@ -5,23 +5,19 @@
 			  i18n-ngbTooltip="@@docedit.forms.composite.outliers.tooltip"
 			  container="body"></span>
 		<input value="{{entryLabels[i]}}" type="text" disabled class="form-control">
-		<div class="input-group-append">
-            <button class="btn btn-danger" (click)="removeEntryAtIndex(i)">
-				<span class="mdi mdi-delete"></span>
-			</button>
-            <button class="btn btn-info edit-composite-entry" (click)="editEntry(entry)">
-				<span class="mdi mdi-pencil"></span>
-			</button>
-        </div>
+		<button class="btn btn-danger" (click)="removeEntryAtIndex(i)">
+			<span class="mdi mdi-delete"></span>
+		</button>
+		<button class="btn btn-info edit-composite-entry" (click)="editEntry(entry)">
+			<span class="mdi mdi-pencil"></span>
+		</button>
 	</div>
 </div>
 
 <div class="input-group">
 	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.composite.add"
            type="text" disabled class="form-control">
-	<div class="input-group-append">
-        <button class="btn btn-success create-composite-entry-button" (click)="createEntry()">
-            <span class="mdi mdi-plus-circle"></span>
-        </button>
-    </div>
+	<button class="btn btn-success create-composite-entry-button" (click)="createEntry()">
+		<span class="mdi mdi-plus-circle"></span>
+	</button>
 </div>

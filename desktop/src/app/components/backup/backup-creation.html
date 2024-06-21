@@ -1,7 +1,7 @@
 <div class="backup-creation row">
     <div class="col">
         <div class="row">
-            <div class="col default-nav bg-light text-right">
+            <div class="col default-nav bg-light text-end">
                 <button id="createBackupButton"
                         class="btn btn-primary"
                         [ngClass]="{ 'disabled': running }"
@@ -13,7 +13,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col default-container">
+            <div class="col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <span i18n="@@backup.creation.info">
                         Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die

@@ -28,7 +28,7 @@
                 <image-overview-taskbar [imageGrid]="imageGrid"></image-overview-taskbar>
             </div>
 
-            <div class="col-auto text-right slider-container">
+            <div class="col-auto text-end slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
                       (click)="decreaseNrImagesPerRow()"></span>
                 <input id="grid-size-slider" #gridSize type="range" min="{{getMinNrImagesPerRow()}}"

@@ -1,11 +1,9 @@
 <div *ngIf="!edit" class="input-group mb-2">
     <input type="text" disabled class="form-control"
            [value]="getGeometryTypeLabel()">
-    <div class="input-group-append">
-        <button class="btn btn-info" type="button" (click)="edit = true;">
-            <span class="mdi mdi-pencil"></span>
-        </button>
-    </div>
+    <button class="btn btn-info" type="button" (click)="edit = true;">
+        <span class="mdi mdi-pencil"></span>
+    </button>
 </div>
 
 <div *ngIf="edit">

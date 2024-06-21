@@ -80,7 +80,15 @@
     #categories-filter {
       position: relative;
       top: 5px;
-      left: 5px;
+      left: 6px;
+      width: 100px;
+      padding-left: 0;
+      padding-right: 0;
+
+      #categories-filter-button {
+        position: relative;
+        top: 1px;
+      }
 
       .categories-filter-selection-button {
         max-width: 50vw;
@@ -110,7 +118,7 @@
     #save-button {
       position: relative;
       top: 6px;
-      left: 9px;
+      left: 6px;
       float: right;
     }
   }

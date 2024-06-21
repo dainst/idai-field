@@ -1,5 +1,5 @@
 <div *ngFor="let field of fieldDefinitions" [id]="getFieldId(field)">
-    <div *ngIf="shouldShow(field)" class="form-group card bg-light">
+    <div *ngIf="shouldShow(field)" class="card bg-light mb-3">
         <div class="card-header h4">
             <span class="card-title">{{labels[field.name]}}</span>
 
@@ -7,7 +7,7 @@
                     placement="left"
                     container="body"
                     ngbTooltip="{{descriptions[field.name]}}"
-                    class="mdi mdi-information-outline float-right"></span>
+                    class="mdi mdi-information-outline float-end"></span>
 
             <img *ngIf="getStratigraphicalRelationInfo(field)"
                  class="relation-image"

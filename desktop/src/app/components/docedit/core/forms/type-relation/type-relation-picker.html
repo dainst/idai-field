@@ -15,7 +15,7 @@
             <option *ngFor="let catalog of availableCatalogs"
                     value={{catalog.identifier}}>{{catalog.identifier}}</option>
         </select>
-        <div class="type-search-bar float-left">
+        <div class="type-search-bar float-start">
             <search-bar [showFiltersMenu]="false"
                         (onQueryStringChanged)="setQueryString($event)">
             </search-bar>

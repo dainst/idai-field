@@ -5,13 +5,11 @@
                    class="form-control reference-input"
                    [(ngModel)]="references[i]">
         </div>
-        <div class="input-group-append">
-            <button class="btn btn-danger"
-                    type="button"
-                    (click)="deleteReference(i)">
-                <span class="mdi mdi-delete"></span>
-            </button>
-        </div>
+        <button class="btn btn-danger"
+                type="button"
+                (click)="deleteReference(i)">
+            <span class="mdi mdi-delete"></span>
+        </button>
     </div>
 </div>
 

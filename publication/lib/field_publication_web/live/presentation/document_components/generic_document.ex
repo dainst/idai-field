@@ -106,6 +106,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                   date={@publication_date}
                   lang={@lang}
                   doc={doc}
+                  image_count={2}
                 />
               <% end %>
             </div>
@@ -121,6 +122,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                   date={@publication_date}
                   lang={@lang}
                   doc={doc}
+                  image_count={2}
                 />
               <% end %>
             </div>

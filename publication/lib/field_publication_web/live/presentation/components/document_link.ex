@@ -5,8 +5,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   alias FieldPublication.Publications.Data
 
   alias FieldPublicationWeb.Presentation.Components.{
+    Image,
     I18n
   }
+
+  attr :doc, :map, required: true
+  attr :project, :string, required: true
+  attr :date, :string, required: true
+  attr :lang, :string, required: true
+  attr :image_count, :integer, default: 0
 
   def show(assigns) do
     ~H"""
@@ -37,6 +44,20 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
             <small class="ml-2 text-slate-600">
               <I18n.text values={shortdescription["values"]} />
             </small>
+          <% end %>
+        </div>
+        <% images = Enum.take(Map.get(@doc, "images", []), @image_count) %>
+        <div
+          :if={images != []}
+          class={"grid grid-cols-#{@image_count} gap-2 mt-2 justify-items-center"}
+        >
+          <%= for uuid <- images do %>
+            <Image.show
+              class="border-2 p-2 border-slate-100"
+              size=",128"
+              project={@project}
+              uuid={uuid}
+            />
           <% end %>
         </div>
       </.link>

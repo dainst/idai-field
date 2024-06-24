@@ -7,10 +7,14 @@ The app is developed in [React Native](https://reactnative.dev/) and the [Expo C
 
 Use the following commands to run the app for development in the browser (in the repository root):
 
+```
     $ npm run bootstrap
-    $ cd mobile
+    $ cd core
+    $ npm run build
+    $ cd ../mobile
     $ npm install --global expo-cli
     $ npm start
+```
 
 ## Run on (virtual) device
 

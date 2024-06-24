@@ -114,8 +114,7 @@ export class MatrixPage {
 
     public static async performSelectOperation(index) {
 
-        await waitForExist('.dropdown');
-        await click('.dropdown');
+        await click('#operation-selection-button');
         await waitForExist('.dropdown .dropdown-menu');
         await click((await getLocator('.dropdown .dropdown-menu button')).nth(index));
     }

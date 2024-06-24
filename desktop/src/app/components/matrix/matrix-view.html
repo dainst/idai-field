@@ -3,7 +3,7 @@
         <div class="row">
             <div *ngIf="showOperationSelector()" class="dropdown"
                  ngbDropdown placement="bottom-left" role="group">
-                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                <button id="operation-selection-button" class="btn btn-outline-primary" ngbDropdownToggle>
                     <span *ngIf="selectedOperation" id="selected-operation-label">
                         {{getDocumentLabel(selectedOperation)}}
                     </span>

@@ -35,7 +35,7 @@
         <div *ngIf="warningType === 'unconfiguredFields'"
              class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.selectNewField.multiple.info.unconfigured">
-            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Bitte beachten Sie: Durch diese Aktion werden bei allen <b>{{countAffected}}</b> Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche eingetragenen Daten aus dem Feld
             <span [innerHTML]="getFieldLabelHTML(fieldName)"></span> in das Feld
             <span [innerHTML]="getFieldLabelHTML(selectedFieldName)"></span> verschoben.
@@ -43,7 +43,7 @@
         <div *ngIf="warningType === 'invalidFields'"
             class="text-center alert alert-warning"
             i18n="@@navbar.taskbar.selectNewField.multiple.info.invalid">
-            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Bitte beachten Sie: Durch diese Aktion werden bei allen <b>{{countAffected}}</b> Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> ungültige Daten aus dem Feld
             <span [innerHTML]="getFieldLabelHTML(fieldName)"></span> in das Feld
             <span [innerHTML]="getFieldLabelHTML(selectedFieldName)"></span> verschoben.

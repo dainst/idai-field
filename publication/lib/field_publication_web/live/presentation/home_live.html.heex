@@ -6,63 +6,28 @@
       No projects published.
     <% else %>
       <div>
-        Search projects
-        <form phx-change="preview_search" phx-submit="open_search_view">
-          <input class="w-full" type="text" name="search_input" phx-debounce="500" />
-
-          <%= if @search_results != [] do %>
-            <div class="bg-slate-50 mt-1">
-              <%= for result <- @search_results do %>
-                <div class="grid relative">
-                  <div>
-                    <DocumentLink.show
-                      project={result["project_name"]}
-                      date={result["publication_draft_date"]}
-                      doc={result["full_doc"]}
-                      lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
-                    />
-                  </div>
-                  <div
-                    class={"p-0.5 text-xs absolute bottom-1.5 right-1 rounded cursor-pointer #{if @highlighted == result["project_name"] do "bg-indigo-500" else "bg-slate-300" end}"}
-                    phx-click="project_selected"
-                    phx-value-id={result["project_name"]}
-                  >
-                    <div
-                      id={"search_result_#{result["id"]}"}
-                      referenced_project={result["project_name"]}
-                      phx-hook="HoverHighlightMapFeature"
-                      target="project_overview_map"
-                    >
-                      <%= result["project_name"] %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          <% else %>
-            <%= for %{doc: doc} = project <- @published_projects do %>
-              <div
-                id={"project_list_#{project[:name]}"}
-                referenced_project={project[:name]}
-                phx-hook="HoverHighlightMapFeature"
-                target="project_overview_map"
-              >
-                <!-- The custom hook above triggers the marker highlight on the map component below when hovering this element. -->
+        <.link navigate={~p"/search"}>Search projects</.link>
+        <%= for %{doc: doc} = project <- @published_projects do %>
+          <div
+            id={"project_list_#{project[:name]}"}
+            referenced_project={project[:name]}
+            phx-hook="HoverHighlightMapFeature"
+            target="project_overview_map"
+          >
+            <!-- The custom hook above triggers the marker highlight on the map component below when hovering this element. -->
         <!-- In parallel to the hook above, phx-click and phx-value-* below implement the click behaviour
           with standard liveview attributes. -->
-                <div
-                  phx-click="project_selected"
-                  phx-value-id={project[:name]}
-                  class={"rounded #{if @highlighted == project[:name] do "bg-indigo-500" else "bg-slate-300" end} p-2 mt-2 cursor-pointer"}
-                >
-                  <div class="text-center">
-                    <I18n.text values={Data.get_field_values(doc, "shortName")} />
-                  </div>
-                </div>
+            <div
+              phx-click="project_selected"
+              phx-value-id={project[:name]}
+              class={"rounded #{if @highlighted == project[:name] do "bg-indigo-500" else "bg-slate-300" end} p-2 mt-2 cursor-pointer"}
+            >
+              <div class="text-center">
+                <I18n.text values={Data.get_field_values(doc, "shortName")} />
               </div>
-            <% end %>
-          <% end %>
-        </form>
+            </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>

@@ -23,7 +23,7 @@
     <div *ngIf="convertAll">
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.convertFieldData.all.info">
-            Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der
+            Bitte beachten Sie: Durch diese Aktion werden in allen <b>{{countAffected}}</b> Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> ungültige Daten im
             Feld <span [innerHTML]="getFieldLabelHTML()"></span> konvertiert (falls möglich).
         </div>

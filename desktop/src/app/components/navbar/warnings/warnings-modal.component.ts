@@ -276,6 +276,7 @@ export class WarningsModalComponent {
         componentInstance.category = section.category;
         componentInstance.inputType = section.inputType;
         componentInstance.inputTypeLabel = this.getInputTypeLabel(section);
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,

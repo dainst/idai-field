@@ -26,7 +26,7 @@ defmodule FieldPublication.Publications.Search do
       |> Enum.into(%{})
   end
 
-  def fuzzy_search(q, from \\ 0, size \\ 100, filter) do
+  def fuzzy_search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
         "*" ->
@@ -79,7 +79,7 @@ defmodule FieldPublication.Publications.Search do
           docs:
             body["hits"]["hits"]
             |> Enum.map(fn %{"_source" => doc} ->
-              doc
+              Map.put(doc, :id, doc["id"])
             end),
           aggregations:
             body["aggregations"]
@@ -87,6 +87,76 @@ defmodule FieldPublication.Publications.Search do
             |> Enum.into(%{})
         }
     end
+  end
+
+  def search_stream(q, start_from, size, filter) do
+    Stream.resource(
+      fn ->
+        q =
+          case q do
+            "*" ->
+              q
+
+            "" ->
+              "*"
+
+            q ->
+              "#{q}~"
+          end
+
+        payload =
+          %{
+            query: %{
+              bool: %{
+                must: %{
+                  query_string: %{
+                    query: q
+                  }
+                }
+              }
+            },
+            size: size,
+            from: start_from
+          }
+
+        filter_params =
+          Enum.map(filter, fn {key, value} ->
+            %{term: %{key => value}}
+          end)
+
+        if Enum.empty?(filter_params) do
+          payload
+        else
+          boolean_query = Map.put(payload.query.bool, :filter, %{bool: %{must: filter_params}})
+
+          put_in(payload.query.bool, boolean_query)
+        end
+      end,
+      fn payload ->
+        {:ok, %{status: 200, body: body}} = OpensearchService.run_search(payload)
+
+        body = Jason.decode!(body)
+
+        body["hits"]["hits"]
+        |> case do
+          [] ->
+            {:halt, :ok}
+
+          hits ->
+            {
+              hits
+              |> Enum.map(fn %{"_source" => doc} ->
+                Map.put(doc, :id, doc["id"])
+              end),
+              Map.put(payload, :from, payload.from + payload.size)
+            }
+        end
+      end,
+      fn final_payload ->
+        IO.inspect(final_payload)
+        :ok
+      end
+    )
   end
 
   defp reduce_aggregation({field, %{"buckets" => buckets}}) do

@@ -7,15 +7,57 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     DocumentLink
   }
 
+  @search_batch_limit 20
+
   def handle_params(params, _uri, socket) do
     q = Map.get(params, "q", "*")
     filters = Map.get(params, "filters", %{})
 
+    from = 0
+
+    %{
+      total: total,
+      docs: docs,
+      aggregations: aggregations
+    } = Search.fuzzy_search(q, filters, from, @search_batch_limit)
+
     {
       :noreply,
       socket
-      |> assign(:search_parameters, %{q: q, filters: filters})
-      |> assign(:search_results, Search.fuzzy_search(q, filters))
+      |> assign(:search_parameters, %{q: q, filters: filters, from: from})
+      |> assign(:search_end_reached, false)
+      |> assign(:aggregations, aggregations)
+      |> assign(:total, total)
+      |> stream(:search_results, docs, reset: true)
+    }
+  end
+
+  def handle_event("search_next_batch", _, %{assigns: %{search_end_reached: true}} = socket) do
+    {
+      :noreply,
+      socket
+    }
+  end
+
+  def handle_event("search_next_batch", _, %{assigns: %{search_parameters: parameters}} = socket) do
+    new_parameters = Map.put(parameters, :from, parameters.from + @search_batch_limit)
+
+    %{
+      docs: docs
+    } =
+      Search.fuzzy_search(
+        new_parameters.q,
+        new_parameters.filters,
+        new_parameters.from,
+        @search_batch_limit
+      )
+
+    {
+      :noreply,
+      socket
+      |> assign(:search_parameters, new_parameters)
+      |> assign(:search_end_reached, docs == [])
+      |> stream(:search_results, docs)
     }
   end
 

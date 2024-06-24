@@ -120,6 +120,7 @@
     "@ng-bootstrap/ng-bootstrap": "12.1.2",
     "@ng-select/ng-select": "7.4.0",
     "@ngx-translate/i18n-polyfill": "1.0.0",
+    "@popperjs/core": "^2.11.8",
     "address": "1.2.1",
     "archiver": "5.1.0",
     "assert": "^2.0.0",

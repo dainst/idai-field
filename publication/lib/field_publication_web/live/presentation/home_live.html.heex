@@ -7,14 +7,8 @@
     <% else %>
       <div>
         Search projects
-        <form phx-change="search">
-          <input
-            class="w-full"
-            type="text"
-            value={@current_search}
-            name="search_input"
-            phx-debounce="500"
-          />
+        <form phx-change="preview_search" phx-submit="open_search_view">
+          <input class="w-full" type="text" name="search_input" phx-debounce="500" />
 
           <%= if @search_results != [] do %>
             <div class="bg-slate-50 mt-1">
@@ -22,30 +16,24 @@
                 <div class="grid relative">
                   <div>
                     <DocumentLink.show
-                      project={result.publication.project_name}
-                      date={result.publication.publication_date}
-                      preview_doc={result.doc}
-                      lang={
-                        if Gettext.get_locale(FieldPublicationWeb.Gettext) in result.publication.languages do
-                          Gettext.get_locale(FieldPublicationWeb.Gettext)
-                        else
-                          List.first(result.publication.languages)
-                        end
-                      }
+                      project={result["project_name"]}
+                      date={result["publication_draft_date"]}
+                      preview_doc={result["full_doc"]}
+                      lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
                     />
                   </div>
                   <div
-                    class={"p-0.5 text-xs absolute bottom-1.5 right-1 rounded cursor-pointer #{if @highlighted == result.publication.project_name do "bg-indigo-500" else "bg-slate-300" end}"}
+                    class={"p-0.5 text-xs absolute bottom-1.5 right-1 rounded cursor-pointer #{if @highlighted == result["project_name"] do "bg-indigo-500" else "bg-slate-300" end}"}
                     phx-click="project_selected"
-                    phx-value-id={result.publication.project_name}
+                    phx-value-id={result["project_name"]}
                   >
                     <div
-                      id={"search_result_#{result.doc["id"]}"}
-                      referenced_project={result.publication.project_name}
+                      id={"search_result_#{result["id"]}"}
+                      referenced_project={result["project_name"]}
                       phx-hook="HoverHighlightMapFeature"
                       target="project_overview_map"
                     >
-                      <%= result.publication.project_name %>
+                      <%= result["project_name"] %>
                     </div>
                   </div>
                 </div>

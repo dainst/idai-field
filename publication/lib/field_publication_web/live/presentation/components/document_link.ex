@@ -1,5 +1,6 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   use Phoenix.Component
+  use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data
 
@@ -21,7 +22,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         class="grow p-3 rounded-tr rounded-br"
         style={"border-color: #{@preview_doc["category"]["color"]}; filter:saturate(50%); border-width: 1px 1px 1px 0px;"}
-        patch={"/#{@project}/#{@date}/#{@lang}/#{if @preview_doc["id"] != "project" do @preview_doc["id"] else "" end}"}
+        patch={
+          ~p"/projects/#{@project}/#{@date}/#{@lang}/#{if @preview_doc["id"] != "project" do
+            @preview_doc["id"]
+          else
+            ""
+          end}"
+        }
       >
         <div>
           <%= @preview_doc["identifier"] %>
@@ -51,7 +58,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         class={"grow p-3 rounded-tr rounded-br #{if Map.get(assigns, :is_highlighted), do: "bg-slate-200"}"}
         style={"border-color: #{@preview_doc["category"]["color"]}; filter:saturate(50%); border-width: 1px 1px 1px 0px;"}
-        patch={"/#{@project}/#{@date}/#{@lang}/hierarchy/#{if @preview_doc["id"] != "project" do @preview_doc["id"] else "" end}"}
+        patch={
+          ~p"/projects/#{@project}/#{@date}/#{@lang}/hierarchy/#{if @preview_doc["id"] != "project" do
+            @preview_doc["id"]
+          else
+            ""
+          end}"
+        }
       >
         <div>
           <%= @preview_doc["identifier"] %>

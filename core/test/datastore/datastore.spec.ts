@@ -289,6 +289,7 @@ describe('Datastore', () => {
                 }
             ]),
             Promise.resolve([]),
+            Promise.resolve([]),
             Promise.resolve([])
         );
 

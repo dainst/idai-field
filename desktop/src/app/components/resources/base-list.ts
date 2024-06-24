@@ -26,6 +26,8 @@ export class BaseList {
     
     public readonly itemSize: number;
 
+    private scrollTarget: FieldDocument;
+
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
@@ -71,11 +73,15 @@ export class BaseList {
 
         if (!scrollTarget) return;
 
+        this.scrollTarget = scrollTarget;
+
         const index = this.viewFacade.getDocuments()
             .findIndex(document => document.resource.id === scrollTarget.resource.id);
 
         if (!this.scrollViewport) {
-            setTimeout(() => this.scrollTo(scrollTarget, bottomElement), 100);
+            setTimeout(() => {
+                if (this.scrollTarget === scrollTarget) this.scrollTo(scrollTarget, bottomElement);
+            }, 100);
         } else {
             scrollTo(
                 index, 'resource-' + scrollTarget.resource.identifier, this.itemSize,

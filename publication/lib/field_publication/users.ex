@@ -1,23 +1,8 @@
-defmodule FieldPublication.User do
+defmodule FieldPublication.Users do
+  import Ecto.Changeset
+
   alias FieldPublication.CouchService
-
-  defmodule InputSchema do
-    use Ecto.Schema
-
-    import Ecto.Changeset
-
-    @derive Jason.Encoder
-    @primary_key {:name, :string, autogenerate: false}
-    embedded_schema do
-      field(:password, :string, redact: true)
-    end
-
-    def changeset(%__MODULE__{} = user, attrs \\ %{}) do
-      user
-      |> cast(attrs, [:name, :password])
-      |> validate_required([:name])
-    end
-  end
+  alias FieldPublication.DocumentSchema.User
 
   @moduledoc """
   Bundles (CouchDB) user related functions.
@@ -30,15 +15,19 @@ defmodule FieldPublication.User do
     CouchService.get_user(name)
     |> case do
       {:ok, %{status: 200, body: body}} ->
-        %{"name" => name} = Jason.decode!(body)
+        params =
+          body
+          |> Jason.decode!()
 
-        %FieldPublication.User.InputSchema{
-          name: name
+        {
+          :ok,
+          %User{}
+          |> User.changeset(params)
+          |> apply_action!(:create)
         }
 
-      {:ok, %{status: 404}} = response ->
-        # User was not found
-        response
+      {:ok, %{status: 404}} = _response ->
+        {:error, :not_found}
     end
   end
 
@@ -48,29 +37,32 @@ defmodule FieldPublication.User do
   Returns `{:ok, :created}` if successful or `{:error, :already_exists}` a user of that name already exists.
 
   __Parameters__
-  - `name` the user's name.
-  - `password` the user's password.
+  - `user_name` the user's name.
+  - `user_password` the user's password.
   """
   def create(params) do
-    %FieldPublication.User.InputSchema{}
-    |> FieldPublication.User.InputSchema.changeset(params)
-    |> Ecto.Changeset.validate_required(:password)
-    |> Ecto.Changeset.apply_action(:create)
+    %User{}
+    |> User.changeset(params)
+    |> validate_required([:password])
+    |> apply_action(:create)
     |> case do
       {:error, _changeset} = error ->
         error
 
-      {:ok, %{name: name, password: password} = user_struct} ->
-        CouchService.create_user(name, password)
+      {:ok, %User{name: name} = user} ->
+        CouchService.create_user(user)
         |> case do
           {:ok, %{status: 201}} ->
-            user_struct
+            {:ok, user}
 
           {:ok, %{status: 409}} ->
-            user_struct
-            |> FieldPublication.User.InputSchema.changeset()
-            |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
-            |> Ecto.Changeset.apply_action(:validate)
+            {
+              :error,
+              user
+              |> User.changeset()
+              |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
+              |> Ecto.Changeset.apply_action(:validate)
+            }
         end
     end
   end
@@ -100,28 +92,28 @@ defmodule FieldPublication.User do
   Returns `{:ok, :updated}` if successful or `{:error, :unknown}` if user is unknown.
 
   __Parameters__
-  - `name` the user's name.
-  - `password` the user's name.
+  - `user_name` the user's name.
+  - `user_password` the user's name.
   """
   def update(user, params) do
     user
-    |> FieldPublication.User.InputSchema.changeset(params)
-    |> Ecto.Changeset.apply_action(:update)
+    |> User.changeset(params)
+    |> apply_action(:update)
     |> case do
       {:error, _changeset} = error ->
         error
 
-      {:ok, %{name: name, password: password} = user_struct} ->
-        CouchService.update_password(name, password)
+      {:ok, user} ->
+        CouchService.update_user(user)
         |> case do
           {:ok, %{status: 201}} ->
-            user_struct
+            {:ok, user}
 
           {:ok, %{status: 404}} ->
             {
               :error,
               user
-              |> FieldPublication.User.InputSchema.changeset()
+              |> User.changeset()
               |> Ecto.Changeset.add_error(:name, "name not found.")
             }
         end
@@ -146,9 +138,9 @@ defmodule FieldPublication.User do
         |> Jason.decode!()
         |> Map.get("rows", [])
         |> Enum.filter(fn doc -> String.starts_with?(doc["id"], "org.couchdb.user:") end)
-        |> Enum.map(fn %{"id" => id} ->
-          "org.couchdb.user:" <> without_prefix = id
-          %{name: without_prefix}
+        |> Enum.map(fn %{"doc" => doc} ->
+          User.changeset(%User{}, doc)
+          |> apply_action!(:create)
         end)
     end
   end

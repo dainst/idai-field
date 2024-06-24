@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.publication_date) == date
       end)
 
-    doc = Publications.Data.get_document(uuid, current_publication)
+    doc = Publications.Data.get_document(uuid, current_publication, true)
 
     project_map_layers =
       Publications.Data.get_project_map_layers(current_publication)
@@ -62,7 +62,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
           value["children"]
       end
 
-    child_doc_previews = Data.get_doc_previews(current_publication, child_uuids)
+    child_doc_previews = Data.get_documents(child_uuids, current_publication)
 
     relations_with_geometry =
       Map.get(doc, "relations", [])
@@ -105,7 +105,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.publication_date) == date
       end)
 
-    project_doc = Publications.Data.get_document("project", current_publication)
+    project_doc = Publications.Data.get_document("project", current_publication, true)
 
     project_map_layers =
       Publications.Data.get_project_map_layers(current_publication)
@@ -119,7 +119,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         key
       end)
 
-    child_doc_previews = Data.get_doc_previews(current_publication, top_level_uuids)
+    child_doc_previews = Data.get_documents(top_level_uuids, current_publication)
 
     publication_comments =
       current_publication.comments
@@ -167,7 +167,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:publication, publication)
       |> push_patch(
-        to: ~p"/#{project_name}/#{publication.publication_date}/#{language}",
+        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{language}",
         replace: true
       )
     }
@@ -182,7 +182,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     {
       :noreply,
-      push_patch(socket, to: ~p"/#{project_name}/#{publication.publication_date}/#{lang}/#{uuid}")
+      push_patch(socket,
+        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{lang}/#{uuid}"
+      )
     }
   end
 
@@ -195,7 +197,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     {
       :noreply,
-      push_patch(socket, to: ~p"/#{project_name}/#{date}/#{lang}/#{uuid}")
+      push_patch(socket, to: ~p"/projects/#{project_name}/#{date}/#{lang}/#{uuid}")
     }
   end
 

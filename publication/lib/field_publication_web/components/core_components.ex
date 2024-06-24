@@ -362,7 +362,7 @@ defmodule FieldPublicationWeb.CoreComponents do
     ~H"""
     <div phx-feedback-for={@name} class="text-sm">
       <.label for={@id}><%= @label %></.label>
-      <div class="mt-1 w-full bg-white border border-gray-300 ...">
+      <div class="mt-1 w-full bg-white border border-gray-300">
         <div class="grid grid-cols-1 gap-1 text-sm items-baseline">
           <input type="hidden" name={@name} value="" />
           <div :for={{label, value} <- @options}>
@@ -373,7 +373,7 @@ defmodule FieldPublicationWeb.CoreComponents do
                 name={@name}
                 value={value}
                 checked={value in @value}
-                class="mr-2 h-4 w-4 rounded ..."
+                class="mr-2 h-4 w-4 rounded"
                 {@rest}
               />
               <%= label %>
@@ -691,7 +691,7 @@ defmodule FieldPublicationWeb.CoreComponents do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
 
-  alias FieldPublication.Schemas.LogEntry
+  alias FieldPublication.DocumentSchema.LogEntry
 
   @doc """
   Component for displaying lists of LogEntry schemas.
@@ -740,35 +740,6 @@ defmodule FieldPublicationWeb.CoreComponents do
         <% end %>
       </div>
     </div>
-    """
-  end
-
-  @doc """
-
-  """
-  attr :entries, :list, default: []
-  attr :date, :any, required: true
-  slot :inner_block, required: true
-
-  def publication_list(assigns) do
-    ~H"""
-    <%= for publication <- @entries do %>
-      <% color =
-        cond do
-          publication.publication_date == nil ->
-            "bg-yellow-200"
-
-          Date.before?(@date, publication.publication_date) ->
-            "bg-green-300"
-
-          true ->
-            "bg-green-500"
-        end %>
-
-      <div class={"m-1 p-2 #{color}"}>
-        <%= render_slot(@inner_block, publication) %>
-      </div>
-    <% end %>
     """
   end
 

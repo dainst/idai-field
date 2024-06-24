@@ -1,0 +1,30 @@
+name: Publication
+on:
+  push:
+    paths:
+      - "publication/**"
+      - ".github/workflows/publication.yml"
+  pull_request:
+    paths:
+      - "publication/**"
+      - ".github/workflows/publication.yml"
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: 26.0
+          elixir-version: 1.16.0
+      - name: Start CouchDB, Cantaloupe and OpenSearch
+        run: docker-compose -f docker-compose.yml up -d
+        working-directory: publication
+      - name: Sleep to await CouchDB startup
+        run: sleep 15s
+      - name: Install Field Publication dependencies and run setup
+        run: mix setup
+        working-directory: publication
+      - name: Run Field Publication tests
+        run: mix test
+        working-directory: publication

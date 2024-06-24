@@ -326,7 +326,7 @@ export class Datastore {
     public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
         const revision: Document = await this.datastore.fetchRevision(docId, revisionId);
-        await this.convert(revision);
+        this.documentConverter.convert(revision);
         return revision;
     }
 

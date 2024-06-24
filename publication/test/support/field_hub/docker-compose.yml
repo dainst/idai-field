@@ -1,20 +1,18 @@
-version: '3.5'
-
 services:
   couchdb:
     image: couchdb:3.2.1
+    container_name: "fieldhub_integration_test_couchdb"
     environment:
       - COUCHDB_USER=fieldhub_integration_test_admin
       - COUCHDB_PASSWORD=pw
-    volumes:
-      - ./db_data:/opt/couchdb/data
     ports:
       - "5986:5984"
     extra_hosts:
       - "host.docker.internal:host-gateway"
   app:
     image: ghcr.io/dainst/field_hub:3.2.8
-    environment:
+    container_name: "fieldhub_integration_test_app"
+    environment: 
       - HOST=localhost
       - SECRET_KEY_BASE="6UsnL+ePtT3rclpQiG60gsXGjg1ZpaRtsujvp+0qqMBrTiwxHA5Uc7Vm68mgO5JbpoDtmlX56zb/q0H+rsgxSQ=="
       - COUCHDB_URL=http://couchdb:5984
@@ -22,7 +20,5 @@ services:
       - COUCHDB_ADMIN_PASSWORD=pw
       - COUCHDB_USER_NAME=fieldhub_integration_test_user
       - COUCHDB_USER_PASSWORD=pw
-    volumes:
-      - ./files:/files
     ports:
       - 4003:4000

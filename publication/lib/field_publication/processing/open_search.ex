@@ -2,16 +2,14 @@ defmodule FieldPublication.Processing.OpenSearch do
   alias Phoenix.PubSub
 
   alias FieldPublication.CouchService
-  alias FieldPublication.DataServices.OpensearchService
+  alias FieldPublication.OpensearchService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
-  alias FieldPublication.Schemas.Publication
+  alias FieldPublication.DocumentSchema.Publication
 
   require Logger
 
   def evaluate_state(%Publication{} = publication) do
-    publication_id = Publications.get_doc_id(publication)
-
     doc_count =
       CouchService.get_database(publication.database)
       |> then(fn {:ok, %{status: 200, body: body}} ->
@@ -23,19 +21,13 @@ defmodule FieldPublication.Processing.OpenSearch do
         if count >= 2, do: count - 2, else: 0
       end)
 
-    case OpensearchService.get_active_index(publication_id) do
-      :none ->
-        %{counter: 0, percentage: 0, overall: doc_count}
+    counter = OpensearchService.get_doc_count(publication)
 
-      index_name ->
-        counter = OpensearchService.get_doc_count(index_name)
-
-        %{
-          counter: counter,
-          percentage: counter / doc_count * 100,
-          overall: doc_count
-        }
-    end
+    %{
+      counter: counter,
+      percentage: counter / doc_count * 100,
+      overall: doc_count
+    }
   end
 
   def index(%Publication{} = publication) do
@@ -43,8 +35,7 @@ defmodule FieldPublication.Processing.OpenSearch do
 
     config = Data.get_configuration(publication)
 
-    OpensearchService.initialize_indices_for_alias(publication_id)
-    OpensearchService.clear_inactive_index(publication_id)
+    {:ok, %{status: 200}} = OpensearchService.reset_inactive_index(publication)
 
     {:ok, counter_pid} =
       Agent.start_link(fn ->
@@ -71,24 +62,31 @@ defmodule FieldPublication.Processing.OpenSearch do
     end)
     |> Task.async_stream(
       fn %{"resource" => res} = doc ->
-        category_configuration = Data.search_category_tree(config, res["category"])
+        full_doc =
+          Data.apply_project_configuration(doc, config, publication)
+          |> Map.delete("relations")
 
-        if category_configuration == :not_found do
-          Logger.warning(
-            "Unable to find configuration for category '#{res["category"]}', document: "
-          )
+        open_search_doc =
+          %{
+            "category" => res["category"],
+            "id" => res["id"],
+            "identifier" => res["identifier"],
+            "publication_draft_date" => publication.draft_date,
+            "project_name" => publication.project_name,
+            "full_doc" => full_doc
+          }
 
-          Logger.warning(inspect(doc))
-        else
-          res =
-            res
-            |> Map.put("category", Data.extend_category(category_configuration["item"], res))
+        OpensearchService.put(open_search_doc, publication)
+        |> case do
+          {:ok, %{status: 201}} ->
+            :ok
 
-          # TODO: Groups extented in the default way will cause field mapping conflicts between each other
-          # |> Map.put("groups", Data.extend_field_groups(category_configuration["item"], res))
+          {:ok, %{status: 400, body: body}} ->
+            body
+            |> Jason.decode!()
+            |> Logger.error()
 
-          doc = Map.put(doc, "resource", res)
-          OpensearchService.put(publication_id, doc)
+            :error
         end
 
         updated_state =
@@ -114,7 +112,6 @@ defmodule FieldPublication.Processing.OpenSearch do
     )
     |> Enum.to_list()
 
-    OpensearchService.switch_active_index(publication_id)
-    OpensearchService.clear_inactive_index(publication_id)
+    OpensearchService.switch_active_alias(publication)
   end
 end

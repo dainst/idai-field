@@ -29,7 +29,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
                 <%= for preview_doc <- depicted_in["values"] do %>
                   <.link
-                    patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
+                    patch={
+                      ~p"/projects/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"
+                    }
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">

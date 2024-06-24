@@ -1,7 +1,7 @@
 defimpl Jason.Encoder,
   for: [
-    FieldPublication.Schemas.Project,
-    FieldPublication.Schemas.Publication
+    FieldPublication.DocumentSchema.Project,
+    FieldPublication.DocumentSchema.Publication
   ] do
   def encode(document, opts) do
     document
@@ -9,16 +9,16 @@ defimpl Jason.Encoder,
     |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
     |> Map.put(
       :_id,
-      FieldPublication.Schemas.construct_doc_id(document, get_module(document))
+      FieldPublication.DocumentSchema.Base.construct_doc_id(document, get_module(document))
     )
     |> Jason.Encode.map(opts)
   end
 
-  defp get_module(%FieldPublication.Schemas.Project{}),
-    do: FieldPublication.Schemas.Project
+  defp get_module(%FieldPublication.DocumentSchema.Project{}),
+    do: FieldPublication.DocumentSchema.Project
 
-  defp get_module(%FieldPublication.Schemas.Publication{}),
-    do: FieldPublication.Schemas.Publication
+  defp get_module(%FieldPublication.DocumentSchema.Publication{}),
+    do: FieldPublication.DocumentSchema.Publication
 end
 
 # This tells phoenix how to use date fields (like those of the Publication schema) as part of URLs in path helpers (~p sigils etc. used in templates).
@@ -28,7 +28,7 @@ defimpl Phoenix.Param, for: Date do
   end
 end
 
-defmodule FieldPublication.Schemas do
+defmodule FieldPublication.DocumentSchema.Base do
   import Ecto.Changeset
 
   def validate_doc_type(changeset, expected) do

@@ -1,5 +1,6 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "name": "mobile",
   "scripts": {
     "start": "expo start",
     "start:clear": "expo start -c",
@@ -11,7 +12,8 @@
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
     "build": "tsc -p .",
-    "export": "expo export --dev --public-url http://127.0.0.1:8000"
+    "export": "expo export --dev --public-url http://127.0.0.1:8000",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.4",
@@ -98,6 +100,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest-expo": "^40.0.2",
     "node-gyp": "^10.1.0",
+    "patch-package": "^8.0.0",
     "ts-jest": "^26.5.4",
     "typescript": "~4.0.0"
   },

@@ -1,10 +1,13 @@
-defmodule FieldPublicationWeb.Publishing.PublicationLive.ReplicationFormComponent do
+defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponent do
   alias FieldPublication.Replication
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.Publications
-  alias FieldPublication.Schemas.Publication
-  alias FieldPublication.Schemas.ReplicationInput
+
+  alias FieldPublication.DocumentSchema.{
+    Publication,
+    ReplicationInput
+  }
 
   @impl true
   def render(assigns) do

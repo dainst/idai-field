@@ -1,8 +1,8 @@
-defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
+defmodule FieldPublicationWeb.Management.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Schemas.Project
-  alias FieldPublication.User
+  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.Users
   alias FieldPublication.Projects
 
   @impl true
@@ -23,9 +23,9 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
         <.input field={@form[:_rev]} type="hidden" />
 
         <%= case @action do %>
-          <% :edit -> %>
+          <% :edit_project -> %>
             <h1><%= @project.name %></h1>
-          <% :new -> %>
+          <% :new_project -> %>
             <.input field={@form[:name]} type="text" label="Project key" />
           <% _ -> %>
         <% end %>
@@ -42,8 +42,11 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
   def update(%{project: project} = assigns, socket) do
     changeset = Project.changeset(project)
 
-    # TODO: Extend users to show better labels. First item in tuple is used as label in the checkbox.
-    users = User.list() |> Enum.map(fn %{name: name} -> {name, name} end)
+    users =
+      Enum.map(
+        Users.list(),
+        fn %{name: name, label: label} -> {label, name} end
+      )
 
     {
       :ok,
@@ -68,24 +71,20 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
     save_project(socket, socket.assigns.action, project_params)
   end
 
-  defp save_project(socket, :edit, project_params) do
-    case Projects.put(socket.assigns.project, project_params) do
-      {:ok, updated_project} ->
-        notify_parent({:saved, updated_project})
+  defp save_project(socket, :edit_project, project_params) do
+    {:ok, updated_project} = Projects.put(socket.assigns.project, project_params)
 
-        {
-          :noreply,
-          socket
-          |> put_flash(:info, "Project updated successfully")
-          |> push_navigate(to: ~p"/publishing/#{updated_project}")
-        }
+    notify_parent({:saved, updated_project})
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
+    {
+      :noreply,
+      socket
+      |> put_flash(:info, "Project updated successfully")
+      |> push_patch(to: ~p"/management")
+    }
   end
 
-  defp save_project(socket, :new, project_params) do
+  defp save_project(socket, :new_project, project_params) do
     case Projects.put(%Project{}, project_params) do
       {:ok, created_project} ->
         notify_parent({:saved, created_project})
@@ -94,7 +93,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project created successfully")
-          |> push_navigate(to: ~p"/publishing/#{created_project.name}")
+          |> push_patch(to: ~p"/management")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -106,5 +105,7 @@ defmodule FieldPublicationWeb.Publishing.ProjectLive.FormComponent do
     assign(socket, :form, to_form(changeset))
   end
 
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+  defp notify_parent(msg) do
+    send(self(), {__MODULE__, msg})
+  end
 end

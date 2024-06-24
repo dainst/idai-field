@@ -1,12 +1,12 @@
-defmodule FieldPublication.Schemas.Publication do
+defmodule FieldPublication.DocumentSchema.Publication do
   use Ecto.Schema
 
   import Ecto.Changeset
 
   alias FieldPublication.Projects
-  alias FieldPublication.Schemas
 
-  alias FieldPublication.Schemas.{
+  alias FieldPublication.DocumentSchema.{
+    Base,
     Translation,
     LogEntry
   }
@@ -64,7 +64,7 @@ defmodule FieldPublication.Schemas.Publication do
       :version
     ])
     |> ensure_project_exists()
-    |> Schemas.validate_doc_type(@doc_type)
+    |> Base.validate_doc_type(@doc_type)
   end
 
   def doc_type() do

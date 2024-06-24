@@ -4,7 +4,7 @@ defmodule FieldPublication.Processing.Image do
   alias FieldPublication.FileService
   alias FieldPublication.Publications
 
-  alias FieldPublication.Schemas.{
+  alias FieldPublication.DocumentSchema.{
     Publication
   }
 

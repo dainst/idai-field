@@ -11,7 +11,7 @@ defmodule FieldPublicationWeb.UserSessionController do
   defp create(conn, %{"user" => %{"name" => name, "password" => password}} = form_params, info) do
     CouchService.authenticate(name, password)
     |> case do
-      {:ok, :authenticated} ->
+      {:ok, :valid} ->
         conn
         |> put_flash(:info, info)
         |> UserAuth.log_in_user(name, form_params)
@@ -25,9 +25,6 @@ defmodule FieldPublicationWeb.UserSessionController do
   end
 
   def delete(conn, _params) do
-    conn
-    |> UserAuth.log_out_user()
-    |> put_flash(:info, "Logged out successfully.")
-    |> redirect(to: ~p"/log_in")
+    UserAuth.log_out_user(conn)
   end
 end

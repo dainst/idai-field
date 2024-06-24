@@ -64,7 +64,6 @@ defmodule FieldPublication.Processing.OpenSearch do
       fn %{"resource" => res} = doc ->
         full_doc =
           Data.apply_project_configuration(doc, config, publication)
-          |> Map.delete("relations")
 
         open_search_doc =
           %{
@@ -73,7 +72,8 @@ defmodule FieldPublication.Processing.OpenSearch do
             "identifier" => res["identifier"],
             "publication_draft_date" => publication.draft_date,
             "project_name" => publication.project_name,
-            "full_doc" => full_doc
+            "full_doc" => full_doc,
+            "full_doc_as_text" => Jason.encode!(full_doc)
           }
 
         OpensearchService.put(open_search_doc, publication)

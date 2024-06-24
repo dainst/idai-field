@@ -90,6 +90,9 @@ defmodule FieldPublication.OpensearchService do
             },
             full_doc: %{
               type: "flat_object"
+            },
+            full_doc_as_text: %{
+              type: "text"
             }
           }
         }
@@ -299,6 +302,15 @@ defmodule FieldPublication.OpensearchService do
       Jason.decode!(body)
       |> Map.get("count", 0)
     end)
+  end
+
+  def get_project_mappings() do
+    Finch.build(
+      :get,
+      "#{base_url()}/project_*/_mapping",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
   end
 
   def run_search(query) do

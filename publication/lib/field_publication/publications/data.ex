@@ -221,16 +221,26 @@ defmodule FieldPublication.Publications.Data do
       ) do
     category_configuration = search_category_tree(configuration, resource["category"])
 
+    image_categories = get_all_subcategories(publication, "Image")
+
+    image_uuids =
+      if resource["category"] in image_categories do
+        # Add own uuid as shorthand list
+        [resource["id"]]
+      else
+        # Otherwise evaluate the isDepictedIn relations
+        resource
+        |> Map.get("relations", %{})
+        |> Map.get("isDepictedIn", [])
+      end
+
     doc =
       %{
         "id" => resource["id"],
         "identifier" => resource["identifier"],
         "category" => extend_category(category_configuration["item"], resource),
         "groups" => extend_field_groups(category_configuration["item"], resource),
-        "images" =>
-          resource
-          |> Map.get("relations", %{})
-          |> Map.get("isDepictedIn", [])
+        "images" => image_uuids
       }
 
     if include_relations do
@@ -305,6 +315,10 @@ defmodule FieldPublication.Publications.Data do
   defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_categories}) do
     ([name] ++ Enum.map(child_categories, &flatten_category_tree/1))
     |> List.flatten()
+  end
+
+  defp flatten_category_tree(nil) do
+    []
   end
 
   defp search_category_tree(configuration, category_name) do

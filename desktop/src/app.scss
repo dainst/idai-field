@@ -324,6 +324,10 @@ select.form-control:not([size]):not([multiple]) {
   top: 14px;
 }
 
+.modal {
+  z-index: 1055;
+}
+
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;

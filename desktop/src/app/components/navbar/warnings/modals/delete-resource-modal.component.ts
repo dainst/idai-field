@@ -21,9 +21,9 @@ export class DeleteResourceModalComponent {
     
     public deleteAll: boolean;
     public confirmValue: string;
-
     public countAffected: string;
-    public affectedDocuments: Array<Document>;
+    
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -45,10 +45,10 @@ export class DeleteResourceModalComponent {
 
     public async initialize() {
 
-        const foundDocuments: Array<Document> = (await this.datastore.find(
+        const foundDocuments: Array<Document> = await this.datastore.find(
             { categories: ['UNCONFIGURED'] },
             { includeResourcesWithoutValidParent: true }
-        )).documents;
+        ).then(res => res.documents);
 
         this.affectedDocuments = foundDocuments.filter(document => {
             return document.resource.category === this.document.resource.category;

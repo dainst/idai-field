@@ -24,8 +24,9 @@ export class ConvertFieldDataModalComponent {
     public inputTypeLabel: string;
 
     public convertAll: boolean;
-    public countAffected: Number;
-    public affectedDocuments: Document[];
+    public countAffected: string;
+    
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -51,9 +52,8 @@ export class ConvertFieldDataModalComponent {
             constraints: { ['invalidFields:contain']: this.fieldName }
         }, { includeResourcesWithoutValidParent: true });
         
-        this.countAffected = findResult.totalCount
-        this.affectedDocuments = findResult.documents
-        .filter(document => this.isConvertible(document));
+        this.countAffected = findResult.totalCount.toString();
+        this.affectedDocuments = findResult.documents.filter(document => this.isConvertible(document));
 
     }
 

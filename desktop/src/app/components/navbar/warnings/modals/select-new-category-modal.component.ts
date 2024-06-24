@@ -23,9 +23,9 @@ export class SelectNewCategoryModalComponent {
     public availableTopLevelCategories: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
     public multiple: boolean;
-
-    public affectedDocuments: Array<Document>;
     public countAffected: string;
+
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -53,9 +53,10 @@ export class SelectNewCategoryModalComponent {
 
     public async initialize() {
 
-        const foundDocuments: Array<Document> = (await this.datastore.find({
-            categories: ['UNCONFIGURED'],
-        },  { includeResourcesWithoutValidParent: true })).documents;
+        const foundDocuments: Array<Document> = await this.datastore.find(
+            { categories: ['UNCONFIGURED'] },
+            { includeResourcesWithoutValidParent: true }
+        ).then(res => res.documents);
 
         this.affectedDocuments = foundDocuments.filter(document => {
             return document.resource.category === this.document.resource.category;

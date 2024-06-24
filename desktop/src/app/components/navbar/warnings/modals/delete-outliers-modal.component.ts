@@ -61,9 +61,9 @@ export class DeleteOutliersModalComponent {
     }
 
     public async prepareDeleteAll() {
-        this.deleteAll = !this.deleteAll
+        this.deleteAll = !this.deleteAll;
 
-        this.documentsToDelete = []
+        this.documentsToDelete = [];
 
         for (let document of this.foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);

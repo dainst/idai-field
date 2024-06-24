@@ -26,8 +26,9 @@ export class SelectNewFieldModalComponent {
     public selectedFieldName: string;
     public multiple: boolean;
 
-    public countAffected: Number;
-    public affectedDocuments: Document[];
+    public countAffected: string;
+    
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -57,8 +58,8 @@ export class SelectNewFieldModalComponent {
             constraints: { [this.warningType + ':contain']: this.fieldName }
         }, { includeResourcesWithoutValidParent: true });
 
-        this.countAffected = findResult.totalCount
-        this.affectedDocuments = findResult.documents
+        this.countAffected = findResult.totalCount.toString();
+        this.affectedDocuments = findResult.documents;
 
     }
 

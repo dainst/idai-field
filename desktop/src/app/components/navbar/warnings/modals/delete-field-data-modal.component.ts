@@ -24,8 +24,9 @@ export class DeleteFieldDataModalComponent {
 
     public deleteAll: boolean;
     public confirmFieldName: string;
-    public countAffected: Number;
-    public affectedDocuments: Document[];
+    public countAffected: string;
+    
+    private affectedDocuments: Array<Document>;
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
@@ -48,9 +49,10 @@ export class DeleteFieldDataModalComponent {
         const findResult = await this.datastore.find({
             categories: [this.category.name],
             constraints: { [this.warningType + ':contain']: this.fieldName }
-        }, { includeResourcesWithoutValidParent: true })
-        this.countAffected = findResult.totalCount
-        this.affectedDocuments = findResult.documents
+        }, { includeResourcesWithoutValidParent: true });
+        
+        this.countAffected = findResult.totalCount.toString();
+        this.affectedDocuments = findResult.documents;
 
     }
 

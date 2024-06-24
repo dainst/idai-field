@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
     ~H"""
     <div class="flex mb-[2px]">
       <.link
-        navigate={~p"/search?#{%{filter: ["category:#{@doc["category"]["values"]}"]}}"}
+        navigate={~p"/search?#{%{filters: %{"category" => @doc["category"]["values"]}}}"}
         class="rounded-tl pl-2 rounded-bl text-black"
         style={"background-color: #{@doc["category"]["color"]}; filter: saturate(50%); border-color: #{@doc["category"]["color"]}; border-width: 1px 0px 1px 0px;"}
       >

@@ -5,15 +5,23 @@
 <div class="flex flex-row">
   <div class="w-64 m-4 basis-1/4">
     <form phx-change="search" phx-submit="search">
-      <input class="w-full" type="text" value={@query} name="search_input" phx-debounce="100" />
+      <input
+        class="w-full"
+        type="text"
+        value={@search_parameters.q}
+        name="search_input"
+        phx-debounce="100"
+      />
     </form>
     <h2>Active filters</h2>
-    <%= for {field, value} <- @filters do %>
+    <%= for {field, value} <- @search_parameters.filters do %>
       <.aggregation_deselection field_name={field} value={value} />
     <% end %>
 
+    <h2>Available filters</h2>
+
     <%= for {field, buckets} <- @search_results.aggregations do %>
-      <%= unless Enum.find(@filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) do %>
+      <%= unless Enum.find(@search_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) do %>
         <.aggregation_selection field_name={field} buckets={buckets} />
       <% end %>
     <% end %>
@@ -25,7 +33,7 @@
         project={project}
         date={date}
         lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
-        image_count={3}
+        image_count={10}
       />
     <% end %>
   </div>

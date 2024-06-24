@@ -38,6 +38,7 @@
   font-size: 13px;
   transition: border-color 0.15s ease-in-out;
   overflow-x: hidden;
+  z-index: 2000 !important;
 
   &.ng-select-top {
     margin-bottom: 0 !important;

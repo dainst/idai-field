@@ -252,6 +252,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.warningType = section.type;
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,

@@ -22,6 +22,9 @@ export class DeleteResourceModalComponent {
     public deleteAll: boolean;
     public confirmValue: string;
 
+    public countAffected: string;
+    public affectedDocuments: Array<Document>;
+
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
@@ -40,6 +43,20 @@ export class DeleteResourceModalComponent {
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
+    public async initialize() {
+
+        const foundDocuments: Array<Document> = (await this.datastore.find(
+            { categories: ['UNCONFIGURED'] },
+            { includeResourcesWithoutValidParent: true }
+        )).documents;
+
+        this.affectedDocuments = foundDocuments.filter(document => {
+            return document.resource.category === this.document.resource.category;
+        });
+
+        this.countAffected = this.affectedDocuments.length.toString();
+
+    }
 
     public isDeletionAllowed(): boolean {
 
@@ -90,13 +107,8 @@ export class DeleteResourceModalComponent {
 
 
     private async deleteMultiple() {
-
-        const documents = (await this.datastore.find(
-            { categories: ['UNCONFIGURED'] },
-            { includeResourcesWithoutValidParent: true }
-        )).documents.filter(document => document.resource.category === this.document.resource.category);
         
-        for (let document of documents) {
+        for (let document of this.affectedDocuments) {
             await this.relationsManager.remove(document);
         }
     }

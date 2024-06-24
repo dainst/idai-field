@@ -30,7 +30,7 @@
     <div *ngIf="selectedCategory && multiple">
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.selectNewCategory.multiple.info">
-            Bitte beachten Sie: Durch diese Aktion wird für alle Ressourcen der unkonfigurierten
+            Bitte beachten Sie: Durch diese Aktion wird für alle <b>{{countAffected}}</b> Ressourcen der unkonfigurierten
             Kategorie <code>{{document.resource.category}}</code> die Kategorie
             <b>{{getCategoryLabel(selectedCategory)}}</b> (<code>{{selectedCategory.name}}</code>) gesetzt.
         </div>

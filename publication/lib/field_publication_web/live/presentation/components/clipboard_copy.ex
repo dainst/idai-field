@@ -25,7 +25,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ClipboardCopy do
     }
   end
 
-  @impl
+  @impl true
   def handle_event("link-copied", _, socket) do
     {
       :noreply,

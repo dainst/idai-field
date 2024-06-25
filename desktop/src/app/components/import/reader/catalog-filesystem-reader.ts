@@ -4,7 +4,7 @@ import { Reader } from './reader';
 import { ReaderErrors } from './reader-errors';
 import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/catalog/catalog-exporter';
 import { Settings } from '../../../../app/services/settings/settings';
-import { getAsynchronousFs } from '../../../../app/services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

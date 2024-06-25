@@ -1,7 +1,7 @@
 import { Feature, FeatureCollection, GeometryObject } from 'geojson';
 import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore } from 'idai-field-core';
 import { M } from '../../components/messages/m';
-import { getAsynchronousFs } from '../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 
 const geojsonRewind = typeof window !== 'undefined'
     ? window.require('@mapbox/geojson-rewind')

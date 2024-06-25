@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getAsynchronousFs } from './getAsynchronousFs';
+import { getAsynchronousFs } from './get-asynchronous-fs';
 import { SettingsProvider } from './settings/settings-provider';
 import { StateSerializer } from './state-serializer';
 

@@ -1,7 +1,7 @@
 import { Resource, StringUtils, Datastore } from 'idai-field-core';
 import { ImageRelationsManager } from '../../../services/image-relations-manager';
 import { Settings } from '../../../services/settings/settings';
-import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { getExportDocuments } from './get-export-documents';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');

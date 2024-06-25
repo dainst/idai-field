@@ -9,6 +9,10 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
 
   @search_batch_limit 20
 
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, :page_title, "Search")}
+  end
+
   def handle_params(params, _uri, socket) do
     q = Map.get(params, "q", "*")
     filters = Map.get(params, "filters", %{})

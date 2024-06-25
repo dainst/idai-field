@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Image do
 
   defp construct_url(%{project: project, uuid: uuid} = assigns) do
     region = Map.get(assigns, :region, "full")
-    # scales the image down to 500px width by default
+    # scales the image down or up to 500px width by default
     size =
       assigns
       |> Map.get(:size, "^500,")

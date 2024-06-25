@@ -33,7 +33,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">
-                      <Image.show size="300," project={@project_name} uuid={doc["id"]} />
+                      <Image.show size="^300," project={@project_name} uuid={doc["id"]} />
                     </div>
                   </.link>
                 <% end %>

@@ -7,20 +7,20 @@
         <input
           class="w-full"
           type="text"
-          value={@search_parameters.q}
+          value={@url_parameters.q}
           name="search_input"
           phx-debounce="100"
         />
       </form>
       <h2>Active filters</h2>
-      <%= for {field, value} <- @search_parameters.filters do %>
+      <%= for {field, value} <- @url_parameters.filters do %>
         <.aggregation_deselection field_name={field} value={value} />
       <% end %>
 
       <h2>Available filters</h2>
 
       <%= for {field, buckets} <- @aggregations do %>
-        <%= unless Enum.find(@search_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) do %>
+        <%= unless Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) do %>
           <.aggregation_selection field_name={field} buckets={buckets} />
         <% end %>
       <% end %>

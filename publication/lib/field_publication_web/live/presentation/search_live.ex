@@ -24,7 +24,8 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     {
       :noreply,
       socket
-      |> assign(:search_parameters, %{q: q, filters: filters, from: from})
+      |> assign(:url_parameters, %{q: q, filters: filters})
+      |> assign(:from, from)
       |> assign(:search_end_reached, false)
       |> assign(:aggregations, aggregations)
       |> assign(:total, total)
@@ -39,23 +40,25 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     }
   end
 
-  def handle_event("search_next_batch", _, %{assigns: %{search_parameters: parameters}} = socket) do
-    new_parameters = Map.put(parameters, :from, parameters.from + @search_batch_limit)
-
+  def handle_event(
+        "search_next_batch",
+        _,
+        %{assigns: %{url_parameters: parameters, from: from}} = socket
+      ) do
     %{
       docs: docs
     } =
       Search.fuzzy_search(
-        new_parameters.q,
-        new_parameters.filters,
-        new_parameters.from,
+        parameters.q,
+        parameters.filters,
+        from,
         @search_batch_limit
       )
 
     {
       :noreply,
       socket
-      |> assign(:search_parameters, new_parameters)
+      |> assign(:from, from + @search_batch_limit)
       |> assign(:search_end_reached, docs == [])
       |> stream(:search_results, docs)
     }
@@ -64,14 +67,14 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   def handle_event(
         "search",
         %{"search_input" => input_value},
-        %{assigns: %{search_parameters: parameters}} = socket
+        %{assigns: %{url_parameters: parameters}} = socket
       ) do
-    search_parameters = Map.put(parameters, :q, input_value)
+    url_parameters = Map.put(parameters, :q, input_value)
 
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/search?#{search_parameters}"
+        to: ~p"/search?#{url_parameters}"
       )
     }
   end
@@ -79,11 +82,11 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   def handle_event(
         "toggle_filter",
         %{"key" => key, "value" => value},
-        %{assigns: %{search_parameters: search_parameters}} = socket
+        %{assigns: %{url_parameters: url_parameters}} = socket
       ) do
     toggled_param = {key, value}
 
-    filters = Map.get(search_parameters, :filters, %{})
+    filters = Map.get(url_parameters, :filters, %{})
 
     updated_filters =
       if toggled_param in filters do
@@ -92,12 +95,12 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
         Map.put(filters, key, value)
       end
 
-    search_parameters = Map.put(search_parameters, :filters, updated_filters)
+    url_parameters = Map.put(url_parameters, :filters, updated_filters)
 
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/search?#{search_parameters}"
+        to: ~p"/search?#{url_parameters}"
       )
     }
   end

@@ -82,7 +82,8 @@ defmodule FieldPublication.Publications.Search do
               Map.put(doc, :id, doc["id"])
             end),
           aggregations:
-            body["aggregations"]
+            body
+            |> Map.get("aggregations", %{})
             |> Enum.map(&reduce_aggregation/1)
             |> Enum.into(%{})
         }

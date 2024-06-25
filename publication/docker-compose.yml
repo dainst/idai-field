@@ -21,7 +21,7 @@ services:
       - 9600:9600 # Performance Analyzer
 
   cantaloupe:
-    image: "ghcr.io/dainst/field_publication_cantaloupe:1.0.0"
+    image: "ghcr.io/dainst/field_publication_cantaloupe:1.1.0"
     container_name: "field_publication_cantaloupe"
     environment:
       LOG_APPLICATION_LEVEL: warn

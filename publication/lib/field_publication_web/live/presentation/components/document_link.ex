@@ -21,7 +21,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc["category"]["values"]}}}"}
         class="rounded-tl pl-2 rounded-bl text-black"
-        style={"background-color: #{@doc["category"]["color"]}; filter: saturate(50%); border-color: #{@doc["category"]["color"]}; border-width: 1px 0px 1px 0px;"}
+        style={"background-color: #{@doc["category"]["color"]}; filter: saturate(50%); border-color: #{@doc["category"]["color"]}; border-width: 1px 1px 1px 0px;"}
       >
         <div class="h-full bg-white/60 pl-2 pr-2 pt-3 pb-3 font-thin">
           <I18n.text values={@doc["category"]["labels"]} />
@@ -29,7 +29,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       </.link>
       <.link
         class="grow p-3 rounded-tr rounded-br"
-        style={"border-color: #{@doc["category"]["color"]}; filter:saturate(50%); border-width: 1px 1px 1px 0px;"}
+        style="border-width: 1px 1px 1px 0px;"
         patch={
           ~p"/projects/#{@project}/#{@date}/#{@lang}/#{if @doc["id"] != "project" do
             @doc["id"]

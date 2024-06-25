@@ -48,6 +48,17 @@ Hooks.HoverHighlightMapFeature = {
         })
     }
 }
+Hooks.CopyToClipboard = {
+    mounted() {
+        this.el.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            navigator.clipboard.writeText(this.el.getAttribute("valueToCopy")).then(() => {
+                this.pushEventTo(`#${this.el.id}`, `link-copied`);
+            })
+        })
+
+    }
+}
 
 let liveSocket = new LiveSocket("/live", Socket, { hooks: Hooks, params: { _csrf_token: csrfToken } })
 

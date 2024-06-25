@@ -47,7 +47,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
             </small>
           <% end %>
           <% uuids = Enum.take(Map.get(@doc, "images", []), @image_count) %>
-          <div class="flex items-center overflow-x-scroll">
+          <div class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>
               <Image.show size=",128" class="p-1 inline" project={@project} uuid={uuid} />
             <% end %>

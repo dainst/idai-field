@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ImageStore, ImageVariant, FileInfo } from 'idai-field-core';
+import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigurationDocument,
+    ConfigReader } from 'idai-field-core';
+import { SettingsProvider } from './settings/settings-provider';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
@@ -17,7 +19,10 @@ export class ExpressServer {
     private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '1gb' });
 
 
-    constructor(private imagestore: ImageStore) {}
+    constructor(private imagestore: ImageStore,
+                private configurationSerializer: ConfigurationSerializer,
+                private settingsProvider: SettingsProvider,
+                private configReader: ConfigReader) {}
 
 
     public getPassword = () => this.password;
@@ -144,6 +149,36 @@ export class ExpressServer {
                     console.log(e);
                     res.status(500).send({ reason: 'Whoops?' });
                 }
+            }
+        });
+
+        app.get('/configuration/:project', async (request: any, response: any) => {
+
+            try {
+                const projectIdentifier: string = request.params.project;
+                const formatted: boolean = request.query.formatted !== 'false';
+                const database = new PouchDB(projectIdentifier);
+                const info = await database.info();
+                if (info.update_seq === 0) {
+                    response.status(404).send({
+                        reason: 'The project "' + projectIdentifier + '" could not be found.'
+                    });
+                } else {
+                    const configurationDocument: ConfigurationDocument
+                        = await ConfigurationDocument.getConfigurationDocument(
+                            database.get, this.configReader, projectIdentifier,
+                            this.settingsProvider.getSettings().username
+                        );
+                    const result = await this.configurationSerializer.getConfigurationAsJSON(
+                        projectIdentifier, configurationDocument
+                    );
+                    response.header('Content-Type', 'application/json')
+                        .status(200)
+                        .send(JSON.stringify(result, null, formatted ? 2 : undefined));
+                }
+            } catch (err) {
+                console.error(err);
+                response.status(500).send({ reason: 'An unknown error occurred.' });
             }
         });
 

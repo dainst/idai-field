@@ -40,7 +40,7 @@ describe('ImageSyncService', () => {
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
         imageStoreExpressServer = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
 
-        expressServer = new ExpressServer(imageStoreExpressServer);
+        expressServer = new ExpressServer(imageStoreExpressServer, undefined, undefined, undefined);
         expressServer.setPassword(password);
         expressServer.setAllowLargeFileUploads(true);
 

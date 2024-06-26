@@ -65,7 +65,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           </.group_heading>
           <ul class="ml-0 list-none">
             <li>
-              <a target="_blank" href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
+              <a download={@doc["identifier"]} href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
                 <.icon name="hero-photo-solid" /> Download original
               </a>
             </li>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, equal, isEmpty, Map } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations } from 'idai-field-core';
@@ -36,16 +35,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     public dragging: boolean;
 
-    protected changeMessage = this.i18n({
-        id: 'configuration.fieldChanged', value: 'Das Feld wurde geändert.'
-    });
+    protected changeMessage = $localize `:@@configuration.fieldChanged:Das Feld wurde geändert.`;
 
 
     constructor(activeModal: NgbActiveModal,
                 modals: Modals,
                 menuService: Menus,
-                messages: Messages,
-                private i18n: I18n) {
+                messages: Messages) {
 
         super(activeModal, modals, menuService, messages);
     }
@@ -201,15 +197,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getConstraintIndexedTooltip(): string {
 
        if (this.category.name === 'Project') {
-            return this.i18n({
-                id: 'configuration.fieldSpecificSearch.notAllowedForProjectFields',
-                value: 'Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.'
-            });
+            return $localize `:@@configuration.fieldSpecificSearch.notAllowedForProjectFields:Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.`;
         } else if (!this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable) {
-            return this.i18n({
-                id: 'configuration.fieldSpecificSearch.notAllowedForInputType',
-                value: 'Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.'
-            });
+            return $localize `:@@configuration.fieldSpecificSearch.notAllowedForInputType:Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.`;
         } else {
             return '';
         }

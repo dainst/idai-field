@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Backup } from './backup';
 import { SettingsService } from '../../services/settings/settings-service';
 import { BackupLoadingModalComponent } from './backup-loading-modal.component';
@@ -48,8 +47,7 @@ export class BackupLoadingComponent {
                 private backupProvider: BackupProvider,
                 private tabManager: TabManager,
                 private menuService: Menus,
-                private appState: AppState,
-                private i18n: I18n) {}
+                private appState: AppState) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -67,7 +65,7 @@ export class BackupLoadingComponent {
             {
                 properties: ['openFile'],
                 defaultPath: this.appState.getFolderPath('backupLoading'),
-                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
                 filters: [
                     {
                         name: 'JSON Lines',

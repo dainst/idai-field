@@ -1,6 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { RelationsManager } from 'idai-field-core';
 import { M } from '../../messages/m';
 import { readWldFile, Errors } from '../../image/georeference/wld-import';
@@ -40,8 +39,7 @@ export class GeoreferenceViewComponent {
                 private messages: Messages,
                 private modalService: NgbModal,
                 private menuService: Menus,
-                private appState: AppState,
-                private i18n: I18n) {}
+                private appState: AppState) {}
 
 
     public exportWldFile = () => downloadWldFile(this.document, this.appState);
@@ -91,7 +89,7 @@ export class GeoreferenceViewComponent {
             {
                 properties: ['openFile'],
                 defaultPath: this.appState.getFolderPath('worldfileImport'),
-                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
                 filters: [
                     {
                         name: 'Worldfile',

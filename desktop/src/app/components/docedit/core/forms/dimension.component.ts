@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, Map } from 'tsfun';
 import { Dimension, Labels, Field, I18N, ProjectConfiguration, Valuelist, ValuelistUtil, Datastore, Hierarchy, Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../../util/util-translations';
@@ -38,8 +37,7 @@ export class DimensionComponent implements OnChanges {
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
-                private datastore: Datastore,
-                private i18n: I18n) {}
+                private datastore: Datastore) {}
 
     
     public isValid = (dimension: Dimension) => Dimension.isValid(dimension);
@@ -173,7 +171,7 @@ export class DimensionComponent implements OnChanges {
             this.languages,
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
-            this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' })
+            $localize `:@@languages.noLanguage:Ohne Sprachangabe`
         );
     }
 }

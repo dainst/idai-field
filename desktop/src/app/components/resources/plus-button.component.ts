@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { to } from 'tsfun';
 import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
     PouchdbDatastore } from 'idai-field-core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ViewFacade } from '../../components/resources/view/view-facade';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
@@ -56,7 +55,6 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
                 private messages: Messages,
                 private viewFacade: ViewFacade,
                 private datastore: Datastore,
-                private i18n: I18n,
                 private pouchdbDatastore: PouchdbDatastore) {}
 
 
@@ -151,10 +149,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
             case 'enabled':
                 return '';
             case 'disabled-hierarchy':
-                return this.i18n({
-                    id: 'resources.plusButton.tooltip.deactivated',
-                    value: 'Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.'
-                });
+                return $localize `:@@resources.plusButton.tooltip.deactivated:Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.`;
         }
     }
 

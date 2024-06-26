@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Field } from 'idai-field-core';
 
 
@@ -18,7 +17,7 @@ export class I18nSwitchComponent {
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
 
   
-    constructor(private i18n: I18n) {}
+    constructor() {}
 
 
     public isI18nInputType = () => Field.InputType.I18N_INPUT_TYPES.includes(this.inputType);
@@ -29,10 +28,7 @@ export class I18nSwitchComponent {
     public getI18nOptionTooltip(): string {
 
         if (this.inputType === Field.InputType.TEXT) {
-            return this.i18n({
-                id: 'configuration.i18nOption.changingNotAllowed',
-                value: 'Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.'
-            });
+            return $localize `:@@configuration.i18nOption.changingNotAllowed:Die Eingabe in mehreren Sprachen ist für Felder dieses Eingabetyps immer aktiviert.`;
         } else {
             return '';
         }

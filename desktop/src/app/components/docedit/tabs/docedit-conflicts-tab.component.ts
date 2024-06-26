@@ -1,6 +1,5 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Document, Datastore, Resource, Labels, CategoryForm, ProjectConfiguration, Field } from 'idai-field-core';
 import { UtilTranslations } from '../../../util/util-translations';
 import { Messages } from '../../messages/messages';
@@ -37,8 +36,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 private changeDetectorRef: ChangeDetectorRef,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
-                private labels: Labels,
-                private i18n: I18n) {}
+                private labels: Labels) {}
 
 
     public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
@@ -123,7 +121,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             if (result.length > 0) result += ', ';
             result += this.relationTargets[targetId]
                 ? (this.relationTargets[targetId] as Document).resource.identifier
-                : this.i18n({ id: 'docedit.tabs.conflicts.deletedResource', value: 'Gelöschte Ressource' });
+                : $localize `:@@docedit.tabs.conflicts.deletedResource:Gelöschte Ressource`;
         }
 
         return result;
@@ -187,14 +185,14 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
             if (fieldName === 'geometry') {
                 type = 'geometry';
-                label = this.i18n({ id: 'docedit.tabs.conflicts.geometry', value: 'Geometrie' });
+                label = $localize `:@@docedit.tabs.conflicts.geometry:Geometrie`;
             } else if (fieldName === 'georeference') {
                 type = 'georeference';
-                label = this.i18n({ id: 'docedit.tabs.conflicts.georeference', value: 'Georeferenz' });
+                label = $localize `:@@docedit.tabs.conflicts.georeference:Georeferenz`;
             } else {
                 type = 'field';
                 label = fieldName === 'scanCode'
-                    ? this.i18n({ id: 'docedit.tabs.conflicts.qrCode', value: 'QR-Code' })
+                    ? $localize `:@@docedit.tabs.conflicts.qrCode:QR-Code`
                     : this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);
             }
 

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, } from 'tsfun';
 import { Group, GroupDefinition, I18N, CustomLanguageConfigurations, CategoryForm } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -24,16 +23,13 @@ export class GroupEditorModalComponent extends ConfigurationEditorModalComponent
     public group: Group;
     public permanentlyHiddenFields: string[];
 
-    protected changeMessage = this.i18n({
-        id: 'configuration.groupChanged', value: 'Die Gruppe wurde geändert.'
-    });
+    protected changeMessage = $localize `:@@configuration.groupChanged:Die Gruppe wurde geändert.`;
 
 
     constructor(activeModal: NgbActiveModal,
                 modals: Modals,
                 menuService: Menus,
-                messages: Messages,
-                private i18n: I18n) {
+                messages: Messages) {
 
         super(activeModal, modals, menuService, messages);
     }

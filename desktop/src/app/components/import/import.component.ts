@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take, to } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
@@ -70,8 +69,7 @@ export class ImportComponent implements OnInit {
                 private tabManager: TabManager,
                 private menuService: Menus,
                 private appState: AppState,
-                private labels: Labels,
-                private i18n: I18n) {
+                private labels: Labels) {
 
         this.resetOperationIfNecessary();
     }
@@ -389,7 +387,7 @@ export class ImportComponent implements OnInit {
             {
                 properties: ['openFile'],
                 defaultPath: this.appState.getFolderPath('import'),
-                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
                 filters: this.getFileFilters()
             }
         );
@@ -407,7 +405,7 @@ export class ImportComponent implements OnInit {
 
         return [
             {
-                name: this.i18n({ id: 'import.selectFile.filters.all', value: 'Alle unterstützten Formate' }),
+                name: $localize `:@@import.selectFile.filters.all:Alle unterstützten Formate`,
                 extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog']
             },
             {
@@ -427,7 +425,7 @@ export class ImportComponent implements OnInit {
                 extensions: ['shp']
             },
             {
-                name: this.i18n({ id: 'import.selectFile.filters.catalog', value: 'Field-Typenkatalog' }),
+                name: $localize `:@@import.selectFile.filters.catalog:Field-Typenkatalog`,
                 extensions: ['catalog']
             }
         ];

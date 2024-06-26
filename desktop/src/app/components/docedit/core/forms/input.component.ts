@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
 import { ProjectConfiguration } from 'idai-field-core';
 import { Language, Languages } from '../../../../services/languages';
@@ -24,8 +23,7 @@ export class InputComponent implements OnChanges {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private settingsProvider: SettingsProvider,
-                private i18n: I18n) {}
+                private settingsProvider: SettingsProvider) {}
 
 
     ngOnChanges() {
@@ -35,7 +33,7 @@ export class InputComponent implements OnChanges {
             this.languages,
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
-            this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' })
+            $localize `:@@languages.noLanguage:Ohne Sprachangabe`
         );
     }
 

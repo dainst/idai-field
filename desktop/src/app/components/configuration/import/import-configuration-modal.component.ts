@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { compareVersions } from 'compare-versions';
 import { isArray } from 'tsfun';
 import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
@@ -40,8 +39,7 @@ export class ImportConfigurationModalComponent {
                 private configReader: ConfigReader,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
-                private appState: AppState,
-                private i18n: I18n) {}
+                private appState: AppState) {}
 
 
     public selectProject = (project: string) => this.selectedProject = project;
@@ -69,10 +67,10 @@ export class ImportConfigurationModalComponent {
             {
                 properties: ['openFile'],
                 defaultPath: this.appState.getFolderPath('configurationImport'),
-                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
                 filters: [
                     {
-                        name: this.i18n({ id: 'configuration.importModal.filters.configuration', value: 'Field-Konfiguration' }),
+                        name: $localize `:@@configuration.importModal.filters.configuration:Field-Konfiguration`,
                         extensions: ['configuration']
                     }
                 ]

@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, nop, to } from 'tsfun';
 import { ConfigurationDocument, ConfigurationResource, Datastore, Document, Labels,
     ProjectConfiguration } from 'idai-field-core';
@@ -46,9 +45,7 @@ export class ConfigurationConflictsModalComponent {
 
     public languages: { [languageCode: string]: Language };
 
-    private changeMessage = this.i18n({
-        id: 'configuration.conflicts.changed', value: 'Es wurden bereits Konflikte gelöst.'
-    });
+    private changeMessage = $localize `:@@configuration.conflicts.changed:Es wurden bereits Konflikte gelöst.`;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -59,8 +56,7 @@ export class ConfigurationConflictsModalComponent {
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
                 private modals: Modals,
-                private menus: Menus,
-                private i18n: I18n) {}
+                private menus: Menus) {}
 
 
     public isLoading = () => this.loading.isLoading('configuration-conflicts');

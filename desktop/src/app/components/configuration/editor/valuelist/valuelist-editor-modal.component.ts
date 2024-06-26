@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty, nop, set, Map, clone, on, is, isArray } from 'tsfun';
 import { I18N, InPlace, Labels, Named, SortUtil, Subfield, Valuelist, ValuelistValue } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -38,13 +37,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public dragging: boolean;
     public openedFromFieldEditor: boolean;
 
-    public inputPlaceholder: string = this.i18n({
-        id: 'configuration.newValue', value: 'Neuer Wert'
-    });
+    public inputPlaceholder: string = $localize `:@@configuration.newValue:Neuer Wert`;
 
-    protected changeMessage = this.i18n({
-        id: 'configuration.valuelistChanged', value: 'Die Werteliste wurde geändert.'
-    });
+    protected changeMessage = $localize `:@@configuration.valuelistChanged:Die Werteliste wurde geändert.`;
 
     protected menuContext: MenuContext = MenuContext.CONFIGURATION_VALUELIST_EDIT;
 
@@ -55,8 +50,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 messages: Messages,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
-                private configurationIndex: ConfigurationIndex,
-                private i18n: I18n) {
+                private configurationIndex: ConfigurationIndex) {
 
         super(activeModal, modals, menuService, messages);
     }

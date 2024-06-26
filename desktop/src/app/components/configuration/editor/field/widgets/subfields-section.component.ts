@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { on, is, isArray, isString, isEmpty, Map } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, CustomFormDefinition,
     CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, SubfieldCondition,
@@ -40,15 +39,12 @@ export class SubfieldsSectionComponent {
 
     public newSubfieldName: string;
 
-    public newSubfieldInputPlaceholder: string = this.i18n({
-        id: 'configuration.newSubfield', value: 'Neues Unterfeld'
-    });
+    public newSubfieldInputPlaceholder: string = $localize `:@@configuration.newSubfield:Neues Unterfeld`;
 
   
     constructor(private labels: Labels,
                 private modals: Modals,
-                private utilTranslations: UtilTranslations,
-                private i18n: I18n) {}
+                private utilTranslations: UtilTranslations) {}
 
 
     public getClonedSubfieldDefinitions = () => this.clonedFieldDefinition.subfields;

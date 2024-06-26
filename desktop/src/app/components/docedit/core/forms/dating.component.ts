@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
 import { Dating, I18N, Labels, ProjectConfiguration } from 'idai-field-core';
 import { Language, Languages } from '../../../../services/languages';
@@ -28,8 +27,7 @@ export class DatingComponent {
     constructor(private utilTranslations: UtilTranslations,
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
-                private settingsProvider: SettingsProvider,
-                private i18n: I18n) {}
+                private settingsProvider: SettingsProvider) {}
 
 
     public removeDating(index: number) {
@@ -46,7 +44,7 @@ export class DatingComponent {
             this.languages,
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
-            this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' })
+            $localize `:@@languages.noLanguage:Ohne Sprachangabe`
         );
 
         this.newDating = { type: type };

@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
@@ -70,14 +69,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public escapeKeyPressed: boolean = false;
 
     public categoriesFilterOptions: Array<CategoriesFilter> = [
-        { name: 'all', label: this.i18n({ id: 'configuration.categoriesFilter.all', value: 'Alle' }) },
-        { name: 'project', label: this.i18n({ id: 'configuration.categoriesFilter.project', value: 'Projekt' }) },
-        { name: 'trench', isRecordedInCategory: 'Trench', label: this.i18n({ id: 'configuration.categoriesFilter.trench', value: 'Schnitt' }) },
-        { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauwerk' }) },
-        { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
-        { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
-        { name: 'types', label: this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' }) },
-        { name: 'inventory', label: this.i18n({ id: 'navbar.tabs.inventory', value: 'Inventarisierung' }) }
+        { name: 'all', label: $localize `:@@configuration.categoriesFilter.all:Alle` },
+        { name: 'project', label: $localize `:@@configuration.categoriesFilter.project:Projekt` },
+        { name: 'trench', isRecordedInCategory: 'Trench', label: $localize `:@@configuration.categoriesFilter.trench:Schnitt` },
+        { name: 'building', isRecordedInCategory: 'Building', label: $localize `:@@configuration.categoriesFilter.building:Bauwerk` },
+        { name: 'survey', isRecordedInCategory: 'Survey', label: $localize `:@@configuration.categoriesFilter.survey:Survey` },
+        { name: 'images', label: $localize `:@@configuration.categoriesFilter.images:Bilderverwaltung` },
+        { name: 'types', label: $localize `:@@navbar.tabs.types:Typenverwaltung` },
+        { name: 'inventory', label: $localize `:@@navbar.tabs.inventory:Inventarisierung` }
     ];
 
     public availableInputTypes: Array<InputType> = [
@@ -135,8 +134,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private utilTranslations: UtilTranslations,
-                private appState: AppState,
-                private i18n: I18n) {}
+                private appState: AppState) {}
 
 
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
@@ -544,9 +542,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const modalRef: NgbModalRef = this.modalService.open(
                 EditSaveDialogComponent, { keyboard: false, animation: false }
             );
-            modalRef.componentInstance.changeMessage = this.i18n({
-                id: 'configuration.changes', value: 'An der Konfiguration wurden Änderungen vorgenommen.'
-            });
+            modalRef.componentInstance.changeMessage
+                = $localize `:@@configuration.changes:An der Konfiguration wurden Änderungen vorgenommen.`;
             modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
 
             const result: string = await modalRef.result;

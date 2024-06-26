@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DropAreaComponent } from '../../image/grid/drop-area.component';
 import { ImageUploader } from '../../image/upload/image-uploader';
 import { Messages } from '../../messages/messages';
@@ -17,9 +16,8 @@ export class ViewModalDropAreaComponent extends DropAreaComponent {
 
     public constructor(imageUploader: ImageUploader,
                        messages: Messages,
-                       appState: AppState,
-                       i18n: I18n) {
+                       appState: AppState) {
 
-        super(imageUploader, messages, appState, i18n);
+        super(imageUploader, messages, appState);
     }
 }

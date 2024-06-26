@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
     ProjectConfiguration } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../components/export/catalog/catalog-exporter';
@@ -62,7 +61,6 @@ export class ExportComponent implements OnInit {
     constructor(private settingsProvider: SettingsProvider,
                 private modalService: NgbModal,
                 private messages: Messages,
-                private i18n: I18n,
                 private datastore: Datastore,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
@@ -282,7 +280,7 @@ export class ExportComponent implements OnInit {
         if (this.format === 'catalog') {
             fileName = this.getSelectedCatalog().resource.identifier;
         } else {
-            fileName = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
+            fileName = $localize `:@@export.dialog.untitled:Ohne Titel`;
         }
 
         if (this.format === 'csv' && this.selectedCategory) {
@@ -313,17 +311,17 @@ export class ExportComponent implements OnInit {
         switch (this.format) {
             case 'catalog':
                 return {
-                    name: this.i18n({ id: 'export.dialog.filter.catalog', value: 'Katalog' }),
+                    name: $localize `:@@export.dialog.filter.catalog:Katalog`,
                     extensions: ['catalog']
                 };
             case 'geojson':
                 return {
-                    name: this.i18n({ id: 'export.dialog.filter.geojson', value: 'GeoJSON-Datei' }),
+                    name: $localize `:@@export.dialog.filter.geojson:GeoJSON-Datei`,
                     extensions: ['geojson', 'json']
                 };
             case 'shapefile':
                 return {
-                    name: this.i18n({ id: 'export.dialog.filter.zip', value: 'ZIP-Archiv' }),
+                    name: $localize `:@@export.dialog.filter.zip:ZIP-Archiv`,
                     extensions: ['zip']
                 };
             case 'csv':

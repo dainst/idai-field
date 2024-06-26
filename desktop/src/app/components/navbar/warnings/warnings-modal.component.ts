@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map, flatten, isArray, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
     WarningType, ConfigReader, Group, Resource, Field, Tree, MissingRelationTargetWarnings, InvalidDataUtil,
@@ -73,8 +72,7 @@ export class WarningsModalComponent {
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
                 private labels: Labels,
-                private warningsService: WarningsService,
-                private i18n: I18n) {}
+                private warningsService: WarningsService) {}
 
         
     public getSections = () => this.sections.filter(section => this.isSectionVisible(section));
@@ -437,9 +435,7 @@ export class WarningsModalComponent {
 
         return {
             name: 'Configuration',
-            label: this.i18n({
-                id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
-            }),
+            label: $localize `:@@navbar.tabs.configuration:Projektkonfiguration`,
             children: []
         } as any;
     }

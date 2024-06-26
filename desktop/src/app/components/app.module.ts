@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
     IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
     ImageStore, ImageSyncService } from 'idai-field-core';
@@ -113,7 +112,6 @@ registerLocaleData(localeUk, 'uk');
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-        I18n,
         {
             provide: ConfigReader,
             useFactory: () => new ConfigReader()

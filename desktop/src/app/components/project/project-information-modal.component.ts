@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, isArray } from 'tsfun';
 import { Datastore, PouchdbDatastore, Document, ImageStore, FileInfo, ImageVariant,
@@ -52,8 +51,7 @@ export class ProjectInformationModalComponent implements OnInit {
                 private messages: Messages,
                 private loading: Loading,
                 private routing: Routing,
-                private decimalPipe: DecimalPipe,
-                private i18n: I18n) {}
+                private decimalPipe: DecimalPipe) {}
 
     
     public isLoading = () => this.loading.isLoading('project-information-modal');
@@ -103,7 +101,7 @@ export class ProjectInformationModalComponent implements OnInit {
             this.lastChangedDocumentUser = Document.getLastModified(this.lastChangedDocument).user;
             this.lastChangedDocumentDate = RevisionLabels.getLastModifiedDateLabel(
                 this.lastChangedDocument,
-                this.i18n({ id: 'revisionLabel.timeSuffix', value: 'Uhr' })
+                $localize `:@@revisionLabel.timeSuffix:Uhr`
             );
         }
         

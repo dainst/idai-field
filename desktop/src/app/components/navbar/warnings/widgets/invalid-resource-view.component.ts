@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Datastore, Document, FieldResource, Hierarchy, InvalidDataUtil, Labels, ProjectConfiguration,
     Relation, Resource } from 'idai-field-core';
 
@@ -26,8 +25,7 @@ export class InvalidResourceViewComponent implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
-                private labels: Labels,
-                private i18n: I18n) {}
+                private labels: Labels) {}
 
 
     async ngOnChanges() {
@@ -87,7 +85,7 @@ export class InvalidResourceViewComponent implements OnChanges {
             if (!parentDocument) return undefined;
 
             return this.getRelationField(
-                this.i18n({ id: 'resources.sidebarList.parentInfo', value: 'Übergeordnete Ressource' }),
+                $localize `:@@resources.sidebarList.parentInfo:Übergeordnete Ressource`,
                 parentDocument,
                 false
             );
@@ -126,11 +124,11 @@ export class InvalidResourceViewComponent implements OnChanges {
 
         switch (fieldName) {
             case Resource.IDENTIFIER:
-                return this.i18n({ id: 'config.inputType.identifier', value: 'Bezeichner' });
+                return $localize `:@@config.inputType.identifier:Bezeichner`;
             case Resource.CATEGORY:
-                return this.i18n({ id: 'config.inputType.category', value: 'Kategorie' });
+                return $localize `:@@config.inputType.category:Kategorie`;
             case FieldResource.GEOMETRY:
-                return this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' });
+                return $localize `:@@config.inputType.geometry:Geometrie`;
             default:
                 return fieldName;
         }

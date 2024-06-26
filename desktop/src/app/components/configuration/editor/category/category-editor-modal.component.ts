@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, Map, to } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm, CustomFormDefinition, 
     Field, Labels, PrintedField, Named, ProjectConfiguration } from 'idai-field-core';
@@ -31,16 +30,13 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     private currentColor: string;
 
-    protected changeMessage = this.i18n({
-        id: 'configuration.categoryChanged', value: 'Die Kategorie wurde geändert.'
-    });
+    protected changeMessage = $localize `:@@configuration.categoryChanged:Die Kategorie wurde geändert.`;
 
 
     constructor(activeModal: NgbActiveModal,
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private i18n: I18n,
                 private labels: Labels) {
 
         super(activeModal, modals, menuService, messages);
@@ -319,10 +315,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             case 'isRecordedIn':
                 return this.labels.get(this.clonedProjectConfiguration.getCategory('Operation'));
             case 'liesWithin':
-                return this.i18n({
-                    id: 'qrCode.printedFields.liesWithin',
-                    value: 'Übergeordnete Ressource'
-                });
+                return $localize `:@@qrCode.printedFields.liesWithin:Übergeordnete Ressource`;
             default:
                 return this.labels.getFieldLabel(this.category, fieldName);
         }
@@ -333,26 +326,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         if ((option === 'scanCodes' && !this.isScanCodesOptionEnabled()
                 || option === 'autoCreation' && this.category.parentCategory?.scanCodes?.autoCreate)) {
-            return this.i18n({
-                id: 'configuration.cannotDisableParentOption',
-                value: 'Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.'
-            });
+            return $localize `:@@configuration.cannotDisableParentOption:Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.`;
         } else if ((option === 'autoCreation' && !this.isScanCodeAutoCreationOptionEnabled())
                 || ['printedField', 'printedFieldLabel'].includes(option) && !this.isScanCodeUsageActivated()) {
-            return this.i18n({
-                id: 'configuration.autoCreationOptionDisabled',
-                value: 'Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.'
-            });
+            return $localize `:@@configuration.autoCreationOptionDisabled:Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.`;
         } else if (['printedField', 'printedFieldLabel'].includes(option) && !this.isPrintedFieldsSlotEnabled(index)) {
-            return this.i18n({
-                id: 'configuration.printedFieldSlotDisabled',
-                value: 'Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.'
-            });
+            return $localize `:@@configuration.printedFieldSlotDisabled:Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.`;
         } else if (option === 'printedFieldLabel' && !this.isPrintedFieldsSlotActivated(index)){
-            return this.i18n({
-                id: 'configuration.printedFieldUnselected',
-                value: 'Wählen Sie ein Feld aus, um diese Option zu verwenden.'
-            });
+            return $localize `:@@configuration.printedFieldUnselected:Wählen Sie ein Feld aus, um diese Option zu verwenden.`;
         } else {
             return '';
         }

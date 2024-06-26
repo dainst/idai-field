@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
 import { Document, Field, Group, Labels } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
@@ -33,7 +32,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
 
     constructor(private elementRef: ElementRef,
-                private i18n: I18n,
                 private labels: Labels) {
 
         this.languages = Languages.getAvailableLanguages();
@@ -68,7 +66,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public getLabel(group: Group): string {
 
         return group.name === 'conflicts'
-            ? this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' })
+            ? $localize `:@@docedit.group.conflicts:Konflikte`
             : this.labels.get(group);
     }
 

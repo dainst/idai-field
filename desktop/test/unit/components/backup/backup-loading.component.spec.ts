@@ -44,7 +44,6 @@ describe('BackupLoadingComponent', () => {
             backupProvider,
             tabManager,
             menuService,
-            undefined,
             undefined
         );
 

@@ -120,6 +120,8 @@
   #document-edit-button-dropdown {
     margin-left: 1px;
     border-left: 1px solid #e7e7e7;
+    border-top-right-radius: 32px;
+    border-bottom-right-radius: 32px;
 
     &:focus {
       box-shadow: none;

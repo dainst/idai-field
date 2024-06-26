@@ -24,7 +24,7 @@
     "build:test": "rimraf test/dist && tsc -p test/tsconfig.json",
     "build:test+watch": "rimraf test/dist && tsc -watch -p test/tsconfig.json",
     "build:java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
-    "build:all": "npm run build && npm run build:test && npm run build:java",
+    "build:all": "npm run build && npm run build:java",
     "preinstall": "export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 || set PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1",
     "postinstall": "npm run update-version-info && gulp copy-fonts",
     "lint": "ng lint",

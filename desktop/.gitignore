@@ -67,4 +67,5 @@ src/app.css
 src/fonts
 release
 tools
+test-results
 src/config/Scripts/dist

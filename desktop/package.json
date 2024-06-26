@@ -1,7 +1,7 @@
 {
   "name": "idai-field-client",
   "description": "Field Desktop",
-  "version": "3.5.0",
+  "version": "3.5.0-electron31",
   "main": "electron/main.js",
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
@@ -48,9 +48,15 @@
       "output": "release"
     },
     "mac": {
+      "target": [
+        {
+          "target": "default",
+          "arch": ["x64", "arm64"]
+        }
+      ],
       "category": "public.app-category.productivity",
       "icon": "img/logo.icns",
-      "artifactName": "Field-Desktop-${version}-MacOS.${ext}",
+      "artifactName": "Field-Desktop-${version}-MacOS-${arch}.${ext}",
       "publish": "github",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
@@ -75,7 +81,8 @@
       "artifactName": "Field-Desktop-${version}-Linux.${ext}",
       "category": "Science",
       "asarUnpack": [
-        "node_modules/sharp/**"
+        "**/node_modules/sharp/**/*",
+        "**/node_modules/@img/**/*"
       ]
     },
     "npmRebuild": false,
@@ -112,7 +119,7 @@
     "@angular/platform-browser": "^17.3.11",
     "@angular/platform-browser-dynamic": "^17.3.11",
     "@angular/router": "^17.3.11",
-    "@electron/remote": "2.0.8",
+    "@electron/remote": "2.1.2",
     "@fontsource/open-sans": "^4.5.8",
     "@geoman-io/leaflet-geoman-free": "2.10.0",
     "@mapbox/geojson-rewind": "0.5.2",
@@ -130,8 +137,8 @@
     "cldr": "^5.7.0",
     "compare-versions": "^6.1.0",
     "detect-port": "1.5.1",
-    "electron-log": "4.4.8",
-    "electron-updater": "6.1.0",
+    "electron-log": "5.1.5",
+    "electron-updater": "6.2.1",
     "es6-shim": "0.35.4",
     "exifreader": "4.6.0",
     "express": "4.19.2",
@@ -167,9 +174,9 @@
     "@angular-devkit/build-angular": "^17.3.8",
     "@angular/cli": "^17.3.8",
     "@angular/compiler-cli": "^17.3.11",
-    "@electron/notarize": "2.1.0",
+    "@electron/notarize": "2.3.2",
     "@mapbox/geojsonhint": "3.1.0",
-    "@playwright/test": "1.37.1",
+    "@playwright/test": "1.44.1",
     "@types/geojson": "0.0.32",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
@@ -180,8 +187,8 @@
     "@types/showdown": "1.7.5",
     "ajv": "^6.12.6",
     "cross-var": "^1.1.0",
-    "electron": "23.2.4",
-    "electron-builder": "23.6.0",
+    "electron": "31.0.1",
+    "electron-builder": "24.13.3",
     "file-api": "0.10.4",
     "file-url": "2.0.2",
     "gulp": "4.0.2",
@@ -193,7 +200,6 @@
     "npm-run-all": "4.1.5",
     "node-gyp": "^10.1.0",
     "parameterize": "^1.0.0",
-    "playwright": "1.37.1",
     "pouchdb-adapter-memory": "8.0.1",
     "pouchdb-node": "8.0.1",
     "replace-in-file": "^6.1.0",

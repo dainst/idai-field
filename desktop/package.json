@@ -220,6 +220,7 @@
     "extract-zip": false,
     "crypto": false,
     "child_process": false,
-    "https": false
+    "https": false,
+    "async_hooks": false
   }
 }

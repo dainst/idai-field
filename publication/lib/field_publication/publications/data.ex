@@ -297,7 +297,17 @@ defmodule FieldPublication.Publications.Data do
 
   defp extend_field(field, keys) do
     if(field["name"] in keys) do
-      %{"key" => field["name"], "labels" => field["label"], "type" => field["inputType"]}
+      base_fields = %{
+        "key" => field["name"],
+        "labels" => field["label"],
+        "type" => field["inputType"]
+      }
+
+      if field["valuelist"] do
+        Map.put(base_fields, "list_labels", field["valuelist"]["values"])
+      else
+        base_fields
+      end
     else
       nil
     end

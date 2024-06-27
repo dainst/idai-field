@@ -47,13 +47,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
               <dl>
                 <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category"] end)  do %>
                   <div>
-                    <GenericField.render
-                      key={field["key"]}
-                      values={field["values"]}
-                      labels={field["labels"]}
-                      lang={@lang}
-                      type={field["type"]}
-                    />
+                    <GenericField.render field={field} lang={@lang} />
                   </div>
                 <% end %>
               </dl>

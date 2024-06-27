@@ -46,13 +46,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 <dl class="grid grid-cols-2 gap-1 mt-2">
                   <%= for field <- fields do %>
                     <div class="border-2 p-0.5">
-                      <GenericField.render
-                        key={field["key"]}
-                        values={field["values"]}
-                        labels={field["labels"]}
-                        lang={@lang}
-                        type={field["type"]}
-                      />
+                      <GenericField.render field={field} lang={@lang} />
                     </div>
                   <% end %>
                 </dl>

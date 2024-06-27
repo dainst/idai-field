@@ -21,17 +21,24 @@ $ npm start
 ```
 
 `npm run bootstrap` sets up and fetches the necessary dependencies, while `npm start` compiles the Angular app and starts it via Electron.
+ 
+Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
+```
+$ npm run build:java
+```
+
+### Troubleshooting
+
+If the application does not start in an arm64 environment (e. g. Apple Silicon), set this NPM configuration parameter before bootstrapping the application:
+```
+$ npm config set cpu=arm64
+```
 
 There seems to be an issue with `lerna bootstrap` that prevents running install scripts in dependencies. Use the following commands to run necessary scripts manually as a workaround:
 
 ```
 $ node node_modules/electron/install.js
 $ node node_modules/electron-chromedriver/download-chromedriver.js
-```
- 
-Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
-```
-$ npm run build:java
 ```
 
 ## Tests

@@ -160,6 +160,32 @@ defmodule FieldPublication.OpenSearchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
+  def post(docs, %Publication{} = publication, use_inactive \\ true) when is_list(docs) do
+    # see https://opensearch.org/docs/latest/api-reference/document-apis/bulk/
+    active_index = get_aliased_publication_index(publication)
+
+    index =
+      if use_inactive do
+        get_inactive(active_index)
+      else
+        active_index
+      end
+
+    payload =
+      Enum.map(docs, fn doc ->
+        "#{Jason.encode!(%{index: %{_index: index, _id: doc["id"]}})}\n#{Jason.encode!(doc)}\n"
+      end)
+      |> Enum.join()
+
+    Finch.build(
+      :post,
+      "#{base_url()}/#{index}/_bulk",
+      headers(),
+      payload
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   def put(doc, %Publication{} = publication, use_inactive \\ true) do
     active_index = get_aliased_publication_index(publication)
 

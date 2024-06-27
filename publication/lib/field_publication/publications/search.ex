@@ -185,6 +185,74 @@ defmodule FieldPublication.Publications.Search do
     }
   end
 
+  def prepare_doc_for_indexing(doc, %Publication{} = publication, publication_configuration, %{
+        single_keyword_fields: single_keyword_fields,
+        multi_keyword_fields: multi_keyword_fields
+      }) do
+    %{"resource" => res} =
+      doc =
+      doc
+      |> Map.put("id", doc["_id"])
+      |> Map.delete("_id")
+
+    full_doc =
+      Data.apply_project_configuration(doc, publication_configuration, publication)
+
+    base_document =
+      %{
+        "category" => res["category"],
+        "id" => res["id"],
+        "identifier" => res["identifier"],
+        "publication_draft_date" => publication.draft_date,
+        "project_name" => publication.project_name,
+        "full_doc" => full_doc,
+        "full_doc_as_text" => Jason.encode!(full_doc)
+      }
+
+    additional_fields =
+      single_keyword_fields
+      |> Stream.filter(fn {category_name, _field_name} ->
+        category_name == res["category"]
+      end)
+      |> Stream.map(fn {_this_category, field_name} ->
+        {"#{field_name}_keyword", Map.get(res, field_name)}
+      end)
+      |> Stream.reject(fn {_field_name, value} ->
+        value == nil
+      end)
+      |> Enum.into(%{})
+
+    additional_fields_2 =
+      multi_keyword_fields
+      |> Stream.filter(fn {category_name, _field_name} ->
+        category_name == res["category"]
+      end)
+      |> Stream.map(fn {_this_category, field_name} ->
+        value_list =
+          Map.get(res, field_name)
+          |> case do
+            values when is_list(values) ->
+              values
+
+            values when is_map(values) ->
+              Map.values(values)
+
+            nil ->
+              nil
+          end
+
+        {"#{field_name}_keyword", value_list}
+      end)
+      |> Stream.reject(fn {_field_name, value} ->
+        value == nil
+      end)
+      |> Enum.into(%{})
+
+    base_document
+    |> Map.merge(additional_fields)
+    |> Map.merge(additional_fields_2)
+  end
+
   def evaluate_input_types(%Publication{} = publication) do
     field_names_and_input_types =
       Data.get_configuration(publication)

@@ -47,6 +47,11 @@
     "directories": {
       "output": "release"
     },
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/sharp/**/*",
+      "**/node_modules/@img/**/*"
+    ],
     "mac": {
       "target": [
         {
@@ -79,11 +84,7 @@
       "icon": "img/logo.png",
       "publish": "github",
       "artifactName": "Field-Desktop-${version}-Linux.${ext}",
-      "category": "Science",
-      "asarUnpack": [
-        "**/node_modules/sharp/**/*",
-        "**/node_modules/@img/**/*"
-      ]
+      "category": "Science"
     },
     "npmRebuild": false,
     "afterSign": "notarize.js",

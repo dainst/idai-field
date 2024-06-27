@@ -65,7 +65,11 @@
   },
   "Photo-originalFormat-default": {
     "values": {
-      "Farbe": "Color"
+      "Farbe": "Color",
+      "Digital": "Digital",
+      "Analog": "Analogue",
+      "Dia": "Slide",
+      "S/W": "B/W"
     }
   },
   "Layer-distinguishingCriteria-default": {
@@ -319,6 +323,16 @@
       "braun": "brown",
       "haselnuss": "hazelnut",
       "schwarz": "black"
+    }
+  },
+  "Brick-brickUsage-default": {
+    "values": {
+      "Decke": "Ceiling",
+      "Dach": "Roof",
+      "Fenster": "Window",
+      "Fussboden": "Floor",
+      "Gewölbedecke": "Vaulted ceiling",
+      "Türsturz": "Lintel"
     }
   }
 }

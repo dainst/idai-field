@@ -8,6 +8,8 @@
            [ngbPopover]="linkOrAddMenu"
            ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü."
            i18n-ngbTooltip="@@imageGrid.dropArea.tooltip"
+           #linkOrAddTooltip="ngbTooltip"
+           (mousedown)="linkOrAddTooltip.close()"
            placement="bottom"
            container="body"
            popoverClass="view-modal-drop-area-popover"

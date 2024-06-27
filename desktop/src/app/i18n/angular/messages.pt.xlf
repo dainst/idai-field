@@ -2673,7 +2673,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.noRecordedIn" datatype="html">
         <source>Bitte wählen Sie eine Zielressource für die Relation 'Aufgenommen in Maßnahme' aus.</source>
-        <target state="needs-translation">Bitte wählen Sie eine Zielressource für die Relation 'Aufgenommen in Maßnahme' aus.</target>
+        <target state="translated">Por favor selecione um recurso de destinação para a relação "registado na intervenção".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2681,7 +2681,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.noRecordedInTarget" datatype="html">
         <source>Die Zielressource [0] der Relation 'Aufgenommen in Maßnahme' konnte nicht gefunden werden.</source>
-        <target state="needs-translation">Die Zielressource [0] der Relation 'Aufgenommen in Maßnahme' konnte nicht gefunden werden.</target>
+        <target state="translated">O recurso de destinação [0] da relação 'registado na intervenção' não foi encontrado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3988,7 +3988,7 @@
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
         <source>Daten einer Maßnahme zuordnen</source>
-        <target state="translated">Atribuir dados a uma operação</target>
+        <target state="translated">Atribuir dados a uma intervenção</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">191</context>
@@ -4972,7 +4972,7 @@
       </trans-unit>
       <trans-unit id="resources.showInOperationContext.tooltip" datatype="html">
         <source>Im Kontext der Maßnahme anzeigen</source>
-        <target state="needs-translation">Im Kontext der Maßnahme anzeigen</target>
+        <target state="translated">Mostrar no contexto da intervenção</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">103</context>
@@ -7276,7 +7276,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.missingRelationTargets" datatype="html">
         <source>Fehlende Zielressourcen von Relationen</source>
-        <target state="needs-translation">Fehlende Zielressourcen von Relationen</target>
+        <target state="translated">Falta de recursos de destinação de relações</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7348,7 +7348,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple" datatype="html">
         <source>Fehlende Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">Fehlende Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated">Recursos de destinação da relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ausentes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">73,65</context>
@@ -7364,7 +7364,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier" datatype="html">
         <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Bezeichner<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>identificador<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ambíguo.</target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>identificador<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ambíguo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">87,77</context>
@@ -7380,7 +7380,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.outlierValues.multiple" datatype="html">
         <source>Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht enthalten sind. </source>
-        <target state="needs-translation">Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht enthalten sind. </target>
+        <target state="translated">Foram selecionados valores não contidos na lista de valores <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, configurada para este campo. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,105</context>
@@ -7388,7 +7388,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingRelationTargets.multiple" datatype="html">
         <source>Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</source>
-        <target state="needs-translation">Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</target>
+        <target state="translated">Vários recursos selecionados como recursos de destinação da relação não foram encontrados. Provavelmente não foi completado um processo de sincronização num outro computador.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">135,145</context>
@@ -7396,7 +7396,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.enteredData" datatype="html">
         <source>Eingetragene Daten:</source>
-        <target state="needs-translation">Eingetragene Daten:</target>
+        <target state="translated">Dados inseridos:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">150,154</context>
@@ -7404,7 +7404,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.conflict" datatype="html">
         <source>Bei dieser Ressource ist ein Konflikt aufgetreten.</source>
-        <target state="needs-translation">Bei dieser Ressource ist ein Konflikt aufgetreten.</target>
+        <target state="translated">Ocorreu um conflito neste recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">154,162</context>
@@ -7412,7 +7412,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.outlierValues.single" datatype="html">
         <source>Ungültiger Wert:</source>
-        <target state="needs-translation">Ungültiger Wert:</target>
+        <target state="translated">Valor inválido:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">166,171</context>
@@ -7484,7 +7484,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingRelationTargets.single" datatype="html">
         <source>Fehlende Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">Fehlende Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated">Recurso de destinação da relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ausente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">68,61</context>
@@ -7500,7 +7500,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.outlierValues.single" datatype="html">
         <source>Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht enthalten ist. </source>
-        <target state="needs-translation">Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht enthalten ist. </target>
+        <target state="translated">Foi selecionado um valor não contido na lista de valores <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, configurada para este campo. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">107,100</context>
@@ -7508,7 +7508,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingRelationTargets.single" datatype="html">
         <source>Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</source>
-        <target state="needs-translation">Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</target>
+        <target state="translated">Um recurso selecionado como recurso de destinação da relação não foi encontrado. Provavelmente não foi completado um processo de sincronização num outro computador.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">115,125</context>
@@ -7516,7 +7516,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.nonUniqueIdentifier" datatype="html">
         <source>Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es können dadurch Fehler beim Import und Export von Daten auftreten.</source>
-        <target state="needs-translation">Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es können dadurch Fehler beim Import und Export von Daten auftreten.</target>
+        <target state="translated">O identificador deste recurso é utilisado várias vezes e consequentemente não é único. Podem occorer erros ao exportar e importar dados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">136,144</context>
@@ -7524,7 +7524,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.resourceLimitExceeded.multiple" datatype="html">
         <source>Es dürfen nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.category.resourceLimit}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angelegt werden. </source>
-        <target state="needs-translation">Es dürfen nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.category.resourceLimit}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angelegt werden. </target>
+        <target state="translated">Só podem ser criados <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.category.resourceLimit}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> recursos da categoria <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">149,140</context>
@@ -7532,7 +7532,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.resourceLimitExceeded.single" datatype="html">
         <source>Es darf nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>eine<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressource der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angelegt werden. </source>
-        <target state="needs-translation">Es darf nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>eine<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressource der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angelegt werden. </target>
+        <target state="translated">Só pode ser criada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>uma<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> recurso da categoria <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">158,135</context>
@@ -8224,7 +8224,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField" datatype="html">
         <source>Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </source>
-        <target state="needs-translation">Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
+        <target state="translated">Os dados inseridos no campo não correspondem ao tipo de entrada configurado <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,105</context>
@@ -8376,7 +8376,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fieldData.none" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></source>
-        <target state="needs-translation"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
+        <target state="translated"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>nenhum<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">178,162</context>
@@ -8764,7 +8764,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingOrInvalidParent" datatype="html">
         <source>Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit nicht angezeigt.</source>
-        <target state="needs-translation">Für diese Ressource ist keine gültige übergeordnete Ressource gesetzt. Daher wird die Ressource zurzeit nicht angezeigt.</target>
+        <target state="translated">Não foi selecionado um recurso superior válido para este recurso. Por isso o recurso não é visualizado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">172,181</context>

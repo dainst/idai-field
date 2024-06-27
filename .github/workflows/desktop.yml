@@ -61,8 +61,7 @@ jobs:
       matrix:
         os:
           - { name: 'Linux', version: 'ubuntu-latest' }
-          - { name: 'macOS (arm64)', version: 'macos-latest' }
-          - { name: 'macOS (x64)', version: 'macos-12' }
+          - { name: 'macOS', version: 'macos-latest' }
           - { name: 'Windows', version: 'windows-latest' }
       fail-fast: false
     runs-on: ${{ matrix.os.version }}
@@ -77,6 +76,10 @@ jobs:
         node-version: 20
     - name: Setup NPM cache
       uses: c-hive/gha-npm-cache@v1
+    - name: Install sharp for x64 architecture
+      run: npm install --cpu=x64 --os=darwin sharp
+      if: runner.os == 'macOS'
+      working-directory: desktop
     - name: Install root node modules
       run: npm i
     - name: Install and link package node modules 
@@ -87,20 +90,9 @@ jobs:
     - name: Build desktop
       run: npm run build:all
       working-directory: desktop
-    - name: Create macOS (arm64) package
-      run: npm run package:mac-arm64
-      if: matrix.os.name == 'macOS (arm64)'
-      env:
-        CSC_LINK: ${{ secrets.MAC_CERT }}
-        CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PW }}
-        MAC_NOTARIZE: ${{ contains(github.event.head_commit.message, '[notarize]') && 'true' || 'false' }}
-        MAC_NOTARIZE_AID: ${{ secrets.MAC_NOTARIZE_AID }}
-        MAC_NOTARIZE_PW: ${{ secrets.MAC_NOTARIZE_PW }}
-        MAC_NOTARIZE_TEAM_ID: ${{ secrets.MAC_NOTARIZE_TEAM_ID }}
-      working-directory: desktop
-    - name: Create macOS (x64) package
-      run: npm run package:mac-x64
-      if: matrix.os.name == 'macOS (x64)'
+    - name: Create macOS package
+      run: npm run package:mac
+      if: runner.os == 'macOS'
       env:
         CSC_LINK: ${{ secrets.MAC_CERT }}
         CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PW }}

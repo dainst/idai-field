@@ -69,6 +69,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
               <GenericField.render
+                key={institution["key"]}
                 values={institution["values"]}
                 labels={institution["labels"]}
                 lang={@lang}
@@ -95,6 +96,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
               <GenericField.render
+                key={supervisor["key"]}
                 values={supervisor["values"]}
                 labels={supervisor["labels"]}
                 lang={@lang}
@@ -113,6 +115,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
               <GenericField.render
+                key={bibliographic_references["key"]}
                 values={bibliographic_references["values"]}
                 labels={bibliographic_references["labels"]}
                 lang={@lang}

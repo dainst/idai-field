@@ -1,5 +1,6 @@
 defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   use Phoenix.Component
+  use FieldPublicationWeb, :verified_routes
 
   require Logger
   alias FieldPublicationWeb.Presentation.Components.I18n
@@ -9,7 +10,15 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
     <%= for value <- @values do %>
-      <dd class="ml-4"><I18n.text values={value} /></dd>
+      <dd class="ml-4">
+        <%= if @type in FieldPublication.Publications.Search.get_keyword_multi_inputs() do %>
+          <.link navigate={~p"/search?#{%{filters: %{"#{@key}_keyword" => value}}}"}>
+            <I18n.text values={value} />
+          </.link>
+        <% else %>
+          <I18n.text values={value} />
+        <% end %>
+      </dd>
     <% end %>
     """
   end
@@ -18,7 +27,15 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
       when single_value in ["input", "text", "simpleInput", "dropdown", "dropdownRange"] do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
-    <dd class="ml-4"><I18n.text values={@values} /></dd>
+    <dd class="ml-4">
+      <%= if @type in FieldPublication.Publications.Search.get_keyword_inputs() do %>
+        <.link navigate={~p"/search?#{%{filters: %{"#{@key}_keyword" => @values}}}"}>
+          <I18n.text values={@values} />
+        </.link>
+      <% else %>
+        <I18n.text values={@values} />
+      <% end %>
+    </dd>
     """
   end
 
@@ -26,7 +43,15 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
       when single_value in ["unsignedInt", "unsignedFloat", "date", "radio", "checkboxes"] do
     ~H"""
     <dt class="font-bold"><I18n.text values={@labels} /></dt>
-    <dd class="ml-4"><%= @values %></dd>
+    <dd class="ml-4">
+      <%= if @type in FieldPublication.Publications.Search.get_keyword_inputs() do %>
+        <.link navigate={~p"/search?#{%{filters: %{"#{@key}_keyword" => @values}}}"}>
+          <%= @values %>
+        </.link>
+      <% else %>
+        <%= @values %>
+      <% end %>
+    </dd>
     """
   end
 

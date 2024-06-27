@@ -94,7 +94,40 @@
       "Deutschland": "Germany",
       "Irland": "Ireland",
       "Italien": "Italy",
-      "Palästina": "Palestine"
+      "Palästina": "Palestine",
+      "Attisch": "Attic",
+      "Chios": "Chios",
+      "Ephesos": "Ephesos",
+      "Etruskisch": "Etruscan",
+      "Gallien": "Gaul",
+      "Ionien": "Ionia",
+      "Kampanisch": "Campanian",
+      "Karthagisch": "Carthaginian",
+      "Kleinasien": "Asia Minor",
+      "Knidos": "Knidos",
+      "Korinth": "Corinth",
+      "Kos": "Kos",
+      "Levante": "Levante",
+      "Lokal": "Local",
+      "Lokal/Regional": "Local/Regional",
+      "Milet": "Miletus",
+      "Mäandertal": "Meander Valley",
+      "Nordafrika": "North Africa",
+      "Nordafrikanisch": "North African",
+      "Pannonien": "Pannonia",
+      "Peloponnes": "Peloponnese",
+      "Regional": "Regional",
+      "Rhodos": "Rhodes",
+      "Samos": "Samos",
+      "Skandinavien": "Scandinavia",
+      "Slawisch": "Slavic",
+      "Spanien": "Spain",
+      "Syrien": "Syria",
+      "Südtunesisch": "Southern Tunisian",
+      "Südägäis": "Southern Aegean",
+      "Antiochia (Antakya)": "Antioch (Antakya)",
+      "Lesbos": "Lesbos",
+      "Sizilien": "Sicily"
     }
   },
   "periods-default-1": {
@@ -102,7 +135,30 @@
       "Frühmittelalter": "Early Middle Ages",
       "Mittelalter": "Middle Ages",
       "Spätmittelalter": "Late Middle Ages",
-      "Hochmittelalter": "High Middle Ages"
+      "Hochmittelalter": "High Middle Ages",
+      "Archaisch": "Archaic",
+      "Bronzezeitlich": "Bronze Age",
+      "Byzantinisch": "Byzantine",
+      "Eisenzeitlich": "Iron Age",
+      "Frühbyzantinisch": "Early Byzantine",
+      "Frühhellenistisch": "Early Hellenistic",
+      "Frühklassisch": "Early Classical",
+      "Frühkaiserzeitlich": "Early Imperial Period",
+      "Frühbronzezeitlich": "Early Bronze Age",
+      "Spätbronzezeitlich": "Late Bronze Age",
+      "Geometrisch": "Geometric",
+      "Hellenistisch": "Hellenistic",
+      "Kaiserzeitlich": "Imperial Period",
+      "Klassisch": "Classical",
+      "Neolithisch": "Neolithic",
+      "Osmanisch": "Ottoman",
+      "Rezent": "Recent",
+      "Römisch": "Roman",
+      "Spätantik": "Late Antique",
+      "Spätbyzantinisch": "Late Byzantine",
+      "Späthellenistisch": "Late Hellenistic",
+      "Spätkaiserzeitlich": "Late Imperial Period",
+      "Spätklassisch": "Late Classical"
     }
   },
   "colors-default-2": {
@@ -114,8 +170,15 @@
       "rot": "red",
       "rotbraun": "red-brown",
       "schwarz": "black",
-      "weiß": "white"
-    }
+      "weiß": "white",
+      "beige": "beige",
+      "dunkelbraun": "dark brown",
+      "dunkelrot": "dark red",
+      "gelb": "yellow",
+      "hellbraun": "light brown",
+      "hellgrau": "light grey"
+    },
+    "description": "Color set 2, various applications"
   },
   "glass-decorationTechnique-default": {
     "values": {
@@ -132,7 +195,9 @@
       "Glasschlacke": "Glass slag",
       "Lampe": "Lamp",
       "Löffel": "Spoon",
-      "Tessera": "Tessera"
+      "Tessera": "Tessera",
+      "Gefäß": "Vessel",
+      "Ring": "Ring"
     }
   },
   "Brick-decorationTechnique-default": {
@@ -159,18 +224,101 @@
   },
   "glass-vesselForm-default": {
     "values": {
-      "Tasse": "Cup (with vertical handle)"
+      "Tasse": "Cup (with vertical handle)",
+      "Deckel": "Lid",
+      "Flasche": "Flask",
+      "Teller": "Plate",
+      "Unbestimmt": "Indeterminate"
     }
   },
   "glass-vesselFormSpecific-default": {
     "values": {
-      "Dattelflasche": "Date-shaped bottle"
+      "Dattelflasche": "Date-shaped bottle",
+      "Alabastron": "Alabastron",
+      "Amphoriskos": "Amphoriskos",
+      "Aryballos": "Aryballos",
+      "Hydria": "Hydria",
+      "Kotyle": "Kotyle",
+      "Krater": "Krater",
+      "Kylix": "Kylix",
+      "Lekythos": "Lekythos",
+      "Schöpfer": "Ladle",
+      "Skyphos": "Skyphos"
     }
   },
   "Building-buildingType-default": {
     "values": {
       "Befestigung": "Fortification",
       "Lager": "Storage building"
+    }
+  },
+  "colors-default-1": {
+    "values": {
+      "schwarz": "black",
+      "beige": "beige",
+      "blass-": "pale-",
+      "blau": "blue",
+      "braun": "brown",
+      "cremefarben": "cream",
+      "dunkel-": "dark-",
+      "gelb": "yellow",
+      "grau": "grey",
+      "grün": "green",
+      "hell-": "light-",
+      "leuchtend-": "bright-",
+      "ocker": "ochre",
+      "orange": "orange",
+      "rosa": "rose",
+      "rot": "red",
+      "türkis": "turquoise",
+      "violett": "violet",
+      "weiß": "white"
+    },
+    "description": "Color set 1, various Applications; IT-Department, 2019"
+  },
+  "Building-buildingCategory-default": {
+    "values": {
+      "Tempel": "Temple",
+      "Theater": "Theatre",
+      "Turm": "Tower",
+      "Wohnbau": "Domestic Building"
+    }
+  },
+  "Building-material-default-3": {
+    "values": {
+      "Eisen": "Iron",
+      "Marmor": "Marble",
+      "Blei": "Lead",
+      "Erde": "Earth",
+      "Glas": "Glass",
+      "Holz": "Wood"
+    }
+  },
+  "Wood-objectType-default": {
+    "values": {
+      "Gefäß": "Vessel",
+      "Architektur": "Architecture",
+      "Altar": "Altar",
+      "Gerät": "Tool",
+      "Kasten/Kiste": "Box",
+      "Spielzeug": "Toy"
+    }
+  },
+  "glass-formDescription-default": {
+    "values": {
+      "rund": "round"
+    }
+  },
+  "Building-buildingCategorySpecific-default": {
+    "values": {
+      "Bogen": "Arch"
+    }
+  },
+  "Wood-color-default": {
+    "values": {
+      "braun": "brown",
+      "haselnuss": "hazelnut",
+      "schwarz": "black"
     }
   }
 }

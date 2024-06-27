@@ -1,4 +1,4 @@
-defmodule FieldPublication.OpensearchService do
+defmodule FieldPublication.OpenSearchService do
   alias FieldPublication.Publications
   alias FieldPublication.DocumentSchema.Project
   alias FieldPublication.DocumentSchema.Publication
@@ -56,47 +56,13 @@ defmodule FieldPublication.OpensearchService do
       |> Finch.request(FieldPublication.Finch)
   end
 
-  def reset_inactive_index(%Publication{} = pub) do
+  def reset_inactive_index(%Publication{} = pub, mapping) do
     inactive_index =
       pub
       |> get_aliased_publication_index()
       |> get_inactive()
 
     Logger.debug("Deleting index '#{inactive_index}' and setting mapping.")
-
-    mapping =
-      %{
-        mappings: %{
-          properties: %{
-            id: %{
-              type: "keyword",
-              store: true
-            },
-            identifier: %{
-              type: "keyword",
-              store: true
-            },
-            category: %{
-              type: "keyword",
-              store: true
-            },
-            project_name: %{
-              type: "keyword",
-              store: true
-            },
-            publication_draft_date: %{
-              type: "date",
-              store: true
-            },
-            full_doc: %{
-              type: "flat_object"
-            },
-            full_doc_as_text: %{
-              type: "text"
-            }
-          }
-        }
-      }
 
     Finch.build(
       :delete,
@@ -351,20 +317,20 @@ defmodule FieldPublication.OpensearchService do
   end
 
   defp generate_publication_alias(%Publication{} = publication) do
-    apply_restrictions("publication_#{publication.project_name}_#{publication.draft_date}")
+    encode_invalid_chards("publication_#{publication.project_name}_#{publication.draft_date}")
   end
 
   defp generate_project_alias(%Publication{} = publication) do
-    apply_restrictions("project_#{publication.project_name}")
+    encode_invalid_chards("project_#{publication.project_name}")
   end
 
   defp generate_project_alias(%Project{} = project) do
-    apply_restrictions("project_#{project.name}")
+    encode_invalid_chards("project_#{project.name}")
   end
 
   @invalid_chars [":", "\"", "*", "+", "/", "\\", "|", "?", "#", ">", "<"]
   # See https://opensearch.org/docs/2.14/api-reference/index-apis/create-index/#index-naming-restrictions
-  defp apply_restrictions(index_name) do
+  defp encode_invalid_chards(index_name) do
     result = String.downcase(index_name)
 
     Enum.reduce(@invalid_chars, result, fn char, current ->

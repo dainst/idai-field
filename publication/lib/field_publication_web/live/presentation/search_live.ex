@@ -23,7 +23,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       total: total,
       docs: docs,
       aggregations: aggregations
-    } = Search.fuzzy_search(q, filters, from, @search_batch_limit)
+    } = Search.search(q, filters, from, @search_batch_limit)
 
     {
       :noreply,
@@ -52,7 +52,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     %{
       docs: docs
     } =
-      Search.fuzzy_search(
+      Search.search(
         parameters.q,
         parameters.filters,
         from,

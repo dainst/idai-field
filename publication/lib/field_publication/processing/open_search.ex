@@ -1,41 +1,48 @@
 defmodule FieldPublication.Processing.OpenSearch do
   alias Phoenix.PubSub
 
-  alias FieldPublication.CouchService
-  alias FieldPublication.OpensearchService
+  alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications
-  alias FieldPublication.Publications.Data
+
+  alias FieldPublication.Publications.{
+    Data,
+    Search
+  }
+
   alias FieldPublication.DocumentSchema.Publication
 
   require Logger
 
+  @ignored_documents ["project", "configuration"]
+
   def evaluate_state(%Publication{} = publication) do
-    doc_count =
-      CouchService.get_database(publication.database)
-      |> then(fn {:ok, %{status: 200, body: body}} ->
-        count =
-          Jason.decode!(body)
-          |> Map.get("doc_count", 0)
+    database_count = Data.get_doc_count(publication)
 
-        # We do not count documents 'project' or 'configuration'.
-        if count >= 2, do: count - 2, else: 0
-      end)
+    # We do not count documents 'project' or 'configuration' because they are not added to the index.
+    database_count =
+      if database_count >= 2, do: database_count - Enum.count(@ignored_documents), else: 0
 
-    counter = OpensearchService.get_doc_count(publication)
+    index_count = OpenSearchService.get_doc_count(publication)
 
     %{
-      counter: counter,
-      percentage: counter / doc_count * 100,
-      overall: doc_count
+      counter: index_count,
+      percentage: index_count / database_count * 100,
+      overall: database_count
     }
   end
 
   def index(%Publication{} = publication) do
     publication_id = Publications.get_doc_id(publication)
+    publication_configuration = Data.get_configuration(publication)
 
-    config = Data.get_configuration(publication)
+    mapping = Search.generate_index_mapping(publication)
 
-    {:ok, %{status: 200}} = OpensearchService.reset_inactive_index(publication)
+    %{
+      single_keyword_fields: single_keyword_fields,
+      multi_keyword_fields: multi_keyword_fields
+    } = Search.evaluate_input_types(publication)
+
+    {:ok, %{status: 200}} = OpenSearchService.reset_inactive_index(publication, mapping)
 
     {:ok, counter_pid} =
       Agent.start_link(fn ->
@@ -49,7 +56,7 @@ defmodule FieldPublication.Processing.OpenSearch do
     publication
     |> Publications.Data.get_doc_stream_for_all()
     |> Stream.reject(fn %{"_id" => id} ->
-      id in ["project", "configuration"]
+      id in @ignored_documents
     end)
     |> Stream.reject(fn doc ->
       # Reject all documents marked as deleted
@@ -63,9 +70,9 @@ defmodule FieldPublication.Processing.OpenSearch do
     |> Task.async_stream(
       fn %{"resource" => res} = doc ->
         full_doc =
-          Data.apply_project_configuration(doc, config, publication)
+          Data.apply_project_configuration(doc, publication_configuration, publication)
 
-        open_search_doc =
+        base_document =
           %{
             "category" => res["category"],
             "id" => res["id"],
@@ -76,7 +83,51 @@ defmodule FieldPublication.Processing.OpenSearch do
             "full_doc_as_text" => Jason.encode!(full_doc)
           }
 
-        OpensearchService.put(open_search_doc, publication)
+        additional_fields =
+          single_keyword_fields
+          |> Stream.filter(fn {category_name, _field_name} ->
+            category_name == res["category"]
+          end)
+          |> Stream.map(fn {_this_category, field_name} ->
+            {"#{field_name}_keyword", Map.get(res, field_name)}
+          end)
+          |> Stream.reject(fn {_field_name, value} ->
+            value == nil
+          end)
+          |> Enum.into(%{})
+
+        additional_fields_2 =
+          multi_keyword_fields
+          |> Stream.filter(fn {category_name, _field_name} ->
+            category_name == res["category"]
+          end)
+          |> Stream.map(fn {_this_category, field_name} ->
+            value_list =
+              Map.get(res, field_name)
+              |> case do
+                values when is_list(values) ->
+                  values
+
+                values when is_map(values) ->
+                  Map.values(values)
+
+                nil ->
+                  nil
+              end
+
+            {"#{field_name}_keyword", value_list}
+          end)
+          |> Stream.reject(fn {_field_name, value} ->
+            value == nil
+          end)
+          |> Enum.into(%{})
+
+        open_search_doc =
+          base_document
+          |> Map.merge(additional_fields)
+          |> Map.merge(additional_fields_2)
+
+        OpenSearchService.put(open_search_doc, publication)
         |> case do
           {:ok, %{status: 201}} ->
             :ok
@@ -84,6 +135,7 @@ defmodule FieldPublication.Processing.OpenSearch do
           {:ok, %{status: 400, body: body}} ->
             body
             |> Jason.decode!()
+            |> inspect()
             |> Logger.error()
 
             :error
@@ -112,6 +164,6 @@ defmodule FieldPublication.Processing.OpenSearch do
     )
     |> Enum.to_list()
 
-    OpensearchService.switch_active_alias(publication)
+    OpenSearchService.switch_active_alias(publication)
   end
 end

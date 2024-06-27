@@ -1,5 +1,7 @@
 module.exports = {
-    externals: ['sharp'],
+    externals: {
+        'sharp': 'commonjs sharp'
+    },
     resolve: {
         fallback: {
             buffer: require.resolve('buffer'),

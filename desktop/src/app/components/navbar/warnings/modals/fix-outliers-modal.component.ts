@@ -28,7 +28,6 @@ export class FixOutliersModalComponent {
     public countAffected: Number;
 
     private projectDocument: Document;
-    private foundDocuments: Array<Document>;
     private documentsToChange: Array<Document>;
 
 
@@ -56,9 +55,6 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
-        this.foundDocuments = (await this.datastore.find({
-            constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true })).documents;
         this.documentsToChange = [];
     }
 
@@ -70,13 +66,25 @@ export class FixOutliersModalComponent {
     }
 
 
-    public async prepareReplaceAll() {
-        
+    public toggleReplaceAll() {
+
         this.replaceAll = !this.replaceAll;
 
+        if (this.replaceAll === true) {
+            this.prepareReplaceAll();
+        }
+    }
+
+
+    public async prepareReplaceAll() {
+        
         this.documentsToChange = [];
 
-        for (let document of this.foundDocuments) {
+        const foundDocuments: Array<Document> = (await this.datastore.find({
+            constraints: { ['outlierValues:contain']: this.outlierValue }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {

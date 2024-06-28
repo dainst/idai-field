@@ -24,7 +24,6 @@ export class DeleteOutliersModalComponent {
     public deleteAll: boolean;
     public countAffected: Number;
 
-    private foundDocuments: Array<Document>;
     private documentsToDelete: Array<Document>;
 
 
@@ -45,9 +44,6 @@ export class DeleteOutliersModalComponent {
     
     public async initialize() {
 
-        this.foundDocuments = (await this.datastore.find({
-            constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true })).documents;
         this.documentsToDelete = [];
     }
 
@@ -60,13 +56,25 @@ export class DeleteOutliersModalComponent {
     }
 
 
-    public async prepareDeleteAll() {
+    public toggleDeleteAll() {
 
         this.deleteAll = !this.deleteAll;
 
+        if (this.deleteAll === true) {
+            this.prepareDeleteAll();
+        }
+    }
+
+    
+    public async prepareDeleteAll() {
+
+        const foundDocuments: Array<Document> = (await this.datastore.find({
+            constraints: { ['outlierValues:contain']: this.outlierValue }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
         this.documentsToDelete = [];
 
-        for (let document of this.foundDocuments) {
+        for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
 
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {

@@ -233,13 +233,15 @@ export class ConfigLoader {
 
         if (!languages[section][language][valuelistId].values) return; 
 
-        Object.keys(languages[section][language][valuelistId].values).forEach(valueId => {
-            if (!valuelists[valuelistId].values[valueId].label) {
-                valuelists[valuelistId].values[valueId].label = {};
-            }
-            valuelists[valuelistId].values[valueId].label[language]
-                = languages[section][language][valuelistId].values[valueId];
-        });
+        Object.keys(languages[section][language][valuelistId].values)
+            .filter(valueId => languages[section][language][valuelistId].values[valueId]?.length)
+            .forEach(valueId => {
+                if (!valuelists[valuelistId].values[valueId].label) {
+                    valuelists[valuelistId].values[valueId].label = {};
+                }
+                valuelists[valuelistId].values[valueId].label[language]
+                    = languages[section][language][valuelistId].values[valueId];
+            });
     }
 
 

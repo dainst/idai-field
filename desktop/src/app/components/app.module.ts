@@ -1,5 +1,5 @@
 import { DecimalPipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
 import localeTr from '@angular/common/locales/tr';
@@ -79,7 +79,6 @@ registerLocaleData(localeUk, 'uk');
         SettingsModule,
         BrowserModule,
         FormsModule,
-        HttpClientModule,
         NgbModule,
         // NgbModule.forRoot(),
         MessagesModule,
@@ -212,26 +211,20 @@ registerLocaleData(localeUk, 'uk');
             provide: RelationsManager,
             useFactory: (
                 datastore: Datastore,
-                projectConfiguration: ProjectConfiguration,
+                projectConfiguration: ProjectConfiguration
             ) => new RelationsManager(datastore, projectConfiguration),
             deps: [Datastore, ProjectConfiguration]
         },
         ImageRelationsManager,
         {
             provide: Validator,
-            useFactory: (
-                DocumentDatastore: Datastore,
-                projectConfiguration: ProjectConfiguration) => {
-
-                return new Validator(
-                    projectConfiguration,
-                    (q: Query) => DocumentDatastore.find(q),
-                );
+            useFactory: (DocumentDatastore: Datastore, projectConfiguration: ProjectConfiguration) => {
+                return new Validator(projectConfiguration, (q: Query) => DocumentDatastore.find(q));
             },
             deps: [Datastore, ProjectConfiguration]
         },
         ImportValidator,
-        { provide: MD, useClass: M},
+        { provide: MD, useClass: M },
         {
             provide: SyncService,
             useFactory: (pouchdbDatastore: PouchdbDatastore) => new SyncService(pouchdbDatastore),
@@ -266,7 +259,8 @@ registerLocaleData(localeUk, 'uk');
         MenuModalLauncher,
         ViewModalLauncher,
         ProjectLabelProvider,
-        AppState
+        AppState,
+        provideHttpClient(withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent]
 })

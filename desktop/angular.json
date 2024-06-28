@@ -121,30 +121,30 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "idai-field:build"
+            "buildTarget": "idai-field:build"
           },
           "configurations": {
             "en": {
-              "browserTarget": "idai-field:build:en"
+              "buildTarget": "idai-field:build:en"
             },
             "it": {
-              "browserTarget": "idai-field:build:it"
+              "buildTarget": "idai-field:build:it"
             },
             "tr": {
-              "browserTarget": "idai-field:build:tr"
+              "buildTarget": "idai-field:build:tr"
             },
             "uk": {
-              "browserTarget": "idai-field:build:uk"
+              "buildTarget": "idai-field:build:uk"
             },
             "production": {
-              "browserTarget": "idai-field:build:production"
+              "buildTarget": "idai-field:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "idai-field:build"
+            "buildTarget": "idai-field:build"
           }
         }
       }

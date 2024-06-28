@@ -26,7 +26,7 @@ export class SelectNewFieldModalComponent {
     public selectedFieldName: string;
     public multiple: boolean;
 
-    public countAffected: string;
+    public countAffected: Number;
     
     private affectedDocuments: Array<Document>;
 
@@ -58,7 +58,7 @@ export class SelectNewFieldModalComponent {
             constraints: { [this.warningType + ':contain']: this.fieldName }
         }, { includeResourcesWithoutValidParent: true });
 
-        this.countAffected = findResult.totalCount.toString();
+        this.countAffected = findResult.totalCount;
         this.affectedDocuments = findResult.documents;
 
     }

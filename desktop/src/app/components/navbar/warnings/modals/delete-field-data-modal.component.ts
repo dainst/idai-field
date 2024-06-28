@@ -24,7 +24,7 @@ export class DeleteFieldDataModalComponent {
 
     public deleteAll: boolean;
     public confirmFieldName: string;
-    public countAffected: string;
+    public countAffected: Number;
     
     private affectedDocuments: Array<Document>;
 
@@ -51,7 +51,7 @@ export class DeleteFieldDataModalComponent {
             constraints: { [this.warningType + ':contain']: this.fieldName }
         }, { includeResourcesWithoutValidParent: true });
         
-        this.countAffected = findResult.totalCount.toString();
+        this.countAffected = findResult.totalCount;
         this.affectedDocuments = findResult.documents;
 
     }

@@ -25,7 +25,7 @@ export class FixOutliersModalComponent {
     public valuelist: Valuelist;
     public selectedValue: string;
     public replaceAll: boolean;
-    public countAffected: string;
+    public countAffected: Number;
 
     private projectDocument: Document;
     private foundDocuments: Array<Document>;
@@ -59,7 +59,6 @@ export class FixOutliersModalComponent {
         this.foundDocuments = await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
         }, { includeResourcesWithoutValidParent: true }).then(res => res.documents);
-        this.countAffected = "";
         this.documentsToChange = [];
     }
 
@@ -88,7 +87,7 @@ export class FixOutliersModalComponent {
             }
         }
 
-        this.countAffected = this.documentsToChange.length.toString();
+        this.countAffected = this.documentsToChange.length;
     }
 
     public async performReplacement() {

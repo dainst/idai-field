@@ -24,7 +24,7 @@ export class ConvertFieldDataModalComponent {
     public inputTypeLabel: string;
 
     public convertAll: boolean;
-    public countAffected: string;
+    public countAffected: Number;
     
     private affectedDocuments: Array<Document>;
 
@@ -52,7 +52,7 @@ export class ConvertFieldDataModalComponent {
             constraints: { ['invalidFields:contain']: this.fieldName }
         }, { includeResourcesWithoutValidParent: true });
         
-        this.countAffected = findResult.totalCount.toString();
+        this.countAffected = findResult.totalCount;
         this.affectedDocuments = findResult.documents.filter(document => this.isConvertible(document));
 
     }

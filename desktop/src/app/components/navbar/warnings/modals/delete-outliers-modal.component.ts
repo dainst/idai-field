@@ -22,7 +22,7 @@ export class DeleteOutliersModalComponent {
     public fieldLabel: string|undefined;
     public outlierValue: string;
     public deleteAll: boolean;
-    public countAffected: string;
+    public countAffected: Number;
 
     private foundDocuments: Array<Document>;
     private documentsToDelete: Array<Document>;
@@ -47,7 +47,6 @@ export class DeleteOutliersModalComponent {
         this.foundDocuments = await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
         }, { includeResourcesWithoutValidParent: true }).then(res => res.documents);
-        this.countAffected = "";
         this.documentsToDelete = [];
 
     }
@@ -76,7 +75,7 @@ export class DeleteOutliersModalComponent {
             }
         }
 
-        this.countAffected = this.documentsToDelete.length.toString();
+        this.countAffected = this.documentsToDelete.length;
     }
 
 

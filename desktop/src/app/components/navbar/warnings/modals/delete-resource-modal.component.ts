@@ -21,7 +21,7 @@ export class DeleteResourceModalComponent {
     
     public deleteAll: boolean;
     public confirmValue: string;
-    public countAffected: string;
+    public countAffected: Number;
     
     private affectedDocuments: Array<Document>;
 
@@ -54,7 +54,7 @@ export class DeleteResourceModalComponent {
             return document.resource.category === this.document.resource.category;
         });
 
-        this.countAffected = this.affectedDocuments.length.toString();
+        this.countAffected = this.affectedDocuments.length;
 
     }
 

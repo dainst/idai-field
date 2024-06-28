@@ -21,7 +21,7 @@
     
     <div *ngIf="deleteAll" class="text-center alert alert-warning"
             i18n="@@navbar.taskbar.deleteResource.all.info">
-        Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten
+        Bitte beachten Sie: Durch diese Aktion werden alle <b>{{countAffected}}</b> Ressourcen der unkonfigurierten
         Kategorie <b>{{document.resource.category}}</b> gelöscht.
     </div>
     <span *ngIf="deleteAll" i18n="@@navbar.taskbar.deleteResource.all.confirmInfo">

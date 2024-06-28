@@ -16,7 +16,7 @@
         </div>
         <div class="col-auto">
             <label class="switch">
-                <input type="checkbox" [checked]="deleteAll" (change)="deleteAll = !deleteAll">
+                <input type="checkbox" [checked]="deleteAll" (change)="toggleDeleteAll()">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -26,7 +26,7 @@
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.deleteOutliers.all.info">
             Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{outlierValue}}</b> in sämtlichen Feldern aller Ressourcen gelöscht.
+            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected}}</b> Ressourcen gelöscht.
         </div>
     </div>
 </div>

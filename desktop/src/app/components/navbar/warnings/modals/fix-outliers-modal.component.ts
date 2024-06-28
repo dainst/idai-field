@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { equal, flatten, isArray, isObject, isString, set, Map } from 'tsfun';
 import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
-     Valuelist, ValuelistUtil, BaseField} from 'idai-field-core';
+     Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 
@@ -56,9 +56,9 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
-        this.foundDocuments = await this.datastore.find({
+        this.foundDocuments = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true }).then(res => res.documents);
+        }, { includeResourcesWithoutValidParent: true })).documents;
         this.documentsToChange = [];
     }
 
@@ -69,6 +69,7 @@ export class FixOutliersModalComponent {
     }
 
     public async prepareReplaceAll() {
+        
         this.replaceAll = !this.replaceAll;
 
         this.documentsToChange = [];

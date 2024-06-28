@@ -54,7 +54,6 @@ export class ConvertFieldDataModalComponent {
         
         this.countAffected = findResult.totalCount;
         this.affectedDocuments = findResult.documents.filter(document => this.isConvertible(document));
-
     }
 
     public getFieldLabelHTML(): string {

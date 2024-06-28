@@ -53,7 +53,6 @@ export class DeleteFieldDataModalComponent {
         
         this.countAffected = findResult.totalCount;
         this.affectedDocuments = findResult.documents;
-
     }
 
 

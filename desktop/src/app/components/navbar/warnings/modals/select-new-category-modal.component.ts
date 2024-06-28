@@ -53,10 +53,10 @@ export class SelectNewCategoryModalComponent {
 
     public async initialize() {
 
-        const foundDocuments: Array<Document> = await this.datastore.find(
+        const foundDocuments: Array<Document> = (await this.datastore.find(
             { categories: ['UNCONFIGURED'] },
             { includeResourcesWithoutValidParent: true }
-        ).then(res => res.documents);
+        )).documents;
 
         this.affectedDocuments = foundDocuments.filter(document => {
             return document.resource.category === this.document.resource.category;

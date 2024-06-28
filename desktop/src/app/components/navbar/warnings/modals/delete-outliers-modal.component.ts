@@ -44,11 +44,10 @@ export class DeleteOutliersModalComponent {
 
     public async initialize() {
 
-        this.foundDocuments = await this.datastore.find({
+        this.foundDocuments = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true }).then(res => res.documents);
+        }, { includeResourcesWithoutValidParent: true })).documents;
         this.documentsToDelete = [];
-
     }
 
 
@@ -60,6 +59,7 @@ export class DeleteOutliersModalComponent {
     }
 
     public async prepareDeleteAll() {
+
         this.deleteAll = !this.deleteAll;
 
         this.documentsToDelete = [];

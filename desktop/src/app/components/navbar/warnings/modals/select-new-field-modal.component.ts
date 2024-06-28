@@ -60,7 +60,6 @@ export class SelectNewFieldModalComponent {
 
         this.countAffected = findResult.totalCount;
         this.affectedDocuments = findResult.documents;
-
     }
 
 

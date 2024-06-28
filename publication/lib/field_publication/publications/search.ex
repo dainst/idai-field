@@ -3,7 +3,7 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications.Data
 
-  def fuzzy_search(q, filter, from \\ 0, size \\ 100) do
+  def search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
         "*" ->

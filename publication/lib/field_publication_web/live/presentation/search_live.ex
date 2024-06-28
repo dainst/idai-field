@@ -23,7 +23,15 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       total: total,
       docs: docs,
       aggregations: aggregations
-    } = Search.fuzzy_search(q, filters, from, @search_batch_limit)
+    } = Search.search(q, filters, from, @search_batch_limit)
+
+    {project_specific_aggregations, shared_aggregations} =
+      aggregations
+      |> Enum.split_with(fn {field_name, _buckets} ->
+        String.contains?(field_name, ":")
+      end)
+
+    aggregations = shared_aggregations ++ project_specific_aggregations
 
     {
       :noreply,
@@ -52,7 +60,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     %{
       docs: docs
     } =
-      Search.fuzzy_search(
+      Search.search(
         parameters.q,
         parameters.filters,
         from,
@@ -136,7 +144,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       phx-value-value={@value}
     >
       <div class="h-full pl-2 pr-2 font-thin rounded">
-        <%= @value %>
+        <strong><%= @field_name %></strong> <%= @value %>
       </div>
     </div>
     """

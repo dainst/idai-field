@@ -68,12 +68,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
-              <GenericField.render
-                values={institution["values"]}
-                labels={institution["labels"]}
-                lang={@lang}
-                type={institution["type"]}
-              />
+              <GenericField.render field={institution} lang={@lang} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
@@ -94,12 +89,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
 
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
-              <GenericField.render
-                values={supervisor["values"]}
-                labels={supervisor["labels"]}
-                lang={@lang}
-                type={supervisor["type"]}
-              />
+              <GenericField.render field={supervisor} lang={@lang} />
             <% end %>
 
             <% staff = Data.get_field(@doc, "staff") %>
@@ -112,12 +102,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
-              <GenericField.render
-                values={bibliographic_references["values"]}
-                labels={bibliographic_references["labels"]}
-                lang={@lang}
-                type={bibliographic_references["type"]}
-              />
+              <GenericField.render field={bibliographic_references} lang={@lang} />
             <% end %>
             <% url = Data.get_field_values(@doc, "projectURI") %>
             <%= if url do %>

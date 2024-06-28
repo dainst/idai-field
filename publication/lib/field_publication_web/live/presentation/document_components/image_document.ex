@@ -47,12 +47,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
               <dl>
                 <%= for field <- group["fields"] |> Enum.reject(fn(%{"key" => key}) -> key in ["identifier", "category"] end)  do %>
                   <div>
-                    <GenericField.render
-                      values={field["values"]}
-                      labels={field["labels"]}
-                      lang={@lang}
-                      type={field["type"]}
-                    />
+                    <GenericField.render field={field} lang={@lang} />
                   </div>
                 <% end %>
               </dl>
@@ -65,7 +60,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           </.group_heading>
           <ul class="ml-0 list-none">
             <li>
-              <a target="_blank" href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
+              <a download={@doc["identifier"]} href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
                 <.icon name="hero-photo-solid" /> Download original
               </a>
             </li>

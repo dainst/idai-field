@@ -6,39 +6,50 @@
     "position": "Posição / Contexto",
     "dimension": "Dimensões",
     "identification": "Identificação",
-    "other": "Outro"
+    "other": "Outro",
+    "hierarchy": "Hierarquia",
+    "stratigraphy": "Estratigrafia",
+    "inventory": "Inventariação"
   },
   "commons": {
     "dimensionLength": {
-      "label": "Comprimento"
+      "label": "Comprimento",
+      "description": "Indicação do comprimento"
     },
     "dimensionWidth": {
-      "label": "Largura"
+      "label": "Largura",
+      "description": "Indicação da largura na extensão máxima/mínima"
     },
     "dimensionHeight": {
-      "label": "Altura"
+      "label": "Altura",
+      "description": "Indicação da altura na extensão máxima/mínima"
     },
     "dimensionDepth": {
-      "label": "Profundiade"
+      "label": "Profundiade",
+      "description": "Indicação da profundidade na extensão máxima/mínima"
     },
     "dimensionThickness": {
-      "label": "Espessura"
+      "label": "Espessura",
+      "description": "Espessura do objeto"
     },
     "dimensionVerticalExtent": {
       "label": "Extensão vertical"
     },
     "dimensionPerimeter": {
-      "label": "Perímetro"
+      "label": "Perímetro",
+      "description": "Indicação da circunferência do objeto"
     },
     "dimensionDiameter": {
-      "label": "Diâmetro"
+      "label": "Diâmetro",
+      "description": "Indicação do diâmetro do objeto"
     },
     "dimensionOther": {
       "label": "Outras dimensões",
       "description": "Outras dimensões podem ser registadas aqui; explique sff"
     },
     "area": {
-      "label": "Área em m2"
+      "label": "Área em m2",
+      "description": "Indicação da superfície em metros quadrados"
     },
     "processor": {
       "label": "Processor",
@@ -48,7 +59,8 @@
       "label": "Campanha"
     },
     "description": {
-      "label": "Descrição"
+      "label": "Descrição",
+      "description": "Campo de descrição livre"
     },
     "period": {
       "label": "Período"

@@ -144,7 +144,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       phx-value-value={@value}
     >
       <div class="h-full pl-2 pr-2 font-thin rounded">
-        <%= @value %>
+        <strong><%= @field_name %></strong> <%= @value %>
       </div>
     </div>
     """

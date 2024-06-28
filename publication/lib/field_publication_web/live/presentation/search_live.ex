@@ -25,6 +25,14 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       aggregations: aggregations
     } = Search.search(q, filters, from, @search_batch_limit)
 
+    {project_specific_aggregations, shared_aggregations} =
+      aggregations
+      |> Enum.split_with(fn {field_name, _buckets} ->
+        String.contains?(field_name, ":")
+      end)
+
+    aggregations = shared_aggregations ++ project_specific_aggregations
+
     {
       :noreply,
       socket

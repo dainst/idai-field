@@ -3,33 +3,6 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications.Data
 
-  defp generate_aggs() do
-    {:ok, %{status: 200, body: body}} = OpensearchService.get_project_mappings()
-
-    _keyword_fields =
-      Jason.decode!(body)
-      |> Enum.reduce([], fn {
-                              _publication_index_name,
-                              %{"mappings" => mappings}
-                            },
-                            acc ->
-        props = Map.get(mappings, "properties", %{})
-
-        keywords =
-          Enum.filter(props, fn {_key, %{"type" => type}} -> type == "keyword" end)
-          |> Enum.reject(fn {key, _props} -> key in ["id", "identifier"] end)
-          |> Enum.map(fn {key, _props} -> key end)
-
-        acc = acc ++ (keywords -- acc)
-
-        acc
-      end)
-      |> Enum.map(fn key ->
-        {key, %{terms: %{field: key, size: 20}}}
-      end)
-      |> Enum.into(%{})
-  end
-
   def fuzzy_search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do

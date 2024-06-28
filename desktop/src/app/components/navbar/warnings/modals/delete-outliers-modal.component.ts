@@ -36,12 +36,13 @@ export class DeleteOutliersModalComponent {
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
-
+    
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
+    
     public async initialize() {
 
         this.foundDocuments = (await this.datastore.find({
@@ -57,6 +58,7 @@ export class DeleteOutliersModalComponent {
             ? '<span><b>' + this.fieldLabel + '</b> (<code>' + this.field.name + '</code>)</span>'
             : '<code>' + this.field.name + '</code>';
     }
+
 
     public async prepareDeleteAll() {
 

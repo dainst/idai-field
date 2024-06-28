@@ -44,6 +44,7 @@ export class DeleteFieldDataModalComponent {
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
+
     public async initialize() {
 
         const findResult = await this.datastore.find({

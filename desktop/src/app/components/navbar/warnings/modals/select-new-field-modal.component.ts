@@ -43,6 +43,7 @@ export class SelectNewFieldModalComponent {
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');

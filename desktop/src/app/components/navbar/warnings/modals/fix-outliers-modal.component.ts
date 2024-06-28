@@ -62,11 +62,13 @@ export class FixOutliersModalComponent {
         this.documentsToChange = [];
     }
 
+
     public updateSelectedValue(event: string) {
 
         this.selectedValue = event;
         this.replaceAll = false;
     }
+
 
     public async prepareReplaceAll() {
         
@@ -90,6 +92,7 @@ export class FixOutliersModalComponent {
 
         this.countAffected = this.documentsToChange.length;
     }
+
 
     public async performReplacement() {
 

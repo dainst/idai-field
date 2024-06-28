@@ -45,6 +45,7 @@ export class ConvertFieldDataModalComponent {
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
+
     public async initialize() {
 
         const findResult = await this.datastore.find({
@@ -55,6 +56,7 @@ export class ConvertFieldDataModalComponent {
         this.countAffected = findResult.totalCount;
         this.affectedDocuments = findResult.documents.filter(document => this.isConvertible(document));
     }
+
 
     public getFieldLabelHTML(): string {
 

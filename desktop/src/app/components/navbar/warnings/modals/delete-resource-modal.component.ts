@@ -34,7 +34,6 @@ export class DeleteResourceModalComponent {
 
     public isMultipleSwitchAvailable = () => this.warningType === 'unconfiguredCategory';
 
-
     public cancel = () => this.activeModal.dismiss('cancel');
 
 
@@ -43,6 +42,7 @@ export class DeleteResourceModalComponent {
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
+    
     public async initialize() {
 
         const foundDocuments: Array<Document> = (await this.datastore.find(
@@ -56,6 +56,7 @@ export class DeleteResourceModalComponent {
 
         this.countAffected = this.affectedDocuments.length;
     }
+
 
     public isDeletionAllowed(): boolean {
 

@@ -14,7 +14,7 @@
   "menu.project.projectProperties": "Propriedades",
   "menu.project.projectImages": "Ligar imagens...",
   "menu.project.projectSynchronization": "Sincronizar...",
-  "menu.project.deleteProject": "Apagar...",
+  "menu.project.deleteProject": "Eliminar",
   "menu.project.backupCreation": "Criar cópia de segurança...",
   "menu.project.backupLoading": "Restaurar cópia de segurança...",
   "menu.project.exit": "Sair",
@@ -42,5 +42,14 @@
   "menu.view.toggleDeveloperTools": "Ferramentas de programador ligar/desligar",
   "menu.window": "Janela",
   "menu.window.minimize": "Minimizar",
-  "menu.help": "Ajuda"
+  "menu.help": "Ajuda",
+  "autoUpdate.available.info": "Uma nova versão de Field Desktop está disponível.",
+  "autoUpdate.available.question": "Quer descarregar e instalar a nova versão?",
+  "menu.project.projectInfo": "Apresentação de dados",
+  "menu.configuration.exportConfiguration": "Exportar a configuração...",
+  "info.close": "Fechar",
+  "autoUpdate.available.warning": "Atenção: Por favor crie uma cópia de segurança de todos os projetos antes de fazer a atualização.",
+  "autoUpdate.downloaded.ok": "OK",
+  "menu.configuration.projectLanguages": "Selecionar língua do projeto...",
+  "menu.tools.inventory": "Inventariação"
 }

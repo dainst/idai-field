@@ -55,6 +55,11 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
             <%= @identifier %>
           </div>
         <% end %>
+        <div class="ml-4 mt-4">
+          <.link patch={~p"/search?#{%{filters: [{:project_name, @project_name}]}}"}>
+            <.icon class="mb-1" name="hero-magnifying-glass" />
+          </.link>
+        </div>
       </div>
     </form>
     """

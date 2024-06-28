@@ -1,30 +1,7 @@
 defmodule FieldPublication.Publications.Search do
-  alias FieldPublication.OpensearchService
-
-  defp generate_aggs() do
-    {:ok, %{status: 200, body: body}} = OpensearchService.get_project_mappings()
-
-    _keyword_fields =
-      Jason.decode!(body)
-      |> Enum.reduce([], fn {
-                              _publication_index_name,
-                              %{"mappings" => %{"properties" => props}}
-                            },
-                            acc ->
-        keywords =
-          Enum.filter(props, fn {_key, %{"type" => type}} -> type == "keyword" end)
-          |> Enum.reject(fn {key, _props} -> key in ["id", "identifier"] end)
-          |> Enum.map(fn {key, _props} -> key end)
-
-        acc = acc ++ (keywords -- acc)
-
-        acc
-      end)
-      |> Enum.map(fn key ->
-        {key, %{terms: %{field: key, size: 20}}}
-      end)
-      |> Enum.into(%{})
-  end
+  alias FieldPublication.OpenSearchService
+  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.Publications.Data
 
   def fuzzy_search(q, filter, from \\ 0, size \\ 100) do
     q =
@@ -50,7 +27,7 @@ defmodule FieldPublication.Publications.Search do
             }
           }
         },
-        aggs: generate_aggs(),
+        aggs: generate_aggregations_queries(),
         from: from,
         size: size
       }
@@ -69,7 +46,7 @@ defmodule FieldPublication.Publications.Search do
         put_in(payload.query.bool, boolean_query)
       end
 
-    OpensearchService.run_search(payload)
+    OpenSearchService.run_search(payload)
     |> case do
       {:ok, %{status: 200, body: body}} ->
         body = Jason.decode!(body)
@@ -82,84 +59,67 @@ defmodule FieldPublication.Publications.Search do
               Map.put(doc, :id, doc["id"])
             end),
           aggregations:
-            body["aggregations"]
-            |> Enum.map(&reduce_aggregation/1)
-            |> Enum.into(%{})
+            body
+            |> Map.get("aggregations", %{})
+            |> Stream.map(&parse_aggregation_result/1)
+            |> Stream.reject(fn {_field, buckets} -> buckets == [] end)
+            |> Enum.sort_by(
+              # Sorts the aggregations by descending size of all bucket entries
+              fn {_field, buckets} ->
+                Enum.reduce(buckets, 0, fn %{count: count}, acc -> acc + count end)
+              end,
+              &Kernel.>=/2
+            )
         }
     end
   end
 
-  def search_stream(q, start_from, size, filter) do
-    Stream.resource(
-      fn ->
-        q =
-          case q do
-            "*" ->
-              q
+  defp generate_aggregations_queries() do
+    {:ok, %{status: 200, body: body}} = OpenSearchService.get_project_mappings()
 
-            "" ->
-              "*"
+    _keyword_fields =
+      Jason.decode!(body)
+      |> Enum.reduce([], fn {
+                              _publication_index_name,
+                              %{"mappings" => %{"properties" => props}}
+                            },
+                            acc ->
+        keywords =
+          props
+          |> Enum.map(fn prop ->
+            case prop do
+              {key, %{"type" => "keyword"}} ->
+                key
 
-            q ->
-              "#{q}~"
-          end
+              {key, %{"properties" => nested_props}} ->
+                Enum.map(nested_props, fn nested_prop ->
+                  case nested_prop do
+                    {nested_key, %{"type" => "keyword"}} ->
+                      "#{key}.#{nested_key}"
 
-        payload =
-          %{
-            query: %{
-              bool: %{
-                must: %{
-                  query_string: %{
-                    query: q
-                  }
-                }
-              }
-            },
-            size: size,
-            from: start_from
-          }
+                    _ ->
+                      nil
+                  end
+                end)
 
-        filter_params =
-          Enum.map(filter, fn {key, value} ->
-            %{term: %{key => value}}
+              _ ->
+                nil
+            end
           end)
+          |> List.flatten()
+          |> Enum.reject(fn key -> key in [nil, "id", "identifier"] end)
 
-        if Enum.empty?(filter_params) do
-          payload
-        else
-          boolean_query = Map.put(payload.query.bool, :filter, %{bool: %{must: filter_params}})
+        acc = acc ++ (keywords -- acc)
 
-          put_in(payload.query.bool, boolean_query)
-        end
-      end,
-      fn payload ->
-        {:ok, %{status: 200, body: body}} = OpensearchService.run_search(payload)
-
-        body = Jason.decode!(body)
-
-        body["hits"]["hits"]
-        |> case do
-          [] ->
-            {:halt, :ok}
-
-          hits ->
-            {
-              hits
-              |> Enum.map(fn %{"_source" => doc} ->
-                Map.put(doc, :id, doc["id"])
-              end),
-              Map.put(payload, :from, payload.from + payload.size)
-            }
-        end
-      end,
-      fn final_payload ->
-        IO.inspect(final_payload)
-        :ok
-      end
-    )
+        acc
+      end)
+      |> Stream.map(fn key ->
+        {key, %{terms: %{field: key, size: 200}}}
+      end)
+      |> Enum.into(%{})
   end
 
-  defp reduce_aggregation({field, %{"buckets" => buckets}}) do
+  defp parse_aggregation_result({field, %{"buckets" => buckets}}) do
     {field,
      Enum.map(
        buckets,
@@ -174,4 +134,180 @@ defmodule FieldPublication.Publications.Search do
        end
      )}
   end
+
+  def generate_index_mapping(pub) do
+    base_mapping = %{
+      id: %{
+        type: "keyword",
+        store: true
+      },
+      identifier: %{
+        type: "keyword",
+        store: true
+      },
+      category: %{
+        type: "keyword",
+        store: true
+      },
+      project_name: %{
+        type: "keyword",
+        store: true
+      },
+      publication_draft_date: %{
+        type: "date",
+        store: true
+      },
+      full_doc: %{
+        type: "flat_object"
+      },
+      full_doc_as_text: %{
+        type: "text"
+      }
+    }
+
+    configuration_based_mapping =
+      evaluate_input_types(pub)
+      |> then(fn %{
+                   single_keyword_fields: single_keyword_fields,
+                   multi_keyword_fields: multi_keyword_fields
+                 } ->
+        Enum.concat([single_keyword_fields, multi_keyword_fields])
+      end)
+      |> Stream.map(fn {_category_name, field_name} ->
+        {"#{field_name}_keyword", %{type: "keyword", store: true}}
+      end)
+      |> Enum.into(%{})
+
+    %{
+      mappings: %{
+        properties: Map.merge(base_mapping, configuration_based_mapping)
+      }
+    }
+  end
+
+  def prepare_doc_for_indexing(doc, %Publication{} = publication, publication_configuration, %{
+        single_keyword_fields: single_keyword_fields,
+        multi_keyword_fields: multi_keyword_fields
+      }) do
+    %{"resource" => res} =
+      doc =
+      doc
+      |> Map.put("id", doc["_id"])
+      |> Map.delete("_id")
+
+    full_doc =
+      Data.apply_project_configuration(doc, publication_configuration, publication)
+
+    base_document =
+      %{
+        "category" => res["category"],
+        "id" => res["id"],
+        "identifier" => res["identifier"],
+        "publication_draft_date" => publication.draft_date,
+        "project_name" => publication.project_name,
+        "full_doc" => full_doc,
+        "full_doc_as_text" => Jason.encode!(full_doc)
+      }
+
+    additional_fields =
+      single_keyword_fields
+      |> Stream.filter(fn {category_name, _field_name} ->
+        category_name == res["category"]
+      end)
+      |> Stream.map(fn {_this_category, field_name} ->
+        {"#{field_name}_keyword", Map.get(res, field_name)}
+      end)
+      |> Stream.reject(fn {_field_name, value} ->
+        value == nil
+      end)
+      |> Enum.into(%{})
+
+    additional_fields_2 =
+      multi_keyword_fields
+      |> Stream.filter(fn {category_name, _field_name} ->
+        category_name == res["category"]
+      end)
+      |> Stream.map(fn {_this_category, field_name} ->
+        value_list =
+          Map.get(res, field_name)
+          |> case do
+            values when is_list(values) ->
+              values
+
+            values when is_map(values) ->
+              Map.values(values)
+
+            nil ->
+              nil
+          end
+
+        {"#{field_name}_keyword", value_list}
+      end)
+      |> Stream.reject(fn {_field_name, value} ->
+        value == nil
+      end)
+      |> Enum.into(%{})
+
+    base_document
+    |> Map.merge(additional_fields)
+    |> Map.merge(additional_fields_2)
+  end
+
+  def evaluate_input_types(%Publication{} = publication) do
+    field_names_and_input_types =
+      Data.get_configuration(publication)
+      |> Enum.map(&flatten_input_types/1)
+      |> List.flatten()
+      |> Enum.uniq()
+      |> Enum.group_by(
+        fn {_categoy, _name, input_type} ->
+          input_type
+        end,
+        fn {category, name, _input_type} ->
+          {category, name}
+        end
+      )
+
+    keyword_candidates =
+      field_names_and_input_types
+      |> Enum.filter(fn {input_type, _category_and_field_names} ->
+        input_type in get_keyword_inputs()
+      end)
+      |> Enum.map(fn {_input_type, category_and_field_names} -> category_and_field_names end)
+      |> List.flatten()
+
+    multi_keyword_candidates =
+      field_names_and_input_types
+      |> Enum.filter(fn {input_type, _category_and_field_names} ->
+        input_type in get_keyword_multi_inputs()
+      end)
+      |> Enum.map(fn {_input_type, category_and_field_names} -> category_and_field_names end)
+      |> List.flatten()
+
+    %{
+      single_keyword_fields: keyword_candidates,
+      multi_keyword_fields: multi_keyword_candidates
+    }
+  end
+
+  defp flatten_input_types(
+         %{
+           "item" => %{"name" => category, "groups" => groups},
+           "trees" => child_items
+         } = _config_item
+       ) do
+    (Enum.map(groups, fn %{"fields" => fields} ->
+       Enum.map(fields, fn %{"name" => name, "inputType" => input_type} ->
+         {category, name, input_type}
+       end)
+     end)
+     |> List.flatten()) ++ Enum.map(child_items, &flatten_input_types/1)
+  end
+
+  defp flatten_input_types(nil) do
+    []
+  end
+
+  def get_keyword_inputs(), do: ["dropdown", "radio"]
+  def get_keyword_multi_inputs(), do: ["checkboxes", "dropdownRange"]
 end

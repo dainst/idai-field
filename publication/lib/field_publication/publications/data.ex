@@ -24,7 +24,9 @@ defmodule FieldPublication.Publications.Data do
           end)
           |> Map.get("config", [])
 
-        Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
+        if config != [] do
+          Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
+        end
 
         config
 
@@ -64,6 +66,15 @@ defmodule FieldPublication.Publications.Data do
       _ ->
         false
     end
+  end
+
+  def get_doc_count(%Publication{database: db}) do
+    CouchService.get_database(db)
+    |> then(fn {:ok, %{status: 200, body: body}} ->
+      body
+      |> Jason.decode!()
+      |> Map.get("doc_count", 0)
+    end)
   end
 
   def get_document(uuid, %Publication{database: db} = publication, include_relations \\ false) do
@@ -286,7 +297,17 @@ defmodule FieldPublication.Publications.Data do
 
   defp extend_field(field, keys) do
     if(field["name"] in keys) do
-      %{"key" => field["name"], "labels" => field["label"], "type" => field["inputType"]}
+      base_fields = %{
+        "key" => field["name"],
+        "labels" => field["label"],
+        "type" => field["inputType"]
+      }
+
+      if field["valuelist"] do
+        Map.put(base_fields, "list_labels", field["valuelist"]["values"])
+      else
+        base_fields
+      end
     else
       nil
     end

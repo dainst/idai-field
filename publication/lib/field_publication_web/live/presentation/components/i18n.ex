@@ -46,9 +46,6 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
       nil ->
         {:not_translated, "No value"}
 
-      val when is_binary(val) ->
-        {:not_translated, val}
-
       val when is_map(val) ->
         Map.get(val, lang)
         |> case do
@@ -58,6 +55,9 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
           text ->
             {:ok, text}
         end
+
+      val ->
+        {:not_translated, val}
     end
   end
 

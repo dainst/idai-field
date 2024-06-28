@@ -21,7 +21,7 @@
         <h2>Available filters</h2>
 
         <%= for {field, buckets} <- @aggregations do %>
-          <%= unless Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) do %>
+          <%= if !(Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
             <.aggregation_selection field_name={field} buckets={buckets} />
           <% end %>
         <% end %>

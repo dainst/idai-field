@@ -9,6 +9,12 @@
     },
     "shortDescription": {
       "label": "Descrição breve"
+    },
+    "hasChildren": {
+      "label": "Recursos subordinados"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Inclui unidades estratigráficas"
     }
   },
   "categories": {
@@ -73,10 +79,10 @@
       "label": "Adjacente a"
     },
     "isAfter": {
-      "label": "Depois de"
+      "label": "Cronologicamente depois de"
     },
     "isBefore": {
-      "label": "Antes de"
+      "label": "Cronologicamente antes de"
     },
     "isContemporaryWith": {
       "label": "Contemporâneo com"
@@ -88,16 +94,25 @@
       "label": "Representado em"
     },
     "isMapLayerOf": {
-      "label": "Camada de mapa de"
+      "label": "Mapa de fundo de"
     },
     "hasMapLayer": {
-      "label": "Tem camada de mapa"
+      "label": "Tem mapa de fundo"
     },
     "isInstanceOf": {
       "label": "Classificação tipológica"
     },
     "hasInstance": {
       "label": "Espólio associado"
+    },
+    "abuts": {
+      "label": ""
+    },
+    "isStoredIn": {
+      "label": "É armazenado em"
+    },
+    "isStoragePlaceOf": {
+      "label": "É lugar de armazenamento de"
     }
   }
 }

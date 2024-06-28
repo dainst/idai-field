@@ -1,76 +1,76 @@
 {
   "coordinate-reference-system-default-1": {
     "values": {
-      "Eigenes Koordinatenbezugssystem": "",
-      "EPSG4326 (WGS 84)": "",
-      "EPSG3857 (WGS 84 Web Mercator)": ""
+      "Eigenes Koordinatenbezugssystem": "Sistema de referência de coordenadas próprio do projeto",
+      "EPSG4326 (WGS 84)": "EPSG4326 (WGS 84)",
+      "EPSG3857 (WGS 84 Web Mercator)": "EPSG3857 (WGS 84 Web Mercator)"
     }
   },
   "position-values-expansion-default": {
     "values": {
-      "Maximale Ausdehnung": "",
-      "Minimale Ausdehnung": ""
+      "Maximale Ausdehnung": "Extensão máxima",
+      "Minimale Ausdehnung": "Extensão mínima"
     }
   },
   "position-values-edge-default": {
     "values": {
-      "Oberkante": "",
-      "Unterkante": ""
+      "Oberkante": "Margem superior",
+      "Unterkante": "Margem inferior"
     }
   },
   "orientation-default-1": {
     "values": {
-      "N-S": "",
-      "NNO - SSW": "",
-      "NNW-SSO": "",
-      "NO-SW": "",
-      "NW-SO": "",
-      "W-O": "",
-      "WNW-OSO": "",
-      "WSW-ONO": ""
+      "N-S": "N-S",
+      "NNO - SSW": "NNE-SSO",
+      "NNW-SSO": "NNO-SSE",
+      "NO-SW": "NE-SO",
+      "NW-SO": "NO-SE",
+      "W-O": "O-E",
+      "WNW-OSO": "ONO-ESE",
+      "WSW-ONO": "OSO-ENE"
     }
   },
   "provenance-default-1": {
     "values": {
-      "Anatolien": "",
+      "Anatolien": "Anatólia",
       "Antiochia (Antakya)": "",
-      "Athen": "",
-      "Ägypten": "",
+      "Athen": "Atenas",
+      "Ägypten": "Egito",
       "Attisch": "",
-      "Britannien": "",
+      "Britannien": "Britânia",
       "Chios": "",
-      "Deutschland": "",
+      "Deutschland": "Alemanha",
       "Ephesos": "",
-      "Etruskisch": "",
-      "Gallien": "",
+      "Etruskisch": "Etrusco",
+      "Gallien": "Gália",
       "Ionien": "",
-      "Irland": "",
-      "Italien": "",
+      "Irland": "Irlanda",
+      "Italien": "Itália",
       "Kampanisch": "",
-      "Karthagisch": "",
-      "Kleinasien": "",
+      "Karthagisch": "Cartaginês",
+      "Kleinasien": "Asia Menor",
       "Knidos": "",
-      "Korinth": "",
+      "Korinth": "Corinto",
       "Kos": "",
-      "Lesbos": "",
+      "Lesbos": "Lesbos",
       "Levante": "",
-      "Lokal": "",
-      "Lokal/Regional": "",
+      "Lokal": "Local",
+      "Lokal/Regional": "Local/Regional",
       "Milet": "",
       "Mäandertal": "",
-      "Nordafrika": "",
+      "Nordafrika": "África do Norte",
       "Nordafrikanisch": "",
-      "Palästina": "",
+      "Palästina": "Palestina",
       "Pannonien": "",
       "Peloponnes": "",
-      "Regional": "",
+      "Regional": "Regional",
       "Rhodos": "",
       "Samos": "",
       "Sizilien": "",
       "Skandinavien": "",
       "Slawisch": "",
-      "Spanien": "",
-      "Syrien": "",
+      "Spanien": "Espanha",
+      "Syrien": "Síria",
       "Südtunesisch": "",
       "Südägäis": ""
     }

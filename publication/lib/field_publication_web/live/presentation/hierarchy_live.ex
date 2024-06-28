@@ -45,12 +45,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
     />
     <% description = Data.get_field(@current_doc, "description") %>
     <%= if description do %>
-      <GenericField.render
-        values={description["values"]}
-        labels={description["labels"]}
-        lang={@lang}
-        type={description["type"]}
-      />
+      <GenericField.render field={description} lang={@lang} />
     <% end %>
 
     <div class="grid grid-cols-3 gap-2 justify-center">

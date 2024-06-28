@@ -2,7 +2,7 @@ import { CategoryForm, FieldResource } from 'idai-field-core';
 import { CSVExport, CSVExportResult } from './csv-export';
 import { M } from '../../../components/messages/m';
 import { PerformExport } from '../export-helper';
-import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
 /**
  * Small wrapper to separate async and file handling, including

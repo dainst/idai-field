@@ -3,7 +3,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Image do
 
   def show(assigns) do
     ~H"""
-    <img src={construct_url(assigns)} />
+    <img class={Map.get(assigns, :class, "")} src={construct_url(assigns)} />
     """
   end
 

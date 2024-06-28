@@ -201,6 +201,8 @@ defmodule FieldPublication.Replication do
           language_default
       end
 
+    log(parameters, :info, "Replication finished.")
+
     {:ok, final_publication} =
       publication
       |> Publications.get!()
@@ -219,10 +221,8 @@ defmodule FieldPublication.Replication do
     {_finished_task,
      %{
        input: %{processing: start_processing_immediately}
-     } = parameters} =
+     }} =
       Map.get(running_replications, publication_id)
-
-    log(parameters, :info, "Replication finished.")
 
     if start_processing_immediately do
       Processing.start(final_publication)

@@ -7,7 +7,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
     <form id="project_options" phx-change="project_options_changed">
       <div class="flex flex-row">
         <div class="mt-4">
-          <.link navigate="/">
+          <.link navigate={~p"/"}>
             <.icon class="ml-1 mb-1" name="hero-globe-europe-africa-solid" />
           </.link>
           /
@@ -45,7 +45,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
         </div>
         <div class="mt-4 ml-2">
           /
-          <.link patch={"/#{@project_name}/#{@selected_date}/#{@selected_lang}"}>
+          <.link patch={~p"/projects/#{@project_name}/#{@selected_date}/#{@selected_lang}"}>
             <.icon class="mb-1" name="hero-home-solid" />
           </.link>
         </div>

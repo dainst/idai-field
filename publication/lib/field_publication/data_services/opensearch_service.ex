@@ -1,157 +1,236 @@
-defmodule FieldPublication.DataServices.OpensearchService do
+defmodule FieldPublication.OpensearchService do
+  alias FieldPublication.Publications
+  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DocumentSchema.Publication
   require Logger
 
-  @doc """
-  Post a document
+  def initialize_publication_indices(%Publication{} = pub) do
+    publication_alias = generate_publication_alias(pub)
+    index_a = "#{publication_alias}__a__"
+    index_b = "#{publication_alias}__b__"
 
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the post attempt. See the https://docs.couchdb.org for possible responses.
+    Logger.info("Initializing indices '#{index_a}' and '#{index_b}'.")
 
-  __Parameters__
-  - `doc`, the document that should be added to the database.
-  - `database_name` (optional), the document's database.
-  """
-  def put(index_alias, doc, use_inactive \\ true) do
-    url =
-      if use_inactive do
-        "#{base_url()}/#{get_inactive_index(index_alias)}/_doc/#{doc["id"]}"
+    aliased_project_index = get_aliased_project_index(pub)
+
+    if aliased_project_index in [index_a, index_b] do
+      # TODO?
+      # - As a fallback search all publications for the project, pick the most current one with an active index
+
+      clear_project_alias(pub)
+    end
+
+    [index_a, index_b]
+    |> Enum.map(
+      &Finch.build(
+        :delete,
+        "#{base_url()}/#{&1}",
+        headers()
+      )
+    )
+    |> Enum.map(&Finch.request(&1, FieldPublication.Finch))
+
+    [
+      ok: %{status: 200},
+      ok: %{status: 200}
+    ] =
+      [index_a, index_b]
+      |> Enum.map(
+        &Finch.build(
+          :put,
+          "#{base_url()}/#{&1}",
+          headers()
+        )
+      )
+      |> Enum.map(&Finch.request(&1, FieldPublication.Finch))
+
+    Logger.info("Setting alias '#{publication_alias}' to #{index_a}")
+
+    {:ok, %Finch.Response{status: 200}} =
+      Finch.build(
+        :post,
+        "#{base_url()}/_aliases",
+        headers(),
+        Jason.encode!(%{actions: [%{add: %{index: index_a, alias: publication_alias}}]})
+      )
+      |> Finch.request(FieldPublication.Finch)
+  end
+
+  def reset_inactive_index(%Publication{} = pub) do
+    inactive_index =
+      pub
+      |> get_aliased_publication_index()
+      |> get_inactive()
+
+    Logger.debug("Deleting index '#{inactive_index}' and setting mapping.")
+
+    mapping =
+      %{
+        mappings: %{
+          properties: %{
+            id: %{
+              type: "keyword",
+              store: true
+            },
+            identifier: %{
+              type: "keyword",
+              store: true
+            },
+            category: %{
+              type: "keyword",
+              store: true
+            },
+            project_name: %{
+              type: "keyword",
+              store: true
+            },
+            publication_draft_date: %{
+              type: "date",
+              store: true
+            },
+            full_doc: %{
+              type: "flat_object"
+            },
+            full_doc_as_text: %{
+              type: "text"
+            }
+          }
+        }
+      }
+
+    Finch.build(
+      :delete,
+      "#{base_url()}/#{inactive_index}",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+
+    Finch.build(
+      :put,
+      "#{base_url()}/#{inactive_index}",
+      headers(),
+      Jason.encode!(mapping)
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  def switch_active_alias(%Publication{} = pub) do
+    old_index = get_aliased_publication_index(pub)
+
+    publication_alias = generate_publication_alias(pub)
+
+    next_index =
+      if String.ends_with?(old_index, "__a__") do
+        "#{publication_alias}__b__"
       else
-        "#{base_url()}/#{index_alias}/_doc/#{doc["id"]}"
+        "#{publication_alias}__a__"
+      end
+
+    payload =
+      %{
+        actions: [
+          %{add: %{index: next_index, alias: publication_alias}},
+          %{remove: %{index: old_index, alias: publication_alias}}
+        ]
+      }
+
+    Logger.info("Setting alias '#{publication_alias}' to '#{next_index}'.")
+
+    {:ok, %{status: 200}} =
+      Finch.build(
+        :post,
+        "#{base_url()}/_aliases",
+        headers(),
+        Jason.encode!(payload)
+      )
+      |> Finch.request(FieldPublication.Finch)
+
+    if get_aliased_project_index(pub) == old_index do
+      set_project_alias(pub)
+    end
+
+    :ok
+  end
+
+  def set_project_alias(%Publication{} = pub) do
+    old_index = get_aliased_project_index(pub)
+    next_index = get_aliased_publication_index(pub)
+
+    project_alias = generate_project_alias(pub)
+
+    actions = [%{add: %{index: next_index, alias: project_alias}}]
+
+    actions =
+      if old_index == :none do
+        actions
+      else
+        actions ++ [%{remove: %{index: old_index, alias: project_alias}}]
+      end
+
+    Logger.info("Setting alias '#{project_alias}' to '#{next_index}'.")
+
+    {:ok, %{status: 200}} =
+      Finch.build(
+        :post,
+        "#{base_url()}/_aliases",
+        headers(),
+        Jason.encode!(%{actions: actions})
+      )
+      |> Finch.request(FieldPublication.Finch)
+  end
+
+  def clear_project_alias(pub) do
+    project_alias = generate_project_alias(pub)
+    index = get_aliased_project_index(pub)
+
+    Logger.info("Removing alias '#{project_alias}'.")
+
+    Finch.build(
+      :post,
+      "#{base_url()}/_aliases",
+      headers(),
+      Jason.encode!(%{actions: [%{remove: %{index: index, alias: project_alias}}]})
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  def put(doc, %Publication{} = publication, use_inactive \\ true) do
+    active_index = get_aliased_publication_index(publication)
+
+    index =
+      if use_inactive do
+        get_inactive(active_index)
+      else
+        active_index
       end
 
     Finch.build(
       :post,
-      url,
+      "#{base_url()}/#{index}/_doc/#{doc["id"]}",
       headers(),
       Jason.encode!(doc)
     )
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def initialize_indices_for_alias(index_alias) do
-    {:ok, %{status: code}} =
+  def get_aliased_publication_index(%Publication{} = pub) do
+    {:ok, %{status: 200, body: body}} =
       Finch.build(
-        :put,
-        "#{base_url()}/#{index_alias}__a__",
+        :get,
+        "#{base_url()}/_alias/#{generate_publication_alias(pub)}",
         headers()
       )
       |> Finch.request(FieldPublication.Finch)
 
-    Finch.build(
-      :put,
-      "#{base_url()}/#{index_alias}__b__",
-      headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-
-    case code do
-      200 ->
-        Logger.debug("Indices have been newly created, setting alias #{index_alias}.")
-        switch_active_index(index_alias)
-
-      400 ->
-        Logger.debug("Indices already existing.")
-    end
+    Jason.decode!(body)
+    |> Map.keys()
+    |> List.first()
   end
 
-  def delete_index(index_alias) do
-    Finch.build(
-      :delete,
-      "#{base_url()}/#{index_alias}",
-      headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-  end
-
-  def clear_inactive_index(index_alias) do
-    inactive_index_name =
-      case get_active_index(index_alias) do
-        :none ->
-          "#{index_alias}__a__"
-
-        val ->
-          if String.ends_with?(val, "__a__") do
-            "#{index_alias}__b__"
-          else
-            "#{index_alias}__a__"
-          end
-      end
-
-    Finch.build(
-      :delete,
-      "#{base_url()}/#{inactive_index_name}",
-      headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-
-    Finch.build(
-      :put,
-      "#{base_url()}/#{inactive_index_name}",
-      headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-  end
-
-  def switch_active_index(index_alias) do
-    old = get_active_index(index_alias)
-
-    new =
-      case old do
-        :none ->
-          "#{index_alias}__a__"
-
-        val ->
-          if String.ends_with?(val, "__a__") do
-            "#{index_alias}__b__"
-          else
-            "#{index_alias}__a__"
-          end
-      end
-
-    payload =
-      %{
-        actions: [
-          %{add: %{index: new, alias: index_alias}}
-        ]
-      }
-
-    payload =
-      if old != :none do
-        Map.update!(payload, :actions, fn existing ->
-          existing ++ [%{remove: %{index: old, alias: index_alias}}]
-        end)
-      else
-        payload
-      end
-
-    Finch.build(
-      :post,
-      "#{base_url()}/_aliases",
-      headers(),
-      Jason.encode!(payload)
-    )
-    |> Finch.request(FieldPublication.Finch)
-  end
-
-  def get_inactive_index(index_alias) when is_binary(index_alias) do
-    index_alias
-    |> get_active_index()
-    |> case do
-      :none ->
-        "#{index_alias}__a__"
-
-      val ->
-        if String.ends_with?(val, "__a__") do
-          "#{index_alias}__b__"
-        else
-          "#{index_alias}__a__"
-        end
-    end
-  end
-
-  def get_active_index(index_alias) when is_binary(index_alias) do
+  def get_aliased_project_index(%Publication{} = pub) do
     Finch.build(
       :get,
-      "#{base_url()}/_alias/#{index_alias}",
+      "#{base_url()}/_alias/#{generate_project_alias(pub)}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -161,12 +240,58 @@ defmodule FieldPublication.DataServices.OpensearchService do
         |> Map.keys()
         |> List.first()
 
-      _ ->
+      {:ok, %{status: 404}} ->
         :none
     end
   end
 
-  def get_doc_count(index_name) do
+  def get_aliased_project_index(%Project{} = project) do
+    Finch.build(
+      :get,
+      "#{base_url()}/_alias/#{generate_project_alias(project)}",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        Jason.decode!(body)
+        |> Map.keys()
+        |> List.first()
+
+      {:ok, %{status: 404}} ->
+        :none
+    end
+  end
+
+  def get_aliased_publication(%Project{} = project) do
+    Finch.build(
+      :get,
+      "#{base_url()}/_alias/#{generate_project_alias(project)}",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        Jason.decode!(body)
+        |> Map.keys()
+        |> List.first()
+        |> index_name_to_publication()
+        |> case do
+          {:error, :not_found} ->
+            {:error, :publication_not_found}
+
+          success ->
+            success
+        end
+
+      {:ok, %{status: 404}} ->
+        {:error, :alias_not_set}
+    end
+  end
+
+  def get_doc_count(%Publication{} = pub) do
+    index_name = get_aliased_publication_index(pub)
+
     Finch.build(
       :get,
       "#{base_url()}/#{index_name}/_count",
@@ -177,6 +302,25 @@ defmodule FieldPublication.DataServices.OpensearchService do
       Jason.decode!(body)
       |> Map.get("count", 0)
     end)
+  end
+
+  def get_project_mappings() do
+    Finch.build(
+      :get,
+      "#{base_url()}/project_*/_mapping",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  def run_search(query) do
+    search("project_*", query)
+  end
+
+  def run_search(query, %Publication{} = publication) do
+    index_name = get_aliased_publication_index(publication)
+
+    search(index_name, query)
   end
 
   defp headers() do
@@ -192,10 +336,10 @@ defmodule FieldPublication.DataServices.OpensearchService do
     ]
   end
 
-  def run_search(index_name, query) do
+  defp search(index, query) do
     Finch.build(
       :post,
-      "#{base_url()}/#{index_name}/_search",
+      "#{base_url()}/#{index}/_search",
       headers(),
       Jason.encode!(query)
     )
@@ -204,5 +348,43 @@ defmodule FieldPublication.DataServices.OpensearchService do
 
   defp base_url() do
     Application.get_env(:field_publication, :opensearch_url)
+  end
+
+  defp generate_publication_alias(%Publication{} = publication) do
+    apply_restrictions("publication_#{publication.project_name}_#{publication.draft_date}")
+  end
+
+  defp generate_project_alias(%Publication{} = publication) do
+    apply_restrictions("project_#{publication.project_name}")
+  end
+
+  defp generate_project_alias(%Project{} = project) do
+    apply_restrictions("project_#{project.name}")
+  end
+
+  @invalid_chars [":", "\"", "*", "+", "/", "\\", "|", "?", "#", ">", "<"]
+  # See https://opensearch.org/docs/2.14/api-reference/index-apis/create-index/#index-naming-restrictions
+  defp apply_restrictions(index_name) do
+    result = String.downcase(index_name)
+
+    Enum.reduce(@invalid_chars, result, fn char, current ->
+      String.replace(current, char, "_")
+    end)
+  end
+
+  def index_name_to_publication(name) do
+    regex = ~r/^publication_(.*)_(\d{4}-\d{2}-\d{2})__[ab]__$/
+
+    [[_full_match, project_name, draft_date_iso_8601]] = Regex.scan(regex, name)
+
+    Publications.get(project_name, draft_date_iso_8601)
+  end
+
+  defp get_inactive(active_name) do
+    if String.ends_with?(active_name, "__a__") do
+      String.replace(active_name, "__a__", "__b__")
+    else
+      String.replace(active_name, "__b__", "__a__")
+    end
   end
 end

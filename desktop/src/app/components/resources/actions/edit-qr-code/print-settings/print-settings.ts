@@ -1,4 +1,4 @@
-import { getAsynchronousFs } from '../../../../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../../../services/get-asynchronous-fs';
 import { PrintSettingsProfile } from './print-settings-profile';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;

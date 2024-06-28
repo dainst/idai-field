@@ -1,4 +1,4 @@
-import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { Reader } from './reader';
 import { ReaderErrors } from './reader-errors';
 

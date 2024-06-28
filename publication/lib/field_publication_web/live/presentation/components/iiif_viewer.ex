@@ -10,7 +10,7 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
 
   @impl true
   def update(%{id: id, project: project, uuid: uuid} = assigns, socket) do
-    url = "/api/image/iiif/3/#{project}%2F#{uuid}.jp2/info.json"
+    url = construct_url(project, uuid)
 
     height = Map.get(assigns, :height, "50vh")
 
@@ -22,4 +22,6 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
       |> assign(:height, height)
     }
   end
+
+  def construct_url(project, uuid), do: "/api/image/iiif/3/#{project}%2F#{uuid}.jp2/info.json"
 end

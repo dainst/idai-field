@@ -6,7 +6,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ViewSelection do
     ~H"""
     <div class="pl-4 flex flex-row gap-4">
       <.link
-        navigate={~p"/#{@project}/#{@date}/#{@lang}/#{@uuid}"}
+        navigate={~p"/projects/#{@project}/#{@date}/#{@lang}/#{@uuid}"}
         class={
           if @current == :detail,
             do: "outline outline-offset-2 outline-4 outline-blue-500 bg-slate-500/10 rounded"
@@ -15,7 +15,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ViewSelection do
         <span class="hero-table-cells"></span> Details
       </.link>
       <.link
-        navigate={~p"/#{@project}/#{@date}/#{@lang}/hierarchy/#{@uuid}"}
+        navigate={~p"/projects/#{@project}/#{@date}/#{@lang}/hierarchy/#{@uuid}"}
         class={
           if @current == :hierarchy,
             do: "outline outline-offset-2 outline-4 outline-blue-500 bg-slate-500/10 rounded"

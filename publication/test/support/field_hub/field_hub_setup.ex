@@ -7,6 +7,13 @@ defmodule FieldHubHelper do
       System.cmd("docker-compose", [
         "-f",
         "test/support/field_hub/docker-compose.yml",
+        "pull"
+      ])
+
+    {"", 0} =
+      System.cmd("docker-compose", [
+        "-f",
+        "test/support/field_hub/docker-compose.yml",
         "up",
         "-d"
       ])
@@ -50,7 +57,7 @@ defmodule FieldHubHelper do
     |> Enum.map(fn uuid ->
       Finch.build(
         :put,
-        "#{get_url()}/files/#{seed_project_identifier}/uuid?type=original_image",
+        "#{get_url()}/files/#{seed_project_identifier}/#{uuid}?type=original_image",
         headers() ++ [{"Content-Type", "image/x-www-form-urlencoded"}],
         File.read!("test/support/fixtures/seed_project/images/#{uuid}")
       )
@@ -83,7 +90,12 @@ defmodule FieldHubHelper do
     "pw"
   end
 
-  defp await_startup() do
+  defp await_startup(ms_waited \\ 0) do
+    if ms_waited > 20000 do
+      stop()
+      raise("FieldHub failed to start after 20 seconds, aborting.")
+    end
+
     Finch.build(
       :get,
       get_url(),
@@ -92,9 +104,8 @@ defmodule FieldHubHelper do
     |> Finch.request(FieldPublication.Finch)
     |> case do
       {:error, %Mint.TransportError{reason: :closed}} ->
-        Logger.warning("FieldHub not yet initialized, retrying in #{@retry_timeout}")
         Process.sleep(@retry_timeout)
-        await_startup()
+        await_startup(ms_waited + @retry_timeout)
 
       {:ok, %Finch.Response{status: 200}} ->
         {_log_output, 0} =

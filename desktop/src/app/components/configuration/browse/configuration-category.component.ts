@@ -202,15 +202,18 @@ export class ConfigurationCategoryComponent implements OnChanges {
         const selectedGroupDefinition: GroupDefinition = groups.find(group => group.name === this.selectedGroup);
         const selectedGroup: Group = this.category.groups.find(group => group.name === this.selectedGroup);
 
+        const previousIndex: number = this.getVisibleFieldIndex(selectedGroup.fields, event.previousIndex);
+        const currentIndex: number = this.getVisibleFieldIndex(selectedGroup.fields, event.currentIndex);
+
         if (targetGroup) {
             if (targetGroup.name === selectedGroupDefinition.name) return;
-            const fieldName: string = selectedGroupDefinition.fields.splice(event.previousIndex, 1)[0];
+            const fieldName: string = selectedGroupDefinition.fields.splice(previousIndex, 1)[0];
             const targetGroupDefinition: GroupDefinition = groups.find(group => group.name === targetGroup.name);
             targetGroupDefinition.fields.push(fieldName);
-            selectedGroup.fields.splice(event.previousIndex, 1)[0];
+            selectedGroup.fields.splice(previousIndex, 1)[0];
         } else {
-            InPlace.moveInArray(selectedGroupDefinition.fields, event.previousIndex, event.currentIndex);
-            InPlace.moveInArray(selectedGroup.fields, event.previousIndex, event.currentIndex);
+            InPlace.moveInArray(selectedGroupDefinition.fields, previousIndex, currentIndex);
+            InPlace.moveInArray(selectedGroup.fields, previousIndex, currentIndex);
         }
 
         await this.saveNewGroupsConfiguration(groups);
@@ -242,6 +245,15 @@ export class ConfigurationCategoryComponent implements OnChanges {
             // TODO Show user-readable error messages
             this.messages.add(errWithParams);
         }
+    }
+
+
+    private getVisibleFieldIndex(fields: Array<Field>, listIndex: number) {
+
+        if (this.showHiddenFields) return listIndex;
+
+        const visibleFields: Array<Field> = fields.filter(field => !this.isHidden(field));
+        return fields.indexOf(visibleFields[listIndex]);
     }
 
 

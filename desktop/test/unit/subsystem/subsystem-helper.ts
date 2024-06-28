@@ -42,7 +42,7 @@ class IdGenerator {
  */
 export async function setupSettingsService(pouchdbDatastore, projectIdentifier = 'testdb') {
 
-    const pouchdbServer = new ExpressServer(undefined);
+    const pouchdbServer = new ExpressServer(undefined, undefined, undefined, undefined);
     const settingsProvider = new SettingsProvider();
     const fileSystemAdapter = new FsAdapter();
     const mockMessages = new Messages(undefined, 0);

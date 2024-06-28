@@ -16,7 +16,7 @@ services:
         hard: -1
 
   cantaloupe:
-    image: "ghcr.io/dainst/field_publication_cantaloupe:1.0.0"
+    image: "ghcr.io/dainst/field_publication_cantaloupe:1.1.0"
     environment:
       LOG_APPLICATION_LEVEL: warn
       LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
@@ -53,6 +53,7 @@ services:
       - CANTALOUPE_URL=http://cantaloupe:8182
       - COUCHDB_ADMIN_NAME=${COUCHDB_ADMIN_NAME}
       - COUCHDB_ADMIN_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
+      - OPENSEARCH_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD}
     depends_on:
       - "couchdb"
       - "opensearch"

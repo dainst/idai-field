@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
     IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
-    ImageStore, ImageSyncService } from 'idai-field-core';
+    ImageStore, ImageSyncService, ConfigurationSerializer } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';
@@ -124,6 +124,11 @@ registerLocaleData(localeUk, 'uk');
             provide: AppConfigurator,
             useFactory: (configLoader: ConfigLoader) => new AppConfigurator(configLoader),
             deps: [ConfigLoader]
+        },
+        {
+            provide: ConfigurationSerializer,
+            useFactory: (appConfigurator: AppConfigurator) => new ConfigurationSerializer(appConfigurator),
+            deps: [AppConfigurator]
         },
         SettingsProvider,
         SettingsService,

@@ -1,5 +1,5 @@
 import { ImageGeoreference, Document } from 'idai-field-core';
-import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
 
 export enum Errors {

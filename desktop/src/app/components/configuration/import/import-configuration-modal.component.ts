@@ -6,7 +6,7 @@ import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
-import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { AppState } from '../../../services/app-state';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');

@@ -6,7 +6,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
     I18n,
     IIIFViewer,
     GenericField,
-    DocumentLink
+    DocumentLink,
+    ClipboardCopy
   }
 
   alias FieldPublication.Publications.Data
@@ -18,12 +19,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show
-          project={@project_name}
-          date={@publication_date}
-          lang={@lang}
-          preview_doc={@doc}
-        />
+        <DocumentLink.show project={@project_name} date={@publication_date} lang={@lang} doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-row">
@@ -32,12 +28,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           <%= if depicts do %>
             <I18n.text values={depicts["labels"]} />:
             <div class="overflow-auto overscroll-contain max-h-[190px]">
-              <%= for preview_doc <- depicts["values"] do %>
+              <%= for doc <- depicts["values"] do %>
                 <DocumentLink.show
                   project={@project_name}
                   date={@publication_date}
                   lang={@lang}
-                  preview_doc={preview_doc}
+                  doc={doc}
                 />
               <% end %>
             </div>
@@ -67,25 +63,43 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           <.group_heading>
             Raw data
           </.group_heading>
-          <a class="mb-1" target="_blank" href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
-            <.icon name="hero-photo-solid" /> Download original
-          </a>
-          <br />
-          <a
-            class="mb-1"
-            target="_blank"
-            href={~p"/api/raw/csv/#{@project_name}/#{@publication_date}/#{@uuid}"}
-          >
-            <.icon name="hero-table-cells-solid" /> Download CSV
-          </a>
-          <br />
-          <a
-            class="mb-1"
-            target="_blank"
-            href={~p"/api/json/raw/#{@project_name}/#{@publication_date}/#{@uuid}"}
-          >
-            <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
-          </a>
+          <ul class="ml-0 list-none">
+            <li>
+              <a target="_blank" href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
+                <.icon name="hero-photo-solid" /> Download original
+              </a>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href={~p"/api/raw/csv/#{@project_name}/#{@publication_date}/#{@uuid}"}
+              >
+                <.icon name="hero-table-cells-solid" /> Download CSV
+              </a>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href={~p"/api/json/raw/#{@project_name}/#{@publication_date}/#{@uuid}"}
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
+              </a>
+            </li>
+            <li>
+              <div>
+                <a href="https://iiif.io" target="_blank">
+                  <img src="/images/iiif-logo.png" class="inline h-4" />
+                </a>
+                <.live_component
+                  id="iiif-link"
+                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{IIIFViewer.construct_url(@project_name, @uuid)}"}
+                  module={ClipboardCopy}
+                >
+                  Copy IIIF link
+                </.live_component>
+              </div>
+            </li>
+          </ul>
         </div>
         <div class="basis-2/3 m-5">
           <.live_component id="iiif_viewer" project={@project_name} uuid={@uuid} module={IIIFViewer} />

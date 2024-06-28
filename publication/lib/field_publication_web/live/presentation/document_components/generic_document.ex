@@ -19,12 +19,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show
-          project={@project_name}
-          date={@publication_date}
-          lang={@lang}
-          preview_doc={@doc}
-        />
+        <DocumentLink.show project={@project_name} date={@publication_date} lang={@lang} doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-row">
@@ -86,13 +81,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
               <I18n.text values={depicted_in["labels"]} /> (<%= Enum.count(depicted_in["values"]) %>)
             </.group_heading>
             <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
-              <%= for preview_doc <- depicted_in["values"] do %>
+              <%= for doc <- depicted_in["values"] do %>
                 <.link
-                  patch={"/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"}
+                  patch={~p"/projects/#{@project_name}/#{@publication_date}/#{@lang}/#{doc["id"]}"}
                   class="p-1"
                 >
                   <div class="max-w-[250px]">
-                    <Image.show size="250," project={@project_name} uuid={preview_doc["id"]} />
+                    <Image.show size="^250," project={@project_name} uuid={doc["id"]} />
                   </div>
                 </.link>
               <% end %>
@@ -105,12 +100,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
               (<%= Enum.count(other_relation["values"]) %>)
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
-              <%= for preview_doc <- other_relation["values"] do %>
+              <%= for doc <- other_relation["values"] do %>
                 <DocumentLink.show
                   project={@project_name}
                   date={@publication_date}
                   lang={@lang}
-                  preview_doc={preview_doc}
+                  doc={doc}
+                  image_count={2}
                 />
               <% end %>
             </div>
@@ -125,7 +121,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                   project={@project_name}
                   date={@publication_date}
                   lang={@lang}
-                  preview_doc={doc}
+                  doc={doc}
+                  image_count={2}
                 />
               <% end %>
             </div>

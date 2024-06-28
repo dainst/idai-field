@@ -1,5 +1,4 @@
 defmodule FieldPublicationWeb.Presentation.HomeLive do
-  alias FieldPublication.Publications.Search
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications
@@ -8,8 +7,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.Publications.Data
 
   alias FieldPublicationWeb.Presentation.Components.{
-    I18n,
-    DocumentLink
+    I18n
   }
 
   require Logger
@@ -18,7 +16,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     published_projects =
       Publications.get_current_published()
       |> Task.async_stream(fn publication ->
-        {publication, Publications.Data.get_project_info(publication)}
+        {publication, Publications.Data.get_document("project", publication)}
       end)
       |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, doc}} ->
         longitude =
@@ -53,36 +51,9 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
         published_projects
       )
       |> assign(:highlighted, nil)
-      |> assign(:search_results, [])
+      |> assign(:search_results, %{})
       |> assign(:page_title, "Overview")
     }
-  end
-
-  def handle_params(%{"q" => query}, _, socket) do
-    results =
-      Search.general_search(query)
-      |> Stream.map(fn %{publication_id: id} = result ->
-        Map.put(result, :publication, Publications.get!(id))
-      end)
-      |> Enum.map(fn %{doc: %{"resource" => res}} = result ->
-        Map.put(result, :doc, %{
-          "id" => res["id"],
-          "category" => res["category"],
-          "groups" => res["groups"],
-          "identifier" => res["identifier"]
-        })
-      end)
-
-    {
-      :noreply,
-      socket
-      |> assign(:search_results, results)
-      |> assign(:current_search, query)
-    }
-  end
-
-  def handle_params(_no_params, _uri, socket) do
-    {:noreply, assign(socket, :current_search, "")}
   end
 
   def handle_event("home_marker_hover", project_identifier, socket) do
@@ -105,13 +76,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   end
 
   def handle_event("project_selected", %{"id" => project_identifier}, socket) do
-    {:noreply, push_navigate(socket, to: "/#{project_identifier}")}
-  end
-
-  def handle_event("search", %{"search_input" => query}, socket) do
-    {
-      :noreply,
-      push_patch(socket, to: ~p"/?q=#{query}")
-    }
+    {:noreply, push_navigate(socket, to: ~p"/projects/#{project_identifier}")}
   end
 end

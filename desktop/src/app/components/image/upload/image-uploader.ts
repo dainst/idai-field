@@ -16,7 +16,7 @@ import { ImageMetadata, extendMetadataByFileData } from '../../../services/image
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 import { ImagesState } from '../overview/view/images-state';
-import { getAsynchronousFs } from '../../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
 const path = typeof window !== 'undefined' ? window.require('path') : require('path');
 

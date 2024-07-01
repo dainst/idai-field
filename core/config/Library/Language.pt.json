@@ -276,6 +276,9 @@
           "label": "Critério"
         }
       }
+    },
+    "Building": {
+      "label": "Edifício"
     }
   }
 }

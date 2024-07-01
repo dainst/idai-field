@@ -117,17 +117,18 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   def aggregation_selection(assigns) do
     ~H"""
     <strong>
-      <%= get_filter_label(@field_name) %>
+      <%= render_label(get_filter_label(@field_name)) %>
     </strong>
     <%= for %{count: count, key: key} <- @buckets do %>
       <div
-        class="pl-2 mt-1 cursor-pointer hover:bg-slate-200 rounded"
+        class="pl-2 mt-1 cursor-pointer hover:bg-slate-200 rounded "
         phx-click="toggle_filter"
         phx-value-key={@field_name}
         phx-value-value={key}
       >
-        <div class="h-full pl-2 pr-2 font-thin rounded">
-          <%= get_filter_value_label(@field_name, key) %> (<%= count %>)
+        <div class="flex pl-2 pr-2 font-thin rounded">
+          <span class="grow mr-2"><%= render_label(get_filter_value_label(@field_name, key)) %></span>
+          (<%= count %>)
         </div>
       </div>
     <% end %>
@@ -143,17 +144,42 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       phx-value-value={@value}
     >
       <div class="h-full pl-2 pr-2 font-thin rounded">
-        <strong><%= get_filter_label(@field_name) %>:</strong> <%= get_filter_value_label(
-          @field_name,
-          @value
+        <strong><%= render_label(get_filter_label(@field_name)) %>:</strong> <%= render_label(
+          get_filter_value_label(
+            @field_name,
+            @value
+          )
         ) %>
       </div>
     </div>
     """
   end
 
+  def render_label(%{secondary: _secondary} = assigns) do
+    ~H"""
+    <div class="relative group">
+      <span class="thin hero-information-circle mb-1"></span>
+      <%= @primary %>
+      <div class="p-2 mt-1 w-full z-10 bg-yellow-100 hidden group-hover:block absolute">
+        <span class="font-semibold">Varying usage:</span>
+        <%= for {text, _count, projects} <- @secondary do %>
+          <div>
+            <%= text %> <span class="italic">(<%= Enum.join(projects, ", ") %>)</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    """
+  end
+
+  def render_label(assigns) do
+    ~H"""
+    <%= @primary %>
+    """
+  end
+
   defp get_filter_label("project_name") do
-    Gettext.gettext(FieldPublicationWeb.Gettext, "Project")
+    %{primary: Gettext.gettext(FieldPublicationWeb.Gettext, "Project")}
   end
 
   defp get_filter_label(opensearch_field_name) do
@@ -174,16 +200,13 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     end
     |> case do
       [{text, _count, _projects}] ->
-        text
+        %{primary: text}
 
-      [{text, _count, _projects} = primary | rest] ->
-        # TODO: Display alternatives
-        IO.inspect(primary)
-        IO.inspect(rest)
-        text
+      [{text, _count, _projects} = _primary | rest] ->
+        %{primary: text, secondary: rest}
 
       some_string when is_binary(some_string) ->
-        some_string
+        %{primary: some_string}
     end
   end
 
@@ -203,16 +226,13 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     end
     |> case do
       [{text, _count, _projects}] ->
-        text
+        %{primary: text}
 
-      [{text, _count, _projects} = primary | rest] ->
-        # TODO: Display alternatives
-        IO.inspect(primary)
-        IO.inspect(rest)
-        text
+      [{text, _count, _projects} = _primary | rest] ->
+        %{primary: text, secondary: rest}
 
-      some_string when is_binary(some_string) ->
-        some_string
+      text when is_binary(text) ->
+        %{primary: text}
     end
   end
 
@@ -243,16 +263,13 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     end
     |> case do
       [{text, _count, _projects}] ->
-        text
+        %{primary: text}
 
-      [{text, _count, _projects} = primary | rest] ->
-        # TODO: Display alternatives
-        IO.inspect(primary)
-        IO.inspect(rest)
-        text
+      [{text, _count, _projects} = _primary | rest] ->
+        %{primary: text, secondary: rest}
 
-      some_string when is_binary(some_string) ->
-        some_string
+      text when is_binary(text) ->
+        %{primary: text}
     end
   end
 end

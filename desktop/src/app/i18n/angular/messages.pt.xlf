@@ -6202,7 +6202,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.searchBar.constraints.linkedResources" datatype="html">
         <source>Verknüpfte Ressourcen</source>
-        <target state="needs-translation">Verknüpfte Ressourcen</target>
+        <target state="translated">Recursos ligados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8702,7 +8702,7 @@
       </trans-unit>
       <trans-unit id="import.selectFile.filters.all" datatype="html">
         <source>Alle unterstützten Formate</source>
-        <target state="needs-translation">Alle unterstützten Formate</target>
+        <target state="translated">Todos os formatos suportados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8714,7 +8714,7 @@
       </trans-unit>
       <trans-unit id="import.selectFile.filters.catalog" datatype="html">
         <source>Field-Typenkatalog</source>
-        <target state="needs-translation">Field-Typenkatalog</target>
+        <target state="translated">Catálogo de tipos de Field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">1</context>

@@ -74,7 +74,11 @@
   },
   "Layer-distinguishingCriteria-default": {
     "values": {
-      "Farbe": "Color"
+      "Farbe": "Color",
+      "Form": "shape",
+      "Grenzen": "borders",
+      "Konsistenz": "consistency",
+      "Komposition": "composition"
     }
   },
   "orientation-default-1": {
@@ -162,7 +166,8 @@
       "Spätbyzantinisch": "Late Byzantine",
       "Späthellenistisch": "Late Hellenistic",
       "Spätkaiserzeitlich": "Late Imperial Period",
-      "Spätklassisch": "Late Classical"
+      "Spätklassisch": "Late Classical",
+      "Pleistozän": ""
     }
   },
   "colors-default-2": {
@@ -180,14 +185,20 @@
       "dunkelrot": "dark red",
       "gelb": "yellow",
       "hellbraun": "light brown",
-      "hellgrau": "light grey"
+      "hellgrau": "light grey",
+      "mittelbraun": "medium brown"
     },
     "description": "Color set 2, various applications"
   },
   "glass-decorationTechnique-default": {
     "values": {
       "Diatretdekor": "reticulated / diatretum decoration",
-      "Emaille": "Vitreous enamel"
+      "Emaille": "Vitreous enamel",
+      "Bemalung": "painted decoration",
+      "Facettschliffdekor": "faceting",
+      "Mosaikdekor": "mosaic decoration",
+      "Reliefdekor": "relief decoration",
+      "Stempeldekor": "stamped decoration"
     }
   },
   "glass-objectType-default": {
@@ -201,18 +212,24 @@
       "Löffel": "Spoon",
       "Tessera": "Tessera",
       "Gefäß": "Vessel",
-      "Ring": "Ring"
+      "Ring": "Ring",
+      "Anhänger": "pendant"
     }
   },
   "Brick-decorationTechnique-default": {
     "values": {
       "Fingerabdruck": "Fingerprint",
-      "Reliefdekor": "Relief decor"
+      "Reliefdekor": "Relief decor",
+      "Stempeldekor": "stamped decoration",
+      "Bemalung": "painted decoration",
+      "Stempel": "stamped",
+      "Überzug/Glasur": "slip/glaze"
     }
   },
   "Brick-temper-default": {
     "values": {
-      "Sonstige": "Other"
+      "Sonstige": "Other",
+      "Organische Partikel": "organic particles"
     }
   },
   "Burial-burialDocumentation-default": {
@@ -232,7 +249,8 @@
       "Deckel": "Lid",
       "Flasche": "Flask",
       "Teller": "Plate",
-      "Unbestimmt": "Indeterminate"
+      "Unbestimmt": "Indeterminate",
+      "Vorratsgefäß": "storage vessel"
     }
   },
   "glass-vesselFormSpecific-default": {
@@ -247,7 +265,13 @@
       "Kylix": "Kylix",
       "Lekythos": "Lekythos",
       "Schöpfer": "Ladle",
-      "Skyphos": "Skyphos"
+      "Skyphos": "Skyphos",
+      "Rippenschale": "Ribbed Bowl",
+      "Schliffrillenschale": "linear cut bowl",
+      "Unguentarium": "unguentarium",
+      "Vierkantflasche": "square bottle",
+      "hexagonale Flasche": "hexagonal flask",
+      "zylindrische Flasche": "cylindrical flask"
     }
   },
   "Building-buildingType-default": {
@@ -285,7 +309,13 @@
       "Tempel": "Temple",
       "Theater": "Theatre",
       "Turm": "Tower",
-      "Wohnbau": "Domestic Building"
+      "Wohnbau": "Domestic Building",
+      "Altar": "altar",
+      "Amphitheater": "amphitheatre",
+      "Bogen": "arch",
+      "Brücke": "bridge",
+      "Gymnasium": "gymnasium",
+      "Strasse": "street"
     }
   },
   "Building-material-default-3": {
@@ -295,7 +325,16 @@
       "Blei": "Lead",
       "Erde": "Earth",
       "Glas": "Glass",
-      "Holz": "Wood"
+      "Holz": "Wood",
+      "Metall": "metal",
+      "Mörtel": "mortar",
+      "Stuck": "stucco / moulding",
+      "Kalkmörtel": "lime mortar",
+      "Kalkstein": "limestone",
+      "Pophyr": "porphyry",
+      "Quarz": "quartz",
+      "Sandstein": "sandstone",
+      "Ziegel": "brick"
     }
   },
   "Wood-objectType-default": {
@@ -305,12 +344,22 @@
       "Altar": "Altar",
       "Gerät": "Tool",
       "Kasten/Kiste": "Box",
-      "Spielzeug": "Toy"
+      "Spielzeug": "Toy",
+      "Anhänger": "pendant",
+      "Ring": "ring",
+      "Sarkophag": "sarkophagus"
     }
   },
   "glass-formDescription-default": {
     "values": {
-      "rund": "round"
+      "rund": "round",
+      "bauchig": "globular",
+      "konisch": "conical",
+      "quadratisch": "square",
+      "kugelförmig": "spherical",
+      "rechteckig": "rectangular",
+      "schmal": "narrow",
+      "zylinderförmig": "cylindrical"
     }
   },
   "Building-buildingCategorySpecific-default": {
@@ -332,7 +381,153 @@
       "Fenster": "Window",
       "Fussboden": "Floor",
       "Gewölbedecke": "Vaulted ceiling",
-      "Türsturz": "Lintel"
+      "Türsturz": "Lintel",
+      "Türrahmen": "door casing"
+    }
+  },
+  "Layer-soilType-default": {
+    "values": {
+      "Ton": "clay",
+      "Feinsand": "",
+      "Schluff": "silt",
+      "Sandiger Ton": "sandy silt",
+      "Schluffiger Lehm": "silty loam",
+      "Schluffiger Sand": "silty sand",
+      "Schluffiger Ton": "silty clay"
+    }
+  },
+  "Wood-decorationTechnique-default": {
+    "values": {
+      "Sgraffito": "Sgraffitto"
+    }
+  },
+  "Architecture-wallType-default": {
+    "values": {
+      "Ziegelmauer": "brick wall",
+      "Außenmauer": "external wall",
+      "Fachwerk": "timber framing",
+      "Befestigugsmauer": "fortification wall"
+    }
+  },
+  "Place-findspotClassification-default": {
+    "values": {
+      "Fundsammlung": "find collection",
+      "Grab": "grave",
+      "Nekropole": "necropolis",
+      "Steinbruch": "quarry",
+      "Straße/Platz": "street/square",
+      "ländliches Gebäude": "rural building",
+      "urbanes Gebäude": "urban building"
+    }
+  },
+  "Layer-consistency-default": {
+    "values": {
+      "mittel bindend": "medium binding",
+      "stark bindend": "very binding",
+      "fest": "firm",
+      "flüssig": "liquid",
+      "gut formbar": "easily mouldable",
+      "hart": "hard",
+      "lehmig": "loamy",
+      "locker": "loose",
+      "mittel formbar": "medium mouldable",
+      "nicht bindend": "not binding",
+      "nicht formbar": "not mouldable",
+      "porös": "porous",
+      "sandig": "sandy",
+      "schwach bindend": "hardly binding",
+      "schwach formbar": "hardly mouldable",
+      "sehr gut formbar": "very easily mouldable",
+      "sehr hart": "very hard",
+      "sehr weich": "very soft",
+      "weich": "soft"
+    }
+  },
+  "Layer-layerClassification-default": {
+    "values": {
+      "Kulturschicht": "culture layer",
+      "Brandschicht": "burnt layer",
+      "Laufhorizont": "floor / occupation layer",
+      "Planierschicht": "levelling layer"
+    }
+  },
+  "Pottery-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": "wheel turned"
+    }
+  },
+  "glass-manufacturingMethod-default": {
+    "values": {
+      "Formgeblasen (mit Reliefdekor)": "mould blown (with relief)",
+      "Formgeschmolzen": "mould cast",
+      "Freigeblasen": "free blown",
+      "Kerngeformt": "core formed",
+      "gedreht (auf Drehscheibe)": "wheel turned"
+    }
+  },
+  "Brick-brickForm-default": {
+    "values": {
+      "Dachziegel": "roof tile",
+      "Flachziegel": "flat brick/tile",
+      "Formziegel": "moulded brick",
+      "Imbrex": "Imbrex",
+      "Kalyptere": "Kalypter",
+      "Later": "Later",
+      "Stroter": "Stroter",
+      "Tegula": "Tegula",
+      "Tonrohr": "pipe"
+    }
+  },
+  "Brick-specificType-default": {
+    "values": {
+      "Dachziegel": "Roof tile",
+      "Tonrohr": "pipe"
+    }
+  },
+  "Brick-manufacturing-default": {
+    "values": {
+      "Dickwandig": "thick-walled",
+      "Dünnwandig": "thin-walled"
+    }
+  },
+  "Brick-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": "wheel turned",
+      "gegossen": "cast",
+      "gepresst": "pressed",
+      "handgeformt": "hand formed"
+    }
+  },
+  "Building-material-default-2": {
+    "values": {
+      "Erde": "earth",
+      "Eisen": "iron",
+      "Blei": "lead",
+      "Glas": "glass",
+      "Holz": "wood",
+      "Metall": "metal",
+      "Mörtel": "mortar",
+      "Putz": "plaster",
+      "Stahl": "steel",
+      "Stuck": "stucco / moulding",
+      "Ziegel": "brick"
+    }
+  },
+  "Building-material-default": {
+    "values": {
+      "Ziegel": "brick",
+      "Sandstein": "sandstone",
+      "Quarz": "quartz",
+      "Pophyr": "porphyry",
+      "Marmor": "marble",
+      "Kalkstein": "limestone",
+      "Kalkmörtel": "lime mortar"
+    }
+  },
+  "Place-siteClassification-default": {
+    "values": {
+      "Siedlung": "settlement",
+      "Bestattungsplatz": "burial place"
     }
   }
 }

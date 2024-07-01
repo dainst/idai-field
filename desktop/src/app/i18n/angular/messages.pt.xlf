@@ -3506,7 +3506,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometry" datatype="html">
         <source>Geometrie</source>
-        <target state="needs-translation">Geometrie</target>
+        <target state="translated">Geometria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6134,7 +6134,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.georeference" datatype="html">
         <source>Georeferenz</source>
-        <target state="needs-translation">Georeferenz</target>
+        <target state="translated">Georeferenciação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6142,7 +6142,7 @@
       </trans-unit>
       <trans-unit id="revisionLabel.timeSuffix" datatype="html">
         <source>Uhr</source>
-        <target state="needs-translation">Uhr</target>
+        <target state="translated">horas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6154,7 +6154,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.removeLink" datatype="html">
         <source>Verknüpfung löschen</source>
-        <target state="needs-translation">Verknüpfung löschen</target>
+        <target state="translated">Apagar ligação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6162,7 +6162,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.removeLinks" datatype="html">
         <source>Verknüpfungen löschen</source>
-        <target state="needs-translation">Verknüpfungen löschen</target>
+        <target state="translated">Apagar ligações</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6170,7 +6170,7 @@
       </trans-unit>
       <trans-unit id="export.dialog.untitled" datatype="html">
         <source>Ohne Titel</source>
-        <target state="needs-translation">Ohne Titel</target>
+        <target state="translated">Sem título</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6178,7 +6178,7 @@
       </trans-unit>
       <trans-unit id="export.dialog.filter.catalog" datatype="html">
         <source>Katalog</source>
-        <target state="needs-translation">Katalog</target>
+        <target state="translated">Catálogo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6186,7 +6186,7 @@
       </trans-unit>
       <trans-unit id="export.dialog.filter.geojson" datatype="html">
         <source>GeoJSON-Datei</source>
-        <target state="needs-translation">GeoJSON-Datei</target>
+        <target state="translated">Ficheiro GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6194,7 +6194,7 @@
       </trans-unit>
       <trans-unit id="export.dialog.filter.zip" datatype="html">
         <source>ZIP-Archiv</source>
-        <target state="needs-translation">ZIP-Archiv</target>
+        <target state="translated">Arquivo ZIP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7714,7 +7714,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.qrCode" datatype="html">
         <source>QR-Code</source>
-        <target state="needs-translation">QR-Code</target>
+        <target state="translated">Código QR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">1</context>

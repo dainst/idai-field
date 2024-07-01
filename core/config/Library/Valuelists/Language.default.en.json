@@ -201,7 +201,8 @@
       "Stempeldekor": "stamped decoration",
       "Riefeldekor": "grooved decoration",
       "Ritzungen": "scratched decoration",
-      "Warzendekor": "pincered decoration"
+      "Warzendekor": "pincered decoration",
+      "Schliffrillendekor": "linear cut"
     }
   },
   "glass-objectType-default": {

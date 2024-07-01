@@ -116,5 +116,6 @@ defmodule FieldPublication.Processing.OpenSearch do
     |> Enum.to_list()
 
     OpenSearchService.switch_active_alias(publication)
+    Search.update_label_usage()
   end
 end

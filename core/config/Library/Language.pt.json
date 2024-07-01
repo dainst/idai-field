@@ -63,7 +63,7 @@
       "description": "Campo de descrição livre"
     },
     "period": {
-      "label": "Período"
+      "label": "Período de datação"
     },
     "dating": {
       "label": "Datação"
@@ -218,7 +218,7 @@
       "fields": {
         "draughtsmen": {
           "label": "Autor",
-          "description": "Autor da imagem, fotografia, desenho, ilustração"
+          "description": "Autor(a) da figura, fotógrafo/fotógrafa, desenhador/desenhadora"
         },
         "imageRights": {
           "label": "Direitos da imagem"
@@ -270,7 +270,7 @@
       "label": "Tipo"
     },
     "TypeCatalog": {
-      "label": "Tipo de catálogo",
+      "label": "Catálogo de tipos",
       "fields": {
         "criterion": {
           "label": "Critério"

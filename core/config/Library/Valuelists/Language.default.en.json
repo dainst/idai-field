@@ -198,7 +198,10 @@
       "Facettschliffdekor": "faceting",
       "Mosaikdekor": "mosaic decoration",
       "Reliefdekor": "relief decoration",
-      "Stempeldekor": "stamped decoration"
+      "Stempeldekor": "stamped decoration",
+      "Riefeldekor": "grooved decoration",
+      "Ritzungen": "scratched decoration",
+      "Warzendekor": "pincered decoration"
     }
   },
   "glass-objectType-default": {

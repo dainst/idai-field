@@ -255,56 +255,72 @@ defmodule FieldPublication.Publications.Search do
   end
 
   def get_label_usage() do
-    Publications.get_current_published()
-    |> Enum.map(fn %Publication{} = pub ->
-      config = Publications.Data.get_configuration(pub)
+    Cachex.get(:configuration_docs, :system_wide_label_usage)
+    |> case do
+      {:ok, nil} ->
+        update_label_usage()
 
-      {category_labels, field_labels} =
-        Enum.map(config, &extract_labels_for_item/1)
-        |> Enum.reduce({%{}, %{}}, fn {category_result, field_result},
-                                      {category_acc, field_acc} ->
-          {
-            Map.merge(category_result, category_acc),
-            Map.merge(field_result, field_acc)
-          }
-        end)
+      {:ok, info} ->
+        info
+    end
+  end
 
-      {
-        pub.project_name,
-        category_labels,
-        field_labels
-      }
-    end)
-    |> Enum.reduce(
-      %{category_labels: %{}, field_labels: %{}},
-      fn {
-           project_name,
-           category_labels,
-           field_labels
-         },
-         %{
-           category_labels: category_labels_acc,
-           field_labels: field_labels_acc
-         } = outer_acc ->
-        {updated_category_acc, _project_name} =
-          Enum.reduce(
-            category_labels,
-            {category_labels_acc, project_name},
-            &evaluate_category_label_usage/2
-          )
+  def update_label_usage() do
+    info =
+      Publications.get_current_published()
+      |> Enum.map(fn %Publication{} = pub ->
+        config = Publications.Data.get_configuration(pub)
 
-        {updated_field_acc, _project_name} =
-          Enum.reduce(
-            field_labels,
-            {field_labels_acc, project_name},
-            &evaluate_field_label_usage/2
-          )
+        {category_labels, field_labels} =
+          Enum.map(config, &extract_labels_for_item/1)
+          |> Enum.reduce({%{}, %{}}, fn {category_result, field_result},
+                                        {category_acc, field_acc} ->
+            {
+              Map.merge(category_result, category_acc),
+              Map.merge(field_result, field_acc)
+            }
+          end)
 
-        outer_acc
-        |> put_in([:category_labels], updated_category_acc)
-        |> put_in([:field_labels], updated_field_acc)
-      end
-    )
+        {
+          pub.project_name,
+          category_labels,
+          field_labels
+        }
+      end)
+      |> Enum.reduce(
+        %{category_labels: %{}, field_labels: %{}},
+        fn {
+             project_name,
+             category_labels,
+             field_labels
+           },
+           %{
+             category_labels: category_labels_acc,
+             field_labels: field_labels_acc
+           } = outer_acc ->
+          {updated_category_acc, _project_name} =
+            Enum.reduce(
+              category_labels,
+              {category_labels_acc, project_name},
+              &evaluate_category_label_usage/2
+            )
+
+          {updated_field_acc, _project_name} =
+            Enum.reduce(
+              field_labels,
+              {field_labels_acc, project_name},
+              &evaluate_field_label_usage/2
+            )
+
+          outer_acc
+          |> put_in([:category_labels], updated_category_acc)
+          |> put_in([:field_labels], updated_field_acc)
+        end
+      )
+
+    Cachex.put(:configuration_docs, :system_wide_label_usage, info)
+
+    info
   end
 
   defp extract_labels_for_item(%{

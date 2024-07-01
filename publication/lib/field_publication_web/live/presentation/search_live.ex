@@ -2,10 +2,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications.Search
-
-  alias FieldPublicationWeb.Presentation.Components.{
-    DocumentLink
-  }
+  alias FieldPublicationWeb.Presentation.Components.DocumentLink
 
   @search_batch_limit 20
 
@@ -119,7 +116,9 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
 
   def aggregation_selection(assigns) do
     ~H"""
-    <strong><%= @field_name %></strong>
+    <strong>
+      <%= get_filter_label(@field_name) %>
+    </strong>
     <%= for %{count: count, key: key} <- @buckets do %>
       <div
         class="pl-2 mt-1 cursor-pointer hover:bg-slate-200 rounded"
@@ -128,7 +127,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
         phx-value-value={key}
       >
         <div class="h-full pl-2 pr-2 font-thin rounded">
-          <%= key %> (<%= count %>)
+          <%= get_filter_value_label(@field_name, key) %> (<%= count %>)
         </div>
       </div>
     <% end %>
@@ -144,9 +143,116 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       phx-value-value={@value}
     >
       <div class="h-full pl-2 pr-2 font-thin rounded">
-        <strong><%= @field_name %></strong> <%= @value %>
+        <strong><%= get_filter_label(@field_name) %>:</strong> <%= get_filter_value_label(
+          @field_name,
+          @value
+        ) %>
       </div>
     </div>
     """
+  end
+
+  defp get_filter_label("project_name") do
+    Gettext.gettext(FieldPublicationWeb.Gettext, "Project")
+  end
+
+  defp get_filter_label(opensearch_field_name) do
+    data_field_name = String.replace_suffix(opensearch_field_name, "_keyword", "")
+
+    label_info = Search.get_label_usage()
+
+    case label_info[:field_labels][data_field_name]["labels"] do
+      nil ->
+        opensearch_field_name
+
+      labels ->
+        Map.get(
+          labels,
+          Gettext.get_locale(FieldPublicationWeb.Gettext),
+          data_field_name
+        )
+    end
+    |> case do
+      [{text, _count, _projects}] ->
+        text
+
+      [{text, _count, _projects} = primary | rest] ->
+        # TODO: Display alternatives
+        IO.inspect(primary)
+        IO.inspect(rest)
+        text
+
+      some_string when is_binary(some_string) ->
+        some_string
+    end
+  end
+
+  defp get_filter_value_label("category", opensearch_field_value) do
+    label_info = Search.get_label_usage()
+
+    case label_info[:category_labels][opensearch_field_value] do
+      nil ->
+        opensearch_field_value
+
+      values ->
+        Map.get(
+          values,
+          Gettext.get_locale(FieldPublicationWeb.Gettext),
+          opensearch_field_value
+        )
+    end
+    |> case do
+      [{text, _count, _projects}] ->
+        text
+
+      [{text, _count, _projects} = primary | rest] ->
+        # TODO: Display alternatives
+        IO.inspect(primary)
+        IO.inspect(rest)
+        text
+
+      some_string when is_binary(some_string) ->
+        some_string
+    end
+  end
+
+  defp get_filter_value_label(opensearch_field_name, opensearch_field_value) do
+    label_info = Search.get_label_usage()
+    data_field_name = String.replace_suffix(opensearch_field_name, "_keyword", "")
+
+    case label_info[:field_labels][data_field_name]["value_labels"] do
+      nil ->
+        opensearch_field_value
+
+      empty_map when empty_map == %{} ->
+        opensearch_field_value
+
+      value_translations_mapping ->
+        Map.get(value_translations_mapping, opensearch_field_value, opensearch_field_value)
+    end
+    |> case do
+      some_string when is_binary(some_string) ->
+        some_string
+
+      value_labels ->
+        Map.get(
+          value_labels,
+          Gettext.get_locale(FieldPublicationWeb.Gettext),
+          opensearch_field_value
+        )
+    end
+    |> case do
+      [{text, _count, _projects}] ->
+        text
+
+      [{text, _count, _projects} = primary | rest] ->
+        # TODO: Display alternatives
+        IO.inspect(primary)
+        IO.inspect(rest)
+        text
+
+      some_string when is_binary(some_string) ->
+        some_string
+    end
   end
 end

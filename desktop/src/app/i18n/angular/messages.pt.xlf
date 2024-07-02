@@ -260,7 +260,7 @@
       </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
         <source>Datensätze werden eingelesen...</source>
-        <target state="translated">Importar datasets...</target>
+        <target state="translated">Registo de dados estão a ser lidos...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/upload-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -608,7 +608,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.modal.info" datatype="html">
         <source>Datenbank wird eingelesen.</source>
-        <target state="translated">Restaurando base de dados...</target>
+        <target state="translated">Base de dados está a ser lida...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading-modal.component.ts</context>
           <context context-type="linenumber">14</context>
@@ -616,7 +616,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.loadBackup" datatype="html">
         <source>Backup einlesen</source>
-        <target state="translated">Restaurar backup</target>
+        <target state="translated">Ler cópia de segurança</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -624,7 +624,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
         <source>Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen.</source>
-        <target state="translated">Por favor, introduza o caminho completo para o ficheiro de backup, assim como o nome da base de dados / projeto de destinação. O nome do projeto de destinação não pode ser igual ao do projeto atualmente aberto.</target>
+        <target state="translated">Por favor, insira o caminho completo de um ficheiro da cópia de segurança, assim como o nome da base de dados / projeto de destinação. O nome do projeto de destinação não pode ser igual ao do projeto atualmente aberto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">86</context>
@@ -1544,7 +1544,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
         <source>Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen.</source>
-        <target state="translated">Por favor, introduza o nome do projeto para confirmar processo de apagamento.</target>
+        <target state="translated">Por favor, introduza o identificador de projeto para confirmar processo de apagamento.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -1632,7 +1632,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
         <source>Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
-        <target state="translated">O atual recurso acabou de ser apagado por outro utilizador. Pode voltar a criar o recurso de novo ao selecionar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Gravar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se clicar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, o recurso será descartado. </target>
+        <target state="translated">O atual recurso foi entretanto apagado por uma outra pessoa. Pode voltar a criar o recurso de novo ao selecionar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Gravar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se clicar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, o recurso será descartado. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
           <context context-type="linenumber">24</context>
@@ -2624,7 +2624,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDatingValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Datierung ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Datierung ein.</target>
+        <target state="translated">Por favor insira no campo '[1]' uma datação válida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2632,7 +2632,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDatingValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos datações válidas: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2640,7 +2640,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDimensionValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</target>
+        <target state="translated">Por favor insira no campo '[1]' uma intervenção válida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2648,7 +2648,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparator" datatype="html">
         <source>Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</source>
-        <target state="needs-translation">Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</target>
+        <target state="translated">Por favor utilize um ponto como separador decimal no campo '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2656,7 +2656,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.missingProperty" datatype="html">
         <source>Bitte füllen Sie das Feld '[1]' aus.</source>
-        <target state="needs-translation">Bitte füllen Sie das Feld '[1]' aus.</target>
+        <target state="translated">Por favor preencha o campo '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2664,7 +2664,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="needs-translation">Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <target state="translated">No campo '[1]' podem ser inseridos no máximo [2] carateres.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2688,7 +2688,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.endDateBeforeBeginningDate" datatype="html">
         <source>Das angegebene Enddatum liegt vor dem Startdatum. Bitte prüfen Sie die eingetragenen Daten.</source>
-        <target state="needs-translation">Das angegebene Enddatum liegt vor dem Startdatum. Bitte prüfen Sie die eingetragenen Daten.</target>
+        <target state="translated">A data de fim precede a data de início. Por favor verifique os dados inseridos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2696,7 +2696,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesUploaded" datatype="html">
         <source>[0] Bilder wurden erfolgreich importiert.</source>
-        <target state="needs-translation">[0] Bilder wurden erfolgreich importiert.</target>
+        <target state="translated">[0] imagens foram importadas com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2704,7 +2704,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.fileReader" datatype="html">
         <source>Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</source>
-        <target state="needs-translation">Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</target>
+        <target state="translated">Ficheiro '[0]' não pode ser lido do sistema de ficheiros local.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2712,7 +2712,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierStartingCharacter" datatype="html">
         <source>Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</source>
-        <target state="needs-translation">Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</target>
+        <target state="translated">O identificador de projeto deve começar por uma letra minúscula.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2720,7 +2720,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.nameLength" datatype="html">
         <source>Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</source>
-        <target state="needs-translation">Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</target>
+        <target state="translated">O nome de projeto para a língua [0] tem [1] carateres a mais.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2728,7 +2728,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.noValuesInValuelist" datatype="html">
         <source>Bitte tragen Sie mindestens einen Wert ein.</source>
-        <target state="needs-translation">Bitte tragen Sie mindestens einen Wert ein.</target>
+        <target state="translated">Por favor insira pelo menos um valor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2736,7 +2736,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.noSubfields" datatype="html">
         <source>Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.</source>
-        <target state="needs-translation">Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.</target>
+        <target state="translated">Por favor crie pelo menos dois subcampos ou mude o tipo de entrada do campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2744,7 +2744,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.valueUsedInSubfieldCondition" datatype="html">
         <source>Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.</source>
-        <target state="needs-translation">Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.</target>
+        <target state="translated">O valor "[0]" não pode ser apagado enquanto for configurado para ser o valor requisito para o subcampo "[1]" do campo "[2]" da categoria "[3]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2752,7 +2752,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidReference" datatype="html">
         <source>"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.</source>
-        <target state="needs-translation">"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.</target>
+        <target state="translated">"[0]"não é um URL válido. Por favor indique somente referências URL.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2760,7 +2760,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.notANumber" datatype="html">
         <source>Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</source>
-        <target state="needs-translation">Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</target>
+        <target state="translated">Por favor insira um valor númerico como limite de recursos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2768,7 +2768,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.tooLow" datatype="html">
         <source>Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</source>
-        <target state="needs-translation">Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</target>
+        <target state="translated">Por favor insira um número maior que 0 para o limite de recursos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2776,7 +2776,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.importFailure" datatype="html">
         <source>Die Projektkonfiguration konnte nicht importiert werden.</source>
-        <target state="needs-translation">Die Projektkonfiguration konnte nicht importiert werden.</target>
+        <target state="translated">A configuração de projeto não pode ser importada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2784,7 +2784,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.noProjectLanguages" datatype="html">
         <source>Bitte wählen Sie mindestens eine Projektsprache aus.</source>
-        <target state="needs-translation">Bitte wählen Sie mindestens eine Projektsprache aus.</target>
+        <target state="translated">Por favor selecione pelo menos um língua de projeto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2792,7 +2792,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.images" datatype="html">
         <source>Bilder</source>
-        <target state="needs-translation">Bilder</target>
+        <target state="translated">Imagens</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2800,7 +2800,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.types" datatype="html">
         <source>Typenverwaltung</source>
-        <target state="needs-translation">Typenverwaltung</target>
+        <target state="translated">Gestão de tipos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2808,7 +2808,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.downloadProject" datatype="html">
         <source>Projekt herunterladen</source>
-        <target state="needs-translation">Projekt herunterladen</target>
+        <target state="translated">Descarregar projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2816,7 +2816,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.import" datatype="html">
         <source>Import</source>
-        <target state="needs-translation">Import</target>
+        <target state="translated">Importação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2824,7 +2824,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.export" datatype="html">
         <source>Export</source>
-        <target state="needs-translation">Export</target>
+        <target state="translated">Exportação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2832,7 +2832,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.help" datatype="html">
         <source>Hilfe</source>
-        <target state="needs-translation">Hilfe</target>
+        <target state="translated">Ajuda</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2840,7 +2840,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.configuration" datatype="html">
         <source>Projektkonfiguration</source>
-        <target state="needs-translation">Projektkonfiguration</target>
+        <target state="translated">Configuração de projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>
@@ -2848,7 +2848,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.displayImages" datatype="html">
         <source>Für die Anzeige optimierte Bilddateien:</source>
-        <target state="needs-translation">Für die Anzeige optimierte Bilddateien:</target>
+        <target state="translated">Ficheiros otimizados para a visualização:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">85,89</context>
@@ -2856,7 +2856,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.projectProperties" datatype="html">
         <source>Projekteigenschaften</source>
-        <target state="needs-translation">Projekteigenschaften</target>
+        <target state="translated">Propriedades de projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>
@@ -2864,7 +2864,7 @@
       </trans-unit>
       <trans-unit id="resources.navigation.tooltips.deactivateExtendedSearchMode" datatype="html">
         <source>Erweiterten Suchmodus deaktivieren</source>
-        <target state="needs-translation">Erweiterten Suchmodus deaktivieren</target>
+        <target state="translated">Desativar modo de pesquisa avançada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2872,7 +2872,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.geometry" datatype="html">
         <source>Geometrie</source>
-        <target state="needs-translation">Geometrie</target>
+        <target state="translated">Geometria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2880,7 +2880,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.linkedImages" datatype="html">
         <source>Verknüpfte Bilder</source>
-        <target state="needs-translation">Verknüpfte Bilder</target>
+        <target state="translated">Imagens ligadas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2888,7 +2888,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.isSameAs" datatype="html">
         <source>Verknüpfte identische Ressourcen</source>
-        <target state="needs-translation">Verknüpfte identische Ressourcen</target>
+        <target state="translated">Recursos idênticos ligados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2896,7 +2896,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.isInstanceOf" datatype="html">
         <source>Verknüpfte Typen</source>
-        <target state="needs-translation">Verknüpfte Typen</target>
+        <target state="translated">Tipos ligados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2904,7 +2904,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.hasInstance" datatype="html">
         <source>Verknüpfte Funde</source>
-        <target state="needs-translation">Verknüpfte Funde</target>
+        <target state="translated">Achados ligados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2912,7 +2912,7 @@
       </trans-unit>
       <trans-unit id="settings.languageInfo.uk" datatype="html">
         <source>Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</source>
-        <target state="needs-translation">Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</target>
+        <target state="translated">Se tiver quaisquer perguntas ou comentários sobre a tradução ucraniana, contacte: idai.field-ukrayinska@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2920,7 +2920,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentPicker.project" datatype="html">
         <source>Projekt</source>
-        <target state="needs-translation">Projekt</target>
+        <target state="translated">Projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2932,7 +2932,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapForm" datatype="html">
         <source>Formular wechseln</source>
-        <target state="needs-translation">Formular wechseln</target>
+        <target state="translated">Mudar formulário</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -2944,7 +2944,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.header" datatype="html">
         <source>Formular wechseln?</source>
-        <target state="needs-translation">Formular wechseln?</target>
+        <target state="translated">Mudar formulário?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -2992,7 +2992,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
         <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
-        <target state="translated">Por favor insira o identificador do projeto para proceder.</target>
+        <target state="translated">Por favor insira o identificador de projeto para proceder.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3024,7 +3024,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredMissingIdentifier" datatype="html">
         <source>Die Ressource '[0]' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.</source>
-        <target state="translated">O recurso '[0]' não foi importado porque não foi encontrado um recurso com este identificador.</target>
+        <target state="translated">O recurso "[0]" não foi importado porque não foi encontrado um recurso com este identificador.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3060,7 +3060,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidUrls" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos referências URL válidas: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3068,7 +3068,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDimensionValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos intervenções válidas: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3076,7 +3076,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparators" datatype="html">
         <source>Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].</source>
-        <target state="needs-translation">Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].</target>
+        <target state="translated">Por favor utilize um ponto como separador decimal nos seguintes campos: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3084,7 +3084,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.wldFileUploaded" datatype="html">
         <source>Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.</source>
-        <target state="needs-translation">Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.</target>
+        <target state="translated">Para uma imagem foram importados dados de georeferenciação de um ficheiro Word.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3092,7 +3092,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.wldFilesUploaded" datatype="html">
         <source>Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.</source>
-        <target state="needs-translation">Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.</target>
+        <target state="translated">Para [0] imagens foram importados dados de georeferenciação de um ficheiro Word.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3100,7 +3100,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.duplicateFilename" datatype="html">
         <source>Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen existiert bereits.</source>
-        <target state="needs-translation">Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen existiert bereits.</target>
+        <target state="translated">O ficheiro de imagem '[0]' não pode ser adicionado. Já existe uma imagem como o mesmo nome de ficheiro.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3108,7 +3108,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.duplicateFilenames" datatype="html">
         <source>Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]</source>
-        <target state="needs-translation">Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]</target>
+        <target state="translated">Os seguintes ficheiros de imagens não puderam ser adicionados porque já existem nomes de ficheiros idênticos: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3116,7 +3116,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
         <source>Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</source>
-        <target state="needs-translation">Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</target>
+        <target state="translated">O identificador de projeto contém carateres não permitidos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3124,7 +3124,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.noValuelist" datatype="html">
         <source>Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.</source>
-        <target state="needs-translation">Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.</target>
+        <target state="translated">Por favor escolha uma lista de valores ou mude o tipo de entrada do campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3132,7 +3132,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.valuelists" datatype="html">
         <source>Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
+        <target state="translated">A lista de valores deste subcampo não pode ser removida ou trocada porque foi configurado como campo requisito para o subcampo "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3140,7 +3140,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.inputType" datatype="html">
         <source>Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
+        <target state="translated">O tipo de entrada deste subcampo não pode ser alterada porque foi configurado como campo requisito para o subcampo "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3148,7 +3148,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.backupCreation" datatype="html">
         <source>Backup erstellen</source>
-        <target state="needs-translation">Backup erstellen</target>
+        <target state="translated">Criar cópia de segurança</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3156,7 +3156,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.backupLoading" datatype="html">
         <source>Backup einlesen</source>
-        <target state="needs-translation">Backup einlesen</target>
+        <target state="translated">Ler cópia de segurança</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3164,7 +3164,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileCount" datatype="html">
         <source>Anzahl: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </source>
-        <target state="needs-translation">Anzahl: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </target>
+        <target state="translated">Quantidade: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">76</context>
@@ -3180,7 +3180,7 @@
       </trans-unit>
       <trans-unit id="settings.languageInfo.it" datatype="html">
         <source>Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de</source>
-        <target state="needs-translation">Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de</target>
+        <target state="translated">A tradução italiana é disponibilizada pelo DAI em Roma. Se tiver quaisquer perguntas ou comentários sobre a tradução, contacte: idai.field-italiano@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3188,7 +3188,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
         <source>Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> ersetzen? </source>
-        <target state="needs-translation">Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> ersetzen? </target>
+        <target state="translated">Quer realmente substituir o formulário <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> pelo formulário <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -3236,7 +3236,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.projectName.info" datatype="html">
         <source>Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden. </source>
-        <target state="translated">É possível especificar um nome de projeto para cada língua. O nome pode conter qualquer número de caracteres e no máximo <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> caracteres. Pode ser alterado a qualquer momento nas propriedades de projeto. </target>
+        <target state="translated">É possível inserir um nome de projeto para cada língua. O nome pode conter qualquer número de caracteres e no máximo <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> caracteres. Pode ser alterado a qualquer momento nas propriedades de projeto. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -3260,7 +3260,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
         <source>Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mehr geändert werden. </source>
-        <target state="translated">Inserir aqui uma identificação única do novo porjeto. Caracteres permitidos são minúsculas do alfabeto latino, números, subtraços e hífens. A identificação deve começar por uma letra e pode ter no máximo <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> caracteres. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> pode ser alterada mais tarde. </target>
+        <target state="translated">Inserir aqui um identificador única do novo projeto. Caracteres permitidos são minúsculas do alfabeto latino, números, subtraços e hífens. O identificador deve começar por uma letra e pode ter no máximo <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> caracteres. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> pode ser alterada mais tarde. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -3300,7 +3300,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.settings" datatype="html">
         <source>Einstellungen</source>
-        <target state="needs-translation">Einstellungen</target>
+        <target state="translated">Definições</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/navbar.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3466,7 +3466,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
         <source>Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.</source>
-        <target state="needs-translation">Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.</target>
+        <target state="translated">Este caminho pode normalmente ser deixado com a configuração de base. Tem que ser alterado se o índice de imagens esteja localizado num armazenamento conectado à rede (NAS) que seja utilizado por vários utilizadores. A aplicação cria para cada projeto um índice separado neste caminho. Os índices de imagens são integralmente geridos por Field. Ficheiros de imagens não devem ser depositados manualmente neste caminho, mas importados pela visualização de imagens ou a aba de imagens dos recursos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">148</context>
@@ -3538,7 +3538,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidUrl" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige URL ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige URL ein.</target>
+        <target state="translated">Por favor insira no campo '[1]' um URL válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3546,7 +3546,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingIdentifierShapefile" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</target>
+        <target state="translated">Ocorreu um erro ao importar: foram encontradas uma ou várias unidades estratigráficas sem o atributo "identifier".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3554,7 +3554,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</target>
+        <target state="translated">Ocorreu um erro ao importar: foram encontrados um ou vários recursos com entradas não permitidas em resource.id.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3562,7 +3562,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidCsv" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</target>
+        <target state="translated">Ocorreu um erro ao importar: O CSV na linha [0] não pode ser lido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3570,7 +3570,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.mandatoryCsvFieldMissing" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld '[1]'.</source>
-        <target state="translated">Ocorreu um erro ao importar: na linha [0] falta o campo obrigatório '[1]'.</target>
+        <target state="translated">Ocorreu um erro ao importar: na linha [0] falta o campo obrigatório "[1]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3602,7 +3602,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.noOperationAssignable" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner '[0]' zugeordnet werden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner '[0]' zugeordnet werden.</target>
+        <target state="translated">Ocorreu um erro ao importar: um recurso não pode ser atribuído a uma intervenção com o identificador "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3610,7 +3610,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.shapefile.readError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.</target>
+        <target state="translated">Ocorreu um erro ao importar; o ficheiro não pode ser lido. Por favor selecione um Shapefile (.shp.) válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3618,7 +3618,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
         <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</source>
-        <target state="needs-translation">Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</target>
+        <target state="translated">Recursos da categoria "[0]" devem ser criadas dentro de outros recursos. É afetado : "[1]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3626,7 +3626,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidFields" datatype="html">
         <source>Fehlende Felddefinitionen für die Felder '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Fehlende Felddefinitionen für die Felder '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Definições de campo em falta para os campos "[1]" de um recurso da categoria "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3634,7 +3634,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValues" datatype="html">
         <source>Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Valores numéricos inválidos nos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3642,7 +3642,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidUrls" datatype="html">
         <source>Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Referências URL inválidas nos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3650,7 +3650,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValue" datatype="html">
         <source>Ungültige Maßangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültige Maßangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Intervenções inválidas '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3658,7 +3658,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValues" datatype="html">
         <source>Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Intervenções inválidas nos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3666,7 +3666,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryOnlyAllowedOnUpdate" datatype="html">
         <source>Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
-        <target state="needs-translation">Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
+        <target state="translated">Recursos da seguinte categoria são só permitidos importar no modo suplementar: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3674,7 +3674,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
         <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</source>
-        <target state="needs-translation">Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</target>
+        <target state="translated">Arrays devem conter campos consistentes do mesmo tipo. É afetado: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3722,7 +3722,7 @@
       </trans-unit>
       <trans-unit id="messages.export.csv.warning.invalidFieldData.single" datatype="html">
         <source>Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</source>
-        <target state="needs-translation">Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</target>
+        <target state="translated">O campo "[0]" do recurso [1] foi ignorado na exportação porque os dados de campo não correspondem ao tipo de entradas configurado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3730,7 +3730,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.error.resolveConflict" datatype="html">
         <source>Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.</source>
-        <target state="needs-translation">Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.</target>
+        <target state="translated">O conflito não pode ser resolvido. Por favor verifique se o conflito já foi resolvido por um outro utilizador/uma outra utilizadora.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3738,7 +3738,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.unmachtedWldFiles" datatype="html">
         <source>Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]</source>
-        <target state="needs-translation">Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]</target>
+        <target state="translated">Os seguintes ficheiros Word não puderam ser carregados porque não foram encontrados os ficheiros de imagens correspondentes: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3746,7 +3746,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.read" datatype="html">
         <source>Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</source>
-        <target state="needs-translation">Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
+        <target state="translated">Não puderam ser lidos ficheiros do índice de imagens. Por favor insira um caminho do diretório válido nas definições.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3754,7 +3754,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.upload.pixelLimitExceeded" datatype="html">
         <source>Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</source>
-        <target state="needs-translation">Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</target>
+        <target state="translated">O ficheiro '[0]' não pode ser lido: o número máximo de pixeis, [1], foi ultrapassado. Por favor reduza a resolução e tente de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3762,7 +3762,7 @@
       </trans-unit>
       <trans-unit id="remoteimagestore.warning.largeFileUploadBlockedByPeer" datatype="html">
         <source>Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.</source>
-        <target state="needs-translation">Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.</target>
+        <target state="translated">A sua atual destinação de sincronização está a bloquear a recepção de imagens originais. Pode desativar o carregamento de imagens originais nas definições de sincronização ou então altere a opção para a aceitação de imagens originais na destinação de sincronização.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3770,7 +3770,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.resourceMissingDuringSyncing" datatype="html">
         <source>Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.</source>
-        <target state="needs-translation">Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.</target>
+        <target state="translated">O recurso não pode ser acedido. Por favor espere até que a sincronização esteja completa e tente de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3778,7 +3778,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveWithSameOperationRelations" datatype="html">
         <source>Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</source>
-        <target state="needs-translation">Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</target>
+        <target state="translated">O recurso [0] não pode ser movido para uma outra intervenção porque existem relações que só podem ser definidas dentro da mesma intervenção. Remova as relações e tente de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3786,7 +3786,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.parentResourceDeleted" datatype="html">
         <source>Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
-        <target state="needs-translation">Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
+        <target state="translated">O recurso não pode ser criado porque um recurso superior foi entretanto apagado por um outro utilizador/uma outra utilizadora.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3794,7 +3794,7 @@
       </trans-unit>
       <trans-unit id="widgets.languagesList.noLanguagesSelected" datatype="html">
         <source>Keine Sprachen ausgewählt</source>
-        <target state="needs-translation">Keine Sprachen ausgewählt</target>
+        <target state="translated">Nenhuma língua selecionada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -3802,7 +3802,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> imagens lidas... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -3810,7 +3810,7 @@
       </trans-unit>
       <trans-unit id="image.originalNotFoundWarning" datatype="html">
         <source>Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.</source>
-        <target state="needs-translation">Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.</target>
+        <target state="translated">A versão original da imagem não se encontra no índice de imagens.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
           <context context-type="linenumber">46</context>
@@ -4051,7 +4051,7 @@
       </trans-unit>
       <trans-unit id="project.identifier" datatype="html">
         <source>Projektkennung</source>
-        <target state="translated">Identificação do projeto</target>
+        <target state="translated">identificador de projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">60</context>
@@ -4331,7 +4331,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingIdentifier" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</target>
+        <target state="translated">Ocorreu um erro ao importar: foram encontradas uma ou várias unidades estratigráficas sem properties.identifier.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4339,7 +4339,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCategory" datatype="html">
         <source>Ungültige Kategoriedefinition: '[0]'</source>
-        <target state="needs-translation">Ungültige Kategoriedefinition: '[0]'</target>
+        <target state="translated">Definição de categoria inválida: "[0]"</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4347,7 +4347,7 @@
       </trans-unit>
       <trans-unit id="messages.datastore.error.notFound" datatype="html">
         <source>Die Ressource konnte nicht gefunden werden.</source>
-        <target state="needs-translation">Die Ressource konnte nicht gefunden werden.</target>
+        <target state="translated">O recursos não foram encontrados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4491,7 +4491,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier" datatype="html">
         <source>Projektkennung:</source>
-        <target state="translated">Identificador de projeto:</target>
+        <target state="translated">identificador de projeto:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -4535,7 +4535,7 @@
       </trans-unit>
       <trans-unit id="project.download.overwriteProject" datatype="html">
         <source>Existierendes Projekt gleicher Kennung überschreiben</source>
-        <target state="translated">Projeto com a mesma identificação está a ser sobrescrito</target>
+        <target state="translated">Projeto com o mesmo identificador está a ser sobrescrito</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">231</context>
@@ -5371,7 +5371,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.scientific" datatype="html">
         <source>Naturwissenschaftlich</source>
-        <target state="needs-translation">Naturwissenschaftlich</target>
+        <target state="translated">Científico</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -5483,7 +5483,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.tooltip" datatype="html">
         <source>Start- und Endzeitraum angeben</source>
-        <target state="translated">Especificar data de início e fim</target>
+        <target state="translated">Inserir data de início e fim</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dropdown-range.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -6367,7 +6367,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredExistingIdentifier" datatype="html">
         <source>Die Ressource '[0]' wurde nicht importiert, weil bereits eine Ressource mit dem gleichen Bezeichner existiert.</source>
-        <target state="translated">O recurso '[0]' não foi importado porque já existe um recurso com o mesmo identificador.</target>
+        <target state="translated">O recurso "[0]" não foi importado porque já existe um recurso com o mesmo identificador.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6375,7 +6375,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.csvInvalidHeading" datatype="html">
         <source>Ungültiger CSV-Header: Siehe [0].</source>
-        <target state="needs-translation">Ungültiger CSV-Header: Siehe [0].</target>
+        <target state="translated">Cabeçalho de CSV inválido: ver [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6415,7 +6415,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
         <source>Eigenschaft(en) einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</source>
-        <target state="needs-translation">Eigenschaft(en) einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</target>
+        <target state="translated">Propriedades de um recurso da categoria '[0]' devem estar presentes: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6423,7 +6423,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="needs-translation">Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <target state="translated">No campo '[1]' da categoria '[0]' devem ser inseridos no máximo [2] carateres.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6431,7 +6431,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.resourceLimitExceeded" datatype="html">
         <source>In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</source>
-        <target state="needs-translation">In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</target>
+        <target state="translated">Neste projeto devem ser criados no máximo [1] recursos da categoria '[0]' .</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6439,7 +6439,7 @@
       </trans-unit>
       <trans-unit id="resources.navigation.tooltips.activateExtendedSearchMode" datatype="html">
         <source>Erweiterten Suchmodus aktivieren</source>
-        <target state="needs-translation">Erweiterten Suchmodus aktivieren</target>
+        <target state="translated">Ativar modo de pesquisa avançada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6447,7 +6447,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.tooltip.deactivated" datatype="html">
         <source>Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.</source>
-        <target state="needs-translation">Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.</target>
+        <target state="translated">Por favor desative o modo de pesquisa avançado para poder criar novos recursos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6455,7 +6455,7 @@
       </trans-unit>
       <trans-unit id="buttons.ok" datatype="html">
         <source>OK</source>
-        <target state="needs-translation">OK</target>
+        <target state="translated">OK</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -6523,7 +6523,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.warning.changes.parent" datatype="html">
         <source>Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen.</target>
+        <target state="translated">Por favor note que todas as alterações que fizer neste formulário e todos os formulários subordinados vão ser perdidas ao mudar o formulário.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -6531,7 +6531,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.warning.changes.child" datatype="html">
         <source>Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen.</target>
+        <target state="translated">Por favor note que todas as alterações que fizer neste formulário vão ser perdidas ao mudar o formulário.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -6539,7 +6539,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistDescription" datatype="html">
         <source>Beschreibung der Werteliste</source>
-        <target state="needs-translation">Beschreibung der Werteliste</target>
+        <target state="translated">Descrição da lista de valores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -6547,7 +6547,7 @@
       </trans-unit>
       <trans-unit id="configuration.sortValues" datatype="html">
         <source>Automatische Sortierung</source>
-        <target state="needs-translation">Automatische Sortierung</target>
+        <target state="translated">Ordenação automática</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">142</context>
@@ -6555,7 +6555,7 @@
       </trans-unit>
       <trans-unit id="configuration.createSpecificValuelist" datatype="html">
         <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
-        <target state="needs-translation">Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </target>
+        <target state="translated">Criar lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">170</context>
@@ -6563,7 +6563,7 @@
       </trans-unit>
       <trans-unit id="configuration.editSpecificValuelist" datatype="html">
         <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
-        <target state="needs-translation">Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </target>
+        <target state="translated">Modificar lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -6571,7 +6571,7 @@
       </trans-unit>
       <trans-unit id="configuration.editValuelistInfo" datatype="html">
         <source>Bitte beachten Sie, dass vorgenommene Änderungen nach Klick auf den OK-Button für sämtliche Felder angewendet werden, die diese Werteliste benutzen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass vorgenommene Änderungen nach Klick auf den OK-Button für sämtliche Felder angewendet werden, die diese Werteliste benutzen.</target>
+        <target state="translated">Por favor note que alterações vão ser aplicadas a todos os campos que utilizam esta lista de valores uma vez que clicar no botão OK.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.html</context>
           <context context-type="linenumber">24</context>
@@ -6579,7 +6579,7 @@
       </trans-unit>
       <trans-unit id="buttons.close" datatype="html">
         <source>Schließen</source>
-        <target state="needs-translation">Schließen</target>
+        <target state="translated">Fechar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/language-picker-modal.component.ts</context>
           <context context-type="linenumber">76</context>
@@ -6587,7 +6587,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">
         <source>Bild wird eingelesen...</source>
-        <target state="needs-translation">Bild wird eingelesen...</target>
+        <target state="translated">Imagem está a ser lida...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -6595,7 +6595,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.catalog.generic" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Der Katalog konnte nicht importiert werden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Der Katalog konnte nicht importiert werden.</target>
+        <target state="translated">Ocorreu um erro ao importar: O catálogo não pode ser importado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6611,7 +6611,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.identifierFormat" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.</target>
+        <target state="translated">Ocorreu um erro ao importar: properties.identifier deve ser uma sequência de caracteres e não um número.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6667,7 +6667,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.duplicateidentifier" datatype="html">
         <source>Mehrfach vorhandener Identifier in Importdatei: '[0]'.</source>
-        <target state="translated">Identificador várias vezes presente no ficheiro de importação: '[0]'.</target>
+        <target state="translated">Identificador várias vezes presente no ficheiro de importação: "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6691,7 +6691,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung bei '[0]' fehlerhaft.</source>
-        <target state="translated">Ocorreu um erro ao importar: Ligação incorreta a '[0]' .</target>
+        <target state="translated">Ocorreu um erro ao importar: Ligação incorreta a "[0]" .</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6699,7 +6699,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptyRelation" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</source>
-        <target state="translated">Ocorreu um erro ao importar: Relação vazia a '[0]'.</target>
+        <target state="translated">Ocorreu um erro ao importar: Relação vazia a "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6707,7 +6707,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.liesWithinRecordedInMismatch" datatype="html">
         <source>'parent' zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</source>
-        <target state="translated">'parent' mostra o recurso de uma outra intervenção. Identificador: '[0]'.</target>
+        <target state="translated">'parent' mostra o recurso de uma outra intervenção. Identificador: "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6715,7 +6715,7 @@
       </trans-unit>
       <trans-unit id="messages.Import.ImportErrors.parentMustNotBeArray" datatype="html">
         <source>Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</source>
-        <target state="translated">Erro em recurso com o identificador '[0]'. A relação 'parent' não pode ser um Array.</target>
+        <target state="translated">Erro em recurso com o identificador "[0]". A relação "parent" não pode ser um Array.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6723,7 +6723,7 @@
       </trans-unit>
       <trans-unit id="messages.Import.ImportErrors.relationMustBeArray" datatype="html">
         <source>Fehler bei Ressource mit Bezeichner '[0]'. Relationen ausser 'isChildOf' müssen Arrays sein.</source>
-        <target state="translated">Erro em recurso com o identificador '[0]'. Relações excepto 'isChildOf' devem ser Array.</target>
+        <target state="translated">Erro em recurso com o identificador "[0]". Relações excepto 'isChildOf' devem ser Array.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6731,7 +6731,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.prevalidation.missingRelationTarget" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</target>
+        <target state="translated">Ocorreu um erro ao importar: O recurso definido como destinação de uma relação com o identificador "[0]" não foi encontrado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6739,7 +6739,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.noFeatureAssignable" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: '[0]'</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: '[0]'</target>
+        <target state="translated">Ocorreu um erro ao importar: um recurso não pode ser atribuído a uma unidade estratigráfica. Identificador de destinação ou erro: "[0]"</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6747,7 +6747,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.shapefile.unsupportedGeometryType" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</target>
+        <target state="translated">Ocorreu um erro ao importar: o tipo de geometria [0] não é suportado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6755,7 +6755,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.shapefile.jsonlWriteError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</target>
+        <target state="translated">Ocorreu um erro ao importar: o ficheiro temporário [0] não pode ser criado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6763,7 +6763,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.shapefile.generic" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</source>
-        <target state="needs-translation">Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</target>
+        <target state="translated">Ocorreu um erro ao importar: o Shapefile não pode ser importado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6771,7 +6771,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.targetCategoryRangeMismatch" datatype="html">
         <source>Eine Ressource der Kategorie '[2]' darf nicht mittels '[1]' mit '[0]' verknüpft werden.</source>
-        <target state="needs-translation">Eine Ressource der Kategorie '[2]' darf nicht mittels '[1]' mit '[0]' verknüpft werden.</target>
+        <target state="translated">Um recurso da categoria "[2]" não pode ser ligado a "[0]" através de "[1]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6779,7 +6779,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
         <source>Fehlende Felddefinition für das Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Fehlende Felddefinition für das Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Definição de campo em falta para o campo "[1]" de um recurso da categoria "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6787,7 +6787,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationField" datatype="html">
         <source>Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Falta de definição para a relação '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6795,7 +6795,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationFields" datatype="html">
         <source>Fehlende Definitionen für die Relationen '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Fehlende Definitionen für die Relationen '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Falta de definições para a relação '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6803,7 +6803,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValue" datatype="html">
         <source>Ungültiger Zahlenwert im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültiger Zahlenwert im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Valor numérico inválido no campo '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6811,7 +6811,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidUrl" datatype="html">
         <source>Ungültige URL im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültige URL im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">URL inválida no campo '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6819,7 +6819,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</target>
+        <target state="translated">Data inválida no campo '[1]' de um recurso da categoria '[0]'. Formato para datas: "dia.mês.ano", por exemplo.: 01.01.2010</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6827,7 +6827,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDates" datatype="html">
         <source>Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</source>
-        <target state="needs-translation">Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</target>
+        <target state="translated">Datas inválidas nos seguintes campos de um recurso da categoria '[0]': [1]. Formato para datas: "dia.mês.ano", por exemplo.: 01.01.2010</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6835,7 +6835,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDatingValue" datatype="html">
         <source>Ungültige Datierung im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültige Datierung im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Datação inválida no campo '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6843,7 +6843,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDatingValues" datatype="html">
         <source>Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Datação inválida nos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6851,7 +6851,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidLiteratureValue" datatype="html">
         <source>Ungültiger Literaturverweis im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültiger Literaturverweis im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Referência bibliográfica inválida '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6859,7 +6859,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidLiteratureValues" datatype="html">
         <source>Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Referências bibliográficas dos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6867,7 +6867,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
         <source>Ungültiger Bereich im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültiger Bereich im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Um recurso da categoria "[2]" não pode ser ligado a "[0]" através de "[1]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6875,7 +6875,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidMapLayerRelationTargets" datatype="html">
         <source>Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</source>
-        <target state="needs-translation">Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</target>
+        <target state="translated">A relação "hasDefaultMapLayer" de um recurso da categoria "[0]" refere a um ou mais recursos que não foram referenciados na relação "hasMapLayer".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6883,7 +6883,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.endDateBeforeBeginningDate" datatype="html">
         <source>Das Enddatum einer Ressource der Kategorie '[0]' liegt vor dem Startdatum.</source>
-        <target state="needs-translation">Das Enddatum einer Ressource der Kategorie '[0]' liegt vor dem Startdatum.</target>
+        <target state="translated">A data de fim de um recurso da categoria '[0]' é anterior à data de início.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6891,7 +6891,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryNotAllowed" datatype="html">
         <source>Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</source>
-        <target state="needs-translation">Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</target>
+        <target state="translated">Recursos da seguinte categoria não são permitidos importar: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6899,7 +6899,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
         <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
-        <target state="needs-translation">Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</target>
+        <target state="translated">Recursos encontram-se em diferentes intervenções : '[0]', '[1]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6907,7 +6907,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
-        <target state="needs-translation">Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</target>
+        <target state="translated">A categoria não pode ser mudada durante a importação. É afetado: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6915,7 +6915,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
         <source>Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</source>
-        <target state="needs-translation">Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</target>
+        <target state="translated">Campos Array vazios não são permitidos. É afetado: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6923,7 +6923,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
         <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
-        <target state="needs-translation">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>
+        <target state="translated">Strings vazios não são permitidos como valor no registo de importação.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7035,7 +7035,7 @@
       </trans-unit>
       <trans-unit id="messages.export.shapefile.error.getResources" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</source>
-        <target state="translated">Ocorreu um erro ao exportar: Os recursos não poderam ser lidos da base de dados.</target>
+        <target state="translated">Ocorreu um erro ao exportar: Os recursos não puderam ser lidos da base de dados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7043,7 +7043,7 @@
       </trans-unit>
       <trans-unit id="messages.export.csv.warning.invalidFieldData.multiple" datatype="html">
         <source>Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).</source>
-        <target state="needs-translation">Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).</target>
+        <target state="translated">Vários campos foram ignorados na exportação porque os dados de campo inseridos não correspondem ao tipo de entradas configurado (listagem abaixo).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7051,7 +7051,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.warning.saveConflict" datatype="html">
         <source>Beim Speichern der Ressource ist ein Konflikt aufgetreten.</source>
-        <target state="needs-translation">Beim Speichern der Ressource ist ein Konflikt aufgetreten.</target>
+        <target state="translated">Ocorreu um conflito ao gravar o recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7059,7 +7059,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.warning.categoryChange.fields" datatype="html">
         <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
-        <target state="needs-translation">Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</target>
+        <target state="translated">Por favor note que os dados do campo seguinte vão se perder ao gravar : [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7067,7 +7067,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.warning.categoryChange.relations" datatype="html">
         <source>Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</source>
-        <target state="needs-translation">Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</target>
+        <target state="translated">Por favor note que as relações dos seguintes tipos vão se perder ao gravar: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7075,7 +7075,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.error.save" datatype="html">
         <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Speichern der Ressource ist ein Fehler aufgetreten.</target>
+        <target state="translated">Ocorreu um erro ao gravar o recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7083,7 +7083,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.error.delete" datatype="html">
         <source>Beim Löschen der Ressource ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Löschen der Ressource ist ein Fehler aufgetreten.</target>
+        <target state="translated">Ocorreu um erro ao apagar o recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7091,7 +7091,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidNumericValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' einen gültigen Zahlenwert ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' einen gültigen Zahlenwert ein.</target>
+        <target state="translated">Por favor insira um valor numérico válido no campo '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7099,7 +7099,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidNumericValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos valores numéricos válidos: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7107,7 +7107,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath" datatype="html">
         <source>Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</source>
-        <target state="needs-translation">Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</target>
+        <target state="translated">O índice de imagens não pode ser encontrado. O caminho de diretório '[0]' é inválido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7115,7 +7115,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.write" datatype="html">
         <source>Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</source>
-        <target state="needs-translation">Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
+        <target state="translated">Não puderam ser gravados ficheiros no índice de imagens. Por favor insira um caminho do diretório válido nas definições.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7123,7 +7123,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.delete" datatype="html">
         <source>Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</source>
-        <target state="needs-translation">Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
+        <target state="translated">Não puderam ser apagados ficheiros do índice de imagens. Por favor insira um caminho do diretório válido nas definições.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7131,7 +7131,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.upload" datatype="html">
         <source>Die Datei '[0]' konnte nicht gelesen werden.</source>
-        <target state="needs-translation">Die Datei '[0]' konnte nicht gelesen werden.</target>
+        <target state="translated">O ficheiro '[0]' não pode ser lido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7139,7 +7139,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.write" datatype="html">
         <source>Die Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.</source>
-        <target state="needs-translation">Die Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.</target>
+        <target state="translated">O ficheiro '[0]' não pode ser gravado no índice de imagens.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7147,7 +7147,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.delete" datatype="html">
         <source>Fehler beim Löschen des Bilds '[0]'.</source>
-        <target state="needs-translation">Fehler beim Löschen des Bilds '[0]'.</target>
+        <target state="translated">Erro ao apagar a imagem '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7155,7 +7155,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidWorldfile" datatype="html">
         <source>Die Datei '[0]' ist kein gültiges World-File.</source>
-        <target state="needs-translation">Die Datei '[0]' ist kein gültiges World-File.</target>
+        <target state="translated">O ficheiro '[0]' não é um ficheiro Word válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7163,7 +7163,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.dropArea.error.unsupportedExtensions" datatype="html">
         <source>Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</source>
-        <target state="needs-translation">Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</target>
+        <target state="translated">Ficheiros com formatos não suportados ([0]) são ignorados. Extensões de ficheiro válidas: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7171,7 +7171,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.imagesUploaded" datatype="html">
         <source>[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.</source>
-        <target state="needs-translation">[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.</target>
+        <target state="translated">[0] imagens foram importadas com sucesso e ligadas ao recurso [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7179,7 +7179,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.warning.projectIdentifierNotSame" datatype="html">
         <source>Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</source>
-        <target state="needs-translation">Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</target>
+        <target state="translated">Os identificadores de projeto não são idênticos. O projeto não vai ser apagado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7187,7 +7187,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.oneProjectMustExist" datatype="html">
         <source>Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</source>
-        <target state="needs-translation">Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</target>
+        <target state="translated">O projeto não pode ser apagado. Deve existir pelo menos um projeto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7195,7 +7195,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.resourceDeleted" datatype="html">
         <source>Die Ressource '[0]' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
-        <target state="needs-translation">Die Ressource '[0]' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
+        <target state="translated">O recurso '[0]' não pode ser acedido porque entretanto foi apagado por um outro utilizador/uma outra utilizadora.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7203,7 +7203,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.unknownResourceDeleted" datatype="html">
         <source>Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
-        <target state="needs-translation">Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
+        <target state="translated">O recurso não pode ser acedido porque entretanto foi apagado por um outro utilizador/uma outra utilizadora.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7211,7 +7211,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveChildren" datatype="html">
         <source>Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</source>
-        <target state="needs-translation">Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</target>
+        <target state="translated">O recurso [0] não pode ser movido porque um ou mais recursos subordinados não podem existir dentro da intervenção de destinação.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7219,7 +7219,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.missingIdentifier" datatype="html">
         <source>Bitte geben Sie eine Kennung für das neue Projekt ein.</source>
-        <target state="needs-translation">Bitte geben Sie eine Kennung für das neue Projekt ein.</target>
+        <target state="translated">Por favor insira um identificador para o novo projeto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7227,7 +7227,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierExists" datatype="html">
         <source>Ein Projekt mit der Kennung '[0]' existiert bereits.</source>
-        <target state="needs-translation">Ein Projekt mit der Kennung '[0]' existiert bereits.</target>
+        <target state="translated">Já existe um projeto com o identificador '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7235,7 +7235,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierLength" datatype="html">
         <source>Die angegebene Projektkennung ist um [0] Zeichen zu lang.</source>
-        <target state="needs-translation">Die angegebene Projektkennung ist um [0] Zeichen zu lang.</target>
+        <target state="translated">A identificador de projeto inserido tem [0] carateres a mais.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7387,7 +7387,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingRelationTargets.multiple" datatype="html">
         <source>Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</source>
-        <target state="translated">Vários recursos selecionados como recursos de destinação da relação não foram encontrados. Provavelmente não foi completado um processo de sincronização num outro computador.</target>
+        <target state="translated">Vários recursos especificados como recursos de destinação da relação não foram encontrados. Provavelmente não foi completado um processo de sincronização num outro computador.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">135,145</context>
@@ -7507,7 +7507,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingRelationTargets.single" datatype="html">
         <source>Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden. Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht vollständig abgeschlossen.</source>
-        <target state="translated">Um recurso selecionado como recurso de destinação da relação não foi encontrado. Provavelmente não foi completado um processo de sincronização num outro computador.</target>
+        <target state="translated">Um recurso especificado como recurso de destinação da relação não foi encontrado. Provavelmente não foi completado um processo de sincronização num outro computador.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">115,125</context>
@@ -7723,7 +7723,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.multiple" datatype="html">
         <source>Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
-        <target state="needs-translation">Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
+        <target state="translated">Para [0] recursos foram gravados com sucesso o depósito [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7731,7 +7731,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.single" datatype="html">
         <source>Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</source>
-        <target state="needs-translation">Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</target>
+        <target state="translated">O depósito [1] é já utilizado para o recurso [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7739,7 +7739,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeScanningFailure" datatype="html">
         <source>Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</target>
+        <target state="translated">Ocorreu um erro ao ler um código QR.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7755,7 +7755,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.isStoredIn" datatype="html">
         <source>Verknüpfter Aufbewahrungsort</source>
-        <target state="needs-translation">Verknüpfter Aufbewahrungsort</target>
+        <target state="translated">Depósitos ligados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7763,7 +7763,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html">
         <source>Kamera auswählen:</source>
-        <target state="needs-translation">Kamera auswählen:</target>
+        <target state="translated">Selecionar máquina fotográfica:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">149</context>
@@ -7843,7 +7843,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">
         <source>Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
-        <target state="needs-translation">Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
+        <target state="translated">Para o recurso [0] foi gravado com sucesso o depósito [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7851,7 +7851,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.multiple" datatype="html">
         <source>Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</source>
-        <target state="needs-translation">Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</target>
+        <target state="translated">O depósito [1] já foi definido para as [0] recursos selecionados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7859,7 +7859,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeResourceNotFound" datatype="html">
         <source>Für diesen QR-Code konnte keine Ressource gefunden werden.</source>
-        <target state="needs-translation">Für diesen QR-Code konnte keine Ressource gefunden werden.</target>
+        <target state="translated">Para este código QR não foi encontrado um recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7867,7 +7867,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeAlreadyAssigned" datatype="html">
         <source>Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.</source>
-        <target state="needs-translation">Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.</target>
+        <target state="translated">O código QR já foi atribuído a um outro recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7875,7 +7875,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.isStoragePlaceOf" datatype="html">
         <source>Verknüpfte Objekte</source>
-        <target state="needs-translation">Verknüpfte Objekte</target>
+        <target state="translated">Objetos ligados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7883,7 +7883,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.header" datatype="html">
         <source>QR-Code scannen</source>
-        <target state="needs-translation">QR-Code scannen</target>
+        <target state="translated">Ler código QR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">53,66</context>
@@ -7891,7 +7891,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.cameraNotFound" datatype="html">
         <source>Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</source>
-        <target state="needs-translation">Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</target>
+        <target state="translated">Não foi encontrada uma máquina fotográfica. Por favor verifique se o seu dispositivo tem uma máquina fotográfica e se foram concedidas as autorizações necessárias.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">123,149</context>
@@ -7899,7 +7899,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noStoragePlaceCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</source>
-        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</target>
+        <target state="translated">O recurso [0] da categoria [1] não é um depósito válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7915,7 +7915,7 @@
       </trans-unit>
       <trans-unit id="settings.languageInfo.tr" datatype="html">
         <source>Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</source>
-        <target state="needs-translation">Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</target>
+        <target state="translated">Se tiver quaisquer perguntas ou comentários sobre a tradução turca, contacte: idai.field-turkce@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7959,7 +7959,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeSaved" datatype="html">
         <source>Der neu generierte QR-Code wurde erfolgreich gespeichert.</source>
-        <target state="needs-translation">Der neu generierte QR-Code wurde erfolgreich gespeichert.</target>
+        <target state="translated">O novo código QR foi gerado com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7971,7 +7971,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeDeleted" datatype="html">
         <source>Der QR-Code wurde erfolgreich gelöscht.</source>
-        <target state="needs-translation">Der QR-Code wurde erfolgreich gelöscht.</target>
+        <target state="translated">O código QR foi apagado com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7987,7 +7987,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.hasChildren" datatype="html">
         <source>Untergeordnete Ressourcen</source>
-        <target state="needs-translation">Untergeordnete Ressourcen</target>
+        <target state="translated">Recursos subordinados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8191,7 +8191,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.</source>
-        <target state="translated">Por favor inserir o nome da categoria para confirmar a operação.</target>
+        <target state="translated">Por favor insira o nome da categoria para confirmar a operação.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">45,52</context>
@@ -8303,7 +8303,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.warning" datatype="html">
         <source>Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
-        <target state="translated">Por favor note que carregar <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> ficheiros de imagens pode demorar algum tempo. </target>
+        <target state="translated">Por favor note que ler <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> ficheiros de imagens pode demorar algum tempo. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -8351,7 +8351,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValue" datatype="html">
         <source>Ungültiger Kompositfeld-Eintrag im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültiger Kompositfeld-Eintrag im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Entrada de campo compósito inválida no campo '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8359,7 +8359,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValues" datatype="html">
         <source>Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Entradas de campo compósito inválidas no campo de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8663,7 +8663,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.single.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.</source>
-        <target state="translated">Por favor introduza o identificar do recurso para confirmar a operação.</target>
+        <target state="translated">Por favor insira o identificar do recurso para confirmar a operação.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
           <context context-type="linenumber">53</context>
@@ -8723,7 +8723,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.success.import" datatype="html">
         <source>Die Projektkonfiguration wurde erfolgreich importiert.</source>
-        <target state="needs-translation">Die Projektkonfiguration wurde erfolgreich importiert.</target>
+        <target state="translated">A configuração de projeto foi importada com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8731,7 +8731,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.unsupportedVersion" datatype="html">
         <source>Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</source>
-        <target state="needs-translation">Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</target>
+        <target state="translated">O ficheiro de configuração foi criada com a atual versão de Field Desktop (versão [0]) e daí que não pode ser carregada. Por favor atualize a aplicação e reinicie o processo de importação de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8739,7 +8739,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.setNewParent" datatype="html">
         <source>Übergeordnete Ressource neu setzen</source>
-        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <target state="translated">Redefinir recurso superior</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">22,28</context>
@@ -8803,7 +8803,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <target state="translated">Mover <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
           <context context-type="linenumber">48</context>
@@ -8811,7 +8811,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.single" datatype="html">
         <source>Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation">Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <target state="translated">Mover recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">20,8</context>

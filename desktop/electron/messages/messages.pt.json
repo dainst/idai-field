@@ -16,7 +16,7 @@
   "menu.project.projectSynchronization": "Sincronizar...",
   "menu.project.deleteProject": "Apagar",
   "menu.project.backupCreation": "Criar cópia de segurança...",
-  "menu.project.backupLoading": "Restaurar cópia de segurança...",
+  "menu.project.backupLoading": "Ler cópia de segurança...",
   "menu.project.exit": "Sair",
   "menu.edit": "Editar",
   "menu.edit.undo": "Desfazer",

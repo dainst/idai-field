@@ -277,7 +277,7 @@ export default getDocumentViewMapHook = () => {
                     style: styleFunction,
                 });
 
-                // aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
+                aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
 
                 let extent = vectorSource.getExtent();
 
@@ -295,6 +295,8 @@ export default getDocumentViewMapHook = () => {
 
                 this.map.addLayer(this.childrenLayer);
 
+                aggregatedExtent = extend(aggregatedExtent, additionalVectorSource.getExtent())
+
                 if (extent[0] === Infinity) {
                     // TODO: This is a weird fallback for cases where no highlight is present. This should probably 
                     // first fallback to additionalVectorSource's extent.
@@ -302,7 +304,7 @@ export default getDocumentViewMapHook = () => {
                 }
 
 
-                this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
+                this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
                 this.map.setView(new View({ extent: this.map.getView().calculateExtent(this.map.getSize()) }));
                 this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
 

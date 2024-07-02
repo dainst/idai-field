@@ -1,9 +1,13 @@
+import { describe, expect, test } from '@jest/globals';
 import { tokenize } from '../../../../src/app/services/configuration/index/tokenize';
 
 
+/**
+ * @author Thomas Kleinke
+ */
 describe('tokenize', () => {
 
-    it('tokenize', () => {
+    test('tokenize', async () => {
 
         expect(tokenize(['ab-cd-ef'])).toEqual(['ab', 'cd', 'ef', 'ab-cd-ef']);
         expect(tokenize(['ab_cd_ef'])).toEqual(['ab', 'cd', 'ef', 'ab_cd_ef']);

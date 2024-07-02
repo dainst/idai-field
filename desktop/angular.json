@@ -150,7 +150,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "configPath": "./jest-tests/jest.config.ts"
+            "configPath": "./test/unit/jest.config.ts"
           }
         }
       }

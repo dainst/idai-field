@@ -21,8 +21,6 @@
     "start:dev": "wait-on http-get://localhost:4200/dist/ && electron . dev",
     "build": "node --max_old_space_size=16000 node_modules/@angular/cli/bin/ng build --base-href ./ --localize --configuration production",
     "build:scripts": "rimraf src/config/Scripts/dist && tsc -p src/config/Scripts/tsconfig.json",
-    "build:test": "rimraf test/dist && tsc -p test/tsconfig.json",
-    "build:test+watch": "rimraf test/dist && tsc -watch -p test/tsconfig.json",
     "build:java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
     "build:all": "npm run build && npm run build:java",
     "preinstall": "export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 || set PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1",

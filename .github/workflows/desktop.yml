@@ -24,9 +24,6 @@ jobs:
       - name: Build core
         run: npm run build
         working-directory: core
-      - name: Build desktop tests
-        run: npm run build:test
-        working-directory: desktop
       - name: Run core unit tests
         run: npm run test
         working-directory: core

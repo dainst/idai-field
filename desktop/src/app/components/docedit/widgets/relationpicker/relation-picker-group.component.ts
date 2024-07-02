@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { isEmpty } from 'tsfun';
 import { Relation, Resource } from 'idai-field-core';
 

@@ -1,5 +1,7 @@
+import * as fs from 'fs';
+
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+
 
 /**
  * @author Thomas Kleinke

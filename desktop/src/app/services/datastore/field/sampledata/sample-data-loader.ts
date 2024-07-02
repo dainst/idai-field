@@ -1,8 +1,8 @@
+import * as fs from 'fs';
 import { SampleDataLoaderBase } from 'idai-field-core';
 import { getAsynchronousFs } from '../../../get-asynchronous-fs';
 import { ThumbnailGenerator } from '../../../imagestore/thumbnail-generator';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 

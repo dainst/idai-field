@@ -1,10 +1,10 @@
+import * as fs from 'fs';
 import { ImageDocument } from 'idai-field-core';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { AppState } from '../../../services/app-state';
 import { ImageUploader } from '../upload/image-uploader';
 
 const { dialog } = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 export async function downloadWldFile(imageDocument: ImageDocument, appState: AppState) {

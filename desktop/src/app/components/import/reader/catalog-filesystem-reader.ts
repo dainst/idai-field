@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { Map } from 'tsfun';
 import { ImageStore, IdGenerator } from 'idai-field-core';
 import { Reader } from './reader';
@@ -6,7 +7,6 @@ import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/cata
 import { Settings } from '../../../../app/services/settings/settings';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 const UTF8 = 'utf-8';

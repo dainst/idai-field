@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Resource } from 'idai-field-core';
 import { RelationPickerGroupComponent } from '../../../../../src/app/components/docedit/widgets/relationpicker/relation-picker-group.component';
 
@@ -27,7 +28,7 @@ describe('RelationPickerGroupComponent', () => {
     });
 
 
-    it('should create an empty relation array if no relation array exists and a new relation is created', () => {
+    test('should create an empty relation array if no relation array exists and a new relation is created', () => {
 
         relationPickerGroupComponent.ngOnChanges();
         relationPickerGroupComponent.createRelation();

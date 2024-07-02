@@ -1,10 +1,14 @@
+import { describe, expect, test } from '@jest/globals';
 import { Field, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../src/app/services/configuration/index/configuration-index';
 
 
+/**
+ * @author Thomas Kleinke
+ */
 describe('ConfigurationIndex', () => {
 
-    it('find category forms', () => {
+    test('find category forms', () => {
 
         const forms = [
             {
@@ -35,7 +39,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('get children of category form', () => {
+    test('get children of category form', () => {
 
         const forms = [
             {
@@ -69,7 +73,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('find fields', () => {
+    test('find fields', () => {
 
         const categories = [
             {
@@ -123,7 +127,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-   it('find valuelists', () => {
+    test('find valuelists', () => {
 
         const valuelists: Array<Valuelist> = [
             {
@@ -170,7 +174,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('find groups', () => {
+    test('find groups', () => {
 
         const forms = [
             {
@@ -221,7 +225,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('get valuelist usage', () => {
+    test('get valuelist usage', () => {
 
         const valuelists: Array<Valuelist> = [
             {

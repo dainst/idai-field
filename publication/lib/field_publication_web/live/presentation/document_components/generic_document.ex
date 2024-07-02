@@ -59,14 +59,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <%= if geometry do %>
             <div class="mb-4">
               <.live_component
-                module={FieldPublicationWeb.Presentation.Components.ProjectMap}
+                module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
                 id="generic_doc_map"
                 style="width:100%; height:500px;"
-                project_layer_documents={@project_map_layers}
-                additional_layer_documents={[]}
-                highlighted_geometry_documents={[@doc]}
-                additional_geometry_documents={@child_doc_previews ++ @relations_with_geometry}
-                project_name={@project_name}
+                doc={@doc}
+                children={@child_doc_previews}
+                publication={@publication}
               />
             </div>
           <% end %>

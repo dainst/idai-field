@@ -201,6 +201,19 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     }
   end
 
+  def handle_event(
+        "geometry-clicked",
+        %{"uuid" => uuid},
+        %{assigns: %{publication: publication, selected_lang: lang}} = socket
+      ) do
+    {
+      :noreply,
+      push_patch(socket,
+        to: ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
+      )
+    }
+  end
+
   defp get_page_title(%{"id" => "project"} = doc) do
     {_, short_description} =
       I18n.select_translation(%{values: Data.get_field_values(doc, "shortName")})

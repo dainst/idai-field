@@ -146,6 +146,12 @@
           "options": {
             "buildTarget": "idai-field:build"
           }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "configPath": "./jest-tests/jest.config.ts"
+          }
         }
       }
     }

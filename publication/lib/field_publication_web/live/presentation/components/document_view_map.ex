@@ -128,8 +128,11 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         nil ->
           ""
 
-        map ->
-          Map.get(map, lang, Map.get(map, List.first(Map.keys(map))))
+        value when is_binary(value) ->
+          value
+
+        value when is_map(value) ->
+          Map.get(value, lang, Map.get(value, List.first(Map.keys(value))))
       end
 
     category =

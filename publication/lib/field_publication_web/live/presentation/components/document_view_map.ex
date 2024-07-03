@@ -50,11 +50,21 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           Map.get(relation, "values", [])
       end
 
-    parents =
+    parent_features =
       doc
       |> Data.get_relation_by_name("liesWithin")
       |> case do
         nil ->
+          []
+
+        relation ->
+          relation
+          |> Map.get("values", [])
+          |> Enum.map(&create_feature_info(&1, lang))
+      end
+      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+      |> case do
+        [] ->
           doc
           |> Data.get_relation_by_name("isRecordedIn")
           |> case do
@@ -62,11 +72,14 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
               []
 
             relation ->
-              Map.get(relation, "values", [])
+              relation
+              |> Map.get("values", [])
+              |> Enum.map(&create_feature_info(&1, lang))
           end
+          |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
-        relation ->
-          Map.get(relation, "values", [])
+        geometries_present ->
+          geometries_present
       end
 
     project_tile_layers =
@@ -90,10 +103,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         },
         parent_features: %{
           type: "FeatureCollection",
-          features:
-            parents
-            |> Enum.map(&create_feature_info(&1, lang))
-            |> Enum.reject(fn feature -> feature == nil end)
+          features: parent_features
         },
         project_tile_layers: project_tile_layers
       })
@@ -142,21 +152,23 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         Map.get(category_labels, List.first(Map.keys(category_labels)))
       )
 
-    if geometry = Data.get_field_values(doc, "geometry") do
-      %{
-        type: "Feature",
-        geometry: geometry,
-        properties: %{
-          uuid: uuid,
-          identifier: identifier,
-          color: color,
-          description: description,
-          category: category,
-          type: geometry["type"]
-        }
+    base = %{
+      type: "Feature",
+      properties: %{
+        uuid: uuid,
+        identifier: identifier,
+        color: color,
+        description: description,
+        category: category
       }
+    }
+
+    if geometry = Data.get_field_values(doc, "geometry") do
+      base
+      |> put_in([:geometry], geometry)
+      |> put_in([:properties, :type], geometry["type"])
     else
-      nil
+      base
     end
   end
 

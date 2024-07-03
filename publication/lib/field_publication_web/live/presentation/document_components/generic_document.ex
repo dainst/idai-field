@@ -55,19 +55,16 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <% end %>
         </div>
         <div class="basis-1/3 ml-2">
-          <% geometry = Data.get_field(@doc, "geometry") %>
-          <%= if geometry do %>
-            <div class="mb-4">
-              <.live_component
-                module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
-                id="generic_doc_map"
-                style="width:100%; height:500px;"
-                doc={@doc}
-                publication={@publication}
-                lang={@lang}
-              />
-            </div>
-          <% end %>
+          <div class="mb-4">
+            <.live_component
+              module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
+              id="generic_doc_map"
+              style="width:100%; height:500px;"
+              doc={@doc}
+              publication={@publication}
+              lang={@lang}
+            />
+          </div>
           <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>

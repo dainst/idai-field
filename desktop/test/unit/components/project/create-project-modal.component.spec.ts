@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { M } from '../../../../src/app/components/messages/m';
 import { CreateProjectModalComponent } from '../../../../src/app/components/project/create-project-modal.component';
@@ -17,9 +18,17 @@ describe('CreateProjectModalComponent', () => {
 
     beforeEach(() => {
         
-        settingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings'])
-        settingsService = jasmine.createSpyObj('settingsService', ['deleteProject']);
-        messages = jasmine.createSpyObj('messages', ['add']);
+        settingsProvider = {
+            getSettings: jest.fn()
+        };
+
+        settingsService = {
+            deleteProject: jest.fn()
+        };
+
+        messages = {
+            add: jest.fn()
+        };
 
         createProjectModalComponent = new CreateProjectModalComponent(
             { close: () => {} } as NgbActiveModal,
@@ -33,14 +42,13 @@ describe('CreateProjectModalComponent', () => {
     });
 
 
-    it('cannot create project with existing identifier', async done => {
+    test('cannot create project with existing identifier', async () => {
 
-        settingsProvider.getSettings.and.returnValue({ dbs: ['existing'], selectedProject: 'existing' });
+        settingsProvider.getSettings.mockReturnValue({ dbs: ['existing'], selectedProject: 'existing' });
 
         createProjectModalComponent.projectIdentifier = 'existing';
 
         await createProjectModalComponent.createProject();
         expect(messages.add).toHaveBeenCalledWith([M.PROJECT_CREATION_ERROR_IDENTIFIER_EXISTS, 'existing']);
-        done();
     });
 });

@@ -103,7 +103,7 @@ const config: Config = {
   // notifyMode: 'failure-change',
 
   // A preset that is used as a base for Jest's configuration
-  // preset: undefined,
+  preset: 'jest-preset-angular',
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -135,10 +135,10 @@ const config: Config = {
   // runner: 'jest-runner',
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: ['<rootDir>/test/unit/setup.ts'],
+  // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['<rootDir>/test/unit/setup-jest.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -157,8 +157,8 @@ const config: Config = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-      "<rootDir>/test/unit/services/configuration/**/*.spec.ts",
-      "<rootDir>/test/unit/services/imagestore/**/*.spec.ts",
+      '<rootDir>/test/unit/services/configuration/**/*.spec.ts',
+      '<rootDir>/test/unit/services/imagestore/**/*.spec.ts',
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -181,7 +181,7 @@ const config: Config = {
   // transform: undefined,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: ['<rootDir>/node_modules/(?!.*\\.mjs$|pouchdb)',],
+  transformIgnorePatterns: ['<rootDir>/node_modules/(?!.*\\.mjs$|pouchdb)'],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

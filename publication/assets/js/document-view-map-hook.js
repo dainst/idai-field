@@ -5,7 +5,7 @@ import TileGrid from 'ol/tilegrid/TileGrid';
 import View from 'ol/View.js';
 import { createEmpty, extend } from 'ol/extent.js';
 import { TileImage } from 'ol/source.js';
-import { Fill, Stroke, Style } from 'ol/style.js';
+import { Fill, Stroke, Style, Circle } from 'ol/style.js';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import GeoJSON from 'ol/format/GeoJSON.js';
@@ -72,25 +72,58 @@ const tileSize = 256;
 const styleFunction = function (feature) {
     const props = feature.getProperties();
 
-    const [r, g, b, a] = asArray(props.color)
+    let style = null
 
-    let style = new Style({
-        stroke: new Stroke({
-            color: `rgba(${r}, ${g}, ${b}, ${a})`,
-            width: 1,
+    if (props.type === "Polygon" || props.type === "MultiPolygon") {
+
+        const [r, g, b, a] = asArray(props.color)
+
+        style = new Style({
+            stroke: new Stroke({
+                color: `rgba(${r}, ${g}, ${b}, ${a})`,
+                width: 1,
+            })
         })
-    })
 
-    if (props.fill) {
-        style.setFill(new Fill({
-            color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
-        }));
-        // } else if (props.hatch) {
-        //     style.setFill(new Fill({ color: getCanvasPattern(`rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, ${a})`, `rgba(${r}, ${g}, ${b}, 0.2)`) }))
+        if (props.fill) {
+            style.setFill(new Fill({
+                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
+            }));
+            // } else if (props.hatch) {
+            //     style.setFill(new Fill({ color: getCanvasPattern(`rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, ${a})`, `rgba(${r}, ${g}, ${b}, 0.2)`) }))
+        } else {
+            style.setFill(new Fill({
+                color: `rgba(${r}, ${g}, ${b}, 0.0)`,
+            }));
+        }
+    } else if (props.type == "Point") {
+        const [r, g, b, a] = asArray(props.color)
+
+        let image = new Circle({
+            radius: 7,
+            stroke: new Stroke({
+                color: `rgba(${r}, ${g}, ${b}, ${a})`,
+                width: 1,
+            })
+        })
+
+        if (props.fill) {
+            image.setFill(new Fill({
+                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
+            }));
+            // } else if (props.hatch) {
+            //     style.setFill(new Fill({ color: getCanvasPattern(`rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, ${a})`, `rgba(${r}, ${g}, ${b}, 0.2)`) }))
+        } else {
+            image.setFill(new Fill({
+                color: `rgba(${r}, ${g}, ${b}, 0.05)`,
+            }));
+        }
+
+        style = new Style({
+            image: image
+        })
     } else {
-        style.setFill(new Fill({
-            color: `rgba(${r}, ${g}, ${b}, 0.0)`,
-        }));
+        console.error(`Unknown feature type ${props.type}, no matching styling.`)
     }
 
     return style
@@ -180,50 +213,68 @@ export default getDocumentViewMapHook = () => {
 
                 _this.identifierOverlayContent.innerHTML = null;
 
-                _this.map.forEachFeatureAtPixel(
-                    e.pixel,
-                    function (feature) {
+                if (e.dragging) {
+                    return;
+                }
+
+                _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
+                    const feature = features.length ? features[0] : undefined;
+
+                    if (feature) {
                         let properties = feature.getProperties()
 
                         properties.fill = true;
                         feature.setProperties(properties);
 
-                        _this.identifierOverlayContent.innerHTML = properties.identifier;
+                        _this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
 
                         const [r, g, b, a] = asArray(properties.color)
 
                         _this.identifierOverlayContent.style.background = `rgba(${r}, ${g}, ${b}, 0.8)`;
                         _this.identifierOverlay.setPosition(e.coordinate);
-                    },
-                    {
-                        layerFilter: function (layer) {
-                            const layerName = layer.get('name');
-                            return layerName === 'childLayer' || layerName === 'parentLayer';
-                        }
+                    } else {
+                        _this.parentLayer.getFeatures(e.pixel).then(function (features) {
+                            const feature = features.length ? features[0] : undefined;
+                            if (feature) {
+                                let properties = feature.getProperties()
+
+                                properties.fill = true;
+                                feature.setProperties(properties);
+
+                                _this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
+
+                                const [r, g, b, a] = asArray(properties.color)
+
+                                _this.identifierOverlayContent.style.background = `rgba(${r}, ${g}, ${b}, 0.8)`;
+                                _this.identifierOverlay.setPosition(e.coordinate);
+                            }
+                        })
                     }
-                );
+                })
+
             });
 
             this.map.on('singleclick', function (e) {
                 console.log(e);
 
-                _this.map.forEachFeatureAtPixel(
-                    e.pixel,
-                    function (feature) {
-                        console.log("click");
+                _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
+                    const feature = features.length ? features[0] : undefined;
+
+                    if (feature) {
                         let properties = feature.getProperties()
-
                         _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
-                    },
-                    {
-                        layerFilter: function (layer) {
-                            const layerName = layer.get('name');
-                            return layerName === 'childLayer' || layerName === 'parentLayer';
-                        }
+                    } else {
+                        _this.parentLayer.getFeatures(e.pixel).then(function (features) {
+                            const feature = features.length ? features[0] : undefined;
+                            if (feature) {
+                                let properties = feature.getProperties()
+                                _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
+                            }
+                        })
                     }
-                );
-            })
+                })
 
+            })
         },
         async setup(project, parentFeatures, documentFeature, childrenFeatures, projectTileLayers) {
             this.docId = null

@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
       <div class="pointer-events-none mt-[20px]" id={"#{@id}-identifier-tooltip"}>
         <div
-          class="saturate-50 empty:border-0 rounded p-1 empty:p-0"
+          class="text-xs saturate-50 empty:border-0 rounded p-1 empty:p-0 max-w-32"
           id={"#{@id}-identifier-tooltip-content"}
         >
         </div>
@@ -26,7 +26,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   def update(
-        %{id: id, publication: publication, doc: doc} =
+        %{id: id, publication: publication, doc: doc, lang: lang} =
           assigns,
         socket
       ) do
@@ -44,35 +44,23 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       end
 
     parents =
-      (doc
-       |> Data.get_relation_by_name("isRecordedIn")
-       |> case do
-         nil ->
-           []
+      doc
+      |> Data.get_relation_by_name("liesWithin")
+      |> case do
+        nil ->
+          doc
+          |> Data.get_relation_by_name("isRecordedIn")
+          |> case do
+            nil ->
+              []
 
-         relation ->
-           Map.get(relation, "values", [])
-       end) ++
-        (doc
-         |> Data.get_relation_by_name("liesWithin")
-         |> case do
-           nil ->
-             []
+            relation ->
+              Map.get(relation, "values", [])
+          end
 
-           relation ->
-             Map.get(relation, "values", [])
-         end)
-
-    # parent =
-    #   doc
-    #   |> Data.get_relation_by_name("recordedIn")
-    #   |> case do
-    #     nil ->
-    #       []
-
-    #     relation ->
-    #       Map.get(relation, "values", [])
-    #   end
+        relation ->
+          Map.get(relation, "values", [])
+      end
 
     project_tile_layers =
       publication
@@ -85,19 +73,19 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       |> assign(assigns)
       |> push_event("document-map-update-#{id}", %{
         project: publication.project_name,
-        document_feature: create_feature_info(doc),
+        document_feature: create_feature_info(doc, lang),
         children_features: %{
           type: "FeatureCollection",
           features:
             children
-            |> Enum.map(&create_feature_info/1)
+            |> Enum.map(&create_feature_info(&1, lang))
             |> Enum.reject(fn feature -> feature == nil end)
         },
         parent_features: %{
           type: "FeatureCollection",
           features:
             parents
-            |> Enum.map(&create_feature_info/1)
+            |> Enum.map(&create_feature_info(&1, lang))
             |> Enum.reject(fn feature -> feature == nil end)
         },
         project_tile_layers: project_tile_layers
@@ -119,8 +107,20 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   defp create_feature_info(
-         %{"category" => %{"color" => color}, "id" => uuid, "identifier" => identifier} = doc
+         %{"category" => %{"color" => color}, "id" => uuid, "identifier" => identifier} = doc,
+         lang
        ) do
+    description =
+      doc
+      |> Data.get_field_values("shortDescription")
+      |> case do
+        nil ->
+          ""
+
+        map ->
+          Map.get(map, lang, Map.get(map, List.first(Map.keys(map))))
+      end
+
     if geometry = Data.get_field_values(doc, "geometry") do
       %{
         type: "Feature",
@@ -128,7 +128,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         properties: %{
           uuid: uuid,
           identifier: identifier,
-          color: color
+          color: color,
+          description: description,
+          type: geometry["type"]
         }
       }
     else

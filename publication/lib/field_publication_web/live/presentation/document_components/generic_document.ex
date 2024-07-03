@@ -64,6 +64,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 style="width:100%; height:500px;"
                 doc={@doc}
                 publication={@publication}
+                lang={@lang}
               />
             </div>
           <% end %>

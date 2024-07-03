@@ -122,7 +122,8 @@ export default getDocumentViewMapHook = () => {
             );
 
             this.identifierOverlay = new Overlay({
-                element: overlayDiv
+                element: overlayDiv,
+                offset: [5, 5]
             });
 
             document.getElementById(`${this.el.getAttribute("id")}-map`).innerHTML = ""
@@ -154,9 +155,9 @@ export default getDocumentViewMapHook = () => {
                     let properties = child.getProperties();
                     properties.fill = false;
                     child.setProperties(properties);
-
-                    _this.identifierOverlayContent.innerHTML = "";
                 }
+
+                _this.identifierOverlay.setPosition(undefined)
             });
 
             this.map.on('pointermove', function (e) {

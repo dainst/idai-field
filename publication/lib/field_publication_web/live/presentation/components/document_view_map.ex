@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     >
       <div style={@style} id={"#{@id}-map"}></div>
       <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
-      <div class="pointer-events-none  text-xs" id={"#{@id}-identifier-tooltip"}>
+      <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
         <div class="border-[1px] rounded-sm border-black flex">
           <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
             <div

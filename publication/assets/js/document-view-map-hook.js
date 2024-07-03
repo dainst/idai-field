@@ -100,6 +100,7 @@ export default getDocumentViewMapHook = () => {
     return {
         map: null,
         docId: null,
+        parentLayer: null,
         docLayer: null,
         childrenLayer: null,
         identifierOverlay: null,
@@ -108,9 +109,9 @@ export default getDocumentViewMapHook = () => {
         mounted() {
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
-                ({ project, document_feature, children_features, project_tile_layers }) => {
+                ({ project, document_feature, children_features, parent_features, project_tile_layers }) => {
                     this.initialize(); // TODO: Do not initialize on every change.
-                    this.setup(project, document_feature, children_features, project_tile_layers)
+                    this.setup(project, parent_features, document_feature, children_features, project_tile_layers)
                 }
             )
         },
@@ -163,14 +164,21 @@ export default getDocumentViewMapHook = () => {
 
             this.map.on('pointermove', function (e) {
                 let childFeatures = _this.childrenLayer.getSource().getFeatures();
-
                 for (let child of childFeatures) {
                     let properties = child.getProperties();
                     properties.fill = false;
                     child.setProperties(properties);
 
-                    _this.identifierOverlayContent.innerHTML = null;
                 }
+
+                let parentFeatures = _this.parentLayer.getSource().getFeatures();
+                for (let parent of parentFeatures) {
+                    let properties = parent.getProperties();
+                    properties.fill = false;
+                    parent.setProperties(properties);
+                }
+
+                _this.identifierOverlayContent.innerHTML = null;
 
                 _this.map.forEachFeatureAtPixel(
                     e.pixel,
@@ -189,7 +197,8 @@ export default getDocumentViewMapHook = () => {
                     },
                     {
                         layerFilter: function (layer) {
-                            return layer.get('name') === 'childLayer';
+                            const layerName = layer.get('name');
+                            return layerName === 'childLayer' || layerName === 'parentLayer';
                         }
                     }
                 );
@@ -208,15 +217,15 @@ export default getDocumentViewMapHook = () => {
                     },
                     {
                         layerFilter: function (layer) {
-                            console.log(layer.get('name'))
-                            return layer.get('name') === 'childLayer';
+                            const layerName = layer.get('name');
+                            return layerName === 'childLayer' || layerName === 'parentLayer';
                         }
                     }
                 );
             })
 
         },
-        async setup(project, documentFeature, childrenFeatures, projectTileLayers) {
+        async setup(project, parentFeatures, documentFeature, childrenFeatures, projectTileLayers) {
             this.docId = null
             this.docLayer = null
             this.childrenLayer = null
@@ -225,97 +234,108 @@ export default getDocumentViewMapHook = () => {
 
             this.docId = documentFeature.properties.uuid;
 
-            try {
-                for (let layerInfo of projectTileLayers) {
-                    const geoReference = layerInfo.extent;
+            for (let layerInfo of projectTileLayers) {
+                const geoReference = layerInfo.extent;
 
-                    const extent = [
-                        geoReference.bottomLeftCoordinates[1],
-                        geoReference.bottomLeftCoordinates[0],
-                        geoReference.topRightCoordinates[1],
-                        geoReference.topRightCoordinates[0]
-                    ];
+                const extent = [
+                    geoReference.bottomLeftCoordinates[1],
+                    geoReference.bottomLeftCoordinates[0],
+                    geoReference.topRightCoordinates[1],
+                    geoReference.topRightCoordinates[0]
+                ];
 
-                    const pathTemplate = `/api/image/tile/${project}/${layerInfo.uuid}/{z}/{x}/{y}`;
+                const pathTemplate = `/api/image/tile/${project}/${layerInfo.uuid}/{z}/{x}/{y}`;
 
-                    const resolutions = getResolutions(extent, tileSize, layerInfo.width, layerInfo.height)
+                const resolutions = getResolutions(extent, tileSize, layerInfo.width, layerInfo.height)
 
-                    let source = new TileImage({
-                        tileGrid: new TileGrid({
-                            extent,
-                            origin: [extent[0], extent[3]],
-                            resolutions,
-                            tileSize
-                        }),
-                        tileUrlFunction: (tileCoord) => {
-                            return pathTemplate
-                                .replace('{z}', String(tileCoord[0]))
-                                .replace('{x}', String(tileCoord[1]))
-                                .replace('{y}', String(tileCoord[2]));
-                        }
-                    });
-
-                    let currentLayer = new TileLayer({
-                        source: source,
-                        extent
-                    });
-
-                    this.map.addLayer(currentLayer);
-
-                    aggregatedExtent = extend(aggregatedExtent, extent);
-                }
-                documentFeature.properties.fill = true;
-
-                console.log(documentFeature)
-
-                const vectorSource = new VectorSource({
-                    features: new GeoJSON().readFeatures(documentFeature)
-                })
-
-                this.docLayer = new VectorLayer({
-                    source: vectorSource,
-                    style: styleFunction,
+                let source = new TileImage({
+                    tileGrid: new TileGrid({
+                        extent,
+                        origin: [extent[0], extent[3]],
+                        resolutions,
+                        tileSize
+                    }),
+                    tileUrlFunction: (tileCoord) => {
+                        return pathTemplate
+                            .replace('{z}', String(tileCoord[0]))
+                            .replace('{x}', String(tileCoord[1]))
+                            .replace('{y}', String(tileCoord[2]));
+                    }
                 });
 
-                aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
-
-                let extent = vectorSource.getExtent();
-
-                this.map.addLayer(this.docLayer);
-
-                const additionalVectorSource = new VectorSource({
-                    features: new GeoJSON().readFeatures(childrenFeatures)
-                })
-
-                this.childrenLayer = new VectorLayer({
-                    name: "childLayer",
-                    source: additionalVectorSource,
-                    style: styleFunction,
+                let currentLayer = new TileLayer({
+                    source: source,
+                    extent
                 });
 
-                this.map.addLayer(this.childrenLayer);
+                this.map.addLayer(currentLayer);
 
-                aggregatedExtent = extend(aggregatedExtent, additionalVectorSource.getExtent())
-
-                if (extent[0] === Infinity) {
-                    // TODO: This is a weird fallback for cases where no highlight is present. This should probably 
-                    // first fallback to additionalVectorSource's extent.
-                    extent = aggregatedExtent;
-                }
-
-
-                this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
-                this.map.setView(new View({ extent: this.map.getView().calculateExtent(this.map.getSize()) }));
-                this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
-
-                // this.map.setView(view);
-
-                // this.map.getView().fit(extent, { padding: [100, 100, 100, 100] })
-                // this.map.setView(view);
+                aggregatedExtent = extend(aggregatedExtent, extent);
             }
-            catch (e) {
-                console.error(e)
+
+            const parentVectorSource = new VectorSource({
+                features: new GeoJSON().readFeatures(parentFeatures)
+            })
+
+            this.parentLayer = new VectorLayer({
+                name: "parentLayer",
+                source: parentVectorSource,
+                style: styleFunction,
+            });
+
+            this.map.addLayer(this.parentLayer);
+
+            aggregatedExtent = extend(aggregatedExtent, parentVectorSource.getExtent())
+
+            documentFeature.properties.fill = true;
+
+            const vectorSource = new VectorSource({
+                features: new GeoJSON().readFeatures(documentFeature)
+            })
+
+            this.docLayer = new VectorLayer({
+                source: vectorSource,
+                style: styleFunction,
+            });
+
+            aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
+
+            this.map.addLayer(this.docLayer);
+
+            const additionalVectorSource = new VectorSource({
+                features: new GeoJSON().readFeatures(childrenFeatures)
+            })
+
+            this.childrenLayer = new VectorLayer({
+                name: "childLayer",
+                source: additionalVectorSource,
+                style: styleFunction
+            });
+
+            this.map.addLayer(this.childrenLayer);
+
+            aggregatedExtent = extend(aggregatedExtent, additionalVectorSource.getExtent())
+
+            let extent = aggregatedExtent;
+
+            if (parentFeatures.features.length !== 0) {
+                extent = parentVectorSource.getExtent();
+            } else if (vectorSource.getExtent()) {
+                extent = vectorSource.getExtent();
             }
+
+            this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
+            this.map.setView(new View({
+                extent: this.map.getView().calculateExtent(this.map.getSize()),
+                maxZoom: 40
+            }));
+            this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
+
+            // this.map.setView(view);
+
+            // this.map.getView().fit(extent, { padding: [100, 100, 100, 100] })
+            // this.map.setView(view);
+
         }
     }
 }

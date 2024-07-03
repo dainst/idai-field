@@ -63,7 +63,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 id="generic_doc_map"
                 style="width:100%; height:500px;"
                 doc={@doc}
-                children={@child_doc_previews}
                 publication={@publication}
               />
             </div>
@@ -94,22 +93,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for doc <- other_relation["values"] do %>
-                <DocumentLink.show
-                  project={@project_name}
-                  date={@publication_date}
-                  lang={@lang}
-                  doc={doc}
-                  image_count={2}
-                />
-              <% end %>
-            </div>
-          <% end %>
-          <%= if @child_doc_previews != [] do %>
-            <.group_heading>
-              <%= gettext("Contains") %> (<%= Enum.count(@child_doc_previews) %>)
-            </.group_heading>
-            <div class="overflow-auto overscroll-contain max-h-[400px]">
-              <%= for doc <- @child_doc_previews do %>
                 <DocumentLink.show
                   project={@project_name}
                   date={@publication_date}

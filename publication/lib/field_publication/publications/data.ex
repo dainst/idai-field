@@ -1,4 +1,6 @@
 defmodule FieldPublication.Publications.Data do
+  require FieldPublicationWeb.Gettext
+
   alias FieldPublication.CouchService
   alias FieldPublication.DocumentSchema.Publication
 
@@ -258,7 +260,33 @@ defmodule FieldPublication.Publications.Data do
       Map.put(
         doc,
         "relations",
-        extend_relations(category_configuration["item"], resource, publication)
+        extend_relations(category_configuration["item"], resource, publication) ++
+          [
+            %{
+              "key" => "contains",
+              "values" =>
+                publication
+                |> get_hierarchy()
+                |> Map.get(resource["id"], %{})
+                |> Map.get("children", [])
+                |> get_documents(publication),
+              "labels" =>
+                Gettext.known_locales(FieldPublicationWeb.Gettext)
+                |> Enum.map(fn locale ->
+                  {
+                    locale,
+                    Gettext.with_locale(
+                      FieldPublicationWeb.Gettext,
+                      locale,
+                      fn ->
+                        FieldPublicationWeb.Gettext.gettext("Contains")
+                      end
+                    )
+                  }
+                end)
+                |> Enum.into(%{})
+            }
+          ]
       )
     else
       doc

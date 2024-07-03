@@ -25,8 +25,54 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     """
   end
 
-  def update(%{id: id, publication: publication, doc: doc, children: children} = assigns, socket) do
+  def update(
+        %{id: id, publication: publication, doc: doc} =
+          assigns,
+        socket
+      ) do
     assigns = set_defaults(assigns)
+
+    children =
+      doc
+      |> Data.get_relation_by_name("contains")
+      |> case do
+        nil ->
+          []
+
+        relation ->
+          Map.get(relation, "values", [])
+      end
+
+    parents =
+      (doc
+       |> Data.get_relation_by_name("isRecordedIn")
+       |> case do
+         nil ->
+           []
+
+         relation ->
+           Map.get(relation, "values", [])
+       end) ++
+        (doc
+         |> Data.get_relation_by_name("liesWithin")
+         |> case do
+           nil ->
+             []
+
+           relation ->
+             Map.get(relation, "values", [])
+         end)
+
+    # parent =
+    #   doc
+    #   |> Data.get_relation_by_name("recordedIn")
+    #   |> case do
+    #     nil ->
+    #       []
+
+    #     relation ->
+    #       Map.get(relation, "values", [])
+    #   end
 
     project_tile_layers =
       publication
@@ -44,6 +90,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           type: "FeatureCollection",
           features:
             children
+            |> Enum.map(&create_feature_info/1)
+            |> Enum.reject(fn feature -> feature == nil end)
+        },
+        parent_features: %{
+          type: "FeatureCollection",
+          features:
+            parents
             |> Enum.map(&create_feature_info/1)
             |> Enum.reject(fn feature -> feature == nil end)
         },

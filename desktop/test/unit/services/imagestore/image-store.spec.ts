@@ -1,8 +1,9 @@
-import * as fs from 'fs';
 import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
 import { ImageStore, ImageVariant } from 'idai-field-core';
 import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
+
+const fs = require('fs');
 
 
 /**

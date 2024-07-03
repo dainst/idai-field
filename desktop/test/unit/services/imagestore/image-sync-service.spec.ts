@@ -1,6 +1,4 @@
 import Ajv from 'ajv';
-import * as fs from 'fs';
-import * as request from 'supertest';
 import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
 import { ImageSyncService, PouchdbDatastore, ImageStore, IdGenerator, ImageVariant,
     base64Encode } from 'idai-field-core';
@@ -8,6 +6,9 @@ import { ExpressServer } from '../../../../src/app/services/express-server';
 import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
 import * as schema from '../../../../../core/api-schemas/files-list.json';
+
+const fs = require('fs');
+const request = require('supertest');
 
 
 /**

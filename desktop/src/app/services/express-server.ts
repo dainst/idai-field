@@ -3,12 +3,12 @@ import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, Configurat
     ConfigReader } from 'idai-field-core';
 import { SettingsProvider } from './settings/settings-provider';
 
-const express = typeof window !== 'undefined' ? window.require('express') : require('express');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // Get rid of warning
-const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');
-const bodyParser = typeof window !== 'undefined' ? window.require('body-parser') : require('body-parser');
-let PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+const express = window.require('express');
+const remote = window.require('@electron/remote');
+const expressPouchDB = window.require('express-pouchdb');
+const expressBasicAuth = window.require('express-basic-auth');
+const bodyParser = window.require('body-parser');
+let PouchDB = window.require('pouchdb-browser');
 
 
 @Injectable()

@@ -1,4 +1,4 @@
-const fsPromises = typeof window !== 'undefined' ? undefined : require('fs').promises;
+const fsPromises = window.require('fs').promises;
 const extract = typeof window !== 'undefined' ? undefined : require('extract-zip');
 
 
@@ -8,7 +8,7 @@ const extract = typeof window !== 'undefined' ? undefined : require('extract-zip
 // (See: https://github.com/electron/electron/issues/19554#issuecomment-683383337)
 export function getAsynchronousFs() {
 
-    return fsPromises ? fsPromisesWrapper : filesystem;
+    return window['filesystem'] ? filesystem : fsPromisesWrapper;
 }
 
 

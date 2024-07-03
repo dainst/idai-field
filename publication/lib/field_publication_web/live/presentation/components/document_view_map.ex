@@ -14,11 +14,18 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     >
       <div style={@style} id={"#{@id}-map"}></div>
       <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
-      <div class="pointer-events-none mt-[20px]" id={"#{@id}-identifier-tooltip"}>
-        <div
-          class="text-xs saturate-50 empty:border-0 rounded p-1 empty:p-0 max-w-32"
-          id={"#{@id}-identifier-tooltip-content"}
-        >
+      <div class="pointer-events-none  text-xs" id={"#{@id}-identifier-tooltip"}>
+        <div class="border-[1px] rounded-sm border-black flex">
+          <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
+            <div
+              class="h-full bg-white/60 p-1 font-thin"
+              id={"#{@id}-identifier-tooltip-category-content"}
+            >
+            </div>
+          </div>
+          <div class="grow p-1 h-full bg-white">
+            <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}></div>
+          </div>
         </div>
       </div>
     </div>
@@ -107,7 +114,11 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   defp create_feature_info(
-         %{"category" => %{"color" => color}, "id" => uuid, "identifier" => identifier} = doc,
+         %{
+           "category" => %{"color" => color, "labels" => category_labels},
+           "id" => uuid,
+           "identifier" => identifier
+         } = doc,
          lang
        ) do
     description =
@@ -121,6 +132,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           Map.get(map, lang, Map.get(map, List.first(Map.keys(map))))
       end
 
+    category =
+      Map.get(
+        category_labels,
+        Gettext.get_locale(FieldPublicationWeb.Gettext),
+        Map.get(category_labels, List.first(Map.keys(category_labels)))
+      )
+
     if geometry = Data.get_field_values(doc, "geometry") do
       %{
         type: "Feature",
@@ -130,6 +148,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           identifier: identifier,
           color: color,
           description: description,
+          category: category,
           type: geometry["type"]
         }
       }

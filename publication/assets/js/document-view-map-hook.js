@@ -33,40 +33,6 @@ function getResolutions(
     return result.reverse();
 };
 
-// function getCanvasPattern(color1, color2) {
-//     // Create a pattern, offscreen
-//     const patternCanvas = document.createElement("canvas");
-//     const patternContext = patternCanvas.getContext("2d");
-
-//     // Give the pattern a width and height of 50
-//     patternCanvas.width = 100;
-//     patternCanvas.height = 100;
-
-//     // // Give the pattern a background color and draw an arc
-//     // patternContext.fillStyle = color;
-//     // patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-//     // patternContext.arc(0, 0, 50, 0, 0.5 * Math.PI);
-//     // patternContext.stroke();
-//     var numberOfStripes = 10;
-//     for (var i = 0; i < numberOfStripes * 2; i++) {
-//         var thickness = 30;
-//         patternContext.beginPath();
-//         patternContext.strokeStyle = i % 2 ? color1 : color2;
-//         patternContext.lineWidth = thickness;
-
-//         patternContext.moveTo(i * thickness + thickness - 200, 0);
-//         patternContext.lineTo(0 + i * thickness + thickness, 200);
-//         patternContext.stroke();
-//     }
-
-//     // Create our primary canvas and fill it with the pattern
-//     const canvas = document.createElement("canvas");
-//     const ctx = canvas.getContext("2d");
-//     const pattern = ctx.createPattern(patternCanvas, "repeat");
-
-//     return pattern;
-// }
-
 const tileSize = 256;
 
 const styleFunction = function (feature) {
@@ -89,8 +55,6 @@ const styleFunction = function (feature) {
             style.setFill(new Fill({
                 color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
             }));
-            // } else if (props.hatch) {
-            //     style.setFill(new Fill({ color: getCanvasPattern(`rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, ${a})`, `rgba(${r}, ${g}, ${b}, 0.2)`) }))
         } else {
             style.setFill(new Fill({
                 color: `rgba(${r}, ${g}, ${b}, 0.0)`,
@@ -111,8 +75,6 @@ const styleFunction = function (feature) {
             image.setFill(new Fill({
                 color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
             }));
-            // } else if (props.hatch) {
-            //     style.setFill(new Fill({ color: getCanvasPattern(`rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, ${a})`, `rgba(${r}, ${g}, ${b}, 0.2)`) }))
         } else {
             image.setFill(new Fill({
                 color: `rgba(${r}, ${g}, ${b}, 0.05)`,
@@ -171,6 +133,8 @@ export default getDocumentViewMapHook = () => {
                 overlays: [this.identifierOverlay]
             });
 
+            _this.identifierOverlay.setPosition(undefined)
+
             this.el.addEventListener('pointerenter', function (e) {
                 let docFeature = _this.docLayer.getSource().getFeatures()[0];
                 let properties = docFeature.getProperties();
@@ -201,7 +165,6 @@ export default getDocumentViewMapHook = () => {
                     let properties = child.getProperties();
                     properties.fill = false;
                     child.setProperties(properties);
-
                 }
 
                 let parentFeatures = _this.parentLayer.getSource().getFeatures();
@@ -211,7 +174,7 @@ export default getDocumentViewMapHook = () => {
                     parent.setProperties(properties);
                 }
 
-                _this.identifierOverlayContent.innerHTML = null;
+                _this.identifierOverlay.setPosition(undefined)
 
                 if (e.dragging) {
                     return;
@@ -230,7 +193,9 @@ export default getDocumentViewMapHook = () => {
 
                         const [r, g, b, a] = asArray(properties.color)
 
-                        _this.identifierOverlayContent.style.background = `rgba(${r}, ${g}, ${b}, 0.8)`;
+                        document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
+                        document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category
+
                         _this.identifierOverlay.setPosition(e.coordinate);
                     } else {
                         _this.parentLayer.getFeatures(e.pixel).then(function (features) {
@@ -244,8 +209,9 @@ export default getDocumentViewMapHook = () => {
                                 _this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
 
                                 const [r, g, b, a] = asArray(properties.color)
+                                document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
+                                document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
 
-                                _this.identifierOverlayContent.style.background = `rgba(${r}, ${g}, ${b}, 0.8)`;
                                 _this.identifierOverlay.setPosition(e.coordinate);
                             }
                         })
@@ -255,7 +221,6 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.map.on('singleclick', function (e) {
-                console.log(e);
 
                 _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
                     const feature = features.length ? features[0] : undefined;

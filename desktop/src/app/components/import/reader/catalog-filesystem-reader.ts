@@ -6,10 +6,8 @@ import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/cata
 import { Settings } from '../../../../app/services/settings/settings';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-
-const UTF8 = 'utf-8';
+const fs = window.require('fs');
+const remote = window.require('@electron/remote');
 
 
 /**
@@ -56,7 +54,7 @@ export class CatalogFilesystemReader implements Reader {
                     }
                 }
 
-                let jsonlString = fs.readFileSync(tmpDir + CATALOG_JSONL, UTF8);
+                let jsonlString = fs.readFileSync(tmpDir + CATALOG_JSONL, 'utf-8');
                 for (let imageId of Object.keys(replacementMap)) {
                     jsonlString = jsonlString.replace(new RegExp(imageId, 'g'), replacementMap[imageId]);
                 }

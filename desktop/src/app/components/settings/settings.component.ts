@@ -12,8 +12,8 @@ import { MenuContext } from '../../services/menu-context';
 import { SettingsErrors } from '../../services/settings/settings-errors';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const address = typeof window !== 'undefined' ? window.require('address') : require('address');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const address = window.require('address');
+const remote = window.require('@electron/remote');
 
 
 @Component({

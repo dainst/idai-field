@@ -2,8 +2,8 @@ import { Reader } from './reader';
 import { JavaToolExecutor } from '../../../services/java/java-tool-executor';
 import { ReaderErrors} from './reader-errors';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const remote = window.require('@electron/remote');
+const fs = window.require('fs');
 
 
 /**

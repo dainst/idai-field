@@ -1,7 +1,7 @@
 import { I18N } from 'idai-field-core';
 import { SyncTarget } from './sync-target';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 export interface Settings {

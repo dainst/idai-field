@@ -1,4 +1,4 @@
-const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
+const sharp = window.require('sharp');
 
 
 export module ImageManipulationErrors {

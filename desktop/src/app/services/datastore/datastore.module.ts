@@ -5,6 +5,7 @@ import { ExpressServer } from '../express-server';
 
 const PouchDB = window.require('pouchdb-browser');
 
+
 /**
  * There is the top level package, in which everything idai-field specific resides,
  * FieldDocument, ImageDocument related stuff for example.

@@ -3,7 +3,7 @@ import { Observable, Observer } from 'rxjs';
 import { ObserverUtil } from 'idai-field-core';
 import { MenuContext } from './menu-context';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Injectable()

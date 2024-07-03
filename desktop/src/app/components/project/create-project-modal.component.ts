@@ -13,7 +13,7 @@ import { Messages } from '../messages/messages';
 import { ProjectIdentifierValidatorMessagesConversion } from '../messages/project-identifier-validator-messages-conversion';
 import { MsgWithParams } from '../messages/msg-with-params';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Component({

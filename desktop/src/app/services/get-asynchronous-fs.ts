@@ -1,5 +1,5 @@
 const fsPromises = window.require('fs').promises;
-const extract = typeof window !== 'undefined' ? undefined : require('extract-zip');
+const extract = require('extract-zip');
 
 
 // If called from Electron app: Return fs.promises instance from Electron main process via window['filesystem']

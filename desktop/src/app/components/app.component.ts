@@ -13,8 +13,8 @@ import { ConfigurationChangeNotifications } from './configuration/notifications/
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
+const remote = window.require('@electron/remote');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 @Component({

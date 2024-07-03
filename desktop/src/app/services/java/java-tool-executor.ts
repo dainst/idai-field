@@ -1,7 +1,7 @@
 import { JavaVersionParser } from './java-version-parser';
 
-const exec = typeof window !== 'undefined' ? window.require('child_process').exec : require('child_process').exec;
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const exec = window.require('child_process').exec;
+const remote = window.require('@electron/remote');
 
 
 /**

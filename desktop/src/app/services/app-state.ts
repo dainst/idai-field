@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StateSerializer } from './state-serializer';
 
-const path = typeof window !== 'undefined' ? window.require('path') : require('path');
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const path = window.require('path');
+const fs = window.require('fs');
 
 
 /**

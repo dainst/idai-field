@@ -16,7 +16,7 @@ import { PrintSettingsModalComponent } from './print-settings/print-settings-mod
 import { PrintSettings } from './print-settings/print-settings';
 
 
-const QRCode = require('qrcode');
+const QRCode = window.require('qrcode');
 
 
 type PrintedField = {

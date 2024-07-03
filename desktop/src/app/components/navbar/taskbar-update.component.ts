@@ -1,10 +1,7 @@
 import { Component, Input, NgZone } from '@angular/core';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 
-
-const ipcRenderer = typeof window !== 'undefined'
-  ? window.require('electron').ipcRenderer
-  : require('electron').ipcRenderer;
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 @Component({

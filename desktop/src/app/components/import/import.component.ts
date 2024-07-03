@@ -24,8 +24,8 @@ import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const path = typeof window !== 'undefined' ? window.require('path') : require('path');
+const remote = window.require('@electron/remote');
+const path = window.require('path');
 
 
 @Component({

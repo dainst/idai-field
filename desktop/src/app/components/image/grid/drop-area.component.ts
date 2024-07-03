@@ -5,7 +5,7 @@ import { Messages } from '../../messages/messages';
 import { MsgWithParams } from '../../messages/msg-with-params';
 import { AppState } from '../../../services/app-state';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Component({

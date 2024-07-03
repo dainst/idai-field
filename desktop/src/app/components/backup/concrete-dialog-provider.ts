@@ -1,6 +1,6 @@
 import { AppState } from '../../services/app-state';
 
-const { dialog } = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 /**
@@ -13,7 +13,7 @@ export class ConcreteDialogProvider {
 
         const defaultPath: string = this.getDefaultPath(projectName, appState);
 
-        const saveDialogReturnValue = await dialog.showSaveDialog(
+        const saveDialogReturnValue = await remote.dialog.showSaveDialog(
             {
                 defaultPath,
                 filters: [

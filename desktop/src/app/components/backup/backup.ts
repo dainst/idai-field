@@ -3,10 +3,11 @@ import { ProjectIdentifierValidation } from '../../model/project-identifier-vali
 import { SettingsService } from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 
-const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
-const stream = typeof window !== 'undefined' ? window.require('stream') : require('stream');
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+const replicationStream = window.require('pouchdb-replication-stream');
+const stream = window.require('stream');
+const fs = window.require('fs');
+const PouchDB = window.require('pouchdb-browser');
+const pouchdbLoad = require('pouchdb-load');
 
 
 /**
@@ -56,7 +57,7 @@ export module Backup {
         await db.destroy(); // to prevent pouchdb-load's incremental loading and force a true overwrite of the old db
 
         const db2: any = new PouchDB(project);
-        PouchDB.plugin(require('pouchdb-load'));
+        PouchDB.plugin(pouchdbLoad);
 
         await db2.load('file://' + filePath);
 

@@ -3,7 +3,7 @@ import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 import { AppState } from '../../services/app-state';
 import { M } from '../messages/m';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 /**

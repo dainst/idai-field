@@ -10,8 +10,8 @@ import { MenuContext } from '../../../services/menu-context';
 import { AppState } from '../../../services/app-state';
 import { ImageUploader } from '../../image/upload/image-uploader';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const path = typeof window !== 'undefined' ? window.require('path') : require('path');
+const remote = window.require('@electron/remote');
+const path = window.require('path');
 
 
 @Component({

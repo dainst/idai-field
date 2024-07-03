@@ -1,7 +1,7 @@
 import { Document } from 'idai-field-core';
 
-const moment = typeof window !== 'undefined' ? window.require('moment') : require('moment');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const moment = window.require('moment');
+const remote = window.require('@electron/remote');
 
 
 /**

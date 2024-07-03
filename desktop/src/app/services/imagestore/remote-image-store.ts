@@ -5,16 +5,14 @@ import { Messages } from '../../components/messages/messages';
 import { SettingsProvider } from '../settings/settings-provider';
 import { SyncTarget } from '../settings/sync-target';
 
-const axios = typeof window !== 'undefined' ? window.require('axios') : require('axios');
+const axios = window.require('axios');
 
 
 @Injectable()
 export class RemoteImageStore implements RemoteImageStoreInterface {
 
-    constructor(
-        private settingsProvider: SettingsProvider,
-        private messages: Messages
-    ) { }
+    constructor(private settingsProvider: SettingsProvider,
+                private messages: Messages) {}
 
 
     /**
@@ -56,7 +54,6 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
                 throw error;
             }
         });
-
     }
 
     /**
@@ -164,5 +161,4 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         return Buffer.from(response.data);
     }
-
 }

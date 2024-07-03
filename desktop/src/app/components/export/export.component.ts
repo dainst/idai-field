@@ -22,7 +22,7 @@ import { InvalidField } from './csv/csv-export';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Component({

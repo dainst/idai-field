@@ -8,7 +8,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { Settings } from '../../services/settings/settings';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 const HELP_LANGUAGES = ['de', 'en'];

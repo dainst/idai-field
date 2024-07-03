@@ -3,9 +3,7 @@ import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore } from 'ida
 import { M } from '../../components/messages/m';
 import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 
-const geojsonRewind = typeof window !== 'undefined'
-    ? window.require('@mapbox/geojson-rewind')
-    : require('@mapbox/geojson-rewind');
+const geojsonRewind = window.require('@mapbox/geojson-rewind');
 
 
 /**

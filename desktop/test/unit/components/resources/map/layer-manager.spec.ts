@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { doc, ImageDocument } from 'idai-field-core';
 import { LayerManager } from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
 
@@ -30,19 +31,22 @@ describe('LayerManager', () => {
 
     beforeEach(() => {
 
-        const mockDatastore = jasmine.createSpyObj('datastore', ['getMultiple', 'get']);
-        mockDatastore.getMultiple.and.returnValue(Promise.resolve(layerDocuments));
-        mockDatastore.get.and.returnValue(Promise.resolve(projectDocument));
+        const mockDatastore: any = {
+            getMultiple: jest.fn().mockReturnValue(Promise.resolve(layerDocuments)),
+            get: jest.fn().mockReturnValue(Promise.resolve(projectDocument))
+        };
 
-        mockViewFacade = jasmine.createSpyObj('viewFacade',
-            ['getActiveLayersIds', 'setActiveLayersIds', 'getCurrentOperation']);
-        mockViewFacade.getActiveLayersIds.and.returnValue([]);
+        mockViewFacade = {
+            getActiveLayersIds: jest.fn().mockReturnValue([]),
+            setActiveLayersIds: jest.fn(),
+            getCurrentOperation: jest.fn()
+        };
 
         layerManager = new LayerManager(mockDatastore, mockViewFacade, undefined);
     });
 
 
-    it('initialize layers', async done => {
+    it('initialize layers', async () => {
 
         const activeLayersChange = await layerManager.initializeLayers();
 
@@ -52,33 +56,28 @@ describe('LayerManager', () => {
 
         expect(activeLayersChange.added.length).toBe(0);
         expect(activeLayersChange.removed.length).toBe(0);
-
-        done();
     });
 
 
-    it('restore active layers from resources state', async done => {
+    it('restore active layers from resources state', async () => {
 
-        mockViewFacade.getActiveLayersIds.and.returnValue(['l2']);
+        mockViewFacade.getActiveLayersIds.mockReturnValue(['l2']);
 
         const activeLayersChange = await layerManager.initializeLayers();
 
         expect(activeLayersChange.added.length).toBe(1);
         expect(activeLayersChange.added[0]).toEqual('l2');
         expect(activeLayersChange.removed.length).toBe(0);
-
-        done();
     });
 
 
-    it('add and remove correct layers when initializing with different resources states',
-            async done => {
+    it('add and remove correct layers when initializing with different resources states', async () => {
 
-        mockViewFacade.getActiveLayersIds.and.returnValue(['l2']);
+        mockViewFacade.getActiveLayersIds.mockReturnValue(['l2']);
 
         await layerManager.initializeLayers();
 
-        mockViewFacade.getActiveLayersIds.and.returnValue(['l1']);
+        mockViewFacade.getActiveLayersIds.mockReturnValue(['l1']);
 
         const activeLayersChange = await layerManager.initializeLayers();
 
@@ -86,36 +85,29 @@ describe('LayerManager', () => {
         expect(activeLayersChange.added[0]).toEqual('l1');
         expect(activeLayersChange.removed.length).toBe(1);
         expect(activeLayersChange.removed[0]).toEqual('l2');
-
-        done();
     });
 
 
-    it('add or remove no layers if the layers are initialized with the same resources state again',
-            async done => {
+    test('add or remove no layers if the layers are initialized with the same resources state again', async () => {
 
-        mockViewFacade.getActiveLayersIds.and.returnValue(['l2']);
+        mockViewFacade.getActiveLayersIds.mockReturnValue(['l2']);
 
         await layerManager.initializeLayers();
         const activeLayersChange = await layerManager.initializeLayers();
 
         expect(activeLayersChange.added.length).toBe(0);
         expect(activeLayersChange.removed.length).toBe(0);
-
-        done();
     });
 
 
-    it('use default layers if no active layers ids are stored in resources state', async done => {
+    test('use default layers if no active layers ids are stored in resources state', async () => {
 
-        mockViewFacade.getActiveLayersIds.and.returnValue(undefined);
+        mockViewFacade.getActiveLayersIds.mockReturnValue(undefined);
 
         const activeLayersChange = await layerManager.initializeLayers();
 
         expect(activeLayersChange.added.length).toBe(1);
         expect(activeLayersChange.added[0]).toEqual('l2');
         expect(activeLayersChange.removed.length).toBe(0);
-
-        done();
     });
 });

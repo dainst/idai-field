@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { fieldDoc } from 'idai-field-core';
 import { NavigationPath } from '../../../../../../src/app/components/resources/view/state/navigation-path';
 import { toResourceId } from '../../../../../../src/app/components/resources/view/state/navigation-path-segment';
@@ -8,7 +9,7 @@ import { toResourceId } from '../../../../../../src/app/components/resources/vie
  */
 describe('NavigationPath', () => {
 
-    it('validateFieldDefinitions_ back and forth between two segments', () => {
+    test('validateFieldDefinitions_ back and forth between two segments', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
@@ -39,7 +40,7 @@ describe('NavigationPath', () => {
     });
 
 
-    it('replace last segment after going back once', () => {
+    test('replace last segment after going back once', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
@@ -72,7 +73,7 @@ describe('NavigationPath', () => {
     });
 
 
-    it('replace first segment after going back', () => {
+    test('replace first segment after going back', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 

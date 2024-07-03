@@ -1,4 +1,5 @@
-import {BaseList} from '../../../../src/app/components/resources/base-list';
+import { describe, expect, test, beforeEach, jest } from '@jest/globals';
+import { BaseList } from '../../../../src/app/components/resources/base-list';
 import { MenuContext } from '../../../../src/app/services/menu-context';
 
 
@@ -16,67 +17,74 @@ describe('BaseList', () => {
 
     beforeEach(() => {
 
-        viewFacade = jasmine.createSpyObj('viewFacade', ['isInExtendedSearchMode', 'navigationPathNotifications',
-            'getNavigationPath', 'isInOverview', 'getSelectedOperations', 'isReady']);
-        viewFacade.navigationPathNotifications.and.returnValue({ subscribe: () => {} });
-        viewFacade.getNavigationPath.and.returnValue({});
-        viewFacade.getSelectedOperations.and.returnValue([]);
-        viewFacade.isReady.and.returnValue(true);
+        viewFacade = {
+            isInExtendedSearchMode: jest.fn(),
+            navigationPathNotifications: jest.fn().mockReturnValue({ subscribe: () => {} }),
+            getNavigationPath: jest.fn().mockReturnValue({}),
+            isInOverview: jest.fn().mockReturnValue(true),
+            getSelectedOperations: jest.fn().mockReturnValue([]),
+            isReady: jest.fn().mockReturnValue(true)
+        };
 
-        resourcesComponent = jasmine.createSpyObj('resourcesComponent', ['getViewType']);
-        loading = jasmine.createSpyObj('loading', ['isLoading', 'getContext']);
-        menuService = jasmine.createSpyObj('menuService', ['setContext', 'getContext']);
+        resourcesComponent = {
+            getViewType: jest.fn(),
+            isEditingGeometry: false
+        };
+
+        loading = {
+            isLoading: jest.fn().mockReturnValue(false),
+            getContext: jest.fn()
+        };
+
+        menuService = {
+            setContext: jest.fn(),
+            getContext: jest.fn()
+        };
 
         baseList = new BaseList(resourcesComponent, viewFacade, loading, menuService);
-
-        // partial requirements to show plus button
-        loading.isLoading.and.returnValue(false);
-        loading.getContext.and.returnValue(undefined);
-        viewFacade.isInOverview.and.returnValue(true);
-        resourcesComponent.isEditingGeometry = false;
     });
 
 
-    it('plus button status', () => {
+    test('plus button status', () => {
 
-        viewFacade.isInExtendedSearchMode.and.returnValue(true);
+        viewFacade.isInExtendedSearchMode.mockReturnValue(true)
         expect(baseList.getPlusButtonStatus()).toEqual('disabled-hierarchy');
-        viewFacade.isInExtendedSearchMode.and.returnValue(false);
+        viewFacade.isInExtendedSearchMode.mockReturnValue(false);
         expect(baseList.getPlusButtonStatus()).toEqual('enabled');
     });
 
 
-    it('plus button shown in overview', () => {
+    test('plus button shown in overview', () => {
 
         expect(baseList.isPlusButtonShown()).toBeTruthy();
     });
 
 
-    it('plus button shown if operations exist', () => {
+    test('plus button shown if operations exist', () => {
 
-        viewFacade.isInOverview.and.returnValue(false);
-        viewFacade.getSelectedOperations.and.returnValue([1]);
+        viewFacade.isInOverview.mockReturnValue(false);
+        viewFacade.getSelectedOperations.mockReturnValue([1]);
         expect(baseList.isPlusButtonShown()).toBeTruthy();
     });
 
 
-    it('plus button not shown if isEditingGeometry', () => {
+    test('plus button not shown if isEditingGeometry', () => {
 
-        menuService.getContext.and.returnValue(MenuContext.GEOMETRY_EDIT);
+        menuService.getContext.mockReturnValue(MenuContext.GEOMETRY_EDIT);
         expect(baseList.isPlusButtonShown()).toBeFalsy();
     });
 
 
-    it('plus button not shown if is loading', () => {
+    test('plus button not shown if is loading', () => {
 
-        loading.isLoading.and.returnValue(true);
+        loading.isLoading.mockReturnValue(true);
         expect(baseList.isPlusButtonShown()).toBeFalsy();
     });
 
 
-    it('plus button not shown not ready', () => {
+    test('plus button not shown not ready', () => {
 
-        viewFacade.isReady.and.returnValue(false);
+        viewFacade.isReady.mockReturnValue(false);
         expect(baseList.isPlusButtonShown()).toBeFalsy();
     });
 });

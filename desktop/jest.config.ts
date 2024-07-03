@@ -157,6 +157,7 @@ const config: Config = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
+      '<rootDir>/test/unit/components/resources/**/*.spec.ts',
       '<rootDir>/test/unit/services/**/*.spec.ts',
       '<rootDir>/test/unit/util/**/*.spec.ts'
   ],

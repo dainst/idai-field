@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { fieldDoc } from 'idai-field-core';
 import { NavigationService } from '../../../../../src/app/components/resources/navigation/navigation-service';
 
@@ -12,32 +13,29 @@ describe('NavigationService', () => {
 
     beforeEach(() => {
 
-        viewFacade = jasmine.createSpyObj(
-            'viewFacade',
-            ['isInOverview', 'moveInto', 'isInExtendedSearchMode']
-        );
+        viewFacade = {
+            isInOverview: jest.fn().mockReturnValue(false),
+            moveInto: jest.fn(),
+            isInExtendedSearchMode: jest.fn().mockReturnValue(false)
+        };
 
-        projectConfiguration = jasmine.createSpyObj(
-            'projectConfiguration',
-            ['getRelationsForRangeCategory', 'getCategory']
-        );
+        projectConfiguration = {
+            getRelationsForRangeCategory: jest.fn(),
+            getCategory: jest.fn()
+        };
 
-        messages = jasmine.createSpyObj(
-            'messages',
-            ['add']
-        );
+        messages = {
+            add: jest.fn()
+        };
 
         navigationService = new NavigationService(projectConfiguration, undefined, viewFacade, messages);
-
-        viewFacade.isInOverview.and.returnValue(false);
-        viewFacade.isInExtendedSearchMode.and.returnValue(false);
     });
 
 
-    it('show jump to view buttons in overview for operation subcategories ', () => {
+    test('show jump to view buttons in overview for operation subcategories ', () => {
 
-        viewFacade.isInOverview.and.returnValue(true);
-        projectConfiguration.getCategory.and.returnValue({
+        viewFacade.isInOverview.mockReturnValue(true);
+        projectConfiguration.getCategory.mockReturnValue({
             children: [ { name: 'operationSubcategory' } ]
         });
 
@@ -47,9 +45,9 @@ describe('NavigationService', () => {
     });
 
 
-    it('show move into buttons for resources that can be a liesWithin target', () => {
+    test('show move into buttons for resources that can be a liesWithin target', () => {
 
-        projectConfiguration.getRelationsForRangeCategory.and.returnValue(
+        projectConfiguration.getRelationsForRangeCategory.mockReturnValue(
             [{ name: 'liesWithin' }]
         );
 
@@ -59,9 +57,9 @@ describe('NavigationService', () => {
     });
 
 
-    it('do not show move into buttons for resources that cannot be a liesWithin target', () => {
+    test('do not show move into buttons for resources that cannot be a liesWithin target', () => {
 
-        projectConfiguration.getRelationsForRangeCategory.and.returnValue(
+        projectConfiguration.getRelationsForRangeCategory.mockReturnValue(
             [{ name: 'abc' }]
         );
 
@@ -71,9 +69,9 @@ describe('NavigationService', () => {
     });
 
 
-    it('do not show move into buttons for newly created resources without id', () => {
+    test('do not show move into buttons for newly created resources without id', () => {
 
-        projectConfiguration.getRelationsForRangeCategory.and.returnValue(
+        projectConfiguration.getRelationsForRangeCategory.mockReturnValue(
             [{ name: 'liesWithin' }]
         );
 
@@ -83,12 +81,12 @@ describe('NavigationService', () => {
     });
 
 
-    it('do not show hierarchy buttons in extended search mode', () => {
+    test('do not show hierarchy buttons in extended search mode', () => {
 
-        viewFacade.isInOverview.and.returnValue(true);
-        viewFacade.isInExtendedSearchMode.and.returnValue(true);
+        viewFacade.isInOverview.mockReturnValue(true);
+        viewFacade.isInExtendedSearchMode.mockReturnValue(true);
 
-        projectConfiguration.getCategory.and.returnValue({
+        projectConfiguration.getCategory.mockReturnValue({
             Operation: { children: [ { name: 'operationSubcategory' } ] }
         });
 

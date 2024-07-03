@@ -3,7 +3,7 @@ import { PrintSettingsProfile } from './print-settings-profile';
 
 const remote = window.require('@electron/remote');
 
-const FILE_PATH = remote.getGlobal('appDataPath') + '/print-settings.json';
+const FILE_PATH = remote ? remote.getGlobal('appDataPath') + '/print-settings.json' : '';
 
 
 export interface PrintSettings {

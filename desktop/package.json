@@ -26,7 +26,7 @@
     "preinstall": "export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 || set PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1",
     "postinstall": "npm run update-version-info && gulp copy-fonts",
     "lint": "ng lint",
-    "test": "jest",
+    "test": "jest --runInBand",
     "e2e": "npm-run-all -p -r ng:serve:no-reload e2e:run",
     "e2e:run": "wait-on http-get://localhost:4200/dist/ && playwright test test/e2e --config=test/e2e/playwright.config.ts",
     "test:hub-setup": "docker-compose -f test/hub-integration/docker-compose.yml up -d",

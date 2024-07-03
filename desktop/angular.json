@@ -74,8 +74,12 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "idai-field-core",
-              "xml-utils",
-              "web-worker"
+              "showdown",
+              "svg-pan-zoom",
+              "tsfun",
+              "viz.js",
+              "web-worker",
+              "xml-utils"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@angular/core';
 import L from 'leaflet';
 import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore, ProjectConfiguration,
@@ -11,6 +10,8 @@ import { Messages } from '../../../messages/messages';
 import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';
 import { MapComponent } from './map.component';
+
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 @Component({

@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import { Name } from 'idai-field-core';
 import { ProjectIdentifierValidation } from '../../model/project-identifier-validation';
 import { SettingsService } from '../../services/settings/settings-service';
@@ -6,6 +5,7 @@ import { M } from '../messages/m';
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
 const stream = typeof window !== 'undefined' ? window.require('stream') : require('stream');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 

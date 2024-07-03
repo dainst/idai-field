@@ -305,7 +305,8 @@
   "Building-buildingType-default": {
     "values": {
       "Befestigung": "Fortification",
-      "Lager": "Storage building"
+      "Lager": "Storage building",
+      "Werkstatt": "Workshop"
     }
   },
   "colors-default-1": {
@@ -334,17 +335,24 @@
   },
   "Building-buildingCategory-default": {
     "values": {
-      "Tempel": "Temple",
-      "Theater": "Theatre",
+      "Tempel": "temple",
+      "Theater": "theatre",
       "Turm": "Tower",
       "Wohnbau": "Domestic Building",
       "Altar": "altar",
       "Amphitheater": "amphitheatre",
       "Bogen": "arch",
       "Brücke": "bridge",
-      "Gymnasium": "gymnasium",
-      "Strasse": "street",
-      "Basilika": "basilica"
+      "Gymnasium": "Gymnasium",
+      "Strasse": "Street",
+      "Basilika": "basilica",
+      "Therme": "baths / thermae",
+      "Circus": "Circus",
+      "Grabbau": "Tomb",
+      "Nymphäum": "Nymphaeum",
+      "Odeion": "Odeon",
+      "Stützmauer": "Retaining wall",
+      "Säulenhalle": "Portico"
     }
   },
   "Building-material-default-3": {
@@ -363,21 +371,32 @@
       "Pophyr": "porphyry",
       "Quarz": "quartz",
       "Sandstein": "sandstone",
-      "Ziegel": "brick"
+      "Ziegel": "brick",
+      "Beton": "concrete",
+      "Lehm": "loam",
+      "Putz": "plaster",
+      "Granit": "granite",
+      "Kalk": "lime"
     }
   },
   "Wood-objectType-default": {
     "values": {
-      "Gefäß": "Vessel",
+      "Gefäß": "vessel",
       "Architektur": "Architecture",
       "Altar": "Altar",
-      "Gerät": "Tool",
-      "Kasten/Kiste": "Box",
-      "Spielzeug": "Toy",
+      "Gerät": "tool",
+      "Kasten/Kiste": "box/chest",
+      "Spielzeug": "toy",
       "Anhänger": "pendant",
       "Ring": "ring",
       "Sarkophag": "sarkophagus",
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Gussform": "mould",
+      "Löffel": "spoon",
+      "Mobiliar": "(part of) furniture",
+      "Plastik/Skulptur": "sculpture",
+      "Produktionsrest": "residue of production",
+      "Schmuck": "jewelry"
     }
   },
   "glass-formDescription-default": {
@@ -395,7 +414,8 @@
   },
   "Building-buildingCategorySpecific-default": {
     "values": {
-      "Bogen": "Arch"
+      "Bogen": "Arch",
+      "Villa": "villa"
     }
   },
   "Wood-color-default": {
@@ -430,7 +450,10 @@
   },
   "Wood-decorationTechnique-default": {
     "values": {
-      "Sgraffito": "Sgraffitto"
+      "Sgraffito": "Sgraffito-Pottery",
+      "Intarsie": "intarsia",
+      "Relief": "relief",
+      "Vergoldung/metallischer Überzug": "gilding/metallic plating"
     }
   },
   "Architecture-wallType-default": {
@@ -553,7 +576,9 @@
       "Putz": "plaster",
       "Stahl": "steel",
       "Stuck": "stucco / moulding",
-      "Ziegel": "brick"
+      "Ziegel": "brick",
+      "Beton": "concrete",
+      "Lehm": "loam"
     }
   },
   "Building-material-default": {
@@ -564,7 +589,9 @@
       "Pophyr": "porphyry",
       "Marmor": "marble",
       "Kalkstein": "limestone",
-      "Kalkmörtel": "lime mortar"
+      "Kalkmörtel": "lime mortar",
+      "Granit": "granite",
+      "Kalk": "lime"
     }
   },
   "Place-siteClassification-default": {
@@ -602,7 +629,8 @@
   },
   "Wood-surfaceCondition-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Brandspuren": "burning marks (partly burned)"
     }
   },
   "Coin-metalMaterial-default": {
@@ -653,6 +681,58 @@
   "Metal-objectType-default": {
     "values": {
       "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+    }
+  },
+  "Building-context-default": {
+    "values": {
+      "Akropolis": "Acropolis",
+      "Forum": "Forum",
+      "Handwerksviertel": "artisans district",
+      "Heiligtum": "sanctuary",
+      "Nekropole": "Necropolis",
+      "Wohnviertel": "residential area"
+    }
+  },
+  "Wood-typeOfWood-default": {
+    "values": {
+      "Apfel": "apple",
+      "Birne": "pear",
+      "Eiche": "oak",
+      "Weide": "willow",
+      "Zeder": "cedar"
+    }
+  },
+  "Wood-manufacturingMethod-default": {
+    "values": {
+      "Gebohrt": "drilled",
+      "Gedämpft": "steamed",
+      "Gedreht": "turned",
+      "Gefräst": "milled",
+      "Gesägt": "sawed",
+      "Geschabt": "shaved",
+      "Geschnitzt": "carved",
+      "Gespalten": "split",
+      "Gehobelt": "planed"
+    }
+  },
+  "Wood-paintCondition-default": {
+    "values": {
+      "gut erhalten": "well preserved",
+      "abblätternd": "flaking",
+      "verwaschen": "washed out",
+      "stark abgerieben": "strongly abraded",
+      "nicht erhalten": "not preserved",
+      "verrieben": "slightly abraded / rubbed off"
+    }
+  },
+  "Architecture-blockProcessing-default": {
+    "values": {
+      "Lesesteine": "field stones"
+    }
+  },
+  "Sample-sampleType-default": {
+    "values": {
+      "Pollenanalyse": "Pollen analysis"
     }
   }
 }

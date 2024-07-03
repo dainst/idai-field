@@ -180,7 +180,7 @@
     "@types/node-fetch": "^2.5.12",
     "@types/pouchdb": "6.4.2",
     "@types/showdown": "1.7.5",
-    "ajv": "^6.12.6",
+    "ajv": "^8.16.0",
     "cross-var": "^1.1.0",
     "electron": "31.0.1",
     "electron-builder": "24.13.3",

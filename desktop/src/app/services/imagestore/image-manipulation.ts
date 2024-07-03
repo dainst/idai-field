@@ -1,4 +1,4 @@
-import * as sharp from 'sharp';
+const sharp = typeof window !== 'undefined' ? window.require('sharp') : require('sharp');
 
 
 export module ImageManipulationErrors {

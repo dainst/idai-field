@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { Resource } from 'idai-field-core';
 import { trimFields } from '../../../src/app/util/trim-fields';
 
@@ -8,7 +9,7 @@ import { trimFields } from '../../../src/app/util/trim-fields';
  */
 describe('trim fields', () => {
 
-    it('strip leading & trailing whitespace from field values', () => {
+    test('strip leading & trailing whitespace from field values', () => {
 
         const resource: Resource = {
             id: '1',
@@ -30,7 +31,7 @@ describe('trim fields', () => {
     });
 
 
-    it('strip whitespace of strings in nested objects', () => {
+    test('strip whitespace of strings in nested objects', () => {
 
         const resource: Resource = {
             id: '1',
@@ -50,7 +51,7 @@ describe('trim fields', () => {
     });
 
 
-    it('strip whitespace of strings in nested objects', () => {
+    test('strip whitespace of strings in nested objects', () => {
 
         const resource: Resource = {
             id: '1',

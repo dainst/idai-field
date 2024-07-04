@@ -21,17 +21,16 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
       <.document_heading>
         <DocumentLink.show project={@project_name} date={@publication_date} lang={@lang} doc={@doc} />
       </.document_heading>
+        <ViewSelection.render
+          project={@project_name}
+          date={@publication_date}
+          lang={@lang}
+          uuid={@uuid}
+          current={:detail}
+        />
 
       <div class="flex flex-row">
-        <div class="basis-2/3">
-          <ViewSelection.render
-            project={@project_name}
-            date={@publication_date}
-            lang={@lang}
-            uuid={@uuid}
-            current={:detail}
-          />
-
+      <div class="basis-2/3">
           <%= for group <- @doc["groups"] do %>
             <% fields =
               Enum.reject(group["fields"], fn %{"key" => key} ->

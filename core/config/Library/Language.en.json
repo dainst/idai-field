@@ -82,16 +82,20 @@
       "description": "Date on which the recording of the resource was finished"
     },
     "date": {
-      "label": "Date"
+      "label": "Date",
+      "description": "Date of recording/conducting"
     },
     "orientation": {
-      "label": "Orientation"
+      "label": "Orientation",
+      "description": "Orientation according to compass direction"
     },
     "spatialLocation": {
-      "label": "Spatial location"
+      "label": "Spatial location",
+      "description": "Description of the position within the site, trench or feature"
     },
     "provenance": {
-      "label": "Provenance"
+      "label": "Provenance",
+      "description": "Place of origin"
     },
     "literature": {
       "label": "Literature reference"
@@ -210,10 +214,12 @@
       "label": "Trench",
       "fields": {
         "researchQuestion": {
-          "label": "Research question"
+          "label": "Research question",
+          "description": "Research question or background of the trench, e.g. 'Specification and dating of the structure discovered in the magnetogram for...'"
         },
         "trenchComment": {
-          "label": "Trench comment"
+          "label": "Trench comment",
+          "description": "Trench commentary for evaluation and documentation, report for the excavation management"
         }
       }
     },
@@ -224,31 +230,39 @@
       "label": "Glass",
       "fields": {
         "decorationDescription": {
-          "label": "Decoration description"
+          "label": "Decoration description",
+          "description": "Further description field for more detailed description of the decoration"
         },
         "color": {
-          "label": "Color and intensity"
+          "label": "Color and intensity",
+          "description": "Colour, as far as recognisable"
         },
         "decorationTechnique": {
-          "label": "Surface treatment or decoration technique"
+          "label": "Surface treatment or decoration technique",
+          "description": "Technique used to apply decoration to the glass"
         },
         "formDescription": {
-          "label": "Form description"
+          "label": "Form description",
+          "description": "More detailed description of the general form"
         },
         "manufacturingMethod": {
-          "label": "Manufacturing method"
+          "label": "Manufacturing method",
+          "description": "Technique used to produce the object; recognisable traces of processing"
         },
         "objectType": {
           "label": "Designation or type of the object"
         },
         "transparency": {
-          "label": "Transparency"
+          "label": "Transparency",
+          "description": "How translucent is the object?"
         },
         "vesselForm": {
-          "label": "Basic vessel form"
+          "label": "Basic vessel form",
+          "description": "Basic shape of the vessel"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form"
+          "label": "Specific vessel form",
+          "description": "Specific shape of the vessel"
         }
       }
     },
@@ -289,7 +303,8 @@
           "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
-          "label": "Form description"
+          "label": "Form description",
+          "description": "More detailed description of the general form"
         },
         "manufacturing": {
           "label": "Manufacturing"
@@ -298,10 +313,12 @@
           "label": "Manufacturing method"
         },
         "specificType": {
-          "label": "Format"
+          "label": "Format",
+          "description": "Format of the bricks and tiles, if recognisable"
         },
         "temper": {
-          "label": "Temper"
+          "label": "Temper",
+          "description": "Basic type of temper"
         }
       }
     },
@@ -324,23 +341,27 @@
           "description": "External reference(s) of the project"
         },
         "gazId": {
-          "label": "Gazetteer ID"
+          "label": "Gazetteer ID",
+          "description": "ID number of the place encyclopaedia"
         },
         "institution": {
           "label": "Institution",
           "description": "Institution responsible for the project"
         },
         "latitude": {
-          "label": "Latitude"
+          "label": "Latitude",
+          "description": "Entry is made as a decimal number, negative values are possible"
         },
         "longitude": {
-          "label": "Longitude"
+          "label": "Longitude",
+          "description": "Entry is made as a decimal number, negative values are possible"
         },
         "license": {
           "label": "License information"
         },
         "projectURI": {
-          "label": "Project URL"
+          "label": "Project URL",
+          "description": "Reference to an external project page with further information"
         },
         "staff": {
           "label": "Staff"

@@ -1012,7 +1012,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.dating" datatype="html">
         <source>Datierungsangabe</source>
-        <target state="translated">Datação</target>
+        <target state="translated">Identificação da datação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1028,7 +1028,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
         <source>Maßangabe</source>
-        <target state="translated">Dimensão</target>
+        <target state="translated">Identificação da dimensão</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>

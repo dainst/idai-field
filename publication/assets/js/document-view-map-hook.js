@@ -290,9 +290,6 @@ export default getDocumentViewMapHook = () => {
                 aggregatedExtent = extend(aggregatedExtent, extent);
             }
 
-
-            console.log(parentFeatures)
-
             const parentVectorSource = new VectorSource({
                 features: new GeoJSON().readFeatures(parentFeatures)
             })
@@ -338,11 +335,12 @@ export default getDocumentViewMapHook = () => {
 
             let extent = aggregatedExtent;
 
-
             if (parentFeatures.features.length !== 0) {
                 extent = parentVectorSource.getExtent();
-            } else if (vectorSource.getExtent()) {
+            } else if ('geometry' in documentFeature) {
                 extent = vectorSource.getExtent();
+            } else {
+                extent = aggregatedExtent;
             }
 
             this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });

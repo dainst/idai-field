@@ -30,7 +30,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             </div>
           </div>
           <div class="grow p-1 h-full bg-white">
-            <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}></div>
+            <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}>
+              <!-- This div will get repurposed once the map is loaded. -->
+              Loading map...
+            </div>
           </div>
         </div>
       </div>

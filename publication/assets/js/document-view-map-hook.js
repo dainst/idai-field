@@ -12,6 +12,8 @@ import GeoJSON from 'ol/format/GeoJSON.js';
 import { asArray } from 'ol/color';
 import Overlay from 'ol/Overlay.js';
 
+const tileSize = 256;
+
 function getResolutions(
     extent,
     tileSize,
@@ -33,68 +35,96 @@ function getResolutions(
     return result.reverse();
 };
 
-const tileSize = 256;
+function getPolygonStyle(featureProperties) {
+    const [r, g, b, a] = asArray(featureProperties.color)
+
+    let style = new Style({
+        stroke: new Stroke({
+            color: `rgba(${r}, ${g}, ${b}, ${a})`,
+            width: 1,
+        })
+    })
+
+    if (featureProperties.fill) {
+        style.setFill(new Fill({
+            color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
+        }));
+    } else {
+        style.setFill(new Fill({
+            color: `rgba(${r}, ${g}, ${b}, 0.0)`,
+        }));
+    }
+
+    return style;
+}
+
+const pointRadius = 5;
+const lineWidth = pointRadius * 2;
+
+function getLineStyle(featureProperties) {
+    const [r, g, b, a] = asArray(featureProperties.color)
+
+    let color;
+
+    if (featureProperties.fill) {
+        color = `rgba(${r}, ${g}, ${b}, 1)`
+    } else {
+        color = `rgba(${r}, ${g}, ${b}, 0.5)`
+    }
+
+    return new Style({
+        stroke: new Stroke({
+            color: color,
+            width: lineWidth,
+        })
+    })
+}
+
+function getPointStyle(featureProperties) {
+    const [r, g, b, a] = asArray(featureProperties.color)
+
+    let image = new Circle({
+        radius: pointRadius,
+        stroke: new Stroke({
+            color: `rgba(${r}, ${g}, ${b}, ${a})`,
+            width: 1,
+        })
+    })
+
+    if (featureProperties.fill) {
+        image.setFill(new Fill({
+            color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
+        }));
+    } else {
+        image.setFill(new Fill({
+            color: `rgba(${r}, ${g}, ${b}, 0.05)`,
+        }));
+    }
+
+    return new Style({
+        image: image
+    })
+}
 
 const styleFunction = function (feature) {
     const props = feature.getProperties();
-
-    let style = null
-
     if (props.type === "Polygon" || props.type === "MultiPolygon") {
-
-        const [r, g, b, a] = asArray(props.color)
-
-        style = new Style({
-            stroke: new Stroke({
-                color: `rgba(${r}, ${g}, ${b}, ${a})`,
-                width: 1,
-            })
-        })
-
-        if (props.fill) {
-            style.setFill(new Fill({
-                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
-            }));
-        } else {
-            style.setFill(new Fill({
-                color: `rgba(${r}, ${g}, ${b}, 0.0)`,
-            }));
-        }
+        return getPolygonStyle(props);
+    } else if (props.type == "LineString") {
+        return getLineStyle(props);
     } else if (props.type == "Point") {
-        const [r, g, b, a] = asArray(props.color)
-
-        let image = new Circle({
-            radius: 7,
-            stroke: new Stroke({
-                color: `rgba(${r}, ${g}, ${b}, ${a})`,
-                width: 1,
-            })
-        })
-
-        if (props.fill) {
-            image.setFill(new Fill({
-                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
-            }));
-        } else {
-            image.setFill(new Fill({
-                color: `rgba(${r}, ${g}, ${b}, 0.05)`,
-            }));
-        }
-
-        style = new Style({
-            image: image
-        })
+        return getPointStyle(props);
     } else {
-        console.error(`Unknown feature type ${props.type}, no matching styling.`)
+        console.error(`Unknown feature type ${props.type}, no matching style.`)
+        return null;
     }
-
-    return style
 };
 
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
         docId: null,
+        projectTileLayers: [],
         parentLayer: null,
         docLayer: null,
         childrenLayer: null,
@@ -102,11 +132,20 @@ export default getDocumentViewMapHook = () => {
         identifierOverlayContent: null,
 
         mounted() {
+            console.log("mount")
+            this.initialize();
+            this.handleEvent(
+                `document-map-set-project-layers-${this.el.id}`,
+                ({ project, project_tile_layers }) => {
+                    console.log("project tile layer update")
+                    this.setProjectLayers(project, project_tile_layers)
+                }
+            )
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
-                ({ project, document_feature, children_features, parent_features, project_tile_layers }) => {
-                    this.initialize(); // TODO: Do not initialize on every change.
-                    this.setup(project, parent_features, document_feature, children_features, project_tile_layers)
+                ({ project, document_feature, children_features, parent_features }) => {
+                    // TODO: Do not initialize on every change.
+                    this.setup(parent_features, document_feature, children_features)
                 }
             )
         },
@@ -131,7 +170,7 @@ export default getDocumentViewMapHook = () => {
             this.map = new Map({
                 target: `${this.el.getAttribute("id")}-map`,
                 view: new View(),
-                overlays: [this.identifierOverlay]
+                overlays: [this.identifierOverlay],
             });
 
             _this.identifierOverlay.setPosition(undefined)
@@ -239,20 +278,16 @@ export default getDocumentViewMapHook = () => {
                         })
                     }
                 })
-
             })
         },
-        async setup(project, parentFeatures, documentFeature, childrenFeatures, projectTileLayers) {
-            this.docId = null
-            this.docLayer = null
-            this.childrenLayer = null
 
-            let aggregatedExtent = createEmpty();
+        setProjectLayers(projectName, tileLayersInfo) {
 
-            this.docId = documentFeature.properties.uuid;
+            this.projectTileLayerExtent = createEmpty();
+            this.projectTileLayers = [];
 
-            for (let layerInfo of projectTileLayers) {
-                const geoReference = layerInfo.extent;
+            for (let info of tileLayersInfo) {
+                const geoReference = info.extent;
 
                 const extent = [
                     geoReference.bottomLeftCoordinates[1],
@@ -261,11 +296,11 @@ export default getDocumentViewMapHook = () => {
                     geoReference.topRightCoordinates[0]
                 ];
 
-                const pathTemplate = `/api/image/tile/${project}/${layerInfo.uuid}/{z}/{x}/{y}`;
+                const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
 
-                const resolutions = getResolutions(extent, tileSize, layerInfo.width, layerInfo.height)
+                const resolutions = getResolutions(extent, tileSize, info.width, info.height)
 
-                let source = new TileImage({
+                const source = new TileImage({
                     tileGrid: new TileGrid({
                         extent,
                         origin: [extent[0], extent[3]],
@@ -280,15 +315,23 @@ export default getDocumentViewMapHook = () => {
                     }
                 });
 
-                let currentLayer = new TileLayer({
+                const currentLayer = new TileLayer({
                     source: source,
                     extent
-                });
+                })
 
+                this.projectTileLayers.push(currentLayer);
+
+                this.projectTileLayerExtent = extend(this.projectTileLayerExtent, extent);
                 this.map.addLayer(currentLayer);
-
-                aggregatedExtent = extend(aggregatedExtent, extent);
             }
+        },
+        async setup(parentFeatures, documentFeature, childrenFeatures) {
+            this.docId = documentFeature.properties.uuid;
+
+            if (this.childrenLayer) this.map.removeLayer(this.childrenLayer);
+            if (this.docLayer) this.map.removeLayer(this.docLayer);
+            if (this.parentLayer) this.map.removeLayer(this.parentLayer);
 
             const parentVectorSource = new VectorSource({
                 features: new GeoJSON().readFeatures(parentFeatures)
@@ -302,8 +345,6 @@ export default getDocumentViewMapHook = () => {
 
             this.map.addLayer(this.parentLayer);
 
-            aggregatedExtent = extend(aggregatedExtent, parentVectorSource.getExtent())
-
             documentFeature.properties.fill = true;
 
             const vectorSource = new VectorSource({
@@ -315,30 +356,32 @@ export default getDocumentViewMapHook = () => {
                 style: styleFunction,
             });
 
-            aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
-
             this.map.addLayer(this.docLayer);
 
-            const additionalVectorSource = new VectorSource({
+            const childrenVectorSource = new VectorSource({
                 features: new GeoJSON().readFeatures(childrenFeatures)
             })
 
             this.childrenLayer = new VectorLayer({
                 name: "childLayer",
-                source: additionalVectorSource,
+                source: childrenVectorSource,
                 style: styleFunction
             });
 
             this.map.addLayer(this.childrenLayer);
 
-            aggregatedExtent = extend(aggregatedExtent, additionalVectorSource.getExtent())
+            aggregatedExtent = extend(this.projectTileLayerExtent, parentVectorSource.getExtent())
+            aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
+            aggregatedExtent = extend(aggregatedExtent, childrenVectorSource.getExtent())
 
-            let extent = aggregatedExtent;
+            let extent;
 
             if (parentFeatures.features.length !== 0) {
                 extent = parentVectorSource.getExtent();
             } else if ('geometry' in documentFeature) {
                 extent = vectorSource.getExtent();
+            } else if (childrenFeatures.features.length !== 0) {
+                extent = childrenVectorSource.getExtent();
             } else {
                 extent = aggregatedExtent;
             }
@@ -349,12 +392,6 @@ export default getDocumentViewMapHook = () => {
                 maxZoom: 40
             }));
             this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
-
-            // this.map.setView(view);
-
-            // this.map.getView().fit(extent, { padding: [100, 100, 100, 100] })
-            // this.map.setView(view);
-
         }
     }
 }

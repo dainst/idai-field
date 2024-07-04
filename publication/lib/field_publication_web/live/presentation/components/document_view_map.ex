@@ -3,51 +3,69 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
   import FieldPublicationWeb.Presentation.Components.Typography
 
+  alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications.Data
   alias FieldPublicationWeb.Presentation.Components.GenericField
 
   def render(assigns) do
     ~H"""
     <div>
-    <.group_heading>Geometry <span class="text-xs">(<%= @type %>)</span></.group_heading>
-
-    <div
-      id={@id}
-      centerLon={@centerLon}
-      centerLat={@centerLat}
-      zoom={@zoom}
-      phx-hook="DocumentViewMap"
-    >
-      <div style={@style} id={"#{@id}-map"}></div>
-      <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
-      <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
-        <div class="border-[1px] rounded-sm border-black flex">
-          <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
-            <div
-              class="h-full bg-white/60 p-1 font-thin"
-              id={"#{@id}-identifier-tooltip-category-content"}
-            >
-            </div>
-          </div>
-          <div class="grow p-1 h-full bg-white">
-            <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}>
-              <!-- This div will get repurposed once the map is loaded. -->
-              Loading map...
+      <.group_heading>Geometry <span class="text-xs">(<%= @type %>)</span></.group_heading>
+      <div
+        id={@id}
+        centerLon={@centerLon}
+        centerLat={@centerLat}
+        zoom={@zoom}
+        phx-hook="DocumentViewMap"
+      >
+        <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
+          by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
+        <div style={@style} id={"#{@id}-map"} phx-update="ignore">
+          <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
+          <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
+            <div class="border-[1px] rounded-sm border-black flex">
+              <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
+                <div
+                  class="h-full bg-white/60 p-1 font-thin"
+                  id={"#{@id}-identifier-tooltip-category-content"}
+                >
+                </div>
+              </div>
+              <div class="grow p-1 h-full bg-white">
+                <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}>
+                  <!-- This div will get repurposed once the map is loaded. -->
+                  Loading map...
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
     """
   end
 
   def update(
-        %{id: id, publication: publication, doc: doc, lang: lang} =
+        %{id: id, publication: %Publication{} = publication, doc: doc, lang: lang} =
           assigns,
         socket
       ) do
     assigns = set_defaults(assigns)
+
+    socket =
+      if not (Map.has_key?(socket.assigns, :publication)) or not Map.equal?(socket.assigns.publication, publication) do
+        project_tile_layers =
+          publication
+          |> Data.get_project_map_layers()
+          |> Enum.map(&extract_tile_layer_info/1)
+
+        push_event(socket, "document-map-set-project-layers-#{id}", %{
+          project: publication.project_name,
+          project_tile_layers: project_tile_layers
+        })
+      else
+        socket
+      end
 
     children =
       doc
@@ -94,10 +112,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     document_feature = create_feature_info(doc, lang)
 
-    project_tile_layers =
-      publication
-      |> Data.get_project_map_layers()
-      |> Enum.map(&extract_tile_layer_info/1)
 
     assigns = Map.put(assigns, :type, get_in(document_feature, [:properties, :type]) || "None")
 
@@ -118,8 +132,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         parent_features: %{
           type: "FeatureCollection",
           features: parent_features
-        },
-        project_tile_layers: project_tile_layers
+        }
       })
     }
   end
@@ -191,14 +204,16 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
            "georeference" => georeference,
            "height" => height,
            "width" => width,
-           "id" => uuid
+           "id" => uuid,
+           "identifier" => identifier
          }
        }) do
     %{
       extent: georeference,
       height: height,
       width: width,
-      uuid: uuid
+      uuid: uuid,
+      identifier: identifier
     }
   end
 end

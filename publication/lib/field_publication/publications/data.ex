@@ -257,33 +257,13 @@ defmodule FieldPublication.Publications.Data do
       }
 
     if include_relations do
-      child_relations =
-        %{
-          "key" => "contains",
-          "values" =>
-            publication
-            |> get_hierarchy()
-            |> Map.get(resource["id"], %{})
-            |> Map.get("children", [])
-            |> get_documents(publication),
-          "labels" =>
-            Gettext.known_locales(FieldPublicationWeb.Gettext)
-            |> Enum.map(fn locale ->
-              {
-                locale,
-                Gettext.with_locale(
-                  FieldPublicationWeb.Gettext,
-                  locale,
-                  fn ->
-                    FieldPublicationWeb.Gettext.gettext("Contains")
-                  end
-                )
-              }
-            end)
-            |> Enum.into(%{})
-        }
+      child_task_pid = Task.async(fn() ->
+        create_child_relations(resource["id"], publication)
+      end )
 
       other_relations = extend_relations(category_configuration["item"], resource, publication)
+
+      child_relations = Task.await(child_task_pid)
 
       all_relations =
       if child_relations["values"] != [] do
@@ -364,6 +344,33 @@ defmodule FieldPublication.Publications.Data do
       end)
     end)
     |> List.flatten()
+  end
+
+  defp create_child_relations(uuid, publication) do
+    %{
+      "key" => "contains",
+      "values" =>
+        publication
+        |> get_hierarchy()
+        |> Map.get(uuid, %{})
+        |> Map.get("children", [])
+        |> get_documents(publication),
+      "labels" =>
+        Gettext.known_locales(FieldPublicationWeb.Gettext)
+        |> Enum.map(fn locale ->
+          {
+            locale,
+            Gettext.with_locale(
+              FieldPublicationWeb.Gettext,
+              locale,
+              fn ->
+                FieldPublicationWeb.Gettext.gettext("Contains")
+              end
+            )
+          }
+        end)
+        |> Enum.into(%{})
+    }
   end
 
   defp run_query(query, database) do

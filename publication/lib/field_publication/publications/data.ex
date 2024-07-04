@@ -332,15 +332,26 @@ defmodule FieldPublication.Publications.Data do
 
   defp extend_relations(category_configuration, resource, %Publication{} = publication) do
     relations = Map.get(resource, "relations", %{})
-    keys = Map.keys(relations)
+
+    # Load all related documents from CouchDB in one go...
+    related_documents =
+      relations
+      |> Map.values()
+      |> List.flatten()
+      |> get_documents(publication, false)
+
+    # ...then sort them into their respective relation groups, including the translated labels for those groups.
+    relation_types = Map.keys(relations)
 
     category_configuration["groups"]
     |> Enum.map(fn group ->
       group["fields"]
-      |> Stream.map(&extend_field(&1, keys))
+      |> Stream.map(&extend_field(&1, relation_types))
       |> Stream.reject(fn val -> val == nil end)
-      |> Enum.map(fn %{"key" => key} = map ->
-        Map.put(map, "values", get_documents(relations[key], publication, false))
+      |> Enum.map(fn %{"key" => relation_type} = map ->
+        Map.put(map, "values", Enum.filter(related_documents, fn(%{"id" => uuid}) ->
+          uuid in relations[relation_type]
+        end))
       end)
     end)
     |> List.flatten()

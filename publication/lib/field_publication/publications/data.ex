@@ -257,36 +257,45 @@ defmodule FieldPublication.Publications.Data do
       }
 
     if include_relations do
+      child_relations =
+        %{
+          "key" => "contains",
+          "values" =>
+            publication
+            |> get_hierarchy()
+            |> Map.get(resource["id"], %{})
+            |> Map.get("children", [])
+            |> get_documents(publication),
+          "labels" =>
+            Gettext.known_locales(FieldPublicationWeb.Gettext)
+            |> Enum.map(fn locale ->
+              {
+                locale,
+                Gettext.with_locale(
+                  FieldPublicationWeb.Gettext,
+                  locale,
+                  fn ->
+                    FieldPublicationWeb.Gettext.gettext("Contains")
+                  end
+                )
+              }
+            end)
+            |> Enum.into(%{})
+        }
+
+      other_relations = extend_relations(category_configuration["item"], resource, publication)
+
+      all_relations =
+      if child_relations["values"] != [] do
+        other_relations ++ [child_relations]
+      else
+        other_relations
+      end
+
       Map.put(
         doc,
         "relations",
-        extend_relations(category_configuration["item"], resource, publication) ++
-          [
-            %{
-              "key" => "contains",
-              "values" =>
-                publication
-                |> get_hierarchy()
-                |> Map.get(resource["id"], %{})
-                |> Map.get("children", [])
-                |> get_documents(publication),
-              "labels" =>
-                Gettext.known_locales(FieldPublicationWeb.Gettext)
-                |> Enum.map(fn locale ->
-                  {
-                    locale,
-                    Gettext.with_locale(
-                      FieldPublicationWeb.Gettext,
-                      locale,
-                      fn ->
-                        FieldPublicationWeb.Gettext.gettext("Contains")
-                      end
-                    )
-                  }
-                end)
-                |> Enum.into(%{})
-            }
-          ]
+        all_relations
       )
     else
       doc

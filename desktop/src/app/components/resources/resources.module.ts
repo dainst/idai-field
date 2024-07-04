@@ -20,7 +20,6 @@ import { BaseList } from './base-list';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { ListComponent } from './list/list.component';
 import { RowComponent } from './list/row.component';
-import { GeometryViewComponent } from './map/list/geometry-view.component';
 import { SidebarListComponent } from './map/list/sidebar-list.component';
 import { EditableMapComponent } from './map/map/editable-map.component';
 import { LayerMapComponent } from './map/map/layer-map.component';
@@ -73,7 +72,6 @@ const remote = window.require('@electron/remote');
     ],
     declarations: [
         ResourcesComponent,
-        GeometryViewComponent,
         MapComponent,
         LayerMapComponent,
         EditableMapComponent,
@@ -146,9 +144,6 @@ const remote = window.require('@electron/remote');
                 SyncService
             ]
         },
-    ],
-    exports: [
-        GeometryViewComponent
     ]
 })
 

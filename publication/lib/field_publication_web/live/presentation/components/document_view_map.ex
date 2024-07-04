@@ -1,10 +1,16 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   use FieldPublicationWeb, :live_component
 
+  import FieldPublicationWeb.Presentation.Components.Typography
+
   alias FieldPublication.Publications.Data
+  alias FieldPublicationWeb.Presentation.Components.GenericField
 
   def render(assigns) do
     ~H"""
+    <div>
+    <.group_heading>Geometry <span class="text-xs">(<%= @type %>)</span></.group_heading>
+
     <div
       id={@id}
       centerLon={@centerLon}
@@ -28,6 +34,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           </div>
         </div>
       </div>
+    </div>
     </div>
     """
   end
@@ -82,10 +89,14 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           geometries_present
       end
 
+    document_feature = create_feature_info(doc, lang)
+
     project_tile_layers =
       publication
       |> Data.get_project_map_layers()
       |> Enum.map(&extract_tile_layer_info/1)
+
+    assigns = Map.put(assigns, :type, get_in(document_feature, [:properties, :type]) || "None")
 
     {
       :ok,
@@ -93,7 +104,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       |> assign(assigns)
       |> push_event("document-map-update-#{id}", %{
         project: publication.project_name,
-        document_feature: create_feature_info(doc, lang),
+        document_feature: document_feature,
         children_features: %{
           type: "FeatureCollection",
           features:

@@ -4,43 +4,16 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
 
   def render(assigns) do
     ~H"""
-    <form
-      id="project_options"
-      class="flex flex-row gap-2 items-center"
-      phx-change="project_options_changed"
-    >
+    <div class="flex flex-row gap-2 items-center">
       <.link navigate={~p"/"}>
         <.icon name="hero-globe-europe-africa-solid" />
       </.link>
       <div>/</div>
       <div><%= @current_publication.project_name %></div>
       <div>/</div>
-
-      <% draft_dates =
-        Enum.map(@publications, fn %{draft_date: draft_date} -> Date.to_iso8601(draft_date) end) %>
-      <%= if Enum.count(draft_dates) == 1 do %>
-        <div>
-          <%= List.first(draft_dates) %>
-        </div>
-      <% else %>
-        <.input
-          type="select"
-          name="project_date_selection"
-          options={draft_dates}
-          value={Date.to_iso8601(@current_publication.draft_date)}
-        />
-      <% end %>
+      <%= render_publication_dropdown(assigns) %>
       <div>/</div>
-      <%= if Enum.count(@current_publication.languages) == 1 do %>
-        <div><%= List.first(@current_publication.languages) %></div>
-      <% else %>
-        <.input
-          type="select"
-          name="project_language_selection"
-          options={@current_publication.languages}
-          value={@selected_lang}
-        />
-      <% end %>
+      <%= render_language_dropdown(assigns) %>
       <div>/</div>
       <.link patch={
         ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}/#{@selected_lang}"
@@ -53,7 +26,75 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
           <%= @identifier %>
         </div>
       <% end %>
-    </form>
+    </div>
+    """
+  end
+
+  defp render_publication_dropdown(assigns) do
+    ~H"""
+    <div class="group relative">
+      <%= @current_publication.draft_date %>
+      <%= if Enum.count(@publications) > 1 do %>
+        <.icon name="hero-chevron-down-mini" />
+
+        <div class="z-10 bg-white p-2 outline outline-1 absolute hidden group-hover:block w-max">
+          <div class="font-semibold mb-2">Available publications</div>
+          <%= for publication <- @publications do %>
+            <% url =
+              ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{@selected_lang}"
+
+            url =
+              if Map.has_key?(assigns, :uuid) do
+                "#{url}/#{@uuid}"
+              else
+                url
+              end %>
+            <div class={"#{if publication.draft_date == @current_publication.draft_date, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
+              <.link patch={url}>
+                Project state <%= publication.draft_date %>
+                <%= if publication.publication_date do %>
+                  <span>, published <%= publication.publication_date %></span>
+                <% else %>
+                  <span>, not yet published.</span>
+                <% end %>
+              </.link>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    """
+  end
+
+  defp render_language_dropdown(assigns) do
+    ~H"""
+    <div class="group relative">
+      <%= @selected_lang %>
+
+      <%= if Enum.count(@current_publication.languages) > 1 do %>
+        <.icon name="hero-chevron-down-mini" />
+        <div class="z-10 bg-white p-2 outline outline-1 absolute hidden group-hover:block w-max">
+          <div class="font-semibold mb-2">Available languages</div>
+          <%= for language <- @current_publication.languages do %>
+            <% url =
+              ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}/#{language}"
+
+            url =
+              if Map.has_key?(assigns, :uuid) do
+                "#{url}/#{@uuid}"
+              else
+                url
+              end %>
+
+            <div class={"#{if language == @selected_lang, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
+              <.link patch={url}>
+                <%= language %>
+              </.link>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
     """
   end
 end

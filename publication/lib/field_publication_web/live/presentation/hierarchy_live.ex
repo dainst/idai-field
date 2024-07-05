@@ -10,16 +10,17 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
     GenericField
   }
 
+  alias FieldPublication.Projects
+
   import FieldPublicationWeb.Presentation.Components.Typography
 
   def render(assigns) do
     ~H"""
     <div>
       <PublicationSelection.render
-        project_name={@project_name}
-        draft_dates={@draft_dates}
-        selected_date={@publication.draft_date}
-        languages={@publication.languages}
+        publications={@publications}
+        current_publication={@publication}
+        uuid={@uuid}
         selected_lang={@lang}
         identifier={
           if Data.get_field_values(@current_doc, "category") != "Project",
@@ -111,17 +112,14 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
     publications =
       project_name
       |> Publications.list()
-      |> Stream.filter(fn pub -> pub.draft_date != nil end)
-      |> Enum.reject(fn pub -> Date.after?(pub.draft_date, Date.utc_today()) end)
-
-    draft_dates =
-      Enum.map(publications, fn pub ->
-        Date.to_iso8601(pub.draft_date)
+      |> Enum.filter(fn pub ->
+        Projects.has_publication_access?(pub, socket.assigns.current_user)
       end)
 
     {
       :ok,
-      assign(socket, :draft_dates, draft_dates)
+      socket
+      |> assign(:publications, publications)
     }
   end
 

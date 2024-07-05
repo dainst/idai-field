@@ -3,6 +3,7 @@
     publications={@publications}
     current_publication={@publication}
     selected_lang={@selected_lang}
+    uuid={@uuid}
     identifier={
       if Data.get_field_values(@doc, "category") != "Project",
         do: Data.get_field_values(@doc, "identifier")

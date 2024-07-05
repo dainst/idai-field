@@ -159,34 +159,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def handle_event(
-        "project_options_changed",
-        %{"_target" => ["project_language_selection"], "project_language_selection" => lang},
-        %{assigns: %{project_name: project_name, publication: publication}} = socket
-      ) do
-    uuid = Map.get(socket.assigns, :uuid, "")
-
-    {
-      :noreply,
-      push_patch(socket,
-        to: ~p"/projects/#{project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
-      )
-    }
-  end
-
-  def handle_event(
-        "project_options_changed",
-        %{"_target" => ["project_date_selection"], "project_date_selection" => date},
-        %{assigns: %{project_name: project_name, selected_lang: lang}} = socket
-      ) do
-    uuid = Map.get(socket.assigns, :uuid, "")
-
-    {
-      :noreply,
-      push_patch(socket, to: ~p"/projects/#{project_name}/#{date}/#{lang}/#{uuid}")
-    }
-  end
-
-  def handle_event(
         "geometry-clicked",
         %{"uuid" => uuid},
         %{assigns: %{publication: publication, selected_lang: lang}} = socket

@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeAll, jest } from '@jest/globals';
 import { featureDoc } from 'idai-field-core';
 import { DotBuilder } from '../../../../src/app/components/matrix/dot-builder';
 import { Edges } from '../../../../src/app/components/matrix/edges-builder';
@@ -15,15 +16,13 @@ describe('DotBuilder', () => {
 
     beforeAll(() => {
 
-        mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
-            ['getCategory']);
-        mockProjectConfiguration.getCategory.and.returnValue({
-            color: '#000000',
-        })
+        mockProjectConfiguration = {
+            getCategory: jest.fn().mockReturnValue({ color: '#000000' })
+        };
     });
 
 
-    it('build dot string for simple graph', () => {
+    test('build dot string for simple graph', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -37,17 +36,20 @@ describe('DotBuilder', () => {
             mockProjectConfiguration, { 'UNKNOWN': [feature1, feature2] }, edges
         );
 
-        expect(graph).toMatch('digraph \{ newrank=true; ' +
-            'node \\[style=filled, fontname="Open SansVariable"\\] ' +
-            '"feature1" \\[id="node-f1".*\\] ' +
-            '"feature2" \\[id="node-f2".*\\] ' +
-            '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
-            '\}');
+        expect(graph).toMatch(
+            new RegExp(
+                'digraph \{ newrank=true; ' +
+                'node \\[style=filled, fontname="Open SansVariable"\\] ' +
+                '"feature1" \\[id="node-f1".*\\] ' +
+                '"feature2" \\[id="node-f2".*\\] ' +
+                '\{rank=min "feature1"\} ' +
+                '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+                '\}')
+            );
     });
 
 
-    it('build dot string for graph with multiple children', () => {
+    test('build dot string for graph with multiple children', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -63,19 +65,23 @@ describe('DotBuilder', () => {
             mockProjectConfiguration, { 'UNKNOWN': [feature1, feature2, feature3] }, edges
         );
 
-        expect(graph).toMatch('digraph \{ newrank=true; ' +
-            'node \\[style=filled, fontname="Open SansVariable"\\] ' +
-            '"feature1" \\[id="node-f1".*\\] ' +
-            '"feature2" \\[id="node-f2".*\\] ' +
-            '"feature3" \\[id="node-f3".*\\] ' +
-            '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
-            '"feature1" -> "feature3" \\[class="above-f1 below-f3".*\\] ' +
-            '\}');
+        expect(graph).toMatch(
+            new RegExp(
+                'digraph \{ newrank=true; ' +
+                'node \\[style=filled, fontname="Open SansVariable"\\] ' +
+                '"feature1" \\[id="node-f1".*\\] ' +
+                '"feature2" \\[id="node-f2".*\\] ' +
+                '"feature3" \\[id="node-f3".*\\] ' +
+                '\{rank=min "feature1"\} ' +
+                '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+                '"feature1" -> "feature3" \\[class="above-f1 below-f3".*\\] ' +
+                '\}'
+            )
+        );
     });
 
 
-    it('build dot string for diamond formed graph', () => {
+    test('build dot string for diamond formed graph', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -94,23 +100,25 @@ describe('DotBuilder', () => {
         );
 
         expect(graph).toMatch(
-            'digraph \{ newrank=true; ' +
-            'node \\[style=filled, fontname="Open SansVariable"\\] ' +
-            '"feature1" \\[id="node-f1".*\\] ' +
-            '"feature2" \\[id="node-f2".*\\] ' +
-            '"feature3" \\[id="node-f3".*\\] ' +
-            '"feature4" \\[id="node-f4".*\\] ' +
-            '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
-            '"feature1" -> "feature3" \\[class="above-f1 below-f3".*\\] ' +
-            '"feature2" -> "feature4" \\[class="above-f2 below-f4".*\\] ' +
-            '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
-            '}'
+            new RegExp(
+                'digraph \{ newrank=true; ' +
+                'node \\[style=filled, fontname="Open SansVariable"\\] ' +
+                '"feature1" \\[id="node-f1".*\\] ' +
+                '"feature2" \\[id="node-f2".*\\] ' +
+                '"feature3" \\[id="node-f3".*\\] ' +
+                '"feature4" \\[id="node-f4".*\\] ' +
+                '\{rank=min "feature1"\} ' +
+                '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+                '"feature1" -> "feature3" \\[class="above-f1 below-f3".*\\] ' +
+                '"feature2" -> "feature4" \\[class="above-f2 below-f4".*\\] ' +
+                '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
+                '}'
+            )
         );
     });
 
 
-    it('build dot string for graph with sameRank edges', () => {
+    test('build dot string for graph with sameRank edges', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -128,23 +136,27 @@ describe('DotBuilder', () => {
             mockProjectConfiguration, { 'UNKNOWN': [feature1, feature2, feature3, feature4] }, edges
         );
 
-        expect(graph).toMatch('digraph \{ newrank=true; ' +
-            'node \\[style=filled, fontname="Open SansVariable"\\] ' +
-            '"feature1" \\[id="node-f1".*\\] ' +
-            '"feature2" \\[id="node-f2".*\\] ' +
-            '"feature3" \\[id="node-f3".*\\] ' +
-            '"feature4" \\[id="node-f4".*\\] ' +
-            '"feature1" -> "feature2" \\[dir="none", class="same-rank-f1 same-rank-f2".*\\] ' +
-            '\{rank=same "feature1", "feature2"\} ' +
-            '"feature2" -> "feature4" \\[dir="none", class="same-rank-f2 same-rank-f4".*\\] ' +
-            '\{rank=same "feature2", "feature4"\} ' +
-            '"feature3" -> "feature4" \\[dir="none", class="same-rank-f3 same-rank-f4".*\\] ' +
-            '\{rank=same "feature3", "feature4"\} ' +
-            '\}');
+        expect(graph).toMatch(
+            new RegExp(
+                'digraph \{ newrank=true; ' +
+                'node \\[style=filled, fontname="Open SansVariable"\\] ' +
+                '"feature1" \\[id="node-f1".*\\] ' +
+                '"feature2" \\[id="node-f2".*\\] ' +
+                '"feature3" \\[id="node-f3".*\\] ' +
+                '"feature4" \\[id="node-f4".*\\] ' +
+                '"feature1" -> "feature2" \\[dir="none", class="same-rank-f1 same-rank-f2".*\\] ' +
+                '\{rank=same "feature1", "feature2"\} ' +
+                '"feature2" -> "feature4" \\[dir="none", class="same-rank-f2 same-rank-f4".*\\] ' +
+                '\{rank=same "feature2", "feature4"\} ' +
+                '"feature3" -> "feature4" \\[dir="none", class="same-rank-f3 same-rank-f4".*\\] ' +
+                '\{rank=same "feature3", "feature4"\} ' +
+                '\}'
+            )
+        );
     });
 
 
-    it('build dot string for graph with above and sameRank edges', () => {
+    test('build dot string for graph with above and sameRank edges', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -167,27 +179,29 @@ describe('DotBuilder', () => {
         );
 
         expect(graph).toMatch(
-            'digraph \{ newrank=true; ' +
-            'node \\[style=filled, fontname="Open SansVariable"\\] ' +
-            '"feature1" \\[id="node-f1".*\\] ' +
-            '"feature2" \\[id="node-f2".*\\] ' +
-            '"feature3" \\[id="node-f3".*\\] ' +
-            '"feature4" \\[id="node-f4".*\\] ' +
-            '"feature5" \\[id="node-f5".*\\] ' +
-            '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
-            '"feature2" -> "feature5" \\[class="above-f2 below-f5".*\\] ' +
-            '"feature2" -> "feature3" \\[dir="none", class="same-rank-f2 same-rank-f3".*\\] ' +
-            '"feature2" -> "feature4" \\[dir="none", class="same-rank-f2 same-rank-f4".*\\] ' +
-            '\{rank=same "feature2", "feature3", "feature4"\} ' +
-            '"feature3" -> "feature4" \\[dir="none", class="same-rank-f3 same-rank-f4".*\\] ' +
-            '\{rank=same "feature3", "feature4"\} ' +
-            '\}'
+            new RegExp(
+                'digraph \{ newrank=true; ' +
+                'node \\[style=filled, fontname="Open SansVariable"\\] ' +
+                '"feature1" \\[id="node-f1".*\\] ' +
+                '"feature2" \\[id="node-f2".*\\] ' +
+                '"feature3" \\[id="node-f3".*\\] ' +
+                '"feature4" \\[id="node-f4".*\\] ' +
+                '"feature5" \\[id="node-f5".*\\] ' +
+                '\{rank=min "feature1"\} ' +
+                '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+                '"feature2" -> "feature5" \\[class="above-f2 below-f5".*\\] ' +
+                '"feature2" -> "feature3" \\[dir="none", class="same-rank-f2 same-rank-f3".*\\] ' +
+                '"feature2" -> "feature4" \\[dir="none", class="same-rank-f2 same-rank-f4".*\\] ' +
+                '\{rank=same "feature2", "feature3", "feature4"\} ' +
+                '"feature3" -> "feature4" \\[dir="none", class="same-rank-f3 same-rank-f4".*\\] ' +
+                '\{rank=same "feature3", "feature4"\} ' +
+                '\}'
+            )
         );
     });
 
 
-    it('do not make a node a root node if it has a sameRank edge to a non root node', () => {
+    test('do not make a node a root node if it has a sameRank edge to a non root node', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -206,23 +220,25 @@ describe('DotBuilder', () => {
         );
 
         expect(graph).toMatch(
-            'digraph \{ newrank=true; ' +
-            'node \\[style=filled, fontname="Open SansVariable"\\] ' +
-            '"feature1" \\[id="node-f1".*\\] ' +
-            '"feature2" \\[id="node-f2".*\\] ' +
-            '"feature3" \\[id="node-f3".*\\] ' +
-            '"feature4" \\[id="node-f4".*\\] ' +
-            '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
-            '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
-            '"feature2" -> "feature3" \\[dir="none", class="same-rank-f2 same-rank-f3".*\\] ' +
-            '\{rank=same "feature2", "feature3"\} ' +
-            '\}'
+            new RegExp(
+                'digraph \{ newrank=true; ' +
+                'node \\[style=filled, fontname="Open SansVariable"\\] ' +
+                '"feature1" \\[id="node-f1".*\\] ' +
+                '"feature2" \\[id="node-f2".*\\] ' +
+                '"feature3" \\[id="node-f3".*\\] ' +
+                '"feature4" \\[id="node-f4".*\\] ' +
+                '\{rank=min "feature1"\} ' +
+                '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+                '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
+                '"feature2" -> "feature3" \\[dir="none", class="same-rank-f2 same-rank-f3".*\\] ' +
+                '\{rank=same "feature2", "feature3"\} ' +
+                '\}'
+            )
         );
     });
 
 
-    it('create subgraphs for groups', () => {
+    test('create subgraphs for groups', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -248,21 +264,23 @@ describe('DotBuilder', () => {
         );
 
         expect(graph).toMatch(
-            'digraph \{ newrank=true; ' +
-            'node \\[style=filled, fontname="Open SansVariable"\\] ' +
-            '"feature1" \\[id="node-f1".*\\] ' +
-            'subgraph "cluster Period 1" \{\\label="Period 1".*\\ ' +
-            '"feature2" \\[id="node-f2".*\\] ' +
-            '"feature3" \\[id="node-f3".*\\] \} ' +
-            'subgraph "cluster Period 2" {\\label="Period 2".*\\ ' +
-            '"feature4" \\[id="node-f4".*\\] ' +
-            '"feature5" \\[id="node-f5".*\\] \} ' +
-            '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
-            '"feature1" -> "feature4" \\[class="above-f1 below-f4".*\\] ' +
-            '"feature2" -> "feature3" \\[class="above-f2 below-f3".*\\] ' +
-            '"feature4" -> "feature5" \\[class="above-f4 below-f5".*\\] ' +
-            '}'
+            new RegExp(
+                'digraph \{ newrank=true; ' +
+                'node \\[style=filled, fontname="Open SansVariable"\\] ' +
+                '"feature1" \\[id="node-f1".*\\] ' +
+                'subgraph "cluster Period 1" \{\\label="Period 1".*\\ ' +
+                '"feature2" \\[id="node-f2".*\\] ' +
+                '"feature3" \\[id="node-f3".*\\] \} ' +
+                'subgraph "cluster Period 2" {\\label="Period 2".*\\ ' +
+                '"feature4" \\[id="node-f4".*\\] ' +
+                '"feature5" \\[id="node-f5".*\\] \} ' +
+                '\{rank=min "feature1"\} ' +
+                '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+                '"feature1" -> "feature4" \\[class="above-f1 below-f4".*\\] ' +
+                '"feature2" -> "feature3" \\[class="above-f2 below-f3".*\\] ' +
+                '"feature4" -> "feature5" \\[class="above-f4 below-f5".*\\] ' +
+                '}'
+            )
         );
     });
 });

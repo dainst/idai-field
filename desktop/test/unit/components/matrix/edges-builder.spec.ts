@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { featureDoc } from 'idai-field-core';
 import { Edges, EdgesBuilder, GraphRelationsConfiguration } from '../../../../src/app/components/matrix/edges-builder';
 
@@ -5,7 +6,6 @@ import { Edges, EdgesBuilder, GraphRelationsConfiguration } from '../../../../sr
 /**
  * @author Thomas Kleinke
  */
-
 describe('EdgesBuilder', () => {
 
     const defaultRelations: GraphRelationsConfiguration = {
@@ -15,7 +15,7 @@ describe('EdgesBuilder', () => {
     };
 
 
-    it('build edges for simple graph', () => {
+    test('build edges for simple graph', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -34,7 +34,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for graph with multiple children', () => {
+    test('build edges for graph with multiple children', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -57,7 +57,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for diamond formed graph', () => {
+    test('build edges for diamond formed graph', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -85,7 +85,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for graph with isContemporaryWith relations', () => {
+    test('build edges for graph with isContemporaryWith relations', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -110,7 +110,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for graph with isAfter and isContemporaryWith relations', () => {
+    test('build edges for graph with isAfter and isContemporaryWith relations', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -142,7 +142,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('can deal with missing isAfter relation target', () => {
+    test('can deal with missing isAfter relation target', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -161,7 +161,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('can deal with missing isAfter relation targets (all)', () => {
+    test('can deal with missing isAfter relation targets (all)', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
 
@@ -177,7 +177,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('can deal with missing isContemporaryWith relation target', () => {
+    test('can deal with missing isContemporaryWith relation target', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
@@ -196,7 +196,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('can deal with missing isContemporaryWith relation targets (all)', () => {
+    test('can deal with missing isContemporaryWith relation targets (all)', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
 
@@ -212,7 +212,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for relation configuration with multiple above/below relation categories', () => {
+    test('build edges for relation configuration with multiple above/below relation categories', () => {
 
         const relations: GraphRelationsConfiguration = {
             above: ['isAbove', 'cuts'],
@@ -258,7 +258,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('create above edges between nodes connected via nodes not included in the graph', () => {
+    test('create above edges between nodes connected via nodes not included in the graph', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -287,7 +287,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('create sameRank edges between nodes connected via nodes not included in the graph', () => {
+    test('create sameRank edges between nodes connected via nodes not included in the graph', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -310,7 +310,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('create above edges between nodes connected via a combination of above and sameRank relations of '
+    test('create above edges between nodes connected via a combination of above and sameRank relations of '
             + 'nodes not included in the graph', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
@@ -343,7 +343,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('create above edges between nodes connected via a combination of above and sameRank relations of '
+    test('create above edges between nodes connected via a combination of above and sameRank relations of '
         + 'nodes not included in the graph (2)', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
@@ -371,7 +371,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('do not create duplicate edges', () => {
+    test('do not create duplicate edges', () => {
 
         const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');

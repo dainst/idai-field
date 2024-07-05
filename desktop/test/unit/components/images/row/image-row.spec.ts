@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { ImageDocument } from 'idai-field-core';
 import { ImageRow } from '../../../../../src/app/components/image/row/image-row';
 
@@ -26,7 +27,7 @@ describe('ImageRow', () => {
     ] as unknown as Array<ImageDocument>;
 
 
-    it('switch pages', () => {
+    test('switch pages', () => {
 
         const imageRow = new ImageRow(300, 100, 300, imageDocuments);
 
@@ -62,7 +63,7 @@ describe('ImageRow', () => {
     });
 
 
-    it('switch pages to show selected image', () => {
+    test('switch pages to show selected image', () => {
 
         const imageRow = new ImageRow(300, 100, 300, imageDocuments);
 
@@ -78,7 +79,7 @@ describe('ImageRow', () => {
     });
 
 
-    it('change width', () => {
+    test('change width', () => {
 
         const imageRow = new ImageRow(150, 100, 300, imageDocuments);
 
@@ -94,7 +95,7 @@ describe('ImageRow', () => {
     });
 
 
-    it('return correct values for hasNextPage and hasPreviousPage', () => {
+    test('return correct values for hasNextPage and hasPreviousPage', () => {
 
         const imageRow = new ImageRow(300, 100, 300, imageDocuments);
 

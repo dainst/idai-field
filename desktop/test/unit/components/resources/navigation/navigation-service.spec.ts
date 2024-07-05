@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
+import { describe, expect, test, beforeEach, jest } from '@jest/globals';
 import { fieldDoc } from 'idai-field-core';
 import { NavigationService } from '../../../../../src/app/components/resources/navigation/navigation-service';
 

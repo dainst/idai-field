@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
+import { describe, expect, test, beforeEach, jest } from '@jest/globals';
 import { doc, ImageDocument } from 'idai-field-core';
 import { LayerManager } from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
 

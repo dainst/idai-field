@@ -1,5 +1,5 @@
 import Ajv from 'ajv';
-import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
+import { describe, expect, test, beforeAll, afterAll, jest } from '@jest/globals';
 import { nop } from 'tsfun';
 import { ImageSyncService, PouchdbDatastore, ImageStore, IdGenerator, ImageVariant,
     base64Encode } from 'idai-field-core';

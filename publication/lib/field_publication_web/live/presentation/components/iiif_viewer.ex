@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
   end
 
   @impl true
-  def update(%{id: id, project: project, uuid: uuid} = assigns, socket) do
+  def update(%{project: project, uuid: uuid} = assigns, socket) do
     url = construct_url(project, uuid)
 
     class = Map.get(assigns, :class, "")

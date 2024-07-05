@@ -190,16 +190,13 @@ defmodule FieldPublicationWeb.UserAuth do
 
   def on_mount(
         :ensure_project_published_or_project_access,
-        %{"project_id" => project_name, "draft_date" => draft_date} = opts,
+        %{"project_id" => project_name, "draft_date" => draft_date} = _opts,
         session,
         socket
       ) do
-    IO.inspect(opts)
-
     socket = mount_current_user(socket, session)
 
     Publications.get(project_name, draft_date)
-    |> IO.inspect()
     |> case do
       {:error, :not_found} ->
         {

@@ -1,8 +1,8 @@
 <div>
   <PublicationSelection.render
     project_name={@project_name}
-    publication_dates={@publication_dates}
-    selected_date={@publication.publication_date}
+    draft_dates={@draft_dates}
+    selected_date={@publication.draft_date}
     languages={@publication.languages}
     selected_lang={@selected_lang}
     identifier={
@@ -15,7 +15,7 @@
     category == "Project" ->
       DocumentComponents.Project.render(%{
         project_name: @project_name,
-        publication_date: @publication.publication_date,
+        draft_date: @publication.draft_date,
         publication_comments: @publication_comments,
         doc: @doc,
         publication: @publication,
@@ -39,7 +39,7 @@
       DocumentComponents.Image.render(%{
         doc: @doc,
         project_name: @project_name,
-        publication_date: @publication.publication_date,
+        draft_date: @publication.draft_date,
         lang: @selected_lang,
         uuid: @uuid
       })
@@ -49,7 +49,7 @@
         doc: @doc,
         publication: @publication,
         project_name: @publication.project_name,
-        publication_date: @publication.publication_date,
+        draft_date: @publication.draft_date,
         lang: @selected_lang,
         uuid: @uuid,
         relations_with_geometry: @relations_with_geometry,

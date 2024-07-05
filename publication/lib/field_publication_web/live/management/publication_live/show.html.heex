@@ -190,7 +190,7 @@
             <.link
               class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
               navigate={
-                ~p"/projects/#{@publication.project_name}/#{@publication.publication_date}/#{List.first(@publication.languages)}"
+                ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{List.first(@publication.languages)}"
               }
             >
               <.icon name="hero-folder-open" class="h-4 w-4" /> <%= @publication.publication_date %>

@@ -2,6 +2,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   alias FieldPublicationWeb.Presentation.Components.I18n
   use FieldPublicationWeb, :live_view
 
+  alias FieldPublication.Projects
+
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
 
@@ -12,12 +14,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     publications =
       project_name
       |> Publications.list()
-      |> Stream.filter(fn pub -> pub.publication_date != nil end)
-      |> Enum.reject(fn pub -> Date.after?(pub.publication_date, Date.utc_today()) end)
+      |> Enum.filter(fn pub ->
+        Projects.has_publication_access?(pub, socket.assigns.current_user)
+      end)
 
-    publication_dates =
+    draft_dates =
       Enum.map(publications, fn pub ->
-        Date.to_iso8601(pub.publication_date)
+        Date.to_iso8601(pub.draft_date)
       end)
 
     {
@@ -25,12 +28,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:project_name, project_name)
       |> assign(:publications, publications)
-      |> assign(:publication_dates, publication_dates)
+      |> assign(:draft_dates, draft_dates)
     }
   end
 
   def handle_params(
-        %{"publication_date" => date, "language" => language, "uuid" => uuid},
+        %{"draft_date" => date, "language" => language, "uuid" => uuid},
         _uri,
         %{assigns: %{publications: publications}} = socket
       ) do
@@ -38,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     current_publication =
       Enum.find(publications, fn pub ->
-        Date.to_iso8601(pub.publication_date) == date
+        Date.to_iso8601(pub.draft_date) == date
       end)
 
     doc = Publications.Data.get_document(uuid, current_publication, true)
@@ -76,7 +79,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def handle_params(
-        %{"publication_date" => date, "language" => language},
+        %{"draft_date" => date, "language" => language},
         _uri,
         %{assigns: %{publications: publications}} = socket
       ) do
@@ -84,7 +87,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     current_publication =
       Enum.find(publications, fn pub ->
-        Date.to_iso8601(pub.publication_date) == date
+        Date.to_iso8601(pub.draft_date) == date
       end)
 
     project_doc = Publications.Data.get_document("project", current_publication, true)
@@ -149,7 +152,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:publication, publication)
       |> push_patch(
-        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{language}",
+        to: ~p"/projects/#{project_name}/#{publication.draft_date}/#{language}",
         replace: true
       )
     }
@@ -165,7 +168,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{lang}/#{uuid}"
+        to: ~p"/projects/#{project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
       )
     }
   end

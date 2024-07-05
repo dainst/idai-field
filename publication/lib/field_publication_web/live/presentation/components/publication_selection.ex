@@ -17,15 +17,15 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
           <%= @project_name %> /
         </div>
         <div class="ml-2">
-          <%= if Enum.count(@publication_dates) == 1 do %>
+          <%= if Enum.count(@draft_dates) == 1 do %>
             <div class="mt-4">
-              <%= List.first(@publication_dates) %>
+              <%= List.first(@draft_dates) %>
             </div>
           <% else %>
             <.input
               type="select"
               name="project_date_selection"
-              options={@publication_dates}
+              options={@draft_dates}
               value={@selected_date}
             />
           <% end %>

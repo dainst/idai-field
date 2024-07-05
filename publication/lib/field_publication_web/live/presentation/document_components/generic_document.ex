@@ -19,18 +19,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show project={@project_name} date={@publication_date} lang={@lang} doc={@doc} />
+        <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@doc} />
       </.document_heading>
-        <ViewSelection.render
-          project={@project_name}
-          date={@publication_date}
-          lang={@lang}
-          uuid={@uuid}
-          current={:detail}
-        />
-
       <div class="flex flex-row">
-      <div class="basis-2/3">
+        <div class="basis-2/3">
+          <ViewSelection.render
+            project={@project_name}
+            date={@draft_date}
+            lang={@lang}
+            uuid={@uuid}
+            current={:detail}
+          />
           <%= for group <- @doc["groups"] do %>
             <% fields =
               Enum.reject(group["fields"], fn %{"key" => key} ->
@@ -72,7 +71,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for doc <- depicted_in["values"] do %>
                 <.link
-                  patch={~p"/projects/#{@project_name}/#{@publication_date}/#{@lang}/#{doc["id"]}"}
+                  patch={~p"/projects/#{@project_name}/#{@draft_date}/#{@lang}/#{doc["id"]}"}
                   class="p-1"
                 >
                   <div class="max-w-[250px]">
@@ -92,7 +91,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
               <%= for doc <- other_relation["values"] do %>
                 <DocumentLink.show
                   project={@project_name}
-                  date={@publication_date}
+                  date={@draft_date}
                   lang={@lang}
                   doc={doc}
                   image_count={2}
@@ -100,14 +99,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
               <% end %>
             </div>
           <% end %>
-
           <.group_heading>
             Raw data
           </.group_heading>
           <a
             class="mb-1"
             target="_blank"
-            href={~p"/api/raw/csv/#{@project_name}/#{@publication_date}/#{@uuid}"}
+            href={~p"/api/raw/csv/#{@project_name}/#{@draft_date}/#{@uuid}"}
           >
             <.icon name="hero-table-cells-solid" /> Download CSV
           </a>
@@ -115,7 +113,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <a
             class="mb-1"
             target="_blank"
-            href={~p"/api/json/raw/#{@project_name}/#{@publication_date}/#{@uuid}"}
+            href={~p"/api/json/raw/#{@project_name}/#{@draft_date}/#{@uuid}"}
           >
             <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
           </a>

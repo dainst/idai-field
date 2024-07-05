@@ -1,8 +1,12 @@
 defmodule FieldPublication.Projects do
   import Ecto.Changeset
 
-  alias FieldPublication.DocumentSchema.Base
-  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DocumentSchema.{
+    Base,
+    Project,
+    Publication
+  }
+
   alias FieldPublication.CouchService
   alias FieldPublication.Users
   alias FieldPublication.FileService
@@ -78,16 +82,38 @@ defmodule FieldPublication.Projects do
     end
   end
 
-  def has_project_access?(_project_name, nil) do
+  def has_project_access?(project_name, nil) when is_binary(project_name) do
     false
   end
 
-  def has_project_access?(project_name, user_name) do
+  def has_project_access?(project_name, user_name)
+      when is_binary(project_name) and is_binary(user_name) do
     if Users.is_admin?(user_name) do
       true
     else
       project = get!(project_name)
       user_name in project.editors
+    end
+  end
+
+  def has_publication_access?(%Publication{publication_date: date} = _publication, nil) do
+    date != nil and not Date.after?(date, Date.utc_today())
+  end
+
+  def has_publication_access?(%Publication{} = publication, user_name)
+      when is_binary(user_name) do
+    access? = has_project_access?(publication.project_name, user_name)
+    date = publication.publication_date
+
+    cond do
+      access? ->
+        true
+
+      date != nil and not Date.after?(date, Date.utc_today()) ->
+        true
+
+      true ->
+        false
     end
   end
 

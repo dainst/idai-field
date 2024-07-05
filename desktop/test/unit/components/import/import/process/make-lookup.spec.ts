@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { equal } from 'tsfun';
 import { Document } from 'idai-field-core';
 import { makeLookups } from '../../../../../../src/app/components/import/import/process/make-lookups';
@@ -5,9 +6,9 @@ import { makeLookups } from '../../../../../../src/app/components/import/import/
 
 describe('makeLookup', () => {
 
-    it('whatever get delivers - make a clone of it', async done => {
+    test('whatever get delivers - make a clone of it', async () => {
 
-        const doc = { resource: { id: 1, relations: { isAbove: ['2'] } }};
+        const doc = { resource: { id: 1, relations: { isAbove: ['2'] } } };
         const targetDoc = { resource: { id: 2 }} as unknown as Document;
         const get = () => targetDoc;
 
@@ -16,6 +17,5 @@ describe('makeLookup', () => {
 
         expect(targetDocCloned !== targetDoc).toBeTruthy();
         expect(equal(targetDocCloned, targetDoc)).toBeTruthy();
-        done();
     });
 });

@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { Forest, Field, ProjectConfiguration, Document } from 'idai-field-core';
 import { ImportValidator } from '../../../../../src/app/components/import/import/process/import-validator';
 import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
@@ -125,7 +126,7 @@ describe('ImportValidator', () => {
     });
 
 
-    it('should report error when omitting mandatory property', () => {
+    test('should report error when omitting mandatory property', () => {
 
         const doc = {
             resource: {
@@ -137,14 +138,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
     });
 
 
-    it('should report error when leaving mandatory property empty', () => {
+    test('should report error when leaving mandatory property empty', () => {
 
         const doc = {
             resource: {
@@ -157,14 +158,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
     });
 
 
-    it('should report a missing field definition', () => {
+    test('should report a missing field definition', () => {
 
         const doc = {
             resource: {
@@ -178,15 +179,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertFieldsDefined(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
-
             expect(errWithParams).toEqual([ImportErrors.INVALID_FIELDS, 'T', 'a']);
         }
     });
 
 
-    it('should report missing field definitions', () => {
+    test('should report missing field definitions', () => {
 
         const doc = {
             resource: {
@@ -201,15 +201,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertFieldsDefined(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
-
             expect(errWithParams).toEqual([ImportErrors.INVALID_FIELDS, 'T', 'a, b']);
         }
     });
 
 
-    it('should report a missing relation field definition', () => {
+    test('should report a missing relation field definition', () => {
 
         const doc = {
             resource: {
@@ -223,16 +222,16 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertRelationsWellformedness([doc as any]);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
-
-            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T2',
-                'isRelatedTo']);
+            expect(errWithParams).toEqual(
+                [ImportErrors.INVALID_RELATIONS, 'T2', 'isRelatedTo']
+            );
         }
     });
 
 
-    it('missing relation field definitions', () => {
+    test('missing relation field definitions', () => {
 
         const doc = {
             resource: {
@@ -247,16 +246,16 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertRelationsWellformedness([doc as any]);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
-
-            expect(errWithParams).toEqual([ImportErrors.INVALID_RELATIONS, 'T2',
-                'isRelatedTo, isDepictedIn']);
+            expect(errWithParams).toEqual(
+                [ImportErrors.INVALID_RELATIONS, 'T2', 'isRelatedTo, isDepictedIn']
+            );
         }
     });
 
 
-    it('assertLiesWithinCorrectness - must lie within', async done => {
+    test('assertLiesWithinCorrectness - must lie within', async () => {
 
         const doc = {
             resource: {
@@ -273,18 +272,16 @@ describe('ImportValidator', () => {
         try {
             await new ImportValidator(
                 projectConfiguration,
-                {find: (q: any) => Promise.resolve({documents: []})} as any)
-                .assertLiesWithinCorrectness([doc.resource as any]);
-            fail();
+                { find: _ => Promise.resolve({ documents: [] }) } as any
+            ).assertLiesWithinCorrectness([doc.resource]);
+            throw new Error('Test failure');
         } catch (errWithParams) {
-
             expect(errWithParams).toEqual([ImportErrors.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, 'T3', '3']);
         }
-        done();
     });
 
 
-    it('invalid numeric field', async done => {
+    test('invalid numeric field', async () => {
 
         const doc = {
             resource: {
@@ -298,15 +295,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
         }
-        done();
     });
 
 
-    it('invalid numeric fields', async done => {
+    test('invalid numeric fields', async () => {
 
         const doc = {
             resource: {
@@ -321,15 +317,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
         }
-        done();
     });
 
     
-    it('invalid URL field', async done => {
+    test('invalid URL field', async () => {
 
         const doc = {
             resource: {
@@ -343,15 +338,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1']);
         }
-        done();
     });
 
 
-    it('invalid URL fields', async done => {
+    test('invalid URL fields', async () => {
 
         const doc = {
             resource: {
@@ -366,15 +360,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2']);
         }
-        done();
     });
 
 
-    it('invalid date field', async done => {
+    test('invalid date field', async () => {
 
         const doc = {
             resource: {
@@ -388,15 +381,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1']);
         }
-        done();
     });
 
 
-    it('invalid date fields', async done => {
+    test('invalid date fields', async () => {
 
         const doc = {
             resource: {
@@ -411,15 +403,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1, date2']);
         }
-        done();
     });
 
 
-    it('invalid map layer relations', async done => {
+    test('invalid map layer relations', async () => {
 
         const doc = {
             resource: {
@@ -432,15 +423,14 @@ describe('ImportValidator', () => {
 
         try {
             new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES, 'T']);
         }
-        done();
     });
 
 
-    it('invalid identifier prefix', async done => {
+    test('invalid identifier prefix', async () => {
         
         const document1 = {
             resource: {
@@ -460,24 +450,23 @@ describe('ImportValidator', () => {
             await validator.assertIdentifierPrefixIsValid(document1);
         } catch (err) {
             console.error(err);
-            fail();
+            throw new Error('Test failure');
         }
 
         try {
             await validator.assertIdentifierPrefixIsValid(document2);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.INVALID_IDENTIFIER_PREFIX, 'Resource2', 'T4', 'T4-']);
         }
-        
-        done();
     });
 
 
-    it('resource limit exceeded', () => {
+    test('resource limit exceeded', () => {
 
-        const datastore = jasmine.createSpyObj('MockDatastore', ['findIds']);
-        datastore.findIds.and.returnValue({ ids: ['1', '2'] });
+        const datastore = {
+            findIds: jest.fn().mockReturnValue({ ids: ['1', '2'] })
+        } as any;
         
         const validator: ImportValidator = new ImportValidator(projectConfiguration, datastore);
 
@@ -487,14 +476,14 @@ describe('ImportValidator', () => {
             validator.assertResourceLimitNotExceeded(documents);
         } catch (err) {
             console.error(err);
-            fail();
+            throw new Error('Test failure');
         }
 
         documents.push({ resource: { id: '4', category: 'T5' } } as Document);
 
         try {
             validator.assertResourceLimitNotExceeded(documents);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.RESOURCE_LIMIT_EXCEEDED, 'T5', 3]);
         }

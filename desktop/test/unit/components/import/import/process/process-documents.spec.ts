@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Document, Relation } from 'idai-field-core';
 import { ImportErrors as E } from '../../../../../../src/app/components/import/import/import-errors';
 import { createMockValidator, d } from '../helper';
@@ -26,7 +27,7 @@ describe('processDocuments', () => {
     });
 
 
-    it('merge, add field', () => {
+    test('merge, add field', () => {
 
         const document: Document = {
             _id: '1',
@@ -38,7 +39,7 @@ describe('processDocuments', () => {
                 field: 'new',
                 id: '1',
                 relations: {},
-                geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}
+                geometry: { type: 'Point',  coordinates: [27.189335972070694, 39.14122423529625] }
             }
         };
 
@@ -57,7 +58,7 @@ describe('processDocuments', () => {
     });
 
 
-    it('merge, multiple times', () => {
+    test('merge, multiple times', () => {
 
         const document1: Document = {
             _id: '1',
@@ -72,6 +73,7 @@ describe('processDocuments', () => {
                 relations: {}
             }
         };
+
         const document2: Document = {
             _id: '1',
             created: { user: '', date: new Date() },
@@ -101,15 +103,17 @@ describe('processDocuments', () => {
     });
 
 
-    it('validation error - not wellformed', () => {
+    test('validation error - not wellformed', () => {
 
-        validator.assertFieldsDefined.and.callFake(() => { throw [ValidationErrors.MISSING_PROPERTY, 'Feature', 'invalidField'] });
+        validator.assertFieldsDefined.mockImplementation(() => {
+            throw [ValidationErrors.MISSING_PROPERTY, 'Feature', 'invalidField'];
+        });
 
         try {
-            processDocuments([
-                d('nf1', 'Feature', 'one')
-            ], {}, validator, false);
-            fail();
+            processDocuments(
+                [d('nf1', 'Feature', 'one')], {}, validator, false
+            );
+            throw new Error('Test failure');
         } catch (err) {
             expect(err[0]).toEqual(ValidationErrors.MISSING_PROPERTY);
             expect(err[1]).toEqual('Feature');
@@ -118,15 +122,17 @@ describe('processDocuments', () => {
     });
 
 
-    it('validation error - invalid identifier prefix', () => {
+    test('validation error - invalid identifier prefix', () => {
 
-        validator.assertIdentifierPrefixIsValid.and.callFake(() => { throw [E.INVALID_IDENTIFIER_PREFIX, 'one', 'Feature', 'F'] });
+        validator.assertIdentifierPrefixIsValid.mockImplementation(() => {
+            throw [E.INVALID_IDENTIFIER_PREFIX, 'one', 'Feature', 'F'];
+        });
 
         try {
-            processDocuments([
-                d('nf1', 'Feature', 'one')
-            ], {}, validator, false);
-            fail();
+            processDocuments(
+                [d('nf1', 'Feature', 'one')], {}, validator, false
+            );
+            throw new Error('Test failure');
         } catch (err) {
             expect(err[0]).toEqual(E.INVALID_IDENTIFIER_PREFIX);
             expect(err[1]).toEqual('one');
@@ -136,14 +142,17 @@ describe('processDocuments', () => {
     });
 
 
-    it('duplicate identifiers in import file', () => {
+    test('duplicate identifiers in import file', () => {
 
         try {
-            processDocuments(<any>[
-                d('nf1', 'Feature', 'dup', {liesWithin: ['etc1']}),
-                d('nf2', 'Feature', 'dup', {liesWithin: ['etc1']}),
-            ], {}, validator, false);
-            fail();
+            processDocuments(
+                <any>[
+                    d('nf1', 'Feature', 'dup', { liesWithin: ['etc1'] }),
+                    d('nf2', 'Feature', 'dup', { liesWithin: ['etc1'] }),
+                ],
+                {}, validator, false
+            );
+            throw new Error('Test failure');
         } catch (err) {
             expect(err[0]).toEqual(E.DUPLICATE_IDENTIFIER);
             expect(err[1]).toEqual('dup');
@@ -151,28 +160,27 @@ describe('processDocuments', () => {
     });
 
 
-    it('report invalid fields', () => {
+    test('report invalid fields', () => {
 
-        validator.assertFieldsDefined.and.callFake(() => { throw [E.INVALID_FIELDS]});
+        validator.assertFieldsDefined.mockImplementation(() => { throw [E.INVALID_FIELDS]; });
 
         try {
-            processDocuments([
-                    d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
-                ], {},
-                validator, false);
-            fail();
+            processDocuments(
+                [d('nfi1', 'Find', 'one', { isChildOf: 'et1'})], {}, validator, false
+            );
+            throw new Error('Test failure');
         } catch (err) {
             expect(err[0]).toEqual(E.INVALID_FIELDS);
         }
     });
 
 
-    it('ignore invalid fields', () => {
+    test('ignore invalid fields', () => {
 
         const document = d('nf1', 'Feature', 'one');
         document.resource.invalidField = 'value';
 
-        validator.getUndefinedFields.and.returnValue(['invalidField']);
+        validator.getUndefinedFields.mockReturnValue(['invalidField']);
 
         const result = processDocuments([document], {}, validator, true);
 
@@ -180,7 +188,7 @@ describe('processDocuments', () => {
     });
 
 
-    it('ignore invalid fields in merge mode', () => {
+    test('ignore invalid fields in merge mode', () => {
 
         const document: Document = {
             _id: '1',
@@ -193,11 +201,11 @@ describe('processDocuments', () => {
                 id: '1',
                 invalidField: 'value',
                 relations: {},
-                geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}
+                geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625] }
             }
         };
 
-        validator.getUndefinedFields.and.returnValue(['invalidField']);
+        validator.getUndefinedFields.mockReturnValue(['invalidField']);
 
         const result = processDocuments([document], { '1': existingFeature } as any, validator, true);
 

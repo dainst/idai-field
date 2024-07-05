@@ -1,3 +1,4 @@
+import { describe, expect, test, jest } from '@jest/globals';
 import { Document } from 'idai-field-core';
 import { FieldConverter } from '../../../../src/app/components/import/field-converter';
 
@@ -7,7 +8,7 @@ import { FieldConverter } from '../../../../src/app/components/import/field-conv
  */
 describe('FieldConverter', () => {
 
-    it('preprocessDocument', () => {
+    test('preprocessDocument', () => {
 
         const document: Document = {
             _id: '1',
@@ -34,18 +35,19 @@ describe('FieldConverter', () => {
             }
         };
 
-        const pc = jasmine.createSpyObj('ProjectConfiguration', ['getCategory']);
-        pc.getCategory.and.returnValue({
-            groups: [{
-                name: 'stem',
-                fields:
-                    [{ name: 'dimensionHeight', inputType: 'dimension' },
-                     { name: 'dating', inputType: 'dating' }]
+        const projectConfiguration: any = {
+            getCategory: jest.fn().mockReturnValue({
+                groups: [{
+                    name: 'stem',
+                    fields:
+                        [{ name: 'dimensionHeight', inputType: 'dimension' },
+                         { name: 'dating', inputType: 'dating' }]
+    
+                }]
+            })
+        };
 
-            }]
-        });
-
-        const result = FieldConverter.preprocessDocument(pc)(document);
+        const result = FieldConverter.preprocessDocument(projectConfiguration)(document);
         expect(result.resource['dimensionHeight'][0]['value']).toBeUndefined();
         expect(result.resource['dating'][0]['end']['year']).toBeUndefined();
     });

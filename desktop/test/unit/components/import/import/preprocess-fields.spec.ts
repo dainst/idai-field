@@ -1,9 +1,10 @@
+import { describe, expect, test } from '@jest/globals';
 import { preprocessFields } from '../../../../../src/app/components/import/import/preprocess-fields';
 
 
 describe('preprocessFields', () => {
 
-    it('deletions permitted', () => {
+    test('deletions permitted', () => {
 
         const docs: any = [{ resource: { a: null, relations: {}, category: 'O' } }];
         preprocessFields(docs, { permitDeletions: true});
@@ -11,7 +12,7 @@ describe('preprocessFields', () => {
     });
 
 
-    it('deletions not permitted', () => {
+    test('deletions not permitted', () => {
 
         const docs: any = [{ resource: { a: null, relations: {}, category: 'O' } }];
         preprocessFields(docs, { permitDeletions: false });

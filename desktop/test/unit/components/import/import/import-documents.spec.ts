@@ -1,9 +1,11 @@
+import { describe, expect, test } from '@jest/globals';
 import { identity } from 'tsfun';
 import { Resource } from 'idai-field-core';
 import { ImportErrors as E, ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
 import { buildImportDocuments } from '../../../../../src/app/components/import/import/import-documents';
 import { Settings } from '../../../../../src/app/services/settings/settings';
 import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
+import { createMockValidator } from './helper';
 
 
 /**
@@ -49,27 +51,8 @@ describe('importDocuments', () => {
 
     beforeEach(() => {
 
-        spyOn(console, 'debug');
-
-        validator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist',
-            'assertRelationsWellformedness',
-            'assertIsAllowedRelationDomainCategory',
-            'assertIsWellformed',
-            'assertLiesWithinCorrectness',
-            'assertIsKnownCategory',
-            'assertFieldsDefined',
-            'assertHasLiesWithin',
-            'assertIsAllowedCategory',
-            'assertDropdownRangeComplete',
-            'assertSettingIsRecordedInIsPermissibleForCategory',
-            'assertNoForbiddenRelations',
-            'assertIdentifierPrefixIsValid',
-            'assertResourceLimitNotExceeded'
-        ]);
-
-        validator.assertHasLiesWithin.and.returnValue();
-        validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
+        validator = createMockValidator();
+        validator.assertIsRecordedInTargetsExist.mockReturnValue(Promise.resolve());
 
         services = { validator };
 
@@ -107,20 +90,19 @@ describe('importDocuments', () => {
     });
 
 
-    it('should resolve on success', async done => {
+    test('should resolve on success', async () => {
 
         const [_, result] = await importFunction([
-            { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0'} } } as any]
+            { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0'} } }]
         );
 
         expect(result.createDocuments.length).toBe(1);
-        done();
     });
 
 
-    it('merge if exists', async done => {
+    test('merge if exists', async () => {
 
-        validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
+        validator.assertIsRecordedInTargetsExist.mockReturnValue(Promise.resolve(undefined));
         helpers.find = (_: string) => Promise.resolve(
             { resource: { identifier: '123', id: '1', relations: {} } }
         );
@@ -133,48 +115,47 @@ describe('importDocuments', () => {
             context,
             helpers,
             { mergeMode: true, useIdentifiersInRelations: true }))(
-            [{ resource: { identifier: '123', id: '1', relations: {} } } as any]);
+            [{ resource: { identifier: '123', id: '1', relations: {} } } as any]
+        );
 
         expect(result.createDocuments.length).toBe(0);
         expect(result.updateDocuments.length).toBe(1);
         expect(result.targetDocuments.length).toBe(0);
-        done();
     });
 
 
-    it('does not overwrite if exists', async done => {
+    test('does not overwrite if exists', async () => {
 
         const [_1, result] = await (buildImportDocuments(
             services,
             context,
             helpers,
-            { mergeMode: false }))
-
-        ([{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any]);
+            { mergeMode: false }
+        ))([{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any]);
 
         expect(result.createDocuments.length).toBe(1);
         expect(result.updateDocuments.length).toBe(0);
         expect(result.targetDocuments.length).toBe(0);
-        done();
     });
 
 
-    it('not well formed', async done => { // shows that err from default-import-calc gets propagated
+    test('not well formed', async () => { // shows that err from default-import-calc gets propagated
 
-        validator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]; });
+        validator.assertIsWellformed.mockImplementation(() => { throw [ImportErrors.INVALID_CATEGORY]; });
 
         const [error, _] = await importFunction([
-            { resource: { category: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } } as any
+            { resource: { category: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } }
         ]);
 
         expect(error[0]).toEqual(ImportErrors.INVALID_CATEGORY);
-        done();
     });
 
 
-    it('missing identifier', async done => {
+    test('missing identifier', async () => {
 
-        validator.assertIsWellformed.and.callFake(() => { throw [ValidationErrors.MISSING_PROPERTY, Resource.IDENTIFIER]; });
+        validator.assertIsWellformed.mockImplementation(() => {
+            throw [ValidationErrors.MISSING_PROPERTY, Resource.IDENTIFIER];
+        });
 
         helpers.find = (identifier: string) => {
             if (!identifier) throw ['Find should not be called with undefined'];
@@ -189,119 +170,128 @@ describe('importDocuments', () => {
         ); 
 
         const [error, _] = await importFunction([
-            { resource: { category: 'Trench', relations: {} } } as any
+            { resource: { category: 'Trench', relations: {} } }
         ]);
 
         expect(error[0]).toEqual(ValidationErrors.MISSING_PROPERTY);
-        done();
     });
 
 
-    it('parent not found', async done => {
+    test('parent not found', async () => {
 
         importFunction = buildImportDocuments(
             services,
             context,
             helpers,
-            { mergeMode: false, useIdentifiersInRelations: true }); // !
+            { mergeMode: false, useIdentifiersInRelations: true }
+        );
 
         helpers.find = (_: string) => Promise.resolve(undefined);
 
         const [error, _] = await importFunction([
-            { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
+            { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } }
         ]);
 
         expect(error[0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
         expect(error[1]).toEqual('notfound');
-        done();
     });
 
 
-    it('parent not found, when using plain ids', async done => {
+    test('parent not found, when using plain ids', async () => {
 
         importFunction = buildImportDocuments(
             services,
             context,
             helpers,
-            { mergeMode: false, useIdentifiersInRelations: false}); // !
+            { mergeMode: false, useIdentifiersInRelations: false }
+        );
 
         helpers.find = (_: string) => Promise.resolve(undefined);
 
         const [error, _] = await importFunction([
-            { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
+            { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } }
         ]);
 
         expect(error[0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
         expect(error[1]).toEqual('notfound');
-        done();
     });
 
 
-    it('isChildOf is an array', async done => {
+    test('isChildOf is an array', async () => {
 
         const [error, _] = await importFunction([
-            { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: ['a'] } } } as any
+            { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: ['a'] } } }
         ]);
 
         expect(error[0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
         expect(error[1]).toEqual('1a');
-        done();
     });
 
 
-    it('other relation is not an array', async done => {
+    test('other relation is not an array', async () => {
 
         const [error, _] = await importFunction([
-            { resource: { category: 'Feature', identifier: '1a', relations: { isAbove: 'b' } } } as any
+            { resource: { category: 'Feature', identifier: '1a', relations: { isAbove: 'b' } } }
         ]);
 
         expect(error[0]).toEqual(E.MUST_BE_ARRAY);
         expect(error[1]).toEqual('1a');
-        done();
     });
 
 
-    it('fix - don\'t throw with relations pointing to existing resource, with existing resource' , async done => {
+    test('fix - don\'t throw with relations pointing to existing resource, with existing resource' , async () => {
 
-        helpers.get = async resourceId => {
+        helpers.get = async (resourceId) => {
 
-            if (resourceId === '2') return two;
-            else throw 'missing';
+            if (resourceId === '2') {
+                return two;
+            } else {
+                throw new Error('missing');
+            }
         };
 
-        helpers.find = async identifier => {
+        helpers.find = async (identifier) => {
 
-            if (identifier === 'one') return one;
-            else throw 'missing';
+            if (identifier === 'one') {
+                return one;
+            } else {
+                throw new Error('missing');
+            }
         };
 
         context.inverseRelationsMap = { 'isAbove': 'isBelow' };
         options.useIdentifiersInRelations = true;
 
-        const [error, result] = await importFunction([
+        const [_, result] = await importFunction([
             { resource: { category: 'Feature', identifier: 'one', relations: { isAbove: ['2'] } } }]);
 
         expect(result.createDocuments).toEqual([]);
         expect(result.updateDocuments).toEqual([]);
         expect(result.targetDocuments).toEqual([]);
         expect(result.ignoredIdentifiers).toEqual(['one']);
-        done();
     });
 
 
-    it('fix - don\'t throw where identifier lookup only was done in import documents' , async done => {
+    test('fix - don\'t throw where identifier lookup only was done in import documents' , async () => {
 
-        helpers.get = async resourceId => {
+        helpers.get = async (resourceId) => {
 
-            if (resourceId === '2') return two;
-            else throw 'missing';
+            if (resourceId === '2') {
+                return two;
+            } else {
+                throw new Error('missing');
+            }
         };
 
-        helpers.find = async identifier => {
+        helpers.find = async (identifier) => {
 
-            if (identifier === 'one') return undefined;
-            if (identifier === 'two') return two;
-            else throw 'missing';
+            if (identifier === 'one') {
+                return undefined;
+            } else if (identifier === 'two') {
+                return two;
+            } else {
+                throw new Error('missing');
+            }
         };
 
         context.inverseRelationsMap = { 'isAbove': 'isBelow' };
@@ -315,6 +305,5 @@ describe('importDocuments', () => {
         expect(result.updateDocuments).toEqual([]);
         expect(result.targetDocuments.length).toBe(1);
         expect(result.ignoredIdentifiers).toEqual([]);
-        done();
     });
 });

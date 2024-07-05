@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
+import { nop } from 'tsfun';
 import { ImageSyncService, PouchdbDatastore, ImageStore, IdGenerator, ImageVariant,
     base64Encode } from 'idai-field-core';
 import { ExpressServer } from '../../../../src/app/services/express-server';
@@ -35,6 +36,8 @@ describe('ImageSyncService', () => {
 
     beforeAll(async () => {
 
+        jest.spyOn(console, 'log').mockImplementation(nop);
+
         fs.mkdirSync(localFilePath, { recursive: true });
         fs.mkdirSync(expressServerFilePath, { recursive: true });
 
@@ -59,6 +62,8 @@ describe('ImageSyncService', () => {
 
 
     afterAll(async () => {
+
+        (console.log as any).mockRestore();
 
         await pouchdbDatastore.destroyDb(testProjectIdentifier);
 

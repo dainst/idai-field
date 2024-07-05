@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import { describe, expect, test, beforeAll, beforeEach, afterEach, afterAll } from '@jest/globals';
+import { nop } from 'tsfun';
 import { IdGenerator, PouchdbDatastore, ImageStore, base64Encode} from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
@@ -28,6 +29,8 @@ describe('ExpressServer', () => {
 
 
     beforeAll(async () => {
+
+        jest.spyOn(console, 'log').mockImplementation(nop);
 
         fs.mkdirSync(testFilePath, { recursive: true });
 
@@ -64,6 +67,8 @@ describe('ExpressServer', () => {
 
 
     afterAll(async () => {
+
+        (console.log as any).mockRestore();
 
         await pouchdbDatastore.destroyDb(testProjectIdentifier);
 

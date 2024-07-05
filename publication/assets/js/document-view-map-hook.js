@@ -110,7 +110,7 @@ const styleFunction = function (feature) {
     const props = feature.getProperties();
     if (props.type === "Polygon" || props.type === "MultiPolygon") {
         return getPolygonStyle(props);
-    } else if (props.type == "LineString") {
+    } else if (props.type == "LineString" || props.type === "MultiLineString") {
         return getLineStyle(props);
     } else if (props.type == "Point") {
         return getPointStyle(props);

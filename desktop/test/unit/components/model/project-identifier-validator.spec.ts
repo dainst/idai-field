@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { ProjectIdentifierValidation } from '../../../../src/app/model/project-identifier-validation';
 
 
@@ -6,7 +7,7 @@ import { ProjectIdentifierValidation } from '../../../../src/app/model/project-i
  */
 describe('ProjectIdentifierValidator', () => {
 
-    it('validate project identifier: allowed identifier', () => {
+    test('validate project identifier: allowed identifier', () => {
 
         expect(ProjectIdentifierValidation.validate('project1')).toBeUndefined();
         expect(ProjectIdentifierValidation.validate('project-identifier')).toBeUndefined();
@@ -14,7 +15,7 @@ describe('ProjectIdentifierValidator', () => {
     });
 
 
-    it('validate project identifier: unallowed characters', () => {
+    test('validate project identifier: unallowed characters', () => {
 
         expect(ProjectIdentifierValidation.validate('project$'))
             .toEqual([ProjectIdentifierValidation.Errors.PROJECT_IDENTIFIER_ERROR_CHARACTERS]);
@@ -25,7 +26,7 @@ describe('ProjectIdentifierValidator', () => {
     });
 
 
-    it('validate project identifier: first character is not a letter', () => {
+    test('validate project identifier: first character is not a letter', () => {
 
         expect(ProjectIdentifierValidation.validate('1project'))
             .toEqual([ProjectIdentifierValidation.Errors.PROJECT_IDENTIFIER_ERROR_STARTING_CHARACTER]);
@@ -36,7 +37,7 @@ describe('ProjectIdentifierValidator', () => {
     });
 
 
-    it('validate project identifier: wrong length', () => {
+    test('validate project identifier: wrong length', () => {
 
         const projectIdentifier: string = 'project_identifier_with_too_many_characters';
         const expectedLengthDifference: number =
@@ -50,14 +51,14 @@ describe('ProjectIdentifierValidator', () => {
     });
 
 
-    it('validate project identifier: already existing identifier', () => {
+    test('validate project identifier: already existing identifier', () => {
         
         expect(ProjectIdentifierValidation.validate('project1', ['project1']))
             .toEqual([ProjectIdentifierValidation.Errors.PROJECT_IDENTIFIER_ERROR_EXISTS, 'project1']);
     });
 
 
-    it('validate project identifier: no identifier', () => {
+    test('validate project identifier: no identifier', () => {
 
         expect(ProjectIdentifierValidation.validate(''))
             .toEqual([ProjectIdentifierValidation.Errors.PROJECT_IDENTIFIER_ERROR_MISSING]);
@@ -66,7 +67,7 @@ describe('ProjectIdentifierValidator', () => {
     });
 
 
-    it('test project identifier similarity', () => {
+    test('test project identifier similarity', () => {
 
         expect(ProjectIdentifierValidation.isSimilar('project', 'project-test')).toBe(true);
         expect(ProjectIdentifierValidation.isSimilar('project', 'test-project')).toBe(true);

@@ -22,7 +22,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
       </.link>
       <%= if @identifier do %>
         <div>/</div>
-        <div>
+        <div class="text-nowrap">
           <%= @identifier %>
         </div>
       <% end %>
@@ -32,7 +32,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
 
   defp render_publication_dropdown(assigns) do
     ~H"""
-    <div class="group relative">
+    <div class="group relative text-nowrap">
       <%= @current_publication.draft_date %>
       <%= if Enum.count(@publications) > 1 do %>
         <.icon name="hero-chevron-down-mini" />
@@ -68,7 +68,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
 
   defp render_language_dropdown(assigns) do
     ~H"""
-    <div class="group relative">
+    <div class="group relative text-nowrap">
       <%= @selected_lang %>
 
       <%= if Enum.count(@current_publication.languages) > 1 do %>

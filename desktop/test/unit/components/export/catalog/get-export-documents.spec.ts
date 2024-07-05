@@ -1,4 +1,4 @@
-import { Datastore } from 'idai-field-core';
+import { describe, expect, test, jest, beforeEach } from '@jest/globals';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED,
     getExportDocuments } from '../../../../../src/app/components/export/catalog/get-export-documents';
 import { makeDocumentsLookup } from '../../../../../src/app/components/import/import/utils';
@@ -6,28 +6,13 @@ import { makeDocumentsLookup } from '../../../../../src/app/components/import/im
 
 describe('getExportDocuments', () => {
 
-    let datastore: Datastore;
+    let datastore;
     let imageRelationsManager;
-
     let images;
+
 
     beforeEach(() => {
 
-        datastore = jasmine.createSpyObj('datastore', ['find', 'get']);
-        imageRelationsManager = jasmine.createSpyObj('imageRelationsManager', ['getLinkedImages']);
-
-        images = [
-            {
-                resource: {
-                    id: 'I1',
-                    identifier: 'identifierI1',
-                    category: 'Image',
-                    relations: {
-                        depicts: ['T1']
-                    }
-                }
-            }
-        ];
         const documents: Array<any> = [
             {
                 resource: {
@@ -47,38 +32,60 @@ describe('getExportDocuments', () => {
                 }
             }
         ];
-        (datastore as any).find.and.returnValue({ documents: [documents[1]] });
-        (datastore as any).get.and.returnValue(documents[0]);
-        imageRelationsManager.getLinkedImages.and.returnValue(images);
+
+        images = [
+            {
+                resource: {
+                    id: 'I1',
+                    identifier: 'identifierI1',
+                    category: 'Image',
+                    relations: {
+                        depicts: ['T1']
+                    }
+                }
+            }
+        ];
+
+        datastore = {
+            find: jest.fn().mockReturnValue({ documents: [documents[1]] }),
+            get: jest.fn().mockReturnValue(documents[0])
+        };
+
+        imageRelationsManager = {
+            getLinkedImages: jest.fn().mockReturnValue(images)
+        };
     });
 
 
-    it('basic', async done => {
+    test('basic', async () => {
 
         const [_, [exportDocuments, imageResourceIds]] = await getExportDocuments(
-            datastore, imageRelationsManager, 'C1', 'test-project');
+            datastore, imageRelationsManager, 'C1', 'test-project'
+        );
+
         const exportDocumentsLookup = makeDocumentsLookup(exportDocuments);
+
         expect(exportDocuments.length).toBe(3);
         expect(exportDocumentsLookup['C1']?.['project']).toBe('test-project');
         expect(exportDocumentsLookup['T1']?.['project']).toBe('test-project');
         expect(exportDocumentsLookup['I1']?.['project']).toBe('test-project');
         expect(imageResourceIds).toEqual(['I1']);
-        done();
     });
 
 
-    it('not all images exclusively linked', async done => {
+    test('not all images exclusively linked', async () => {
 
-        imageRelationsManager.getLinkedImages.and.callFake((_, option) => {
+        imageRelationsManager.getLinkedImages.mockImplementation((_, option) => {
             return option === true
                 ? []
                 : images;
         });
 
         const [error, _] = await getExportDocuments(
-            datastore, imageRelationsManager, 'C1', 'test-project');
+            datastore, imageRelationsManager, 'C1', 'test-project'
+        );
+
         expect(error[0]).toEqual(ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED);
         expect(error[1]).toEqual(images[0].resource.identifier);
-        done();
     });
 });

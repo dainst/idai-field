@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeAll, afterEach, jest } from '@jest/globals';
 import { featureDoc } from 'idai-field-core';
 import { GeoJsonExporter } from '../../../../src/app/components/export/geojson-exporter';
 
@@ -9,7 +10,6 @@ const geojsonHint = require('@mapbox/geojsonhint');
 /**
  * @author Thomas Kleinke
  */
-
 describe('GeojsonExporter', () => {
 
     const exportFilePath: string = process.cwd() + '/test/store/test.geojson';
@@ -27,7 +27,9 @@ describe('GeojsonExporter', () => {
 
     beforeAll(() => {
 
-        mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore = {
+            find: jest.fn()
+        };
     });
 
 
@@ -37,7 +39,7 @@ describe('GeojsonExporter', () => {
     });
 
 
-    it('create valid geojson file', async done => {
+    test('create valid geojson file', async () => {
 
         const pointFeature = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
         pointFeature.resource.geometry = {
@@ -51,17 +53,15 @@ describe('GeojsonExporter', () => {
             coordinates: [[0.5, 1.5], [1.5, 2.5], [2.5, 3.5]]
         };
 
-        mockDatastore.find.and.callFake(() => {
+        mockDatastore.find.mockImplementation(() => {
             return { documents: [pointFeature, lineFeature] };
         });
 
         await performExportAndValidate();
-
-        done();
     });
 
 
-    it('close ring and fix winding order for polygon geometry', async done => {
+    test('close ring and fix winding order for polygon geometry', async () => {
 
         const polygonFeature = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
         polygonFeature.resource.geometry = {
@@ -69,12 +69,10 @@ describe('GeojsonExporter', () => {
             coordinates: [[[1.0, 2.0], [2.0, 2.0], [2.0, 1.0], [1.0, 1.0]]]
         };
 
-        mockDatastore.find.and.callFake(() => {
+        mockDatastore.find.mockImplementation(() => {
             return { documents: [polygonFeature] };
         });
 
         await performExportAndValidate();
-
-        done();
     });
 });

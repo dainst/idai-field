@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { Field, fieldDoc, I18N, Relation } from 'idai-field-core';
 import { CSVExport } from '../../../../../src/app/components/export/csv/csv-export';
 
@@ -24,7 +25,6 @@ export function makeFieldDefinitions(fieldNames: string[]) {
 /**
  * @author Daniel de Oliveira
  */
-
 describe('CSVExport', () => {
 
     function ifResource(id: string, identifier: string, shortDescription: I18N.String, category: string) {
@@ -41,7 +41,7 @@ describe('CSVExport', () => {
     }
 
 
-    it('create header line if documents empty', () => {
+    test('create header line if documents empty', () => {
 
         const t = makeFieldDefinitions(['identifier', 'shortDescription', 'custom', 'id']);
 
@@ -50,7 +50,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('create document line', () => {
+    test('create document line', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
         const result = CSVExport.createExportable([resource], t, [], ['en'], ',').csvData;
@@ -59,7 +59,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('export relations', () => {
+    test('export relations', () => {
 
         const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'relation1']);
         const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
@@ -72,7 +72,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('export relations without combining hierarchical relations', () => {
+    test('export relations without combining hierarchical relations', () => {
 
         const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'relation1']);
         const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
@@ -97,7 +97,7 @@ describe('CSVExport', () => {
     }
 
 
-    it('handle double quotes in field values', () => {
+    test('handle double quotes in field values', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
         resource.shortDescription = { en: 'ABC " "DEF"' };
@@ -107,7 +107,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('export array fields', () => {
+    test('export array fields', () => {
 
         const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'color']);
         fields.find(field => field.name === 'color').inputType = 'checkboxes';
@@ -119,7 +119,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('is nested in another resource', () => {
+    test('is nested in another resource', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
         resource.relations = {
@@ -130,7 +130,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('is nested in an operation', () => {
+    test('is nested in an operation', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
         resource.relations = {
@@ -140,7 +140,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand dropdownRange', () => {
+    test('expand dropdownRange', () => {
 
         const t = makeFieldDefinitions(['identifier', 'period', 'custom']);
 
@@ -178,7 +178,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand multiple dropdownRanges', () => {
+    test('expand multiple dropdownRanges', () => {
 
         const t = makeFieldDefinitions(['identifier', 'periodA', 'periodB', 'custom']);
 
@@ -206,7 +206,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand dating', () => {
+    test('expand dating', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dating', 'custom']);
 
@@ -282,7 +282,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand dating field even if no value present', () => {
+    test('expand dating field even if no value present', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dating']);
 
@@ -306,7 +306,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand dating field even if no value present, in header only mode', () => {
+    test('expand dating field even if no value present, in header only mode', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dating']);
 
@@ -324,10 +324,10 @@ describe('CSVExport', () => {
     });
 
 
-    it('do not modify resource when expanding', () => {
+    test('do not modify resource when expanding', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
-        resource.dating = [{ begin: { year: 10 }, end: { year: 20 }, source: { en: 'some1' }, label: 'blablabla1' }];
+        resource.dating = [{ begin: { year: 10 }, end: { year: 20 }, source: { en: 'some1' }, label: 'content' }];
 
         CSVExport.createExportable([resource], t, [], ['en'], ',').csvData.map(row => row.split(','));
 
@@ -337,7 +337,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('do not modify resource when expanding relations', () => {
+    test('do not modify resource when expanding relations', () => {
 
         const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'relation1']);
         const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
@@ -349,7 +349,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand dimension', () => {
+    test('expand dimension', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dimensionX', 'custom']);
 
@@ -407,7 +407,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand one dimension field even if no values present', () => {
+    test('expand one dimension field even if no values present', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dimensionX']);
 
@@ -428,7 +428,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand one dimension field even if no values present, in header only mode', () => {
+    test('expand one dimension field even if no values present, in header only mode', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dimensionX']);
 
@@ -443,7 +443,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand multiple dimension fields', () => {
+    test('expand multiple dimension fields', () => {
 
         const t = makeFieldDefinitions(['identifier', 'dimensionX', 'dimensionY']);
 
@@ -483,7 +483,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand literature', () => {
+    test('expand literature', () => {
 
         const t = makeFieldDefinitions(['identifier', 'literature']);
 
@@ -530,7 +530,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand composite fields', () => {
+    test('expand composite fields', () => {
 
         const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'composite']);
         fieldDefinitions[1].subfields = [
@@ -605,7 +605,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand one composite field even if no values present', () => {
+    test('expand one composite field even if no values present', () => {
 
         const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'composite']);
         fieldDefinitions[1].subfields = [
@@ -627,7 +627,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand one composite field even if no values present, in header only mode', () => {
+    test('expand one composite field even if no values present, in header only mode', () => {
 
         const fieldDefinitions: Array<Field> = makeFieldDefinitions(['identifier', 'composite']);
         fieldDefinitions[1].subfields = [
@@ -643,7 +643,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand i18n strings', () => {
+    test('expand i18n strings', () => {
 
         const t = makeFieldDefinitions(['identifier', 'input1', 'input2', 'input3']);
 
@@ -691,7 +691,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand i18n string arrays', () => {
+    test('expand i18n string arrays', () => {
 
         const t = makeFieldDefinitions(['identifier', 'multiInput1', 'multiInput2']);
 
@@ -748,7 +748,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('do not add language suffixes for projects without configured project languages', () => {
+    test('do not add language suffixes for projects without configured project languages', () => {
 
         const t = makeFieldDefinitions(['identifier', 'input', 'multiInput']);
 
@@ -772,7 +772,7 @@ describe('CSVExport', () => {
     });
 
 
-    it('expand one i18n field even if no project languages are configured, in header only mode', () => {
+    test('expand one i18n field even if no project languages are configured, in header only mode', () => {
 
         const t = makeFieldDefinitions(['identifier', 'input']);
         const result = CSVExport.createExportable([], t, [], [], ',').csvData.map(row => row.split(','));
@@ -781,11 +781,13 @@ describe('CSVExport', () => {
     });
 
 
-    it('export scan code', () => {
+    test('export scan code', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();
         resource.scanCode = '1234567';
+
         const result = CSVExport.createExportable([resource], t, [], ['en'], ',', true, true).csvData;
+
         expect(result[0]).toEqual('"identifier","shortDescription.en","scanCode"');
         expect(result[1]).toEqual('"identifier1","shortDescription1","1234567"');
     });

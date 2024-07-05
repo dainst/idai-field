@@ -1,9 +1,7 @@
 <div>
   <PublicationSelection.render
-    project_name={@project_name}
-    draft_dates={@draft_dates}
-    selected_date={@publication.draft_date}
-    languages={@publication.languages}
+    publications={@publications}
+    current_publication={@publication}
     selected_lang={@selected_lang}
     identifier={
       if Data.get_field_values(@doc, "category") != "Project",

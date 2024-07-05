@@ -98,7 +98,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           </ul>
         </div>
         <div class="basis-2/3 m-5">
-          <.live_component id="iiif_viewer" project={@project_name} uuid={@uuid} module={IIIFViewer} />
+          <.live_component
+            class="h-full"
+            id="iiif_viewer"
+            project={@project_name}
+            uuid={@uuid}
+            module={IIIFViewer}
+          />
         </div>
       </div>
     </div>

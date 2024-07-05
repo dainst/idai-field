@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id={@id} url={@url} style={"height:#{@height}"} class="shadow" phx-hook="IIIFViewer"></div>
+    <div id={@id} url={@url} class={@class} phx-hook="IIIFViewer"></div>
     """
   end
 
@@ -12,14 +12,14 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
   def update(%{id: id, project: project, uuid: uuid} = assigns, socket) do
     url = construct_url(project, uuid)
 
-    height = Map.get(assigns, :height, "50vh")
+    class = Map.get(assigns, :class, "")
 
     {
       :ok,
       socket
-      |> assign(:id, id)
+      |> assign(assigns)
+      |> assign(:class, class)
       |> assign(:url, url)
-      |> assign(:height, height)
     }
   end
 

@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { JavaVersionParser } from '../../../../src/app/services/java/java-version-parser';
 
 
@@ -6,7 +7,7 @@ import { JavaVersionParser } from '../../../../src/app/services/java/java-versio
  */
 describe('JavaVersionParser', () => {
 
-    it('parse Java version', () => {
+    test('parse Java version', () => {
 
         expect(JavaVersionParser.parse('java version "1.8.0_152"')).toBe(8);
         expect(JavaVersionParser.parse('java version "9"')).toBe(9);

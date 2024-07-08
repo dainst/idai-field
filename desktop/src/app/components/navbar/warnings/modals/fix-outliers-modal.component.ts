@@ -70,9 +70,7 @@ export class FixOutliersModalComponent {
 
         this.replaceAll = !this.replaceAll;
 
-        if (this.replaceAll === true) {
-            this.prepareReplaceAll();
-        }
+        if (this.replaceAll) this.prepareReplaceAll();
     }
 
 

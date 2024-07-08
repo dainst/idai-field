@@ -60,9 +60,7 @@ export class DeleteOutliersModalComponent {
 
         this.deleteAll = !this.deleteAll;
 
-        if (this.deleteAll === true) {
-            this.prepareDeleteAll();
-        }
+        if (this.deleteAll) this.prepareDeleteAll();
     }
 
     

@@ -1,21 +1,18 @@
+import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
 import { fieldDoc } from 'idai-field-core';
 import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/imageoverview-facade';
-import { createApp } from '../subsystem-helper';
-import PouchDB =  require('pouchdb-node');
+import { cleanUp, createApp } from '../subsystem-helper';
 
 
 /**
- * This is a subsystem test.
- * The use of mocks is intentionally reduced.
- * The subsystem gets assembled via createApp.
- *
  * @author Daniel de Oliveira
  */
 describe('ImageOverviewFacade/Subsystem', () => {
 
     let imageOverviewFacade: ImageOverviewFacade;
 
-    beforeEach(async done => {
+
+    beforeEach(async () => {
 
         const result = await createApp();
 
@@ -23,20 +20,21 @@ describe('ImageOverviewFacade/Subsystem', () => {
         imageOverviewFacade = result.imageOverviewFacade;
 
         for (let i = 0; i < 60; i++) { // create 60 documents
-
             const imageDocument = fieldDoc('image document ' + i, 'imagedocument' + i, 'Image', 'im' + i);
             await datastore.create(imageDocument);
         }
 
         await imageOverviewFacade.initialize();
-        done();
     });
 
 
-    afterEach(done => new PouchDB('test').destroy().then(() => { done(); }), 5000);
+    afterEach(async () =>{
+        
+        await cleanUp();
+    });
 
 
-    it('turn page', async done => {
+    test('turn page', async () => {
 
         let documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19); // first page's first slot is occupied by the drop area, so we have 19, not 20 documents
@@ -89,11 +87,10 @@ describe('ImageOverviewFacade/Subsystem', () => {
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im0');
-        done();
     });
 
 
-    it('change nrImagesPerRow -> jump back to initial page', async done => {
+    test('change nrImagesPerRow -> jump back to initial page', async () => {
 
         await imageOverviewFacade.turnPage();
         let documents = await imageOverviewFacade.getDocuments();
@@ -112,6 +109,5 @@ describe('ImageOverviewFacade/Subsystem', () => {
         documents = await imageOverviewFacade.getDocuments();
         expect(documents.length).toBe(19);
         expect(documents[0].resource.id).toBe('im0');
-        done();
     });
 });

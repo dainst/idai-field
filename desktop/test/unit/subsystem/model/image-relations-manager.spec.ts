@@ -1,5 +1,6 @@
+import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
 import { Relation } from 'idai-field-core';
-import { createApp, createHelpers } from '../subsystem-helper';
+import { cleanUp, createApp, createHelpers } from '../subsystem-helper';
 
 
 describe('subsystem/image-relations-manager', () => {
@@ -8,19 +9,21 @@ describe('subsystem/image-relations-manager', () => {
     let helpers;
 
 
-    beforeEach(async done => {
+    beforeEach(async () => {
 
         app = await createApp();
         helpers = createHelpers(app);
         helpers.createProjectDir();
-
-        spyOn(console, 'error');
-        // spyOn(console, 'warn');
-        done();
     });
 
 
-    it('remove TypeCatalog with images', async done => {
+    afterEach(async () =>{
+        
+        await cleanUp();
+    });
+
+
+    test('remove TypeCatalog with images', async () => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -38,11 +41,10 @@ describe('subsystem/image-relations-manager', () => {
 
         await helpers.expectDocuments('project');
         helpers.expectImagesDontExist('i1', 'i2');
-        done();
     });
 
 
-    it('remove Type with images', async done => {
+    test('remove Type with images', async () => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -61,11 +63,10 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('project', 'tc1', 'i1');
         helpers.expectImagesExist('i1');
         helpers.expectImagesDontExist('i2');
-        done();
     });
 
 
-    it('remove Type and Catalog with same image', async done => {
+    test('remove Type and Catalog with same image', async () => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -82,11 +83,10 @@ describe('subsystem/image-relations-manager', () => {
 
         await helpers.expectDocuments('project');
         helpers.expectImagesDontExist('i1');
-        done();
     });
 
 
-    it('do not remove images (with TypeCatalog) which are also connected to other resources', async done => {
+    test('do not remove images (with TypeCatalog) which are also connected to other resources', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -111,11 +111,10 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('project', 'i2', 'tr1', 'r1');
         helpers.expectImagesDontExist('i1');
         helpers.expectImagesExist('i2');
-        done();
     });
 
 
-    it('remove 2 type with shared images', async done => {
+    test('remove 2 type with shared images', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -133,11 +132,10 @@ describe('subsystem/image-relations-manager', () => {
 
         await helpers.expectDocuments('project', 'tc1');
         helpers.expectImagesDontExist('i1');
-        done();
     });
 
 
-    it('remove 2 type with shared images, but image is also connected to other resources', async done => {
+    test('remove 2 type with shared images, but image is also connected to other resources', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -161,11 +159,10 @@ describe('subsystem/image-relations-manager', () => {
 
         await helpers.expectDocuments('project', 'tc1', 'tr1', 'r1', 'i1');
         helpers.expectImagesExist('i1');
-        done();
     });
 
 
-    it('do not remove images (with TypeCatalog) which are also connected to ancestor resources', async done => {
+    test('do not remove images (with TypeCatalog) which are also connected to ancestor resources', async () => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -182,11 +179,10 @@ describe('subsystem/image-relations-manager', () => {
 
         await helpers.expectDocuments('project', 'tc1', 'i1');
         helpers.expectImagesExist('i1');
-        done();
     });
 
 
-    it('remove images', async done => {
+    test('remove images', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -200,11 +196,10 @@ describe('subsystem/image-relations-manager', () => {
         await helpers.expectDocuments('project', 'tc1');
         const tc1 = await app.datastore.get('tc1');
         expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
-        done();
     });
 
 
-    it('remove images - where image is connected to another resource, but is nevertheless deleted because image is amongst resources to be deleted', async done => {
+    test('remove images - where image is connected to another resource, but is nevertheless deleted because image is amongst resources to be deleted', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -225,11 +220,10 @@ describe('subsystem/image-relations-manager', () => {
 
         await helpers.expectDocuments('project', 'tr1', 'r1');
         helpers.expectImagesDontExist('i1');
-        done();
     });
 
 
-    it('add depicts relation', async done => {
+    test('add depicts relation', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -247,11 +241,10 @@ describe('subsystem/image-relations-manager', () => {
         const i1 = await app.datastore.get('i1');
         expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
         expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1']);
-        done();
     });
 
 
-    it('add depicts relation - throw if trying to link image with resource if either is not owned', async done => {
+    test('add depicts relation - throw if trying to link image with resource if either is not owned', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -263,19 +256,18 @@ describe('subsystem/image-relations-manager', () => {
         documentsLookup.tc1.project = 'other-project';
         try {
             await app.imageRelationsManager.link(documentsLookup.tc1, documentsLookup.i1);
-            fail();
+            throw new Error('Test failure');
         } catch {}
 
         documentsLookup.i1.project = 'other-project';
         try {
             await app.imageRelationsManager.link(documentsLookup.tc1, documentsLookup.i1);
-            fail();
+            throw new Error('Test failure');
         } catch {}
-        done();
     });
 
 
-    it('remove depicts relation', async done => {
+    test('remove depicts relation', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -293,11 +285,10 @@ describe('subsystem/image-relations-manager', () => {
         const i1 = await app.datastore.get('i1');
         expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
         expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual([]);
-        done();
     });
 
 
-    it('remove depicts relation between image documennt document', async done => {
+    test('remove depicts relation between image documennt document', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -320,12 +311,10 @@ describe('subsystem/image-relations-manager', () => {
         expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
         expect(tc2.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
         expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual(['tc2']);
-
-        done();
     });
 
 
-    it('only first might be non image document', async done => {
+    test('only first might be non image document', async () => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -336,11 +325,9 @@ describe('subsystem/image-relations-manager', () => {
 
         try {
             await app.imageRelationsManager.unlink(documentsLookup.tc1, documentsLookup.tc2);
-            fail();
+            throw new Error('Test failure');
         } catch (err) {
             expect(err.includes('illegal argument')).toBeTruthy();
-        } finally {
-            done();
         }
     });
 });

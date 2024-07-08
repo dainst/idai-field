@@ -2,9 +2,9 @@ import { describe, test, beforeAll, afterEach, afterAll, jest } from '@jest/glob
 import { nop } from 'tsfun';
 import { Backup } from '../../../../src/app/components/backup/backup';
 
-import fs = require('fs');
-import rimraf = require('rimraf');
-import PouchDB = require('pouchdb-node');
+const fs = require('fs');
+const rimraf = require('rimraf');
+const PouchDB = require('pouchdb-node');
 
 
 /**

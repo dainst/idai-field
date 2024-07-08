@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from '@jest/globals';
-import * as tsfun from 'tsfun';
+import { clone } from 'tsfun';
 import { Resource, Relation } from 'idai-field-core';
 import { GEOMETRY, mergeResource, RELATIONS } from '../../../../../src/app/components/import/import/process/merge-resource';
 import { ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
@@ -27,9 +27,9 @@ describe('mergeResource', () => {
 
     beforeEach(() => {
 
-        target = tsfun.clone(template);
+        target = clone(template);
         target['anotherField'] = 'field1';
-        source = tsfun.clone(template);
+        source = clone(template);
     });
 
 

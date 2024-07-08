@@ -4,7 +4,7 @@ import { BackupLoadingComponent } from '../../../../src/app/components/backup/ba
 import { Backup } from '../../../../src/app/components/backup/backup';
 import { M } from '../../../../src/app/components/messages/m';
 
-import PouchDB = require('pouchdb-node');
+const PouchDB = require('pouchdb-node');
 
 
 /**

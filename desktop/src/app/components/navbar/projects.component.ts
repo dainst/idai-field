@@ -37,7 +37,7 @@ export class ProjectsComponent {
 
     public openUsernameModal = () => this.menuModalLauncher.openUpdateUsernameModal();
 
-    public isHighDPIDisplay = () => window.devicePixelRatio > 1;
+    public isHighDPIDisplay = () => globalThis.devicePixelRatio > 1;
 
 
     private updateProjectLabel() {

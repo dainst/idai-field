@@ -16,7 +16,7 @@ import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 @Component({

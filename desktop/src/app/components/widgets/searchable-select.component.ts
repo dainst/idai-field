@@ -81,7 +81,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
         this.scrollListenerInitialized = false;
 
         this.onScrollListener = this.onScroll.bind(this);
-        window.addEventListener('scroll', this.onScrollListener, true);
+        globalThis.addEventListener('scroll', this.onScrollListener, true);
     }
 
     
@@ -89,7 +89,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
         if (!this.onScrollListener) return;
 
-        window.removeEventListener('scroll', this.onScrollListener, true);
+        globalThis.removeEventListener('scroll', this.onScrollListener, true);
         this.onScrollListener = undefined;
     }
 

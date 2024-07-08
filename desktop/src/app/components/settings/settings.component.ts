@@ -12,8 +12,8 @@ import { MenuContext } from '../../services/menu-context';
 import { SettingsErrors } from '../../services/settings/settings-errors';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const address = window.require('address');
-const remote = window.require('@electron/remote');
+const address = globalThis.require('address');
+const remote = globalThis.require('@electron/remote');
 
 
 @Component({

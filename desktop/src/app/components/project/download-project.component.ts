@@ -14,8 +14,8 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const PouchDB = window.require('pouchdb-browser');
-const address = window.require('address');
+const PouchDB = globalThis.require('pouchdb-browser');
+const address = globalThis.require('address');
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
 

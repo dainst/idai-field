@@ -13,7 +13,7 @@ import { Messages } from '../messages/messages';
 import { ProjectIdentifierValidatorMessagesConversion } from '../messages/project-identifier-validator-messages-conversion';
 import { MsgWithParams } from '../messages/msg-with-params';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 @Component({

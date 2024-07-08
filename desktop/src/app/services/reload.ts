@@ -1,5 +1,5 @@
-const ipcRenderer = window.require('electron')?.ipcRenderer;
-const remote = window.require('@electron/remote');
+const ipcRenderer = globalThis.require('electron')?.ipcRenderer;
+const remote = globalThis.require('@electron/remote');
 
 
 /**
@@ -9,7 +9,7 @@ const remote = window.require('@electron/remote');
 export const reload = () => {
 
     if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
-        const route = window.location.href.split('#')[1];
+        const route = globalThis.location.href.split('#')[1];
         ipcRenderer.send('reload', route);
     }
 };

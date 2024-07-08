@@ -146,7 +146,7 @@ export class NavbarComponent implements DoCheck {
 
         return this.tabSpaceElement.nativeElement.offsetWidth
             + parseInt(
-                ((window.getComputedStyle(this.tabSpaceElement.nativeElement).marginRight as string)
+                ((globalThis.getComputedStyle(this.tabSpaceElement.nativeElement).marginRight as string)
                     .replace('px', ''))
             );
     }

@@ -13,8 +13,8 @@ import { ConfigurationChangeNotifications } from './configuration/notifications/
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
 
-const remote = window.require('@electron/remote');
-const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = globalThis.require('@electron/remote');
+const ipcRenderer = globalThis.require('electron')?.ipcRenderer;
 
 
 @Component({

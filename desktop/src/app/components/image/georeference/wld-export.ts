@@ -3,8 +3,8 @@ import { ExtensionUtil } from '../../../util/extension-util';
 import { AppState } from '../../../services/app-state';
 import { ImageUploader } from '../upload/image-uploader';
 
-const remote = window.require('@electron/remote');
-const fs = window.require('fs');
+const remote = globalThis.require('@electron/remote');
+const fs = globalThis.require('fs');
 
 
 export async function downloadWldFile(imageDocument: ImageDocument, appState: AppState) {

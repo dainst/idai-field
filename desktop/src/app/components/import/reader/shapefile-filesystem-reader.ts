@@ -2,8 +2,8 @@ import { Reader } from './reader';
 import { JavaToolExecutor } from '../../../services/java/java-tool-executor';
 import { ReaderErrors} from './reader-errors';
 
-const remote = window.require('@electron/remote');
-const fs = window.require('fs');
+const remote = globalThis.require('@electron/remote');
+const fs = globalThis.require('fs');
 
 
 /**

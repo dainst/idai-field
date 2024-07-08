@@ -8,7 +8,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { Settings } from '../../services/settings/settings';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 const HELP_LANGUAGES = ['de', 'en'];

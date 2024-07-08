@@ -1,5 +1,5 @@
-const remote = window.require('@electron/remote');
-const fs = window.require('fs');
+const remote = globalThis.require('@electron/remote');
+const fs = globalThis.require('fs');
 
 
 /**

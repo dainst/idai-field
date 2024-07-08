@@ -1,4 +1,4 @@
-const camelCase = window.require('camelcase');
+const camelCase = globalThis.require('camelcase');
 
 
 /**

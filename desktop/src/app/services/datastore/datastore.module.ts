@@ -3,7 +3,7 @@ import { DocumentConverter, ChangesStream, Datastore, DocumentCache, IdGenerator
 import { SettingsProvider } from '../settings/settings-provider';
 import { ExpressServer } from '../express-server';
 
-const PouchDB = window.require('pouchdb-browser');
+const PouchDB = globalThis.require('pouchdb-browser');
 
 
 /**

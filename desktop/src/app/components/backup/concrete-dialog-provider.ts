@@ -1,6 +1,6 @@
 import { AppState } from '../../services/app-state';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 /**

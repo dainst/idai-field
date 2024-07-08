@@ -5,7 +5,7 @@ import { Messages } from '../../messages/messages';
 import { MsgWithParams } from '../../messages/msg-with-params';
 import { AppState } from '../../../services/app-state';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 @Component({

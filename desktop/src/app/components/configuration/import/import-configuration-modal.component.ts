@@ -9,8 +9,8 @@ import { Messages } from '../../messages/messages';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { AppState } from '../../../services/app-state';
 
-const PouchDB = window.require('pouchdb-browser');
-const remote = window.require('@electron/remote');
+const PouchDB = globalThis.require('pouchdb-browser');
+const remote = globalThis.require('@electron/remote');
 
 
 @Component({

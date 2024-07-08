@@ -82,7 +82,7 @@ export class DateComponent implements OnChanges {
         this.scrollListenerInitialized = false;
 
         this.onScrollListener = this.onScroll(datePicker).bind(this);
-        window.addEventListener('scroll', this.onScrollListener, true);
+        globalThis.addEventListener('scroll', this.onScrollListener, true);
     }
 
     
@@ -90,7 +90,7 @@ export class DateComponent implements OnChanges {
 
         if (!this.onScrollListener) return;
 
-        window.removeEventListener('scroll', this.onScrollListener, true);
+        globalThis.removeEventListener('scroll', this.onScrollListener, true);
         this.onScrollListener = undefined;
     }
 

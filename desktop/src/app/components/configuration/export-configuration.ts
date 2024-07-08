@@ -3,7 +3,7 @@ import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 import { AppState } from '../../services/app-state';
 import { M } from '../messages/m';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 /**

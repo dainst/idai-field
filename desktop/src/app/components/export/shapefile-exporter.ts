@@ -3,7 +3,7 @@ import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { M } from '../messages/m';
 import { Settings } from '../../services/settings/settings';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 /**

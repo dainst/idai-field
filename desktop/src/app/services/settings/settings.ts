@@ -1,7 +1,7 @@
 import { I18N } from 'idai-field-core';
 import { SyncTarget } from './sync-target';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 
 export interface Settings {

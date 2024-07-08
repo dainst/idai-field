@@ -1,7 +1,7 @@
 import { getAsynchronousFs } from '../../../../../services/get-asynchronous-fs';
 import { PrintSettingsProfile } from './print-settings-profile';
 
-const remote = window.require('@electron/remote');
+const remote = globalThis.require('@electron/remote');
 
 const FILE_PATH = remote ? remote.getGlobal('appDataPath') + '/print-settings.json' : '';
 

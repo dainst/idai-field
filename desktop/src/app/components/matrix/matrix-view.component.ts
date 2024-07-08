@@ -26,7 +26,7 @@ import FILLS = Relation.Position.FILLS;
 import IS_FILLED_BY = Relation.Position.FILLEDBY;
 import SAME_AS = Relation.SAME_AS;
 
-const Viz = window.require('viz.js');
+const Viz = globalThis.require('viz.js');
 
 const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 

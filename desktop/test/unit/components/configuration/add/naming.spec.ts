@@ -1,9 +1,10 @@
+import { describe, test } from '@jest/globals';
 import { Naming } from '../../../../../src/app/components/configuration/add/naming';
 
 
 describe('naming', () => {
 
-    it('generate field/group names', () => {
+    test('generate field/group names', () => {
       
         expect(Naming.getFieldOrGroupName('fieldName', 'project')).toEqual('project:fieldName');
         expect(Naming.getFieldOrGroupName('field-name', 'project')).toEqual('project:fieldName');
@@ -15,7 +16,7 @@ describe('naming', () => {
     });
 
 
-    it('generate subfield names', () => {
+    test('generate subfield names', () => {
       
         expect(Naming.getSubfieldName('subfieldName')).toEqual('subfieldName');
         expect(Naming.getSubfieldName('subfield-name')).toEqual('subfieldName');
@@ -26,7 +27,7 @@ describe('naming', () => {
     });
 
 
-    it('generate category names', () => {
+    test('generate category names', () => {
       
         expect(Naming.getCategoryName('CategoryName', 'project')).toEqual('Project:CategoryName');
         expect(Naming.getCategoryName('category-name', 'project')).toEqual('Project:CategoryName');
@@ -38,7 +39,7 @@ describe('naming', () => {
     });
 
 
-    it('generate valuelist ids', () => {
+    test('generate valuelist ids', () => {
       
         expect(Naming.getValuelistId('valuelist-name', 'project')).toEqual('project:valuelist-name');
         expect(Naming.getValuelistId('value list-name', 'project')).toEqual('project:valuelist-name');

@@ -25,7 +25,7 @@ export class FixOutliersModalComponent {
     public valuelist: Valuelist;
     public selectedValue: string;
     public replaceAll: boolean;
-    public countAffected: Number;
+    public countAffected: number;
 
     private projectDocument: Document;
     private documentsToChange: Array<Document>;

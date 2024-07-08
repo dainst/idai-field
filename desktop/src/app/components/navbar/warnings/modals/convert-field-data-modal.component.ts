@@ -24,7 +24,7 @@ export class ConvertFieldDataModalComponent {
     public inputTypeLabel: string;
 
     public convertAll: boolean;
-    public countAffected: Number;
+    public countAffected: number;
     
     private affectedDocuments: Array<Document>;
 

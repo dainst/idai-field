@@ -23,7 +23,7 @@ export class SelectNewCategoryModalComponent {
     public availableTopLevelCategories: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
     public multiple: boolean;
-    public countAffected: Number;
+    public countAffected: number;
 
     private affectedDocuments: Array<Document>;
 

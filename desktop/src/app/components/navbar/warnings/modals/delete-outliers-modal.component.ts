@@ -22,7 +22,7 @@ export class DeleteOutliersModalComponent {
     public fieldLabel: string|undefined;
     public outlierValue: string;
     public deleteAll: boolean;
-    public countAffected: Number;
+    public countAffected: number;
 
     private documentsToChange: Array<Document>;
 

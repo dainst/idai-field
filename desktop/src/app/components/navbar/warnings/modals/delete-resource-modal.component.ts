@@ -21,7 +21,7 @@ export class DeleteResourceModalComponent {
     
     public deleteAll: boolean;
     public confirmValue: string;
-    public countAffected: Number;
+    public countAffected: number;
     
     private affectedDocuments: Array<Document>;
 

@@ -24,7 +24,7 @@ export class DeleteFieldDataModalComponent {
 
     public deleteAll: boolean;
     public confirmFieldName: string;
-    public countAffected: Number;
+    public countAffected: number;
     
     private affectedDocuments: Array<Document>;
 

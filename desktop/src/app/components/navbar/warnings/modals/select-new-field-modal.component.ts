@@ -26,7 +26,7 @@ export class SelectNewFieldModalComponent {
     public selectedFieldName: string;
     public multiple: boolean;
 
-    public countAffected: Number;
+    public countAffected: number;
     
     private affectedDocuments: Array<Document>;
 

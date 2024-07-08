@@ -51,7 +51,7 @@ const setUp = async (mainWindow) => {
             modal.show();
         });
         modal.on('close', () => {
-            parentWindow.focus();
+            modal.getParentWindow().focus();
         });
 
         ipcMain.once('confirm-auto-update', () => {
@@ -111,7 +111,7 @@ const setUp = async (mainWindow) => {
             modal.show();
         });
         modal.on('close', () => {
-            parentWindow.focus();
+            modal.getParentWindow().focus();
         });
 
         ipcMain.once('close-download-finished-modal', () => {

@@ -221,7 +221,7 @@
       "Anhänger": "pendant",
       "Rohglas": "raw glass",
       "Fensterglas": "window pane",
-      "Perle": "pearl",
+      "Perle": "bead",
       "Produktionsfragment": "production residue",
       "Schmuck": "jewelry",
       "Spielstein": "game piece",
@@ -650,17 +650,44 @@
   },
   "Pottery-objectType-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Perle": "bead"
     }
   },
   "Bone-objectType-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Spielstein": "gaming piece / token",
+      "Armreif": "bracelet",
+      "Bearbeitet (allgemein)": "worked (unspecific)",
+      "Einlage": "inlay",
+      "Gefäß": "vessel",
+      "Gerät": "tool",
+      "Kette": "necklace / chain",
+      "Löffel": "spoon",
+      "Perle": "bead",
+      "Ring": "ring",
+      "Schmuck": "jewelry",
+      "Waffe": "weapon",
+      "Werkzeug": "tool"
     }
   },
   "Stone-objectType-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Plastik/Skulptur": "sculpture",
+      "Perle": "bead",
+      "Abschlag": "flake",
+      "Altar": "altar",
+      "Bauglied": "architectural element",
+      "Einlage": "inlay",
+      "Gefäß": "vessel",
+      "Gerät": "tool",
+      "Gussform": "mould",
+      "Lampe": "lamp",
+      "Löffel": "spoon",
+      "Mobiliar": "(part of) furniture",
+      "Produktionsfragment": "production residue"
     }
   },
   "Coin-denomination-default": {
@@ -680,7 +707,8 @@
   },
   "Metal-objectType-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Perle": "bead"
     }
   },
   "Building-context-default": {
@@ -733,6 +761,109 @@
   "Sample-sampleType-default": {
     "values": {
       "Pollenanalyse": "Pollen analysis"
+    }
+  },
+  "Pottery-vesselFormSpecific-default": {
+    "values": {
+      "Fischteller": "Fishplate",
+      "Salznapf": "Saltcellar",
+      "Kragenschale": "collar rim bowl",
+      "Vierkantflasche": "square bottle",
+      "hexagonale Flasche": "hexagonal flask",
+      "zylindrische Flasche": "cylindrical flask"
+    }
+  },
+  "Bone-boneClassification-default": {
+    "values": {
+      "Zahn": "tooth"
+    }
+  },
+  "Bone-boneType-default": {
+    "values": {
+      "Tierknochen": "animal bones",
+      "Elfenbein": "ivory",
+      "Horn": "horn",
+      "Menschenknochen": "human bones"
+    }
+  },
+  "Terracotta-clayStructure-default": {
+    "values": {
+      "weich": "soft (can be scratched by fingernail)",
+      "hart": "hard (can be scratched by knife)",
+      "klingend hart": "(?trans.) very hard (can not be scratched by knife)",
+      "mittel": "medium"
+    }
+  },
+  "Terracotta-surfaceCondition-default": {
+    "values": {
+      "starke Sinter- oder Mörtelablagerungen": "sinter or mortar deposits",
+      "Brandspuren": "burning marks",
+      "Sekundärbrand": "burned / fired (secondary)",
+      "abblätternd": "flaking",
+      "gut erhalten": "well preserved",
+      "stark abgerieben": "strongly abraded",
+      "versintert": "sintered",
+      "verwaschen": "washed out"
+    }
+  },
+  "Terracotta-vesselForm-default": {
+    "values": {
+      "Teller": "plate",
+      "Deckel": "lid",
+      "Tasse": "Cup/Mug (Tasse)",
+      "Topf": "pot",
+      "Unbestimmt": "inditerminate",
+      "Vorratsgefäß": "storage vessel"
+    }
+  },
+  "Terracotta-vesselFormSpecific-default": {
+    "values": {
+      "Balsamarium": "balsamarium",
+      "Kragenschale": "collar rim bowl",
+      "Vierkantflasche": "square bottle",
+      "hexagonale Flasche": "hexagonal flask",
+      "zylindrische Flasche": "cylindrical flask"
+    }
+  },
+  "Survey-researchMethod-default": {
+    "values": {
+      "Luft- oder Satellitenbilder": "Aerial or satellite imagery",
+      "Quadratisch": "square"
+    }
+  },
+  "Stone-material-default": {
+    "values": {
+      "Kalkmörtel": "lime mortar",
+      "Flint": "flint",
+      "Glimmer": "mica",
+      "Granit": "granite",
+      "Kalk": "lime",
+      "Kalkstein": "limestone",
+      "Marmor": "marble",
+      "Pophyr": "porphyry",
+      "Quarz": "quartz",
+      "Sandstein": "sandstone"
+    }
+  },
+  "Bone-sex-default": {
+    "values": {
+      "Männlich": "male",
+      "Weiblich": "female"
+    }
+  },
+  "Bone-species-default": {
+    "values": {
+      "Biber": "beaver",
+      "Fisch": "fish",
+      "Schwein": "Suidae",
+      "Vogel": "bird"
+    }
+  },
+  "Stone-architectureElement-default": {
+    "values": {
+      "Fries": "frieze",
+      "Säule": "column",
+      "Wandverkleidung": "wall panels"
     }
   }
 }

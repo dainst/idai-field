@@ -74,7 +74,7 @@ export class FixOutliersModalComponent {
     }
 
 
-    public async prepareReplaceAll() {
+    private async prepareReplaceAll() {
         
         this.documentsToChange = [];
 

@@ -64,7 +64,7 @@ export class DeleteOutliersModalComponent {
     }
 
     
-    public async prepareDeleteAll() {
+    private async prepareDeleteAll() {
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }

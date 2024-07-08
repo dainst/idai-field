@@ -30,7 +30,7 @@
     "e2e": "npm-run-all -p -r ng:serve:no-reload e2e:run",
     "e2e:run": "wait-on http-get://localhost:4200/dist/ && playwright test test/e2e --config=test/e2e/playwright.config.ts",
     "test:hub-setup": "docker-compose -f test/hub-integration/docker-compose.yml up -d",
-    "test:hub-run": "jest --config=./test/jest.config.ts --testMatch=\"<rootDir>/test/hub-integration/**/*.spec.ts\" --env=node --runInBand",
+    "test:hub-run": "wait-on http-get://localhost:4003/ && jest --config=./test/jest.config.ts --testMatch=\"<rootDir>/test/hub-integration/**/*.spec.ts\" --env=node --runInBand",
     "test:hub-teardown": "docker-compose -f test/hub-integration/docker-compose.yml down -v",
     "test:hub-integration": "npm-run-all -s -c test:hub-setup test:hub-run test:hub-teardown",
     "package:mac": "electron-builder -m --universal",

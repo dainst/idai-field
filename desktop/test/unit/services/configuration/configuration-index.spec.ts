@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Field, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../src/app/services/configuration/index/configuration-index';
 

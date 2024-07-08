@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Relation, Document } from 'idai-field-core';
 import { ImportErrors as E } from '../../../../../src/app/components/import/import/import-errors';
 import { completeInverseRelations } from '../../../../../src/app/components/import/import/process/complete-inverse-relations';

@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
 import { fieldDoc } from 'idai-field-core';
 import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/imageoverview-facade';
 import { cleanUp, createApp } from '../subsystem-helper';

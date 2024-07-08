@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { ImageDocument } from 'idai-field-core';
 import { ImageRow } from '../../../../../src/app/components/image/row/image-row';
 

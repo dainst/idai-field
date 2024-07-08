@@ -1,4 +1,3 @@
-import { describe, test } from '@jest/globals';
 import { validateReferences } from '../../../../../src/app/components/configuration/validation/validate-references';
 import { M } from '../../../../../src/app/components/messages/m';
 

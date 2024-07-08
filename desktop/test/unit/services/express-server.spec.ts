@@ -1,5 +1,4 @@
 import Ajv from 'ajv';
-import { describe, expect, test, beforeAll, beforeEach, afterEach, afterAll, jest } from '@jest/globals';
 import { nop } from 'tsfun';
 import { IdGenerator, PouchdbDatastore, ImageStore, base64Encode} from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';

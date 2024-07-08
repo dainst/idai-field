@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Document, ProjectConfiguration, Forest, IdGenerator } from 'idai-field-core';
 import { DocumentHolder } from '../../../../src/app/components/docedit/document-holder';
 import { M } from '../../../../src/app/components/messages/m';

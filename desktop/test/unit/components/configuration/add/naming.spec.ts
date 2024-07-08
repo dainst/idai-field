@@ -1,4 +1,3 @@
-import { describe, test } from '@jest/globals';
 import { Naming } from '../../../../../src/app/components/configuration/add/naming';
 
 

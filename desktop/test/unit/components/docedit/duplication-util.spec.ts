@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeAll } from '@jest/globals';
 import { NewDocument, Document } from 'idai-field-core';
 import { DuplicationUtil } from '../../../../src/app/components/docedit/duplication-util';
 

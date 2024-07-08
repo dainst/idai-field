@@ -1,4 +1,3 @@
-import { expect, jest } from '@jest/globals';
 import { sameset } from 'tsfun';
 import { AppConfigurator, DocumentConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource, SyncService, ImageStore,

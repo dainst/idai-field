@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, afterEach, jest } from '@jest/globals';
 import { Datastore, Document, fieldDoc } from 'idai-field-core';
 import { FieldDocument } from '../../../../../core/index';
 import { ResourcesStateManager } from '../../../../src/app/components/resources/view/resources-state-manager';

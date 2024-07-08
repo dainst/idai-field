@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { CoordinatesUtility } from '../../../../../src/app/components/resources/map/map/coordinates-utility';
 
 

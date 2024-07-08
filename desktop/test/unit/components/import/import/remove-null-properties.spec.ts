@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
 import { removeNullProperties } from '../../../../../src/app/components/import/import/remove-null-properties';
 

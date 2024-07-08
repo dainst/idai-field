@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
 import { doc, Relation, Document } from 'idai-field-core';
 import { getSuggestions } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
 

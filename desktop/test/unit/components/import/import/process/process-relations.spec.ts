@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Relation } from 'idai-field-core';
 import { processRelations } from '../../../../../../src/app/components/import/import/process/process-relations';
 import { createMockValidator, d } from '../helper';

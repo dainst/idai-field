@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
 import { update } from 'tsfun';
 import { Datastore, Document } from 'idai-field-core';
 import { getImageSuggestions } from '../../../../../src/app/components/docedit/widgets/get-image-suggestions';

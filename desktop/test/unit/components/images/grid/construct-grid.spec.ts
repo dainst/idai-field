@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { constructGrid } from '../../../../../src/app/components/image/grid/construct-grid';
 
 

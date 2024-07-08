@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { CategoryForm } from 'idai-field-core';
 import { CsvParser } from '../../../../../src/app/components/import/parser/csv-parser';
 import { makeFieldDefinitions } from '../../export/csv/csv-export.spec';

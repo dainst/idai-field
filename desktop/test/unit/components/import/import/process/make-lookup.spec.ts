@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { equal } from 'tsfun';
 import { Document } from 'idai-field-core';
 import { makeLookups } from '../../../../../../src/app/components/import/import/process/make-lookups';

@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Field, ProjectConfiguration, Forest } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validations } from '../../../../src/app/model/validations';

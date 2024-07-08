@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
 import { Relation } from 'idai-field-core';
 import { cleanUp, createApp, createHelpers } from '../subsystem-helper';
 

@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
 import { update } from 'tsfun';
 import { getDocumentSuggestions } from '../../../../src/app/components/widgets/get-document-suggestions';
 import { cleanUp, createApp } from '../subsystem-helper';

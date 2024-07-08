@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Document, Relation } from 'idai-field-core';
 import { ImportErrors as E } from '../../../../../../src/app/components/import/import/import-errors';
 import { createMockValidator, d } from '../helper';

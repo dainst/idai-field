@@ -1,4 +1,3 @@
-import { describe, expect, test, jest } from '@jest/globals';
 import { Document } from 'idai-field-core';
 import { FieldConverter } from '../../../../src/app/components/import/field-converter';
 

@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Map, to } from 'tsfun';
 import { I18N, Document } from 'idai-field-core';
 import { Languages, Language } from '../../../src/app/services/languages';

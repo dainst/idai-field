@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Field, fieldDoc, I18N, Relation } from 'idai-field-core';
 import { CSVExport } from '../../../../../src/app/components/export/csv/csv-export';
 

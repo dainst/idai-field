@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Dating, Dimension, Resource, CategoryForm } from 'idai-field-core';
 import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;

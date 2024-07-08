@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Field, I18N } from 'idai-field-core';
 import { val } from 'tsfun';
 import { CSVExpansion } from '../../../../../src/app/components/export/csv/csv-expansion';

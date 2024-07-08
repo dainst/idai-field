@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, afterEach, beforeAll, afterAll } from '@jest/globals';
 import { CategoryForm, PouchdbDatastore } from 'idai-field-core';
 import { ImportErrors } from '../../../../src/app/components/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../src/app/components/import/importer';

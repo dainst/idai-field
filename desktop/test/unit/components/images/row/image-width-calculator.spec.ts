@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { ImageWidthCalculator } from '../../../../../src/app/components/image/row/image-width-calculator';
 
 

@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { ProjectIdentifierValidation } from '../../../../src/app/model/project-identifier-validation';
 
 

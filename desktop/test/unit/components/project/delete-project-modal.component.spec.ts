@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, jest } from '@jest/globals';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { M } from '../../../../src/app/components/messages/m';
 import { DeleteProjectModalComponent } from '../../../../src/app/components/project/delete-project-modal.component';

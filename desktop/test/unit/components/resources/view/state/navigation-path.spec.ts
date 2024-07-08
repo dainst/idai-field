@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { fieldDoc } from 'idai-field-core';
 import { NavigationPath } from '../../../../../../src/app/components/resources/view/state/navigation-path';
 import { toResourceId } from '../../../../../../src/app/components/resources/view/state/navigation-path-segment';

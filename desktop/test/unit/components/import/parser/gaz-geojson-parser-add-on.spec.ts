@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { GeojsonParser } from '../../../../../src/app/components/import/parser/geojson-parser';
 import { GazGeojsonParserAddOn } from '../../../../../src/app/components/import/parser/gaz-geojson-parser-add-on';
 import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';

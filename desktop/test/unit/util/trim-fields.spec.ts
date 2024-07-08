@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Resource } from 'idai-field-core';
 import { trimFields } from '../../../src/app/util/trim-fields';
 

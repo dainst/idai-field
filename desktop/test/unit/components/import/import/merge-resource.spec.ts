@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
 import { clone } from 'tsfun';
 import { Resource, Relation } from 'idai-field-core';
 import { GEOMETRY, mergeResource, RELATIONS } from '../../../../../src/app/components/import/import/process/merge-resource';

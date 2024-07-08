@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { Document } from 'idai-field-core';
 import { GeojsonParser } from '../../../../../src/app/components/import/parser/geojson-parser';
 import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';

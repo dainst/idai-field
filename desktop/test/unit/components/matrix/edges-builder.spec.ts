@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { featureDoc } from 'idai-field-core';
 import { Edges, EdgesBuilder, GraphRelationsConfiguration } from '../../../../src/app/components/matrix/edges-builder';
 

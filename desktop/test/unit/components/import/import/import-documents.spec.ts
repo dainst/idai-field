@@ -1,4 +1,3 @@
-import { describe, expect, test } from '@jest/globals';
 import { identity } from 'tsfun';
 import { Resource } from 'idai-field-core';
 import { ImportErrors as E, ImportErrors } from '../../../../../src/app/components/import/import/import-errors';

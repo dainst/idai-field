@@ -1,4 +1,3 @@
-import { describe, expect, test, jest, beforeEach } from '@jest/globals';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED,
     getExportDocuments } from '../../../../../src/app/components/export/catalog/get-export-documents';
 import { makeDocumentsLookup } from '../../../../../src/app/components/import/import/utils';

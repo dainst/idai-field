@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeAll, afterEach, jest } from '@jest/globals';
 import { featureDoc } from 'idai-field-core';
 import { GeoJsonExporter } from '../../../../src/app/components/export/geojson-exporter';
 

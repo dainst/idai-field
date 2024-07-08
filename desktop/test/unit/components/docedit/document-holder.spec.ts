@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { Document, ProjectConfiguration, Forest, IdGenerator } from 'idai-field-core';
 import { DocumentHolder } from '../../../../src/app/components/docedit/document-holder';
 import { M } from '../../../../src/app/components/messages/m';
@@ -12,14 +13,13 @@ describe('DocumentHolder', () => {
     let defaultDocument: Document;
     let changedDocument: Document;
 
-    let docHolder;
-    let datastore;
+    let documentHolder;
     let validator;
 
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration({
+        const projectConfiguration = new ProjectConfiguration({
             forms: Forest.build(
                 [
                     [{
@@ -96,27 +96,28 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        validator = jasmine.createSpyObj('Validator', [
-            'assertIsRecordedInTargetsExist', 'assertIdentifierIsUnique',
-            'assertHasIsRecordedIn', 'assertNoFieldsMissing',
-            'assertCorrectnessOfNumericalValues', 'assertGeometryIsValid']);
+        validator = {
+            assertIsRecordedInTargetsExist: jest.fn(),
+            assertIdentifierIsUnique: jest.fn(),
+            assertHasIsRecordedIn: jest.fn(),
+            assertNoFieldsMissing: jest.fn(),
+            assertCorrectnessOfNumericalValues: jest.fn(),
+            assertGeometryIsValid: jest.fn()
+        };
 
-        const persistenceManager = jasmine.createSpyObj('PersistenceManager', ['update']);
-        persistenceManager.update.and.callFake((doc, b, c, d) => {
-            changedDocument = doc;
-            return Promise.resolve(changedDocument);
-        });
+        const persistenceManager: any = {
+            update: jest.fn((doc, _, __, ___) => {
+                changedDocument = doc;
+                return Promise.resolve(changedDocument);
+            })
+        };
+        
+        const datastore: any = {
+            get: jest.fn((_, __) => changedDocument)
+        };
 
-        const projectCategories = jasmine.createSpyObj('ProjectCategories', ['getRegularCategoryNames']);
-        projectCategories.getRegularCategoryNames.and.returnValue(['Find']);
-
-        const settingsProvider = jasmine.createSpyObj('UsernameProvider', ['getSettings']);
-        settingsProvider.getSettings.and.returnValue({username:''});
-        datastore = jasmine.createSpyObj('Datastore', ['get']);
-        datastore.get.and.callFake((a, b) => changedDocument);
-
-        docHolder = new DocumentHolder(
-            pconf,
+        documentHolder = new DocumentHolder(
+            projectConfiguration,
             persistenceManager,
             validator,
             datastore,
@@ -125,54 +126,50 @@ describe('DocumentHolder', () => {
     });
 
 
-    it('remove empty and undefined fields', async done => {
+    test('remove empty and undefined fields', async () => {
 
         const cloned = Document.clone(defaultDocument);
         delete cloned.resource.undefinedField;
-        docHolder.setDocument(cloned);
+        documentHolder.setDocument(cloned);
 
-        docHolder.clonedDocument = defaultDocument;
-        const savedDocument: Document = await docHolder.save();
+        documentHolder.clonedDocument = defaultDocument;
+        const savedDocument: Document = await documentHolder.save();
 
         expect(savedDocument.resource.undefinedField).toBeUndefined();
         expect(savedDocument.resource.emptyField).toBeUndefined();
         expect(savedDocument.resource.onlyWhitespaceField).toBeUndefined();
         expect(savedDocument.resource.category).not.toBeUndefined();
-        done();
     });
 
 
-    it('remove leading and trailing whitespace from strings', async done => {
+    test('remove leading and trailing whitespace from strings', async () => {
 
-        docHolder.setDocument(defaultDocument);
-        const savedDocument: Document = await docHolder.save();
+        documentHolder.setDocument(defaultDocument);
+        const savedDocument: Document = await documentHolder.save();
 
         expect(savedDocument.resource.textAndWhitespaceField).toEqual('abc');
-        done();
     });
 
 
-    it('do not remove undefined field if it was part of the original object', async done => {
+    test('do not remove undefined field if it was part of the original object', async () => {
 
-        docHolder.setDocument(defaultDocument);
-        const savedDocument: Document = await docHolder.save();
+        documentHolder.setDocument(defaultDocument);
+        const savedDocument: Document = await documentHolder.save();
         expect(savedDocument.resource.undefinedField).toEqual('some');
-        done();
     });
 
 
-    it('do not remove undefined relation if it was part of the original object', async done => {
+    test('do not remove undefined relation if it was part of the original object', async () => {
 
-        docHolder.setDocument(defaultDocument);
-        const savedDocument: Document = await docHolder.save();
+        documentHolder.setDocument(defaultDocument);
+        const savedDocument: Document = await documentHolder.save();
         expect(savedDocument.resource.relations.undefrel[0]).toEqual('2');
-        done();
     });
 
 
-    it('throw exception if isRecordedIn relation is missing', async done => {
+    test('throw exception if isRecordedIn relation is missing', async () => {
 
-        validator.assertHasIsRecordedIn.and.callFake(() => { throw [M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]; });
+        validator.assertHasIsRecordedIn.mockImplementation(() => { throw [M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]; });
 
         const document: Document = {
             _id: '1',
@@ -186,19 +183,18 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.setDocument(document);
+        documentHolder.setDocument(document);
 
         try {
-            await docHolder.save();
-            fail();
+            await documentHolder.save();
+            throw new Error('Test failure');
         } catch (e) {
             expect(e).toEqual([M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]);
         }
-        done();
     });
 
 
-    it('do not throw exception if isRecordedIn relation is found', async done => {
+    test('do not throw exception if isRecordedIn relation is found', async () => {
 
         const document: Document = {
             _id: '1',
@@ -214,19 +210,13 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.setDocument(document);
+        documentHolder.setDocument(document);
 
-        try {
-            await docHolder.save();
-            done();
-        } catch (e) {
-            fail();
-            done();
-        }
+        await documentHolder.save();
     });
 
 
-    it('do not throw exception if no isRecordedIn relation is expected', async done => {
+    test('do not throw exception if no isRecordedIn relation is expected', async () => {
 
         const document: Document = {
             _id: '1',
@@ -240,19 +230,13 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.setDocument(document);
+        documentHolder.setDocument(document);
 
-        try {
-            await docHolder.save();
-            done();
-        } catch (e) {
-            fail();
-            done();
-        }
+        await documentHolder.save();
     });
 
 
-    it('convert strings to numbers for int & float fields', async done => {
+    test('convert strings to numbers for int & float fields', async () => {
 
         const document: Document = {
             _id: '1',
@@ -269,13 +253,11 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.setDocument(document);
-        const savedDocument = await docHolder.save();
+        documentHolder.setDocument(document);
+        const savedDocument = await documentHolder.save();
 
         expect(savedDocument.resource.unsignedIntField).toBe(7);
         expect(savedDocument.resource.unsignedFloatField).toBe(7.49);
         expect(savedDocument.resource.floatField).toBe(-7.49);
-
-        done();
     });
 });

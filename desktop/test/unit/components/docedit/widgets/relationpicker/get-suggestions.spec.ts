@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { doc, Relation, Document } from 'idai-field-core';
 import { getSuggestions } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
 
@@ -12,15 +13,15 @@ describe('getSuggestions', () => {
 
     beforeEach(() => {
 
-        datastore = jasmine.createSpyObj('ReadDatastore', ['find']);
-        datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
+        datastore = {
+            find: jest.fn().mockReturnValue(Promise.resolve({ documents: [] }))
+        };
     });
 
 
-    it('create suggestions query', async done => {
+    test('create suggestions query', async () => {
 
-        const document: Document
-            = doc('shortDescription', 'identifier', 'Category','id');
+        const document: Document = doc('shortDescription', 'identifier', 'Category', 'id');
         document.resource.relations['relation'] = [''];
 
         const relationDefinition: Relation = {
@@ -46,15 +47,12 @@ describe('getSuggestions', () => {
                }
             }
         });
-
-        done();
     });
 
 
-    it('do not suggest resources which are already targets of the relation or inverse relation', async done => {
+    test('do not suggest resources which are already targets of the relation or inverse relation', async () => {
 
-        const document: Document
-            = doc('shortDescription', 'identifier', 'Category','id1');
+        const document: Document = doc('shortDescription', 'identifier', 'Category', 'id1');
         document.resource.relations['relation'] = ['id2', 'id3'];
         document.resource.relations['inverse'] = ['id4', 'id5'];
 
@@ -82,16 +80,13 @@ describe('getSuggestions', () => {
                 }
             }
         });
-
-        done();
     });
 
 
-    it('only suggest resources with an isRecordedIn relation to the same resource if the option' +
-            'sameMainCategoryResource is set', async done => {
+    test('only suggest resources with an isRecordedIn relation to the same resource if the option' +
+            'sameMainCategoryResource is set', async () => {
 
-        const document: Document
-            = doc('shortDescription', 'identifier', 'Category','id');
+        const document: Document = doc('shortDescription', 'identifier', 'Category', 'id');
         document.resource.relations['relation'] = [''];
         document.resource.relations['isRecordedIn'] = ['operationId'];
 
@@ -119,15 +114,12 @@ describe('getSuggestions', () => {
                 }, 'isChildOf:contain': { value: 'operationId', searchRecursively: true },
             }
         });
-
-        done();
     });
 
 
-    it('show suggestions for new document without id', async done => {
+    test('show suggestions for new document without id', async () => {
 
-        const document: Document
-            = doc('shortDescription', 'identifier', 'Category','id');
+        const document: Document = doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
         delete document.resource.id;
 
@@ -141,11 +133,7 @@ describe('getSuggestions', () => {
             inputType: 'relation'
         };
 
-        try {
-            await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
-        } catch (err) {
-            fail();
-        }
+        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
@@ -159,7 +147,5 @@ describe('getSuggestions', () => {
                 },
             }
         });
-
-        done();
     });
 });

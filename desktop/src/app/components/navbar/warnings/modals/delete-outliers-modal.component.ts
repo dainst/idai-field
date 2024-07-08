@@ -24,7 +24,7 @@ export class DeleteOutliersModalComponent {
     public deleteAll: boolean;
     public countAffected: Number;
 
-    private documentsToDelete: Array<Document>;
+    private documentsToChange: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -44,7 +44,7 @@ export class DeleteOutliersModalComponent {
     
     public async initialize() {
 
-        this.documentsToDelete = [];
+        this.documentsToChange = [];
     }
 
 
@@ -70,7 +70,7 @@ export class DeleteOutliersModalComponent {
             constraints: { ['outlierValues:contain']: this.outlierValue }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
-        this.documentsToDelete = [];
+        this.documentsToChange = [];
 
         for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
@@ -78,12 +78,11 @@ export class DeleteOutliersModalComponent {
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
-                this.deleteValue(document, document.resource, field);
-                if (!this.documentsToDelete.includes(document)) this.documentsToDelete.push(document);
+                if (!this.documentsToChange.includes(document)) this.documentsToChange.push(document);
             }
         }
 
-        this.countAffected = this.documentsToDelete.length;
+        this.countAffected = this.documentsToChange.length;
     }
 
 
@@ -127,7 +126,11 @@ export class DeleteOutliersModalComponent {
 
     private async deleteMultiple() {
 
-        await this.datastore.bulkUpdate(this.documentsToDelete);
+        for (let document of this.documentsToChange) {
+            this.deleteValue(document, document.resource, this.field);
+        }
+
+        await this.datastore.bulkUpdate(this.documentsToChange);
     }
 
 

@@ -62,7 +62,6 @@ export class FixOutliersModalComponent {
     public updateSelectedValue(event: string) {
 
         this.selectedValue = event;
-        this.replaceAll = false;
     }
 
 
@@ -90,7 +89,6 @@ export class FixOutliersModalComponent {
                 if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
-                    this.replaceValue(document, document.resource, field);
                     if (!this.documentsToChange.includes(document)) this.documentsToChange.push(document);
                 }
             }
@@ -141,6 +139,10 @@ export class FixOutliersModalComponent {
 
     private async replaceMultiple() {
         
+        for (let document of this.documentsToChange) {
+            this.replaceValue(document, document.resource, this.field);
+        }
+
         await this.datastore.bulkUpdate(this.documentsToChange);
     }
 

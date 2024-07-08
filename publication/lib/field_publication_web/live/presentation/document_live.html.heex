@@ -1,10 +1,9 @@
 <div>
   <PublicationSelection.render
-    project_name={@project_name}
-    publication_dates={@publication_dates}
-    selected_date={@publication.publication_date}
-    languages={@publication.languages}
+    publications={@publications}
+    current_publication={@publication}
     selected_lang={@selected_lang}
+    uuid={@uuid}
     identifier={
       if Data.get_field_values(@doc, "category") != "Project",
         do: Data.get_field_values(@doc, "identifier")
@@ -15,12 +14,12 @@
     category == "Project" ->
       DocumentComponents.Project.render(%{
         project_name: @project_name,
-        publication_date: @publication.publication_date,
+        draft_date: @publication.draft_date,
         publication_comments: @publication_comments,
         doc: @doc,
         publication: @publication,
         lang: @selected_lang,
-        top_level_docs: @child_doc_previews,
+        top_level_docs: @top_level_docs,
         project_map_layers: @project_map_layers
       })
 
@@ -39,7 +38,7 @@
       DocumentComponents.Image.render(%{
         doc: @doc,
         project_name: @project_name,
-        publication_date: @publication.publication_date,
+        draft_date: @publication.draft_date,
         lang: @selected_lang,
         uuid: @uuid
       })
@@ -47,11 +46,11 @@
     true ->
       DocumentComponents.Generic.render(%{
         doc: @doc,
+        publication: @publication,
         project_name: @publication.project_name,
-        publication_date: @publication.publication_date,
+        draft_date: @publication.draft_date,
         lang: @selected_lang,
         uuid: @uuid,
-        child_doc_previews: @child_doc_previews,
         relations_with_geometry: @relations_with_geometry,
         project_map_layers: @project_map_layers
       })

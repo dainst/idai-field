@@ -1,5 +1,5 @@
 import { ConfigurationDocument } from 'idai-field-core';
-import { getAsynchronousFs } from '../../services/getAsynchronousFs';
+import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 import { AppState } from '../../services/app-state';
 import { M } from '../messages/m';
 

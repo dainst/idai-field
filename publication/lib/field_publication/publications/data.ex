@@ -1,4 +1,6 @@
 defmodule FieldPublication.Publications.Data do
+  require FieldPublicationWeb.Gettext
+
   alias FieldPublication.CouchService
   alias FieldPublication.DocumentSchema.Publication
 
@@ -24,7 +26,9 @@ defmodule FieldPublication.Publications.Data do
           end)
           |> Map.get("config", [])
 
-        Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
+        if config != [] do
+          Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
+        end
 
         config
 
@@ -64,6 +68,15 @@ defmodule FieldPublication.Publications.Data do
       _ ->
         false
     end
+  end
+
+  def get_doc_count(%Publication{database: db}) do
+    CouchService.get_database(db)
+    |> then(fn {:ok, %{status: 200, body: body}} ->
+      body
+      |> Jason.decode!()
+      |> Map.get("doc_count", 0)
+    end)
   end
 
   def get_document(uuid, %Publication{database: db} = publication, include_relations \\ false) do
@@ -221,23 +234,48 @@ defmodule FieldPublication.Publications.Data do
       ) do
     category_configuration = search_category_tree(configuration, resource["category"])
 
+    image_categories = get_all_subcategories(publication, "Image")
+
+    image_uuids =
+      if resource["category"] in image_categories do
+        # Add own uuid as shorthand list
+        [resource["id"]]
+      else
+        # Otherwise evaluate the isDepictedIn relations
+        resource
+        |> Map.get("relations", %{})
+        |> Map.get("isDepictedIn", [])
+      end
+
     doc =
       %{
         "id" => resource["id"],
         "identifier" => resource["identifier"],
         "category" => extend_category(category_configuration["item"], resource),
         "groups" => extend_field_groups(category_configuration["item"], resource),
-        "images" =>
-          resource
-          |> Map.get("relations", %{})
-          |> Map.get("isDepictedIn", [])
+        "images" => image_uuids
       }
 
     if include_relations do
+      child_task_pid = Task.async(fn() ->
+        create_child_relations(resource["id"], publication)
+      end )
+
+      other_relations = extend_relations(category_configuration["item"], resource, publication)
+
+      child_relations = Task.await(child_task_pid)
+
+      all_relations =
+      if child_relations["values"] != [] do
+        other_relations ++ [child_relations]
+      else
+        other_relations
+      end
+
       Map.put(
         doc,
         "relations",
-        extend_relations(category_configuration["item"], resource, publication)
+        all_relations
       )
     else
       doc
@@ -276,7 +314,17 @@ defmodule FieldPublication.Publications.Data do
 
   defp extend_field(field, keys) do
     if(field["name"] in keys) do
-      %{"key" => field["name"], "labels" => field["label"], "type" => field["inputType"]}
+      base_fields = %{
+        "key" => field["name"],
+        "labels" => field["label"],
+        "type" => field["inputType"]
+      }
+
+      if field["valuelist"] do
+        Map.put(base_fields, "list_labels", field["valuelist"]["values"])
+      else
+        base_fields
+      end
     else
       nil
     end
@@ -284,18 +332,56 @@ defmodule FieldPublication.Publications.Data do
 
   defp extend_relations(category_configuration, resource, %Publication{} = publication) do
     relations = Map.get(resource, "relations", %{})
-    keys = Map.keys(relations)
+
+    # Load all related documents from CouchDB in one go...
+    related_documents =
+      relations
+      |> Map.values()
+      |> List.flatten()
+      |> get_documents(publication, false)
+
+    # ...then sort them into their respective relation groups, including the translated labels for those groups.
+    relation_types = Map.keys(relations)
 
     category_configuration["groups"]
     |> Enum.map(fn group ->
       group["fields"]
-      |> Stream.map(&extend_field(&1, keys))
+      |> Stream.map(&extend_field(&1, relation_types))
       |> Stream.reject(fn val -> val == nil end)
-      |> Enum.map(fn %{"key" => key} = map ->
-        Map.put(map, "values", get_documents(relations[key], publication, false))
+      |> Enum.map(fn %{"key" => relation_type} = map ->
+        Map.put(map, "values", Enum.filter(related_documents, fn(%{"id" => uuid}) ->
+          uuid in relations[relation_type]
+        end))
       end)
     end)
     |> List.flatten()
+  end
+
+  defp create_child_relations(uuid, publication) do
+    %{
+      "key" => "contains",
+      "values" =>
+        publication
+        |> get_hierarchy()
+        |> Map.get(uuid, %{})
+        |> Map.get("children", [])
+        |> get_documents(publication),
+      "labels" =>
+        Gettext.known_locales(FieldPublicationWeb.Gettext)
+        |> Enum.map(fn locale ->
+          {
+            locale,
+            Gettext.with_locale(
+              FieldPublicationWeb.Gettext,
+              locale,
+              fn ->
+                FieldPublicationWeb.Gettext.gettext("Contains")
+              end
+            )
+          }
+        end)
+        |> Enum.into(%{})
+    }
   end
 
   defp run_query(query, database) do
@@ -305,6 +391,10 @@ defmodule FieldPublication.Publications.Data do
   defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_categories}) do
     ([name] ++ Enum.map(child_categories, &flatten_category_tree/1))
     |> List.flatten()
+  end
+
+  defp flatten_category_tree(nil) do
+    []
   end
 
   defp search_category_tree(configuration, category_name) do

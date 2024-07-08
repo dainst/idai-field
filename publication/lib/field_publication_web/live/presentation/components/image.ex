@@ -3,14 +3,18 @@ defmodule FieldPublicationWeb.Presentation.Components.Image do
 
   def show(assigns) do
     ~H"""
-    <img src={construct_url(assigns)} />
+    <img class={Map.get(assigns, :class, "")} src={construct_url(assigns)} />
     """
   end
 
   defp construct_url(%{project: project, uuid: uuid} = assigns) do
     region = Map.get(assigns, :region, "full")
-    # scales the image down to 500px width by default
-    size = Map.get(assigns, :size, "500,")
+    # scales the image down or up to 500px width by default
+    size =
+      assigns
+      |> Map.get(:size, "^500,")
+      |> String.replace("^", "%5E")
+
     rotation = Map.get(assigns, :rotation, "0")
     quality = Map.get(assigns, :quality, "default")
 

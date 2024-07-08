@@ -1,5 +1,4 @@
 defmodule FieldPublicationWeb.Presentation.HomeLive do
-  alias FieldPublication.Publications.Search
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications
@@ -8,8 +7,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.Publications.Data
 
   alias FieldPublicationWeb.Presentation.Components.{
-    I18n,
-    DocumentLink
+    I18n
   }
 
   require Logger
@@ -53,7 +51,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
         published_projects
       )
       |> assign(:highlighted, nil)
-      |> assign(:search_results, [])
+      |> assign(:search_results, %{})
       |> assign(:page_title, "Overview")
     }
   end
@@ -79,23 +77,5 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
   def handle_event("project_selected", %{"id" => project_identifier}, socket) do
     {:noreply, push_navigate(socket, to: ~p"/projects/#{project_identifier}")}
-  end
-
-  def handle_event("preview_search", %{"search_input" => query}, socket) do
-    {
-      :noreply,
-      assign(
-        socket,
-        :search_results,
-        Search.fuzzy_search(query)
-      )
-    }
-  end
-
-  def handle_event("open_search_view", %{"search_input" => query}, socket) do
-    {
-      :noreply,
-      push_navigate(socket, to: ~p"/search?q=#{query}")
-    }
   end
 end

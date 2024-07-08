@@ -27,15 +27,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
             <%= if depicted_in do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
-                <%= for preview_doc <- depicted_in["values"] do %>
+                <%= for doc <- depicted_in["values"] do %>
                   <.link
-                    patch={
-                      ~p"/projects/#{@project_name}/#{@publication_date}/#{@lang}/#{preview_doc["id"]}"
-                    }
+                    patch={~p"/projects/#{@project_name}/#{@draft_date}/#{@lang}/#{doc["id"]}"}
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">
-                      <Image.show size="300," project={@project_name} uuid={preview_doc["id"]} />
+                      <Image.show size="^300," project={@project_name} uuid={doc["id"]} />
                     </div>
                   </.link>
                 <% end %>
@@ -70,12 +68,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
-              <GenericField.render
-                values={institution["values"]}
-                labels={institution["labels"]}
-                lang={@lang}
-                type={institution["type"]}
-              />
+              <GenericField.render field={institution} lang={@lang} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
@@ -96,12 +89,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
 
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
-              <GenericField.render
-                values={supervisor["values"]}
-                labels={supervisor["labels"]}
-                lang={@lang}
-                type={supervisor["type"]}
-              />
+              <GenericField.render field={supervisor} lang={@lang} />
             <% end %>
 
             <% staff = Data.get_field(@doc, "staff") %>
@@ -114,12 +102,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
-              <GenericField.render
-                values={bibliographic_references["values"]}
-                labels={bibliographic_references["labels"]}
-                lang={@lang}
-                type={bibliographic_references["type"]}
-              />
+              <GenericField.render field={bibliographic_references} lang={@lang} />
             <% end %>
             <% url = Data.get_field_values(@doc, "projectURI") %>
             <%= if url do %>
@@ -136,12 +119,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("Main documents") %>
           </.group_heading>
           <%= for doc <- @top_level_docs do %>
-            <DocumentLink.show
-              project={@project_name}
-              date={@publication_date}
-              lang={@lang}
-              preview_doc={doc}
-            />
+            <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={doc} />
           <% end %>
         </div>
       </div>

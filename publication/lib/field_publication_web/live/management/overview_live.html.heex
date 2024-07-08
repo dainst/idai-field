@@ -143,7 +143,7 @@
                         <td>
                           <.icon name="hero-eye" class="bg-green-600 mb-1" />
                           <.link navigate={
-                            ~p"/#{project}/#{publication.publication_date}/#{List.first(publication.languages)}"
+                            ~p"/projects/#{project}/#{publication.draft_date}/#{List.first(publication.languages)}"
                           }>
                             <%= publication.publication_date %>
                           </.link>

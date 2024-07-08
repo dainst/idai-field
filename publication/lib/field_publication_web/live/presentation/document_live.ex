@@ -2,6 +2,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   alias FieldPublicationWeb.Presentation.Components.I18n
   use FieldPublicationWeb, :live_view
 
+  alias FieldPublication.Projects
+
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
 
@@ -12,12 +14,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     publications =
       project_name
       |> Publications.list()
-      |> Stream.filter(fn pub -> pub.publication_date != nil end)
-      |> Enum.reject(fn pub -> Date.after?(pub.publication_date, Date.utc_today()) end)
+      |> Enum.filter(fn pub ->
+        Projects.has_publication_access?(pub, socket.assigns.current_user)
+      end)
 
-    publication_dates =
+    draft_dates =
       Enum.map(publications, fn pub ->
-        Date.to_iso8601(pub.publication_date)
+        Date.to_iso8601(pub.draft_date)
       end)
 
     {
@@ -25,12 +28,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:project_name, project_name)
       |> assign(:publications, publications)
-      |> assign(:publication_dates, publication_dates)
+      |> assign(:draft_dates, draft_dates)
     }
   end
 
   def handle_params(
-        %{"publication_date" => date, "language" => language, "uuid" => uuid},
+        %{"draft_date" => date, "language" => language, "uuid" => uuid},
         _uri,
         %{assigns: %{publications: publications}} = socket
       ) do
@@ -38,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     current_publication =
       Enum.find(publications, fn pub ->
-        Date.to_iso8601(pub.publication_date) == date
+        Date.to_iso8601(pub.draft_date) == date
       end)
 
     doc = Publications.Data.get_document(uuid, current_publication, true)
@@ -48,29 +51,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
 
-    child_uuids =
-      Publications.Data.get_hierarchy(current_publication)
-      |> Enum.find(fn {key, _values} ->
-        key == uuid
-      end)
-      |> case do
-        nil ->
-          # Document is not part of the hierarchy, for example images.
-          []
-
-        {_key, value} ->
-          value["children"]
-      end
-
-    child_doc_previews = Data.get_documents(child_uuids, current_publication)
-
     relations_with_geometry =
       Map.get(doc, "relations", [])
       |> Enum.map(fn %{"values" => rel_docs} ->
         rel_docs
       end)
       |> List.flatten()
-      |> List.flatten(child_doc_previews)
       |> Enum.filter(fn rel ->
         Data.get_field(rel, "geometry") != nil
       end)
@@ -83,7 +69,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:selected_lang, language)
       |> assign(:uuid, uuid)
       |> assign(:image_categories, image_categories)
-      |> assign(:child_doc_previews, child_doc_previews)
       |> assign(:relations_with_geometry, relations_with_geometry)
       |> assign(:project_map_layers, project_map_layers)
       |> assign(
@@ -94,7 +79,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def handle_params(
-        %{"publication_date" => date, "language" => language},
+        %{"draft_date" => date, "language" => language},
         _uri,
         %{assigns: %{publications: publications}} = socket
       ) do
@@ -102,7 +87,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     current_publication =
       Enum.find(publications, fn pub ->
-        Date.to_iso8601(pub.publication_date) == date
+        Date.to_iso8601(pub.draft_date) == date
       end)
 
     project_doc = Publications.Data.get_document("project", current_publication, true)
@@ -119,7 +104,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         key
       end)
 
-    child_doc_previews = Data.get_documents(top_level_uuids, current_publication)
+    top_level_docs = Data.get_documents(top_level_uuids, current_publication)
 
     publication_comments =
       current_publication.comments
@@ -133,7 +118,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
       |> assign(:publication_comments, publication_comments)
-      |> assign(:child_doc_previews, child_doc_previews)
+      |> assign(:top_level_docs, top_level_docs)
       |> assign(:project_map_layers, project_map_layers)
       |> assign(
         :page_title,
@@ -167,37 +152,22 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:publication, publication)
       |> push_patch(
-        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{language}",
+        to: ~p"/projects/#{project_name}/#{publication.draft_date}/#{language}",
         replace: true
       )
     }
   end
 
   def handle_event(
-        "project_options_changed",
-        %{"_target" => ["project_language_selection"], "project_language_selection" => lang},
-        %{assigns: %{project_name: project_name, publication: publication}} = socket
+        "geometry-clicked",
+        %{"uuid" => uuid},
+        %{assigns: %{publication: publication, selected_lang: lang}} = socket
       ) do
-    uuid = Map.get(socket.assigns, :uuid, "")
-
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/projects/#{project_name}/#{publication.publication_date}/#{lang}/#{uuid}"
+        to: ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
       )
-    }
-  end
-
-  def handle_event(
-        "project_options_changed",
-        %{"_target" => ["project_date_selection"], "project_date_selection" => date},
-        %{assigns: %{project_name: project_name, selected_lang: lang}} = socket
-      ) do
-    uuid = Map.get(socket.assigns, :uuid, "")
-
-    {
-      :noreply,
-      push_patch(socket, to: ~p"/projects/#{project_name}/#{date}/#{lang}/#{uuid}")
     }
   end
 

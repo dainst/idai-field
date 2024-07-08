@@ -1,22 +1,22 @@
 {
   "default": {
-    "label": ""
+    "label": "Standard"
   },
   "minimalExcavation": {
-    "label": ""
+    "label": "Configuração de base (escavação)"
   },
   "minimalBuilding": {
-    "label": ""
+    "label": "Configuração de base (registo gráfico de arquitetura)"
   },
   "minimalSurvey": {
-    "label": ""
+    "label": "Configuração de base (prospeção)"
   },
   "archaeoDox": {
-    "label": "",
+    "label": "archaeoDox",
     "languageConfiguration": {
       "relations": {
         "isPresentIn": {
-          "label": ""
+          "label": "Está presente no desenho de perfil/de plano"
         }
       }
     }

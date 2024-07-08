@@ -24,6 +24,7 @@ import topbar from "../vendor/topbar"
 
 import getWorldMapHook from "./world-map-hook"
 import getProjectMapHook from "./project-map-hook"
+import getDocumentViewMapHook from "./document-view-map-hook"
 import getIIIFHook from "./iiif-hook"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
@@ -32,6 +33,7 @@ let Hooks = {}
 
 Hooks.WorldMap = getWorldMapHook();
 Hooks.ProjectMap = getProjectMapHook();
+Hooks.DocumentViewMap = getDocumentViewMapHook();
 Hooks.IIIFViewer = getIIIFHook();
 Hooks.HoverHighlightMapFeature = {
     // This hook allows arbitrary DOM elements to trigger highlights on a target open layers map on mousemove events.
@@ -46,6 +48,17 @@ Hooks.HoverHighlightMapFeature = {
         this.el.addEventListener("mouseleave", (_) => {
             window.dispatchEvent(new CustomEvent(`phx:map-clear-highlights-${this.el.getAttribute("target")}`));
         })
+    }
+}
+Hooks.CopyToClipboard = {
+    mounted() {
+        this.el.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            navigator.clipboard.writeText(this.el.getAttribute("valueToCopy")).then(() => {
+                this.pushEventTo(`#${this.el.id}`, `link-copied`);
+            })
+        })
+
     }
 }
 

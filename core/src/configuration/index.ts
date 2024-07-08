@@ -5,3 +5,4 @@ export { linkParentAndChildInstances } from './category-forest';
 export * from './model';
 export { getConfigurationName } from './project-configuration-names';
 export { createRawLibraryConfiguration as createContextIndependentCategories } from './index/create-raw-library-configuration';
+export { ConfigurationSerializer } from './configuration-serializer';

@@ -33,7 +33,7 @@ describe('ExpressServer', () => {
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
 
-        expressServer = new ExpressServer(imageStore);
+        expressServer = new ExpressServer(imageStore, undefined, undefined, undefined);
         expressServer.setPassword(password);
         expressServer.setAllowLargeFileUploads(true);
 

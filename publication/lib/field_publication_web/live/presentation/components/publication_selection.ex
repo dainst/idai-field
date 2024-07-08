@@ -4,59 +4,97 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
 
   def render(assigns) do
     ~H"""
-    <form id="project_options" phx-change="project_options_changed">
-      <div class="flex flex-row">
-        <div class="mt-4">
-          <.link navigate="/">
-            <.icon class="ml-1 mb-1" name="hero-globe-europe-africa-solid" />
-          </.link>
-          /
+    <div class="flex flex-row gap-2 items-center">
+      <.link navigate={~p"/"}>
+        <.icon name="hero-globe-europe-africa-solid" />
+      </.link>
+      <div>/</div>
+      <div><%= @current_publication.project_name %></div>
+      <div>/</div>
+      <%= render_publication_dropdown(assigns) %>
+      <div>/</div>
+      <%= render_language_dropdown(assigns) %>
+      <div>/</div>
+      <.link patch={
+        ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}/#{@selected_lang}"
+      }>
+        <.icon name="hero-home-solid" />
+      </.link>
+      <%= if @identifier do %>
+        <div>/</div>
+        <div class="text-nowrap">
+          <%= @identifier %>
         </div>
+      <% end %>
+    </div>
+    """
+  end
 
-        <div class=" ml-2 mt-4">
-          <%= @project_name %> /
-        </div>
-        <div class="ml-2">
-          <%= if Enum.count(@publication_dates) == 1 do %>
-            <div class="mt-4">
-              <%= List.first(@publication_dates) %>
+  defp render_publication_dropdown(assigns) do
+    ~H"""
+    <div class="group relative text-nowrap">
+      <%= @current_publication.draft_date %>
+      <%= if Enum.count(@publications) > 1 do %>
+        <.icon name="hero-chevron-down-mini" />
+
+        <div class="z-10 bg-white p-2 outline outline-1 absolute hidden group-hover:block w-max">
+          <div class="font-semibold mb-2">Available publications</div>
+          <%= for publication <- @publications do %>
+            <% url =
+              ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{@selected_lang}"
+
+            url =
+              if Map.has_key?(assigns, :uuid) do
+                "#{url}/#{@uuid}"
+              else
+                url
+              end %>
+            <div class={"#{if publication.draft_date == @current_publication.draft_date, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
+              <.link patch={url}>
+                Project state <%= publication.draft_date %>
+                <%= if publication.publication_date do %>
+                  <span>, published <%= publication.publication_date %></span>
+                <% else %>
+                  <span>, not yet published.</span>
+                <% end %>
+              </.link>
             </div>
-          <% else %>
-            <.input
-              type="select"
-              name="project_date_selection"
-              options={@publication_dates}
-              value={@selected_date}
-            />
           <% end %>
         </div>
-        <div class="mt-4 ml-2">/</div>
-        <div class="ml-2">
-          <%= if Enum.count(@languages) == 1 do %>
-            <div class="mt-4"><%= List.first(@languages) %></div>
-          <% else %>
-            <.input
-              type="select"
-              name="project_language_selection"
-              options={@languages}
-              value={@selected_lang}
-            />
+      <% end %>
+    </div>
+    """
+  end
+
+  defp render_language_dropdown(assigns) do
+    ~H"""
+    <div class="group relative text-nowrap">
+      <%= @selected_lang %>
+
+      <%= if Enum.count(@current_publication.languages) > 1 do %>
+        <.icon name="hero-chevron-down-mini" />
+        <div class="z-10 bg-white p-2 outline outline-1 absolute hidden group-hover:block w-max">
+          <div class="font-semibold mb-2">Available languages</div>
+          <%= for language <- @current_publication.languages do %>
+            <% url =
+              ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}/#{language}"
+
+            url =
+              if Map.has_key?(assigns, :uuid) do
+                "#{url}/#{@uuid}"
+              else
+                url
+              end %>
+
+            <div class={"#{if language == @selected_lang, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
+              <.link patch={url}>
+                <%= language %>
+              </.link>
+            </div>
           <% end %>
         </div>
-        <div class="mt-4 ml-2">
-          /
-          <.link patch={"/#{@project_name}/#{@selected_date}/#{@selected_lang}"}>
-            <.icon class="mb-1" name="hero-home-solid" />
-          </.link>
-        </div>
-        <%= if @identifier do %>
-          <div class="mt-4 ml-2">/</div>
-          <div class="mt-4 ml-2">
-            <%= @identifier %>
-          </div>
-        <% end %>
-      </div>
-    </form>
+      <% end %>
+    </div>
     """
   end
 end

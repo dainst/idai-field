@@ -1,5 +1,9 @@
 defmodule FieldPublicationWeb.UserAuth do
-  alias FieldPublication.Publications
+  alias FieldPublication.{
+    Publications,
+    Projects
+  }
+
   use FieldPublicationWeb, :verified_routes
 
   import Plug.Conn
@@ -169,7 +173,7 @@ defmodule FieldPublicationWeb.UserAuth do
   def on_mount(:ensure_has_project_access, %{"project_id" => project_name}, session, socket) do
     socket = mount_current_user(socket, session)
 
-    if FieldPublication.Projects.has_project_access?(
+    if Projects.has_project_access?(
          project_name,
          socket.assigns.current_user
        ) do
@@ -181,6 +185,61 @@ defmodule FieldPublicationWeb.UserAuth do
         |> Phoenix.LiveView.redirect(to: ~p"/")
 
       {:halt, socket}
+    end
+  end
+
+  def on_mount(
+        :ensure_project_published_or_project_access,
+        %{"project_id" => project_name, "draft_date" => draft_date} = _opts,
+        session,
+        socket
+      ) do
+    socket = mount_current_user(socket, session)
+
+    Publications.get(project_name, draft_date)
+    |> case do
+      {:error, :not_found} ->
+        {
+          :halt,
+          socket
+          |> Phoenix.LiveView.put_flash(:error, "Unknown publication.")
+          |> Phoenix.LiveView.redirect(to: ~p"/")
+        }
+
+      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+        if not Projects.has_publication_access?(publication, socket.assigns.current_user) do
+          {
+            :halt,
+            socket
+            |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+            |> Phoenix.LiveView.redirect(to: ~p"/")
+          }
+        else
+          {:cont, socket}
+        end
+    end
+  end
+
+  def on_mount(
+        :ensure_project_published_or_project_access,
+        %{"project_id" => project_name},
+        session,
+        socket
+      ) do
+    socket = mount_current_user(socket, session)
+
+    Publications.get_current_published(project_name)
+    |> case do
+      :none ->
+        {
+          :halt,
+          socket
+          |> Phoenix.LiveView.put_flash(:error, "Project has no publication.")
+          |> Phoenix.LiveView.redirect(to: ~p"/")
+        }
+
+      %FieldPublication.DocumentSchema.Publication{} = _publication ->
+        {:cont, socket}
     end
   end
 
@@ -249,7 +308,7 @@ defmodule FieldPublicationWeb.UserAuth do
   Used for routes that require the user to be authenticated.
   """
   def require_project_access(%{params: %{"project_id" => project_id}} = conn, _opts) do
-    if FieldPublication.Projects.has_project_access?(
+    if Projects.has_project_access?(
          project_id,
          conn.assigns[:current_user]
        ) do
@@ -259,6 +318,47 @@ defmodule FieldPublicationWeb.UserAuth do
       |> put_flash(:error, "You are not allowed to access that page.")
       |> redirect(to: ~p"/")
       |> halt()
+    end
+  end
+
+  def require_published_or_project_access(
+        %{params: %{"project_id" => project_id, "draft_date" => draft_date}} = conn,
+        _options
+      ) do
+    Publications.get(project_id, draft_date)
+    |> case do
+      {:error, :not_found} ->
+        conn
+        |> resp(
+          404,
+          "No publication found for project '#{project_id}' with a publication date of '#{draft_date}'."
+        )
+        |> halt()
+
+      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+        if not Projects.has_publication_access?(publication, conn.assigns.current_user) do
+          conn
+          |> resp(403, "You are not allowed to access that page.")
+          |> halt()
+        else
+          conn
+        end
+    end
+  end
+
+  def require_published_or_project_access(
+        %{params: %{"project_id" => project_id}} = conn,
+        _opts
+      ) do
+    Publications.get_current_published(project_id)
+    |> case do
+      :none ->
+        conn
+        |> resp(404, "No publications found for project '#{project_id}'.")
+        |> halt()
+
+      %FieldPublication.DocumentSchema.Publication{} = _publication ->
+        conn
     end
   end
 

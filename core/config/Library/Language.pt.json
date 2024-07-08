@@ -1,57 +1,70 @@
 {
   "groups": {
-    "stem": "Core",
+    "stem": "Dados de base",
     "properties": "Propriedades",
-    "time": "Tempo",
+    "time": "Cronologia",
     "position": "Posição / Contexto",
     "dimension": "Dimensões",
-    "identification": "Identificação",
-    "other": "Outro"
+    "identification": "Determinação",
+    "other": "Outros",
+    "hierarchy": "Hierarquia",
+    "stratigraphy": "Estratigrafia",
+    "inventory": "Inventariação"
   },
   "commons": {
     "dimensionLength": {
-      "label": "Comprimento"
+      "label": "Comprimento",
+      "description": "Indicação do comprimento"
     },
     "dimensionWidth": {
-      "label": "Largura"
+      "label": "Largura",
+      "description": "Indicação da largura na extensão máxima/mínima"
     },
     "dimensionHeight": {
-      "label": "Altura"
+      "label": "Altura",
+      "description": "Indicação da altura na extensão máxima/mínima"
     },
     "dimensionDepth": {
-      "label": "Profundiade"
+      "label": "Profundiade",
+      "description": "Indicação da profundidade na extensão máxima/mínima"
     },
     "dimensionThickness": {
-      "label": "Espessura"
+      "label": "Espessura",
+      "description": "Espessura do objeto"
     },
     "dimensionVerticalExtent": {
-      "label": "Extensão vertical"
+      "label": "Nível",
+      "description": "Nível margem superior / margem inferior"
     },
     "dimensionPerimeter": {
-      "label": "Perímetro"
+      "label": "Perímetro",
+      "description": "Indicação da circunferência do objeto"
     },
     "dimensionDiameter": {
-      "label": "Diâmetro"
+      "label": "Diâmetro",
+      "description": "Indicação do diâmetro do objeto"
     },
     "dimensionOther": {
       "label": "Outras dimensões",
-      "description": "Outras dimensões podem ser registadas aqui; explique sff"
+      "description": "Outras dimensões podem ser inseridas aqui; por favor explique"
     },
     "area": {
-      "label": "Área em m2"
+      "label": "Área em m2",
+      "description": "Indicação da superfície em metros quadrados"
     },
     "processor": {
-      "label": "Processor",
+      "label": "Editor/editora",
       "description": "Nomes dos responsáveis pelo recurso ou objeto durante a campanha. NOTA: Os nomes das pessoas que editam a base de dados são registados automaticamente e, portanto, não são necessários aqui."
     },
     "campaign": {
       "label": "Campanha"
     },
     "description": {
-      "label": "Descrição"
+      "label": "Descrição",
+      "description": "Campo de descrição livre"
     },
     "period": {
-      "label": "Período"
+      "label": "Período de datação"
     },
     "dating": {
       "label": "Datação"
@@ -65,26 +78,48 @@
       "description": "Data em que iniciou o registo do recurso"
     },
     "endDate": {
-      "label": "Data de final",
+      "label": "Data de fim",
       "description": "Data em que terminou o registo do recurso"
     },
     "date": {
-      "label": "Data"
+      "label": "Data",
+      "description": "Data do registo / da execução"
     },
     "orientation": {
-      "label": "Orientação"
+      "label": "Orientação",
+      "description": "Alinhamento cardeal"
     },
     "spatialLocation": {
-      "label": "Localização espacial"
+      "label": "Localização espacial",
+      "description": "Descrição da posição no contexto do sítio de descoberta, da quadrícula ou da unidade estratigráfica"
     },
     "provenance": {
-      "label": "Proveniência"
+      "label": "Proveniência",
+      "description": "Proveniência"
     },
     "literature": {
       "label": "Referências da literatura"
     },
     "geometry": {
       "label": "Geometria"
+    },
+    "notes": {
+      "label": "Anotações"
+    },
+    "damage": {
+      "label": "Danos em porcento"
+    },
+    "archaeoDox:documentationUnit": {
+      "label": "Unidade de documentação"
+    },
+    "webGisId": {
+      "label": "Web-GIS-ID"
+    },
+    "shortDescriptionAddendum": {
+      "label": "Descrição breve (suplementar)"
+    },
+    "phase": {
+      "label": "Fase"
     }
   },
   "categories": {
@@ -92,10 +127,34 @@
       "label": "Vidro",
       "fields": {
         "decorationDescription": {
-          "label": "Descrição da decoração"
+          "label": "Descrição da decoração",
+          "description": "Outro campo de descrição para uma descrição detalhada da decoração"
         },
         "color": {
-          "label": "Cor e intensidade"
+          "label": "Cor e intensidade",
+          "description": "Cor, se reconhecível"
+        },
+        "decorationTechnique": {
+          "label": "Particularidades da superfície ou da técnica de decoração",
+          "description": "Técnica com que a decoração foi aplicada ao vidro"
+        },
+        "formDescription": {
+          "label": "Descrição da forma",
+          "description": "Descrição detalhada da forma em geral"
+        },
+        "manufacturingMethod": {
+          "label": "Técnica de produção",
+          "description": "Técnica utilizada para a produção do objeto; vestígios de trabalho reconhecíveis"
+        },
+        "objectType": {
+          "label": "Denominação ou tipo de objeto"
+        },
+        "transparency": {
+          "label": "Transparência",
+          "description": "Quão transparente é o objeto?"
+        },
+        "vesselFormSpecific": {
+          "label": "Forma"
         }
       }
     },
@@ -114,34 +173,39 @@
           "description": "Endereço de correio do projeto ou da pessoa de contacto"
         },
         "contactPerson": {
-          "label": "Pessoa de contacto"
+          "label": "Pessoa de contacto",
+          "description": "Pessoa de contato do projeto"
         },
         "epsgId": {
           "label": "Código EPSG",
-          "description": "Especificação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
+          "description": "Identificação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
         },
         "externalReference": {
           "label": "Página do projeto",
           "description": "Referência(s) externa(s) do projeto"
         },
         "gazId": {
-          "label": "Gazetteer ID"
+          "label": "Gazetteer ID",
+          "description": "Número ID do léxico local"
         },
         "institution": {
           "label": "Instituição",
           "description": "Instituição responsável pelo projeto"
         },
         "latitude": {
-          "label": "Latitude"
+          "label": "Latitude",
+          "description": "Entrada como número decimal, valores negativos são possíveis"
         },
         "longitude": {
-          "label": "Longitude"
+          "label": "Longitude",
+          "description": "Entrada como número decimal, valores negativos são possíveis"
         },
         "license": {
           "label": "License information"
         },
         "projectURI": {
-          "label": "URL do projeto"
+          "label": "URL do projeto",
+          "description": "Referência a uma página de projeto externa com mais informações"
         },
         "staff": {
           "label": "Equipa"
@@ -163,6 +227,67 @@
       "fields": {
         "bibliography": {
           "label": "Bibliografia"
+        },
+        "publicationDatingScientific": {
+          "description": "Descrição da publicação, referência de datações existentes",
+          "label": "Datação (científica)"
+        },
+        "wallClassification": {
+          "label": "Classificação do muro"
+        },
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        },
+        "constructionDetailsDescription": {
+          "label": "Descrição dos detalhes de construção"
+        },
+        "findingPlace": {
+          "label": "Sítio de descoberta",
+          "description": "Para a entrada de vários recursos como sítio de descoberta, por exemplo: (PE07 So 04,002)"
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "Descrição da técnica de construção",
+          "description": "Descrição detalhada da técnica de construção (por exemplo muro em pedra ou em telha)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datação (estratigrafia)"
+        },
+        "publicationRemark": {
+          "label": "Anotações",
+          "description": "Anotações sobre a publicação"
+        },
+        "blockProcessing": {
+          "label": "Tipo dos blocos de pedra"
+        },
+        "blockTreatment": {
+          "label": "Tratamento dos blocos de pedra",
+          "description": "Tratamento do bloco/vestígios de tratamento"
+        },
+        "wallType": {
+          "label": "Tipo de muro"
+        },
+        "materialCharacteristic": {
+          "label": "Caraterística do material",
+          "description": "Características das propriedades do material"
+        },
+        "materialForm": {
+          "label": "Forma material",
+          "description": "Descrição adicional das telhas/pedras etc."
+        },
+        "publicationDatingFinds": {
+          "label": "Datação (achados)"
+        },
+        "conditionAmount": {
+          "label": "Parte preservada",
+          "description": "Parte preservada em comparação com o original"
+        },
+        "condition": {
+          "label": "Estado de preservação",
+          "description": "Descrição do estado de preservação"
+        },
+        "construction": {
+          "label": "Construção",
+          "description": "Que tipo de construção do muro é presente?"
         }
       }
     },
@@ -176,21 +301,59 @@
           "label": "História do sítio"
         },
         "buildingResearchHistory": {
-          "label": "Histórico da investigação"
+          "label": "Histórico da investigação",
+          "description": "História precedente de todas as investigações feitas ao edifício, incluindo escavações"
         },
         "description": {
-          "label": "Descrição"
+          "label": "Descrição",
+          "description": "Campo de descrição livre"
         },
         "excavationHistory": {
           "label": "Histórico da escavação"
         },
         "siteClassification": {
           "label": "Classificação do sítio"
+        },
+        "gazId": {
+          "label": "Gazetteer-ID",
+          "description": "Número ID do léxico local"
+        },
+        "findSituation": {
+          "description": "Descrição mais detalhada em que condições e por quem foi descoberto o sítio",
+          "label": "Contexto do achado"
+        },
+        "modernIntervention": {
+          "label": "Intervenções modernas"
+        },
+        "findspotClassification": {
+          "label": "Classificação do sítio de descoberta"
         }
       }
     },
     "Feature": {
-      "label": "Unidade etratigráfica"
+      "label": "Unidade etratigráfica",
+      "fields": {
+        "featureBorders": {
+          "description": "determinação dos limites da unidade estratigráfica",
+          "label": "Limites da unidade estratigráfica"
+        },
+        "comparison": {
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência",
+          "label": "Comparação/Comparações"
+        },
+        "hasDisturbance": {
+          "description": "A unidade estratigráfica foi disturbada?",
+          "label": "Distúrbio"
+        },
+        "color": {
+          "label": "Cor e intensidade",
+          "description": "Cor, se reconhecível"
+        },
+        "featureForm": {
+          "label": "Forma da unidade estratigráfica",
+          "description": "Forma da unidade estratigráfica no plano ou no perfil: qual a forma identificável?"
+        }
+      }
     },
     "Inscription": {
       "fields": {
@@ -199,17 +362,40 @@
         },
         "objectType": {
           "label": "Designação ou tipo de inscrição"
+        },
+        "comparison": {
+          "label": "Comparação/Comparações",
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+        },
+        "condition": {
+          "label": "Estado de preservação",
+          "description": "Descrição do estado de preservação"
+        },
+        "conditionAmount": {
+          "label": "Parte preservada",
+          "description": "Parte preservada em comparação com o original"
+        },
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        },
+        "language": {
+          "label": "Língua"
         }
-      }
+      },
+      "label": "Inscrição"
     },
     "Image": {
       "fields": {
         "draughtsmen": {
           "label": "Autor",
-          "description": "Autor da imagem, fotografia, desenho, ilustração"
+          "description": "Autor(a) da figura, fotógrafo/fotógrafa, desenhador/desenhadora"
         },
         "imageRights": {
           "label": "Direitos da imagem"
+        },
+        "processor": {
+          "label": "Editor/editora",
+          "description": "Editor/editora da imagem em caso de alteração da imagem após criação"
         }
       }
     },
@@ -258,12 +444,422 @@
       "label": "Tipo"
     },
     "TypeCatalog": {
-      "label": "Tipo de catálogo",
+      "label": "Catálogo de tipos",
       "fields": {
         "criterion": {
           "label": "Critério"
         }
       }
+    },
+    "Building": {
+      "label": "Edifício",
+      "fields": {
+        "buildingHistory": {
+          "label": "História do edifício",
+          "description": "Tratamento histórico do edifício"
+        },
+        "buildingResearchHistory": {
+          "label": "História da investigação",
+          "description": "História precedente de todas as investigações feitas ao edifício, incluindo escavações"
+        },
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        },
+        "excavationHistory": {
+          "label": "História das escavações"
+        },
+        "history": {
+          "label": "História",
+          "description": "Passado histórico do edifício"
+        },
+        "architecturalOrders": {
+          "label": "Ordem arquitetónica",
+          "description": "Indicação da ordem arquitetónica colunar"
+        },
+        "buildingCategory": {
+          "label": "Tipo de edifício"
+        },
+        "hasRestoration": {
+          "label": "Restauro",
+          "description": "Foram feitas intervenções de restauro e conservação?"
+        },
+        "buildingCategorySpecific": {
+          "label": "Tipo de edifício (especifico)"
+        },
+        "buildingTechnique": {
+          "label": "Técnica de construção",
+          "description": "Designação da técnica utilizada na construção do edifício"
+        },
+        "context": {
+          "description": "Em que contexto se situa o edifício?",
+          "label": "Contexto"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "conditionAmount": {
+          "label": "Parte preservada",
+          "description": "Parte preservada em comparação com o original"
+        },
+        "buildingType": {
+          "label": "Tipo de edifício"
+        },
+        "condition": {
+          "label": "Estado de preservação",
+          "description": "Descrição do estado de preservação"
+        }
+      }
+    },
+    "Burial": {
+      "fields": {
+        "ageDetermination": {
+          "label": "determinação da idade"
+        },
+        "ageDeterminationBasis": {
+          "label": "Base para a determinação da idade"
+        },
+        "sexDetermination": {
+          "label": "determinação do sexo"
+        },
+        "sexDeterminationBasis": {
+          "label": "Base para a determinação do sexo"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "Altura do corpo e robustez"
+        },
+        "burialRite": {
+          "label": "Ritos funerários ou tratamento dos mortos"
+        },
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        },
+        "dietReconstruction": {
+          "label": "Reconstrução da dieta"
+        },
+        "findingPlace": {
+          "label": "Sítio de descoberta",
+          "description": "Para a entrada de vários recursos como sítio de descoberta, por exemplo: (PE07 So 04,002)"
+        },
+        "burialDocumentation": {
+          "description": "Quais o(s) tipo(s) de documentação utilizado(s)?",
+          "label": "Documentação"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datação (estratigrafia)"
+        },
+        "positionArms": {
+          "label": "Posição dos braços"
+        },
+        "publicationDatingFinds": {
+          "label": "Datação (achados)"
+        },
+        "positionLegs": {
+          "label": "Posição das pernas"
+        },
+        "positioningIndividuals": {
+          "label": "Posição do defunto"
+        }
+      }
+    },
+    "Wood": {
+      "fields": {
+        "typeOfWood": {
+          "description": "determinação do tipo de madeiro no objeto",
+          "label": "Tipo de madeira"
+        },
+        "paintCondition": {
+          "label": "Estado da pintura"
+        },
+        "paintColor": {
+          "label": "Cor(es) da pintura"
+        },
+        "paintColorMunsell": {
+          "label": "Cor(es) da pintura, número no sistema de cores Munsell"
+        },
+        "color": {
+          "description": "Cor do achado ou da estrutura de madeira",
+          "label": "Cor"
+        },
+        "objectType": {
+          "label": "Denominação ou tipo de objeto"
+        },
+        "manufacturingMethod": {
+          "label": "Técnica de produção"
+        },
+        "colorOutside": {
+          "label": "Cor(es) da madeira no exterior"
+        },
+        "colorInside": {
+          "label": "Cor(es) da madeiro no interior"
+        },
+        "colorOutsideMunsell": {
+          "label": "Cor da madeira no exterior, número no sistema de cores Munsell"
+        },
+        "colorInsideMunsell": {
+          "label": "Cor da madeira no interior, número no sistema de cores Munsell"
+        },
+        "colorBreak": {
+          "label": "Cor(es) do núcleo da madeira"
+        },
+        "colorBreakMunsell": {
+          "label": "Cor(es) do núcleo da madeira, número no sistema de cores Munsell"
+        },
+        "surfaceCondition": {
+          "label": "Vestígios de queimadura"
+        },
+        "decorationTechnique": {
+          "label": "Superfície e decoração"
+        }
+      },
+      "label": "Madeira"
+    },
+    "Floor": {
+      "fields": {
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        },
+        "distinguishingCriteria": {
+          "description": "Qual o critério escolhida para determinar a borda da unidade estratigráfica?",
+          "label": "Critério de distinção"
+        },
+        "floorClassification": {
+          "label": "Classificação do pavimento"
+        },
+        "layerClassification": {
+          "label": "Definição ou classificação do depósito"
+        },
+        "condition": {
+          "label": "Estado de preservação",
+          "description": "Descrição do estado de preservação"
+        },
+        "conditionAmount": {
+          "label": "Parte preservada",
+          "description": "Parte preservada em comparação com o original"
+        },
+        "consistency": {
+          "label": "Consistência"
+        }
+      },
+      "label": "Pavimento"
+    },
+    "Pottery": {
+      "fields": {
+        "amountSherdsPercent": {
+          "label": "Quantificação em porcento",
+          "description": "Entrada feita com número decimal, valores negativos não são permitidos"
+        }
+      },
+      "label": "Cerâmica"
+    },
+    "FeatureSegment": {
+      "fields": {
+        "hasDisturbance": {
+          "label": "Distúrbio"
+        },
+        "comparison": {
+          "label": "Comparação/Comparações"
+        }
+      }
+    },
+    "Level": {
+      "label": "Andar",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "RoomFloor": {
+      "label": "Solo",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "RoomWall": {
+      "label": "Parede",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "InnerWall": {
+      "label": "Parede interior"
+    },
+    "Trench": {
+      "label": "Quadrícula",
+      "fields": {
+        "researchQuestion": {
+          "label": "Questão de investigação",
+          "description": "Questão de investigação ou motivo da abertura da área, por exemplo \"Especificação e datação de uma estrutura descoberta com o magnetómetro...\""
+        },
+        "trenchComment": {
+          "label": "Comentário sobre a quadrícula",
+          "description": "Comentário sobre a quadrícula para a avaliação e documentação, relatório para a direção de escavação"
+        }
+      }
+    },
+    "Planum": {
+      "label": "Planta"
+    },
+    "Brick": {
+      "label": "Telha",
+      "fields": {
+        "brickForm": {
+          "label": "Forma e utilização da telha"
+        },
+        "brickUsage": {
+          "label": "Utilização da telha na arquitectura"
+        },
+        "clayColorOutside": {
+          "label": "Externo: cor e intensidade da argila"
+        },
+        "coatColorInside": {
+          "label": "Revestimento (interior): cor e intensidade"
+        },
+        "coatColorOutside": {
+          "label": "Revestimento (exterior): cor e intensidade"
+        },
+        "decorationTechnique": {
+          "label": "Particularidades da superfície ou decoração"
+        },
+        "formDescription": {
+          "label": "Descrição da forma",
+          "description": "Descrição detalhada da forma em geral"
+        },
+        "manufacturing": {
+          "label": "Produto"
+        },
+        "specificType": {
+          "description": "Formato das pedras e telhas, se reconhecível",
+          "label": "Formato"
+        },
+        "manufacturingMethod": {
+          "label": "Técnica de produção"
+        }
+      }
+    },
+    "Operation": {
+      "label": "Intervenção",
+      "fields": {
+        "supervisor": {
+          "description": "Pessoa responsável da intervenção",
+          "label": "Supervisor/a"
+        }
+      }
+    },
+    "Layer": {
+      "fields": {
+        "isNatural": {
+          "label": "Natural",
+          "description": "O estrato é natural? (Por exemplo \"Sim\" para uma erosão)"
+        },
+        "consistency": {
+          "label": "Consistência"
+        },
+        "distinguishingCriteria": {
+          "label": "Critério de distinção",
+          "description": "Qual o critério escolhida para determinar a borda da unidade estratigráfica?"
+        },
+        "layerClassification": {
+          "label": "Definição ou classificação do depósito"
+        },
+        "soilType": {
+          "label": "Tipo de sedimento"
+        },
+        "appearance": {
+          "label": "Formação",
+          "description": "Descrição da formação do estrato, por exemplo \"colapso do muro de adobe ocidental\""
+        }
+      },
+      "label": "Depósito"
+    },
+    "FeatureGroup": {
+      "fields": {
+        "comparison": {
+          "label": "Comparação/Comparações",
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "hasRestoration": {
+          "description": "Foram feitas intervenções de restauro e conservação?"
+        }
+      }
+    },
+    "Opening": {
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      },
+      "label": "Abertura"
+    },
+    "OuterWall": {
+      "label": "Parede exterior"
+    },
+    "RoomCeiling": {
+      "label": "Teto",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Window": {
+      "label": "Janela"
+    },
+    "Door": {
+      "label": "Porta"
+    },
+    "Damage": {
+      "label": "Danos",
+      "fields": {
+        "damageType": {
+          "label": "Tipo de danos"
+        },
+        "condition": {
+          "label": "Estado"
+        }
+      }
+    },
+    "DesignElement": {
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Roof": {
+      "label": "telhado",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Stairs": {
+      "label": "Escadas",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "ExcavationArea": {
+      "label": "Área de investigação"
+    },
+    "SurveyUnit": {
+      "label": "Unidade de prospecção"
+    }
+  },
+  "forms": {
+    "Feature:archaeoDox": {
+      "label": "unidade estratigráfica"
     }
   }
 }

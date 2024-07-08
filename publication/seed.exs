@@ -1,5 +1,5 @@
 defmodule Seeder do
-  alias FieldPublication.OpensearchService
+  alias FieldPublication.OpenSearchService
   alias FieldPublication.Processing
   alias FieldPublication.FileService
   alias FieldPublication.Replication
@@ -93,7 +93,7 @@ defmodule Seeder do
 
     :ok = Processing.OpenSearch.index(publication)
 
-    {:ok, _} = OpensearchService.set_project_alias(publication)
+    {:ok, _} = OpenSearchService.set_project_alias(publication)
 
     {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
       Publications.put(publication, %{

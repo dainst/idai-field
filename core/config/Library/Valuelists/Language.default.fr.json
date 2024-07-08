@@ -35,7 +35,7 @@
       "Anatolien": "Anatolie",
       "Antiochia (Antakya)": "Antioche (Antakya)",
       "Athen": "Athènes",
-      "Ägypten": "Egypte",
+      "Ägypten": "Égypte",
       "Attisch": "",
       "Britannien": "",
       "Chios": "",
@@ -47,13 +47,13 @@
       "Irland": "Irlande",
       "Italien": "Italie",
       "Kampanisch": "",
-      "Karthagisch": "",
-      "Kleinasien": "Asie Mineure (Anatolie)",
+      "Karthagisch": "Carthaginois",
+      "Kleinasien": "Asie Mineure",
       "Knidos": "Cnide",
       "Korinth": "Corinthe",
       "Kos": "Kos",
       "Lesbos": "Lesbos",
-      "Levante": "Levant (Proche-Orient)",
+      "Levante": "Levant",
       "Lokal": "Local",
       "Lokal/Regional": "Local/Régional",
       "Milet": "Milet",
@@ -72,14 +72,14 @@
       "Spanien": "Espagne",
       "Syrien": "Syrie",
       "Südtunesisch": "Tunisie du Sud",
-      "Südägäis": ""
+      "Südägäis": "Egée du Sud"
     }
   },
   "periods-default-1": {
     "values": {
-      "Archaisch": "",
-      "Bronzezeitlich": "",
-      "Byzantinisch": "",
+      "Archaisch": "Archaïque",
+      "Bronzezeitlich": "Age du Bronze",
+      "Byzantinisch": "Byzantin",
       "Eisenzeitlich": "",
       "Frühbronzezeitlich": "",
       "Frühbyzantinisch": "",
@@ -87,19 +87,19 @@
       "Frühkaiserzeitlich": "",
       "Frühklassisch": "",
       "Frühmittelalter": "",
-      "Geometrisch": "",
-      "Hellenistisch": "",
+      "Geometrisch": "Géométrique",
+      "Hellenistisch": "Hellénistique",
       "Hochmittelalter": "",
-      "Kaiserzeitlich": "",
-      "Klassisch": "",
+      "Kaiserzeitlich": "Époque impériale romaine",
+      "Klassisch": "Classique",
       "Mittelalter": "",
       "Neolithisch": "",
-      "Neuzeitlich": "",
-      "Osmanisch": "",
-      "Pleistozän": "",
+      "Neuzeitlich": "Époque moderne",
+      "Osmanisch": "Ottomane",
+      "Pleistozän": "Pléistocène",
       "Rezent": "",
-      "Römisch": "",
-      "Spätantik": "",
+      "Römisch": "Romaine",
+      "Spätantik": "Fin de l'Antiquité",
       "Spätbronzezeitlich": "",
       "Spätbyzantinisch": "",
       "Späthellenistisch": "",
@@ -110,63 +110,63 @@
   },
   "colors-default-1": {
     "values": {
-      "beige": "",
-      "blass-": "",
-      "blau": "",
-      "braun": "",
-      "cremefarben": "",
-      "dunkel-": "",
-      "gelb": "",
-      "grau": "",
-      "grün": "",
-      "hell-": "",
-      "leuchtend-": "",
-      "ocker": "",
-      "orange": "",
-      "rosa": "",
-      "rot": "",
-      "schwarz": "",
-      "türkis": "",
-      "violett": "",
-      "weiß": ""
+      "beige": "beige",
+      "blass-": "pâle",
+      "blau": "bleu",
+      "braun": "marron",
+      "cremefarben": "crème",
+      "dunkel-": "foncé",
+      "gelb": "jaune",
+      "grau": "gris",
+      "grün": "vert",
+      "hell-": "clair",
+      "leuchtend-": "vive",
+      "ocker": "ocre",
+      "orange": "orange",
+      "rosa": "rose",
+      "rot": "rouge",
+      "schwarz": "noir",
+      "türkis": "turquoise",
+      "violett": "violet",
+      "weiß": "blanc"
     },
     "description": ""
   },
   "colors-default-2": {
     "values": {
-      "beige": "",
-      "dunkelbraun": "",
-      "dunkelrot": "",
-      "gelb": "",
-      "hellbraun": "",
-      "hellgrau": "",
+      "beige": "beige",
+      "dunkelbraun": "marron foncé",
+      "dunkelrot": "rouge foncé",
+      "gelb": "jaune",
+      "hellbraun": "brun clair",
+      "hellgrau": "Gris clair",
       "mittelbraun": "",
-      "ocker": "",
-      "orange": "",
-      "orangerot": "",
-      "rosa": "",
-      "rot": "",
-      "rotbraun": "",
-      "schwarz": "",
-      "weiß": ""
+      "ocker": "ocre",
+      "orange": "orange",
+      "orangerot": "rouge orangé",
+      "rosa": "rose",
+      "rot": "rouge",
+      "rotbraun": "rouge-marron",
+      "schwarz": "noir",
+      "weiß": "blanc"
     },
     "description": ""
   },
   "glass-decorationTechnique-default": {
     "values": {
-      "Bemalung": "",
+      "Bemalung": "peinte",
       "Diatretdekor": "",
-      "Emaille": "",
+      "Emaille": "Email",
       "Facettschliffdekor": "",
       "Fadendekor (aufgelegt)": "",
       "Fadendekor (verschmolzen)": "",
-      "Mosaikdekor": "",
-      "Reliefdekor": "",
+      "Mosaikdekor": "décoration mosaïque",
+      "Reliefdekor": "décor en relief",
       "Reticelladekor": "",
-      "Riefeldekor": "",
+      "Riefeldekor": "decor rainuré",
       "Ritzungen": "",
       "Schlangenfadendekor": "",
-      "Schliffrillendekor": "",
+      "Schliffrillendekor": "Décor à rainures",
       "Stempeldekor": "",
       "Tupfendekor": "",
       "Warzendekor": "",
@@ -182,16 +182,16 @@
       "doppelkonisch": "",
       "halbkugelig": "",
       "hochoval": "",
-      "konisch": "",
-      "kugelförmig": "",
-      "quadratisch": "",
-      "rechteckig": "",
-      "rund": "",
-      "schlank": "",
-      "schmal": "",
-      "spindelförmig": "",
+      "konisch": "conique",
+      "kugelförmig": "sphérique",
+      "quadratisch": "quadratique",
+      "rechteckig": "rectangulaire",
+      "rund": "rond",
+      "schlank": "mince",
+      "schmal": "fin",
+      "spindelförmig": "fusiforme",
       "tonnenförmig": "",
-      "zylinderförmig": ""
+      "zylinderförmig": "cylindrique"
     }
   },
   "glass-manufacturingMethod-default": {
@@ -203,13 +203,13 @@
       "In offene Halbformen geblasen": "",
       "Kerngeformt": "",
       "Sandkerngeschmolzen": "",
-      "gedreht (auf Drehscheibe)": ""
+      "gedreht (auf Drehscheibe)": "tourné (utilisation d'un tour)"
     }
   },
   "glass-objectType-default": {
     "values": {
       "Anhänger": "",
-      "Armreif": "",
+      "Armreif": "bracelet",
       "Einlage": "",
       "Fensterglas": "",
       "Gefäß": "",
@@ -217,25 +217,25 @@
       "Gerät": "",
       "Glasschlacke": "",
       "Lampe": "",
-      "Löffel": "",
-      "Perle": "",
+      "Löffel": "cuillère",
+      "Perle": "perle",
       "Produktionsfragment": "",
-      "Ring": "",
-      "Rohglas": "",
+      "Ring": "anneau",
+      "Rohglas": "verre brut",
       "Rührstab": "",
       "Scheiben": "",
-      "Schmuck": "",
+      "Schmuck": "bijoux",
       "Spielstein": "",
       "Tessera": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "incertain ou indéterminé",
       "Weinheber": ""
     }
   },
   "glass-transparency-default": {
     "values": {
-      "durchscheinend": "",
-      "durchsichtig": "",
-      "opak": "",
+      "durchscheinend": "translucide",
+      "durchsichtig": "tansparent",
+      "opak": "opaque",
       "versintert": ""
     }
   },
@@ -245,15 +245,15 @@
       "Becher": "",
       "Deckel": "",
       "Deckelgefäß": "",
-      "Flasche": "",
+      "Flasche": "Bouteille",
       "Krug": "",
       "Napf": "",
       "Schale": "",
       "Schüssel": "",
-      "Tasse": "",
-      "Teller": "",
-      "Topf": "",
-      "Unbestimmt": "",
+      "Tasse": "tasse",
+      "Teller": "Plaque",
+      "Topf": "pot",
+      "Unbestimmt": "indéterminé",
       "Vorratsgefäß": ""
     }
   },
@@ -331,13 +331,13 @@
   },
   "Brick-decorationTechnique-default": {
     "values": {
-      "Bemalung": "",
-      "Fingerabdruck": "",
+      "Bemalung": "peinte",
+      "Fingerabdruck": "empreinte digitale",
       "Kammritzung": "",
       "Reliefdekor": "",
       "Riefeldekor": "",
       "Ritzungen": "",
-      "Sonstige Abdrücke": "",
+      "Sonstige Abdrücke": "autres impressions",
       "Stempel": "",
       "Stempeldekor": "",
       "Tupfendekor": "",
@@ -387,13 +387,13 @@
   },
   "Brick-temper-default": {
     "values": {
-      "Glimmer": "",
+      "Glimmer": "Mica",
       "Kalk": "",
       "Mineralische Partikel": "",
       "Muschelgrus": "",
       "Organische Partikel": "",
-      "Quarz": "",
-      "Schamotte": "",
+      "Quarz": "Quartz",
+      "Schamotte": "Chamotte",
       "Sonstige": "",
       "Steinchen": "",
       "Stroh/Spreu": "",
@@ -410,7 +410,7 @@
       "Kollektivbestattung": "",
       "Massengrab": "",
       "Mehrfachbestattung": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incertain ou indéterminé",
       "Wiedergängerbestattung": ""
     }
   },
@@ -418,7 +418,7 @@
     "values": {
       "Primäre Bestattung": "",
       "Sekundäre Bestattung": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Unsicher bzw. unbestimmbar": "Incertain ou indéterminé"
     }
   },
   "Burial-burialDocumentation-default": {
@@ -442,7 +442,7 @@
   },
   "Burial-positionArms-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incertain ou indéterminé",
       "am Kinn": "",
       "an den Seiten": "",
       "auf dem Bauch": "",
@@ -457,7 +457,7 @@
       "Beinhocker": "",
       "Extremhocker": "",
       "Hocker": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incertain ou indéterminé",
       "gestreckt": ""
     }
   },
@@ -467,7 +467,7 @@
       "Rückenlage": "",
       "Seitenlage, links": "",
       "Seitenlage, rechts": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Unsicher bzw. unbestimmbar": "incertain ou indéterminé"
     }
   },
   "Building-architecturalOrders-default": {
@@ -481,25 +481,25 @@
   },
   "Building-buildingCategory-default": {
     "values": {
-      "Altar": "",
-      "Amphitheater": "",
-      "Basilika": "",
+      "Altar": "Autel",
+      "Amphitheater": "Amphithéâtre",
+      "Basilika": "Basilique",
       "Bogen": "",
-      "Brücke": "",
-      "Circus": "",
-      "Grabbau": "",
-      "Gymnasium": "",
+      "Brücke": "Pont",
+      "Circus": "Cirque",
+      "Grabbau": "Tombe",
+      "Gymnasium": "Gymnase",
       "Mauerkurtine": "",
-      "Nymphäum": "",
-      "Odeion": "",
-      "Strasse": "",
+      "Nymphäum": "Nymphée",
+      "Odeion": "Odéon",
+      "Strasse": "Rue",
       "Stützmauer": "",
-      "Säulenhalle": "",
-      "Tempel": "",
-      "Theater": "",
-      "Therme": "",
+      "Säulenhalle": "Portique",
+      "Tempel": "Temple",
+      "Theater": "Théâtre",
+      "Therme": "Thermes",
       "Toranlage": "",
-      "Turm": "",
+      "Turm": "Tour",
       "Wohnbau": ""
     }
   },
@@ -565,7 +565,7 @@
       "Befestigung": "",
       "Haus": "",
       "Lager": "",
-      "Werkstatt": ""
+      "Werkstatt": "Atelier"
     }
   },
   "Building-condition-default": {
@@ -579,53 +579,53 @@
   },
   "Building-conditionAmount-default": {
     "values": {
-      "Fragmentarisch": "",
-      "Vollständig": "",
+      "Fragmentarisch": "Fragmentaire",
+      "Vollständig": "Complet",
       "Vollständig zerstört": ""
     }
   },
   "Building-context-default": {
     "values": {
-      "Akropolis": "",
-      "Forum": "",
-      "Handwerksviertel": "",
-      "Heiligtum": "",
-      "Nekropole": "",
-      "Wohnviertel": ""
+      "Akropolis": "Acropole",
+      "Forum": "Forum",
+      "Handwerksviertel": "Quartier artisanal",
+      "Heiligtum": "Sanctuaire",
+      "Nekropole": "Nécropole",
+      "Wohnviertel": "Quartier résidentiel"
     }
   },
   "Building-material-default": {
     "values": {
-      "Granit": "",
-      "Kalk": "",
+      "Granit": "Granit",
+      "Kalk": "chaux",
       "Kalkmörtel": "",
       "Kalkstein": "",
       "Kalzit": "",
       "Kreide": "",
-      "Marmor": "",
-      "Pophyr": "",
-      "Quarz": "",
-      "Sandstein": "",
+      "Marmor": "Marbre",
+      "Pophyr": "Porphyre",
+      "Quarz": "Quartz",
+      "Sandstein": "Grès",
       "Ziegel": ""
     }
   },
   "Building-material-default-2": {
     "values": {
-      "Beton": "",
+      "Beton": "Béton",
       "Blei": "",
       "Eisen": "",
       "Erde": "",
       "Fliesen": "",
       "Gips": "",
-      "Glas": "",
-      "Holz": "",
+      "Glas": "Verre",
+      "Holz": "Bois",
       "Holzwerkstoff": "",
       "Kunststoff": "",
-      "Lehm": "",
-      "Metall": "",
-      "Mörtel": "",
+      "Lehm": "Glaise",
+      "Metall": "Métal",
+      "Mörtel": "Mortier",
       "Naturstein": "",
-      "Putz": "",
+      "Putz": "Enduit",
       "Stahl": "",
       "Stahlbeton": "",
       "Stuck": "",
@@ -635,49 +635,49 @@
   },
   "Building-material-default-3": {
     "values": {
-      "Beton": "",
+      "Beton": "Béton",
       "Blei": "",
       "Eisen": "",
       "Erde": "",
       "Fliesen": "",
       "Gips": "",
-      "Glas": "",
-      "Holz": "",
+      "Glas": "Verre",
+      "Holz": "Bois",
       "Holzwerkstoff": "",
       "Kunststoff": "",
-      "Lehm": "",
-      "Metall": "",
-      "Mörtel": "",
+      "Lehm": "Glaise",
+      "Metall": "Métal",
+      "Mörtel": "Mortier",
       "Naturstein": "",
-      "Putz": "",
+      "Putz": "Enduit",
       "Stahl": "",
       "Stahlbeton": "",
       "Stuck": "",
       "Unbekannt/Unerkannt": "",
-      "Granit": "",
-      "Kalk": "",
+      "Granit": "Granit",
+      "Kalk": "Chaux",
       "Kalkmörtel": "",
       "Kalkstein": "",
       "Kalzit": "",
       "Kreide": "",
-      "Marmor": "",
-      "Pophyr": "",
-      "Quarz": "",
-      "Sandstein": "",
+      "Marmor": "Marbre",
+      "Pophyr": "Porphyre",
+      "Quarz": "Quartz",
+      "Sandstein": "Grès",
       "Ziegel": ""
     }
   },
   "Wood-color-default": {
     "values": {
-      "braun": "",
+      "braun": "brune",
       "haselnuss": "",
-      "schwarz": ""
+      "schwarz": "noire"
     }
   },
   "Wood-objectType-default": {
     "values": {
       "Architektur": "",
-      "Altar": "",
+      "Altar": "Autel",
       "Anhänger": "",
       "Gefäß": "",
       "Gerät": "",
@@ -694,7 +694,7 @@
       "Sarkophag": "",
       "Schmuck": "",
       "Spielzeug": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Unsicher bzw. unbestimmbar": "Incertain ou indéterminé"
     }
   },
   "Wood-typeOfWood-default": {
@@ -749,10 +749,10 @@
       "Bemalung (Enkaustik)": "",
       "Bemalung (Eitemperatechnik)": "",
       "Intarsie": "",
-      "Relief": "",
+      "Relief": "Relief",
       "Ritzung": "",
       "Schnitzung": "",
-      "Sgraffito": "",
+      "Sgraffito": "Sgraffito",
       "Vergoldung/metallischer Überzug": ""
     }
   },
@@ -819,8 +819,8 @@
   "Architecture-mortarBinder-default": {
     "values": {
       "dominant": "",
-      "gering": "",
-      "hoch": "",
+      "gering": "Bas",
+      "hoch": "Haut",
       "mittel": ""
     }
   },
@@ -839,29 +839,29 @@
   "Architecture-wallClassification-default": {
     "values": {
       "Aufgehendes": "",
-      "Fensterzusetzung": "",
-      "Flickung": "",
-      "Fundament": "",
-      "Gewölbe": "",
-      "Mauer": "",
+      "Fensterzusetzung": "Remplissage de fenêtre",
+      "Flickung": "Réparation",
+      "Fundament": "Fondation",
+      "Gewölbe": "Voûte",
+      "Mauer": "Mur",
       "Mauerbettung": "",
       "Mauerdurchbruch": "",
-      "Mosaik": "",
+      "Mosaik": "Mosaïque",
       "Opus sectile": "",
-      "Türzusetzung": "",
-      "Wandgestaltung": ""
+      "Türzusetzung": "Remplissage de porte",
+      "Wandgestaltung": "Décoration murale"
     }
   },
   "Architecture-wallType-default": {
     "values": {
-      "Außenmauer": "",
+      "Außenmauer": "Mur extérieur",
       "Befestigugsmauer": "",
       "Blockmauerwerk": "",
       "Bruchsteinmauer": "",
       "Fachwerk": "",
       "Feldsteinmauer": "",
       "Grenzmauer": "",
-      "Ziegelmauer": ""
+      "Ziegelmauer": "Mur en briques"
     }
   },
   "Place-findspotClassification-default": {
@@ -871,7 +871,7 @@
       "Funderfassung": "",
       "Fundsammlung": "",
       "Grab": "",
-      "Nekropole": "",
+      "Nekropole": "Nécropole",
       "Spolie in rezenter Mauer": "",
       "Steinbruch": "",
       "Straße/Platz": "",
@@ -889,9 +889,9 @@
   },
   "Layer-consistency-default": {
     "values": {
-      "Durch Brand versiegelt": "",
-      "Oberfläche abgewaschen": "",
-      "Oberfläche verhärtet": "",
+      "Durch Brand versiegelt": "Scellée par le feu",
+      "Oberfläche abgewaschen": "Surface délavée",
+      "Oberfläche verhärtet": "Surface durcie",
       "fest": "",
       "flüssig": "",
       "gut formbar": "",
@@ -917,16 +917,16 @@
   },
   "Layer-distinguishingCriteria-default": {
     "values": {
-      "Farbe": "",
+      "Farbe": "Couleur",
       "Form": "",
       "Grenzen": "",
-      "Konsistenz": "",
-      "Komposition": ""
+      "Konsistenz": "Consistence",
+      "Komposition": "Composition"
     }
   },
   "Layer-layerClassification-default": {
     "values": {
-      "Brandschicht": "",
+      "Brandschicht": "Couche brûlée",
       "Kulturschicht": "",
       "Laufhorizont": "",
       "Planierschicht": ""
@@ -934,25 +934,25 @@
   },
   "Layer-soilType-default": {
     "values": {
-      "Feinsand": "",
-      "Feinstsand": "",
-      "Grobsand": "",
-      "Lehm": "",
+      "Feinsand": "Sable fin",
+      "Feinstsand": "Sable très fin",
+      "Grobsand": "Sable grossier",
+      "Lehm": "Glaise",
       "Lehmiger Sand": "",
       "Lehmiger Schluff": "",
       "Lehmiger Ton": "",
-      "Mergel": "",
+      "Mergel": "Marne",
       "Mittlerer Sand": "",
-      "Sand": "",
-      "Sandiger Lehm": "",
-      "Sandiger Schluff": "",
-      "Sandiger Ton": "",
-      "Schluff": "",
-      "Schluffiger Lehm": "",
-      "Schluffiger Sand": "",
-      "Schluffiger Ton": "",
-      "Ton": "",
-      "Toniger Lehm": "",
+      "Sand": "Sable",
+      "Sandiger Lehm": "Glaise sablonneuse",
+      "Sandiger Schluff": "Limon sablonneux",
+      "Sandiger Ton": "Argile sablonneuse",
+      "Schluff": "Limon",
+      "Schluffiger Lehm": "Glaise limoneuse",
+      "Schluffiger Sand": "Sable limoneux",
+      "Schluffiger Ton": "Argile limoneuse",
+      "Ton": "Argile",
+      "Toniger Lehm": "Glaise argileuse",
       "Toniger Sand": "",
       "Toniger Schluff": ""
     }
@@ -2213,7 +2213,7 @@
       "Analog": "",
       "Dia": "",
       "S/W": "",
-      "Farbe": ""
+      "Farbe": "Couleur"
     }
   }
 }

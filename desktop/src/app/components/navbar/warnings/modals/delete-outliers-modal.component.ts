@@ -24,7 +24,7 @@ export class DeleteOutliersModalComponent {
     public deleteAll: boolean;
     public countAffected: number;
 
-    private documentsToChange: Array<Document>;
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -42,12 +42,6 @@ export class DeleteOutliersModalComponent {
     }
 
     
-    public async initialize() {
-
-        this.documentsToChange = [];
-    }
-
-
     public getFieldLabelHTML(): string {
 
         return this.fieldLabel
@@ -70,7 +64,7 @@ export class DeleteOutliersModalComponent {
             constraints: { ['outlierValues:contain']: this.outlierValue }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
-        this.documentsToChange = [];
+        this.affectedDocuments = [];
 
         for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
@@ -78,11 +72,11 @@ export class DeleteOutliersModalComponent {
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
-                if (!this.documentsToChange.includes(document)) this.documentsToChange.push(document);
+                if (!this.affectedDocuments.includes(document)) this.affectedDocuments.push(document);
             }
         }
 
-        this.countAffected = this.documentsToChange.length;
+        this.countAffected = this.affectedDocuments.length;
     }
 
 
@@ -126,11 +120,20 @@ export class DeleteOutliersModalComponent {
 
     private async deleteMultiple() {
 
-        for (let document of this.documentsToChange) {
-            this.deleteValue(document, document.resource, this.field);
+        const changedDocuments: Array<Document> = [];
+
+        for (let document of this.affectedDocuments) {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+
+            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!this.hasOutlierValue(document, field)) continue;
+                this.deleteValue(document, document.resource, field);
+                if (!changedDocuments.includes(document)) changedDocuments.push(document);
+            }
         }
 
-        await this.datastore.bulkUpdate(this.documentsToChange);
+        await this.datastore.bulkUpdate(changedDocuments);
     }
 
 

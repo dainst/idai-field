@@ -28,7 +28,7 @@ export class FixOutliersModalComponent {
     public countAffected: number;
 
     private projectDocument: Document;
-    private documentsToChange: Array<Document>;
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -55,7 +55,6 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
-        this.documentsToChange = [];
     }
 
 
@@ -75,7 +74,7 @@ export class FixOutliersModalComponent {
 
     private async prepareReplaceAll() {
         
-        this.documentsToChange = [];
+        this.affectedDocuments = [];
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
@@ -89,12 +88,12 @@ export class FixOutliersModalComponent {
                 if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
-                    if (!this.documentsToChange.includes(document)) this.documentsToChange.push(document);
+                    if (!this.affectedDocuments.includes(document)) this.affectedDocuments.push(document);
                 }
             }
         }
 
-        this.countAffected = this.documentsToChange.length;
+        this.countAffected = this.affectedDocuments.length;
     }
 
 
@@ -138,12 +137,23 @@ export class FixOutliersModalComponent {
 
 
     private async replaceMultiple() {
-        
-        for (let document of this.documentsToChange) {
-            this.replaceValue(document, document.resource, this.field);
+        const changedDocuments: Array<Document> = [];
+
+        for (let document of this.affectedDocuments) {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+
+            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!this.hasOutlierValue(document, field)) continue;
+                const valuelist: Valuelist = await this.getValuelist(document, field);
+                if (valuelist && equal(valuelist, this.valuelist)) {
+                    this.replaceValue(document, document.resource, field);
+                    if (!changedDocuments.includes(document)) changedDocuments.push(document);
+                }
+            }
         }
 
-        await this.datastore.bulkUpdate(this.documentsToChange);
+        await this.datastore.bulkUpdate(changedDocuments);
     }
 
 

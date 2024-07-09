@@ -62,8 +62,12 @@ html {
 
 body {
   position: relative;
-  font-family: 'Open SansVariable', sans-serif !important;
   overflow: hidden;
+}
+
+body,
+.popover {
+  font-family: 'Open SansVariable', sans-serif !important;
 }
 
 #idaifieldlogo {

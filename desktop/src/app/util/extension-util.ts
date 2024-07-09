@@ -1,4 +1,4 @@
-const path = globalThis.require('path');
+const path = window.require('path');
 
 
 /**

@@ -5,7 +5,7 @@ import { InitializationProgress } from './app/components/initialization-progress
 import { Settings } from './app/services/settings/settings';
 import { environment } from './environments/environment';
 
-const detectPort = globalThis.require('detect-port');
+const detectPort = window.require('detect-port');
 
 
 if (environment.production) enableProdMode();

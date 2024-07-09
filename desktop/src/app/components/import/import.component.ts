@@ -24,8 +24,8 @@ import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 
 
-const remote = globalThis.require('@electron/remote');
-const path = globalThis.require('path');
+const remote = window.require('@electron/remote');
+const path = window.require('path');
 
 
 @Component({

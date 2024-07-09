@@ -2,8 +2,8 @@ import { SampleDataLoaderBase } from 'idai-field-core';
 import { getAsynchronousFs } from '../../../get-asynchronous-fs';
 import { ThumbnailGenerator } from '../../../imagestore/thumbnail-generator';
 
-const fs = globalThis.require('fs');
-const remote = globalThis.require('@electron/remote');
+const fs = window.require('fs');
+const remote = window.require('@electron/remote');
 
 
 /**

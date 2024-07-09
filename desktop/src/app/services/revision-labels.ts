@@ -1,7 +1,7 @@
 import { Document } from 'idai-field-core';
 
-const moment = globalThis.require('moment');
-const remote = globalThis.require('@electron/remote');
+const moment = window.require('moment');
+const remote = window.require('@electron/remote');
 
 
 /**

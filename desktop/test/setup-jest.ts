@@ -12,4 +12,4 @@ const customRequire = (moduleName) => {
     return require(moduleName);
 };
 
-globalThis.require = customRequire as any;
+window.require = customRequire as any;

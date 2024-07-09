@@ -1,18 +1,18 @@
-const ipcRenderer = globalThis.require('electron').ipcRenderer;
+const ipcRenderer = window.require('electron').ipcRenderer;
 
-globalThis.filesystem = {};
-globalThis.filesystem.getFileInfos = function(paths) { return ipcRenderer.invoke('getFileInfos', paths); };
-globalThis.filesystem.isFile = function(path) { return ipcRenderer.invoke('isFile', path); };
-globalThis.filesystem.isDirectory = function(path) { return ipcRenderer.invoke('isDirectory', path); };
-globalThis.filesystem.writeFile = function(path, contents) { return ipcRenderer.invoke('writeFile', path, contents); };
-globalThis.filesystem.readFile = function(path, encoding) { return ipcRenderer.invoke('readFile', path, encoding); };
-globalThis.filesystem.readdir = function(path) { return ipcRenderer.invoke('readdir', path); };
-globalThis.filesystem.mkdir = function(path, options) { return ipcRenderer.invoke('mkdir', path, options); };
-globalThis.filesystem.rm = function(path, options) { return ipcRenderer.invoke('rm', path, options); };
-globalThis.filesystem.unlink = function(path) { return ipcRenderer.invoke('unlink', path); };
-globalThis.filesystem.extractZip = function(source, destination) {
+window.filesystem = {};
+window.filesystem.getFileInfos = function(paths) { return ipcRenderer.invoke('getFileInfos', paths); };
+window.filesystem.isFile = function(path) { return ipcRenderer.invoke('isFile', path); };
+window.filesystem.isDirectory = function(path) { return ipcRenderer.invoke('isDirectory', path); };
+window.filesystem.writeFile = function(path, contents) { return ipcRenderer.invoke('writeFile', path, contents); };
+window.filesystem.readFile = function(path, encoding) { return ipcRenderer.invoke('readFile', path, encoding); };
+window.filesystem.readdir = function(path) { return ipcRenderer.invoke('readdir', path); };
+window.filesystem.mkdir = function(path, options) { return ipcRenderer.invoke('mkdir', path, options); };
+window.filesystem.rm = function(path, options) { return ipcRenderer.invoke('rm', path, options); };
+window.filesystem.unlink = function(path) { return ipcRenderer.invoke('unlink', path); };
+window.filesystem.extractZip = function(source, destination) {
     return ipcRenderer.invoke('extractZip', source, destination);
 };
-globalThis.filesystem.createCatalogZip = function(outputFilePath, filePath, fileName, imageDirPath, imageDirName) {
+window.filesystem.createCatalogZip = function(outputFilePath, filePath, fileName, imageDirPath, imageDirName) {
     return ipcRenderer.invoke('createCatalogZip', outputFilePath, filePath, fileName, imageDirPath, imageDirName);
 };

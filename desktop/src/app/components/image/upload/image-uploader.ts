@@ -18,7 +18,7 @@ import { createDisplayVariant } from '../../../services/imagestore/create-displa
 import { ImagesState } from '../overview/view/images-state';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
-const path = globalThis.require('path');
+const path = window.require('path');
 
 
 export interface ImageUploadResult {

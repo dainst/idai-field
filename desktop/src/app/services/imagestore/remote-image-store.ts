@@ -5,7 +5,7 @@ import { Messages } from '../../components/messages/messages';
 import { SettingsProvider } from '../settings/settings-provider';
 import { SyncTarget } from '../settings/sync-target';
 
-const axios = globalThis.require('axios');
+const axios = window.require('axios');
 
 
 @Injectable()

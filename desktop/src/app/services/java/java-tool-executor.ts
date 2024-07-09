@@ -1,7 +1,7 @@
 import { JavaVersionParser } from './java-version-parser';
 
-const exec = globalThis.require('child_process').exec;
-const remote = globalThis.require('@electron/remote');
+const exec = window.require('child_process').exec;
+const remote = window.require('@electron/remote');
 
 
 /**

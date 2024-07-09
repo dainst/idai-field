@@ -6,8 +6,8 @@ import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/cata
 import { Settings } from '../../../../app/services/settings/settings';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
-const fs = globalThis.require('fs');
-const remote = globalThis.require('@electron/remote');
+const fs = window.require('fs');
+const remote = window.require('@electron/remote');
 
 
 /**

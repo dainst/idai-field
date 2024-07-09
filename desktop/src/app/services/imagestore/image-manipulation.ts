@@ -1,4 +1,4 @@
-const sharp = globalThis.require('sharp');
+const sharp = window.require('sharp');
 
 
 export module ImageManipulationErrors {

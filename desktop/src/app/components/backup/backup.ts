@@ -3,10 +3,10 @@ import { ProjectIdentifierValidation } from '../../model/project-identifier-vali
 import { SettingsService } from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 
-const replicationStream = globalThis.require('pouchdb-replication-stream');
-const stream = globalThis.require('stream');
-const fs = globalThis.require('fs');
-const PouchDB = globalThis.require('pouchdb-browser');
+const replicationStream = window.require('pouchdb-replication-stream');
+const stream = window.require('stream');
+const fs = window.require('fs');
+const PouchDB = window.require('pouchdb-browser');
 const pouchdbLoad = require('pouchdb-load');
 
 

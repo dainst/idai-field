@@ -29,7 +29,7 @@ export class ContextMenu {
 
     public static computeOrientation(yPosition?: number): ContextMenuOrientation {
 
-        return !yPosition || yPosition <= globalThis.innerHeight * 0.6
+        return !yPosition || yPosition <= window.innerHeight * 0.6
             ? 'top'
             : 'bottom';
     }
@@ -37,6 +37,6 @@ export class ContextMenu {
 
     public static getBottomPosition(yPosition: number): number {
 
-        return globalThis.innerHeight - yPosition;
+        return window.innerHeight - yPosition;
     }
 }

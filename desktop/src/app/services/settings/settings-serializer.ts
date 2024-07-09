@@ -1,7 +1,7 @@
 import { getAsynchronousFs } from '../get-asynchronous-fs';
 import { Settings } from './settings';
 
-const remote = globalThis.require('@electron/remote');
+const remote = window.require('@electron/remote');
 
 
 /**

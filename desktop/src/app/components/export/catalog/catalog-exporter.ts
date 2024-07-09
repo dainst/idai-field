@@ -4,8 +4,8 @@ import { Settings } from '../../../services/settings/settings';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { getExportDocuments } from './get-export-documents';
 
-const fs = globalThis.require('fs');
-const remote = globalThis.require('@electron/remote');
+const fs = window.require('fs');
+const remote = window.require('@electron/remote');
 
 
 export const ERROR_FAILED_TO_COPY_IMAGES = 'export.catalog.failedToCopyImages';

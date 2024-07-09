@@ -55,7 +55,7 @@ import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/sca
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 
-const remote = globalThis.require('@electron/remote');
+const remote = window.require('@electron/remote');
 
 
 @NgModule({

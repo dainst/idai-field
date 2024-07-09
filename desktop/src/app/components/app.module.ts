@@ -62,7 +62,7 @@ import { ProjectLabelProvider } from '../services/project-label-provider';
 import { AppState } from '../services/app-state';
 
 
-const remote = globalThis.require('@electron/remote');
+const remote = window.require('@electron/remote');
 
 
 registerLocaleData(localeDe, 'de');

@@ -1,14 +1,14 @@
-const fsPromises = globalThis.require('fs').promises;
+const fsPromises = window.require('fs').promises;
 const extract = require('extract-zip');
 
 
-// If called from Electron app: Return fs.promises instance from Electron main process via globalThis['filesystem']
+// If called from Electron app: Return fs.promises instance from Electron main process via window['filesystem']
 // If called from tests: Return required fs.promises instance
 //
 // (See: https://github.com/electron/electron/issues/19554#issuecomment-683383337)
 export function getAsynchronousFs() {
 
-    return globalThis['filesystem'] ? filesystem : fsPromisesWrapper;
+    return window['filesystem'] ? filesystem : fsPromisesWrapper;
 }
 
 
@@ -45,7 +45,7 @@ const fsPromisesWrapper = {
 
 async function callFsFunction(functionName: string, ...args: any[]): Promise<any> {
 
-    const returnValue = await globalThis['filesystem'][functionName](...args);
+    const returnValue = await window['filesystem'][functionName](...args);
 
     if (returnValue.error) {
         throw returnValue.error;

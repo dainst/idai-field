@@ -1,6 +1,6 @@
 import { FileSyncPreference } from 'idai-field-core';
 
-const address = globalThis.require('address');
+const address = window.require('address');
 
 
 export interface SyncTarget {

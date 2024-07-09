@@ -16,7 +16,7 @@ import { PrintSettingsModalComponent } from './print-settings/print-settings-mod
 import { PrintSettings } from './print-settings/print-settings';
 
 
-const QRCode = globalThis.require('qrcode');
+const QRCode = window.require('qrcode');
 
 
 type PrintedField = {
@@ -149,7 +149,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         const defaultTitle: string = document.title;
         document.title = this.projectLabelProvider.getProjectLabel() + ' ' + this.document.resource.identifier;
 
-        globalThis.print();
+        window.print();
 
         document.title = defaultTitle;
 

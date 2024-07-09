@@ -3,12 +3,12 @@ import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, Configurat
     ConfigReader } from 'idai-field-core';
 import { SettingsProvider } from './settings/settings-provider';
 
-const express = globalThis.require('express');
-const remote = globalThis.require('@electron/remote');
-const expressPouchDB = globalThis.require('express-pouchdb');
-const expressBasicAuth = globalThis.require('express-basic-auth');
-const bodyParser = globalThis.require('body-parser');
-let PouchDB = globalThis.require('pouchdb-browser');
+const express = window.require('express');
+const remote = window.require('@electron/remote');
+const expressPouchDB = window.require('express-pouchdb');
+const expressBasicAuth = window.require('express-basic-auth');
+const bodyParser = window.require('body-parser');
+let PouchDB = window.require('pouchdb-browser');
 
 
 @Injectable()

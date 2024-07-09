@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StateSerializer } from './state-serializer';
 
-const path = globalThis.require('path');
-const fs = globalThis.require('fs');
+const path = window.require('path');
+const fs = window.require('fs');
 
 
 /**

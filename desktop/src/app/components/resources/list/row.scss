@@ -84,22 +84,26 @@
     }
   }
 
-  .mdi-delete {
-    color: #dc3545;
-  }
+  .list-action-buttons {
+    border-radius: 0;
 
-  .btn-small:hover {
-    background-color: darken($list-item-hover-color, 5%);
-  }
+    .mdi-delete {
+      color: #dc3545;
+    }
+  
+    .btn-small:hover {
+      background-color: darken($list-item-hover-color, 5%);
+    }
+  
+    .list-edit-button,
+    .list-move-button,
+    .list-delete-button {
+      border-radius: 32px !important;
+    }
 
-  .list-edit-button,
-  .list-move-button,
-  .list-delete-button {
-    border-radius: 32px !important;
-  }
-
-  .hidden-option {
-    opacity: 0;
+    .hidden-option {
+      opacity: 0;
+    }
   }
 }
 

@@ -124,7 +124,7 @@ const config: Config = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  rootDir: '../',
+  rootDir: '../../',
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -147,10 +147,12 @@ const config: Config = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  // testEnvironment: '',
+  testEnvironment: 'jsdom',
 
   // Options that will be passed to the testEnvironment
-  // testEnvironmentOptions: {},
+  testEnvironmentOptions: {
+    url: 'http://localhost:4003'
+  },
 
   // Adds a location field to test results
   // testLocationInResults: false,

@@ -10,7 +10,7 @@
             (click)="applyingChanges || !isChanged() || confirm()">
         <span class="button-label" i18n="@@buttons.ok">OK</span>
     </button>
-    <button class="btn btn-primary btn-square"
+    <button id="cancel-button" class="btn btn-primary btn-square"
             [class.disabled]="applyingChanges"
             (click)="applyingChanges || cancel()">
         <span class="mdi mdi-close"></span>

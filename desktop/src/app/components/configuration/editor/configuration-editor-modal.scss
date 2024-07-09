@@ -7,7 +7,6 @@
 
   .modal-title {
     position: relative;
-    top: 5px;
     left: 9px;
     max-width: calc(100% - 120px);
     white-space: nowrap;
@@ -16,8 +15,7 @@
   }
 
   #confirm-button,
-  #confirm-valuelist-button,
-  #confirm-value-button {
+  #confirm-valuelist-button {
     position: absolute;
     right: 52px;
     height: 39px;
@@ -25,6 +23,12 @@
     .button-label {
       margin-left: 0;
     }
+  }
+
+  #cancel-button,
+  #cancel-valuelist-button {
+    position: absolute;
+    right: 7px;
   }
 }
 

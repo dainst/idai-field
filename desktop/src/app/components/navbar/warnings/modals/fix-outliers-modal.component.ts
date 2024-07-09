@@ -122,18 +122,16 @@ export class FixOutliersModalComponent {
 
 
     private async replaceMultiple() {
-        const changedDocuments: Array<Document> = [];
-
+        
         for (let affectedDocument of this.affectedDocuments) {
             for (let field of affectedDocument.fields) {
                 this.replaceValue(affectedDocument.document, affectedDocument.document.resource, field);
-                if (!changedDocuments.includes(affectedDocument.document)) {
-                    changedDocuments.push(affectedDocument.document);
-                }
             }
         }
 
-        await this.datastore.bulkUpdate(changedDocuments);
+        await this.datastore.bulkUpdate(
+            this.affectedDocuments.map(affectedDocument => affectedDocument.document)
+        );
     }
 
 

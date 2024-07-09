@@ -115,16 +115,15 @@ export class DeleteOutliersModalComponent {
 
     private async deleteMultiple() {
 
-        const changedDocuments: Array<Document> = [];
-
         for (let affectedDocument of this.affectedDocuments) {
             for (let field of affectedDocument.fields) {
                 this.deleteValue(affectedDocument.document, affectedDocument.document.resource, field);
             }
-            changedDocuments.push(affectedDocument.document);
         }
 
-        await this.datastore.bulkUpdate(changedDocuments);
+        await this.datastore.bulkUpdate(
+            this.affectedDocuments.map(affectedDocument => affectedDocument.document)
+        );
     }
 
 

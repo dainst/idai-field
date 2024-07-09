@@ -15,13 +15,23 @@
         </category-picker>
     </div>
 
-    <div *ngIf="selectedCategory && document.resource.category" id="multiple-switch" class="row">
+    <div *ngIf="selectedCategory && document.resource.category" 
+            id="multiple-switch" 
+            class="row" 
+            [disableTooltip]="countAffected !== 1" 
+            [class.disabled]="countAffected == 1"
+            ngbTooltip="Nur diese Ressource ist betroffen." 
+            i18n-ngbTooltip="@@navbar.taskbar.selectNewCategory.all.tooltip" 
+            container="body">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.selectNewCategory.all">Bei allen Ressourcen dieser Kategorie durchführen</span>
         </div>
         <div class="col-auto">
-            <label class="switch">
-                <input type="checkbox" [checked]="multiple" (change)="multiple = !multiple">
+            <label class="switch" [class.disabled]="countAffected == 1">
+                <input type="checkbox" 
+                        [checked]="multiple" 
+                        (change)="multiple = !multiple" 
+                        [disabled]="countAffected == 1">
                 <span class="slider round"></span>
             </label>
         </div>

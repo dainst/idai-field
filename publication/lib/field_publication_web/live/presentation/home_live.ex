@@ -62,20 +62,14 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   end
 
   def handle_event("text_hover", project_identifier, socket) do
-    socket =
-      push_event(socket, "map-highlight-feature", %{feature_id: project_identifier})
+    socket = push_event(socket, "map-highlight-feature", %{feature_id: project_identifier})
 
     {:noreply, socket}
   end
 
   def handle_event("text_hover_out", _, socket) do
-    socket =
-      push_event(socket, "map-clear-highlights", %{})
+    socket = push_event(socket, "map-clear-highlights", %{})
 
     {:noreply, socket}
-  end
-
-  def handle_event("project_selected", %{"id" => project_identifier}, socket) do
-    {:noreply, push_navigate(socket, to: ~p"/projects/#{project_identifier}")}
   end
 end

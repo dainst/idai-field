@@ -257,20 +257,21 @@ defmodule FieldPublication.Publications.Data do
       }
 
     if include_relations do
-      child_task_pid = Task.async(fn() ->
-        create_child_relations(resource["id"], publication)
-      end )
+      child_task_pid =
+        Task.async(fn ->
+          create_child_relations(resource["id"], publication)
+        end)
 
       other_relations = extend_relations(category_configuration["item"], resource, publication)
 
       child_relations = Task.await(child_task_pid)
 
       all_relations =
-      if child_relations["values"] != [] do
-        other_relations ++ [child_relations]
-      else
-        other_relations
-      end
+        if child_relations["values"] != [] do
+          other_relations ++ [child_relations]
+        else
+          other_relations
+        end
 
       Map.put(
         doc,
@@ -349,9 +350,13 @@ defmodule FieldPublication.Publications.Data do
       |> Stream.map(&extend_field(&1, relation_types))
       |> Stream.reject(fn val -> val == nil end)
       |> Enum.map(fn %{"key" => relation_type} = map ->
-        Map.put(map, "values", Enum.filter(related_documents, fn(%{"id" => uuid}) ->
-          uuid in relations[relation_type]
-        end))
+        Map.put(
+          map,
+          "values",
+          Enum.filter(related_documents, fn %{"id" => uuid} ->
+            uuid in relations[relation_type]
+          end)
+        )
       end)
     end)
     |> List.flatten()

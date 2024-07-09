@@ -5,7 +5,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
   alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications.Data
-  alias FieldPublicationWeb.Presentation.Components.GenericField
 
   def render(assigns) do
     ~H"""
@@ -53,7 +52,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     assigns = set_defaults(assigns)
 
     socket =
-      if not (Map.has_key?(socket.assigns, :publication)) or not Map.equal?(socket.assigns.publication, publication) do
+      if not Map.has_key?(socket.assigns, :publication) or
+           not Map.equal?(socket.assigns.publication, publication) do
         project_tile_layers =
           publication
           |> Data.get_project_map_layers()
@@ -111,7 +111,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       end
 
     document_feature = create_feature_info(doc, lang)
-
 
     assigns = Map.put(assigns, :type, get_in(document_feature, [:properties, :type]) || "None")
 

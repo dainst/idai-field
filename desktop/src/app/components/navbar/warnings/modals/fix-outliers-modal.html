@@ -12,7 +12,7 @@
     <searchable-select [selectedValue]="selectedValue"
                        [values]="getValues()"
                        [getLabel]="getValueLabel"
-                       (onValueSelected)="updateSelectedValue($event)"></searchable-select>
+                       (onValueSelected)="selectedValue = $event"></searchable-select>
 
     <div *ngIf="selectedValue" id="multiple-switch" class="row">
         <div class="col-auto mr-auto">
@@ -20,7 +20,7 @@
         </div>
         <div class="col-auto"> 
             <label class="switch">
-                <input type="checkbox" [checked]="replaceAll" (change)="toggleReplaceAll()">
+                <input type="checkbox" [checked]="replaceAll" (change)="replaceAll = !replaceAll;">
                 <span class="slider round"></span>
             </label>
         </div>

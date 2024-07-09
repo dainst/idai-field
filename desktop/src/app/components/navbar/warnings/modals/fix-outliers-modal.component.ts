@@ -5,6 +5,7 @@ import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels,
      Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { AffectedDocument } from '../warnings.types';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class FixOutliersModalComponent {
     public countAffected: number;
 
     private projectDocument: Document;
-    private affectedDocuments: Array<Document>;
+    private affectedDocuments: Array<AffectedDocument>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -55,25 +56,6 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
-    }
-
-
-    public updateSelectedValue(event: string) {
-
-        this.selectedValue = event;
-    }
-
-
-    public toggleReplaceAll() {
-
-        this.replaceAll = !this.replaceAll;
-
-        if (this.replaceAll) this.prepareReplaceAll();
-    }
-
-
-    private async prepareReplaceAll() {
-        
         this.affectedDocuments = [];
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
@@ -82,15 +64,18 @@ export class FixOutliersModalComponent {
 
         for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+            const affectedDocument: AffectedDocument = { document: document, fields: [] };
 
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
-                    if (!this.affectedDocuments.includes(document)) this.affectedDocuments.push(document);
+                    affectedDocument.fields.push(field);
                 }
             }
+
+            if(affectedDocument.fields.length !== 0) this.affectedDocuments.push(affectedDocument);
         }
 
         this.countAffected = this.affectedDocuments.length;
@@ -139,16 +124,11 @@ export class FixOutliersModalComponent {
     private async replaceMultiple() {
         const changedDocuments: Array<Document> = [];
 
-        for (let document of this.affectedDocuments) {
-            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-
-            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
-                const field: Field = CategoryForm.getField(category, fieldName);
-                if (!this.hasOutlierValue(document, field)) continue;
-                const valuelist: Valuelist = await this.getValuelist(document, field);
-                if (valuelist && equal(valuelist, this.valuelist)) {
-                    this.replaceValue(document, document.resource, field);
-                    if (!changedDocuments.includes(document)) changedDocuments.push(document);
+        for (let affectedDocument of this.affectedDocuments) {
+            for (let field of affectedDocument.fields) {
+                this.replaceValue(affectedDocument.document, affectedDocument.document.resource, field);
+                if (!changedDocuments.includes(affectedDocument.document)) {
+                    changedDocuments.push(affectedDocument.document);
                 }
             }
         }

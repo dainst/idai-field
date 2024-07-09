@@ -4,6 +4,7 @@ import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
 import { BaseField, CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { AffectedDocument } from '../warnings.types';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class DeleteOutliersModalComponent {
     public deleteAll: boolean;
     public countAffected: number;
 
-    private affectedDocuments: Array<Document>;
+    private affectedDocuments: Array<AffectedDocument>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -41,42 +42,36 @@ export class DeleteOutliersModalComponent {
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
+
+    public async initialize() {
+
+        this.affectedDocuments = [];
+
+        const foundDocuments: Array<Document> = (await this.datastore.find({
+            constraints: { ['outlierValues:contain']: this.outlierValue }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of foundDocuments) {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+            const affectedDocument: AffectedDocument = { document: document, fields: [] };
+
+            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!this.hasOutlierValue(document, field)) continue;
+                affectedDocument.fields.push(field);
+            }
+
+            if(affectedDocument.fields.length !== 0) this.affectedDocuments.push(affectedDocument);
+        }
+
+        this.countAffected = this.affectedDocuments.length;
+    }
     
     public getFieldLabelHTML(): string {
 
         return this.fieldLabel
             ? '<span><b>' + this.fieldLabel + '</b> (<code>' + this.field.name + '</code>)</span>'
             : '<code>' + this.field.name + '</code>';
-    }
-
-
-    public toggleDeleteAll() {
-
-        this.deleteAll = !this.deleteAll;
-
-        if (this.deleteAll) this.prepareDeleteAll();
-    }
-
-    
-    private async prepareDeleteAll() {
-
-        const foundDocuments: Array<Document> = (await this.datastore.find({
-            constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true })).documents;
-
-        this.affectedDocuments = [];
-
-        for (let document of foundDocuments) {
-            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-
-            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
-                const field: Field = CategoryForm.getField(category, fieldName);
-                if (!this.hasOutlierValue(document, field)) continue;
-                if (!this.affectedDocuments.includes(document)) this.affectedDocuments.push(document);
-            }
-        }
-
-        this.countAffected = this.affectedDocuments.length;
     }
 
 
@@ -122,15 +117,11 @@ export class DeleteOutliersModalComponent {
 
         const changedDocuments: Array<Document> = [];
 
-        for (let document of this.affectedDocuments) {
-            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-
-            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
-                const field: Field = CategoryForm.getField(category, fieldName);
-                if (!this.hasOutlierValue(document, field)) continue;
-                this.deleteValue(document, document.resource, field);
-                if (!changedDocuments.includes(document)) changedDocuments.push(document);
+        for (let affectedDocument of this.affectedDocuments) {
+            for (let field of affectedDocument.fields) {
+                this.deleteValue(affectedDocument.document, affectedDocument.document.resource, field);
             }
+            changedDocuments.push(affectedDocument.document);
         }
 
         await this.datastore.bulkUpdate(changedDocuments);

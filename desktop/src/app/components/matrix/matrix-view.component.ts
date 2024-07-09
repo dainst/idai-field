@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { instance as vizJs, Viz } from '@viz-js/viz';
 import { isEmpty, on, is, not, isUndefined } from 'tsfun';
 import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
     Relation, Labels, CategoryForm, Valuelist } from 'idai-field-core';
@@ -25,8 +26,6 @@ import IS_ABUTTED_BY = Relation.Position.ABUTTEDBY;
 import FILLS = Relation.Position.FILLS;
 import IS_FILLED_BY = Relation.Position.FILLEDBY;
 import SAME_AS = Relation.SAME_AS;
-
-const Viz = window.require('viz.js');
 
 const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 
@@ -60,6 +59,7 @@ export class MatrixViewComponent implements OnInit {
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private operationsLoaded: boolean = false;
+    private viz: Viz;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -106,8 +106,10 @@ export class MatrixViewComponent implements OnInit {
 
     async ngOnInit() {
 
+        this.viz = await vizJs();
         await this.matrixState.load();
         await this.populateOperations();
+
         this.operationsLoaded = true;
     }
 
@@ -172,7 +174,7 @@ export class MatrixViewComponent implements OnInit {
             this.matrixState.getLineMode() === 'curved'
         );
 
-        this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
+        this.graph = this.viz.renderString(graph, { format: 'svg', engine: 'dot' });
     }
 
 

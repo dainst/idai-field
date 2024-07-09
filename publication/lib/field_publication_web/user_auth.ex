@@ -228,9 +228,9 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     socket = mount_current_user(socket, session)
 
-    Publications.get_current_published(project_name)
+    Publications.get_most_recent(project_name, socket.assigns.current_user)
     |> case do
-      :none ->
+      [] ->
         {
           :halt,
           socket
@@ -238,7 +238,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      %FieldPublication.DocumentSchema.Publication{} = _publication ->
+      [%FieldPublication.DocumentSchema.Publication{} = _publication] ->
         {:cont, socket}
     end
   end
@@ -350,14 +350,14 @@ defmodule FieldPublicationWeb.UserAuth do
         %{params: %{"project_id" => project_id}} = conn,
         _opts
       ) do
-    Publications.get_current_published(project_id)
+    Publications.get_most_recent(project_id, conn.assigns.current_user)
     |> case do
-      :none ->
+      [] ->
         conn
         |> resp(404, "No publications found for project '#{project_id}'.")
         |> halt()
 
-      %FieldPublication.DocumentSchema.Publication{} = _publication ->
+      [%FieldPublication.DocumentSchema.Publication{} = _publication] ->
         conn
     end
   end

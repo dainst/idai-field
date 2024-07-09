@@ -3,6 +3,7 @@ defmodule FieldPublication.Publications do
 
   alias FieldPublication.CouchService
   alias FieldPublication.OpenSearchService
+  alias FieldPublication.Projects
 
   alias FieldPublication.DocumentSchema.{
     ReplicationInput,
@@ -144,6 +145,38 @@ defmodule FieldPublication.Publications do
     project_name
     |> get_published()
     |> List.first(:none)
+  end
+
+  @doc """
+  Returns the most recent publication(s) based on user's access rights and
+  the draft date.
+  """
+  def get_most_recent(project_name \\ :all, user_name \\ nil)
+
+  def get_most_recent(:all, user_name) do
+    list()
+    |> Enum.group_by(fn val -> val.project_name end)
+    |> Stream.map(fn {_project_name, publications} ->
+      publications
+      |> Stream.filter(fn %Publication{} = pub ->
+        Projects.has_publication_access?(pub, user_name)
+      end)
+      |> Enum.sort(fn %Publication{draft_date: a}, %Publication{draft_date: b} ->
+        Date.compare(a, b) in [:eq, :gt]
+      end)
+      |> List.first()
+    end)
+    |> Enum.reject(fn val -> val == nil end)
+  end
+
+  def get_most_recent(project_name, user_name) do
+    list(project_name)
+    |> Stream.filter(fn publication ->
+      Projects.has_publication_access?(publication, user_name)
+    end)
+    |> Enum.sort(fn %Publication{draft_date: a}, %Publication{draft_date: b} ->
+      Date.compare(a, b) in [:eq, :gt]
+    end)
   end
 
   def list() do

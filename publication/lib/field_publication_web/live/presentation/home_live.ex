@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
   def mount(_assigns, _session, socket) do
     published_projects =
-      Publications.get_current_published()
+      Publications.get_most_recent(:all, socket.assigns.current_user)
       |> Task.async_stream(fn publication ->
         {publication, Publications.Data.get_document("project", publication)}
       end)

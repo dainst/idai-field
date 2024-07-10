@@ -198,3 +198,14 @@ category-switcher-button {
   display: inline-block;
   margin-left: 5px;
 }
+
+.btn-info {
+  color: white !important;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+
+  &:hover, &:active {
+    background-color: #138496 !important;
+    border-color: #138496 !important;
+  }
+}

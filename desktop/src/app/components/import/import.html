@@ -58,6 +58,13 @@
                         Bildformate können in der <a href="#" routerLink="../images">Bilderverwaltung</a> importiert werden.
                     </div>
 
+                    <div *ngIf="importState.format === 'csv'" class="import-info" i18n="@@import.csv.info">
+                        Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören.
+                        Bitte beachten Sie, dass die Spaltenköpfe der CSV-Datei den Feldnamen entsprechen müssen,
+                        die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im
+                        <a href="#" routerLink="../export">Export-Menü</a> eine Schemadatei generiert werden.
+                     </div>
+
                     <div *ngIf="isDefaultFormat()">
                         <div
                             (click)="setMergeMode(false)"
@@ -92,6 +99,7 @@
                                     Vorhandene Ressource ergänzen
                                 </label>
                             </div>
+
                             <div *ngIf="importState.format === 'native'" class="import-info"
                                 i18n="@@import.mergeOption.native.info">
                                 Ist diese Option aktiviert, so werden bereits existierende Datensätze mit

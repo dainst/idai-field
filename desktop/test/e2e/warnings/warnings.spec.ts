@@ -768,10 +768,10 @@ test.describe('warnings --', () => {
     test('only delete invalid data while solving multiple invalid field data warnings', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1'], 'field', 'Text', Field.InputType.INT);
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'Text', Field.InputType.INT);
 
-        await ResourcesPage.performCreateResource('2', 'place', 'test:field', '10');
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+        await ResourcesPage.performCreateResource('3', 'place', 'test:field', '10');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
@@ -782,14 +782,19 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
 
-        // Check that invalid field data has been deleted
+        // Check that invalid field data has been deleted in first resource
         await ResourcesPage.clickSelectResource('1');
         let fields = await FieldsViewPage.getFields(0);
         expect(await fields.count()).toBe(1);
         expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
+        // Check that invalid field data has been deleted in second resource
+        await ResourcesPage.clickSelectResource('2');
+        fields = await FieldsViewPage.getFields(0);
+        expect(await fields.count()).toBe(1);
+        expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
 
         // Check that valid field data has not been deleted
-        await ResourcesPage.clickSelectResource('2');
+        await ResourcesPage.clickSelectResource('3');
         fields = await FieldsViewPage.getFields(0);
         expect(await fields.count()).toBe(2);
         expect(await FieldsViewPage.getFieldName(0, 1)).toEqual('test:field');
@@ -1322,9 +1327,9 @@ test.describe('warnings --', () => {
             async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field1');
-        await createCompositeOutlierValuesWarnings(['2', '3'], 'field2');
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+        await createOutlierValuesWarnings(['1', '2'], 'field1');
+        await createCompositeOutlierValuesWarnings(['3', '4'], 'field2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('4');
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
@@ -1350,9 +1355,9 @@ test.describe('warnings --', () => {
             async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field1');
-        await createCompositeOutlierValuesWarnings(['2', '3'], 'field2');
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+        await createOutlierValuesWarnings(['1', '2'], 'field1');
+        await createCompositeOutlierValuesWarnings(['3', '4'], 'field2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('4');
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteOutliersButton(0);

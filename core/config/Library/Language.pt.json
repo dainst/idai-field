@@ -647,6 +647,9 @@
         "amountSherdsPercent": {
           "label": "Quantificação em porcento",
           "description": "Entrada feita com número decimal, valores negativos não são permitidos"
+        },
+        "specificType": {
+          "label": "Tipo de cerâmica"
         }
       },
       "label": "Cerâmica"
@@ -855,11 +858,84 @@
     },
     "SurveyUnit": {
       "label": "Unidade de prospecção"
+    },
+    "Area": {
+      "label": "Área"
+    },
+    "Excavation": {
+      "label": "Escavação"
+    },
+    "StoragePlace": {
+      "label": "Depósito"
+    },
+    "StorageBuilding": {
+      "label": "Edifício"
+    },
+    "StorageRoom": {
+      "label": "Sala"
+    },
+    "StorageShelf": {
+      "label": "Prateleira"
+    },
+    "StorageCompartment": {
+      "label": "Compartimento"
+    },
+    "StorageBox": {
+      "label": "Caixa"
+    },
+    "StorageBag": {
+      "label": "Saco"
     }
   },
   "forms": {
     "Feature:archaeoDox": {
-      "label": "unidade estratigráfica"
+      "label": "unidade estratigráfica",
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "label": "Critério de distinção"
+        },
+        "archaeoDox:isNatural": {
+          "label": "Natural"
+        },
+        "archaeoDox:soilType": {
+          "label": "Tipo de sedimento"
+        },
+        "archaeoDox:consistency": {
+          "label": "Consistência"
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "label": "Sem relevância arqueológica"
+        }
+      }
+    },
+    "Project:archaeoDox": {
+      "label": "Processo"
+    },
+    "Place:archaeoDox": {
+      "label": "Sítio de descoberta"
+    },
+    "Profile:archaeoDox": {
+      "label": "Desenho de perfil"
+    },
+    "Find:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        },
+        "archaeoDox:material": {
+          "label": "Material"
+        }
+      }
+    },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        }
+      }
     }
   }
 }

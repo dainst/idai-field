@@ -22,6 +22,8 @@ defmodule FieldPublicationWeb.Router do
   end
 
   scope "/api/image" do
+    pipe_through :fetch_session
+    pipe_through :fetch_current_user
     pipe_through :ensure_image_published
 
     scope "/iiif" do

@@ -380,28 +380,8 @@ defmodule FieldPublicationWeb.UserAuth do
         %{params: %{"project_name" => project_name, "uuid" => uuid}} = conn,
         _options
       ) do
-    case Cachex.get(:published_images, {project_name, uuid}) do
-      {:ok, true} ->
-        conn
 
-      {:ok, false} ->
-        conn
-        |> resp(403, "The image you requested has not been published.")
-        |> halt()
-
-      _ ->
-        if is_image_published?(project_name, uuid) do
-          Cachex.put(:published_images, {project_name, uuid}, true)
-          conn
-        else
-          # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
-          Cachex.put(:published_images, {project_name, uuid}, false, ttl: 1000 * 60 * 60)
-
-          conn
-          |> resp(403, "The image you requested has not been published.")
-          |> halt()
-        end
-    end
+    check_image_access(conn, project_name, uuid)
   end
 
   def ensure_image_published(
@@ -412,15 +392,53 @@ defmodule FieldPublicationWeb.UserAuth do
         _opts
       ) do
     # This is the variant of ensure_image_published/2 that is used for the reverse proxy routes of the
-    # cantaloupe image server. We can not extract project_name and uuid beforehand, so we parse the requested
-    # image name and call the default function above by setting :params manually.
+    # cantaloupe image server. We can not extract project_name and uuid beforehand.
     [project_name, uuid] =
       image_name
       |> String.replace_suffix(".jp2", "")
       |> String.split("%2F")
 
-    Map.put(conn, :params, %{"project_name" => project_name, "uuid" => uuid})
-    |> ensure_image_published(%{})
+    check_image_access(conn, project_name, uuid)
+  end
+
+  defp check_image_access(conn, project_name, uuid) do
+    case Cachex.get(:published_images, {project_name, uuid}) do
+      {:ok, true} ->
+        # The image was evaluated as published before, image access is granted.
+        conn
+
+      {:ok, false} ->
+        if Projects.has_project_access?(project_name, conn.assigns[:current_user]) do
+          # The image is part of a non published draft the user has access to, image access is granted.
+          conn
+        else
+          # Neither published nor user access.
+          conn
+          |> resp(403, "The image you requested has not been published.")
+          |> halt()
+        end
+
+      _ ->
+        # The image has not been evaluated since the start of the application (not found in cache).
+        if is_image_published?(project_name, uuid) do
+          # Mark the image as published for all further requests, image access is granted.
+          Cachex.put(:published_images, {project_name, uuid}, true)
+          conn
+        else
+          # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
+          Cachex.put(:published_images, {project_name, uuid}, false, ttl: 1000 * 60 * 60)
+
+          if Projects.has_project_access?(project_name, conn.assigns[:current_user]) do
+            # The image is part of a non published draft the user has access to, image access is granted.
+            conn
+          else
+            # Neither published nor user access.
+            conn
+            |> resp(403, "The image you requested has not been published.")
+            |> halt()
+          end
+        end
+    end
   end
 
   defp is_image_published?(project_name, uuid) do

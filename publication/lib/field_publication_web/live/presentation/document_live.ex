@@ -1,5 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
-  alias FieldPublicationWeb.Presentation.Components.Image
+  alias FieldPublicationWeb.Presentation.Opengraph
   alias FieldPublicationWeb.Presentation.Components.I18n
   use FieldPublicationWeb, :live_view
 
@@ -47,33 +47,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     doc = Publications.Data.get_document(uuid, current_publication, true)
 
-    first_image_uuid =
-      Data.get_relation_by_name(doc, "isDepictedIn")
-      |> Map.get("values", [])
-      |> Enum.map(fn %{"id" => uuid} -> uuid end)
-      |> List.first()
-
     project_map_layers =
       Publications.Data.get_project_map_layers(current_publication)
 
     image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
-
-    page_description =
-      Data.get_field_values(doc, "shortDescription")
-      |> case do
-        value when is_binary(value) ->
-          value
-
-        value when is_map(value) ->
-          Map.get(
-            value,
-            Gettext.get_locale(FieldPublicationWeb.Gettext),
-            Map.get(value, List.first(Map.keys(value)))
-          )
-
-        nil ->
-          nil
-      end
 
     relations_with_geometry =
       Map.get(doc, "relations", [])
@@ -99,14 +76,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         :page_title,
         get_page_title(doc)
       )
-      |> assign(
-        :page_image,
-        "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(%{uuid: first_image_uuid, project: current_publication.project_name})}"
-      )
-      |> assign(
-        :page_description,
-        page_description
-      )
+      |> Opengraph.add_opengraph_tags(current_publication, doc, language)
     }
   end
 

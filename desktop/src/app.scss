@@ -274,10 +274,10 @@ html [type='button'],
 .form-control {
   border-radius: 1px !important;
   -webkit-appearance: none;
+}
 
-  &:focus {
-    box-shadow: none;
-  }
+input:focus, .form-control:focus {
+  box-shadow: none  !important;
 }
 
 select.form-control:not([size]):not([multiple]) {

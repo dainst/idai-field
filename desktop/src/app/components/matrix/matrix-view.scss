@@ -20,33 +20,37 @@
   }
 
   .toolbar {
-    padding-right: 5px;
+    padding-right: 2px;
   }
 
   .btn-group {
     max-width: 100%;
   }
 
-  .operation-selection-button {
-    max-width: 50vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: default;
-  }
+  #operation-selection-container {
+    padding: 0 0 0 2px;
 
-  #operation-selection-menu {
-    padding: 0;
-
-    #operation-selection-buttons {
-      max-height: calc(100vh - 350px);
-      overflow-y: auto;
-
-      button:first-child {
-        margin-top: 7px;
-      }
-
-      button:last-child {
-        margin-bottom: 7px;
+    .operation-selection-button {
+      max-width: 50vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: default;
+    }
+  
+    #operation-selection-menu {
+      padding: 0;
+  
+      #operation-selection-buttons {
+        max-height: calc(100vh - 350px);
+        overflow-y: auto;
+  
+        button:first-child {
+          margin-top: 7px;
+        }
+  
+        button:last-child {
+          margin-bottom: 7px;
+        }
       }
     }
   }

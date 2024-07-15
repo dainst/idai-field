@@ -1,8 +1,11 @@
 <div id="matrix-view" class="row bg-light">
     <div class="col col-md-6">
         <div class="row">
-            <div *ngIf="showOperationSelector()" class="dropdown"
-                 ngbDropdown placement="bottom-left" role="group">
+            <div *ngIf="showOperationSelector()"
+                 id="operation-selection-container"
+                 class="dropdown"
+                 ngbDropdown placement="bottom-left"
+                 role="group">
                 <button id="operation-selection-button" class="btn btn-outline-primary" ngbDropdownToggle>
                     <span *ngIf="selectedOperation" id="selected-operation-label">
                         {{getDocumentLabel(selectedOperation)}}
@@ -67,7 +70,7 @@
             </div>
         </div>
 
-        <div class="btn-group pl-2">
+        <div class="btn-group ms-2">
             <div id="clear-selection-button"
                  class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"

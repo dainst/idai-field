@@ -271,11 +271,12 @@
   "glass-vesselForm-default": {
     "values": {
       "Tasse": "Cup (with vertical handle)",
-      "Deckel": "Lid",
+      "Deckel": "lid",
       "Flasche": "Flask",
       "Teller": "Plate",
       "Unbestimmt": "indeterminate",
-      "Vorratsgefäß": "storage vessel"
+      "Vorratsgefäß": "storage vessel",
+      "Deckelgefäß": "vessel with lid"
     }
   },
   "glass-vesselFormSpecific-default": {
@@ -445,7 +446,10 @@
       "Sandiger Ton": "sandy silt",
       "Schluffiger Lehm": "silty loam",
       "Schluffiger Sand": "silty sand",
-      "Schluffiger Ton": "silty clay"
+      "Schluffiger Ton": "silty clay",
+      "Toniger Lehm": "clayey loam",
+      "Toniger Sand": "clayey sand",
+      "Toniger Schluff": "clayey silt"
     }
   },
   "Wood-decorationTechnique-default": {
@@ -508,7 +512,10 @@
   },
   "Pottery-manufacturingMethod-default": {
     "values": {
-      "gedreht (auf Drehscheibe)": "wheel turned"
+      "gedreht (auf Drehscheibe)": "wheel turned",
+      "gegossen": "cast",
+      "gepresst": "pressed",
+      "handgeformt": "hand formed"
     }
   },
   "glass-manufacturingMethod-default": {
@@ -645,13 +652,37 @@
   },
   "Inscription-objectType-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Ehreninschrift": "honorary inscription",
+      "Alltäglicher Gebrauch": "everyday use",
+      "Bauinschrift": "building inscription",
+      "Grabinschrift (Inschrift im Grabkontext)": "tomb inscription (inscription in the context of a grave)",
+      "Urkunde": "deed",
+      "Wasserversorgung": "water supply",
+      "Weihinschrift": "dedicatory inscription"
     }
   },
   "Pottery-objectType-default": {
     "values": {
       "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
-      "Perle": "bead"
+      "Perle": "bead",
+      "Plastik/Skulptur": "sculpture",
+      "Spinnwirtel": "spindle whorle",
+      "Altar": "altar",
+      "Einlage": "inlay",
+      "Gefäß": "vessel",
+      "Gerät": "tool",
+      "Gussform": "mould",
+      "Kette": "chain / necklace",
+      "Kohlebecken": "brazier",
+      "Lampe": "lamp",
+      "Löffel": "spoon",
+      "Produktionsfragment": "production residue",
+      "Ring": "ring",
+      "Schmuck": "jewelry",
+      "Spielstein": "gaming piece / token",
+      "Webgewicht": "loom weight",
+      "Werkzeug": "tool"
     }
   },
   "Bone-objectType-default": {
@@ -702,7 +733,10 @@
   },
   "Coin-mint-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Sizilien": "Sicily",
+      "Syrien": "Syria",
+      "Thasos": "Thasos"
     }
   },
   "Metal-objectType-default": {
@@ -813,7 +847,8 @@
       "Tasse": "Cup/Mug (Tasse)",
       "Topf": "pot",
       "Unbestimmt": "inditerminate",
-      "Vorratsgefäß": "storage vessel"
+      "Vorratsgefäß": "storage vessel",
+      "Deckelgefäß": "vessel with lid"
     }
   },
   "Terracotta-vesselFormSpecific-default": {
@@ -864,6 +899,86 @@
       "Fries": "frieze",
       "Säule": "column",
       "Wandverkleidung": "wall panels"
+    }
+  },
+  "Floor-floorClassification-default": {
+    "values": {
+      "Mosaik": "mosaic",
+      "Opus sectile": "opus sectile",
+      "Pflaster": "pavement",
+      "Stampflehm": "packed loam",
+      "Ziegel": "bricks or tiles"
+    }
+  },
+  "Pottery-decorationTechnique-default": {
+    "values": {
+      "Stempel": "stamp(s)",
+      "Bemalung": "painted",
+      "Reliefdekor": "relief decoration",
+      "Stempeldekor": "stamped decoration",
+      "Warzendekor": "pincered decoration"
+    }
+  },
+  "Pottery-temperParticles-default": {
+    "values": {
+      "sehr fein": "very fine",
+      "fein": "fine",
+      "grob": "coarse",
+      "mittel": "medium",
+      "mittelfein": "medium-fine",
+      "sehr grob": "very coarse"
+    }
+  },
+  "Feature-featureForm-default": {
+    "values": {
+      "oval": "oval",
+      "Befundrest": "feature remnants",
+      "U-förmig": "U-shaped",
+      "V-förmig": "V-shaped",
+      "rechteckig": "rectangular",
+      "rund": "round",
+      "unregelmäßig": "irregular"
+    }
+  },
+  "Feature-featureBorders-default": {
+    "values": {
+      "deutlich": "clear",
+      "fließend": "gradual",
+      "scharf": "sharp",
+      "sehr deutlich": "very clear",
+      "undeutlich": "unclear",
+      "unregelmäßig": "irregular",
+      "verwaschen": "washed out"
+    }
+  },
+  "Pottery-coatInsideType-default": {
+    "values": {
+      "Bemalung": "painted",
+      "Geglättet": "smoothed",
+      "Poliert": "polished"
+    }
+  },
+  "Pottery-specificType-default": {
+    "values": {
+      "Campana A": "Campana A",
+      "Campana B": "Campana B",
+      "Campana C": "Campana C"
+    }
+  },
+  "Pottery-temperAmount-default": {
+    "values": {
+      "Keine Einschlüsse": "none",
+      "Mittel": "medium",
+      "Nicht erkennbar": "not identifiable",
+      "Vereinzelt": "scattered",
+      "Viel": "much",
+      "Wenig": "few"
+    }
+  },
+  "Pottery-vesselForm-default": {
+    "values": {
+      "Deckel": "lid",
+      "Deckelgefäß": "vessel with lid"
     }
   }
 }

@@ -20,6 +20,11 @@ image-overview-search-constraints {
     &:active {
       border-color: #ced4da !important;
     }
+
+    .badge {
+      color: black;
+      right: 4px;
+    }
   }
 
   #constraints-menu {

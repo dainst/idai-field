@@ -1,9 +1,18 @@
 defmodule FieldPublicationWeb.Presentation.Components.Image do
   use Phoenix.Component
 
+  attr :project, :string, required: true
+  attr :uuid, :string, required: true
+  attr :class, :string, default: ""
+  attr :alt_text, :string, default: ""
+  attr :region, :string
+  attr :size, :string
+  attr :rotation, :string
+  attr :quality, :string
+
   def show(assigns) do
     ~H"""
-    <img class={Map.get(assigns, :class, "")} src={construct_url(assigns)} />
+    <img class={@class} alt={@alt_text} src={construct_url(assigns)} />
     """
   end
 

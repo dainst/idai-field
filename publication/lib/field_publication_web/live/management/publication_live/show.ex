@@ -52,7 +52,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
         type == :search_index
       end)
 
-    initialized_comments = initialize_comments(publication)
+    initialized_comments = initialize_missing_comments(publication)
 
     publication_form =
       publication
@@ -173,80 +173,11 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
   end
 
   def handle_event(
-        "validate",
-        %{
-          "_target" => ["publication", "version"],
-          "publication" => %{"version" => new_version}
-        },
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    {
-      :noreply,
-      assign(
-        socket,
-        :publication_form,
-        publication
-        |> Publication.changeset(%{"version" => new_version})
-        |> to_form()
-      )
-    }
-  end
-
-  def handle_event(
-        "validate",
-        %{
-          "_target" => ["publication", "publication_date"],
-          "publication" => %{"publication_date" => date_string}
-        },
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    {
-      :noreply,
-      assign(
-        socket,
-        :publication_form,
-        publication
-        |> Publication.changeset(%{"publication_date" => date_string})
-        |> to_form()
-      )
-    }
-  end
-
-  def handle_event(
-        "validate",
-        %{
-          "_target" => ["publication", "comments", _translation_index, "text"],
-          "publication" => %{"comments" => comment_form_parameters}
-        },
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    # Because the comment interface is implemented with inputs_for/1 Phoenix also returns an index for the
-    # element that was changed. Instead of making use of this and updating a single comment within the publication,
-    # we rewrite the complete list of comments. For that we discard the index information.
-    comments =
-      comment_form_parameters
-      |> Enum.map(fn {_index, parameters} ->
-        parameters
-      end)
-
-    {
-      :noreply,
-      assign(
-        socket,
-        :publication_form,
-        publication
-        |> Publication.changeset(%{"comments" => comments})
-        |> to_form()
-      )
-    }
-  end
-
-  def handle_event(
         "save",
         %{"publication" => publication_form_params},
         %{assigns: %{publication: publication}} = socket
       ) do
-    case Publications.put(publication, publication_form_params) do
+    case Publications.put(publication, publication_form_params) |> IO.inspect() do
       {:ok, updated_publication} ->
         {
           :noreply,
@@ -256,13 +187,33 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
             :publication_form,
             updated_publication
             |> Publication.changeset()
-            |> to_form
+            |> to_form()
           )
         }
 
       {:error, changeset} ->
+        changeset =
+          Map.put(changeset, "comments", initialize_missing_comments(publication))
+
         {:noreply, assign(socket, :publication_form, to_form(changeset))}
     end
+  end
+
+  def handle_event("publish", _, %{assigns: %{publication: publication}} = socket) do
+    {:ok, updated_publication} =
+      Publications.put(publication, %{publication_date: Date.utc_today()})
+
+    {
+      :noreply,
+      socket
+      |> assign(:publication, updated_publication)
+      |> assign(
+        :publication_form,
+        updated_publication
+        |> Publication.changeset()
+        |> to_form()
+      )
+    }
   end
 
   @impl true
@@ -315,12 +266,10 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     start_data_state_evaluation(publication)
 
     # Update the form to reflect the final document revision, otherwise making changes based on an old revision will fail.
-    initialized_comments = initialize_comments(publication)
-
     publication_form =
       publication
-      |> Publication.changeset(%{comments: initialized_comments})
-      |> to_form
+      |> Publication.changeset(%{comments: initialize_missing_comments(publication)})
+      |> to_form()
 
     {
       :noreply,
@@ -434,10 +383,12 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     end)
   end
 
-  defp initialize_comments(%Publication{} = publication) do
-    # If there are already comments for every project added, this simply
-    # returns them as changeset parameters. For every language that is missing
-    # a parameters for the language and an empty text is created.
+  defp initialize_missing_comments(%Publication{} = publication) do
+    # The comments are based on a list of %Translation{} schemas. We expect a comment
+    # for every language that is defined as a project language in the publication. This
+    # function initializes missing language variants to an empty string and keeps existing
+    # comments as they are in order to setup the UI form properly.
+
     publication_languages = publication.languages
 
     Enum.map(publication_languages, fn project_lang ->

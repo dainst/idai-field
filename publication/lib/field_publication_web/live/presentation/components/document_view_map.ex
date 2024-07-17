@@ -11,6 +11,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     <div>
       <.group_heading>Geometry <span class="text-xs">(<%= @type %>)</span></.group_heading>
       <div
+        class="relative"
         id={@id}
         centerLon={@centerLon}
         centerLat={@centerLat}
@@ -38,6 +39,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
               </div>
             </div>
           </div>
+        </div>
+        <div
+          :if={@no_data}
+          class="absolute w-full h-full top-0 bg-white text-center place-content-center"
+        >
+          <.icon class="mb-1" name="hero-no-symbol" /> No geometry context available
         </div>
       </div>
     </div>
@@ -110,29 +117,41 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           geometries_present
       end
 
+    children_features =
+      children
+      |> Enum.map(&create_feature_info(&1, lang))
+      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+
     document_feature = create_feature_info(doc, lang)
 
     assigns = Map.put(assigns, :type, get_in(document_feature, [:properties, :type]) || "None")
 
+    socket = assign(socket, assigns)
+
+    socket =
+      if parent_features == [] and children_features == [] and
+           not Map.has_key?(document_feature, :geometry) do
+        socket
+      else
+        socket
+        |> push_event("document-map-update-#{id}", %{
+          project: publication.project_name,
+          document_feature: document_feature,
+          children_features: %{
+            type: "FeatureCollection",
+            features: children_features
+          },
+          parent_features: %{
+            type: "FeatureCollection",
+            features: parent_features
+          }
+        })
+        |> assign(:no_data, false)
+      end
+
     {
       :ok,
       socket
-      |> assign(assigns)
-      |> push_event("document-map-update-#{id}", %{
-        project: publication.project_name,
-        document_feature: document_feature,
-        children_features: %{
-          type: "FeatureCollection",
-          features:
-            children
-            |> Enum.map(&create_feature_info(&1, lang))
-            |> Enum.reject(fn feature -> feature == nil end)
-        },
-        parent_features: %{
-          type: "FeatureCollection",
-          features: parent_features
-        }
-      })
     }
   end
 
@@ -147,6 +166,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       |> Data.get_project_map_layers()
       |> Enum.map(&extract_tile_layer_info/1)
     )
+    |> Map.put(:no_data, true)
   end
 
   defp create_feature_info(

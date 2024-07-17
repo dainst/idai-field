@@ -441,7 +441,7 @@
   "Layer-soilType-default": {
     "values": {
       "Ton": "clay",
-      "Feinsand": "",
+      "Feinsand": "fine sand",
       "Schluff": "silt",
       "Sandiger Ton": "sandy silt",
       "Schluffiger Lehm": "silty loam",
@@ -465,7 +465,11 @@
       "Ziegelmauer": "brick wall",
       "Außenmauer": "external wall",
       "Fachwerk": "timber framing",
-      "Befestigugsmauer": "fortification wall"
+      "Befestigugsmauer": "fortification wall",
+      "Blockmauerwerk": "block masonry",
+      "Bruchsteinmauer": "rubble wall",
+      "Feldsteinmauer": "fieldstone wall",
+      "Grenzmauer": "border wall"
     }
   },
   "Place-findspotClassification-default": {
@@ -476,7 +480,8 @@
       "Steinbruch": "quarry",
       "Straße/Platz": "street/square",
       "ländliches Gebäude": "rural building",
-      "urbanes Gebäude": "urban building"
+      "urbanes Gebäude": "urban building",
+      "Felsabarbeitung": "carved rock"
     }
   },
   "Layer-consistency-default": {
@@ -499,7 +504,10 @@
       "sehr gut formbar": "very easily mouldable",
       "sehr hart": "very hard",
       "sehr weich": "very soft",
-      "weich": "soft"
+      "weich": "soft",
+      "Durch Brand versiegelt": "sealed by fire / burning",
+      "Oberfläche abgewaschen": "surface washed off",
+      "Oberfläche verhärtet": "surface area hardened"
     }
   },
   "Layer-layerClassification-default": {
@@ -823,8 +831,8 @@
   "Terracotta-clayStructure-default": {
     "values": {
       "weich": "soft (can be scratched by fingernail)",
-      "hart": "hard (can be scratched by knife)",
-      "klingend hart": "(?trans.) very hard (can not be scratched by knife)",
+      "hart": "hard",
+      "klingend hart": "very / sounding hard",
       "mittel": "medium"
     }
   },
@@ -979,6 +987,44 @@
     "values": {
       "Deckel": "lid",
       "Deckelgefäß": "vessel with lid"
+    }
+  },
+  "Architecture-wallClassification-default": {
+    "values": {
+      "Fundament": "foundation",
+      "Wandgestaltung": "wall design",
+      "Fensterzusetzung": "window filling",
+      "Flickung": "mending",
+      "Gewölbe": "vaulting",
+      "Mauer": "wall",
+      "Mauerbettung": "masonry bedding",
+      "Mauerdurchbruch": "wall opening / break in wall",
+      "Mosaik": "mosaic",
+      "Opus sectile": "opus sectile",
+      "Türzusetzung": "door filling"
+    }
+  },
+  "Architecture-mortarBinder-default": {
+    "values": {
+      "gering": "low",
+      "hoch": "high",
+      "mittel": "medium"
+    }
+  },
+  "Architecture-mortarConsistency-default": {
+    "values": {
+      "fest": "firm",
+      "locker": "loose",
+      "mittelfein": "medium fine",
+      "hart": "hard"
+    }
+  },
+  "Pottery-clayHardness-default": {
+    "values": {
+      "4 (Messerspitze ritzt)": "4 (can be scratched by knife)",
+      "5 (Messerspitze ritzt schwer)": "5 (can hardly be scratched by knife)",
+      "3 (Messerspitze ritzt leicht)": "3 (can easily be scratched by knife)",
+      "2 (Fingernagel ritzt)": "2 (can be scratched by fingernail)"
     }
   }
 }

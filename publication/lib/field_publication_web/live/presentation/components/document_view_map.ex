@@ -74,7 +74,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         socket
       end
 
-    children =
+    children_features =
       doc
       |> Data.get_relation_by_name("contains")
       |> case do
@@ -84,6 +84,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         relation ->
           Map.get(relation, "values", [])
       end
+      |> Enum.map(&create_feature_info(&1, lang))
+      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
     parent_features =
       doc
@@ -116,11 +118,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         geometries_present ->
           geometries_present
       end
-
-    children_features =
-      children
-      |> Enum.map(&create_feature_info(&1, lang))
-      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
     document_feature = create_feature_info(doc, lang)
 

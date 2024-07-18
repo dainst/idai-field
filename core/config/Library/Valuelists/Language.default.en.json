@@ -650,7 +650,17 @@
   },
   "Coin-metalMaterial-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Blei": "lead",
+      "Bronze": "bronze",
+      "Eisen": "iron",
+      "Gold": "gold",
+      "Kupfer": "copper",
+      "Messing": "brass",
+      "Silber": "silver",
+      "Stahl": "steel",
+      "Zink": "zinc",
+      "Zinn": "tin"
     }
   },
   "Burial-positionArms-default": {
@@ -744,7 +754,24 @@
       "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
       "Sizilien": "Sicily",
       "Syrien": "Syria",
-      "Thasos": "Thasos"
+      "Thasos": "Thasos",
+      "Akanthus": "Acanthus",
+      "Alexandria": "Alexandria",
+      "Abdera": "Abdera",
+      "Abydos": "Abydos",
+      "Afrika": "Africa",
+      "Agrigent": "Agrigento",
+      "Aigai (Vergina)": "Aigai (Vergina)",
+      "Aiolis": "Aeolis",
+      "Aitolischer Bund": "Aetolian League",
+      "Akkon": "Akkon / Acre",
+      "Alabanda": "Alabanda",
+      "Alexandria Troas": "Alexandria Troas",
+      "Amasra": "Amasra",
+      "Amathus": "Amathus",
+      "Ambianum (Amiens)": "Ambianum (Amiens)",
+      "Ambracia": "Ambracia",
+      "Amiens": "Amiens"
     }
   },
   "Metal-objectType-default": {
@@ -1025,6 +1052,12 @@
       "5 (Messerspitze ritzt schwer)": "5 (can hardly be scratched by knife)",
       "3 (Messerspitze ritzt leicht)": "3 (can easily be scratched by knife)",
       "2 (Fingernagel ritzt)": "2 (can be scratched by fingernail)"
+    }
+  },
+  "Stone-origin-default": {
+    "values": {
+      "Kreta": "Crete",
+      "Sizilien": "Sicily"
     }
   }
 }

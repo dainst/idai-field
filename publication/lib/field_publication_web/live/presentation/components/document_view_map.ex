@@ -40,6 +40,39 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             </div>
           </div>
         </div>
+        <div class="absolute p-1 top-1 right-1">
+          <div
+            class="right-1 absolute rounded w-8 h-8 text-center pt-[2px] bg-white"
+            phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
+          >
+            <.icon name="hero-square-3-stack-3d" />
+          </div>
+          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto" hidden>
+            <div class="font-semibold pb-2">Project layers</div>
+            <%= for project_layer  <- @project_tile_layers_state do %>
+              <div class="text-xs">
+                <span
+                  class="cursor-pointer"
+                  phx-target={@myself}
+                  phx-click="toggle-layer"
+                  phx-value-group="project"
+                  phx-value-uuid={project_layer.uuid}
+                >
+                  <.icon
+                    class="mb-1"
+                    name={if project_layer.visible, do: "hero-eye", else: "hero-eye-slash"}
+                  />
+                </span>
+                <%= project_layer.identifier %>
+                <.link patch={
+                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{project_layer.uuid}"
+                }>
+                  <.icon class="mb-1" name="hero-photo" />
+                </.link>
+              </div>
+            <% end %>
+          </div>
+        </div>
         <div
           :if={@no_data}
           class="absolute w-full h-full top-0 bg-white text-center place-content-center"
@@ -66,10 +99,20 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           |> Data.get_project_map_layers()
           |> Enum.map(&extract_tile_layer_info/1)
 
-        push_event(socket, "document-map-set-project-layers-#{id}", %{
+        project_tile_layers_state =
+          Enum.map(
+            project_tile_layers,
+            fn layer_info ->
+              Map.merge(layer_info, %{visible: true})
+            end
+          )
+
+        socket
+        |> push_event("document-map-set-project-layers-#{id}", %{
           project: publication.project_name,
           project_tile_layers: project_tile_layers
         })
+        |> assign(:project_tile_layers_state, project_tile_layers_state)
       else
         socket
       end
@@ -164,6 +207,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       |> Enum.map(&extract_tile_layer_info/1)
     )
     |> Map.put(:no_data, true)
+    |> Map.put(:show_layer_select, false)
   end
 
   defp create_feature_info(
@@ -230,6 +274,32 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       width: width,
       uuid: uuid,
       identifier: identifier
+    }
+  end
+
+  def handle_event(
+        "toggle-layer",
+        %{"group" => "project", "uuid" => uuid},
+        %{assigns: %{id: id, project_tile_layers_state: layer_states}} = socket
+      ) do
+    layer_states =
+      Enum.map(layer_states, fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, !state.visible)
+        else
+          state
+        end
+      end)
+
+    {
+      :noreply,
+      socket
+      |> assign(:project_tile_layers_state, layer_states)
+      |> push_event("document-map-set-layer-visibility-#{id}", %{
+        uuid: uuid,
+        visibility:
+          Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
+      })
     }
   end
 end

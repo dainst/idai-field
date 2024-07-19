@@ -19,8 +19,8 @@
   "surveyUnitShort": "SUR",
   "stone": "Stone",
   "stoneShort": "ST",
-  "building": "Building",
-  "buildingShort": "B",
+  "building": "Edifício",
+  "buildingShort": "E",
   "room": "Room",
   "roomShort": "R",
   "mapLayer": "Mapa de fundo"

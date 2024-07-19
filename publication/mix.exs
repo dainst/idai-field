@@ -25,6 +25,7 @@ defmodule FieldPublication.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:dev), do: ["lib", "test/support/fixtures/seed_project"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -85,7 +86,7 @@ defmodule FieldPublication.MixProject do
         "phx.digest"
       ],
       seed: [
-        "run seed.exs"
+        "run --eval 'FieldPublication.Test.ProjectSeed.start(\"testopolis\")'"
       ],
       "seed-desktop-test": [
         "run --eval 'FieldPublication.Project.create(\"#{seed_project_name}\")'",

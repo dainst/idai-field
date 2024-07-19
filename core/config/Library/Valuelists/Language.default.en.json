@@ -271,11 +271,12 @@
   "glass-vesselForm-default": {
     "values": {
       "Tasse": "Cup (with vertical handle)",
-      "Deckel": "Lid",
+      "Deckel": "lid",
       "Flasche": "Flask",
       "Teller": "Plate",
       "Unbestimmt": "indeterminate",
-      "Vorratsgefäß": "storage vessel"
+      "Vorratsgefäß": "storage vessel",
+      "Deckelgefäß": "vessel with lid"
     }
   },
   "glass-vesselFormSpecific-default": {
@@ -440,12 +441,15 @@
   "Layer-soilType-default": {
     "values": {
       "Ton": "clay",
-      "Feinsand": "",
+      "Feinsand": "fine sand",
       "Schluff": "silt",
       "Sandiger Ton": "sandy silt",
       "Schluffiger Lehm": "silty loam",
       "Schluffiger Sand": "silty sand",
-      "Schluffiger Ton": "silty clay"
+      "Schluffiger Ton": "silty clay",
+      "Toniger Lehm": "clayey loam",
+      "Toniger Sand": "clayey sand",
+      "Toniger Schluff": "clayey silt"
     }
   },
   "Wood-decorationTechnique-default": {
@@ -461,7 +465,11 @@
       "Ziegelmauer": "brick wall",
       "Außenmauer": "external wall",
       "Fachwerk": "timber framing",
-      "Befestigugsmauer": "fortification wall"
+      "Befestigugsmauer": "fortification wall",
+      "Blockmauerwerk": "block masonry",
+      "Bruchsteinmauer": "rubble wall",
+      "Feldsteinmauer": "fieldstone wall",
+      "Grenzmauer": "border wall"
     }
   },
   "Place-findspotClassification-default": {
@@ -472,7 +480,8 @@
       "Steinbruch": "quarry",
       "Straße/Platz": "street/square",
       "ländliches Gebäude": "rural building",
-      "urbanes Gebäude": "urban building"
+      "urbanes Gebäude": "urban building",
+      "Felsabarbeitung": "carved rock"
     }
   },
   "Layer-consistency-default": {
@@ -495,7 +504,10 @@
       "sehr gut formbar": "very easily mouldable",
       "sehr hart": "very hard",
       "sehr weich": "very soft",
-      "weich": "soft"
+      "weich": "soft",
+      "Durch Brand versiegelt": "sealed by fire / burning",
+      "Oberfläche abgewaschen": "surface washed off",
+      "Oberfläche verhärtet": "surface area hardened"
     }
   },
   "Layer-layerClassification-default": {
@@ -508,7 +520,10 @@
   },
   "Pottery-manufacturingMethod-default": {
     "values": {
-      "gedreht (auf Drehscheibe)": "wheel turned"
+      "gedreht (auf Drehscheibe)": "wheel turned",
+      "gegossen": "cast",
+      "gepresst": "pressed",
+      "handgeformt": "hand formed"
     }
   },
   "glass-manufacturingMethod-default": {
@@ -635,7 +650,17 @@
   },
   "Coin-metalMaterial-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Blei": "lead",
+      "Bronze": "bronze",
+      "Eisen": "iron",
+      "Gold": "gold",
+      "Kupfer": "copper",
+      "Messing": "brass",
+      "Silber": "silver",
+      "Stahl": "steel",
+      "Zink": "zinc",
+      "Zinn": "tin"
     }
   },
   "Burial-positionArms-default": {
@@ -645,13 +670,37 @@
   },
   "Inscription-objectType-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Ehreninschrift": "honorary inscription",
+      "Alltäglicher Gebrauch": "everyday use",
+      "Bauinschrift": "building inscription",
+      "Grabinschrift (Inschrift im Grabkontext)": "tomb inscription (inscription in the context of a grave)",
+      "Urkunde": "deed",
+      "Wasserversorgung": "water supply",
+      "Weihinschrift": "dedicatory inscription"
     }
   },
   "Pottery-objectType-default": {
     "values": {
       "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
-      "Perle": "bead"
+      "Perle": "bead",
+      "Plastik/Skulptur": "sculpture",
+      "Spinnwirtel": "spindle whorle",
+      "Altar": "altar",
+      "Einlage": "inlay",
+      "Gefäß": "vessel",
+      "Gerät": "tool",
+      "Gussform": "mould",
+      "Kette": "chain / necklace",
+      "Kohlebecken": "brazier",
+      "Lampe": "lamp",
+      "Löffel": "spoon",
+      "Produktionsfragment": "production residue",
+      "Ring": "ring",
+      "Schmuck": "jewelry",
+      "Spielstein": "gaming piece / token",
+      "Webgewicht": "loom weight",
+      "Werkzeug": "tool"
     }
   },
   "Bone-objectType-default": {
@@ -702,7 +751,37 @@
   },
   "Coin-mint-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate"
+      "Unsicher bzw. unbestimmbar": "uncertain or indeterminate",
+      "Sizilien": "Sicily",
+      "Syrien": "Syria",
+      "Thasos": "Thasos",
+      "Akanthus": "Acanthus",
+      "Alexandria": "Alexandria",
+      "Abdera": "Abdera",
+      "Abydos": "Abydos",
+      "Afrika": "Africa",
+      "Agrigent": "Agrigento",
+      "Aigai (Vergina)": "Aigai (Vergina)",
+      "Aiolis": "Aeolis",
+      "Aitolischer Bund": "Aetolian League",
+      "Akkon": "Akkon / Acre",
+      "Alabanda": "Alabanda",
+      "Alexandria Troas": "Alexandria Troas",
+      "Amasra": "Amasra",
+      "Amathus": "Amathus",
+      "Ambianum (Amiens)": "Ambianum (Amiens)",
+      "Ambracia": "Ambracia",
+      "Amiens": "Amiens",
+      "Amisus": "Amisus",
+      "Amphipolis": "Amphipolis",
+      "Amrit": "Amrit",
+      "Anaktorio": "Anaktorio",
+      "Antiochia": "Antioch",
+      "Antiochia (Antakya)": "Antioch (Antakya)",
+      "Antiochia am Orontes": "Antioch on the Orontes",
+      "Apameia Kibotos": "Apamea Cibotus",
+      "Apameia am Orontes": "Apamea, Syria",
+      "Apulien": "Apulia"
     }
   },
   "Metal-objectType-default": {
@@ -789,8 +868,8 @@
   "Terracotta-clayStructure-default": {
     "values": {
       "weich": "soft (can be scratched by fingernail)",
-      "hart": "hard (can be scratched by knife)",
-      "klingend hart": "(?trans.) very hard (can not be scratched by knife)",
+      "hart": "hard",
+      "klingend hart": "very / sounding hard",
       "mittel": "medium"
     }
   },
@@ -813,7 +892,8 @@
       "Tasse": "Cup/Mug (Tasse)",
       "Topf": "pot",
       "Unbestimmt": "inditerminate",
-      "Vorratsgefäß": "storage vessel"
+      "Vorratsgefäß": "storage vessel",
+      "Deckelgefäß": "vessel with lid"
     }
   },
   "Terracotta-vesselFormSpecific-default": {
@@ -864,6 +944,130 @@
       "Fries": "frieze",
       "Säule": "column",
       "Wandverkleidung": "wall panels"
+    }
+  },
+  "Floor-floorClassification-default": {
+    "values": {
+      "Mosaik": "mosaic",
+      "Opus sectile": "opus sectile",
+      "Pflaster": "pavement",
+      "Stampflehm": "packed loam",
+      "Ziegel": "bricks or tiles"
+    }
+  },
+  "Pottery-decorationTechnique-default": {
+    "values": {
+      "Stempel": "stamp(s)",
+      "Bemalung": "painted",
+      "Reliefdekor": "relief decoration",
+      "Stempeldekor": "stamped decoration",
+      "Warzendekor": "pincered decoration"
+    }
+  },
+  "Pottery-temperParticles-default": {
+    "values": {
+      "sehr fein": "very fine",
+      "fein": "fine",
+      "grob": "coarse",
+      "mittel": "medium",
+      "mittelfein": "medium-fine",
+      "sehr grob": "very coarse"
+    }
+  },
+  "Feature-featureForm-default": {
+    "values": {
+      "oval": "oval",
+      "Befundrest": "feature remnants",
+      "U-förmig": "U-shaped",
+      "V-förmig": "V-shaped",
+      "rechteckig": "rectangular",
+      "rund": "round",
+      "unregelmäßig": "irregular"
+    }
+  },
+  "Feature-featureBorders-default": {
+    "values": {
+      "deutlich": "clear",
+      "fließend": "gradual",
+      "scharf": "sharp",
+      "sehr deutlich": "very clear",
+      "undeutlich": "unclear",
+      "unregelmäßig": "irregular",
+      "verwaschen": "washed out"
+    }
+  },
+  "Pottery-coatInsideType-default": {
+    "values": {
+      "Bemalung": "painted",
+      "Geglättet": "smoothed",
+      "Poliert": "polished"
+    }
+  },
+  "Pottery-specificType-default": {
+    "values": {
+      "Campana A": "Campana A",
+      "Campana B": "Campana B",
+      "Campana C": "Campana C"
+    }
+  },
+  "Pottery-temperAmount-default": {
+    "values": {
+      "Keine Einschlüsse": "none",
+      "Mittel": "medium",
+      "Nicht erkennbar": "not identifiable",
+      "Vereinzelt": "scattered",
+      "Viel": "much",
+      "Wenig": "few"
+    }
+  },
+  "Pottery-vesselForm-default": {
+    "values": {
+      "Deckel": "lid",
+      "Deckelgefäß": "vessel with lid"
+    }
+  },
+  "Architecture-wallClassification-default": {
+    "values": {
+      "Fundament": "foundation",
+      "Wandgestaltung": "wall design",
+      "Fensterzusetzung": "window filling",
+      "Flickung": "mending",
+      "Gewölbe": "vaulting",
+      "Mauer": "wall",
+      "Mauerbettung": "masonry bedding",
+      "Mauerdurchbruch": "wall opening / break in wall",
+      "Mosaik": "mosaic",
+      "Opus sectile": "opus sectile",
+      "Türzusetzung": "door filling"
+    }
+  },
+  "Architecture-mortarBinder-default": {
+    "values": {
+      "gering": "low",
+      "hoch": "high",
+      "mittel": "medium"
+    }
+  },
+  "Architecture-mortarConsistency-default": {
+    "values": {
+      "fest": "firm",
+      "locker": "loose",
+      "mittelfein": "medium fine",
+      "hart": "hard"
+    }
+  },
+  "Pottery-clayHardness-default": {
+    "values": {
+      "4 (Messerspitze ritzt)": "4 (can be scratched by knife)",
+      "5 (Messerspitze ritzt schwer)": "5 (can hardly be scratched by knife)",
+      "3 (Messerspitze ritzt leicht)": "3 (can easily be scratched by knife)",
+      "2 (Fingernagel ritzt)": "2 (can be scratched by fingernail)"
+    }
+  },
+  "Stone-origin-default": {
+    "values": {
+      "Kreta": "Crete",
+      "Sizilien": "Sicily"
     }
   }
 }

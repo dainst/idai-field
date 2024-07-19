@@ -75,7 +75,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                   class="p-1"
                 >
                   <div class="max-w-[250px]">
-                    <Image.show size="^250," project={@project_name} uuid={doc["id"]} />
+                    <Image.show
+                      size="^250,"
+                      project={@project_name}
+                      uuid={doc["id"]}
+                      alt_text={"Project image '#{doc["identifier"]}' (#{I18n.select_translation(%{values: doc["category"]["labels"]}) |> then(fn {_, text} -> text end)})"}
+                    />
                   </div>
                 </.link>
               <% end %>

@@ -11,6 +11,7 @@ import VectorLayer from 'ol/layer/Vector';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { asArray } from 'ol/color';
 import Overlay from 'ol/Overlay.js';
+import { Control, defaults as defaultControls } from 'ol/control.js';
 
 const tileSize = 256;
 
@@ -123,6 +124,7 @@ const styleFunction = function (feature) {
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
+        // layerControl: null,
         docId: null,
         projectTileLayers: [],
         parentLayer: null,
@@ -137,7 +139,6 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,
                 ({ project, project_tile_layers }) => {
-                    console.log("project tile layer update")
                     this.setProjectLayers(project, project_tile_layers)
                 }
             )
@@ -146,6 +147,12 @@ export default getDocumentViewMapHook = () => {
                 ({ project, document_feature, children_features, parent_features }) => {
                     // TODO: Do not initialize on every change.
                     this.setup(parent_features, document_feature, children_features)
+                }
+            )
+            this.handleEvent(
+                `document-map-set-layer-visibility-${this.el.id}`,
+                ({ uuid, visibility }) => {
+                    this.toggleLayerVisibility(uuid, visibility)
                 }
             )
         },
@@ -316,6 +323,7 @@ export default getDocumentViewMapHook = () => {
                 });
 
                 const currentLayer = new TileLayer({
+                    name: info.uuid,
                     source: source,
                     extent
                 })
@@ -392,6 +400,10 @@ export default getDocumentViewMapHook = () => {
                 maxZoom: 40
             }));
             this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
+        },
+        toggleLayerVisibility(uuid, visibility) {
+            const layer = this.map.getLayers().getArray().find(layer => layer.get('name') == uuid)
+            if (layer) layer.setVisible(visibility)
         }
     }
 }

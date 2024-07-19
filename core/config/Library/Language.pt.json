@@ -154,7 +154,12 @@
           "description": "Quão transparente é o objeto?"
         },
         "vesselFormSpecific": {
-          "label": "Forma"
+          "label": "Forma",
+          "description": "Forma especial do recipiente"
+        },
+        "vesselForm": {
+          "label": "Forma de base do recipiente",
+          "description": "Forma de base do recipiente"
         }
       }
     },
@@ -288,6 +293,12 @@
         "construction": {
           "label": "Construção",
           "description": "Que tipo de construção do muro é presente?"
+        },
+        "mortarColor": {
+          "label": "Cor da argamassa"
+        },
+        "mortarConsistency": {
+          "label": "Consistência da argamassa"
         }
       }
     },
@@ -400,19 +411,26 @@
       }
     },
     "Other": {
-      "label": "Outro"
+      "label": "Outro",
+      "fields": {
+        "consistency": {
+          "label": "Consistência"
+        }
+      }
     },
     "Sample": {
       "label": "Amostra",
       "fields": {
         "labNumber": {
-          "label": "Laboratory number"
+          "label": "Laboratory number",
+          "description": "Número da amostra, atribuída pelo laboratório de análises"
         },
         "weight": {
           "label": "Peso (g)"
         },
         "sampleType": {
-          "label": "Tipo de amostra"
+          "label": "Tipo de amostra",
+          "description": "Qual a amostra retirada? Quais as análises são para ser efetuadas?"
         }
       }
     },
@@ -647,6 +665,28 @@
         "amountSherdsPercent": {
           "label": "Quantificação em porcento",
           "description": "Entrada feita com número decimal, valores negativos não são permitidos"
+        },
+        "specificType": {
+          "label": "Tipo de cerâmica"
+        },
+        "typeNumber": {
+          "label": "Número de tipo",
+          "description": "Número do catálogo de tipos"
+        },
+        "sample": {
+          "label": "Amostra",
+          "description": "Detalhes sobre a amostra retirada"
+        },
+        "purpose": {
+          "label": "Utilização",
+          "description": "Função ou utilização do objeto"
+        },
+        "vesselFormSpecific": {
+          "label": "Forma",
+          "description": "Forma especial do recipiente"
+        },
+        "vesselpart": {
+          "label": "Parte do recipiente"
         }
       },
       "label": "Cerâmica"
@@ -738,6 +778,10 @@
         },
         "manufacturingMethod": {
           "label": "Técnica de produção"
+        },
+        "featureText": {
+          "label": "Texto(s) do carimbo",
+          "description": "Transcrição ou cópia do texto do carimbo"
         }
       }
     },
@@ -788,6 +832,24 @@
       "fields": {
         "hasRestoration": {
           "description": "Foram feitas intervenções de restauro e conservação?"
+        },
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        },
+        "bibliography": {
+          "label": "Bibliografia"
+        },
+        "publicationRemark": {
+          "label": "Anotações",
+          "description": "Anotações sobre a publicação"
+        },
+        "condition": {
+          "label": "Estado de preservação",
+          "description": "Descrição do estado de preservação"
+        },
+        "conditionAmount": {
+          "label": "Parte preservada",
+          "description": "Parte preservada em comparação com o original"
         }
       }
     },
@@ -832,7 +894,8 @@
         "material": {
           "label": "Material"
         }
-      }
+      },
+      "label": "Elemento de estilo"
     },
     "Roof": {
       "label": "telhado",
@@ -855,11 +918,192 @@
     },
     "SurveyUnit": {
       "label": "Unidade de prospecção"
+    },
+    "Area": {
+      "label": "Área"
+    },
+    "Excavation": {
+      "label": "Escavação"
+    },
+    "StoragePlace": {
+      "label": "Depósito"
+    },
+    "StorageBuilding": {
+      "label": "Edifício"
+    },
+    "StorageRoom": {
+      "label": "Sala"
+    },
+    "StorageShelf": {
+      "label": "Prateleira"
+    },
+    "StorageCompartment": {
+      "label": "Compartimento"
+    },
+    "StorageBox": {
+      "label": "Caixa"
+    },
+    "StorageBag": {
+      "label": "Saco"
+    },
+    "Stone": {
+      "fields": {
+        "purpose": {
+          "description": "Função ou utilização do objeto",
+          "label": "Utilização"
+        }
+      }
+    },
+    "Room": {
+      "fields": {
+        "condition": {
+          "label": "Estado de preservação",
+          "description": "Descrição do estado de preservação"
+        },
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        },
+        "conditionAmount": {
+          "description": "Parte preservada em comparação com o original",
+          "label": "Parte preservada"
+        }
+      }
+    },
+    "Grave": {
+      "fields": {
+        "publicationDatingFinds": {
+          "label": "Datação (achados)"
+        },
+        "findingPlace": {
+          "description": "Para a entrada de vários recursos como sítio de descoberta, por exemplo: (PE07 So 04,002)",
+          "label": "Sítio de descoberta"
+        },
+        "publicationDatingScientific": {
+          "description": "Descrição da publicação, referência de datações existentes"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datação (estratigrafia)"
+        },
+        "bibliography": {
+          "label": "Bibliografia"
+        },
+        "publicationRemark": {
+          "label": "Anotações",
+          "description": "Anotações sobre a publicação"
+        },
+        "condition": {
+          "description": "Descrição do estado de preservação",
+          "label": "Estado de preservação"
+        },
+        "conditionAmount": {
+          "label": "Parte preservada",
+          "description": "Parte preservada em comparação com o original"
+        },
+        "conditionComment": {
+          "label": "Comentário sobre o estado de preservação"
+        }
+      }
+    },
+    "Terracotta": {
+      "fields": {
+        "vesselFormSpecific": {
+          "label": "Forma",
+          "description": "Forma especial do recipiente"
+        },
+        "vesselForm": {
+          "label": "Forma de base do recipiente"
+        }
+      }
+    },
+    "FindCollection": {
+      "fields": {
+        "bibliography": {
+          "label": "Bibliografia"
+        }
+      }
+    },
+    "Metal": {
+      "fields": {
+        "vesselFormSpecific": {
+          "label": "Forma",
+          "description": "Forma especial do recipiente"
+        },
+        "vesselForm": {
+          "label": "Forma de base do recipiente"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "fields": {
+        "hasDecoration": {
+          "label": "Pintura"
+        }
+      }
     }
   },
   "forms": {
     "Feature:archaeoDox": {
-      "label": "unidade estratigráfica"
+      "label": "unidade estratigráfica",
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "label": "Critério de distinção"
+        },
+        "archaeoDox:isNatural": {
+          "label": "Natural"
+        },
+        "archaeoDox:soilType": {
+          "label": "Tipo de sedimento"
+        },
+        "archaeoDox:consistency": {
+          "label": "Consistência"
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "label": "Sem relevância arqueológica"
+        }
+      }
+    },
+    "Project:archaeoDox": {
+      "label": "Processo"
+    },
+    "Place:archaeoDox": {
+      "label": "Sítio de descoberta"
+    },
+    "Profile:archaeoDox": {
+      "label": "Desenho de perfil"
+    },
+    "Find:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        },
+        "archaeoDox:material": {
+          "label": "Material"
+        }
+      }
+    },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        }
+      }
+    },
+    "FeatureSegment:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        }
+      }
+    },
+    "Sample:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Descrição breve (classificação)"
+        }
+      }
     }
   }
 }

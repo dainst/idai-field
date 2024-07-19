@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
+  alias FieldPublicationWeb.Presentation.Opengraph
   alias FieldPublicationWeb.Presentation.Components.I18n
   use FieldPublicationWeb, :live_view
 
@@ -75,6 +76,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         :page_title,
         get_page_title(doc)
       )
+      |> Opengraph.add_opengraph_tags(current_publication, doc, language)
     }
   end
 

@@ -8496,7 +8496,7 @@
     ]
   },
   "Trench-excavationType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Sektor": {},
@@ -8504,7 +8504,7 @@
     }
   },
   "Grave-artifacts-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "01.02.2020",
     "values": {
       "Probe": {},
@@ -8512,7 +8512,7 @@
     }
   },
   "Grave-significanceRemark-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "30.12.2019",
     "values": {
       "ungestört": {},
@@ -8522,7 +8522,7 @@
     }
   },
   "Grave-graveType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Grubengrab": {},
@@ -8530,7 +8530,7 @@
     }
   },
   "Layer-artifacts-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Keramik": {},
@@ -8544,7 +8544,7 @@
     }
   },
   "Layer-significanceRemark-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "stratifiziert": {},
@@ -8562,7 +8562,7 @@
     }
   },
   "Layer-layerClassification-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Auffüllung": {},
@@ -8580,7 +8580,7 @@
     }
   },
   "Feature-featureClassification-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Archäologisches Planum": {},
@@ -8589,14 +8589,14 @@
   },
   "Feature-featureClassificationOther-ayamonte": {
     "creationDate": "02.01.2020",
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "values": {
       "alcorque": {}
     }
   },
   "Feature-otherClassification-ayamonte": {
     "creationDate": "02.01.2020",
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "values": {
       "Grube": {},
       "andere Klass.": {},
@@ -8606,7 +8606,7 @@
     }
   },
   "Feature-artifacts-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Knochen": {},
@@ -8617,7 +8617,7 @@
     }
   },
   "Feature-significanceRemark-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "stratifiziert": {},
@@ -8628,28 +8628,28 @@
   },
   "Find-findCategory-ayamonte": {
     "creationDate": "02.01.2020",
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "values": {
       "Botanik": {},
       "Sonstiges": {}
     }
   },
   "Find-findObjectType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Amulett": {}
     }
   },
   "Find-materialColor-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "beige": {}
     }
   },
   "Find-findType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Botanik": {},
@@ -8657,7 +8657,7 @@
     }
   },
   "Sample-material-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "gebrannter Ton": {},
@@ -8665,14 +8665,14 @@
     }
   },
   "Find-storagePlace-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Huelva": {}
     }
   },
   "Find-period-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "01.02.2020",
     "values": {
       "modern": {},
@@ -8680,14 +8680,14 @@
     }
   },
   "Glass-objectType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Gefäß": {}
     }
   },
   "Mollusk-classification-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Muscheln": {},
@@ -8695,7 +8695,7 @@
     }
   },
   "Burial-sexDetermination-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "01.02.2020",
     "values": {
       "weiblich": {},
@@ -8703,21 +8703,21 @@
     }
   },
   "Burial-graveFeature-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "01.02.2020",
     "values": {
       "Brandbestattung": {}
     }
   },
   "Wood-objectType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Holzkohle": {}
     }
   },
   "Pottery-vesselForm-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Lampe": {},
@@ -8730,7 +8730,7 @@
     }
   },
   "Pottery-specificType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Handgeformte Keramik": {},
@@ -8738,14 +8738,14 @@
     }
   },
   "Pottery-vesselFormSpecific-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Halsamphore Cruz del Negro": {}
     }
   },
   "Pottery-objectType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Grobkeramik": {},
@@ -8753,14 +8753,14 @@
     }
   },
   "Pottery-provenance-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "01.02.2020",
     "values": {
       "Torre del Mar": {}
     }
   },
   "Pottery-condition-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "01.02.2020",
     "values": {
       "mehrere Fragmente": {},
@@ -8773,7 +8773,7 @@
     }
   },
   "Find-ayamonteCondition-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "weitgehend vollständiges Gefäß": {},
@@ -8787,7 +8787,7 @@
     }
   },
   "Bone-boneType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Mensch": {},
@@ -8795,7 +8795,7 @@
     }
   },
   "Bone-biologicalAge-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "adult II (30-39 Jahre)": {},
@@ -8807,7 +8807,7 @@
     }
   },
   "Bone-conditionAmount-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "großes Fragment": {},
@@ -8816,7 +8816,7 @@
     }
   },
   "Bone-burningGrade-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun": {},
@@ -8826,7 +8826,7 @@
     }
   },
   "Bone-sex-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Weiblich": {},
@@ -8834,7 +8834,7 @@
     }
   },
   "Bone-boneClassification-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Schädel (Cranius)": {},
@@ -8858,7 +8858,7 @@
     }
   },
   "Drawing-drawingType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "01.02.2020",
     "values": {
       "Druckvorlage": {},
@@ -8866,7 +8866,7 @@
     }
   },
   "Sample-sampleType-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Keramikprobe": {},
@@ -8877,7 +8877,7 @@
     }
   },
   "Place-siteClassification-ayamonte": {
-    "createdBy": "T.H.",
+    "createdBy": "Theresa Hradilak",
     "creationDate": "16.09.2020",
     "values": {
       "Nekropole": {},

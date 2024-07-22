@@ -204,8 +204,7 @@ defmodule FieldPublication.Replication do
     log(parameters, :info, "Replication finished.")
 
     {:ok, final_publication} =
-      publication
-      |> Publications.get!()
+      Publications.get!(publication.project_name, publication.draft_date)
       |> Publications.put(%{
         "replication_finished" => DateTime.utc_now(),
         "languages" => languages
@@ -289,8 +288,7 @@ defmodule FieldPublication.Replication do
         message: msg
       })
 
-    publication
-    |> Publications.get!()
+    Publications.get!(publication.project_name, publication.draft_date)
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
     |> Publications.put(%{})
 

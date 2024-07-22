@@ -230,7 +230,7 @@ defmodule FieldPublicationWeb.UserAuth do
 
     Publications.get_most_recent(project_name, socket.assigns.current_user)
     |> case do
-      [] ->
+      nil ->
         {
           :halt,
           socket
@@ -238,7 +238,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      [%FieldPublication.DocumentSchema.Publication{} = _publication] ->
+      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
         {:cont, socket}
     end
   end
@@ -352,12 +352,12 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     Publications.get_most_recent(project_id, conn.assigns.current_user)
     |> case do
-      [] ->
+      nil ->
         conn
         |> resp(404, "No publications found for project '#{project_id}'.")
         |> halt()
 
-      [%FieldPublication.DocumentSchema.Publication{} = _publication] ->
+      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
         conn
     end
   end
@@ -380,7 +380,6 @@ defmodule FieldPublicationWeb.UserAuth do
         %{params: %{"project_name" => project_name, "uuid" => uuid}} = conn,
         _options
       ) do
-
     check_image_access(conn, project_name, uuid)
   end
 

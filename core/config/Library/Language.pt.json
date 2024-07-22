@@ -426,7 +426,8 @@
           "description": "Número da amostra, atribuída pelo laboratório de análises"
         },
         "weight": {
-          "label": "Peso (g)"
+          "label": "Peso (g)",
+          "description": "Peso em gramas"
         },
         "sampleType": {
           "label": "Tipo de amostra",
@@ -453,7 +454,23 @@
       }
     },
     "Coin": {
-      "label": "Moeda"
+      "label": "Moeda",
+      "fields": {
+        "metalMaterial": {
+          "label": "Material"
+        },
+        "preservedDiameter": {
+          "description": "Diâmetro da moeda em milímetros",
+          "label": "Diâmetro preservado"
+        },
+        "reverseSideDescription": {
+          "label": "Descrição reverso",
+          "description": "Descrição reverso da moeda"
+        },
+        "stampPositioning": {
+          "description": "Rotação do carimbo no reverso em comparação com a parte da frente; Indicação em 1-12h, análogo ao relógio (exemplo: '12' sem rotação)"
+        }
+      }
     },
     "Photo": {
       "label": "Fotografia"
@@ -576,6 +593,9 @@
         },
         "positioningIndividuals": {
           "label": "Posição do defunto"
+        },
+        "amountIndividuals": {
+          "label": "Tipo de sepultamento - número"
         }
       }
     },
@@ -687,6 +707,27 @@
         },
         "vesselpart": {
           "label": "Parte do recipiente"
+        },
+        "amountSherdsRim": {
+          "label": "Número de fragmentos de bordo"
+        },
+        "amountSherdsBase": {
+          "label": "Número de fragmentos de base"
+        },
+        "amountSherdsHandles": {
+          "label": "Número de asas"
+        },
+        "amountSherdsOther": {
+          "label": "Número de outros fragmentos"
+        },
+        "amountSherdsWall": {
+          "label": "Número de fragmentos de parede"
+        },
+        "amountSherdsRimBase": {
+          "label": "Número de fragmentos de bordo/base"
+        },
+        "formDescription": {
+          "label": "Descrição da forma"
         }
       },
       "label": "Cerâmica"
@@ -697,7 +738,8 @@
           "label": "Distúrbio"
         },
         "comparison": {
-          "label": "Comparação/Comparações"
+          "label": "Comparação/Comparações",
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
         }
       }
     },
@@ -831,7 +873,8 @@
     "Find": {
       "fields": {
         "hasRestoration": {
-          "description": "Foram feitas intervenções de restauro e conservação?"
+          "description": "Foram feitas intervenções de restauro e conservação?",
+          "label": "Restauro"
         },
         "conditionComment": {
           "label": "Comentário sobre o estado de preservação"
@@ -850,6 +893,32 @@
         "conditionAmount": {
           "label": "Parte preservada",
           "description": "Parte preservada em comparação com o original"
+        },
+        "comparison": {
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência",
+          "label": "Comparação/Comparações"
+        },
+        "publicationMaterialSummary": {
+          "label": "Material"
+        },
+        "instanceOf": {
+          "label": "Classificação tipológica"
+        },
+        "amount": {
+          "label": "Número (total)",
+          "description": "Número de achados guardados ou inventariados"
+        },
+        "catalogueNumber": {
+          "label": "Número de catálogo",
+          "description": "Número atribuído ao incluir o achado no catálogo"
+        },
+        "storageInventoryNumber": {
+          "label": "Número de inventariação",
+          "description": "Número atribuído durante a inventariação de uma coleção ou depósito"
+        },
+        "weight": {
+          "label": "Peso (g)",
+          "description": "Peso em gramas"
         }
       }
     },
@@ -951,6 +1020,13 @@
         "purpose": {
           "description": "Função ou utilização do objeto",
           "label": "Utilização"
+        },
+        "formDescription": {
+          "description": "Descrição detalhada da forma em geral",
+          "label": "Descrição da forma"
+        },
+        "material": {
+          "label": "Material"
         }
       }
     },
@@ -1012,6 +1088,10 @@
         },
         "vesselForm": {
           "label": "Forma de base do recipiente"
+        },
+        "formDescription": {
+          "label": "Descrição da forma",
+          "description": "Descrição detalhada da forma em geral"
         }
       }
     },
@@ -1019,6 +1099,14 @@
       "fields": {
         "bibliography": {
           "label": "Bibliografia"
+        },
+        "amount": {
+          "label": "Número (total)",
+          "description": "Número de achados guardados ou inventariados"
+        },
+        "weight": {
+          "label": "Peso (g)",
+          "description": "Peso em gramas"
         }
       }
     },
@@ -1030,13 +1118,31 @@
         },
         "vesselForm": {
           "label": "Forma de base do recipiente"
+        },
+        "metalMaterial": {
+          "label": "Material"
+        },
+        "formDescription": {
+          "description": "Descrição detalhada da forma em geral",
+          "label": "Descrição da forma"
+        },
+        "materialDescription": {
+          "label": "Descrição do material"
         }
-      }
+      },
+      "label": "Metal"
     },
     "PlasterFragment": {
       "fields": {
         "hasDecoration": {
           "label": "Pintura"
+        }
+      }
+    },
+    "BuildingPart": {
+      "fields": {
+        "material": {
+          "label": "Material"
         }
       }
     }

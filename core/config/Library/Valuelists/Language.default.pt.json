@@ -46,7 +46,7 @@
       "Ionien": "Jónia",
       "Irland": "Irlanda",
       "Italien": "Itália",
-      "Kampanisch": "",
+      "Kampanisch": "Campano",
       "Karthagisch": "Cartaginês",
       "Kleinasien": "Asia Menor",
       "Knidos": "Cnido",
@@ -59,7 +59,7 @@
       "Milet": "Mileto",
       "Mäandertal": "",
       "Nordafrika": "África do Norte",
-      "Nordafrikanisch": "",
+      "Nordafrikanisch": "norte-africano",
       "Palästina": "Palestina",
       "Pannonien": "Panónia",
       "Peloponnes": "Peloponeso",
@@ -71,38 +71,41 @@
       "Slawisch": "Eslavo",
       "Spanien": "Espanha",
       "Syrien": "Síria",
-      "Südtunesisch": "",
-      "Südägäis": ""
+      "Südtunesisch": "Sul tunisiano",
+      "Südägäis": "Egeu do Sul"
     }
   },
   "periods-default-1": {
     "values": {
       "Archaisch": "Arcaico",
-      "Bronzezeitlich": "",
+      "Bronzezeitlich": "Idade do Bronze",
       "Byzantinisch": "Bizantino",
-      "Eisenzeitlich": "",
-      "Frühbronzezeitlich": "",
-      "Frühbyzantinisch": "",
-      "Frühhellenistisch": "",
-      "Frühkaiserzeitlich": "",
-      "Frühklassisch": "",
+      "Eisenzeitlich": "Idade do Ferro",
+      "Frühbronzezeitlich": "Idade do Bronze Inicial",
+      "Frühbyzantinisch": "Período bizantino Inicial",
+      "Frühhellenistisch": "Período Helenístico Inicial",
+      "Frühkaiserzeitlich": "Período Imperial Romano Inicial",
+      "Frühklassisch": "Clássico Antigo",
       "Geometrisch": "Geométrico",
       "Hellenistisch": "Helenístico",
-      "Kaiserzeitlich": "",
-      "Klassisch": "",
+      "Kaiserzeitlich": "Período Imperial Romano",
+      "Klassisch": "Clássico",
       "Neolithisch": "Neolítico",
       "Neuzeitlich": "Moderno",
       "Osmanisch": "Otomano",
       "Pleistozän": "Pleistoceno",
       "Rezent": "Recente",
       "Römisch": "Romano",
-      "Spätantik": "",
-      "Spätbronzezeitlich": "",
-      "Spätbyzantinisch": "",
-      "Späthellenistisch": "",
-      "Spätkaiserzeitlich": "",
-      "Spätklassisch": "",
-      "Mittelalter": "Idade Medieval"
+      "Spätantik": "Antiguidade Tardia",
+      "Spätbronzezeitlich": "Idade do Bronze Tardio",
+      "Spätbyzantinisch": "Período Bizantino Tardio",
+      "Späthellenistisch": "Período Helenístico Tardio",
+      "Spätkaiserzeitlich": "Período Imperial Romano Tardio",
+      "Spätklassisch": "Clássico Tardio",
+      "Mittelalter": "Idade Média",
+      "Frühmittelalter": "Idade Média Antiga",
+      "Hochmittelalter": "Alta Idade Média",
+      "Spätmittelalter": "Baixa Idade Média"
     }
   },
   "colors-default-1": {
@@ -282,9 +285,9 @@
       "Tierflasche": "",
       "Unguentarium": "",
       "Vierkantflasche": "",
-      "hexagonale Flasche": "",
+      "hexagonale Flasche": "Frasco hexagonal",
       "zarte Rippenschale": "",
-      "zylindrische Flasche": ""
+      "zylindrische Flasche": "Frasco cilíndrico"
     }
   },
   "Mollusk-classification-default": {
@@ -385,7 +388,7 @@
   "Brick-temper-default": {
     "values": {
       "Glimmer": "",
-      "Kalk": "",
+      "Kalk": "Calcário",
       "Mineralische Partikel": "",
       "Muschelgrus": "",
       "Organische Partikel": "",
@@ -407,7 +410,7 @@
       "Kollektivbestattung": "",
       "Massengrab": "",
       "Mehrfachbestattung": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Wiedergängerbestattung": ""
     }
   },
@@ -415,7 +418,7 @@
     "values": {
       "Primäre Bestattung": "",
       "Sekundäre Bestattung": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável"
     }
   },
   "Burial-burialDocumentation-default": {
@@ -439,7 +442,7 @@
   },
   "Burial-positionArms-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "am Kinn": "",
       "an den Seiten": "",
       "auf dem Bauch": "",
@@ -454,7 +457,7 @@
       "Beinhocker": "",
       "Extremhocker": "",
       "Hocker": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "gestreckt": ""
     }
   },
@@ -464,7 +467,7 @@
       "Rückenlage": "",
       "Seitenlage, links": "",
       "Seitenlage, rechts": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável"
     }
   },
   "Building-architecturalOrders-default": {
@@ -587,16 +590,16 @@
       "Forum": "",
       "Handwerksviertel": "",
       "Heiligtum": "",
-      "Nekropole": "",
-      "Wohnviertel": ""
+      "Nekropole": "Necrópole",
+      "Wohnviertel": "Quarteirão residencial"
     }
   },
   "Building-material-default": {
     "values": {
-      "Granit": "",
-      "Kalk": "",
-      "Kalkmörtel": "",
-      "Kalkstein": "",
+      "Granit": "Granito",
+      "Kalk": "Calcário",
+      "Kalkmörtel": "Argamassa de calcário",
+      "Kalkstein": "Pedra calcária",
       "Kalzit": "",
       "Kreide": "",
       "Marmor": "",
@@ -618,8 +621,8 @@
       "Holz": "Madeira",
       "Holzwerkstoff": "",
       "Kunststoff": "",
-      "Lehm": "",
-      "Metall": "",
+      "Lehm": "argila",
+      "Metall": "Metal",
       "Mörtel": "",
       "Naturstein": "",
       "Putz": "",
@@ -642,8 +645,8 @@
       "Holz": "",
       "Holzwerkstoff": "",
       "Kunststoff": "",
-      "Lehm": "",
-      "Metall": "",
+      "Lehm": "argila",
+      "Metall": "Metal",
       "Mörtel": "",
       "Naturstein": "",
       "Putz": "",
@@ -651,10 +654,10 @@
       "Stahlbeton": "",
       "Stuck": "",
       "Unbekannt/Unerkannt": "",
-      "Granit": "",
-      "Kalk": "",
-      "Kalkmörtel": "",
-      "Kalkstein": "",
+      "Granit": "Granito",
+      "Kalk": "Calcário",
+      "Kalkmörtel": "Argamassa de calcário",
+      "Kalkstein": "Pedra calcária",
       "Kalzit": "",
       "Kreide": "",
       "Marmor": "",
@@ -684,14 +687,14 @@
       "Gussform": "",
       "Kasten/Kiste": "",
       "Löffel": "Colher",
-      "Mobiliar": "",
-      "Plastik/Skulptur": "",
+      "Mobiliar": "Mobília",
+      "Plastik/Skulptur": "Plástica/Escultura",
       "Produktionsrest": "",
       "Ring": "Anel",
       "Sarkophag": "",
       "Schmuck": "",
       "Spielzeug": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável"
     }
   },
   "Wood-typeOfWood-default": {
@@ -735,9 +738,9 @@
   },
   "Wood-surfaceCondition-default": {
     "values": {
-      "Brandspuren": "",
-      "Keine Brandspuren": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Brandspuren": "Vestígios de queimadura",
+      "Keine Brandspuren": "Sem vestígios de queimadura",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável"
     }
   },
   "Wood-decorationTechnique-default": {
@@ -755,7 +758,7 @@
   },
   "Wood-paintCondition-default": {
     "values": {
-      "gut erhalten": "",
+      "gut erhalten": "bem preservado",
       "abblätternd": "",
       "verrieben": "",
       "verwaschen": "",
@@ -815,22 +818,22 @@
   },
   "Architecture-mortarBinder-default": {
     "values": {
-      "dominant": "",
-      "gering": "",
-      "hoch": "",
-      "mittel": ""
+      "dominant": "dominante",
+      "gering": "pouco",
+      "hoch": "elevado",
+      "mittel": "médio"
     }
   },
   "Architecture-mortarConsistency-default": {
     "values": {
       "brüchig": "",
-      "erdig/lehmig": "",
-      "fest": "",
-      "hart": "",
-      "locker": "",
+      "erdig/lehmig": "terroso/argiloso",
+      "fest": "firme",
+      "hart": "duro",
+      "locker": "solto",
       "mittelfein": "fino médio",
       "pulverig": "",
-      "sandig": ""
+      "sandig": "arenoso"
     }
   },
   "Architecture-wallClassification-default": {
@@ -840,7 +843,7 @@
       "Flickung": "",
       "Fundament": "",
       "Gewölbe": "",
-      "Mauer": "",
+      "Mauer": "Muro",
       "Mauerbettung": "",
       "Mauerdurchbruch": "",
       "Mosaik": "",
@@ -851,7 +854,7 @@
   },
   "Architecture-wallType-default": {
     "values": {
-      "Außenmauer": "",
+      "Außenmauer": "Muro exterior",
       "Befestigugsmauer": "",
       "Blockmauerwerk": "",
       "Bruchsteinmauer": "",
@@ -867,8 +870,8 @@
       "Felsabarbeitung": "",
       "Funderfassung": "",
       "Fundsammlung": "",
-      "Grab": "",
-      "Nekropole": "",
+      "Grab": "Sepultura",
+      "Nekropole": "Necrópole",
       "Spolie in rezenter Mauer": "",
       "Steinbruch": "",
       "Straße/Platz": "",
@@ -889,18 +892,18 @@
       "Durch Brand versiegelt": "",
       "Oberfläche abgewaschen": "",
       "Oberfläche verhärtet": "",
-      "fest": "",
+      "fest": "firme",
       "flüssig": "",
       "gut formbar": "",
-      "hart": "",
-      "lehmig": "",
+      "hart": "duro",
+      "lehmig": "argiloso",
       "locker": "",
       "mittel bindend": "",
       "mittel formbar": "",
       "nicht bindend": "",
       "nicht formbar": "",
       "porös": "",
-      "sandig": "",
+      "sandig": "arenoso",
       "schwach bindend": "",
       "schwach formbar": "",
       "sehr gut formbar": "",
@@ -934,24 +937,24 @@
       "Feinsand": "",
       "Feinstsand": "",
       "Grobsand": "",
-      "Lehm": "",
-      "Lehmiger Sand": "",
-      "Lehmiger Schluff": "",
-      "Lehmiger Ton": "",
+      "Lehm": "argila",
+      "Lehmiger Sand": "areia argilosa",
+      "Lehmiger Schluff": "limo argiloso",
+      "Lehmiger Ton": "barro argiloso",
       "Mergel": "",
       "Mittlerer Sand": "",
       "Sand": "",
       "Sandiger Lehm": "",
-      "Sandiger Schluff": "",
+      "Sandiger Schluff": "limo arenoso",
       "Sandiger Ton": "",
-      "Schluff": "",
-      "Schluffiger Lehm": "",
-      "Schluffiger Sand": "",
-      "Schluffiger Ton": "",
-      "Ton": "",
-      "Toniger Lehm": "",
-      "Toniger Sand": "",
-      "Toniger Schluff": ""
+      "Schluff": "limo",
+      "Schluffiger Lehm": "argila limosa",
+      "Schluffiger Sand": "areia limosa",
+      "Schluffiger Ton": "barro limoso",
+      "Ton": "barro",
+      "Toniger Lehm": "argila barrosa",
+      "Toniger Sand": "areia barrosa",
+      "Toniger Schluff": "limo barroso"
     }
   },
   "Feature-featureBorders-default": {
@@ -1019,7 +1022,7 @@
       "Grabinschrift (Inschrift im Grabkontext)": "",
       "Private Ausstattung": "",
       "Sakrale Ausstattung": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Urkunde": "",
       "Wasserversorgung": "",
       "Weihinschrift": "",
@@ -1100,15 +1103,15 @@
       "Lampe": "Lâmpada",
       "Löffel": "Colher",
       "Perle": "Pérola",
-      "Plastik/Skulptur": "",
-      "Produktionsfragment": "",
+      "Plastik/Skulptur": "Plástica/Escultura",
+      "Produktionsfragment": "Fragmento de produção",
       "Ring": "Anel",
       "Sarkophag": "",
       "Schmuck": "",
       "Siegel": "",
       "Spielstein": "",
       "Spinnwirtel": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Webgewicht": "",
       "Werkzeug": ""
     }
@@ -1148,7 +1151,7 @@
   "Pottery-temperAmount-default": {
     "values": {
       "Keine Einschlüsse": "",
-      "Mittel": "",
+      "Mittel": "médio",
       "Nicht erkennbar": "Não reconhecível",
       "Sehr Viel": "Muito",
       "Vereinzelt": "Alguns",
@@ -1228,8 +1231,8 @@
       "Tischamphore": "",
       "Tränenfläschchen": "",
       "Vierkantflasche": "",
-      "hexagonale Flasche": "",
-      "zylindrische Flasche": ""
+      "hexagonale Flasche": "Frasco hexagonal",
+      "zylindrische Flasche": "Frasco cilíndrico"
     }
   },
   "Grave-graveType-default": {
@@ -1352,8 +1355,8 @@
       "Ring": "Anel",
       "Schmuck": "",
       "Spielstein": "",
-      "Unsicher bzw. unbestimmbar": "",
-      "Waffe": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
+      "Waffe": "Arma",
       "Weinheber": "",
       "Werkzeug": ""
     }
@@ -1374,18 +1377,18 @@
   },
   "Terracotta-clayStructure-default": {
     "values": {
-      "hart": "",
+      "hart": "duro",
       "klingend hart": "",
-      "mittel": "",
+      "mittel": "médio",
       "weich": ""
     }
   },
   "Terracotta-surfaceCondition-default": {
     "values": {
-      "Brandspuren": "",
+      "Brandspuren": "Vestígios de queimadura",
       "Sekundärbrand": "",
       "abblätternd": "",
-      "gut erhalten": "",
+      "gut erhalten": "bem preservado",
       "stark abgerieben": "",
       "starke Sinter- oder Mörtelablagerungen": "",
       "verrieben": "",
@@ -1436,19 +1439,19 @@
       "Spitzamphora": "",
       "Stamnos": "",
       "Vierkantflasche": "",
-      "hexagonale Flasche": "",
-      "zylindrische Flasche": ""
+      "hexagonale Flasche": "Frasco hexagonal",
+      "zylindrische Flasche": "Frasco cilíndrico"
     }
   },
   "Drawing-drawingMaterial-default": {
     "values": {
       "Digitale Datei": "",
       "Folie": "",
-      "Karton": "",
+      "Karton": "Cartão",
       "Lichtpause": "",
       "Mikrofilm": "",
-      "Millimeterpapier": "",
-      "Papier": "",
+      "Millimeterpapier": "Papel milimétrico",
+      "Papier": "Papel",
       "Photoabzüge": "",
       "Transparentfilm": "",
       "Transparentpapier": ""
@@ -1524,10 +1527,10 @@
       "Feldspat": "",
       "Flint": "",
       "Glimmer": "",
-      "Granit": "",
-      "Kalk": "",
-      "Kalkmörtel": "",
-      "Kalkstein": "",
+      "Granit": "Granito",
+      "Kalk": "Calcário",
+      "Kalkmörtel": "Argamassa de calcário",
+      "Kalkstein": "Pedra calcária",
       "Kalzit": "",
       "Kreide": "",
       "Marmor": "",
@@ -1560,11 +1563,11 @@
       "Lampe": "Lâmpada",
       "Löffel": "Colher",
       "Mahlstein": "",
-      "Mobiliar": "",
+      "Mobiliar": "Mobília",
       "Mörser": "",
       "Perle": "Pérola",
-      "Plastik/Skulptur": "",
-      "Produktionsfragment": "",
+      "Plastik/Skulptur": "Plástica/Escultura",
+      "Produktionsfragment": "Fragmento de produção",
       "Reibstein": "",
       "Ring": "Anel",
       "Rührstab": "",
@@ -1579,8 +1582,8 @@
       "Stele": "",
       "Tessera": "",
       "Tischfuß": "",
-      "Unsicher bzw. unbestimmbar": "",
-      "Waffe": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
+      "Waffe": "Arma",
       "Webgewicht": "",
       "Werkzeug": "",
       "Ölpresse": ""
@@ -1666,7 +1669,7 @@
       "Tremissis": "",
       "Triens": "",
       "Uncia": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Victoriatus": ""
     }
   },
@@ -1675,23 +1678,23 @@
       "Gegossen": "",
       "Geprägt": "",
       "Plattiert": "",
-      "Unsicher bzw. unbestimmbar": ""
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável"
     }
   },
   "Coin-metalMaterial-default": {
     "values": {
-      "Aluminium": "",
+      "Aluminium": "Alumínio",
       "Billon": "",
       "Blei": "",
-      "Bronze": "",
+      "Bronze": "bronze",
       "Eisen": "",
       "Gold": "",
       "Kupfer": "",
       "Messing": "",
       "Silber": "",
       "Stahl": "",
-      "Unsicher bzw. unbestimmbar": "",
-      "Zink": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
+      "Zink": "Zinco",
       "Zinn": ""
     }
   },
@@ -1746,7 +1749,7 @@
       "Beirut": "",
       "Bozcaada": "",
       "Byblos": "",
-      "Byzantion": "",
+      "Byzantion": "Bizâncio",
       "Böotien": "",
       "Caesaraugusta": "",
       "Caesarea in Kappadokien": "",
@@ -1880,7 +1883,7 @@
       "Paros": "",
       "Pella": "",
       "Peloponnes": "",
-      "Pergamon": "",
+      "Pergamon": "Pérgamo",
       "Perge": "",
       "Persien": "",
       "Phanagoria": "",
@@ -1941,7 +1944,7 @@
       "Trier": "",
       "Tripoli (Libanon)": "",
       "Tyros": "",
-      "Unsicher bzw. unbestimmbar": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Viminatium": "",
       "Vindobona": "",
       "Warna": "",
@@ -1955,7 +1958,7 @@
     "values": {
       "Constans": "",
       "Domitian": "",
-      "Kaiser Nero": "",
+      "Kaiser Nero": "Imperador Nero",
       "Konstantin": "",
       "Licinius": "",
       "Myrina": "",
@@ -1983,22 +1986,22 @@
   "Find-storagePlace-default": {
     "values": {
       "Landesamt": "",
-      "Museum": "",
+      "Museum": "Museu",
       "Museum Bergama": "",
-      "Pergamon Depot": "",
-      "Privatbesitz": "",
-      "Regionalverwaltung": "",
-      "Restaurierungswerkstatt": "",
-      "Staatsbesitz": ""
+      "Pergamon Depot": "Depósito de Pérgamo",
+      "Privatbesitz": "Propriedade privada",
+      "Regionalverwaltung": "Administração regional",
+      "Restaurierungswerkstatt": "Oficina de restauro",
+      "Staatsbesitz": "Propriedade do Estado"
     }
   },
   "storagePlace-default": {
     "values": {
       "Landesamt": "",
-      "Museum": "",
-      "Privatbesitz": "",
-      "Restaurierungswerkstatt": "",
-      "Staatsbesitz": ""
+      "Museum": "Museu",
+      "Privatbesitz": "Propriedade privada",
+      "Restaurierungswerkstatt": "Oficina de restauro",
+      "Staatsbesitz": "Propriedade do Estado"
     }
   },
   "PlasterFragment-plasterComponents-default": {
@@ -2054,8 +2057,8 @@
       "Fibel": "",
       "Gefäß": "Recipiente",
       "Gerät": "",
-      "Gewicht": "",
-      "Glocke": "",
+      "Gewicht": "Peso",
+      "Glocke": "Sino",
       "Gussform": "",
       "Gusszapfen": "",
       "Halbfabrikat": "",
@@ -2065,14 +2068,14 @@
       "Knopf": "",
       "Lampe": "Lâmpada",
       "Löffel": "Colher",
-      "Mobiliar": "",
+      "Mobiliar": "Mobília",
       "Nadel": "",
       "Nagel": "",
       "Perle": "Pérola",
       "Pfeilspitze": "",
-      "Plastik/Skulptur": "",
-      "Produktionsfragment": "",
-      "Projektil": "",
+      "Plastik/Skulptur": "Plástica/Escultura",
+      "Produktionsfragment": "Fragmento de produção",
+      "Projektil": "Projétil",
       "Reibe": "",
       "Ring": "Anel",
       "Ringbarren": "",
@@ -2080,7 +2083,7 @@
       "Sarkophag": "",
       "Schild": "",
       "Schlacke": "",
-      "Schlüssel": "",
+      "Schlüssel": "Tigela",
       "Schmiedeabfall": "",
       "Schmuck": "",
       "Schnalle": "",
@@ -2092,8 +2095,8 @@
       "Stabbarren": "",
       "Strigilis": "",
       "Türschloss": "",
-      "Unsicher bzw. unbestimmbar": "",
-      "Waffe": "",
+      "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
+      "Waffe": "Arma",
       "Wasserleitung": "",
       "Weinheber": "",
       "Werkzeug": "",
@@ -2126,15 +2129,15 @@
       "Sprenkler": "",
       "Stamnos": "",
       "Vierkantflasche": "",
-      "hexagonale Flasche": "",
-      "zylindrische Flasche": ""
+      "hexagonale Flasche": "Frasco hexagonal",
+      "zylindrische Flasche": "Frasco cilíndrico"
     }
   },
   "Sample-sampleType-default": {
     "values": {
-      "Bodenprobe": "",
-      "C14-Analyse": "",
-      "Dendroprobe": "",
+      "Bodenprobe": "Amostra de solo",
+      "C14-Analyse": "Análise C14",
+      "Dendroprobe": "Amostra dendrológica",
       "Hammerschlagsprobe": "",
       "Phosphatanalyse": "",
       "Pollenanalyse": ""
@@ -2143,9 +2146,9 @@
   "TypeCatalog-criterion-default": {
     "values": {
       "Form": "Forma",
-      "Material": "",
-      "Dekoration": "",
-      "Spuren": ""
+      "Material": "Material",
+      "Dekoration": "Decoração",
+      "Spuren": "Vestígios"
     }
   },
   "damages-default": {
@@ -2168,13 +2171,13 @@
       "efflorescence": "",
       "bioSettlement": "",
       "fireDamage": "",
-      "erosion": "",
+      "erosion": "Erosão",
       "corrosion": "",
-      "crusting": "",
-      "mechanicDamage": "",
+      "crusting": "Formação de crosta",
+      "mechanicDamage": "Dano mecânico",
       "discoloration": "",
       "contamination": "",
-      "fragmentation": "",
+      "fragmentation": "Fragmentação",
       "ruin": "",
       "weathering": "",
       "rotting": "",
@@ -2194,22 +2197,22 @@
   },
   "viewingDirection-default": {
     "values": {
-      "N": "",
-      "NE": "",
-      "E": "",
-      "SE": "",
-      "S": "",
-      "SW": "",
-      "W": "",
-      "NW": ""
+      "N": "N",
+      "NE": "NE",
+      "E": "E",
+      "SE": "SE",
+      "S": "S",
+      "SW": "SO",
+      "W": "O",
+      "NW": "NO"
     }
   },
   "Photo-originalFormat-default": {
     "values": {
-      "Digital": "",
-      "Analog": "",
-      "Dia": "",
-      "S/W": "",
+      "Digital": "Digital",
+      "Analog": "Análogo",
+      "Dia": "Diapositivo",
+      "S/W": "P/B",
       "Farbe": "Cor"
     }
   }

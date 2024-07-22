@@ -255,14 +255,6 @@ defmodule FieldPublication.Publications do
            :database_exists,
            "A publication database '#{get_field(changeset, :database)}' already exists."
          )}
-
-      {:error, posix} when is_atom(posix) ->
-        {:error,
-         add_error(
-           changeset,
-           :posix_error,
-           "Got '#{posix}' while trying to initialize file directory."
-         )}
     end
   end
 

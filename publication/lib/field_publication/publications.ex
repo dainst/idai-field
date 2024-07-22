@@ -177,6 +177,7 @@ defmodule FieldPublication.Publications do
     |> Enum.sort(fn %Publication{draft_date: a}, %Publication{draft_date: b} ->
       Date.compare(a, b) in [:eq, :gt]
     end)
+    |> List.first()
   end
 
   def list() do

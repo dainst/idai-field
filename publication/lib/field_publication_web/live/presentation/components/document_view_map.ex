@@ -119,7 +119,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     children_features =
       doc
-      |> Data.get_relation_by_name("contains")
+      |> Data.get_relation("contains")
       |> case do
         nil ->
           []
@@ -132,7 +132,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     parent_features =
       doc
-      |> Data.get_relation_by_name("liesWithin")
+      |> Data.get_relation("liesWithin")
       |> case do
         nil ->
           []
@@ -146,7 +146,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       |> case do
         [] ->
           doc
-          |> Data.get_relation_by_name("isRecordedIn")
+          |> Data.get_relation("isRecordedIn")
           |> case do
             nil ->
               []

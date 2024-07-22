@@ -24,7 +24,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("project_doc_about_project") %>
           </.header>
           <div class="bg-slate-50 p-2 rounded">
-            <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
+            <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
             <%= if depicted_in do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
                 <%= for doc <- depicted_in["values"] do %>
@@ -50,7 +50,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
         </div>
 
         <div class="basis-1/3 m-5">
-          <% map_layers = Data.get_relation_by_name(@doc, "hasDefaultMapLayer") %>
+          <% map_layers = Data.get_relation(@doc, "hasDefaultMapLayer") %>
           <%= if map_layers do %>
             <div class="mb-4">
               <.live_component

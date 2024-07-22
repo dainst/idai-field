@@ -63,7 +63,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
               lang={@lang}
             />
           </div>
-          <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
+          <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>
               <I18n.text values={depicted_in["labels"]} /> (<%= Enum.count(depicted_in["values"]) %>)

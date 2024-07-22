@@ -79,19 +79,14 @@ defmodule FieldPublication.Publications.Data do
     end)
   end
 
-  def get_document(uuid, %Publication{database: db} = publication, include_relations \\ false) do
-    config = get_configuration(publication)
-
+  def get_raw_document(uuid, %Publication{database: db}) do
     CouchService.get_document(uuid, db)
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
     end)
-    |> apply_project_configuration(config, publication, include_relations)
   end
 
-  def get_documents(uuids, %Publication{database: db} = publication, include_relations \\ false) do
-    config = get_configuration(publication)
-
+  def get_raw_documents(uuids, %Publication{database: db}) do
     CouchService.get_documents(uuids, db)
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
@@ -109,6 +104,24 @@ defmodule FieldPublication.Publications.Data do
       end)
     end)
     |> List.flatten()
+  end
+
+  def get_extended_document(uuid, %Publication{} = publication, include_relations \\ false)
+      when is_binary(uuid) do
+    config = get_configuration(publication)
+
+    get_raw_document(uuid, publication)
+    |> apply_project_configuration(config, publication, include_relations)
+  end
+
+  def get_extended_documents(
+        uuids,
+        %Publication{database: db} = publication,
+        include_relations \\ false
+      ) do
+    config = get_configuration(publication)
+
+    get_raw_documents(uuids, %Publication{database: db})
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 
@@ -208,21 +221,13 @@ defmodule FieldPublication.Publications.Data do
     nil
   end
 
-  def get_group(%{"groups" => groups}, name) do
-    Enum.find(groups, fn %{"key" => key} -> key == name end)
-  end
-
-  def get_group(_, _) do
-    nil
-  end
-
-  def get_relation_by_name(%{"relations" => relations} = _doc, name) do
+  def get_relation(%{"relations" => relations} = _doc, name) do
     Enum.find(relations, fn relation ->
       relation["key"] == name
     end)
   end
 
-  def get_relation_by_name(_, _) do
+  def get_relation(_, _) do
     nil
   end
 
@@ -339,7 +344,7 @@ defmodule FieldPublication.Publications.Data do
       relations
       |> Map.values()
       |> List.flatten()
-      |> get_documents(publication, false)
+      |> get_extended_documents(publication, false)
 
     # ...then sort them into their respective relation groups, including the translated labels for those groups.
     relation_types = Map.keys(relations)
@@ -370,7 +375,7 @@ defmodule FieldPublication.Publications.Data do
         |> get_hierarchy()
         |> Map.get(uuid, %{})
         |> Map.get("children", [])
-        |> get_documents(publication),
+        |> get_extended_documents(publication),
       "labels" =>
         Gettext.known_locales(FieldPublicationWeb.Gettext)
         |> Enum.map(fn locale ->

@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     published_projects =
       Publications.get_most_recent(:all, socket.assigns.current_user)
       |> Task.async_stream(fn publication ->
-        {publication, Publications.Data.get_document("project", publication)}
+        {publication, Publications.Data.get_extended_document("project", publication)}
       end)
       |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, doc}} ->
         longitude =

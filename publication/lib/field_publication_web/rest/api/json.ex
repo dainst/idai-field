@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.Api.JSON do
 
     publication = Publications.get!(name, draft_date)
 
-    doc = Data.get_document(uuid, publication, true)
+    doc = Data.get_extended_document(uuid, publication, true)
 
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")

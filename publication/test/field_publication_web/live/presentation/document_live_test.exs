@@ -44,7 +44,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, live_view_pid, html} =
              live(conn, ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en")
 
-    doc = Data.get_document("project", publication)
+    doc = Data.get_extended_document("project", publication)
     short_description = Data.get_field_values(doc, "shortName") |> Map.get("en")
 
     assert html =~ short_description

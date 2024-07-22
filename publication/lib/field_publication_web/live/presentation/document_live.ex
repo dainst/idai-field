@@ -45,7 +45,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.draft_date) == date
       end)
 
-    doc = Publications.Data.get_document(uuid, current_publication, true)
+    doc = Publications.Data.get_extended_document(uuid, current_publication, true)
 
     project_map_layers =
       Publications.Data.get_project_map_layers(current_publication)
@@ -92,7 +92,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         Date.to_iso8601(pub.draft_date) == date
       end)
 
-    project_doc = Publications.Data.get_document("project", current_publication, true)
+    project_doc = Publications.Data.get_extended_document("project", current_publication, true)
 
     project_map_layers =
       Publications.Data.get_project_map_layers(current_publication)
@@ -106,7 +106,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         key
       end)
 
-    top_level_docs = Data.get_documents(top_level_uuids, current_publication)
+    top_level_docs = Data.get_extended_documents(top_level_uuids, current_publication)
 
     publication_comments =
       current_publication.comments

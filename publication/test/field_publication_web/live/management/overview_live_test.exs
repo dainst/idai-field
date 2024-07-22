@@ -132,7 +132,8 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       assert live_process
              |> form("#project-form", project: %{"name" => @test_project_name})
-             |> render_submit() =~ "a project with this name already exists"
+             |> render_submit() =~
+               "a project with this name already exists, the provided document revision does not match the existing"
     end
 
     test "can create and delete projects", %{conn: conn} do

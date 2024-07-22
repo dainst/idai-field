@@ -41,7 +41,14 @@ defmodule FieldPublication.ProjectTest do
       assert {:ok, %Project{}} = Projects.put(%Project{}, @project_fixture)
       assert {:error, changeset} = Projects.put(%Project{}, @project_fixture)
 
-      assert %{errors: [name: {"a project with this name already exists", _}]} = changeset
+      assert %{
+               errors: [
+                 name: {
+                   "a project with this name already exists, the provided document revision does not match the existing",
+                   _
+                 }
+               ]
+             } = changeset
     end
 
     test "can list projects" do

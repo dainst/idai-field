@@ -19,13 +19,13 @@ defmodule FieldPublication.FileService do
     "#{@file_store_path}/map_tiles/#{project_name}"
   end
 
-  def initialize(project_name) do
+  def initialize!(project_name) do
     [
       get_raw_image_data_path(project_name),
       get_web_images_path(project_name),
       get_map_tiles_path(project_name)
     ]
-    |> Enum.map(&File.mkdir_p/1)
+    |> Enum.map(&File.mkdir_p!/1)
   end
 
   def create_map_tiles_subdirectory(project_name, uuid, z_index, x_index) do

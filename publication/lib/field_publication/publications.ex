@@ -91,7 +91,7 @@ defmodule FieldPublication.Publications do
   end
 
   def get_configuration(%Publication{configuration_doc: config_name}) do
-    Cachex.get(:configuration_docs, config_name)
+    Cachex.get(:document_cache, config_name)
     |> case do
       {:ok, nil} ->
         config =
@@ -102,7 +102,7 @@ defmodule FieldPublication.Publications do
           |> Map.get("config", [])
 
         if config != [] do
-          Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
+          Cachex.put(:document_cache, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
         end
 
         config
@@ -113,7 +113,7 @@ defmodule FieldPublication.Publications do
   end
 
   def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
-    Cachex.get(:configuration_docs, hierarchy_doc_name)
+    Cachex.get(:document_cache, hierarchy_doc_name)
     |> case do
       {:ok, nil} ->
         hierarchy =
@@ -123,9 +123,7 @@ defmodule FieldPublication.Publications do
           end)
           |> Map.get("hierarchy", [])
 
-        Cachex.put(:configuration_docs, hierarchy_doc_name, hierarchy,
-          ttl: 1000 * 60 * 60 * 24 * 7
-        )
+        Cachex.put(:document_cache, hierarchy_doc_name, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
 
         hierarchy
 

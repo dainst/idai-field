@@ -215,7 +215,7 @@ defmodule FieldPublication.Projects do
 
     {:ok, _deleted_paths} = FileService.delete(name)
     CouchService.delete_document(doc_id, rev)
-    publications = Publications.list(project)
+    publications = Publications.list(project.name)
     Enum.each(publications, &Publications.delete(&1))
 
     {:ok, :deleted}

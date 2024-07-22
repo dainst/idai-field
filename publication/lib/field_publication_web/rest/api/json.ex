@@ -2,12 +2,11 @@ defmodule FieldPublicationWeb.Api.JSON do
   use FieldPublicationWeb, :controller
 
   alias FieldPublication.Publications.Data
-  alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications
 
   def raw(
         conn,
-        %{"project_name" => name, "publication_date" => publication_date, "uuid" => uuid} =
+        %{"project_name" => name, "draft_date" => draft_date, "uuid" => uuid} =
           _params
       ) do
     # TODO: Sanitize?
@@ -15,8 +14,7 @@ defmodule FieldPublicationWeb.Api.JSON do
     # TODO: Check if already published?
     # TODO: Implement more efficient and elegant way to lookup publication
 
-    publication =
-      Publications.get!(%Publication{project_name: name, publication_date: publication_date})
+    publication = Publications.get!(name, draft_date)
 
     doc = Data.get_document(uuid, publication, true)
 

@@ -17,6 +17,9 @@
     <.live_title>
       <%= title %>
     </.live_title>
+    <!-- The Opengraph meta tags are set only once on the initial HTTP page load, later websocket navigation leaves
+    them unchanged. See also https://github.com/phoenixframework/phoenix_live_view/issues/1194. Appropriate values have to 
+    be set on mount in the different live views. -->
     <meta property="og:title" content={title} />
     <meta property="og:url" content={Phoenix.Controller.current_url(@conn)} />
     <%= if assigns[:page_image] do %>

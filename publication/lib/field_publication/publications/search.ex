@@ -269,7 +269,7 @@ defmodule FieldPublication.Publications.Search do
     info =
       Publications.get_current_published()
       |> Enum.map(fn %Publication{} = pub ->
-        config = Publications.Data.get_configuration(pub)
+        config = Publications.get_configuration(pub)
 
         {category_labels, field_labels} =
           Enum.map(config, &extract_labels_for_item/1)
@@ -516,7 +516,7 @@ defmodule FieldPublication.Publications.Search do
 
   def evaluate_input_types(%Publication{} = publication) do
     field_names_and_input_types =
-      Data.get_configuration(publication)
+      Publications.get_configuration(publication)
       |> Enum.map(&flatten_input_types/1)
       |> List.flatten()
       |> Enum.uniq()

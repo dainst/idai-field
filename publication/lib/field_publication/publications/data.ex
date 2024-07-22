@@ -1,62 +1,22 @@
 defmodule FieldPublication.Publications.Data do
   require FieldPublicationWeb.Gettext
 
-  alias FieldPublication.CouchService
+  alias FieldPublication.{
+    Publications,
+    CouchService
+  }
+
   alias FieldPublication.DocumentSchema.Publication
 
   def get_all_subcategories(publication, category_name) do
     publication
-    |> get_configuration()
+    |> Publications.get_configuration()
     |> Enum.find(fn %{"item" => item} ->
       category_name == item["name"]
     end)
     |> then(fn entry ->
       flatten_category_tree(entry)
     end)
-  end
-
-  def get_configuration(%Publication{configuration_doc: config_name}) do
-    Cachex.get(:configuration_docs, config_name)
-    |> case do
-      {:ok, nil} ->
-        config =
-          CouchService.get_document(config_name)
-          |> then(fn {:ok, %{body: body}} ->
-            Jason.decode!(body)
-          end)
-          |> Map.get("config", [])
-
-        if config != [] do
-          Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
-        end
-
-        config
-
-      {:ok, cached} ->
-        cached
-    end
-  end
-
-  def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
-    Cachex.get(:configuration_docs, hierarchy_doc_name)
-    |> case do
-      {:ok, nil} ->
-        hierarchy =
-          CouchService.get_document(hierarchy_doc_name)
-          |> then(fn {:ok, %{body: body}} ->
-            Jason.decode!(body)
-          end)
-          |> Map.get("hierarchy", [])
-
-        Cachex.put(:configuration_docs, hierarchy_doc_name, hierarchy,
-          ttl: 1000 * 60 * 60 * 24 * 7
-        )
-
-        hierarchy
-
-      {:ok, cached} ->
-        cached
-    end
   end
 
   def document_exists?(uuid, %Publication{database: db}) do
@@ -108,7 +68,7 @@ defmodule FieldPublication.Publications.Data do
 
   def get_extended_document(uuid, %Publication{} = publication, include_relations \\ false)
       when is_binary(uuid) do
-    config = get_configuration(publication)
+    config = Publications.get_configuration(publication)
 
     get_raw_document(uuid, publication)
     |> apply_project_configuration(config, publication, include_relations)
@@ -119,7 +79,7 @@ defmodule FieldPublication.Publications.Data do
         %Publication{database: db} = publication,
         include_relations \\ false
       ) do
-    config = get_configuration(publication)
+    config = Publications.get_configuration(publication)
 
     get_raw_documents(uuids, %Publication{database: db})
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
@@ -372,7 +332,7 @@ defmodule FieldPublication.Publications.Data do
       "key" => "contains",
       "values" =>
         publication
-        |> get_hierarchy()
+        |> Publications.get_hierarchy()
         |> Map.get(uuid, %{})
         |> Map.get("children", [])
         |> get_extended_documents(publication),

@@ -98,7 +98,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       Publications.Data.get_project_map_layers(current_publication)
 
     top_level_uuids =
-      Publications.Data.get_hierarchy(current_publication)
+      Publications.get_hierarchy(current_publication)
       |> Enum.filter(fn {_key, values} ->
         Map.get(values, "parent") == nil
       end)

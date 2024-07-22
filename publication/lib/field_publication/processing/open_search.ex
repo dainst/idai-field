@@ -33,7 +33,7 @@ defmodule FieldPublication.Processing.OpenSearch do
 
   def index(%Publication{} = publication) do
     publication_id = Publications.get_doc_id(publication)
-    publication_configuration = Data.get_configuration(publication)
+    publication_configuration = Publications.get_configuration(publication)
 
     mapping = Search.generate_index_mapping(publication)
     special_input_types = Search.evaluate_input_types(publication)

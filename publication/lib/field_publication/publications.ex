@@ -90,6 +90,50 @@ defmodule FieldPublication.Publications do
     publication
   end
 
+  def get_configuration(%Publication{configuration_doc: config_name}) do
+    Cachex.get(:configuration_docs, config_name)
+    |> case do
+      {:ok, nil} ->
+        config =
+          CouchService.get_document(config_name)
+          |> then(fn {:ok, %{body: body}} ->
+            Jason.decode!(body)
+          end)
+          |> Map.get("config", [])
+
+        if config != [] do
+          Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
+        end
+
+        config
+
+      {:ok, cached} ->
+        cached
+    end
+  end
+
+  def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
+    Cachex.get(:configuration_docs, hierarchy_doc_name)
+    |> case do
+      {:ok, nil} ->
+        hierarchy =
+          CouchService.get_document(hierarchy_doc_name)
+          |> then(fn {:ok, %{body: body}} ->
+            Jason.decode!(body)
+          end)
+          |> Map.get("hierarchy", [])
+
+        Cachex.put(:configuration_docs, hierarchy_doc_name, hierarchy,
+          ttl: 1000 * 60 * 60 * 24 * 7
+        )
+
+        hierarchy
+
+      {:ok, cached} ->
+        cached
+    end
+  end
+
   def get_published(project_name) do
     list(project_name)
     |> Stream.reject(fn %Publication{} = pub -> pub.publication_date == nil end)

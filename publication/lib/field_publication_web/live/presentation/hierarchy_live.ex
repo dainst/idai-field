@@ -135,7 +135,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
       ) do
     publication = Publications.get!(project_name, date)
 
-    hierarchy = Data.get_hierarchy(publication)
+    hierarchy = Publications.get_hierarchy(publication)
 
     [current_doc] = Data.get_extended_documents([uuid], publication)
 

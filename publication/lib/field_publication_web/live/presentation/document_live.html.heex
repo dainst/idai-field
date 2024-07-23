@@ -23,11 +23,23 @@
         project_map_layers: @project_map_layers
       })
 
-    # category == "Type" ->
-    # TODO
+    category == "TypeCatalog" ->
+      DocumentComponents.TypeCatalog.render(%{
+        doc: @doc,
+        project_name: @project_name,
+        draft_date: @publication.draft_date,
+        lang: @selected_lang,
+        uuid: @uuid
+      })
 
-    # category == "TypeCatalogue" ->
-    # TODO
+    category in @type_categories ->
+      DocumentComponents.Type.render(%{
+        doc: @doc,
+        project_name: @project_name,
+        draft_date: @publication.draft_date,
+        lang: @selected_lang,
+        uuid: @uuid
+      })
 
     # category == "Trench" ->
     # TODO

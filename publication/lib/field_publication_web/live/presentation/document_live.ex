@@ -52,6 +52,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
 
+    type_categories = Publications.Data.get_all_subcategories(current_publication, "Type")
+
     relations_with_geometry =
       Map.get(doc, "relations", [])
       |> Enum.map(fn %{"values" => rel_docs} ->
@@ -70,6 +72,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:selected_lang, language)
       |> assign(:uuid, uuid)
       |> assign(:image_categories, image_categories)
+      |> assign(:type_categories, type_categories)
       |> assign(:relations_with_geometry, relations_with_geometry)
       |> assign(:project_map_layers, project_map_layers)
       |> assign(

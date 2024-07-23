@@ -13,7 +13,7 @@
     <div id="multiple-switch" 
          class="row" 
          [disableTooltip]="countAffected !== 1" 
-         [class.disabled]="countAffected == 1"
+         [class.disabled]="countAffected === 1"
          ngbTooltip="Nur diese Ressource ist betroffen." 
          i18n-ngbTooltip="@@navbar.taskbar.deleteOutliers.all.tooltip" 
          container="body">
@@ -21,11 +21,11 @@
             <span i18n="@@navbar.taskbar.deleteOutliers.all">Alle Vorkommnisse dieses Werts löschen</span>
         </div>
         <div class="col-auto">
-            <label class="switch" [class.disabled]="countAffected == 1">
+            <label class="switch" [class.disabled]="countAffected === 1">
                 <input type="checkbox" 
                        [checked]="deleteAll" 
                        (change)="deleteAll = !deleteAll" 
-                       [disabled]="countAffected == 1">
+                       [disabled]="countAffected === 1">
                 <span class="slider round"></span>
             </label>
         </div>

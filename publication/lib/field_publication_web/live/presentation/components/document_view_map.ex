@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
+  require Logger
   use FieldPublicationWeb, :live_component
 
   import FieldPublicationWeb.Presentation.Components.Typography
@@ -9,7 +10,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   def render(assigns) do
     ~H"""
     <div>
-      <.group_heading>Geometry <span class="text-xs">(<%= @type %>)</span></.group_heading>
+      <.group_heading>Geometry <span class="text-xs">(<%= @geometry_type %>)</span></.group_heading>
       <div
         class="relative"
         id={@id}
@@ -91,31 +92,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       ) do
     assigns = set_defaults(assigns)
 
-    socket =
-      if not Map.has_key?(socket.assigns, :publication) or
-           not Map.equal?(socket.assigns.publication, publication) do
-        project_tile_layers =
-          publication
-          |> Data.get_project_map_layers()
-          |> Enum.map(&extract_tile_layer_info/1)
-
-        project_tile_layers_state =
-          Enum.map(
-            project_tile_layers,
-            fn layer_info ->
-              Map.merge(layer_info, %{visible: true})
-            end
-          )
-
-        socket
-        |> push_event("document-map-set-project-layers-#{id}", %{
-          project: publication.project_name,
-          project_tile_layers: project_tile_layers
-        })
-        |> assign(:project_tile_layers_state, project_tile_layers_state)
-      else
-        socket
-      end
+    socket = handle_publication_change(socket, publication, id)
 
     children_features =
       doc
@@ -164,7 +141,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     document_feature = create_feature_info(doc, lang)
 
-    assigns = Map.put(assigns, :type, get_in(document_feature, [:properties, :type]) || "None")
+    assigns =
+      Map.put(
+        assigns,
+        :geometry_type,
+        get_in(document_feature, [:properties, :type]) || "None"
+      )
 
     socket = assign(socket, assigns)
 
@@ -275,6 +257,39 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       uuid: uuid,
       identifier: identifier
     }
+  end
+
+  defp handle_publication_change(socket, %Publication{} = current, hook_id) do
+    unless Map.has_key?(socket.assigns, :publication) and
+             Map.equal?(socket.assigns.publication, current) do
+      # If the publication already assigned to the socket differes from the one in the current
+      # update call, we re-initialize the background layers. This may occur if the user switches
+      # to an older or newer publication of the same project.
+      Logger.debug("Resetting project level background layers.")
+
+      project_tile_layers =
+        current
+        |> Data.get_project_map_layers()
+        |> Enum.map(&extract_tile_layer_info/1)
+
+      project_tile_layers_state =
+        Enum.map(
+          project_tile_layers,
+          fn layer_info ->
+            Map.merge(layer_info, %{visible: true})
+          end
+        )
+
+      socket
+      |> push_event("document-map-set-project-layers-#{hook_id}", %{
+        project: current.project_name,
+        project_tile_layers: project_tile_layers
+      })
+      |> assign(:project_tile_layers_state, project_tile_layers_state)
+    else
+      # Same publication, leave project layers as they are.
+      socket
+    end
   end
 
   def handle_event(

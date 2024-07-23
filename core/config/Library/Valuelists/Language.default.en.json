@@ -1017,7 +1017,8 @@
     "values": {
       "Campana A": "Campana A",
       "Campana B": "Campana B",
-      "Campana C": "Campana C"
+      "Campana C": "Campana C",
+      "Red Slip Ware": "Cerâmica com engobe vermelho (Red slip ware)"
     }
   },
   "Pottery-temperAmount-default": {
@@ -1083,6 +1084,16 @@
     "values": {
       "Kreta": "Crete",
       "Sizilien": "Sicily"
+    }
+  },
+  "Pottery-materialType-default": {
+    "values": {
+      "Gebrauchskeramik (Grobe Ware)": "Coarse ware"
+    }
+  },
+  "Pottery-coatInside-default": {
+    "values": {
+      "Redslip": "Engobe vermelho (Red slip)"
     }
   }
 }

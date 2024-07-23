@@ -642,7 +642,7 @@ export class WarningsModalComponent {
         componentInstance.field = field;
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.outlierValue = outlierValue;
-        await componentInstance.initialize()
+        await componentInstance.initialize();
 
         let changed: boolean;
 

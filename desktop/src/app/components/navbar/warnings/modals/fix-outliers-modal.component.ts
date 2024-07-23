@@ -5,7 +5,7 @@ import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels,
      Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
-import { AffectedDocument } from '../warnings.types';
+import { AffectedDocument } from '../affected-document';
 
 
 @Component({
@@ -75,7 +75,7 @@ export class FixOutliersModalComponent {
                 }
             }
 
-            if(affectedDocument.fields.length !== 0) this.affectedDocuments.push(affectedDocument);
+            if (affectedDocument.fields.length) this.affectedDocuments.push(affectedDocument);
         }
 
         this.countAffected = this.affectedDocuments.length;

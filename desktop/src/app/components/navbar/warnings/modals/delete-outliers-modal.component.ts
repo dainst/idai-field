@@ -4,7 +4,7 @@ import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
 import { BaseField, CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
-import { AffectedDocument } from '../warnings.types';
+import { AffectedDocument } from '../affected-document';
 
 
 @Component({
@@ -61,7 +61,7 @@ export class DeleteOutliersModalComponent {
                 affectedDocument.fields.push(field);
             }
 
-            if(affectedDocument.fields.length !== 0) this.affectedDocuments.push(affectedDocument);
+            if (affectedDocument.fields.length) this.affectedDocuments.push(affectedDocument);
         }
 
         this.countAffected = this.affectedDocuments.length;

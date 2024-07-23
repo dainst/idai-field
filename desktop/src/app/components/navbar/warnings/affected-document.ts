@@ -1,4 +1,4 @@
-import { Field, Document } from "idai-field-core";
+import { Field, Document } from 'idai-field-core';
 
 export type AffectedDocument = {
     document: Document,

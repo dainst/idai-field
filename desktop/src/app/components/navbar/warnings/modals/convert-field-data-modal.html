@@ -9,21 +9,21 @@
     </span>
 
     <div id="multiple-switch" 
-        class="row" 
-        [disableTooltip]="countAffected !== 1" 
-        [class.disabled]="countAffected == 1"
-        ngbTooltip="Nur diese Ressource ist betroffen." 
-        i18n-ngbTooltip="@@navbar.taskbar.convertFieldData.all.tooltip" 
-        container="body">
+         class="row" 
+         [disableTooltip]="countAffected !== 1" 
+         [class.disabled]="countAffected == 1"
+         ngbTooltip="Nur diese Ressource ist betroffen." 
+         i18n-ngbTooltip="@@navbar.taskbar.convertFieldData.all.tooltip" 
+         container="body">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.convertFieldData.all">In allen Ressourcen dieser Kategorie konvertieren</span>
         </div>
         <div class="col-auto">
             <label class="switch" [class.disabled]="countAffected == 1">
                 <input type="checkbox" 
-                        [checked]="convertAll" 
-                        (change)="convertAll = !convertAll" 
-                        [disabled]="countAffected == 1">
+                       [checked]="convertAll" 
+                       (change)="convertAll = !convertAll" 
+                       [disabled]="countAffected == 1">
                 <span class="slider round"></span>
             </label>
         </div>

@@ -9,21 +9,21 @@
     </span>
 
     <div id="multiple-switch" 
-            class="row" 
-            [disableTooltip]="countAffected !== 1" 
-            [class.disabled]="countAffected == 1"
-            ngbTooltip="Nur diese Ressource ist betroffen." 
-            i18n-ngbTooltip="@@navbar.taskbar.deleteFieldData.all.tooltip" 
-            container="body">
+         class="row" 
+         [disableTooltip]="countAffected !== 1" 
+         [class.disabled]="countAffected == 1"
+         ngbTooltip="Nur diese Ressource ist betroffen." 
+         i18n-ngbTooltip="@@navbar.taskbar.deleteFieldData.all.tooltip" 
+         container="body">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.deleteFieldData.all">Bei allen Ressourcen dieser Kategorie löschen</span>
         </div>
         <div class="col-auto">
             <label class="switch" [class.disabled]="countAffected == 1">
                 <input type="checkbox" 
-                        [checked]="deleteAll" 
-                        (change)="deleteAll = !deleteAll" 
-                        [disabled]="countAffected == 1">
+                       [checked]="deleteAll" 
+                       (change)="deleteAll = !deleteAll" 
+                       [disabled]="countAffected == 1">
                 <span class="slider round"></span>
             </label>
         </div>

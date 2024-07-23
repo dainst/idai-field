@@ -128,7 +128,7 @@
       "fields": {
         "decorationDescription": {
           "label": "Descrição da decoração",
-          "description": "Outro campo de descrição para uma descrição detalhada da decoração"
+          "description": "Campo adicional de descrição para uma descrição detalhada da decoração"
         },
         "color": {
           "label": "Cor e intensidade",
@@ -144,7 +144,7 @@
         },
         "manufacturingMethod": {
           "label": "Técnica de produção",
-          "description": "Técnica utilizada para a produção do objeto; vestígios de trabalho reconhecíveis"
+          "description": "Técnica utilizada para a produção do objeto; vestígios de tratamento reconhecíveis"
         },
         "objectType": {
           "label": "Denominação ou tipo de objeto"
@@ -255,7 +255,8 @@
           "description": "Descrição detalhada da técnica de construção (por exemplo muro em pedra ou em telha)"
         },
         "publicationDatingStratigraphy": {
-          "label": "Datação (estratigrafia)"
+          "label": "Datação (estratigrafia)",
+          "description": "por exemplo: ver Tomba 1: corta a Tomba 28 datada com C-14 (20 a. C. ‐ 65 d. C.)"
         },
         "publicationRemark": {
           "label": "Anotações",
@@ -280,7 +281,8 @@
           "description": "Descrição adicional das telhas/pedras etc."
         },
         "publicationDatingFinds": {
-          "label": "Datação (achados)"
+          "label": "Datação (achados)",
+          "description": "por exemplo: vestígios de sepultamento disturbados (2./3. séc. d. C.)"
         },
         "conditionAmount": {
           "label": "Parte preservada",
@@ -299,6 +301,18 @@
         },
         "mortarConsistency": {
           "label": "Consistência da argamassa"
+        },
+        "hasGrouting": {
+          "label": "Junta",
+          "description": "O muro tem juntas?"
+        },
+        "markDescription": {
+          "label": "Descrição do marco",
+          "description": "Explicações e conclusões sobre o marco existente"
+        },
+        "mark": {
+          "label": "Marca de pedreiro",
+          "description": "Listagem de possíveis marcas de pedreiro"
         }
       }
     },
@@ -415,6 +429,9 @@
       "fields": {
         "consistency": {
           "label": "Consistência"
+        },
+        "isNatural": {
+          "label": "Natural"
         }
       }
     },
@@ -469,6 +486,9 @@
         },
         "stampPositioning": {
           "description": "Rotação do carimbo no reverso em comparação com a parte da frente; Indicação em 1-12h, análogo ao relógio (exemplo: '12' sem rotação)"
+        },
+        "manufacturingMethod": {
+          "label": "Técnica de produção"
         }
       }
     },
@@ -580,13 +600,15 @@
           "label": "Documentação"
         },
         "publicationDatingStratigraphy": {
-          "label": "Datação (estratigrafia)"
+          "label": "Datação (estratigrafia)",
+          "description": "por exemplo: ver Tomba 1: corta a Tomba 28 datada com C-14 (20 a. C. ‐ 65 d. C.)"
         },
         "positionArms": {
           "label": "Posição dos braços"
         },
         "publicationDatingFinds": {
-          "label": "Datação (achados)"
+          "label": "Datação (achados)",
+          "description": "por exemplo: vestígios de sepultamento disturbados (2./3. séc. d. C.)"
         },
         "positionLegs": {
           "label": "Posição das pernas"
@@ -596,8 +618,18 @@
         },
         "amountIndividuals": {
           "label": "Tipo de sepultamento - número"
+        },
+        "palaeopathologicalReport": {
+          "label": "Relatório paleopatológico"
+        },
+        "burialCharacteristic": {
+          "label": "Sequência de sepultamento (primário/secundário)"
+        },
+        "graveFeature": {
+          "label": "Tipo de sepultamento"
         }
-      }
+      },
+      "label": "Sepultamento"
     },
     "Wood": {
       "fields": {
@@ -728,6 +760,85 @@
         },
         "formDescription": {
           "label": "Descrição da forma"
+        },
+        "residueAnalysis": {
+          "label": "Análise de resíduos",
+          "description": "Indicação sobre a análise de resíduos"
+        },
+        "amountSherdsLid": {
+          "label": "Número de coberturas"
+        },
+        "hasCoat": {
+          "label": "Engobe"
+        },
+        "coatColorInside": {
+          "label": "Engobe (interior): cor e intensidade"
+        },
+        "coatColorOutside": {
+          "label": "Engobe (exterior): cor e intensidade"
+        },
+        "coatInside": {
+          "label": "Engobe (interior)"
+        },
+        "coatOutside": {
+          "label": "Engobe (exterior)"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Cor interior (Munsell)"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Cor exterior (Munsell)"
+        },
+        "decorationDescription": {
+          "label": "Descrição da decoração",
+          "description": "Campo adicional de descrição para uma descrição detalhada da decoração"
+        },
+        "breakStructure": {
+          "label": "Observações sobre a fratura (estrutura, porosidade, etc.)",
+          "description": "Descrição da estrutura e porosidade da fratura"
+        },
+        "clayColorInside": {
+          "label": "Interior: cor e intensidade da argila"
+        },
+        "clayColorOutside": {
+          "label": "Exterior: cor e intensidade da argila"
+        },
+        "clayColorBreak": {
+          "label": "Fratura: cor da argila e intensidade"
+        },
+        "clayHardness": {
+          "label": "Dureza da argila (escala de Mohs)"
+        },
+        "coatInsideType": {
+          "label": "Tratamento (interior)"
+        },
+        "temper": {
+          "label": "Tipo de inclusões"
+        },
+        "amountSherdsPedestal": {
+          "label": "Número de fragmentos de pé"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Cor da fratura (Munsell)"
+        },
+        "decorationTechnique": {
+          "label": "Particularidades da superfície ou da técnica de decoração"
+        },
+        "coatOutsideType": {
+          "label": "Tratamento (exterior)"
+        },
+        "manufacturingMethod": {
+          "label": "Técnica de produção"
+        },
+        "Firing": {
+          "label": "Tipo de cozedura da cerâmica"
+        },
+        "temperAmount": {
+          "label": "Quantidade de inclusões"
+        },
+        "temperParticles": {
+          "label": "Granulação das inclusões",
+          "description": "Tamanho das partículas de inclusões"
         }
       },
       "label": "Cerâmica"
@@ -796,13 +907,13 @@
           "label": "Utilização da telha na arquitectura"
         },
         "clayColorOutside": {
-          "label": "Externo: cor e intensidade da argila"
+          "label": "Exterior: cor e intensidade da argila"
         },
         "coatColorInside": {
-          "label": "Revestimento (interior): cor e intensidade"
+          "label": "Engobe (interior): cor e intensidade"
         },
         "coatColorOutside": {
-          "label": "Revestimento (exterior): cor e intensidade"
+          "label": "Engobe (exterior): cor e intensidade"
         },
         "decorationTechnique": {
           "label": "Particularidades da superfície ou decoração"
@@ -824,6 +935,10 @@
         "featureText": {
           "label": "Texto(s) do carimbo",
           "description": "Transcrição ou cópia do texto do carimbo"
+        },
+        "temper": {
+          "label": "Tipo de inclusões",
+          "description": "Tipo principal de inclusões"
         }
       }
     },
@@ -1027,6 +1142,13 @@
         },
         "material": {
           "label": "Material"
+        },
+        "temperAmount": {
+          "label": "Quantidade de inclusões"
+        },
+        "treatment": {
+          "label": "Tratamento",
+          "description": "Campo de descrição sobre a presença de vestígios de tratamento antigos (por exemplo: 'marca de pedreiro no pé')"
         }
       }
     },
@@ -1058,7 +1180,8 @@
           "description": "Descrição da publicação, referência de datações existentes"
         },
         "publicationDatingStratigraphy": {
-          "label": "Datação (estratigrafia)"
+          "label": "Datação (estratigrafia)",
+          "description": "por exemplo: ver Tomba 1: corta a Tomba 28 datada com C-14 (20 a. C. ‐ 65 d. C.)"
         },
         "bibliography": {
           "label": "Bibliografia"
@@ -1077,6 +1200,9 @@
         },
         "conditionComment": {
           "label": "Comentário sobre o estado de preservação"
+        },
+        "tombBuilding": {
+          "label": "Tomba"
         }
       }
     },
@@ -1092,8 +1218,49 @@
         "formDescription": {
           "label": "Descrição da forma",
           "description": "Descrição detalhada da forma em geral"
+        },
+        "temperAmount": {
+          "label": "Quantidade de inclusões"
+        },
+        "clayColorBreak": {
+          "label": "Fratura: cor e intensidade da argila"
+        },
+        "clayStructure": {
+          "label": "Estrutura",
+          "description": "De que tipo é a estrutura de terracota?"
+        },
+        "surfaceCondition": {
+          "description": "Indicação sobre a condição da superfície",
+          "label": "Condição da superfície"
+        },
+        "temper": {
+          "label": "Tipo de inclusões",
+          "description": "Tipo principal de inclusões"
+        },
+        "decorationTechnique": {
+          "label": "Particularidades da superfície ou da técnica de decoração"
+        },
+        "coatColorInside": {
+          "label": "Engobe (interior): cor e intensidade"
+        },
+        "coatColorOutside": {
+          "label": "Engobe (exterior): cor e intensidade"
+        },
+        "clayColorInside": {
+          "label": "Interior: cor e intensidade da argila"
+        },
+        "clayColorOutside": {
+          "label": "Exterior: cor e intensidade da argila"
+        },
+        "manufacturingMethod": {
+          "label": "Técnica de produção"
+        },
+        "temperParticles": {
+          "label": "Granulação das inclusões",
+          "description": "Tamanho das partículas de inclusões"
         }
-      }
+      },
+      "label": "Terracota"
     },
     "FindCollection": {
       "fields": {
@@ -1128,6 +1295,12 @@
         },
         "materialDescription": {
           "label": "Descrição do material"
+        },
+        "manufacturingMethod": {
+          "label": "Técnica de produção"
+        },
+        "decorationTechnique": {
+          "label": "Particularidades da superfície ou da técnica de decoração"
         }
       },
       "label": "Metal"

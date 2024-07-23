@@ -255,7 +255,7 @@ defmodule FieldPublication.Publications.Search do
   end
 
   def get_label_usage() do
-    Cachex.get(:configuration_docs, :system_wide_label_usage)
+    Cachex.get(:document_cache, :system_wide_label_usage)
     |> case do
       {:ok, nil} ->
         update_label_usage()
@@ -318,7 +318,7 @@ defmodule FieldPublication.Publications.Search do
         end
       )
 
-    Cachex.put(:configuration_docs, :system_wide_label_usage, info)
+    Cachex.put(:document_cache, :system_wide_label_usage, info)
 
     info
   end

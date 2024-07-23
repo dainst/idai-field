@@ -342,17 +342,17 @@
       "Stempeldekor": "Decoração do carimbo",
       "Tupfendekor": "",
       "Wischzeichen": "",
-      "Überzug/Glasur": ""
+      "Überzug/Glasur": "Engobe/Esmalte"
     }
   },
   "Brick-manufacturing-default": {
     "values": {
-      "Dickwandig": "",
-      "Dünnwandig": "",
+      "Dickwandig": "Parede espessa",
+      "Dünnwandig": "Parede fina",
       "Gebrannt": "Cozido",
       "Hart gebrannt": "",
       "Luftgetrocknet": "",
-      "Oberfläche glatt": "",
+      "Oberfläche glatt": "Superfície lisa",
       "Oberfläche rau": "",
       "Sekundär gebrannt": "",
       "Weich gebrannt": ""
@@ -487,7 +487,7 @@
       "Bogen": "",
       "Brücke": "",
       "Circus": "",
-      "Grabbau": "",
+      "Grabbau": "Tomba",
       "Gymnasium": "",
       "Mauerkurtine": "",
       "Nymphäum": "",
@@ -641,8 +641,8 @@
       "Erde": "",
       "Fliesen": "",
       "Gips": "",
-      "Glas": "",
-      "Holz": "",
+      "Glas": "Vidro",
+      "Holz": "Madeira",
       "Holzwerkstoff": "",
       "Kunststoff": "",
       "Lehm": "argila",
@@ -653,7 +653,7 @@
       "Stahl": "",
       "Stahlbeton": "",
       "Stuck": "",
-      "Unbekannt/Unerkannt": "",
+      "Unbekannt/Unerkannt": "Desconhecido/Não reconhecido",
       "Granit": "Granito",
       "Kalk": "Calcário",
       "Kalkmörtel": "Argamassa de calcário",
@@ -943,7 +943,7 @@
       "Lehmiger Ton": "barro argiloso",
       "Mergel": "",
       "Mittlerer Sand": "",
-      "Sand": "",
+      "Sand": "Areia",
       "Sandiger Lehm": "",
       "Sandiger Schluff": "limo arenoso",
       "Sandiger Ton": "",
@@ -1084,8 +1084,8 @@
   },
   "Pottery-materialType-default": {
     "values": {
-      "Feinkeramik (Feine Ware)": "",
-      "Gebrauchskeramik (Grobe Ware)": ""
+      "Feinkeramik (Feine Ware)": "Cerâmica fina",
+      "Gebrauchskeramik (Grobe Ware)": "Cerâmica comum"
     }
   },
   "Pottery-objectType-default": {
@@ -1120,11 +1120,11 @@
     "values": {
       "Arretina schwarz": "",
       "Attisch farbig aufgehöhte Schwarzglanzton Ware": "",
-      "Attische Keramik": "",
-      "Attische Rotfigurige Keramik": "",
-      "Attische Schwarzfigurige Keramik": "",
+      "Attische Keramik": "Cerâmica ática",
+      "Attische Rotfigurige Keramik": "Ceramica ática de figuras vermelhas",
+      "Attische Schwarzfigurige Keramik": "Ceramica ática de figuras negras",
       "Attische Schwarzglanzton Ware": "",
-      "Bemalte Keramik": "",
+      "Bemalte Keramik": "Cerâmica pintada",
       "Bemalte Ware (floral)": "",
       "Bemalte Ware (linear)": "",
       "Bichrome Ware": "",
@@ -1133,15 +1133,15 @@
       "Campana B Imitation": "",
       "Campana B-oid": "",
       "Campana C": "",
-      "Dünnwandige Feinkeramik": "",
+      "Dünnwandige Feinkeramik": "Cerâmica fina com paredes finas",
       "Firnisware": "",
-      "Glasierte Keramik": "",
+      "Glasierte Keramik": "Cerâmica vidrada",
       "Glattwandige Ware": "",
       "Hand": "",
-      "Korinthische Keramik": "",
+      "Korinthische Keramik": "Cerâmica coríntia",
       "Küchenware": "",
-      "Ostgriechische Keramik": "",
-      "Prähistorische Keramik": "",
+      "Ostgriechische Keramik": "Cerâmica greco-oriental",
+      "Prähistorische Keramik": "Cerâmica pré-histórica",
       "Red Slip Ware": "",
       "Schlichte Ware": "",
       "Schwarzglanzton Ware": "",
@@ -1150,7 +1150,7 @@
   },
   "Pottery-temperAmount-default": {
     "values": {
-      "Keine Einschlüsse": "",
+      "Keine Einschlüsse": "Sem inclusões",
       "Mittel": "médio",
       "Nicht erkennbar": "Não reconhecível",
       "Sehr Viel": "Muito",
@@ -1398,7 +1398,7 @@
   },
   "Terracotta-vesselForm-default": {
     "values": {
-      "Amphore": "",
+      "Amphore": "Ânfora",
       "Aschenurne": "",
       "Becher": "Copo",
       "Deckel": "",
@@ -2008,7 +2008,7 @@
     "values": {
       "Feinsand": "",
       "Grus": "",
-      "Sand": ""
+      "Sand": "Areia"
     }
   },
   "Photo-originalType-default": {

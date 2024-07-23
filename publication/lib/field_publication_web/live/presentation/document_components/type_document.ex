@@ -22,23 +22,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
       </.document_heading>
 
       <div class="flex flex-row">
-        <div class="basis-1/3 m-5">
-          <%= for relations <- @doc["relations"] do %>
-            <.group_heading>
-              <I18n.text values={relations["labels"]} /> (<%= Enum.count(relations["values"]) %>)
-            </.group_heading>
-            <div class="overflow-auto overscroll-contain max-h-[200px]">
-              <%= for doc <- relations["values"] do %>
-                <DocumentLink.show
-                  project={@project_name}
-                  date={@draft_date}
-                  lang={@lang}
-                  doc={doc}
-                  image_count={0}
-                />
-              <% end %>
-            </div>
-          <% end %>
+        <div class="basis-1/5 m-5">
           <%= for group <- @doc["groups"] do %>
             <% fields =
               Enum.reject(group["fields"], fn %{"key" => key} ->
@@ -81,30 +65,25 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
                 <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
               </a>
             </li>
-            <li>
-              <div>
-                <a href="https://iiif.io" target="_blank">
-                  <img src="/images/iiif-logo.png" class="inline h-4" />
-                </a>
-                <.live_component
-                  id="iiif-link"
-                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{IIIFViewer.construct_url(@project_name, @uuid)}"}
-                  module={ClipboardCopy}
-                >
-                  Copy IIIF link
-                </.live_component>
-              </div>
-            </li>
           </ul>
         </div>
-        <div class="basis-2/3 m-5">
-          <.live_component
-            class="h-full"
-            id="iiif_viewer"
-            project={@project_name}
-            uuid={@uuid}
-            module={IIIFViewer}
-          />
+        <div class="basis-4/5 m-5">
+          <%= for relations <- @doc["relations"] do %>
+            <.group_heading>
+              <I18n.text values={relations["labels"]} /> (<%= Enum.count(relations["values"]) %>)
+            </.group_heading>
+            <div class="overflow-auto overscroll-contain">
+            <%= for doc <- relations["values"] do %>
+              <DocumentLink.show
+                project={@project_name}
+                date={@draft_date}
+                lang={@lang}
+                doc={doc}
+                image_count={3}
+              />
+            <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

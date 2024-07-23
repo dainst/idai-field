@@ -81,30 +81,20 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.TypeCatalog do
                 <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
               </a>
             </li>
-            <li>
-              <div>
-                <a href="https://iiif.io" target="_blank">
-                  <img src="/images/iiif-logo.png" class="inline h-4" />
-                </a>
-                <.live_component
-                  id="iiif-link"
-                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{IIIFViewer.construct_url(@project_name, @uuid)}"}
-                  module={ClipboardCopy}
-                >
-                  Copy IIIF link
-                </.live_component>
-              </div>
-            </li>
           </ul>
         </div>
         <div class="basis-2/3 m-5">
-          <.live_component
-            class="h-full"
-            id="iiif_viewer"
-            project={@project_name}
-            uuid={@uuid}
-            module={IIIFViewer}
-          />
+          <h1>All Finds in this Catalog</h1>
+          <%= for relations <- @doc["relations"] do %>
+            <div class="overflow-auto overscroll-contain max-h-[200px]">
+              <%= for linkeddoc <- relations["values"] do %>
+                <!---
+                and then we magically find all find-resources associated with this catalog
+                # <%= linkeddoc["identifier"] %>
+                --->
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

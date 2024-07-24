@@ -29,11 +29,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
                 <%= for doc <- depicted_in["values"] do %>
                   <.link
-                    patch={~p"/projects/#{@project_name}/#{@draft_date}/#{@lang}/#{doc["id"]}"}
+                    patch={
+                      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc["id"]}"
+                    }
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">
-                      <Image.show size="^300," project={@project_name} uuid={doc["id"]} />
+                      <Image.show size="^300," project={@publication.project_name} uuid={doc["id"]} />
                     </div>
                   </.link>
                 <% end %>
@@ -45,7 +47,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("project_doc_about_publication") %>
           </.header>
           <div class="bg-slate-50 p-2 rounded">
-            <I18n.markdown values={@publication_comments} lang={@lang} />
+            <I18n.markdown
+              values={
+                @publication.comments
+                |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
+                |> Enum.into(%{})
+              }
+              lang={@lang}
+            />
           </div>
         </div>
 
@@ -61,7 +70,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
                 additional_layer_documents={[]}
                 highlighted_geometry_documents={[]}
                 additional_geometry_documents={[]}
-                project_name={@project_name}
+                project_name={@publication.project_name}
               />
             </div>
           <% end %>
@@ -119,7 +128,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("Main documents") %>
           </.group_heading>
           <%= for doc <- @top_level_docs do %>
-            <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={doc} />
+            <DocumentLink.show
+              project={@publication.project_name}
+              date={@publication.draft_date}
+              lang={@lang}
+              doc={doc}
+            />
           <% end %>
         </div>
       </div>

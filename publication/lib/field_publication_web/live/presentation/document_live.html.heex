@@ -13,9 +13,6 @@
   <%= cond do
     category == "Project" ->
       DocumentComponents.Project.render(%{
-        project_name: @project_name,
-        draft_date: @publication.draft_date,
-        publication_comments: @publication_comments,
         doc: @doc,
         publication: @publication,
         lang: @selected_lang,
@@ -37,8 +34,7 @@
     category in @image_categories ->
       DocumentComponents.Image.render(%{
         doc: @doc,
-        project_name: @project_name,
-        draft_date: @publication.draft_date,
+        publication: @publication,
         lang: @selected_lang,
         uuid: @uuid
       })
@@ -47,12 +43,8 @@
       DocumentComponents.Generic.render(%{
         doc: @doc,
         publication: @publication,
-        project_name: @publication.project_name,
-        draft_date: @publication.draft_date,
         lang: @selected_lang,
-        uuid: @uuid,
-        relations_with_geometry: @relations_with_geometry,
-        project_map_layers: @project_map_layers
+        uuid: @uuid
       })
   end %>
 </div>

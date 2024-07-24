@@ -52,16 +52,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
 
-    relations_with_geometry =
-      Map.get(doc, "relations", [])
-      |> Enum.map(fn %{"values" => rel_docs} ->
-        rel_docs
-      end)
-      |> List.flatten()
-      |> Enum.filter(fn rel ->
-        Data.get_field(rel, "geometry") != nil
-      end)
-
     {
       :noreply,
       socket
@@ -70,7 +60,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:selected_lang, language)
       |> assign(:uuid, uuid)
       |> assign(:image_categories, image_categories)
-      |> assign(:relations_with_geometry, relations_with_geometry)
       |> assign(:project_map_layers, project_map_layers)
       |> assign(
         :page_title,
@@ -108,18 +97,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     top_level_docs = Data.get_extended_documents(top_level_uuids, current_publication)
 
-    publication_comments =
-      current_publication.comments
-      |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
-      |> Enum.into(%{})
-
     {
       :noreply,
       socket
       |> assign(:doc, project_doc)
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
-      |> assign(:publication_comments, publication_comments)
       |> assign(:top_level_docs, top_level_docs)
       |> assign(:project_map_layers, project_map_layers)
       |> assign(

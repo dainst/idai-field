@@ -309,7 +309,7 @@
       "Kalyptere": "",
       "Later": "",
       "Leistenziegel": "",
-      "Lochziegel/Hohlziegel": "",
+      "Lochziegel/Hohlziegel": "Tijolo perfurado",
       "Stroter": "",
       "Tegula": "Tégula",
       "Tonrohr": "",
@@ -324,8 +324,8 @@
       "Fussboden": "Pavimento",
       "Gewölbedecke": "",
       "Klosterformat": "",
-      "Türrahmen": "",
-      "Türsturz": "",
+      "Türrahmen": "Obreira",
+      "Türsturz": "Lintel de porta",
       "Wandverkleidung": ""
     }
   },
@@ -472,11 +472,11 @@
   },
   "Building-architecturalOrders-default": {
     "values": {
-      "Dorische Ordnung": "",
-      "Ionische Ordnung": "",
-      "Komposite Ordnung": "",
-      "Korinthische Ordnung": "",
-      "Toskanische Ordnung": ""
+      "Dorische Ordnung": "Ordem dórica",
+      "Ionische Ordnung": "Ordem jónica",
+      "Komposite Ordnung": "Ordem compósita",
+      "Korinthische Ordnung": "Ordem coríntia",
+      "Toskanische Ordnung": "Ordem toscana"
     }
   },
   "Building-buildingCategory-default": {
@@ -542,7 +542,7 @@
       "Bruchsteinmauerwerk": "",
       "Feldsteinmauerwerk": "",
       "Kyklopenmauerwerk": "",
-      "Lehmziegelmauerwerk": "",
+      "Lehmziegelmauerwerk": "Alvenaria de tijolo cozido",
       "Mischform Polygonal-/Quadermauerwerk": "",
       "Opus Caementitium": "",
       "Polygonalmauerwerk": "",
@@ -551,13 +551,13 @@
       "Unregelmäßiges Polygonalmauerwerk": "",
       "Würfel-/Handquadermauerwerk": "",
       "Ziegelmauerwerk": "",
-      "irreguläres Mauerwerk": "",
+      "irreguläres Mauerwerk": "Aparelho irregular",
       "regelmäßiges Polygonalmauerwerk": "",
       "regelmäßiges Quadermauerwerk": "",
       "regelmäßiges Trapezoidalmauerwerk": "",
       "unregelmäßiges Quadermauerwerk": "",
       "unregelmäßiges Trapezoidalmauerwerk": "",
-      "unspezifisches Mauerwerk": ""
+      "unspezifisches Mauerwerk": "Alvenaria não especificada"
     }
   },
   "Building-buildingType-default": {
@@ -768,7 +768,7 @@
   },
   "Architecture-blockProcessing-default": {
     "values": {
-      "Bruchsteine": "",
+      "Bruchsteine": "Brita",
       "Hausteine": "",
       "Lesesteine": "",
       "Werksteine": ""
@@ -791,8 +791,8 @@
     "values": {
       "Binderverband": "",
       "Blockverband": "",
-      "Flämischer Verband": "",
-      "Holländischer Verband": "",
+      "Flämischer Verband": "Aparelho flamenco",
+      "Holländischer Verband": "Aparelho holandês",
       "Kreuzverband": "",
       "Läuferverband": "",
       "Märkischer Verband": ""
@@ -803,10 +803,10 @@
       "Fundament: Geschüttet": "",
       "Fundament: gesetzt": "",
       "Mauerkern: Lesesteine": "",
-      "einschalig vor Feld/Hang": "",
+      "einschalig vor Feld/Hang": "Parede simples em frente a campo/encosta",
       "ohne Schalen/keine durchgehenden Lagen": "",
       "ohne Schalen/nur durchgehende Lagen": "",
-      "zweischalig": "",
+      "zweischalig": "Parede de dois panos",
       "zweischalig mit Binderlagen": ""
     }
   },
@@ -826,13 +826,13 @@
   },
   "Architecture-mortarConsistency-default": {
     "values": {
-      "brüchig": "",
+      "brüchig": "quebradiço",
       "erdig/lehmig": "terroso/argiloso",
       "fest": "firme",
       "hart": "duro",
       "locker": "solto",
       "mittelfein": "fino médio",
-      "pulverig": "",
+      "pulverig": "polvoroso",
       "sandig": "arenoso"
     }
   },
@@ -841,15 +841,15 @@
       "Aufgehendes": "",
       "Fensterzusetzung": "",
       "Flickung": "",
-      "Fundament": "",
-      "Gewölbe": "",
+      "Fundament": "Fundação",
+      "Gewölbe": "Abóbada",
       "Mauer": "Muro",
       "Mauerbettung": "",
       "Mauerdurchbruch": "",
-      "Mosaik": "",
+      "Mosaik": "Mosaico",
       "Opus sectile": "",
-      "Türzusetzung": "",
-      "Wandgestaltung": ""
+      "Türzusetzung": "Fecho de porta",
+      "Wandgestaltung": "Decoração/concepção da parede"
     }
   },
   "Architecture-wallType-default": {
@@ -861,7 +861,7 @@
       "Fachwerk": "",
       "Feldsteinmauer": "",
       "Grenzmauer": "",
-      "Ziegelmauer": ""
+      "Ziegelmauer": "Muro de tijolo"
     }
   },
   "Place-findspotClassification-default": {
@@ -1004,7 +1004,7 @@
     "values": {
       "Bastmatten": "",
       "Korkboden": "",
-      "Mosaik": "",
+      "Mosaik": "Mosaico",
       "Opus sectile": "",
       "Opus signinum": "",
       "Pflaster": "",
@@ -1502,22 +1502,22 @@
   "Stone-architectureElement-default": {
     "values": {
       "Akroter": "",
-      "Architrav": "",
+      "Architrav": "Arquitrave",
       "Archtitravfriesblock": "",
-      "Basis": "",
+      "Basis": "Base",
       "Bauplastik": "",
-      "Fries": "",
-      "Gesims": "",
-      "Kapitell": "",
+      "Fries": "Friso",
+      "Gesims": "Cornija",
+      "Kapitell": "Capitel",
       "Konsole": "",
-      "Profilstück": "",
+      "Profilstück": "Peça de perfil",
       "Quaderblock": "",
       "Rinne": "",
       "Schrankenplatte": "",
-      "Schwellenblock": "",
+      "Schwellenblock": "Bloco de soleira",
       "Sima": "",
-      "Säule": "",
-      "Wandverkleidung": ""
+      "Säule": "Coluna",
+      "Wandverkleidung": "Revestimento de parede"
     }
   },
   "Stone-material-default": {
@@ -1591,12 +1591,12 @@
   },
   "Stone-origin-default": {
     "values": {
-      "Alpen": "",
-      "Anatolien": "",
+      "Alpen": "Alpes",
+      "Anatolien": "Anatólia",
       "Chimtou": "",
       "Harz": "",
-      "Kreta": "",
-      "Sizilien": ""
+      "Kreta": "Creta",
+      "Sizilien": "Sicília"
     }
   },
   "Coin-denomination-default": {
@@ -1963,7 +1963,7 @@
       "Licinius": "",
       "Myrina": "",
       "Traian": "",
-      "Türkische Republick": "",
+      "Türkische Republick": "República Turca",
       "Valentianus III": ""
     }
   },
@@ -2013,9 +2013,9 @@
   },
   "Photo-originalType-default": {
     "values": {
-      "Dia bunt": "",
-      "Digitalfoto": "",
-      "Glasnegativ": "",
+      "Dia bunt": "Diapositivo a cores",
+      "Digitalfoto": "Foto digital",
+      "Glasnegativ": "Negativo sobre vidro",
       "Kleinbild bunt": "",
       "Kleinbild s/w": "",
       "Messbild": "",
@@ -2153,8 +2153,8 @@
   },
   "damages-default": {
     "values": {
-      "totalCollapse": "",
-      "partialCollapse": "",
+      "totalCollapse": "Perda total / colapso",
+      "partialCollapse": "Colapso parcial",
       "missingconst": "",
       "looseconst": "",
       "fractures": "",

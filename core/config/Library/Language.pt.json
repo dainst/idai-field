@@ -155,11 +155,11 @@
         },
         "vesselFormSpecific": {
           "label": "Forma",
-          "description": "Forma especial do recipiente"
+          "description": "Forma especial do contentor"
         },
         "vesselForm": {
-          "label": "Forma de base do recipiente",
-          "description": "Forma de base do recipiente"
+          "label": "Forma de base do contentor",
+          "description": "Forma de base do contentor"
         }
       }
     },
@@ -735,10 +735,10 @@
         },
         "vesselFormSpecific": {
           "label": "Forma",
-          "description": "Forma especial do recipiente"
+          "description": "Forma especial do contentor"
         },
         "vesselpart": {
-          "label": "Parte do recipiente"
+          "label": "Parte do contentor"
         },
         "amountSherdsRim": {
           "label": "Número de fragmentos de bordo"
@@ -759,7 +759,8 @@
           "label": "Número de fragmentos de bordo/base"
         },
         "formDescription": {
-          "label": "Descrição da forma"
+          "label": "Descrição da forma",
+          "description": "Descrição mais detalhada sobre a forma em geral (ovóide etc.)"
         },
         "residueAnalysis": {
           "label": "Análise de resíduos",
@@ -813,7 +814,8 @@
           "label": "Tratamento (interior)"
         },
         "temper": {
-          "label": "Tipo de inclusões"
+          "label": "Tipo de desengordurantes/ENP´s",
+          "description": "Principais tipos de desengordurantes/ENP´s, por exemplo 'materiais orgânicos'"
         },
         "amountSherdsPedestal": {
           "label": "Número de fragmentos de pé"
@@ -837,8 +839,51 @@
           "label": "Quantidade de inclusões"
         },
         "temperParticles": {
-          "label": "Granulação das inclusões",
-          "description": "Tamanho das partículas de inclusões"
+          "label": "Granulação dos desengordurantes/ENP´s",
+          "description": "Tamanho das partículas de desengordurantes/ENP´s"
+        },
+        "amountSherdsRimShoulder": {
+          "label": "Número de fragmentos de ombro/colo"
+        },
+        "amountSherdsShoulder": {
+          "label": "Número de fragmentos de ombro"
+        },
+        "Drawing": {
+          "label": "Desenho presente"
+        },
+        "objectType": {
+          "label": "Tipo de objeto"
+        },
+        "materialType": {
+          "description": "Qual o tipo de fabrico é o objeto encontrado?",
+          "label": "Classe de material"
+        },
+        "FormComparisonCompendia": {
+          "label": "Compêndio para comparação de forma"
+        },
+        "FormComparisonCompendiadetail": {
+          "label": "Compêndio para comparação de forma em detalhe"
+        },
+        "DecorationComparisonCompendia": {
+          "label": "Compêndio para comparação de decoração"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "label": "Compêndio para comparação de decoração em detalhe"
+        },
+        "ApplicationComparisonCompendia": {
+          "label": "Compêndio para comparação de aplicações"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "label": "Compêndio para comparação de aplicações em detalhe"
+        },
+        "manufacturing": {
+          "label": "Fabrico"
+        },
+        "temperTypeClay": {
+          "label": "Tipo de argila"
+        },
+        "vesselForm": {
+          "label": "Forma de base do contentor"
         }
       },
       "label": "Cerâmica"
@@ -923,7 +968,7 @@
           "description": "Descrição detalhada da forma em geral"
         },
         "manufacturing": {
-          "label": "Produto"
+          "label": "Fabrico"
         },
         "specificType": {
           "description": "Formato das pedras e telhas, se reconhecível",
@@ -937,8 +982,8 @@
           "description": "Transcrição ou cópia do texto do carimbo"
         },
         "temper": {
-          "label": "Tipo de inclusões",
-          "description": "Tipo principal de inclusões"
+          "label": "Tipo de desengordurantes/ENP´s",
+          "description": "Tipo principal de desengordurantes/ENP´s"
         }
       }
     },
@@ -1149,6 +1194,13 @@
         "treatment": {
           "label": "Tratamento",
           "description": "Campo de descrição sobre a presença de vestígios de tratamento antigos (por exemplo: 'marca de pedreiro no pé')"
+        },
+        "origin": {
+          "label": "Proveniência do material",
+          "description": "Lugar de proveniência do material"
+        },
+        "objectType": {
+          "label": "Tipo de objeto"
         }
       }
     },
@@ -1210,10 +1262,10 @@
       "fields": {
         "vesselFormSpecific": {
           "label": "Forma",
-          "description": "Forma especial do recipiente"
+          "description": "Forma especial do contentor"
         },
         "vesselForm": {
-          "label": "Forma de base do recipiente"
+          "label": "Forma de base do contentor"
         },
         "formDescription": {
           "label": "Descrição da forma",
@@ -1234,8 +1286,8 @@
           "label": "Condição da superfície"
         },
         "temper": {
-          "label": "Tipo de inclusões",
-          "description": "Tipo principal de inclusões"
+          "label": "Tipo de desengordurantes/ENP´s",
+          "description": "Tipo principal de desengordurantes/ENP´s"
         },
         "decorationTechnique": {
           "label": "Particularidades da superfície ou da técnica de decoração"
@@ -1256,8 +1308,8 @@
           "label": "Técnica de produção"
         },
         "temperParticles": {
-          "label": "Granulação das inclusões",
-          "description": "Tamanho das partículas de inclusões"
+          "label": "Granulação dos desengordurantes/ENP´s",
+          "description": "Tamanho das partículas de desengordurantes/ENP´s"
         }
       },
       "label": "Terracota"
@@ -1281,10 +1333,10 @@
       "fields": {
         "vesselFormSpecific": {
           "label": "Forma",
-          "description": "Forma especial do recipiente"
+          "description": "Forma especial do contentor"
         },
         "vesselForm": {
-          "label": "Forma de base do recipiente"
+          "label": "Forma de base do contentor"
         },
         "metalMaterial": {
           "label": "Material"

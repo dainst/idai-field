@@ -252,7 +252,7 @@
         },
         "descriptionOfBuildingTechnique": {
           "label": "Descrição da técnica de construção",
-          "description": "Descrição detalhada da técnica de construção (por exemplo muro em pedra ou em telha)"
+          "description": "Descrição detalhada da técnica de construção (por exemplo alvenaria em pedra ou em telha)"
         },
         "publicationDatingStratigraphy": {
           "label": "Datação (estratigrafia)",
@@ -270,7 +270,8 @@
           "description": "Tratamento do bloco/vestígios de tratamento"
         },
         "wallType": {
-          "label": "Tipo de muro"
+          "label": "Tipo de muro",
+          "description": "Tipo de alvenaria"
         },
         "materialCharacteristic": {
           "label": "Caraterística do material",
@@ -311,8 +312,15 @@
           "description": "Explicações e conclusões sobre o marco existente"
         },
         "mark": {
-          "label": "Marca de pedreiro",
-          "description": "Listagem de possíveis marcas de pedreiro"
+          "label": "Marca de canteiro",
+          "description": "Listagem de possíveis marcas de canteiro"
+        },
+        "brickwork": {
+          "label": "Aparelho"
+        },
+        "mortarBinder": {
+          "label": "Adição de argamassa",
+          "description": "Quão alto é a adição de material externo?"
         }
       }
     },
@@ -708,6 +716,10 @@
         },
         "consistency": {
           "label": "Consistência"
+        },
+        "mortarBinder": {
+          "description": "Quão alto é a adição de material externo?",
+          "label": "Adição de argamassa"
         }
       },
       "label": "Pavimento"
@@ -1193,7 +1205,7 @@
         },
         "treatment": {
           "label": "Tratamento",
-          "description": "Campo de descrição sobre a presença de vestígios de tratamento antigos (por exemplo: 'marca de pedreiro no pé')"
+          "description": "Campo de descrição sobre a presença de vestígios de tratamento antigos (por exemplo: 'marca de canteiro no pé')"
         },
         "origin": {
           "label": "Proveniência do material",
@@ -1201,6 +1213,9 @@
         },
         "objectType": {
           "label": "Tipo de objeto"
+        },
+        "architectureElement": {
+          "label": "Elemento arquitetónico"
         }
       }
     },

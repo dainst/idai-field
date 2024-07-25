@@ -212,7 +212,7 @@
       "Armreif": "Bracelete",
       "Einlage": "Inserto",
       "Fensterglas": "Vidro de janela",
-      "Gefäß": "Recipiente",
+      "Gefäß": "contentor",
       "Gemme": "",
       "Gerät": "Instrumento",
       "Glasschlacke": "Escória de vidro",
@@ -403,15 +403,15 @@
   },
   "Burial-amountIndividuals-default": {
     "values": {
-      "Doppelbestattung": "",
-      "Dreifachbestattung": "",
-      "Einzelbestattung": "",
+      "Doppelbestattung": "Sepultamento duplo",
+      "Dreifachbestattung": "Sepultamento triplo",
+      "Einzelbestattung": "Sepultamento único",
       "Grabdeponat": "",
-      "Kollektivbestattung": "",
-      "Massengrab": "",
-      "Mehrfachbestattung": "",
+      "Kollektivbestattung": "Sepultamento colectivo",
+      "Massengrab": "Vala comum",
+      "Mehrfachbestattung": "Sepultamento múltiplo",
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
-      "Wiedergängerbestattung": ""
+      "Wiedergängerbestattung": "Re-sepultamento"
     }
   },
   "Burial-burialCharacteristic-default": {
@@ -423,32 +423,32 @@
   },
   "Burial-burialDocumentation-default": {
     "values": {
-      "Endoskopie": "",
-      "Foto": "",
+      "Endoskopie": "Endoscopia",
+      "Foto": "Foto",
       "Histologie": "",
       "LM": "",
       "REM": "",
-      "Röntgen": ""
+      "Röntgen": "Radiografia"
     }
   },
   "Burial-graveFeature-default": {
     "values": {
       "Brandbestattung": "",
-      "Kenotaph": "",
+      "Kenotaph": "Cenotáfio",
       "Körperbestattung": "",
-      "Ossuar": "",
+      "Ossuar": "Ossário",
       "Teil-Körperbestattung": ""
     }
   },
   "Burial-positionArms-default": {
     "values": {
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
-      "am Kinn": "",
-      "an den Seiten": "",
-      "auf dem Bauch": "",
-      "auf dem Becken": "",
-      "auf der Brust": "",
-      "ungleichmäßig": ""
+      "am Kinn": "no queixo",
+      "an den Seiten": "nos lados",
+      "auf dem Bauch": "na barriga",
+      "auf dem Becken": "na bacia",
+      "auf der Brust": "no peito",
+      "ungleichmäßig": "irregular"
     }
   },
   "Burial-positionLegs-default": {
@@ -481,38 +481,38 @@
   },
   "Building-buildingCategory-default": {
     "values": {
-      "Altar": "",
-      "Amphitheater": "",
-      "Basilika": "",
-      "Bogen": "",
-      "Brücke": "",
-      "Circus": "",
+      "Altar": "Altar",
+      "Amphitheater": "Anfiteatro",
+      "Basilika": "Basílica",
+      "Bogen": "Arco",
+      "Brücke": "Ponte",
+      "Circus": "Circo",
       "Grabbau": "Tomba",
-      "Gymnasium": "",
+      "Gymnasium": "Ginásio",
       "Mauerkurtine": "",
       "Nymphäum": "",
       "Odeion": "",
-      "Strasse": "",
-      "Stützmauer": "",
+      "Strasse": "Estrada",
+      "Stützmauer": "Muro de suporte",
       "Säulenhalle": "",
-      "Tempel": "",
-      "Theater": "",
+      "Tempel": "Templo",
+      "Theater": "Teatro",
       "Therme": "",
       "Toranlage": "",
-      "Turm": "",
-      "Wohnbau": ""
+      "Turm": "Torre",
+      "Wohnbau": "Habitação"
     }
   },
   "Building-buildingCategorySpecific-default": {
     "values": {
       "Aediculabau": "",
       "Atriumhaus": "",
-      "Bogen": "",
+      "Bogen": "Arco",
       "Dipteros": "",
-      "Ehrenbogen": "",
-      "Ehrensäule": "",
+      "Ehrenbogen": "Arco honorário",
+      "Ehrensäule": "Coluna honorária",
       "Hoftempel": "",
-      "Palast": "",
+      "Palast": "Palácio",
       "Palästra": "",
       "Peripteros": "",
       "Peripteros sine portico": "",
@@ -677,10 +677,10 @@
   "Wood-objectType-default": {
     "values": {
       "Architektur": "",
-      "Altar": "",
-      "Anhänger": "",
-      "Gefäß": "Recipiente",
-      "Gerät": "",
+      "Altar": "Altar",
+      "Anhänger": "Pendente",
+      "Gefäß": "Contentor",
+      "Gerät": "Instrumento",
       "Grabbehältnis": "",
       "Grabmarkierung": "",
       "Grabplatte": "",
@@ -1342,14 +1342,14 @@
   },
   "Bone-objectType-default": {
     "values": {
-      "Anhänger": "",
-      "Armreif": "",
+      "Anhänger": "Pendente",
+      "Armreif": "Bracelete",
       "Astragal": "",
       "Bearbeitet (allgemein)": "",
       "Einlage": "Inserto",
-      "Gefäß": "Recipiente",
-      "Gerät": "",
-      "Kette": "",
+      "Gefäß": "contentor",
+      "Gerät": "Instrumento",
+      "Kette": "Cadeia",
       "Löffel": "Colher",
       "Perle": "Pérola",
       "Ring": "Anel",
@@ -1545,8 +1545,8 @@
   "Stone-objectType-default": {
     "values": {
       "Abschlag": "",
-      "Altar": "",
-      "Anhänger": "",
+      "Altar": "Altar",
+      "Anhänger": "Pendente",
       "Architekturdekor": "",
       "Bauglied": "",
       "Becken": "",
@@ -1554,7 +1554,7 @@
       "Einsatzkopf": "",
       "Fußbodenfragment": "",
       "Gefäß": "Recipiente",
-      "Gerät": "",
+      "Gerät": "Instrumento",
       "Grabmarkierung": "",
       "Grabplatte": "",
       "Gussform": "",
@@ -1573,7 +1573,7 @@
       "Rührstab": "",
       "Sarkophag": "",
       "Schmuck": "Joalharia",
-      "Siegel": "",
+      "Siegel": "Selo",
       "Spielbrett": "",
       "Spielstein": "Peça de jogo",
       "Spinnwirtel": "Fusaiola",
@@ -2048,22 +2048,22 @@
   },
   "Metal-objectType-default": {
     "values": {
-      "Anhänger": "",
-      "Armreif": "",
+      "Anhänger": "Pendente",
+      "Armreif": "Bracelete",
       "Barren": "",
       "Beschlag": "",
       "Blech": "",
       "Einlage": "Inserto",
       "Fibel": "",
-      "Gefäß": "Recipiente",
-      "Gerät": "",
+      "Gefäß": "Contentor",
+      "Gerät": "Instrumento",
       "Gewicht": "Peso",
       "Glocke": "Sino",
       "Gussform": "",
       "Gusszapfen": "",
       "Halbfabrikat": "",
       "Kandelaber": "",
-      "Kette": "",
+      "Kette": "Cadeia",
       "Klinge": "",
       "Knopf": "",
       "Lampe": "Lâmpada",
@@ -2088,8 +2088,8 @@
       "Schmuck": "Joalharia",
       "Schnalle": "",
       "Schreibgerät": "",
-      "Siegel": "",
-      "Spiegel": "",
+      "Siegel": "Selo",
+      "Spiegel": "Espelho",
       "Spielstein": "Peça de jogo",
       "Spinnwirtel": "Fusaiola",
       "Stabbarren": "",
@@ -2182,7 +2182,7 @@
       "weathering": "",
       "rotting": "",
       "rottingstr": "",
-      "vandalizm": "",
+      "vandalizm": "Vandalismo",
       "fissure": ""
     }
   },

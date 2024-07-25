@@ -32,8 +32,8 @@
                                    (change)="setCategoryCounts()"
                                    value="complete" id="completeselect"/>
                             <label class="form-check-label" for="completeselect" i18n="@@export.csvimportmode.complete">Komplett</label>
-                        <div class="form-check">
                         </div>
+                        <div class="form-check">
                             <input class="form-check-input" type="radio"
                                    [(ngModel)]="csvExportMode"
                                    (change)="setCategoryCounts()"
@@ -90,7 +90,7 @@
                     </div>
 
                     <div *ngIf="format === 'csv'" id="combine-hierarchical-relations-checkbox"
-                         class="form-check-inline mb-3">
+                         class="form-check-inline">
                         <input type="checkbox" id="hierarchical-relations-checkbox" class="form-check-input"
                                 [(ngModel)]="combineHierarchicalRelations">
                         <label for="hierarchical-relations-checkbox" class="form-check-label"

@@ -27,4 +27,17 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  .form-check-label {
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  .col-form-label {
+    padding-top: 0;
+  }
+
+  input[type=checkbox] {
+    margin-right: 8px;
+  }
 }

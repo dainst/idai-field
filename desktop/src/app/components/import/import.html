@@ -28,7 +28,7 @@
 
                     <div *ngIf="importState.sourceType === 'file'" class="mb-3">
                         <label class="control-label col-form-label" i18n="@@import.path">Pfad</label>
-                        <div class="input-group">
+                        <div id="path-input-group" class="input-group">
                             <input id="file-path-input"
                                    [ngModel]="importState.filePath"
                                    class="form-control"
@@ -57,29 +57,27 @@
                     </div>
 
                     <div *ngIf="isDefaultFormat()">
-                        <div
-                            (click)="setMergeMode(false)"
-                            id="radiobutton-merge-mode-false">
-                            <div class="form-check-inline mb-3">
-                            <input type="radio"
-                                class="form-check-input"
-                                name="radiobutton-merge-mode"
-                                [checked]="!isMergeMode()" />
-                            <label for="radiobutton-merge-mode-false"
-                                class="form-check-label"
-                                i18n="@@import.regularOption.label">
-                                Neue Ressourcen importieren</label>
-                            </div>
-                            <div class="import-info"
-                                i18n="@@import.defaultOption.info">
-                                Datensätze, deren Bezeichner (Feld <em>identifier</em>)
-                                bereits vergeben ist, werden ignoriert.
-                            </div>
+                        <div (click)="setMergeMode(false)"
+                             id="radiobutton-merge-mode-false">
+                            <div class="form-check">
+                                <input type="radio"
+                                    class="form-check-input"
+                                    name="radiobutton-merge-mode"
+                                    [checked]="!isMergeMode()" />
+                                <label for="radiobutton-merge-mode-false"
+                                    class="form-check-label"
+                                    i18n="@@import.regularOption.label">
+                                    Neue Ressourcen importieren</label>
+                                </div>
+                                <div class="import-info"
+                                    i18n="@@import.defaultOption.info">
+                                    Datensätze, deren Bezeichner (Feld <em>identifier</em>)
+                                    bereits vergeben ist, werden ignoriert.
+                                </div>
                         </div>
-                        <div
-                            (click)="setMergeMode(true)"
-                            id="radiobutton-merge-mode-true">
-                            <div class="form-check-inline mb-3">
+                        <div (click)="setMergeMode(true)"
+                             id="radiobutton-merge-mode-true">
+                            <div class="form-check">
                                 <input type="radio"
                                     class="form-check-input"
                                     name="radiobutton-merge-mode"
@@ -113,7 +111,7 @@
                             </div>
                         </div>
                         <div *ngIf="shouldDisplayPermitDeletionsOption()">
-                            <div class="form-check-inline mb-3">
+                            <div class="form-check-inline">
                                 <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
                                         [(ngModel)]="importState.permitDeletions">
                                 <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.permitDeletions">
@@ -136,7 +134,7 @@
                                 unverändert.
                             </div>
                         </div>
-                        <div class="mb-3 form-check-inline">
+                        <div class="form-check-inline">
                             <input type="checkbox" id="ignore-unconfigured-fields-checkbox" class="form-check-input"
                                     [(ngModel)]="importState.ignoreUnconfiguredFields">
                             <label for="ignore-unconfigured-fields-checkbox" class="form-check-label"

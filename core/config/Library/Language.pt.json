@@ -342,7 +342,8 @@
           "description": "Campo de descrição livre"
         },
         "excavationHistory": {
-          "label": "Histórico da escavação"
+          "label": "Histórico da escavação",
+          "description": "Sumário sobre os projetos executados no sítio de descoberta"
         },
         "siteClassification": {
           "label": "Classificação do sítio"
@@ -529,7 +530,8 @@
           "label": "Comentário sobre o estado de preservação"
         },
         "excavationHistory": {
-          "label": "História das escavações"
+          "label": "História das escavações",
+          "description": "Sumário sobre os projetos executados no sítio de descoberta"
         },
         "history": {
           "label": "História",

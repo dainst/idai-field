@@ -21,6 +21,9 @@ export class DeleteResourceModalComponent {
     
     public deleteAll: boolean;
     public confirmValue: string;
+    public countAffected: number;
+    
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -31,13 +34,27 @@ export class DeleteResourceModalComponent {
 
     public isMultipleSwitchAvailable = () => this.warningType === 'unconfiguredCategory';
 
-
     public cancel = () => this.activeModal.dismiss('cancel');
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+    
+    public async initialize() {
+
+        const foundDocuments: Array<Document> = (await this.datastore.find(
+            { categories: ['UNCONFIGURED'] },
+            { includeResourcesWithoutValidParent: true }
+        )).documents;
+
+        this.affectedDocuments = foundDocuments.filter(document => {
+            return document.resource.category === this.document.resource.category;
+        });
+
+        this.countAffected = this.affectedDocuments.length;
     }
 
 
@@ -90,13 +107,8 @@ export class DeleteResourceModalComponent {
 
 
     private async deleteMultiple() {
-
-        const documents = (await this.datastore.find(
-            { categories: ['UNCONFIGURED'] },
-            { includeResourcesWithoutValidParent: true }
-        )).documents.filter(document => document.resource.category === this.document.resource.category);
         
-        for (let document of documents) {
+        for (let document of this.affectedDocuments) {
             await this.relationsManager.remove(document);
         }
     }

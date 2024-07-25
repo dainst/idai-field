@@ -8,13 +8,22 @@
         Daten wirklich löschen?
     </span>
 
-    <div id="multiple-switch" class="row">
+    <div id="multiple-switch" 
+         class="row" 
+         [disableTooltip]="countAffected !== 1" 
+         [class.disabled]="countAffected === 1"
+         ngbTooltip="Nur diese Ressource ist betroffen." 
+         i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
+         container="body">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.deleteFieldData.all">Bei allen Ressourcen dieser Kategorie löschen</span>
         </div>
         <div class="col-auto">
-            <label class="switch">
-                <input type="checkbox" [checked]="deleteAll" (change)="deleteAll = !deleteAll">
+            <label class="switch" [class.disabled]="countAffected === 1">
+                <input type="checkbox" 
+                       [checked]="deleteAll" 
+                       (change)="deleteAll = !deleteAll" 
+                       [disabled]="countAffected === 1">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -23,13 +32,13 @@
     <div *ngIf="deleteAll">
         <div *ngIf="warningType === 'unconfiguredFields'" class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.deleteFieldData.all.info.unconfigured">
-            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Bitte beachten Sie: Durch diese Aktion werden bei allen <b>{{countAffected}}</b> Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche eingetragenen Daten im
             Feld <span [innerHTML]="getFieldLabelHTML()"></span> gelöscht.
         </div>
         <div *ngIf="warningType === 'invalidFields'" class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.deleteFieldData.all.info.invalid">
-            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Bitte beachten Sie: Durch diese Aktion werden bei <b>{{countAffected}}</b> allen Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche ungültigen Daten im
             Feld <span [innerHTML]="getFieldLabelHTML()"></span> gelöscht. Gültige Daten bleiben erhalten.
         </div>
@@ -52,7 +61,8 @@
          (click)="performDeletion()">
         <span i18n="@@buttons.ok">OK</span>
     </div>
-    <div class="btn btn-secondary"
+    <div id="cancel-button" 
+         class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>

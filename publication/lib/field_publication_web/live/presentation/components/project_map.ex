@@ -83,7 +83,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectMap do
          highlighted \\ false
        ) do
     geometry =
-      Data.get_field_values(doc, "geometry")
+      Data.get_field_value(doc, "geometry")
 
     %{
       type: "Feature",

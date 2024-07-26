@@ -177,7 +177,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
         %{"publication" => publication_form_params},
         %{assigns: %{publication: publication}} = socket
       ) do
-    case Publications.put(publication, publication_form_params) |> IO.inspect() do
+    case Publications.put(publication, publication_form_params) do
       {:ok, updated_publication} ->
         {
           :noreply,

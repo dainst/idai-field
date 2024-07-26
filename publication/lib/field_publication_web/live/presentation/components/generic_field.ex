@@ -3,6 +3,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   use FieldPublicationWeb, :verified_routes
 
   require Logger
+  alias FieldPublication.Publications.Data.Field
   alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Search
 
@@ -10,30 +11,30 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
   end
 
-  def render(%{field: %{"values" => values}} = assigns)
-      when is_binary(values) or is_map(values) or is_number(values) or is_boolean(values) do
+  def render(%{field: %Field{value: value}} = assigns)
+      when is_binary(value) or is_map(value) or is_number(value) or is_boolean(value) do
     ~H"""
-    <dt class="font-bold"><I18n.text values={@field["labels"]} /></dt>
+    <dt class="font-bold"><I18n.text values={@field.labels} /></dt>
 
     <.render_value
-      list_labels={@field["list_labels"]}
-      key={@field["key"]}
-      value={@field["values"]}
-      type={@field["type"]}
+      list_labels={@field.value_labels}
+      key={@field.name}
+      value={@field.value}
+      type={@field.input_type}
     />
     """
   end
 
-  def render(%{field: %{"values" => values}} = assigns) when is_list(values) do
+  def render(%{field: %Field{value: values}} = assigns) when is_list(values) do
     ~H"""
-    <dt class="font-bold"><I18n.text values={@field["labels"]} /></dt>
+    <dt class="font-bold"><I18n.text values={@field.labels} /></dt>
 
-    <%= for value <- @field["values"] do %>
+    <%= for value <- @field.value do %>
       <.render_value
-        list_labels={@field["list_labels"]}
-        key={@field["key"]}
+        list_labels={@field.value_labels}
+        key={@field.name}
         value={value}
-        type={@field["type"]}
+        type={@field.input_type}
       />
     <% end %>
     """

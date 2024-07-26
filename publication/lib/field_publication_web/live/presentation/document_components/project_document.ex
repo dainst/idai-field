@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
     ~H"""
     <div>
       <.document_heading>
-        <I18n.text values={Data.get_field_values(@doc, "shortName")} lang={@lang} />
+        <I18n.text values={Data.get_field_value(@doc, "shortName")} lang={@lang} />
       </.document_heading>
       <div class="flex flex-row">
         <div class="basis-2/3 m-5">
@@ -27,7 +27,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
             <%= if depicted_in do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
-                <%= for doc <- depicted_in["values"] do %>
+                <%= for doc <- depicted_in.value do %>
                   <.link
                     patch={
                       ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc["id"]}"
@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
                 <% end %>
               </div>
             <% end %>
-            <I18n.markdown values={Data.get_field_values(@doc, "description")} lang={@lang} />
+            <I18n.markdown values={Data.get_field_value(@doc, "description")} lang={@lang} />
           </div>
           <.header class="mt-3">
             <%= gettext("project_doc_about_publication") %>
@@ -83,12 +83,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
             <% contact_person = Data.get_field(@doc, "contactPerson") %>
             <%= if contact_mail do %>
-              <dt class="font-bold"><I18n.text values={contact_person["labels"]} lang={@lang} /></dt>
+              <dt class="font-bold"><I18n.text values={contact_person.labels} lang={@lang} /></dt>
               <dd class="ml-4">
-                <a href={"mailto:#{contact_mail["values"]}"}>
+                <a href={"mailto:#{contact_mail.value}"}>
                   <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
                   <%= if contact_person do %>
-                    <%= contact_person["values"] %>
+                    <%= contact_person.value %>
                   <% else %>
                     <%= gettext("contact_email") %>
                   <% end %>
@@ -103,9 +103,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
 
             <% staff = Data.get_field(@doc, "staff") %>
             <%= if staff do %>
-              <dt class="font-bold"><I18n.text values={staff["labels"]} lang={@lang} /></dt>
+              <dt class="font-bold"><I18n.text values={staff.labels} lang={@lang} /></dt>
               <dd class="ml-4">
-                <%= Enum.join(staff["values"], ", ") %>
+                <%= Enum.join(staff.value, ", ") %>
               </dd>
             <% end %>
 
@@ -113,7 +113,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= if bibliographic_references do %>
               <GenericField.render field={bibliographic_references} lang={@lang} />
             <% end %>
-            <% url = Data.get_field_values(@doc, "projectURI") %>
+            <% url = Data.get_field_value(@doc, "projectURI") %>
             <%= if url do %>
               <dt class="font-bold"><%= gettext("further_links") %></dt>
               <dd class="ml-4">

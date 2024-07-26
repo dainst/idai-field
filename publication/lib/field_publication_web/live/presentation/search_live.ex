@@ -38,7 +38,9 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       |> assign(:search_end_reached, false)
       |> assign(:aggregations, aggregations)
       |> assign(:total, total)
-      |> stream(:search_results, docs, reset: true)
+      |> stream(:search_results, docs |> Enum.map(fn doc -> Map.put(doc, :id, doc["id"]) end),
+        reset: true
+      )
     }
   end
 
@@ -69,7 +71,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       socket
       |> assign(:from, from + @search_batch_limit)
       |> assign(:search_end_reached, docs == [])
-      |> stream(:search_results, docs)
+      |> stream(:search_results, docs |> Enum.map(fn doc -> Map.put(doc, :id, doc["id"]) end))
     }
   end
 

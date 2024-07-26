@@ -158,20 +158,20 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   defp get_page_title(%{"id" => "project"} = doc) do
     {_, short_description} =
-      I18n.select_translation(%{values: Data.get_field_values(doc, "shortName")})
+      I18n.select_translation(%{values: Data.get_field_value(doc, "shortName")})
 
     short_description
   end
 
   defp get_page_title(doc) do
     short_descriptions =
-      Data.get_field_values(doc, "shortDescription")
+      Data.get_field_value(doc, "shortDescription")
       |> case do
         nil ->
-          Data.get_field_values(doc, "identifier")
+          Data.get_field_value(doc, "identifier")
 
-        values ->
-          values
+        val ->
+          val
       end
 
     {_translation_info, value} = I18n.select_translation(%{values: short_descriptions})

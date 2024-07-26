@@ -5,6 +5,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.DocumentSchema.Publication
 
   alias FieldPublication.Publications.Data
+  alias FieldPublication.Publications.Data.Document
 
   alias FieldPublicationWeb.Presentation.Components.{
     I18n
@@ -15,18 +16,18 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   def mount(_assigns, _session, socket) do
     published_projects =
       Publications.get_most_recent(:all, socket.assigns.current_user)
-      |> Task.async_stream(fn publication ->
+      |> Task.async_stream(fn %Publication{} = publication ->
         {publication, Publications.Data.get_extended_document("project", publication)}
       end)
-      |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, doc}} ->
+      |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, %Document{} = doc}} ->
         longitude =
-          Data.get_field_values(
+          Data.get_field_value(
             doc,
             "longitude"
           )
 
         latitude =
-          Data.get_field_values(
+          Data.get_field_value(
             doc,
             "latitude"
           )

@@ -7,6 +7,11 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications.Data
 
+  alias FieldPublication.Publications.Data.{
+    Category,
+    Document
+  }
+
   def render(assigns) do
     ~H"""
     <div>
@@ -115,9 +120,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           []
 
         relation ->
-          relation
-          |> Map.get("values", [])
-          |> Enum.map(&create_feature_info(&1, lang))
+          Enum.map(relation.docs, &create_feature_info(&1, lang))
       end
       |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
       |> case do
@@ -129,9 +132,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
               []
 
             relation ->
-              relation
-              |> Map.get("values", [])
-              |> Enum.map(&create_feature_info(&1, lang))
+              Enum.map(relation.docs, &create_feature_info(&1, lang))
           end
           |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
@@ -193,16 +194,16 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   defp create_feature_info(
-         %{
-           "category" => %{"color" => color, "labels" => category_labels},
-           "id" => uuid,
-           "identifier" => identifier
+         %Document{
+           category: %Category{color: color, labels: category_labels},
+           id: uuid,
+           identifier: identifier
          } = doc,
          lang
        ) do
     description =
       doc
-      |> Data.get_field_values("shortDescription")
+      |> Data.get_field_value("shortDescription")
       |> case do
         nil ->
           ""
@@ -232,7 +233,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       }
     }
 
-    if geometry = Data.get_field_values(doc, "geometry") do
+    if geometry = Data.get_field_value(doc, "geometry") do
       base
       |> put_in([:geometry], geometry)
       |> put_in([:properties, :type], geometry["type"])

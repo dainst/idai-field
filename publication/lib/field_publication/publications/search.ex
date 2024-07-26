@@ -4,6 +4,8 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications.Data
 
+  require Logger
+
   def search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
@@ -57,7 +59,7 @@ defmodule FieldPublication.Publications.Search do
           docs:
             body["hits"]["hits"]
             |> Enum.map(fn %{"_source" => doc} ->
-              Map.put(doc, :id, doc["id"])
+              Map.put(doc, "full_doc", Data.document_map_to_struct(doc["full_doc"]))
             end),
           aggregations:
             body
@@ -238,14 +240,21 @@ defmodule FieldPublication.Publications.Search do
             values when is_map(values) ->
               Map.values(values)
 
+            values when is_binary(values) ->
+              Logger.warning(
+                "Based on the project configuration expected Map or List values for field '#{field_name}' in '#{res["id"]}', but got '#{values}'."
+              )
+
+              [values]
+
             nil ->
               nil
           end
 
         {"#{field_name}_keyword", value_list}
       end)
-      |> Stream.reject(fn {_field_name, value} ->
-        value == nil
+      |> Stream.reject(fn {_field_name, value} = val ->
+        value == nil or is_binary(val)
       end)
       |> Enum.into(%{})
 

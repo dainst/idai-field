@@ -23,8 +23,8 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
         uuid={@uuid}
         selected_lang={@lang}
         identifier={
-          if Data.get_field_values(@current_doc, "category") != "Project",
-            do: Data.get_field_values(@current_doc, "identifier")
+          if Data.get_field_value(@current_doc, "category") != "Project",
+            do: Data.get_field_value(@current_doc, "identifier")
         }
       />
     </div>

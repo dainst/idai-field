@@ -3,15 +3,14 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data
+  alias FieldPublication.Publications.Data.Document
 
   alias FieldPublicationWeb.Presentation.Components.{
     Image,
     I18n
   }
 
-  attr :doc, :map, required: true
-  attr :project, :string, required: true
-  attr :date, :string, required: true
+  attr :doc, Document, required: true
   attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
 
@@ -31,7 +30,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         class="grow p-3 rounded-tr rounded-br"
         style="border-width: 1px 1px 1px 0px;"
         patch={
-          ~p"/projects/#{@project}/#{@date}/#{@lang}/#{if @doc.id != "project" do
+          ~p"/projects/#{@doc.project}/#{@doc.publication}/#{@lang}/#{if @doc.id != "project" do
             @doc.id
           else
             ""
@@ -82,7 +81,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         class={"grow p-3 rounded-tr rounded-br #{if Map.get(assigns, :is_highlighted), do: "bg-slate-200"}"}
         style={"border-color: #{@doc.category.color}; filter:saturate(50%); border-width: 1px 1px 1px 0px;"}
         patch={
-          ~p"/projects/#{@project}/#{@date}/#{@lang}/hierarchy/#{if @doc.id != "project" do
+          ~p"/projects/#{@doc.project}/#{@doc.publication}/#{@lang}/hierarchy/#{if @doc.id != "project" do
             @doc.id
           else
             ""
@@ -102,7 +101,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
             <Image.show
               size="^,128"
               class="pt-1 border-slate-100"
-              project={@project}
+              project={@doc.project}
               uuid={preview_image_uuid}
               alt_text={"An image depicting #{@doc.identifier}"}
             />

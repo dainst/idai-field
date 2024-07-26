@@ -27,12 +27,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show
-          project={@publication.project_name}
-          date={@publication.draft_date}
-          lang={@lang}
-          doc={@doc}
-        />
+        <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
       <div class="flex flex-row">
         <div class="basis-2/3">
@@ -110,13 +105,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- other_relation.docs do %>
-                <DocumentLink.show
-                  project={@publication.project_name}
-                  date={@publication.draft_date}
-                  lang={@lang}
-                  doc={doc}
-                  image_count={2}
-                />
+                <DocumentLink.show lang={@lang} doc={doc} image_count={2} />
               <% end %>
             </div>
           <% end %>

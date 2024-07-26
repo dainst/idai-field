@@ -128,12 +128,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("Main documents") %>
           </.group_heading>
           <%= for doc <- @top_level_docs do %>
-            <DocumentLink.show
-              project={@publication.project_name}
-              date={@publication.draft_date}
-              lang={@lang}
-              doc={doc}
-            />
+            <DocumentLink.show lang={@lang} doc={doc} />
           <% end %>
         </div>
       </div>

@@ -10,8 +10,17 @@ defmodule FieldPublication.Publications.Data do
 
   defmodule Document do
     @derive Jason.Encoder
-    @enforce_keys [:id, :identifier, :category]
-    defstruct [:id, :identifier, :category, groups: [], relations: [], image_uuids: []]
+    @enforce_keys [:id, :identifier, :category, :project, :publication]
+    defstruct [
+      :id,
+      :identifier,
+      :project,
+      :publication,
+      :category,
+      groups: [],
+      relations: [],
+      image_uuids: []
+    ]
   end
 
   defmodule Category do
@@ -42,6 +51,8 @@ defmodule FieldPublication.Publications.Data do
     %Document{
       id: map["id"],
       identifier: map["identifier"],
+      project: map["project"],
+      publication: map["publication"],
       category: %Category{
         name: map["category"]["name"],
         labels: map["category"]["labels"],
@@ -262,7 +273,7 @@ defmodule FieldPublication.Publications.Data do
   def apply_project_configuration(
         %{"resource" => resource} = _document,
         configuration,
-        publication,
+        %Publication{} = publication,
         include_relations \\ false
       ) do
     category_configuration = search_category_tree(configuration, resource["category"])
@@ -284,6 +295,8 @@ defmodule FieldPublication.Publications.Data do
       %Document{
         id: resource["id"],
         identifier: resource["identifier"],
+        project: publication.project_name,
+        publication: publication.draft_date,
         category: extend_category(category_configuration["item"], resource),
         groups: extend_field_groups(category_configuration["item"], resource),
         image_uuids: image_uuids

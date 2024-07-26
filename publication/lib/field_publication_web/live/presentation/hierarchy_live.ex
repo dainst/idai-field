@@ -29,7 +29,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
       />
     </div>
     <.document_heading>
-      <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@current_doc} />
+      <DocumentLink.show lang={@lang} doc={@current_doc} />
     </.document_heading>
 
     <ViewSelection.render

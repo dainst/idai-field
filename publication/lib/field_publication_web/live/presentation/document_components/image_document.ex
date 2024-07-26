@@ -23,12 +23,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show
-          project={@publication.project_name}
-          date={@publication.draft_date}
-          lang={@lang}
-          doc={@doc}
-        />
+        <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-row">
@@ -39,13 +34,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>
-                <DocumentLink.show
-                  project={@publication.project_name}
-                  date={@publication.draft_date}
-                  lang={@lang}
-                  doc={doc}
-                  image_count={0}
-                />
+                <DocumentLink.show lang={@lang} doc={doc} image_count={0} />
               <% end %>
             </div>
           <% end %>

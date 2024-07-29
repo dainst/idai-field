@@ -59,7 +59,9 @@ defmodule FieldPublication.Publications.Data do
         color: map["category"]["color"]
       },
       groups:
-        Enum.map(map["groups"], fn group ->
+        map
+        |> Map.get("groups", [])
+        |> Enum.map(fn group ->
           %Group{
             name: group["name"],
             labels: group["labels"],
@@ -76,7 +78,9 @@ defmodule FieldPublication.Publications.Data do
           }
         end),
       relations:
-        Enum.map(map["relations"], fn relation_group ->
+        map
+        |> Map.get("relations", [])
+        |> Enum.map(fn relation_group ->
           %RelationGroup{
             name: relation_group["name"],
             labels: relation_group["labels"],

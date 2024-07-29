@@ -9,7 +9,7 @@ defmodule FieldPublication.Processing.OpenSearch do
     Search
   }
 
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Publication
 
   require Logger
 

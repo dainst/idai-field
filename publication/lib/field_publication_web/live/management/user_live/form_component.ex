@@ -3,7 +3,7 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
 
   alias FieldPublication.CouchService
   alias FieldPublication.Users
-  alias FieldPublication.DocumentSchema.User
+  alias FieldPublication.DatabaseSchema.User
 
   @impl true
   def render(assigns) do

@@ -6,7 +6,7 @@ defmodule FieldPublication.Publications.Data do
     CouchService
   }
 
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Publication
 
   defmodule Document do
     @derive Jason.Encoder

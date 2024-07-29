@@ -206,7 +206,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
         if not Projects.has_publication_access?(publication, socket.assigns.current_user) do
           {
             :halt,
@@ -238,7 +238,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
+      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
         {:cont, socket}
     end
   end
@@ -335,7 +335,7 @@ defmodule FieldPublicationWeb.UserAuth do
         )
         |> halt()
 
-      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
         if not Projects.has_publication_access?(publication, conn.assigns.current_user) do
           conn
           |> resp(403, "You are not allowed to access that page.")
@@ -357,7 +357,7 @@ defmodule FieldPublicationWeb.UserAuth do
         |> resp(404, "No publications found for project '#{project_id}'.")
         |> halt()
 
-      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
+      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
         conn
     end
   end

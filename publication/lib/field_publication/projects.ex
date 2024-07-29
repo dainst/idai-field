@@ -3,7 +3,7 @@ defmodule FieldPublication.Projects do
 
   alias Ecto.Changeset
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Base,
     Project,
     Publication
@@ -23,7 +23,7 @@ defmodule FieldPublication.Projects do
   @doc """
   Retrieve a project document by the projects name.
 
-  Returns `{:ok, %FieldPublication.DocumentSchema.Project{}}` on success, or `{:error, :not_found}` if a project of that name does not exist.
+  Returns `{:ok, %FieldPublication.DatabaseSchema.Project{}}` on success, or `{:error, :not_found}` if a project of that name does not exist.
 
   ## Parameters
     - `name`: Name of the project as String.
@@ -32,7 +32,7 @@ defmodule FieldPublication.Projects do
       iex> get("bourgou")
       {
         :ok,
-        %FieldPublication.DocumentSchema.Project{
+        %FieldPublication.DatabaseSchema.Project{
           _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
           name: "bourgou",
           doc_type: "project",
@@ -67,14 +67,14 @@ defmodule FieldPublication.Projects do
   @doc """
   Retrieve a project document by the projects name.
 
-  Returns a `%FieldPublication.DocumentSchema.Project{}` schema struct or raises an expection if the project was not found.
+  Returns a `%FieldPublication.DatabaseSchema.Project{}` schema struct or raises an expection if the project was not found.
 
   ## Parameters
     - `name`: Name of the project as String.
 
   ## Examples
       iex> get!("bourgou")
-      %FieldPublication.DocumentSchema.Project{
+      %FieldPublication.DatabaseSchema.Project{
         _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
         name: "bourgou",
         doc_type: "project",
@@ -92,12 +92,12 @@ defmodule FieldPublication.Projects do
   @doc """
   List a projects in the database.
 
-  Returns a list of all  `%FieldPublication.DocumentSchema.Project{}` schema structs in the database.
+  Returns a list of all  `%FieldPublication.DatabaseSchema.Project{}` schema structs in the database.
 
   ## Examples
       iex> list()
       [
-        %FieldPublication.DocumentSchema.Project{
+        %FieldPublication.DatabaseSchema.Project{
           _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
           name: "bourgou",
           doc_type: "project",
@@ -117,7 +117,7 @@ defmodule FieldPublication.Projects do
   @doc """
   Create or update a project. This initializes the both the database document and the FileService directories.
 
-  Returns either `{:ok, %FieldPublication.DocumentSchema.Project{}}` containing the update document on success, or `{:error, changeset}` if
+  Returns either `{:ok, %FieldPublication.DatabaseSchema.Project{}}` containing the update document on success, or `{:error, changeset}` if
   the update failed due to document revision missmatch.
 
   The function may also raise an exception if FieldPublication fails to create the project's file directories.
@@ -128,9 +128,9 @@ defmodule FieldPublication.Projects do
 
   ## Example
   ### (1) Creating a new project document.
-      iex> FieldPublication.Projects.put(%FieldPublication.DocumentSchema.Project{}, %{"name" => "my_new_project", "editors" => ["some_user"]})
+      iex> FieldPublication.Projects.put(%FieldPublication.DatabaseSchema.Project{}, %{"name" => "my_new_project", "editors" => ["some_user"]})
       {:ok,
-      %FieldPublication.DocumentSchema.Project{
+      %FieldPublication.DatabaseSchema.Project{
         _rev: "1-efb39394b265b932a1c0d3d6ae3c2e6d",
         name: "my_new_project",
         doc_type: "project",
@@ -138,19 +138,19 @@ defmodule FieldPublication.Projects do
       }}
 
   ### (2) Attempting to create a new project document without a project name.
-      iex> FieldPublication.Projects.put(%FieldPublication.DocumentSchema.Project{}, %{"editors" => ["some_user"]})
+      iex> FieldPublication.Projects.put(%FieldPublication.DatabaseSchema.Project{}, %{"editors" => ["some_user"]})
       {:error,
       #Ecto.Changeset<
         action: :create,
         changes: %{editors: ["some_user"]},
         errors: [name: {"can't be blank", [validation: :required]}],
-        data: #FieldPublication.DocumentSchema.Project<>,
+        data: #FieldPublication.DatabaseSchema.Project<>,
         valid?: false
       >}
 
   ### (3) Updating an existing project document.
       bourgou = FieldPublication.Projects.get!("bourgou")
-      %FieldPublication.DocumentSchema.Project{
+      %FieldPublication.DatabaseSchema.Project{
         _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
         name: "bourgou",
         doc_type: "project",
@@ -159,7 +159,7 @@ defmodule FieldPublication.Projects do
 
       FieldPublication.Projects.put(bourgou, %{"editors" => ["some_user"]})
       {:ok,
-      %FieldPublication.DocumentSchema.Project{
+      %FieldPublication.DatabaseSchema.Project{
         _rev: "9-b5deb5d3c32e9638554cd9c9cf76ce2e",
         name: "bourgou",
         doc_type: "project",
@@ -201,7 +201,7 @@ defmodule FieldPublication.Projects do
 
   ## Example
       iex(0)> project = FieldPublication.Projects.get!("my_doomed_project")
-      %FieldPublication.DocumentSchema.Project{
+      %FieldPublication.DatabaseSchema.Project{
         _rev: "1-efb39394b265b932a1c0d3d6ae3c2e6d",
         name: "my_doomed_project",
         doc_type: "project",

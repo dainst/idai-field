@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
   import FieldPublicationWeb.Presentation.Components.Typography
 
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications.Data
 
   alias FieldPublication.Publications.Data.{

@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponen
 
   alias FieldPublication.Publications
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Publication,
     ReplicationInput
   }

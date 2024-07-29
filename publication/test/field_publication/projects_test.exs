@@ -3,7 +3,7 @@ defmodule FieldPublication.ProjectTest do
 
   alias FieldPublication.FileService
   alias FieldPublication.CouchService
-  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DatabaseSchema.Project
   alias FieldPublication.Projects
 
   @core_database Application.compile_env(:field_publication, :core_database)

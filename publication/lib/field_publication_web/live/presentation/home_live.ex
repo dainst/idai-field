@@ -2,7 +2,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Publication
 
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document

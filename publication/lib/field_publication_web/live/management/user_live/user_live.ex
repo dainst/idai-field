@@ -2,7 +2,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Users
-  alias FieldPublication.DocumentSchema.User
+  alias FieldPublication.DatabaseSchema.User
   alias FieldPublicationWeb.Management.UserLive.FormComponent
 
   @impl true

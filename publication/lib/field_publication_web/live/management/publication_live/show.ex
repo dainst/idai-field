@@ -11,7 +11,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     Processing
   }
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Publication,
     LogEntry,
     Translation

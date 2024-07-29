@@ -8,7 +8,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
     Projects
   }
 
-  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DatabaseSchema.Project
 
   alias FieldPublication.Test.ProjectSeed
 

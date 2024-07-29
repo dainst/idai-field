@@ -4,15 +4,15 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
   alias FieldPublication.Publications
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
-  alias FieldPublication.DocumentSchema.Project
-  alias FieldPublication.DocumentSchema.LogEntry
+  alias FieldPublication.DatabaseSchema.Project
+  alias FieldPublication.DatabaseSchema.LogEntry
 
   use FieldPublicationWeb.ConnCase
   import Phoenix.LiveViewTest
 
   @core_database Application.compile_env(:field_publication, :core_database)
   @test_project_name "test_project_a"
-  @test_user %FieldPublication.DocumentSchema.User{
+  @test_user %FieldPublication.DatabaseSchema.User{
     name: "test_user",
     password: "pw",
     label: "Test user"
@@ -139,7 +139,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
         :receive,
         {
           :replication_result,
-          %FieldPublication.DocumentSchema.Publication{
+          %FieldPublication.DatabaseSchema.Publication{
             _rev: _,
             doc_type: "publication",
             project_name: @test_project_name,

@@ -51,7 +51,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
               <Image.show
                 size="^,128"
                 class="p-1 inline"
-                project={@project}
+                project={@doc.project}
                 uuid={uuid}
                 alt_text={"An image depicting '#{@doc.identifier}'"}
               />

@@ -83,14 +83,23 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     <%= if is_list(@field.value) do %>
       <ul>
         <%= for value <- @field.value do %>
-          <%= if Map.has_key?(value, "doi") do %>
-            <li>
-              <a href={value["doi"]}><%= value["quotation"] %></a>
-            </li>
-          <% else %>
-            <li>
-              <.render_warning value={value} />
-            </li>
+          <%= cond do %>
+            <% Map.has_key?(value, "doi") -> %>
+              <li>
+                <a href={value["doi"]} target="_blank"><%= value["quotation"] %></a>
+              </li>
+            <% Map.has_key?(value, "zenonId") -> %>
+              <li>
+                <a href={value["zenonId"]} target="_blank"><%= value["quotation"] %></a>
+              </li>
+            <% Map.has_key?(value, "quotation") -> %>
+              <li>
+                <%= value["quotation"] %>
+              </li>
+            <% true -> %>
+              <li>
+                <.render_warning value={value} />
+              </li>
           <% end %>
         <% end %>
       </ul>

@@ -100,6 +100,18 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
+  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["dimension"] do
+    ~H"""
+    <%= for %{"inputUnit" => unit, "inputValue" => value, "isImprecise" => imprecise?, "measurementPosition" => position} <- @field.value do %>
+      <div>
+        <%= if position != nil and position != "", do: "#{position}: " %><%= "#{value} #{unit}" %><%= if imprecise?,
+          do: " (#{gettext("imprecise")})" %>
+      </div>
+    <% end %>
+    """
+  end
+
   def render_value(assigns) do
     render_warning(assigns)
   end

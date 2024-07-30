@@ -15,13 +15,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   attr :field, Field, required: true
   attr :lang, :string, default: Gettext.get_locale(FieldPublicationWeb.Gettext)
 
-  def render(assigns) do
-    ~H"""
-    <.render_value {assigns} />
-    """
-  end
-
-  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text", "unsignedInt", "unsignedFloat", "date"] do
     ~H"""
     <.construct_search_link field={@field} value={@field.value}>
@@ -30,7 +24,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["checkboxes"] do
     ~H"""
     <%= for value <- @field.value do %>
@@ -43,7 +37,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["dropdown", "radio"] do
     ~H"""
     <.construct_search_link field={@field} value={@field.value}>
@@ -52,7 +46,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["dropdownRange"] do
     ~H"""
     <.construct_search_link field={@field} value={@field.value["value"]}>
@@ -70,14 +64,14 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
     ~H"""
     <%= if @field.value == true, do: gettext("true"), else: gettext("false") %>
     """
   end
 
-  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["literature"] do
     ~H"""
     <%= if is_list(@field.value) do %>
@@ -109,7 +103,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render_value(%{field: %Field{input_type: input_type}} = assigns)
+  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["dimension"] do
     ~H"""
     <%= for %{"inputUnit" => unit, "inputValue" => value, "isImprecise" => imprecise?, "measurementPosition" => position} <- @field.value do %>
@@ -121,7 +115,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render_value(assigns) do
+  def render(assigns) do
     render_warning(assigns)
   end
 
@@ -162,46 +156,4 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     </div>
     """
   end
-
-  # defp render_value(assigns) do
-  #   ~H"""
-  #   <dd class="ml-4">
-  #     <.render_link key={@key} value={@value} add={is_search_keyword?(@type)}>
-  #       <%= if @list_labels  do %>
-  #         <!-- if the value in the raw document is not part of the list of labels, fallback to the value itself
-  #         this handles data quality issues, where data was imported into the field that does not match the
-  #         referenced list -->
-  #         <I18n.text values={get_in(@list_labels, [@value, "label"]) || @value} lang={@lang} />
-  #       <% else %>
-  #         <I18n.text values={@value} lang={@lang} />
-  #       <% end %>
-  #     </.render_link>
-  #   </dd>
-  #   """
-  # end
-
-  # defp render_link(%{add: true, value: value} = assigns) when is_map(value) do
-  #   # TODO: This handles keyword fields that are based on value lists (dropdownRanges?), the actual value we want
-  #   # to search is contained in @value["value"]. The naming/structure is suboptimal currently.
-
-  #   ~H"""
-  #   <.link navigate={~p"/search?#{%{filters: %{"#{@key}_keyword" => @value["value"]}}}"}>
-  #     <%= render_slot(@inner_block) %>
-  #   </.link>
-  #   """
-  # end
-
-  # defp render_link(%{add: true} = assigns) do
-  #   ~H"""
-  #   <.link navigate={~p"/search?#{%{filters: %{"#{@key}_keyword" => @value}}}"}>
-  #     <%= render_slot(@inner_block) %>
-  #   </.link>
-  #   """
-  # end
-
-  # defp render_link(%{add: false} = assigns) do
-  #   ~H"""
-  #   <%= render_slot(@inner_block) %>
-  #   """
-  # end
 end

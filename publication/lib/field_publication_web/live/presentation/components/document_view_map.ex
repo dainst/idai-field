@@ -8,6 +8,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   alias FieldPublication.Publications.Data
 
   alias FieldPublication.Publications.Data.{
+    RelationGroup,
     Category,
     Document
   }
@@ -106,8 +107,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         nil ->
           []
 
-        relation ->
-          Map.get(relation, "values", [])
+        %RelationGroup{} = relation ->
+          relation.docs
       end
       |> Enum.map(&create_feature_info(&1, lang))
       |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
@@ -119,7 +120,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         nil ->
           []
 
-        relation ->
+        %RelationGroup{} = relation ->
           Enum.map(relation.docs, &create_feature_info(&1, lang))
       end
       |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
@@ -131,7 +132,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             nil ->
               []
 
-            relation ->
+            %RelationGroup{} = relation ->
               Enum.map(relation.docs, &create_feature_info(&1, lang))
           end
           |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)

@@ -77,13 +77,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
+              <dt class="font-bold"><I18n.text values={institution.labels} /></dt>
               <GenericField.render field={institution} lang={@lang} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
             <% contact_person = Data.get_field(@doc, "contactPerson") %>
             <%= if contact_mail do %>
-              <dt class="font-bold"><I18n.text values={contact_person.labels} lang={@lang} /></dt>
+              <dt class="font-bold"><I18n.text values={contact_person.labels} /></dt>
               <dd class="ml-4">
                 <a href={"mailto:#{contact_mail.value}"}>
                   <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
@@ -98,6 +99,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
 
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
+              <dt class="font-bold"><I18n.text values={supervisor.labels} /></dt>
               <GenericField.render field={supervisor} lang={@lang} />
             <% end %>
 
@@ -111,6 +113,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
+              <dt class="font-bold"><I18n.text values={bibliographic_references.labels} /></dt>
               <GenericField.render field={bibliographic_references} lang={@lang} />
             <% end %>
             <% url = Data.get_field_value(@doc, "projectURI") %>

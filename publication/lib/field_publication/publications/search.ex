@@ -372,7 +372,8 @@ defmodule FieldPublication.Publications.Search do
         field
         |> Map.get("valuelist", %{})
         |> Map.get("values", %{})
-        |> Enum.reject(fn {_key, value} -> Enum.empty?(value) end)
+        |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+        |> Enum.reject(fn {_key, map} -> Enum.empty?(map) end)
         |> Enum.into(%{})
 
       %{field_name => %{"labels" => field_labels, "value_labels" => value_labels}}
@@ -435,7 +436,7 @@ defmodule FieldPublication.Publications.Search do
             {lang, [{text, 1, [project_name]}]}
           end)
           |> Enum.into(%{}),
-          Enum.map(value_labels, fn {value_name, %{"label" => labels}} ->
+          Enum.map(value_labels, fn {value_name, labels} ->
             translations =
               Enum.map(labels, fn {lang, text} ->
                 {lang, [{text, 1, [project_name]}]}
@@ -451,9 +452,9 @@ defmodule FieldPublication.Publications.Search do
       else
         {
           Enum.map(labels, fn {lang, text} ->
-            if Map.has_key?(existing["labels"], lang) do
+            if Map.has_key?(existing, lang) do
               {matching_variant, other_variants} =
-                existing["labels"][lang]
+                existing[lang]
                 |> Enum.split_with(fn {variant_text, _count, _project_list} ->
                   variant_text == text
                 end)
@@ -461,7 +462,7 @@ defmodule FieldPublication.Publications.Search do
               variants =
                 case matching_variant do
                   [] ->
-                    existing["labels"][lang] ++ [{text, 1, [project_name]}]
+                    existing[lang] ++ [{text, 1, [project_name]}]
 
                   [{text, count, projects_list}] ->
                     [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
@@ -475,7 +476,7 @@ defmodule FieldPublication.Publications.Search do
           |> Enum.reduce(%{}, fn {lang, translations}, acc ->
             Map.merge(acc, %{lang => translations})
           end),
-          Enum.map(value_labels, fn {value_name, %{"label" => value_list_labels}} ->
+          Enum.map(value_labels, fn {value_name, value_list_labels} ->
             translations =
               Enum.map(value_list_labels, fn {lang, text} ->
                 if Map.has_key?(existing["value_labels"], value_name) do

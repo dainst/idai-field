@@ -368,7 +368,14 @@ defmodule FieldPublication.Publications.Data do
       }
 
       if field["valuelist"] do
-        %Field{base_fields | value_labels: field["valuelist"]["values"]}
+        value_labels =
+          field
+          |> Map.get("valuelist", %{})
+          |> Map.get("values", %{})
+          |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+          |> Enum.into(%{})
+
+        %Field{base_fields | value_labels: value_labels}
       else
         base_fields
       end

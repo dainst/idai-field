@@ -52,7 +52,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
                 <dl>
                   <%= for %Field{} = field <- fields do %>
                     <div>
-                      <GenericField.render field={field} lang={@lang} />
+                      <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                      <dd class="pl-4"><GenericField.render field={field} lang={@lang} /></dd>
                     </div>
                   <% end %>
                 </dl>

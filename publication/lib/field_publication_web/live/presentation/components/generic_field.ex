@@ -22,7 +22,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   end
 
   def render_value(%{field: %Field{input_type: input_type}} = assigns)
-      when input_type in ["input", "simpleInput", "text", "unsignedInt", "date"] do
+      when input_type in ["input", "simpleInput", "text", "unsignedInt", "unsignedFloat", "date"] do
     ~H"""
     <.construct_search_link field={@field} value={@field.value}>
       <I18n.text values={@field.value} lang={@lang} />

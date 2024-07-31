@@ -133,7 +133,6 @@ export default getDocumentViewMapHook = () => {
         identifierOverlayContent: null,
 
         mounted() {
-            console.log("mount")
             this.initialize();
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,

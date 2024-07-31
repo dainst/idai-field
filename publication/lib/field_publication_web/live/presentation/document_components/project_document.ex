@@ -24,18 +24,18 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("project_doc_about_project") %>
           </.header>
           <div class="bg-slate-50 p-2 rounded">
-            <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
-            <%= if depicted_in do %>
+            <% %Data.RelationGroup{} = depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+            <%= if depicted_in != nil do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
-                <%= for doc <- depicted_in.value do %>
+                <%= for %Data.Document{} = doc <- depicted_in.docs do %>
                   <.link
                     patch={
-                      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc["id"]}"
+                      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
                     }
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">
-                      <Image.show size="^300," project={@publication.project_name} uuid={doc["id"]} />
+                      <Image.show size="^300," project={@publication.project_name} uuid={doc.id} />
                     </div>
                   </.link>
                 <% end %>

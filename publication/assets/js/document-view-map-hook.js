@@ -385,8 +385,10 @@ export default getDocumentViewMapHook = () => {
             }
         },
         clearAllHighlights() {
+            this.setFillForParents(false);
             this.setFillForSelectedDocument(false);
             this.setFillForChildren(false);
+            this.identifierOverlay.setPosition(undefined)
         },
         toggleLayerVisibility(uuid, visibility) {
             const layer = this.map.getLayers().getArray().find(layer => layer.get('name') == uuid)

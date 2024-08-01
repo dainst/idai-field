@@ -63,14 +63,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
           <%= if map_layers do %>
             <div class="mb-4">
               <.live_component
-                module={FieldPublicationWeb.Presentation.Components.ProjectMap}
-                id="project_doc_map"
-                style="width:100%; height:300px;"
-                project_layer_documents={@project_map_layers}
-                additional_layer_documents={[]}
-                highlighted_geometry_documents={[]}
-                additional_geometry_documents={[]}
-                project_name={@publication.project_name}
+                module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
+                id="generic_doc_map"
+                style="width:100%; height:500px;"
+                doc={@doc}
+                publication={@publication}
+                lang={@lang}
               />
             </div>
           <% end %>

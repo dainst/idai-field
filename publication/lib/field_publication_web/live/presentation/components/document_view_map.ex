@@ -278,7 +278,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         |> Stream.map(fn layer_info ->
           Map.merge(layer_info, %{visible: false})
         end)
-        |> Enum.reject(fn entry -> entry in default_map_layers end)
+        |> Enum.reject(fn entry ->
+          entry.uuid in Map.get(project_doc_relations, "hasDefaultMapLayer", [])
+        end)
 
       socket
       |> push_event("document-map-set-project-layers-#{hook_id}", %{

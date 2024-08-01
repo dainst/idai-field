@@ -65,7 +65,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
               group={:document}
               layer_states={@document_tile_layers_state}
             />
-            <hr />
             <.render_tile_layer_selection_group
               target={@myself}
               lang={@lang}

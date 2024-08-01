@@ -14,6 +14,44 @@ import Overlay from 'ol/Overlay.js';
 
 const tileSize = 256;
 
+function createTileLayer(info, projectName) {
+    const geoReference = info.extent;
+
+    const extent = [
+        geoReference.bottomLeftCoordinates[1],
+        geoReference.bottomLeftCoordinates[0],
+        geoReference.topRightCoordinates[1],
+        geoReference.topRightCoordinates[0]
+    ];
+
+    const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
+
+    const resolutions = getResolutions(extent, tileSize, info.width, info.height)
+
+    const source = new TileImage({
+        tileGrid: new TileGrid({
+            extent,
+            origin: [extent[0], extent[3]],
+            resolutions,
+            tileSize
+        }),
+        tileUrlFunction: (tileCoord) => {
+            return pathTemplate
+                .replace('{z}', String(tileCoord[0]))
+                .replace('{x}', String(tileCoord[1]))
+                .replace('{y}', String(tileCoord[2]));
+        }
+    });
+
+    return new TileLayer({
+        name: info.uuid,
+        source: source,
+        extent,
+        visible: info.visible
+    })
+}
+
+
 function getResolutions(
     extent,
     tileSize,
@@ -123,7 +161,6 @@ const styleFunction = function (feature) {
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
-        // layerControl: null,
         docId: null,
         projectTileLayers: [],
         projectTileLayerExtent: null,
@@ -145,7 +182,6 @@ export default getDocumentViewMapHook = () => {
             )
             this.handleEvent(
                 `document-map-set-document-layers-${this.el.id}`,
-
                 ({ project, document_tile_layers }) => {
                     this.setDocumentLayers(project, document_tile_layers)
                 }
@@ -249,45 +285,12 @@ export default getDocumentViewMapHook = () => {
             this.projectTileLayers = [];
 
             for (let info of tileLayersInfo) {
-                const geoReference = info.extent;
 
-                const extent = [
-                    geoReference.bottomLeftCoordinates[1],
-                    geoReference.bottomLeftCoordinates[0],
-                    geoReference.topRightCoordinates[1],
-                    geoReference.topRightCoordinates[0]
-                ];
+                const layer = createTileLayer(info, projectName)
+                this.projectTileLayers.push(layer);
 
-                const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
-
-                const resolutions = getResolutions(extent, tileSize, info.width, info.height)
-
-                const source = new TileImage({
-                    tileGrid: new TileGrid({
-                        extent,
-                        origin: [extent[0], extent[3]],
-                        resolutions,
-                        tileSize
-                    }),
-                    tileUrlFunction: (tileCoord) => {
-                        return pathTemplate
-                            .replace('{z}', String(tileCoord[0]))
-                            .replace('{x}', String(tileCoord[1]))
-                            .replace('{y}', String(tileCoord[2]));
-                    }
-                });
-
-                const currentLayer = new TileLayer({
-                    name: info.uuid,
-                    source: source,
-                    extent,
-                    visible: info.visible
-                })
-
-                this.projectTileLayers.push(currentLayer);
-
-                this.projectTileLayerExtent = extend(this.projectTileLayerExtent, extent);
-                this.map.addLayer(currentLayer);
+                this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
+                this.map.addLayer(layer);
             }
         },
         setDocumentLayers(projectName, tileLayersInfo) {
@@ -296,45 +299,12 @@ export default getDocumentViewMapHook = () => {
             this.documentTileLayers = [];
 
             for (let info of tileLayersInfo) {
-                const geoReference = info.extent;
+                const layer = createTileLayer(info, projectName)
 
-                const extent = [
-                    geoReference.bottomLeftCoordinates[1],
-                    geoReference.bottomLeftCoordinates[0],
-                    geoReference.topRightCoordinates[1],
-                    geoReference.topRightCoordinates[0]
-                ];
+                this.documentTileLayers.push(layer);
 
-                const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
-
-                const resolutions = getResolutions(extent, tileSize, info.width, info.height)
-
-                const source = new TileImage({
-                    tileGrid: new TileGrid({
-                        extent,
-                        origin: [extent[0], extent[3]],
-                        resolutions,
-                        tileSize
-                    }),
-                    tileUrlFunction: (tileCoord) => {
-                        return pathTemplate
-                            .replace('{z}', String(tileCoord[0]))
-                            .replace('{x}', String(tileCoord[1]))
-                            .replace('{y}', String(tileCoord[2]));
-                    }
-                });
-
-                const currentLayer = new TileLayer({
-                    name: info.uuid,
-                    source: source,
-                    extent,
-                    visible: info.visible
-                })
-
-                this.documentTileLayers.push(currentLayer);
-
-                this.documentTileLayerExtent = extend(this.documentTileLayerExtent, extent);
-                this.map.addLayer(currentLayer);
+                this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
+                this.map.addLayer(layer);
             }
         },
         async setMapFeatures(parentFeatures, documentFeature, childrenFeatures) {

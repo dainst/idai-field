@@ -31,7 +31,7 @@ defmodule FieldPublication.Publications.Data do
     defstruct [:name, :labels, :color]
   end
 
-  defmodule Group do
+  defmodule FieldGroup do
     @derive Jason.Encoder
     @enforce_keys [:name, :labels]
     defstruct [:name, :labels, fields: []]
@@ -64,7 +64,7 @@ defmodule FieldPublication.Publications.Data do
         map
         |> Map.get("groups", [])
         |> Enum.map(fn group ->
-          %Group{
+          %FieldGroup{
             name: group["name"],
             labels: group["labels"],
             fields:
@@ -245,7 +245,7 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def get_field(%Document{groups: groups} = _doc, name) when is_list(groups) do
-    Enum.map(groups, fn %Group{} = group ->
+    Enum.map(groups, fn %FieldGroup{} = group ->
       Enum.find(group.fields, fn %Field{name: current} ->
         current == name
       end)
@@ -366,7 +366,7 @@ defmodule FieldPublication.Publications.Data do
           nil
 
         fields_with_data ->
-          %Group{name: group["name"], labels: group["label"], fields: fields_with_data}
+          %FieldGroup{name: group["name"], labels: group["label"], fields: fields_with_data}
       end
     end)
     |> Enum.reject(fn group -> group == nil end)

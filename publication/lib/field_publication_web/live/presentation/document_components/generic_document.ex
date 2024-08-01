@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
 
   alias FieldPublication.Publications.Data.{
     Document,
-    Group,
+    FieldGroup,
     Field
   }
 
@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             uuid={@uuid}
             current={:detail}
           />
-          <%= for %Group{} = group <- @doc.groups do %>
+          <%= for %FieldGroup{} = group <- @doc.groups do %>
             <% fields =
               Enum.reject(group.fields, fn %Field{name: name} ->
                 name in ["identifier", "category", "geometry"]

@@ -3,7 +3,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data.Field
-  alias FieldPublication.Publications.Data.Group
+  alias FieldPublication.Publications.Data.FieldGroup
   alias FieldPublication.Publications.Data.Document
   alias FieldPublication.Publications.Data.RelationGroup
 
@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
               <% end %>
             </div>
           <% end %>
-          <%= for %Group{} = group <- @doc.groups do %>
+          <%= for %FieldGroup{} = group <- @doc.groups do %>
             <% fields =
               Enum.reject(group.fields, fn %Field{name: name} ->
                 name in ["identifier", "category", "geometry"]

@@ -67,11 +67,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
                 >
                   <.icon class="mb-1" name={if layer.visible, do: "hero-eye", else: "hero-eye-slash"} />
                 </span>
-                <%= layer.identifier %>
                 <.link patch={
                   ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{layer.uuid}"
                 }>
-                  <.icon class="mb-1" name="hero-photo" />
+                  <%= layer.identifier %>
                 </.link>
               </div>
             <% end %>
@@ -90,11 +89,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
                     name={if project_layer.visible, do: "hero-eye", else: "hero-eye-slash"}
                   />
                 </span>
-                <%= project_layer.identifier %>
                 <.link patch={
                   ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{project_layer.uuid}"
                 }>
-                  <.icon class="mb-1" name="hero-photo" />
+                  <%= project_layer.identifier %>
                 </.link>
               </div>
             <% end %>

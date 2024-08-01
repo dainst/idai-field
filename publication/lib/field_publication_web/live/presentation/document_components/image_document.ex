@@ -54,7 +54,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
                     <div>
                       <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                       <dd class="pl-4">
-                        <GenericField.render field={field |> IO.inspect()} lang={@lang} />
+                        <GenericField.render field={field} lang={@lang} />
                       </dd>
                     </div>
                   <% end %>

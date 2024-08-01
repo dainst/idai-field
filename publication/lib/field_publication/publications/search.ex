@@ -1,8 +1,10 @@
 defmodule FieldPublication.Publications.Search do
   alias FieldPublication.Publications
   alias FieldPublication.OpenSearchService
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications.Data
+
+  require Logger
 
   def search(q, filter, from \\ 0, size \\ 100) do
     q =
@@ -57,7 +59,7 @@ defmodule FieldPublication.Publications.Search do
           docs:
             body["hits"]["hits"]
             |> Enum.map(fn %{"_source" => doc} ->
-              Map.put(doc, :id, doc["id"])
+              Map.put(doc, "full_doc", Data.document_map_to_struct(doc["full_doc"]))
             end),
           aggregations:
             body
@@ -238,14 +240,21 @@ defmodule FieldPublication.Publications.Search do
             values when is_map(values) ->
               Map.values(values)
 
+            values when is_binary(values) ->
+              Logger.warning(
+                "Based on the project configuration expected Map or List values for field '#{field_name}' in '#{res["id"]}', but got '#{values}'."
+              )
+
+              [values]
+
             nil ->
               nil
           end
 
         {"#{field_name}_keyword", value_list}
       end)
-      |> Stream.reject(fn {_field_name, value} ->
-        value == nil
+      |> Stream.reject(fn {_field_name, value} = val ->
+        value == nil or is_binary(val)
       end)
       |> Enum.into(%{})
 
@@ -363,7 +372,8 @@ defmodule FieldPublication.Publications.Search do
         field
         |> Map.get("valuelist", %{})
         |> Map.get("values", %{})
-        |> Enum.reject(fn {_key, value} -> Enum.empty?(value) end)
+        |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+        |> Enum.reject(fn {_key, map} -> Enum.empty?(map) end)
         |> Enum.into(%{})
 
       %{field_name => %{"labels" => field_labels, "value_labels" => value_labels}}
@@ -426,7 +436,7 @@ defmodule FieldPublication.Publications.Search do
             {lang, [{text, 1, [project_name]}]}
           end)
           |> Enum.into(%{}),
-          Enum.map(value_labels, fn {value_name, %{"label" => labels}} ->
+          Enum.map(value_labels, fn {value_name, labels} ->
             translations =
               Enum.map(labels, fn {lang, text} ->
                 {lang, [{text, 1, [project_name]}]}
@@ -442,9 +452,9 @@ defmodule FieldPublication.Publications.Search do
       else
         {
           Enum.map(labels, fn {lang, text} ->
-            if Map.has_key?(existing["labels"], lang) do
+            if Map.has_key?(existing, lang) do
               {matching_variant, other_variants} =
-                existing["labels"][lang]
+                existing[lang]
                 |> Enum.split_with(fn {variant_text, _count, _project_list} ->
                   variant_text == text
                 end)
@@ -452,7 +462,7 @@ defmodule FieldPublication.Publications.Search do
               variants =
                 case matching_variant do
                   [] ->
-                    existing["labels"][lang] ++ [{text, 1, [project_name]}]
+                    existing[lang] ++ [{text, 1, [project_name]}]
 
                   [{text, count, projects_list}] ->
                     [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
@@ -466,7 +476,7 @@ defmodule FieldPublication.Publications.Search do
           |> Enum.reduce(%{}, fn {lang, translations}, acc ->
             Map.merge(acc, %{lang => translations})
           end),
-          Enum.map(value_labels, fn {value_name, %{"label" => value_list_labels}} ->
+          Enum.map(value_labels, fn {value_name, value_list_labels} ->
             translations =
               Enum.map(value_list_labels, fn {lang, text} ->
                 if Map.has_key?(existing["value_labels"], value_name) do

@@ -23,13 +23,13 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
         uuid={@uuid}
         selected_lang={@lang}
         identifier={
-          if Data.get_field_values(@current_doc, "category") != "Project",
-            do: Data.get_field_values(@current_doc, "identifier")
+          if Data.get_field_value(@current_doc, "category") != "Project",
+            do: Data.get_field_value(@current_doc, "identifier")
         }
       />
     </div>
     <.document_heading>
-      <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@current_doc} />
+      <DocumentLink.show lang={@lang} doc={@current_doc} />
     </.document_heading>
 
     <ViewSelection.render

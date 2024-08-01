@@ -1,4 +1,4 @@
-defmodule FieldPublication.DocumentSchema.Translation do
+defmodule FieldPublication.DatabaseSchema.Translation do
   use Ecto.Schema
   import Ecto.Changeset
 

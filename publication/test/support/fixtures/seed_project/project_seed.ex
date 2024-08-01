@@ -9,7 +9,7 @@ defmodule FieldPublication.Test.ProjectSeed do
     Publications
   }
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Project,
     ReplicationInput,
     Publication
@@ -28,7 +28,7 @@ defmodule FieldPublication.Test.ProjectSeed do
       end)
 
     case Projects.get(project_name) do
-      {:ok, %FieldPublication.DocumentSchema.Project{} = project} ->
+      {:ok, %FieldPublication.DatabaseSchema.Project{} = project} ->
         Logger.info("Recreating project '#{project_name}'.")
         {:ok, :deleted} = Projects.delete(project)
 
@@ -96,7 +96,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     {:ok, _} = OpenSearchService.set_project_alias(publication)
 
-    {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
+    {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{
         "publication_date" => Date.utc_today(),
         "comments" => [

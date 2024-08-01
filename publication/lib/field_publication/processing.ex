@@ -8,7 +8,7 @@ defmodule FieldPublication.Processing do
     OpenSearch
   }
 
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications
 
   alias Phoenix.PubSub
@@ -29,7 +29,7 @@ defmodule FieldPublication.Processing do
   Each item in the internal state is a tuple of the pattern `{task, processing_type, processing_context}`,
   where `task` is a reference to the Elixir Task that got initiated, processing_type is an atom that identifies the
   type of processing (for example `:web_images`) and `processing_context` identifies the context within FieldPublication
-  that is being processed (for example the document id of a certain `FieldPublication.DocumentSchema.Publication`). The
+  that is being processed (for example the document id of a certain `FieldPublication.DatabaseSchema.Publication`). The
   `processing_context` value is also used to broadcast PubSub messages.
 
   Use the API functions below to interact with the module.

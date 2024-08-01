@@ -5,11 +5,11 @@
     selected_lang={@selected_lang}
     uuid={@uuid}
     identifier={
-      if Data.get_field_values(@doc, "category") != "Project",
-        do: Data.get_field_values(@doc, "identifier")
+      if Data.get_field_value(@doc, "category") != "Project",
+        do: Data.get_field_value(@doc, "identifier")
     }
   />
-  <% category = Data.get_field_values(@doc, "category") %>
+  <% category = Data.get_field_value(@doc, "category") %>
   <%= cond do
     category == "Project" ->
       DocumentComponents.Project.render(%{

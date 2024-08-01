@@ -5,7 +5,7 @@ defmodule FieldPublication.Publications do
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Projects
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
     Publication,
     Base

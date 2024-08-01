@@ -1,7 +1,10 @@
 defmodule FieldPublicationWeb.Presentation.Components.ClipboardCopy do
   use FieldPublicationWeb, :live_component
 
-  @impl true
+  attr :id, :string, required: true
+  attr :copy_value, :string, required: true
+  slot :inner_block, required: true
+
   def render(assigns) do
     ~H"""
     <a class="cursor-pointer" id={@id} phx-hook="CopyToClipboard" valueToCopy={@copy_value}>

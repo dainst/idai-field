@@ -8,7 +8,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     Projects
   }
 
-  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DatabaseSchema.Project
 
   alias FieldPublication.Test.ProjectSeed
 
@@ -45,7 +45,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
              live(conn, ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en")
 
     doc = Data.get_extended_document("project", publication)
-    short_description = Data.get_field_values(doc, "shortName") |> Map.get("en")
+    short_description = Data.get_field_value(doc, "shortName") |> Map.get("en")
 
     assert html =~ short_description
     assert html =~ "Institution"

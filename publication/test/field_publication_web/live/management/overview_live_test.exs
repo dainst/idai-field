@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.Management.OverviewLiveTest do
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
-  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DatabaseSchema.Project
 
   use FieldPublicationWeb.ConnCase
 
@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
   @core_database Application.compile_env(:field_publication, :core_database)
   @test_project_name "test_project_a"
-  @test_user %FieldPublication.DocumentSchema.User{
+  @test_user %FieldPublication.DatabaseSchema.User{
     name: "test_user",
     password: "pw",
     label: "Test user"

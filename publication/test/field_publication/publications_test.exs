@@ -1,12 +1,12 @@
 # defmodule FieldPublication.PublicationsTest do
 #   use ExUnit.Case
 
-#   alias FieldPublication.DocumentSchema.Translation
+#   alias FieldPublication.DatabaseSchema.Translation
 #   alias FieldPublication.CouchService
 #   alias FieldPublication.Projects
 #   alias FieldPublication.Publications
 
-#   alias FieldPublication.DocumentSchema.{
+#   alias FieldPublication.DatabaseSchema.{
 #     Project,
 #     Publication,
 #     ReplicationInput

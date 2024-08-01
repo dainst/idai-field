@@ -1,9 +1,9 @@
-defmodule FieldPublication.DocumentSchema.Project do
+defmodule FieldPublication.DatabaseSchema.Project do
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias FieldPublication.DocumentSchema.Base
+  alias FieldPublication.DatabaseSchema.Base
 
   @doc_type "project"
   @primary_key false
@@ -27,7 +27,7 @@ defmodule FieldPublication.DocumentSchema.Project do
   end
 end
 
-defimpl Phoenix.Param, for: FieldPublication.DocumentSchema.Project do
+defimpl Phoenix.Param, for: FieldPublication.DatabaseSchema.Project do
   def to_param(%{name: name}) do
     name
   end

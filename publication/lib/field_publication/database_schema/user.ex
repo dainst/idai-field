@@ -1,4 +1,4 @@
-defmodule FieldPublication.DocumentSchema.User do
+defmodule FieldPublication.DatabaseSchema.User do
   use Ecto.Schema
 
   import Ecto.Changeset

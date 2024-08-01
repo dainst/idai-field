@@ -47,7 +47,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             </div>
           </div>
         </div>
-        <div class="absolute p-1 top-1 right-1">
+        <div
+          :if={@document_tile_layers_state ++ @project_tile_layers_state != []}
+          class="absolute p-1 top-1 right-1"
+        >
           <div
             class="right-1 absolute rounded w-8 h-8 text-center pt-[2px] bg-white"
             phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
@@ -55,47 +58,21 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             <.icon name="hero-square-3-stack-3d" />
           </div>
           <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto" hidden>
-            <div class="font-semibold pb-2">Document layers</div>
-            <%= for layer  <- @document_tile_layers_state do %>
-              <div class="text-xs">
-                <span
-                  class="cursor-pointer"
-                  phx-target={@myself}
-                  phx-click="toggle-layer"
-                  phx-value-group="document"
-                  phx-value-uuid={layer.uuid}
-                >
-                  <.icon class="mb-1" name={if layer.visible, do: "hero-eye", else: "hero-eye-slash"} />
-                </span>
-                <.link patch={
-                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{layer.uuid}"
-                }>
-                  <%= layer.identifier %>
-                </.link>
-              </div>
-            <% end %>
-            <div class="font-semibold pb-2">Project layers</div>
-            <%= for project_layer  <- @project_tile_layers_state do %>
-              <div class="text-xs">
-                <span
-                  class="cursor-pointer"
-                  phx-target={@myself}
-                  phx-click="toggle-layer"
-                  phx-value-group="project"
-                  phx-value-uuid={project_layer.uuid}
-                >
-                  <.icon
-                    class="mb-1"
-                    name={if project_layer.visible, do: "hero-eye", else: "hero-eye-slash"}
-                  />
-                </span>
-                <.link patch={
-                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{project_layer.uuid}"
-                }>
-                  <%= project_layer.identifier %>
-                </.link>
-              </div>
-            <% end %>
+            <.render_tile_layer_selection_group
+              target={@myself}
+              lang={@lang}
+              publication={@publication}
+              group={:document}
+              layer_states={@document_tile_layers_state}
+            />
+            <hr />
+            <.render_tile_layer_selection_group
+              target={@myself}
+              lang={@lang}
+              publication={@publication}
+              group={:project}
+              layer_states={@project_tile_layers_state}
+            />
           </div>
         </div>
         <div
@@ -352,11 +329,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
   def handle_event(
         "toggle-layer",
-        %{"group" => "project", "uuid" => uuid},
-        %{assigns: %{id: id, project_tile_layers_state: layer_states}} = socket
+        %{"group" => group, "uuid" => uuid},
+        %{assigns: %{id: id}} = socket
       ) do
+    toggled_group =
+      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
+
     layer_states =
-      Enum.map(layer_states, fn state ->
+      socket.assigns[toggled_group]
+      |> Enum.map(fn state ->
         if state.uuid == uuid do
           Map.put(state, :visible, !state.visible)
         else
@@ -367,7 +348,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     {
       :noreply,
       socket
-      |> assign(:project_tile_layers_state, layer_states)
+      |> assign(toggled_group, layer_states)
       |> push_event("document-map-set-layer-visibility-#{id}", %{
         uuid: uuid,
         visibility:
@@ -376,29 +357,31 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
-  def handle_event(
-        "toggle-layer",
-        %{"group" => "document", "uuid" => uuid},
-        %{assigns: %{id: id, document_tile_layers_state: layer_states}} = socket
-      ) do
-    layer_states =
-      Enum.map(layer_states, fn state ->
-        if state.uuid == uuid do
-          Map.put(state, :visible, !state.visible)
-        else
-          state
-        end
-      end)
-
-    {
-      :noreply,
-      socket
-      |> assign(:document_tile_layers_state, layer_states)
-      |> push_event("document-map-set-layer-visibility-#{id}", %{
-        uuid: uuid,
-        visibility:
-          Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
-      })
-    }
+  defp render_tile_layer_selection_group(assigns) do
+    ~H"""
+    <%= if @layer_states != [] do %>
+      <div class="font-semibold pb-2">
+        <%= if @group == :project, do: gettext("Project layers"), else: gettext("Document layers") %>
+      </div>
+      <%= for layer  <- @layer_states do %>
+        <div class="text-xs">
+          <span
+            class="cursor-pointer"
+            phx-target={@target}
+            phx-click="toggle-layer"
+            phx-value-group={@group}
+            phx-value-uuid={layer.uuid}
+          >
+            <.icon class="mb-1" name={if layer.visible, do: "hero-eye", else: "hero-eye-slash"} />
+          </span>
+          <.link patch={
+            ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{layer.uuid}"
+          }>
+            <%= layer.identifier %>
+          </.link>
+        </div>
+      <% end %>
+    <% end %>
+    """
   end
 end

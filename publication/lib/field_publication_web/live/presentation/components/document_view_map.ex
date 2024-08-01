@@ -55,6 +55,26 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             <.icon name="hero-square-3-stack-3d" />
           </div>
           <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto" hidden>
+            <div class="font-semibold pb-2">Document layers</div>
+            <%= for layer  <- @document_tile_layers_state do %>
+              <div class="text-xs">
+                <span
+                  class="cursor-pointer"
+                  phx-target={@myself}
+                  phx-click="toggle-layer"
+                  phx-value-group="document"
+                  phx-value-uuid={layer.uuid}
+                >
+                  <.icon class="mb-1" name={if layer.visible, do: "hero-eye", else: "hero-eye-slash"} />
+                </span>
+                <%= layer.identifier %>
+                <.link patch={
+                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{layer.uuid}"
+                }>
+                  <.icon class="mb-1" name="hero-photo" />
+                </.link>
+              </div>
+            <% end %>
             <div class="font-semibold pb-2">Project layers</div>
             <%= for project_layer  <- @project_tile_layers_state do %>
               <div class="text-xs">
@@ -99,6 +119,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     assigns = set_defaults(assigns)
 
     socket = handle_publication_change(socket, publication, id)
+    socket = process_document_tile_layers(socket, publication, doc, id)
 
     children_features =
       doc
@@ -179,17 +200,11 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
-  defp set_defaults(%{publication: pub} = assigns) do
+  defp set_defaults(assigns) do
     assigns
     |> Map.put_new(:centerLon, 0)
     |> Map.put_new(:centerLat, 0)
     |> Map.put_new(:zoom, 2)
-    |> Map.put(
-      :project_tile_layers,
-      pub
-      |> Data.get_project_map_layers()
-      |> Enum.map(&extract_tile_layer_info/1)
-    )
     |> Map.put(:no_data, true)
     |> Map.put(:show_layer_select, false)
   end
@@ -269,29 +284,72 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       # to an older or newer publication of the same project.
       Logger.debug("Resetting project level background layers.")
 
-      project_tile_layers =
-        current
-        |> Data.get_project_map_layers()
-        |> Enum.map(&extract_tile_layer_info/1)
+      project_doc_relations =
+        Data.get_raw_document("project", current)
+        |> Map.get("resource", %{})
+        |> Map.get("relations", %{})
 
-      project_tile_layers_state =
-        Enum.map(
-          project_tile_layers,
-          fn layer_info ->
-            Map.merge(layer_info, %{visible: true})
-          end
-        )
+      default_map_layers =
+        Map.get(project_doc_relations, "hasDefaultMapLayer", [])
+        |> Data.get_raw_documents(current)
+        |> Stream.map(&extract_tile_layer_info/1)
+        |> Enum.map(fn layer_info ->
+          Map.merge(layer_info, %{visible: true})
+        end)
+
+      other_map_layers =
+        Map.get(project_doc_relations, "hasMapLayer", [])
+        |> Data.get_raw_documents(current)
+        |> Stream.map(&extract_tile_layer_info/1)
+        |> Stream.map(fn layer_info ->
+          Map.merge(layer_info, %{visible: false})
+        end)
+        |> Enum.reject(fn entry -> entry in default_map_layers end)
 
       socket
       |> push_event("document-map-set-project-layers-#{hook_id}", %{
         project: current.project_name,
-        project_tile_layers: project_tile_layers
+        project_tile_layers: default_map_layers ++ other_map_layers
       })
-      |> assign(:project_tile_layers_state, project_tile_layers_state)
+      |> assign(
+        :project_tile_layers_state,
+        default_map_layers ++ other_map_layers
+      )
     else
       # Same publication, leave project layers as they are.
       socket
     end
+  end
+
+  defp process_document_tile_layers(socket, publication, %Document{} = doc, hook_id) do
+    Logger.debug("Setting document level background layers.")
+
+    default_map_layers =
+      doc.default_map_layers
+      |> Data.get_raw_documents(publication)
+      |> Stream.map(&extract_tile_layer_info/1)
+      |> Enum.map(fn layer_info ->
+        Map.merge(layer_info, %{visible: true})
+      end)
+
+    other_map_layers =
+      doc.map_layers
+      |> Data.get_raw_documents(publication)
+      |> Stream.map(&extract_tile_layer_info/1)
+      |> Enum.map(fn layer_info ->
+        Map.merge(layer_info, %{visible: false})
+      end)
+      |> Enum.reject(fn entry -> entry.uuid in doc.default_map_layers end)
+
+    socket
+    |> push_event("document-map-set-document-layers-#{hook_id}", %{
+      project: publication.project_name,
+      document_tile_layers: default_map_layers ++ other_map_layers
+    })
+    |> assign(
+      :document_tile_layers_state,
+      default_map_layers ++ other_map_layers
+    )
   end
 
   def handle_event(
@@ -312,6 +370,32 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       :noreply,
       socket
       |> assign(:project_tile_layers_state, layer_states)
+      |> push_event("document-map-set-layer-visibility-#{id}", %{
+        uuid: uuid,
+        visibility:
+          Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
+      })
+    }
+  end
+
+  def handle_event(
+        "toggle-layer",
+        %{"group" => "document", "uuid" => uuid},
+        %{assigns: %{id: id, document_tile_layers_state: layer_states}} = socket
+      ) do
+    layer_states =
+      Enum.map(layer_states, fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, !state.visible)
+        else
+          state
+        end
+      end)
+
+    {
+      :noreply,
+      socket
+      |> assign(:document_tile_layers_state, layer_states)
       |> push_event("document-map-set-layer-visibility-#{id}", %{
         uuid: uuid,
         visibility:

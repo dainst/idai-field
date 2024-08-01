@@ -101,7 +101,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <% end %>
           <%= for other_relation <- Enum.reject(
             @doc.relations,
-            fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn"] end
+            fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
             )  do %>
             <.group_heading>
               <I18n.text values={other_relation.labels} /> (<%= Enum.count(other_relation.docs) %>)

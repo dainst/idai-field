@@ -19,7 +19,9 @@ defmodule FieldPublication.Publications.Data do
       :category,
       groups: [],
       relations: [],
-      image_uuids: []
+      image_uuids: [],
+      default_map_layers: [],
+      map_layers: []
     ]
   end
 
@@ -295,6 +297,16 @@ defmodule FieldPublication.Publications.Data do
         |> Map.get("isDepictedIn", [])
       end
 
+    default_map_layers =
+      resource
+      |> Map.get("relations", %{})
+      |> Map.get("hasDefaultMapLayer", [])
+
+    map_layers =
+      resource
+      |> Map.get("relations", %{})
+      |> Map.get("hasMapLayer", [])
+
     doc =
       %Document{
         id: resource["id"],
@@ -303,7 +315,9 @@ defmodule FieldPublication.Publications.Data do
         publication: publication.draft_date,
         category: extend_category(category_configuration["item"], resource),
         groups: extend_field_groups(category_configuration["item"], resource),
-        image_uuids: image_uuids
+        image_uuids: image_uuids,
+        default_map_layers: default_map_layers,
+        map_layers: map_layers
       }
 
     if include_relations do

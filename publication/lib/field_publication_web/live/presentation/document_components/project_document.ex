@@ -24,7 +24,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("project_doc_about_project") %>
           </.header>
           <div class="bg-slate-50 p-2 rounded">
-            <% %Data.RelationGroup{} = depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+            <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
             <%= if depicted_in != nil do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
                 <%= for %Data.Document{} = doc <- depicted_in.docs do %>

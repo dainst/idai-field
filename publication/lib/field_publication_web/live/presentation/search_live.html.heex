@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="w-full" id="result_list" phx-update="stream" phx-viewport-bottom="search_next_batch">
-    <div :for={{dom_id, %{"full_doc" => doc}} <- @streams.search_results} id={dom_id}>
+    <div :for={{dom_id, %SearchDocument{full_doc: doc}} <- @streams.search_results} id={dom_id}>
       <DocumentLink.show
         doc={doc}
         lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}

@@ -2,6 +2,7 @@ defmodule FieldPublication.OpenSearchService do
   alias FieldPublication.Publications
   alias FieldPublication.DatabaseSchema.Project
   alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publications.Search.SearchDocument
   require Logger
 
   def initialize_publication_indices(%Publication{} = pub) do
@@ -172,8 +173,8 @@ defmodule FieldPublication.OpenSearchService do
       end
 
     payload =
-      Enum.map(docs, fn doc ->
-        "#{Jason.encode!(%{index: %{_index: index, _id: doc["id"]}})}\n#{Jason.encode!(doc)}\n"
+      Enum.map(docs, fn %SearchDocument{} = doc ->
+        "#{Jason.encode!(%{index: %{_index: index, _id: doc.id}})}\n#{Jason.encode!(doc)}\n"
       end)
       |> Enum.join()
 

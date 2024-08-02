@@ -9,11 +9,18 @@ services:
       - plugins.security.ssl.http.enabled=false
       - "bootstrap.memory_lock=true" # Disable JVM heap memory swapping
       - "OPENSEARCH_JAVA_OPTS=-Xms4g -Xmx4g" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - "OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD}"
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD}
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
     ulimits:
       memlock:
-        soft: -1
+        soft: -1 # Set memlock to unlimited (no soft or hard limit)
         hard: -1
+      nofile:
+        soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
+        hard: 65536
+    networks:
+      - default
 
   cantaloupe:
     image: "ghcr.io/dainst/field_publication_cantaloupe:1.1.0"
@@ -49,10 +56,10 @@ services:
       - HOST
       - SECRET_KEY_BASE
       - COUCHDB_URL=http://couchdb:5984
-      - OPENSEARCH_URL=http://opensearch:9200
       - CANTALOUPE_URL=http://cantaloupe:8182
       - COUCHDB_ADMIN_NAME=${COUCHDB_ADMIN_NAME}
       - COUCHDB_ADMIN_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
+      - OPENSEARCH_URL=http://opensearch:9200
       - OPENSEARCH_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD}
     depends_on:
       - "couchdb"

@@ -43,7 +43,7 @@ defmodule FieldPublicationWeb.Router do
   end
 
   scope "/api/json" do
-    get "/raw/:project_name/:publication_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
+    get "/raw/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's

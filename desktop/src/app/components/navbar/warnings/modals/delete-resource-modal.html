@@ -7,21 +7,30 @@
         Möchten Sie die Ressource <b>{{document.resource.identifier}}</b> wirklich löschen?
     </span>
 
-    <div *ngIf="isMultipleSwitchAvailable()" id="multiple-switch" class="row">
+    <div *ngIf="isMultipleSwitchAvailable()" 
+         id="multiple-switch" 
+         class="row" 
+         [disableTooltip]="countAffected !== 1" 
+         [class.disabled]="countAffected === 1"
+         ngbTooltip="Nur diese Ressource ist betroffen." 
+         i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
+         container="body">
         <div class="col-auto mr-auto">
             <span i18n="@@navbar.taskbar.deleteResource.all">Alle Ressourcen dieser Kategorie löschen</span>
         </div>
         <div class="col-auto">
-            <label class="switch">
-                <input type="checkbox" [checked]="deleteAll" (change)="deleteAll = !deleteAll">
+            <label class="switch" [class.disabled]="countAffected === 1">
+                <input type="checkbox" 
+                       [checked]="deleteAll" 
+                       (change)="deleteAll = !deleteAll" 
+                       [disabled]="countAffected === 1">
                 <span class="slider round"></span>
             </label>
         </div>
     </div>
-    
     <div *ngIf="deleteAll" class="text-center alert alert-warning"
-            i18n="@@navbar.taskbar.deleteResource.all.info">
-        Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten
+         i18n="@@navbar.taskbar.deleteResource.all.info">
+        Bitte beachten Sie: Durch diese Aktion werden alle <b>{{countAffected}}</b> Ressourcen der unkonfigurierten
         Kategorie <b>{{document.resource.category}}</b> gelöscht.
     </div>
     <span *ngIf="deleteAll" i18n="@@navbar.taskbar.deleteResource.all.confirmInfo">
@@ -32,10 +41,10 @@
     </span>
     <div>
         <input type="text"
-                id="confirm-deletion-input"
-                class="form-control"
-                [(ngModel)]="confirmValue"
-                (keydown)="$event.key !== 'Enter' || performDeletion()" />
+               id="confirm-deletion-input"
+               class="form-control"
+               [(ngModel)]="confirmValue"
+               (keydown)="$event.key !== 'Enter' || performDeletion()" />
     </div>
 </div>
 
@@ -45,7 +54,8 @@
          (click)="performDeletion()">
         <span i18n="@@buttons.ok">OK</span>
     </div>
-    <div class="btn btn-secondary"
+    <div id="cancel-button" 
+         class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>

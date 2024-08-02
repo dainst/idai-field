@@ -158,17 +158,17 @@
       "Diatretdekor": "",
       "Emaille": "Esmalte",
       "Facettschliffdekor": "",
-      "Fadendekor (aufgelegt)": "",
-      "Fadendekor (verschmolzen)": "",
-      "Mosaikdekor": "",
-      "Reliefdekor": "",
+      "Fadendekor (aufgelegt)": "Decoração de cordão (aplicado)",
+      "Fadendekor (verschmolzen)": "Decoração de cordão (fundido)",
+      "Mosaikdekor": "Decoração de mosaicos",
+      "Reliefdekor": "Decoração em relevo",
       "Reticelladekor": "",
-      "Riefeldekor": "",
-      "Ritzungen": "",
+      "Riefeldekor": "Decoração com ranhuras",
+      "Ritzungen": "Incisões",
       "Schlangenfadendekor": "",
       "Schliffrillendekor": "",
       "Stempeldekor": "Decoração do carimbo",
-      "Tupfendekor": "",
+      "Tupfendekor": "Decoração com pintas",
       "Warzendekor": "",
       "Zwischengoldglas": "",
       "figürlicher Schliffdekor": ""
@@ -176,57 +176,57 @@
   },
   "glass-formDescription-default": {
     "values": {
-      "ausladend": "",
+      "ausladend": "exvertido",
       "bauchig": "",
-      "breitoval": "",
-      "doppelkonisch": "",
-      "halbkugelig": "",
-      "hochoval": "",
-      "konisch": "",
-      "kugelförmig": "",
+      "breitoval": "elíptico horizontal",
+      "doppelkonisch": "duplo cónico",
+      "halbkugelig": "meia esfera",
+      "hochoval": "elíptico vertical",
+      "konisch": "cónico",
+      "kugelförmig": "esférico",
       "quadratisch": "quadrado",
       "rechteckig": "retangular",
       "rund": "redondo",
-      "schlank": "",
-      "schmal": "",
-      "spindelförmig": "",
-      "tonnenförmig": "",
-      "zylinderförmig": ""
+      "schlank": "fino",
+      "schmal": "estreito",
+      "spindelförmig": "fusiforme",
+      "tonnenförmig": "em forma de barril",
+      "zylinderförmig": "cilíndrico"
     }
   },
   "glass-manufacturingMethod-default": {
     "values": {
-      "Formgeblasen (mit Reliefdekor)": "",
-      "Formgeschmolzen": "",
-      "Freigeblasen": "",
-      "In Vorformen geblasen": "",
-      "In offene Halbformen geblasen": "",
-      "Kerngeformt": "",
-      "Sandkerngeschmolzen": "",
-      "gedreht (auf Drehscheibe)": ""
+      "Formgeblasen (mit Reliefdekor)": "sopro em molde (com decoração em relevo)",
+      "Formgeschmolzen": "fundido em molde",
+      "Freigeblasen": "sopro livre",
+      "In Vorformen geblasen": "sopro em pré-forma",
+      "In offene Halbformen geblasen": "sopro em meia forma aberta",
+      "Kerngeformt": "enrolamento sobre núcleo",
+      "Sandkerngeschmolzen": "fundido com núcleo arenosos",
+      "gedreht (auf Drehscheibe)": "a torno (roda de oleiro)"
     }
   },
   "glass-objectType-default": {
     "values": {
       "Anhänger": "Pendente",
       "Armreif": "Bracelete",
-      "Einlage": "",
-      "Fensterglas": "",
+      "Einlage": "Inserto",
+      "Fensterglas": "Vidro de janela",
       "Gefäß": "Recipiente",
       "Gemme": "",
       "Gerät": "Instrumento",
-      "Glasschlacke": "",
+      "Glasschlacke": "Escória de vidro",
       "Lampe": "Lâmpada",
       "Löffel": "Colher",
       "Perle": "Pérola",
       "Produktionsfragment": "Fragmento de produção",
       "Ring": "Anel",
-      "Rohglas": "",
+      "Rohglas": "Vidro bruto",
       "Rührstab": "",
-      "Scheiben": "",
-      "Schmuck": "",
-      "Spielstein": "",
-      "Tessera": "",
+      "Scheiben": "Discos",
+      "Schmuck": "Joalharia",
+      "Spielstein": "Peça de jogo",
+      "Tessera": "Téssera",
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Weinheber": ""
     }
@@ -241,15 +241,15 @@
   },
   "glass-vesselForm-default": {
     "values": {
-      "Aschenurne": "",
+      "Aschenurne": "Urna cinerária",
       "Becher": "Copo",
-      "Deckel": "",
-      "Deckelgefäß": "",
+      "Deckel": "Cobertura",
+      "Deckelgefäß": "Contentor com cobertura",
       "Flasche": "Frasco",
-      "Krug": "",
-      "Napf": "",
-      "Schale": "",
-      "Schüssel": "Tigela",
+      "Krug": "Jarra",
+      "Napf": "Tigela",
+      "Schale": "Tigela",
+      "Schüssel": "Taça",
       "Tasse": "Taça",
       "Teller": "Prato",
       "Topf": "Panela",
@@ -261,30 +261,30 @@
     "values": {
       "Alabastron": "Alabástro",
       "Amphoriskos": "",
-      "Aryballos": "",
-      "Balsamarium": "",
-      "Dattelflasche": "",
+      "Aryballos": "Aríbalo",
+      "Balsamarium": "Balsamário",
+      "Dattelflasche": "Frasco em forma de tâmara",
       "Faltenbecher": "",
       "Hydria": "Hídria",
-      "Kopfflasche": "",
+      "Kopfflasche": "Frasco em forma de cabeça",
       "Kotyle": "",
       "Kragenschale": "",
       "Krater": "Cratera",
       "Kylix": "",
-      "Lekythos": "",
+      "Lekythos": "Lécito",
       "Luterion": "",
       "Oinochoe": "",
       "Pelike": "Pélica",
       "Rippenschale": "",
       "Schliffrillenschale": "",
-      "Schöpfer": "",
+      "Schöpfer": "Concha",
       "Skyphos": "",
       "Spitzamphora": "",
       "Sprenkler": "",
       "Stamnos": "",
-      "Tierflasche": "",
+      "Tierflasche": "Frasco zoomórfico",
       "Unguentarium": "",
-      "Vierkantflasche": "",
+      "Vierkantflasche": "Frasco quadrado",
       "hexagonale Flasche": "Frasco hexagonal",
       "zarte Rippenschale": "",
       "zylindrische Flasche": "Frasco cilíndrico"
@@ -294,26 +294,26 @@
     "values": {
       "Schuppe": "",
       "Coxa": "",
-      "Muschelschale (Bivalvia)": "",
-      "Schneckenhaus (Gastropoda)": ""
+      "Muschelschale (Bivalvia)": "Concha (Bivalvia)",
+      "Schneckenhaus (Gastropoda)": "Casa de caracol (Gastropoda)"
     }
   },
   "Brick-brickForm-default": {
     "values": {
-      "Bodenziegel": "",
-      "Dachziegel": "",
+      "Bodenziegel": "Tijolo de pavimento",
+      "Dachziegel": "Telha",
       "Flachziegel": "",
       "Formziegel": "",
       "Hypokaustziegel": "",
-      "Imbrex": "",
+      "Imbrex": "Ímbrice",
       "Kalyptere": "",
       "Later": "",
       "Leistenziegel": "",
-      "Lochziegel/Hohlziegel": "",
+      "Lochziegel/Hohlziegel": "Tijolo perfurado",
       "Stroter": "",
-      "Tegula": "",
+      "Tegula": "Tégula",
       "Tonrohr": "",
-      "Wandziegel": ""
+      "Wandziegel": "Tijolo"
     }
   },
   "Brick-brickUsage-default": {
@@ -324,8 +324,8 @@
       "Fussboden": "Pavimento",
       "Gewölbedecke": "",
       "Klosterformat": "",
-      "Türrahmen": "",
-      "Türsturz": "",
+      "Türrahmen": "Obreira",
+      "Türsturz": "Lintel de porta",
       "Wandverkleidung": ""
     }
   },
@@ -334,25 +334,25 @@
       "Bemalung": "Pintura",
       "Fingerabdruck": "Impressão digital",
       "Kammritzung": "",
-      "Reliefdekor": "",
-      "Riefeldekor": "",
+      "Reliefdekor": "Decoração em relevo",
+      "Riefeldekor": "Decoração com ranhuras",
       "Ritzungen": "Incisões",
       "Sonstige Abdrücke": "Outras impressões",
       "Stempel": "Carimbo",
       "Stempeldekor": "Decoração do carimbo",
-      "Tupfendekor": "",
+      "Tupfendekor": "Decoração com pintas",
       "Wischzeichen": "",
-      "Überzug/Glasur": ""
+      "Überzug/Glasur": "Engobe/Vidrado"
     }
   },
   "Brick-manufacturing-default": {
     "values": {
-      "Dickwandig": "",
-      "Dünnwandig": "",
+      "Dickwandig": "Parede espessa",
+      "Dünnwandig": "Parede fina",
       "Gebrannt": "Cozido",
       "Hart gebrannt": "",
       "Luftgetrocknet": "",
-      "Oberfläche glatt": "",
+      "Oberfläche glatt": "Superfície lisa",
       "Oberfläche rau": "",
       "Sekundär gebrannt": "",
       "Weich gebrannt": ""
@@ -360,19 +360,19 @@
   },
   "Brick-manufacturingMethod-default": {
     "values": {
-      "gedreht (auf Drehscheibe)": "",
-      "gegossen": "",
-      "gepresst": "",
-      "handgeformt": ""
+      "gedreht (auf Drehscheibe)": "a torno (roda de oleiro)",
+      "gegossen": "fundido",
+      "gepresst": "prensado",
+      "handgeformt": "fabricado à mão"
     }
   },
   "Brick-specificType-default": {
     "values": {
       "Abschläge": "",
       "Berg": "",
-      "Bodenziegel": "",
+      "Bodenziegel": "Tijolo de pavimento",
       "Bruchstein": "",
-      "Dachziegel": "",
+      "Dachziegel": "Telha",
       "Geröll": "",
       "Hohlziegel": "",
       "Hypokaustziegel": "",
@@ -381,7 +381,7 @@
       "Quader": "",
       "Tonrohr": "",
       "Variierend": "",
-      "Wandziegel": "",
+      "Wandziegel": "Tijolo",
       "Ziegelbruch": ""
     }
   },
@@ -472,11 +472,11 @@
   },
   "Building-architecturalOrders-default": {
     "values": {
-      "Dorische Ordnung": "",
-      "Ionische Ordnung": "",
-      "Komposite Ordnung": "",
-      "Korinthische Ordnung": "",
-      "Toskanische Ordnung": ""
+      "Dorische Ordnung": "Ordem dórica",
+      "Ionische Ordnung": "Ordem jónica",
+      "Komposite Ordnung": "Ordem compósita",
+      "Korinthische Ordnung": "Ordem coríntia",
+      "Toskanische Ordnung": "Ordem toscana"
     }
   },
   "Building-buildingCategory-default": {
@@ -487,7 +487,7 @@
       "Bogen": "",
       "Brücke": "",
       "Circus": "",
-      "Grabbau": "",
+      "Grabbau": "Tomba",
       "Gymnasium": "",
       "Mauerkurtine": "",
       "Nymphäum": "",
@@ -542,7 +542,7 @@
       "Bruchsteinmauerwerk": "",
       "Feldsteinmauerwerk": "",
       "Kyklopenmauerwerk": "",
-      "Lehmziegelmauerwerk": "",
+      "Lehmziegelmauerwerk": "Alvenaria de tijolo cozido",
       "Mischform Polygonal-/Quadermauerwerk": "",
       "Opus Caementitium": "",
       "Polygonalmauerwerk": "",
@@ -551,13 +551,13 @@
       "Unregelmäßiges Polygonalmauerwerk": "",
       "Würfel-/Handquadermauerwerk": "",
       "Ziegelmauerwerk": "",
-      "irreguläres Mauerwerk": "",
+      "irreguläres Mauerwerk": "Aparelho irregular",
       "regelmäßiges Polygonalmauerwerk": "",
       "regelmäßiges Quadermauerwerk": "",
       "regelmäßiges Trapezoidalmauerwerk": "",
       "unregelmäßiges Quadermauerwerk": "",
       "unregelmäßiges Trapezoidalmauerwerk": "",
-      "unspezifisches Mauerwerk": ""
+      "unspezifisches Mauerwerk": "Alvenaria não especificada"
     }
   },
   "Building-buildingType-default": {
@@ -606,12 +606,12 @@
       "Pophyr": "",
       "Quarz": "",
       "Sandstein": "",
-      "Ziegel": ""
+      "Ziegel": "Telha"
     }
   },
   "Building-material-default-2": {
     "values": {
-      "Beton": "",
+      "Beton": "Betão",
       "Blei": "",
       "Eisen": "",
       "Erde": "",
@@ -630,19 +630,19 @@
       "Stahlbeton": "",
       "Stuck": "",
       "Unbekannt/Unerkannt": "",
-      "Ziegel": ""
+      "Ziegel": "Telha"
     }
   },
   "Building-material-default-3": {
     "values": {
-      "Beton": "",
+      "Beton": "Betão",
       "Blei": "",
       "Eisen": "",
       "Erde": "",
       "Fliesen": "",
       "Gips": "",
-      "Glas": "",
-      "Holz": "",
+      "Glas": "Vidro",
+      "Holz": "Madeira",
       "Holzwerkstoff": "",
       "Kunststoff": "",
       "Lehm": "argila",
@@ -653,7 +653,7 @@
       "Stahl": "",
       "Stahlbeton": "",
       "Stuck": "",
-      "Unbekannt/Unerkannt": "",
+      "Unbekannt/Unerkannt": "Desconhecido/Não reconhecido",
       "Granit": "Granito",
       "Kalk": "Calcário",
       "Kalkmörtel": "Argamassa de calcário",
@@ -664,7 +664,7 @@
       "Pophyr": "",
       "Quarz": "",
       "Sandstein": "",
-      "Ziegel": ""
+      "Ziegel": "Telha"
     }
   },
   "Wood-color-default": {
@@ -692,7 +692,7 @@
       "Produktionsrest": "",
       "Ring": "Anel",
       "Sarkophag": "",
-      "Schmuck": "",
+      "Schmuck": "Joalharia",
       "Spielzeug": "",
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável"
     }
@@ -768,7 +768,7 @@
   },
   "Architecture-blockProcessing-default": {
     "values": {
-      "Bruchsteine": "",
+      "Bruchsteine": "Brita",
       "Hausteine": "",
       "Lesesteine": "",
       "Werksteine": ""
@@ -791,8 +791,8 @@
     "values": {
       "Binderverband": "",
       "Blockverband": "",
-      "Flämischer Verband": "",
-      "Holländischer Verband": "",
+      "Flämischer Verband": "Aparelho flamenco",
+      "Holländischer Verband": "Aparelho holandês",
       "Kreuzverband": "",
       "Läuferverband": "",
       "Märkischer Verband": ""
@@ -803,10 +803,10 @@
       "Fundament: Geschüttet": "",
       "Fundament: gesetzt": "",
       "Mauerkern: Lesesteine": "",
-      "einschalig vor Feld/Hang": "",
+      "einschalig vor Feld/Hang": "Parede simples em frente a campo/encosta",
       "ohne Schalen/keine durchgehenden Lagen": "",
       "ohne Schalen/nur durchgehende Lagen": "",
-      "zweischalig": "",
+      "zweischalig": "Parede de dois panos",
       "zweischalig mit Binderlagen": ""
     }
   },
@@ -826,13 +826,13 @@
   },
   "Architecture-mortarConsistency-default": {
     "values": {
-      "brüchig": "",
+      "brüchig": "quebradiço",
       "erdig/lehmig": "terroso/argiloso",
       "fest": "firme",
       "hart": "duro",
       "locker": "solto",
       "mittelfein": "fino médio",
-      "pulverig": "",
+      "pulverig": "polvoroso",
       "sandig": "arenoso"
     }
   },
@@ -841,15 +841,15 @@
       "Aufgehendes": "",
       "Fensterzusetzung": "",
       "Flickung": "",
-      "Fundament": "",
-      "Gewölbe": "",
+      "Fundament": "Fundação",
+      "Gewölbe": "Abóbada",
       "Mauer": "Muro",
       "Mauerbettung": "",
       "Mauerdurchbruch": "",
-      "Mosaik": "",
+      "Mosaik": "Mosaico",
       "Opus sectile": "",
-      "Türzusetzung": "",
-      "Wandgestaltung": ""
+      "Türzusetzung": "Fecho de porta",
+      "Wandgestaltung": "Decoração/concepção da parede"
     }
   },
   "Architecture-wallType-default": {
@@ -861,7 +861,7 @@
       "Fachwerk": "",
       "Feldsteinmauer": "",
       "Grenzmauer": "",
-      "Ziegelmauer": ""
+      "Ziegelmauer": "Muro de tijolo"
     }
   },
   "Place-findspotClassification-default": {
@@ -943,7 +943,7 @@
       "Lehmiger Ton": "barro argiloso",
       "Mergel": "",
       "Mittlerer Sand": "",
-      "Sand": "",
+      "Sand": "Areia",
       "Sandiger Lehm": "",
       "Sandiger Schluff": "limo arenoso",
       "Sandiger Ton": "",
@@ -989,7 +989,7 @@
       "halbmondförmig": "",
       "kesselförmig": "",
       "langgezogen": "",
-      "oval": "",
+      "oval": "elíptico",
       "rechteckig": "",
       "regelmäßig": "",
       "rund": "redondo",
@@ -1004,19 +1004,19 @@
     "values": {
       "Bastmatten": "",
       "Korkboden": "",
-      "Mosaik": "",
+      "Mosaik": "Mosaico",
       "Opus sectile": "",
       "Opus signinum": "",
       "Pflaster": "",
       "Stampflehm": "",
       "Terrazzo": "",
       "Webmatten": "",
-      "Ziegel": ""
+      "Ziegel": "Telha"
     }
   },
   "Inscription-objectType-default": {
     "values": {
-      "Alltäglicher Gebrauch": "",
+      "Alltäglicher Gebrauch": "Uso quotidiano",
       "Bauinschrift": "",
       "Ehreninschrift": "",
       "Grabinschrift (Inschrift im Grabkontext)": "",
@@ -1031,19 +1031,19 @@
   },
   "Pottery-clayHardness-default": {
     "values": {
-      "1 (Fingernagel schabt, ritzt leicht)": "",
-      "2 (Fingernagel ritzt)": "",
-      "3 (Messerspitze ritzt leicht)": "",
-      "4 (Messerspitze ritzt)": "",
-      "5 (Messerspitze ritzt schwer)": "",
-      "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": "",
-      "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)": ""
+      "1 (Fingernagel schabt, ritzt leicht)": "1 (unha raspa levemente)",
+      "2 (Fingernagel ritzt)": "2 (unha incisa)",
+      "3 (Messerspitze ritzt leicht)": "3 (ponta da faca incisa levemente)",
+      "4 (Messerspitze ritzt)": "4 (ponta de faca incise)",
+      "5 (Messerspitze ritzt schwer)": "5 (ponta da faca incise dificilmente)",
+      "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": "6 (vidro de janela incise dificilmente, lima incisa)",
+      "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)": "7-10 (vidro de janela é incisa, aço faz faíscas)"
     }
   },
   "Pottery-coatInside-default": {
     "values": {
-      "Glasur": "Esmalte",
-      "Redslip": "",
+      "Glasur": "Vidrado",
+      "Redslip": "Engobe vermelho (redslip)",
       "Schwarzfirnis": "",
       "Tongrundig": ""
     }
@@ -1052,105 +1052,105 @@
     "values": {
       "Andere": "Outros",
       "Bemalung": "Pintura",
-      "Geglättet": "",
-      "Glasur": "Esmalte",
+      "Geglättet": "Alisado",
+      "Glasur": "Vidrado",
       "Poliert": "Polido",
-      "Verstrichen": "",
-      "Überzug": ""
+      "Verstrichen": "Espalhado",
+      "Überzug": "Engobe"
     }
   },
   "Pottery-decorationTechnique-default": {
     "values": {
       "Bemalung": "Pintura",
-      "Fadendekor (aufgelegt)": "",
-      "Reliefdekor": "",
-      "Riefeldekor": "",
-      "Ritzungen": "",
+      "Fadendekor (aufgelegt)": "Decoração de cordão (aplicado)",
+      "Reliefdekor": "Decoração em relevo",
+      "Riefeldekor": "Decoração com ranhuras",
+      "Ritzungen": "Incisões",
       "Stempel": "Carimbo",
       "Stempeldekor": "Decoração do carimbo",
-      "Tupfendekor": "",
+      "Tupfendekor": "Decoração com pintas",
       "Warzendekor": ""
     }
   },
   "Pottery-manufacturingMethod-default": {
     "values": {
-      "gedreht (auf Drehscheibe)": "",
-      "gegossen": "",
-      "gepresst": "",
-      "handgeformt": "",
-      "in Form gedreht": "",
+      "gedreht (auf Drehscheibe)": "a torno (roda de oleiro)",
+      "gegossen": "fundido",
+      "gepresst": "prensado",
+      "handgeformt": "fabricado à mão",
+      "in Form gedreht": "fabricado a torno",
       "nachgedreht (überdreht)": ""
     }
   },
   "Pottery-materialType-default": {
     "values": {
-      "Feinkeramik (Feine Ware)": "",
-      "Gebrauchskeramik (Grobe Ware)": ""
+      "Feinkeramik (Feine Ware)": "Cerâmica fina",
+      "Gebrauchskeramik (Grobe Ware)": "Cerâmica comum"
     }
   },
   "Pottery-objectType-default": {
     "values": {
-      "Altar": "",
-      "Anhänger": "",
-      "Antefix": "",
-      "Becken": "",
-      "Einlage": "",
-      "Gefäß": "Recipiente",
-      "Gerät": "",
-      "Gussform": "",
-      "Kette": "",
-      "Kohlebecken": "",
+      "Altar": "Altar",
+      "Anhänger": "Pendente",
+      "Antefix": "Antefixo",
+      "Becken": "Bacia",
+      "Einlage": "Inserto",
+      "Gefäß": "Contentor",
+      "Gerät": "Instrumento",
+      "Gussform": "Molde",
+      "Kette": "Cadeia",
+      "Kohlebecken": "Braseiro",
       "Lampe": "Lâmpada",
       "Löffel": "Colher",
       "Perle": "Pérola",
       "Plastik/Skulptur": "Plástica/Escultura",
       "Produktionsfragment": "Fragmento de produção",
       "Ring": "Anel",
-      "Sarkophag": "",
-      "Schmuck": "",
-      "Siegel": "",
-      "Spielstein": "",
-      "Spinnwirtel": "",
+      "Sarkophag": "Sarcófago",
+      "Schmuck": "Joalharia",
+      "Siegel": "Selo",
+      "Spielstein": "Peça de jogo",
+      "Spinnwirtel": "Fusaiola",
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
-      "Webgewicht": "",
-      "Werkzeug": ""
+      "Webgewicht": "Peso de fiação",
+      "Werkzeug": "Ferramenta"
     }
   },
   "Pottery-specificType-default": {
     "values": {
-      "Arretina schwarz": "",
-      "Attisch farbig aufgehöhte Schwarzglanzton Ware": "",
-      "Attische Keramik": "",
-      "Attische Rotfigurige Keramik": "",
-      "Attische Schwarzfigurige Keramik": "",
-      "Attische Schwarzglanzton Ware": "",
-      "Bemalte Keramik": "",
-      "Bemalte Ware (floral)": "",
-      "Bemalte Ware (linear)": "",
-      "Bichrome Ware": "",
-      "Campana A": "",
-      "Campana B": "",
-      "Campana B Imitation": "",
-      "Campana B-oid": "",
-      "Campana C": "",
-      "Dünnwandige Feinkeramik": "",
-      "Firnisware": "",
-      "Glasierte Keramik": "",
-      "Glattwandige Ware": "",
-      "Hand": "",
-      "Korinthische Keramik": "",
-      "Küchenware": "",
-      "Ostgriechische Keramik": "",
-      "Prähistorische Keramik": "",
-      "Red Slip Ware": "",
-      "Schlichte Ware": "",
-      "Schwarzglanzton Ware": "",
-      "Terra sigilata": ""
+      "Arretina schwarz": "Aretina negra",
+      "Attisch farbig aufgehöhte Schwarzglanzton Ware": "Cerâmica ática de verniz negro elevada",
+      "Attische Keramik": "Cerâmica ática",
+      "Attische Rotfigurige Keramik": "Cerâmica ática de figuras vermelhas",
+      "Attische Schwarzfigurige Keramik": "Cerâmica ática de figuras negras",
+      "Attische Schwarzglanzton Ware": "Cerâmica ática de verniz negro",
+      "Bemalte Keramik": "Cerâmica pintada",
+      "Bemalte Ware (floral)": "Cerâmica pintada (floral)",
+      "Bemalte Ware (linear)": "Cerâmica pintada (linear)",
+      "Bichrome Ware": "Cerâmica bicromática",
+      "Campana A": "Campana A",
+      "Campana B": "Campana B",
+      "Campana B Imitation": "Imitação de Campana B",
+      "Campana B-oid": "Campana B-oide",
+      "Campana C": "Campana C",
+      "Dünnwandige Feinkeramik": "Cerâmica fina com paredes finas",
+      "Firnisware": "Cerâmica de engobe brilhante",
+      "Glasierte Keramik": "Cerâmica vidrada",
+      "Glattwandige Ware": "Cerâmica de paredes lisas",
+      "Hand": "à mão",
+      "Korinthische Keramik": "Cerâmica coríntia",
+      "Küchenware": "Cerâmica de cozinha",
+      "Ostgriechische Keramik": "Cerâmica greco-oriental",
+      "Prähistorische Keramik": "Cerâmica pré-histórica",
+      "Red Slip Ware": "Cerâmica de engobe vermelho (redslip ware)",
+      "Schlichte Ware": "Cerâmica simples",
+      "Schwarzglanzton Ware": "Cerâmica de engobe negro brilhante",
+      "Terra sigilata": "Terra sigillata"
     }
   },
   "Pottery-temperAmount-default": {
     "values": {
-      "Keine Einschlüsse": "",
+      "Keine Einschlüsse": "Sem inclusões",
       "Mittel": "médio",
       "Nicht erkennbar": "Não reconhecível",
       "Sehr Viel": "Muito",
@@ -1172,25 +1172,25 @@
   "Pottery-vesselForm-default": {
     "values": {
       "Amphore": "Ânfora",
-      "Aschenurne": "",
+      "Aschenurne": "Urna cinerária",
       "Becher": "Copo",
-      "Deckel": "",
-      "Deckelgefäß": "",
-      "Flasche": "",
-      "Geschlossenes Gefäß": "",
-      "Kanne": "",
-      "Kasserole": "",
-      "Kochschüssel": "",
-      "Krug": "",
-      "Napf": "",
-      "Offenes Gefäß": "",
-      "Pfanne": "",
-      "Räuchergefäß": "",
-      "Schale": "",
-      "Schüssel": "Tigela",
+      "Deckel": "Cobertura",
+      "Deckelgefäß": "Contentor com cobertura",
+      "Flasche": "Frasco",
+      "Geschlossenes Gefäß": "Contentor fechado",
+      "Kanne": "Jarro",
+      "Kasserole": "Caçarola",
+      "Kochschüssel": "Tigela para cozer",
+      "Krug": "Jarra",
+      "Napf": "Tigela",
+      "Offenes Gefäß": "Contentor aberto",
+      "Pfanne": "Frigideira",
+      "Räuchergefäß": "Incensório",
+      "Schale": "Tigela",
+      "Schüssel": "Taça",
       "Tasse": "Taça",
       "Teller": "Prato",
-      "Teller/Untersatz": "",
+      "Teller/Untersatz": "Prato/base",
       "Topf": "Panela",
       "Unbestimmt": "Indeterminado",
       "Vorratsgefäß": "Recipiente de armazenamento"
@@ -1200,37 +1200,37 @@
     "values": {
       "Alabastron": "Alabástro",
       "Amphoriskos": "",
-      "Aryballos": "",
-      "Balsamarium": "",
-      "Dattelflasche": "",
+      "Aryballos": "Aríbalo",
+      "Balsamarium": "Balsamário",
+      "Dattelflasche": "Frasco em forma de tâmara",
       "Faltenbecher": "",
-      "Fischteller": "",
-      "Glockenbecher": "",
-      "Handelsamphore": "",
+      "Fischteller": "Prato para peixe",
+      "Glockenbecher": "Vaso campaniforme",
+      "Handelsamphore": "Ânfora comercial",
       "Hydria": "Hídria",
-      "Kopfflasche": "",
+      "Kopfflasche": "Frasco em forma de cabeça",
       "Kotyle": "",
       "Kragenschale": "",
       "Krater": "Cratera",
-      "Kylix": "",
-      "Lekane": "",
-      "Lekythos": "",
+      "Kylix": "Kylix",
+      "Lekane": "Lecánide",
+      "Lekythos": "Lécito",
       "Luterion": "",
-      "Lutrophore": "",
+      "Lutrophore": "Lutrófore",
       "Miscellanea": "",
       "Oinochoe": "",
       "Pelike": "Pélica",
       "Pithos": "Pito",
       "Pyxis": "Píxide",
-      "Salznapf": "",
+      "Salznapf": "Saleiro",
       "Skyphos": "",
       "Spitzamphora": "",
       "Sprenkler": "",
       "Stamnos": "",
-      "Tierflasche": "",
+      "Tierflasche": "Frasco zoomórfico",
       "Tischamphore": "",
       "Tränenfläschchen": "",
-      "Vierkantflasche": "",
+      "Vierkantflasche": "Frasco quadrado",
       "hexagonale Flasche": "Frasco hexagonal",
       "zylindrische Flasche": "Frasco cilíndrico"
     }
@@ -1346,19 +1346,19 @@
       "Armreif": "",
       "Astragal": "",
       "Bearbeitet (allgemein)": "",
-      "Einlage": "",
+      "Einlage": "Inserto",
       "Gefäß": "Recipiente",
       "Gerät": "",
       "Kette": "",
       "Löffel": "Colher",
       "Perle": "Pérola",
       "Ring": "Anel",
-      "Schmuck": "",
-      "Spielstein": "",
+      "Schmuck": "Joalharia",
+      "Spielstein": "Peça de jogo",
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Waffe": "Arma",
       "Weinheber": "",
-      "Werkzeug": ""
+      "Werkzeug": "Ferramenta"
     }
   },
   "Bone-species-default": {
@@ -1398,16 +1398,16 @@
   },
   "Terracotta-vesselForm-default": {
     "values": {
-      "Amphore": "",
-      "Aschenurne": "",
+      "Amphore": "Ânfora",
+      "Aschenurne": "Urna cinerária",
       "Becher": "Copo",
-      "Deckel": "",
-      "Deckelgefäß": "",
-      "Flasche": "",
-      "Krug": "",
-      "Napf": "",
-      "Schale": "",
-      "Schüssel": "Tigela",
+      "Deckel": "Cobertura",
+      "Deckelgefäß": "Contentor com cobertura",
+      "Flasche": "Frasco",
+      "Krug": "Jarra",
+      "Napf": "Tigela",
+      "Schale": "Tigela",
+      "Schüssel": "Taça",
       "Tasse": "Taça",
       "Teller": "Prato",
       "Topf": "Panela",
@@ -1419,26 +1419,26 @@
     "values": {
       "Alabastron": "Alabástro",
       "Amphoriskos": "",
-      "Aryballos": "",
-      "Balsamarium": "",
-      "Dattelflasche": "",
+      "Aryballos": "Aríbalo",
+      "Balsamarium": "Balsamário",
+      "Dattelflasche": "Frasco em forma de tâmara",
       "Faltenbecher": "",
       "Hydria": "Hídria",
-      "Kopfflasche": "",
+      "Kopfflasche": "Frasco em forma de cabeça",
       "Kotyle": "",
       "Kragenschale": "",
       "Krater": "Cratera",
       "Kylix": "",
-      "Lekythos": "",
+      "Lekythos": "Lécito",
       "Luterion": "",
-      "Lutrophore": "",
+      "Lutrophore": "Lutrófore",
       "Oinochoe": "",
       "Pelike": "Pélica",
       "Pithos": "Pito",
       "Skyphos": "",
       "Spitzamphora": "",
       "Stamnos": "",
-      "Vierkantflasche": "",
+      "Vierkantflasche": "Frasco quadrado",
       "hexagonale Flasche": "Frasco hexagonal",
       "zylindrische Flasche": "Frasco cilíndrico"
     }
@@ -1502,22 +1502,22 @@
   "Stone-architectureElement-default": {
     "values": {
       "Akroter": "",
-      "Architrav": "",
+      "Architrav": "Arquitrave",
       "Archtitravfriesblock": "",
-      "Basis": "",
+      "Basis": "Base",
       "Bauplastik": "",
-      "Fries": "",
-      "Gesims": "",
-      "Kapitell": "",
+      "Fries": "Friso",
+      "Gesims": "Cornija",
+      "Kapitell": "Capitel",
       "Konsole": "",
-      "Profilstück": "",
+      "Profilstück": "Peça de perfil",
       "Quaderblock": "",
       "Rinne": "",
       "Schrankenplatte": "",
-      "Schwellenblock": "",
+      "Schwellenblock": "Bloco de soleira",
       "Sima": "",
-      "Säule": "",
-      "Wandverkleidung": ""
+      "Säule": "Coluna",
+      "Wandverkleidung": "Revestimento de parede"
     }
   },
   "Stone-material-default": {
@@ -1550,7 +1550,7 @@
       "Architekturdekor": "",
       "Bauglied": "",
       "Becken": "",
-      "Einlage": "",
+      "Einlage": "Inserto",
       "Einsatzkopf": "",
       "Fußbodenfragment": "",
       "Gefäß": "Recipiente",
@@ -1572,31 +1572,31 @@
       "Ring": "Anel",
       "Rührstab": "",
       "Sarkophag": "",
-      "Schmuck": "",
+      "Schmuck": "Joalharia",
       "Siegel": "",
       "Spielbrett": "",
-      "Spielstein": "",
-      "Spinnwirtel": "",
+      "Spielstein": "Peça de jogo",
+      "Spinnwirtel": "Fusaiola",
       "Spolie": "",
       "Statuenbasis": "",
       "Stele": "",
-      "Tessera": "",
+      "Tessera": "Téssera",
       "Tischfuß": "",
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável",
       "Waffe": "Arma",
       "Webgewicht": "",
-      "Werkzeug": "",
+      "Werkzeug": "Ferramenta",
       "Ölpresse": ""
     }
   },
   "Stone-origin-default": {
     "values": {
-      "Alpen": "",
-      "Anatolien": "",
+      "Alpen": "Alpes",
+      "Anatolien": "Anatólia",
       "Chimtou": "",
       "Harz": "",
-      "Kreta": "",
-      "Sizilien": ""
+      "Kreta": "Creta",
+      "Sizilien": "Sicília"
     }
   },
   "Coin-denomination-default": {
@@ -1675,7 +1675,7 @@
   },
   "Coin-manufacturingMethod-default": {
     "values": {
-      "Gegossen": "",
+      "Gegossen": "fundido",
       "Geprägt": "",
       "Plattiert": "",
       "Unsicher bzw. unbestimmbar": "Incerto ou indeterminável"
@@ -1963,7 +1963,7 @@
       "Licinius": "",
       "Myrina": "",
       "Traian": "",
-      "Türkische Republick": "",
+      "Türkische Republick": "República Turca",
       "Valentianus III": ""
     }
   },
@@ -2008,14 +2008,14 @@
     "values": {
       "Feinsand": "",
       "Grus": "",
-      "Sand": ""
+      "Sand": "Areia"
     }
   },
   "Photo-originalType-default": {
     "values": {
-      "Dia bunt": "",
-      "Digitalfoto": "",
-      "Glasnegativ": "",
+      "Dia bunt": "Diapositivo a cores",
+      "Digitalfoto": "Foto digital",
+      "Glasnegativ": "Negativo sobre vidro",
       "Kleinbild bunt": "",
       "Kleinbild s/w": "",
       "Messbild": "",
@@ -2029,9 +2029,9 @@
       "Beschläge": "",
       "Emaille": "Esmalte",
       "Nielloverzierung": "",
-      "Reliefdekor": "",
-      "Riefeldekor": "",
-      "Ritzungen": "",
+      "Reliefdekor": "Decoração em relevo",
+      "Riefeldekor": "Decoração com ranhuras",
+      "Ritzungen": "Incisões",
       "Stempel": "Carimbo",
       "Stempeldekor": "Decoração do carimbo",
       "Vergoldung": ""
@@ -2053,7 +2053,7 @@
       "Barren": "",
       "Beschlag": "",
       "Blech": "",
-      "Einlage": "",
+      "Einlage": "Inserto",
       "Fibel": "",
       "Gefäß": "Recipiente",
       "Gerät": "",
@@ -2082,16 +2082,16 @@
       "Rührstab": "",
       "Sarkophag": "",
       "Schild": "",
-      "Schlacke": "",
+      "Schlacke": "Escória",
       "Schlüssel": "Tigela",
       "Schmiedeabfall": "",
-      "Schmuck": "",
+      "Schmuck": "Joalharia",
       "Schnalle": "",
       "Schreibgerät": "",
       "Siegel": "",
       "Spiegel": "",
-      "Spielstein": "",
-      "Spinnwirtel": "",
+      "Spielstein": "Peça de jogo",
+      "Spinnwirtel": "Fusaiola",
       "Stabbarren": "",
       "Strigilis": "",
       "Türschloss": "",
@@ -2099,7 +2099,7 @@
       "Waffe": "Arma",
       "Wasserleitung": "",
       "Weinheber": "",
-      "Werkzeug": "",
+      "Werkzeug": "Ferramenta",
       "Zierbeschlag": ""
     }
   },
@@ -2107,18 +2107,18 @@
     "values": {
       "Alabastron": "Alabástro",
       "Amphoriskos": "",
-      "Aryballos": "",
-      "Balsamarium": "",
-      "Dattelflasche": "",
+      "Aryballos": "Aríbalo",
+      "Balsamarium": "Balsamário",
+      "Dattelflasche": "Frasco em forma de tâmara",
       "Faltenbecher": "",
-      "Glockenbecher": "",
+      "Glockenbecher": "Vaso campaniforme",
       "Hydria": "Hídria",
-      "Kopfflasche": "",
+      "Kopfflasche": "Frasco em forma de cabeça",
       "Kotyle": "",
       "Kragenschale": "",
       "Krater": "Cratera",
       "Kylix": "",
-      "Lekythos": "",
+      "Lekythos": "Lécito",
       "Luterion": "",
       "Oinochoe": "",
       "Pelike": "Pélica",
@@ -2128,7 +2128,7 @@
       "Spitzamphora": "",
       "Sprenkler": "",
       "Stamnos": "",
-      "Vierkantflasche": "",
+      "Vierkantflasche": "Frasco quadrado",
       "hexagonale Flasche": "Frasco hexagonal",
       "zylindrische Flasche": "Frasco cilíndrico"
     }
@@ -2153,8 +2153,8 @@
   },
   "damages-default": {
     "values": {
-      "totalCollapse": "",
-      "partialCollapse": "",
+      "totalCollapse": "Perda total / colapso",
+      "partialCollapse": "Colapso parcial",
       "missingconst": "",
       "looseconst": "",
       "fractures": "",

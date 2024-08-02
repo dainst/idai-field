@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.Management.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DatabaseSchema.Project
   alias FieldPublication.Users
   alias FieldPublication.Projects
 

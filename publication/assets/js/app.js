@@ -23,7 +23,6 @@ import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
 import getWorldMapHook from "./world-map-hook"
-import getProjectMapHook from "./project-map-hook"
 import getDocumentViewMapHook from "./document-view-map-hook"
 import getIIIFHook from "./iiif-hook"
 
@@ -32,7 +31,6 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 let Hooks = {}
 
 Hooks.WorldMap = getWorldMapHook();
-Hooks.ProjectMap = getProjectMapHook();
 Hooks.DocumentViewMap = getDocumentViewMapHook();
 Hooks.IIIFViewer = getIIIFHook();
 Hooks.HoverHighlightMapFeature = {

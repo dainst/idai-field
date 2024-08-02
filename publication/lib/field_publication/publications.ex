@@ -5,7 +5,7 @@ defmodule FieldPublication.Publications do
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Projects
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
     Publication,
     Base
@@ -64,24 +64,34 @@ defmodule FieldPublication.Publications do
   end
 
   def get(project_name, %Date{} = draft_date) when is_binary(project_name) do
-    %Publication{
-      project_name: project_name,
-      draft_date: draft_date,
-      doc_type: Publication.doc_type()
-    }
-    |> get_doc_id()
-    |> CouchService.get_document()
+    doc_id =
+      %Publication{
+        project_name: project_name,
+        draft_date: draft_date,
+        doc_type: Publication.doc_type()
+      }
+      |> get_doc_id()
+
+    Cachex.get(:document_cache, doc_id)
     |> case do
-      {:ok, %{status: 200, body: body}} ->
-        json_doc = Jason.decode!(body)
+      {:ok, nil} ->
+        doc_id
+        |> CouchService.get_document()
+        |> case do
+          {:ok, %{status: 200, body: body}} ->
+            json_doc = Jason.decode!(body)
 
-        {
-          :ok,
-          apply_changes(Publication.changeset(%Publication{}, json_doc))
-        }
+            publication = apply_changes(Publication.changeset(%Publication{}, json_doc))
+            Cachex.put(:document_cache, doc_id, publication, ttl: 1000 * 60 * 60 * 24 * 7)
 
-      {:ok, %{status: 404}} ->
-        {:error, :not_found}
+            {:ok, publication}
+
+          {:ok, %{status: 404}} ->
+            {:error, :not_found}
+        end
+
+      {:ok, cached} ->
+        {:ok, cached}
     end
   end
 
@@ -224,9 +234,11 @@ defmodule FieldPublication.Publications do
   def put(%Publication{_rev: rev} = publication, params) when not is_nil(rev) do
     # If revision is not nil, this is an update to an existing publication. No need to to create documents, initializes search indices etc.
     changeset = Publication.changeset(publication, params)
+    doc_id = get_doc_id(publication)
+
+    Cachex.del(:document_cache, doc_id)
 
     with {:ok, publication} <- apply_action(changeset, :create),
-         doc_id <- get_doc_id(publication),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(publication, :_rev, rev)}
@@ -244,6 +256,7 @@ defmodule FieldPublication.Publications do
 
     with {:ok, publication} <- apply_action(changeset, :create),
          doc_id <- get_doc_id(publication),
+         _ <- Cachex.del(:document_cache, doc_id),
          {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.hierarchy_doc, %{}),
@@ -275,6 +288,7 @@ defmodule FieldPublication.Publications do
         } = publication
       ) do
     doc_id = get_doc_id(publication)
+    Cachex.del(:document_cache, doc_id)
 
     with {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_document(doc_id, rev),

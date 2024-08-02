@@ -3,7 +3,7 @@ defmodule FieldPublication.Replication.FileReplication do
   alias FieldPublication.FileService
   alias FieldPublication.Replication
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
     Publication
   }

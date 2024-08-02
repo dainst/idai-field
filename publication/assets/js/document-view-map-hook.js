@@ -11,9 +11,46 @@ import VectorLayer from 'ol/layer/Vector';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { asArray } from 'ol/color';
 import Overlay from 'ol/Overlay.js';
-import { Control, defaults as defaultControls } from 'ol/control.js';
 
 const tileSize = 256;
+
+function createTileLayer(info, projectName) {
+    const geoReference = info.extent;
+
+    const extent = [
+        geoReference.bottomLeftCoordinates[1],
+        geoReference.bottomLeftCoordinates[0],
+        geoReference.topRightCoordinates[1],
+        geoReference.topRightCoordinates[0]
+    ];
+
+    const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
+
+    const resolutions = getResolutions(extent, tileSize, info.width, info.height)
+
+    const source = new TileImage({
+        tileGrid: new TileGrid({
+            extent,
+            origin: [extent[0], extent[3]],
+            resolutions,
+            tileSize
+        }),
+        tileUrlFunction: (tileCoord) => {
+            return pathTemplate
+                .replace('{z}', String(tileCoord[0]))
+                .replace('{x}', String(tileCoord[1]))
+                .replace('{y}', String(tileCoord[2]));
+        }
+    });
+
+    return new TileLayer({
+        name: info.uuid,
+        source: source,
+        extent,
+        visible: info.visible
+    })
+}
+
 
 function getResolutions(
     extent,
@@ -124,9 +161,11 @@ const styleFunction = function (feature) {
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
-        // layerControl: null,
         docId: null,
         projectTileLayers: [],
+        projectTileLayerExtent: null,
+        documentTileLayers: [],
+        documentTileLayerExtent: null,
         parentLayer: null,
         docLayer: null,
         childrenLayer: null,
@@ -134,7 +173,6 @@ export default getDocumentViewMapHook = () => {
         identifierOverlayContent: null,
 
         mounted() {
-            console.log("mount")
             this.initialize();
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,
@@ -143,10 +181,15 @@ export default getDocumentViewMapHook = () => {
                 }
             )
             this.handleEvent(
+                `document-map-set-document-layers-${this.el.id}`,
+                ({ project, document_tile_layers }) => {
+                    this.setDocumentLayers(project, document_tile_layers)
+                }
+            )
+            this.handleEvent(
                 `document-map-update-${this.el.id}`,
-                ({ project, document_feature, children_features, parent_features }) => {
-                    // TODO: Do not initialize on every change.
-                    this.setup(parent_features, document_feature, children_features)
+                ({ document_feature, children_features, parent_features }) => {
+                    this.setMapFeatures(parent_features, document_feature, children_features)
                 }
             )
             this.handleEvent(
@@ -183,44 +226,19 @@ export default getDocumentViewMapHook = () => {
             _this.identifierOverlay.setPosition(undefined)
 
             this.el.addEventListener('pointerenter', function (e) {
-                let docFeature = _this.docLayer.getSource().getFeatures()[0];
-                let properties = docFeature.getProperties();
-                properties.fill = false;
-                docFeature.setProperties(properties);
+                _this.setFillForSelectedDocument(false);
             });
 
             this.el.addEventListener('pointerleave', function (e) {
-                let docFeature = _this.docLayer.getSource().getFeatures()[0];
-                let properties = docFeature.getProperties();
-                properties.fill = true;
-                docFeature.setProperties(properties);
-
-                let childFeatures = _this.childrenLayer.getSource().getFeatures();
-
-                for (let child of childFeatures) {
-                    let properties = child.getProperties();
-                    properties.fill = false;
-                    child.setProperties(properties);
-                }
-
-                _this.identifierOverlay.setPosition(undefined)
+                _this.setFillForParents(false);
+                _this.setFillForSelectedDocument(true);
+                _this.setFillForChildren(false);
             });
 
             this.map.on('pointermove', function (e) {
-                let childFeatures = _this.childrenLayer.getSource().getFeatures();
-                for (let child of childFeatures) {
-                    let properties = child.getProperties();
-                    properties.fill = false;
-                    child.setProperties(properties);
-                }
 
-                let parentFeatures = _this.parentLayer.getSource().getFeatures();
-                for (let parent of parentFeatures) {
-                    let properties = parent.getProperties();
-                    properties.fill = false;
-                    parent.setProperties(properties);
-                }
-
+                _this.setFillForChildren(false);
+                _this.setFillForParents(false);
                 _this.identifierOverlay.setPosition(undefined)
 
                 if (e.dragging) {
@@ -228,50 +246,24 @@ export default getDocumentViewMapHook = () => {
                 }
 
                 _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
-                    const feature = features.length ? features[0] : undefined;
-
-                    if (feature) {
-                        let properties = feature.getProperties()
-
-                        properties.fill = true;
-                        feature.setProperties(properties);
-
-                        _this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
-
-                        const [r, g, b, a] = asArray(properties.color)
-
-                        document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
-                        document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category
-
-                        _this.identifierOverlay.setPosition(e.coordinate);
+                    const childFeature = features.length ? features[0] : undefined;
+                    if (childFeature) {
+                        _this.highlightFeature(childFeature, e.coordinate)
                     } else {
                         _this.parentLayer.getFeatures(e.pixel).then(function (features) {
-                            const feature = features.length ? features[0] : undefined;
-                            if (feature) {
-                                let properties = feature.getProperties()
-
-                                properties.fill = true;
-                                feature.setProperties(properties);
-
-                                _this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
-
-                                const [r, g, b, a] = asArray(properties.color)
-                                document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
-                                document.getElementById(`${_this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
-
-                                _this.identifierOverlay.setPosition(e.coordinate);
-                            }
+                            const parentFeature = features.length ? features[0] : undefined;
+                            if (parentFeature) {
+                                _this.highlightFeature(parentFeature, e.coordinate)
+                            };
                         })
                     }
                 })
-
             });
 
             this.map.on('singleclick', function (e) {
 
                 _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
                     const feature = features.length ? features[0] : undefined;
-
                     if (feature) {
                         let properties = feature.getProperties()
                         _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
@@ -287,54 +279,35 @@ export default getDocumentViewMapHook = () => {
                 })
             })
         },
-
         setProjectLayers(projectName, tileLayersInfo) {
 
             this.projectTileLayerExtent = createEmpty();
             this.projectTileLayers = [];
 
             for (let info of tileLayersInfo) {
-                const geoReference = info.extent;
 
-                const extent = [
-                    geoReference.bottomLeftCoordinates[1],
-                    geoReference.bottomLeftCoordinates[0],
-                    geoReference.topRightCoordinates[1],
-                    geoReference.topRightCoordinates[0]
-                ];
+                const layer = createTileLayer(info, projectName)
+                this.projectTileLayers.push(layer);
 
-                const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
-
-                const resolutions = getResolutions(extent, tileSize, info.width, info.height)
-
-                const source = new TileImage({
-                    tileGrid: new TileGrid({
-                        extent,
-                        origin: [extent[0], extent[3]],
-                        resolutions,
-                        tileSize
-                    }),
-                    tileUrlFunction: (tileCoord) => {
-                        return pathTemplate
-                            .replace('{z}', String(tileCoord[0]))
-                            .replace('{x}', String(tileCoord[1]))
-                            .replace('{y}', String(tileCoord[2]));
-                    }
-                });
-
-                const currentLayer = new TileLayer({
-                    name: info.uuid,
-                    source: source,
-                    extent
-                })
-
-                this.projectTileLayers.push(currentLayer);
-
-                this.projectTileLayerExtent = extend(this.projectTileLayerExtent, extent);
-                this.map.addLayer(currentLayer);
+                this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
+                this.map.addLayer(layer);
             }
         },
-        async setup(parentFeatures, documentFeature, childrenFeatures) {
+        setDocumentLayers(projectName, tileLayersInfo) {
+
+            this.documentTileLayerExtent = createEmpty();
+            this.documentTileLayers = [];
+
+            for (let info of tileLayersInfo) {
+                const layer = createTileLayer(info, projectName)
+
+                this.documentTileLayers.push(layer);
+
+                this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
+                this.map.addLayer(layer);
+            }
+        },
+        async setMapFeatures(parentFeatures, documentFeature, childrenFeatures) {
             this.docId = documentFeature.properties.uuid;
 
             if (this.childrenLayer) this.map.removeLayer(this.childrenLayer);
@@ -400,6 +373,50 @@ export default getDocumentViewMapHook = () => {
                 maxZoom: 40
             }));
             this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
+
+            this.clearAllHighlights()
+        },
+        highlightFeature(feature, coordinate) {
+            let properties = feature.getProperties()
+
+            properties.fill = true;
+            feature.setProperties(properties);
+
+            this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
+
+            const [r, g, b, a] = asArray(properties.color)
+            document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
+            document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
+
+            this.identifierOverlay.setPosition(coordinate);
+        },
+        setFillForParents(val) {
+            let parentFeatures = this.parentLayer.getSource().getFeatures();
+            for (let parent of parentFeatures) {
+                let properties = parent.getProperties();
+                properties.fill = val;
+                parent.setProperties(properties);
+            }
+        },
+        setFillForSelectedDocument(val) {
+            let docFeature = this.docLayer.getSource().getFeatures()[0];
+            let properties = docFeature.getProperties();
+            properties.fill = val;
+            docFeature.setProperties(properties);
+        },
+        setFillForChildren(val) {
+            let childFeatures = this.childrenLayer.getSource().getFeatures();
+            for (let child of childFeatures) {
+                let properties = child.getProperties();
+                properties.fill = val;
+                child.setProperties(properties);
+            }
+        },
+        clearAllHighlights() {
+            this.setFillForParents(false);
+            this.setFillForSelectedDocument(false);
+            this.setFillForChildren(false);
+            this.identifierOverlay.setPosition(undefined)
         },
         toggleLayerVisibility(uuid, visibility) {
             const layer = this.map.getLayers().getArray().find(layer => layer.get('name') == uuid)

@@ -7,6 +7,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
+  alias FieldPublication.Publications.Data.Document
 
   alias FieldPublicationWeb.Presentation.DocumentComponents
   alias FieldPublicationWeb.Presentation.Components.PublicationSelection
@@ -54,15 +55,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     type_categories = Publications.Data.get_all_subcategories(current_publication, "Type")
 
-    relations_with_geometry =
-      Map.get(doc, "relations", [])
-      |> Enum.map(fn %{"values" => rel_docs} ->
-        rel_docs
-      end)
-      |> List.flatten()
-      |> Enum.filter(fn rel ->
-        Data.get_field(rel, "geometry") != nil
-      end)
+
 
     {
       :noreply,
@@ -73,7 +66,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:uuid, uuid)
       |> assign(:image_categories, image_categories)
       |> assign(:type_categories, type_categories)
-      |> assign(:relations_with_geometry, relations_with_geometry)
       |> assign(:project_map_layers, project_map_layers)
       |> assign(
         :page_title,
@@ -111,18 +103,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     top_level_docs = Data.get_extended_documents(top_level_uuids, current_publication)
 
-    publication_comments =
-      current_publication.comments
-      |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
-      |> Enum.into(%{})
-
     {
       :noreply,
       socket
       |> assign(:doc, project_doc)
       |> assign(:publication, current_publication)
       |> assign(:selected_lang, language)
-      |> assign(:publication_comments, publication_comments)
       |> assign(:top_level_docs, top_level_docs)
       |> assign(:project_map_layers, project_map_layers)
       |> assign(
@@ -176,22 +162,22 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     }
   end
 
-  defp get_page_title(%{"id" => "project"} = doc) do
+  defp get_page_title(%Document{id: "project"} = doc) do
     {_, short_description} =
-      I18n.select_translation(%{values: Data.get_field_values(doc, "shortName")})
+      I18n.select_translation(%{values: Data.get_field_value(doc, "shortName")})
 
     short_description
   end
 
-  defp get_page_title(doc) do
+  defp get_page_title(%Document{} = doc) do
     short_descriptions =
-      Data.get_field_values(doc, "shortDescription")
+      Data.get_field_value(doc, "shortDescription")
       |> case do
         nil ->
-          Data.get_field_values(doc, "identifier")
+          Data.get_field_value(doc, "identifier")
 
-        values ->
-          values
+        val ->
+          val
       end
 
     {_translation_info, value} = I18n.select_translation(%{values: short_descriptions})

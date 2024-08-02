@@ -26,6 +26,10 @@ export class SelectNewFieldModalComponent {
     public selectedFieldName: string;
     public multiple: boolean;
 
+    public countAffected: number;
+    
+    private affectedDocuments: Array<Document>;
+
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
@@ -39,15 +43,24 @@ export class SelectNewFieldModalComponent {
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
 
-    public initialize() {
-
+    public async initialize() {
+        
         this.availableFields = this.getAvailableFields();
+
+        const findResult = await this.datastore.find({
+            categories: [this.category.name],
+            constraints: { [this.warningType + ':contain']: this.fieldName }
+        }, { includeResourcesWithoutValidParent: true });
+
+        this.countAffected = findResult.totalCount;
+        this.affectedDocuments = findResult.documents;
     }
 
 
@@ -91,14 +104,9 @@ export class SelectNewFieldModalComponent {
 
     private async moveMultiple() {
 
-        const documents = (await this.datastore.find({
-            categories: [this.category.name],
-            constraints: { [this.warningType + ':contain']: this.fieldName }
-        }, { includeResourcesWithoutValidParent: true })).documents;
+        this.affectedDocuments.forEach(document => this.moveDataToNewField(document));
 
-        documents.forEach(document => this.moveDataToNewField(document));
-
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(this.affectedDocuments);
     }
 
 

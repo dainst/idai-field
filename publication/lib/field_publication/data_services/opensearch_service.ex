@@ -1,7 +1,7 @@
 defmodule FieldPublication.OpenSearchService do
   alias FieldPublication.Publications
-  alias FieldPublication.DocumentSchema.Project
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Project
+  alias FieldPublication.DatabaseSchema.Publication
   require Logger
 
   def initialize_publication_indices(%Publication{} = pub) do

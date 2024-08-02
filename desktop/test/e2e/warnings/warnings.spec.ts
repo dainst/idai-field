@@ -486,6 +486,28 @@ test.describe('warnings --', () => {
     });
 
 
+    test('disable multiple switch if single resource is affected by unconfigured category warning', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredCategoryWarnings(['1'], 'CustomCategory');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickSelectNewCategoryButton(0);
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await expect(SelectModalPage.getMultipleSwitch()).toBeDisabled();
+        await SelectModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickDeleteResourceButton(0);
+        await expect(DeleteModalPage.getMultipleSwitch()).toBeDisabled();
+        await DeleteModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
     test('solve multiple warnings for unconfigured category by selecting new category in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -566,6 +588,28 @@ test.describe('warnings --', () => {
     });
 
 
+    test('disable multiple switch if single resource is affected by unconfigured field warning', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredFieldWarnings(['1'], 'field');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await expect(DeleteModalPage.getMultipleSwitch()).toBeDisabled();
+        await DeleteModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickSelectNewFieldButton(0);
+        await SelectModalPage.clickSelectField('Kurzbeschreibung');
+        await expect(SelectModalPage.getMultipleSwitch()).toBeDisabled();
+        await DeleteModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
     test('solve multiple warnings for unconfigured fields via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -630,6 +674,32 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickConvertFieldDataButton(0);
         await ConvertFieldDataModalPage.clickConfirmConversionButton();
         await waitForNotExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
+    test('disable multiple switch if single resource is affected by invalid field data warning', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1'], 'field2', 'true', Field.InputType.BOOLEAN);
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await expect(DeleteModalPage.getMultipleSwitch()).toBeDisabled();
+        await DeleteModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickSelectNewFieldButton(0);
+        await SelectModalPage.clickSelectField('Kurzbeschreibung');
+        await expect(SelectModalPage.getMultipleSwitch()).toBeDisabled();
+        await SelectModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickConvertFieldDataButton(0);
+        await expect(ConvertFieldDataModalPage.getMultipleSwitch()).toBeDisabled();
+        await ConvertFieldDataModalPage.clickCancelButton();
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
@@ -768,10 +838,10 @@ test.describe('warnings --', () => {
     test('only delete invalid data while solving multiple invalid field data warnings', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1'], 'field', 'Text', Field.InputType.INT);
+        await createInvalidFieldDataWarnings(['1', '2'], 'field', 'Text', Field.InputType.INT);
 
-        await ResourcesPage.performCreateResource('2', 'place', 'test:field', '10');
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+        await ResourcesPage.performCreateResource('3', 'place', 'test:field', '10');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteFieldDataButton(0);
@@ -782,14 +852,19 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
 
-        // Check that invalid field data has been deleted
+        // Check that invalid field data has been deleted in first resource
         await ResourcesPage.clickSelectResource('1');
         let fields = await FieldsViewPage.getFields(0);
         expect(await fields.count()).toBe(1);
         expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
+        // Check that invalid field data has been deleted in second resource
+        await ResourcesPage.clickSelectResource('2');
+        fields = await FieldsViewPage.getFields(0);
+        expect(await fields.count()).toBe(1);
+        expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
 
         // Check that valid field data has not been deleted
-        await ResourcesPage.clickSelectResource('2');
+        await ResourcesPage.clickSelectResource('3');
         fields = await FieldsViewPage.getFields(0);
         expect(await fields.count()).toBe(2);
         expect(await FieldsViewPage.getFieldName(0, 1)).toEqual('test:field');
@@ -878,6 +953,30 @@ test.describe('warnings --', () => {
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+    });    
+    
+    
+    test('disable multiple switch if single resource is affected by outlier values warning', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteOutliersButton(0);
+        await expect(DeleteModalPage.getMultipleSwitch()).toBeDisabled();
+        await DeleteModalPage.clickCancelButton();
+
+        
+        await WarningsModalPage.clickFixOutliersButton(0);
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await expect(FixOutliersModalPage.getMultipleSwitch()).toBeDisabled();
+        await FixOutliersModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
     });
 
 
@@ -1322,9 +1421,9 @@ test.describe('warnings --', () => {
             async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field1');
-        await createCompositeOutlierValuesWarnings(['2', '3'], 'field2');
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+        await createOutlierValuesWarnings(['1', '2'], 'field1');
+        await createCompositeOutlierValuesWarnings(['3', '4'], 'field2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('4');
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
@@ -1345,14 +1444,14 @@ test.describe('warnings --', () => {
         await waitForNotExist(await NavbarPage.getWarnings());
     });
 
-
+  
     test('solve multiple warnings for outlier values in composite & checkboxes fields by deleting value via warnings modal',
             async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field1');
-        await createCompositeOutlierValuesWarnings(['2', '3'], 'field2');
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+        await createOutlierValuesWarnings(['1', '2'], 'field1');
+        await createCompositeOutlierValuesWarnings(['3', '4'], 'field2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('4');
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickDeleteOutliersButton(0);

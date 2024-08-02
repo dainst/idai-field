@@ -5,7 +5,7 @@ defmodule FieldPublicationWeb.Management.UserLiveTest do
 
   alias FieldPublication.CouchService
 
-  @test_user %FieldPublication.DocumentSchema.User{
+  @test_user %FieldPublication.DatabaseSchema.User{
     name: "test_user",
     password: "pw",
     label: "Test user"

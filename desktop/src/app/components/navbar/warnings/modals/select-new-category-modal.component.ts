@@ -23,6 +23,9 @@ export class SelectNewCategoryModalComponent {
     public availableTopLevelCategories: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
     public multiple: boolean;
+    public countAffected: number;
+
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -48,7 +51,18 @@ export class SelectNewCategoryModalComponent {
     }
 
 
-    public initialize() {
+    public async initialize() {
+
+        const foundDocuments: Array<Document> = (await this.datastore.find(
+            { categories: ['UNCONFIGURED'] },
+            { includeResourcesWithoutValidParent: true }
+        )).documents;
+
+        this.affectedDocuments = foundDocuments.filter(document => {
+            return document.resource.category === this.document.resource.category;
+        });
+
+        this.countAffected = this.affectedDocuments.length;
 
         this.availableTopLevelCategories = this.getAvailableTopLevelCategories();
     }
@@ -84,16 +98,9 @@ export class SelectNewCategoryModalComponent {
 
     private async performMultiple() {
 
-        const documents: Array<Document> = (await this.datastore.find({
-            categories: ['UNCONFIGURED'],
-        },  { includeResourcesWithoutValidParent: true })).documents;
+        this.affectedDocuments.forEach(document => document.resource.category = this.selectedCategory.name);
 
-        const documentsToChange: Array<Document> = documents.filter(document => {
-            return document.resource.category === this.document.resource.category;
-        });
-        documentsToChange.forEach(document => document.resource.category = this.selectedCategory.name);
-
-        await this.datastore.bulkUpdate(documentsToChange);
+        await this.datastore.bulkUpdate(this.affectedDocuments);
     }
 
 

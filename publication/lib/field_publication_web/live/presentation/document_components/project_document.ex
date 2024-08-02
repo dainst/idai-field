@@ -64,7 +64,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <div class="mb-4">
               <.live_component
                 module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
-                id="generic_doc_map"
+                id="project_doc_map"
                 style="width:100%; height:500px;"
                 doc={@doc}
                 publication={@publication}

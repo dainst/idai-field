@@ -391,6 +391,7 @@ export default getDocumentViewMapHook = () => {
             this.identifierOverlay.setPosition(coordinate);
         },
         setFillForParents(val) {
+            if (!this.parentLayer) return;
             let parentFeatures = this.parentLayer.getSource().getFeatures();
             for (let parent of parentFeatures) {
                 let properties = parent.getProperties();
@@ -399,12 +400,14 @@ export default getDocumentViewMapHook = () => {
             }
         },
         setFillForSelectedDocument(val) {
+            if (!this.docLayer) return;
             let docFeature = this.docLayer.getSource().getFeatures()[0];
             let properties = docFeature.getProperties();
             properties.fill = val;
             docFeature.setProperties(properties);
         },
         setFillForChildren(val) {
+            if (!this.childrenLayer) return;
             let childFeatures = this.childrenLayer.getSource().getFeatures();
             for (let child of childFeatures) {
                 let properties = child.getProperties();

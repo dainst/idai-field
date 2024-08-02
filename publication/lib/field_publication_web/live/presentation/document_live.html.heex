@@ -23,8 +23,7 @@
     category == "TypeCatalog" ->
       DocumentComponents.TypeCatalog.render(%{
         doc: @doc,
-        project_name: @project_name,
-        draft_date: @publication.draft_date,
+        publication: @publication,
         lang: @selected_lang,
         uuid: @uuid
       })
@@ -32,8 +31,7 @@
     category in @type_categories ->
       DocumentComponents.Type.render(%{
         doc: @doc,
-        project_name: @project_name,
-        draft_date: @publication.draft_date,
+        publication: @publication,
         lang: @selected_lang,
         uuid: @uuid
       })

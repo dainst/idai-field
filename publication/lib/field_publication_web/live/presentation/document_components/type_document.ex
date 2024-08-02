@@ -2,12 +2,15 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
   use Phoenix.Component
   use FieldPublicationWeb, :verified_routes
 
+  alias FieldPublication.Publications.Data.Field
+  alias FieldPublication.Publications.Data.FieldGroup
+  alias FieldPublication.Publications.Data.Document
+  alias FieldPublication.Publications.Data.RelationGroup
+
   alias FieldPublicationWeb.Presentation.Components.{
     I18n,
-    IIIFViewer,
     GenericField,
-    DocumentLink,
-    ClipboardCopy
+    DocumentLink
   }
 
   import FieldPublicationWeb.CoreComponents
@@ -18,32 +21,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@doc} />
+        <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-row">
         <div class="basis-1/5 m-5">
-          <%= for group <- @doc["groups"] do %>
-            <% fields =
-              Enum.reject(group["fields"], fn %{"key" => key} ->
-                key in ["identifier", "category", "geometry"]
-              end) %>
-            <%= unless fields == [] do %>
-              <section>
-                <.group_heading>
-                  <I18n.text values={group["labels"]} />
-                </.group_heading>
-
-                <dl>
-                  <%= for field <- fields do %>
-                    <div>
-                      <GenericField.render field={field} lang={@lang} />
-                    </div>
-                  <% end %>
-                </dl>
-              </section>
-            <% end %>
-          <% end %>
+          Test
           <hr class="mt-4" />
 
           <.group_heading>
@@ -51,38 +34,27 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
           </.group_heading>
           <ul class="ml-0 list-none">
             <li>
-              <a download={@doc["identifier"]} href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
+              <a download={@doc.identifier} href={~p"/api/image/raw/#{@publication.project_name}/#{@uuid}"}>
                 <.icon name="hero-photo-solid" /> Download original
               </a>
             </li>
             <li>
-              <a target="_blank" href={~p"/api/raw/csv/#{@project_name}/#{@draft_date}/#{@uuid}"}>
+              <a target="_blank" href={~p"/api/raw/csv/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"}>
                 <.icon name="hero-table-cells-solid" /> Download CSV
               </a>
             </li>
             <li>
-              <a target="_blank" href={~p"/api/json/raw/#{@project_name}/#{@draft_date}/#{@uuid}"}>
+              <a target="_blank" href={~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"}>
                 <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
               </a>
             </li>
           </ul>
         </div>
         <div class="basis-4/5 m-5">
-          <%= for relations <- @doc["relations"] do %>
+          <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
-              <I18n.text values={relations["labels"]} /> (<%= Enum.count(relations["values"]) %>)
+              test
             </.group_heading>
-            <div class="overflow-auto overscroll-contain">
-            <%= for doc <- relations["values"] do %>
-              <DocumentLink.show
-                project={@project_name}
-                date={@draft_date}
-                lang={@lang}
-                doc={doc}
-                image_count={3}
-              />
-            <% end %>
-            </div>
           <% end %>
         </div>
       </div>

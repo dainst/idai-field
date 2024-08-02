@@ -73,10 +73,39 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
           </ul>
         </div>
         <div class="basis-4/5 m-5">
-          <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
+            <div class="flex flex-row justify-between">
+                <%= for %RelationGroup{} = header_group <- @doc.relations
+                  |> Enum.filter(fn %RelationGroup{name: name} ->
+                      name in ["liesWithin", "contains"] end) do %>
+                  <div class="w-[45%] overflow-auto overscroll-contain h-[200px]">
+                    <.group_heading>
+                      <I18n.text values={header_group.labels} />
+                    </.group_heading>
+                    <%= for %Document{} = doc <- header_group.docs do %>
+                      <DocumentLink.show
+                        lang={@lang}
+                        doc={doc}
+                        image_count={1}
+                      />
+                    <%= end %>
+                  </div>
+                <%= end %>
+            </div>
+
+          <%= for %RelationGroup{} = relation_group <- @doc.relations
+            |> Enum.filter(fn %RelationGroup{name: name} -> name == "hasInstance" end) do %>
             <.group_heading>
-              test
+                <I18n.text values={relation_group.labels} /> (<%= Enum.count(relation_group.docs) %>)
             </.group_heading>
+            <div class="overflow-auto overscroll-contain">
+              <%= for %Document{} = doc <- relation_group.docs do %>
+                <DocumentLink.show
+                  lang={@lang}
+                  doc={doc}
+                  image_count={1}
+                />
+              <% end %>
+            </div>
           <% end %>
         </div>
       </div>

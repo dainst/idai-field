@@ -42,7 +42,8 @@ iex -S mix phx.server
 
 Now you can visit [`localhost:4001`](http://localhost:4001) in your browser and should see the landing page. The next step would be to login as the COUCHDB_USER as defined in the [docker-compose.yml](docker-compose.yml). 
 
-## 3. Seed Project for Development
+
+## 4. Seed Project for Development
 By running
 
 ```

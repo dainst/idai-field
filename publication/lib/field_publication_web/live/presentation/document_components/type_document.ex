@@ -26,7 +26,29 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
 
       <div class="flex flex-row">
         <div class="basis-1/5 m-5">
-          Test
+          <%= for %FieldGroup{} = field_group <- @doc.groups do %>
+            <% fields_to_display =
+              Enum.reject(field_group.fields, fn %Field{name: name} ->
+                name in ["identifier", "category", "geometry"]
+            end) %>
+            <%= unless fields_to_display == [] do %>
+              <section>
+                <.group_heading>
+                  <I18n.text values={field_group.labels} />
+                </.group_heading>
+                <dl>
+                    <%= for %Field{} = field <- fields_to_display do %>
+                      <div>
+                      <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                      <dd class="pl-4">
+                        <GenericField.render field={field} lang={@lang} />
+                      </dd>
+                      </div>
+                    <% end %>
+                </dl>
+              </section>
+            <% end %>
+          <% end %>
           <hr class="mt-4" />
 
           <.group_heading>

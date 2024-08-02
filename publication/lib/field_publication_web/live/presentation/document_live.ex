@@ -16,6 +16,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     publications =
       project_name
       |> Publications.list()
+      |> Stream.reject(fn publication -> publication.replication_finished == nil end)
       |> Enum.filter(fn pub ->
         Projects.has_publication_access?(pub, socket.assigns.current_user)
       end)

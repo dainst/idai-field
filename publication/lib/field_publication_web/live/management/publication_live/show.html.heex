@@ -205,7 +205,13 @@
     <% end %>
   </.form>
   <%= unless @publication.publication_date do %>
-    <.button class="mt-3 w-full" phx-click="publish">Publish</.button>
+    <.button
+      disabled={@publication.replication_finished == nil}
+      class="mt-3 w-full disabled:bg-slate-400"
+      phx-click="publish"
+    >
+      Publish
+    </.button>
   <% end %>
 </div>
 

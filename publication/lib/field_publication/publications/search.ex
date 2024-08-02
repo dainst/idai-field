@@ -6,6 +6,48 @@ defmodule FieldPublication.Publications.Search do
 
   require Logger
 
+  defmodule SearchDocument do
+    @derive Jason.Encoder
+    @enforce_keys [
+      :id,
+      :identifier,
+      :category,
+      :project_name,
+      :publication_draft_date,
+      :full_doc,
+      :full_doc_as_text
+    ]
+    defstruct [
+      :id,
+      :identifier,
+      :category,
+      :project_name,
+      :publication_draft_date,
+      :full_doc,
+      :full_doc_as_text
+    ]
+  end
+
+  def search_document_map_to_struct(%{
+        "id" => id,
+        "identifier" => identifier,
+        "category" => category,
+        "project_name" => project_name,
+        "publication_draft_date" => publication_draft_date,
+        "full_doc" => full_doc,
+        "full_doc_as_text" => full_doc_as_text
+      }) do
+    %SearchDocument{
+      id: id,
+      identifier: identifier,
+      category: category,
+      project_name: project_name,
+      publication_draft_date: publication_draft_date,
+      full_doc: Data.document_map_to_struct(full_doc),
+      full_doc_as_text: full_doc_as_text
+    }
+  end
+
   def search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
@@ -59,7 +101,7 @@ defmodule FieldPublication.Publications.Search do
           docs:
             body["hits"]["hits"]
             |> Enum.map(fn %{"_source" => doc} ->
-              Map.put(doc, "full_doc", Data.document_map_to_struct(doc["full_doc"]))
+              search_document_map_to_struct(doc)
             end),
           aggregations:
             body
@@ -202,14 +244,14 @@ defmodule FieldPublication.Publications.Search do
       Data.apply_project_configuration(doc, publication_configuration, publication)
 
     base_document =
-      %{
-        "category" => res["category"],
-        "id" => res["id"],
-        "identifier" => res["identifier"],
-        "publication_draft_date" => publication.draft_date,
-        "project_name" => publication.project_name,
-        "full_doc" => full_doc,
-        "full_doc_as_text" => Jason.encode!(full_doc)
+      %SearchDocument{
+        id: res["id"],
+        identifier: res["identifier"],
+        category: res["category"],
+        publication_draft_date: publication.draft_date,
+        project_name: publication.project_name,
+        full_doc: full_doc,
+        full_doc_as_text: Jason.encode!(full_doc)
       }
 
     additional_fields =

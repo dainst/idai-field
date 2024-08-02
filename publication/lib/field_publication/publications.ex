@@ -181,6 +181,7 @@ defmodule FieldPublication.Publications do
     |> Enum.group_by(fn val -> val.project_name end)
     |> Stream.map(fn {_project_name, publications} ->
       publications
+      |> Stream.reject(fn publication -> publication.replication_finished == nil end)
       |> Stream.filter(fn %Publication{} = pub ->
         Projects.has_publication_access?(pub, user_name)
       end)
@@ -194,6 +195,7 @@ defmodule FieldPublication.Publications do
 
   def get_most_recent(project_name, user_name) do
     list(project_name)
+    |> Stream.reject(fn publication -> publication.replication_finished == nil end)
     |> Stream.filter(fn publication ->
       Projects.has_publication_access?(publication, user_name)
     end)

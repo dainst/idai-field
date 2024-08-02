@@ -189,6 +189,7 @@ defmodule FieldPublication.Publications do
       end)
       |> List.first()
     end)
+    |> Enum.reject(fn publication -> publication.replication_finished == nil end)
     |> Enum.reject(fn val -> val == nil end)
   end
 
@@ -197,6 +198,7 @@ defmodule FieldPublication.Publications do
     |> Stream.filter(fn publication ->
       Projects.has_publication_access?(publication, user_name)
     end)
+    |> Enum.reject(fn publication -> publication.replication_finished == nil end)
     |> Enum.sort(fn %Publication{draft_date: a}, %Publication{draft_date: b} ->
       Date.compare(a, b) in [:eq, :gt]
     end)

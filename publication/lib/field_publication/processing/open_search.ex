@@ -1,7 +1,6 @@
 defmodule FieldPublication.Processing.OpenSearch do
   alias Phoenix.PubSub
 
-  alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications
 
   alias FieldPublication.Publications.{
@@ -22,7 +21,7 @@ defmodule FieldPublication.Processing.OpenSearch do
     database_count =
       if database_count >= 2, do: database_count - Enum.count(@ignored_documents), else: 0
 
-    index_count = OpenSearchService.get_doc_count(publication)
+    index_count = Search.get_doc_count(publication)
 
     %{
       counter: index_count,
@@ -38,7 +37,7 @@ defmodule FieldPublication.Processing.OpenSearch do
     mapping = Search.generate_index_mapping(publication)
     special_input_types = Search.evaluate_input_types(publication)
 
-    {:ok, %{status: 200}} = OpenSearchService.reset_inactive_index(publication, mapping)
+    {:ok, %{status: 200}} = Search.reset_inactive_index(publication, mapping)
 
     initial_state =
       publication
@@ -80,7 +79,7 @@ defmodule FieldPublication.Processing.OpenSearch do
     |> Enum.map(fn doc_batch ->
       batch_size = Enum.count(doc_batch)
 
-      OpenSearchService.post(doc_batch, publication)
+      Search.index_documents(doc_batch, publication)
       |> case do
         {:ok, %{status: 200}} ->
           :ok
@@ -115,7 +114,7 @@ defmodule FieldPublication.Processing.OpenSearch do
     end)
     |> Enum.to_list()
 
-    OpenSearchService.switch_active_alias(publication)
+    Search.switch_active_alias(publication)
     Search.update_label_usage()
   end
 end

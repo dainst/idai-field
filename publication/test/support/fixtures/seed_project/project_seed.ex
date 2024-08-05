@@ -3,7 +3,6 @@ defmodule FieldPublication.Test.ProjectSeed do
     Projects,
     FileService,
     CouchService,
-    OpenSearchService,
     Replication,
     Processing,
     Publications
@@ -95,7 +94,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     %{field_labels: _, category_labels: _} = Processing.OpenSearch.index(publication)
 
-    {:ok, _} = OpenSearchService.set_project_alias(publication)
+    {:ok, _} = Publications.Search.set_project_alias(publication)
 
     {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{

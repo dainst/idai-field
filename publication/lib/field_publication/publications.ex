@@ -2,8 +2,8 @@ defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
   alias FieldPublication.CouchService
-  alias FieldPublication.OpenSearchService
   alias FieldPublication.Projects
+  alias FieldPublication.Publications.Search
 
   alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
@@ -263,7 +263,7 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.hierarchy_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication),
-         {:ok, %{status: 200}} <- OpenSearchService.initialize_publication_indices(publication) do
+         {:ok, %{status: 200}} <- Search.initialize_search_indices(publication) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(publication, :_rev, rev)}
     else
@@ -343,7 +343,7 @@ defmodule FieldPublication.Publications do
     "#{project_key}_#{draft_date}_task"
   end
 
-  def get_doc_id(publication) do
+  def get_doc_id(%Publication{} = publication) do
     Base.construct_doc_id(publication, Publication)
   end
 end

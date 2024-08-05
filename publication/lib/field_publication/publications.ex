@@ -19,9 +19,9 @@ defmodule FieldPublication.Publications do
         source_project_name: source_project_name,
         project_name: project_name,
         delete_existing_publication: delete_existing,
-        drafted_by: drafted_by
+        drafted_by: drafted_by,
+        draft_date: draft_date
       }) do
-    draft_date = Date.utc_today()
 
     changeset =
       %Publication{

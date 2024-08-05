@@ -53,7 +53,8 @@ defmodule FieldPublication.Test.ProjectSeed do
         "source_user" => "local_developer",
         "source_password" => "fake",
         "project_name" => identifier,
-        "drafted_by" => "mix seed"
+        "drafted_by" => "mix seed",
+        "draft_date" => Date.from_iso8601!("2024-06-05")
       })
 
     {:ok, %Publication{} = publication} =
@@ -98,7 +99,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{
-        "publication_date" => Date.utc_today(),
+        "publication_date" => Date.from_iso8601!("2024-06-05"),
         "comments" => [
           %{
             "text" =>

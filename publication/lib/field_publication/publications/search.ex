@@ -1,4 +1,6 @@
 defmodule FieldPublication.Publications.Search do
+  alias Phoenix.PubSub
+
   alias FieldPublication.Publications
   alias FieldPublication.Projects
   alias FieldPublication.OpenSearchService
@@ -776,6 +778,114 @@ defmodule FieldPublication.Publications.Search do
       single_keyword_fields: keyword_candidates,
       multi_keyword_fields: multi_keyword_candidates
     }
+  end
+
+  @not_indexed_document_uuids ["project", "configuration"]
+
+  def evaluate_active_index_state(%Publication{} = publication) do
+    database_count = Data.get_doc_count(publication)
+
+    # We do not count documents 'project' or 'configuration' because they are not added to the index.
+    database_count =
+      if database_count >= 2,
+        do: database_count - Enum.count(@not_indexed_document_uuids),
+        else: 0
+
+    indexed_count = get_doc_count(publication)
+
+    %{
+      counter: indexed_count,
+      percentage: indexed_count / database_count * 100,
+      overall: database_count
+    }
+  end
+
+  def index_documents(%Publication{} = publication) do
+    publication_id = Publications.get_doc_id(publication)
+    publication_configuration = Publications.get_configuration(publication)
+
+    mapping = generate_index_mapping(publication)
+    special_input_types = evaluate_input_types(publication)
+
+    {:ok, %{status: 200}} = reset_inactive_index(publication, mapping)
+
+    initial_state =
+      publication
+      |> evaluate_active_index_state()
+      # We will re-index in a moment, so set the state for counter and percentage accordingly
+      |> Map.put(:counter, 0)
+      |> Map.put(:percentage, 0)
+
+    {:ok, counter_pid} =
+      Agent.start_link(fn -> initial_state end)
+
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      publication_id,
+      {
+        :search_index_processing_count,
+        initial_state
+      }
+    )
+
+    publication
+    |> Publications.Data.get_doc_stream_for_all()
+    |> Stream.reject(fn %{"_id" => id} ->
+      id in @not_indexed_document_uuids
+    end)
+    |> Stream.reject(fn doc ->
+      # Reject all documents marked as deleted
+      Map.get(doc, "deleted", false)
+    end)
+    |> Stream.map(
+      &prepare_doc_for_indexing(
+        &1,
+        publication,
+        publication_configuration,
+        special_input_types
+      )
+    )
+    |> Stream.chunk_every(100)
+    |> Enum.map(fn doc_batch ->
+      batch_size = Enum.count(doc_batch)
+
+      index_documents(doc_batch, publication)
+      |> case do
+        {:ok, %{status: 200}} ->
+          :ok
+
+        {:ok, %{status: 400, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> inspect()
+          |> Logger.error()
+
+          :error
+      end
+
+      updated_state =
+        Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+          state =
+            state
+            |> Map.put(:counter, counter + batch_size)
+            |> Map.put(:percentage, (counter + batch_size) / overall * 100)
+
+          {state, state}
+        end)
+
+      PubSub.broadcast(
+        FieldPublication.PubSub,
+        publication_id,
+        {
+          :search_index_processing_count,
+          updated_state
+        }
+      )
+    end)
+    |> Enum.to_list()
+
+    switch_active_alias(publication)
+    update_label_usage()
   end
 
   defp flatten_input_types(

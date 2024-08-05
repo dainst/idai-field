@@ -1,11 +1,9 @@
 defmodule FieldPublication.Processing do
   use GenServer
 
-  alias FieldPublication.Processing.MapTiles
-
   alias FieldPublication.Processing.{
     Image,
-    OpenSearch
+    MapTiles
   }
 
   alias FieldPublication.DatabaseSchema.Publication
@@ -196,9 +194,9 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          OpenSearch,
+          Publications.Search,
           # Function within that module to start the processing.
-          :index,
+          :index_documents,
           # Parameters for that function.
           [publication]
         )

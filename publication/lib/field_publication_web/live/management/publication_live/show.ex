@@ -1,7 +1,6 @@
 defmodule FieldPublicationWeb.Management.PublicationLive.Show do
   alias FieldPublication.Processing.{
     MapTiles,
-    OpenSearch,
     Image
   }
 
@@ -377,7 +376,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
         %{
           images: Image.evaluate_web_images_state(publication),
           tiles: MapTiles.evaluate_state(publication),
-          search_index: OpenSearch.evaluate_state(publication)
+          search_index: Publications.Search.evaluate_active_index_state(publication)
         }
       }
     end)

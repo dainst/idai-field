@@ -92,7 +92,7 @@ defmodule FieldPublication.Test.ProjectSeed do
       end)
       |> Enum.reject(fn val -> val == :ok end)
 
-    %{field_labels: _, category_labels: _} = Processing.OpenSearch.index(publication)
+    %{field_labels: _, category_labels: _} = Publications.Search.index_documents(publication)
 
     {:ok, _} = Publications.Search.set_project_alias(publication)
 

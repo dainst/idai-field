@@ -99,6 +99,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{
+        "publication_date" => Date.from_iso8601!("2024-06-05"),
         "comments" => [
           %{
             "text" =>

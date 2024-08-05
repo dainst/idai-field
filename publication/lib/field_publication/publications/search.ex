@@ -19,7 +19,7 @@ defmodule FieldPublication.Publications.Search do
       :category,
       :project_name,
       :publication_draft_date,
-      :automatically_mapped_fields,
+      :configuration_based_field_mappings,
       :full_doc,
       :full_doc_as_text
     ]
@@ -29,7 +29,7 @@ defmodule FieldPublication.Publications.Search do
       :category,
       :project_name,
       :publication_draft_date,
-      :automatically_mapped_fields,
+      :configuration_based_field_mappings,
       :full_doc,
       :full_doc_as_text
     ]
@@ -41,7 +41,7 @@ defmodule FieldPublication.Publications.Search do
         "category" => category,
         "project_name" => project_name,
         "publication_draft_date" => publication_draft_date,
-        "automatically_mapped_fields" => automatically_mapped_fields,
+        "configuration_based_field_mappings" => configuration_based_field_mappings,
         "full_doc" => full_doc,
         "full_doc_as_text" => full_doc_as_text
       }) do
@@ -51,7 +51,7 @@ defmodule FieldPublication.Publications.Search do
       category: category,
       project_name: project_name,
       publication_draft_date: publication_draft_date,
-      automatically_mapped_fields: automatically_mapped_fields,
+      configuration_based_field_mappings: configuration_based_field_mappings,
       full_doc: Data.document_map_to_struct(full_doc),
       full_doc_as_text: full_doc_as_text
     }
@@ -235,7 +235,7 @@ defmodule FieldPublication.Publications.Search do
             %{term: %{key => value}}
 
           true ->
-            %{term: %{"automatically_mapped_fields.#{key}" => value}}
+            %{term: %{"configuration_based_field_mappings.#{key}" => value}}
         end
       end)
 
@@ -321,7 +321,7 @@ defmodule FieldPublication.Publications.Search do
             {key, %{terms: %{field: key, size: 200}}}
 
           true ->
-            {key, %{terms: %{field: "automatically_mapped_fields.#{key}", size: 200}}}
+            {key, %{terms: %{field: "configuration_based_field_mappings.#{key}", size: 200}}}
         end
       end)
       |> Enum.into(%{})
@@ -392,7 +392,7 @@ defmodule FieldPublication.Publications.Search do
           Map.merge(
             base_mapping,
             %{
-              automatically_mapped_fields: %{
+              configuration_based_field_mappings: %{
                 type: "object",
                 properties: configuration_based_mapping
               }
@@ -422,7 +422,7 @@ defmodule FieldPublication.Publications.Search do
         category: res["category"],
         publication_draft_date: publication.draft_date,
         project_name: publication.project_name,
-        automatically_mapped_fields: %{},
+        configuration_based_field_mappings: %{},
         full_doc: full_doc,
         full_doc_as_text: Jason.encode!(full_doc)
       }
@@ -479,7 +479,7 @@ defmodule FieldPublication.Publications.Search do
 
     Map.put(
       base_document,
-      :automatically_mapped_fields,
+      :configuration_based_field_mappings,
       Map.merge(additional_fields, additional_fields_2)
     )
   end

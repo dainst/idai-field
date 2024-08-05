@@ -4,14 +4,14 @@ defmodule FieldHubHelper do
 
   def start() do
     {"", 0} =
-      System.cmd("docker-compose", [
+      System.cmd("docker compose", [
         "-f",
         "test/support/field_hub/docker-compose.yml",
         "pull"
       ])
 
     {"", 0} =
-      System.cmd("docker-compose", [
+      System.cmd("docker compose", [
         "-f",
         "test/support/field_hub/docker-compose.yml",
         "up",
@@ -67,7 +67,7 @@ defmodule FieldHubHelper do
 
   def stop() do
     {"", 0} =
-      System.cmd("docker-compose", [
+      System.cmd("docker compose", [
         "-f",
         "test/support/field_hub/docker-compose.yml",
         "down"

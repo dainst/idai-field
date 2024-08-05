@@ -427,7 +427,7 @@ defmodule FieldPublication.Publications.Search do
         full_doc_as_text: Jason.encode!(full_doc)
       }
 
-    additional_fields =
+    config_mapping_single_keyword =
       single_keyword_fields
       |> Stream.filter(fn {category_name, _field_name} ->
         category_name == res["category"]
@@ -440,7 +440,7 @@ defmodule FieldPublication.Publications.Search do
       end)
       |> Enum.into(%{})
 
-    additional_fields_2 =
+    config_mapping_multi_keyword =
       multi_keyword_fields
       |> Stream.filter(fn {category_name, _field_name} ->
         category_name == res["category"]
@@ -473,14 +473,10 @@ defmodule FieldPublication.Publications.Search do
       end)
       |> Enum.into(%{})
 
-    base_document
-    |> Map.merge(additional_fields)
-    |> Map.merge(additional_fields_2)
-
     Map.put(
       base_document,
       :configuration_based_field_mappings,
-      Map.merge(additional_fields, additional_fields_2)
+      Map.merge(config_mapping_single_keyword, config_mapping_multi_keyword)
     )
   end
 

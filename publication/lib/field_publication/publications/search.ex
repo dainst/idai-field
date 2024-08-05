@@ -290,19 +290,19 @@ defmodule FieldPublication.Publications.Search do
           props
           |> Enum.map(fn prop ->
             case prop do
-              {key, %{"type" => "keyword"}} ->
-                key
-
-              {key, %{"properties" => nested_props}} ->
-                Enum.map(nested_props, fn nested_prop ->
-                  case nested_prop do
+              {"configuration_based_field_mappings", %{"properties" => configuration_based_props}} ->
+                Enum.map(configuration_based_props, fn configuration_prop ->
+                  case configuration_prop do
                     {nested_key, %{"type" => "keyword"}} ->
-                      "#{key}.#{nested_key}"
+                      nested_key
 
                     _ ->
                       nil
                   end
                 end)
+
+              {key, %{"type" => "keyword"}} ->
+                key
 
               _ ->
                 nil

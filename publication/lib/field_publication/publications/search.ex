@@ -482,18 +482,18 @@ defmodule FieldPublication.Publications.Search do
     )
   end
 
-  def get_label_usage() do
+  def get_system_wide_label_usage() do
     Cachex.get(:document_cache, :system_wide_label_usage)
     |> case do
       {:ok, nil} ->
-        update_label_usage()
+        evaluate_system_wide_label_usage()
 
       {:ok, info} ->
         info
     end
   end
 
-  def update_label_usage() do
+  def evaluate_system_wide_label_usage() do
     info =
       Publications.get_current_published()
       |> Enum.map(fn %Publication{} = pub ->
@@ -561,7 +561,7 @@ defmodule FieldPublication.Publications.Search do
        }) do
     field_labels =
       groups
-      |> Enum.map(&extract_label_for_fields/1)
+      |> Enum.map(&extract_labels_for_fields/1)
       |> List.flatten()
       |> Enum.reduce(%{}, fn result, acc -> Map.merge(result, acc) end)
 
@@ -581,7 +581,7 @@ defmodule FieldPublication.Publications.Search do
     }
   end
 
-  defp extract_label_for_fields(%{"fields" => fields}) do
+  defp extract_labels_for_fields(%{"fields" => fields}) do
     fields
     |> Stream.filter(fn %{"inputType" => input_type} ->
       input_type != "relation"
@@ -885,7 +885,7 @@ defmodule FieldPublication.Publications.Search do
     |> Enum.to_list()
 
     switch_active_alias(publication)
-    update_label_usage()
+    evaluate_system_wide_label_usage()
   end
 
   defp flatten_input_types(

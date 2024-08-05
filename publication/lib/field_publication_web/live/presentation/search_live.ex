@@ -186,7 +186,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   defp get_filter_label(opensearch_field_name) do
     data_field_name = String.replace_suffix(opensearch_field_name, "_keyword", "")
 
-    label_info = Search.get_label_usage()
+    label_info = Search.get_system_wide_label_usage()
 
     case label_info[:field_labels][data_field_name]["labels"] do
       nil ->
@@ -212,7 +212,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   end
 
   defp get_filter_value_label("category", opensearch_field_value) do
-    label_info = Search.get_label_usage()
+    label_info = Search.get_system_wide_label_usage()
 
     case label_info[:category_labels][opensearch_field_value] do
       nil ->
@@ -238,7 +238,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   end
 
   defp get_filter_value_label(opensearch_field_name, opensearch_field_value) do
-    label_info = Search.get_label_usage()
+    label_info = Search.get_system_wide_label_usage()
     data_field_name = String.replace_suffix(opensearch_field_name, "_keyword", "")
 
     case label_info[:field_labels][data_field_name]["value_labels"] do

@@ -13,21 +13,17 @@
         <.link navigate="/management" class="text-[0.8125rem] leading-6 font-semibold ">
           Management
         </.link>
-        <a>
-          <.link
-            href={~p"/log_out"}
-            method="delete"
-            class="text-[0.8125rem] leading-6 font-semibold"
-          >
-            Log out
-          </.link>
-        </a>
+        <.link
+          href={~p"/log_out"}
+          method="delete"
+          class="text-[0.8125rem] leading-6 font-semibold"
+        >
+          Log out
+        </.link>
       <% else %>
-        <a>
-          <.link href={~p"/log_in"} class="text-[0.8125rem] leading-6 font-semibold">
-            Log in
-          </.link>
-        </a>
+        <.link href={~p"/log_in"} class="text-[0.8125rem] leading-6 font-semibold">
+          Log in
+        </.link>
       <% end %>
       <span class="text-[0.8125rem] leading-6">
         <%= @current_user %>

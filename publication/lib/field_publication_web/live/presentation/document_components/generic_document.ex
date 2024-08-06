@@ -112,7 +112,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             </div>
           <% end %>
           <.group_heading>
-            Data download
+            Data formats
           </.group_heading>
           <ul class="ml-0 list-none">
             <li>
@@ -124,7 +124,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 }
               >
                 <span class="text-center inline-block w-[20px]" style="block">{}</span>
-                Download JSON (raw)
+                view JSON (raw)
               </a>
             </li>
             <li>
@@ -136,7 +136,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 }
               >
                 <span class="text-center inline-block w-[20px]" style="block">{}</span>
-                Download JSON (extended)
+                View JSON (extended)
               </a>
             </li>
           </ul>

@@ -16,7 +16,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
   require Logger
 
-  def start(project_name) do
+  def start(project_name, process_images \\ true) do
     seed_project_docs =
       File.read!("test/support/fixtures/seed_project/publication_data.json")
       |> Jason.decode!()
@@ -31,15 +31,15 @@ defmodule FieldPublication.Test.ProjectSeed do
         Logger.info("Recreating project '#{project_name}'.")
         {:ok, :deleted} = Projects.delete(project)
 
-        create(project_name, seed_project_docs)
+        create(project_name, seed_project_docs, process_images)
 
       _ ->
         Logger.info("Creating project '#{project_name}'.")
-        create(project_name, seed_project_docs)
+        create(project_name, seed_project_docs, process_images)
     end
   end
 
-  def create(identifier, docs) do
+  def create(identifier, docs, process_images) do
     {:ok, %Project{} = project} =
       Projects.put(%Project{}, %{
         "name" => identifier
@@ -115,13 +115,15 @@ defmodule FieldPublication.Test.ProjectSeed do
         "replication_finished" => DateTime.utc_now()
       })
 
-    [] =
-      Processing.MapTiles.start_tile_creation(publication)
-      |> Enum.reject(fn val -> val == :ok end)
+    if process_images do
+      [] =
+        Processing.MapTiles.start_tile_creation(publication)
+        |> Enum.reject(fn val -> val == :ok end)
 
-    [] =
-      Processing.Image.start_web_image_processing(publication)
-      |> Enum.reject(fn val -> val == :ok end)
+      [] =
+        Processing.Image.start_web_image_processing(publication)
+        |> Enum.reject(fn val -> val == :ok end)
+    end
 
     {project, publication}
   end

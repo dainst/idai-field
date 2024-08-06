@@ -33,14 +33,16 @@ defmodule FieldPublicationWeb.Gettext do
     Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
 
     # Put the current path into the assigns of any live view in the application. This is required for the
-    # `return_to` parameter in the UI switch form (see app.html.heex).
+    # `return_to` parameter in the UI language switch form (see app.html.heex).
     socket =
       Phoenix.LiveView.attach_hook(
         socket,
         :put_path_in_assigns,
         :handle_params,
         fn _params, url, socket ->
-          {:cont, Phoenix.Component.assign(socket, :current_path, URI.parse(url).path)}
+          %URI{path: path, query: query} = URI.parse(url)
+
+          {:cont, Phoenix.Component.assign(socket, :current_path, "#{path}?#{query}")}
         end
       )
 

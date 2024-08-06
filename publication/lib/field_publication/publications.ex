@@ -307,7 +307,8 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_hierarchy_doc(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_database(database) do
+           CouchService.delete_database(database),
+         :ok <- Search.delete_search_indices(publication) do
       {:ok, :deleted}
     else
       error ->

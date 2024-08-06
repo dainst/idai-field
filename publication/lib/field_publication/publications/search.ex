@@ -68,14 +68,14 @@ defmodule FieldPublication.Publications.Search do
     }
   end
 
-  def initialize_search_indices(%Publication{} = pub) do
-    publication_alias = get_search_alias(pub)
+  def initialize_search_indices(%Publication{} = publication) do
+    publication_alias = get_search_alias(publication)
 
     index_a = "#{publication_alias}__a__"
     index_b = "#{publication_alias}__b__"
 
     project_alias =
-      pub.project_name
+      publication.project_name
       |> Projects.get!()
       |> get_search_alias()
 
@@ -103,8 +103,17 @@ defmodule FieldPublication.Publications.Search do
     OpenSearchService.set_alias(index_a, publication_alias)
   end
 
-  def switch_active_alias(%Publication{} = pub) do
-    publication_alias = get_search_alias(pub)
+  def delete_search_indices(%Publication{} = publication) do
+    publication_alias = get_search_alias(publication)
+
+    OpenSearchService.delete_index("#{publication_alias}__a__")
+    OpenSearchService.delete_index("#{publication_alias}__b__")
+
+    :ok
+  end
+
+  def switch_active_alias(%Publication{} = publication) do
+    publication_alias = get_search_alias(publication)
 
     old_index =
       publication_alias
@@ -122,7 +131,7 @@ defmodule FieldPublication.Publications.Search do
     OpenSearchService.set_alias(next_index, publication_alias)
 
     project_alias =
-      pub.project_name
+      publication.project_name
       |> Projects.get!()
       |> get_search_alias()
 
@@ -136,8 +145,8 @@ defmodule FieldPublication.Publications.Search do
     :ok
   end
 
-  def reset_inactive_index(%Publication{} = pub, mapping) do
-    publication_alias = get_search_alias(pub)
+  def reset_inactive_index(%Publication{} = publication, mapping) do
+    publication_alias = get_search_alias(publication)
 
     inactive_index =
       publication_alias
@@ -149,11 +158,11 @@ defmodule FieldPublication.Publications.Search do
     OpenSearchService.create_index(inactive_index, mapping)
   end
 
-  def set_project_alias(%Publication{} = pub) do
-    publication_alias = get_search_alias(pub)
+  def set_project_alias(%Publication{} = publication) do
+    publication_alias = get_search_alias(publication)
 
     project_alias =
-      pub.project_name
+      publication.project_name
       |> Projects.get!()
       |> get_search_alias()
 
@@ -174,9 +183,9 @@ defmodule FieldPublication.Publications.Search do
     OpenSearchService.set_alias(next_index, project_alias)
   end
 
-  def clear_project_alias(%Publication{} = pub) do
+  def clear_project_alias(%Publication{} = publication) do
     project_alias =
-      pub.project_name
+      publication.project_name
       |> Projects.get!()
       |> get_search_alias()
 
@@ -188,15 +197,15 @@ defmodule FieldPublication.Publications.Search do
     OpenSearchService.remove_alias(index, project_alias)
   end
 
-  def get_doc_count(%Publication{} = pub) do
-    pub
+  def get_doc_count(%Publication{} = publication) do
+    publication
     |> get_search_alias()
     |> OpenSearchService.get_doc_count()
   end
 
-  def index_documents(docs, %Publication{} = pub, inactive_alias \\ true) do
+  def index_documents(docs, %Publication{} = publication, inactive_alias \\ true) do
     index =
-      get_search_alias(pub)
+      get_search_alias(publication)
       |> OpenSearchService.get_indices_behind_alias()
       |> List.first()
 

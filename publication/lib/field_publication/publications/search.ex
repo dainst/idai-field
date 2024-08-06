@@ -509,7 +509,7 @@ defmodule FieldPublication.Publications.Search do
         config = Publications.get_configuration(pub)
 
         {category_labels, field_labels} =
-          Enum.map(config, &extract_labels_for_item/1)
+          Enum.map(config, &extract_labels_for_configuration_item/1)
           |> Enum.reduce({%{}, %{}}, fn {category_result, field_result},
                                         {category_acc, field_acc} ->
             {
@@ -525,6 +525,7 @@ defmodule FieldPublication.Publications.Search do
         }
       end)
       |> Enum.reduce(
+        # We now merge the label information for all projects into one accumulator.
         %{category_labels: %{}, field_labels: %{}},
         fn {
              project_name,
@@ -560,7 +561,7 @@ defmodule FieldPublication.Publications.Search do
     info
   end
 
-  defp extract_labels_for_item(%{
+  defp extract_labels_for_configuration_item(%{
          "item" => %{
            "label" => label,
            "name" => name,
@@ -576,7 +577,7 @@ defmodule FieldPublication.Publications.Search do
 
     {child_category_labels, child_field_labels} =
       child_categories
-      |> Enum.map(&extract_labels_for_item/1)
+      |> Enum.map(&extract_labels_for_configuration_item/1)
       |> Enum.reduce({%{}, %{}}, fn {category_result, field_result}, {category_acc, field_acc} ->
         {
           Map.merge(category_result, category_acc),

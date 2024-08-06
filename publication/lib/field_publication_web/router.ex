@@ -75,7 +75,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through [:browser, :require_administrator]
 
     live_session :require_administrator,
-      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
+      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_is_admin}] do
       live "/users", Management.UserLive, :index
       live "/users/new", Management.UserLive, :new
       live "/users/:name/edit", Management.UserLive, :edit

@@ -112,15 +112,34 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             </div>
           <% end %>
           <.group_heading>
-            Raw data
+            Data download
           </.group_heading>
-          <a
-            class="mb-1"
-            target="_blank"
-            href={~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"}
-          >
-            <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
-          </a>
+          <ul class="ml-0 list-none">
+            <li>
+              <a
+                class="mb-1"
+                target="_blank"
+                href={
+                  ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                Download JSON (raw)
+              </a>
+            </li>
+            <li>
+              <a
+                class="mb-1"
+                target="_blank"
+                href={
+                  ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                Download JSON (extended)
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

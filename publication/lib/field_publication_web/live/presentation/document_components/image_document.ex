@@ -89,7 +89,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
             </li>
             <li>
               <a
-                class="mb-1"
                 target="_blank"
                 href={
                   ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"

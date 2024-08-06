@@ -20,7 +20,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
 
   alias FieldPublicationWeb.Presentation.Components.ViewSelection
 
-  import FieldPublicationWeb.CoreComponents
   import FieldPublicationWeb.Presentation.Components.Typography
 
   def render(assigns) do

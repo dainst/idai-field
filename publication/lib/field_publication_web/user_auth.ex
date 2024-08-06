@@ -46,7 +46,7 @@ defmodule FieldPublicationWeb.UserAuth do
     conn
     |> renew_session()
     |> put_token_in_session(token)
-    |> maybe_write_remember_me_cookie(token, params)
+    |> maybe_write_remember_me_cookie(token, params["user"])
     |> redirect(to: user_return_to || signed_in_path(conn))
   end
 

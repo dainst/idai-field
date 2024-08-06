@@ -9,6 +9,12 @@ defmodule FieldPublicationWeb.UserAuth do
   import Plug.Conn
   import Phoenix.Controller
 
+  @moduledoc """
+  This module implements plugs for handling user authentication and the different authorization levels.
+
+  See also the official [Phoenix documentation](https://hexdocs.pm/phoenix/plug.html).
+  """
+
   defmodule Token do
     @enforce_keys [:name, :token, :context]
     defstruct [:name, :token, :context]

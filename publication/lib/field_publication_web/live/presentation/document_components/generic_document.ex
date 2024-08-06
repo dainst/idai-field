@@ -124,7 +124,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 }
               >
                 <span class="text-center inline-block w-[20px]" style="block">{}</span>
-                view JSON (raw)
+                View JSON (raw)
               </a>
             </li>
             <li>

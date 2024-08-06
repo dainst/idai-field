@@ -13,7 +13,16 @@ defmodule FieldPublication.Publications.Search do
 
   require Logger
 
+  @moduledoc """
+  This module contains functions facilitating the interaction between research data and the
+  external OpenSearch search application.
+  """
+
   defmodule SearchDocument do
+    @moduledoc """
+    Defines the data struct that is used for research data in the OpenSearch index.
+    """
+
     @derive Jason.Encoder
     @enforce_keys [
       :id,

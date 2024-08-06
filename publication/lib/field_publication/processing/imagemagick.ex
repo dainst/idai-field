@@ -1,8 +1,15 @@
 defmodule FieldPublication.Processing.Imagemagick do
   @moduledoc """
-  This module is a wrapper around functions that use imagemagic shell commands, in local development each function
-  uses the Cantaloupe docker container to process the image data, in production it will use the FieldPublication application
-  container.
+  This module is a wrapper around functions that use imagemagic shell commands.
+
+  In development or test environemnts each function uses the Cantaloupe docker service
+  to process the image data, in production it will use the FieldPublication application
+  container. The idea being, that by using the cantaloupe service in development, developers
+  do not need to keep track of their local imagemagick version to ensure compatibality with the
+  production environment.
+
+  On the flipside, the ImageMagick versions used by the docker images `field_publication` and
+  `field_publication_cantaloupe` should therefore always be kept aligned.
   """
 
   @filestore_root Application.compile_env(:field_publication, :file_store_directory_root)

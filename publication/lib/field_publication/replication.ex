@@ -20,6 +20,29 @@ defmodule FieldPublication.Replication do
     LogEntry
   }
 
+  @moduledoc """
+  This GenServer is used to start, stop and track data replications.
+
+  GenServers are a core building block in Elixir (or rather the whole Erlang ecosystem).
+  Basically this defines a child process that gets started when the application is started
+  (see application.ex) and waits for requests from other processes within the system.
+  It holds an internal state (a map tracking current replications) and provides some API functions
+  that let other part of the application start/stop or monitor the running replications.
+
+  See also https://hexdocs.pm/elixir/1.15.7/GenServer.htm
+
+  - Each key in the state map is the publication id, see
+    `FieldPublication.Publications.get_doc_id/1`.
+  - Each value in the state map then contains a tuple `{task_id, replication_parameters}`. The
+    `task_id` references a currently running async task process. The `replication_parameters`
+    contain the initial `ReplicationInput` provided by the user and the current version of the
+    `Publication` document.
+
+  This publication's ID is also used to broadcast PubSub messages throughout the application.
+
+  Use the API functions below to interact with the module.
+  """
+
   def start_link(_opts) do
     Logger.debug("Starting Replication GenServer")
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
@@ -30,6 +53,9 @@ defmodule FieldPublication.Replication do
 
     {:ok, %{}}
   end
+
+  #########################################################################
+  ## Start of API functions to be called from the rest of the application.
 
   def initialize_publication(%ReplicationInput{} = params) do
     with {:ok, publication} <- Publications.create_from_replication_input(params),
@@ -96,6 +122,16 @@ defmodule FieldPublication.Replication do
     GenServer.call(__MODULE__, {:show, publication})
   end
 
+  # End of API function definitions. Everything below should __not__ get called directly from
+  # other modules.
+  ###################################
+
+  @doc """
+  These `handle_call/3` implementations handle messages sent by other processes to
+  the GenServer. These calls will in general originate from the API functions defined above or
+  from the asynchronous tasks started by the GenServer itself (reporting that the replication
+  task has finished/crashed...).
+  """
   def handle_call(
         {:start, %ReplicationInput{} = input, %Publication{} = publication},
         _from,

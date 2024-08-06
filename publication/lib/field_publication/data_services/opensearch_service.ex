@@ -2,6 +2,11 @@ defmodule FieldPublication.OpenSearchService do
   alias FieldPublication.Publications.Search.SearchDocument
   require Logger
 
+  @moduledoc """
+  This module contains function for interacting with the external OpenSearch service running
+  alongside the application.
+  """
+
   def create_index(index_name) when is_binary(index_name) do
     Logger.info("Creating index '#{index_name}'.")
 

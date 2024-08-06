@@ -14,13 +14,13 @@ defmodule FieldPublication.Processing do
   require Logger
 
   @moduledoc """
-  This GenServer module starts, stops and tracks processing tasks.
+  This GenServer is used to start, stop and track processing tasks.
 
   GenServers are a core building block in Elixir (or rather the whole Erlang ecosystem).
   Basically this defines a child process that gets started when the application is started
   (see application.ex) and waits for requests from other processes within the system.
   It holds an internal state (a list of running tasks) and provides some API functions
-  that let other part sof the application start/stop or monitor the running tasks.
+  that let other part of the application start/stop or monitor the running tasks.
 
   See also https://hexdocs.pm/elixir/1.15.7/GenServer.htm
 
@@ -28,7 +28,7 @@ defmodule FieldPublication.Processing do
   where `task` is a reference to the Elixir Task that got initiated, processing_type is an atom that identifies the
   type of processing (for example `:web_images`) and `processing_context` identifies the context within FieldPublication
   that is being processed (for example the document id of a certain `FieldPublication.DatabaseSchema.Publication`). The
-  `processing_context` value is also used to broadcast PubSub messages.
+  `processing_context` value is also used to broadcast PubSub messages throughout the application.
 
   Use the API functions below to interact with the module.
   """

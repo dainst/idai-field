@@ -11,6 +11,15 @@ defmodule FieldPublication.Publications do
     Base
   }
 
+  @moduledoc """
+  This module contains functions to retrieve, create, update and list publications within the
+  FieldPublication system.
+
+  This primarily concerns the publication metadata that resides in the application's core
+  database. If you want to access the publications' actual research data use the respective modules,
+  see `FieldPublication.Publications.Data` and `FieldPublication.Publications.Search`.
+  """
+
   @doc """
   Initializes a new publication based on some user input.
   """
@@ -22,7 +31,6 @@ defmodule FieldPublication.Publications do
         drafted_by: drafted_by,
         draft_date: draft_date
       }) do
-
     changeset =
       %Publication{
         project_name: project_name,

@@ -2,10 +2,11 @@ defmodule FieldPublication.Publications.Data do
   @moduledoc """
   This module handles access to a publication's research database.
 
-  You can retrieve the raw documents or an extended version with the publication's configuration applied. The
-  latter will group the data fields and add translated labels for the different value types, relations etc. (if
-  there are any defined in the configuration). The extended version will be returned as a standardized struct,
-  see the `Document` struct definition below.
+  You can retrieve the raw documents or an extended version with the publication's configuration
+  applied. The latter will group the data fields and add translated labels for the different
+  value types, relations etc. (if there are any defined in the configuration). The extended
+  version will be returned as a standardized struct, see the
+  `FieldPublication.Publications.Data.Document` struct definition below.
   """
 
   require FieldPublicationWeb.Gettext

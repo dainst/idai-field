@@ -5,6 +5,11 @@ defmodule FieldPublication.CouchService do
 
   require Logger
 
+  @moduledoc """
+  This module contains functions to interact with the CouchDB service application running
+  alongside FieldPublication.
+  """
+
   @doc """
   Creates CouchDB's internal databases `_users` and `_replicator` and the application's core database.
   """

@@ -80,16 +80,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
               <a
                 target="_blank"
                 href={
-                  ~p"/api/raw/csv/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
-                }
-              >
-                <.icon name="hero-table-cells-solid" /> Download CSV
-              </a>
-            </li>
-            <li>
-              <a
-                target="_blank"
-                href={
                   ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
                 }
               >

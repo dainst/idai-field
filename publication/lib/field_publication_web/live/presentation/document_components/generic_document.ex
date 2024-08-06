@@ -118,14 +118,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <a
             class="mb-1"
             target="_blank"
-            href={~p"/api/raw/csv/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"}
-          >
-            <.icon name="hero-table-cells-solid" /> Download CSV
-          </a>
-          <br />
-          <a
-            class="mb-1"
-            target="_blank"
             href={~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"}
           >
             <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON

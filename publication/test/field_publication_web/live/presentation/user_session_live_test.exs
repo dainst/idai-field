@@ -1,6 +1,8 @@
 defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
   use FieldPublicationWeb.ConnCase
 
+  alias FieldPublicationWeb.UserAuth
+
   alias FieldPublication.{
     CouchService,
     Projects
@@ -12,6 +14,7 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
 
   import Phoenix.LiveViewTest
   @core_database Application.compile_env(:field_publication, :core_database)
+  @cache_name Application.compile_env(:field_publication, :user_tokens_cache_name)
   @test_project_name "test_project_a"
 
   setup_all %{} do
@@ -47,11 +50,13 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
 
     assert html =~ "Sign in to account"
 
+    admin_user_name = Application.get_env(:field_publication, :couchdb_admin_name)
+
     assert logged_in_conn =
              live_view_pid
              |> form("#login_form", %{
                user: %{
-                 name: Application.get_env(:field_publication, :couchdb_admin_name),
+                 name: admin_user_name,
                  password: Application.get_env(:field_publication, :couchdb_admin_password)
                }
              })
@@ -68,12 +73,22 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
 
     assert html =~ "<h1>Projects</h1>"
 
+    token =
+      logged_in_conn
+      |> get_session()
+      |> Map.get("user_token")
+
+    assert {:ok, %UserAuth.Token{name: ^admin_user_name}} =
+             Cachex.get(@cache_name, token)
+
     assert {:error, {:redirect, %{to: path}}} =
              live_view_pid
              |> element("a", "Log out")
              |> render_click()
 
     logged_out_conn = delete(logged_in_conn, path)
+
+    assert {:ok, nil} = Cachex.get(@cache_name, token)
 
     assert {:error,
             {:redirect,

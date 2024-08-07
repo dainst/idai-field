@@ -39,7 +39,7 @@ defmodule FieldPublicationWeb.Cantaloupe do
     |> Keyword.get(:port)
     |> case do
       nil ->
-        # Development case
+        # Development case, has no :url endpoint configuration and thus also no prot definition.
         Plug.Conn.put_req_header(conn, "x-forwarded-port", "4001")
 
       _ ->

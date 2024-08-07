@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.start(@test_project_name)
+    {project, publication} = ProjectSeed.start(@test_project_name, false)
 
     on_exit(fn ->
       Projects.get(@test_project_name)

@@ -66,8 +66,6 @@ defmodule FieldPublication.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    seed_project_name = "test"
-
     [
       setup: [
         "deps.get",

@@ -87,11 +87,6 @@ defmodule FieldPublication.MixProject do
       ],
       seed: [
         "run --eval 'FieldPublication.Test.ProjectSeed.start(\"testopolis\")'"
-      ],
-      "seed-desktop-test": [
-        "run --eval 'FieldPublication.Project.create(\"#{seed_project_name}\")'",
-        # TODO: Password via config?
-        "run --eval 'FieldPublication.Project.initialize_publication(\"#{seed_project_name}\", \"http://localhost:3000\", \"#{seed_project_name}\", \"#{seed_project_name}\", \"sync_test\")'"
       ]
     ]
   end

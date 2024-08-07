@@ -33,19 +33,22 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
       CouchService.delete_database(@core_database)
     end)
 
-    image_categories = Data.get_all_subcategories(publication, "Image")
+    image_doc =
+      Data.get_raw_document("project", publication)
+      |> Map.get("resource", %{})
+      |> Map.get("relations", %{})
+      |> Map.get("hasMapLayer", [])
+      |> List.first()
+      |> Data.get_raw_document(publication)
 
-    image_docs =
-      publication
-      |> Data.get_doc_stream_for_categories(image_categories)
-      |> Enum.to_list()
-
-    %{project: project, publication: publication, image_docs: image_docs}
+    %{project: project, publication: publication, image_doc: image_doc}
   end
 
-  test "returns published iiif image info", %{conn: conn, project: project, image_docs: docs} do
-    %{"_id" => uuid} = List.first(docs)
-
+  test "returns published iiif image info and data from cantaloupe", %{
+    conn: conn,
+    project: project,
+    image_doc: %{"_id" => uuid}
+  } do
     # Try a query for image meta data.
     %{
       "@context" => "http://iiif.io/api/image/3/context.json",
@@ -61,6 +64,15 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
     # Try a query for actual image data.
     assert get(conn, "#{path}/full/max/0/default.jpg")
            |> response(200)
-           |> is_binary()
+  end
+
+  test "returns raw image data", %{conn: conn, project: project, image_doc: %{"_id" => uuid}} do
+    assert get(conn, ~p"/api/image/raw/#{project}/#{uuid}")
+           |> response(200)
+  end
+
+  test "returns tile image data", %{conn: conn, project: project, image_doc: %{"_id" => uuid}} do
+    assert get(conn, ~p"/api/image/tile/#{project}/#{uuid}/0/0/0")
+           |> response(200)
   end
 end

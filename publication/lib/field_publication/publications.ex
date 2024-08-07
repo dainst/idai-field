@@ -68,7 +68,13 @@ defmodule FieldPublication.Publications do
   end
 
   def get(project_name, draft_date) when is_binary(draft_date) and is_binary(project_name) do
-    get(project_name, Date.from_iso8601!(draft_date))
+    case Date.from_iso8601(draft_date) do
+      {:ok, %Date{} = parsed} ->
+        get(project_name, parsed)
+
+      _ ->
+        {:error, :invalid_date}
+    end
   end
 
   def get(project_name, %Date{} = draft_date) when is_binary(project_name) do

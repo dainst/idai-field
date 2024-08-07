@@ -10,6 +10,7 @@ defmodule FieldPublication.Publications.Data do
   """
 
   require FieldPublicationWeb.Gettext
+  require Logger
 
   alias FieldPublication.{
     Publications,
@@ -139,6 +140,13 @@ defmodule FieldPublication.Publications.Data do
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
     end)
+    |> case do
+      %{"error" => "not_found"} ->
+        {:error, :not_found}
+
+      doc ->
+        doc
+    end
   end
 
   def get_raw_documents(uuids, %Publication{database: db}) do
@@ -154,7 +162,8 @@ defmodule FieldPublication.Publications.Data do
             doc
 
           other ->
-            {:error, other}
+            Logger.error(inspect(other))
+            {:error, :not_found}
         end
       end)
     end)
@@ -166,7 +175,13 @@ defmodule FieldPublication.Publications.Data do
     config = Publications.get_configuration(publication)
 
     get_raw_document(uuid, publication)
-    |> apply_project_configuration(config, publication, include_relations)
+    |> case do
+      {:error, _} ->
+        {:error, :not_found}
+
+      doc ->
+        apply_project_configuration(doc, config, publication, include_relations)
+    end
   end
 
   def get_extended_documents(

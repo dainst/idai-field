@@ -333,7 +333,7 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     Publications.get(project_id, draft_date)
     |> case do
-      {:error, :not_found} ->
+      {:error, _} ->
         conn
         |> resp(
           404,

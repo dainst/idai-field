@@ -462,22 +462,6 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  def forward_headers(conn, _options) do
-    # TODO: This might break if we change the runtime.exs or dev.exs/test.exs
-    FieldPublicationWeb.Endpoint.config(:url)
-    |> Keyword.get(:port)
-    |> case do
-      nil ->
-        # Development/test case
-        Plug.Conn.put_req_header(conn, "x-forwarded-port", "4001")
-
-      _ ->
-        # Release case
-        conn
-    end
-    |> Plug.Conn.put_req_header("x-forwarded-path", "/api/image/")
-  end
-
   def put_token_in_session(conn, token) do
     conn
     |> put_session(:user_token, token)

@@ -6,6 +6,8 @@ defmodule FieldPublicationWeb.Router do
   import FieldPublicationWeb.UserAuth
   import FieldPublicationWeb.Gettext.Plug
 
+  import FieldPublicationWeb.Cantaloupe, only: [set_forward_headers_for_cantaloupe: 2]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -27,7 +29,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through :ensure_image_published
 
     scope "/iiif" do
-      pipe_through :forward_headers
+      pipe_through :set_forward_headers_for_cantaloupe
 
       forward("/", ReverseProxyPlug,
         status_callbacks: %{

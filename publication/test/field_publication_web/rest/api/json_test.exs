@@ -61,5 +61,41 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
              |> Data.document_map_to_struct()
 
     assert extended_doc.id == doc["_id"]
+
+    # Check if the nested structure of document matches the expectations.
+
+    assert %Data.Category{} = extended_doc.category
+
+    assert Enum.count(extended_doc.groups) > 0
+
+    assert Enum.map(
+             extended_doc.groups,
+             fn %Data.FieldGroup{fields: fields} = group ->
+               assert Enum.count(fields) > 0
+
+               Enum.map(
+                 fields,
+                 fn %Data.Field{} = field ->
+                   :ok
+                 end
+               )
+             end
+           )
+
+    assert Enum.count(extended_doc.relations) > 0
+
+    assert Enum.map(
+             extended_doc.relations,
+             fn %Data.RelationGroup{docs: docs} ->
+               assert Enum.count(docs) > 0
+
+               Enum.map(
+                 docs,
+                 fn %Data.Document{} = doc ->
+                   :ok
+                 end
+               )
+             end
+           )
   end
 end

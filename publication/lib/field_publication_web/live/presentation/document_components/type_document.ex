@@ -87,9 +87,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Type do
                         doc={doc}
                         image_count={1}
                       />
-                    <%= end %>
+                    <% end %>
                   </div>
-                <%= end %>
+                <% end %>
             </div>
 
           <%= for %RelationGroup{} = relation_group <- @doc.relations

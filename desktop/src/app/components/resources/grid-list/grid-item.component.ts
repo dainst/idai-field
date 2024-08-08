@@ -1,6 +1,6 @@
 import { Input, Component } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
+import { FieldDocument, I18N, Labels, ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({
@@ -18,7 +18,8 @@ export class GridItemComponent {
     @Input() subDocuments: Array<FieldDocument>;
 
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration, 
+                private labels: Labels) {}
 
 
     public getSubDocumentsLabel(): string {
@@ -32,5 +33,11 @@ export class GridItemComponent {
         if (!this.document.resource.scanCode) return false;
 
         return this.projectConfiguration.getCategory(this.document.resource.category).scanCodes !== undefined;
+    }
+
+    
+    public getLabelFromI18NString(i18nString: I18N.String|string): string {
+
+        return this.labels.getFromI18NString(i18nString);
     }
 }

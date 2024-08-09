@@ -17,7 +17,7 @@ grid-item {
 
   .grid-resource-info {
     position: absolute;
-    height: 25px;
+    min-height: 25px;
     width: 192px;
     line-height: 25px;
     text-align: center;
@@ -37,6 +37,16 @@ grid-item {
       white-space: normal;
       z-index: 5;
     }
+  }
+
+  .grid-resource-shortdescription {
+    display: none;
+    font-style: italic;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    width: calc(100% - 1px);
   }
 
   .badge {

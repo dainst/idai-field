@@ -15,10 +15,10 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: '16.x'
       - name: Install dependencies
         run: npm run bootstrap
       - name: Build core
@@ -43,10 +43,10 @@ jobs:
     timeout-minutes: 90
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: '16.x'
       - name: Install dependencies
         run: npm run bootstrap
       - name: Build core
@@ -69,13 +69,13 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Setup NodeJS
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: '16.x'
     - name: Setup NPM cache
-      uses: c-hive/gha-npm-cache@v1
+      uses: actions/cache@v3
     - name: Install root node modules
       run: npm i
     - name: Install and link package node modules 

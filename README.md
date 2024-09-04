@@ -3,7 +3,6 @@
 <!-- badges: start -->
 [![latest release](https://img.shields.io/github/v/release/dainst/idai-field)](https://github.com/dainst/releases)
 [![Manual](https://img.shields.io/badge/Manual-field.idai.world-green)](https://field.idai.world/manual)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/dainst/idai-field/total)
 <!-- badges: end -->
 
 Field is the German Archaeological Institutes take on digital field and find recording. For an overview of the genesis and the idea behind Field, check out one of our latest articles: 

@@ -52,22 +52,20 @@ Girdiler listesinin üstündeki gezinme yolu, şu anda seçili hiyerarşi seviye
 ### Girdileri yönetme
 
 Listedeki girdiler tıklanarak seçilebilir. Ctrl/Cmd veya Shift tuşuna basılı tutarak, birden fazla girdi
-eş zamanlı olarak seçilebilir. Listedeki bir veya daha fazla seçili girdiye sağ tıklandığında, şu seçenekleri sağlayan bir kontekst menüsü açılır:
+eş zamanlı olarak seçilebilir. Listedeki bir veya daha fazla seçili girdiye sağ tıklandığında, şu seçenekleri gösteren bir kontekst menüsü açılır:
 
-* *Show warnings*: Displays the warnings available for this resource (only available for resources with warnings, see chapter *Warnings*)
-* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed
-* *Add QR code*: Opens a window in which a new QR code can be generated for the resource or an existing QR code can be linked via camera scan
-* *Manage QR code*: Displays the QR code of the resource and allows printing a QR code label (alternatively also accessible via the QR code button on the right side of the list element of the resource)
-* *Move*: Allows removing resources from their current context and assigning them to another parent resource
-* *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
-exclusively linked to the resources you want to delete)
-* *Scan storage place*: Sets a new storage place for the resource by scanning the QR code of the storage place via camera scan (only available for resources of the categories "Find", "Find collection" and "Sample" as well as the respective subcategories)
+* *Uyarıları göster*: Bu girdi için mevcut uyarıları görüntüler (sadece uyarı içeren girdiler için mevcuttur, *Uyarılar* bölümüne bakın)
+* *Düzenle*: Düzenleyiciyi açar (ayrıca listedeki girdiye çift tıklanarak da kullanılabilir)
+* *Görselleri bağla*: Görsellerin seçili girdiye bağlanabileceği veya bağlı görsellerin kaldırılabileceği bir pencere açar
+* *QR kodu ekle*: Girdi için yeni bir QR kodunun oluşturulabileceği veya mevcut bir QR kodunun kamera taramasyla bağlanabileceği bir pencere açar
+* *QR kodunu yönet*: Girdinin QR kodunu görüntüler ve bir QR kodu etiketi yazdırmaya olanak tanır (alternatif olarak listede girdinin sağ tarafındaki QR kodu düğmesinden de erişilebilir)
+* *Taşı*: Girdilerin geçerli kontekstlerinden başka bir üst girdiye atanması için kullanılır
+* *Sil*: Bir güvenlik kontrolünden sonra girdileri kaldırır (isteğe bağlı olarak, silmek istediğiniz girdilere bağlı olan tüm görselleri de silebilirsiniz)
+* *Depolama yerini tara*: Kamerayla depolama yerinin QR kodunu tarayarak girdi için yeni bir depolama yeri ayarlar (yalnızca "Bul", "Koleksiyonu bul" ve "Örnek" kategorilerinin girdileri ile ilgili alt kategoriler için kullanılabilir)
 
-Furthermore, the context menu contains options for creating and editing geometries. Please note that when
-multiple resources are selected, only the *Move* and *Delete* options are available. Options for adding or managing QR codes are only available if the use of QR codes has been set up for the corresponding category in the configuration editor (see section *Edit categories* in chapter *Configuration*).
+Ayrıca, kontekst menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen birden fazla girdi seçildiğinde yalnızca *Taşı* ve *Sil* seçeneklerinin kullanılabilir olduğunu unutmayın. QR kodlarını ekleme veya yönetme seçenekleri, QR kodlarının kullanımı ayarlanmışsa yalnızca konfigürasyon düzenleyicisinde karşılık gelen kategori için kullanılabilir (bkz. *Konfigürasyon* bölümündeki *Kategorileri düzenle* bölümü).
 
-<p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
+<p align="center"><img src="images/en/resources/context_menu.png" alt="Kontekst menü"/></p>
 
 
 <hr>

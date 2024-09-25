@@ -49,11 +49,10 @@ Girdiler listesinin üstündeki gezinme yolu, şu anda seçili hiyerarşi seviye
 <p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
 
 
-### Manage resources
+### Girdileri yönetme
 
-Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd or Shift key, multiple resources
-can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
-providing the following options:
+Listedeki girdiler tıklanarak seçilebilir. Ctrl/Cmd veya Shift tuşuna basılı tutarak, birden fazla girdi
+eş zamanlı olarak seçilebilir. Listedeki bir veya daha fazla seçili girdiye sağ tıklandığında, şu seçenekleri sağlayan bir kontekst menüsü açılır:
 
 * *Show warnings*: Displays the warnings available for this resource (only available for resources with warnings, see chapter *Warnings*)
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)

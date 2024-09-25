@@ -24,20 +24,17 @@ Yeni bir işlem oluşturmak için girdiler listesinin altındaki yeşil artı bu
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="İşlem girdisi oluştur"/></p>
 
-In the process, you firstly choose the category of the operation, before you may optionally create a geometry
-for the new resource. Afterwards the editor is opened, where all data of the operation can be filled in.
-Depending on the chosen operation category, different fields are available, which are arranged in multiple
-groups. You can switch between field groups by clicking the buttons on the left side.
+İşlem sırasında, öncelikle işlemin kategorisini seçersiniz, ardından isteğe bağlı olarak yeni girdi için bir geometri
+oluşturabilirsiniz. Daha sonra, işlemin tüm verilerinin tamamlanabileceği düzenleyici açılır.
+Seçilen işlem kategorisine bağlı olarak, birden fazla grupta düzenlenmiş farklı alanlar mevcuttur. Sol taraftaki düğmelere tıklayarak alan grupları arasında geçiş yapabilirsiniz.
 
-Before the resource can be saved via the green save button, at the very least the **identifier** field in the
-core section has to be filled in.
+Girdinin yeşil kaydet butonu ile kaydedilebilmesi için en azından temel bilgiler bölümündeki **tanımlayıcı** alanının doldurulması gerekmektedir.
 
-<p align="center"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
+<p align="center"><img src="images/en/resources/save_operation.png" alt="İşlem girdisini kaydet"/></p>
 
-The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
-up right) in order to open a new tab for the operation.
+Yeni işlem artık girdiler listesinde görüntülenmektedir. İşlem için yeni bir sekme açmak için "İşleme geç" düğmesini (Sembol: Yukarı çapraz ok) kullanın.
 
-<p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
+<p align="center"><img src="images/en/resources/goto_operation.png" alt="İşlem girdisini aç"/></p>
 
 Depending on the category of the operation, resources of different categories can be created within an
 operation tab via the plus button (e.g. stratigraphical units within a trench or rooms within a building).

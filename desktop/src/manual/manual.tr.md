@@ -4,13 +4,11 @@ Uygulamayı ilk başlattığınızda adınızı girmeniz istenecektir. Adınız�
 
 Başlangıçta, test projesi etkin olacak ve birtakım örnek verilerle uygulamayı denemenize olanak tanıyacaktır. Lütfen test projesi seçili olduğu sürece, yeni oluşturulan tüm veri setlerinin silineceğini ve uygulama yeniden başlatıldığında tüm değişikliklerin sıfırlanacağını unutmayın. Bu nedenle, test projesi diğer Field Desktop uygulamaları veya veritabanlarıyla senkronize edilmez.
 
-In order to work with Field Desktop productively and create your own project, you should first follow these steps:
+Field Desktop ile verimli bir şekilde çalışabilmek ve kendi projenizi oluşturabilmek için öncelikle şu adımları izlemelisiniz:
 
-1. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
+1. "Proje" menüsünde, kendi projenizi oluşturmak için **Yeni...** menü ögesini seçin. Proje konfigürasyonu için çeşitli ön ayarlar arasından seçim yapabilirsiniz: Varsayılan kapsamlı konfigürasyon için "Standart"ı veya yalnızca ön ayar kategorileri ve alanlarından oluşan temel ayarlarla başlamak istiyorsanız "Temel" seçeneklerden birini seçin. Ayrıca, proje içinde verilerin girileceği dilleri belirtin. Son olarak, istenen proje tanımlayıcısını ve isteğe bağlı olarak seçilen dillerin her biri için bir proje adı girin.
 
-2. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
-"Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
-these lists at any time.
+2. Yeni proje yüklenir yüklenmez, "Proje" ➝ "Özellikler" menüsü üzerinden temel proje verilerini girebilirsiniz. Öncelikle, **personel üyeleri** (Proje bölümünün "Personel" alanı) ve **sezonlar** (Proje bölümünün "Sezonlarö" alanı) listelerini oluşturmalısınız. Bu listeleri istediğiniz zaman genişletebilirsiniz.
 
 Use the menu option **Create backup...**, which is accessible via the menu "Project", to create backup files of
 your project data regularly.

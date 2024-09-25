@@ -7299,7 +7299,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie löschen</source>
-        <target state="translated">Bu kategorideki tüm girdileri sil</target>
+        <target state="translated">Bu kategorideki tüm girdilerde sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">83,86</context>

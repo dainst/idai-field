@@ -36,17 +36,15 @@ Yeni işlem artık girdiler listesinde görüntülenmektedir. İşlem için yeni
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="İşlem girdisini aç"/></p>
 
-Depending on the category of the operation, resources of different categories can be created within an
-operation tab via the plus button (e.g. stratigraphical units within a trench or rooms within a building).
+İşlemin kategorisine bağlı olarak, artı düğmesi aracılığıyla bir operasyon sekmesi içerisinde farklı kategorilerde girdiler (örneğin, bir açmadaki stratigrafik birimler veya bir yapıdaki odalar) oluşturulabilir.
 
 
-### Hierarchical ordering
+### Hiyerarşik sıralama
 
-Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphic unit. Use the button 
-"Show child resources" (symbol: rectangular arrow down right) to switch to the lower hierarchy level. The child resources are now displayed (e.g. the finds of a stratigraphic unit), and resources that are newly created via the plus button appear at this hierarchy level accordingly.
+Girdiler, örneğin buluntuları bir stratigrafik birime atamak için hiyerarşik yapılar halinde düzenlenebilir. Alt hiyerarşi seviyesine geçmek için
+"Alt girdileri göster" (sembol: aşağı sağa ok) düğmesini kullanın. Bir stratigrafik birimin buluntuları gibi alt girdiler artık görüntülenebilir. Ayrıca artı düğmesiyle yeni oluşturulan girdiler buna göre hiyerarşik olarak görünür.
 
-The navigation path above the resources list indicates the currently selected hierarchy level. You can always
-switch to another level by clicking one of the buttons of the navigation path.
+Girdiler listesinin üstündeki gezinme yolu, şu anda seçili hiyerarşi seviyesini gösterir. Gezinme yolunun düğmelerinden birine tıklayarak her zaman başka bir seviyeye geçebilirsiniz.
 
 <p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
 

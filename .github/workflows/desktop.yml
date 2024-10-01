@@ -74,8 +74,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '16.x'
-    - name: Setup NPM cache
-      uses: actions/cache@v3
     - name: Install root node modules
       run: npm i
     - name: Install and link package node modules 

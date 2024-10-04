@@ -10,6 +10,10 @@
   background-color: white;
   z-index: 1001;
 
+  #search-container {
+    width: 100%;
+  }
+
   #help-container {
     padding: 15px 0;
     hyphens: auto;
@@ -47,6 +51,15 @@
     img {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
+
+    .search-result {
+      color: white;
+      background-color: #5572a1;
+
+      &.selected-search-result {
+        background-color: #90a5c5;
+      }
+    }
   }
 
   #table-of-contents-placeholder {
@@ -57,6 +70,30 @@
     position: fixed;
     margin-top: 10px;
     user-select: none;
+
+    input {
+      margin-left: 12px;
+      margin-bottom: 5px;
+      width: calc(100% - 72px);
+      margin-right: 10px;
+      float: left;
+    }
+
+    .browse-search-results-button {
+      width: 50px;
+      height: 19px;
+      border-color: white !important;
+
+      .mdi {
+        position: relative;
+        bottom: 11px;
+        font-size: 10px;
+      }
+    }
+
+    ul {
+      padding: 0;
+    }
 
     .nav {
       margin: 5px 12px;

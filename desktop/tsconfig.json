@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "lib": [
-      "es2018",
+      "es2022",
       "dom"
     ],
     "useDefineForClassFields": false

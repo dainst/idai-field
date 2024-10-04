@@ -3,14 +3,17 @@ defmodule FieldPublication.Publications do
 
   alias FieldPublication.CouchService
   alias FieldPublication.OpenSearchService
+  alias FieldPublication.Projects
 
   alias FieldPublication.DocumentSchema.{
     ReplicationInput,
-    Project,
     Publication,
     Base
   }
 
+  @doc """
+  Initializes a new publication based on some user input.
+  """
   def create_from_replication_input(%ReplicationInput{
         source_url: source_url,
         source_project_name: source_project_name,
@@ -82,37 +85,6 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get!(publication_id) when is_binary(publication_id) do
-    CouchService.get_document(publication_id)
-    |> case do
-      {:ok, %{status: 200, body: body}} ->
-        json_doc = Jason.decode!(body)
-
-        apply_changes(Publication.changeset(%Publication{}, json_doc))
-
-      {:ok, %{status: 404}} ->
-        {:error, :not_found}
-    end
-  end
-
-  def get!(%Publication{project_name: project_name, draft_date: draft_date})
-      when not is_nil(draft_date) do
-    get!(project_name, draft_date)
-  end
-
-  def get!(%Publication{project_name: project_name, publication_date: publication_date}) do
-    # TODO: This is not very efficient?
-
-    run_search(%{
-      selector: %{
-        doc_type: Publication.doc_type(),
-        project_name: project_name,
-        publication_date: publication_date
-      }
-    })
-    |> List.first()
-  end
-
   def get!(project_name, draft_date) do
     {:ok, publication} = get(project_name, draft_date)
     publication
@@ -146,16 +118,45 @@ defmodule FieldPublication.Publications do
     |> List.first(:none)
   end
 
+  @doc """
+  Returns the most recent publication(s) based on user's access rights and
+  the draft date.
+  """
+  def get_most_recent(project_name \\ :all, user_name \\ nil)
+
+  def get_most_recent(:all, user_name) do
+    list()
+    |> Enum.group_by(fn val -> val.project_name end)
+    |> Stream.map(fn {_project_name, publications} ->
+      publications
+      |> Stream.filter(fn %Publication{} = pub ->
+        Projects.has_publication_access?(pub, user_name)
+      end)
+      |> Enum.sort(fn %Publication{draft_date: a}, %Publication{draft_date: b} ->
+        Date.compare(a, b) in [:eq, :gt]
+      end)
+      |> List.first()
+    end)
+    |> Enum.reject(fn val -> val == nil end)
+  end
+
+  def get_most_recent(project_name, user_name) do
+    list(project_name)
+    |> Stream.filter(fn publication ->
+      Projects.has_publication_access?(publication, user_name)
+    end)
+    |> Enum.sort(fn %Publication{draft_date: a}, %Publication{draft_date: b} ->
+      Date.compare(a, b) in [:eq, :gt]
+    end)
+    |> List.first()
+  end
+
   def list() do
     run_search(%{selector: %{doc_type: Publication.doc_type()}})
   end
 
-  def list(name) when is_binary(name) do
-    run_search(%{selector: %{doc_type: Publication.doc_type(), project_name: name}})
-  end
-
-  def list(%Project{name: name}) do
-    run_search(%{selector: %{doc_type: Publication.doc_type(), project_name: name}})
+  def list(project_name) when is_binary(project_name) do
+    run_search(%{selector: %{doc_type: Publication.doc_type(), project_name: project_name}})
   end
 
   defp run_search(query) do
@@ -179,6 +180,7 @@ defmodule FieldPublication.Publications do
   def put(publication, params \\ %{})
 
   def put(%Publication{_rev: rev} = publication, params) when not is_nil(rev) do
+    # If revision is not nil, this is an update to an existing publication. No need to to create documents, initializes search indices etc.
     changeset = Publication.changeset(publication, params)
 
     with {:ok, publication} <- apply_action(changeset, :create),
@@ -221,28 +223,6 @@ defmodule FieldPublication.Publications do
            :database_exists,
            "A publication database '#{get_field(changeset, :database)}' already exists."
          )}
-
-      {:error, posix} when is_atom(posix) ->
-        {:error,
-         add_error(
-           changeset,
-           :posix_error,
-           "Got '#{posix}' while trying to initialize file directory."
-         )}
-    end
-  end
-
-  def update_comments(%Publication{} = publication, translations) do
-    publication
-    |> Publication.changeset(%{})
-    |> Ecto.Changeset.put_embed(:comments, translations)
-    |> Ecto.Changeset.apply_action(:create)
-    |> case do
-      {:ok, %Publication{} = valid_data} ->
-        put(valid_data)
-
-      {:error, _changeset} = error ->
-        error
     end
   end
 

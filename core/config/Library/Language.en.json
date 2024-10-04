@@ -17,32 +17,40 @@
       "description": "Measurement of the length"
     },
     "dimensionWidth": {
-      "label": "Width"
+      "label": "Width",
+      "description": "Indication of the width at the maximum/minimum extension"
     },
     "dimensionHeight": {
-      "label": "Height"
+      "label": "Height",
+      "description": "Indication of the height at the maximum/minimum extension"
     },
     "dimensionDepth": {
-      "label": "Depth"
+      "label": "Depth",
+      "description": "Indication of the depth at the maximum/minimum extension"
     },
     "dimensionThickness": {
-      "label": "Thickness"
+      "label": "Thickness",
+      "description": "Thickness or strength of the object"
     },
     "dimensionVerticalExtent": {
-      "label": "Vertical extent"
+      "label": "Vertical extent",
+      "description": "Niveau of the upper/lower boundary or the walking level"
     },
     "dimensionPerimeter": {
-      "label": "Perimeter"
+      "label": "Perimeter",
+      "description": "Indication of the objects circumference"
     },
     "dimensionDiameter": {
-      "label": "Diameter"
+      "label": "Diameter",
+      "description": "Indication of the objects diameter"
     },
     "dimensionOther": {
       "label": "Other dimensions",
       "description": "Other dimensions can be entered here; please comment"
     },
     "area": {
-      "label": "Area in m2"
+      "label": "Area in m2",
+      "description": "Area in square meters"
     },
     "processor": {
       "label": "Processor",
@@ -52,7 +60,8 @@
       "label": "Campaign"
     },
     "description": {
-      "label": "Description"
+      "label": "Description",
+      "description": "Unrestricted description field"
     },
     "period": {
       "label": "Period"
@@ -73,16 +82,20 @@
       "description": "Date on which the recording of the resource was finished"
     },
     "date": {
-      "label": "Date"
+      "label": "Date",
+      "description": "Date of recording/conducting"
     },
     "orientation": {
-      "label": "Orientation"
+      "label": "Orientation",
+      "description": "Orientation according to compass direction"
     },
     "spatialLocation": {
-      "label": "Spatial location"
+      "label": "Spatial location",
+      "description": "Description of the position within the site, trench or feature"
     },
     "provenance": {
-      "label": "Provenance"
+      "label": "Provenance",
+      "description": "Place of origin"
     },
     "literature": {
       "label": "Literature reference"
@@ -201,10 +214,12 @@
       "label": "Trench",
       "fields": {
         "researchQuestion": {
-          "label": "Research question"
+          "label": "Research question",
+          "description": "Research question or background of the trench, e.g. 'Specification and dating of the structure discovered in the magnetogram for...'"
         },
         "trenchComment": {
-          "label": "Trench comment"
+          "label": "Trench comment",
+          "description": "Trench commentary for evaluation and documentation, report for the excavation management"
         }
       }
     },
@@ -215,31 +230,39 @@
       "label": "Glass",
       "fields": {
         "decorationDescription": {
-          "label": "Decoration description"
+          "label": "Decoration description",
+          "description": "Further description field for more detailed description of the decoration"
         },
         "color": {
-          "label": "Color and intensity"
+          "label": "Color and intensity",
+          "description": "Colour, as far as recognisable"
         },
         "decorationTechnique": {
-          "label": "Surface treatment or decoration technique"
+          "label": "Surface treatment or decoration technique",
+          "description": "Technique used to apply decoration to the glass"
         },
         "formDescription": {
-          "label": "Form description"
+          "label": "Form description",
+          "description": "More detailed description of the general form"
         },
         "manufacturingMethod": {
-          "label": "Manufacturing method"
+          "label": "Manufacturing method",
+          "description": "Technique used to produce the object; recognisable traces of processing"
         },
         "objectType": {
           "label": "Designation or type of the object"
         },
         "transparency": {
-          "label": "Transparency"
+          "label": "Transparency",
+          "description": "How translucent is the object?"
         },
         "vesselForm": {
-          "label": "Basic vessel form"
+          "label": "Basic vessel form",
+          "description": "Basic shape of the vessel"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form"
+          "label": "Specific vessel form",
+          "description": "Specific shape of the vessel"
         }
       }
     },
@@ -280,7 +303,8 @@
           "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
-          "label": "Form description"
+          "label": "Form description",
+          "description": "More detailed description of the general form"
         },
         "manufacturing": {
           "label": "Manufacturing"
@@ -289,10 +313,12 @@
           "label": "Manufacturing method"
         },
         "specificType": {
-          "label": "Format"
+          "label": "Format",
+          "description": "Format of the bricks and tiles, if recognisable"
         },
         "temper": {
-          "label": "Temper"
+          "label": "Temper",
+          "description": "Basic type of temper"
         }
       }
     },
@@ -303,7 +329,8 @@
           "description": "Mail address of the project or a contact person"
         },
         "contactPerson": {
-          "label": "Contact person"
+          "label": "Contact person",
+          "description": "Contact person of the project"
         },
         "epsgId": {
           "label": "EPSG Code",
@@ -314,23 +341,27 @@
           "description": "External reference(s) of the project"
         },
         "gazId": {
-          "label": "Gazetteer ID"
+          "label": "Gazetteer ID",
+          "description": "ID number of the place encyclopaedia"
         },
         "institution": {
           "label": "Institution",
           "description": "Institution responsible for the project"
         },
         "latitude": {
-          "label": "Latitude"
+          "label": "Latitude",
+          "description": "Entry is made as a decimal number, negative values are possible"
         },
         "longitude": {
-          "label": "Longitude"
+          "label": "Longitude",
+          "description": "Entry is made as a decimal number, negative values are possible"
         },
         "license": {
           "label": "License information"
         },
         "projectURI": {
-          "label": "Project URL"
+          "label": "Project URL",
+          "description": "Reference to an external project page with further information"
         },
         "staff": {
           "label": "Staff"
@@ -394,7 +425,8 @@
           "label": "Burial sequence (primary/secondary)"
         },
         "burialDocumentation": {
-          "label": "Documentation"
+          "label": "Documentation",
+          "description": "Which forms of documentation were employed?"
         },
         "graveFeature": {
           "label": "Method of interment"
@@ -468,7 +500,8 @@
       "label": "Wood",
       "fields": {
         "color": {
-          "label": "Color"
+          "label": "Color",
+          "description": "Color of the find or the wooden structure"
         },
         "objectType": {
           "label": "Designation or type of the object"
@@ -922,7 +955,8 @@
           "label": "Number of inclusions"
         },
         "temperParticles": {
-          "label": "Temper particles"
+          "label": "Temper particles",
+          "description": "Size of the temper particles"
         },
         "temperTypeClay": {
           "label": "Clay type"
@@ -1101,7 +1135,8 @@
           "label": "Number of inclusions"
         },
         "temperParticles": {
-          "label": "Temper particles"
+          "label": "Temper particles",
+          "description": "Size of the temper particles"
         },
         "vesselForm": {
           "label": "Basic vessel form"
@@ -1138,7 +1173,8 @@
           "label": "Laboratory number"
         },
         "weight": {
-          "label": "Weight (g)"
+          "label": "Weight (g)",
+          "description": "Weight in grams"
         },
         "sampleType": {
           "label": "Sample type"
@@ -1156,7 +1192,8 @@
           "description": "Material/application used for creating the drawing"
         },
         "drawingTool": {
-          "label": "Drawing tool"
+          "label": "Drawing tool",
+          "description": "Which type of tool was used for drawing?"
         },
         "drawingType": {
           "label": "Drawing type"
@@ -1304,23 +1341,28 @@
           "label": "Publication remark"
         },
         "hasRestoration": {
-          "label": "Restoration"
+          "label": "Restoration",
+          "description": "Have restoration and conservation measures been undertaken?"
         },
         "storageInventoryNumber": {
-          "label": "Inventory number"
+          "label": "Inventory number",
+          "description": "Number assigned during inventory in a collection or depot"
         },
         "weight": {
-          "label": "Weight (g)"
+          "label": "Weight (g)",
+          "description": "Weight in grams"
         },
         "condition": {
-          "label": "Condition"
+          "label": "Condition",
+          "description": "Description of the state of preservation"
         },
         "conditionAmount": {
           "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "storagePlace": {
-          "label": "Storage place"
+          "label": "Storage place",
+          "description": "Storage place of the find"
         }
       }
     },
@@ -1328,16 +1370,19 @@
       "label": "Find collection",
       "fields": {
         "amount": {
-          "label": "Total number"
+          "label": "Total number",
+          "description": "Number of artefacts stored or inventoried"
         },
         "bibliography": {
           "label": "Bibliography"
         },
         "weight": {
-          "label": "Weight (g)"
+          "label": "Weight (g)",
+          "description": "Weight in grams"
         },
         "storagePlace": {
-          "label": "Storage place"
+          "label": "Storage place",
+          "description": "Storage location of the find collection"
         }
       }
     },
@@ -1345,13 +1390,15 @@
       "label": "Plaster fragment",
       "fields": {
         "composition": {
-          "label": "Composition"
+          "label": "Composition",
+          "description": "Description of the structure of the plaster"
         },
         "hasDecoration": {
           "label": "Decoration"
         },
         "color": {
-          "label": "Color and intensity"
+          "label": "Color and intensity",
+          "description": "Colour, as far as recognisable"
         },
         "plasterComponents": {
           "label": "Plaster components"
@@ -1376,13 +1423,15 @@
       "label": "Metal",
       "fields": {
         "materialDescription": {
-          "label": "Material description"
+          "label": "Material description",
+          "description": "Description of the material used; possibly exact description of the metal or alloy"
         },
         "decorationTechnique": {
           "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
-          "label": "Form description"
+          "label": "Form description",
+          "description": "More detailed description of the general form"
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
@@ -1397,7 +1446,8 @@
           "label": "Basic vessel form"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form"
+          "label": "Specific vessel form",
+          "description": "Specific shape of the vessel"
         }
       }
     },

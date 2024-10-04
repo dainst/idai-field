@@ -9,7 +9,7 @@ defmodule FieldPublication.Processing.MapTiles do
   @tile_size 256
 
   def evaluate_state(%Publication{} = publication) do
-    FileService.initialize(publication.project_name)
+    FileService.initialize!(publication.project_name)
 
     existing_tiles = FileService.list_tile_image_directories(publication.project_name)
 

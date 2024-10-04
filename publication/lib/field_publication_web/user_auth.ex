@@ -1,5 +1,9 @@
 defmodule FieldPublicationWeb.UserAuth do
-  alias FieldPublication.Publications
+  alias FieldPublication.{
+    Publications,
+    Projects
+  }
+
   use FieldPublicationWeb, :verified_routes
 
   import Plug.Conn
@@ -169,7 +173,7 @@ defmodule FieldPublicationWeb.UserAuth do
   def on_mount(:ensure_has_project_access, %{"project_id" => project_name}, session, socket) do
     socket = mount_current_user(socket, session)
 
-    if FieldPublication.Projects.has_project_access?(
+    if Projects.has_project_access?(
          project_name,
          socket.assigns.current_user
        ) do
@@ -181,6 +185,61 @@ defmodule FieldPublicationWeb.UserAuth do
         |> Phoenix.LiveView.redirect(to: ~p"/")
 
       {:halt, socket}
+    end
+  end
+
+  def on_mount(
+        :ensure_project_published_or_project_access,
+        %{"project_id" => project_name, "draft_date" => draft_date} = _opts,
+        session,
+        socket
+      ) do
+    socket = mount_current_user(socket, session)
+
+    Publications.get(project_name, draft_date)
+    |> case do
+      {:error, :not_found} ->
+        {
+          :halt,
+          socket
+          |> Phoenix.LiveView.put_flash(:error, "Unknown publication.")
+          |> Phoenix.LiveView.redirect(to: ~p"/")
+        }
+
+      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+        if not Projects.has_publication_access?(publication, socket.assigns.current_user) do
+          {
+            :halt,
+            socket
+            |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+            |> Phoenix.LiveView.redirect(to: ~p"/")
+          }
+        else
+          {:cont, socket}
+        end
+    end
+  end
+
+  def on_mount(
+        :ensure_project_published_or_project_access,
+        %{"project_id" => project_name},
+        session,
+        socket
+      ) do
+    socket = mount_current_user(socket, session)
+
+    Publications.get_most_recent(project_name, socket.assigns.current_user)
+    |> case do
+      nil ->
+        {
+          :halt,
+          socket
+          |> Phoenix.LiveView.put_flash(:error, "Project has no publication.")
+          |> Phoenix.LiveView.redirect(to: ~p"/")
+        }
+
+      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
+        {:cont, socket}
     end
   end
 
@@ -249,7 +308,7 @@ defmodule FieldPublicationWeb.UserAuth do
   Used for routes that require the user to be authenticated.
   """
   def require_project_access(%{params: %{"project_id" => project_id}} = conn, _opts) do
-    if FieldPublication.Projects.has_project_access?(
+    if Projects.has_project_access?(
          project_id,
          conn.assigns[:current_user]
        ) do
@@ -259,6 +318,47 @@ defmodule FieldPublicationWeb.UserAuth do
       |> put_flash(:error, "You are not allowed to access that page.")
       |> redirect(to: ~p"/")
       |> halt()
+    end
+  end
+
+  def require_published_or_project_access(
+        %{params: %{"project_id" => project_id, "draft_date" => draft_date}} = conn,
+        _options
+      ) do
+    Publications.get(project_id, draft_date)
+    |> case do
+      {:error, :not_found} ->
+        conn
+        |> resp(
+          404,
+          "No publication found for project '#{project_id}' with a publication date of '#{draft_date}'."
+        )
+        |> halt()
+
+      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+        if not Projects.has_publication_access?(publication, conn.assigns.current_user) do
+          conn
+          |> resp(403, "You are not allowed to access that page.")
+          |> halt()
+        else
+          conn
+        end
+    end
+  end
+
+  def require_published_or_project_access(
+        %{params: %{"project_id" => project_id}} = conn,
+        _opts
+      ) do
+    Publications.get_most_recent(project_id, conn.assigns.current_user)
+    |> case do
+      nil ->
+        conn
+        |> resp(404, "No publications found for project '#{project_id}'.")
+        |> halt()
+
+      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
+        conn
     end
   end
 
@@ -280,28 +380,7 @@ defmodule FieldPublicationWeb.UserAuth do
         %{params: %{"project_name" => project_name, "uuid" => uuid}} = conn,
         _options
       ) do
-    case Cachex.get(:published_images, {project_name, uuid}) do
-      {:ok, true} ->
-        conn
-
-      {:ok, false} ->
-        conn
-        |> resp(403, "The image you requested has not been published.")
-        |> halt()
-
-      _ ->
-        if is_image_published?(project_name, uuid) do
-          Cachex.put(:published_images, {project_name, uuid}, true)
-          conn
-        else
-          # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
-          Cachex.put(:published_images, {project_name, uuid}, false, ttl: 1000 * 60 * 60)
-
-          conn
-          |> resp(403, "The image you requested has not been published.")
-          |> halt()
-        end
-    end
+    check_image_access(conn, project_name, uuid)
   end
 
   def ensure_image_published(
@@ -312,15 +391,53 @@ defmodule FieldPublicationWeb.UserAuth do
         _opts
       ) do
     # This is the variant of ensure_image_published/2 that is used for the reverse proxy routes of the
-    # cantaloupe image server. We can not extract project_name and uuid beforehand, so we parse the requested
-    # image name and call the default function above by setting :params manually.
+    # cantaloupe image server. We can not extract project_name and uuid beforehand.
     [project_name, uuid] =
       image_name
       |> String.replace_suffix(".jp2", "")
       |> String.split("%2F")
 
-    Map.put(conn, :params, %{"project_name" => project_name, "uuid" => uuid})
-    |> ensure_image_published(%{})
+    check_image_access(conn, project_name, uuid)
+  end
+
+  defp check_image_access(conn, project_name, uuid) do
+    case Cachex.get(:published_images, {project_name, uuid}) do
+      {:ok, true} ->
+        # The image was evaluated as published before, image access is granted.
+        conn
+
+      {:ok, false} ->
+        if Projects.has_project_access?(project_name, conn.assigns[:current_user]) do
+          # The image is part of a non published draft the user has access to, image access is granted.
+          conn
+        else
+          # Neither published nor user access.
+          conn
+          |> resp(403, "The image you requested has not been published.")
+          |> halt()
+        end
+
+      _ ->
+        # The image has not been evaluated since the start of the application (not found in cache).
+        if is_image_published?(project_name, uuid) do
+          # Mark the image as published for all further requests, image access is granted.
+          Cachex.put(:published_images, {project_name, uuid}, true)
+          conn
+        else
+          # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
+          Cachex.put(:published_images, {project_name, uuid}, false, ttl: 1000 * 60 * 60)
+
+          if Projects.has_project_access?(project_name, conn.assigns[:current_user]) do
+            # The image is part of a non published draft the user has access to, image access is granted.
+            conn
+          else
+            # Neither published nor user access.
+            conn
+            |> resp(403, "The image you requested has not been published.")
+            |> halt()
+          end
+        end
+    end
   end
 
   defp is_image_published?(project_name, uuid) do

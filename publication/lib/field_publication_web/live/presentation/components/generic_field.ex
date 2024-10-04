@@ -66,6 +66,17 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
+  defp render_link(%{add: true, value: value} = assigns) when is_map(value) do
+    # TODO: This handles keyword fields that are based on value lists (dropdownRanges?), the actual value we want
+    # to search is contained in @value["value"]. The naming/structure is suboptimal currently.
+
+    ~H"""
+    <.link navigate={~p"/search?#{%{filters: %{"#{@key}_keyword" => @value["value"]}}}"}>
+      <%= render_slot(@inner_block) %>
+    </.link>
+    """
+  end
+
   defp render_link(%{add: true} = assigns) do
     ~H"""
     <.link navigate={~p"/search?#{%{filters: %{"#{@key}_keyword" => @value}}}"}>

@@ -1,4 +1,6 @@
 defmodule FieldPublication.Publications.Data do
+  require FieldPublicationWeb.Gettext
+
   alias FieldPublication.CouchService
   alias FieldPublication.DocumentSchema.Publication
 
@@ -255,10 +257,26 @@ defmodule FieldPublication.Publications.Data do
       }
 
     if include_relations do
+      child_task_pid =
+        Task.async(fn ->
+          create_child_relations(resource["id"], publication)
+        end)
+
+      other_relations = extend_relations(category_configuration["item"], resource, publication)
+
+      child_relations = Task.await(child_task_pid)
+
+      all_relations =
+        if child_relations["values"] != [] do
+          other_relations ++ [child_relations]
+        else
+          other_relations
+        end
+
       Map.put(
         doc,
         "relations",
-        extend_relations(category_configuration["item"], resource, publication)
+        all_relations
       )
     else
       doc
@@ -315,18 +333,60 @@ defmodule FieldPublication.Publications.Data do
 
   defp extend_relations(category_configuration, resource, %Publication{} = publication) do
     relations = Map.get(resource, "relations", %{})
-    keys = Map.keys(relations)
+
+    # Load all related documents from CouchDB in one go...
+    related_documents =
+      relations
+      |> Map.values()
+      |> List.flatten()
+      |> get_documents(publication, false)
+
+    # ...then sort them into their respective relation groups, including the translated labels for those groups.
+    relation_types = Map.keys(relations)
 
     category_configuration["groups"]
     |> Enum.map(fn group ->
       group["fields"]
-      |> Stream.map(&extend_field(&1, keys))
+      |> Stream.map(&extend_field(&1, relation_types))
       |> Stream.reject(fn val -> val == nil end)
-      |> Enum.map(fn %{"key" => key} = map ->
-        Map.put(map, "values", get_documents(relations[key], publication, false))
+      |> Enum.map(fn %{"key" => relation_type} = map ->
+        Map.put(
+          map,
+          "values",
+          Enum.filter(related_documents, fn %{"id" => uuid} ->
+            uuid in relations[relation_type]
+          end)
+        )
       end)
     end)
     |> List.flatten()
+  end
+
+  defp create_child_relations(uuid, publication) do
+    %{
+      "key" => "contains",
+      "values" =>
+        publication
+        |> get_hierarchy()
+        |> Map.get(uuid, %{})
+        |> Map.get("children", [])
+        |> get_documents(publication),
+      "labels" =>
+        Gettext.known_locales(FieldPublicationWeb.Gettext)
+        |> Enum.map(fn locale ->
+          {
+            locale,
+            Gettext.with_locale(
+              FieldPublicationWeb.Gettext,
+              locale,
+              fn ->
+                FieldPublicationWeb.Gettext.gettext("Contains")
+              end
+            )
+          }
+        end)
+        |> Enum.into(%{})
+    }
   end
 
   defp run_query(query, database) do

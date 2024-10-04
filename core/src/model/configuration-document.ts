@@ -141,7 +141,6 @@ export namespace ConfigurationDocument {
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
             .forms[category.libraryId ?? category.name];
-        delete clonedCategoryConfiguration.fields[field.name];
 
         const scanCodeConfiguration: ScanCodeConfiguration = clonedCategoryConfiguration.scanCodes;
         if (scanCodeConfiguration?.printedFields) {
@@ -150,24 +149,12 @@ export namespace ConfigurationDocument {
             });
         }
 
-        removeFieldFromForm(clonedConfigurationDocument, category, field.name);
+        removeFieldFromForm(clonedConfigurationDocument, category, field);
 
         category.children.filter(childCategory => childCategory.customFields.includes(field.name))
             .forEach(childCategory => {
-                removeFieldFromForm(clonedConfigurationDocument, childCategory, field.name);
+                removeFieldFromForm(clonedConfigurationDocument, childCategory, field);
             });
-
-        CustomLanguageConfigurations.update(
-            clonedConfigurationDocument.resource.languages, {}, {}, category, field
-        );
-
-        if (field.subfields) {
-            field.subfields.forEach(subfield => {
-                CustomLanguageConfigurations.update(
-                    clonedConfigurationDocument.resource.languages, {}, {}, category, field, subfield
-                );
-            });
-        }
 
         return clonedConfigurationDocument;
     }
@@ -332,23 +319,36 @@ export namespace ConfigurationDocument {
 
 
     function removeFieldFromForm(configurationDocument: ConfigurationDocument, category: CategoryForm,
-                                 fieldName: string) {
-        
+                                 field: Field) {
+
         const formDefinition = configurationDocument.resource
-        .forms[category.libraryId ?? category.name];
+            .forms[category.libraryId ?? category.name];
 
         const groupDefinition = formDefinition.groups
-            .find(group => group.fields.includes(fieldName));
+            .find(group => group.fields.includes(field.name));
 
-        groupDefinition.fields = groupDefinition.fields.filter(f => f !== fieldName);
+        delete formDefinition.fields[field.name];
+        groupDefinition.fields = groupDefinition.fields.filter(f => f !== field.name);
 
         if (groupDefinition.fields.length === 0) {
             formDefinition.groups.splice(formDefinition.groups.indexOf(groupDefinition), 1);
         }
 
-        if (formDefinition.valuelists?.[fieldName]) {
-            delete formDefinition.valuelists[fieldName];
+        if (formDefinition.valuelists?.[field.name]) {
+            delete formDefinition.valuelists[field.name];
             if (isEmpty(formDefinition.valuelists)) delete formDefinition.valuelists;
+        }
+
+        CustomLanguageConfigurations.update(
+            configurationDocument.resource.languages, {}, {}, category, field
+        );
+
+        if (field.subfields) {
+            field.subfields.forEach(subfield => {
+                CustomLanguageConfigurations.update(
+                    configurationDocument.resource.languages, {}, {}, category, field, subfield
+                );
+            });
         }
     }
 }

@@ -1,16 +1,23 @@
-defmodule Seeder do
-  alias FieldPublication.OpenSearchService
-  alias FieldPublication.Processing
-  alias FieldPublication.FileService
-  alias FieldPublication.Replication
-  alias FieldPublication.CouchService
-  alias FieldPublication.Publications
-  alias FieldPublication.DocumentSchema.ReplicationInput
-  alias FieldPublication.Projects
+defmodule FieldPublication.Test.ProjectSeed do
+  alias FieldPublication.{
+    Projects,
+    FileService,
+    CouchService,
+    OpenSearchService,
+    Replication,
+    Processing,
+    Publications
+  }
+
+  alias FieldPublication.DocumentSchema.{
+    Project,
+    ReplicationInput,
+    Publication
+  }
 
   require Logger
 
-  def start() do
+  def start(project_name) do
     seed_project_docs =
       File.read!("test/support/fixtures/seed_project/publication_data.json")
       |> Jason.decode!()
@@ -20,28 +27,22 @@ defmodule Seeder do
         end)
       end)
 
-    seed_project_identifier =
-      Enum.find(seed_project_docs, fn %{"_id" => uuid} = _doc ->
-        uuid == "project"
-      end)
-      |> then(fn %{"resource" => %{"identifier" => identifier}} -> identifier end)
-
-    case Projects.get(seed_project_identifier) do
+    case Projects.get(project_name) do
       {:ok, %FieldPublication.DocumentSchema.Project{} = project} ->
-        Logger.info("Recreating seed project '#{seed_project_identifier}'.")
+        Logger.info("Recreating project '#{project_name}'.")
         {:ok, :deleted} = Projects.delete(project)
 
-        Seeder.create(seed_project_identifier, seed_project_docs)
+        create(project_name, seed_project_docs)
 
       _ ->
-        Logger.info("Creating seed project '#{seed_project_identifier}'.")
-        Seeder.create(seed_project_identifier, seed_project_docs)
+        Logger.info("Creating project '#{project_name}'.")
+        create(project_name, seed_project_docs)
     end
   end
 
   def create(identifier, docs) do
-    {:ok, %FieldPublication.DocumentSchema.Project{}} =
-      Projects.put(%FieldPublication.DocumentSchema.Project{}, %{
+    {:ok, %Project{} = project} =
+      Projects.put(%Project{}, %{
         "name" => identifier
       })
 
@@ -55,7 +56,7 @@ defmodule Seeder do
         "drafted_by" => "mix seed"
       })
 
-    {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
+    {:ok, %Publication{} = publication} =
       Publications.create_from_replication_input(replication_input)
 
     Task.async_stream(docs, fn doc ->
@@ -91,7 +92,7 @@ defmodule Seeder do
       end)
       |> Enum.reject(fn val -> val == :ok end)
 
-    :ok = Processing.OpenSearch.index(publication)
+    %{field_labels: _, category_labels: _} = Processing.OpenSearch.index(publication)
 
     {:ok, _} = OpenSearchService.set_project_alias(publication)
 
@@ -121,7 +122,7 @@ defmodule Seeder do
     [] =
       Processing.Image.start_web_image_processing(publication)
       |> Enum.reject(fn val -> val == :ok end)
+
+    {project, publication}
   end
 end
-
-Seeder.start()

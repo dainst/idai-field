@@ -39,7 +39,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         }
       >
         <div>
-          <%= @doc["identifier"] %>
+          <span><%= @doc["identifier"] %></span>
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <%= if shortdescription do %>
             <small class="ml-2 text-slate-600">
@@ -49,7 +49,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
           <% uuids = Enum.take(Map.get(@doc, "images", []), @image_count) %>
           <div class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>
-              <Image.show size="^,128" class="p-1 inline" project={@project} uuid={uuid} />
+              <Image.show
+                size="^,128"
+                class="p-1 inline"
+                project={@project}
+                uuid={uuid}
+                alt_text={"An image depicting '#{@doc["identifier"]}'"}
+              />
             <% end %>
             <%= if uuids== [] and @image_count > 0 do %>
               <small class="text-black">no images</small>
@@ -98,6 +104,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
               class="pt-1 border-slate-100"
               project={@project}
               uuid={preview_image_uuid}
+              alt_text={"An image depicting #{@doc["identifier"]}"}
             />
           </div>
         </div>

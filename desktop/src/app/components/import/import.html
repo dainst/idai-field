@@ -56,6 +56,13 @@
                         Bildformate können in der <a href="#" routerLink="../images">Bilderverwaltung</a> importiert werden.
                     </div>
 
+                    <div *ngIf="importState.format === 'csv'" class="import-info" i18n="@@import.csv.info">
+                        Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören.
+                        Bitte beachten Sie, dass die Spaltenköpfe den Namen der Felder entsprechen müssen,
+                        die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im
+                        <a href="#" routerLink="../export">Export-Menü</a> eine Schemadatei generiert werden.
+                     </div>
+
                     <div *ngIf="isDefaultFormat()">
                         <div (click)="setMergeMode(false)"
                              id="radiobutton-merge-mode-false">
@@ -88,6 +95,7 @@
                                     Vorhandene Ressource ergänzen
                                 </label>
                             </div>
+
                             <div *ngIf="importState.format === 'native'" class="import-info"
                                 i18n="@@import.mergeOption.native.info">
                                 Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
@@ -194,7 +202,7 @@
                     </div>
 
                     <div *ngIf="isJavaInstallationMissing()" class="import-info text-danger" i18n="@@import.shapefile.javaWarning">
-                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
+                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java JDK 8 oder höher
                         erforderlich.
                     </div>
 

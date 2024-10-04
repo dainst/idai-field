@@ -552,7 +552,7 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Feldliste kann der Feldeditor geöffnet werden, in dem die Eigenschaften des Feldes editiert werden können:
 
 * *Feldbezeichnung*: Der Anzeigename des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
-* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Feldnamen eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
+* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben der Feldbezeichnung eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
 
 
 #### Eingabetyp ändern

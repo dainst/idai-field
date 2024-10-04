@@ -537,7 +537,7 @@ Right-clicking on a field brings up a context menu that provides the following o
 Via the context menu or by double-clicking on an entry in the field list, the field editor can be opened, in which the properties of the field can be edited:
 
 * *Field label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
-* *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field name and is intended to help with data entry.
+* *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field label and is intended to help with data entry.
 
 
 #### Change input type

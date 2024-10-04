@@ -29,7 +29,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
                 <%= for doc <- depicted_in["values"] do %>
                   <.link
-                    patch={~p"/projects/#{@project_name}/#{@publication_date}/#{@lang}/#{doc["id"]}"}
+                    patch={~p"/projects/#{@project_name}/#{@draft_date}/#{@lang}/#{doc["id"]}"}
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">
@@ -119,12 +119,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= gettext("Main documents") %>
           </.group_heading>
           <%= for doc <- @top_level_docs do %>
-            <DocumentLink.show
-              project={@project_name}
-              date={@publication_date}
-              lang={@lang}
-              doc={doc}
-            />
+            <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={doc} />
           <% end %>
         </div>
       </div>

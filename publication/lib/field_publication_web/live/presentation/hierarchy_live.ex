@@ -10,16 +10,17 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
     GenericField
   }
 
+  alias FieldPublication.Projects
+
   import FieldPublicationWeb.Presentation.Components.Typography
 
   def render(assigns) do
     ~H"""
     <div>
       <PublicationSelection.render
-        project_name={@project_name}
-        publication_dates={@publication_dates}
-        selected_date={@publication.publication_date}
-        languages={@publication.languages}
+        publications={@publications}
+        current_publication={@publication}
+        uuid={@uuid}
         selected_lang={@lang}
         identifier={
           if Data.get_field_values(@current_doc, "category") != "Project",
@@ -28,17 +29,12 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
       />
     </div>
     <.document_heading>
-      <DocumentLink.show
-        project={@project_name}
-        date={@publication_date}
-        lang={@lang}
-        doc={@current_doc}
-      />
+      <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@current_doc} />
     </.document_heading>
 
     <ViewSelection.render
       project={@project_name}
-      date={@publication_date}
+      date={@draft_date}
       lang={@lang}
       uuid={@uuid}
       current={:hierarchy}
@@ -55,7 +51,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
           <%= for doc <- @level_above do %>
             <DocumentLink.hierarchy
               project={@project_name}
-              date={@publication_date}
+              date={@draft_date}
               lang={@lang}
               doc={doc}
               is_highlighted={doc["id"] == @parent_uuid}
@@ -73,7 +69,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
           <%= for sibling_or_self <- @same_level do %>
             <DocumentLink.hierarchy
               project={@project_name}
-              date={@publication_date}
+              date={@draft_date}
               lang={@lang}
               doc={sibling_or_self}
               is_highlighted={sibling_or_self["id"] == @uuid}
@@ -92,7 +88,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
             <div>
               <DocumentLink.hierarchy
                 project={@project_name}
-                date={@publication_date}
+                date={@draft_date}
                 lang={@lang}
                 doc={child}
               />
@@ -116,17 +112,14 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
     publications =
       project_name
       |> Publications.list()
-      |> Stream.filter(fn pub -> pub.publication_date != nil end)
-      |> Enum.reject(fn pub -> Date.after?(pub.publication_date, Date.utc_today()) end)
-
-    publication_dates =
-      Enum.map(publications, fn pub ->
-        Date.to_iso8601(pub.publication_date)
+      |> Enum.filter(fn pub ->
+        Projects.has_publication_access?(pub, socket.assigns.current_user)
       end)
 
     {
       :ok,
-      assign(socket, :publication_dates, publication_dates)
+      socket
+      |> assign(:publications, publications)
     }
   end
 
@@ -134,7 +127,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
         %{
           "language" => lang,
           "project_id" => project_name,
-          "publication_date" => date,
+          "draft_date" => date,
           "uuid" => uuid
         },
         _uri,
@@ -197,7 +190,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
       |> assign(:lang, lang)
       |> assign(:publication, publication)
       |> assign(:project_name, project_name)
-      |> assign(:publication_date, date)
+      |> assign(:draft_date, date)
       |> assign(:uuid, uuid)
       |> assign(:current_doc, current_doc)
       |> assign(:parent_uuid, parent_uuid)

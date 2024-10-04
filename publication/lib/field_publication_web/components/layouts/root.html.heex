@@ -7,6 +7,27 @@
     <.live_title suffix=" · FieldPublication">
       <%= assigns[:page_title] || "" %>
     </.live_title>
+
+    <% title =
+      if assigns[:page_title] do
+        "#{assigns[:page_title]} | FieldPublication"
+      else
+        "Field Publication"
+      end %>
+    <.live_title>
+      <%= title %>
+    </.live_title>
+    <!-- The Opengraph meta tags are set only once on the initial HTTP page load, later websocket navigation leaves
+    them unchanged. See also https://github.com/phoenixframework/phoenix_live_view/issues/1194. Appropriate values have to 
+    be set on mount in the different live views. -->
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content={Phoenix.Controller.current_url(@conn)} />
+    <%= if assigns[:page_image] do %>
+      <meta property="og:image" content={assigns[:page_image]} />
+    <% end %>
+    <%= if assigns[:page_description] do %>
+      <meta property="og:description" content={assigns[:page_description]} />
+    <% end %>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/ol.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>

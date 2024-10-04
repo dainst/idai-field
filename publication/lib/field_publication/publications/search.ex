@@ -1,9 +1,10 @@
 defmodule FieldPublication.Publications.Search do
+  alias FieldPublication.Publications
   alias FieldPublication.OpenSearchService
   alias FieldPublication.DocumentSchema.Publication
   alias FieldPublication.Publications.Data
 
-  def fuzzy_search(q, filter, from \\ 0, size \\ 100) do
+  def search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
         "*" ->
@@ -251,6 +252,266 @@ defmodule FieldPublication.Publications.Search do
     base_document
     |> Map.merge(additional_fields)
     |> Map.merge(additional_fields_2)
+  end
+
+  def get_label_usage() do
+    Cachex.get(:configuration_docs, :system_wide_label_usage)
+    |> case do
+      {:ok, nil} ->
+        update_label_usage()
+
+      {:ok, info} ->
+        info
+    end
+  end
+
+  def update_label_usage() do
+    info =
+      Publications.get_current_published()
+      |> Enum.map(fn %Publication{} = pub ->
+        config = Publications.Data.get_configuration(pub)
+
+        {category_labels, field_labels} =
+          Enum.map(config, &extract_labels_for_item/1)
+          |> Enum.reduce({%{}, %{}}, fn {category_result, field_result},
+                                        {category_acc, field_acc} ->
+            {
+              Map.merge(category_result, category_acc),
+              Map.merge(field_result, field_acc)
+            }
+          end)
+
+        {
+          pub.project_name,
+          category_labels,
+          field_labels
+        }
+      end)
+      |> Enum.reduce(
+        %{category_labels: %{}, field_labels: %{}},
+        fn {
+             project_name,
+             category_labels,
+             field_labels
+           },
+           %{
+             category_labels: category_labels_acc,
+             field_labels: field_labels_acc
+           } = outer_acc ->
+          {updated_category_acc, _project_name} =
+            Enum.reduce(
+              category_labels,
+              {category_labels_acc, project_name},
+              &evaluate_category_label_usage/2
+            )
+
+          {updated_field_acc, _project_name} =
+            Enum.reduce(
+              field_labels,
+              {field_labels_acc, project_name},
+              &evaluate_field_label_usage/2
+            )
+
+          outer_acc
+          |> put_in([:category_labels], updated_category_acc)
+          |> put_in([:field_labels], updated_field_acc)
+        end
+      )
+
+    Cachex.put(:configuration_docs, :system_wide_label_usage, info)
+
+    info
+  end
+
+  defp extract_labels_for_item(%{
+         "item" => %{
+           "label" => label,
+           "name" => name,
+           "groups" => groups
+         },
+         "trees" => child_categories
+       }) do
+    field_labels =
+      groups
+      |> Enum.map(&extract_label_for_fields/1)
+      |> List.flatten()
+      |> Enum.reduce(%{}, fn result, acc -> Map.merge(result, acc) end)
+
+    {child_category_labels, child_field_labels} =
+      child_categories
+      |> Enum.map(&extract_labels_for_item/1)
+      |> Enum.reduce({%{}, %{}}, fn {category_result, field_result}, {category_acc, field_acc} ->
+        {
+          Map.merge(category_result, category_acc),
+          Map.merge(field_result, field_acc)
+        }
+      end)
+
+    {
+      Map.merge(%{name => label}, child_category_labels),
+      Map.merge(field_labels, child_field_labels)
+    }
+  end
+
+  defp extract_label_for_fields(%{"fields" => fields}) do
+    fields
+    |> Stream.filter(fn %{"inputType" => input_type} ->
+      input_type != "relation"
+    end)
+    |> Enum.map(fn %{"label" => field_labels, "name" => field_name} = field ->
+      value_labels =
+        field
+        |> Map.get("valuelist", %{})
+        |> Map.get("values", %{})
+        |> Enum.reject(fn {_key, value} -> Enum.empty?(value) end)
+        |> Enum.into(%{})
+
+      %{field_name => %{"labels" => field_labels, "value_labels" => value_labels}}
+    end)
+  end
+
+  defp evaluate_category_label_usage({name, labels}, {acc, project_name}) do
+    existing = Map.get(acc, name, %{})
+
+    translations =
+      if Enum.empty?(existing) do
+        Enum.map(labels, fn {lang, text} ->
+          {lang, [{text, 1, [project_name]}]}
+        end)
+        |> Enum.into(%{})
+      else
+        Enum.map(labels, fn {lang, text} ->
+          if Map.has_key?(existing, lang) do
+            {matching_variant, other_variants} =
+              existing[lang]
+              |> Enum.split_with(fn {variant_text, _count, _project_list} ->
+                variant_text == text
+              end)
+
+            variants =
+              case matching_variant do
+                [] ->
+                  existing[lang] ++ [{text, 1, [project_name]}]
+
+                [{text, count, projects_list}] ->
+                  [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+              end
+
+            {lang, variants}
+          else
+            {lang, [{text, 1, [project_name]}]}
+          end
+        end)
+        |> Enum.reduce(%{}, fn {lang, translations}, acc ->
+          Map.merge(acc, %{lang => translations})
+        end)
+      end
+
+    {
+      Map.put(acc, name, translations),
+      project_name
+    }
+  end
+
+  defp evaluate_field_label_usage(
+         {field_name, %{"labels" => labels, "value_labels" => value_labels}},
+         {acc, project_name}
+       ) do
+    existing = Map.get(acc, field_name, %{})
+
+    {label_translations, value_label_translations} =
+      if Enum.empty?(existing) do
+        {
+          Enum.map(labels, fn {lang, text} ->
+            {lang, [{text, 1, [project_name]}]}
+          end)
+          |> Enum.into(%{}),
+          Enum.map(value_labels, fn {value_name, %{"label" => labels}} ->
+            translations =
+              Enum.map(labels, fn {lang, text} ->
+                {lang, [{text, 1, [project_name]}]}
+              end)
+              |> Enum.reduce(%{}, fn {lang, info}, inner_acc ->
+                Map.put(inner_acc, lang, info)
+              end)
+
+            {value_name, translations}
+          end)
+          |> Enum.into(%{})
+        }
+      else
+        {
+          Enum.map(labels, fn {lang, text} ->
+            if Map.has_key?(existing["labels"], lang) do
+              {matching_variant, other_variants} =
+                existing["labels"][lang]
+                |> Enum.split_with(fn {variant_text, _count, _project_list} ->
+                  variant_text == text
+                end)
+
+              variants =
+                case matching_variant do
+                  [] ->
+                    existing["labels"][lang] ++ [{text, 1, [project_name]}]
+
+                  [{text, count, projects_list}] ->
+                    [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                end
+
+              {lang, variants}
+            else
+              {lang, [{text, 1, [project_name]}]}
+            end
+          end)
+          |> Enum.reduce(%{}, fn {lang, translations}, acc ->
+            Map.merge(acc, %{lang => translations})
+          end),
+          Enum.map(value_labels, fn {value_name, %{"label" => value_list_labels}} ->
+            translations =
+              Enum.map(value_list_labels, fn {lang, text} ->
+                if Map.has_key?(existing["value_labels"], value_name) do
+                  if Map.has_key?(existing["value_labels"][value_name], lang) do
+                    {matching_variant, other_variants} =
+                      existing["value_labels"][value_name][lang]
+                      |> Enum.split_with(fn {variant_text, _count, _project_list} ->
+                        variant_text == text
+                      end)
+
+                    variants =
+                      case matching_variant do
+                        [] ->
+                          existing["value_labels"][value_name][lang] ++
+                            [{text, 1, [project_name]}]
+
+                        [{text, count, projects_list}] ->
+                          [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                      end
+
+                    {lang, variants}
+                  else
+                    {lang, [{text, 1, [project_name]}]}
+                  end
+                else
+                  {lang, [{text, 1, [project_name]}]}
+                end
+              end)
+              |> Enum.reduce(%{}, fn {lang, translations}, acc ->
+                Map.merge(acc, %{lang => translations})
+              end)
+
+            {value_name, translations}
+          end)
+          |> Enum.into(%{})
+        }
+      end
+
+    {
+      Map.put(acc, field_name, %{
+        "labels" => label_translations,
+        "value_labels" => value_label_translations
+      }),
+      project_name
+    }
   end
 
   def evaluate_input_types(%Publication{} = publication) do

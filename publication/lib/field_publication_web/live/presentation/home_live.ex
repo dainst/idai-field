@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
   def mount(_assigns, _session, socket) do
     published_projects =
-      Publications.get_current_published()
+      Publications.get_most_recent(:all, socket.assigns.current_user)
       |> Task.async_stream(fn publication ->
         {publication, Publications.Data.get_document("project", publication)}
       end)
@@ -62,20 +62,14 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   end
 
   def handle_event("text_hover", project_identifier, socket) do
-    socket =
-      push_event(socket, "map-highlight-feature", %{feature_id: project_identifier})
+    socket = push_event(socket, "map-highlight-feature", %{feature_id: project_identifier})
 
     {:noreply, socket}
   end
 
   def handle_event("text_hover_out", _, socket) do
-    socket =
-      push_event(socket, "map-clear-highlights", %{})
+    socket = push_event(socket, "map-clear-highlights", %{})
 
     {:noreply, socket}
-  end
-
-  def handle_event("project_selected", %{"id" => project_identifier}, socket) do
-    {:noreply, push_navigate(socket, to: ~p"/projects/#{project_identifier}")}
   end
 end

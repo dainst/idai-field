@@ -1,4 +1,4 @@
-import { DecimalPipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
+import { DecimalPipe, HashLocationStrategy, IMAGE_CONFIG, LocationStrategy, registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
@@ -265,6 +265,7 @@ registerLocaleData(localeUk, 'uk');
         ViewModalLauncher,
         ProjectLabelProvider,
         AppState,
+        { provide: IMAGE_CONFIG, useValue: { disableImageSizeWarning: true, disableImageLazyLoadWarning: true } },
         provideHttpClient(withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent]

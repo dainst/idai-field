@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
+  alias FieldPublication.Publications.Data.RelationGroup
   use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
@@ -10,41 +11,50 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
   }
 
   alias FieldPublication.Publications.Data
+
+  alias FieldPublication.Publications.Data.{
+    Document,
+    FieldGroup,
+    Field
+  }
+
   alias FieldPublicationWeb.Presentation.Components.ViewSelection
 
-  import FieldPublicationWeb.CoreComponents
   import FieldPublicationWeb.Presentation.Components.Typography
 
   def render(assigns) do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@doc} />
+        <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
       <div class="flex flex-row">
         <div class="basis-2/3">
           <ViewSelection.render
-            project={@project_name}
-            date={@draft_date}
+            project={@publication.project_name}
+            date={@publication.draft_date}
             lang={@lang}
             uuid={@uuid}
             current={:detail}
           />
-          <%= for group <- @doc["groups"] do %>
+          <%= for %FieldGroup{} = group <- @doc.groups do %>
             <% fields =
-              Enum.reject(group["fields"], fn %{"key" => key} ->
-                key in ["identifier", "category", "geometry"]
+              Enum.reject(group.fields, fn %Field{name: name} ->
+                name in ["identifier", "category", "geometry"]
               end) %>
             <%= unless fields == [] do %>
               <section>
                 <.group_heading>
-                  <I18n.text values={group["labels"]} />
+                  <I18n.text values={group.labels} />
                 </.group_heading>
 
                 <dl class="grid grid-cols-2 gap-1 mt-2">
-                  <%= for field <- fields do %>
+                  <%= for %Field{} = field <- fields do %>
                     <div class="border-2 p-0.5">
-                      <GenericField.render field={field} lang={@lang} />
+                      <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                      <dd class="pl-4">
+                        <GenericField.render field={field} lang={@lang} />
+                      </dd>
                     </div>
                   <% end %>
                 </dl>
@@ -63,65 +73,73 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
               lang={@lang}
             />
           </div>
-          <% depicted_in = Data.get_relation_by_name(@doc, "isDepictedIn") %>
+          <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>
-              <I18n.text values={depicted_in["labels"]} /> (<%= Enum.count(depicted_in["values"]) %>)
+              <I18n.text values={depicted_in.labels} /> (<%= Enum.count(depicted_in.docs) %>)
             </.group_heading>
             <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
-              <%= for doc <- depicted_in["values"] do %>
+              <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link
-                  patch={~p"/projects/#{@project_name}/#{@draft_date}/#{@lang}/#{doc["id"]}"}
+                  patch={
+                    ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
+                  }
                   class="p-1"
                 >
                   <div class="max-w-[250px]">
                     <Image.show
                       size="^250,"
-                      project={@project_name}
-                      uuid={doc["id"]}
-                      alt_text={"Project image '#{doc["identifier"]}' (#{I18n.select_translation(%{values: doc["category"]["labels"]}) |> then(fn {_, text} -> text end)})"}
+                      project={@publication.project_name}
+                      uuid={doc.id}
+                      alt_text={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
                     />
                   </div>
                 </.link>
               <% end %>
             </div>
           <% end %>
-          <%= for other_relation <- @doc["relations"]
-                  |> Enum.reject(fn %{"key" => key} -> key in ["isDepictedIn"] end)  do %>
+          <%= for other_relation <- Enum.reject(
+            @doc.relations,
+            fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
+            )  do %>
             <.group_heading>
-              <I18n.text values={other_relation["labels"]} />
-              (<%= Enum.count(other_relation["values"]) %>)
+              <I18n.text values={other_relation.labels} /> (<%= Enum.count(other_relation.docs) %>)
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
-              <%= for doc <- other_relation["values"] do %>
-                <DocumentLink.show
-                  project={@project_name}
-                  date={@draft_date}
-                  lang={@lang}
-                  doc={doc}
-                  image_count={2}
-                />
+              <%= for %Document{} = doc <- other_relation.docs do %>
+                <DocumentLink.show lang={@lang} doc={doc} image_count={2} />
               <% end %>
             </div>
           <% end %>
           <.group_heading>
-            Raw data
+            Data formats
           </.group_heading>
-          <a
-            class="mb-1"
-            target="_blank"
-            href={~p"/api/raw/csv/#{@project_name}/#{@draft_date}/#{@uuid}"}
-          >
-            <.icon name="hero-table-cells-solid" /> Download CSV
-          </a>
-          <br />
-          <a
-            class="mb-1"
-            target="_blank"
-            href={~p"/api/json/raw/#{@project_name}/#{@draft_date}/#{@uuid}"}
-          >
-            <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
-          </a>
+          <ul class="ml-0 list-none">
+            <li>
+              <a
+                class="mb-1"
+                target="_blank"
+                href={
+                  ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (raw)
+              </a>
+            </li>
+            <li>
+              <a
+                class="mb-1"
+                target="_blank"
+                href={
+                  ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (extended)
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

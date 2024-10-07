@@ -5,8 +5,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   alias FieldPublication.Projects
 
+  alias FieldPublication.DatabaseSchema.Publication
+
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
+  alias FieldPublication.Publications.Data.Document
 
   alias FieldPublicationWeb.Presentation.DocumentComponents
   alias FieldPublicationWeb.Presentation.Components.PublicationSelection
@@ -15,13 +18,16 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     publications =
       project_name
       |> Publications.list()
-      |> Enum.filter(fn pub ->
-        Projects.has_publication_access?(pub, socket.assigns.current_user)
+      |> Stream.reject(fn %Publication{} = publication ->
+        publication.replication_finished == nil
+      end)
+      |> Enum.filter(fn %Publication{} = publication ->
+        Projects.has_publication_access?(publication, socket.assigns.current_user)
       end)
 
     draft_dates =
-      Enum.map(publications, fn pub ->
-        Date.to_iso8601(pub.draft_date)
+      Enum.map(publications, fn %Publication{} = publication ->
+        Date.to_iso8601(publication.draft_date)
       end)
 
     {
@@ -34,104 +40,27 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def handle_params(
-        %{"draft_date" => date, "language" => language, "uuid" => uuid},
+        %{"draft_date" => date} = params,
         _uri,
         %{assigns: %{publications: publications}} = socket
       ) do
-    # Display the document corresponding to the provided UUID.
-
-    current_publication =
+    %Publication{} =
+      current_publication =
       Enum.find(publications, fn pub ->
         Date.to_iso8601(pub.draft_date) == date
-      end)
-
-    doc = Publications.Data.get_document(uuid, current_publication, true)
-
-    project_map_layers =
-      Publications.Data.get_project_map_layers(current_publication)
-
-    image_categories = Publications.Data.get_all_subcategories(current_publication, "Image")
-
-    relations_with_geometry =
-      Map.get(doc, "relations", [])
-      |> Enum.map(fn %{"values" => rel_docs} ->
-        rel_docs
-      end)
-      |> List.flatten()
-      |> Enum.filter(fn rel ->
-        Data.get_field(rel, "geometry") != nil
       end)
 
     {
       :noreply,
       socket
-      |> assign(:doc, doc)
       |> assign(:publication, current_publication)
-      |> assign(:selected_lang, language)
-      |> assign(:uuid, uuid)
-      |> assign(:image_categories, image_categories)
-      |> assign(:relations_with_geometry, relations_with_geometry)
-      |> assign(:project_map_layers, project_map_layers)
-      |> assign(
-        :page_title,
-        get_page_title(doc)
-      )
-      |> Opengraph.add_opengraph_tags(current_publication, doc, language)
+      |> evaluate_requested_language(current_publication, params)
+      |> evaluate_requested_doc(current_publication, params)
     }
   end
 
   def handle_params(
-        %{"draft_date" => date, "language" => language},
-        _uri,
-        %{assigns: %{publications: publications}} = socket
-      ) do
-    # No was UUID provided, display the project document for the selected publication.
-
-    current_publication =
-      Enum.find(publications, fn pub ->
-        Date.to_iso8601(pub.draft_date) == date
-      end)
-
-    project_doc = Publications.Data.get_document("project", current_publication, true)
-
-    project_map_layers =
-      Publications.Data.get_project_map_layers(current_publication)
-
-    top_level_uuids =
-      Publications.Data.get_hierarchy(current_publication)
-      |> Enum.filter(fn {_key, values} ->
-        Map.get(values, "parent") == nil
-      end)
-      |> Enum.map(fn {key, _values} ->
-        key
-      end)
-
-    top_level_docs = Data.get_documents(top_level_uuids, current_publication)
-
-    publication_comments =
-      current_publication.comments
-      |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
-      |> Enum.into(%{})
-
-    {
-      :noreply,
-      socket
-      |> assign(:doc, project_doc)
-      |> assign(:publication, current_publication)
-      |> assign(:selected_lang, language)
-      |> assign(:publication_comments, publication_comments)
-      |> assign(:top_level_docs, top_level_docs)
-      |> assign(:project_map_layers, project_map_layers)
-      |> assign(
-        :page_title,
-        get_page_title(project_doc)
-      )
-      |> assign(:uuid, "")
-    }
-  end
-
-  def handle_params(
-        _neither_date_nor_language_specified,
+        _neither_date_nor_language_were_requested,
         _uri,
         %{assigns: %{publications: publications, project_name: project_name}} = socket
       ) do
@@ -141,13 +70,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     # The patch will then get handled by another handle_params/3 above.
 
     publication = List.last(publications)
-
-    language =
-      if Gettext.get_locale(FieldPublicationWeb.Gettext) in publication.languages do
-        Gettext.get_locale(FieldPublicationWeb.Gettext)
-      else
-        List.first(publication.languages)
-      end
+    language = pick_default_language(publication)
 
     {
       :noreply,
@@ -173,26 +96,129 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     }
   end
 
-  defp get_page_title(%{"id" => "project"} = doc) do
+  defp get_page_title(%Document{id: "project"} = doc) do
     {_, short_description} =
-      I18n.select_translation(%{values: Data.get_field_values(doc, "shortName")})
+      I18n.select_translation(%{values: Data.get_field_value(doc, "shortName")})
 
     short_description
   end
 
-  defp get_page_title(doc) do
+  defp get_page_title(%Document{} = doc) do
     short_descriptions =
-      Data.get_field_values(doc, "shortDescription")
+      Data.get_field_value(doc, "shortDescription")
       |> case do
         nil ->
-          Data.get_field_values(doc, "identifier")
+          Data.get_field_value(doc, "identifier")
 
-        values ->
-          values
+        val ->
+          val
       end
 
     {_translation_info, value} = I18n.select_translation(%{values: short_descriptions})
 
     value
+  end
+
+  defp evaluate_requested_language(
+         socket,
+         %Publication{} = publication,
+         %{"language" => language} = params
+       )
+       when is_binary(language) do
+    # In cases the user switched the publication version (to one earlier or later) and the
+    # previously selected language is not supported, we select a new default and patch accordingly.
+    if language in publication.languages do
+      assign(socket, :selected_lang, language)
+    else
+      default = pick_default_language(publication)
+
+      push_patch(socket,
+        to:
+          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{default}/#{Map.get(params, "uuid", "")}",
+        replace: true
+      )
+    end
+  end
+
+  defp evaluate_requested_doc(
+         %{assigns: %{selected_lang: language}} = socket,
+         %Publication{} = publication,
+         %{"uuid" => uuid}
+       ) do
+    # If a UUID was provided, load its extended document.
+    uuid
+    |> Publications.Data.get_extended_document(publication, true)
+    |> case do
+      {:error, :not_found} ->
+        socket
+        |> assign(:uuid, uuid)
+        |> assign(:doc, :not_found)
+        |> assign(:page_title, "Document not found")
+
+      %Document{} = extended_doc ->
+        project_map_layers = Publications.Data.get_project_map_layers(publication)
+
+        image_categories = Publications.Data.get_all_subcategories(publication, "Image")
+
+        socket
+        |> assign(:uuid, uuid)
+        |> assign(:doc, extended_doc)
+        |> assign(:image_categories, image_categories)
+        |> assign(:project_map_layers, project_map_layers)
+        |> assign(
+          :page_title,
+          get_page_title(extended_doc)
+        )
+        |> Opengraph.add_opengraph_tags(publication, extended_doc, language)
+    end
+  end
+
+  defp evaluate_requested_doc(
+         %{assigns: %{selected_lang: _language}} = socket,
+         %Publication{} = publication,
+         _params
+       ) do
+    # If no UUID was provided, load the publication's extended "project" document.
+    project_doc = Publications.Data.get_extended_document("project", publication, true)
+
+    project_map_layers =
+      Publications.Data.get_project_map_layers(publication)
+
+    top_level_uuids =
+      Publications.get_hierarchy(publication)
+      |> Enum.filter(fn {_key, values} ->
+        Map.get(values, "parent") == nil
+      end)
+      |> Enum.map(fn {key, _values} ->
+        key
+      end)
+
+    top_level_docs = Data.get_extended_documents(top_level_uuids, publication)
+
+    socket
+    |> assign(:doc, project_doc)
+    |> assign(:publication, publication)
+    |> assign(:top_level_docs, top_level_docs)
+    |> assign(:project_map_layers, project_map_layers)
+    |> assign(
+      :page_title,
+      get_page_title(project_doc)
+    )
+    |> assign(:uuid, "")
+  end
+
+  defp evaluate_requested_doc(socket, _, _) do
+    # If the socket does not contain :selected_lang at this point, this means the selected language was
+    # unsupport by the selected publication and the url got patched. No sense in evaluating the document
+    # at this point.
+    socket
+  end
+
+  defp pick_default_language(%Publication{} = publication) do
+    if Gettext.get_locale(FieldPublicationWeb.Gettext) in publication.languages do
+      Gettext.get_locale(FieldPublicationWeb.Gettext)
+    else
+      List.first(publication.languages)
+    end
   end
 end

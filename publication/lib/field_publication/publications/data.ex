@@ -1,62 +1,118 @@
 defmodule FieldPublication.Publications.Data do
-  require FieldPublicationWeb.Gettext
+  @moduledoc """
+  This module handles access to a publication's research database.
 
-  alias FieldPublication.CouchService
-  alias FieldPublication.DocumentSchema.Publication
+  You can retrieve the raw documents or an extended version with the publication's configuration
+  applied. The latter will group the data fields and add translated labels for the different
+  value types, relations etc. (if there are any defined in the configuration). The extended
+  version will be returned as a standardized struct, see the
+  `FieldPublication.Publications.Data.Document` struct definition below.
+  """
+
+  require FieldPublicationWeb.Gettext
+  require Logger
+
+  alias FieldPublication.{
+    Publications,
+    CouchService
+  }
+
+  alias FieldPublication.DatabaseSchema.Publication
+
+  defmodule Document do
+    @derive Jason.Encoder
+    @enforce_keys [:id, :identifier, :category, :project, :publication]
+    defstruct [
+      :id,
+      :identifier,
+      :project,
+      :publication,
+      :category,
+      groups: [],
+      relations: [],
+      image_uuids: [],
+      default_map_layers: [],
+      map_layers: []
+    ]
+  end
+
+  defmodule Category do
+    @derive Jason.Encoder
+    @enforce_keys [:name, :labels, :color]
+    defstruct [:name, :labels, :color]
+  end
+
+  defmodule FieldGroup do
+    @derive Jason.Encoder
+    @enforce_keys [:name, :labels]
+    defstruct [:name, :labels, fields: []]
+  end
+
+  defmodule RelationGroup do
+    @derive Jason.Encoder
+    @enforce_keys [:name, :labels]
+    defstruct [:name, :labels, docs: []]
+  end
+
+  defmodule Field do
+    @derive Jason.Encoder
+    @enforce_keys [:name, :value, :labels, :input_type]
+    defstruct [:name, :value, :labels, :value_labels, :input_type]
+  end
+
+  def document_map_to_struct(map) do
+    %Document{
+      id: map["id"],
+      identifier: map["identifier"],
+      project: map["project"],
+      publication: map["publication"],
+      category: %Category{
+        name: map["category"]["name"],
+        labels: map["category"]["labels"],
+        color: map["category"]["color"]
+      },
+      groups:
+        map
+        |> Map.get("groups", [])
+        |> Enum.map(fn group ->
+          %FieldGroup{
+            name: group["name"],
+            labels: group["labels"],
+            fields:
+              Enum.map(group["fields"], fn field ->
+                %Field{
+                  name: field["name"],
+                  value: field["value"],
+                  labels: field["labels"],
+                  value_labels: field["value_labels"],
+                  input_type: field["input_type"]
+                }
+              end)
+          }
+        end),
+      relations:
+        map
+        |> Map.get("relations", [])
+        |> Enum.map(fn relation_group ->
+          %RelationGroup{
+            name: relation_group["name"],
+            labels: relation_group["labels"],
+            docs: Enum.map(relation_group["docs"], &document_map_to_struct/1)
+          }
+        end),
+      image_uuids: map["image_uuids"]
+    }
+  end
 
   def get_all_subcategories(publication, category_name) do
     publication
-    |> get_configuration()
+    |> Publications.get_configuration()
     |> Enum.find(fn %{"item" => item} ->
       category_name == item["name"]
     end)
     |> then(fn entry ->
       flatten_category_tree(entry)
     end)
-  end
-
-  def get_configuration(%Publication{configuration_doc: config_name}) do
-    Cachex.get(:configuration_docs, config_name)
-    |> case do
-      {:ok, nil} ->
-        config =
-          CouchService.get_document(config_name)
-          |> then(fn {:ok, %{body: body}} ->
-            Jason.decode!(body)
-          end)
-          |> Map.get("config", [])
-
-        if config != [] do
-          Cachex.put(:configuration_docs, config_name, config, ttl: 1000 * 60 * 60 * 24 * 7)
-        end
-
-        config
-
-      {:ok, cached} ->
-        cached
-    end
-  end
-
-  def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
-    Cachex.get(:configuration_docs, hierarchy_doc_name)
-    |> case do
-      {:ok, nil} ->
-        hierarchy =
-          CouchService.get_document(hierarchy_doc_name)
-          |> then(fn {:ok, %{body: body}} ->
-            Jason.decode!(body)
-          end)
-          |> Map.get("hierarchy", [])
-
-        Cachex.put(:configuration_docs, hierarchy_doc_name, hierarchy,
-          ttl: 1000 * 60 * 60 * 24 * 7
-        )
-
-        hierarchy
-
-      {:ok, cached} ->
-        cached
-    end
   end
 
   def document_exists?(uuid, %Publication{database: db}) do
@@ -79,19 +135,21 @@ defmodule FieldPublication.Publications.Data do
     end)
   end
 
-  def get_document(uuid, %Publication{database: db} = publication, include_relations \\ false) do
-    config = get_configuration(publication)
-
+  def get_raw_document(uuid, %Publication{database: db}) do
     CouchService.get_document(uuid, db)
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
     end)
-    |> apply_project_configuration(config, publication, include_relations)
+    |> case do
+      %{"error" => "not_found"} ->
+        {:error, :not_found}
+
+      doc ->
+        doc
+    end
   end
 
-  def get_documents(uuids, %Publication{database: db} = publication, include_relations \\ false) do
-    config = get_configuration(publication)
-
+  def get_raw_documents(uuids, %Publication{database: db}) do
     CouchService.get_documents(uuids, db)
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
@@ -104,11 +162,36 @@ defmodule FieldPublication.Publications.Data do
             doc
 
           other ->
-            {:error, other}
+            Logger.error(inspect(other))
+            {:error, :not_found}
         end
       end)
     end)
     |> List.flatten()
+  end
+
+  def get_extended_document(uuid, %Publication{} = publication, include_relations \\ false)
+      when is_binary(uuid) do
+    config = Publications.get_configuration(publication)
+
+    get_raw_document(uuid, publication)
+    |> case do
+      {:error, _} ->
+        {:error, :not_found}
+
+      doc ->
+        apply_project_configuration(doc, config, publication, include_relations)
+    end
+  end
+
+  def get_extended_documents(
+        uuids,
+        %Publication{database: db} = publication,
+        include_relations \\ false
+      ) do
+    config = Publications.get_configuration(publication)
+
+    get_raw_documents(uuids, %Publication{database: db})
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 
@@ -162,15 +245,15 @@ defmodule FieldPublication.Publications.Data do
     |> Enum.to_list()
   end
 
-  def get_field_values(doc, name) do
+  def get_field_value(doc, name) do
     doc
     |> get_field(name)
     |> case do
       nil ->
         nil
 
-      field ->
-        Map.get(field, "values")
+      %Field{} = field ->
+        field.value
     end
   end
 
@@ -181,21 +264,21 @@ defmodule FieldPublication.Publications.Data do
       nil ->
         nil
 
-      field ->
-        Map.get(field, "labels")
+      %Field{} = field ->
+        field.labels
     end
   end
 
-  def get_field(%{"groups" => groups} = _doc, name) when is_list(groups) do
-    Enum.map(groups, fn group ->
-      Enum.find(group["fields"], fn %{"key" => key} ->
-        key == name
+  def get_field(%Document{groups: groups} = _doc, name) when is_list(groups) do
+    Enum.map(groups, fn %FieldGroup{} = group ->
+      Enum.find(group.fields, fn %Field{name: current} ->
+        current == name
       end)
       |> case do
         nil ->
           nil
 
-        field ->
+        %Field{} = field ->
           field
       end
     end)
@@ -208,28 +291,20 @@ defmodule FieldPublication.Publications.Data do
     nil
   end
 
-  def get_group(%{"groups" => groups}, name) do
-    Enum.find(groups, fn %{"key" => key} -> key == name end)
-  end
-
-  def get_group(_, _) do
-    nil
-  end
-
-  def get_relation_by_name(%{"relations" => relations} = _doc, name) do
+  def get_relation(%Document{relations: relations} = _doc, name) do
     Enum.find(relations, fn relation ->
-      relation["key"] == name
+      relation.name == name
     end)
   end
 
-  def get_relation_by_name(_, _) do
+  def get_relation(_, _) do
     nil
   end
 
   def apply_project_configuration(
         %{"resource" => resource} = _document,
         configuration,
-        publication,
+        %Publication{} = publication,
         include_relations \\ false
       ) do
     category_configuration = search_category_tree(configuration, resource["category"])
@@ -247,13 +322,27 @@ defmodule FieldPublication.Publications.Data do
         |> Map.get("isDepictedIn", [])
       end
 
+    default_map_layers =
+      resource
+      |> Map.get("relations", %{})
+      |> Map.get("hasDefaultMapLayer", [])
+
+    map_layers =
+      resource
+      |> Map.get("relations", %{})
+      |> Map.get("hasMapLayer", [])
+
     doc =
-      %{
-        "id" => resource["id"],
-        "identifier" => resource["identifier"],
-        "category" => extend_category(category_configuration["item"], resource),
-        "groups" => extend_field_groups(category_configuration["item"], resource),
-        "images" => image_uuids
+      %Document{
+        id: resource["id"],
+        identifier: resource["identifier"],
+        project: publication.project_name,
+        publication: publication.draft_date,
+        category: extend_category(category_configuration["item"], resource),
+        groups: extend_field_groups(category_configuration["item"], resource),
+        image_uuids: image_uuids,
+        default_map_layers: default_map_layers,
+        map_layers: map_layers
       }
 
     if include_relations do
@@ -267,62 +356,65 @@ defmodule FieldPublication.Publications.Data do
       child_relations = Task.await(child_task_pid)
 
       all_relations =
-        if child_relations["values"] != [] do
+        if child_relations.docs != [] do
           other_relations ++ [child_relations]
         else
           other_relations
         end
 
-      Map.put(
-        doc,
-        "relations",
-        all_relations
-      )
+      %Document{doc | relations: all_relations}
     else
       doc
     end
   end
 
   defp extend_category(category_configuration, resource) do
-    %{
-      "labels" => category_configuration["label"],
-      "color" => category_configuration["color"],
-      "values" => resource["category"]
+    %Category{
+      name: resource["category"],
+      labels: category_configuration["label"],
+      color: category_configuration["color"]
     }
   end
 
   defp extend_field_groups(category_configuration, resource) do
-    keys = Map.keys(resource)
+    resource_keys = Map.keys(resource)
 
     category_configuration["groups"]
     |> Enum.map(fn group ->
       group["fields"]
-      |> Enum.map(&extend_field(&1, keys))
+      |> Enum.map(&extend_field(&1, resource_keys, resource))
       |> Enum.reject(fn val -> val == nil end)
-      |> Enum.map(fn %{"key" => key} = map ->
-        Map.put(map, "values", resource[key])
-      end)
       |> case do
         [] ->
+          # This group was defined in the configuration, but for the current document there are no
+          # values present.
           nil
 
         fields_with_data ->
-          %{"key" => group["name"], "labels" => group["label"], "fields" => fields_with_data}
+          %FieldGroup{name: group["name"], labels: group["label"], fields: fields_with_data}
       end
     end)
-    |> Enum.reject(fn group -> is_nil(group) end)
+    |> Enum.reject(fn group -> group == nil end)
   end
 
-  defp extend_field(field, keys) do
-    if(field["name"] in keys) do
-      base_fields = %{
-        "key" => field["name"],
-        "labels" => field["label"],
-        "type" => field["inputType"]
+  defp extend_field(field, resource_keys, resource) do
+    if(field["name"] in resource_keys) do
+      base_fields = %Field{
+        name: field["name"],
+        value: resource[field["name"]],
+        labels: field["label"],
+        input_type: field["inputType"]
       }
 
       if field["valuelist"] do
-        Map.put(base_fields, "list_labels", field["valuelist"]["values"])
+        value_labels =
+          field
+          |> Map.get("valuelist", %{})
+          |> Map.get("values", %{})
+          |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+          |> Enum.into(%{})
+
+        %Field{base_fields | value_labels: value_labels}
       else
         base_fields
       end
@@ -339,7 +431,7 @@ defmodule FieldPublication.Publications.Data do
       relations
       |> Map.values()
       |> List.flatten()
-      |> get_documents(publication, false)
+      |> get_extended_documents(publication, false)
 
     # ...then sort them into their respective relation groups, including the translated labels for those groups.
     relation_types = Map.keys(relations)
@@ -347,31 +439,27 @@ defmodule FieldPublication.Publications.Data do
     category_configuration["groups"]
     |> Enum.map(fn group ->
       group["fields"]
-      |> Stream.map(&extend_field(&1, relation_types))
-      |> Stream.reject(fn val -> val == nil end)
-      |> Enum.map(fn %{"key" => relation_type} = map ->
-        Map.put(
-          map,
-          "values",
-          Enum.filter(related_documents, fn %{"id" => uuid} ->
-            uuid in relations[relation_type]
-          end)
-        )
+      |> Stream.map(fn group_field ->
+        if group_field["name"] in relation_types do
+          %RelationGroup{
+            name: group_field["name"],
+            labels: group_field["label"],
+            docs:
+              Enum.filter(related_documents, fn %Document{id: uuid} ->
+                uuid in relations[group_field["name"]]
+              end)
+          }
+        end
       end)
+      |> Enum.reject(fn val -> val == nil end)
     end)
     |> List.flatten()
   end
 
   defp create_child_relations(uuid, publication) do
-    %{
-      "key" => "contains",
-      "values" =>
-        publication
-        |> get_hierarchy()
-        |> Map.get(uuid, %{})
-        |> Map.get("children", [])
-        |> get_documents(publication),
-      "labels" =>
+    %RelationGroup{
+      name: "contains",
+      labels:
         Gettext.known_locales(FieldPublicationWeb.Gettext)
         |> Enum.map(fn locale ->
           {
@@ -385,7 +473,13 @@ defmodule FieldPublication.Publications.Data do
             )
           }
         end)
-        |> Enum.into(%{})
+        |> Enum.into(%{}),
+      docs:
+        publication
+        |> Publications.get_hierarchy()
+        |> Map.get(uuid, %{})
+        |> Map.get("children", [])
+        |> get_extended_documents(publication)
     }
   end
 

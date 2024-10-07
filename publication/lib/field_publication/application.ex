@@ -26,8 +26,8 @@ defmodule FieldPublication.Application do
         id: :user_tokens_cache
       ),
       Supervisor.child_spec(
-        {Cachex, name: :configuration_docs},
-        id: :configuration_docs
+        {Cachex, name: :document_cache},
+        id: :document_cache
       ),
       Supervisor.child_spec(
         {Cachex, name: :published_images},

@@ -4,6 +4,7 @@ import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
 import { BaseField, CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { AffectedDocument } from '../affected-document';
 
 
 @Component({
@@ -21,8 +22,10 @@ export class DeleteOutliersModalComponent {
     public field: Field;
     public fieldLabel: string|undefined;
     public outlierValue: string;
-
     public deleteAll: boolean;
+    public countAffected: number;
+
+    private affectedDocuments: Array<AffectedDocument>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -33,13 +36,37 @@ export class DeleteOutliersModalComponent {
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
-
+    
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
     }
 
 
+    public async initialize() {
+
+        this.affectedDocuments = [];
+
+        const foundDocuments: Array<Document> = (await this.datastore.find({
+            constraints: { ['outlierValues:contain']: this.outlierValue }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of foundDocuments) {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+            const affectedDocument: AffectedDocument = { document: document, fields: [] };
+
+            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!this.hasOutlierValue(document, field)) continue;
+                affectedDocument.fields.push(field);
+            }
+
+            if (affectedDocument.fields.length) this.affectedDocuments.push(affectedDocument);
+        }
+
+        this.countAffected = this.affectedDocuments.length;
+    }
+    
     public getFieldLabelHTML(): string {
 
         return this.fieldLabel
@@ -88,24 +115,15 @@ export class DeleteOutliersModalComponent {
 
     private async deleteMultiple() {
 
-        const documents = (await this.datastore.find({
-            constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true })).documents;
-
-        const changedDocuments: Array<Document> = [];
-
-        for (let document of documents) {
-            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-
-            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
-                const field: Field = CategoryForm.getField(category, fieldName);
-                if (!this.hasOutlierValue(document, field)) continue;
-                this.deleteValue(document, document.resource, field);
-                if (!changedDocuments.includes(document)) changedDocuments.push(document);
+        for (let affectedDocument of this.affectedDocuments) {
+            for (let field of affectedDocument.fields) {
+                this.deleteValue(affectedDocument.document, affectedDocument.document.resource, field);
             }
         }
 
-        await this.datastore.bulkUpdate(changedDocuments);
+        await this.datastore.bulkUpdate(
+            this.affectedDocuments.map(affectedDocument => affectedDocument.document)
+        );
     }
 
 

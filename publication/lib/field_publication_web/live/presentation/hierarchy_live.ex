@@ -23,13 +23,13 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
         uuid={@uuid}
         selected_lang={@lang}
         identifier={
-          if Data.get_field_values(@current_doc, "category") != "Project",
-            do: Data.get_field_values(@current_doc, "identifier")
+          if Data.get_field_value(@current_doc, "category") != "Project",
+            do: Data.get_field_value(@current_doc, "identifier")
         }
       />
     </div>
     <.document_heading>
-      <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@current_doc} />
+      <DocumentLink.show lang={@lang} doc={@current_doc} />
     </.document_heading>
 
     <ViewSelection.render
@@ -135,9 +135,9 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
       ) do
     publication = Publications.get!(project_name, date)
 
-    hierarchy = Data.get_hierarchy(publication)
+    hierarchy = Publications.get_hierarchy(publication)
 
-    [current_doc] = Data.get_documents([uuid], publication)
+    [current_doc] = Data.get_extended_documents([uuid], publication)
 
     parent_uuid = hierarchy[uuid]["parent"]
 
@@ -146,7 +146,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
         parent_hierarchy_entry = hierarchy[parent_uuid]
 
         if parent_hierarchy_entry["parent"] != nil do
-          Data.get_documents(
+          Data.get_extended_documents(
             hierarchy[parent_hierarchy_entry["parent"]]["children"],
             publication
           )
@@ -160,7 +160,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
               key
             end)
 
-          Data.get_documents(top_level_uuids, publication)
+          Data.get_extended_documents(top_level_uuids, publication)
         end
       else
         []
@@ -168,7 +168,7 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
 
     same_level =
       if parent_uuid != nil do
-        Data.get_documents(hierarchy[parent_uuid]["children"], publication)
+        Data.get_extended_documents(hierarchy[parent_uuid]["children"], publication)
       else
         top_level_uuids =
           hierarchy
@@ -179,10 +179,10 @@ defmodule FieldPublicationWeb.Presentation.HierarchyLive do
             key
           end)
 
-        Data.get_documents(top_level_uuids, publication)
+        Data.get_extended_documents(top_level_uuids, publication)
       end
 
-    level_below = Data.get_documents(hierarchy[uuid]["children"], publication)
+    level_below = Data.get_extended_documents(hierarchy[uuid]["children"], publication)
 
     {
       :noreply,

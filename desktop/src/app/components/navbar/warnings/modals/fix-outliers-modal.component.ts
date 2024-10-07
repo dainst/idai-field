@@ -5,6 +5,7 @@ import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels,
      Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { AffectedDocument } from '../affected-document';
 
 
 @Component({
@@ -25,8 +26,10 @@ export class FixOutliersModalComponent {
     public valuelist: Valuelist;
     public selectedValue: string;
     public replaceAll: boolean;
+    public countAffected: number;
 
     private projectDocument: Document;
+    private affectedDocuments: Array<AffectedDocument>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -39,7 +42,7 @@ export class FixOutliersModalComponent {
     public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
 
     public getValueLabel = (value: string) => this.labels.getValueLabel(this.valuelist, value);
-
+    
     public cancel = () => this.activeModal.dismiss('cancel');
 
 
@@ -53,6 +56,29 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
+        this.affectedDocuments = [];
+
+        const foundDocuments: Array<Document> = (await this.datastore.find({
+            constraints: { ['outlierValues:contain']: this.outlierValue }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of foundDocuments) {
+            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+            const affectedDocument: AffectedDocument = { document: document, fields: [] };
+
+            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!this.hasOutlierValue(document, field)) continue;
+                const valuelist: Valuelist = await this.getValuelist(document, field);
+                if (valuelist && equal(valuelist, this.valuelist)) {
+                    affectedDocument.fields.push(field);
+                }
+            }
+
+            if (affectedDocument.fields.length) this.affectedDocuments.push(affectedDocument);
+        }
+
+        this.countAffected = this.affectedDocuments.length;
     }
 
 
@@ -90,34 +116,22 @@ export class FixOutliersModalComponent {
     private async replaceSingle() {
 
         this.replaceValue(this.document, this.document.resource, this.field);
-
+        
         await this.datastore.update(this.document);
     }
 
 
     private async replaceMultiple() {
-
-        const documents = (await this.datastore.find({
-            constraints: { ['outlierValues:contain']: this.outlierValue }
-        }, { includeResourcesWithoutValidParent: true })).documents;
-
-        const changedDocuments: Array<Document> = [];
-
-        for (let document of documents) {
-            const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-
-            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
-                const field: Field = CategoryForm.getField(category, fieldName);
-                if (!this.hasOutlierValue(document, field)) continue;
-                const valuelist: Valuelist = await this.getValuelist(document, field);
-                if (valuelist && equal(valuelist, this.valuelist)) {
-                    this.replaceValue(document, document.resource, field);
-                    if (!changedDocuments.includes(document)) changedDocuments.push(document);
-                }
+        
+        for (let affectedDocument of this.affectedDocuments) {
+            for (let field of affectedDocument.fields) {
+                this.replaceValue(affectedDocument.document, affectedDocument.document.resource, field);
             }
         }
 
-        await this.datastore.bulkUpdate(changedDocuments);
+        await this.datastore.bulkUpdate(
+            this.affectedDocuments.map(affectedDocument => affectedDocument.document)
+        );
     }
 
 

@@ -2,10 +2,10 @@ defmodule FieldPublication.Users do
   import Ecto.Changeset
 
   alias FieldPublication.CouchService
-  alias FieldPublication.DocumentSchema.User
+  alias FieldPublication.DatabaseSchema.User
 
   @moduledoc """
-  Bundles (CouchDB) user related functions.
+  This module contains (CouchDB) user related functions.
   """
 
   @doc """

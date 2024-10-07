@@ -225,7 +225,7 @@ defmodule FieldPublicationWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
+        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 disabled:bg-zinc-700 hover:bg-zinc-700 py-2 px-3",
         "text-sm font-semibold leading-6 text-white active:text-white/80",
         @class
       ]}
@@ -691,7 +691,7 @@ defmodule FieldPublicationWeb.CoreComponents do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
 
-  alias FieldPublication.DocumentSchema.LogEntry
+  alias FieldPublication.DatabaseSchema.LogEntry
 
   @doc """
   Component for displaying lists of LogEntry schemas.

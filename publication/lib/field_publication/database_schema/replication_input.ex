@@ -1,4 +1,4 @@
-defmodule FieldPublication.DocumentSchema.ReplicationInput do
+defmodule FieldPublication.DatabaseSchema.ReplicationInput do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -12,6 +12,7 @@ defmodule FieldPublication.DocumentSchema.ReplicationInput do
     field(:project_name, :string)
     field(:delete_existing_publication, :boolean, default: false)
     field(:processing, :boolean, default: true)
+    field(:draft_date, :date, default: Date.utc_today())
   end
 
   @doc false
@@ -19,6 +20,7 @@ defmodule FieldPublication.DocumentSchema.ReplicationInput do
     input_struct
     |> cast(attrs, [
       :drafted_by,
+      :draft_date,
       :source_url,
       :source_project_name,
       :source_user,

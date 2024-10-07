@@ -1,9 +1,14 @@
 defmodule FieldPublication.CouchService do
-  alias FieldPublication.DocumentSchema.User
+  alias FieldPublication.DatabaseSchema.User
 
   @core_database Application.compile_env(:field_publication, :core_database)
 
   require Logger
+
+  @moduledoc """
+  This module contains functions to interact with the CouchDB service application running
+  alongside FieldPublication.
+  """
 
   @doc """
   Creates CouchDB's internal databases `_users` and `_replicator` and the application's core database.

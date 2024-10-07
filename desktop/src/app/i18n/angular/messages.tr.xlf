@@ -7299,7 +7299,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie löschen</source>
-        <target state="translated">Bu kategorideki tüm girdileri sil</target>
+        <target state="translated">Bu kategorideki tüm girdilerde sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">83,86</context>
@@ -8239,7 +8239,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all" datatype="html">
         <source>Alle Ressourcen dieser Kategorie löschen</source>
-        <target state="translated">Bu kategorideki tüm girdileri sil</target>
+        <target state="translated">Bu kategorideki tüm girdilerde sil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">24,32</context>
@@ -8874,8 +8874,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.info" datatype="html">
-        <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe der CSV-Datei den Feldnamen entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
-        <target state="needs-translation">Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe der CSV-Datei den Feldnamen entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </target>
+        <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Namen der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
+        <target state="translated">CSV dosyasında tanımlanan tüm kaynaklar aynı kategoriye ait olmalıdır. Lütfen sütun başlıklarının ilgili kategori için konfigüre edilmiş alanların adlarına karşılık gelmesi gerektiğini unutmayın. Bir şema dosyası <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>dışa aktarma menüsünde<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> şablon olarak oluşturulabilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>

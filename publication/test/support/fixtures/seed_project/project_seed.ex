@@ -3,13 +3,12 @@ defmodule FieldPublication.Test.ProjectSeed do
     Projects,
     FileService,
     CouchService,
-    OpenSearchService,
     Replication,
     Processing,
     Publications
   }
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Project,
     ReplicationInput,
     Publication
@@ -17,7 +16,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
   require Logger
 
-  def start(project_name) do
+  def start(project_name, process_images \\ true) do
     seed_project_docs =
       File.read!("test/support/fixtures/seed_project/publication_data.json")
       |> Jason.decode!()
@@ -28,19 +27,19 @@ defmodule FieldPublication.Test.ProjectSeed do
       end)
 
     case Projects.get(project_name) do
-      {:ok, %FieldPublication.DocumentSchema.Project{} = project} ->
+      {:ok, %FieldPublication.DatabaseSchema.Project{} = project} ->
         Logger.info("Recreating project '#{project_name}'.")
         {:ok, :deleted} = Projects.delete(project)
 
-        create(project_name, seed_project_docs)
+        create(project_name, seed_project_docs, process_images)
 
       _ ->
         Logger.info("Creating project '#{project_name}'.")
-        create(project_name, seed_project_docs)
+        create(project_name, seed_project_docs, process_images)
     end
   end
 
-  def create(identifier, docs) do
+  def create(identifier, docs, process_images) do
     {:ok, %Project{} = project} =
       Projects.put(%Project{}, %{
         "name" => identifier
@@ -53,7 +52,8 @@ defmodule FieldPublication.Test.ProjectSeed do
         "source_user" => "local_developer",
         "source_password" => "fake",
         "project_name" => identifier,
-        "drafted_by" => "mix seed"
+        "drafted_by" => "mix seed",
+        "draft_date" => Date.from_iso8601!("2024-06-05")
       })
 
     {:ok, %Publication{} = publication} =
@@ -92,13 +92,13 @@ defmodule FieldPublication.Test.ProjectSeed do
       end)
       |> Enum.reject(fn val -> val == :ok end)
 
-    %{field_labels: _, category_labels: _} = Processing.OpenSearch.index(publication)
+    %{field_labels: _, category_labels: _} = Publications.Search.index_documents(publication)
 
-    {:ok, _} = OpenSearchService.set_project_alias(publication)
+    {:ok, _} = Publications.Search.set_project_alias(publication)
 
-    {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} =
+    {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{
-        "publication_date" => Date.utc_today(),
+        "publication_date" => Date.from_iso8601!("2024-06-05"),
         "comments" => [
           %{
             "text" =>
@@ -115,13 +115,15 @@ defmodule FieldPublication.Test.ProjectSeed do
         "replication_finished" => DateTime.utc_now()
       })
 
-    [] =
-      Processing.MapTiles.start_tile_creation(publication)
-      |> Enum.reject(fn val -> val == :ok end)
+    if process_images do
+      [] =
+        Processing.MapTiles.start_tile_creation(publication)
+        |> Enum.reject(fn val -> val == :ok end)
 
-    [] =
-      Processing.Image.start_web_image_processing(publication)
-      |> Enum.reject(fn val -> val == :ok end)
+      [] =
+        Processing.Image.start_web_image_processing(publication)
+        |> Enum.reject(fn val -> val == :ok end)
+    end
 
     {project, publication}
   end

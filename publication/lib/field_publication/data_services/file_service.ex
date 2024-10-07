@@ -3,6 +3,11 @@ defmodule FieldPublication.FileService do
 
   require Logger
 
+  @moduledoc """
+  This module handles interaction with data served from the application's file system. This is
+  currently means all image data variants.
+  """
+
   def get_raw_data_path(project_name) when is_binary(project_name) do
     "#{@file_store_path}/raw/#{project_name}"
   end

@@ -1,11 +1,11 @@
-defmodule FieldPublication.DocumentSchema.Publication do
+defmodule FieldPublication.DatabaseSchema.Publication do
   use Ecto.Schema
 
   import Ecto.Changeset
 
   alias FieldPublication.Projects
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Base,
     Translation,
     LogEntry

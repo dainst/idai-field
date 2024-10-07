@@ -1,7 +1,6 @@
 defmodule FieldPublicationWeb.Management.PublicationLive.Show do
   alias FieldPublication.Processing.{
     MapTiles,
-    OpenSearch,
     Image
   }
 
@@ -11,7 +10,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     Processing
   }
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Publication,
     LogEntry,
     Translation
@@ -177,7 +176,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
         %{"publication" => publication_form_params},
         %{assigns: %{publication: publication}} = socket
       ) do
-    case Publications.put(publication, publication_form_params) |> IO.inspect() do
+    case Publications.put(publication, publication_form_params) do
       {:ok, updated_publication} ->
         {
           :noreply,
@@ -252,12 +251,12 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     {:noreply, assign(socket, :replication_progress_state, state)}
   end
 
-  def handle_info({:replication_stopped}, %{assigns: %{publication: publication}} = socket) do
+  def handle_info({:replication_stopped}, socket) do
     # Replication was stopped prematurely by a user, the publication got deleted so we redirect the connected
     # user to the parent project.
     {
       :noreply,
-      push_navigate(socket, to: ~p"/projects/management/projects/#{publication.project_name}")
+      push_navigate(socket, to: ~p"/management")
     }
   end
 
@@ -377,7 +376,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
         %{
           images: Image.evaluate_web_images_state(publication),
           tiles: MapTiles.evaluate_state(publication),
-          search_index: OpenSearch.evaluate_state(publication)
+          search_index: Publications.Search.evaluate_active_index_state(publication)
         }
       }
     end)

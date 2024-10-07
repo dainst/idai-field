@@ -3,7 +3,7 @@ defmodule FieldPublication.Replication.FileReplication do
   alias FieldPublication.FileService
   alias FieldPublication.Replication
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
     Publication
   }
@@ -104,7 +104,7 @@ defmodule FieldPublication.Replication.FileReplication do
        ) do
     file_list
     |> Task.async_stream(&copy_file(&1, variant, base_file_url, headers, parameters),
-      timeout: 1000 * 60 * 5
+      timeout: 1000 * 60 * 20
     )
     |> Enum.to_list()
   end

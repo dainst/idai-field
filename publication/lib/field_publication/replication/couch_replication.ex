@@ -9,7 +9,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     Replication
   }
 
-  alias FieldPublication.DocumentSchema.ReplicationInput
+  alias FieldPublication.DatabaseSchema.ReplicationInput
 
   require Logger
 
@@ -26,13 +26,10 @@ defmodule FieldPublication.Replication.CouchReplication do
       # Once the document has been committed, poll the progress in regular intervals.
       poll_replication_status!(target_database_name, source_doc_count, parameters)
     else
-      {:error, :error_count_exceeded} ->
+      error ->
         CouchService.delete_document(target_database_name, "_replicator")
         CouchService.delete_database(target_database_name)
-        {:error, :couchdb_error_count_exceeded}
-
-      error ->
-        error
+        raise(error)
     end
   end
 
@@ -161,7 +158,7 @@ defmodule FieldPublication.Replication.CouchReplication do
           "Experienced error while replicating documents, stopping replication."
         )
 
-        throw(error)
+        {:error, error}
     end
   end
 

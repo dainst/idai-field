@@ -250,6 +250,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.warningType = section.type;
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
@@ -274,6 +275,7 @@ export class WarningsModalComponent {
         componentInstance.category = section.category;
         componentInstance.inputType = section.inputType;
         componentInstance.inputTypeLabel = this.getInputTypeLabel(section);
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
@@ -365,6 +367,7 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
@@ -635,6 +638,7 @@ export class WarningsModalComponent {
         componentInstance.field = field;
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.outlierValue = outlierValue;
+        await componentInstance.initialize();
 
         let changed: boolean;
 

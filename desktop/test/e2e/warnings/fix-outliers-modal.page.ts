@@ -1,4 +1,4 @@
-import { click, getText, selectSearchableSelectOption, typeIn } from '../app';
+import { click, getLocator, getText, selectSearchableSelectOption, typeIn } from '../app';
 
 
 /**
@@ -26,11 +26,22 @@ export class FixOutliersModalPage {
     }
 
 
+    public static clickCancelButton() {
 
+        return click('#cancel-button');
+    }
+
+    
     // get
 
     public static async getHeading() {
 
         return getText('#fix-outliers-modal-header h5');
+    }
+
+    
+    public static getMultipleSwitch() {
+
+        return getLocator('#multiple-switch .switch');
     }
 }

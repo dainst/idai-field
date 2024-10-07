@@ -1,6 +1,6 @@
 {
   "testProject": "Projeto de teste",
-  "testCampaign": "Campanha de testen",
+  "testCampaign": "Campanha de teste",
   "person": "Pessoa",
   "trench": "Quadrícula",
   "trenchShort": "T",
@@ -8,7 +8,7 @@
   "stratigraphicalUnitShort": "UE",
   "layer": "Depósito",
   "architecture": "Arquitetura",
-  "grave": "Grave",
+  "grave": "Sepultura",
   "findShort": "F",
   "coin": "Coin",
   "testFind": "Test find",

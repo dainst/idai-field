@@ -8,7 +8,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
     Projects
   }
 
-  alias FieldPublication.DocumentSchema.Project
+  alias FieldPublication.DatabaseSchema.Project
 
   alias FieldPublication.Test.ProjectSeed
 
@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.start(@test_project_name)
+    {project, publication} = ProjectSeed.start(@test_project_name, false)
 
     on_exit(fn ->
       Projects.get(@test_project_name)
@@ -45,9 +45,9 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
 
     assert html =~ "Projects"
 
-    doc = Data.get_document("project", publication)
+    doc = Data.get_extended_document("project", publication)
 
-    short_description = Data.get_field_values(doc, "shortName") |> Map.get("en")
+    short_description = Data.get_field_value(doc, "shortName") |> Map.get("en")
 
     assert html =~ short_description
 

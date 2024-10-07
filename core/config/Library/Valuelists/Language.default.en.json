@@ -449,7 +449,10 @@
       "Schluffiger Ton": "silty clay",
       "Toniger Lehm": "clayey loam",
       "Toniger Sand": "clayey sand",
-      "Toniger Schluff": "clayey silt"
+      "Toniger Schluff": "clayey silt",
+      "Lehmiger Sand": "loamy sand",
+      "Lehmiger Schluff": "loamy silt",
+      "Lehmiger Ton": "loamy clay"
     }
   },
   "Wood-decorationTechnique-default": {
@@ -481,7 +484,9 @@
       "Straße/Platz": "street/square",
       "ländliches Gebäude": "rural building",
       "urbanes Gebäude": "urban building",
-      "Felsabarbeitung": "carved rock"
+      "Felsabarbeitung": "carved rock",
+      "Wein- bzw. Ölpresse": "grape or olive press",
+      "einzelnes Steindenkmal": "singular stone monument"
     }
   },
   "Layer-consistency-default": {
@@ -507,7 +512,9 @@
       "weich": "soft",
       "Durch Brand versiegelt": "sealed by fire / burning",
       "Oberfläche abgewaschen": "surface washed off",
-      "Oberfläche verhärtet": "surface area hardened"
+      "Oberfläche verhärtet": "surface area hardened",
+      "sehr schwach formbar": "very hardly malleable",
+      "steif": "rigid"
     }
   },
   "Layer-layerClassification-default": {
@@ -660,7 +667,8 @@
       "Silber": "silver",
       "Stahl": "steel",
       "Zink": "zinc",
-      "Zinn": "tin"
+      "Zinn": "tin",
+      "Billon": "Billon"
     }
   },
   "Burial-positionArms-default": {
@@ -781,7 +789,19 @@
       "Antiochia am Orontes": "Antioch on the Orontes",
       "Apameia Kibotos": "Apamea Cibotus",
       "Apameia am Orontes": "Apamea, Syria",
-      "Apulien": "Apulia"
+      "Apulien": "Apulia",
+      "Etrurien": "Etruria",
+      "Korinth": "Corinth",
+      "Gallien": "Gaul",
+      "Italien": "Italy",
+      "Karthago": "Carthage",
+      "Milas": "Milas",
+      "Naxos": "Naxos",
+      "Paros": "Paros",
+      "Priene": "Priene",
+      "Rhodos": "Rhodes",
+      "Samos": "Samos",
+      "Sardinien": "Sardinia"
     }
   },
   "Metal-objectType-default": {
@@ -993,7 +1013,10 @@
       "sehr deutlich": "very clear",
       "undeutlich": "unclear",
       "unregelmäßig": "irregular",
-      "verwaschen": "washed out"
+      "verwaschen": "washed out",
+      "diffus": "vague",
+      "eben": "even",
+      "erkennbar": "discernible"
     }
   },
   "Pottery-coatInsideType-default": {
@@ -1007,7 +1030,8 @@
     "values": {
       "Campana A": "Campana A",
       "Campana B": "Campana B",
-      "Campana C": "Campana C"
+      "Campana C": "Campana C",
+      "Red Slip Ware": ""
     }
   },
   "Pottery-temperAmount-default": {
@@ -1038,7 +1062,8 @@
       "Mauerdurchbruch": "wall opening / break in wall",
       "Mosaik": "mosaic",
       "Opus sectile": "opus sectile",
-      "Türzusetzung": "door filling"
+      "Türzusetzung": "door filling",
+      "Aufgehendes": "rising masonry"
     }
   },
   "Architecture-mortarBinder-default": {
@@ -1053,7 +1078,11 @@
       "fest": "firm",
       "locker": "loose",
       "mittelfein": "medium fine",
-      "hart": "hard"
+      "hart": "hard",
+      "sandig": "sandy",
+      "pulverig": "powdery",
+      "erdig/lehmig": "with soil / loamy",
+      "brüchig": "brittle"
     }
   },
   "Pottery-clayHardness-default": {
@@ -1067,7 +1096,38 @@
   "Stone-origin-default": {
     "values": {
       "Kreta": "Crete",
-      "Sizilien": "Sicily"
+      "Sizilien": "Sicily",
+      "Anatolien": "Anatolia",
+      "Chimtou": "Chimtou",
+      "Harz": "Harz"
+    }
+  },
+  "Pottery-materialType-default": {
+    "values": {
+      "Gebrauchskeramik (Grobe Ware)": "Coarse ware"
+    }
+  },
+  "Pottery-coatInside-default": {
+    "values": {
+      "Redslip": "Engobe vermelho (Red slip)"
+    }
+  },
+  "PlasterFragment-plasterComponents-default": {
+    "values": {
+      "Grus": "grus",
+      "Sand": "sand"
+    }
+  },
+  "Metal-decorationTechnique-default": {
+    "values": {
+      "Stempel": "stamped",
+      "Bemalung": "painted",
+      "Emaille": "enamel",
+      "Reliefdekor": "relief decoration",
+      "Riefeldekor": "grooved decoration",
+      "Stempeldekor": "stamped (decorative)",
+      "Vergoldung": "gilding",
+      "Ritzungen": "scratched"
     }
   }
 }

@@ -10,13 +10,22 @@
         Wert <b>{{outlierValue}}</b> wirklich löschen?
     </div>
 
-    <div id="multiple-switch" class="row">
+    <div id="multiple-switch" 
+         class="row" 
+         [disableTooltip]="countAffected !== 1" 
+         [class.disabled]="countAffected === 1"
+         ngbTooltip="Nur diese Ressource ist betroffen." 
+         i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
+         container="body">
         <div class="col-auto me-auto">
             <span i18n="@@navbar.taskbar.deleteOutliers.all">Alle Vorkommnisse dieses Werts löschen</span>
         </div>
         <div class="col-auto">
-            <label class="switch">
-                <input type="checkbox" [checked]="deleteAll" (change)="deleteAll = !deleteAll">
+            <label class="switch" [class.disabled]="countAffected === 1">
+                <input type="checkbox" 
+                       [checked]="deleteAll" 
+                       (change)="deleteAll = !deleteAll" 
+                       [disabled]="countAffected === 1">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -26,7 +35,7 @@
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.deleteOutliers.all.info">
             Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{outlierValue}}</b> in sämtlichen Feldern aller Ressourcen gelöscht.
+            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected}}</b> Ressourcen gelöscht.
         </div>
     </div>
 </div>
@@ -36,7 +45,8 @@
          (click)="performDeletion()">
         <span i18n="@@buttons.ok">OK</span>
     </div>
-    <div class="btn btn-secondary"
+    <div id="cancel-button" 
+         class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>

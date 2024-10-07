@@ -2,6 +2,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
   use Phoenix.Component
   use FieldPublicationWeb, :verified_routes
 
+  alias FieldPublication.Publications.Data.Field
+  alias FieldPublication.Publications.Data.FieldGroup
+  alias FieldPublication.Publications.Data.Document
+  alias FieldPublication.Publications.Data.RelationGroup
+
   alias FieldPublicationWeb.Presentation.Components.{
     I18n,
     IIIFViewer,
@@ -18,42 +23,39 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show project={@project_name} date={@draft_date} lang={@lang} doc={@doc} />
+        <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-row">
         <div class="basis-1/3 m-5">
-          <%= for relations <- @doc["relations"] do %>
+          <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
-              <I18n.text values={relations["labels"]} /> (<%= Enum.count(relations["values"]) %>)
+              <I18n.text values={relation_group.labels} /> (<%= Enum.count(relation_group.docs) %>)
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
-              <%= for doc <- relations["values"] do %>
-                <DocumentLink.show
-                  project={@project_name}
-                  date={@draft_date}
-                  lang={@lang}
-                  doc={doc}
-                  image_count={0}
-                />
+              <%= for %Document{} = doc <- relation_group.docs do %>
+                <DocumentLink.show lang={@lang} doc={doc} image_count={0} />
               <% end %>
             </div>
           <% end %>
-          <%= for group <- @doc["groups"] do %>
+          <%= for %FieldGroup{} = group <- @doc.groups do %>
             <% fields =
-              Enum.reject(group["fields"], fn %{"key" => key} ->
-                key in ["identifier", "category", "geometry"]
+              Enum.reject(group.fields, fn %Field{name: name} ->
+                name in ["identifier", "category", "geometry"]
               end) %>
             <%= unless fields == [] do %>
               <section>
                 <.group_heading>
-                  <I18n.text values={group["labels"]} />
+                  <I18n.text values={group.labels} />
                 </.group_heading>
 
                 <dl>
-                  <%= for field <- fields do %>
+                  <%= for %Field{} = field <- fields do %>
                     <div>
-                      <GenericField.render field={field} lang={@lang} />
+                      <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                      <dd class="pl-4">
+                        <GenericField.render field={field} lang={@lang} />
+                      </dd>
                     </div>
                   <% end %>
                 </dl>
@@ -63,22 +65,37 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           <hr class="mt-4" />
 
           <.group_heading>
-            Raw data
+            Data formats
           </.group_heading>
           <ul class="ml-0 list-none">
             <li>
-              <a download={@doc["identifier"]} href={~p"/api/image/raw/#{@project_name}/#{@uuid}"}>
+              <a
+                download={@doc.identifier}
+                href={~p"/api/image/raw/#{@publication.project_name}/#{@uuid}"}
+              >
                 <.icon name="hero-photo-solid" /> Download original
               </a>
             </li>
             <li>
-              <a target="_blank" href={~p"/api/raw/csv/#{@project_name}/#{@draft_date}/#{@uuid}"}>
-                <.icon name="hero-table-cells-solid" /> Download CSV
+              <a
+                target="_blank"
+                href={
+                  ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (raw)
               </a>
             </li>
             <li>
-              <a target="_blank" href={~p"/api/json/raw/#{@project_name}/#{@draft_date}/#{@uuid}"}>
-                <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
+              <a
+                target="_blank"
+                href={
+                  ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (extended)
               </a>
             </li>
             <li>
@@ -88,7 +105,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
                 </a>
                 <.live_component
                   id="iiif-link"
-                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{IIIFViewer.construct_url(@project_name, @uuid)}"}
+                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{IIIFViewer.construct_url(@publication.project_name, @uuid)}"}
                   module={ClipboardCopy}
                 >
                   Copy IIIF link
@@ -101,7 +118,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           <.live_component
             class="h-full"
             id="iiif_viewer"
-            project={@project_name}
+            project={@publication.project_name}
             uuid={@uuid}
             module={IIIFViewer}
           />

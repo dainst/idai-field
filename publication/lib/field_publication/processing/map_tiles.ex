@@ -2,11 +2,19 @@ defmodule FieldPublication.Processing.MapTiles do
   alias FieldPublication.FileService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
-  alias FieldPublication.DocumentSchema.Publication
+  alias FieldPublication.DatabaseSchema.Publication
   alias Phoenix.PubSub
   require Logger
 
   @tile_size 256
+
+  @moduledoc """
+  This module contains functions for creating image tiles from raw image data to be served as
+  TileLayer sources in OpenLayer maps.
+
+  The result will be a nested directory structure with a specific file name pattern representing
+  different zoom levels and x/y coordinates for each tiled image.
+  """
 
   def evaluate_state(%Publication{} = publication) do
     FileService.initialize!(publication.project_name)

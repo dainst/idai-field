@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.Management.OverviewLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.DocumentSchema.{
+  alias FieldPublication.DatabaseSchema.{
     Project,
     Publication,
     ReplicationInput
@@ -11,7 +11,6 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   alias FieldPublication.Publications
   alias FieldPublication.Processing
   alias FieldPublication.Users
-  alias FieldPublication.OpenSearchService
 
   @impl true
   def mount(_params, _session, socket) do
@@ -113,7 +112,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     |> Enum.find(fn publication ->
       Date.to_string(publication.draft_date) == draft_date
     end)
-    |> OpenSearchService.set_project_alias()
+    |> Publications.Search.set_project_alias()
 
     {:noreply, assign_projects(socket)}
   end
@@ -126,12 +125,12 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       end)
       |> Enum.map(fn project ->
         publications = Publications.list(project.name)
-        search_aliased_publication = OpenSearchService.get_aliased_publication(project)
 
         %{
           project: project,
           publications: publications,
-          search_aliased_publication: search_aliased_publication
+          search_aliased_publication:
+            Publications.Search.get_currently_aliased_publication(project)
         }
       end)
 

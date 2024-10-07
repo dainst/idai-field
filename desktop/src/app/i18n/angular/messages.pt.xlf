@@ -1352,7 +1352,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
         <source>Es werden Daten heruntergeladen.</source>
-        <target state="translated">Download em curso.</target>
+        <target state="translated">Descarregamento em curso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -1459,16 +1459,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.cancelModal.header" datatype="html">
-        <source> Download abbrechen? </source>
-        <target state="translated">Cancelar download?</target>
+        <source>Download abbrechen?</source>
+        <target state="translated">Cancelar descarregamento?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.cancelModal.info" datatype="html">
-        <source> Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen. </source>
-        <target state="translated">Tenha em atenção que se interromper o download, este irá reiniciar do princípio se voltar a descarregar o projeto mais tarde.</target>
+        <source>Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen.</source>
+        <target state="translated">Tenha em atenção que se interromper o descarregamento, este irá reiniciar do princípio se voltar a descarregar o projeto mais tarde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1560,7 +1560,7 @@
       </trans-unit>
       <trans-unit id="project.download.connect" datatype="html">
         <source>Download starten</source>
-        <target state="translated">Iniciar download</target>
+        <target state="translated">Iniciar descarregamento</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">47</context>

@@ -19,13 +19,23 @@
         </option>
     </select>
 
-    <div *ngIf="selectedFieldName" id="multiple-switch" class="row">
+    <div *ngIf="selectedFieldName" 
+         id="multiple-switch" 
+         class="row" 
+         [disableTooltip]="countAffected !== 1" 
+         [class.disabled]="countAffected === 1"
+         ngbTooltip="Nur diese Ressource ist betroffen." 
+         i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
+         container="body">
         <div class="col-auto me-auto">
             <span i18n="@@navbar.taskbar.selectNewField.all">Bei allen Ressourcen dieser Kategorie durchführen</span>
         </div>
         <div class="col-auto">
-            <label class="switch">
-                <input type="checkbox" [checked]="multiple" (change)="multiple = !multiple">
+            <label class="switch" [class.disabled]="countAffected === 1">
+                <input type="checkbox" 
+                       [checked]="multiple" 
+                       (change)="multiple = !multiple" 
+                       [disabled]="countAffected === 1">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -35,15 +45,15 @@
         <div *ngIf="warningType === 'unconfiguredFields'"
              class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.selectNewField.multiple.info.unconfigured">
-            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+            Bitte beachten Sie: Durch diese Aktion werden bei allen <b>{{countAffected}}</b> Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche eingetragenen Daten aus dem Feld
             <span [innerHTML]="getFieldLabelHTML(fieldName)"></span> in das Feld
             <span [innerHTML]="getFieldLabelHTML(selectedFieldName)"></span> verschoben.
         </div>
         <div *ngIf="warningType === 'invalidFields'"
-            class="text-center alert alert-warning"
-            i18n="@@navbar.taskbar.selectNewField.multiple.info.invalid">
-            Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der
+             class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.selectNewField.multiple.info.invalid">
+            Bitte beachten Sie: Durch diese Aktion werden bei allen <b>{{countAffected}}</b> Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> ungültige Daten aus dem Feld
             <span [innerHTML]="getFieldLabelHTML(fieldName)"></span> in das Feld
             <span [innerHTML]="getFieldLabelHTML(selectedFieldName)"></span> verschoben.
@@ -59,7 +69,8 @@
          (click)="perform()">
         <span i18n="@@buttons.ok">OK</span>
     </div>
-    <div class="btn btn-secondary"
+    <div id="cancel-button" 
+         class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>

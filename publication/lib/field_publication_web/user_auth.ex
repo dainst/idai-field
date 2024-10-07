@@ -9,6 +9,12 @@ defmodule FieldPublicationWeb.UserAuth do
   import Plug.Conn
   import Phoenix.Controller
 
+  @moduledoc """
+  This module implements plugs for handling user authentication and the different authorization levels.
+
+  See also the official [Phoenix documentation](https://hexdocs.pm/phoenix/plug.html).
+  """
+
   defmodule Token do
     @enforce_keys [:name, :token, :context]
     defstruct [:name, :token, :context]
@@ -40,7 +46,7 @@ defmodule FieldPublicationWeb.UserAuth do
     conn
     |> renew_session()
     |> put_token_in_session(token)
-    |> maybe_write_remember_me_cookie(token, params)
+    |> maybe_write_remember_me_cookie(token, params["user"])
     |> redirect(to: user_return_to || signed_in_path(conn))
   end
 
@@ -206,7 +212,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
         if not Projects.has_publication_access?(publication, socket.assigns.current_user) do
           {
             :halt,
@@ -238,7 +244,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
+      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
         {:cont, socket}
     end
   end
@@ -327,7 +333,7 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     Publications.get(project_id, draft_date)
     |> case do
-      {:error, :not_found} ->
+      {:error, _} ->
         conn
         |> resp(
           404,
@@ -335,7 +341,7 @@ defmodule FieldPublicationWeb.UserAuth do
         )
         |> halt()
 
-      {:ok, %FieldPublication.DocumentSchema.Publication{} = publication} ->
+      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
         if not Projects.has_publication_access?(publication, conn.assigns.current_user) do
           conn
           |> resp(403, "You are not allowed to access that page.")
@@ -357,7 +363,7 @@ defmodule FieldPublicationWeb.UserAuth do
         |> resp(404, "No publications found for project '#{project_id}'.")
         |> halt()
 
-      %FieldPublication.DocumentSchema.Publication{} = _most_recent ->
+      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
         conn
     end
   end
@@ -454,22 +460,6 @@ defmodule FieldPublicationWeb.UserAuth do
       _ ->
         true
     end
-  end
-
-  def forward_headers(conn, _options) do
-    # TODO: This might break if we change the runtime.exs or dev.exs/test.exs
-    FieldPublicationWeb.Endpoint.config(:url)
-    |> Keyword.get(:port)
-    |> case do
-      nil ->
-        # Development/test case
-        Plug.Conn.put_req_header(conn, "x-forwarded-port", "4001")
-
-      _ ->
-        # Release case
-        conn
-    end
-    |> Plug.Conn.put_req_header("x-forwarded-path", "/api/image/")
   end
 
   def put_token_in_session(conn, token) do

@@ -24,6 +24,9 @@ export class ConvertFieldDataModalComponent {
     public inputTypeLabel: string;
 
     public convertAll: boolean;
+    public countAffected: number;
+    
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -40,6 +43,18 @@ export class ConvertFieldDataModalComponent {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+
+    public async initialize() {
+
+        const findResult = await this.datastore.find({
+            categories: [this.category.name],
+            constraints: { ['invalidFields:contain']: this.fieldName }
+        }, { includeResourcesWithoutValidParent: true });
+        
+        this.countAffected = findResult.totalCount;
+        this.affectedDocuments = findResult.documents.filter(document => this.isConvertible(document));
     }
 
 
@@ -89,15 +104,9 @@ export class ConvertFieldDataModalComponent {
 
     private async convertMultiple() {
 
-        const documents = (await this.datastore.find({
-            categories: [this.category.name],
-            constraints: { ['invalidFields:contain']: this.fieldName }
-        }, { includeResourcesWithoutValidParent: true })).documents
-            .filter(document => this.isConvertible(document));
+        this.affectedDocuments.forEach(document => this.convert(document));
 
-        documents.forEach(document => this.convert(document));
-
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(this.affectedDocuments);
     }
 
 

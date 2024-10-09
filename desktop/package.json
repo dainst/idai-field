@@ -182,7 +182,7 @@
     "ajv": "^8.16.0",
     "cross-var": "^1.1.0",
     "electron": "32.1.2",
-    "electron-builder": "25.1.7",
+    "electron-builder": "25.1.8",
     "file-api": "0.10.4",
     "file-url": "2.0.2",
     "gulp": "4.0.2",

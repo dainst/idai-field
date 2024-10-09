@@ -19,7 +19,7 @@
     "start:tr": "npm-run-all -p ng:serve:tr start:dev",
     "start:uk": "npm-run-all -p ng:serve:uk start:dev",
     "start:dev": "wait-on http-get://localhost:4200/dist/ && electron . dev",
-    "build": "node --max_old_space_size=16000 node_modules/@angular/cli/bin/ng build --base-href ./ --localize --configuration production",
+    "build": "npm run copy-core && node --max_old_space_size=16000 node_modules/@angular/cli/bin/ng build --base-href ./ --localize --configuration production",
     "build:scripts": "rimraf src/config/Scripts/dist && tsc -p src/config/Scripts/tsconfig.json",
     "build:java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
     "build:all": "npm run build && npm run build:java",
@@ -36,6 +36,7 @@
     "package:mac": "electron-builder -m --universal",
     "package:win": "electron-builder -w nsis --x64 --ia32",
     "package:lnx": "electron-builder -l --x64",
+    "copy-core": "rimraf node_modules/idai-field-core && gulp copy-core",
     "i18n": "node --max_old_space_size=16000 node_modules/@angular/cli/bin/ng extract-i18n idai-field && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",
     "update-version-info": "cross-var replace-in-file \"/<span id=\\\"version-info-number\\\">.*</span>/\" \"<span id=\\\"version-info-number\\\">$npm_package_version</span>\" src/index.html --isRegex"
   },

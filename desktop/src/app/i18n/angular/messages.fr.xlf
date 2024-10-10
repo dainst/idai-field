@@ -315,14 +315,6 @@
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
-        <source>Multipolyline</source>
-        <target state="translated">Multipolyligne</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
         <source>Keine Suchkriterien angegeben.</source>
         <target state="translated">Aucun critère de recherche spécifié.</target>

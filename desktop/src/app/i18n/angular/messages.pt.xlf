@@ -186,14 +186,6 @@
           <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
-        <source>Multipolyline</source>
-        <target state="translated">Multipolilinha</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
         <source>Keine Suchkriterien angegeben.</source>
         <target state="translated">Nenhum critério de pesquisa especificado.</target>

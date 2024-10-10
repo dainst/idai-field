@@ -331,25 +331,9 @@
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
-        <source>Multipolygon</source>
-        <target state="translated">Multipoligono</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
         <source>Multipolyline</source>
         <target state="translated">Multipolilinea</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
-        <source>Multipunkt</source>
-        <target state="translated">Multipunto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -8843,6 +8827,46 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warningsModal.singleResourceAffected" datatype="html">
+        <source>Nur diese Ressource ist betroffen.</source>
+        <target state="needs-translation">Nur diese Ressource ist betroffen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.success.existingQrCodeSaved" datatype="html">
+        <source>Der eingescannte QR-Code wurde erfolgreich gespeichert.</source>
+        <target state="needs-translation">Der eingescannte QR-Code wurde erfolgreich gespeichert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">984</context>
         </context-group>
       </trans-unit>
     </body>

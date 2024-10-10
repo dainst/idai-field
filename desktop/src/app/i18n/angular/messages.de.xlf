@@ -259,14 +259,6 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ngb.timepicker.AM" datatype="html">
-        <source><x id="INTERPOLATION"/></source>
-        <target state="final"><x id="INTERPOLATION"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/src/ngb-config.ts</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="ngb.toast.close-aria" datatype="html">
         <source>Close</source>
         <target state="final">Schließen</target>
@@ -355,62 +347,6 @@
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
-        <source>Polygon</source>
-        <target state="final">Polygon</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
-        <source>Multipolygon</source>
-        <target state="final">Multipolygon</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
-        <source>Polyline</source>
-        <target state="final">Polyline</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
-        <source>Multipolyline</source>
-        <target state="final">Multipolyline</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.point" datatype="html">
-        <source>Punkt</source>
-        <target state="final">Punkt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
-        <source>Multipunkt</source>
-        <target state="final">Multipunkt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
-        <source>Keine</source>
-        <target state="final">Keine</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/list/geometry-view.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
         <source>Keine Suchkriterien angegeben.</source>
         <target state="final">Keine Suchkriterien angegeben.</target>
@@ -430,6 +366,10 @@
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
         <source>Suchen...</source>
         <target state="final">Suchen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/help/help.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/searchbar/image-overview-search-bar.html</context>
           <context context-type="linenumber">11</context>
@@ -452,7 +392,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-bar.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.categoryPicker.allCategories" datatype="html">
@@ -539,8 +479,8 @@
         <source>Import starten</source>
         <target state="final">Import starten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.source" datatype="html">
@@ -551,8 +491,8 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
@@ -563,16 +503,16 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.http" datatype="html">
         <source>HTTP</source>
         <target state="final">HTTP</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -583,8 +523,8 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
@@ -599,24 +539,32 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
         <source>URL</source>
         <target state="final">URL</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden. </source>
         <target state="final"> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.csv.info" datatype="html">
+        <source> Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Namen der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;>"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> eine Schemadatei generiert werden. </source>
+        <target state="final"> Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Namen der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;>"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> eine Schemadatei generiert werden. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">59,64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
@@ -632,7 +580,7 @@
         <target state="final"> Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>) bereits vergeben ist, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields" datatype="html">
@@ -640,7 +588,7 @@
         <target state="final"> Nicht konfigurierte Felder ignorieren </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.ignoreUnconfiguredFields.info" datatype="html">
@@ -648,7 +596,7 @@
         <target state="final"> Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
@@ -656,7 +604,7 @@
         <target state="final"> Vorhandene Ressource ergänzen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
@@ -664,7 +612,7 @@
         <target state="final"> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
@@ -672,7 +620,7 @@
         <target state="final"> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
@@ -680,7 +628,7 @@
         <target state="final"> Löschen erlauben </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
@@ -688,7 +636,7 @@
         <target state="final"> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
@@ -696,7 +644,7 @@
         <target state="final"> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importCategorySelect" datatype="html">
@@ -708,7 +656,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">163</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.selectCategory" datatype="html">
@@ -716,7 +664,7 @@
         <target state="final">Kategorie auswählen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -724,7 +672,7 @@
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">190</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -732,7 +680,7 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -744,7 +692,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">214</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -752,7 +700,7 @@
         <target state="final"> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">196</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -760,7 +708,7 @@
         <target state="final"> Zur Durchführung eines Shapefile-Imports ist die Installation von Java JDK 8 oder höher erforderlich. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">204</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -768,7 +716,7 @@
         <target state="final"> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">209</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
@@ -776,7 +724,7 @@
         <target state="final">Nicht importierte Ressourcen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">219</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
@@ -788,7 +736,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">229</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
@@ -988,8 +936,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
-        <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="final"> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden. </target>
+        <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden. </source>
+        <target state="final"> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.html</context>
           <context context-type="linenumber">18</context>
@@ -1148,8 +1096,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.extendValuelistInfo" datatype="html">
-        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
-        <target state="final"> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </target>
+        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text=".id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=".
+    &lt;/spa"/>. </source>
+        <target state="final"> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text=".id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=".
+    &lt;/spa"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.html</context>
           <context context-type="linenumber">6</context>
@@ -2276,8 +2226,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation" datatype="html">
-        <source> Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
-        <target state="final"> Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </target>
+        <source> Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
+        <target state="final"> Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">7</context>
@@ -2292,11 +2242,43 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.info" datatype="html">
-        <source> Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> entsprechen. </source>
-        <target state="final"> Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> entsprechen. </target>
+        <source> Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="entsprechen."/> entsprechen. </source>
+        <target state="final"> Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="entsprechen."/> entsprechen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warningsModal.singleResourceAffected" datatype="html">
+        <source>Nur diese Ressource ist betroffen.</source>
+        <target state="final">Nur diese Ressource ist betroffen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.all" datatype="html">
@@ -2304,15 +2286,15 @@
         <target state="final">In allen Ressourcen dieser Kategorie konvertieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.all.info" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> konvertiert (falls möglich). </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden in allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> konvertiert (falls möglich). </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden in allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="konvertiert"/> konvertiert (falls möglich). </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden in allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="konvertiert"/> konvertiert (falls möglich). </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.header" datatype="html">
@@ -2324,8 +2306,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.confirmation" datatype="html">
-        <source> Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten wirklich löschen? </source>
-        <target state="final"> Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten wirklich löschen? </target>
+        <source> Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Daten wirklich löschen? </source>
+        <target state="final"> Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Daten wirklich löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
           <context context-type="linenumber">6</context>
@@ -2336,7 +2318,7 @@
         <target state="final">Bei allen Ressourcen dieser Kategorie löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.confirmInfo" datatype="html">
@@ -2344,36 +2326,38 @@
         <target state="final"> Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. Gültige Daten bleiben erhalten. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht. G"/> gelöscht. Gültige Daten bleiben erhalten. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht. G"/> gelöscht. Gültige Daten bleiben erhalten. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.unconfigured" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> gelöscht. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht."/> gelöscht. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht."/> gelöscht. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.header" datatype="html">
-        <source> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen </source>
-        <target state="final"> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen </target>
+        <source> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="löschen
+    &lt;"/> löschen </source>
+        <target state="final"> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="löschen
+    &lt;"/> löschen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.confirmation" datatype="html">
-        <source> Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </source>
-        <target state="final"> Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </target>
+        <source> Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wirklich lösc"/> wirklich löschen? </source>
+        <target state="final"> Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wirklich lösc"/> wirklich löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">8</context>
@@ -2384,15 +2368,15 @@
         <target state="final">Alle Vorkommnisse dieses Werts löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.all.info" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen gelöscht. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen gelöscht. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/> Ressourcen gelöscht. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/> Ressourcen gelöscht. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.header" datatype="html">
@@ -2404,8 +2388,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.confirmation" datatype="html">
-        <source> Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </source>
-        <target state="final"> Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich löschen? </target>
+        <source> Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wirklich lösc"/> wirklich löschen? </source>
+        <target state="final"> Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wirklich lösc"/> wirklich löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
           <context context-type="linenumber">6</context>
@@ -2416,7 +2400,7 @@
         <target state="final">Alle Ressourcen dieser Kategorie löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.single.confirmInfo" datatype="html">
@@ -2424,7 +2408,7 @@
         <target state="final"> Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.confirmInfo" datatype="html">
@@ -2432,20 +2416,24 @@
         <target state="final"> Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.info" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gelöscht. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden alle Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gelöscht. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.
+    &lt;"/> Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.
+    &lt;"/> gelöscht. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.
+    &lt;"/> Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.
+    &lt;"/> gelöscht. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.header" datatype="html">
-        <source> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> korrigieren </source>
-        <target state="final"> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> korrigieren </target>
+        <source> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="korrigieren"/> korrigieren </source>
+        <target state="final"> Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="korrigieren"/> korrigieren </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -2464,15 +2452,15 @@
         <target state="final">Alle Vorkommnisse dieses Werts ersetzen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.all.info" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{getValueLabel(selectedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ersetzt. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> in sämtlichen Feldern aller Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{getValueLabel(selectedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ersetzt. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_2" equiv-text="ctedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b>"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_2" equiv-text="ctedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fixingDataInProgress.single" datatype="html">
@@ -2500,11 +2488,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewCategory.confirmation" datatype="html">
-        <source> Bitte wählen Sie die Kategorie aus, die für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gesetzt werden soll. </source>
-        <target state="final"> Bitte wählen Sie die Kategorie aus, die für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gesetzt werden soll. </target>
+        <source> Bitte wählen Sie die Kategorie aus, die für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="geset"/> gesetzt werden soll. </source>
+        <target state="final"> Bitte wählen Sie die Kategorie aus, die für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="geset"/> gesetzt werden soll. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.component.ts</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewCategory.all" datatype="html">
@@ -2512,15 +2500,15 @@
         <target state="final">Bei allen Ressourcen dieser Kategorie durchführen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewCategory.multiple.info" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion wird für alle Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(selectedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_2" equiv-text="{{selectedCategory.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>) gesetzt. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird für alle Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(selectedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_2" equiv-text="{{selectedCategory.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>) gesetzt. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion wird für alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code>{{select"/> Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text=".category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_2" equiv-text="electedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code>{{select"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_3" equiv-text="name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/>) gesetzt. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion wird für alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code>{{select"/> Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text=".category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_2" equiv-text="electedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code>{{select"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_3" equiv-text="name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/>) gesetzt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.header" datatype="html">
@@ -2532,8 +2520,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.confirmation" datatype="html">
-        <source> Bitte wählen Sie das Feld aus, in das die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten übertragen werden sollen. </source>
-        <target state="final"> Bitte wählen Sie das Feld aus, in das die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> eingetragenen Daten übertragen werden sollen. </target>
+        <source> Bitte wählen Sie das Feld aus, in das die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="ein"/> eingetragenen Daten übertragen werden sollen. </source>
+        <target state="final"> Bitte wählen Sie das Feld aus, in das die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="ein"/> eingetragenen Daten übertragen werden sollen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
           <context context-type="linenumber">6</context>
@@ -2544,23 +2532,23 @@
         <target state="final">Bei allen Ressourcen dieser Kategorie durchführen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.multiple.info.invalid" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. Gültige Daten verbleiben im ursprünglichen Feld. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ungültige Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. Gültige Daten verbleiben im ursprünglichen Feld. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> ungültige Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> verschoben. Gültige Daten verbleiben im ursprünglichen Feld. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> ungültige Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> verschoben. Gültige Daten verbleiben im ursprünglichen Feld. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.multiple.info.unconfigured" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. </source>
-        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> verschoben. </target>
+        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> verschoben. </source>
+        <target state="final"> Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> verschoben. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.header" datatype="html">
@@ -2792,8 +2780,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fieldData.none" datatype="html">
-        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/></source>
-        <target state="final"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/></target>
+        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="Keine&lt;/i>&lt;/div>
+    &lt;button class=&quot;btn btn-danger delete-invalid-field-data-button&quot; type=&quot;button&quot; (clic"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/></source>
+        <target state="final"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="Keine&lt;/i>&lt;/div>
+    &lt;button class=&quot;btn btn-danger delete-invalid-field-data-button&quot; type=&quot;button&quot; (clic"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/invalid-field-data.html</context>
           <context context-type="linenumber">7</context>
@@ -2952,8 +2942,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.deleteModal.header" datatype="html">
-        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
-        <target state="final"> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{projectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </target>
+        <source> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="löschen?"/> löschen? </source>
+        <target state="final"> Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="löschen?"/> löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -2976,16 +2966,20 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.progressInfo.files" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>% der Bilder geladen... </source>
-        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(filesProgressPercent)}}"/>% der Bilder geladen... </target>
+        <source><x id="INTERPOLATION" equiv-text="% der Bilder geladen... &lt;/div>
+            &lt;div *ngIf=&quot;canc"/>% der Bilder geladen... </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="% der Bilder geladen... &lt;/div>
+            &lt;div *ngIf=&quot;canc"/>% der Bilder geladen... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.progressInfo.databaseFinished" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen. </source>
-        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen. </target>
+        <source><x id="INTERPOLATION" equiv-text="% der Projektdaten geladen. &lt;/div>
+        &lt;div *ngIf=&quot;filesProgres"/>% der Projektdaten geladen. </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="% der Projektdaten geladen. &lt;/div>
+        &lt;div *ngIf=&quot;filesProgres"/>% der Projektdaten geladen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">12</context>
@@ -3012,8 +3006,10 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.progressInfo.database" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen... </source>
-        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen... </target>
+        <source><x id="INTERPOLATION" equiv-text="% der Projektdaten geladen... &lt;/div>
+        &lt;div *ngIf=&quot;fi"/>% der Projektdaten geladen... </source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="% der Projektdaten geladen... &lt;/div>
+        &lt;div *ngIf=&quot;fi"/>% der Projektdaten geladen... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">11</context>
@@ -3201,8 +3197,8 @@
         <source> Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
         <target state="final"> Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
-          <context context-type="linenumber">227</context>
+          <context context-type="sourcefile">src/app/components/project/synchronization-modal.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.originalImageFilesUpload" datatype="html">
@@ -3238,16 +3234,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.linkInfo.single" datatype="html">
-        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="final"> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </target>
+        <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="get.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verknüpft."/> verknüpft. </source>
+        <target state="final"> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="get.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verknüpft."/> verknüpft. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.linkInfo.multiple" datatype="html">
-        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="final"> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </target>
+        <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="get.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="v"/> verknüpft. </source>
+        <target state="final"> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="get.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="v"/> verknüpft. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
           <context context-type="linenumber">19</context>
@@ -3354,8 +3350,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
-        <source> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
-        <target state="final"> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </target>
+        <source> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
+        <target state="final"> Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">37</context>
@@ -3370,8 +3366,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteField.body" datatype="html">
-        <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</source>
-        <target state="final">Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</target>
+        <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen?</source>
+        <target state="final">Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">6</context>
@@ -3386,8 +3382,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="90026491151501a7c5b791694c673a36d810e3cb" datatype="html">
-        <source> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
-        <target state="final"> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </target>
+        <source> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen? </source>
+        <target state="final"> Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen? </target>
         <note priority="1" from="description">configuration.deleteGroup.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
@@ -3395,8 +3391,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
-        <source> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
-        <target state="final"> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </target>
+        <source> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
+        <target state="final"> Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
           <context context-type="linenumber">10</context>
@@ -3411,8 +3407,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.body" datatype="html">
-        <source> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </source>
-        <target state="final"> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen? </target>
+        <source> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen? </source>
+        <target state="final"> Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">7</context>
@@ -3427,16 +3423,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.multiple" datatype="html">
-        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
-        <target state="final"> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </target>
+        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
+        <target state="final"> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.single" datatype="html">
-        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
-        <target state="final"> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </target>
+        <source> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </source>
+        <target state="final"> Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie einem Feld zugewiesen ist. Bitte weisen Sie dem Feld zunächst eine andere Werteliste zu. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -3619,16 +3615,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
-        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll: </source>
-        <target state="final"> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll: </target>
+        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> zugewiesen werden soll: </source>
+        <target state="final"> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> zugewiesen werden soll: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
-        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen: </source>
-        <target state="final"> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen: </target>
+        <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen: </source>
+        <target state="final"> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">22</context>
@@ -3667,24 +3663,30 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.singleStoragePlace" datatype="html">
-        <source> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gesetzt. </source>
-        <target state="final"> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gesetzt. </target>
+        <source> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.
+    &lt;/"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.
+    &lt;/"/> gesetzt. </source>
+        <target state="final"> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.
+    &lt;/"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.
+    &lt;/"/> gesetzt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.multipleStoragePlaces" datatype="html">
-        <source> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </source>
-        <target state="final"> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </target>
+        <source> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </source>
+        <target state="final"> Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.multipleDocuments.singleStoragePlace" datatype="html">
-        <source> Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gesetzt. </source>
-        <target state="final"> Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gesetzt. </target>
+        <source> Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.
+    &lt;/"/> gesetzt. </source>
+        <target state="final"> Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.
+    &lt;/"/> gesetzt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -3699,16 +3701,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.question.single" datatype="html">
-        <source> Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beibehalten? </source>
-        <target state="final"> Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beibehalten? </target>
+        <source> Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="ument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
+        <target state="final"> Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="ument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.question.multiple" datatype="html">
-        <source> Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beibehalten? </source>
-        <target state="final"> Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beibehalten? </target>
+        <source> Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="ument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
+        <target state="final"> Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="ument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">37</context>
@@ -3935,8 +3937,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.single" datatype="html">
-        <source> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </source>
-        <target state="final"> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> löschen? </target>
+        <source> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="löschen?"/> löschen? </source>
+        <target state="final"> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="löschen?"/> löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/delete/delete-modal.html</context>
           <context context-type="linenumber">3</context>
@@ -4199,8 +4201,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.qrCodeEditorModal.header" datatype="html">
-        <source> QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/></source>
-        <target state="final"> QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/></target>
+        <source> QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/div>"/></source>
+        <target state="final"> QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/div>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/qr-code-editor-modal.html</context>
           <context context-type="linenumber">3</context>
@@ -4467,8 +4469,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
-        <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</source>
-        <target state="final">Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich löschen?</target>
+        <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen?</source>
+        <target state="final">Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen?</target>
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
@@ -4803,8 +4805,8 @@
         <source>Suchergebnisse in anderen Kontexten</source>
         <target state="final">Suchergebnisse in anderen Kontexten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.noResourcesFound" datatype="html">
@@ -4832,16 +4834,20 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</source>
-        <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</target>
+        <source><x id="INTERPOLATION" equiv-text="Bilder verknüpfen&lt;/span>
+            &lt;span *ngIf=&quot;mode === 'layers'&quot;"/> Bilder verknüpfen</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="Bilder verknüpfen&lt;/span>
+            &lt;span *ngIf=&quot;mode === 'layers'&quot;"/> Bilder verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</source>
-        <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</target>
+        <source><x id="INTERPOLATION" equiv-text="Bilder als Kartenhintergrund verknüpfen&lt;/span>
+        &lt;/button>"/> Bilder als Kartenhintergrund verknüpfen</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="Bilder als Kartenhintergrund verknüpfen&lt;/span>
+        &lt;/button>"/> Bilder als Kartenhintergrund verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
           <context context-type="linenumber">26</context>
@@ -4936,7 +4942,7 @@
         <target state="final">Neue Bilder hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.link-images" datatype="html">
@@ -4944,7 +4950,7 @@
         <target state="final">Existierende Bilder verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
@@ -5290,9 +5296,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.missingValuelistInfo.projectDocumentField" datatype="html">
-        <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
+        <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="eldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text=") ein.
+&lt;/span>"/>) ein.
 </source>
-        <target state="final"> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
+        <target state="final"> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="eldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text=") ein.
+&lt;/span>"/>) ein.
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
@@ -5718,7 +5726,7 @@
         <target state="final">Bearbeitungsmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
@@ -5726,7 +5734,7 @@
         <target state="final">Einzelauswahlmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
@@ -5734,7 +5742,7 @@
         <target state="final">Gruppenauswahlmodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
@@ -5742,7 +5750,7 @@
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
@@ -5750,7 +5758,7 @@
         <target state="final">Matrix aus Auswahl erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -5758,7 +5766,7 @@
         <target state="final">Matrix neu laden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
@@ -5766,7 +5774,7 @@
         <target state="final"> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
@@ -5774,7 +5782,7 @@
         <target state="final"> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
@@ -5782,7 +5790,7 @@
         <target state="final"> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
@@ -5790,7 +5798,7 @@
         <target state="final"> Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.label" datatype="html">
@@ -8182,7 +8190,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
-          <context context-type="linenumber">438</context>
+          <context context-type="linenumber">441</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
@@ -8462,31 +8470,31 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
           <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">75</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
@@ -8545,8 +8553,8 @@
           <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.swapForm" datatype="html">
@@ -8578,8 +8586,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
-        <source> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ersetzen? </source>
-        <target state="final"> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ersetzen? </target>
+        <source> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> ersetzen? </source>
+        <target state="final"> Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> ersetzen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">6</context>
@@ -8914,31 +8922,31 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
           <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
@@ -9030,16 +9038,20 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verschieben? </source>
-        <target state="final"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verschieben? </target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{documents.length}} Ressourcen&lt;/b> verschieben?
+    &lt;/h5>
+    &lt;h5 *ngIf=&quot;documents.length === 1 &amp;&amp; hasVa"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verschieben? </source>
+        <target state="final"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{documents.length}} Ressourcen&lt;/b> verschieben?
+    &lt;/h5>
+    &lt;h5 *ngIf=&quot;documents.length === 1 &amp;&amp; hasVa"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verschieben? </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.single" datatype="html">
-        <source> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verschieben? </source>
-        <target state="final"> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verschieben? </target>
+        <source> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verschieben?"/> verschieben? </source>
+        <target state="final"> Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verschieben?"/> verschieben? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">7</context>
@@ -9065,16 +9077,16 @@
         <source> Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind. </source>
         <target state="final"> Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
-          <context context-type="linenumber">123,149</context>
+          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.html</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html">
         <source>Kamera auswählen:</source>
         <target state="final">Kamera auswählen:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">

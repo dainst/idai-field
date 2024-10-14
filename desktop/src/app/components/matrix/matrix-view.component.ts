@@ -195,7 +195,7 @@ export class MatrixViewComponent implements OnInit {
                 this.settingsProvider.getSettings().selectedProject,
                 this.selectedOperation.resource.identifier,
                 this.appState,
-                $localize `:@@matrix.export.dotFile:Graphviz-Dot-File`
+                $localize `:@@matrix.export.dotFile:Graphviz-Dot-Datei`
             ); 
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch (err) {

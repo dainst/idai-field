@@ -5769,12 +5769,20 @@
           <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="matrix.view.tooltips.export" datatype="html">
+        <source>Matrix exportieren</source>
+        <target state="final">Matrix exportieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="matrix.view.noConfiguredOperationCategoriesWarning" datatype="html">
         <source> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </source>
         <target state="final"> Für dieses Projekt sind keine Maßnahmenkategorien konfiguriert, die für die Matrixdarstellung geeignet sind. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
@@ -5782,7 +5790,7 @@
         <target state="final"> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
@@ -5790,7 +5798,7 @@
         <target state="final"> Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
@@ -5798,7 +5806,7 @@
         <target state="final"> Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel('Feature')}}"/>" in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">163</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.label" datatype="html">
@@ -5855,6 +5863,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.html</context>
           <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.export.dotFile" datatype="html">
+        <source>Graphviz-Dot-Datei</source>
+        <target state="final">Graphviz-Dot-Datei</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.dating.bce" datatype="html">

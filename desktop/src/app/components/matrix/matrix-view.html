@@ -106,7 +106,7 @@
                  [class.disabled]="!graphFromSelection"
                  ngbTooltip="Matrix neu laden"
                  i18n-ngbTooltip="@@matrix.view.tooltips.reloadMatrix"
-                 placement="left"
+                 placement="bottom"
                  container="body"
                  triggers="manual"
                  #reloadGraphTooltip="ngbTooltip"
@@ -115,6 +115,20 @@
                  (click)="reloadGraphTooltip.close(); reloadGraph();">
                 <span class="mdi mdi-reload"></span>
             </div>
+        </div>
+
+        <div id="export-button"
+             class="btn btn-primary btn-square ms-2"
+             ngbTooltip="Matrix exportieren"
+             i18n-ngbTooltip="@@matrix.view.tooltips.export"
+             placement="left"
+             container="body"
+             triggers="manual"
+             #exportTooltip="ngbTooltip"
+             (mouseover)="exportTooltip.open()"
+             (mouseleave)="exportTooltip.close()"
+             (click)="exportTooltip.close(); exportGraph();">
+            <span class="mdi mdi-file-export"></span>
         </div>
     </div>
 </div>

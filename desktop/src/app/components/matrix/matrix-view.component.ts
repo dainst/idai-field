@@ -26,6 +26,11 @@ import IS_ABUTTED_BY = Relation.Position.ABUTTEDBY;
 import FILLS = Relation.Position.FILLS;
 import IS_FILLED_BY = Relation.Position.FILLEDBY;
 import SAME_AS = Relation.SAME_AS;
+import { exportGraph } from './export-graph';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { AppState } from '../../services/app-state';
+import { Messages } from '../messages/messages';
+import { M } from '../messages/m';
 
 const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 
@@ -60,6 +65,7 @@ export class MatrixViewComponent implements OnInit {
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private operationsLoaded: boolean = false;
     private viz: Viz;
+    private dotGraph: string;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -69,7 +75,10 @@ export class MatrixViewComponent implements OnInit {
                 private loading: Loading,
                 private tabManager: TabManager,
                 private menuService: Menus,
-                private labels: Labels) {}
+                private labels: Labels,
+                private settingsProvider: SettingsProvider,
+                private appState: AppState,
+                private messages: Messages) {}
 
 
     public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels, this.projectConfiguration);
@@ -167,16 +176,33 @@ export class MatrixViewComponent implements OnInit {
             MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
         );
 
-        const graph: string = DotBuilder.build(
+        this.dotGraph = DotBuilder.build(
             this.projectConfiguration,
             this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
             edges,
             this.matrixState.getLineMode() === 'curved'
         );
 
-        this.graph = this.viz.renderString(graph, { format: 'svg', engine: 'dot' });
+        this.graph = this.viz.renderString(this.dotGraph, { format: 'svg', engine: 'dot' });
     }
 
+
+    public async exportGraph() {
+
+        try {
+            await exportGraph(
+                this.dotGraph,
+                this.settingsProvider.getSettings().selectedProject,
+                this.selectedOperation.resource.identifier,
+                this.appState,
+                $localize `:@@matrix.export.dotFile:Graphviz-Dot-File`
+            ); 
+            this.messages.add([M.EXPORT_SUCCESS]);
+        } catch (err) {
+            if (err != 'canceled') this.messages.add(err);
+        }
+    }
+    
 
     private async populateOperations(): Promise<void> {
 

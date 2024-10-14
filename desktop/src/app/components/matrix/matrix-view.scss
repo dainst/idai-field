@@ -15,10 +15,6 @@
   user-select: none;
   cursor: default;
 
-  .float-right {
-    margin-right: 4px;
-  }
-
   .toolbar {
     padding-right: 2px;
   }
@@ -59,6 +55,11 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .mdi-file-export {
+    position: relative;
+    top: 6px;
   }
 }
 

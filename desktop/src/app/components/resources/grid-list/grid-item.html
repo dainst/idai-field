@@ -6,4 +6,7 @@
                 [imageUrls]="images"></grid-item-icon>
 <div class="grid-resource-info">
     {{document.resource.identifier}}
+    <span *ngIf="document.resource.shortDescription" class="grid-resource-short-description">
+        {{getLabelFromI18NString(document.resource.shortDescription)}}
+    </span>
 </div>

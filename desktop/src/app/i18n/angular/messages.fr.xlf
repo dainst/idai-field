@@ -9045,6 +9045,14 @@
           <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="matrix.export.info" datatype="html">
+        <source>Matrix wird exportiert...</source>
+        <target state="needs-translation">Matrix wird exportiert...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/export-graph-modal.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

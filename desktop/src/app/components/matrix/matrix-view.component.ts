@@ -31,6 +31,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { AppState } from '../../services/app-state';
 import { Messages } from '../messages/messages';
 import { M } from '../messages/m';
+import { AngularUtility } from '../../angular/angular-utility';
 
 const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 
@@ -168,7 +169,12 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public calculateGraph() {
+    public async calculateGraph() {
+
+        this.graph = undefined;
+
+        this.loading.start();
+        await AngularUtility.refresh(100);
 
         const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
             this.featureDocuments,
@@ -184,6 +190,8 @@ export class MatrixViewComponent implements OnInit {
         );
 
         this.graph = this.graphviz.dot(this.dotGraph);
+
+        this.loading.stop();
     }
 
 
@@ -234,15 +242,17 @@ export class MatrixViewComponent implements OnInit {
         this.featureDocuments = [];
         this.graphFromSelection = false;
         this.graph = undefined;
+        
+        this.loading.start();
 
         await this.loadFeatureDocuments(operation);
         this.calculateGraph();
+
+        this.loading.stop();
     }
 
 
     private async loadFeatureDocuments(operation: FieldDocument) {
-
-        this.loading.start();
 
         const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
 
@@ -251,8 +261,6 @@ export class MatrixViewComponent implements OnInit {
             categories: categories
         });
         this.totalFeatureDocuments = this.featureDocuments = result.documents as Array<FeatureDocument>;
-
-        this.loading.stop();
     }
 
 

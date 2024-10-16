@@ -50,9 +50,7 @@ const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
  */
 export class MatrixViewComponent implements OnInit {
 
-    /**
-     * The latest svg calculated with GraphViz via DotBuilder based on our component's current settings.
-     */
+    // The latest svg calculated with GraphViz via DotBuilder based on our component's current settings.
     public graph: string|undefined;
 
     public graphFromSelection: boolean = false;
@@ -203,6 +201,8 @@ export class MatrixViewComponent implements OnInit {
                 this.settingsProvider.getSettings().selectedProject,
                 this.selectedOperation.resource.identifier,
                 this.appState,
+                this.graphviz,
+                this.modalService,
                 $localize `:@@matrix.export.dotFile:Graphviz-Dot-Datei`
             ); 
             this.messages.add([M.EXPORT_SUCCESS]);

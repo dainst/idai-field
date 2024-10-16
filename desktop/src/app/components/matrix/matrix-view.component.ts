@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { instance as vizJs, Viz } from '@viz-js/viz';
+import { Graphviz } from '@hpcc-js/wasm-graphviz';
 import { isEmpty, on, is, not, isUndefined } from 'tsfun';
 import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
     Relation, Labels, CategoryForm, Valuelist } from 'idai-field-core';
@@ -61,10 +61,10 @@ export class MatrixViewComponent implements OnInit {
     public selectedOperation: FieldDocument|undefined;
     public configuredOperationCategories: string[] = [];
 
+    private graphviz: Graphviz;
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private operationsLoaded: boolean = false;
-    private viz: Viz;
     private dotGraph: string;
 
 
@@ -115,7 +115,7 @@ export class MatrixViewComponent implements OnInit {
 
     async ngOnInit() {
 
-        this.viz = await vizJs();
+        this.graphviz = await Graphviz.load();
         await this.matrixState.load();
         await this.populateOperations();
 
@@ -183,7 +183,7 @@ export class MatrixViewComponent implements OnInit {
             this.matrixState.getLineMode() === 'curved'
         );
 
-        this.graph = this.viz.renderString(this.dotGraph, { format: 'svg', engine: 'dot' });
+        this.graph = this.graphviz.dot(this.dotGraph);
     }
 
 

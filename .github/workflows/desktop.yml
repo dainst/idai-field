@@ -71,8 +71,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20
-    - name: Setup NPM cache
-      uses: c-hive/gha-npm-cache@v1
     - name: Install sharp for x64 architecture
       run: npm install --cpu=x64 --os=darwin sharp
       if: runner.os == 'macOS'

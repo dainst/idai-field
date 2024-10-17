@@ -1,5 +1,4 @@
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Graphviz } from '@hpcc-js/wasm-graphviz';
 import { AppState } from '../../services/app-state';
 import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 import { M } from '../messages/m';
@@ -13,16 +12,16 @@ const remote = window.require('@electron/remote');
  * @author Thomas Kleinke
  */
 export async function exportGraph(dotGraph: string, projectName: string, trenchIdentifier: string, appState: AppState,
-                                  graphviz: Graphviz, modalService: NgbModal, fileFilterLabel: string) {
+                                  modalService: NgbModal, fileFilterLabel: string) {
 
     const filePath: string = await chooseFilepath(projectName, trenchIdentifier, appState, fileFilterLabel);
     if (!filePath) throw 'canceled';
 
     const modalRef: NgbModalRef = openExportModal(modalService);
-    await AngularUtility.refresh();
+    await AngularUtility.refresh(500);
 
     try {
-        await writeFile(filePath, graphviz.dot(dotGraph, 'dot'));
+        await writeFile(filePath, dotGraph);
     } catch (errWithParams) {
         throw errWithParams;
     } finally {

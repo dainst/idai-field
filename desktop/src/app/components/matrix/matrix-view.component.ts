@@ -50,7 +50,7 @@ const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
  */
 export class MatrixViewComponent implements OnInit {
 
-    // The latest svg calculated with GraphViz via DotBuilder based on our component's current settings.
+    public dotGraph: string|undefined;
     public graph: string|undefined;
 
     public graphFromSelection: boolean = false;
@@ -59,12 +59,11 @@ export class MatrixViewComponent implements OnInit {
     public operations: Array<FieldDocument> = [];
     public selectedOperation: FieldDocument|undefined;
     public configuredOperationCategories: string[] = [];
+    public graphvizFailure: boolean = false;
 
-    private graphviz: Graphviz;
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private operationsLoaded: boolean = false;
-    private dotGraph: string;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -114,7 +113,6 @@ export class MatrixViewComponent implements OnInit {
 
     async ngOnInit() {
 
-        this.graphviz = await Graphviz.load();
         await this.matrixState.load();
         await this.populateOperations();
 
@@ -169,31 +167,50 @@ export class MatrixViewComponent implements OnInit {
 
     public async calculateGraph() {
 
+        this.dotGraph = undefined;
         this.graph = undefined;
+        this.graphvizFailure = false;
+        let dotGraph: string;
 
         this.loading.start();
-        await AngularUtility.refresh(100);
 
-        const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
-            this.featureDocuments,
-            this.totalFeatureDocuments,
-            MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
-        );
+        await AngularUtility.blurActiveElement();
+        await AngularUtility.refresh(500);
 
-        this.dotGraph = DotBuilder.build(
-            this.projectConfiguration,
-            this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
-            edges,
-            this.matrixState.getLineMode() === 'curved'
-        );
-
-        this.graph = this.graphviz.dot(this.dotGraph);
-
-        this.loading.stop();
+        try {
+            const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
+                this.featureDocuments,
+                this.totalFeatureDocuments,
+                MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
+            );
+    
+            dotGraph = DotBuilder.build(
+                this.projectConfiguration,
+                this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
+                edges,
+                this.matrixState.getLineMode() === 'curved'
+            );
+        } catch (err) {
+            console.error(err);
+            this.messages.add([M.MATRIX_ERROR_GENERIC]);
+            return this.loading.stop();
+        }
+  
+        try {
+            const graphviz: Graphviz = await Graphviz.load();
+            this.graph = graphviz.dot(dotGraph);
+        } catch (err) {
+            this.graphvizFailure = true;
+        } finally {
+            Graphviz.unload();
+            this.dotGraph = dotGraph;
+            this.loading.stop();
+        }
     }
 
-
     public async exportGraph() {
+
+        if (!this.dotGraph) return;
 
         try {
             await exportGraph(
@@ -201,7 +218,6 @@ export class MatrixViewComponent implements OnInit {
                 this.settingsProvider.getSettings().selectedProject,
                 this.selectedOperation.resource.identifier,
                 this.appState,
-                this.graphviz,
                 this.modalService,
                 $localize `:@@matrix.export.dotFile:Graphviz-Dot-Datei`
             ); 

@@ -119,6 +119,7 @@
 
         <div id="export-button"
              class="btn btn-primary btn-square ms-2"
+             [class.disabled]="!dotGraph"
              ngbTooltip="Matrix exportieren"
              i18n-ngbTooltip="@@matrix.view.tooltips.export"
              placement="left"
@@ -163,6 +164,14 @@
         <em i18n="@@matrix.view.noResourcesWarning">
             Legen Sie für die ausgewählte Maßnahme Ressourcen der Kategorie "{{getCategoryLabel('Feature')}}" in der
             Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
+        </em>
+    </div>
+
+    <div *ngIf="graphvizFailure"
+         class="col-8 text-center alert alert-warning matrix-alert">
+        <em i18n="@@matrix.view.tooBigWarning">
+            Die Matrix überschreitet die maximale Darstellungsgröße. Bitte verwenden Sie die Exportfunktion, um die
+            Matrix zur Anzeige in einem externen Viewer zu speichern.
         </em>
     </div>
 

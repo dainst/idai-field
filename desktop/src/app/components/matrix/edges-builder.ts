@@ -127,7 +127,6 @@ export module EdgesBuilder {
     }
 
 
-
     function getIncludedRelationTargetIds(targetId: string, graphDocuments: Array<Document>,
                                           totalDocuments: Array<Document>,
                                           relations: GraphRelationsConfiguration,

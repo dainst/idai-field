@@ -267,6 +267,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION = 'configuration.error.unsupportedVersion';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
 
+    // Matrix Package
+    public static MATRIX_ERROR_GENERIC = 'matrix.error.generic';
+
     public msgs : { [id: string]: MessageTemplate } = {};
 
 
@@ -1121,6 +1124,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES] = {
             content: $localize `:@@messages.configuration.error.noProjectLanguages:Bitte wählen Sie mindestens eine Projektsprache aus.`,
+            level: 'danger'
+        };
+        this.msgs[M.MATRIX_ERROR_GENERIC] = {
+            content: $localize `:@@messages.matrix.error.generic:Bei der Generierung der Matrix ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
     }

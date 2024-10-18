@@ -197,12 +197,12 @@ export class MatrixViewComponent implements OnInit {
 
         try {
             await exportGraph(
-                this.dotGraph,
                 this.settingsProvider.getSettings().selectedProject,
                 this.selectedOperation.resource.identifier,
                 this.appState,
                 this.modalService,
-                $localize `:@@matrix.export.dotFile:Graphviz-Dot-Datei`
+                this.dotGraph,
+                this.svgGraph
             ); 
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch (err) {

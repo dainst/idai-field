@@ -11,17 +11,20 @@ const remote = window.require('@electron/remote');
 /**
  * @author Thomas Kleinke
  */
-export async function exportGraph(dotGraph: string, projectName: string, trenchIdentifier: string, appState: AppState,
-                                  modalService: NgbModal, fileFilterLabel: string) {
+export async function exportGraph(projectName: string, trenchIdentifier: string, appState: AppState,
+                                  modalService: NgbModal, dotGraph: string, svgGraph?: string) {
 
-    const filePath: string = await chooseFilepath(projectName, trenchIdentifier, appState, fileFilterLabel);
+    const filePath: string = await chooseFilepath(projectName, trenchIdentifier, appState, svgGraph !== undefined);
     if (!filePath) throw 'canceled';
 
     const modalRef: NgbModalRef = openExportModal(modalService);
     await AngularUtility.refresh(500);
 
     try {
-        await writeFile(filePath, dotGraph);
+        await writeFile(
+            filePath,
+            filePath.endsWith('.gv') ? dotGraph : svgGraph
+        );
     } catch (errWithParams) {
         throw errWithParams;
     } finally {
@@ -31,18 +34,12 @@ export async function exportGraph(dotGraph: string, projectName: string, trenchI
 
 
 async function chooseFilepath(projectName: string, trenchIdentifier: string, appState: AppState,
-                              fileFilterLabel: string): Promise<string> {
+                              includeSvgOption: boolean): Promise<string> {
 
-    const defaultPath: string = getDefaultPath(projectName, trenchIdentifier, appState);
-
-    const saveDialogReturnValue = await remote.dialog.showSaveDialog(
-        {
-            defaultPath,
-            filters: [
-                { name: fileFilterLabel, extensions: [ 'gv' ] }
-            ]
-        }
-    );
+    const saveDialogReturnValue = await remote.dialog.showSaveDialog({
+        defaultPath: getDefaultPath(projectName, trenchIdentifier, appState),
+        filters: getFilters(includeSvgOption)
+    });
 
     const filePath: string = saveDialogReturnValue.filePath;
     
@@ -58,11 +55,22 @@ async function chooseFilepath(projectName: string, trenchIdentifier: string, app
 function getDefaultPath(projectName: string, trenchIdentifier: string, appState?: AppState): string {
 
     const folderPath: string = appState?.getFolderPath('matrixExport');
-    const fileName: string = projectName + '_' + trenchIdentifier + '.gv';
+    const fileName: string = projectName + '_' + trenchIdentifier;
 
     return folderPath
         ? folderPath + '/' + fileName
         : fileName;
+}
+
+
+function getFilters(includeSvgOption: boolean): any[] {
+
+    const result: any[] = [];
+
+    result.push({ name: 'Dot (Graphviz)', extensions: [ 'gv' ] });
+    if (includeSvgOption) result.push({ name: 'SVG', extensions: [ 'svg' ] });
+
+    return result;
 }
 
 

@@ -189,27 +189,6 @@ export class MatrixViewComponent implements OnInit {
 
         this.loading.stop();
     }
-    
-
-    /**
-     * Graphviz sometimes randomly fails for larger graphs. For that reason, we try again multiple
-     * times in case of an error.
-     */
-    private async buildSvgGraph(dotGraph: string, retries: number = 4) {
-
-        try {
-            const graphviz: Graphviz = await Graphviz.load();
-            this.graph = graphviz.dot(dotGraph);
-            Graphviz.unload();
-        } catch (err) {
-            Graphviz.unload();
-            if (retries > 0) {
-                await this.buildSvgGraph(dotGraph, --retries);   
-            } else {
-                this.graphvizFailure = true;
-            }
-        }
-    }
 
 
     public async exportGraph() {
@@ -229,25 +208,6 @@ export class MatrixViewComponent implements OnInit {
         } catch (err) {
             if (err != 'canceled') this.messages.add(err);
         }
-    }
-    
-
-    private async populateOperations(): Promise<void> {
-
-        this.configuredOperationCategories = SUPPORTED_OPERATION_CATEGORIES.map(categoryName => {
-            return this.projectConfiguration.getCategory(categoryName)?.name
-        }).filter(not(isUndefined));
-        if (this.configuredOperationCategories.length === 0) return;
-
-        this.operations = (await this.datastore.find({ categories: SUPPORTED_OPERATION_CATEGORIES }))
-            .documents as Array<FieldDocument>;
-        if (this.operations.length === 0) return;
-
-        const previouslySelectedOperation: FieldDocument = this.operations
-            .find(on(['resource','id'], is(this.matrixState.getSelectedOperationId())));
-        if (previouslySelectedOperation) return this.selectOperation(previouslySelectedOperation);
-
-        await this.selectOperation(this.operations[0]);
     }
 
 
@@ -272,6 +232,25 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
+    private async populateOperations(): Promise<void> {
+
+        this.configuredOperationCategories = SUPPORTED_OPERATION_CATEGORIES.map(categoryName => {
+            return this.projectConfiguration.getCategory(categoryName)?.name
+        }).filter(not(isUndefined));
+        if (this.configuredOperationCategories.length === 0) return;
+
+        this.operations = (await this.datastore.find({ categories: SUPPORTED_OPERATION_CATEGORIES }))
+            .documents as Array<FieldDocument>;
+        if (this.operations.length === 0) return;
+
+        const previouslySelectedOperation: FieldDocument = this.operations
+            .find(on(['resource','id'], is(this.matrixState.getSelectedOperationId())));
+        if (previouslySelectedOperation) return this.selectOperation(previouslySelectedOperation);
+
+        await this.selectOperation(this.operations[0]);
+    }
+
+
     private async loadFeatureDocuments(operation: FieldDocument) {
 
         const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
@@ -281,28 +260,6 @@ export class MatrixViewComponent implements OnInit {
             categories: categories
         });
         this.totalFeatureDocuments = this.featureDocuments = result.documents as Array<FeatureDocument>;
-    }
-
-
-    private async openEditorModal(docToEdit: FeatureDocument) {
-
-        this.menuService.setContext(MenuContext.DOCEDIT);
-
-        const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
-        doceditRef.componentInstance.setDocument(docToEdit);
-
-        const reset = async () => {
-            this.featureDocuments = [];
-            this.selectedOperation = undefined;
-            await this.populateOperations();
-        };
-
-        await doceditRef.result
-            .then(reset, reason => {
-                this.menuService.setContext(MenuContext.DEFAULT);
-                if (reason === 'deleted') return reset();
-            });
     }
 
 
@@ -328,6 +285,27 @@ export class MatrixViewComponent implements OnInit {
             edges,
             this.matrixState.getLineMode() === 'curved'
         );
+    }
+
+
+    /**
+     * Graphviz sometimes randomly fails for larger graphs. For that reason, we try again multiple
+     * times in case of an error.
+     */
+    private async buildSvgGraph(dotGraph: string, retries: number = 4) {
+
+        try {
+            const graphviz: Graphviz = await Graphviz.load();
+            this.graph = graphviz.dot(dotGraph);
+            Graphviz.unload();
+        } catch (err) {
+            Graphviz.unload();
+            if (retries > 0) {
+                await this.buildSvgGraph(dotGraph, --retries);   
+            } else {
+                this.graphvizFailure = true;
+            }
+        }
     }
 
 
@@ -359,6 +337,29 @@ export class MatrixViewComponent implements OnInit {
             ? this.labels.getValueLabel(valuelist, value)
             : value;
     }
+
+
+    private async openEditorModal(docToEdit: FeatureDocument) {
+
+        this.menuService.setContext(MenuContext.DOCEDIT);
+
+        const doceditRef = this.modalService.open(DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
+        doceditRef.componentInstance.setDocument(docToEdit);
+
+        const reset = async () => {
+            this.featureDocuments = [];
+            this.selectedOperation = undefined;
+            await this.populateOperations();
+        };
+
+        await doceditRef.result
+            .then(reset, reason => {
+                this.menuService.setContext(MenuContext.DEFAULT);
+                if (reason === 'deleted') return reset();
+            });
+    }
+
 
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 

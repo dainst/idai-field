@@ -13,6 +13,12 @@ import { Edges, EdgesBuilder, GraphRelationsConfiguration } from './edges-builde
 import { TabManager } from '../../services/tabs/tab-manager';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
+import { exportGraph } from './export-graph';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { AppState } from '../../services/app-state';
+import { Messages } from '../messages/messages';
+import { M } from '../messages/m';
+import { AngularUtility } from '../../angular/angular-utility';
 import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
 import IS_BEFORE = Relation.Time.BEFORE;
 import IS_AFTER = Relation.Time.AFTER;
@@ -26,12 +32,6 @@ import IS_ABUTTED_BY = Relation.Position.ABUTTEDBY;
 import FILLS = Relation.Position.FILLS;
 import IS_FILLED_BY = Relation.Position.FILLEDBY;
 import SAME_AS = Relation.SAME_AS;
-import { exportGraph } from './export-graph';
-import { SettingsProvider } from '../../services/settings/settings-provider';
-import { AppState } from '../../services/app-state';
-import { Messages } from '../messages/messages';
-import { M } from '../messages/m';
-import { AngularUtility } from '../../angular/angular-utility';
 
 const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 
@@ -51,7 +51,7 @@ const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 export class MatrixViewComponent implements OnInit {
 
     public dotGraph: string|undefined;
-    public graph: string|undefined;
+    public svgGraph: string|undefined;
 
     public graphFromSelection: boolean = false;
     public selection: MatrixSelection = new MatrixSelection();
@@ -184,7 +184,7 @@ export class MatrixViewComponent implements OnInit {
             return this.loading.stop();
         }
   
-        await this.buildSvgGraph(dotGraph);
+        this.svgGraph = await this.buildSvgGraph(dotGraph);
         this.dotGraph = dotGraph;
 
         this.loading.stop();
@@ -221,7 +221,7 @@ export class MatrixViewComponent implements OnInit {
         this.matrixState.setSelectedOperationId(this.selectedOperation.resource.id);
         this.featureDocuments = [];
         this.graphFromSelection = false;
-        this.graph = undefined;
+        this.svgGraph = undefined;
         
         this.loading.start();
 
@@ -266,7 +266,7 @@ export class MatrixViewComponent implements OnInit {
     private resetGraph() {
 
         this.dotGraph = undefined;
-        this.graph = undefined;
+        this.svgGraph = undefined;
         this.graphvizFailure = false;
     }
 
@@ -292,18 +292,20 @@ export class MatrixViewComponent implements OnInit {
      * Graphviz sometimes randomly fails for larger graphs. For that reason, we try again multiple
      * times in case of an error.
      */
-    private async buildSvgGraph(dotGraph: string, retries: number = 4) {
+    private async buildSvgGraph(dotGraph: string, retries: number = 4): Promise<string> {
 
         try {
             const graphviz: Graphviz = await Graphviz.load();
-            this.graph = graphviz.dot(dotGraph);
+            const graph: string = graphviz.dot(dotGraph);
             Graphviz.unload();
+            return graph;
         } catch (err) {
             Graphviz.unload();
             if (retries > 0) {
-                await this.buildSvgGraph(dotGraph, --retries);   
+                return await this.buildSvgGraph(dotGraph, --retries);   
             } else {
                 this.graphvizFailure = true;
+                return undefined;
             }
         }
     }

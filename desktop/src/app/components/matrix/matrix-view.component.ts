@@ -167,29 +167,17 @@ export class MatrixViewComponent implements OnInit {
 
     public async calculateGraph() {
 
-        this.dotGraph = undefined;
-        this.graph = undefined;
-        this.graphvizFailure = false;
-        let dotGraph: string;
-
         this.loading.start();
 
+        this.resetGraph();
+    
         await AngularUtility.blurActiveElement();
         await AngularUtility.refresh(500);
 
+        let dotGraph: string;
+
         try {
-            const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
-                this.featureDocuments,
-                this.totalFeatureDocuments,
-                MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
-            );
-    
-            dotGraph = DotBuilder.build(
-                this.projectConfiguration,
-                this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
-                edges,
-                this.matrixState.getLineMode() === 'curved'
-            );
+            dotGraph = this.buildDotGraph();
         } catch (err) {
             console.error(err);
             this.messages.add([M.MATRIX_ERROR_GENERIC]);
@@ -207,6 +195,7 @@ export class MatrixViewComponent implements OnInit {
             this.loading.stop();
         }
     }
+
 
     public async exportGraph() {
 
@@ -299,6 +288,31 @@ export class MatrixViewComponent implements OnInit {
                 this.menuService.setContext(MenuContext.DEFAULT);
                 if (reason === 'deleted') return reset();
             });
+    }
+
+
+    private resetGraph() {
+
+        this.dotGraph = undefined;
+        this.graph = undefined;
+        this.graphvizFailure = false;
+    }
+
+
+    private buildDotGraph(): string {
+
+        const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
+            this.featureDocuments,
+            this.totalFeatureDocuments,
+            MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
+        );
+
+        return DotBuilder.build(
+            this.projectConfiguration,
+            this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
+            edges,
+            this.matrixState.getLineMode() === 'curved'
+        );
     }
 
 

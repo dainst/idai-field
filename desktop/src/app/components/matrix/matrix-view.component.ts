@@ -184,15 +184,30 @@ export class MatrixViewComponent implements OnInit {
             return this.loading.stop();
         }
   
+        await this.buildSvgGraph(dotGraph);
+        this.dotGraph = dotGraph;
+
+        this.loading.stop();
+    }
+    
+
+    /**
+     * Graphviz sometimes randomly fails for larger graphs. For that reason, we try again multiple
+     * times in case of an error.
+     */
+    private async buildSvgGraph(dotGraph: string, retries: number = 4) {
+
         try {
             const graphviz: Graphviz = await Graphviz.load();
             this.graph = graphviz.dot(dotGraph);
-        } catch (err) {
-            this.graphvizFailure = true;
-        } finally {
             Graphviz.unload();
-            this.dotGraph = dotGraph;
-            this.loading.stop();
+        } catch (err) {
+            Graphviz.unload();
+            if (retries > 0) {
+                await this.buildSvgGraph(dotGraph, --retries);   
+            } else {
+                this.graphvizFailure = true;
+            }
         }
     }
 

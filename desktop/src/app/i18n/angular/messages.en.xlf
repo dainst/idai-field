@@ -8878,7 +8878,7 @@
       </trans-unit>
       <trans-unit id="messages.matrix.error.generic" datatype="html">
         <source>Bei der Generierung der Matrix ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Bei der Generierung der Matrix ist ein Fehler aufgetreten.</target>
+        <target state="translated">An error occurred while generating the matrix.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1130</context>
@@ -8886,7 +8886,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooBigWarning" datatype="html">
         <source>Die Matrix überschreitet die maximale Darstellungsgröße. Bitte verwenden Sie die Exportfunktion, um die Matrix zur Anzeige in einem externen Viewer als Dot-Datei zu speichern.</source>
-        <target state="needs-translation">Die Matrix überschreitet die maximale Darstellungsgröße. Bitte verwenden Sie die Exportfunktion, um die Matrix zur Anzeige in einem externen Viewer als Dot-Datei zu speichern.</target>
+        <target state="translated">The matrix exceeds the maximum display size. Please use the export function to save the matrix as a dot file for display in an external viewer.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">172,175</context>

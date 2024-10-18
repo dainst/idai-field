@@ -8865,14 +8865,6 @@
           <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="matrix.export.dotFile" datatype="html">
-        <source>Graphviz-Dot-Datei</source>
-        <target state="needs-translation">Graphviz-Dot-Datei</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
-          <context context-type="linenumber">198</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="matrix.export.info" datatype="html">
         <source>Matrix wird exportiert...</source>
         <target state="needs-translation">Matrix wird exportiert...</target>

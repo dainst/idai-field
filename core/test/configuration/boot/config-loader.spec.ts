@@ -1008,7 +1008,7 @@ describe('ConfigLoader', () => {
     });
 
 
-    it('include all relations', async done => {
+    it('include all built-in relations', async done => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1079,6 +1079,82 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('isRecordedIn');
         expect(pconf.getCategory('B').groups[0].fields.length).toBe(1);
         expect(pconf.getCategory('B').groups[0].fields[0].name).toEqual('isSameAs');
+
+        done();
+    });
+
+
+    it('include custom relations', async done => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['isSimilarTo'] }
+                    ]
+                },
+                supercategory: true
+            },
+            B: {
+                fields: {},
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: [] }
+                    ]
+                },
+                supercategory: true
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': {
+                fields: {
+                    customRelation: {
+                        inputType: 'relation',
+                        range: ['B']
+                    }
+                },
+                groups: [
+                    { name: 'stem', fields: ['isSimilarTo', 'customRelation'] }
+                ]
+            },
+            'B': { fields: {} }
+        };
+
+        applyConfig();
+
+        let pconf;
+
+        try {
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
+                [
+                    {
+                        name: 'isSimilarTo',
+                        domain: ['A'],
+                        range: ['A'],
+                        inputType: 'relation'
+                    }
+                ],
+                {},
+                getConfigurationDocument(customForms),
+                true
+            );
+        } catch(err) {
+            fail(err);
+        }
+
+        expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);
+        expect(pconf.getCategory('A').groups[0].fields[0].name).toEqual('isSimilarTo');
+        expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('customRelation');
+        expect(pconf.getRelations()[0].name).toEqual('customRelation');
+        expect(pconf.getRelations()[0].domain.length).toBe(1);
+        expect(pconf.getRelations()[0].domain[0]).toBe('A');
+        expect(pconf.getRelations()[0].range.length).toBe(1);
+        expect(pconf.getRelations()[0].range[0]).toBe('B');
+        expect(pconf.getRelations()[1].name).toEqual('isSimilarTo');
 
         done();
     });

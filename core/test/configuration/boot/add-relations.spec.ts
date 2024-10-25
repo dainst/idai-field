@@ -2,6 +2,7 @@ import { Map } from 'tsfun';
 import { addRelations } from '../../../src/configuration/boot/add-relations';
 import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
 import { Relation } from '../../../src/model/configuration/relation';
+import { TransientFieldDefinition } from '../../../src/configuration/model/field/transient-field-definition';
 
 
 /**
@@ -252,5 +253,26 @@ describe('addRelations', () => {
         expect(relations[0].range[0]).toBe('T3');
         expect(relations[0].range.indexOf('T1')).toBe(-1);
         expect(relations[0].range.indexOf('T2')).toBe(-1);
+    });
+
+    
+    it('add a custom relation', () => {
+
+        const customRelation: TransientFieldDefinition = {
+            name: 'customRelation',
+            range: ['rangeA', 'rangeB'],
+            inputType: 'relation'
+        };
+
+        t1.fields['customRelation'] = customRelation;
+
+        const [, relations] = addRelations([])([forms, []]);
+
+        expect(relations[0].name).toBe('customRelation');
+        expect(relations[0].domain.length).toBe(1);
+        expect(relations[0].domain[0]).toBe('T1');
+        expect(relations[0].range.length).toBe(2);
+        expect(relations[0].range[0]).toBe('rangeA');
+        expect(relations[0].range[1]).toBe('rangeB');
     });
 });

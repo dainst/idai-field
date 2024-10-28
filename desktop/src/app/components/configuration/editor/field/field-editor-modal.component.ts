@@ -60,7 +60,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
-    public isRelationSectionVisible = () => this.getInputType() === Field.InputType.RELATION;
+    public isRelationSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.RELATION;
 
     public isCustomField = () => this.field.source === 'custom';
 

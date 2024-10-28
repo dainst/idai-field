@@ -251,7 +251,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
             || this.isSubfieldsChanged()
-            || !equal(this.getCustomFieldDefinition().range, this.getRange())
+            || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),

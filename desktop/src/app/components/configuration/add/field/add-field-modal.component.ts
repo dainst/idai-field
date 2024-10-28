@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels, ProjectConfiguration } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field/field-editor-modal.component';
@@ -28,6 +28,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
+    public clonedProjectConfiguration: ProjectConfiguration;
     public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<void>;
 
     public searchTerm: string = '';
@@ -137,6 +138,7 @@ export class AddFieldModalComponent {
         componentInstance.groupName = this.groupName;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.new = true;
         componentInstance.initialize();
 

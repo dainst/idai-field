@@ -102,6 +102,13 @@ export class ProjectConfiguration {
     }
 
 
+    public getTopLevelCategories(): Array<CategoryForm> {
+
+        return Tree.flatten(this.getCategories())
+            .filter(category => !category.parentCategory);
+    }
+
+
     public getHierarchyParentCategories(categoryName: string): Array<CategoryForm> {
 
         return this.getAllowedRelationRangeCategories('isRecordedIn', categoryName)

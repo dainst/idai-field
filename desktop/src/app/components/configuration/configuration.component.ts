@@ -100,10 +100,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'dimension', customFields: true },
         { name: 'literature', customFields: true },
         { name: 'composite', customFields: true },
-        { name: 'geometry'  },
-        { name: 'instanceOf' },
-        { name: 'relation' },
+        { name: 'relation', customFields: true },
         { name: 'derivedRelation' },
+        { name: 'instanceOf' },
+        { name: 'geometry' },
         { name: 'category' },
         { name: 'identifier' }
     ];
@@ -427,6 +427,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.availableInputTypes = field.source === 'custom'
             ? this.availableInputTypes.filter(inputType => inputType.customFields)
             : this.availableInputTypes;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
@@ -678,8 +679,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     private async loadCategories(selectedCategoriesFilterName?: string, selectedCategoryName?: string) {
 
-        this.topLevelCategoriesArray = Tree.flatten(this.clonedProjectConfiguration.getCategories())
-            .filter(category => !category.parentCategory);
+        this.topLevelCategoriesArray = this.clonedProjectConfiguration.getTopLevelCategories();
 
         if (this.selectedCategory) {
             this.selectCategory(this.clonedProjectConfiguration.getCategory(this.selectedCategory.name));

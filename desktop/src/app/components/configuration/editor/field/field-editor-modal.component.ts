@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, equal, isEmpty, Map } from 'tsfun';
+import { clone, equal, isEmpty, Map, set, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations } from 'idai-field-core';
+    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -27,6 +27,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
+    public clonedProjectConfiguration: ProjectConfiguration;
 
     public clonedField: Field|undefined;
     public hideable: boolean;
@@ -34,6 +35,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public i18nCompatible: boolean;
     public subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     public dragging: boolean;
+    public topLevelCategoriesArray: Array<CategoryForm>;
+    public selectedTargetCategoryNames: string[];
 
     protected changeMessage = $localize `:@@configuration.fieldChanged:Das Feld wurde geändert.`;
 
@@ -57,12 +60,16 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
+    public isRelationSectionVisible = () => this.getInputType() === Field.InputType.RELATION;
+
     public isCustomField = () => this.field.source === 'custom';
 
 
     public initialize() {
 
         super.initialize();
+
+        this.topLevelCategoriesArray = this.clonedProjectConfiguration.getTopLevelCategories();
 
         if (this.new) {
             this.getClonedFormDefinition().fields[this.field.name] = {
@@ -89,6 +96,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             result[subfield.name] = { label: subfield.label, description: subfield.description };
             return result;
         }, {}) ?? {};
+
+        this.initializeSelectedTargetCategories();
     }
 
 
@@ -123,6 +132,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {
                 this.subfieldI18nStrings[subfieldName] = {};
             });
+        }
+
+        if (this.isRelationSectionVisible()) {
+            this.getClonedFieldDefinition().range = this.getRange();
+        } else {
+            delete this.getClonedFieldDefinition().range;
         }
 
         await super.confirm(this.isValuelistChanged());
@@ -213,6 +228,21 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public toggleTargetCategory(category: CategoryForm) {
+        
+        if (this.selectedTargetCategoryNames.includes(category.name)) {
+            this.selectedTargetCategoryNames = this.selectedTargetCategoryNames.filter(categoryName => {
+                return categoryName != category.name
+                    && this.clonedProjectConfiguration.getCategory(categoryName).parentCategory?.name !== category.name
+                    && category.parentCategory?.name !== categoryName;
+            });
+        } else {
+            const categoryNames: string[] = [category].concat(category.children).map(to(Named.NAME));
+            this.selectedTargetCategoryNames = set(this.selectedTargetCategoryNames.concat(categoryNames));
+        }
+    }
+
+
     public isChanged(): boolean {
 
         return this.new
@@ -221,6 +251,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
             || this.isSubfieldsChanged()
+            || !equal(this.getCustomFieldDefinition().range, this.getRange())
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
@@ -260,6 +291,41 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 || !equal(subfield.description ?? {})(I18N.removeEmpty(this.subfieldI18nStrings[subfield.name]
                     ?.description ?? {}));
         }).length > 0;
+    }
+
+
+    private initializeSelectedTargetCategories() {
+
+        const range: string[] = this.getClonedFieldDefinition().range ?? [];
+
+        this.selectedTargetCategoryNames = range.reduce((result, entry) => {
+            if (entry.endsWith(':inherit')) { 
+                const categoryName = entry.replace(':inherit', '');
+                const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+                return result.concat([categoryName])
+                    .concat(category.children.map(to(Named.NAME)));
+            } else {
+                return result.concat([entry]);
+            }
+        }, []);
+    }
+
+
+    private getRange(): string[] {
+
+        const result: string[] = this.selectedTargetCategoryNames.filter(categoryName => {
+            const parentCategory: CategoryForm 
+                = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
+            return !parentCategory || !this.selectedTargetCategoryNames.includes(parentCategory.name);
+        }).map(categoryName => {
+            return this.clonedProjectConfiguration.getCategory(categoryName).children.length
+                ? categoryName + ':inherit'
+                : categoryName;
+        });
+
+        result.sort();
+
+        return result;
     }
 
 

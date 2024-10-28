@@ -169,6 +169,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.category = this.category;
         componentInstance.groupName = this.selectedGroup;
         componentInstance.availableInputTypes = this.availableInputTypes;

@@ -1,50 +1,50 @@
-# Field Mobile
+# Welcome to your Expo app 👋
 
-This package contains the mobile client for Field.
-The app is developed in [React Native](https://reactnative.dev/) and the [Expo CLI](https://expo.io/).
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Development
+## Get started
 
-Use the following commands to run the app for development in the browser (in the repository root):
+1. Install dependencies
 
+   ```bash
+   npm install
+   ```
+
+2. Start the app
+
+   ```bash
+    npx expo start
+   ```
+
+In the output, you'll find options to open the app in a
+
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
 ```
-    $ npm run bootstrap
-    $ cd core
-    $ npm run build
-    $ cd ../mobile
-    $ npm install --global expo-cli
-    $ npm start
-```
 
-## Run on (virtual) device
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-First run 
+## Learn more
 
-    $ npm start
+To learn more about developing your project with Expo, look at the following resources:
 
-to start expo cli. From here you can open the app on your mobile device by scanning displayed QR code. Or you can run the app on virtual devices (using Xcode or Android Studio simulators)
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Use Debugger in VSCode (Tested only with iOS devices)
+## Join the community
 
-1. Download [React Native Tools](https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native) extension.
-2. Launch "Debug in Exponent"
-3. Scan QR code on your real device
-4. Enable Remote Debugging on your device
+Join our community of developers creating universal apps.
 
-## Use React Native Debugger (Tested only with iOS devices)
-
-1. Download [React Native Debugger](https://github.com/jhen0409/react-native-debugger)
-2. Open React Native Debugger and press Cmd + T to open new tap
-3. Select port 19001
-4. Start expo app with expo start or npm start
-5. Open App on simulator or device and enable remote debugging
-6. React Native Debugger should connect to your application
-
-The source files to set the brakpoints are quite hidden in the React Native Debugger application. You can find them here: <br/>
-Sources -> RNDebuggerWorker.js -> 127.0.0.1:9001
-
-## Testing
-
-After bootstrapping the app use the following command to run the tests:
-
-    $ npm test
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

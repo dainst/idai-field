@@ -6,19 +6,6 @@ const defaultConfig = getDefaultConfig(__dirname);
 
 const customConfig = {
     resolver: {
-        sourceExts: [
-            'expo.ts',
-            'expo.tsx',
-            'expo.js',
-            'expo.jsx',
-            'ts',
-            'tsx',
-            'js',
-            'jsx',
-            'json',
-            'wasm',
-            'svg'
-        ],
         extraNodeModules: {
             'idai-field-core': path.resolve(__dirname, '../core')
         }

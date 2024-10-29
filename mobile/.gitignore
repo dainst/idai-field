@@ -10,7 +10,7 @@ coverage/**/*
 *.orig.*
 web-build/
 build/
-.vscode/.react/**/*
+.vscode/**/*
 .idea
 testdb/**
 *.apk

@@ -1,27 +1,19 @@
-import { Text, View } from 'react-native';
-import ProjectScreen from '@/old/src/components/Project/ProjectScreen';
-import SettingsScreen from '@/old/src/components/Settings/SettingsScreen';
+import { Text } from 'react-native';
 import usePreferences from '@/old/src/hooks/use-preferences';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
-    const preferences = usePreferences();
-    const currentProject = preferences.preferences.currentProject || {
-        url: "asd",
-        password: "asd",
-        connected: true,
-        mapSettings: {pointRadius:123},
-    }
-    
+  // const preferences = usePreferences();
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-        {/* {currentProject ? <ProjectScreen /> : <Text>Project not found</Text> } */}
-        <Text>Project not found</Text>
-    </View>
+      {/* {preferences.preferences.currentProject ? <ProjectScreen /> : <Text>Project not found</Text> } */}
+      <Text>Project</Text>
+    </SafeAreaView>
   );
 }

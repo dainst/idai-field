@@ -1,17 +1,16 @@
-import { Text, View } from 'react-native';
-import App from '@/old/App';
 import HomeScreen from '@/old/src/components/Home/HomeScreen';
-
+import { Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Index() {
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <Text>INDEX</Text>
-    </View>
+      <HomeScreen navigate={() => null} deleteProject={() => null} />
+    </SafeAreaView>
   );
 }

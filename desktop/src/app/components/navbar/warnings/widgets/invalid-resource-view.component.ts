@@ -103,7 +103,9 @@ export class InvalidResourceViewComponent implements OnChanges {
             : Document.getLabel(targetDocument, this.labels, this.projectConfiguration);
 
         return {
-            nameLabel: getNameLabel ? this.labels.getRelationLabel(relationName) : relationName,
+            nameLabel: getNameLabel
+                ? this.labels.getRelationLabel(relationName, this.projectConfiguration.getRelations())
+                : relationName,
             contentLabel
         };
     }

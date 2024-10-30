@@ -659,6 +659,6 @@ export class WarningsModalComponent {
         return this.labels.getFieldLabel(
             this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
             section.fieldName
-        ) ?? this.labels.getRelationLabel(section.fieldName)
+        ) ?? this.labels.getRelationLabel(section.fieldName, this.projectConfiguration.getRelations());
     }
 }

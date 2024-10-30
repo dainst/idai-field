@@ -148,7 +148,7 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress) => {
 
     const projectIdentifier = settings.dbs[0];
-    const labels: Labels = new Labels(new Languages().get, null);
+    const labels: Labels = new Labels(new Languages().get);
     const projectName = labels.getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
     await progress.setProjectName(

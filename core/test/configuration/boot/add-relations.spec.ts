@@ -79,7 +79,7 @@ describe('addRelations', () => {
 
         const r1: Relation = {
             name: 'R',
-            domain: ['T1:inherit'],
+            domain: ['T1'],
             range : ['rangeA'],
             editable: false,
             inputType: 'relation'
@@ -87,7 +87,7 @@ describe('addRelations', () => {
 
         const r2: Relation = {
             name: 'R',
-            domain: ['T1:inherit'],
+            domain: ['T1'],
             range: ['rangeA', 'rangeB', 'rangeC'],
             editable: false,
             inputType: 'relation'
@@ -136,11 +136,11 @@ describe('addRelations', () => {
     });
 
 
-    it('replace range :inherit with all subcategories', () => {
+    it('add subcategories to range', () => {
 
         const r: Relation = { name: 'R',
             domain: [ 'T3' ],
-            range: [ 'T1:inherit' ],
+            range: [ 'T1' ],
             editable: false,
             inputType: 'relation'
         };
@@ -171,16 +171,15 @@ describe('addRelations', () => {
 
         expect(relations[0].range.indexOf('T1')).not.toBe(-1);
         expect(relations[0].range.indexOf('T2')).not.toBe(-1);
-        expect(relations[0].range.indexOf('T1:inherit')).toBe(-1);
         expect(relations[0].domain[0]).toBe('T3');
     });
 
 
-    it('replace domain :inherit with all subcategories', () => {
+    it('add subcategories to domain', () => {
 
         const r: Relation = {
             name: 'R',
-            domain: ['T1:inherit'],
+            domain: ['T1'],
             range: ['T3'],
             editable: false,
             inputType: 'relation'
@@ -212,17 +211,15 @@ describe('addRelations', () => {
 
         expect(relations[0].domain.indexOf('T1')).not.toBe(-1);
         expect(relations[0].domain.indexOf('T2')).not.toBe(-1);
-        expect(relations[0].domain.indexOf('T1:inherit')).toBe(-1);
         expect(relations[0].range[0]).toBe('T3');
     });
 
 
-    // This test can detect problems coming from a wrong order of expandInherits and expandAllMarker calls
-    it('exclude the category and subcategories when using :inherit and total range', () => {
+    it('exclude the domain category and subcategories when filling empty range', () => {
 
         const r: Relation = {
             name: 'R',
-            domain: ['T1:inherit'],
+            domain: ['T1'],
             range: [],
             editable: false,
             inputType: 'relation'
@@ -250,9 +247,8 @@ describe('addRelations', () => {
         };
         const [, relations] = addRelations([r])([forms, []]);
 
+        expect(relations[0].range.length).toBe(1);
         expect(relations[0].range[0]).toBe('T3');
-        expect(relations[0].range.indexOf('T1')).toBe(-1);
-        expect(relations[0].range.indexOf('T2')).toBe(-1);
     });
 
     

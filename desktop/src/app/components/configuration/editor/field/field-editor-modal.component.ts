@@ -320,15 +320,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         const range: string[] = this.getClonedFieldDefinition().range ?? [];
 
-        this.selectedTargetCategoryNames = range.reduce((result, entry) => {
-            if (entry.endsWith(':inherit')) { 
-                const categoryName = entry.replace(':inherit', '');
-                const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
-                return result.concat([categoryName])
-                    .concat(category.children.map(to(Named.NAME)));
-            } else {
-                return result.concat([entry]);
-            }
+        this.selectedTargetCategoryNames = range.reduce((result, categoryName) => {
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            return result.concat([categoryName])
+                .concat(category.children.map(to(Named.NAME)));
         }, []);
     }
 
@@ -339,10 +334,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             const parentCategory: CategoryForm 
                 = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
             return !parentCategory || !this.selectedTargetCategoryNames.includes(parentCategory.name);
-        }).map(categoryName => {
-            return this.clonedProjectConfiguration.getCategory(categoryName).children.length
-                ? categoryName + ':inherit'
-                : categoryName;
         });
 
         result.sort();

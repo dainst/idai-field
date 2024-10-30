@@ -19,7 +19,7 @@ export function addRelations(builtInRelations: Array<Relation>) {
         const relationsToAdd = builtInRelations.concat(getCustomRelations(forms));
 
         for (let relationToAdd of relationsToAdd) {
-            expandInherits(forms, relationToAdd, Relation.DOMAIN);
+            addSubcategories(forms, relationToAdd, Relation.DOMAIN);
 
             relations.filter(on(Named.NAME)(relationToAdd))
                 .forEach((relation: any) => {
@@ -29,7 +29,7 @@ export function addRelations(builtInRelations: Array<Relation>) {
 
             relations.splice(0, 0, relationToAdd);
 
-            expandInherits(forms, relationToAdd, Relation.RANGE);
+            addSubcategories(forms, relationToAdd, Relation.RANGE);
             expandOnEmpty(forms, relationToAdd, Relation.RANGE);
             expandOnEmpty(forms, relationToAdd, Relation.DOMAIN);
         }
@@ -46,52 +46,40 @@ function getCustomRelations(forms: Map<TransientFormDefinition>): Array<Relation
         const relations = Object.values(form.fields).filter(field => {
             return field.inputType === Field.InputType.RELATION;
         });
-        relations.forEach(relation => addDomain(relation as Relation, form));
+        relations.forEach((relation: Relation) => relation.domain = [form.categoryName]);
         return result.concat(relations);
     }, []);
 }
 
 
-function addDomain(relation: Relation, form: TransientFormDefinition) {
+function addSubcategories(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: 'domain'|'range') {
 
-    let domainName: string = form.categoryName;
-    if (!form.parent) domainName += ':inherit';
-    relation.domain = [domainName];
-}
-
-
-function expandInherits(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: string) {
-
-    if (!relation) return;
-    if (!(relation as any)[itemSet]) return;
+    if (!relation?.[itemSet]) return;
 
     const newItems: string[] = [];
-    for (let item of (relation as any)[itemSet]) {
-        if (item.indexOf(':inherit') !== -1) {
-            for (let form of Object.values(forms)) {
-                if (form.parent === item.split(':')[0] && !newItems.includes(form.categoryName)) {
-                    newItems.push(form.categoryName);
-                }
+
+    for (let categoryName of relation[itemSet]) {
+        for (let form of Object.values(forms)) {
+            if (form.parent === categoryName && !newItems.includes(form.categoryName)) {
+                newItems.push(form.categoryName);
             }
-            newItems.push(item.split(':')[0]);
-        } else {
-            newItems.push(item);
         }
+        newItems.push(categoryName);
     }
+
     relation[itemSet] = newItems;
 }
 
 
-function expandOnEmpty(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: string) {
+function expandOnEmpty(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: 'domain'|'range') {
 
     if (not(isEmpty)(relation[itemSet])) return;
 
-    let opposite = Relation.RANGE;
-    if (itemSet === Relation.RANGE) opposite = Relation.DOMAIN;
+    const opposite: 'domain'|'range' = (itemSet === Relation.RANGE) ? Relation.DOMAIN : Relation.RANGE;
 
     relation[itemSet] = [];
     for (let form of Object.values(forms)) {
-        if (relation[opposite].indexOf(form.categoryName) === -1) {
+        if (!relation[opposite].includes(form.categoryName)) {
             relation[itemSet].push(form.categoryName);
         }
     }

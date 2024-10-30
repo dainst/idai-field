@@ -2303,8 +2303,8 @@ describe('buildRawProjectConfiguration', () => {
         const relationDefinitions: Array<Relation> = [{
             name: 'isAbove',
             inverse: 'isBelow',
-            domain: ['P:inherit'],
-            range: ['P:inherit'],
+            domain: ['P'],
+            range: ['P'],
             inputType: 'relation',
             sameMainCategoryResource: true
         }];

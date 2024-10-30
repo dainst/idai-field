@@ -243,8 +243,8 @@ describe('ConfigLoader', () => {
                         inputType: 'relation'
                     }, {
                         name: 'connection',
-                        domain: ['A:inherit'],
-                        range: ['B:inherit'],
+                        domain: ['A'],
+                        range: ['B'],
                         editable: false,
                         inputType: 'relation'
                     }],
@@ -906,7 +906,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go(
                 {}, builtInCategories,
-                [{ name: 'relation1', domain: ['A:inherit'], range: ['B'], inputType: 'relation' }],
+                [{ name: 'relation1', domain: ['A'], range: ['B'], inputType: 'relation' }],
                 {},
                 getConfigurationDocument(customForms)
             );

@@ -139,4 +139,19 @@
                              (onCategoryPicked)="toggleTargetCategory($event)"></category-picker>
         </div>
     </div>
+
+    <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.relation.inverse">
+            Gegenrelation
+        </div>
+        <select (change)="setInverseRelation($event.target.value)"
+                class="form-control">
+            <option value="" i18n="@@configuration.relation.inverse.none">Keine Gegenrelation</option>
+            <option *ngFor="let relationName of availableInverseRelations"
+                    [value]="relationName"
+                    [selected]="isSelectedInverseRelation(relationName)">
+                {{getRelationLabel(relationName)}}
+            </option>
+        </select>
+    </div>
 </div>

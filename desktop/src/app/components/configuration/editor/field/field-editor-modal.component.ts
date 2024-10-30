@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, equal, isEmpty, Map, set, to } from 'tsfun';
+import { clone, equal, intersection, isEmpty, Map, set, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named } from 'idai-field-core';
+    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Relation, Labels } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -37,6 +37,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public dragging: boolean;
     public topLevelCategoriesArray: Array<CategoryForm>;
     public selectedTargetCategoryNames: string[];
+    public availableInverseRelations: string[];
 
     protected changeMessage = $localize `:@@configuration.fieldChanged:Das Feld wurde geändert.`;
 
@@ -44,7 +45,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     constructor(activeModal: NgbActiveModal,
                 modals: Modals,
                 menuService: Menus,
-                messages: Messages) {
+                messages: Messages,
+                private labels: Labels) {
 
         super(activeModal, modals, menuService, messages);
     }
@@ -53,6 +55,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getCustomFieldDefinition = () => this.getCustomFormDefinition().fields[this.field.name];
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
+
+    public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
+        relationName, this.clonedProjectConfiguration.getRelations()
+    );
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType as Field.InputType ?? this.field.inputType
@@ -98,6 +104,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }, {}) ?? {};
 
         this.initializeSelectedTargetCategories();
+        this.updateAvailableInverseRelations();
     }
 
 
@@ -240,6 +247,20 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             const categoryNames: string[] = [category].concat(category.children).map(to(Named.NAME));
             this.selectedTargetCategoryNames = set(this.selectedTargetCategoryNames.concat(categoryNames));
         }
+
+        this.updateAvailableInverseRelations();
+    }
+
+
+    public setInverseRelation(relationName) {
+
+        this.getClonedFieldDefinition().inverse = relationName;
+    }
+
+
+    public isSelectedInverseRelation(relationName) {
+
+        return this.getClonedFieldDefinition().inverse === relationName;
     }
 
 
@@ -252,6 +273,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isConstraintIndexedChanged()
             || this.isSubfieldsChanged()
             || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
+            || this.getCustomFieldDefinition()?.inverse !== this.getClonedFieldDefinition().inverse
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
@@ -326,6 +348,27 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         result.sort();
 
         return result;
+    }
+
+
+    private updateAvailableInverseRelations() {
+
+        const relationNames: string[][] = this.selectedTargetCategoryNames
+            .map(categoryName => this.clonedProjectConfiguration.getCategory(categoryName))
+            .map(category => {
+                return CategoryForm.getFields(category)
+                    .filter(field => {
+                        return field.inputType === Field.InputType.RELATION
+                            && ((field as Relation).range.includes(this.category.name)
+                                || !(field as Relation).range.length)
+                    }).map(to(Named.NAME));
+            });
+        
+        this.availableInverseRelations = intersection(relationNames);
+        
+        if (!this.availableInverseRelations.includes(this.getClonedFieldDefinition().inverse)) {
+            delete this.getClonedFieldDefinition().inverse;
+        }
     }
 
 

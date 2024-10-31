@@ -12,10 +12,11 @@ import { defaultMapSettings } from '../Project/Map/map-settings';
 import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
 import LoadProjectModal from './LoadProjectModal';
+import { Href } from 'expo-router';
 
 interface HomeScreenProps {
     deleteProject: (project: string) => void;
-    navigate: (screen: string) => void;
+    navigate: (screen: Href) => void;
 }
 
 
@@ -42,7 +43,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
         setSelectedProject(project);
         preferences.setCurrentProject(project);
-        navigate('ProjectScreen');
+        navigate('/ProjectScreen');
     }, [navigate, preferences]);
 
     const onDeleteProject = useCallback((project: string) => {
@@ -58,7 +59,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         setSelectedProject(project);
         preferences.setCurrentProject(project);
         preferences.setProjectSettings(project, { url, password, connected: true, mapSettings: defaultMapSettings() });
-        navigate('LoadingScreen');
+        navigate('/LoadingScreen');
     },[navigate, preferences]);
 
     const usernameNotSet = () => preferences.preferences.username === '';
@@ -88,7 +89,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 }
                 <Button
                     icon={ <Ionicons name="settings" size={ 16 } /> }
-                    onPress={ () => navigate('SettingsScreen') }
+                    onPress={ () => navigate('/SettingsScreen') }
                     variant="transparent"
                 />
             </Row>
@@ -150,6 +151,7 @@ const renderRecentProjects = (
             { recentProjects.map(project =>
                 <Picker.Item label={ project } value={ project } key={ project } /> ) }
         </Picker>
+        <Column style={ styles.bottomRow }>
         <Row>
             <Button
                 style={ { marginRight: 5, flex: 1 } }
@@ -166,6 +168,7 @@ const renderRecentProjects = (
                 variant="danger"
             />
         </Row>
+        </Column>
     </Column>
 );
 
@@ -175,6 +178,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.containerBackground,
         padding: 5,
+        borderBlockColor:colors.danger,
     },
     topRow: {
         justifyContent: 'flex-end',
@@ -205,6 +209,10 @@ const styles = StyleSheet.create({
     bottomRow: {
         flex: 1,
         alignItems: 'stretch',
+    },
+    renderProject: {
+        flex: 1,
+        alignItems: 'center',
     },
     bottomRowButton: {
         flex: 1,

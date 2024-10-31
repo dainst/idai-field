@@ -26,19 +26,26 @@ export default usePouchDbDatastore;
 const buildpouchdbDatastore = async (
   project: string
 ): Promise<PouchdbDatastore> => {
-  const datastore = new PouchdbDatastore(
-    (name: string) => new PouchDB(name),
-    new IdGenerator()
-  );
-  await datastore.createDb(
-    project,
-    { _id: 'project', resource: { id: 'project' } },
-    project === 'test'
-  );
-  datastore.setupChangesEmitter();
-  if (project === 'test') {
-    const loader = new SampleDataLoaderBase('en');
-    await loader.go(datastore.getDb(), 'test');
+ 
+    const datastore = new PouchdbDatastore(
+      (name: string) => new PouchDB(name),
+      new IdGenerator()
+    );
+    try {
+    await datastore.createDb(
+      project,
+      { _id: 'project', resource: { id: 'project' } },
+      project === 'test'
+    );
+     } catch (error) {
+    console.log(error)
   }
-  return datastore;
+    datastore.setupChangesEmitter();
+    if (project === 'test') {
+      const loader = new SampleDataLoaderBase('en');
+      await loader.go(datastore.getDb(), 'test');
+    }
+    return datastore;
+ 
+  
 };

@@ -1,6 +1,7 @@
 import HomeScreen from '@/old/src/components/Home/HomeScreen';
 import { Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Href, router } from 'expo-router';
 export default function Index() {
   return (
     <SafeAreaView
@@ -10,7 +11,8 @@ export default function Index() {
         alignItems: 'center',
       }}
     >
-      <HomeScreen navigate={() => null} deleteProject={() => null} />
+      <HomeScreen navigate={(screen: Href) =>
+                          router.navigate(screen)} deleteProject={() => null} />
     </SafeAreaView>
   );
 }

@@ -158,18 +158,20 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public setInputType(newInputType: string) {
+    public setInputType(newInputType: Field.InputType) {
 
         if (!this.availableInputTypes.find(inputType => inputType.name === newInputType).searchable) {
             delete this.getClonedFieldDefinition().constraintIndexed;
         }
         if (newInputType === this.field.inputType && !this.getCustomFieldDefinition()?.inputType) {
             delete this.getClonedFieldDefinition().inputType;
+            this.clonedField.inputType = this.field.inputType;
             if (this.getCustomFieldDefinition()?.constraintIndexed) {
                 this.getClonedFieldDefinition().constraintIndexed = this.field.constraintIndexed;
             }
         } else {
             this.getClonedFieldDefinition().inputType = newInputType;
+            this.clonedField.inputType = newInputType;
         }
     }
 
@@ -379,7 +381,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription,
-            this.category, this.field
+            this.category, this.clonedField
         );
 
         Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {

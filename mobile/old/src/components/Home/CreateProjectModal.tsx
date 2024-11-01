@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Modal } from 'react-native';
+import { Modal, View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../common/Button';
 import Heading from '../common/Heading';
@@ -30,7 +30,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
   };
 
   return (
-      <Modal style={{paddingTop:40}} onRequestClose={onCancel} animationType="slide">
+    <Modal onRequestClose={onCancel} animationType="slide">
+      <SafeAreaView>
         <TitleBar
           title={<Heading>Create project</Heading>}
           left={
@@ -50,32 +51,39 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
             />
           }
         />
-          <SafeAreaView>
-        <Input
-          testID="project-input"
-          label="Project name"
-          value={project}
-          onChangeText={setProject}
-          autoCapitalize="none"
-          autoCompleteType="off"
-          autoCorrect={false}
-          autoFocus
-          helpText="The project name is the unique identifier for the project.
+        <View style={styles.formContainer}>
+          <Input
+            testID="project-input"
+            label="Project name"
+            value={project}
+            onChangeText={setProject}
+            autoCapitalize="none"
+            autoCompleteType="off"
+            autoCorrect={false}
+            autoFocus
+            helpText="The project name is the unique identifier for the project.
                     Make sure to use the exact same project name if you intend to sync
                     to other instances of Field."
-          invalidText="Project name must not be empty."
-          isValid={project !== ''}
-          style={{ margin: 10 }}
-        />
-          <Button
-              title="Create"
-              variant="success"
-              onPress={onCreate}
-              isDisabled={!project}
-            />
-             </SafeAreaView>
-      </Modal>
+            invalidText="Project name must not be empty."
+            isValid={project !== ''}
+          />
+          {/* <Button
+          title="Create"
+          variant="success"
+          onPress={onCreate}
+          isDisabled={!project}
+        /> */}
+        </View>
+      </SafeAreaView>
+    </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  formContainer: {
+    alignItems: 'stretch',
+    padding: 40,
+  },
+});
 
 export default CreateProjectModal;

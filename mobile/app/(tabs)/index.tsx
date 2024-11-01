@@ -6,12 +6,11 @@ export default function Index() {
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <HomeScreen navigate={(screen: Href) =>
-                          router.navigate(screen)} deleteProject={() => null} />
+      <HomeScreen navigate={router.navigate} deleteProject={() => null} />
     </SafeAreaView>
   );
 }

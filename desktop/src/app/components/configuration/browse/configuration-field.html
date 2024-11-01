@@ -21,7 +21,7 @@
         <p *ngIf="description" class="card-text">{{description}}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="input-type-colon">:</span>
+                <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="oneliner-colon">:</span>
                 <span>{{getInputTypeLabel()}}</span>
             </li>
             <li *ngIf="field.valuelist" class="list-group-item">
@@ -41,6 +41,10 @@
                                    size="25"></category-icon>
                     <span class="target-category-label">{{getCategoryLabel(categoryName)}}</span>
                 </div>
+            </li>
+            <li *ngIf="getInverseRelation()" class="list-group-item">
+                <b i18n="@@configuration.relation.inverse">Gegenrelation</b><span class="oneliner-colon">:</span>
+                <span>{{getRelationLabel(getInverseRelation())}}</span>
             </li>
         </ul>
     </div>

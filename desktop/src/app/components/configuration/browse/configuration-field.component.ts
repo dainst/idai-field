@@ -44,10 +44,20 @@ export class ConfigurationFieldComponent implements OnChanges {
 
 
     public getFieldId = () => 'field-' + this.field.name.replace(':', '-');
+
+    public getInputTypeLabel = () => getInputTypeLabel(
+        this.field.inputType, this.utilTranslations
+    );
     
     public getCategoryLabel = (categoryName: string) => this.labels.get(
         this.clonedProjectConfiguration.getCategory(categoryName)
     );
+
+    public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
+        relationName, this.clonedProjectConfiguration.getRelations()
+    );
+
+    public getInverseRelation = () => (this.field as Relation).inverse;
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -59,10 +69,6 @@ export class ConfigurationFieldComponent implements OnChanges {
         );
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
-
-    public getInputTypeLabel = () => getInputTypeLabel(
-        this.field.inputType, this.utilTranslations
-    );
 
 
     ngOnChanges() {

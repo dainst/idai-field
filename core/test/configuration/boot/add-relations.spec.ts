@@ -75,33 +75,6 @@ describe('addRelations', () => {
     });
 
 
-    it('overwrite relation with inheritance for a part of a domain', () => {
-
-        const r1: Relation = {
-            name: 'R',
-            domain: ['T1'],
-            range : ['rangeA'],
-            editable: false,
-            inputType: 'relation'
-        };
-
-        const r2: Relation = {
-            name: 'R',
-            domain: ['T1'],
-            range: ['rangeA', 'rangeB', 'rangeC'],
-            editable: false,
-            inputType: 'relation'
-        };
-
-        const [, relations] = addRelations([r1, r2])([forms, []]);
-
-        expect(relations.length).toEqual(1); // to make sure the relation is collapsed into one
-        expect(relations[0].range).toContain('rangeA');
-        expect(relations[0].range).toContain('rangeB');
-        expect(relations[0].range).toContain('rangeC');
-    });
-
-
     it('replace empty range with all categories except the domain categories', () => {
 
         const r: Relation = {

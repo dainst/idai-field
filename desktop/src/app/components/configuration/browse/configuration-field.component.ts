@@ -94,7 +94,7 @@ export class ConfigurationFieldComponent implements OnChanges {
         
         return range?.filter(categoryName => {
             const parentCategory = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
-            return !parentCategory || !range.includes(categoryName);
+            return !parentCategory || !range.includes(parentCategory.name);
         });
     }
 

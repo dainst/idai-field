@@ -119,6 +119,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add([M.CONFIGURATION_ERROR_NO_SUBFIELDS]);
         }
 
+        if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES]);
+        }
+
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {

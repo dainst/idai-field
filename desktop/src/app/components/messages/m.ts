@@ -266,6 +266,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
     public static CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION = 'configuration.error.unsupportedVersion';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
+    public static CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES = 'configuration.error.noAllowedTargetCategories';
 
     // Matrix Package
     public static MATRIX_ERROR_GENERIC = 'matrix.error.generic';
@@ -1124,6 +1125,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES] = {
             content: $localize `:@@messages.configuration.error.noProjectLanguages:Bitte wählen Sie mindestens eine Projektsprache aus.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES] = {
+            content: $localize `:@@configuration.error.noAllowedTargetCategories:Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.`,
             level: 'danger'
         };
         this.msgs[M.MATRIX_ERROR_GENERIC] = {

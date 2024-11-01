@@ -27,7 +27,6 @@ export interface ConfigurationDocument extends Document {
 
 export namespace ConfigurationDocument {
 
-
     export async function getConfigurationDocument(getFunction: (id: string) => Promise<Document>,
                                                    configReader: ConfigReader,
                                                    projectIdentifier: string,

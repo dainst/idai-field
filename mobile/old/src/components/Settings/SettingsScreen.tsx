@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+// import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import React, { useContext, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AppParamList } from '../../../App';
+// import { AppParamList } from '../../../App';
 import { PreferencesContext } from '../../contexts/preferences-context';
 import Button from '../common/Button';
 import Column from '../common/Column';

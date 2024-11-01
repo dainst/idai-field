@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { getDefaultConfig } = require('@expo/metro-config');
 const { mergeConfig } = require('metro-config');
 const path = require('path');

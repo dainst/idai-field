@@ -3,7 +3,7 @@ import {
   CategoryForm,
   Field,
   Group,
-  Groups,
+  // Groups,
   NewResource,
   Resource,
 } from 'idai-field-core';

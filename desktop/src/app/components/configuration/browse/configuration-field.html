@@ -1,5 +1,5 @@
 <div *ngIf="field && category"
-     [id]="getFieldId(field)"
+     [id]="getFieldId()"
      class="card"
      [class.custom]="highlightAsCustomField()"
      [class.hidden-element]="hidden"
@@ -32,6 +32,15 @@
                     Die Werteliste für dieses Feld entspricht den Einträgen im Feld 
                     <code>{{field.valuelistFromProjectField}}</code> der Projekteinstellungen.
                 </span>
+            </li>
+            <li *ngIf="getRange()" class="list-group-item">
+                <b i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</b>:
+                <div *ngFor="let categoryName of getRange()" class="target-category">
+                    <category-icon [category]="categoryName"
+                                   [customProjectConfiguration]="clonedProjectConfiguration"
+                                   size="25"></category-icon>
+                    <span class="target-category-label">{{getCategoryLabel(categoryName)}}</span>
+                </div>
             </li>
         </ul>
     </div>

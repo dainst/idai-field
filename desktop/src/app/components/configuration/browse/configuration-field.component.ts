@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
-import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels, ProjectConfiguration,
+    Relation } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -20,6 +21,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     @Input() category: CategoryForm;
     @Input() field: Field;
     @Input() configurationDocument: ConfigurationDocument;
+    @Input() clonedProjectConfiguration: ProjectConfiguration;
     @Input() hidden: boolean;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
@@ -41,16 +43,11 @@ export class ConfigurationFieldComponent implements OnChanges {
                 private settingsProvider: SettingsProvider) {}
 
 
-    public getFieldId = (field: Field) => 'field-' + field.name.replace(':', '-');
-
-
-    ngOnChanges() {
-
-        if (!this.category || !this.field) return;
-
-        this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
-        this.updateLabelAndDescription();
-    }
+    public getFieldId = () => 'field-' + this.field.name.replace(':', '-');
+    
+    public getCategoryLabel = (categoryName: string) => this.labels.get(
+        this.clonedProjectConfiguration.getCategory(categoryName)
+    );
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -68,11 +65,31 @@ export class ConfigurationFieldComponent implements OnChanges {
     );
 
 
+    ngOnChanges() {
+
+        if (!this.category || !this.field) return;
+
+        this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
+        this.updateLabelAndDescription();
+    }
+
+
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
 
         return this.configurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name]
             .fields[this.field.name];
+    }
+
+
+    public getRange(): string[] {
+        
+        const range: string[] = (this.field as Relation).range;
+        
+        return range?.filter(categoryName => {
+            const parentCategory = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
+            return !parentCategory || !range.includes(categoryName);
+        });
     }
 
 

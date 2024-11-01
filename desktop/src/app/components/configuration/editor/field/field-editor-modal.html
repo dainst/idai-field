@@ -128,9 +128,8 @@
 
 
     <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.relation.targetCategories">
-            Erlaubte Zielkategorien
-        </div>
+        <div class="configuration-editor-section-title"
+             i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</div>
         <div id="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
                              [selectedCategories]="selectedTargetCategoryNames"

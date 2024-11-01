@@ -76,6 +76,20 @@ configuration-field {
       margin-right: 4px;
     }
 
+    .target-category {
+      position: relative;
+      left: 10px;
+      margin-top: 8px;
+
+      .target-category-label {
+        margin-left: 5px;
+      }
+
+      &:first-of-type {
+        margin-top: 5px;
+      }
+    }
+
     &.hidden-element {
       b,
       code,

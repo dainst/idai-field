@@ -1,8 +1,8 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { PreferencesContext } from '@/old/src/contexts/preferences-context';
-import usePreferences from '@/old/src/hooks/use-preferences';
+import { PreferencesContext } from '@/contexts/preferences-context';
+import usePreferences from '@/hooks/use-preferences';
 
 export default function TabLayout() {
   const preferences = usePreferences();
@@ -34,6 +34,15 @@ export default function TabLayout() {
               title: 'Project',
               tabBarIcon: ({ color }) => (
                 <FontAwesome size={28} name="edit" color={color} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="LoadingScreen"
+            options={{
+              title: 'Loading',
+              tabBarIcon: ({ color }) => (
+                <FontAwesome size={28} name="server" color={color} />
               ),
             }}
           />

@@ -1,8 +1,8 @@
 import { Text } from 'react-native';
-import usePreferences from '@/old/src/hooks/use-preferences';
+import usePreferences from '@/hooks/use-preferences';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import usePouchDbDatastore from '@/old/src/hooks/use-pouchdb-datastore';
-import ProjectScreen from '@/old/src/components/Project/ProjectScreen';
+import usePouchDbDatastore from '@/hooks/use-pouchdb-datastore';
+import ProjectScreen from '@/components/Project/ProjectScreen';
 
 export default function Index() {
   const preferences = usePreferences();

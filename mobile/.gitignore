@@ -14,6 +14,8 @@ build/
 .idea
 testdb/**
 *.apk
+.yalc
+yalc.lock
 
 # macOS
 .DS_Store

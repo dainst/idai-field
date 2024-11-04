@@ -1,6 +1,10 @@
 import { IdGenerator, PouchdbDatastore, SampleDataLoaderBase } from 'idai-field-core';
-import PouchDB from 'pouchdb-react-native';
 import { useEffect, useState } from 'react';
+import PouchDB from 'pouchdb-core'
+
+PouchDB.plugin(require('@neighbourhoodie/pouchdb-asyncstorage-adapter').default)
+
+
 
 const usePouchDbDatastore = (project: string): PouchdbDatastore | undefined => {
   const [pouchdbDatastore, setpouchdbDatastore] = useState<PouchdbDatastore>();
@@ -32,14 +36,22 @@ const buildpouchdbDatastore = async (
       new IdGenerator()
     );
     try {
-    await datastore.createDb(
+    const db = await datastore.createDb(
       project,
       { _id: 'project', resource: { id: 'project' } },
       project === 'test'
     );
+    const result = await db.allDocs({
+      include_docs: true,
+      attachments: true
+    });
+    result.rows.forEach(row=>console.log(row))
+    console.log(result.rows)
      } catch (error) {
     console.log(error)
+    throw error
   }
+  
     datastore.setupChangesEmitter();
     if (project === 'test') {
       const loader = new SampleDataLoaderBase('en');

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, equal, intersection, isEmpty, Map, set, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Relation, Labels } from 'idai-field-core';
+    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
+    CustomFieldDefinition } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -145,10 +146,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             });
         }
 
+        if (this.getCustomFieldDefinition()?.inverse) this.deleteInverseRelations();
+
         if (this.isRelationSectionVisible()) {
             this.getClonedFieldDefinition().range = this.getRange();
+            if (this.getClonedFieldDefinition().inverse) this.updateInverseRelations();
         } else {
             delete this.getClonedFieldDefinition().range;
+            delete this.getClonedFieldDefinition().inverse;
         }
 
         await super.confirm(this.isValuelistChanged());
@@ -350,15 +355,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private updateAvailableInverseRelations() {
 
-        const relationNames: string[][] = this.selectedTargetCategoryNames
-            .map(categoryName => this.clonedProjectConfiguration.getCategory(categoryName))
-            .map(category => {
-                return CategoryForm.getFields(category)
-                    .filter(field => {
-                        return field.inputType === Field.InputType.RELATION
-                            && ((field as Relation).range.includes(this.category.name)
-                                || !(field as Relation).range.length)
-                    }).map(to(Named.NAME));
+        const relationNames: string[][] = this.getRange()
+            .map(categoryName => { 
+                const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+                const formDefinition: CustomFormDefinition = this.getClonedFormDefinition(category);
+
+                return Object.keys(formDefinition.fields)
+                    .filter(fieldName => {
+                        const fieldDefinition: CustomFieldDefinition = formDefinition.fields[fieldName];
+                        return fieldDefinition.inputType === Field.InputType.RELATION
+                            && this.isValidInverseRelation(
+                                fieldDefinition, categoryName, this.category.name, fieldName
+                            );
+                    });
             });
         
         this.availableInverseRelations = intersection(relationNames);
@@ -366,6 +375,70 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (!this.availableInverseRelations.includes(this.getClonedFieldDefinition().inverse)) {
             delete this.getClonedFieldDefinition().inverse;
         }
+    }
+
+
+    private isValidInverseRelation(relationDefinition: CustomFieldDefinition, domain: string, expectedRange: string,
+                                   inverseRelationName: string, inverse: boolean = true,
+                                   checkedCategories: Map<string[]> = {}): boolean {
+
+        const range: string[] = relationDefinition === this.getClonedFieldDefinition()
+            ? this.getRange()
+            : relationDefinition?.range;
+
+        if (!range?.includes(expectedRange)) {
+            return false;
+        } else {
+            if (!checkedCategories[domain]) checkedCategories[domain] = [];
+            checkedCategories[domain].push(expectedRange);
+            for (let categoryName of range) {
+                if (checkedCategories[categoryName]?.includes(domain)) continue;
+    
+                const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+                const relationToCheck: string = inverse ? this.field.name : inverseRelationName;
+                const fieldDefinition: CustomFieldDefinition = this.getClonedFormDefinition(category)
+                    .fields[relationToCheck];
+                if (!this.isValidInverseRelation(
+                    fieldDefinition, categoryName, domain, inverseRelationName, !inverse, checkedCategories
+                )) return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    private deleteInverseRelations(categoryNames: string[] = this.getCustomFieldDefinition().range ?? [],
+                                   inverse: boolean = false) {
+        
+        const relationToEdit: string = inverse ? this.field.name : this.getCustomFieldDefinition().inverse;
+
+        categoryNames.forEach(categoryName => {
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            const fieldDefinition: CustomFieldDefinition = this.getClonedFormDefinition(category)
+                .fields[relationToEdit];
+            if (fieldDefinition.inverse) {
+                delete fieldDefinition.inverse;
+                this.deleteInverseRelations(fieldDefinition.range, !inverse);
+            }
+        });
+    }
+
+
+    private updateInverseRelations(categoryNames: string[] = this.getRange(), inverse: boolean = false) {
+
+        const relationToEdit: string = inverse ? this.field.name : this.getClonedFieldDefinition().inverse;
+        const relationToSet: string = inverse ? this.getClonedFieldDefinition().inverse : this.field.name;
+
+        categoryNames.forEach(categoryName => {
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            const fieldDefinition: CustomFieldDefinition = this.getClonedFormDefinition(category)
+                .fields[relationToEdit];
+            if (fieldDefinition.inverse !== relationToSet) {
+                fieldDefinition.inverse = relationToSet;
+                this.updateInverseRelations(fieldDefinition.range, !inverse);
+            }
+        });
     }
 
 

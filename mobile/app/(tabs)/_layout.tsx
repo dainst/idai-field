@@ -37,15 +37,6 @@ export default function TabLayout() {
               ),
             }}
           />
-          <Tabs.Screen
-            name="LoadingScreen"
-            options={{
-              title: 'Loading',
-              tabBarIcon: ({ color }) => (
-                <FontAwesome size={28} name="server" color={color} />
-              ),
-            }}
-          />
         </Tabs>
       </PreferencesContext.Provider>
     </SafeAreaProvider>

@@ -3,7 +3,7 @@
     <h5 *ngIf="!isDeletionAllowed()" class="modal-title" i18n="@@configuration.deleteField.header.notAllowed">Feld löschen nicht möglich</h5>
 </div>
 
-<div class="modal-body">
+<div class="modal-body configuration-delete-modal-body">
     <span *ngIf="isDeletionAllowed()"
           i18n="@@configuration.deleteField.body">Möchten Sie das Feld <code>{{field.name}}</code> wirklich löschen?</span>
     <span *ngIf="!isDeletionAllowed()"

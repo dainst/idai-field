@@ -57,10 +57,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
-    public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
-        relationName, this.clonedProjectConfiguration.getRelations()
-    );
-
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType as Field.InputType ?? this.field.inputType
     ) && !this.field.valuelistFromProjectField;
@@ -243,6 +239,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         return Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
             && !['staff', 'campaigns'].includes(this.field.name);
+    }
+
+
+    public getRelationLabel(relationName: string) {
+
+        if (relationName === this.field.name) {
+            const label: string = this.labels.getFromI18NString(this.clonedLabel);
+            return label?.length ? label : relationName;
+        } else {
+            return this.labels.getRelationLabel(relationName, this.clonedProjectConfiguration.getRelations());
+        }
     }
 
 

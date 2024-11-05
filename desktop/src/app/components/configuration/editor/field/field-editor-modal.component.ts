@@ -76,7 +76,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (this.new) {
             this.getClonedFormDefinition().fields[this.field.name] = {
-                inputType: 'input',
+                inputType: this.field.inputType,
                 constraintIndexed: false
             };
             this.clonedConfigurationDocument = ConfigurationDocument.addField(
@@ -152,7 +152,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFieldDefinition().inverse;
         }
 
-        await super.confirm(this.isValuelistChanged());
+        await super.confirm(this.isValuelistChanged() || this.getInputType() === Field.InputType.RELATION);
     }
 
 

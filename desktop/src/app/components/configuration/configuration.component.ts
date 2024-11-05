@@ -603,7 +603,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteField(
                 this.configurationDocument, category, field
             );
-            await this.updateProjectConfiguration(changedConfigurationDocument);
+            await this.updateProjectConfiguration(changedConfigurationDocument, true);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);

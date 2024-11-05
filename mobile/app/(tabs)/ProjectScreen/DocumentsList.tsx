@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Document } from 'idai-field-core';
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import Button from '@/components/common/Button';
 import DocumentButton from '@/components/common/DocumentButton';
 import Row from '@/components/common/Row';
@@ -13,7 +13,7 @@ interface DocumentsListProps {
 }
 
 const DocumentsList: React.FC<DocumentsListProps> = ({
-  documents,
+  documents =[],
   onDocumentSelected,
   onParentSelected,
 }) => {
@@ -23,17 +23,18 @@ const DocumentsList: React.FC<DocumentsListProps> = ({
 
   return (
     <ScrollView>
+      <Text>Hello</Text>
       {documents.map((document) => (
         <Row style={styles.row} key={document.resource.id}>
           <DocumentButton
             style={styles.documentButton}
             document={document}
-            onPress={() => onDocumentSelected(document)}
+            onPress={() => console.log(document)}
             size={25}
           />
           <Button
             variant="transparent"
-            onPress={() => onDrillDown(document)}
+            onPress={() => console.log(document)}
             icon={<Ionicons name="chevron-forward" size={18} />}
           />
         </Row>

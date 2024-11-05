@@ -7,8 +7,7 @@ import ProjectScreen from '@/components/Project/ProjectScreen';
 export default function Index() {
   const preferences = usePreferences();
   const pouchdbDatastore = usePouchDbDatastore('');
-  console.log(preferences.preferences.currentProject)
-  console.log(pouchdbDatastore)
+  
   return (
     <SafeAreaView
       style={{

@@ -11,13 +11,13 @@ import DocumentRemoveModal from './DocumentRemoveModal';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';
 import SearchBar from './SearchBar';
-
+import { router } from 'expo-router';
 interface DocumentsMapProps {
-  route: RouteProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
-  navigation: DrawerNavigationProp<
-    DocumentsContainerDrawerParamList,
-    'DocumentsMap'
-  >;
+  // route: RouteProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
+  // navigation: DrawerNavigationProp<
+  //   DocumentsContainerDrawerParamList,
+  //   'DocumentsMap'
+  // >;
   repository: DocumentRepository;
   documents: Document[];
   syncStatus: SyncStatus;
@@ -28,8 +28,6 @@ interface DocumentsMapProps {
 }
 
 const DocumentsMap: React.FC<DocumentsMapProps> = ({
-  route,
-  navigation,
   repository,
   documents,
   syncStatus,
@@ -42,10 +40,13 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState<boolean>(false);
   const [highlightedDoc, setHighlightedDoc] = useState<Document>();
   const { showToast } = useToast();
+  const {navigate} = router;
 
   const toggleDrawer = useCallback(
-    () => navigation.toggleDrawer(),
-    [navigation]
+    () => toggleDrawer(),
+    [
+      
+    ]
   );
 
   const onQrCodeScanned = useCallback(
@@ -53,7 +54,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
       repository
         .find({ constraints: { 'identifier:match': data } })
         .then(({ documents: [doc] }) =>
-          navigation.navigate('DocumentEdit', {
+          navigate('DocumentEdit', {
             docId: doc.resource.id,
             categoryName: doc.resource.category,
           })
@@ -73,7 +74,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   };
 
   const handleEditDocument = (docId: string, categoryName: string) =>
-    navigation.navigate('DocumentEdit', { docId, categoryName });
+    navigate('DocumentEdit', { docId, categoryName });
 
   const closeAddModal = () => setIsAddModalOpen(false);
 
@@ -96,7 +97,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         .then(() => {
           setIsDeleteModelOpen(false);
           showToast(ToastType.Info, `Removed ${identifier}`);
-          navigation.navigate(
+          navigate(
             'DocumentsMap',
             isRecordedIn ? { highlightedDocId: isRecordedIn } : {}
           );
@@ -114,7 +115,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   ) => {
     closeAddModal();
     if (parentDoc)
-      navigation.navigate('DocumentAdd', { parentDoc, categoryName });
+      navigate('DocumentAdd', { parentDoc, categoryName });
   };
 
   return (
@@ -149,7 +150,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             () => documents.map((doc) => doc.resource.id),
             [documents]
           )}
-          highlightedDocId={route.params?.highlightedDocId}
+          // highlightedDocId={route.params?.highlightedDocId}
           addDocument={handleAddDocument}
           editDocument={handleEditDocument}
           removeDocument={openRemoveDocument}

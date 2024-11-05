@@ -49,6 +49,7 @@ export class DocumentRepository {
       relations: [],
       commonFields: {},
       valuelists: {},
+      projectLanguages:[],
     });
     const [datastore, changesStream] = await buildDatastore(
       categoryForms,
@@ -117,6 +118,7 @@ const buildDatastore = async (
       indexFacade,
       documentCache,
       converter,
+      projectConfiguration,
       () => username
     ),
     new ChangesStream(
@@ -124,6 +126,7 @@ const buildDatastore = async (
       indexFacade,
       documentCache,
       converter,
+      projectConfiguration,
       () => username
     ),
   ];

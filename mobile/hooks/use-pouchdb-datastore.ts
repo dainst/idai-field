@@ -16,7 +16,7 @@ const usePouchDbDatastore = (project: string): PouchdbDatastore | undefined => {
     });
     return () => {
       managerPromise.then((manager) => {
-        console.log('close', manager.getDb().name);
+        // console.log('close', manager.getDb().name);
         manager.close();
       });
     };
@@ -41,12 +41,12 @@ const buildpouchdbDatastore = async (
       { _id: 'project', resource: { id: 'project' } },
       project === 'test'
     );
-    const result = await db.allDocs({
+     db.allDocs({
       include_docs: true,
       attachments: true
     });
-    result.rows.forEach(row=>console.log(row))
-    console.log(result.rows)
+    // result.rows.forEach(row=>console.log(row))
+    // console.log(result.rows)
      } catch (error) {
     console.log(error)
     throw error

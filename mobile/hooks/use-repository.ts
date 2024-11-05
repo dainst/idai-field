@@ -12,10 +12,10 @@ const useRepository = (
   const [repository, setRepository] = useState<DocumentRepository>();
 
   useEffect(() => {
-    if (!pouchdbDatastore || !pouchdbDatastore.open || !categories) return;
+    if (!pouchdbDatastore  || !categories) return;
 
     setupRepository(username, categories, pouchdbDatastore, setRepository);
-  }, [username, categories, pouchdbDatastore, pouchdbDatastore?.open]);
+  }, [username, categories, pouchdbDatastore]);
 
   return repository;
 };

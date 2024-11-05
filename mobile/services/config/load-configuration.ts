@@ -5,6 +5,7 @@ import {
   getConfigurationName,
   PouchdbDatastore,
   ProjectConfiguration,
+  ConfigurationDocument,
 } from 'idai-field-core';
 
 const loadConfiguration = async (
@@ -13,11 +14,15 @@ const loadConfiguration = async (
   languages: string[],
   username: string
 ): Promise<ProjectConfiguration> => {
-  const customConfigName = getConfigurationName(project);
+  const configReader =  new ConfigReader()
+  // const customConfigName = getConfigurationName(project);
+  const db = pouchdbDatastore.getDb()
+ const config = await ConfigurationDocument.getConfigurationDocument((id: string) => db.get(id),configReader,project,username)
+
   const configurator = new AppConfigurator(
-    new ConfigLoader(new ConfigReader(), pouchdbDatastore)
+    new ConfigLoader(new ConfigReader())
   );
-  return await configurator.go(username, customConfigName);
+  return await configurator.go(username, config);
 };
 
 export default loadConfiguration;

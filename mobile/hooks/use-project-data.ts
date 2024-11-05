@@ -37,7 +37,7 @@ const useProjectData = (
       .getOperationCategories()
       .map(Named.toName);
     const concreteCategories = config
-      .getConcreteFieldCategories()
+      .getConcreteOverviewCategories()
       .map(Named.toName);
 
     if (q) {

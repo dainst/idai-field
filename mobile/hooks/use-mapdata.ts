@@ -139,6 +139,7 @@ const useMapData = (
   };
 
   useEffect(() => {
+
     repository
       .find(geoDocSearchQuery)
       .then((result) => setGeoDocuments(result.documents))

@@ -61,7 +61,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     popFromHierarchy,
     isInOverview,
   } = useProjectData(repository, q);
-
+  // repository.create({_id:'hello',})
   const hierarchyNavigationRef = useRef<NavigationContainerRef>(null);
 
   const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
@@ -91,65 +91,78 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     setHierarchyBack(true);
     popFromHierarchy();
   };
-
-  return (
-    <Drawer.Navigator
-      drawerType={orientation === 'landscape' ? 'permanent' : 'front'}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      drawerContent={({ navigation }: { navigation: any }) => {
-        return (
-          <DocumentsDrawer
-            hierarchyNavigationRef={hierarchyNavigationRef}
-            documents={documents}
-            currentParent={last(hierarchyPath)}
-            onDocumentSelected={(doc) => onDocumentSelected(doc, navigation)}
-            onHomeButtonPressed={() => navigation.navigate('HomeScreen')}
-            onSettingsButtonPressed={() =>
-              navigation.navigate('SettingsScreen')
-            }
-            onParentSelected={(doc) => onParentSelected(doc, navigation)}
-            onHierarchyBack={onHierarchyBack}
-          />
-        );
-      }}
-    >
-      <Drawer.Screen name="DocumentsMap">
-        {({ navigation, route }) => (
-          <DocumentsMap
-            route={route}
-            navigation={navigation}
-            repository={repository}
-            documents={documents}
-            issueSearch={setQ}
-            syncStatus={syncStatus}
-            relationsManager={relationsManager}
-            isInOverview={isInOverview}
-            selectParent={(doc) => onParentSelected(doc, navigation)}
-          />
-        )}
-      </Drawer.Screen>
-      <Drawer.Screen name="DocumentAdd">
-        {({ navigation, route }) => (
-          <DocumentAdd
-            navigation={navigation}
-            repository={repository}
-            parentDoc={route.params.parentDoc}
-            categoryName={route.params.categoryName}
-          />
-        )}
-      </Drawer.Screen>
-      <Drawer.Screen name="DocumentEdit">
-        {({ navigation, route }) => (
-          <DocumentEdit
-            navigation={navigation}
-            repository={repository}
-            docId={route.params.docId}
-            categoryName={route.params.categoryName}
-          />
-        )}
-      </Drawer.Screen>
-    </Drawer.Navigator>
-  );
+  console.log("last(hierarchyPath)",last(hierarchyPath))
+  // console.log("hierarchyPath",hierarchyPath)
+  return           (<DocumentsMap
+              repository={repository}
+              documents={documents}
+              issueSearch={setQ}
+              syncStatus={syncStatus}
+              relationsManager={relationsManager}
+              isInOverview={isInOverview}
+              selectParent={(doc) => console.log(doc)}
+            />)
+  // return (
+  //   <Drawer.Navigator
+  //     drawerType={orientation === 'landscape' ? 'permanent' : 'front'}
+  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //     drawerContent={({ navigation }: { navigation: any }) => {
+  //       return (
+  //         <DocumentsDrawer
+  //           hierarchyNavigationRef={hierarchyNavigationRef}
+  //           documents={documents}
+  //           currentParent={last(hierarchyPath)}
+  //           onDocumentSelected={(doc) => onDocumentSelected(doc, navigation)}
+  //           onHomeButtonPressed={() => navigation.navigate('HomeScreen')}
+  //           onSettingsButtonPressed={() =>
+  //             navigation.navigate('SettingsScreen')
+  //           }
+  //           onParentSelected={(doc) => onParentSelected(doc, navigation)}
+  //           onHierarchyBack={onHierarchyBack}
+  //         />
+  //       );
+  //     }}
+  //   >
+  //     <Drawer.Screen name="DocumentsMap">
+  //       {({ navigation, route }) => {
+  //         console.log('router', route);
+  //         return (
+  //           <DocumentsMap
+  //             route={route}
+  //             navigation={navigation}
+  //             repository={repository}
+  //             documents={documents}
+  //             issueSearch={setQ}
+  //             syncStatus={syncStatus}
+  //             relationsManager={relationsManager}
+  //             isInOverview={isInOverview}
+  //             selectParent={(doc) => onParentSelected(doc, navigation)}
+  //           />
+  //         );
+  //       }}
+  //     </Drawer.Screen>
+  //     {/* <Drawer.Screen name="DocumentAdd">
+  //       {({ navigation, route }) => (
+  //         <DocumentAdd
+  //           navigation={navigation}
+  //           repository={repository}
+  //           parentDoc={route.params.parentDoc}
+  //           categoryName={route.params.categoryName}
+  //         />
+  //       )}
+  //     </Drawer.Screen>
+  //     <Drawer.Screen name="DocumentEdit">
+  //       {({ navigation, route }) => (
+  //         <DocumentEdit
+  //           navigation={navigation}
+  //           repository={repository}
+  //           docId={route.params.docId}
+  //           categoryName={route.params.categoryName}
+  //         />
+  //       )}
+  //     </Drawer.Screen> */}
+  //   </Drawer.Navigator>
+  // );
 };
 
 export default DocumentsContainer;

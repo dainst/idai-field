@@ -36,7 +36,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         style={styles.input}
         onChangeText={setQ}
         onEndEditing={() => issueSearch(q)}
-        hideBorder
+        // hideBorder
       />
       {renderRightIcons(syncStatus, onQrCodeScanned)}
     </Row>

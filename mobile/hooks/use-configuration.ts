@@ -11,12 +11,12 @@ const useConfiguration = (
   const [config, setConfig] = useState<ProjectConfiguration>();
 
   useEffect(() => {
-    if (!pouchdbDatastore || !pouchdbDatastore.open || !project) return;
+    if (!pouchdbDatastore || !project) return;
 
     loadConfiguration(pouchdbDatastore, project, languages, username).then(
       setConfig
     );
-  }, [pouchdbDatastore, pouchdbDatastore?.open, project, languages, username]);
+  }, [pouchdbDatastore,  project, languages, username]);
 
   return config;
 };

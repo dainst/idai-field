@@ -152,7 +152,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFieldDefinition().inverse;
         }
 
-        await super.confirm(this.isValuelistChanged() || this.getInputType() === Field.InputType.RELATION);
+        await super.confirm(true);
     }
 
 

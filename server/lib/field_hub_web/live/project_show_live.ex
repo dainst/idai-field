@@ -51,7 +51,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
-          |> assign(:nb_changes_to_display, 2)
+          |> assign(:n_changes_to_display, 5)
           |> read_project_doc()
         }
 
@@ -62,7 +62,7 @@ defmodule FieldHubWeb.ProjectShowLive do
 
   def handle_info(
         :update_overview,
-        %{assigns: %{project: project, nb_changes_to_display: number_of_changes}} = socket
+        %{assigns: %{project: project, n_changes_to_display: number_of_changes}} = socket
       ) do
     # Evaluate the project asynchronously. Once the task finishes, it will get picked up
     # by another handle_info/2 below.
@@ -135,7 +135,7 @@ defmodule FieldHubWeb.ProjectShowLive do
     {:noreply, assign(socket, :new_password, password)}
   end
 
-  def handle_event("last_changes", %{"n-last-changes" => n} = _values, socket) do
+  def handle_event("change_count_select", %{"n-last-changes" => n} = _values, socket) do
     {n_integer, _remainder} = Integer.parse(n)
 
     stats = Project.evaluate_project(socket.assigns.project, n_integer)
@@ -143,7 +143,7 @@ defmodule FieldHubWeb.ProjectShowLive do
     socket =
       socket
       |> assign(:stats, stats)
-      |> assign(:nb_changes_to_display, n_integer)
+      |> assign(:n_changes_to_display, n_integer)
 
     {:noreply, socket}
   end

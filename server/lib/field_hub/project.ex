@@ -191,7 +191,7 @@ defmodule FieldHub.Project do
         name: "development"
       }
   """
-  def evaluate_project(project_identifier, nb_changes_to_display \\ 2) do
+  def evaluate_project(project_identifier, n_changes_to_display \\ 2) do
     project_identifier
     |> evaluate_database()
     |> case do
@@ -201,7 +201,7 @@ defmodule FieldHub.Project do
       db_statistics ->
         file_statistics = evaluate_file_store(project_identifier)
 
-        changes = CouchService.get_n_last_changes(project_identifier, nb_changes_to_display)
+        changes = CouchService.get_last_n_changes(project_identifier, n_changes_to_display)
 
         db_statistics =
           db_statistics

@@ -6,9 +6,6 @@ defmodule FieldHub.CouchService do
   @moduledoc """
   Bundles functions for directly interacting with the CouchDB.
   """
-  alias Cachex
-  alias ExJsonSchema
-  alias ElixirLS
   require Logger
 
   @doc """
@@ -347,7 +344,7 @@ defmodule FieldHub.CouchService do
   - `project_identifier` - The name of the project.
 
   ## Example
-  iex> get_n_last_changes("project_a",1)
+  iex> get_last_n_changes("project_a",1)
   [
     %{
       "changes" => [%{"rev" => "2-4f773e67d44d4bc99008713d9f9d164f"}],
@@ -374,7 +371,7 @@ defmodule FieldHub.CouchService do
   ]
 
   """
-  def get_n_last_changes(project_identifier, n) do
+  def get_last_n_changes(project_identifier, n) do
     HTTPoison.get!(
       "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=100&include_docs=true",
       get_user_credentials()

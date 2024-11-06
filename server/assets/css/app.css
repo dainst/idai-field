@@ -267,8 +267,20 @@ nav {
   }
 }
 
+.row-compact {
+  color:#3f4246;  
+  line-height: 0%;
+  font-size: small;
+}
+
+
 .column-date-time {
-  width: 8em;
+  width: 11em;  
+}
+
+.row-head{
+  color: #3f4246;
+  font-size: small;
 }
 
 .column-last-changes-slider {

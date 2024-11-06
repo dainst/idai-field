@@ -54,11 +54,54 @@
                         <% %{
                             database: %{
                                 doc_count: db_doc_count,
-                                file_size: db_file_size
+                                file_size: db_file_size,
+                                last_n_changes: last_n_changes
                             },
                             files: files
                         } -> %>
-                            <section>Database documents: <%= db_doc_count %></section>
+                            <section>Database documents: <%= db_doc_count %></section>                      
+                            
+                            <section>                                
+                                <tr >
+                                    <td valign="top" class="column-last-changes-slider">
+                                        <form id="last_changes_form" phx-change="change_count_select">                                        
+                                            Show the <%= @n_changes_to_display %><br /> last changes                          
+                                            <div class="slider-container">                                             
+                                            <input 
+                                                type="range" 
+                                                min="2" 
+                                                max= "100"
+                                                value= {@n_changes_to_display}
+                                                class="slider"
+                                                name="n-last-changes"
+                                            > 
+                                            </div>                                       
+                                        </form>
+                                    </td>
+                                    <td>                                 
+                                        <table>
+                                        <tbody  class = "row-compact">
+                                            <tr class="row-head">
+                                                <th>Ressource</th>
+                                                <th>Action</th>
+                                                <th>User</th>
+                                                <th>Time</th>
+                                            </tr>
+                                            <%= for change <- last_n_changes do %> 
+                                                <%{type, date_time, user_name} = CouchService.extract_most_recent_change_info(change) %>
+                                                <tr> 
+                                                    <td>'<%= change["doc"]["resource"]["identifier"] %>'</td> 
+                                                    <td><%= type %></td>
+                                                    <td><i><%= user_name %></i></td>
+                                                    <td class="column-date-time"><%= Calendar.strftime(date_time, "%c") %></td>                    
+                                                </tr>
+                                            <% end %> 
+                                        </tbody>                                           
+                                        </table>
+                                    </td>
+                                </tr>                         
+                            </section>
+
                             <section>Database size: <%= Sizeable.filesize(db_file_size) %> (<%= db_file_size %> bytes)</section>
                             <%= case files do %>
                                 <% :enoent -> %>
@@ -106,19 +149,19 @@
                 <%= "None." %>
             <% issue_groups -> %>
                 <%= for {{type, severity}, issues} <- issue_groups do %>
-                <section id={"#{type}-issue-group"} class="issue-group hide">
-                <h3 class={issue_classes(severity)}>
-                    <span class="show-toggle" style="cursor: pointer;" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
-                        🗀 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
-                    </span>
-                    <span class="hide-toggle" style="cursor: pointer;" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
-                        🗁 <%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
-                    </span>
-                </h3>
+                    <section id={"#{type}-issue-group"} class="issue-group hide">
+                        <h3 class={issue_classes(severity)}>
+                            <div class="show-toggle" phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}>
+                                <img src="/images/hero-icons/folder.svg"/><%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                            </div>
+                            <div class="hide-toggle" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
+                                <img src="/images/hero-icons/folder-open.svg"/><%= get_issue_type_label(type) %> (<%= Enum.count(issues) %>)
+                            </div>
+                        </h3>
 
-                <.live_component module={ProjectShowLiveIssues} id={type} issues={issues} project={@project} />
+                        <.live_component module={ProjectShowLiveIssues} id={type} issues={issues} project={@project} />
 
-                </section>
+                    </section>
                 <% end %>
         <% end %>
     </section>

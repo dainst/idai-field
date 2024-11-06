@@ -25,6 +25,7 @@ defmodule FieldHubWeb.ProjectShowLive do
     # access via websocket. In the normal application flow this will be unnesseary
     # because the http plug will already have caught unauthorized access before switching protocols.
     # See https://hexdocs.pm/phoenix_live_view/security-model.html#mounting-considerations
+
     user_name =
       user_token
       |> UserAuth.get_user_by_session_token()
@@ -50,6 +51,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
+          |> assign(:n_changes_to_display, 5)
           |> read_project_doc()
         }
 
@@ -58,11 +60,14 @@ defmodule FieldHubWeb.ProjectShowLive do
     end
   end
 
-  def handle_info(:update_overview, %{assigns: %{project: project}} = socket) do
+  def handle_info(
+        :update_overview,
+        %{assigns: %{project: project, n_changes_to_display: number_of_changes}} = socket
+      ) do
     # Evaluate the project asynchronously. Once the task finishes, it will get picked up
     # by another handle_info/2 below.
     Task.async(fn ->
-      {:overview_task, Project.evaluate_project(project)}
+      {:overview_task, Project.evaluate_project(project, number_of_changes)}
     end)
 
     {:noreply, socket}
@@ -128,6 +133,19 @@ defmodule FieldHubWeb.ProjectShowLive do
 
   def handle_event("update", %{"password" => password} = _values, socket) do
     {:noreply, assign(socket, :new_password, password)}
+  end
+
+  def handle_event("change_count_select", %{"n-last-changes" => n} = _values, socket) do
+    {n_integer, _remainder} = Integer.parse(n)
+
+    stats = Project.evaluate_project(socket.assigns.project, n_integer)
+
+    socket =
+      socket
+      |> assign(:stats, stats)
+      |> assign(:n_changes_to_display, n_integer)
+
+    {:noreply, socket}
   end
 
   def handle_event("delete_cache", _values, %{assigns: %{project: project}} = socket) do

@@ -18,7 +18,7 @@ jobs:
           otp-version: 26.0
           elixir-version: 1.16.0
       - name: Start CouchDB
-        run: docker-compose -f docker-compose.yml --env-file .env_template up -d
+        run: docker compose -f docker-compose.yml --env-file .env_template up -d
         working-directory: server
       - name: Sleep to await CouchDB startup
         run: sleep 15s

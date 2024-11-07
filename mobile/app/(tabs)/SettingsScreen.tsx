@@ -34,7 +34,7 @@ const SettingsScreen: React.FC = () => {
           paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right,
-        }
+        },
       ]}
     >
       <View style={styles.content}>
@@ -57,7 +57,7 @@ const SettingsScreen: React.FC = () => {
             />
           }
         />
-        
+
         <Column style={styles.formContainer}>
           <Input
             label="Editor name"

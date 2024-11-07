@@ -1,71 +1,64 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { RouteProp } from '@react-navigation/native';
 import { Document, RelationsManager, SyncStatus } from 'idai-field-core';
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { Alert, Keyboard, StyleSheet, View } from 'react-native';
 import useToast from '@/hooks/use-toast';
 import { DocumentRepository } from '@/repositories/document-repository';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import DocumentAddModal from './DocumentAddModal';
 import DocumentRemoveModal from './DocumentRemoveModal';
-import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
+
 import Map from './Map/Map';
+import { router, useGlobalSearchParams } from 'expo-router';
 import SearchBar from './SearchBar';
-import { router } from 'expo-router';
+import { ProjectContext } from '@/contexts/project-context';
 interface DocumentsMapProps {
-  // route: RouteProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
-  // navigation: DrawerNavigationProp<
-  //   DocumentsContainerDrawerParamList,
-  //   'DocumentsMap'
-  // >;
   repository: DocumentRepository;
-  documents: Document[];
   syncStatus: SyncStatus;
   relationsManager: RelationsManager;
   issueSearch: (q: string) => void;
-  isInOverview: (category: string) => boolean;
   selectParent: (doc: Document) => void;
 }
 
 const DocumentsMap: React.FC<DocumentsMapProps> = ({
   repository,
-  documents,
   syncStatus,
   relationsManager,
   issueSearch,
-  isInOverview,
   selectParent,
 }): ReactElement => {
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState<boolean>(false);
   const [highlightedDoc, setHighlightedDoc] = useState<Document>();
-  const { showToast } = useToast();
-  const {navigate} = router;
+  // TODO: configure expo router to load params
+  const params = useGlobalSearchParams();
 
-  const toggleDrawer = useCallback(
-    () => toggleDrawer(),
-    [
-      
-    ]
-  );
+  const { showToast } = useToast();
+  const { documents, isInOverview } = useContext(ProjectContext);
 
   const onQrCodeScanned = useCallback(
     (data: string) => {
       repository
-        .find({ constraints: { 'identifier:match': data } })
-        .then(({ documents: [doc] }) =>
-          navigate('DocumentEdit', {
+        ?.find({ constraints: { 'identifier:match': data } })
+        .then(({ documents: [doc] }) => {
+          router.setParams({
             docId: doc.resource.id,
             categoryName: doc.resource.category,
-          })
-        )
+          });
+          router.navigate('/ProjectScreen/DocumentEdit');
+        })
         .catch(() =>
           Alert.alert('Not found', `Resource  '${data}' is not available`, [
             { text: 'OK' },
           ])
         );
     },
-    [repository, navigation]
+    [repository]
   );
 
   const handleAddDocument = (parentDoc: Document) => {
@@ -73,8 +66,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     setIsAddModalOpen(true);
   };
 
-  const handleEditDocument = (docId: string, categoryName: string) =>
-    navigate('DocumentEdit', { docId, categoryName });
+  const handleEditDocument = (docId: string, categoryName: string) => {
+    router.setParams({ docId, categoryName });
+    router.navigate('/ProjectScreen/DocumentEdit');
+  };
 
   const closeAddModal = () => setIsAddModalOpen(false);
 
@@ -97,10 +92,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         .then(() => {
           setIsDeleteModelOpen(false);
           showToast(ToastType.Info, `Removed ${identifier}`);
-          navigate(
-            'DocumentsMap',
+          router.setParams(
             isRecordedIn ? { highlightedDocId: isRecordedIn } : {}
           );
+          router.navigate('/ProjectScreen/DocumentsMap');
         })
         .catch((err) => {
           showToast(ToastType.Error, `Could not remove ${identifier}: ${err}`);
@@ -114,8 +109,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     parentDoc: Document | undefined
   ) => {
     closeAddModal();
-    if (parentDoc)
-      navigate('DocumentAdd', { parentDoc, categoryName });
+    if (parentDoc) {
+      router.setParams({ parentDocId: parentDoc?._id, categoryName });
+      router.navigate('/ProjectScreen/DocumentAdd');
+    }
   };
 
   return (
@@ -139,7 +136,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         {...{
           issueSearch,
           syncStatus,
-          toggleDrawer,
           onQrCodeScanned,
         }}
       />
@@ -150,7 +146,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
             () => documents.map((doc) => doc.resource.id),
             [documents]
           )}
-          // highlightedDocId={route.params?.highlightedDocId}
+          highlightedDocId={params?.highlightedDocId}
           addDocument={handleAddDocument}
           editDocument={handleEditDocument}
           removeDocument={openRemoveDocument}

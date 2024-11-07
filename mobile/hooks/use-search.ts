@@ -10,8 +10,7 @@ const useSearch = (
 
   const issueSearch = useCallback(
     () =>
-      repository
-        .find(query)
+      repository?.find(query)
         .then((result) => setDocuments(result.documents))
         .catch((err) => console.log('Documents not found. Error:', err)),
     [repository, query]
@@ -22,8 +21,8 @@ const useSearch = (
   }, [issueSearch]);
 
   useEffect(() => {
-    const s = repository.remoteChanged().subscribe(() => issueSearch());
-    return () => s.unsubscribe();
+    const s = repository?.remoteChanged().subscribe(() => issueSearch());
+    return () => s?.unsubscribe();
   }, [repository, issueSearch]);
 
   return documents;

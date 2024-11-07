@@ -18,10 +18,10 @@ interface HomeScreenProps {
   navigate: (screen: Href) => void;
 }
 
-const Header: React.FC<{ usernameNotSet: boolean; onSettingsPress: () => void }> = ({
-  usernameNotSet,
-  onSettingsPress
-}) => (
+const Header: React.FC<{
+  usernameNotSet: boolean;
+  onSettingsPress: () => void;
+}> = ({ usernameNotSet, onSettingsPress }) => (
   <Row style={styles.topRow}>
     {usernameNotSet && (
       <Row style={styles.usernameWarning}>
@@ -47,7 +47,6 @@ const Header: React.FC<{ usernameNotSet: boolean; onSettingsPress: () => void }>
     />
   </Row>
 );
-
 
 const BottomActions: React.FC<{
   onCreatePress: () => void;
@@ -111,7 +110,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ deleteProject }) => {
       if (selectedProject === project)
         setSelectedProject(preferences.preferences.recentProjects[0]);
     },
-    [selectedProject, setSelectedProject, deleteProject, preferences.preferences.recentProjects]
+    [
+      selectedProject,
+      setSelectedProject,
+      deleteProject,
+      preferences.preferences.recentProjects,
+    ]
   );
 
   const loadProject = useCallback(
@@ -154,9 +158,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ deleteProject }) => {
       )}
 
       <View style={styles.contentContainer}>
-        <Header 
-          usernameNotSet={usernameNotSet()} 
-          onSettingsPress={() => navigate('/SettingsScreen')} 
+        <Header
+          usernameNotSet={usernameNotSet()}
+          onSettingsPress={() => navigate('/SettingsScreen')}
         />
 
         <View style={styles.projectsContainer}>

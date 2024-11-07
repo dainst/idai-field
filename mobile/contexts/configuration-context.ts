@@ -7,6 +7,7 @@ const defaultConfig = new ProjectConfiguration({
   relations: [],
   commonFields: {},
   valuelists: {},
+  projectLanguages:[]
 });
 
 export const ConfigurationContext =

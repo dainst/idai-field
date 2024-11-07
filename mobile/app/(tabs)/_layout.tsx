@@ -12,8 +12,13 @@ export default function TabLayout() {
     <SafeAreaProvider>
       <PreferencesContext.Provider value={preferences}>
         <ToastProvider>
-          <Tabs screenOptions={{ tabBarActiveTintColor: 'blue',headerShown:false }}>
-            <Tabs.Screen     
+          <Tabs
+            screenOptions={{
+              tabBarActiveTintColor: 'blue',
+              headerShown: false,
+            }}
+          >
+            <Tabs.Screen
               name="index"
               options={{
                 title: 'Home Screen',
@@ -41,7 +46,7 @@ export default function TabLayout() {
               }}
             />
           </Tabs>
-          <Toast/>
+          <Toast />
         </ToastProvider>
       </PreferencesContext.Provider>
     </SafeAreaProvider>

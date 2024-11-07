@@ -1,46 +1,119 @@
 import { Document, PouchdbDatastore, SyncService, SyncStatus } from 'idai-field-core';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { ProjectSettings } from '@/models/preferences';
 
-const useSync = (
-  project: string,
-  projectSettings: ProjectSettings,
-  pouchdbDatastore?: PouchdbDatastore,
-  live: boolean = true // TODO Either remove this or make it work again
-): SyncStatus => {
+interface SyncConfig {
+  project: string;
+  projectSettings: ProjectSettings;
+  pouchdbDatastore?: PouchdbDatastore;
+  live?: boolean;
+}
+
+const useSync = ({
+  project,
+  projectSettings,
+  pouchdbDatastore,
+  live = true
+}: SyncConfig): SyncStatus => {
   const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
-  const [syncService, setSyncService] = useState<SyncService>();
+  const syncServiceRef = useRef<SyncService | null>(null);
+  const isInitializedRef = useRef(false);
+
+  const initializeSyncService = useCallback(() => {
+    if (!pouchdbDatastore || syncServiceRef.current) return;
+    syncServiceRef.current = new SyncService(pouchdbDatastore);
+  }, [pouchdbDatastore]);
 
   useEffect(() => {
-    if (!pouchdbDatastore || !pouchdbDatastore.open) return;
+    if (!syncServiceRef.current) return;
 
-    setSyncService(new SyncService(pouchdbDatastore));
-  }, [pouchdbDatastore, pouchdbDatastore?.open]);
-
-  useEffect(() => {
-    if (!syncService) return;
-
-    const subscription = syncService
+    const subscription = syncServiceRef.current
       .statusNotifications()
-      .subscribe((status) => setStatus(status));
-    return () => subscription.unsubscribe();
-  }, [syncService]);
+      .subscribe((newStatus) => {
+        setStatus(newStatus);
+      });
 
-  useEffect(() => console.log('status', status), [status]);
-
-  useEffect(() => {
-    if (!projectSettings?.url || !project || !syncService) return;
-
-    syncService.init(projectSettings.url, project, projectSettings.password);
-  }, [syncService, projectSettings?.url, project, projectSettings?.password]);
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
-    if (!syncService || !project || !projectSettings?.connected) return;
+    if (
+      !projectSettings?.url ||
+      !project ||
+      !syncServiceRef.current ||
+      isInitializedRef.current
+    ) {
+      return;
+    }
 
-    syncService.startSync(true, isNotAnImage);
+    const initSync = async () => {
+      try {
+        await syncServiceRef.current?.init(
+          // Testing locally
+          "http://localhost:5984/dai",
+          project,
+          projectSettings.password,
+          async () => true
+        );
+        isInitializedRef.current = true;
+      } catch (error) {
+        console.error('Failed to initialize sync:', error);
+        setStatus(SyncStatus.Error);
+      }
+    };
 
-    return () => syncService.stopSync();
-  }, [live, syncService, project, projectSettings?.connected]);
+    initSync();
+
+    return () => {
+      isInitializedRef.current = false;
+    };
+  }, [project, projectSettings?.url, projectSettings?.password]);
+
+
+  useEffect(() => {
+    if (
+      !syncServiceRef.current ||
+      !project ||
+      !projectSettings?.connected ||
+      !isInitializedRef.current
+    ) {
+      return;
+    }
+
+    const startSyncProcess = () => {
+      try {
+        syncServiceRef.current?.startSync(true, isNotAnImage);
+      } catch (error) {
+        console.error('Failed to start sync:', error);
+        setStatus(SyncStatus.Error);
+      }
+    };
+
+    startSyncProcess();
+
+    return () => {
+      try {
+        syncServiceRef.current?.stopSync();
+      } catch (error) {
+        console.error('Failed to stop sync:', error);
+      }
+    };
+  }, [live, project, projectSettings?.connected]);
+
+
+  useEffect(() => {
+    initializeSyncService();
+
+    return () => {
+      if (syncServiceRef.current) {
+        syncServiceRef.current.stopSync();
+        syncServiceRef.current = null;
+      }
+      isInitializedRef.current = false;
+    };
+  }, [initializeSyncService]);
 
   return status;
 };

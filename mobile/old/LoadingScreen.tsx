@@ -1,6 +1,6 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { SyncStatus } from 'idai-field-core';
+// import { SyncStatus } from 'idai-field-core';
 
 import React, { useContext, useEffect } from 'react';
 import {
@@ -26,16 +26,16 @@ const LoadingScreen: React.FC = () => {
     preferences.preferences.currentProject
   );
 
-  const syncStatus = useSync(
-    preferences.preferences.currentProject,
-    preferences.preferences.projects[preferences.preferences.currentProject],
-    pouchdbDatastore,
-    false
-  );
+  // const syncStatus = useSync(
+  //   preferences.preferences.currentProject,
+  //   preferences.preferences.projects[preferences.preferences.currentProject],
+  //   pouchdbDatastore,
+  //   false
+  // );
 
   useEffect(() => {
     if (syncStatus === SyncStatus.InSync) {
-      navigate('/ProjectScreen');
+      navigate('/ProjectScreen/');
     }
   }, [syncStatus, navigate]);
 

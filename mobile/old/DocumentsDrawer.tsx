@@ -29,6 +29,7 @@ interface DocumentsDrawerProps {
   onHierarchyBack: () => void;
 }
 
+// This is not used anymore 
 const Stack = createStackNavigator<DocumentsDrawerStackParamList>();
 
 const DocumentsDrawer: React.FC<DocumentsDrawerProps> = ({

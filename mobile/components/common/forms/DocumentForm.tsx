@@ -47,7 +47,6 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
   const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
 
   useEffect(() => setActiveGroup(category?.groups[0]), [category]);
-
   const renderItem = ({ item }: { item: Group }) => (
     <TouchableOpacity
       onPress={() => setActiveGroup(item)}

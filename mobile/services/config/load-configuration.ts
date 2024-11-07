@@ -2,7 +2,6 @@ import {
   AppConfigurator,
   ConfigLoader,
   ConfigReader,
-  getConfigurationName,
   PouchdbDatastore,
   ProjectConfiguration,
   ConfigurationDocument,
@@ -14,10 +13,16 @@ const loadConfiguration = async (
   languages: string[],
   username: string
 ): Promise<ProjectConfiguration> => {
-  const configReader =  new ConfigReader()
-  // const customConfigName = getConfigurationName(project);
-  const db = pouchdbDatastore.getDb()
- const config = await ConfigurationDocument.getConfigurationDocument((id: string) => db.get(id),configReader,project,username)
+  const configReader = new ConfigReader();
+
+  const db = pouchdbDatastore.getDb();
+  
+  const config = await ConfigurationDocument.getConfigurationDocument(
+    (id: string) => db.get(id),
+    configReader,
+    project,
+    username
+  );
 
   const configurator = new AppConfigurator(
     new ConfigLoader(new ConfigReader())

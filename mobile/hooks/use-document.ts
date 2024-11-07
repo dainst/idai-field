@@ -10,11 +10,10 @@ const useDocument = (
 
   useEffect(() => {
     if (!docId) return undefined;
-    repository
-      .get(docId)
+    repository?.get(docId)
       .then(setDoc)
       .catch((error) => {
-        console.error(error);
+        console.error(error)
         setDoc(undefined);
       });
   }, [repository, docId]);

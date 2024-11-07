@@ -62,7 +62,7 @@ const Map: React.FC<MapProps> = (props) => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Location.requestPermissionsAsync();
+      const { status } = await Location.requestBackgroundPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
         return;
@@ -88,7 +88,7 @@ const Map: React.FC<MapProps> = (props) => {
 
   return (
     <View style={styles.container} onLayout={handleLayoutChange}>
-      {screen && documentToWorldMatrix && screenToWorldMatrix && (
+      {/* {screen && documentToWorldMatrix && screenToWorldMatrix && (
         <GLMap
           setHighlightedDocId={setHighlightedDocFromId}
           highlightedDocId={highlightedDoc?.resource.id}
@@ -104,7 +104,7 @@ const Map: React.FC<MapProps> = (props) => {
           layerDocuments={layerDocuments}
           focusMapOnDocumentId={focusMapOnDocumentId}
         />
-      )}
+      )} */}
       <MapBottomSheet
         document={highlightedDoc}
         addDocument={props.addDocument}

@@ -12,35 +12,33 @@ import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import useToast from '@/hooks/use-toast';
-import { DocumentRepository } from '@/repositories/document-repository';
 import Button from '@/components/common/Button';
 import DocumentForm from '@/components/common/forms/DocumentForm';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 // import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import { router } from 'expo-router';
-import useRepository from '@/hooks/use-repository';
-import useProjectData from '@/hooks/use-project-data';
+import { ProjectContext } from '@/contexts/project-context';
+import { multiPolyTrench } from '@/test_data/test_docs/multiPolyTrench';
 
 interface DocumentAddProps {
-  repository: DocumentRepository;
   parentDoc: Document;
   categoryName: string;
 }
 
 const DocumentAdd: React.FC<DocumentAddProps> = ({
-  // repository,
-  parentDoc,
+  parentDoc, // TODO: configure expo router to load params
   categoryName,
 }) => {
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
+  const { repository } = useContext(ProjectContext);
+
   const { showToast } = useToast();
-  const {navigate} = router;
+  const { navigate } = router;
   const [category, setCategory] = useState<CategoryForm>();
   const [newResource, setNewResource] = useState<NewResource>();
   const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
-  // const repository = useRepository()
-  // const resource = useProjectData()
+
   const setResourceToDefault = useCallback(
     () =>
       setNewResource({
@@ -58,6 +56,18 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
     else setSaveBtnEnabled(false);
   }, [newResource]);
 
+  // useEffect(()=> {
+  //   const createRepo = async ()=> {
+  //     try {
+  //        await repository?.create(multiPolyTrench)
+  //       // console.log(doc)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+
+  //   }
+  //   createRepo()
+  // },[repository])
   useEffect(
     () => setCategory(config.getCategory(categoryName)),
     [config, categoryName]
@@ -75,13 +85,14 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
         resource: newResource,
       };
       repository
-        .create(newDocument)
+        ?.create(newDocument)
         .then((doc) => {
           showToast(ToastType.Success, `Created ${doc.resource.identifier}`);
           setResourceToDefault();
-          navigate('DocumentsMap', {
+          router.setParams({
             highlightedDocId: doc.resource.id,
           });
+          navigate('/ProjectScreen/DocumentsMap');
         })
         .catch((_err) => {
           Keyboard.dismiss();
@@ -93,11 +104,10 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
 
   const onReturn = () => {
     setResourceToDefault();
-    navigate('DocumentsMap', {});
+    navigate('/ProjectScreen/DocumentsMap');
   };
 
   if (!category || !labels) return null;
-
   return (
     <DocumentForm
       titleBarRight={
@@ -117,8 +127,10 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
         />
       }
       category={category}
-      headerText={`Add ${labels.get(category)} to ${
-        parentDoc.resource.identifier
+      // headerText={`Add ${labels.get(category)} to ${
+      //   parentDoc.resource?.identifier ||'no parent'
+      // }`}
+      headerText={`asdasd '
       }`}
       returnBtnHandler={onReturn}
       resource={newResource}

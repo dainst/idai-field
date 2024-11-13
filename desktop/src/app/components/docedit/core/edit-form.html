@@ -15,12 +15,22 @@
                         {{getLabel(group)}}
                     </a>
                 </li>
+
+                <li class="nav nav-pills" >
+                    <a class="nav-link"
+                    [class.active]="'changes' === activeGroup"
+                    href="javascript: void(0);"
+                    (click)="activateGroup('changes')"
+                    > Changes history </a>
+                </li>
+
+
             </ul>
         </div>
-
+        
         <div class="col-md-9 forms-container">
             <div id="{{activeGroup}}-group" class="scrollable-group"
-                 *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
+                 *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images' && activeGroup !== 'changes'">
                 <edit-form-group [document]="document"
                                  [originalDocument]="originalDocument"
                                  [fieldDefinitions]="getFields(activeGroup)"
@@ -28,6 +38,10 @@
                                  [languages]="languages"
                                  [scrollTargetField]="scrollTargetField">
                 </edit-form-group>
+            </div>
+
+            <div *ngIf="activeGroup === 'changes'" id="docedit-conflicts-tab">
+                ##########################################
             </div>
 
             <div *ngIf="activeGroup === 'conflicts'" id="docedit-conflicts-tab">

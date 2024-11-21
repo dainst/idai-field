@@ -146,6 +146,9 @@ export class WarningsModalComponent {
 
         this.selectedDocument = document;
         this.updateSections(document);
+
+        console.log({document})
+        console.log(this.sections)
     }
 
 

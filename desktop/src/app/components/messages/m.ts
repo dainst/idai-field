@@ -165,10 +165,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG = 'export.error.catalog.imagesNotExclusiveToCatalog';
     public static EXPORT_CATALOG_FAILED_TO_COPY_IMAGES = 'export.error.catalog.failedToCopyImages';
     public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
-    public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
-    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_SHAPEFILE_ERROR_WRITE = 'export.shapefile.error.write';
-    public static EXPORT_SHAPEFILE_ERROR_GET_RESOURCES = 'export.shapefile.error.getResources';
+    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE = 'export.csv.warning.invalidFieldData.single';
     public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_MULTIPLE = 'export.csv.warning.invalidFieldData.multiple';
 
@@ -782,20 +780,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.export.error.catalog.failedToCopyImages:Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.`,
             level: 'danger'
         };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION] = {
-            content: $localize `:@@messages.export.shapefile.error.tempFolderCreation:Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.`,
-            level: 'danger'
-        };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
-            content: $localize `:@@messages.export.shapefile.error.zipFileCreation:Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.`,
-            level: 'danger'
-        };
         this.msgs[M.EXPORT_SHAPEFILE_ERROR_WRITE] = {
             content: $localize `:@@messages.export.shapefile.error.write:Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.`,
             level: 'danger'
         };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES] = {
-            content: $localize `:@@messages.export.shapefile.error.getResources:Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.`,
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
+            content: $localize `:@@messages.export.shapefile.error.zipFileCreation:Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE] = {

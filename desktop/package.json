@@ -140,6 +140,7 @@
     "express-basic-auth": "1.2.1",
     "express-pouchdb": "4.2.0",
     "extract-zip": "2.0.1",
+    "gdal3.js": "2.8.1",
     "geotiff": "2.0.7",
     "idai-field-core": "^1.4.0",
     "leaflet": "1.7.1",

@@ -6,7 +6,6 @@ const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
 const autoUpdate = require('./auto-update.js');
-require('./asynchronous-fs.js');
 
 remoteMain.initialize();
 
@@ -220,6 +219,10 @@ process.env['NODE_OPTIONS'] = '--no-deprecation';
 
 
 // -- OTHER GLOBALS
+
+require('./asynchronous-fs.js');
+require('./gdal');
+require('./zip');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

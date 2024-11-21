@@ -1,5 +1,5 @@
 import { Feature, FeatureCollection, GeometryObject } from 'geojson';
-import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore } from 'idai-field-core';
+import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore, FieldGeometryType } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 
@@ -11,22 +11,26 @@ const geojsonRewind = window.require('@mapbox/geojson-rewind');
  */
 export module GeoJsonExporter {
 
-    export async function performExport(datastore: Datastore, outputFilePath: string,
-                                        operationId: string): Promise<void> {
+    export async function performExport(datastore: Datastore, outputFilePath: string, operationId: string,
+                                        geometryTypes?: Array<FieldGeometryType>) {
 
-        const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId);
+        const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId, geometryTypes);
         const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(documents);
 
         return writeFile(outputFilePath, featureCollection);
     }
 
 
-    async function getGeometryDocuments(datastore: Datastore,
-                                        operationId: string): Promise<Array<FieldDocument>> {
+    async function getGeometryDocuments(datastore: Datastore, operationId: string,
+                                        geometryTypes?: Array<FieldGeometryType>): Promise<Array<FieldDocument>> {
 
         const query: Query = createQuery(operationId);
-        const result = await datastore.find(query);
-        return result.documents as Array<FieldDocument>;
+        const result: Datastore.FindResult = await datastore.find(query);
+        const documents: Array<FieldDocument> = result.documents as Array<FieldDocument>;
+
+        return geometryTypes
+            ? documents.filter(document => geometryTypes.includes(document.resource.geometry.type))
+            : documents;
     }
 
 
@@ -69,7 +73,7 @@ export module GeoJsonExporter {
 
 
     async function writeFile(outputFilePath: string,
-                       featureCollection: FeatureCollection<GeometryObject>): Promise<void> {
+                             featureCollection: FeatureCollection<GeometryObject>) {
 
         const json: string = JSON.stringify(featureCollection, null, 2);
 

@@ -10,9 +10,3 @@ window.filesystem.readdir = function(path) { return ipcRenderer.invoke('readdir'
 window.filesystem.mkdir = function(path, options) { return ipcRenderer.invoke('mkdir', path, options); };
 window.filesystem.rm = function(path, options) { return ipcRenderer.invoke('rm', path, options); };
 window.filesystem.unlink = function(path) { return ipcRenderer.invoke('unlink', path); };
-window.filesystem.extractZip = function(source, destination) {
-    return ipcRenderer.invoke('extractZip', source, destination);
-};
-window.filesystem.createCatalogZip = function(outputFilePath, filePath, fileName, imageDirPath, imageDirName) {
-    return ipcRenderer.invoke('createCatalogZip', outputFilePath, filePath, fileName, imageDirPath, imageDirName);
-};

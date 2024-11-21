@@ -206,7 +206,7 @@ export class ExportComponent implements OnInit {
     private async startShapeFileExport(filePath: string) {
 
         await ShapefileExporter.performExport(
-            this.settingsProvider.getSettings(),
+            this.datastore,
             await this.datastore.get('project'),
             filePath,
             this.selectedContext

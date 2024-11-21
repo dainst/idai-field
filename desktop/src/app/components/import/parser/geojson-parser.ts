@@ -12,21 +12,6 @@ export interface Geojson {
 }
 
 
-export interface GazetteerProperties {
-
-    prefName: {
-        title: string;
-    };
-    identifier: string;
-    id: string;
-    gazId: string;
-    category: string;
-    geometry: { type: string };
-    parent: string;
-    relations: any;
-}
-
-
 /**
  * This parser is in part optimized to handle the iDAI.welt specific geojson format well.
  *

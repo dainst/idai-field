@@ -5,6 +5,11 @@ const initGdalJs = require('gdal3.js/node');
 
 
 const tempDirectoryPath = path.relative(electron.app.getAppPath(), global.appDataPath + '/gdal');
+
+console.log('appPath', electron.app.getAppPath());
+console.log('appDataPath', global.appDataPath);
+console.log('tempDirectoryPath', tempDirectoryPath);
+
 if (fs.existsSync(tempDirectoryPath)) fs.rmSync(tempDirectoryPath, { recursive: true });
 fs.mkdirSync(tempDirectoryPath);
 

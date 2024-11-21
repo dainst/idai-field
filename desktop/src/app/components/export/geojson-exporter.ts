@@ -1,5 +1,6 @@
 import { Feature, FeatureCollection, GeometryObject } from 'geojson';
-import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore, FieldGeometryType } from 'idai-field-core';
+import { isObject } from 'tsfun';
+import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore, FieldGeometryType, I18N } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 
@@ -12,10 +13,11 @@ const geojsonRewind = window.require('@mapbox/geojson-rewind');
 export module GeoJsonExporter {
 
     export async function performExport(datastore: Datastore, outputFilePath: string, operationId: string,
+                                        explodeShortDescription: boolean = false,
                                         geometryTypes?: Array<FieldGeometryType>) {
 
         const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId, geometryTypes);
-        const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(documents);
+        const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(documents, explodeShortDescription);
 
         return writeFile(outputFilePath, featureCollection);
     }
@@ -49,11 +51,12 @@ export module GeoJsonExporter {
     }
 
 
-    function createFeatureCollection(documents: Array<FieldDocument>): FeatureCollection<GeometryObject> {
+    function createFeatureCollection(documents: Array<FieldDocument>,
+                                     explodeShortDescription: boolean): FeatureCollection<GeometryObject> {
 
         const featureCollection: FeatureCollection<GeometryObject> = {
             type: 'FeatureCollection',
-            features: documents.map(createFeature)
+            features: documents.map(document => createFeature(document, explodeShortDescription))
         };
 
         geojsonRewind(featureCollection);
@@ -62,12 +65,12 @@ export module GeoJsonExporter {
     }
 
 
-    function createFeature(document: FieldDocument): Feature<GeometryObject> {
+    function createFeature(document: FieldDocument, explodeShortDescription: boolean): Feature<GeometryObject> {
 
         return {
             type: 'Feature',
             geometry: getGeometry(document),
-            properties: getProperties(document)
+            properties: getProperties(document, explodeShortDescription)
         };
     }
 
@@ -119,16 +122,37 @@ export module GeoJsonExporter {
     }
 
 
-    function getProperties(document: FieldDocument): any {
+    function getProperties(document: FieldDocument, explodeShortDescription: boolean): any {
 
         const properties: any = {
             identifier: document.resource.identifier,
-            shortDescription: document.resource.shortDescription,
             category: document.resource.category
         };
 
-        if (!properties.shortDescription) delete properties.shortDescription;
+        addShortDescription(properties, document, explodeShortDescription);
 
         return properties;
+    }
+
+
+    function addShortDescription(properties: any, document: FieldDocument, explodeShortDescription: boolean) {
+
+        const shortDescription: I18N.String|string = document.resource.shortDescription;
+        if (!shortDescription) return;
+
+        if (explodeShortDescription) {
+            if (isObject(shortDescription)) {
+                Object.keys(shortDescription).forEach(languageCode => {
+                    const suffix: string = languageCode !== I18N.UNSPECIFIED_LANGUAGE
+                        ? '_' + languageCode
+                        : '';
+                    properties['sdesc' + suffix] = shortDescription[languageCode];
+                });
+            } else {
+                properties['sdesc'] = shortDescription;
+            }
+        } else {
+            properties.shortDescription = shortDescription;
+        }
     }
 }

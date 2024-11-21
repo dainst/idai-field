@@ -62,7 +62,7 @@ export module ShapefileExporter {
                                   epsgCode: string) {
 
         const geoJsonFilePath: string = TEMP_DIRECTORY_PATH + type.fileName + '.geojson';
-        await GeoJsonExporter.performExport(datastore, geoJsonFilePath, operationId, type.geometryTypes);
+        await GeoJsonExporter.performExport(datastore, geoJsonFilePath, operationId, true, type.geometryTypes);
 
         await ipcRenderer.invoke(
             'ogr2ogr',

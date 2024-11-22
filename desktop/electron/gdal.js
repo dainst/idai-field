@@ -14,8 +14,13 @@ if (fs.existsSync(tempDirectoryPath)) fs.rmSync(tempDirectoryPath, { recursive: 
 log.info('Create temp directory');
 fs.mkdirSync(tempDirectoryPath);
 
-log.info('Init gdal');
-initGdalJs({ dest: tempDirectoryPath }).then(async gdal => {
+const options = {
+    path: global.libPath + 'gdal',
+    dest: tempDirectoryPath
+};
+
+log.info('Init gdal at path:', options.path);
+initGdalJs(options).then(async gdal => {
     log.info('gdal ready!');
     electron.ipcMain.handle('ogr2ogr', async (_, sourceFilePath, options, outputFileBaseName) => {
         try {

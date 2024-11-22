@@ -24,7 +24,7 @@
     "build:java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
     "build:all": "npm run build && npm run build:java",
     "preinstall": "export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 || set PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1",
-    "postinstall": "npm run update-version-info && gulp copy-fonts",
+    "postinstall": "npm run update-version-info && gulp copy-fonts && gulp copy-gdal",
     "lint": "ng lint",
     "test": "jest --config=./test/unit/jest.config.ts --runInBand",
     "e2e": "npm-run-all -p -r ng:serve:no-reload e2e:run",
@@ -49,8 +49,7 @@
     "asar": true,
     "asarUnpack": [
       "**/node_modules/sharp/**/*",
-      "**/node_modules/@img/**/*",
-      "**/node_modules/gdal3.js/**/*"
+      "**/node_modules/@img/**/*"
     ],
     "mac": {
       "category": "public.app-category.productivity",
@@ -95,6 +94,7 @@
         "from": "img/linux",
         "to": "icons"
       },
+      "lib",
       "tools",
       "samples"
     ]

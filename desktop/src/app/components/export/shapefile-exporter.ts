@@ -19,7 +19,7 @@ const SHAPEFILE_TYPES: Array<ShapefileType> = [
     { geometryTypes: ['Polygon', 'MultiPolygon'], gdalType: 'MULTIPOLYGON', fileName: 'multipolygons' }
 ];
 
-const TEMP_DIRECTORY_PATH = remote.getGlobal('appDataPath') + '/gdal/';
+const TEMP_DIRECTORY_PATH: string = remote.getGlobal('appDataPath') + '/gdal/';
 
 
 

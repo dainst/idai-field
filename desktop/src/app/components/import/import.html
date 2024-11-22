@@ -201,12 +201,7 @@
                         Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                     </div>
 
-                    <div *ngIf="isJavaInstallationMissing()" class="import-info text-danger" i18n="@@import.shapefile.javaWarning">
-                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java JDK 8 oder höher
-                        erforderlich.
-                    </div>
-
-                    <div *ngIf="importState.format === 'shapefile' && !isJavaInstallationMissing()" class="import-info" i18n="@@import.shapefile.info">
+                    <div *ngIf="importState.format === 'shapefile'" class="import-info" i18n="@@import.shapefile.info">
                         Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
                         Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per

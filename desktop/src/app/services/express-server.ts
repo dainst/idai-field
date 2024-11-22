@@ -7,7 +7,6 @@ const express = window.require('express');
 const remote = window.require('@electron/remote');
 const expressPouchDB = window.require('express-pouchdb');
 const expressBasicAuth = window.require('express-basic-auth');
-window.require('pouchdb-mapreduce-utils');
 const bodyParser = window.require('body-parser');
 let PouchDB = window.require('pouchdb-browser');
 

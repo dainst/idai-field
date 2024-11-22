@@ -36,10 +36,13 @@ export async function exportGraph(projectName: string, trenchIdentifier: string,
 async function chooseFilepath(projectName: string, trenchIdentifier: string, appState: AppState,
                               includeSvgOption: boolean): Promise<string> {
 
-    const saveDialogReturnValue = await remote.dialog.showSaveDialog({
-        defaultPath: getDefaultPath(projectName, trenchIdentifier, appState),
-        filters: getFilters(includeSvgOption)
-    });
+    const saveDialogReturnValue = await remote.dialog.showSaveDialog(
+        remote.getCurrentWindow(),
+        {
+            defaultPath: getDefaultPath(projectName, trenchIdentifier, appState),
+            filters: getFilters(includeSvgOption)
+        }
+    );
 
     const filePath: string = saveDialogReturnValue.filePath;
     

@@ -14,6 +14,7 @@ export class ConcreteDialogProvider {
         const defaultPath: string = this.getDefaultPath(projectName, appState);
 
         const saveDialogReturnValue = await remote.dialog.showSaveDialog(
+            remote.getCurrentWindow(),
             {
                 defaultPath,
                 filters: [

@@ -49,7 +49,8 @@
     "asar": true,
     "asarUnpack": [
       "**/node_modules/sharp/**/*",
-      "**/node_modules/@img/**/*"
+      "**/node_modules/@img/**/*",
+      "**/node_modules/pouchdb-mapreduce-utils/**/*"
     ],
     "mac": {
       "category": "public.app-category.productivity",

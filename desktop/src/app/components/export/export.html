@@ -125,15 +125,7 @@
                         jeweiligen Ressourcen.
                     </div>
 
-
-                    <div *ngIf="isJavaInstallationMissing()" class="export-info text-danger"
-                         i18n="@@export.shapefile.javaWarning">
-                        Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher
-                        erforderlich.
-                    </div>
-
-
-                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing() && !noResourcesFound()"
+                    <div *ngIf="format === 'shapefile' && !noResourcesFound()"
                          class="export-info" i18n="@@export.shapefile.info">
                         Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
                         <em>Kurzbeschreibung</em> (shortdesc) und <em>Kategorie</em> (category) der jeweiligen

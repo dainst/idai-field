@@ -136,13 +136,18 @@ export class ExportComponent implements OnInit {
 
     public async startExport() {
 
+        if (this.running) return;
+        this.running = true;
+
         this.messages.removeAllMessages();
         AngularUtility.blurActiveElement();
 
         const filePath: string = await this.chooseFilepath();
-        if (!filePath) return;
-
-        this.running = true;
+        if (!filePath) {
+            this.running = false;
+            return;
+        }
+        
         this.menuService.setContext(MenuContext.MODAL);
         this.openModal();
 
@@ -244,7 +249,7 @@ export class ExportComponent implements OnInit {
             filters: [this.getFileFilter()]
         };
 
-        const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
+        const saveDialogReturnValue = await remote.dialog.showSaveDialog(remote.getCurrentWindow(), options);
         const filePath: string = saveDialogReturnValue.filePath;
 
         if (filePath) {

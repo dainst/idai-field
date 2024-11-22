@@ -1,14 +1,22 @@
 const electron = require('electron');
 const fs = require('original-fs');
+const log = require('electron-log');
 const initGdalJs = require('gdal3.js/node');
 
 
 const tempDirectoryPath = global.appDataPath + '/gdal';
 
+log.info('appPath', electron.app.getAppPath());
+log.info('appDataPath', global.appDataPath);
+log.info('tempDirectoryPath', tempDirectoryPath);
+
 if (fs.existsSync(tempDirectoryPath)) fs.rmSync(tempDirectoryPath, { recursive: true });
+log.info('Create temp directory');
 fs.mkdirSync(tempDirectoryPath);
 
+log.info('Init gdal');
 initGdalJs({ dest: tempDirectoryPath }).then(async gdal => {
+    log.info('gdal ready!');
     electron.ipcMain.handle('ogr2ogr', async (_, sourceFilePath, options, outputFileBaseName) => {
         try {
             const result = await gdal.open(sourceFilePath);
@@ -20,4 +28,4 @@ initGdalJs({ dest: tempDirectoryPath }).then(async gdal => {
             return { error };
         }
     });
-});
+}).catch(err => log.error(err));

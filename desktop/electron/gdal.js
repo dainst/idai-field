@@ -2,13 +2,14 @@ const electron = require('electron');
 const path = require('path');
 const fs = require('original-fs');
 const initGdalJs = require('gdal3.js/node');
+const log = require('electron-log');
 
 
 const tempDirectoryPath = path.relative(electron.app.getAppPath(), global.appDataPath + '/gdal');
 
-console.log('appPath', electron.app.getAppPath());
-console.log('appDataPath', global.appDataPath);
-console.log('tempDirectoryPath', tempDirectoryPath);
+log.info('appPath', electron.app.getAppPath());
+log.info('appDataPath', global.appDataPath);
+log.info('tempDirectoryPath', tempDirectoryPath);
 
 if (fs.existsSync(tempDirectoryPath)) fs.rmSync(tempDirectoryPath, { recursive: true });
 fs.mkdirSync(tempDirectoryPath);

@@ -5,7 +5,7 @@ const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 const fs = window.require('fs');
 
-const TEMP_DIRECTORY_PATH: string = remote.getGlobal('appDataPath') + '/gdal/';
+const TEMP_DIRECTORY_PATH: string = remote ? remote.getGlobal('appDataPath') + '/gdal/' : '';
 
 
 /**

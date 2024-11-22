@@ -1,7 +1,6 @@
 module.exports = {
     target: 'electron-renderer',
     externals: {
-        'pouchdb-mapreduce-utils': 'commonjs pouchdb-mapreduce-utils',
         'sharp': 'commonjs sharp'
     },
     resolve: {

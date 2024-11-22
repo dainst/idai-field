@@ -202,9 +202,13 @@ if (global.mode === 'test') {
     global.switches.provide_reset = true;
 }
 
-global.toolsPath = global.mode === 'production' ?
-    electron.app.getAppPath().replace('app.asar', 'tools')
+global.toolsPath = global.mode === 'production'
+    ? electron.app.getAppPath().replace('app.asar', 'tools')
     : 'tools';
+
+global.libPath = global.mode === 'production'
+    ? electron.app.getAppPath().replace('app.asar', 'lib/')
+    : './lib/';
 
 global.samplesPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'samples/')

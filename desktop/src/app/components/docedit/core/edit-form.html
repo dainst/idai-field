@@ -15,19 +15,8 @@
                         {{getLabel(group)}}
                     </a>
                 </li>
-
-                <li class="nav nav-pills" >
-                    <a class="nav-link"
-                    [class.active]="'changes' === activeGroup"
-                    href="javascript: void(0);"
-                    (click)="activateGroup('changes')"
-                    > Changes history </a>
-                </li>
-
-
             </ul>
-        </div>
-        
+        </div>        
         <div class="col-md-9 forms-container">
             <div id="{{activeGroup}}-group" class="scrollable-group"
                  *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images' && activeGroup !== 'changes'">
@@ -39,30 +28,6 @@
                                  [scrollTargetField]="scrollTargetField">
                 </edit-form-group>
             </div>
-
-            <div *ngIf="activeGroup === 'changes'" id="docedit-conflicts-tab">
-                <table>
-                    <tbody  class = "row-compact">
-                        <tr class="row-head">
-                            <th>Ressource</th>
-                            <th>Action</th>                            
-                            <th>User</th>
-                            <th>UIID</th>
-                            <th>Time</th>
-                        </tr>
-                        <tr ngfor = "let change of changes">
-                        <!-- <tr>  -->
-                            <td>Trench 1</td> 
-                            <td>modified</td>
-                            <td><i>Jean Claude</i></td>
-                            <td>gj6t4858v3cm539ckc5849</td>
-                            <td class="column-date-time">2024-11-18 18:19</td>                    
-                        </tr>
-                        
-                    </tbody>                                           
-                </table>
-            </div>
-
             <div *ngIf="activeGroup === 'conflicts'" id="docedit-conflicts-tab">
                 <docedit-conflicts-tab [document]="document"
                                        [inspectedRevisions]="inspectedRevisions">

@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <!-- <h5  class="modal-title" i18n="@@widgets.saveModal.header">{{document._id}}</h5> -->
+</div>
+
+<div id="changes-history-modal-body" class="modal-body">
+    <table>
+        <tbody  class = "row-compact">
+            <tr class="row-head">
+                <th>Action</th>                            
+                <th>User</th>
+                <th>UIID</th>
+                <th>Time</th>
+            </tr>
+            <tr *ngFor ="let change of CHANGESLIST">                      
+                <td>{{change.action}}</td>                         
+                <td>{{change.name}}</td>
+                <td>{{change.uiid}}</td>
+                <td class="column-date-time">{{change.time}}</td>                    
+            </tr>
+            <tr>                      
+                <td>{{CHANGESLIST[0].action}}</td>                         
+                <td>{{CHANGESLIST[0].name}}</td>
+                <td>{{CHANGESLIST[0].uiid}}</td>
+                <td class="column-date-time">{{CHANGESLIST[0].time}}</td>                 
+            </tr>
+        </tbody>                                           
+    </table>
+</div>
+<div class="modal-footer">
+    <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

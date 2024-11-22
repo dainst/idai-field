@@ -49,9 +49,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (!this.scrollTargetField) this.focusFirstInputElement();
     }
 
-
     ngOnChanges() {
-
+        
         if (isUndefinedOrEmpty(this.originalGroups)) return;
 
         this.groups = [];
@@ -64,7 +63,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
 
     public getLabel(group: Group): string {
-
+       
         return group.name === 'conflicts'
             ? $localize `:@@docedit.group.conflicts:Konflikte`
             : this.labels.get(group);

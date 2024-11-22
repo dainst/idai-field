@@ -59,11 +59,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
     public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
     public static IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT = 'M.Import.ParserErrors.invalidGeojsonImportStruct';
-    public static IMPORT_PARSER_INVALID_GEOMETRY = 'M.Import.ParserErrors.invalidGeometry';
     public static IMPORT_PARSER_MISSING_IDENTIFIER = 'M.Import.ParserErrors.missingIdentifier';
-    public static IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE = 'M.Import.ParserErrors.missingIdentifierShapefile';
     public static IMPORT_PARSER_ID_MUST_NOT_BE_SET = 'M.Import.ParserErrors.parsing.idnottobeset';
-    public static IMPORT_PARSER_SHAPEFILE_GENERIC = 'M.Import.ParserErrors.shapefile.generic';
     public static IMPORT_PARSER_CATALOG_GENERIC = 'M.Import.ParserErrors.catalog.generic';
     public static IMPORT_PARSER_IDENTIFIER_FORMAT = 'M.Import.ParserErrors.identifierFormat';
     public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
@@ -84,8 +81,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_READER_ROLLBACK = 'M.Import.ReaderErrors.rollbackError';
     public static IMPORT_READER_INVALID_OPERATION_RESOURCE = 'M.Import.ReaderErrors.invalidOperationResource';
     public static IMPORT_READER_SHAPEFILE_READ_ERROR = 'M.Import.ReaderErrors.shapefile.readError';
-    public static IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'M.Import.ReaderErrors.shapefile.unsupportedGeometryType';
-    public static IMPORT_READER_SHAPEFILE_JSONL_WRITE = 'M.Import.ReaderErrors.shapefile.jsonlWriteError';
+
 
     // ImportPackage ValidationErrors
     public static IMPORT_VALIDATION_MISSING_PROPERTY = 'M.Import.ValidationErrors.missingProperty';
@@ -440,10 +436,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.error.missingIdentifier:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE] = {
-            content: $localize `:@@messages.import.error.missingIdentifierShapefile:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.`,
-            level: 'danger'
-        };
         this.msgs[M.IMPORT_PARSER_ID_MUST_NOT_BE_SET] = {
             content: $localize `:@@messages.import.error.parser.idnottobeset:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.`,
             level: 'danger'
@@ -512,10 +504,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.error.genericDatastoreError:Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_PARSER_INVALID_GEOMETRY] = {
-            content: $localize `:@@messages.import.error.invalidGeometry:Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].`,
-            level: 'danger'
-        };
+
         this.msgs[M.IMPORT_READER_ROLLBACK] = {
             content: $localize `:@@messages.import.error.rollbackError:Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.`,
             level: 'danger'
@@ -562,18 +551,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_READER_SHAPEFILE_READ_ERROR] = {
             content: $localize `:@@messages.import.error.shapefile.readError:Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.`,
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE] = {
-            content: $localize `:@@messages.import.error.shapefile.unsupportedGeometryType:Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.`,
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_READER_SHAPEFILE_JSONL_WRITE] = {
-            content: $localize `:@@messages.import.error.shapefile.jsonlWriteError:Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.`,
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_PARSER_SHAPEFILE_GENERIC] = {
-            content: $localize `:@@messages.import.error.shapefile.generic:Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CATALOG_GENERIC] = {

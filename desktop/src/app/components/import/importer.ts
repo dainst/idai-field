@@ -14,7 +14,6 @@ import { CsvParser } from './parser/csv-parser';
 import { GazGeojsonParserAddOn } from './parser/gaz-geojson-parser-add-on';
 import { GeojsonParser } from './parser/geojson-parser';
 import { NativeJsonlParser } from './parser/native-jsonl-parser';
-import { ShapefileParser } from './parser/shapefile-parser';
 import { CatalogFilesystemReader } from './reader/catalog-filesystem-reader';
 import { FilesystemReader } from './reader/filesystem-reader';
 import { HttpReader } from './reader/http-reader';
@@ -218,9 +217,8 @@ export module Importer {
                     GazGeojsonParserAddOn.postProcess
                 );
             case 'geojson':
-                return GeojsonParser.getParse(undefined, undefined);
             case 'shapefile':
-                return ShapefileParser.parse;
+                return GeojsonParser.getParse();
             case 'native':
                 return NativeJsonlParser.parse;
             case 'catalog':

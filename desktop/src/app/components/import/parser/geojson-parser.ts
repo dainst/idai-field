@@ -29,8 +29,7 @@ export module GeojsonParser {
      * @param preValidateAndTransform
      * @param postProcess
      */
-    export function getParse(preValidateAndTransform: Function|undefined,
-                    postProcess: Function|undefined): Parser {
+    export function getParse(preValidateAndTransform?: Function, postProcess?: Function): Parser {
 
         /**
          * The content json must be of a certain structure to

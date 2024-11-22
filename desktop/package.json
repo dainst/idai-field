@@ -49,8 +49,7 @@
     "asar": true,
     "asarUnpack": [
       "**/node_modules/sharp/**/*",
-      "**/node_modules/@img/**/*",
-      "**/node_modules/pouchdb-mapreduce-utils/**/*"
+      "**/node_modules/@img/**/*"
     ],
     "mac": {
       "category": "public.app-category.productivity",
@@ -148,7 +147,6 @@
     "moment": "2.29.4",
     "pouchdb-browser": "8.0.1",
     "pouchdb-load": "1.4.6",
-    "pouchdb-mapreduce-utils": "7.3.1",
     "pouchdb-replication-stream": "1.2.9",
     "pouchdb-server": "4.2.0",
     "qr-scanner": "^1.4.2",
@@ -186,7 +184,7 @@
     "ajv": "^8.16.0",
     "cross-var": "^1.1.0",
     "electron": "32.1.2",
-    "electron-builder": "25.1.8",
+    "electron-builder": "26.0.0-alpha.6",
     "file-api": "0.10.4",
     "file-url": "2.0.2",
     "gulp": "4.0.2",

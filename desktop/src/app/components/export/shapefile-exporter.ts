@@ -95,15 +95,18 @@ export module ShapefileExporter {
     function moveFilesToShapefileDirectory(shapefileDirectoryPath: string, timestamp: string,
                                            keepProjectionFiles: boolean) {
 
-        fs.readdirSync(TEMP_DIRECTORY_PATH)
-            .filter(fileName => fileName.includes(timestamp + '.'))
-            .filter(fileName => keepProjectionFiles || !fileName.endsWith('.prj'))
+        const fileNames: string[] = fs.readdirSync(TEMP_DIRECTORY_PATH)
+            .filter(fileName => fileName.includes(timestamp + '.'));
+        
+        fileNames.filter(fileName => keepProjectionFiles || !fileName.endsWith('.prj'))
             .forEach(fileName => {
                 fs.copyFileSync(
                     TEMP_DIRECTORY_PATH + fileName,
                     shapefileDirectoryPath + fileName.replace(timestamp, '')
                 );
             });
+
+        fileNames.forEach(fileName => fs.rmSync(TEMP_DIRECTORY_PATH + fileName));
     }
 
 

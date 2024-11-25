@@ -41,6 +41,8 @@ export class ShapefileFilesystemReader implements Reader {
         } catch (err) {
             console.error(err);
             throw [ReaderErrors.SHAPEFILE_GENERIC];
+        } finally {
+            fs.rmSync(TEMP_DIRECTORY_PATH + baseFileName + '.geojson');
         }
     }
 }

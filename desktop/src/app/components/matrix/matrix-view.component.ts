@@ -13,7 +13,7 @@ import { Edges, EdgesBuilder, GraphRelationsConfiguration } from './edges-builde
 import { TabManager } from '../../services/tabs/tab-manager';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
-import { exportGraph } from './export-graph';
+import { exportGraph, MatrixExportFormat } from './export-graph';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { AppState } from '../../services/app-state';
 import { Messages } from '../messages/messages';
@@ -191,7 +191,7 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async exportGraph() {
+    public async exportGraph(format: MatrixExportFormat) {
 
         if (!this.dotGraph) return;
 
@@ -201,8 +201,8 @@ export class MatrixViewComponent implements OnInit {
                 this.selectedOperation.resource.identifier,
                 this.appState,
                 this.modalService,
-                this.dotGraph,
-                this.svgGraph
+                format === 'dot' ? this.dotGraph : this.svgGraph,
+                format
             ); 
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch (err) {

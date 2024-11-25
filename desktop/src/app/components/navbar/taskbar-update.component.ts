@@ -1,5 +1,4 @@
 import { Component, Input, NgZone } from '@angular/core';
-import { SettingsProvider } from '../../services/settings/settings-provider';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 
@@ -26,7 +25,7 @@ export class TaskbarUpdateComponent {
 
     constructor(zone: NgZone) {
 
-        ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
+        ipcRenderer.on('downloadProgress', (_: any, downloadInfo: any) => {
             zone.run(() => {
                 this.progressPercent = Math.round(downloadInfo.progressPercent);
                 this.version = downloadInfo.version;

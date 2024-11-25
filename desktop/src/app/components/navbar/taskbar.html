@@ -1,13 +1,13 @@
 <ul class="nav navbar-nav taskbar">
-    <li *ngIf="!isLinux" id="update" class="nav-item pr-2">
+    <li *ngIf="!isLinux" id="update" class="nav-item pe-2">
         <taskbar-update [isSyncStatusShown]="showSyncStatus()"></taskbar-update>
     </li>
 
-    <li id="warnings" class="nav-item pr-2">
+    <li id="warnings" class="nav-item">
         <taskbar-warnings></taskbar-warnings>
     </li>
 
-    <li *ngIf="showSyncStatus()" class="nav-item pr-2">
+    <li *ngIf="showSyncStatus()" class="nav-item pe-2">
         <taskbar-sync-status></taskbar-sync-status>
     </li>
 

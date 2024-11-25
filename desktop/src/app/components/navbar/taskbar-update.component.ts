@@ -24,7 +24,7 @@ export class TaskbarUpdateComponent {
     private errorTimeout: any = undefined;
 
 
-    constructor(private settingsProvider: SettingsProvider, zone: NgZone) {
+    constructor(zone: NgZone) {
 
         ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
             zone.run(() => {

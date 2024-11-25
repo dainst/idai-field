@@ -224,9 +224,7 @@ process.env['NODE_OPTIONS'] = '--no-deprecation';
 
 // -- OTHER GLOBALS
 
-require('./asynchronous-fs.js');
-if (global.mode !== 'test') require('./gdal');
-require('./zip');
+require('./services/services');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

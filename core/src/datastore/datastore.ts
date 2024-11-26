@@ -52,8 +52,7 @@ export class Datastore {
                 private documentCache: DocumentCache,
                 private documentConverter: DocumentConverter,
                 private projectConfiguration: ProjectConfiguration,
-                private getUser: () => Name) {
-    }
+                private getUser: () => Name) {}
     
 
     /**
@@ -236,8 +235,7 @@ export class Datastore {
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean })
-            : Promise<Document> => {
+    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean }): Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
 

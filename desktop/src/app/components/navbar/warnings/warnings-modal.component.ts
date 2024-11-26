@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map, flatten, isArray, nop } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
-    WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
+import { Map, flatten, intersect, isArray, nop } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
     RelationTargetWarnings } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
@@ -36,6 +36,7 @@ type WarningSection = {
     inputType?: Field.InputType;
     dataLabel?: string;
     outlierValues?: string[];
+    relationTargets?: Array<Document>;
 }
 
 
@@ -564,7 +565,22 @@ export class WarningsModalComponent {
                 : flatten(Object.values(outlierValues));
         }
 
+        if (type === 'invalidRelationTargets') {
+           section.relationTargets = await this.fetchRelationTargets(document, fieldName);
+        }
+
         return section;
+    }
+
+
+    private fetchRelationTargets(document: FieldDocument, fieldName: string): Promise<Array<Document>> {
+
+        const targetIds: string[] = intersect(
+            document.resource.relations[fieldName],
+            document.warnings.invalidRelationTargets.targetIds
+        );
+
+        return this.datastore.getMultiple(targetIds);
     }
 
 

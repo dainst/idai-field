@@ -210,6 +210,13 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="section.type === 'invalidRelationTargets'" class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.invalidRelationTargets">Ungültige Zielressourcen:</b></div>
+                        <div class="data-info-content">
+                            <document-teaser *ngFor="let targetDocument of section.relationTargets"
+                                             [document]="targetDocument"></document-teaser>
+                        </div>
+                    </div>
                     <span *ngIf="section.type === 'conflicts'">
                         <button class="btn btn-primary solve-conflict-button"
                                 (click)="openConflictResolver()">

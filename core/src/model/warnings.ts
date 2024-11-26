@@ -6,6 +6,7 @@ export type WarningType = 'unconfiguredCategory'
     |'invalidFields'
     |'outliers'
     |'missingRelationTargets'
+    |'invalidRelationTargets'
     |'conflicts'
     |'missingIdentifierPrefix'
     |'nonUniqueIdentifier'
@@ -18,7 +19,8 @@ export interface Warnings {
     unconfiguredFields: string[];
     invalidFields: string[];
     outliers?: OutlierWarnings;
-    missingRelationTargets?: MissingRelationTargetWarnings;
+    missingRelationTargets?: RelationTargetWarnings;
+    invalidRelationTargets?: RelationTargetWarnings;
     unconfiguredCategory?: boolean;
     conflicts?: boolean;
     missingIdentifierPrefix?: boolean;
@@ -35,7 +37,7 @@ export interface OutlierWarnings {
 }
 
 
-export interface MissingRelationTargetWarnings {
+export interface RelationTargetWarnings {
     
     relationNames: string[];
     targetIds: string[];
@@ -53,6 +55,7 @@ export module Warnings {
             || warnings.invalidFields.length > 0
             || warnings.outliers !== undefined
             || warnings.missingRelationTargets !== undefined
+            || warnings.invalidRelationTargets !== undefined
             || warnings.unconfiguredCategory
             || warnings.conflicts
             || warnings.missingIdentifierPrefix

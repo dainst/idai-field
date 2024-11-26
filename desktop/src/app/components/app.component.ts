@@ -165,6 +165,10 @@ export class AppComponent {
             $localize `:@@util.warnings.missingRelationTargets:Fehlende Zielressourcen von Relationen`
         );
         this.utilTranslations.addTranslation(
+            'warnings.invalidRelationTargets',
+            $localize `:@@util.warnings.invalidRelationTargets:Ungültige Zielressourcen von Relationen`
+        );
+        this.utilTranslations.addTranslation(
             'warnings.missingOrInvalidParent',
             $localize `:@@util.warnings.missingOrInvalidParent:Fehlende oder ungültige übergeordnete Ressource`
         );

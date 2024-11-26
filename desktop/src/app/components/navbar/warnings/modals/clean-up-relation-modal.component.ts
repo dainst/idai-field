@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'tsfun';
-import { Datastore, Document } from 'idai-field-core';
+import { Datastore, Document, WarningType } from 'idai-field-core';
 
 
 @Component({
@@ -19,6 +19,7 @@ export class CleanUpRelationModalComponent {
     public relationName: string;
     public relationLabel: string|undefined;
     public invalidTargetIds: string[];
+    public warningType: WarningType;
 
 
     constructor(public activeModal: NgbActiveModal,

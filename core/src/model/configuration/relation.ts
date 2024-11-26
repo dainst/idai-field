@@ -10,7 +10,6 @@ export interface Relation extends Field {
     domain: string[];
     range: string[];
     inverse?: string;
-    sameMainCategoryResource?: boolean;
 }
 
 

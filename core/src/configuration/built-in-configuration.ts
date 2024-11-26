@@ -1005,7 +1005,6 @@ export class BuiltInConfiguration {
             inverse: 'isBelow',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1015,7 +1014,6 @@ export class BuiltInConfiguration {
             inverse: 'isAbove',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1025,7 +1023,6 @@ export class BuiltInConfiguration {
             inverse: 'isCutBy',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1035,7 +1032,6 @@ export class BuiltInConfiguration {
             inverse: 'cuts',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1045,7 +1041,6 @@ export class BuiltInConfiguration {
             inverse: 'isFilledBy',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1055,7 +1050,6 @@ export class BuiltInConfiguration {
             inverse: 'fills',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1065,7 +1059,6 @@ export class BuiltInConfiguration {
             inverse: 'borders',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1075,7 +1068,6 @@ export class BuiltInConfiguration {
             inverse: 'borders',
             domain: ['BuildingPart'],
             range: ['BuildingPart'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1085,7 +1077,6 @@ export class BuiltInConfiguration {
             inverse: 'isAbuttedBy',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1095,7 +1086,6 @@ export class BuiltInConfiguration {
             inverse: 'abuts',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1105,7 +1095,6 @@ export class BuiltInConfiguration {
             inverse: 'bondsWith',
             domain: ['Feature'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1181,7 +1170,6 @@ export class BuiltInConfiguration {
             range: ['FindCollection', 'Feature', 'Area', 'Sample', 'Room',
                 'BuildingPart', 'Level', 'RoomFloor', 'RoomWall', 'RoomCeiling', 'Roof',
                 'Stairs', 'DesignElement'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1190,7 +1178,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Inscription'],
             range: ['Find'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1199,7 +1186,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Feature'],
             range: ['Feature', 'FeatureGroup'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1208,7 +1194,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['FeatureSegment'],
             range: ['Feature'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1217,7 +1202,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Sample'],
             range: ['Sample', 'Feature', 'Find'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1226,7 +1210,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Level'],
             range: ['BuildingPart'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1235,7 +1218,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['BuildingPart'],
             range: ['BuildingPart', 'Area'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1244,7 +1226,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Room'],
             range: ['BuildingPart', 'Level'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1253,7 +1234,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Area'],
             range: ['Area'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1262,7 +1242,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['RoomFloor', 'RoomWall', 'RoomCeiling', 'Roof', 'Stairs'],
             range: ['BuildingPart', 'Room', 'Level'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1271,7 +1250,6 @@ export class BuiltInConfiguration {
             name: 'liesWithin',
             domain: ['Opening'],
             range: ['Room', 'RoomFloor', 'RoomWall', 'RoomCeiling', 'Roof', 'Stairs'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1281,7 +1259,6 @@ export class BuiltInConfiguration {
             domain: ['Damage'],
             range: ['BuildingPart', 'Room', 'Level', 'RoomFloor', 'RoomWall',
                 'RoomCeiling', 'Roof', 'Stairs', 'Opening', 'DesignElement'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1291,7 +1268,6 @@ export class BuiltInConfiguration {
             domain: ['DesignElement'],
             range: ['BuildingPart', 'Room', 'Level', 'RoomFloor', 'RoomWall',
                 'RoomCeiling', 'Roof', 'Stairs', 'Opening'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1464,7 +1440,6 @@ export class BuiltInConfiguration {
                 name: 'liesWithin',
                 domain: ['SurveyBurial'],
                 range: ['Area'],
-                sameMainCategoryResource: true,
                 editable: false,
                 inputType: 'relation'
             });
@@ -1474,7 +1449,6 @@ export class BuiltInConfiguration {
                 inverse: 'borders',
                 domain: ['BuildingFloor'],
                 range: ['BuildingPart'],
-                sameMainCategoryResource: true,
                 editable: true,
                 inputType: 'relation'
             });
@@ -1484,7 +1458,6 @@ export class BuiltInConfiguration {
                 inverse: 'borders',
                 domain: ['BuildingPart'],
                 range: ['BuildingPart', 'BuildingFloor'],
-                sameMainCategoryResource: true,
                 editable: true,
                 inputType: 'relation'
             });

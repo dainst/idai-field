@@ -112,7 +112,6 @@ function cleanField(field: any): FieldDefinition {
     delete field.domain;
     delete field.range;
     delete field.inverse;
-    delete field.sameMainCategoryResource;
 
     return field;
 }

@@ -77,7 +77,6 @@ export module MessagesConversion {
         if (msg === ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.PARENT_MUST_NOT_BE_ARRAY) replacement = M.IMPORT_PARENT_MUST_NOT_BE_ARRAY;
         if (msg === ImportErrors.MUST_BE_ARRAY) replacement = M.IMPORT_MUST_BE_ARRAY;
-        if (msg === ImportErrors.MUST_BE_IN_SAME_OPERATION) replacement = M.IMPORT_MUST_BE_IN_SAME_OPERATION;
         if (msg === ImportErrors.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE) replacement = M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE;
         if (msg === ImportErrors.TARGET_CATEGORY_RANGE_MISMATCH) replacement = M.IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH;
         if (msg === ImportErrors.MUST_NOT_BE_EMPTY_STRING) replacement = M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING;

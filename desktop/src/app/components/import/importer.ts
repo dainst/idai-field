@@ -103,8 +103,7 @@ export module Importer {
         const operationCategoryNames = context.operationCategories;
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = Relation.makeInverseRelationsMap(context.projectConfiguration.getRelations());
-        const sameOperationRelations = context.projectConfiguration.getRelations()
-            .filter(relation => relation.sameMainCategoryResource).map(to('name'));
+
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
         const find = findByIdentifier(services.datastore);
@@ -116,7 +115,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -127,7 +127,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -137,7 +138,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },

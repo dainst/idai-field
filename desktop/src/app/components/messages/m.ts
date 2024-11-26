@@ -138,7 +138,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
     public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
-    public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
     public static IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING = 'M.Import.ImportErrors.mustNotBeEmptyString';
     public static IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.categoryCannotBeChanged';
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
@@ -232,7 +231,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
     public static RESOURCES_ERROR_PARENT_RESOURCE_DELETED = 'resources.error.parentResourceDeleted';
     public static RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING = 'resources.error.resourceMissingDuringSyncing';
-    public static RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS = 'resources.error.cannotMoveWithSameOperationRelations';
     public static RESOURCES_ERROR_CANNOT_MOVE_CHILDREN = 'resources.error.cannotMoveChildren';
     public static RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE = 'resources.error.qrCodeScanningFailure';
     public static RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND = 'resources.error.qrCodeResourceNotFound';
@@ -673,10 +671,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.error.categoryOnlyAllowedOnUpdate:Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\'`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_MUST_BE_IN_SAME_OPERATION] = {
-            content: $localize `:@@messages.import.error.mustBeInSameOperation:Ressourcen liegen in unterschiedlichen Maßnahmen: \'[0]\', \'[1]\'`,
-            level: 'danger'
-        };
         this.msgs[M.IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED] = {
             content: $localize `:@@messages.import.error.categoryCannotBeChanged:Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: \'[0]\'`,
             level: 'danger'
@@ -992,10 +986,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING] = {
             content: $localize `:@@messages.resources.error.resourceMissingDuringSyncing:Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.`,
-            level: 'danger'
-        };
-        this.msgs[M.RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS] = {
-            content: $localize `:@@messages.resources.error.cannotMoveWithSameOperationRelations:Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_CANNOT_MOVE_CHILDREN] = {

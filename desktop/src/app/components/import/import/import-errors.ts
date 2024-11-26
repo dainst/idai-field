@@ -27,7 +27,6 @@ export module ImportErrors {
     export const PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'ImportErrors.parentAssignmentOperationnotallowed';
     export const PARENT_MUST_NOT_BE_ARRAY = 'ImportErrors.parentMustNotBeArray';
     export const MUST_BE_ARRAY = 'ImportErrors.relationMustBeArray';
-    export const MUST_BE_IN_SAME_OPERATION = 'ImportErrors.mustBeInSameOperation';
     export const MUST_NOT_BE_EMPTY_STRING = 'ImportErrors.mustNotBeEmptyString';
     export const TARGET_CATEGORY_RANGE_MISMATCH = 'ImportErrors.targetCategoryRangeMismatch';
     export const CATEGORY_CANNOT_BE_CHANGED = 'ImportErrors.categoryCannotBeChanged';

@@ -31,7 +31,6 @@ describe('processRelations', () => {
     };
 
     const relationInverses = { isAfter: 'isBefore' };
-    const sameOperationRelations = ['isAfter', 'isBefore'];
 
 
     let get = async (resourceId): Promise<any> => {
@@ -60,7 +59,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, ['Trench'], get, relationInverses, sameOperationRelations, {}
+            documents, validator, ['Trench'], get, relationInverses, {}
         );
 
         expect(documents[0].resource.relations[LIES_WITHIN]).toBeUndefined();
@@ -76,7 +75,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, ['Trench'], get, relationInverses, sameOperationRelations, {}
+            documents, validator, ['Trench'], get, relationInverses, {}
         );
 
         expect(documents[1].resource.identifier).toBe('NewFeature1');
@@ -93,7 +92,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, ['Trench'], get, relationInverses, sameOperationRelations, {}
+            documents, validator, ['Trench'], get, relationInverses, {}
         );
 
         expect(documents[1].resource.identifier).toBe('NewTrench1');
@@ -109,7 +108,7 @@ describe('processRelations', () => {
         ];
 
         const result = await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+            documents, validator, operationCategoryNames, get, relationInverses,
             { mergeMode: false }
         );
 
@@ -124,7 +123,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+            documents, validator, operationCategoryNames, get, relationInverses,
             { mergeMode: false }
         );
 
@@ -143,7 +142,7 @@ describe('processRelations', () => {
 
         await processRelations(
             documents,
-            validator, operationCategoryNames, get, relationInverses, sameOperationRelations, { mergeMode: false }
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: false }
         );
 
         const resource = documents[0].resource;
@@ -160,7 +159,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         const resource = documents[0].resource;
@@ -177,7 +176,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         const resource = documents[0].resource;
@@ -195,7 +194,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         const resource = documents[1].resource;
@@ -213,7 +212,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         const resource = documents[0].resource;
@@ -232,7 +231,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         const resource = documents[2].resource;
@@ -251,7 +250,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         const resource = documents[0].resource;
@@ -268,7 +267,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents , validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents , validator, operationCategoryNames, get, relationInverses, {}
         );
 
         const resource = documents[0].resource;
@@ -284,7 +283,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+            documents, validator, operationCategoryNames, get, relationInverses,
             { operationId: 'et1' }
         );
 
@@ -302,7 +301,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         expect(documents[0].resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -320,7 +319,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+            documents, validator, operationCategoryNames, get, relationInverses, {}
         );
 
         expect(documents[0].resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -338,7 +337,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+            documents, validator, operationCategoryNames, get, relationInverses,
             { operationId: 'et1' }
         );
 
@@ -357,7 +356,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations, { operationId: 'et1' }
+            documents, validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' }
         );
 
         expect(documents[0].resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -374,7 +373,7 @@ describe('processRelations', () => {
         ];
 
         await processRelations(
-            documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+            documents, validator, operationCategoryNames, get, relationInverses,
             { operationId: 'et1' }
         );
 
@@ -393,7 +392,7 @@ describe('processRelations', () => {
 
         await processRelations(
             [document],
-            validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+            validator, operationCategoryNames, get, relationInverses,
             { mergeMode: true }
         );
 
@@ -409,7 +408,7 @@ describe('processRelations', () => {
 
         const result = await processRelations(
             [document],
-            validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+            validator, operationCategoryNames, get, relationInverses,
             { mergeMode: true }
         );
 
@@ -428,7 +427,7 @@ describe('processRelations', () => {
         try {
             await processRelations(
                 [document],
-                validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+                validator, operationCategoryNames, get, relationInverses,
                 { mergeMode: true }
             );
             throw new Error('Test failure');
@@ -450,7 +449,7 @@ describe('processRelations', () => {
                 d('nfi1', 'Find', 'one', { isChildOf: 'et1' })
             ];
             await processRelations(documents,
-                validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+                validator, operationCategoryNames, get, relationInverses, {}
             );
             throw new Error('Test failure');
         } catch (err) {
@@ -467,7 +466,7 @@ describe('processRelations', () => {
             ];
 
             await processRelations(
-                documents, validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+                documents, validator, operationCategoryNames, get, relationInverses,
                 { operationId: 'et1' }
             );
             throw new Error('Test failure');
@@ -483,7 +482,7 @@ describe('processRelations', () => {
         try {
             await processRelations(
                 [d('nf1', 'Feature', 'one', { liesWithin: ['et1'] })],
-                validator, operationCategoryNames, get, relationInverses, sameOperationRelations,
+                validator, operationCategoryNames, get, relationInverses,
                 { operationId: 'et1' }
             );
             throw new Error('Test failure');
@@ -500,7 +499,7 @@ describe('processRelations', () => {
         try {
             await processRelations(
                 [d('nf1', 'Feature', 'one')],
-                validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+                validator, operationCategoryNames, get, relationInverses, {}
             );
             throw new Error('Test failure');
         } catch (err) {
@@ -516,7 +515,7 @@ describe('processRelations', () => {
 
         try {
             await processRelations(
-                [doc], validator, operationCategoryNames, get, relationInverses, sameOperationRelations, {}
+                [doc], validator, operationCategoryNames, get, relationInverses, {}
             );
             throw new Error('Test failure');
         } catch (errWithParams) {

@@ -2305,8 +2305,7 @@ describe('buildRawProjectConfiguration', () => {
             inverse: 'isBelow',
             domain: ['P'],
             range: ['P'],
-            inputType: 'relation',
-            sameMainCategoryResource: true
+            inputType: 'relation'
         }];
 
         const result = buildRaw(

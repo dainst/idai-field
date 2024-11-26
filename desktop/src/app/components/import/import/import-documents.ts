@@ -43,7 +43,6 @@ export interface ImportContext {
 
     operationCategories: string[];
     inverseRelationsMap: Relation.InverseRelationsMap;
-    sameOperationRelations: string[];
     settings: Settings;
 }
 
@@ -122,7 +121,6 @@ async function importDocuments(services: ImportServices,
             context.operationCategories,
             helpers.get,
             context.inverseRelationsMap,
-            context.sameOperationRelations,
             options
         );
         const postprocessedDocuments = processedDocuments.map(helpers.postprocessDocument);

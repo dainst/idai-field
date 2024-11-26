@@ -1,4 +1,4 @@
-import { flatten, intersection, set, to, isDefined } from 'tsfun';
+import { intersection, set, to, isDefined } from 'tsfun';
 import { Document, ProjectConfiguration, RelationsManager,
     FieldDocument, IndexFacade, Constraint, CategoryForm, Relation, Named, Datastore } from 'idai-field-core';
 import { M } from '../../messages/m';
@@ -17,10 +17,6 @@ export module MoveUtility {
                                        datastore: Datastore) {
 
         if (getParentId(document) === newParent.resource.id) return;
-
-        if (!(await checkForSameOperationRelations(document, newParent, projectConfiguration))) {
-            throw [M.RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS, document.resource.identifier];
-        }
 
         if (!(await checkChildren(document, newParent, projectConfiguration, datastore))) {
             throw [M.RESOURCES_ERROR_CANNOT_MOVE_CHILDREN, document.resource.identifier];
@@ -157,31 +153,6 @@ export module MoveUtility {
                 'liesWithin', document.resource.category
             ))
         );
-    }
-
-
-    async function checkForSameOperationRelations(document: FieldDocument, newParent: FieldDocument,
-                                                  projectConfiguration: ProjectConfiguration): Promise<boolean> {
-
-        const currentOperationId: string|undefined = document.resource.relations?.[Relation.Hierarchy.RECORDEDIN]?.[0];
-
-        if (newParent.resource.relations?.[Relation.Hierarchy.RECORDEDIN]?.[0] === currentOperationId
-               || newParent.resource.id === currentOperationId) {
-            return true;
-        }
-
-        const relations: Array<Relation> =
-            projectConfiguration.getRelationsForDomainCategory(document.resource.category);
-
-        const targetIds: string[] = flatten(
-            Object.keys(document.resource.relations)
-                .filter(relationName => {
-                    return !Relation.Hierarchy.ALL.includes(relationName) 
-                        && relations.find(relation => relation.name === relationName)?.sameMainCategoryResource;
-                }).map(relationName => document.resource.relations[relationName])
-        );
-
-        return targetIds.length === 0;
     }
 
 

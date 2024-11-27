@@ -144,6 +144,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
     public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
     public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
+    public static IMPORT_ERROR_WARNINGS_EXIST = 'M.Import.ImportErros.warningsExist';
 
     // Import Package - ImportCatalogErrors
     public static IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH = 'M.Import.ImportCatalogErrors.identifierClash';
@@ -693,6 +694,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE] = {
             content: $localize `:@@messages.import.error.emptyObjectInResource:Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_ERROR_WARNINGS_EXIST] = {
+            content: $localize `:@@messages.import.error.warningsExist:Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED] = {

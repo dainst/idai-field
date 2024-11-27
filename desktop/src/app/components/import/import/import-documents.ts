@@ -75,9 +75,7 @@ export type Documents2Result = (_: Array<Document>) => Promise<Result>;
  *   The relations map is assumed to be at least existent, but can be empty. // TODO REVIEW, than we can omit creation of it and only assert that it is there
  *   The resource.category field may be empty.
  */
-export function buildImportDocuments(services: ImportServices,
-                                     context: ImportContext,
-                                     helpers: ImportHelpers,
+export function buildImportDocuments(services: ImportServices, context: ImportContext, helpers: ImportHelpers,
                                      options: ImportOptions = {}): Documents2Result {
 
     if (options.mergeMode) {
@@ -96,11 +94,8 @@ export function buildImportDocuments(services: ImportServices,
 }
 
 
-async function importDocuments(services: ImportServices,
-                               context: ImportContext,
-                               helpers: ImportHelpers,
-                               options: ImportOptions,
-                               documents: Array<Document>): Promise<Result> {
+async function importDocuments(services: ImportServices, context: ImportContext, helpers: ImportHelpers,
+                               options: ImportOptions, documents: Array<Document>): Promise<Result> {
 
     makeSureRelationStructuresExists(documents);
     complementInverseRelationsBetweenImportDocs(context, options, documents);
@@ -148,25 +143,27 @@ async function importDocuments(services: ImportServices,
 }
 
 
-async function makeExistingDocumentsMap(find: Find,
-                                        options: ImportOptions,
+async function makeExistingDocumentsMap(find: Find, options: ImportOptions,
                                         documents: Array<Document>): Promise<Map<Document>> {
 
     if (!options.useIdentifiersInRelations) return {};
-    const lookup = {};
+
+    const result = {};
+
     for (const document of documents) {
-        const identifier = document.resource[Resource.IDENTIFIER] as string; // not a FieldDocument yet
+        const identifier: string = document.resource[Resource.IDENTIFIER]; // not a FieldDocument yet
         if (!identifier) continue;
-        const found = await find(identifier);
-        if (found) lookup[identifier] = found;
+        const existingDocument: Document = await find(identifier);
+        if (!existingDocument) continue;
+        if (existingDocument.warnings) throw [E.WARNINGS_EXIST, existingDocument.resource.identifier];
+        result[identifier] = existingDocument;
     }
-    return lookup;
+
+    return result;
 }
 
 
-function getDocumentsToImport(existingDocumentsMap: Map<Document>,
-                              options: ImportOptions,
-                              documents: Array<Document>)
+function getDocumentsToImport(existingDocumentsMap: Map<Document>, options: ImportOptions, documents: Array<Document>)
         : { documentsToImport: Array<Document>, documentsToIgnore: Array<Document> } {
 
     const existingDocuments = documents.filter(document => {
@@ -182,9 +179,7 @@ function getDocumentsToImport(existingDocumentsMap: Map<Document>,
 }
 
 
-function preprocessDocuments(existingDocuments: Map<Document>,
-                             helpers: ImportHelpers,
-                             options: ImportOptions,
+function preprocessDocuments(existingDocuments: Map<Document>, helpers: ImportHelpers, options: ImportOptions,
                              documents: Array<Document>): Map<Document> {
 
     const mergeDocs = {};

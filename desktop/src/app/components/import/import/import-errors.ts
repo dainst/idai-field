@@ -35,4 +35,5 @@ export module ImportErrors {
     export const EMPTY_OBJECT_IN_RESOURCE = 'ImportErrors.emptyObjectInResource';
     export const INVALID_IDENTIFIER_PREFIX = 'ImportErrors.invalidIdentifierPrefix';
     export const RESOURCE_LIMIT_EXCEEDED = 'ImportErrors.resourceLimitExceeded';
+    export const WARNINGS_EXIST = 'ImportErrors.warningsExist';
 }

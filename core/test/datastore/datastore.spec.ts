@@ -15,6 +15,7 @@ describe('Datastore', () => {
     let mockdb: any;
     let mockIndexFacade: any;
 
+
     function createMockedDatastore(mockdb: any) {
 
         const forms = [createCategory('Find')];
@@ -274,7 +275,7 @@ describe('Datastore', () => {
     });
 
 
-    it('cant find second document', async done => {
+    fit('cant find second document', async done => {
 
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
@@ -288,6 +289,7 @@ describe('Datastore', () => {
                     }
                 }
             ]),
+            Promise.resolve([]),
             Promise.resolve([]),
             Promise.resolve([]),
             Promise.resolve([])

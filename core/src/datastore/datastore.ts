@@ -157,9 +157,20 @@ export class Datastore {
 
     private async updateIndex(document: Document, notifyObservers: boolean = true): Promise<Document> {
 
-        const previousVersion: Document = this.documentCache.get(document.resource.id);
+        const previousIdentifier: string|undefined = this.documentCache.get(document.resource.id)?.resource.identifier;
+    
+        document = this.updateCache(document);
 
-        await this.convert(document, notifyObservers);
+        this.documentConverter.convert(document);
+        await this.updateWarnings(document, notifyObservers, previousIdentifier);
+
+        return this.updateCache(document);
+    }
+
+
+    private updateCache(document: Document) {
+        
+        const previousVersion: Document = this.documentCache.get(document.resource.id);
 
         return !previousVersion
             ? this.documentCache.set(document)
@@ -435,14 +446,15 @@ export class Datastore {
     }
 
 
-    private async updateWarnings(document: Document, notifyObservers: boolean) {
+    private async updateWarnings(document: Document, notifyObservers: boolean, previousIdentifier?: string) {
 
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
 
         this.indexFacade.put(document);
-        
-        const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
-        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        if (!previousIdentifier) {
+            previousIdentifier = this.documentCache.get(document.resource.id)?.resource.identifier;
+        }
 
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this,

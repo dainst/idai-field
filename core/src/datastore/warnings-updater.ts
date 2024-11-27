@@ -164,7 +164,6 @@ export module WarningsUpdater {
                     if (!warnings.relationNames.includes(relationName)) warnings.relationNames.push(relationName);
                     if (!warnings.targetIds.includes(targetId)) warnings.targetIds.push(targetId);
                 }
-
             }
         }
 

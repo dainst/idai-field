@@ -11,6 +11,7 @@ describe('subsystem/datastore', () => {
 
     let image0;
     let trench0;
+   
     
     beforeEach(async done => {
 
@@ -189,6 +190,32 @@ describe('subsystem/datastore', () => {
         clonedDocument3.resource.identifier = '2';
         await app.datastore.update(clonedDocument3);
         
+        expect(document2.warnings).toBeUndefined();
+        expect(document3.warnings).toBeUndefined();
+
+        done();
+    });
+
+
+    it('update missing relation target warnings', async done => {
+
+        let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
+        let document2 = doc('sd2', '1', 'Feature', 'id2');
+        let document3 = doc('sd3', '2', 'Feature', 'id3');
+
+        document2.resource.relations.isRecordedIn = ['id1'];
+        document2.resource.relations.isAbove = ['id3'];
+        document3.resource.relations.isRecordedIn = ['id1'];
+        document3.resource.relations.isBelow = ['id2'];
+
+        await app.datastore.create(document1);
+        document2 = await app.datastore.create(document2);
+
+        expect(document2.warnings?.missingRelationTargets?.relationNames).toEqual(['isAbove'])
+        expect(document2.warnings?.missingRelationTargets?.targetIds).toEqual(['id3'])
+
+        document3 = await app.datastore.create(document3);
+
         expect(document2.warnings).toBeUndefined();
         expect(document3.warnings).toBeUndefined();
 

@@ -221,4 +221,20 @@ describe('subsystem/datastore', () => {
 
         done();
     });
+
+
+    it('update missing parent warnings', async done => {
+
+        let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
+        let document2 = doc('sd2', 'Feature', 'Feature', 'id2');
+
+        document2.resource.relations.isRecordedIn = ['id1'];
+        document2 = await app.datastore.create(document2);
+        expect(document2.warnings?.missingOrInvalidParent).toBe(true);
+
+        await app.datastore.create(document1);
+        expect(document2.warnings).toBeUndefined();
+
+        done();
+    });
 });

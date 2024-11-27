@@ -189,8 +189,8 @@ describe('subsystem/datastore', () => {
         clonedDocument3.resource.identifier = '2';
         await app.datastore.update(clonedDocument3);
         
-        expect(document1.warnings).toBeUndefined();
         expect(document2.warnings).toBeUndefined();
+        expect(document3.warnings).toBeUndefined();
 
         done();
     });

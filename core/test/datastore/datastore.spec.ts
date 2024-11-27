@@ -275,7 +275,7 @@ describe('Datastore', () => {
     });
 
 
-    fit('cant find second document', async done => {
+    it('cant find second document', async done => {
 
         mockIndexFacade.find.and.returnValue(['1', '2']);
 

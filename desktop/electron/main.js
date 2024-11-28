@@ -206,12 +206,6 @@ global.toolsPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'tools')
     : 'tools';
 
-global.gdalPath = global.mode === 'production'
-    ? process.platform === 'win32'
-        ? 'resources/lib/gdal'
-        : '../lib/gdal'
-    : 'lib/gdal';
-
 global.samplesPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'samples/')
     : './samples/';

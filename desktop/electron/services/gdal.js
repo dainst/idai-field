@@ -13,12 +13,14 @@ log.info('appDataPath', global.appDataPath);
 log.info('node working directory path', __dirname);
 log.info('tempDirectoryPath', tempDirectoryPath);
 
+const gdalPath = getGdalPath();
+
 if (fs.existsSync(tempDirectoryPath)) fs.rmSync(tempDirectoryPath, { recursive: true });
 log.info('Create temp directory');
 fs.mkdirSync(tempDirectoryPath);
 
 const options = {
-    path: global.gdalPath,
+    path: gdalPath,
     dest: tempDirectoryPath
 };
 
@@ -37,3 +39,18 @@ initGdalJs(options).then(async gdal => {
         }
     });
 }).catch(err => log.error(err));
+
+
+function getGdalPath() {
+
+    if (global.mode !== 'production') return 'lib/gdal';
+
+    switch (process.platform) {
+        case 'darwin':
+            return '../../Resources/lib/gdal';
+        case 'linux':
+            return '../resources/lib/gdal';
+        case 'win32':
+            return 'resources/lib/gdal';
+    }
+}

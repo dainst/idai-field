@@ -206,9 +206,9 @@ global.toolsPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'tools')
     : 'tools';
 
-global.libPath = global.mode === 'production'
-    ? electron.app.getAppPath().replace('app.asar', 'lib/')
-    : './lib/';
+global.gdalPath = global.mode === 'production'
+    ? 'resources/lib/gdal'
+    : 'lib/gdal';
 
 global.samplesPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'samples/')

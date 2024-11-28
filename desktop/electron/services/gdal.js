@@ -15,7 +15,7 @@ log.info('Create temp directory');
 fs.mkdirSync(tempDirectoryPath);
 
 const options = {
-    path: global.libPath + 'gdal',
+    path: global.gdalPath,
     dest: tempDirectoryPath
 };
 

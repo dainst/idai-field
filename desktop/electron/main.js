@@ -207,7 +207,9 @@ global.toolsPath = global.mode === 'production'
     : 'tools';
 
 global.gdalPath = global.mode === 'production'
-    ? 'resources/lib/gdal'
+    ? process.platform === 'win32'
+        ? 'resources/lib/gdal'
+        : '../lib/gdal'
     : 'lib/gdal';
 
 global.samplesPath = global.mode === 'production'

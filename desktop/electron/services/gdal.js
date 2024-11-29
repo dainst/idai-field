@@ -12,7 +12,7 @@ log.info('appPath', electron.app.getAppPath());
 log.info('appDataPath', global.appDataPath);
 log.info('node working directory path', __dirname);
 log.info('tempDirectoryPath', tempDirectoryPath);
-console.log(fs.readdirSync('.'));
+log.info(fs.readdirSync('.'));
 
 const gdalPath = getGdalPath();
 

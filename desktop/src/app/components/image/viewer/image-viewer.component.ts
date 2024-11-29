@@ -100,14 +100,10 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     }
 
 
-    public stopLoading() {
+    public async onImageLoaded() {
 
-        if (this.loadingIconTimeout) {
-            clearTimeout(this.loadingIconTimeout);
-            this.loadingIconTimeout = undefined;
-        }
-        this.loading.stop('image-viewer', false);
-        this.loadingIconVisible = false;
+        this.stopLoading();
+        await this.setupPanZoom();
     }
 
 
@@ -121,7 +117,6 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
             const newImageContainer: ImageContainer = await this.loadImage(this.image);
             if (newImageContainer.document.resource.id === this.image.resource.id) {
                 this.imageContainer = newImageContainer;
-                await this.setupPanZoom();
             }
         });
     }
@@ -156,6 +151,17 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
         this.loadingIconTimeout = setTimeout(() => {
             this.loadingIconVisible = true;
         }, 250);
+    }
+
+
+    private stopLoading() {
+
+        if (this.loadingIconTimeout) {
+            clearTimeout(this.loadingIconTimeout);
+            this.loadingIconTimeout = undefined;
+        }
+        this.loading.stop('image-viewer', false);
+        this.loadingIconVisible = false;
     }
 
 

@@ -7,7 +7,7 @@
         <img *ngIf="isImageContainerVisible() && containsOriginal(imageContainer)"
              #originalImage
              [src]="imageContainer?.imgSrc"
-             (load)="stopLoading()">
+             (load)="onImageLoaded()">
         <img *ngIf="isImageContainerVisible() && !containsOriginal(imageContainer)"
              [src]="imageContainer?.thumbSrc">
         <zoom-buttons [zoomInEnabled]="containsOriginal(imageContainer) && getScale() < maxZoom"

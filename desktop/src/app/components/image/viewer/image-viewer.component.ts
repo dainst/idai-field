@@ -14,7 +14,10 @@ const panzoom = require('panzoom');
 
 @Component({
     selector: 'image-viewer',
-    templateUrl: './image-viewer.html'
+    templateUrl: './image-viewer.html',
+    host: {
+        '(window:resize)': 'onResize()'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -66,6 +69,13 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
         
         this.resetPanZoom();
+    }
+
+
+    public onResize() {
+
+        this.resetPanZoom();
+        this.setupPanZoom();
     }
 
 
@@ -226,7 +236,7 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
         const resource: ImageResource = this.imageContainer.document.resource;
         const dimension: string = resource.width < resource.height ? 'width' : 'height';
 
-        const imageValue: number = this.imageContainer.document.resource[dimension];
+        const imageValue: number = resource[dimension];
         const containerValue: number = this.containerElement.nativeElement.getBoundingClientRect()[dimension];
         
         return Math.max(1, imageValue / containerValue);

@@ -1,11 +1,15 @@
-import { Component, OnChanges, Input, NgZone, ChangeDetectorRef } from '@angular/core';
-import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
+import { Component, OnChanges, Input, NgZone, ChangeDetectorRef, ElementRef, ViewChild,
+    OnDestroy } from '@angular/core';
+import { ImageDocument, ImageResource, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImageContainer } from '../../../services/imagestore/image-container';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole } from '../log-messages';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
 import { Loading } from '../../widgets/loading';
+import { AngularUtility } from '../../../angular/angular-utility';
+
+const panzoom = require('panzoom');
 
 
 @Component({
@@ -16,13 +20,20 @@ import { Loading } from '../../widgets/loading';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageViewerComponent implements OnChanges {
+export class ImageViewerComponent implements OnChanges, OnDestroy {
 
     @Input() image: ImageDocument;
 
+    @ViewChild('container') containerElement: ElementRef;
+    @ViewChild('originalImage') imageElement: ElementRef;
+
     public imageContainer: ImageContainer;
+    public maxZoom: number;
     public loadingIconVisible: boolean = false;
     public loadingIconTimeout: any = undefined;
+
+    private panzoomInstance: any;
+    private zooming: boolean = false;
 
 
     constructor(private imageUrlMaker: ImageUrlMaker,
@@ -33,13 +44,28 @@ export class ImageViewerComponent implements OnChanges {
                 private changeDetectorRef: ChangeDetectorRef) {}
 
 
+    public getScale = () => this.panzoomInstance?.getTransform().scale ?? 0;
+
+    public zoomIn = () => this.zoom(2);
+
+    public zoomOut = () => this.zoom(0.5);
+
+
     async ngOnChanges() {
+
+        this.resetPanZoom();
 
         if (!this.imagestore.getAbsoluteRootPath()) {
             this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
         }
         
         if (this.image) await this.update();
+    }
+
+
+    ngOnDestroy() {
+        
+        this.resetPanZoom();
     }
 
 
@@ -85,6 +111,7 @@ export class ImageViewerComponent implements OnChanges {
             const newImageContainer: ImageContainer = await this.loadImage(this.image);
             if (newImageContainer.document.resource.id === this.image.resource.id) {
                 this.imageContainer = newImageContainer;
+                await this.setupPanZoom();
             }
         });
     }
@@ -135,5 +162,73 @@ export class ImageViewerComponent implements OnChanges {
         } else {
             showMissingOriginalImageMessageOnConsole(imageId);
         }
+    }
+
+
+    private async setupPanZoom() {
+
+        if (!this.containsOriginal(this.imageContainer)) return;
+
+        await AngularUtility.refresh();
+
+        this.maxZoom = this.calculateMaxZoom();
+
+        this.panzoomInstance = panzoom(
+            this.imageElement.nativeElement,
+            {
+                smoothScroll: false,
+                bounds: true,
+                zoomDoubleClickSpeed: 1,
+                initialZoom: 1,
+                maxZoom: this.maxZoom,
+                minZoom: 1
+            }
+        );
+
+        this.panzoomInstance.on('zoom', () => {
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.panzoomInstance.on('zoomend', () => {
+            this.zooming = false;
+            this.changeDetectorRef.detectChanges();
+        });
+    }
+
+
+    private resetPanZoom() {
+
+        if (!this.panzoomInstance) return;
+
+        this.panzoomInstance.dispose();
+        this.panzoomInstance = undefined;
+    }
+
+
+    private zoom(value: number) {
+
+        if (this.zooming) return;
+
+        if (this.getScale() < 2 && value < 1) value = 0.45;
+
+        this.zooming = true;
+
+        const bounds: any = this.containerElement.nativeElement.getBoundingClientRect();
+        const x: number = bounds.width / 2;
+        const y: number = bounds.height / 2;
+
+        this.panzoomInstance.smoothZoom(x, y, value);
+    }
+
+
+    private calculateMaxZoom(): number {
+
+        const resource: ImageResource = this.imageContainer.document.resource;
+        const dimension: string = resource.width < resource.height ? 'width' : 'height';
+
+        const imageValue: number = this.imageContainer.document.resource[dimension];
+        const containerValue: number = this.containerElement.nativeElement.getBoundingClientRect()[dimension];
+        
+        return Math.max(1, imageValue / containerValue);
     }
 }

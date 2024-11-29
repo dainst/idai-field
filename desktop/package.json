@@ -143,6 +143,7 @@
     "idai-field-core": "^1.4.0",
     "leaflet": "1.7.1",
     "moment": "2.29.4",
+    "panzoom": "9.4.3",
     "pouchdb-browser": "8.0.1",
     "pouchdb-load": "1.4.6",
     "pouchdb-replication-stream": "1.2.9",

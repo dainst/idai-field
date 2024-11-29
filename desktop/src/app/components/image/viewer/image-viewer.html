@@ -1,14 +1,19 @@
 <div id="image-container">
-    <div class="d-flex align-items-center justify-content-center">
+    <div #container class="d-flex align-items-center justify-content-center">
         <div *ngIf="isOriginalNotFoundWarningVisible()" class="alert alert-info" role="alert"
              i18n="@@image.originalNotFoundWarning">
             Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
         </div>
         <img *ngIf="isImageContainerVisible() && containsOriginal(imageContainer)"
+             #originalImage
              [src]="imageContainer?.imgSrc"
              (load)="stopLoading()">
         <img *ngIf="isImageContainerVisible() && !containsOriginal(imageContainer)"
              [src]="imageContainer?.thumbSrc">
+        <zoom-buttons [zoomInEnabled]="containsOriginal(imageContainer) && getScale() < maxZoom"
+                      [zoomOutEnabled]="containsOriginal(imageContainer) && getScale() > 1"
+                      (onZoomInClicked)="zoomIn()"
+                      (onZoomOutClicked)="zoomOut()"></zoom-buttons>
         <loading-icon *ngIf="loadingIconVisible" [context]="'image-viewer'"></loading-icon>
     </div>
 </div>

@@ -12,6 +12,7 @@ log.info('appPath', electron.app.getAppPath());
 log.info('appDataPath', global.appDataPath);
 log.info('node working directory path', __dirname);
 log.info('tempDirectoryPath', tempDirectoryPath);
+console.log(fs.readdirSync('.'));
 
 const gdalPath = getGdalPath();
 
@@ -47,7 +48,7 @@ function getGdalPath() {
 
     switch (process.platform) {
         case 'darwin':
-            return '../../../lib/gdal';
+            return 'lib/gdal';
         case 'linux':
             return '../../../lib/gdal';
         case 'win32':

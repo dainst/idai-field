@@ -1,11 +1,9 @@
 image-viewer {
   #image-container {
+    position: relative;
     height: 100%;
     background-color: #000;
-
-    .d-flex {
-      overflow: hidden;
-    }
+    overflow: hidden;
 
     img {
       max-width: 100%;

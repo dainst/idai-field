@@ -193,13 +193,19 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
             this.imageElement.nativeElement,
             {
                 smoothScroll: false,
-                bounds: true,
                 zoomDoubleClickSpeed: 1,
                 initialZoom: 1,
                 maxZoom: this.maxZoom,
                 minZoom: 1
             }
         );
+
+        this.setupPanZoomEvents();
+        this.centerImage();
+    }
+
+
+    private setupPanZoomEvents() {
 
         this.panzoomInstance.on('zoom', () => {
             this.changeDetectorRef.detectChanges();
@@ -209,6 +215,17 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
             this.zooming = false;
             this.changeDetectorRef.detectChanges();
         });
+    }
+
+
+    private centerImage() {
+
+        const imageBounds: any = this.imageElement.nativeElement.getBoundingClientRect();
+        const containerBounds: any = this.containerElement.nativeElement.getBoundingClientRect();
+        const x: number = containerBounds.width / 2 - imageBounds.width / 2;
+        const y: number = containerBounds.height / 2 - imageBounds.height / 2;
+
+        this.panzoomInstance.moveTo(x, y);
     }
 
 
@@ -229,9 +246,9 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
         this.zooming = true;
 
-        const bounds: any = this.containerElement.nativeElement.getBoundingClientRect();
-        const x: number = bounds.width / 2;
-        const y: number = bounds.height / 2;
+        const containerBounds: any = this.containerElement.nativeElement.getBoundingClientRect();
+        const x: number = containerBounds.width / 2;
+        const y: number = containerBounds.height / 2;
 
         this.panzoomInstance.smoothZoom(x, y, value);
     }

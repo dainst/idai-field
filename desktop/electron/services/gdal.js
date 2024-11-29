@@ -47,9 +47,9 @@ function getGdalPath() {
 
     switch (process.platform) {
         case 'darwin':
-            return '../../Resources/lib/gdal';
+            return '../../../lib/gdal';
         case 'linux':
-            return '../resources/lib/gdal';
+            return '../../../lib/gdal';
         case 'win32':
             return 'resources/lib/gdal';
     }

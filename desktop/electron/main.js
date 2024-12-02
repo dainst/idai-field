@@ -5,9 +5,15 @@ const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
+const log = require('electron-log');
 const autoUpdate = require('./auto-update.js');
 
 remoteMain.initialize();
+
+if (global.mode !== 'development') {
+    process.chdir(electron.app.getAppPath().replace('app.asar', ''));
+}
+log.info('Working directory:', process.cwd());
 
 let menuContext = 'loading';
 

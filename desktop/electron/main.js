@@ -17,7 +17,7 @@ log.info('Working directory:', process.cwd());
 
 let menuContext = 'loading';
 
-const mainLanguages = ['de', 'en', 'it', 'tr', 'uk'];
+const mainLanguages = ['de', 'en', 'it', 'pt', 'tr', 'uk'];
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864

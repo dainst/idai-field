@@ -32,6 +32,7 @@ import coreLanguageEn from '../../../config/Core/Language.en.json';
 import coreLanguageEs from '../../../config/Core/Language.es.json';
 import coreLanguageIt from '../../../config/Core/Language.it.json';
 import coreLanguageFr from '../../../config/Core/Language.fr.json';
+import coreLanguagePt from '../../../config/Core/Language.pt.json';
 import coreLanguageTr from '../../../config/Core/Language.tr.json';
 import coreLanguageUk from '../../../config/Core/Language.uk.json';
 import languageAbbirCella_en from '../../../config/Language-AbbirCella.en.json';
@@ -86,6 +87,7 @@ import libraryTemplates from '../../../config/Library/Templates/Templates.json';
 import libraryTemplatesLanguageDe from '../../../config/Library/Templates/Language.de.json';
 import libraryTemplatesLanguageEn from '../../../config/Library/Templates/Language.en.json';
 import libraryTemplatesLanguageIt from '../../../config/Library/Templates/Language.it.json';
+import libraryTemplatesLanguagePt from '../../../config/Library/Templates/Language.pt.json';
 import libraryTemplatesLanguageTr from '../../../config/Library/Templates/Language.tr.json';
 import libraryTemplatesLanguageUk from '../../../config/Library/Templates/Language.uk.json';
 import libraryLanguageDe from '../../../config/Library/Language.de.json';
@@ -93,12 +95,14 @@ import libraryLanguageEn from '../../../config/Library/Language.en.json';
 import libraryLanguageEs from '../../../config/Library/Language.es.json';
 import libraryLanguageIt from '../../../config/Library/Language.it.json';
 import libraryLanguageFr from '../../../config/Library/Language.fr.json';
+import libraryLanguagePt from '../../../config/Library/Language.pt.json';
 import libraryLanguageTr from '../../../config/Library/Language.tr.json';
 import libraryLanguageUk from '../../../config/Library/Language.uk.json';
 import libraryValuelists from '../../../config/Library/Valuelists/Valuelists.json';
 import libraryValuelistsLanguageDefaultDe from '../../../config/Library/Valuelists/Language.default.de.json';
 import libraryValuelistsLanguageDefaultEn from '../../../config/Library/Valuelists/Language.default.en.json';
 import libraryValuelistsLanguageDefaultIt from '../../../config/Library/Valuelists/Language.default.it.json';
+import libraryValuelistsLanguageDefaultPt from '../../../config/Library/Valuelists/Language.default.pt.json';
 import libraryValuelistsLanguageDefaultTr from '../../../config/Library/Valuelists/Language.default.tr.json';
 import libraryValuelistsLanguageDefaultUk from '../../../config/Library/Valuelists/Language.default.uk.json';
 import libraryValuelistsLanguageProjectsDe from '../../../config/Library/Valuelists/Language.projects.de.json';
@@ -116,6 +120,7 @@ const PATH_MAP: Record<string, any> = {
     '/Core/Language.es.json': coreLanguageEs,
     '/Core/Language.it.json': coreLanguageIt,
     '/Core/Language.fr.json': coreLanguageFr,
+    '/Core/Language.pt.json': coreLanguagePt,
     '/Core/Language.tr.json': coreLanguageTr,
     '/Core/Language.uk.json': coreLanguageUk,
     '/Library/Categories.json': libraryCategories,
@@ -124,6 +129,7 @@ const PATH_MAP: Record<string, any> = {
     '/Library/Templates/Language.de.json': libraryTemplatesLanguageDe,
     '/Library/Templates/Language.en.json': libraryTemplatesLanguageEn,
     '/Library/Templates/Language.it.json': libraryTemplatesLanguageIt,
+    '/Library/Templates/Language.pt.json': libraryTemplatesLanguagePt,
     '/Library/Templates/Language.tr.json': libraryTemplatesLanguageTr,
     '/Library/Templates/Language.uk.json': libraryTemplatesLanguageUk,
     '/Library/Language.de.json': libraryLanguageDe,
@@ -131,6 +137,7 @@ const PATH_MAP: Record<string, any> = {
     '/Library/Language.es.json': libraryLanguageEs,
     '/Library/Language.it.json': libraryLanguageIt,
     '/Library/Language.fr.json': libraryLanguageFr,
+    '/Library/Language.pt.json': libraryLanguagePt,
     '/Library/Language.tr.json': libraryLanguageTr,
     '/Library/Language.uk.json': libraryLanguageUk,
     '/Library/Valuelists/Valuelists.json': libraryValuelists,
@@ -170,6 +177,7 @@ const VALUELISTS_LANGUAGES = {
         en: libraryValuelistsLanguageDefaultEn,
         it: libraryValuelistsLanguageDefaultIt,
         tr: libraryValuelistsLanguageDefaultTr,
+        pt: libraryValuelistsLanguageDefaultPt,
         uk: libraryValuelistsLanguageDefaultUk
     },
     projects: {

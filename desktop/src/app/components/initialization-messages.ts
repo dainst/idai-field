@@ -1,6 +1,7 @@
 import messagesDe from '../i18n/initialization/messages.de.json';
 import messagesEn from '../i18n/initialization/messages.en.json';
 import messagesIt from '../i18n/initialization/messages.it.json';
+import messagesPt from '../i18n/initialization/messages.pt.json';
 import messagesTr from '../i18n/initialization/messages.tr.json';
 import messagesUk from '../i18n/initialization/messages.uk.json';
 
@@ -9,6 +10,7 @@ const messageDictionary = {
     de: messagesDe,
     en: messagesEn,
     it: messagesIt,
+    pt: messagesPt,
     tr: messagesTr,
     uk: messagesUk
 };

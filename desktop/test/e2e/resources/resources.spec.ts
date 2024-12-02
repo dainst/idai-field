@@ -321,6 +321,7 @@ test.describe('resources --', () => {
         await waitForExist(await ConfigurationPage.getConfigurationEditor());
         await navigateTo('projectLanguages');
         await ProjectLanguagesModalPage.clickDeleteLanguage('it');
+        await ProjectLanguagesModalPage.clickDeleteLanguage('pt');
         await ProjectLanguagesModalPage.clickConfirm();
         await ConfigurationPage.changeMultiLanguageSetting('shortDescription', 'Feature');
         await ConfigurationPage.save();

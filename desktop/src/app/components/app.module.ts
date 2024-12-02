@@ -2,6 +2,7 @@ import { DecimalPipe, HashLocationStrategy, IMAGE_CONFIG, LocationStrategy, regi
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
+import localePt from '@angular/common/locales/pt';
 import localeTr from '@angular/common/locales/tr';
 import localeUk from '@angular/common/locales/uk';
 import { APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
@@ -67,6 +68,7 @@ const remote = window.require('@electron/remote');
 
 registerLocaleData(localeDe, 'de');
 registerLocaleData(localeIt, 'it');
+registerLocaleData(localePt, 'pt');
 registerLocaleData(localeTr, 'tr');
 registerLocaleData(localeUk, 'uk');
 

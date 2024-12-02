@@ -153,7 +153,7 @@ export class ExportComponent implements OnInit {
 
         try {
             if (this.format === 'geojson') await this.startGeojsonExport(filePath);
-            else if (this.format === 'shapefile') await this.startShapeFileExport(filePath);
+            else if (this.format === 'shapefile') await this.startShapefileExport(filePath);
             else if (this.format === 'csv') await this.startCsvExport(filePath);
             else if (this.format === 'catalog') await this.startCatalogExport(filePath);
 
@@ -202,7 +202,7 @@ export class ExportComponent implements OnInit {
     }
 
 
-    private async startShapeFileExport(filePath: string) {
+    private async startShapefileExport(filePath: string) {
 
         await ShapefileExporter.performExport(
             this.datastore,

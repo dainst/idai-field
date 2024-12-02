@@ -4,6 +4,11 @@ image-viewer {
     height: 100%;
     background-color: #000;
     overflow: hidden;
+    cursor: grab;
+
+    &.panning {
+      cursor: grabbing;
+    }
 
     img {
       max-width: 100%;

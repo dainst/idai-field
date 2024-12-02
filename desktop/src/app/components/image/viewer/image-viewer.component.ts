@@ -32,6 +32,7 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
     public imageContainer: ImageContainer;
     public maxZoom: number;
+    public panning: boolean = false;
     public loadingIconVisible: boolean = false;
     public loadingIconTimeout: any = undefined;
 
@@ -213,6 +214,16 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
         this.panzoomInstance.on('zoomend', () => {
             this.zooming = false;
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.panzoomInstance.on('panstart', () => {
+            this.panning = true;
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.panzoomInstance.on('panend', () => {
+            this.panning = false;
             this.changeDetectorRef.detectChanges();
         });
     }

@@ -1,4 +1,7 @@
-<div #container id="image-container" class="align-items-center justify-content-center">
+<div #container
+     id="image-container"
+     class="align-items-center justify-content-center"
+     [class.panning]="panning">
     <div *ngIf="isOriginalNotFoundWarningVisible()" class="alert alert-info" role="alert"
          i18n="@@image.originalNotFoundWarning">
         Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.

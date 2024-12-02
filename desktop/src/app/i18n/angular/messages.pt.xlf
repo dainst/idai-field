@@ -354,14 +354,6 @@
           <context context-type="linenumber">221</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.shapefile.javaWarning" datatype="html">
-        <source> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </source>
-        <target state="translated">É necessário instalar Java 8 ou superior para poder fazer importação de shapefile.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">195</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
         <source> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
         <target state="translated">A importação de shapefile não cria novos recursos. As geometrias são adicionadas a recursos já existentes. Tenha em atenção que neste processo as geometrias já existentes serão substituídas. A atribuição dos registos é feita com base no campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Registos no shapefile que não possam ser atribuídos a um recurso serão ignorados. </target>
@@ -500,14 +492,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">360</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="export.shapefile.javaWarning" datatype="html">
-        <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher erforderlich. </source>
-        <target state="translated">É necessário instalar Java 8 ou superior para poder fazer exportação de shapefile.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
@@ -3488,14 +3472,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.missingIdentifierShapefile" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</source>
-        <target state="translated">Ocorreu um erro ao importar: foram encontradas uma ou várias unidades estratigráficas sem o atributo "identifier".</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</source>
         <target state="translated">Ocorreu um erro ao importar: foram encontrados um ou vários recursos com entradas não permitidas em resource.id.</target>
@@ -3656,14 +3632,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.export.shapefile.error.tempFolderCreation" datatype="html">
-        <source>Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.</source>
-        <target state="translated">Ocorreu um erro ao exportar: O inventário temporário [0] não pode ser criado.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.export.csv.warning.invalidFieldData.single" datatype="html">
         <source>Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</source>
         <target state="translated">O campo "[0]" do recurso [1] foi ignorado na exportação porque os dados de campo não correspondem ao tipo de entradas configurado.</target>
@@ -3715,14 +3683,6 @@
       <trans-unit id="messages.resources.error.resourceMissingDuringSyncing" datatype="html">
         <source>Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.</source>
         <target state="translated">O recurso não pode ser acedido. Por favor espere até que a sincronização esteja completa e tente de novo.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.error.cannotMoveWithSameOperationRelations" datatype="html">
-        <source>Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</source>
-        <target state="translated">O recurso [0] não pode ser movido para uma outra intervenção porque existem relações que só podem ser definidas dentro da mesma intervenção. Remova as relações e tente de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6609,14 +6569,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.invalidGeometry" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].</source>
-        <target state="translated">Ocorreu um erro ao importar: dados de geometria inválidos na linha [0].</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.missingRelationTarget" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</source>
         <target state="translated">Ocorreu um erro ao importar: não foi encontrado o recurso com o ID [0], selecionado como destinação de uma relação.</target>
@@ -6681,25 +6633,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.shapefile.unsupportedGeometryType" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</source>
-        <target state="translated">Ocorreu um erro ao importar: o tipo de geometria [0] não é suportado.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.shapefile.jsonlWriteError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</source>
         <target state="translated">Ocorreu um erro ao importar: o ficheiro temporário [0] não pode ser criado.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.error.shapefile.generic" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</source>
-        <target state="translated">Ocorreu um erro ao importar: o Shapefile não pode ser importado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6833,14 +6769,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
-        <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
-        <target state="translated">Recursos encontram-se em diferentes intervenções : '[0]', '[1]'</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
         <target state="translated">A categoria não pode ser mudada durante a importação. É afetado: '[0]'</target>
@@ -6964,14 +6892,6 @@
       <trans-unit id="messages.export.shapefile.error.write" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</source>
         <target state="translated">Ocorreu um erro ao exportar: O shapefile não pode ser escrito.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.export.shapefile.error.getResources" datatype="html">
-        <source>Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</source>
-        <target state="translated">Ocorreu um erro ao exportar: Os recursos não puderam ser lidos da base de dados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8419,14 +8339,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">84,95</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation" datatype="html">
-        <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
-        <target state="translated">Quer realmente corrigir a relação <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> ? Todas as indicações a recursos não existentes vão ser apagadas. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.component.ts</context>
-          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.header" datatype="html">

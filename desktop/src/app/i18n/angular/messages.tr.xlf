@@ -583,14 +583,6 @@
           <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.shapefile.javaWarning" datatype="html">
-        <source>Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich.</source>
-        <target state="translated">Shapefile dosyasını içe aktarma işlemini gerçekleştirmek için Java 8 veya üzerinin yüklenmesi gerekir.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">207</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
         <source>Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
         <target state="translated">Shapefile içe aktarımı yeni girdiler oluşturmaz. Bunun yerine geometriler mevcut girdilere eklenir. Bu süreçte mevcut geometrilerin üzerine yazıldığını lütfen unutmayın. Kayıtların atanması, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> alanına göre gerçekleştirilir. Shapefile dosyasındaki bir kaynağa atanamayan kayıtlar göz ardı edilecektir. </target>
@@ -773,14 +765,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">147</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="export.shapefile.javaWarning" datatype="html">
-        <source>Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher erforderlich.</source>
-        <target state="translated">Shapefile dışa aktarımı gerçekleştirmek için Java JDK 8 veya daha üst sürümünün yüklenmesi gerekir.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
@@ -4933,14 +4917,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.missingIdentifierShapefile" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</source>
-        <target state="translated">İçe aktarma sırasında bir hata oluştu: "tanımlayıcı" özniteliğine sahip olmayan bir veya daha fazla özellik bulundu.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</source>
         <target state="translated">İçe aktarma sırasında bir hata oluştu: ressource.id için izin verilmeyen girişlere sahip bir veya daha fazla girdi bulundu.</target>
@@ -5077,14 +5053,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.invalidGeometry" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].</source>
-        <target state="translated">İçe aktarma sırasında bir hata oluştu: [0] satırında geçersiz geometri verileri.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.rollbackError" datatype="html">
         <source>Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.</source>
         <target state="translated">Halihazırda içe aktarılan veriler silinmeye çalışılırken bir hata oluştu.</target>
@@ -5181,25 +5149,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.shapefile.unsupportedGeometryType" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</source>
-        <target state="translated">İçe aktarma sırasında bir hata oluştu: Geometri türü [0] desteklenmiyor.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.shapefile.jsonlWriteError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</source>
         <target state="translated">İçe aktarma sırasında bir hata oluştu: Geçici dosya [0] oluşturulamadı.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.error.shapefile.generic" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</source>
-        <target state="translated">İçe aktarma sırasında bir hata oluştu: shapefile dosyası içe aktarılamadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5421,14 +5373,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
-        <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
-        <target state="translated">İşlemlerle ilgili girdiler: '[0]', '[1]'</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
         <target state="translated">Kategori içe aktarma sırasında değiştirilemez. Girdi tanımlayıcı: '[0]'</target>
@@ -5589,14 +5533,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.export.shapefile.error.tempFolderCreation" datatype="html">
-        <source>Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.</source>
-        <target state="translated">Dışa aktarma sırasında bir hata oluştu: Geçici dizin [0] oluşturulamadı.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.export.shapefile.error.zipFileCreation" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.</source>
         <target state="translated">Dışa aktarma sırasında bir hata oluştu: ZIP dosyası [0] oluşturulamadı.</target>
@@ -5608,14 +5544,6 @@
       <trans-unit id="messages.export.shapefile.error.write" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</source>
         <target state="translated">Dışa aktarma sırasında bir hata oluştu: shapefile dosyasına yazılamadı.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.export.shapefile.error.getResources" datatype="html">
-        <source>Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</source>
-        <target state="translated">Dışa aktarma sırasında bir hata oluştu: Girdiler veritabanından okunamadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6000,14 +5928,6 @@
       <trans-unit id="messages.resources.error.resourceMissingDuringSyncing" datatype="html">
         <source>Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.</source>
         <target state="translated">Girdiye erişilemiyor. Lütfen senkronizasyon işlemi bitene kadar bekleyin ve tekrar deneyin.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.error.cannotMoveWithSameOperationRelations" datatype="html">
-        <source>Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</source>
-        <target state="translated">Girdi [0] başka bir işleme taşınamaz çünkü ilişkiler yalnızca aynı işlem içindeki girdiler arasında ayarlanabilecek şekilde ayarlanmıştır. İlişkileri kaldırıp tekrar deneyin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8531,14 +8451,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation" datatype="html">
-        <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
-        <target state="translated">İlişkiyi <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gerçekten kaldırmak istiyor musunuz? Mevcut olmayan girdilere yapılan tüm referanslar kaldırılacaktır. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.component.ts</context>
-          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.info" datatype="html">

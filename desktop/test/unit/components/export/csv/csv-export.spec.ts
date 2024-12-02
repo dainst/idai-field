@@ -15,6 +15,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
         if (fieldName.startsWith('period')) inputType = 'dropdownRange';
         if (fieldName.startsWith('relation')) inputType = 'relation';
         if (fieldName.startsWith('composite')) inputType = 'composite';
+        if (fieldName.startsWith('isInstanceOf')) inputType = 'instanceOf';
 
         return { name: fieldName, inputType: inputType };
     }) as Array<Field>;
@@ -85,6 +86,19 @@ describe('CSVExport', () => {
         expect(result[0]).toBe('"identifier","shortDescription.en","relations.relation1","relations.liesWithin",'
             + '"relations.isRecordedIn"');
         expect(result[1]).toBe('"identifier1","shortDescription1","identifier2","identifier3","identifier4"');
+    });
+
+
+    test('export instanceOf field', () => {
+
+        const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'isInstanceOf']);
+        const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
+        resource.relations = { isInstanceOf: ['identifier2'] } as any;
+
+        const result = CSVExport.createExportable([resource], fields, ['liesWithin', 'isInstanceOf'], ['en'], ',')
+            .csvData;
+        expect(result[0]).toBe('"identifier","shortDescription.en","relations.isInstanceOf","relations.isChildOf"');
+        expect(result[1]).toBe('"identifier1","shortDescription1","identifier2",""');
     });
 
 

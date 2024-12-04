@@ -1,5 +1,6 @@
 import { click, getLocator, getText, rightClick, typeIn, waitForNotExist } from '../app';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { AddFieldModalPage } from './add-field-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
 
 
@@ -182,6 +183,31 @@ export class ConfigurationPage {
         await CategoryPickerPage.clickOpenContextMenu(categoryName, supercategoryName);
         await ConfigurationPage.clickContextMenuEditOption();
         await EditConfigurationPage.clickToggleScanCodesSlider();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    }
+
+
+    public static async createRelation(categoryName: string, relationName: string, relationLabel: string,
+                                       targetCategoryNames: string[],
+                                       targetSupercategoryNames: Array<string|undefined>,
+                                       supercategoryName?: string) {
+
+        await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput(relationName);
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('relation', 'field');
+        await EditConfigurationPage.typeInTranslation(0, 0, relationLabel, 'field');
+
+        for (let i = 0; i < targetCategoryNames.length; i++) {
+            await CategoryPickerPage.clickSelectCategory(
+                targetCategoryNames[i],
+                targetSupercategoryNames[i],
+                'target-category-picker-container'
+            );
+        }
+
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();
     }

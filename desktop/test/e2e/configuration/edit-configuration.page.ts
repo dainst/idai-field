@@ -148,6 +148,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickSelectInverseRelation(relationName: string) {
+
+        return selectOption('#inverse-relation-select', relationName);
+    }
+
+
     // get text
 
     public static getSelectedValuelist() {

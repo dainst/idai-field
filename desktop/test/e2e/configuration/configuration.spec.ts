@@ -11,6 +11,8 @@ import { AddGroupModalPage } from './add-group-modal.page';
 import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 import { MoveModalPage } from '../widgets/move-modal.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -943,5 +945,35 @@ test.describe('configuration --', () => {
 
         await EditConfigurationPage.clickConfirmSubfield();
         await EditConfigurationPage.clickCancel();
+    });
+
+
+    test('create relation with inverse relation', async () => {
+
+        await ConfigurationPage.createRelation('Place', 'relation1', 'Relation 1', ['Trench'], ['Operation']);
+        await ConfigurationPage.createRelation('Trench', 'relation2', 'Relation 2', ['Place'], [undefined], 'Operation');
+        
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectInverseRelation('test:relation1');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.performCreateResource('T1', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('test:relation1');
+        await DoceditRelationsPage.typeInRelation('test:relation1', 'T1');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('P1');
+        expect(await FieldsViewPage.getRelationName(0, 1)).toBe('Relation 1');
+        expect(await FieldsViewPage.getRelationValue(0, 0)).toBe('T1');
+
+        await ResourcesPage.clickSelectResource('T1');
+        expect(await FieldsViewPage.getRelationName(0, 1)).toBe('Relation 2');
+        expect(await FieldsViewPage.getRelationValue(0, 0)).toBe('P1');
     });
 });

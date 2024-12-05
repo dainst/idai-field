@@ -154,6 +154,14 @@ export class EditConfigurationPage {
     }
 
 
+    // get
+
+    public static async getInverseRelationOptions() {
+
+        return getLocator('#inverse-relation-select option');
+    }
+
+
     // get text
 
     public static getSelectedValuelist() {

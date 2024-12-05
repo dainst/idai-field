@@ -1018,11 +1018,43 @@ test.describe('configuration --', () => {
         await ConfigurationPage.clickContextMenuEditOption();
         await EditConfigurationPage.clickSelectInverseRelation('');
         await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
 
         await expectInverseRelation('Place', 'test:relation1', undefined);
         await expectInverseRelation('Trench', 'test:relation2', undefined, 'Operation');
         await expectInverseRelation('Feature', 'test:relation2', undefined);
         await expectInverseRelation('Find', 'test:relation1', undefined);
         await expectInverseRelation('Sample', 'test:relation2', undefined);
+    });
+
+
+    test('show only suitable relations in inverse relation dropdown', async () => {
+
+        await ConfigurationPage.createRelation('Place', 'relation1', 'Relation 1', ['Trench'], ['Operation']);
+        await ConfigurationPage.createRelation(
+            'Trench', 'relation2', 'Relation 2', ['Feature'], [undefined], 'Operation'
+        );
+        
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        let options = await EditConfigurationPage.getInverseRelationOptions();
+        expect(await options.count()).toBe(1);
+        expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
+
+        await CategoryPickerPage.clickSelectCategory('Place', undefined, 'target-category-picker-container');
+
+        options = await EditConfigurationPage.getInverseRelationOptions();
+        expect(await options.count()).toBe(1);
+        expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
+
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'target-category-picker-container');
+
+        options = await EditConfigurationPage.getInverseRelationOptions();
+        expect(await options.count()).toBe(2);
+        expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
+        expect(await getText(await options.nth(1))).toBe('Relation 1');
+
+        await EditConfigurationPage.clickCancel();
     });
 });

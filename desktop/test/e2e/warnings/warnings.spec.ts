@@ -1550,6 +1550,24 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for invalid relation targets via configuration editor', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidRelationTargetWarning('1', '2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation1');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await CategoryPickerPage.clickSelectCategory('Trench', 'Operation', 'target-category-picker-container');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing or invalid parent via deletion in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

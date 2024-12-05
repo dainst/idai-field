@@ -17,6 +17,7 @@ import { ConvertFieldDataModalPage } from './convert-field-data-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 import { SelectModalPage } from './select-modal.page';
 import { MoveModalPage } from '../widgets/move-modal.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -67,7 +68,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createUnconfiguredFieldWarnings(resourceIdentifiers: string[], fieldName: string) {
@@ -90,7 +91,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createInvalidFieldDataWarnings(resourceIdentifiers: string[], fieldName: string,
@@ -115,7 +116,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
@@ -146,7 +147,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createProjectOutlierValuesWarning(resourceIdentifier: string) {
@@ -219,7 +220,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createDropdownRangeOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
@@ -251,7 +252,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createCompositeOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
@@ -312,8 +313,37 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
+    async function createInvalidRelationTargetWarning(resourceIdentifier: string, targetIdentifier: string) {
+
+        await navigateTo('configuration');
+        await ConfigurationPage.createRelation(
+            'Place', 'relation1', 'Relation 1', ['Trench', 'Building'], ['Operation', 'Operation']
+        );
+        await ConfigurationPage.createRelation(
+            'Trench', 'relation2', 'Relation 2', ['Place'], [undefined], 'Operation'
+        );
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
+        await ResourcesPage.performCreateResource(targetIdentifier, 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource(resourceIdentifier);
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('test:relation1');
+        await DoceditRelationsPage.typeInRelation('test:relation1', targetIdentifier);
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation1');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await CategoryPickerPage.clickSelectCategory('Trench', 'Operation', 'target-category-picker-container');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    }
 
     async function createMissingIdentifierPrefixWarning(resourceIdentifier: string) {
 
@@ -327,7 +357,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createResourceLimitWarnings(resourceIdentifiers: string[]) {
@@ -345,7 +375,7 @@ test.describe('warnings --', () => {
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();
-    };
+    }
 
 
     async function createWarningViaAppController(message: string) {
@@ -1479,6 +1509,24 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await expectResourcesInWarningsModal(['1']);
         await expectSectionTitles(['Fehlende Zielressource der Relation Wird gezeigt in']);
+
+        await WarningsModalPage.clickCleanUpRelationButton(0);
+        await WarningsModalPage.clickConfirmCleanUpInModalButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve warning for invalid relation targets via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidRelationTargetWarning('1', '2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1']);
+        await expectSectionTitles(['Ungültige Zielressource der Relation Relation 1']);
 
         await WarningsModalPage.clickCleanUpRelationButton(0);
         await WarningsModalPage.clickConfirmCleanUpInModalButton();

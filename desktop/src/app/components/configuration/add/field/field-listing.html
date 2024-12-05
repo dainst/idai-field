@@ -1,6 +1,6 @@
 <ul class="bg-light listing">
     <li *ngFor="let field of fields"
-        [id]="'select-field-' + field.name"
+        [id]="getFieldId(field)"
         [class.selected]="selectedField === field"
         (click)="select(field)">
         <span class="item-label">{{getLabel(field)}}</span>

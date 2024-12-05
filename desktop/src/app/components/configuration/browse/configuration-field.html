@@ -42,9 +42,9 @@
                     <span class="target-category-label">{{getCategoryLabel(categoryName)}}</span>
                 </div>
             </li>
-            <li *ngIf="getInverseRelation()" class="list-group-item">
+            <li *ngIf="getInverseRelation()" class="list-group-item inverse-relation">
                 <b i18n="@@configuration.relation.inverse">Gegenrelation</b><span class="oneliner-colon">:</span>
-                <span>{{getRelationLabel(getInverseRelation())}}</span>
+                <span class="inverse-relation-label">{{getRelationLabel(getInverseRelation())}}</span>
             </li>
         </ul>
     </div>

@@ -27,6 +27,8 @@ export class FieldListingComponent {
 
     public select = (field: Field) => this.onFieldSelected.emit(field);
 
+    public getFieldId = (field: Field) => 'select-field-' + field.name.replace(':', '-');
+
     public getLabel = (value: any) => this.labels.get(value);
 
     public getSearchResultLabel = (field: Field) => getSearchResultLabel(field, this.searchTerm, this.getLabel);

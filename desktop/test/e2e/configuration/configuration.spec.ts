@@ -976,4 +976,53 @@ test.describe('configuration --', () => {
         expect(await FieldsViewPage.getRelationName(0, 1)).toBe('Relation 2');
         expect(await FieldsViewPage.getRelationValue(0, 0)).toBe('P1');
     });
+
+
+    test('add & remove inverse relations automatically', async () => {
+
+        async function expectInverseRelation(categoryName: string, relationName: string, inverseRelationLabel?: string,
+                                             supercategoryName?: string) {
+
+            await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+            await ConfigurationPage.clickSelectField(relationName);
+
+            if (inverseRelationLabel) {
+                expect(await ConfigurationPage.getInverseRelationLabel(relationName)).toBe(inverseRelationLabel); 
+            } else {
+                await waitForNotExist(await ConfigurationPage.getInverseRelation(relationName));
+            }
+        };
+
+        await ConfigurationPage.createRelation(
+            'Place', 'relation1', 'Relation 1', ['Trench', 'Feature', 'Sample'], ['Operation', undefined, undefined]
+        );
+        await ConfigurationPage.createRelation(
+            'Trench', 'relation2', 'Relation 2', ['Place', 'Find'], [undefined, undefined], 'Operation'
+        );
+        await ConfigurationPage.addRelation('Feature', 'test:relation2', ['Place', 'Find'], [undefined, undefined]);
+        await ConfigurationPage.addRelation('Find', 'test:relation1', ['Trench', 'Feature'], ['Operation', undefined]);
+        await ConfigurationPage.addRelation('Sample', 'test:relation2', ['Place'], [undefined]);
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectInverseRelation('test:relation1');
+        await EditConfigurationPage.clickConfirm();
+
+        await expectInverseRelation('Place', 'test:relation1', 'Relation 2');
+        await expectInverseRelation('Trench', 'test:relation2', 'Relation 1', 'Operation');
+        await expectInverseRelation('Feature', 'test:relation2', 'Relation 1');
+        await expectInverseRelation('Find', 'test:relation1', 'Relation 2');
+        await expectInverseRelation('Sample', 'test:relation2', 'Relation 1');
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectInverseRelation('');
+        await EditConfigurationPage.clickConfirm();
+
+        await expectInverseRelation('Place', 'test:relation1', undefined);
+        await expectInverseRelation('Trench', 'test:relation2', undefined, 'Operation');
+        await expectInverseRelation('Feature', 'test:relation2', undefined);
+        await expectInverseRelation('Find', 'test:relation1', undefined);
+        await expectInverseRelation('Sample', 'test:relation2', undefined);
+    });
 });

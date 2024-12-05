@@ -1,6 +1,6 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -1054,6 +1054,22 @@ test.describe('configuration --', () => {
         expect(await options.count()).toBe(2);
         expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
         expect(await getText(await options.nth(1))).toBe('Relation 1');
+
+        await EditConfigurationPage.clickCancel();
+    });
+
+
+    test('prevent creation of relation without target categories', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('relation');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('relation', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await NavbarPage.awaitAlert('Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.');
+        await NavbarPage.clickCloseAllMessages();
 
         await EditConfigurationPage.clickCancel();
     });

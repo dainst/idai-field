@@ -1536,6 +1536,20 @@ test.describe('warnings --', () => {
     });
 
 
+    test('solve warning for invalid relation targets via resources view', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidRelationTargetWarning('1', '2');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditRelationsPage.clickRelationDeleteButtonByIndices('test:relation1', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
     test('solve warning for missing or invalid parent via deletion in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

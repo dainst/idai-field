@@ -951,7 +951,9 @@ test.describe('configuration --', () => {
     test('create relation with inverse relation', async () => {
 
         await ConfigurationPage.createRelation('Place', 'relation1', 'Relation 1', ['Trench'], ['Operation']);
-        await ConfigurationPage.createRelation('Trench', 'relation2', 'Relation 2', ['Place'], [undefined], 'Operation');
+        await ConfigurationPage.createRelation(
+            'Trench', 'relation2', 'Relation 2', ['Place'], [undefined], 'Operation'
+        );
         
         await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
         await ConfigurationPage.clickContextMenuEditOption();

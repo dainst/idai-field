@@ -276,12 +276,12 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
     private calculateMaxZoom(): number {
 
-        const resource: ImageResource = this.imageContainer.document.resource;
-        const dimension: string = resource.width < resource.height ? 'width' : 'height';
+        const imageWidth: number = this.imageElement.nativeElement.naturalWidth;
+        const imageHeight: number = this.imageElement.nativeElement.naturalHeight;
 
-        const imageValue: number = resource[dimension];
-        const containerValue: number = this.containerElement.nativeElement.getBoundingClientRect()[dimension];
+        const containerWidth: number = this.containerElement.nativeElement.getBoundingClientRect().width;
+        const containerHeight: number = this.containerElement.nativeElement.getBoundingClientRect().height;
         
-        return Math.max(1, imageValue / containerValue);
+        return Math.max(1, Math.max(imageWidth / containerWidth, imageHeight / containerHeight));
     }
 }

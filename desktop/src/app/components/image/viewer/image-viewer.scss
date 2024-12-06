@@ -46,16 +46,21 @@ image-viewer {
       z-index: 1003;
     }
 
-    .alert {
+    .alert,
+    loading-icon {
       position: absolute;
-      top: 10px;
       left: 50%;
-      transform: translateX(-50%);
       z-index: 1003;
     }
 
+    .alert {
+      top: 10px;
+      transform: translateX(-50%);
+    }
+
     loading-icon {
-      position: absolute;
+      top: 50%;
+      transform: translateX(-20px) translateY(25px);
     }
   }
 }

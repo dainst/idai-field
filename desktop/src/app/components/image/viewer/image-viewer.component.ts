@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, NgZone, ChangeDetectorRef, ElementRef, ViewChild,
     OnDestroy } from '@angular/core';
-import { ImageDocument, ImageResource, ImageStore, ImageVariant } from 'idai-field-core';
-import { ImageContainer } from '../../../services/imagestore/image-container';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole } from '../log-messages';
 import { Messages } from '../../messages/messages';
@@ -10,6 +10,12 @@ import { Loading } from '../../widgets/loading';
 import { AngularUtility } from '../../../angular/angular-utility';
 
 const panzoom = require('panzoom');
+
+
+type LoadingResult = {
+    imageUrl: SafeResourceUrl;
+    isOriginal: boolean;
+};
 
 
 @Component({
@@ -25,19 +31,21 @@ const panzoom = require('panzoom');
  */
 export class ImageViewerComponent implements OnChanges, OnDestroy {
 
-    @Input() image: ImageDocument;
+    @Input() imageDocument: ImageDocument;
 
     @ViewChild('container') containerElement: ElementRef;
-    @ViewChild('originalImage') imageElement: ElementRef;
+    @ViewChild('image') imageElement: ElementRef;
     @ViewChild('preloadImage') preloadImageElement: ElementRef;
     @ViewChild('overlay') overlayElement: ElementRef;
 
-    public imageContainer: ImageContainer;
+    public imageUrl: SafeResourceUrl;
+    public isOriginal: boolean;
     public maxZoom: number;
     public panning: boolean = false;
     public loadingIconVisible: boolean = false;
     public loadingIconTimeout: any = undefined;
 
+    private loadedImageId: string;
     private panzoomInstance: any;
     private zooming: boolean = false;
 
@@ -65,7 +73,7 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
             this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
         }
         
-        if (this.image) await this.update();
+        if (this.imageDocument) await this.update();
     }
 
 
@@ -82,23 +90,17 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     }
 
 
-    public containsOriginal(imageContainer: ImageContainer): boolean {
-
-        return imageContainer?.imgSrc !== undefined && imageContainer?.imgSrc !== '';
-    }
-
-
     public isImageContainerVisible(): boolean {
         
         return !this.loadingIconVisible
-            || (this.image?.resource.id === this.imageContainer?.document.resource.id);
+            || (this.imageDocument?.resource.id === this.loadedImageId);
     }
 
 
     public isOriginalNotFoundWarningVisible(): boolean {
 
-        return this.imageContainer
-            && !this.containsOriginal(this.imageContainer)
+        return this.imageUrl
+            && !this.isOriginal
             && !this.loadingIconVisible;
     }
 
@@ -117,37 +119,41 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
         this.stopLoading();
         await AngularUtility.refresh();
 
-        if (this.image.resource.id === this.imageContainer?.document.resource.id) return;
+        if (this.imageDocument.resource.id === this.loadedImageId) return;
         
         this.zone.run(async () => {
-            const newImageContainer: ImageContainer = await this.loadImage(this.image);
-            if (newImageContainer.document.resource.id === this.image.resource.id) {
-                this.imageContainer = newImageContainer;
+            const imageId: string = this.imageDocument.resource.id;
+            const result: LoadingResult = await this.loadImage(this.imageDocument);
+            if (imageId === this.imageDocument.resource.id) {
+                this.loadedImageId = imageId;
+                this.imageUrl = result.imageUrl;
+                this.isOriginal = result.isOriginal;
+                if (!this.isOriginal) this.showMissingImageMessageOnConsole();
             }
         });
     }
 
 
-    private async loadImage(document: ImageDocument): Promise<ImageContainer> {
+    private async loadImage(document: ImageDocument): Promise<LoadingResult> {
 
         this.startLoading();
         this.overlayElement.nativeElement.style['z-index'] = 1002;
         this.changeDetectorRef.detectChanges();
 
-        const imageContainer: ImageContainer = { document };
+        let imageUrl: SafeResourceUrl;
+        let isOriginal: boolean;
 
         try {
-            imageContainer.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
-            this.changeDetectorRef.detectChanges();
-        } catch (e) {
-            imageContainer.imgSrc = undefined;
-            imageContainer.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
-            this.stopLoading();
+            imageUrl = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
+            isOriginal = true;
+        } catch (_) {
+            imageUrl = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
+            isOriginal = false;
         }
 
-        this.showConsoleErrorIfImageIsMissing(imageContainer);
-
-        return imageContainer;
+        this.changeDetectorRef.detectChanges();
+        
+        return { imageUrl, isOriginal };
     }
 
 
@@ -172,15 +178,11 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     }
 
 
-    private showConsoleErrorIfImageIsMissing(imageContainer: ImageContainer) {
+    private showMissingImageMessageOnConsole() {
 
-        if (this.containsOriginal(imageContainer)) return;
+        const imageId: string = this.imageDocument?.resource.id ?? 'unknown';
 
-        const imageId: string = imageContainer.document && imageContainer.document.resource
-            ? imageContainer.document.resource.id
-            : 'unknown';
-
-        if (imageContainer.thumbSrc === ImageUrlMaker.blackImg) {
+        if (this.imageUrl === ImageUrlMaker.blackImg) {
             showMissingImageMessageOnConsole(imageId);
         } else {
             showMissingOriginalImageMessageOnConsole(imageId);
@@ -189,8 +191,6 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
 
     private async setupPanZoom() {
-
-        if (!this.containsOriginal(this.imageContainer)) return;
 
         await AngularUtility.refresh();
 
@@ -212,6 +212,8 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
         this.setupPanZoomEvents();
         this.centerImage();
+
+        if (!this.isOriginal) this.panzoomInstance.pause();
     }
 
 

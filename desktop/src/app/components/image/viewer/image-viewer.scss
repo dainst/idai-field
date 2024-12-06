@@ -6,6 +6,10 @@ image-viewer {
     overflow: hidden;
     cursor: grab;
 
+    &.panning-disabled {
+      cursor: default;
+    }
+
     &.panning {
       cursor: grabbing;
     }
@@ -26,12 +30,8 @@ image-viewer {
       -webkit-user-drag: none;
     }
 
-    #original-image {
+    #image {
       will-change: transform;
-    }
-
-    #original-image,
-    #thumbnail-image {
       z-index: 1001;
     }
 
@@ -46,14 +46,12 @@ image-viewer {
       z-index: 1003;
     }
 
-    .align-items-center {
-      position: relative;
-      height: 100%;
-    }
-
     .alert {
       position: absolute;
       top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1003;
     }
 
     loading-icon {

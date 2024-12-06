@@ -6,12 +6,19 @@
          i18n="@@image.originalNotFoundWarning">
         Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
     </div>
+    <div #overlay id="image-overlay"></div>
     <img *ngIf="isImageContainerVisible() && containsOriginal(imageContainer)"
          #originalImage
-         [src]="imageContainer?.imgSrc"
-         (load)="onImageLoaded()">
-    <img *ngIf="isImageContainerVisible() && !containsOriginal(imageContainer)"
-         [src]="imageContainer?.thumbSrc">
+         id="original-image"
+         [src]="imageContainer?.imgSrc">
+     <img *ngIf="isImageContainerVisible() && containsOriginal(imageContainer)"
+          #preloadImage
+          id="preload-image"
+          [src]="imageContainer?.imgSrc"
+          (load)="onImageLoaded()">
+     <img *ngIf="isImageContainerVisible() && !containsOriginal(imageContainer)"
+          id="thumbnail-image"
+          [src]="imageContainer?.thumbSrc">
     <zoom-buttons [zoomInEnabled]="containsOriginal(imageContainer) && getScale() < maxZoom"
                   [zoomOutEnabled]="containsOriginal(imageContainer) && getScale() > 1"
                   (onZoomInClicked)="zoomIn()"

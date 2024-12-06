@@ -29,6 +29,8 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') containerElement: ElementRef;
     @ViewChild('originalImage') imageElement: ElementRef;
+    @ViewChild('preloadImage') preloadImageElement: ElementRef;
+    @ViewChild('overlay') overlayElement: ElementRef;
 
     public imageContainer: ImageContainer;
     public maxZoom: number;
@@ -105,12 +107,15 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
         this.stopLoading();
         await this.setupPanZoom();
+
+        this.overlayElement.nativeElement.style['z-index'] = 1000;
     }
 
 
     private async update() {
 
         this.stopLoading();
+        await AngularUtility.refresh();
 
         if (this.image.resource.id === this.imageContainer?.document.resource.id) return;
         
@@ -126,6 +131,7 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     private async loadImage(document: ImageDocument): Promise<ImageContainer> {
 
         this.startLoading();
+        this.overlayElement.nativeElement.style['z-index'] = 1002;
         this.changeDetectorRef.detectChanges();
 
         const imageContainer: ImageContainer = { document };
@@ -189,6 +195,9 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
         await AngularUtility.refresh();
 
         this.maxZoom = this.calculateMaxZoom();
+        this.imageElement.nativeElement.style.transform = 'none';
+        this.preloadImageElement.nativeElement.style.transform
+            = `matrix(${this.maxZoom}, 0, 0, ${this.maxZoom}, 0, 0)`;
 
         this.panzoomInstance = panzoom(
             this.imageElement.nativeElement,

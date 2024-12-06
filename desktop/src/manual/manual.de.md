@@ -743,6 +743,13 @@ Im Auswahlmenü "Quelle" können Sie zwischen zwei verschiedenen Importmöglichk
 Das Ergebnis des Imports kann nun im Editor überprüft und per Klick auf den "Speichern"-Button übernommen werden. Bitte beachten Sie, dass dabei sämtliche bisherigen Konfigurationseinstellungen durch die importierte Konfiguration ersetzt werden.
 
 
+### Konfiguration exportieren
+
+Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren..." auf, um die Konfiguration des aktuell geöffneten Projekts als Field-Konfigurationsdatei (Dateiendung *.configuration*) zu speichern. Exportiert wird dabei der im Konfigurationseditor angezeigte Stand inklusive eventueller ungespeicherter Änderungen. In der erzeugten Datei sind auch alle projektspezifischen Wertelisten enthalten.
+
+Über die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." kann die Datei anschließend wieder importiert werden, um die Konfiguration in ein anderes Projekt zu übernehmen oder den gespeicherten Stand der Konfiguration im gleichen Projekt wiederherzustellen.
+
+
 <hr>
 
 

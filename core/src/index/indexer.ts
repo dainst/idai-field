@@ -1,7 +1,7 @@
 import { isUndefined, not } from 'tsfun';
 import { IndexFacade } from './index-facade';
 import { DocumentConverter, DocumentCache } from '../datastore';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 import { WarningsUpdater } from '../datastore/warnings-updater';
 import { ProjectConfiguration } from '../services';
 

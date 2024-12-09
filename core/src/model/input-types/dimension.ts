@@ -1,5 +1,5 @@
 import { flow, detach, isNumber, isObject, isString } from 'tsfun';
-import { I18N } from '../tools/i18n';
+import { I18N } from '../../tools/i18n';
 
 
 /**

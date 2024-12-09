@@ -1,5 +1,5 @@
 import { WarningsUpdater } from '../../src/datastore/warnings-updater';
-import { Warnings } from '../../src/model/warnings';
+import { Warnings } from '../../src/model/document/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 import { CategoryForm } from '../../src/model/configuration/category-form';

@@ -1,6 +1,6 @@
-import { Resource } from '../model/resource';
-import { Constraint } from '../model/constraint';
-import { Query } from '../model/query';
+import { Resource } from '../model/document/resource';
+import { Constraint } from '../model/datastore/constraint';
+import { Query } from '../model/datastore/query';
 import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
 import { ResultSets } from './result-sets';

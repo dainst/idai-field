@@ -1,10 +1,10 @@
 import { Path } from 'tsfun';
-import { LanguageConfiguration } from '../configuration/model/language/language-configuration';
-import { I18N } from '../tools/i18n';
-import { InPlace } from '../tools/in-place';
-import { CategoryForm } from './configuration/category-form';
-import { Field, Subfield } from './configuration/field';
-import { Group } from './configuration/group';
+import { LanguageConfiguration } from '../../configuration/model/language/language-configuration';
+import { I18N } from '../../tools/i18n';
+import { InPlace } from '../../tools/in-place';
+import { CategoryForm } from './category-form';
+import { Field, Subfield } from './field';
+import { Group } from './group';
 
 export type CustomLanguageConfigurations = { [language: string]: LanguageConfiguration };
 

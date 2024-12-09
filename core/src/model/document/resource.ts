@@ -1,13 +1,13 @@
 import { set, sameset, samemap, isnt, includedIn, flatMap, Map, remove, isUndefinedOrEmpty, isString } from 'tsfun';
-import { Datastore } from '../datastore/datastore';
+import { Datastore } from '../../datastore/datastore';
 import { Document } from './document';
-import { notBothEqual, notCompareInBoth } from '../tools/compare';
-import { Name } from '../tools/named';
-import { SortUtil } from '../tools/sort-util';
-import { concatIf } from '../tools/utils';
-import { Labels, ProjectConfiguration } from '../services';
-import { Valuelist } from './configuration/valuelist';
-import { CategoryForm } from './configuration/category-form';
+import { notBothEqual, notCompareInBoth } from '../../tools/compare';
+import { Name } from '../../tools/named';
+import { SortUtil } from '../../tools/sort-util';
+import { concatIf } from '../../tools/utils';
+import { Labels, ProjectConfiguration } from '../../services';
+import { Valuelist } from '../configuration/valuelist';
+import { CategoryForm } from '../configuration/category-form';
 
 
 export interface NewResource {

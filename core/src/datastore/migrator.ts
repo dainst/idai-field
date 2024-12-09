@@ -1,6 +1,6 @@
 import { isArray, isObject } from 'tsfun';
-import { Document } from '../model/document';
-import { OptionalRange } from '../model/optional-range';
+import { Document } from '../model/document/document';
+import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';

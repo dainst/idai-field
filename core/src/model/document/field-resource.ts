@@ -1,6 +1,6 @@
 import { Resource } from './resource';
 import { FieldGeometry } from './field-geometry';
-import { I18N } from '../tools';
+import { I18N } from '../../tools';
 
 
 export module FieldRelations {

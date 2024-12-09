@@ -1,7 +1,7 @@
 import { intersect, isArray, isObject } from 'tsfun';
-import { Valuelist } from '.';
-import { I18N } from '../tools/i18n';
-import { Field, Subfield } from './configuration/field';
+import { Valuelist } from '..';
+import { I18N } from '../../tools/i18n';
+import { Field, Subfield } from '../configuration/field';
 
 
 /**

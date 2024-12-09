@@ -1,5 +1,5 @@
 import { flow, cond, on, isUndefinedOrEmpty, detach, isObject } from 'tsfun';
-import { I18N } from '../tools/i18n';
+import { I18N } from '../../tools/i18n';
 
 
 /**

@@ -1,4 +1,4 @@
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 
 
 /**

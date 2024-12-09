@@ -1,8 +1,8 @@
 import { clone, filter, includedIn, isArray, isDefined, isNot, isString } from 'tsfun';
-import { Document } from '../model/document';
-import { Resource } from '../model/resource';
+import { Document } from '../model/document/document';
+import { Resource } from '../model/document/resource';
 import { Valuelist } from '../model/configuration/valuelist';
-import { OptionalRange } from '../model/optional-range';
+import { OptionalRange } from '../model/input-types/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
 import { CategoryForm, Dimension } from '../model';

@@ -1,4 +1,4 @@
-import { Document, NewDocument } from '../../model/document';
+import { Document, NewDocument } from '../../model/document/document';
 import { getSampleDocuments } from './sample-data';
 
 

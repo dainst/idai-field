@@ -1,6 +1,6 @@
 import { Relation } from '../model/configuration/relation';
-import { Document } from '../model/document';
-import { Resource } from '../model/resource';
+import { Document } from '../model/document/document';
+import { Resource } from '../model/document/resource';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Tree } from '../tools/forest';
 import { InPlace } from '../tools/in-place';

@@ -1,12 +1,12 @@
 import { filter, to, isAssociative, isPrimitive, map, flow, keys, isUndefinedOrEmpty } from 'tsfun';
 import { NewResource, Resource } from './resource';
 import { Action } from './action';
-import { ObjectUtils } from '../tools/object-utils';
-import { Labels, ProjectConfiguration } from '../services';
+import { ObjectUtils } from '../../tools/object-utils';
+import { Labels, ProjectConfiguration } from '../../services';
 import { Warnings } from './warnings';
-import { CategoryForm } from './configuration/category-form';
-import { Relation } from './configuration/relation';
-import { Named } from '../tools/named';
+import { CategoryForm } from '../configuration/category-form';
+import { Relation } from '../configuration/relation';
+import { Named } from '../../tools/named';
 
 
 export type RevisionId = string;

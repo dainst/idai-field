@@ -1,4 +1,4 @@
-import { Composite } from '../../src/model/composite';
+import { Composite } from '../../src/model/input-types/composite';
 import { Subfield } from '../../src/model/configuration/field';
 
 

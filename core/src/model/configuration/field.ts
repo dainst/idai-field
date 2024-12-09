@@ -2,12 +2,12 @@ import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt, validateUrl } from '../../tools/validation-util';
 import { parseDate } from '../../tools/parse-date';
-import { Dating } from '../dating';
-import { Dimension } from '../dimension';
-import { Literature } from '../literature';
-import { OptionalRange } from '../optional-range';
+import { Dating } from '../input-types/dating';
+import { Dimension } from '../input-types/dimension';
+import { Literature } from '../input-types/literature';
+import { OptionalRange } from '../input-types/optional-range';
 import { Valuelist } from './valuelist';
-import { Composite } from '../composite';
+import { Composite } from '../input-types/composite';
 
 
 /**

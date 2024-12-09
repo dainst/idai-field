@@ -1,7 +1,7 @@
 import { CategoryForm } from '../../../src/model/configuration/category-form';
 import { Field } from '../../../src/model/configuration/field';
 import { Group } from '../../../src/model/configuration/group';
-import { CustomLanguageConfigurations} from '../../../src/model/custom-language-configurations';
+import { CustomLanguageConfigurations} from '../../../src/model/configuration/custom-language-configurations';
 import { I18N } from '../../../src/tools/i18n';
 
 

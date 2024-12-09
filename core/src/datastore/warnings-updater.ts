@@ -1,19 +1,19 @@
 import { equal, is, isArray, isObject, on, set, to, Map } from 'tsfun';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 import { Named } from '../tools/named';
 import { CategoryForm } from '../model/configuration/category-form';
 import { BaseField, Field } from '../model/configuration/field';
 import { ValuelistUtil } from '../tools/valuelist-util';
-import { Resource } from '../model/resource';
-import { ImageResource } from '../model/image-resource';
-import { RelationTargetWarnings, OutlierWarnings, Warnings } from '../model/warnings';
+import { Resource } from '../model/document/resource';
+import { ImageResource } from '../model/document/image-resource';
+import { RelationTargetWarnings, OutlierWarnings, Warnings } from '../model/document/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
-import { Query } from '../model/query';
+import { Query } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
 import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
-import { FieldResource } from '../model/field-resource';
+import { FieldResource } from '../model/document/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { Relation } from '../model/configuration/relation';
 

@@ -1,8 +1,8 @@
 import { clone } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
-import { Document } from '../model/document';
-import { NewDocument } from '../model/document';
-import { Query } from '../model/query';
+import { Document } from '../model/document/document';
+import { NewDocument } from '../model/document/document';
+import { Query } from '../model/datastore/query';
 import { Name } from '../tools/named';
 import { DocumentConverter } from './document-converter';
 import { DatastoreErrors } from './datastore-errors';

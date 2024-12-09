@@ -1,4 +1,4 @@
-import { Document } from '../../src/model/document';
+import { Document } from '../../src/model/document/document';
 import { AppConfigurator } from '../../src/configuration/app-configurator';
 import { ConfigLoader } from '../../src/configuration/boot/config-loader';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';

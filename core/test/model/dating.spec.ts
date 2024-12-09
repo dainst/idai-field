@@ -1,4 +1,4 @@
-import { Dating } from '../../src/model/dating';
+import { Dating } from '../../src/model/input-types/dating';
 
 
 /**

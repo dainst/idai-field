@@ -1,4 +1,4 @@
-import { Dimension } from '../../src/model/dimension';
+import { Dimension } from '../../src/model/input-types/dimension';
 
 
 describe('Dimension', () => {

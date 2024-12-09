@@ -1,6 +1,6 @@
-import { Dating } from './dating';
+import { Dating } from '../input-types/dating';
 import { FieldResource } from './field-resource';
-import { OptionalRange } from './optional-range';
+import { OptionalRange } from '../input-types/optional-range';
 
 
 export interface FeatureResource extends FieldResource {

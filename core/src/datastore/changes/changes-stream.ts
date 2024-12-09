@@ -1,7 +1,7 @@
 import { Observable, Observer } from 'rxjs';
 import { IndexFacade } from '../../index/index-facade';
-import { Action } from '../../model/action';
-import { Document } from '../../model/document';
+import { Action } from '../../model/document/action';
+import { Document } from '../../model/document/document';
 import { ObserverUtil } from '../../tools/observer-util';
 import { DocumentConverter } from '../document-converter';
 import { DocumentCache } from '../document-cache';

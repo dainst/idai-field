@@ -1,4 +1,4 @@
-import { NewDocument } from '../../model/document';
+import { NewDocument } from '../../model/document/document';
 import { I18N } from '../../tools';
 import { sampleDataLabels } from './sample-data-labels';
 

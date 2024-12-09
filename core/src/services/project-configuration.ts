@@ -5,7 +5,7 @@ import { Category } from '../model/configuration/category';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Relation } from '../model/configuration/relation';
 import { Field } from '../model/configuration/field';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 import { Valuelist } from '../model';
 
 

@@ -1,6 +1,6 @@
 import { flatMap, flow, subtract } from 'tsfun';
-import { Document, toResourceId  } from '../../model/document';
-import { Resource } from '../../model/resource';
+import { Document, toResourceId  } from '../../model/document/document';
+import { Resource } from '../../model/document/resource';
 import { Relation } from '../../model/configuration/relation';
 import { Datastore } from '../../datastore/datastore';
 import { updateRelations } from './update-relations';

@@ -1,9 +1,9 @@
 import { Map, set } from 'tsfun';
-import { CustomFormDefinition } from '../configuration/model/form/custom-form-definition';
-import { LanguageConfiguration } from '../configuration/model/language/language-configuration';
-import { notCompareInBoth } from '../tools/compare';
-import { concatIf } from '../tools/utils';
-import { Valuelist } from './configuration/valuelist';
+import { CustomFormDefinition } from '../../configuration/model/form/custom-form-definition';
+import { LanguageConfiguration } from '../../configuration/model/language/language-configuration';
+import { notCompareInBoth } from '../../tools/compare';
+import { concatIf } from '../../tools/utils';
+import { Valuelist } from '../configuration/valuelist';
 import { Resource } from './resource';
 
 

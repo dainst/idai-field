@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
 import { IndexDefinition } from './index/constraint-index';
-import { Query } from './model/query';
-import { Resource } from './model/resource';
+import { Query } from './model/datastore/query';
+import { Resource } from './model/document/resource';
 
 
 export const childrenOf = (id: Resource.Id): Query => ({

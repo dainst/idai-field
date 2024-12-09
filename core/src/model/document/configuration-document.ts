@@ -1,19 +1,19 @@
 import { isEmpty, on, to } from 'tsfun';
 import { Document } from './document';
 import { ConfigurationResource } from './configuration-resource';
-import { CategoryForm } from './configuration/category-form';
-import { CustomFormDefinition } from '../configuration/model/form/custom-form-definition';
-import { CustomLanguageConfigurations } from './custom-language-configurations';
-import { Group } from './configuration/group';
-import { Field } from './configuration/field';
+import { CategoryForm } from '../configuration/category-form';
+import { CustomFormDefinition } from '../../configuration/model/form/custom-form-definition';
+import { CustomLanguageConfigurations } from '../configuration/custom-language-configurations';
+import { Group } from '../configuration/group';
+import { Field } from '../configuration/field';
 import { Resource } from './resource';
 import { FieldResource } from './field-resource';
-import { Valuelist } from './configuration/valuelist';
-import { BaseGroupDefinition } from '../configuration/model/form/base-form-definition';
-import { ConfigReader } from '../configuration/boot/config-reader';
-import { getConfigurationName } from '../configuration/project-configuration-names';
-import { sampleDataLabels } from '../datastore/sampledata/sample-data-labels';
-import { ScanCodeConfiguration } from './configuration/scan-code-configuration';
+import { Valuelist } from '../configuration/valuelist';
+import { BaseGroupDefinition } from '../../configuration/model/form/base-form-definition';
+import { ConfigReader } from '../../configuration/boot/config-reader';
+import { getConfigurationName } from '../../configuration/project-configuration-names';
+import { sampleDataLabels } from '../../datastore/sampledata/sample-data-labels';
+import { ScanCodeConfiguration } from '../configuration/scan-code-configuration';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];

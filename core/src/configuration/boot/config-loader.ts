@@ -1,5 +1,5 @@
 import { clone, Map } from 'tsfun';
-import { ConfigurationDocument } from '../../model/configuration-document';
+import { ConfigurationDocument } from '../../model/document/configuration-document';
 import { Relation } from '../../model/configuration/relation';
 import { LanguageConfiguration } from '../model/language/language-configuration';
 import { LanguageConfigurations } from '../model/language/language-configurations';

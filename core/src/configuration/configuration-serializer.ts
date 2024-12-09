@@ -2,7 +2,7 @@ import { ProjectConfiguration } from '../services/project-configuration';
 import { getConfigurationName } from './project-configuration-names';
 import { Forest } from '../tools/forest';
 import { AppConfigurator } from './app-configurator';
-import { ConfigurationDocument } from '../model/configuration-document';
+import { ConfigurationDocument } from '../model/document/configuration-document';
 import { CategoryForm } from '../model/configuration/category-form';
 
 

@@ -332,7 +332,7 @@ export module WarningsUpdater {
         }
 
         const valuelist: Valuelist = ValuelistUtil.getValuelist(
-            field, projectDocument, projectConfiguration, parentResource
+            field, projectDocument, projectConfiguration, parentResource, [], true
         );
         return valuelist
             ? set(ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])

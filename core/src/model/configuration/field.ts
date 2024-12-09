@@ -101,6 +101,8 @@ export module Field {
                 return isArray(fieldData) && fieldData.every(element => isString(element));
             case InputType.MULTIINPUT:
                 return isArray(fieldData) && fieldData.every(element => isString(element) || isObject(element));
+            case InputType.VALUELIST_MULTIINPUT:
+                return isArray(fieldData) && fieldData.every(element => isObject(element) && element.value);            
             case InputType.UNSIGNEDINT:
                 return validateUnsignedInt(fieldData);
             case InputType.UNSIGNEDFLOAT:
@@ -156,6 +158,7 @@ export module Field {
         |'url'
         |'multiInput'
         |'simpleMultiInput'
+        |'valuelistMultiInput'
         |'dropdown'
         |'dropdownRange'
         |'radio'
@@ -187,6 +190,7 @@ export module Field {
         export const TEXT = 'text';
         export const MULTIINPUT = 'multiInput';
         export const SIMPLE_MULTIINPUT = 'simpleMultiInput';
+        export const VALUELIST_MULTIINPUT = 'valuelistMultiInput';
         export const URL = 'url';
         export const DROPDOWN = 'dropdown';
         export const DROPDOWNRANGE = 'dropdownRange';

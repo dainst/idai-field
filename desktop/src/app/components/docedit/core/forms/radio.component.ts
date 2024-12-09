@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy, ProjectConfiguration } from 'idai-field-core';
+import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy,
+    ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class RadioComponent implements OnChanges {
             this.field,
             await this.datastore.get('project'),
             this.projectConfiguration,
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
+            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource),
+            this.fieldContainer[this.field.name]
         );
     }
 

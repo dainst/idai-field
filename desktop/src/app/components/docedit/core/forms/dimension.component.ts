@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { clone, Map } from 'tsfun';
-import { Dimension, Labels, Field, I18N, ProjectConfiguration, Valuelist, ValuelistUtil, Datastore, Hierarchy, Resource } from 'idai-field-core';
+import { clone, isDefined, Map } from 'tsfun';
+import { Dimension, Labels, Field, I18N, ProjectConfiguration, Valuelist, ValuelistUtil, Datastore, Hierarchy,
+    Resource } from 'idai-field-core';
 import { UtilTranslations } from '../../../../util/util-translations';
 import { Language, Languages } from '../../../../services/languages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
@@ -49,12 +50,7 @@ export class DimensionComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.valuelist = ValuelistUtil.getValuelist(
-            this.field,
-            await this.datastore.get('project'),
-            this.projectConfiguration,
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
-        );
+        this.valuelist = await this.getValuelist();
     }
 
 
@@ -172,6 +168,22 @@ export class DimensionComponent implements OnChanges {
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
             $localize `:@@languages.noLanguage:Ohne Sprachangabe`
+        );
+    }
+
+
+    private async getValuelist(): Promise<Valuelist> {
+
+        const existingValues: string[] = [
+            this.fieldContainer[this.field.name]?.measurementPosition
+        ].filter(isDefined)
+
+        return ValuelistUtil.getValuelist(
+            this.field,
+            await this.datastore.get('project'),
+            this.projectConfiguration,
+            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource),
+            existingValues
         );
     }
 }

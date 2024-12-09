@@ -887,7 +887,7 @@ describe('WarningsUpdater', () => {
             createDocument('1')
         ];
 
-        documents[0].resource.staff = ['Person'];
+        documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
         documents[1].resource.editor = ['outlierValue1'];
         documents[1].resource.dropdown = 'outlierValue2';
@@ -924,6 +924,50 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
+        done();
+    });
+
+
+    it('do not set outlier warnings for unselectable values from project field', async done => {
+
+        const categoryDefinition = {
+            name: 'Category',
+            identifierPrefix: 'C',
+            groups: [
+                {
+                    fields: [
+                        {
+                            name: 'editor',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelistFromProjectField: 'staff'
+                        }
+                    ]
+                }
+            ]
+        } as any;
+
+        const documents = [
+            createDocument('project', 'Project'),
+            createDocument('1')
+        ];
+
+        documents[0].resource.staff = [{ value: 'Person', selectable: false }];
+
+        documents[1].resource.editor = ['Person'];
+
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        const mockIndexFacade = getMockIndexFacade();
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        await WarningsUpdater.updateOutlierWarning(
+            documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
+        );
+
+        expect(documents[1].warnings).toBeUndefined();
         done();
     });
 
@@ -992,7 +1036,7 @@ describe('WarningsUpdater', () => {
             createDocument('1')
         ];
 
-        documents[0].resource.staff = ['Person'];
+        documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.outliers = {
@@ -1066,7 +1110,7 @@ describe('WarningsUpdater', () => {
             createDocument('3')
         ];
 
-        documents[0].resource.staff = ['Person'];
+        documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.outliers = { fields: { editor: ['outlierValue'] }, values: ['outlierValue'] };

@@ -21,6 +21,7 @@ export { NewImageDocument } from './document/image-document';
 export { NewImageResource } from './document/image-resource';
 export { NewResource } from './document/resource';
 export { OptionalRange } from './input-types/optional-range';
+export { EditableValue } from './input-types/editable-value';
 export { Query, Constraints } from './datastore/query';
 export { Relation } from './configuration/relation';
 export { Resource } from './document/resource';

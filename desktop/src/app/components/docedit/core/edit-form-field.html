@@ -16,6 +16,9 @@
 <form-field-simple-multi-input *ngIf="field.inputType === 'simpleMultiInput'"
     [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-simple-multi-input>
 
+<form-field-valuelist-multi-input *ngIf="field.inputType === 'valuelistMultiInput'"
+    [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-valuelist-multi-input>
+
 <form-field-dropdown *ngIf="field.inputType === 'dropdown'"
     [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown>
 

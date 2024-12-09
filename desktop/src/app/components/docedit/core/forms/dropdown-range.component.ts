@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { isUndefinedOrEmpty } from 'tsfun';
-import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy, ProjectConfiguration } from 'idai-field-core';
+import { isUndefinedOrEmpty, isDefined } from 'tsfun';
+import { Datastore, OptionalRange, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy,
+    ProjectConfiguration } from 'idai-field-core';
 
 
 const PROJECT = 'project';
@@ -39,12 +40,7 @@ export class DropdownRangeComponent {
 
     async ngOnChanges() {
 
-        this.valuelist = ValuelistUtil.getValuelist(
-            this.field,
-            await this.datastore.get(PROJECT),
-            this.projectConfiguration,
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
-        );
+        this.valuelist = await this.getValuelist();
     }
 
 
@@ -82,5 +78,22 @@ export class DropdownRangeComponent {
     public hasEmptyValuelist(): boolean {
 
         return this.valuelist && Object.keys(this.valuelist.values).length === 0;
+    }
+
+
+    private async getValuelist(): Promise<Valuelist> {
+
+        const existingValues: string[] = [
+            this.fieldContainer[this.field.name]?.[OptionalRange.VALUE],
+            this.fieldContainer[this.field.name]?.[OptionalRange.ENDVALUE]
+        ].filter(isDefined)
+
+        return ValuelistUtil.getValuelist(
+            this.field,
+            await this.datastore.get(PROJECT),
+            this.projectConfiguration,
+            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource),
+            existingValues
+        );
     }
 }

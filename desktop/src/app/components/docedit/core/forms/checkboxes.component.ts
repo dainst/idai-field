@@ -32,7 +32,8 @@ export class CheckboxesComponent implements OnChanges {
             this.field,
             await this.datastore.get('project'),
             this.projectConfiguration,
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
+            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource),
+            this.fieldContainer[this.field.name]
         );
     }
 

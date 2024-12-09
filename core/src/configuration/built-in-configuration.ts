@@ -153,11 +153,11 @@ export class BuiltInConfiguration {
                     fixedInputType: true
                 },
                 staff: {
-                    inputType: Field.InputType.SIMPLE_MULTIINPUT,
+                    inputType: Field.InputType.VALUELIST_MULTIINPUT,
                     fixedInputType: true
                 },
                 campaigns: {
-                    inputType: Field.InputType.SIMPLE_MULTIINPUT,
+                    inputType: Field.InputType.VALUELIST_MULTIINPUT,
                     fixedInputType: true
                 }
             },

@@ -18,24 +18,6 @@ const { test, expect } = require('@playwright/test');
 
 
 /**
- * creation
- *   creation with relations
- *   messages
- *     after docedit closed, under various conditions
- * deletion
- *   including relations
- * operations
- *   creation, deletion, editing
- *   update of navbar
- * relations
- *   creation
- *   showing in sidebar
- *   showing in docedit afterwards
- * move
- *   contextMenu/moveModal
- * change category
- * docedit/images
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -820,5 +802,39 @@ test.describe('resources --', () => {
         checkboxes = await DoceditPage.getCheckboxes('processor');
         expect(await checkboxes.count()).toBe(1);
         expect(await getText(checkboxes.nth(0))).toEqual('Person 2');
+
+        await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('still allow removing value in editor after making it unselectable', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+        await DoceditPage.clickCheckbox('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await NavbarPage.clickProjectButton();
+        await DoceditPage.clickGotoPropertiesTab();
+        await DoceditPage.clickToggleSelectable('staff', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        let checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(2);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 1');
+        expect(await getText(checkboxes.nth(1))).toEqual('Person 2');
+
+        await DoceditPage.clickCheckbox('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(1);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 2');
+
+        await DoceditPage.clickCloseEdit();
     });
 });

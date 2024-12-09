@@ -792,8 +792,33 @@ test.describe('resources --', () => {
         await DoceditPage.clickCheckbox('processor', 0);
         await DoceditPage.clickSaveDocument();
 
-        await ResourcesPage.clickSelectResource('Trench1');;
+        await ResourcesPage.clickSelectResource('Trench1');
         expect(await FieldsViewPage.getFieldValue(0, 1, 0)).toBe('Person 1');
         expect(await FieldsViewPage.getFieldValue(0, 1, 1)).toBe('Person 2');
+    });
+
+
+    test('make value from project document unselectable', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        let checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(2);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 1');
+        expect(await getText(checkboxes.nth(1))).toEqual('Person 2');
+
+        await DoceditPage.clickCloseEdit();
+
+        await NavbarPage.clickProjectButton();
+        await DoceditPage.clickGotoPropertiesTab();
+        await DoceditPage.clickToggleSelectable('staff', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(1);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 2');
     });
 });

@@ -29,7 +29,7 @@ export class DoceditPage {
     }
 
 
-     public static async clickCloseEdit(action?: 'discard'|'cancel'|'save') {
+    public static async clickCloseEdit(action?: 'discard'|'cancel'|'save') {
 
         await waitForExist('#document-edit-button-goto-view');
         await click('#document-edit-button-goto-view');
@@ -185,6 +185,16 @@ export class DoceditPage {
         await waitForExist(field);
 
         const element = await field.locator('.add-multi-input-entry');
+        return click(element);
+    }
+
+
+    public static async clickToggleSelectable(fieldName: string, valueIndex: number) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('.selectable-toggle')).nth(valueIndex);
         return click(element);
     }
 

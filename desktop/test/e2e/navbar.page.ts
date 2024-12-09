@@ -35,6 +35,12 @@ export class NavbarPage {
     }
 
 
+    public static clickProjectButton() {
+
+        return click('#projects-badge');
+    }
+
+
     public static async clickCloseAllMessages() {
 
         await waitForExist((await getLocator('.alert button')).nth(0));

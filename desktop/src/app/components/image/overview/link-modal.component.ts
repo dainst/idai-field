@@ -48,7 +48,7 @@ export class LinkModalComponent {
     private getIdsToIgnore(): string[] {
 
         return intersection(this.imageDocuments.map(document => {
-            return document.resource.relations[Relation.Image.DEPICTS];
+            return document.resource.relations[Relation.Image.DEPICTS] ?? [];
         }));
     }
 }

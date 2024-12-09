@@ -16,8 +16,8 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    afterEach(async () =>{
-        
+    afterEach(async () => {
+
         await cleanUp();
     });
 
@@ -25,12 +25,12 @@ describe('subsystem/image-relations-manager', () => {
     test('remove TypeCatalog with images', async () => {
 
         const documentsLookup = await helpers.createDocuments(
-          [
-              ['tc1', 'TypeCatalog', ['t1']],
-              ['t1', 'Type'],
-              ['i1', 'Image', ['tc1']],
-              ['i2', 'Image', ['t1']]
-          ]
+            [
+                ['tc1', 'TypeCatalog', ['t1']],
+                ['t1', 'Type'],
+                ['i1', 'Image', ['tc1']],
+                ['i2', 'Image', ['t1']]
+            ]
         );
 
         await helpers.expectDocuments('project', 'tc1', 't1', 'i1', 'i2');
@@ -46,12 +46,12 @@ describe('subsystem/image-relations-manager', () => {
     test('remove Type with images', async () => {
 
         const documentsLookup = await helpers.createDocuments(
-          [
-              ['tc1', 'TypeCatalog', ['t1']],
-              ['t1', 'Type'],
-              ['i1', 'Image', ['tc1']],
-              ['i2', 'Image', ['t1']]
-          ]
+            [
+                ['tc1', 'TypeCatalog', ['t1']],
+                ['t1', 'Type'],
+                ['i1', 'Image', ['tc1']],
+                ['i2', 'Image', ['t1']]
+            ]
         );
 
         await helpers.expectDocuments('project', 'tc1', 't1', 'i1', 'i2');
@@ -68,11 +68,11 @@ describe('subsystem/image-relations-manager', () => {
     test('remove Type and Catalog with same image', async () => {
 
         const documentsLookup = await helpers.createDocuments(
-          [
-              ['tc1', 'TypeCatalog', ['t1']],
-              ['t1', 'Type'],
-              ['i1', 'Image', ['tc1', 't1']]
-          ]
+            [
+                ['tc1', 'TypeCatalog', ['t1']],
+                ['t1', 'Type'],
+                ['i1', 'Image', ['tc1', 't1']]
+            ]
         );
 
         await helpers.expectDocuments('project', 'tc1', 't1', 'i1');
@@ -164,11 +164,11 @@ describe('subsystem/image-relations-manager', () => {
     test('do not remove images (with TypeCatalog) which are also connected to ancestor resources', async () => {
 
         const documentsLookup = await helpers.createDocuments(
-          [
-              ['tc1', 'TypeCatalog', ['t1']],
-              ['t1', 'Type'],
-              ['i1', 'Image', ['tc1', 't1']]
-          ]
+            [
+                ['tc1', 'TypeCatalog', ['t1']],
+                ['t1', 'Type'],
+                ['i1', 'Image', ['tc1', 't1']]
+            ]
         );
 
         await helpers.expectDocuments('project', 'tc1', 't1', 'i1');
@@ -232,14 +232,15 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         expect(documentsLookup.tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
-        expect(documentsLookup.i1.resource.relations[Relation.Image.DEPICTS]).toEqual([]);
+        expect(documentsLookup.i1.resource.relations[Relation.Image.DEPICTS]).toBeUndefined();
 
         await app.imageRelationsManager.link(documentsLookup.tc1, documentsLookup.i1);
 
         const tc1 = await app.datastore.get('tc1');
         const i1 = await app.datastore.get('i1');
-        expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
+
         expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual(['tc1']);
+        expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toEqual(['i1']);
     });
 
 
@@ -283,7 +284,7 @@ describe('subsystem/image-relations-manager', () => {
         const tc1 = await app.datastore.get('tc1');
         const i1 = await app.datastore.get('i1');
         expect(tc1.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
-        expect(i1.resource.relations[Relation.Image.DEPICTS]).toEqual([]);
+        expect(i1.resource.relations[Relation.Image.DEPICTS]).toBeUndefined();
     });
 
 

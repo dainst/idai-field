@@ -21,6 +21,6 @@ export module ImageResource {
 
     export interface Relations extends Resource.Relations {
 
-        depicts: string[];
+        depicts?: string[];
     }
 }

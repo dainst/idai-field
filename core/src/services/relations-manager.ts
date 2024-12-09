@@ -7,9 +7,9 @@ import { NewDocument } from '../model/document/document';
 import { ProjectConfiguration } from './project-configuration'
 import { ON_RESOURCE_ID } from '../constants';
 import { Query } from '../model/datastore/query'
-import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 import { childrenOf } from '../basic-index-configuration';
 import { Name, Named } from '../tools/named';
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 
 
 /**
@@ -79,7 +79,8 @@ export class RelationsManager {
         const documentsToBeDeleted =
             flow(descendants,
                 subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
-                append(document));
+                append(document)
+            );
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
     }

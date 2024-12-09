@@ -4,13 +4,13 @@ import { Document } from '../model/document/document';
 import { NewDocument } from '../model/document/document';
 import { Query } from '../model/datastore/query';
 import { Name } from '../tools/named';
-import { DocumentConverter } from './document-converter';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Indexer } from '../index';
+import { Migrator } from './migrator';
 
 
 export type FindOptions = {
@@ -50,7 +50,6 @@ export class Datastore {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private documentConverter: DocumentConverter,
                 private projectConfiguration: ProjectConfiguration,
                 private getUser: () => Name) {}
     
@@ -161,7 +160,7 @@ export class Datastore {
     
         document = this.updateCache(document);
 
-        this.documentConverter.convert(document);
+        Migrator.migrate(document, this.projectConfiguration);
         await this.updateWarnings(document, notifyObservers, previousIdentifier);
 
         return this.updateCache(document);
@@ -184,7 +183,7 @@ export class Datastore {
 
         for (let document of documents) {
             const previousVersion: Document = this.documentCache.get(document.resource.id);
-            this.documentConverter.convert(document);
+            Migrator.migrate(document, this.projectConfiguration);
             const updatedDocument: Document = !previousVersion
                 ? this.documentCache.set(document)
                 : this.documentCache.reassign(document);
@@ -195,7 +194,6 @@ export class Datastore {
             this.indexFacade,
             this.datastore.getDb(),
             this.documentCache,
-            this.documentConverter,
             this.projectConfiguration,
             true
         );
@@ -304,7 +302,7 @@ export class Datastore {
 
     public convert: Datastore.Convert = async (document: Document, notifyObservers: boolean = true) => {
         
-        this.documentConverter.convert(document);
+        Migrator.migrate(document, this.projectConfiguration);
         await this.updateWarnings(document, notifyObservers);
     }  
 
@@ -335,7 +333,7 @@ export class Datastore {
     public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
         const revision: Document = await this.datastore.fetchRevision(docId, revisionId);
-        this.documentConverter.convert(revision);
+        Migrator.migrate(revision, this.projectConfiguration);
         return revision;
     }
 

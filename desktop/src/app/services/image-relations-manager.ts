@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Document, Datastore, FieldDocument, ImageDocument, Relation, ProjectConfiguration,
-    ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, Hierarchy} from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to, isnt, not, rest, first } from 'tsfun';
-import { ImageStore } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, ImageDocument, Relation, ProjectConfiguration,
+    ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, Hierarchy, ImageStore } from 'idai-field-core';
 import DEPICTS = Relation.Image.DEPICTS;
 import ISDEPICTEDIN = Relation.Image.ISDEPICTEDIN;
 
@@ -37,7 +36,7 @@ export class ImageRelationsManager {
 
         return onlyExclusivelyRelated
             ? result.filter(imageDocument => {
-                return subtract(documentsIds)(imageDocument.resource.relations[DEPICTS]).length === 0;
+                return subtract(documentsIds)(imageDocument.resource.relations[DEPICTS] ?? []).length === 0;
             })
             : result;
     }
@@ -87,6 +86,7 @@ export class ImageRelationsManager {
 
         for (let imageDocument of selectedImages) {
             const oldVersion = Document.clone(imageDocument);
+            if (!imageDocument.resource.relations.depicts) imageDocument.resource.relations.depicts = [];
             const depictsRelations: string[] = imageDocument.resource.relations.depicts;
 
             if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
@@ -136,7 +136,7 @@ export class ImageRelationsManager {
         const leftovers = [];
         for (const imageDocument of (await this.getLinkedImages(documentsToBeDeleted))) {
             let depictsOnlyDocumentsToBeDeleted = true;
-            for (const depictsTargetId of imageDocument.resource.relations[DEPICTS]) {
+            for (const depictsTargetId of (imageDocument.resource.relations[DEPICTS] ?? [])) {
                 if (!idsOfDocumentsToBeDeleted.includes(depictsTargetId)) depictsOnlyDocumentsToBeDeleted = false;
             }
             if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);

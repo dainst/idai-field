@@ -1,4 +1,3 @@
-import { DocumentConverter } from '../../src/datastore/document-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
@@ -30,7 +29,6 @@ describe('Datastore', () => {
             mockdb,
             mockIndexFacade,
             documentCache,
-            new DocumentConverter(projectConfiguration),
             projectConfiguration,
             () => 'username'
         );
@@ -39,7 +37,7 @@ describe('Datastore', () => {
 
     function verifyIsDocument(document) {
 
-        expect(document.resource.identifier).toEqual('');
+        expect(document.resource.id).toBeDefined();
     }
 
 

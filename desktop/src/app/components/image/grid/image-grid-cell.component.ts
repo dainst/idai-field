@@ -20,7 +20,7 @@ export class ImageGridCellComponent {
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
     @Input() showGeoIcon: boolean = false;
-    @Input() resourceIdentifiers: {[id: string]: string} = {};
+    @Input() resourceIdentifiers: { [id: string]: string } = {};
     @Input() nrOfColumns: number = 0;
 
 

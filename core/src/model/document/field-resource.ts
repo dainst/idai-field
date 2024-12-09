@@ -28,6 +28,6 @@ export module FieldResource {
 
     export interface Relations extends Resource.Relations {
 
-        isRecordedIn: string[];
+        isRecordedIn?: string[];
     }
 }

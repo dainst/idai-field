@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Datastore, FieldDocument, ImageResource} from 'idai-field-core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Datastore, FieldDocument, ImageResource } from 'idai-field-core';
 
 
 @Component({
@@ -26,7 +26,9 @@ export class DepictsRelationsViewComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.relationTargets = (await this.datastore.getMultiple(this.resource.relations.depicts)) as Array<FieldDocument>;
+        this.relationTargets = this.resource.relations.depicts
+            ? (await this.datastore.getMultiple(this.resource.relations.depicts)) as Array<FieldDocument>
+            : [];
     }
 
 

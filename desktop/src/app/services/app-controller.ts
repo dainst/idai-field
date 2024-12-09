@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, DocumentConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
+import { AppConfigurator, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
     PouchdbDatastore, ProjectConfiguration, Document } from 'idai-field-core';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
@@ -87,7 +87,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -113,7 +112,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -130,7 +128,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -148,7 +145,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -185,7 +181,6 @@ export class AppController {
             this.indexFacade,
             db,
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );

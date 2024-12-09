@@ -1,4 +1,5 @@
-import { set, sameset, samemap, isnt, includedIn, flatMap, Map, remove, isUndefinedOrEmpty, isString } from 'tsfun';
+import { set, sameset, samemap, isnt, includedIn, flatMap, Map, remove, isUndefinedOrEmpty, isString,
+    clone } from 'tsfun';
 import { Datastore } from '../../datastore/datastore';
 import { Document } from './document';
 import { notBothEqual, notCompareInBoth } from '../../tools/compare';
@@ -123,10 +124,16 @@ export module Resource {
     }
 
 
-    export const relationsEquivalent = (r1: Resource) => (r2: Resource) =>
-        samemap(sameset,
-            remove(isUndefinedOrEmpty, r1.relations),
-            remove(isUndefinedOrEmpty, r2.relations));
+    export const relationsEquivalent = (r1: Resource) => (r2: Resource) => {
+
+        const relations1 = clone(r1.relations);
+        const relations2 = clone(r2.relations);
+
+        return samemap(sameset,
+            remove(isUndefinedOrEmpty, relations1),
+            remove(isUndefinedOrEmpty, relations2)
+        );
+    };
 
     
     function findDifferingFieldsInResource(resource1: Object, resource2: Object): string[] {

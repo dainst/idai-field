@@ -3,13 +3,13 @@ import { IndexFacade } from '../../index/index-facade';
 import { Action } from '../../model/document/action';
 import { Document } from '../../model/document/document';
 import { ObserverUtil } from '../../tools/observer-util';
-import { DocumentConverter } from '../document-converter';
 import { DocumentCache } from '../document-cache';
 import { isProjectDocument } from '../helpers';
 import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from '../warnings-updater';
 import { Datastore } from '../datastore';
 import { ProjectConfiguration } from '../../services/project-configuration';
+import { Migrator } from '../migrator';
 
 
 export type RemoteChangeInfo = {
@@ -33,7 +33,6 @@ export class ChangesStream {
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private documentConverter: DocumentConverter,
                 private projectConfiguration: ProjectConfiguration,
                 private getUsername: () => string) {
 
@@ -75,7 +74,7 @@ export class ChangesStream {
 
     private async welcomeDocument(document: Document) {
 
-        this.documentConverter.convert(document);
+        Migrator.migrate(document, this.projectConfiguration);
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
         this.indexFacade.put(document);
 

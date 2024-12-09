@@ -2,7 +2,6 @@ import { Document } from '../../src/model/document/document';
 import { AppConfigurator } from '../../src/configuration/app-configurator';
 import { ConfigLoader } from '../../src/configuration/boot/config-loader';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';
-import { DocumentConverter } from '../../src/datastore/document-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { PouchdbDatastore } from '../../src/datastore/pouchdb/pouchdb-datastore';
@@ -96,12 +95,10 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         false
     );
 
-    const documentConverter = new DocumentConverter(projectConfiguration);
     const datastore = new Datastore(
         pouchdbDatastore,
         createdIndexFacade,
         documentCache,
-        documentConverter,
         projectConfiguration,
         () => user
     );

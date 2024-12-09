@@ -70,7 +70,8 @@ export class ImageUploader {
         const imageFilePaths: string[] = filePaths.filter(filePath =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
         if (imageFilePaths.length) {
-            const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
+            const metadata: ImageMetadata|undefined
+                = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
             if (!metadata) return uploadResult;
 
             const menuContext: MenuContext = this.menuService.getContext();

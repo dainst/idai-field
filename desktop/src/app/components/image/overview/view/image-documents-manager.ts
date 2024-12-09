@@ -77,8 +77,7 @@ export class ImageDocumentsManager {
     private doSelectedDocumentsContainDepictsRelations(): boolean {
 
         for (let document of this.selected) {
-            if (document.resource.relations.depicts &&
-                    document.resource.relations.depicts.length > 0) {
+            if (document.resource.relations.depicts && document.resource.relations.depicts.length > 0) {
                 return true;
             }
         }

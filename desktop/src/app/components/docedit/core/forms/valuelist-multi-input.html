@@ -3,12 +3,20 @@
         <button *ngIf="entry.selectable"
                 class="btn btn-success selectable-toggle"
                 type="button"
+                ngbTooltip="Dieser Wert steht bei der Dateneingabe zur Auswahl."
+                i18n-ngbTooltip="@@docedit.forms.valuelistMultiInput.selectable"
+                container="body"
+                placement="left"
                 (click)="toggleSelectable(entry)">
             <span class="mdi mdi-check-circle"></span>
         </button>
         <button *ngIf="!entry.selectable"
                 class="btn btn-secondary selectable-toggle"
                 type="button"
+                ngbTooltip="Dieser Wert steht bei der Dateneingabe nicht zur Auswahl."
+                i18n-ngbTooltip="@@docedit.forms.valuelistMultiInput.unselectable"
+                container="body"
+                placement="left"
                 (click)="toggleSelectable(entry)">
             <span class="mdi mdi-minus-circle"></span>
         </button>

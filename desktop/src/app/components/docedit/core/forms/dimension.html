@@ -17,7 +17,8 @@
 </div>
 
 <div class="input-group" *ngIf="isEditingAllowed()">
-	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dimension.add" type="text" disabled class="form-control">
+	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dimension.add" type="text"
+		   disabled class="form-control">
 	<button class="btn btn-success create-new-dimension-button"
 			(click)="createNewDimension()">
 		<span class="mdi mdi-plus-circle"></span>
@@ -41,17 +42,15 @@
 				<option [ngValue]="true" i18n="@@docedit.forms.dimension.range">Bereich</option>
 			</select>
 
-			<div class="d-flex flex-row align-items-center flex-wrap mb-3">
+			<div class="d-flex mb-3 value-inputs-container">
 				<input [(ngModel)]="dimension.inputValue" type="number"
-						step="0.001" min="0" size="6" name="inputValue"
-						class="form-control value-input">
-				<span *ngIf="dimension['isRange']" class="md-flex flex-row align-items-center flex-wrap mb-3 ms-2">
-						-
-					<input [(ngModel)]="dimension.inputRangeEndValue" type="number"
-							step="0.001" min="0" size="6" name="inputRangeEndValue"
-							class="ms-2 form-control range-end-input">
-				</span>
-
+					   step="0.001" min="0" size="6" name="inputValue"
+					   class="form-control value-input">
+				<span *ngIf="dimension.isRange"class="value-separator">-</span>
+				<input *ngIf="dimension.isRange"
+					   [(ngModel)]="dimension.inputRangeEndValue" type="number"
+					   step="0.001" min="0" size="6" name="inputRangeEndValue"
+					   class="form-control range-end-input">
 				<select [(ngModel)]="dimension.inputUnit"
 						class="form-control input-unit-select"
 						name="inputUnit">
@@ -63,7 +62,7 @@
 			<div class="d-flex flex-row align-items-center flex-wrap mb-3">
 				<label i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an</label>
 				<select [(ngModel)]="dimension.measurementPosition"
-						class="ms-2 form-control measurement-position-select" >
+						class="ms-2 form-control measurement-position-select">
 					<option value=""></option>
 					<option *ngFor="let value of getPositionValues()" value="{{value}}">
 						{{getPositionValueLabel(value)}}
@@ -83,7 +82,7 @@
 			</div>
 
 			<div class="mb-3">
-				<label i18n="@@docedit.forms.dimension.comment">Kommentar:</label>
+				<label i18n="@@docedit.forms.dimension.comment" class="comment-label">Kommentar:</label>
 				<multi-language-text-field [fieldData]="dimension.measurementComment"
 										   [languages]="fieldLanguages"
 										   (onFieldDataChanged)="updateMeasurementComment(dimension, $event)">

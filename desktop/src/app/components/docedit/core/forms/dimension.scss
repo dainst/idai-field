@@ -7,14 +7,34 @@ form-field-dimension {
     left: 4px;
   }
 
-  .value-input,
-  .range-end-input {
-    width: 100px;
+  .input-unit-select,
+  .measurement-position-select {
+    width: unset;
+  }
+
+  .value-inputs-container {
+    height: 33px;
+
+    .value-input,
+    .range-end-input {
+      width: 120px;
+    }
+
+    .value-separator {
+      position: relative;
+      top: 2px;
+      margin: 0 5px;
+      user-select: none;
+    }
   }
 
   .form-check {
     .form-check-label {
       padding-left: 0;
     }
+  }
+
+  .comment-label {
+    margin-bottom: 8px !important;
   }
 }

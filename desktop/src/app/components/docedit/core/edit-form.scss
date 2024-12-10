@@ -43,14 +43,15 @@
         }
 
         .forms-container {
-          padding-right: 15px;
+          padding-right: 0;
           padding-left: 0;
           height: 100%;
 
           .scrollable-group {
-            height: calc(100% - 30px);
+            height: 100%;
             overflow-y: auto;
-            margin-top: 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
 
             input:not([type]),
             input[type="text"],
@@ -96,6 +97,12 @@
               height: 33px;
               width: 34px;
               padding: 0;
+            }
+
+            .delete-multi-input-entry .mdi,
+            .mdi-plus-circle {
+              position: relative;
+              right: 1px;
             }
 
             .card-footer:last-child {

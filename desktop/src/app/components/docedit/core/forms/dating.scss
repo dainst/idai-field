@@ -27,5 +27,11 @@ form-field-dating {
   .until-label {
     width: 60px;
     text-align: center;
+    font-size: 14px;
+    user-select: none;
+  }
+
+  .source-label {
+    margin-bottom: 8px !important;
   }
 }

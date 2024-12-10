@@ -102,7 +102,7 @@
             </div>
 
             <div class="mb-3">
-                <label i18n="@@docedit.forms.dating.source">Grundlage:</label>
+                <label i18n="@@docedit.forms.dating.source" class="source-label">Grundlage:</label>
                 <multi-language-text-field [fieldData]="dating.source" [languages]="fieldLanguages"
                                            (onFieldDataChanged)="updateSource(dating, $event)">
                 </multi-language-text-field>

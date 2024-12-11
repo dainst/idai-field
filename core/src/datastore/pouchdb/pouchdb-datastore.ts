@@ -288,7 +288,7 @@ export class PouchdbDatastore {
      */
     public fetchRevision(resourceId: string, revisionId: string): Promise<Document> {
 
-        return this.fetch(resourceId, { rev: revisionId });
+        return this.fetch(resourceId, { rev: revisionId }, true);
     }
 
 

@@ -49,7 +49,7 @@ import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.compo
 import { IdentifierComponent } from './core/forms/identifier.component';
 import { CompositeComponent } from './core/forms/composite/composite.component';
 import { CompositeEntryModalComponent } from './core/forms/composite/composite-entry-modal.component';
-
+import { ChangesHistoryDialogComponent } from '../widgets/changes-history-dialog.component';
 
 @NgModule({
     providers: [
@@ -109,7 +109,8 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent,
         CompositeComponent,
-        CompositeEntryModalComponent
+        CompositeEntryModalComponent,
+        ChangesHistoryDialogComponent
     ],
     exports: [
         DoceditComponent,

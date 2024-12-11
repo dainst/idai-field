@@ -39,6 +39,12 @@
         <span class="mdi mdi-file-tree"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.move">Verschieben</span>
     </div>
+    <div *ngIf="isShowHistoryOptionAvailable()"
+        id="context-menu-show-history-button" class="dropdown-item" 
+        (click)="selectAction('show-history')">
+        <span class="mdi mdi-history"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.history">Geschichte</span>
+    </div>
     <div *ngIf="isDeleteOptionAvailable()"
          id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
         <span class="mdi mdi-delete"></span>

@@ -14,8 +14,7 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
-
-
+import { ChangesHistoryDialogComponent } from '../widgets/changes-history-dialog.component';
 @Component({
     selector: 'detail-modal',
     templateUrl: './docedit.html',
@@ -206,6 +205,11 @@ export class DoceditComponent {
         }
     }
 
+    
+    public showChangeHistory() { 
+        this.modalService.open( ChangesHistoryDialogComponent, { keyboard: false, animation: false })
+    }
+
 
     private updateFields() {
 
@@ -315,7 +319,7 @@ export class DoceditComponent {
         }
     }
 
-
+ 
     private showCategoryChangeFieldsWarning(invalidFields: string[]) {
 
         if (invalidFields.length > 0) {

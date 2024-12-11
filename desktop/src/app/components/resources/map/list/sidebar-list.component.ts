@@ -12,7 +12,8 @@ import { MenuContext } from '../../../../services/menu-context';
 import { Menus } from '../../../../services/menus';
 import { ComponentHelpers } from '../../../component-helpers';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
-
+import { ChangesHistoryDialogComponent } from '../../../widgets/changes-history-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'sidebar-list',
@@ -41,6 +42,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     constructor(private navigationService: NavigationService,
                 private warningsService: WarningsService,
+                private modalService: NgbModal,
                 resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 viewFacade: ViewFacade,
@@ -145,6 +147,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 break;
             case 'move':
                 await this.resourcesComponent.moveDocuments(this.contextMenu.documents as Array<FieldDocument>);
+                break;
+            case 'show-history':
+                this.modalService.open( ChangesHistoryDialogComponent, { keyboard: false, animation: false })
                 break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument(this.contextMenu.documents as Array<FieldDocument>);

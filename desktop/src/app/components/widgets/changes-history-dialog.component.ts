@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from 'idai-field-core';
+import { DocumentHolder } from '../docedit/document-holder';
+
 
 @Component({
     selector: 'changes-history-dialog',
@@ -9,24 +11,20 @@ import { Document } from 'idai-field-core';
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
     }
+    
 })
 
 export class ChangesHistoryDialogComponent {
-
+    
     @Input() document: Document;
     
     public escapeKeyPressed: boolean;
-    public CHANGESLIST: any[] = [
-        { uiid: 1, name: 'Kurt Cobain', time: '1990-12-01 23:45', action: 'deleted' },
-        { uiid: 2, name: 'Jacques Brel', time: '1968-02-12 20:30', action: 'created' },
-        { uiid: 5, name: 'Pinkfloyd', time: '1980-08-11 20:35', action: 'modified' },
-        { uiid: 3, name: 'Lou Reed', time: '1970-12-21 21:00', action: 'modified' }
-    ];
-
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor( public activeModal: NgbActiveModal,
+                 public documentHolder: DocumentHolder
+    ) {}
 
     public async onKeyDown(event: KeyboardEvent) {
-
+        console.log(this.document);
         if (event.key === 'Escape' && !this.escapeKeyPressed) {
             this.activeModal.dismiss('cancel');
         }
@@ -34,7 +32,6 @@ export class ChangesHistoryDialogComponent {
 
 
     public async onKeyUp(event: KeyboardEvent) {
-
         if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 

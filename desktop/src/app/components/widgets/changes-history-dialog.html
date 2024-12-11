@@ -1,30 +1,34 @@
 <div class="modal-header">
-    <!-- <h5  class="modal-title" i18n="@@widgets.saveModal.header">{{document._id}}</h5> -->
+    <h5  class="modal-title" i18n="@@widgets.saveModal.header">{{documentHolder.clonedDocument.resource.identifier}} changes history</h5>
 </div>
 
 <div id="changes-history-modal-body" class="modal-body">
-    <table>
-        <tbody  class = "row-compact">
-            <tr class="row-head">
-                <th>Action</th>                            
-                <th>User</th>
-                <th>UIID</th>
-                <th>Time</th>
-            </tr>
-            <tr *ngFor ="let change of CHANGESLIST">                      
-                <td>{{change.action}}</td>                         
-                <td>{{change.name}}</td>
-                <td>{{change.uiid}}</td>
-                <td class="column-date-time">{{change.time}}</td>                    
-            </tr>
-            <tr>                      
-                <td>{{CHANGESLIST[0].action}}</td>                         
-                <td>{{CHANGESLIST[0].name}}</td>
-                <td>{{CHANGESLIST[0].uiid}}</td>
-                <td class="column-date-time">{{CHANGESLIST[0].time}}</td>                 
-            </tr>
-        </tbody>                                           
-    </table>
+
+    <div id="list">
+        <div *ngIf="documentHolder.clonedDocument">
+            <div id="list-header">  
+                <div class="list-header-field" i18n="@@resources.list.headers.category">Date</div>
+                <div class="list-header-field" i18n="@@resources.list.headers.category">Action</div>
+                <!-- <div class="list-header-field" i18n="@@resources.list.headers.identifier">Identifier</div> -->
+                <div class="list-header-field" i18n="@@resources.list.headers.identifier">User</div>
+            </div>
+    </div>
+    ______
+    <div>    
+        <div *ngFor="let modification of documentHolder.clonedDocument.modified.reverse()">
+            date: {{modification.date}} <br />
+            action: Modified <br />
+            user: {{modification.user}} <br />      
+            __________________   
+        </div>
+        <div>
+            date: {{documentHolder.clonedDocument.created.date}}  <br />
+            action: Created <br />
+            user: {{documentHolder.clonedDocument.created.user}} <br />   
+            identifier: {{documentHolder.clonedDocument.resource.identifier}}     
+        </div>
+    </div>
+    </div>    
 </div>
 <div class="modal-footer">
     <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"

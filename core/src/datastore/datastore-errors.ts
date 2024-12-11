@@ -3,7 +3,6 @@
  */
 export module DatastoreErrors {
 
-    export const UNKNOWN_CATEGORY = 'datastore/unknowncategory';
     export const INVALID_DOCUMENT = 'datastore/invaliddocument';
     export const GENERIC_ERROR = 'datastore/genericerror';
     export const DOCUMENT_RESOURCE_ID_EXISTS = 'datastore/documentresourceidexists';

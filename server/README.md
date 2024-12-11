@@ -30,13 +30,13 @@ If you change the default CouchDB credentials in your `.env` file, make sure to 
 Start a dockerized CouchDB:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 Or, if you want to run docker in the background:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Phoenix Server

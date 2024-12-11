@@ -18,7 +18,7 @@ Field Publication relies on several services:
 
 The [docker-compose.yml](docker-compose.yml) defines all three services for development. For starting the dockerized services run:
 ```
-docker-compose up
+docker compose up
 ```
 
 ## 2. Running the setup

@@ -50,7 +50,7 @@ _Note: if you want the files to be put somewhere else, you can do that by updati
 Run the application from the directory containing both files with:
 
 ```
-docker-compose up
+docker compose up
 ```
 
 This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDB's webinterface go to (..):5984/_utils/. 
@@ -79,13 +79,13 @@ To run the application in production, you should do (atleast) 3 things:
 Afterwards stop and delete all previously created test containers.
 
 ```
-docker-compose down -v
+docker compose down -v
 ```
 
 Finally, we want to start everything in the background, using the detached `-d` option.
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 If you want to see which containers are now running there are several commands.

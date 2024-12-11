@@ -1,0 +1,21 @@
+<div *ngFor="let entry of fieldContainer[field.name]">
+    <div class="input-group mb-2">
+        <input value="{{getLabel(entry)}}" type="text" disabled class="form-control">
+        <button class="btn btn-danger" (click)="remove(entry)">
+            <span class="mdi mdi-delete"></span>
+        </button>
+        <button class="btn btn-info" (click)="edit(entry)">
+            <span class="mdi mdi-pencil"></span>
+        </button>
+    </div>
+</div>
+
+<div class="input-group">
+    <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.objectArray.add"
+           type="text" disabled class="form-control">
+    <button class="btn btn-success" (click)="createEntry()">
+        <span class="mdi mdi-plus-circle"></span>
+    </button>
+</div>
+
+<outliers *ngIf="valuelist" [fieldContainer]="fieldContainer" [field]="field" [valuelist]="valuelist"></outliers>

@@ -9,7 +9,7 @@ import { I18N } from '../../tools/i18n';
  */
 export interface Dating {
 
-    type: Dating.Types,
+    type: Dating.Type,
 
     begin?: DatingElement,
     end?: DatingElement,
@@ -57,7 +57,7 @@ export module Dating {
     export const VALID_DATING_TYPES = ['bce','ce','bp'];
     export const VALID_TYPES = ['range','single','before','after','scientific']
 
-    export type Types = 'range'|'single'|'before'|'after'|'scientific'
+    export type Type = 'range'|'single'|'before'|'after'|'scientific'
     export type Translations = 'bce'|'ce'|'bp'|'before'|'after';
 
 

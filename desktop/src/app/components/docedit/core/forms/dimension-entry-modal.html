@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <h5 *ngIf="isNew" i18n="@@docedit.createEntry">Eintrag anlegen</h5>
+    <h5 *ngIf="!isNew" i18n="@@docedit.editEntry">Eintrag bearbeiten</h5>
+</div>
+
+<div *ngIf="entry" class="modal-body bg-light dimension-entry-modal-body">
+	<select class="form-control w100 mb-2"
+			[(ngModel)]="isRange"
+			(ngModelChange)="toggleRange($event)"
+			name="range">
+		<option [ngValue]="false" i18n="@@docedit.forms.dimension.singleValue">Einzelwert</option>
+		<option [ngValue]="true" i18n="@@docedit.forms.dimension.range">Bereich</option>
+	</select>
+
+	<div class="d-flex mb-3 value-inputs-container">
+		<input [(ngModel)]="entry.inputValue" type="number"
+				step="0.001" min="0" size="6" name="inputValue"
+				class="form-control value-input">
+		<span *ngIf="isRange" class="value-separator">-</span>
+		<input *ngIf="isRange"
+				[(ngModel)]="entry.inputRangeEndValue" type="number"
+				step="0.001" min="0" size="6" name="inputRangeEndValue"
+				class="form-control range-end-input">
+		<select [(ngModel)]="entry.inputUnit"
+				class="form-control input-unit-select"
+				name="inputUnit">
+			<option value="cm">cm</option>
+			<option value="m">m</option>
+			<option value="mm">mm</option>
+		</select>
+	</div>
+	<div class="d-flex flex-row align-items-center flex-wrap mb-3">
+		<label i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an</label>
+		<select [(ngModel)]="entry.measurementPosition"
+				class="ms-2 form-control measurement-position-select">
+			<option value=""></option>
+			<option *ngFor="let value of getPositionValues()" value="{{value}}">
+				{{getPositionValueLabel(value)}}
+			</option>
+		</select>
+	</div>
+
+	<div class="mb-3">
+		<div class="checkbox form-check form-check-inline">
+			<label class="form-check-label">
+				<input class="form-check-input" type="checkbox"
+					   [checked]="entry.isImprecise"
+					   (change)="entry.isImprecise = !entry.isImprecise">
+				<span i18n="@@docedit.forms.dimension.imprecise">Ungenau</span>
+			</label>
+		</div>
+	</div>
+
+	<div class="mb-3">
+		<label i18n="@@docedit.forms.dimension.comment">Kommentar:</label>
+		<multi-language-text-field [fieldData]="entry.measurementComment"
+								   [languages]="fieldLanguages"
+								   (onFieldDataChanged)="updateMeasurementComment($event)">
+		</multi-language-text-field>
+	</div>
+</div>
+
+<div *ngIf="entry" class="modal-footer">
+    <button id="confirm-button" class="btn btn-primary"
+            [disabled]="!validate()"
+            (click)="confirm()">
+        <span i18n="@@buttons.ok">OK</span>
+    </button>
+    <div id="cancel-button" class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 /**
  * @author Thomas Kleinke
  */
-form-field-dimension {
+ .dimension-entry-modal-body {
   .input-unit-select {
     position: relative;
     left: 4px;
@@ -32,9 +32,5 @@ form-field-dimension {
     .form-check-label {
       padding-left: 0;
     }
-  }
-
-  .comment-label {
-    margin-bottom: 8px !important;
   }
 }

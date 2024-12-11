@@ -30,7 +30,7 @@ export class CompositeEntryModalComponent {
     @Input() subfieldDescriptions: Map<string> = {};
 
 
-    constructor(public activeModal: NgbActiveModal,
+    constructor(private activeModal: NgbActiveModal,
                 private messages: Messages,
                 private labels: Labels,
                 private menus: Menus) {}

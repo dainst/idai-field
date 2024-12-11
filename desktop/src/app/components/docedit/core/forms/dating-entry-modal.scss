@@ -3,7 +3,11 @@
  * @author Thomas Kleinke
  */
 
-form-field-dating {
+.dating-entry-modal-body {
+  .card-block {
+    padding-bottom: 0 !important;
+  }
+
   .margin-label {
     width: 60px;
     text-align: center;
@@ -29,9 +33,5 @@ form-field-dating {
     text-align: center;
     font-size: 14px;
     user-select: none;
-  }
-
-  .source-label {
-    margin-bottom: 8px !important;
   }
 }

@@ -18,13 +18,13 @@ import { EditFormComponent } from './core/edit-form.component';
 import { BooleanComponent } from './core/forms/boolean.component';
 import { CheckboxesComponent } from './core/forms/checkboxes.component';
 import { DateComponent } from './core/forms/date.component';
-import { DatingComponent } from './core/forms/dating.component';
-import { DimensionComponent } from './core/forms/dimension.component';
+import { DatingEntryModalComponent } from './core/forms/dating-entry-modal.component';
+import { DimensionEntryModalComponent } from './core/forms/dimension-entry-modal.component';
 import { DropdownRangeComponent } from './core/forms/dropdown-range.component';
 import { DropdownComponent } from './core/forms/dropdown.component';
 import { GeometryComponent } from './core/forms/geometry.component';
 import { InputComponent } from './core/forms/input.component';
-import { LiteratureComponent } from './core/forms/literature.component';
+import { ObjectArrayComponent } from './core/forms/object-array.component';
 import { MultiInputComponent } from './core/forms/multi-input.component';
 import { RadioComponent } from './core/forms/radio.component';
 import { TypeRelationPickerComponent } from './core/forms/type-relation/type-relation-picker.component';
@@ -50,6 +50,7 @@ import { IdentifierComponent } from './core/forms/identifier.component';
 import { CompositeComponent } from './core/forms/composite/composite.component';
 import { CompositeEntryModalComponent } from './core/forms/composite/composite-entry-modal.component';
 import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input.component';
+import { LiteratureEntryModalComponent } from './core/forms/literature-entry-modal.component';
 
 
 @NgModule({
@@ -96,17 +97,18 @@ import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input
         SimpleMultiInputComponent,
         ValuelistMultiInputComponent,
         RadioComponent,
-        DatingComponent,
+        DatingEntryModalComponent,
         DateComponent,
         TypeRelationComponent,
         TypeRowComponent,
         TypeRelationPickerComponent,
-        DimensionComponent,
+        DimensionEntryModalComponent,
         DropdownRangeComponent,
         GeometryComponent,
         OutliersComponent,
         EmptyValuelistInfoComponent,
-        LiteratureComponent,
+        ObjectArrayComponent,
+        LiteratureEntryModalComponent,
         IdentifierComponent,
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent,

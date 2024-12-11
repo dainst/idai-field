@@ -39,53 +39,27 @@ Having Docker and docker-compose installed, you should be able to run the applic
 
 ## Test run the application
 
+The first thing we should do is create a directory for the application to store the synchronized files in. In the directory run
+
+```
+mkdir files && chown nobody files/
+```
+
+_Note: if you want the files to be put somewhere else, you can do that by updating the `FILE_DIRECTORY` environment variable in the [.env](.env) file._
+
 Run the application from the directory containing both files with:
 
 ```
 docker-compose up
 ```
 
-This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDB's webinterface go to (..):5984/_utils/. Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
+This should run the application in the foreground and display logs for both services. The services can also be viewed in your webbrowser at port 80 (FieldHub service) and port 5984 (CouchDB service). For CouchDB's webinterface go to (..):5984/_utils/. 
 
-You can now run [CLI](https://github.com/dainst/idai-field/wiki/FieldHub#manual) scripts in a second terminal to finalize the CouchDB setup.
+Assuming you are trying this out on your local PC or Laptop, check [localhost](http://localhost) and [localhost:5984/_utils](http://localhost:5984/_utils).
 
-```
-docker exec -it field-hub-app /app/bin/field_hub eval 'FieldHub.CLI.setup()'
-```
-
-Here `field-hub-app` is the container name, as defined in the docker-compose file.
-
-The result should look something like this:
-
-```
-2023-01-18 12:44:42.897 [info] RUNNING SETUP
-2023-01-18 12:44:42.921 [info] Running initial CouchDB setup for single node at http://couchdb:5984...
-2023-01-18 12:44:43.723 [info] Created system database `_users`.
-2023-01-18 12:44:43.723 [info] Created system database `_replicator`.
-2023-01-18 12:44:44.458 [info] Created application user 'app_user'.
-2023-01-18 12:44:44.585 [info] Setup done.
-```
-
-Next you can add a first project.
-
-First, make sure the Field Hub user (within the container) owns the `FILE_DIRECTORY` on your host machine (see .env file). __This is only necessary after the first startup, not each time you add a new project.__
-
-```
-docker exec field-hub-app id
-```
-
-Should give you something like:
-```
-uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
-```
-
-Use the `uid` to set the owner for `FILE_DIRECTORY`.
-```
-sudo chown 65534 files/
-```
 ### Creating a project
 
-Open http://localhost and login with the CouchDB admin credentials as defined in your .env file. You should be able to create new projects in your browser. Create a project `my_first_project`, you can set a custom password or have Field Hub generate one for you.
+Open http://localhost and login with the CouchDB admin credentials as defined in your [.env](.env) file. You should be able to create new projects in your browser. Create a project `my_first_project`, you can set a custom password or have Field Hub generate one for you.
 
 After project creation, your `FILE_DIRECTORY` you should now have a directory with the name `my_first_project`, itself containing two directories `original_image` and `thumbnail_image`. In the CouchDB webinterface you should see a new database called `my_first_project`. Both the database and the file directories are empty at this point.
 

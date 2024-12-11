@@ -29,6 +29,8 @@ defmodule FieldHub.CLI do
     Logger.info(" Initializing CouchDB in 'single node' mode at '#{CouchService.base_url()}'.")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
 
+    wait_for_couchdb()
+
     {users, replicator} = CouchService.initial_setup()
 
     case users do
@@ -75,6 +77,28 @@ defmodule FieldHub.CLI do
     end
 
     Logger.info("Setup finished.")
+  end
+
+  defp wait_for_couchdb(retries \\ 5)
+
+  defp wait_for_couchdb(retries) when retries > 0 do
+    Logger.info("Checking for CouchDB...")
+
+    CouchService.ping_couch()
+    |> case do
+      {:ok, _} ->
+        Logger.info("CouchDB found.")
+        :ok
+
+      _ ->
+        Process.sleep(5000)
+        wait_for_couchdb(retries - 1)
+    end
+  end
+
+  defp wait_for_couchdb(_retries) do
+    Logger.error("Unable to connect to CouchDB.")
+    :error
   end
 
   @doc """

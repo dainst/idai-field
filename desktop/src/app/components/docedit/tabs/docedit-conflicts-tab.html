@@ -49,7 +49,8 @@
                 </div>
             </div>
             <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSideForField(field, true)">
-                <input type="radio" name="radiobutton-{{field.name}}" [checked]="field.rightSideWinning"/>
+                <input type="radio" name="radiobutton-{{field.name}}" [checked]="field.rightSideWinning"
+                       [disabled]="!isSelectable(field, true)"/>
             </div>
             <div class="col-md-5 my-auto conflict-resolver-field" [class.winning-side]="field.rightSideWinning"
                  [class.losing-side]="!field.rightSideWinning" (click)="setWinningSideForField(field, true)">

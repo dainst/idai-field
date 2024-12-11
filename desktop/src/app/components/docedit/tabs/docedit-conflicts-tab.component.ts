@@ -154,13 +154,24 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public setWinningSide(winningSide: WinningSide) {
 
-        for (let field of this.differingFields) field.rightSideWinning = winningSide === 'right';
+        for (let field of this.differingFields) {
+            this.setWinningSideForField(field, winningSide === 'right');
+        }
     }
 
 
     public setWinningSideForField(field: DifferingField, rightSideWinning: boolean) {
 
+        if (!this.isSelectable(field, rightSideWinning)) return false;
         field.rightSideWinning = rightSideWinning;
+    }
+    
+
+    public isSelectable(field: DifferingField, rightSideWinning: boolean): boolean {
+
+        if (field.name !== Resource.CATEGORY || !rightSideWinning) return true;
+
+        return this.selectedRevision.resource.category !== undefined;
     }
 
 

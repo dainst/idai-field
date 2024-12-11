@@ -64,7 +64,7 @@ To execute **integration test with Field Hub**, run
 $ npm run test:hub-integration --prefix desktop
 ```
 
-The Field Hub integration tests require installed Docker and docker-compose.
+The Field Hub integration tests require installed Docker.
 
 ## Packaging
 

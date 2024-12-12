@@ -4,13 +4,13 @@ This is a tutorial guide for deploying Field Hub. __This describes a very basic 
 
 ## Prerequisites
 
-We will use [Docker](https://docs.docker.com/get-started/overview/) with [docker-compose](https://docs.docker.com/compose/). For this guide there are two Docker concepts to be aware of:
+We will use [Docker](https://docs.docker.com/get-started/overview/). For this guide there are two Docker concepts to be aware of:
 1. images
 2. containers
 
-You can think of a Docker image as the bundled blueprint for running an application, and of a Docker container as a running instance.
+You can think of a Docker image as the bundled package containing the application, and of a Docker container as a running instance of such a package.
 
-For more details please refer to the Docker/docker-compose documentation.
+For more details please refer to the Docker documentation.
 
 ## Files
 
@@ -29,7 +29,7 @@ COUCHDB_USER_NAME=app_user
 COUCHDB_USER_PASSWORD=app_user_password
 DB_DATA_DIRECTORY=./couch_data
 
-FIELD_HUB_VERSION=3.2.0
+FIELD_HUB_VERSION=3.3.1
 HOST=localhost
 SECRET_KEY_BASE=put_long_random_string_here_atleast_64_bytes_in_length_123456789
 FILE_DIRECTORY=./files

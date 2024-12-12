@@ -1,7 +1,8 @@
 import { Field } from 'idai-field-core';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { navigateTo, pause, resetApp, sendMessageToAppController, start, stop, waitForExist, waitForNotExist } from '../app';
+import { navigateTo, pause, resetApp, sendMessageToAppController, start, stop, waitForExist,
+    waitForNotExist } from '../app';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
@@ -18,6 +19,7 @@ import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-ent
 import { SelectModalPage } from './select-modal.page';
 import { MoveModalPage } from '../widgets/move-modal.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
+import { DoceditDimensionEntryModalPage } from '../docedit/docedit-dimension-entry-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -201,10 +203,10 @@ test.describe('warnings --', () => {
         for (let identifier of resourceIdentifiers) {
             await ResourcesPage.performCreateResource(identifier, 'place');
             await ResourcesPage.openEditByDoubleClickResource(identifier);
-            await DoceditPage.clickCreateNewDimensionButton(completeFieldName);
-            await DoceditPage.typeInDimensionInputValue(completeFieldName, '1');
-            await DoceditPage.clickDimensionMeasurementPositionOption(completeFieldName, 'Oberkante');
-            await DoceditPage.clickSaveDimensionButton(completeFieldName);
+            await DoceditPage.clickCreateNewObjectArrayEntryButton(completeFieldName);
+            await DoceditDimensionEntryModalPage.typeInInputValue('1');
+            await DoceditDimensionEntryModalPage.clickMeasurementPositionOption('Oberkante');
+            await DoceditDimensionEntryModalPage.clickConfirm();
             await DoceditPage.clickSaveDocument();
         }
 

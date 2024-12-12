@@ -209,32 +209,13 @@ export class DoceditPage {
     }
 
 
-    public static async clickCreateNewDimensionButton(fieldName: string) {
+    public static async clickCreateNewObjectArrayEntryButton(fieldName: string) {
 
         const field = await this.getField(fieldName);
         await waitForExist(field);
 
-        const element = await field.locator('.create-new-dimension-button');
+        const element = await field.locator('.create-entry-button');
         return click(element);
-    }
-
-
-    public static async clickSaveDimensionButton(fieldName: string) {
-
-        const field = await this.getField(fieldName);
-        await waitForExist(field);
-
-        const element = await field.locator('.save-dimension-button');
-        return click(element);
-    }
-
-
-    public static async clickDimensionMeasurementPositionOption(fieldName: string, optionValue: string) {
-
-        return selectOption(
-            (await this.getField(fieldName)).locator('.measurement-position-select'),
-            optionValue
-        );
     }
 
 
@@ -402,12 +383,6 @@ export class DoceditPage {
         const element = await elements.nth(await elements.count() - 1);
 
         return typeIn(element, text);
-    }
-
-
-    public static async typeInDimensionInputValue(fieldName: string, text: string) {
-
-        return typeIn((await this.getField(fieldName)).locator('.value-input'), text);
     }
 
 

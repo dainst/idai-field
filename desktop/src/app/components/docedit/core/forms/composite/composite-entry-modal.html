@@ -3,7 +3,7 @@
     <h5 *ngIf="!isNew" i18n="@@docedit.editEntry">Eintrag bearbeiten</h5>
 </div>
 
-<div class="modal-body bg-light">
+<div class="modal-body bg-light composite-entry-modal-body">
     <div *ngFor="let subfield of getSubfields()" class="docedit-subfield-section">
         <label class="composite-entry-modal-subfield-label">{{getSubfieldLabel(subfield)}}</label>
         <span *ngIf="getSubfieldDescription(subfield)"

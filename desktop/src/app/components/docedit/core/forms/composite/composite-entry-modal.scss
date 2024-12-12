@@ -1,66 +1,48 @@
 /**
  * @author Thomas Kleinke
  */
- .composite-entry-modal {
-  top: 55px;
+.composite-entry-modal-body {
+  padding-bottom: 16px !important;
 
-  .modal-dialog {
-    max-width: calc(100vw - 350px);
+  .docedit-subfield-section:not(:last-child) {
+    margin-bottom: 10px;
   }
 
-  .modal-header {
-    background-color: $modal-header-background-color;
-    border-bottom: 1px solid #ccc;
-  
-    h5 {
-      margin-bottom: 0;
-    }
+  .mdi-information-outline {
+    position: relative;
+    bottom: 2px;
+    font-size: 20px;
   }
-  
-  .modal-body {
-    max-height: calc(100vh - 292px);
-    overflow-y: auto;
-  
-    .docedit-subfield-section:not(:last-child) {
-      margin-bottom: 10px;
-    }
-  
-    .mdi-information-outline {
-      position: relative;
-      bottom: 2px;
-      font-size: 20px;
-    }
-  
-    .invalid-data {
-      font-style: italic;
-      pointer-events: none;
-    }
 
-    .form-check-label,
-    label {
-      font-size: 15px;
-      user-select: none;
-    }
+  .invalid-data {
+    font-style: italic;
+    pointer-events: none;
+  }
 
-    input,
-    textarea {
-      font-size: 13px;
-    }
+  .form-check-label,
+  label {
+    font-size: 15px;
+    user-select: none;
+  }
 
-    input:not([type]),
-    input[type="text"],
-    .btn-danger {
-      height: 33px;
-    }
+  input,
+  textarea {
+    font-size: 13px;
+  }
 
-    .btn-danger {
-      width: 34px;
-    }
+  input:not([type]),
+  input[type="text"],
+  .btn-danger {
+    height: 33px;
+  }
 
-    .mdi-delete {
-      position: relative;
-      bottom: 3px;
-      right: 5px;
-    }
-  }  
- }
+  .btn-danger {
+    width: 34px;
+  }
+
+  .mdi-delete {
+    position: relative;
+    bottom: 3px;
+    right: 5px;
+  }
+}

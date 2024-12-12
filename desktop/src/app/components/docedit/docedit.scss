@@ -226,6 +226,7 @@
     input:not([type]),
     input[type="text"],
     input[type="number"],
+    select,
     .form-check-label,
     label {
       font-size: 15px;
@@ -239,14 +240,13 @@
     }
 
     select {
-      font-size: 14px;
-      line-height: 19px;
+      line-height: 20px;
     }
 
     input[type="checkbox"],
     input[type="radio"] {
       position: relative;
-      top: 1.5px;
+      top: 0.5px;
     }
   }
  }

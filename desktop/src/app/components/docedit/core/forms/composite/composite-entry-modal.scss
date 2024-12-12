@@ -36,6 +36,11 @@
     height: 33px;
   }
 
+  input[type="checkbox"],
+  input[type="radio"] {
+    top: 1.5px !important;
+  }
+
   .btn-danger {
     width: 34px;
   }

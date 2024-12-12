@@ -31,7 +31,16 @@
   .until-label {
     width: 60px;
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     user-select: none;
+  }
+
+  .card-block {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .form-check {
+    padding-left: 0;
   }
 }

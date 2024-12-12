@@ -10,7 +10,7 @@ We will use [Docker](https://docs.docker.com/get-started/overview/). For this gu
 
 You can think of a Docker image as the bundled package containing the application, and of a Docker container as a running instance of such a package.
 
-For more details please refer to the Docker/docker-compose documentation.
+For more details please refer to the Docker documentation.
 
 ## Files
 

@@ -1609,6 +1609,16 @@
       "wannenförmig": {}
     }
   },
+  "Feature-colorDistribution-default": {
+    "creationDate": "",
+    "createdBy": "",
+    "values": {
+      "marmoriert": {},
+      "gefleckt": {},
+      "gebändert": {},
+      "geadert": {}
+    }
+  },
   "Floor-floorClassification-default": {
     "creationDate": "",
     "createdBy": "",

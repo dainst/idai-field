@@ -770,6 +770,9 @@
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"
         },
+        "colorDistribution": {
+          "label":  "Farbverteilung"
+        },
         "featureBorders": {
           "label": "Grenzen der stratigraphischen Einheit",
           "description": "Bestimmung der Grenzen des Befundes"

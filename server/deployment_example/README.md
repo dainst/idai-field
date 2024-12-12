@@ -29,7 +29,7 @@ COUCHDB_USER_NAME=app_user
 COUCHDB_USER_PASSWORD=app_user_password
 DB_DATA_DIRECTORY=./couch_data
 
-FIELD_HUB_VERSION=3.2.0
+FIELD_HUB_VERSION=3.3.1
 HOST=localhost
 SECRET_KEY_BASE=put_long_random_string_here_atleast_64_bytes_in_length_123456789
 FILE_DIRECTORY=./files

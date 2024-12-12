@@ -8,7 +8,7 @@ We will use [Docker](https://docs.docker.com/get-started/overview/). For this gu
 1. images
 2. containers
 
-You can think of a Docker image as the bundled packages containing the application, and of a Docker container as a running instance.
+You can think of a Docker image as the bundled package containing the application, and of a Docker container as a running instance of such a package.
 
 For more details please refer to the Docker/docker-compose documentation.
 

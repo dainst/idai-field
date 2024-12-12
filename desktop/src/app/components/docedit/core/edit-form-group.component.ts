@@ -40,11 +40,7 @@ export class EditFormGroup implements OnChanges {
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
-        if (this.scrollTargetField) {
-            this.scrollToTargetField();
-        } else {
-            this.scrollToTop();
-        }
+        this.autoScroll();
     }
 
 
@@ -126,6 +122,16 @@ export class EditFormGroup implements OnChanges {
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;
         });
+    }
+
+
+    private async autoScroll() {
+
+        if (this.scrollTargetField) {
+            this.scrollToTargetField();
+        } else {
+            this.scrollToTop();
+        }
     }
 
 

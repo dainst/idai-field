@@ -206,7 +206,7 @@ export class DoceditComponent {
     }
 
     
-    public showChangeHistory() { 
+    public showChangeHistory() {
         this.modalService.open( ChangesHistoryDialogComponent, { keyboard: false, animation: false })
     }
 
@@ -319,7 +319,7 @@ export class DoceditComponent {
         }
     }
 
- 
+
     private showCategoryChangeFieldsWarning(invalidFields: string[]) {
 
         if (invalidFields.length > 0) {

@@ -1,36 +1,43 @@
+
 <div class="modal-header">
     <h5  class="modal-title" i18n="@@widgets.saveModal.header">{{documentHolder.clonedDocument.resource.identifier}} changes history</h5>
 </div>
 
-<div id="changes-history-modal-body" class="modal-body">
-
-    <div id="list">
+<div class="modal-body">
+    <div id="changes-history-modal-body" class="modal-body">
         <div *ngIf="documentHolder.clonedDocument">
-            <div id="list-header">  
-                <div class="list-header-field" i18n="@@resources.list.headers.category">Date</div>
-                <div class="list-header-field" i18n="@@resources.list.headers.category">Action</div>
-                <!-- <div class="list-header-field" i18n="@@resources.list.headers.identifier">Identifier</div> -->
-                <div class="list-header-field" i18n="@@resources.list.headers.identifier">User</div>
+            
+            <div id="list">
+                
+                <div id="list-header">  
+                    <div class="list-header-field date" i18n="@@resources.list.headers.category">Date</div>
+                    <div class="list-header-field action" i18n="@@resources.list.headers.category">Action</div>
+                    <div class="list-header-field user" i18n="@@resources.list.headers.identifier">User</div>
+                </div>
+            
+                <div id="list-body">
+                    <div *ngFor="let modification of documentHolder.clonedDocument.modified.reverse()" 
+                         class = "list-row">
+                        <div class= "list-body-field date">{{modification.date}} </div>
+                        <div class= "list-body-field action"> Modified </div>
+                        <div class= "list-body-field user">{{modification.user}} </div>      
+                    </div> 
+                    <div class = "list-row">       
+                        <div class= "list-body-field date">{{documentHolder.clonedDocument.created.date}}  </div>
+                        <div class= "list-body-field action"> Created  </div>
+                        <div class= "list-body-field user"> {{documentHolder.clonedDocument.created.user}}  </div> 
+                    </div>
+                </div>
+
             </div>
+
+        </div>    
     </div>
-    ______
-    <div>    
-        <div *ngFor="let modification of documentHolder.clonedDocument.modified.reverse()">
-            date: {{modification.date}} <br />
-            action: Modified <br />
-            user: {{modification.user}} <br />      
-            __________________   
-        </div>
-        <div>
-            date: {{documentHolder.clonedDocument.created.date}}  <br />
-            action: Created <br />
-            user: {{documentHolder.clonedDocument.created.user}} <br />   
-            identifier: {{documentHolder.clonedDocument.resource.identifier}}     
-        </div>
-    </div>
-    </div>    
 </div>
+
 <div class="modal-footer">
     <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
 </div>
+
+

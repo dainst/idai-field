@@ -21,8 +21,6 @@ form-field-identifier {
   }
 
   input.with-prefix {
-    position: relative;
-    right: 1px;
     margin-right: -1px !important;
     padding-left: 0;
     border-left: none;
@@ -34,7 +32,7 @@ form-field-identifier {
     text-align: left;
     margin-top: 9px;
     margin-bottom: 0;
-    border-radius: 7px;
+    border-radius: 7px !important;
     user-select: none;
     cursor: default;
   }

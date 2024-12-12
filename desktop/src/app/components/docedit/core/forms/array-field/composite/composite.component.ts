@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Map, clone } from 'tsfun';
 import { Field, Labels, Resource, Composite, I18N, Valuelist, ValuelistUtil} from 'idai-field-core';
-import { Language } from '../../../../../services/languages';
-import { UtilTranslations } from '../../../../../util/util-translations';
-import { Modals } from '../../../../../services/modals';
+import { Language } from '../../../../../../services/languages';
+import { UtilTranslations } from '../../../../../../util/util-translations';
+import { Modals } from '../../../../../../services/modals';
 import { CompositeEntryModalComponent as CompositeEntryModalComponent } from './composite-entry-modal.component';
-import { MenuContext } from '../../../../../services/menu-context';
-import { AngularUtility } from '../../../../../angular/angular-utility';
-import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../../services/menu-context';
+import { AngularUtility } from '../../../../../../angular/angular-utility';
+import { Menus } from '../../../../../../services/menus';
 
 
 @Component({

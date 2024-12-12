@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Literature } from 'idai-field-core';
-import { Menus } from '../../../../services/menus';
-import { MenuContext } from '../../../../services/menu-context';
+import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
 
 
 

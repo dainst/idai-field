@@ -4,13 +4,13 @@ import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstr
 import { is, remove, clone, Map } from 'tsfun';
 import { Literature, Field, Dating, I18N, Labels, Dimension, ValuelistUtil, Valuelist, Datastore,
     ProjectConfiguration } from 'idai-field-core';
-import { UtilTranslations } from '../../../../util/util-translations';
+import { UtilTranslations } from '../../../../../util/util-translations';
 import { LiteratureEntryModalComponent } from './literature-entry-modal.component';
-import { MenuContext } from '../../../../services/menu-context';
-import { AngularUtility } from '../../../../angular/angular-utility';
-import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
+import { AngularUtility } from '../../../../../angular/angular-utility';
+import { Menus } from '../../../../../services/menus';
 import { DimensionEntryModalComponent } from './dimension-entry-modal.component';
-import { Language } from '../../../../services/languages';
+import { Language } from '../../../../../services/languages';
 import { DatingEntryModalComponent } from './dating-entry-modal.component';
 
 

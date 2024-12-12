@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map } from 'tsfun';
 import { Dating, I18N, ProjectConfiguration } from 'idai-field-core';
-import { Language, Languages } from '../../../../services/languages';
-import { SettingsProvider } from '../../../../services/settings/settings-provider';
-import { Menus } from '../../../../services/menus';
-import { MenuContext } from '../../../../services/menu-context';
+import { Language, Languages } from '../../../../../services/languages';
+import { SettingsProvider } from '../../../../../services/settings/settings-provider';
+import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
 
 
 @Component({

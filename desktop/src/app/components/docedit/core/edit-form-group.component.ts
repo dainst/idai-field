@@ -40,7 +40,11 @@ export class EditFormGroup implements OnChanges {
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
-        if (this.scrollTargetField) this.scrollToTargetField();
+        if (this.scrollTargetField) {
+            this.scrollToTargetField();
+        } else {
+            this.scrollToTop();
+        }
     }
 
 
@@ -148,6 +152,13 @@ export class EditFormGroup implements OnChanges {
 
         await AngularUtility.refresh();
         const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
+        containerElement.parentElement.scrollTo(0, scrollY);
+    }
+
+
+    private scrollToTop() {
+
+        const containerElement: HTMLElement = this.elementRef.nativeElement;
         containerElement.parentElement.scrollTo(0, scrollY);
     }
 

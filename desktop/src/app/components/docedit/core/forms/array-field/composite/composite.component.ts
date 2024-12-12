@@ -77,7 +77,7 @@ export class CompositeComponent implements OnInit, OnChanges {
         const [result, componentInstance] = this.modals.make<CompositeEntryModalComponent>(
             CompositeEntryModalComponent,
             MenuContext.MODAL,
-            undefined, 'array-field-entry-modal', false
+            undefined, 'object-array-entry-modal', false
         );
 
         componentInstance.entry = clone(entry);

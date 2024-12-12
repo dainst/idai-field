@@ -103,7 +103,7 @@ export class ObjectArrayComponent implements OnChanges {
             backdrop: 'static',
             keyboard: false,
             animation: false,
-            windowClass: 'array-field-entry-modal'
+            windowClass: 'object-array-entry-modal'
         };
 
         const modalReference: NgbModalRef = this.modalService.open(

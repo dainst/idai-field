@@ -15,6 +15,7 @@
 @import 'core/forms/valuelist-multi-input';
 @import 'core/forms/identifier';
 @import 'core/forms/type-relation/type-relation';
+@import 'core/forms/array-field/object-array-entry-modal';
 @import 'core/forms/array-field/dating-entry-modal';
 @import 'core/forms/array-field/dimension-entry-modal';
 @import 'core/forms/array-field/literature-entry-modal';
@@ -138,7 +139,7 @@
 }
 
 #document-edit-wrapper,
-.array-field-entry-modal {
+.object-array-entry-modal {
   searchable-select {
     .ng-select {
       .ng-select-container {
@@ -192,61 +193,3 @@
     color: #28a745;
   }
 }
-
-.array-field-entry-modal {
-  top: 55px;
-
-  .modal-dialog {
-    max-width: calc(100vw - 350px);
-  }
-
-  .modal-header {
-    background-color: $modal-header-background-color;
-    border-bottom: 1px solid #ccc;
-  
-    h5 {
-      margin-bottom: 0;
-    }
-  }
-  
-  .modal-body {
-    max-height: calc(100vh - 292px);
-    padding-bottom: 0;
-    overflow-y: auto;
-
-    .form-check-label,
-    label {
-      user-select: none;
-    }
-
-    .form-check-label {
-      margin-bottom: 0;
-    }
-
-    input:not([type]),
-    input[type="text"],
-    input[type="number"],
-    select,
-    .form-check-label,
-    label {
-      font-size: 15px;
-    }
-
-    input:not([type]),
-    input[type="text"],
-    input[type="number"],
-    select {
-      height: 33px !important;
-    }
-
-    select {
-      line-height: 20px;
-    }
-
-    input[type="checkbox"],
-    input[type="radio"] {
-      position: relative;
-      top: 0.5px;
-    }
-  }
- }

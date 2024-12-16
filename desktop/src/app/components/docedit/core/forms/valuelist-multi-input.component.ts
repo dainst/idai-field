@@ -46,7 +46,7 @@ export class ValuelistMultiInputComponent {
 
     public isValidEntry(entry: EditableValue): boolean {
 
-        const existingValues: string[] = this.fieldContainer[this.fieldName]?.map(entry => entry.value);
+        const existingValues: string[] = this.fieldContainer[this.fieldName]?.map(entry => entry.value) ?? [];
         return entry.value.length > 0 && !existingValues.includes(entry.value);
     }
 

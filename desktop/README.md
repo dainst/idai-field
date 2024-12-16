@@ -1,6 +1,6 @@
 # Field Desktop
-   
-The German Archaeological Institute’s ([DAI](https://www.dainst.org)) new take on a field research documentation system. 
+
+Field Desktop is a modern take on flexible field and find recording for archaeological excavations. It is developed as a cooperation between the German Archaeological Institute ([DAI](https://www.dainst.org)) and the Head Office of the GBV Common Library Network ([GBV](https://en.gbv.de/)). Field Desktop is completely Open Source and free to use!
 
 ## Usage
 

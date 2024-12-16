@@ -5,8 +5,6 @@ on:
       - "core/**"
       - "desktop/**"
       - ".github/workflows/desktop.yml"
-    branches:
-      - master
   pull_request:
     paths:
       - "core/**"

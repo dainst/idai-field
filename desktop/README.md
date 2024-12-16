@@ -1,6 +1,6 @@
 # Field Desktop
-   
-The German Archaeological Institute’s ([DAI](https://www.dainst.org)) new take on a field research documentation system. 
+
+Field Desktop is the German Archaeological Institutes ([DAI](https://www.dainst.org)) take on digital field and find recording for archaeological excavations.
 
 ## Usage
 

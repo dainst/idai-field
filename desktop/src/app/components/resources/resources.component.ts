@@ -21,6 +21,7 @@ import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
+import { ChangesHistoryDialogComponent } from '../widgets/changes-history-dialog.component';
 
 
 @Component({
@@ -198,6 +199,27 @@ export class ResourcesComponent implements OnDestroy {
             const modalRef: NgbModalRef = this.modalService.open(
                 QrCodeEditorModalComponent,
                 { animation: false, backdrop: 'static', keyboard: false }
+            );
+            modalRef.componentInstance.document = document;
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    public async showHistory(document: Document) {
+
+        try {
+            this.menuService.setContext(MenuContext.QR_CODE_EDITOR);
+
+            const modalRef: NgbModalRef = this.modalService.open(
+                ChangesHistoryDialogComponent,
+                { animation: false, backdrop: 'static', keyboard: false,  windowClass : "history-modal-content" }
             );
             modalRef.componentInstance.document = document;
             await modalRef.componentInstance.initialize();

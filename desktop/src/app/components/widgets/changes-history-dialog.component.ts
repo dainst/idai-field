@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DocumentHolder } from '../docedit/document-holder';
+import { Document } from 'idai-field-core';
 
 
 @Component({
@@ -12,20 +12,23 @@ import { DocumentHolder } from '../docedit/document-holder';
 export class ChangesHistoryDialogComponent {
 
     public escapeKeyPressed: boolean;
-    
+    public document: Document;
+
     constructor( public activeModal: NgbActiveModal,
-                 public documentHolder: DocumentHolder,
     ) {}
+
 
     public async onKeyDown(event: KeyboardEvent) {
         if (event.key === 'Escape' && !this.escapeKeyPressed) {
             this.activeModal.dismiss('cancel');
         }
+        
     }
 
 
     public async onKeyUp(event: KeyboardEvent) {
         if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
+
 
 }

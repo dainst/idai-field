@@ -207,7 +207,12 @@ export class DoceditComponent {
 
     
     public showChangeHistory() {
-        this.modalService.open( ChangesHistoryDialogComponent, { keyboard: false, animation: false })
+        const modalRef: NgbModalRef = this.modalService.open( 
+            ChangesHistoryDialogComponent, 
+            { animation: false, backdrop: 'static', keyboard: false,  windowClass : "history-modal-content" }
+        );
+    
+        modalRef.componentInstance.document = this.documentHolder.clonedDocument;
     }
 
 

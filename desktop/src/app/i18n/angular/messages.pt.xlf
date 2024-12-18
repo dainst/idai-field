@@ -8881,6 +8881,30 @@
           <context context-type="linenumber">700</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.forms.objectArray.add" datatype="html">
+        <source>Hinzufügen...</source>
+        <target state="needs-translation">Hinzufügen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/object-array.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.valuelistMultiInput.unselectable" datatype="html">
+        <source>Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</source>
+        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.valuelistMultiInput.selectable" datatype="html">
+        <source>Dieser Wert steht bei der Dateneingabe zur Auswahl.</source>
+        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe zur Auswahl.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -9,10 +9,23 @@
         Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
     </div>
 
-    <searchable-select [selectedValue]="selectedValue"
-                       [values]="getValues()"
-                       [getLabel]="getValueLabel"
-                       (onValueSelected)="selectedValue = $event"></searchable-select>
+    <div *ngIf="inputType == 'dropdown'">
+        <searchable-select [selectedValue]="selectedValue"
+                           [values]="getValues()"
+                           [getLabel]="getValueLabel"
+                           (onValueSelected)="selectedValue = $event">
+        </searchable-select>
+    </div>
+    <div *ngIf="inputType == 'checkboxes'">
+        {{getValues()}}
+        <div *ngFor="let value of getValues()" class="checkbox form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" [value]="value" type="checkbox" (click)="clickCheckbox(value)" [checked]="isSelectedValue(value)">
+                {{value}}
+            </label>
+        </div>
+    </div>
+    
 
     <div *ngIf="selectedValue" 
          id="multiple-switch" 

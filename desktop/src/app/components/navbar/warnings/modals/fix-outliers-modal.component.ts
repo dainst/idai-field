@@ -25,6 +25,7 @@ export class FixOutliersModalComponent {
     
     public valuelist: Valuelist;
     public selectedValue: string;
+    public inputType: string;
     public replaceAll: boolean;
     public countAffected: number;
 
@@ -56,6 +57,9 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
+        this.inputType = await this.field.inputType;
+        console.log(this.inputType)
+        console.log(this.valuelist.values)
         this.affectedDocuments = [];
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
@@ -100,6 +104,17 @@ export class FixOutliersModalComponent {
         this.activeModal.close();
     }
 
+    public clickCheckbox(value: string) {
+        
+        /** TODO */
+        console.log(value)
+    }
+
+    public isSelectedValue(value: string) {
+
+        /** TODO */
+        return false;
+    }
 
     private openFixingDataInProgressModal(): NgbModalRef {
 

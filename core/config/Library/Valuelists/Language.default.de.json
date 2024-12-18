@@ -1000,14 +1000,6 @@
       "wannenförmig": "wannenförmig"
     }
   },
-  "Feature-colorDistribution-default": {
-    "values": {
-      "marmoriert": "marmoriert",
-      "gefleckt": "gefleckt",
-      "gebändert": "gebändert",
-      "geadert": "geadert"
-    }
-  },
   "Floor-floorClassification-default": {
     "values": {
       "Bastmatten": "Bastmatten",

@@ -3950,14 +3950,6 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.literature.add" datatype="html">
-        <source>Hinzufügen...</source>
-        <target state="translated">Add...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
         <source>Literaturzitat:</source>
         <target state="translated">Literature quotation:</target>
@@ -4084,14 +4076,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.dimension.add" datatype="html">
-        <source>Hinzufügen...</source>
-        <target state="translated">Add...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.singleValue" datatype="html">
@@ -4304,14 +4288,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
           <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.dating.add" datatype="html">
-        <source>Hinzufügen...</source>
-        <target state="translated">Add...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.catalogCriteria.none" datatype="html">
@@ -8938,6 +8914,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1093</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.objectArray.add" datatype="html">
+        <source>Hinzufügen...</source>
+        <target state="translated">Add...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/object-array.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.valuelistMultiInput.selectable" datatype="html">
+        <source>Dieser Wert steht bei der Dateneingabe zur Auswahl.</source>
+        <target state="translated">This value is available for selection when entering data.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.valuelistMultiInput.unselectable" datatype="html">
+        <source>Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</source>
+        <target state="translated">This value is not available for selection when entering data.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
     </body>

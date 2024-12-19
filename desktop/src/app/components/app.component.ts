@@ -197,6 +197,10 @@ export class AppComponent {
             $localize `:@@config.inputType.multiInput:Einzeiliger Text (Liste)`
         );
         this.utilTranslations.addTranslation(
+            'inputTypes.valuelistMultiInput',
+            $localize `:@@config.inputType.valuelistMultiInput:Projekt-Werteliste`
+        );
+        this.utilTranslations.addTranslation(
             'inputTypes.text',
             $localize `:@@config.inputType.text:Mehrzeiliger Text`
         );

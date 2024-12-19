@@ -25,6 +25,7 @@ export class FixOutliersModalComponent {
     
     public valuelist: Valuelist;
     public selectedValue: string;
+    public selectedValues: Array<string>;
     public inputType: string;
     public replaceAll: boolean;
     public countAffected: number;
@@ -46,6 +47,7 @@ export class FixOutliersModalComponent {
     
     public cancel = () => this.activeModal.dismiss('cancel');
 
+    public isInvalid = () => !(this.selectedValue || (this.selectedValues.length > 0));
 
     public async onKeyDown(event: KeyboardEvent) {
 
@@ -58,9 +60,8 @@ export class FixOutliersModalComponent {
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
         this.inputType = await this.field.inputType;
-        console.log(this.inputType)
-        console.log(this.valuelist.values)
         this.affectedDocuments = [];
+        this.selectedValues = [];
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
@@ -88,7 +89,7 @@ export class FixOutliersModalComponent {
 
     public async performReplacement() {
 
-        if (!this.selectedValue) return;
+        if (this.isInvalid()) return;
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
 
@@ -104,16 +105,27 @@ export class FixOutliersModalComponent {
         this.activeModal.close();
     }
 
-    public clickCheckbox(value: string) {
+    public toggleCheckboxValue(value: string) {
         
         /** TODO */
-        console.log(value)
+        if (this.selectedValues.includes(value)) {
+            this.selectedValues.splice(this.selectedValues.indexOf(value), 1);
+        } else {
+            this.selectedValues.push(value);
+        }
+        /** console.log(this.selectedValues)
+        console.log(this.selectedValues.length)
+        console.log(this.isInvalid())
+        console.log(value) */
     }
 
-    public isSelectedValue(value: string) {
-
-        /** TODO */
-        return false;
+    public isPreselectedValue(value: string) {
+        
+        if (this.document.resource[this.field.name].includes(value)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private openFixingDataInProgressModal(): NgbModalRef {
@@ -165,7 +177,8 @@ export class FixOutliersModalComponent {
     private getReplacement(document: Document, entry: any, field: Field): any {
 
         if (isString(entry) && entry === this.outlierValue) {
-            return this.selectedValue;
+            console.log(entry)
+            /*return this.selectedValue;*/
         } else if (isObject(entry)) {
             if (field.inputType === Field.InputType.DIMENSION
                     && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {
@@ -178,6 +191,9 @@ export class FixOutliersModalComponent {
                 entry.endValue = this.selectedValue;
             } else if (field.inputType === Field.InputType.COMPOSITE) {
                 this.replaceValueInCompositeEntry(document, entry, field);
+            } else if (field.inputType === Field.InputType.CHECKBOXES) {
+                console.log(entry)
+                /* return this.selectedValues */
             }
         }
         

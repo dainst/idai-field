@@ -1366,7 +1366,7 @@
         <target state="final">Positive Ganzzahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">209</context>
+          <context context-type="linenumber">213</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.float" datatype="html">
@@ -1374,7 +1374,7 @@
         <target state="final">Kommazahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">213</context>
+          <context context-type="linenumber">217</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedFloat" datatype="html">
@@ -1382,7 +1382,7 @@
         <target state="final">Positive Kommazahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">221</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.url" datatype="html">
@@ -1390,7 +1390,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">225</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.multiInput" datatype="html">
@@ -1401,12 +1401,20 @@
           <context context-type="linenumber">197</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="config.inputType.valuelistMultiInput" datatype="html">
+        <source>Projekt-Werteliste</source>
+        <target state="final">Projekt-Werteliste</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">201</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="config.inputType.text" datatype="html">
         <source>Mehrzeiliger Text</source>
         <target state="final">Mehrzeiliger Text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">205</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.int" datatype="html">
@@ -1414,7 +1422,7 @@
         <target state="final">Ganzzahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">205</context>
+          <context context-type="linenumber">209</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdown" datatype="html">
@@ -1422,7 +1430,7 @@
         <target state="final">Dropdown-Liste</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">229</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdownRange" datatype="html">
@@ -1430,7 +1438,7 @@
         <target state="final">Dropdown-Liste (Bereich)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">229</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.radio" datatype="html">
@@ -1438,7 +1446,7 @@
         <target state="final">Radiobutton</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">233</context>
+          <context context-type="linenumber">237</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.boolean" datatype="html">
@@ -1446,7 +1454,7 @@
         <target state="final">Ja / Nein</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">241</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.checkboxes" datatype="html">
@@ -1454,7 +1462,7 @@
         <target state="final">Checkboxen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">241</context>
+          <context context-type="linenumber">245</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dating" datatype="html">
@@ -1462,7 +1470,7 @@
         <target state="final">Datierungsangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">245</context>
+          <context context-type="linenumber">249</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.date" datatype="html">
@@ -1470,7 +1478,7 @@
         <target state="final">Datum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">249</context>
+          <context context-type="linenumber">253</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
@@ -1478,7 +1486,7 @@
         <target state="final">Maßangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">253</context>
+          <context context-type="linenumber">257</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.literature" datatype="html">
@@ -1486,7 +1494,7 @@
         <target state="final">Literaturangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">257</context>
+          <context context-type="linenumber">261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.composite" datatype="html">
@@ -1494,7 +1502,7 @@
         <target state="final">Kompositfeld</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">261</context>
+          <context context-type="linenumber">265</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.geometry" datatype="html">
@@ -1502,7 +1510,7 @@
         <target state="final">Geometrie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">265</context>
+          <context context-type="linenumber">269</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/widgets/invalid-resource-view.component.ts</context>
@@ -1514,7 +1522,7 @@
         <target state="final">Typenauswahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">269</context>
+          <context context-type="linenumber">273</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.relation" datatype="html">
@@ -1522,7 +1530,7 @@
         <target state="final">Relation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">273</context>
+          <context context-type="linenumber">277</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.derivedRelation" datatype="html">
@@ -1530,7 +1538,7 @@
         <target state="final">Abgeleitete Relation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">277</context>
+          <context context-type="linenumber">281</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.category" datatype="html">
@@ -1538,7 +1546,7 @@
         <target state="final">Kategorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">281</context>
+          <context context-type="linenumber">285</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/widgets/invalid-resource-view.component.ts</context>
@@ -1550,7 +1558,7 @@
         <target state="final">Bezeichner</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">285</context>
+          <context context-type="linenumber">289</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/widgets/invalid-resource-view.component.ts</context>
@@ -1562,7 +1570,7 @@
         <target state="final">Field-Konfigurationsdatei</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">288</context>
+          <context context-type="linenumber">292</context>
         </context-group>
       </trans-unit>
       <trans-unit id="openFileDialog.select" datatype="html">

@@ -21,7 +21,6 @@ $ npm start
 ```
 
 `npm run bootstrap` sets up and fetches the necessary dependencies, while `npm start` compiles the Angular app and starts it via Electron.
-```
 
 ### Troubleshooting
 

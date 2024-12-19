@@ -47,7 +47,7 @@ export class FixOutliersModalComponent {
     
     public cancel = () => this.activeModal.dismiss('cancel');
 
-    public isInvalid = () => !(this.selectedValue || (this.selectedValues.length > 0));
+    public isValid = () => (this.selectedValue || (this.selectedValues.length > 0));
 
     public async onKeyDown(event: KeyboardEvent) {
 
@@ -89,7 +89,7 @@ export class FixOutliersModalComponent {
 
     public async performReplacement() {
 
-        if (this.isInvalid()) return;
+        if (!this.isValid()) return;
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
 

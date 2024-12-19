@@ -107,25 +107,17 @@ export class FixOutliersModalComponent {
 
     public toggleCheckboxValue(value: string) {
         
-        /** TODO */
         if (this.selectedValues.includes(value)) {
             this.selectedValues.splice(this.selectedValues.indexOf(value), 1);
         } else {
             this.selectedValues.push(value);
         }
-        /** console.log(this.selectedValues)
-        console.log(this.selectedValues.length)
-        console.log(this.isInvalid())
-        console.log(value) */
     }
 
     public isPreselectedValue(value: string) {
         
-        if (this.document.resource[this.field.name].includes(value)) {
-            return true;
-        } else {
-            return false;
-        }
+        /* TODO: This should (maybe) not be here! */ 
+        return this.document.resource[this.field.name].includes(value);
     }
 
     private openFixingDataInProgressModal(): NgbModalRef {
@@ -168,6 +160,9 @@ export class FixOutliersModalComponent {
 
         if (isArray(fieldContent)) {
             fieldContainer[field.name] = set(fieldContent.map(entry => this.getReplacement(document, entry, field)));
+            if (field.inputType == Field.InputType.CHECKBOXES) {
+                fieldContainer[field.name] = set(fieldContainer[field.name].flat());
+            }
         } else {
             fieldContainer[field.name] = this.getReplacement(document, fieldContent, field);
         }
@@ -177,8 +172,7 @@ export class FixOutliersModalComponent {
     private getReplacement(document: Document, entry: any, field: Field): any {
 
         if (isString(entry) && entry === this.outlierValue) {
-            console.log(entry)
-            /*return this.selectedValue;*/
+            entry = this.selectedValue ? this.selectedValue : this.selectedValues;
         } else if (isObject(entry)) {
             if (field.inputType === Field.InputType.DIMENSION
                     && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {
@@ -191,12 +185,9 @@ export class FixOutliersModalComponent {
                 entry.endValue = this.selectedValue;
             } else if (field.inputType === Field.InputType.COMPOSITE) {
                 this.replaceValueInCompositeEntry(document, entry, field);
-            } else if (field.inputType === Field.InputType.CHECKBOXES) {
-                console.log(entry)
-                /* return this.selectedValues */
-            }
+            } 
         }
-        
+
         return entry;
     }
 

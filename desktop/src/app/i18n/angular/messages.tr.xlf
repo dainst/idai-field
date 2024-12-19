@@ -8937,6 +8937,14 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="config.inputType.valuelistMultiInput" datatype="html">
+        <source>Projekt-Werteliste</source>
+        <target state="needs-translation">Projekt-Werteliste</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">201</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

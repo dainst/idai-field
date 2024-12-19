@@ -10,10 +10,10 @@
     </div>
 
     <div *ngIf="inputType == 'dropdown'">
-        <searchable-select [selectedValue]="selectedValue"
+        <searchable-select [selectedValue]="selectedValues[0]"
                            [values]="getValues()"
                            [getLabel]="getValueLabel"
-                           (onValueSelected)="selectedValue = $event">
+                           (onValueSelected)="selectedValues.push($event)">
         </searchable-select>
     </div>
     <div *ngIf="inputType == 'checkboxes'">
@@ -53,7 +53,9 @@
              i18n="@@navbar.taskbar.fixOutliers.all.info">
             Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
             <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected}}</b> Ressourcen durch den
-            ausgewählten Wert <b>{{getValueLabel(selectedValue)}}</b> ersetzt.
+            ausgewählten Wert 
+            @for (value of selectedValues; track value; let isLast = $last) {<b>{{value}}@if(!isLast){, }</b>} 
+            ersetzt.
         </div>
     </div>
 </div>

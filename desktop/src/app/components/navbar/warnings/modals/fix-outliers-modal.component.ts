@@ -24,7 +24,6 @@ export class FixOutliersModalComponent {
     public outlierValue: string;
     
     public valuelist: Valuelist;
-    public selectedValue: string;
     public selectedValues: string[];
     public inputType: string;
     public replaceAll: boolean;
@@ -47,7 +46,7 @@ export class FixOutliersModalComponent {
     
     public cancel = () => this.activeModal.dismiss('cancel');
 
-    public isValid = () => (this.selectedValue || (this.selectedValues.length > 0));
+    public isValid = () => this.selectedValues.length > 0;
 
     public async onKeyDown(event: KeyboardEvent) {
 
@@ -172,17 +171,17 @@ export class FixOutliersModalComponent {
     private getReplacement(document: Document, entry: any, field: Field): any {
 
         if (isString(entry) && entry === this.outlierValue) {
-            entry = this.selectedValue ? this.selectedValue : this.selectedValues;
+            return this.selectedValues;
         } else if (isObject(entry)) {
             if (field.inputType === Field.InputType.DIMENSION
                     && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {
-                entry.measurementPosition = this.selectedValue;
+                entry.measurementPosition = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.VALUE] === this.outlierValue) {
-                entry.value = this.selectedValue;
+                entry.value = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.ENDVALUE] === this.outlierValue) {
-                entry.endValue = this.selectedValue;
+                entry.endValue = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.COMPOSITE) {
                 this.replaceValueInCompositeEntry(document, entry, field);
             } 

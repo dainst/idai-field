@@ -7,7 +7,7 @@ import { ImageUrlMaker } from '../../../../../services/imagestore/image-url-make
 
 
 @Component({
-    selector: 'dai-type-row',
+    selector: 'type-row',
     templateUrl: './type-row.html'
 })
 /**

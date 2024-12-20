@@ -82,10 +82,7 @@ category-picker {
     background-color: transparent;
     border: 0;
     height: 100%;
-
-    &:hover {
-      cursor: default;
-    }
+    cursor: default;
 
     &:focus {
       outline: none;

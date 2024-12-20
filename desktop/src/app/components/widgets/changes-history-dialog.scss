@@ -4,14 +4,12 @@
 
   #list-header {
     user-select: none;
-    margin-top: 2px;
     display: grid;
     grid-template-columns: 230px 100px 250px;
     font-size: 16px;
     font-weight: 500;    
     
     .list-header-field {
-      height: 34px;      
       padding: 5px 5px 5px 10px;
       color: rgb(73, 80, 87);
       border: solid 1px rgb(221, 221, 221);
@@ -25,14 +23,12 @@
 
   .list-row {
     user-select: none;
-    margin-top: 2px;
     display: grid;
     grid-template-columns: 230px 100px 250px;
     font-size: 16px;
     font-weight: 500;
   
     .list-body-field {
-      height: 80px;      
       padding: 5px 5px 0px 10px;
       color: rgb(73, 80, 87);
       border: solid 1px rgb(221, 221, 221);

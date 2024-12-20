@@ -13,15 +13,15 @@
                 </div>            
                 <div class="list-body">
                     <div *ngFor="let modification of document.modified.reverse()" 
-                         class = "list-row">
-                        <div class= "list-body-field">{{modification.date}} </div>
+                        class = "list-row">                    
+                        <div class= "list-body-field" [textContent]="formatDateTime(modification.date)"></div>
                         <div class= "list-body-field"> Modified </div>
-                        <div class= "list-body-field">{{modification.user}} </div>      
+                        <div class= "list-body-field" [textContent]="modification.user"></div>      
                     </div> 
                     <div class = "list-row">       
-                        <div class= "list-body-field">{{document.created.date}}  </div>
+                        <div class= "list-body-field" [textContent]="formatDateTime(document.created.date)"></div>
                         <div class= "list-body-field"> Created  </div>
-                        <div class= "list-body-field"> {{document.created.user}}  </div> 
+                        <div class= "list-body-field" [textContent]="document.created.user"></div> 
                     </div>
                 </div>
             </div>

@@ -31,4 +31,10 @@ export class ChangesHistoryDialogComponent {
     }
 
 
+    public formatDateTime( date: string | Date, locale: string = 'de-DE' ) { 
+        return new Date(date).toLocaleString(locale);
+    }
+    // public formatDateTime( date: string | Date) { 
+    //     return new Date(date).toLocaleString();
+    // }
 }

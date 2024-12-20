@@ -324,12 +324,17 @@ select.form-control:not([size]):not([multiple]) {
   overflow: hidden;
 }
 
-.history-modal-content .modal-content{
+.history-modal-content .modal-content {
+  // max-height: 20%;
   user-select: none;
   width: fit-content;
-  max-height: 600px;
+  // max-height: 600px;
   // max-height: 800px;
 }
+
+// changes-history-dialog {
+//   height: 2000px;
+// }
 
 
 .modal-dialog:not(.modal-dialog-centered) {

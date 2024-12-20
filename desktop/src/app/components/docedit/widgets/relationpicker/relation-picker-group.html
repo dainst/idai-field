@@ -4,10 +4,11 @@
                      [relationIndex]="i"></relation-picker>
 </div>
 
-<div *ngIf="showPlusButton()"
+<div *ngIf="isPlusButtonVisible()"
      class="circular-button add-relation"
      [class.with-margin]="relations[relationDefinition.name]?.length > 0"
      type="button"
      (click)="createRelation()">+</div>
-<div *ngIf="!showPlusButton() && relations[relationDefinition.name]?.length > 1"
+<div *ngIf="!isPlusButtonVisible() && relations[relationDefinition.name]?.length > 1"
      class="relation-picker-group-space"></div>
+     

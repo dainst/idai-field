@@ -42,7 +42,7 @@ export class RelationPickerGroupComponent implements OnChanges {
     }
 
 
-    public showPlusButton(): boolean {
+    public isPlusButtonVisible(): boolean {
 
         return !this.relations[this.relationDefinition.name]
             || isEmpty(this.relations[this.relationDefinition.name])

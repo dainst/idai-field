@@ -42,12 +42,7 @@ export class RelationPickerGroupComponent implements OnChanges {
     }
 
 
-    // Button not shown when waiting for input
     public showPlusButton(): boolean {
-
-        if ((this.relationDefinition.name === 'isRecordedIn' || this.relationDefinition.name === 'liesWithin') &&
-                (this.relations[this.relationDefinition.name] &&
-                    this.relations[this.relationDefinition.name].length > 0)) return false;
 
         return !this.relations[this.relationDefinition.name]
             || isEmpty(this.relations[this.relationDefinition.name])

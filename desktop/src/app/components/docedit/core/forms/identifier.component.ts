@@ -29,14 +29,14 @@ export class IdentifierComponent implements OnChanges {
     }
 
 
-    public update(value: string) {
+    public update() {
 
-        if (value === '') {
+        if (this.identifierBody === '') {
             delete this.fieldContainer[this.fieldName];
         } else {
             this.fieldContainer[this.fieldName] = this.identifierPrefix
-                ? this.identifierPrefix + value
-                : value;
+                ? this.identifierPrefix + this.identifierBody
+                : this.identifierBody;
         }
     }
 

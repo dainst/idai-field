@@ -6,7 +6,6 @@
 
   .type-row {
     $type-row-height: 181px;
-
     width: 100%;
     height: $type-row-height;
     max-height: $type-row-height;
@@ -22,6 +21,7 @@
     }
 
     .type-info {
+      position: relative;
       min-width: 150px;
       max-width: 150px;
       height: $type-row-height - 6px;
@@ -29,8 +29,15 @@
       transition: opacity 0.25s ease-in-out;
 
       .type-title {
+        position: absolute;
+        bottom: 5px;
+        padding: 0 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        height: auto;
+        width: 100%;
+        overflow-wrap: break-word;
+        z-index: 5;
         text-align: center;
-        height: 25px;
         user-select: none;
       }
 

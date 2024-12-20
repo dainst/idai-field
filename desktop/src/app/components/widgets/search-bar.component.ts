@@ -49,7 +49,7 @@ export class SearchBarComponent implements OnChanges {
     public isAllCategoriesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
 
 
-    public onKeyUp(event: KeyboardEvent) {
+    public onInput(event: KeyboardEvent) {
 
         if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', 'Escape'].includes(event.key)) {
             return;

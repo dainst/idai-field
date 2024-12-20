@@ -5,7 +5,7 @@
             [(ngModel)]="q"
             (focus)="focused = true"
             (blur)="focused = false"
-            (keyup)="onKeyUp($event)"
+            (input)="onInput($event)"
             name="searchInput"
             type="text"
             placeholder="Suchen..."

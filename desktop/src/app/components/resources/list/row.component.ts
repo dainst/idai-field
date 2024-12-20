@@ -87,7 +87,7 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
+    public async onInput(event: KeyboardEvent, fieldName: string) {
 
         this.setValue(fieldName, event.target['value']);
 

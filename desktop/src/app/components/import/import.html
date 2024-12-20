@@ -48,7 +48,7 @@
                         <input class="form-control" id="importUrlInput"
                                type="text"
                                [(ngModel)]="importState.url"
-                               (keyup)="updateFormat()">
+                               (input)="updateFormat()">
                     </div>
 
                     <div *ngIf="!importState.format" class="import-info" i18n="@@import.format.info">

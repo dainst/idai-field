@@ -87,9 +87,13 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onInput(event: KeyboardEvent, fieldName: string) {
+    public onInput(event: KeyboardEvent, fieldName: string) {
 
         this.setValue(fieldName, event.target['value']);
+    }
+
+
+    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
         if (event.key === 'Enter') {
             await this.stopEditing(fieldName, this.document.resource[fieldName]);

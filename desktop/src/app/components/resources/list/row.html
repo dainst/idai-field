@@ -60,6 +60,7 @@
                (focus)="startEditing('identifier', document.resource.identifier)"
                (blur)="stopEditing('identifier', document.resource.identifier)"
                (input)="onInput($event, 'identifier')"
+               (keyup)="onKeyUp($event, 'identifier')"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
     </div>
     <div *ngIf="!shortDescriptionValuelist" class="input-field">
@@ -67,6 +68,7 @@
                (focus)="startEditing('shortDescription', document.resource.shortDescription)"
                (blur)="stopEditing('shortDescription', document.resource.shortDescription)"
                (input)="onInput($event, 'shortDescription')"
+               (keyup)="onKeyUp($event, 'shortDescription')"
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
     </div>

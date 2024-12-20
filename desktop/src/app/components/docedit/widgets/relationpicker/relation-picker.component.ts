@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { Document, Datastore, Resource, Relation, Labels, ProjectConfiguration } from 'idai-field-core';
 import { getSuggestions } from './get-suggestions';
@@ -21,6 +21,8 @@ export class RelationPickerComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() relationDefinition: Relation;
     @Input() relationIndex: number;
+
+    @Output() onTargetSelected: EventEmitter<Document|undefined> = new EventEmitter<Document|undefined>();
 
     public availableTargets: Array<Document>;
     public selectedTarget: Document|undefined;
@@ -54,9 +56,9 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    public onTargetSelected(targetId: string) {
+    public selectTarget(targetId: string) {
 
-        const target: Document = targetId
+        const target: Document|undefined = targetId
             ? this.availableTargets.find(t => t.resource.id === targetId)
             : undefined;
 
@@ -65,6 +67,8 @@ export class RelationPickerComponent implements OnChanges {
         } else {
             this.deleteRelation();
         }
+
+        this.onTargetSelected.emit(target);
     }
 
 
@@ -72,6 +76,7 @@ export class RelationPickerComponent implements OnChanges {
 
         await this.updateSelectedTarget();
         if (!this.selectedTarget) this.deleteRelation();
+        this.onTargetSelected.emit();
     }
 
 

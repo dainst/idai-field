@@ -1,14 +1,15 @@
 <div *ngFor="let relation of relations[relationDefinition.name]; let i = index">
     <relation-picker [resource]="resource"
                      [relationDefinition]="relationDefinition"
-                     [relationIndex]="i"></relation-picker>
+                     [relationIndex]="i"
+                     (onTargetSelected)="onTargetSelected($event)"></relation-picker>
 </div>
 
-<div *ngIf="isPlusButtonVisible()"
+<div *ngIf="isPlusButtonAvailable()"
+     #plusButton
      class="circular-button add-relation"
      [class.with-margin]="relations[relationDefinition.name]?.length > 0"
      type="button"
      (click)="createRelation()">+</div>
-<div *ngIf="!isPlusButtonVisible() && relations[relationDefinition.name]?.length > 1"
+<div *ngIf="!isPlusButtonAvailable() && relations[relationDefinition.name]?.length > 1"
      class="relation-picker-group-space"></div>
-     

@@ -8948,6 +8948,14 @@
           <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="viewModal.noProjectImages" datatype="html">
+        <source>Mit dem Projekt sind keine Bilder verknüpft.</source>
+        <target state="needs-translation">Mit dem Projekt sind keine Bilder verknüpft.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
+          <context context-type="linenumber">74,76</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

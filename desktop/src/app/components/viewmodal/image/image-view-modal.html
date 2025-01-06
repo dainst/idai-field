@@ -38,7 +38,12 @@
                 (click)="setMode('view')"
                 ngbTooltip="Ansicht"
                 i18n-ngbTooltip="@@image-view-modal.modal.view"
-                placement="left">
+                placement="left"
+                triggers="manual"
+                #viewImagesTooltip="ngbTooltip"
+                (mouseover)="viewImagesTooltip.open()"
+                (mouseleave)="viewImagesTooltip.close()"
+                (mousedown)="viewImagesTooltip.close()">
                 <span class="mdi mdi-image"></span>
             </button>
             <button class="btn btn-link btn-square m-0"
@@ -48,7 +53,12 @@
                 (click)="setMode('edit')"
                 ngbTooltip="Bearbeiten"
                 i18n-ngbTooltip="@@image-view-modal.modal-edit"
-                placement="left">
+                placement="left"
+                triggers="manual"
+                #editImagesTooltip="ngbTooltip"
+                (mouseover)="editImagesTooltip.open()"
+                (mouseleave)="editImagesTooltip.close()"
+                (mousedown)="editImagesTooltip.close()">
                 <span class="mdi mdi-image-edit"></span>
             </button>
         </div>

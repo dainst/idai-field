@@ -70,9 +70,15 @@
             <div *ngIf="!images || images.length === 0"
                  id="no-images-placeholder"
                  class="d-flex align-items-center justify-content-center">
-                <div class="alert alert-info" i18n="@@viewModal.noImages">
-                    Mit dieser Ressource sind keine Bilder verknüpft.
-                </div>
+                @if (linkedDocument.resource.category === 'Project') {
+                    <div class="alert alert-info" i18n="@@viewModal.noProjectImages">
+                        Mit dem Projekt sind keine Bilder verknüpft.
+                    </div>
+                } @else {
+                    <div class="alert alert-info" i18n="@@viewModal.noImages">
+                        Mit dieser Ressource sind keine Bilder verknüpft.
+                    </div>
+                }
             </div>
     
             <document-info [document]="selectedImage?.document"

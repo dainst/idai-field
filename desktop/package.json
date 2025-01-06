@@ -120,7 +120,7 @@
     "@mapbox/geojson-rewind": "0.5.2",
     "@mdi/font": "7.4.47",
     "@ng-bootstrap/ng-bootstrap": "18.0.0",
-    "@ng-select/ng-select": "13.3.0",
+    "@ng-select/ng-select": "14.1.0",
     "@popperjs/core": "^2.11.8",
     "address": "1.2.1",
     "archiver": "5.1.0",

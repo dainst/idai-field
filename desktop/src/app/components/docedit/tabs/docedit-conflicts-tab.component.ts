@@ -16,7 +16,8 @@ import { DifferingField, DifferingFieldType } from './field-diff';
  */
 @Component({
     selector: 'docedit-conflicts-tab',
-    templateUrl: './docedit-conflicts-tab.html'
+    templateUrl: './docedit-conflicts-tab.html',
+    standalone: false
 })
 export class DoceditConflictsTabComponent implements OnChanges {
 

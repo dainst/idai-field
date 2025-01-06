@@ -4,7 +4,8 @@ import { Dimension, Field, Valuelist, ValuelistUtil } from 'idai-field-core';
 
 @Component({
     selector: 'outliers',
-    templateUrl: './outliers.html'
+    templateUrl: './outliers.html',
+    standalone: false
 })
 
 /**

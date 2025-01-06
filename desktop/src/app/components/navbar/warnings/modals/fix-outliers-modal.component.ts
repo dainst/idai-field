@@ -12,7 +12,8 @@ import { AffectedDocument } from '../affected-document';
     templateUrl: './fix-outliers-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

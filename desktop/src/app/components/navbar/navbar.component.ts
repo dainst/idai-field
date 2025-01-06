@@ -13,7 +13,8 @@ import { MenuModalLauncher } from '../../services/menu-modal-launcher';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:resize)': 'onResize()'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

@@ -6,7 +6,8 @@ import { MatrixLineMode, MatrixRelationsMode, MatrixState } from './matrix-state
 
 @Component({
     selector: 'matrix-options-menu',
-    templateUrl: './matrix-options-menu.html'
+    templateUrl: './matrix-options-menu.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

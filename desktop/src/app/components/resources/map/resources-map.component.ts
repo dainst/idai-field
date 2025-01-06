@@ -12,7 +12,8 @@ import { MenuContext } from '../../../services/menu-context';
 @Component({
     selector: 'resources-map',
     templateUrl: './resources-map.html',
-    host: { '(window:keydown)': 'onKeyDown($event)' }
+    host: { '(window:keydown)': 'onKeyDown($event)' },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

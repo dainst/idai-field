@@ -22,7 +22,8 @@ import { MessagesConversion } from './messages-conversion';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * Uses the document edit forms of idai-field-core and adds styling

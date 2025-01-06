@@ -6,7 +6,8 @@ import { Language, Languages } from '../../../../services/languages';
 
 @Component({
     selector: 'multi-language-input',
-    templateUrl: './multi-language-input.html'
+    templateUrl: './multi-language-input.html',
+    standalone: false
 })
 /**
 * @author Thomas Kleinke

@@ -11,7 +11,8 @@ type CategoryListingItem = {
 
 @Component({
     selector: 'category-listing',
-    templateUrl: './category-listing.html'
+    templateUrl: './category-listing.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

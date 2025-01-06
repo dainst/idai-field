@@ -17,7 +17,8 @@ import { AngularUtility } from '../../angular/angular-utility';
     templateUrl: './backup-creation.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

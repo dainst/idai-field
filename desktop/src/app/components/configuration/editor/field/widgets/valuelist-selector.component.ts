@@ -12,7 +12,8 @@ import { SubfieldEditorData } from '../subfield-editor-modal.component';
 
 @Component({
     selector: 'valuelist-selector',
-    templateUrl: './valuelist-selector.html'
+    templateUrl: './valuelist-selector.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

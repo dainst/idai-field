@@ -5,7 +5,8 @@ import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy,
 
 @Component({
     selector: 'form-field-radio',
-    templateUrl: `./radio.html`
+    templateUrl: `./radio.html`,
+    standalone: false
 })
 
 /**

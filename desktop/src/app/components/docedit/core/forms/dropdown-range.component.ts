@@ -9,7 +9,8 @@ const PROJECT = 'project';
 
 @Component({
     selector: 'form-field-dropdown-range',
-    templateUrl: './dropdown-range.html'
+    templateUrl: './dropdown-range.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

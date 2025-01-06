@@ -47,7 +47,8 @@ import { M } from '../messages/m';
         '(window:keyup)': 'onKeyUp($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

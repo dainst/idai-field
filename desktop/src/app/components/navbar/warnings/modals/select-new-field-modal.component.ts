@@ -9,7 +9,8 @@ import { AngularUtility } from '../../../../angular/angular-utility';
     templateUrl: './select-new-field-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

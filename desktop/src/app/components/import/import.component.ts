@@ -31,7 +31,8 @@ const path = window.require('path');
     templateUrl: './import.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * Delegates calls to the Importer, waits for

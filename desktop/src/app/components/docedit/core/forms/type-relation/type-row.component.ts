@@ -8,7 +8,8 @@ import { ImageUrlMaker } from '../../../../../services/imagestore/image-url-make
 
 @Component({
     selector: 'type-row',
-    templateUrl: './type-row.html'
+    templateUrl: './type-row.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

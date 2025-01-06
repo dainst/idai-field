@@ -25,7 +25,8 @@ type DrawMode = 'None'|'Line'|'Poly';
 
 @Component({
     selector: 'editable-map',
-    templateUrl: './editable-map.html'
+    templateUrl: './editable-map.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

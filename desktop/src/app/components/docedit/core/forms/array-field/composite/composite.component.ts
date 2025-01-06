@@ -12,7 +12,8 @@ import { Menus } from '../../../../../../services/menus';
 
 @Component({
     selector: 'form-field-composite',
-    templateUrl: './composite.html'
+    templateUrl: './composite.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

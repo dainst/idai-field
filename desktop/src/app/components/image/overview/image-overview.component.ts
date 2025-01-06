@@ -21,7 +21,8 @@ import { Routing } from '../../../services/routing';
     templateUrl: './image-overview.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

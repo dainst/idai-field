@@ -7,7 +7,8 @@ import { Group } from 'idai-field-core';
     templateUrl: './delete-group-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

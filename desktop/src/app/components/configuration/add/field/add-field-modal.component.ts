@@ -16,7 +16,8 @@ import { Naming } from '../naming';
     templateUrl: './add-field-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -6,7 +6,8 @@ import { getSearchResultLabel } from '../getSearchResultLabel';
 
 @Component({
     selector: 'field-listing',
-    templateUrl: './field-listing.html'
+    templateUrl: './field-listing.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

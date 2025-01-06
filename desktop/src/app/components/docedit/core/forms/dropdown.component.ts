@@ -5,7 +5,8 @@ import { Datastore, Labels, Field, Valuelist, ValuelistUtil, Hierarchy, Resource
 
 @Component({
     selector: 'form-field-dropdown',
-    templateUrl: './dropdown.html'
+    templateUrl: './dropdown.html',
+    standalone: false
 })
 /**
  * @author Fabian Z.

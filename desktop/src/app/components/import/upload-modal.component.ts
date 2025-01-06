@@ -4,7 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'upload-modal',
-    templateUrl: './upload-modal.html'
+    templateUrl: './upload-modal.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

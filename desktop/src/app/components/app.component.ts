@@ -19,7 +19,8 @@ const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 @Component({
     selector: 'idai-field-app',
-    templateUrl: './app.html'
+    templateUrl: './app.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

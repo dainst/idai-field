@@ -5,7 +5,8 @@ import { FieldDocument, I18N, Labels, ProjectConfiguration } from 'idai-field-co
 
 @Component({
     selector: 'grid-item',
-    templateUrl: './grid-item.html'
+    templateUrl: './grid-item.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -9,7 +9,8 @@ import { AngularUtility } from '../../../angular/angular-utility';
 
 @Component({
     selector: 'search-suggestions',
-    templateUrl: './search-suggestions.html'
+    templateUrl: './search-suggestions.html',
+    standalone: false
 })
 
 /**

@@ -9,7 +9,8 @@ const DROPAREA = 'droparea';
 
 @Component({
     selector: 'image-grid',
-    templateUrl: './image-grid.html'
+    templateUrl: './image-grid.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

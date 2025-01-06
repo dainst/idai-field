@@ -13,7 +13,8 @@ import { MenuContext } from '../../../../../services/menu-context';
     templateUrl: './dimension-entry-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Fabian Z.

@@ -9,7 +9,8 @@ const SUGGESTIONS_CHUNK_SIZE: number = 20;
 
 @Component({
     selector: 'relation-picker',
-    templateUrl: './relation-picker.html'
+    templateUrl: './relation-picker.html',
+    standalone: false
 })
 /**
  * @author Jan G. Wieners

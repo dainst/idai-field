@@ -21,7 +21,8 @@ import { EditSaveDialogComponent } from '../../widgets/edit-save-dialog.componen
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

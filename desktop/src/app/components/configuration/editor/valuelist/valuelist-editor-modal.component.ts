@@ -21,7 +21,8 @@ import { ValuelistUsage } from '../../../../services/configuration/index/valueli
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

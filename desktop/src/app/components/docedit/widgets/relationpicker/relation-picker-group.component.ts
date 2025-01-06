@@ -9,7 +9,8 @@ import { AngularUtility } from '../../../../angular/angular-utility';
  */
 @Component({
     selector: 'relation-picker-group',
-    templateUrl: './relation-picker-group.html'
+    templateUrl: './relation-picker-group.html',
+    standalone: false
 })
 export class RelationPickerGroupComponent implements OnChanges, AfterViewChecked {
 

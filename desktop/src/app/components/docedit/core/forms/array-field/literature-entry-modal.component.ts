@@ -10,7 +10,8 @@ import { MenuContext } from '../../../../../services/menu-context';
     templateUrl: './literature-entry-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

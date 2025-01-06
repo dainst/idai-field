@@ -16,7 +16,8 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 @Component({
     selector: 'configuration-category',
-    templateUrl: './configuration-category.html'
+    templateUrl: './configuration-category.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

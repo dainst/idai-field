@@ -7,7 +7,8 @@ import { PrintSettings } from './print-settings';
     templateUrl: './create-print-settings-profile-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

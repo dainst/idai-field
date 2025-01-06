@@ -9,7 +9,8 @@ import { ComponentHelpers } from '../component-helpers';
     templateUrl: './search-bar.html',
     host: {
         '(document:click)': 'handleClick($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

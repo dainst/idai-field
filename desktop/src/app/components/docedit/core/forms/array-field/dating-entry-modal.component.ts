@@ -12,7 +12,8 @@ import { MenuContext } from '../../../../../services/menu-context';
     templateUrl: './dating-entry-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

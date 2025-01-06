@@ -4,7 +4,8 @@ import { Datastore, FieldDocument, ImageResource } from 'idai-field-core';
 
 @Component({
     selector: 'depicts-relations-view',
-    templateUrl: './depicts-relations-view.html'
+    templateUrl: './depicts-relations-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

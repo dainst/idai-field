@@ -4,7 +4,8 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'form-field-simple-input',
     template: `<input [(ngModel)]="fieldContainer[fieldName]" (input)="deleteIfEmpty()"
-                      class="form-control">`
+                      class="form-control">`,
+    standalone: false
 })
 
 /**

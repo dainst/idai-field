@@ -13,7 +13,8 @@ import { Messages } from '../messages/messages';
     templateUrl: './delete-project-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

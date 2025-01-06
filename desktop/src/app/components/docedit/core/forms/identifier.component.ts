@@ -3,7 +3,8 @@ import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/cor
 
 @Component({
     selector: 'form-field-identifier',
-    templateUrl: './identifier.html'
+    templateUrl: './identifier.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

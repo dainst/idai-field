@@ -5,7 +5,8 @@ import { CancelModalComponent } from './cancel-modal.component';
 
 
 @Component({
-    templateUrl: './download-project-progress-modal.html'
+    templateUrl: './download-project-progress-modal.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

@@ -12,7 +12,8 @@ import { scrollTo } from '../../angular/scrolling';
 
 
 @Component({
-   template: ''
+    template: '',
+    standalone: false
 })
 /**
  * @author Philipp Gerth

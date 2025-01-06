@@ -23,7 +23,8 @@ const remote = window.require('@electron/remote');
     templateUrl: './backup-loading.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

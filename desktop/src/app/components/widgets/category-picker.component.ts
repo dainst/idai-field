@@ -16,7 +16,8 @@ export type OrderChange = {
 
 @Component({
     selector: 'category-picker',
-    templateUrl: './category-picker.html'
+    templateUrl: './category-picker.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

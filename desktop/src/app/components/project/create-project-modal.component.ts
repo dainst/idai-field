@@ -21,7 +21,8 @@ const remote = window.require('@electron/remote');
     templateUrl: './create-project-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

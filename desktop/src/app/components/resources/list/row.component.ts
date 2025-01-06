@@ -14,7 +14,8 @@ import { Language } from '../../../services/languages';
 
 @Component({
     selector: 'row',
-    templateUrl: './row.html'
+    templateUrl: './row.html',
+    standalone: false
 })
 /**
  * @author Fabian Z.

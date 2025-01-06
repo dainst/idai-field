@@ -7,7 +7,8 @@ import { AngularUtility } from '../../angular/angular-utility';
 
 @Component({
     selector: 'searchable-select',
-    templateUrl: './searchable-select.html'
+    templateUrl: './searchable-select.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

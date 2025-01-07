@@ -30,7 +30,7 @@
     },
     "dimensionThickness": {
       "label": "Thickness",
-      "description": "Thickness or strength of the object"
+      "description": "Thickness of the object"
     },
     "dimensionVerticalExtent": {
       "label": "Vertical extent",

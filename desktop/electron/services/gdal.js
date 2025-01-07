@@ -14,9 +14,7 @@ const options = {
     dest: tempDirectoryPath
 };
 
-log.info('Init gdal at path:', options.path);
 initGdalJs(options).then(async gdal => {
-    log.info('gdal ready!');
     electron.ipcMain.handle('ogr2ogr', async (_, sourceFilePath, options, outputFileBaseName) => {
         try {
             const result = await gdal.open(sourceFilePath);

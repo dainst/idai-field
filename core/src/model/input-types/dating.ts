@@ -129,6 +129,15 @@ export module Dating {
     }
 
 
+    export function getNormalizedYear(inputYear: number, inputType: DatingType): number {
+
+        if (inputType === 'bce') return 0 - inputYear;
+        if (inputType === 'bp') return 1950 - inputYear;
+
+        return inputYear;
+    }
+
+
     export function generateLabel(dating: Dating,
                                   getTranslation: (term: Dating.Translations) => string,
                                   getFromI18NString: (i18nString: I18N.String|string) => string): string {
@@ -179,7 +188,7 @@ export module Dating {
     }
 
 
-    export function setNormalizedYears(dating: Dating) {
+    function setNormalizedYears(dating: Dating) {
 
         if (dating.begin && dating.begin.inputYear && dating.begin.inputType) {
             dating.begin.year = getNormalizedYear(dating.begin.inputYear, dating.begin.inputType);
@@ -188,15 +197,6 @@ export module Dating {
         if (dating.end && dating.end.inputYear && dating.end.inputType) {
             dating.end.year = getNormalizedYear(dating.end.inputYear, dating.end.inputType);
         }
-    }
-
-
-    export function getNormalizedYear(inputYear: number, inputType: DatingType): number {
-
-        if (inputType === 'bce') return 0 - inputYear;
-        if (inputType === 'bp') return 1950 - inputYear;
-
-        return inputYear;
     }
 
 

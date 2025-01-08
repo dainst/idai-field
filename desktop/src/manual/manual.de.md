@@ -965,11 +965,11 @@ Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere
 
 * *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich)
 * *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird
-* *end*: Jahresangabe, die bei den Datierungstyen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird
+* *end*: Jahresangabe, die bei den Datierungstypen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird
 * *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*
 * *source*: Grundlage der Datierung, mehrsprachiges Textfeld
-* *isImprecise*: Kennzeichnet die Datierungsangabe als "ungenau", wenn der Wert *true* eingetragen ist
-* *isUncertain*: Kennzeichnet die Datierungsangabe als "unsicher", wenn der Wert *true* eingetragen ist
+* *isImprecise*: Angabe "Ungenau". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein)
+* *isUncertain*: Angabe "Unsicher". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein)
 
 Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 

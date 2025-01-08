@@ -1154,6 +1154,37 @@ Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere 
 </div>
 
 
+##### Dropdown-Listen (Bereich)
+
+Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden beiden Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
+
+* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
+* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>period.value</th>
+        <th>period.endValue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Eisenzeitlich</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Frühbronzezeitlich</td>
+        <td>Spätbronzezeitlich</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 <hr>
 

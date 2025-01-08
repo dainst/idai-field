@@ -435,11 +435,11 @@ Durch **Relationen** werden Beziehungen zwischen Ressourcen angegeben (z. B.: Er
 Über das Menü "Werkzeuge" ➝ "Projektkonfiguration" erreichen Sie den Konfigurationseditor, der es Ihnen erlaubt, die im Projekt verfügbaren Kategorien, Felder und Wertelisten anzupassen und zu erweitern. Änderungen an der Konfiguration werden bei bestehender Synchronisationsverbindung an andere Nutzer und Nutzerinnen übertragen, sobald sie über den "Speichern"-Button bestätigt werden.
 
 
-### Bezeichner und Anzeigetexte
+### Bezeichner und Anzeigenamen
 
-Alle Elemente der Projektkonfiguration (Kategorien, Felder, Wertelisten usw.) besitzen jeweils einen **Bezeichner** zur eindeutigen Identifikation. Dieser Bezeichner wird in der Datenbank gespeichert und auch beim Import oder Export von Ressourcen verwendet. Im Konfigurationseditor wird er jeweils in magentafarbener Schrift dargestellt.
+Alle Elemente der Projektkonfiguration (Kategorien, Felder usw.) besitzen jeweils einen **Bezeichner** zur eindeutigen Identifikation. Dieser Bezeichner wird in der Datenbank gespeichert und auch beim Import oder Export von Ressourcen verwendet. Im Konfigurationseditor wird er jeweils in magentafarbener Schrift dargestellt.
 
-Darüber hinaus können **Anzeigetexte** für jede der konfigurierten Projektsprachen eingetragen werden. Diese Texte werden zur Anzeige in allen anderen Bereichen der Anwendung verwendet und auch im Konfigurationseditor in schwarzer Schrift angezeigt. Ist kein Anzeigetext vorhanden, wird stattdessen der Bezeichner angezeigt.
+Darüber hinaus können **Anzeigenamen** für jede der konfigurierten Projektsprachen eingetragen werden. Diese Texte werden zur Anzeige in allen anderen Bereichen der Anwendung verwendet und auch im Konfigurationseditor in schwarzer Schrift angezeigt. Ist kein Anzeigename vorhanden, wird stattdessen der Bezeichner angezeigt.
 
 
 ### Kategorien und Formulare
@@ -480,7 +480,7 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 
 Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Kategorieliste kann der Kategorieeditor geöffnet werden, in dem die Eigenschaften der Kategorie editiert werden können:
 
-* *Kategoriebezeichnung*: Der Anzeigename der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
+* *Anzeigename*: Der Name der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Farbe*: Die Farbe des Kategorie-Symbols sowie der Geometrien, die für Ressourcen dieser Kategorie auf der Karte angezeigt werden.
 * *QR-Codes*: Ermöglicht die Verwendung von QR-Codes bei Ressourcen dieser Kategorie (siehe Abschnitt *QR-Codes*).
 * *Bezeichner-Präfix*: Geben Sie hier optional einen Text ein, mit dem der Bezeichner von Ressourcen dieser Kategorie stets beginnen soll. Beachten Sie dabei, dass bereits bestehende Bezeichner nicht automatisch angepasst werden.
@@ -502,7 +502,7 @@ Bitte beachten Sie, dass QR-Codes nur für die Kategorien "Fund", "Fundkollektio
 Zur Konfiguration von QR-Codes stehen im Kategorieeditor folgende Optionen bereit:
 * *QR-Codes zur Identifikation verwenden*: Aktivieren Sie diese Option, um die Verwendung von QR-Codes für Ressourcen der Kategorie zu erlauben
 * *Für neue Ressourcen automatisch erzeugen*: Aktivieren Sie diese Option, wenn für jede neu angelegte Ressource automatisch ein QR-Code generiert werden soll
-* *Zu druckende Felder*: Wählen Sie bis zu drei Felder aus, die zusätzlich zum Ressourcen-Bezeichner auf dem QR-Code-Etikett gedruckt werden sollen. Aktivieren Sie jeweils die Option "Feldbezeichnung drucken", wenn die Feldbezeichnung vor dem Feldinhalt auf dem Etikett erscheinen soll.
+* *Zu druckende Felder*: Wählen Sie bis zu drei Felder aus, die zusätzlich zum Ressourcen-Bezeichner auf dem QR-Code-Etikett gedruckt werden sollen. Aktivieren Sie jeweils die Option "Feldbezeichnung drucken", wenn der Anzeigename des Feldes vor dem Feldinhalt auf dem Etikett erscheinen soll.
 
 
 #### Hierarchie
@@ -558,8 +558,8 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 
 Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Feldliste kann der Feldeditor geöffnet werden, in dem die Eigenschaften des Feldes editiert werden können:
 
-* *Feldbezeichnung*: Der Anzeigename des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
-* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben der Feldbezeichnung eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
+* *Anzeigename*: Der Name des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
+* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Anzeigenamen des Feldes eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
 
 
 #### Eingabetyp ändern
@@ -866,14 +866,14 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
 CSV ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
 
-Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie; jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Feldbezeichnungen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Unterkapitel "Export").
+Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie; jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Unterkapitel "Export").
 
 CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
 
 
 ##### Wertelistenfelder
 
-Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Werts eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Wertebezeichnungen können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
+Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Werts eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
 
 
 ##### Mehrsprachige Felder

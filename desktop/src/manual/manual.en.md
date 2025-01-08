@@ -466,7 +466,7 @@ Right-clicking on a category brings up a context menu that provides the followin
 
 Via the context menu or by double-clicking on an entry in the category list, the category editor can be opened, in which the properties of the category can be edited:
 
-* *Category label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
+* *Label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
 * *Color*: The color of the category icon as well as the geometries displayed for resources of this category on the map.
 * *QR codes*: Enables the use of QR codes for resources of this category (see section *QR codes*).
 * *Identifier prefix*: Optionally enter here a text with which the identifier of resources of this category should always start. Please note that already existing identifiers will not be adjusted automatically.
@@ -487,7 +487,7 @@ Please note that QR codes can only be used for the categories "Find", "Find coll
 The following options are available in the category editor for configuring QR codes:
 * *Use QR codes for identification*: Enable this option to allow the use of QR codes for resources of the category
 * *Automatically create for new resources*: Enable this option if a QR code should be generated automatically for every newly created resource
-* *Fields to print*: Select up to three fields to be printed on the QR code label in addition to the resource identifier. Activate the option "Print field label" if you want the field label to appear before the field content on the label.
+* *Fields to print*: Select up to three fields to be printed on the QR code label in addition to the resource identifier. Activate the option "Print field label" if you want the field label to appear before the field content on the printed label.
 
 
 #### Hierarchy
@@ -543,7 +543,7 @@ Right-clicking on a field brings up a context menu that provides the following o
 
 Via the context menu or by double-clicking on an entry in the field list, the field editor can be opened, in which the properties of the field can be edited:
 
-* *Field label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
+* *Label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
 * *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field label and is intended to help with data entry.
 
 

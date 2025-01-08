@@ -16,8 +16,8 @@ export interface Dating {
 
     margin?: number,
     source?: I18N.String|string,
-    isImprecise?: boolean,
-    isUncertain?: boolean,
+    isImprecise: boolean,
+    isUncertain: boolean,
 
     label?: string  // Deprecated
 }

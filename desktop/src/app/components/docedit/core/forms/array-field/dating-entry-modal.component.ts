@@ -106,10 +106,11 @@ export class DatingEntryModalComponent {
 
         delete this.entry.begin;
         delete this.entry.end;
-        delete this.entry.isImprecise;
-        delete this.entry.isUncertain;
         delete this.entry.margin;
         delete this.entry.source;
+
+        this.entry.isImprecise = false;
+        this.entry.isUncertain = false;
     }
 
 

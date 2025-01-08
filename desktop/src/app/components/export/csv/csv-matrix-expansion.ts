@@ -233,13 +233,12 @@ export module CSVMatrixExpansion {
             const expandedDimension = [
                 (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
                 (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
+                inputUnit ?? '',
                 measurementPosition ?? ''
             ].concat(measurementComment
                 ? rowsWithI18nStringExpanded(languages)(measurementComment)
                 : languages.map(_ => '')
-            ).concat([
-                inputUnit ?? ''
-            ]);
+            );
 
             if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
 

@@ -690,7 +690,7 @@ Auf die gleiche Weise können Felder auch einer anderen Gruppe zugeordnet werden
 
 Über das Menü "Projektkonfiguration" ➝ "Wertelistenverwaltung" kann eine Übersicht sämtlicher Wertelisten aufgerufen werden, die mit Field mitgeliefert werden. Die hier aufgeführten Wertelisten werden entweder von den Feldern der Standard-Formulare verwendet oder wurden im Rahmen von Projekten angelegt, die Field bereits eingesetzt haben.
 
-Verwenden Sie das Textfeld oberhalb der Liste, um die Wertelisten auf Basis beliebiger Suchbegriffe zu filtern. Die Suche berücksichtigt dabei sowohl Wertelisten-IDs als auch IDs und Anzeigetexte von einzelnen Werten. Über den Button rechts des Suchfeldes können Sie das Filtermenü öffnen, das es erlaubt, wahlweise nur projektspezifische (d. h. für das Projekt neu angelegte) und/oder innerhalb des Projekts derzeit verwendete Wertelisten anzuzeigen.
+Verwenden Sie das Textfeld oberhalb der Liste, um die Wertelisten auf Basis beliebiger Suchbegriffe zu filtern. Die Suche berücksichtigt dabei sowohl Wertelisten-Bezeichner als auch Bezeichner und Anzeigetexte von einzelnen Werten. Über den Button rechts des Suchfeldes können Sie das Filtermenü öffnen, das es erlaubt, wahlweise nur projektspezifische (d. h. für das Projekt neu angelegte) und/oder innerhalb des Projekts derzeit verwendete Wertelisten anzuzeigen.
 
 <p align="center"><img src="images/de/configuration/valuelists_filter.png" alt="Wertelisten-Filtermenü"/></p>
 
@@ -699,9 +699,9 @@ Bitte beachten Sie, dass sämtliche Änderungen, die in der Wertelistenverwaltun
 
 #### Erstellen und Erweitern von Wertelisten
 
-Um eine neue Werteliste anzulegen, geben Sie die gewünschte ID in das Textfeld ein und wählen Sie die Option "Neue Werteliste erstellen". Es öffnet sich der Wertelisteneditor, in dem Sie die gewünschten Werte eintragen und weitere Einstellungen vornehmen können (siehe Abschnitt *Wertelisten bearbeiten*).
+Um eine neue Werteliste anzulegen, geben Sie den gewünschten Bezeichner in das Textfeld ein und wählen Sie die Option "Neue Werteliste erstellen". Es öffnet sich der Wertelisteneditor, in dem Sie die gewünschten Werte eintragen und weitere Einstellungen vornehmen können (siehe Abschnitt *Wertelisten bearbeiten*).
 
-Anstatt eine komplett neue Werteliste anzulegen, können Sie alternativ eine bereits bestehende erweitern. Öffnen Sie dazu per Rechtsklick auf den entsprechenden Listeneintrag das Kontextmenü, wählen Sie die Option *Werteliste erweitern* und geben Sie eine ID für Ihre Erweiterungsliste ein. Alle Werte der ausgewählten Werteliste werden übernommen und können nun im Editor durch zusätzliche Werte ergänzt werden. Sie haben außerdem die Möglichkeit, existierende Werte zu verstecken und die Reihenfolge anzupassen. Bitte beachten Sie, dass Erweiterungslisten sowie projektspezifische Listen nicht erweitert werden können.
+Anstatt eine komplett neue Werteliste anzulegen, können Sie alternativ eine bereits bestehende erweitern. Öffnen Sie dazu per Rechtsklick auf den entsprechenden Listeneintrag das Kontextmenü, wählen Sie die Option *Werteliste erweitern* und geben Sie einen Bezeichner für Ihre Erweiterungsliste ein. Alle Werte der ausgewählten Werteliste werden übernommen und können nun im Editor durch zusätzliche Werte ergänzt werden. Sie haben außerdem die Möglichkeit, existierende Werte zu verstecken und die Reihenfolge anzupassen. Bitte beachten Sie, dass Erweiterungslisten sowie projektspezifische Listen nicht erweitert werden können.
 
 
 #### Projektspezifische Wertelisten verwalten
@@ -718,7 +718,7 @@ Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmen
 
 * *Beschreibung der Werteliste*: Ein Beschreibungstext, in dem Sie nähere Informationen zur Werteliste angeben können. Dieser Text wird in der Wertelistenverwaltung bei Auswahl der Liste angezeigt.
 * *Verweise*: Geben Sie hier URLs an, um auf weitere Informationen zur Werteliste oder zugrunde liegenden Definitionen in anderen Systemen zu verweisen.
-* *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" die gewünschte ID eines neuen Werts ein, der von der Werteliste angeboten werden soll. Es öffnet sich der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
+* *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" den gewünschten Bezeichner eines neuen Werts ein, der von der Werteliste angeboten werden soll. Es öffnet sich der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
 * *Automatische Sortierung*: Ist diese Option aktiviert, werden die Werte stets in alphanumerischer Reihenfolge angezeigt. Sie können die Option deaktivieren, um die Werte anschließend per Drag & Drop in die gewünschte Reihenfolge zu bringen.
 
 
@@ -873,7 +873,7 @@ CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate
 
 ##### Wertelistenfelder
 
-Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils die ID des entsprechenden Werts eingetragen werden. Die Werte-ID wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Wertebezeichnungen können **nicht** verwendet werden (außer in Fällen, in denen die Werte-ID mit der Bezeichnung in einer der Sprachen identisch ist).
+Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Werts eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Wertebezeichnungen können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
 
 
 ##### Mehrsprachige Felder

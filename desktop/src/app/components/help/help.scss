@@ -54,11 +54,10 @@
 
     .table-container {
       width: 100%;
+      margin-bottom: 1rem;
       overflow-x: auto;
 
-      table {
-        margin-bottom: 1rem;
-  
+      table {  
         th, td {
           padding: 0 7px;
           border-style: solid;

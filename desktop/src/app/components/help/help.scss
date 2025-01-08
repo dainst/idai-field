@@ -52,6 +52,27 @@
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+
+      table {
+        margin-bottom: 1rem;
+  
+        th, td {
+          padding: 0 7px;
+          border-style: solid;
+          border-width: 1px;
+        }
+  
+        th {
+          background-color: #f8f9fa;
+          font-weight: normal;
+          white-space: nowrap;
+        }
+      }
+    }
+
     .search-result {
       color: white;
       background-color: #5572a1;

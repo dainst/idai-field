@@ -1005,8 +1005,8 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
         <td></td>
         <td>Beispieltext</td>
         <td>Example text</td>
-        <td></td>
-        <td></td>
+        <td>false</td>
+        <td>false</td>
       </tr>
       <tr>
         <td>B</td>
@@ -1019,7 +1019,7 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
         <td></td>
         <td></td>
         <td>true</td>
-        <td></td>
+        <td>false</td>
       </tr>
       <tr>
         <td>C</td>
@@ -1031,7 +1031,7 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>false</td>
         <td>true</td>
       </tr>
       <tr>
@@ -1044,8 +1044,8 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>false</td>
+        <td>false</td>
       </tr>
       <tr>
         <td>E</td>
@@ -1057,8 +1057,8 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
         <td>50</td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>false</td>
+        <td>false</td>
       </tr>
     </tbody>
   </table>

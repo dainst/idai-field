@@ -851,9 +851,219 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 <hr>
 
 
+## Import und Export
+
+### Formate
+
+#### CSV
+
+CSV ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
+
+Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie; jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Feldbezeichnungen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Unterkapitel "Export").
+
+CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
+
+
+##### Wertelistenfelder
+
+Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils die ID des entsprechenden Werts eingetragen werden. Die Werte-ID wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Wertebezeichnungen können **nicht** verwendet werden (außer in Fällen, in denen die Werte-ID mit der Bezeichnung in einer der Sprachen identisch ist).
+
+
+##### Mehrsprachige Felder
+
+Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldnamen getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
+
+In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
+
+
+##### Listenfelder
+
+Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
+
+Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden für jeden Listeneintrag die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
+
+*Beispiel für ein Feld des Eingabetyps "Einzeiliger Text (Liste)" mit Mehrsprachigkeit:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>exampleField.0.de</th>
+        <th>exampleField.0.en</th>
+        <th>exampleField.1.de</th>
+        <th>exampleField.1.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Wert A1</td>
+        <td>Value A1</td>
+        <td>Wert A2</td>
+        <td>Value A2</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Wert B1</td>
+        <td>Value B1</td>
+        <td>Wert B2</td>
+        <td>Value B2</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Relationen
+
+Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix "relations". Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
+
+Zusätzlich zu den Relationen, in der Projektkonfiguration in den Formularen der jeweiligen Kategorien aufgeführt sind, können die folgenden Spalten verwendet werden:
+* *relations.isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; bleibt bei Ressourcen auf oberster Ebene leer
+* *relations.depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen
+* *relations.isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern
+* *relations.isMapLayerOf* (nur bei Bildressourcen): Fügt das Bild als Kartenhintergrund im Kontext der als Ziel angegebenen Ressource hinzu
+* *relations.hasMapLayer* (nicht bei Bildressourcen): Fügt im Kontext dieser Ressource eines oder mehrere Bilder als Kartenhintergrund hinzu
+
+Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhintergrund einzurichten, tragen Sie in der Spalte *relations.depicts* bzw. *relations.isMapLayerOf* die Projektkennung ein.
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>relations.isAbove</th>
+        <th>relations.isChildOf</th>
+        <th>relations.isDepictedIn</th>
+        <th>relations.hasMapLayer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>B;C;D</td>
+        <td>E</td>
+        <td>Image1.png;Image2.png</td>
+        <td>Image3.png</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Datierungsangaben
+
+Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung besteht aus folgenden Unterfeldern, für die jeweils pro Datierung eine eigene Spalte angelegt wird:
+
+* *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich)
+* *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird
+* *end*: Jahresangabe, die bei den Datierungstyen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird
+* *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*
+* *source*: Grundlage der Datierung, mehrsprachiges Textfeld
+* *isImprecise*: Kennzeichnet die Datierungsangabe als "ungenau", wenn der Wert *true* eingetragen ist
+* *isUncertain*: Kennzeichnet die Datierungsangabe als "unsicher", wenn der Wert *true* eingetragen ist
+
+Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
+
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP)
+* *inputYear*: Die Jahreszahl
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dating.0.type</th>
+        <th>dating.0.begin.inputType</th>
+        <th>dating.0.begin.inputYear</th>
+        <th>dating.0.end.inputType</th>
+        <th>dating.0.end.inputYear</th>
+        <th>dating.0.margin</th>
+        <th>dating.0.source.de</th>
+        <th>dating.0.source.en</th>
+        <th>dating.0.isImprecise</th>
+        <th>dating.0.isUncertain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>range</td>
+        <td>bce</td>
+        <td>100</td>
+        <td>ce</td>
+        <td>200</td>
+        <td></td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>single</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>750</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>before</td>
+        <td></td>
+        <td></td>
+        <td>bp</td>
+        <td>20</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td>after</td>
+        <td>bce</td>
+        <td>350</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>E</td>
+        <td>scientific</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>1200</td>
+        <td>50</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<hr>
+
+
 ## Warnungen
 
-Aus verschiedenen Gründen, etwa Änderungen der Projektkonfiguration, können in einem Projekt inkonsistente oder anderweitig fehlerhafte Daten entstehen. In diesen Fällen zeigt die Anwendung eine Warnung an und stellt Möglichkeiten zur Behebung des Problems bereit. Fehlerhafte Ressourcen werden mit einem roten Balken neben dem Listeneintrag der entsprechenden Ressource markiert. In der Navigationsleiste oben rechts wird zudem ein Icon angezeigt, das die Anzahl der Ressourcen angibt, für die Warnungen aufgrund von Datenproblemen vorliegen:
+Aus verschiedenen Gründen, etwa Änderungen der Projektkonfiguration, können in einem Projekt inkonsistente oder anderweitig fehlerhafte Daten entstehen. In diesen Fällen zeigt die Anwendung eine Warnung an und stellt Möglichkeiten zur Behebung des Problems bereit. Fehlerhafte Ressourcen werden mit einem roten Balken neben dem Listeneintrag der entsprechenden Ressource markiert. In der Navigationsleiste oben rechts wird zudem ein Icon ante zeigt, das die Anzahl der Ressourcen angibt, für die Warnungen aufgrund von Datenproblemen vorliegen:
 
 <p align="center"><img src="images/de/warnings/warnings_icon.png" alt="Warnungen-Icon"/></p>
 

@@ -435,6 +435,13 @@ Durch **Relationen** werden Beziehungen zwischen Ressourcen angegeben (z. B.: Er
 Über das Menü "Werkzeuge" ➝ "Projektkonfiguration" erreichen Sie den Konfigurationseditor, der es Ihnen erlaubt, die im Projekt verfügbaren Kategorien, Felder und Wertelisten anzupassen und zu erweitern. Änderungen an der Konfiguration werden bei bestehender Synchronisationsverbindung an andere Nutzer und Nutzerinnen übertragen, sobald sie über den "Speichern"-Button bestätigt werden.
 
 
+### Bezeichner und Anzeigetexte
+
+Alle Elemente der Projektkonfiguration (Kategorien, Felder, Wertelisten usw.) besitzen jeweils einen **Bezeichner** zur eindeutigen Identifikation. Dieser Bezeichner wird in der Datenbank gespeichert und auch beim Import oder Export von Ressourcen verwendet. Im Konfigurationseditor wird er jeweils in magentafarbener Schrift dargestellt.
+
+Darüber hinaus können **Anzeigetexte** für jede der konfigurierten Projektsprachen eingetragen werden. Diese Texte werden zur Anzeige in allen anderen Bereichen der Anwendung verwendet und auch im Konfigurationseditor in schwarzer Schrift angezeigt. Ist kein Anzeigetext vorhanden, wird stattdessen der Bezeichner angezeigt.
+
+
 ### Kategorien und Formulare
 
 In der linken Seitenleiste des Editors werden die aktuell für das Projekt konfigurierten Kategorien aufgelistet. Über das Filtermenü links oben können Sie die Auswahl der angezeigten Kategorien auf einen bestimmten Bereich der Anwendung beschränken (z. B. "Schnitt" für die Beschränkung auf Kategorien, die innerhalb eines Schnitt-Tabs angelegt werden können). Bei Wahl der Option "Alle" werden sämtliche Kategorien des Projekts aufgeführt.

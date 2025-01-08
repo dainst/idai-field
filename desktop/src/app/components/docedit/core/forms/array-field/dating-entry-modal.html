@@ -36,7 +36,7 @@
 
 <div *ngIf="entry" class="modal-body bg-light dating-entry-modal-body">
     <div>
-        <select class="form-control" (change)="setType($event.target.value)">
+        <select class="form-control" [value]="entry.type" (change)="setType($event.target.value)">
             <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
             <option value="single" i18n="@@docedit.forms.dating.single">Einzelnes Jahr</option>
             <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>

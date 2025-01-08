@@ -9089,6 +9089,30 @@
           <context context-type="linenumber">74,76</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.label" datatype="html">
+        <source>Anzeigetext</source>
+        <target state="needs-translation">Anzeigetext</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/group/group-editor-modal.html</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

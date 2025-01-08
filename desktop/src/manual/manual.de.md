@@ -876,6 +876,11 @@ CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate
 Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Wertes eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
 
 
+##### Ja/Nein-Felder
+
+Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) eingetragen werden.
+
+
 ##### Mehrsprachige Felder
 
 Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldnamen getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
@@ -1152,6 +1157,11 @@ Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere 
     </tbody>
   </table>
 </div>
+
+
+##### Kompositfelder
+
+Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Für jedes konfigurierte Unterfeld wird pro Eintrag eine Spalte angelegt (bei mehrsprachigen Textfeldern entsprechend eine Spalte für jede Sprache). Im Spaltenkopf wird jeweils der Bezeichner des Unterfelds angegeben.
 
 
 ##### Dropdown-Listen (Bereich)

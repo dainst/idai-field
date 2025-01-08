@@ -718,7 +718,7 @@ Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmen
 
 * *Beschreibung der Werteliste*: Ein Beschreibungstext, in dem Sie nähere Informationen zur Werteliste angeben können. Dieser Text wird in der Wertelistenverwaltung bei Auswahl der Liste angezeigt.
 * *Verweise*: Geben Sie hier URLs an, um auf weitere Informationen zur Werteliste oder zugrunde liegenden Definitionen in anderen Systemen zu verweisen.
-* *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" den gewünschten Bezeichner eines neuen Werts ein, der von der Werteliste angeboten werden soll. Es öffnet sich der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
+* *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" den gewünschten Bezeichner eines neuen Wertes ein, der von der Werteliste angeboten werden soll. Es öffnet sich der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
 * *Automatische Sortierung*: Ist diese Option aktiviert, werden die Werte stets in alphanumerischer Reihenfolge angezeigt. Sie können die Option deaktivieren, um die Werte anschließend per Drag & Drop in die gewünschte Reihenfolge zu bringen.
 
 
@@ -873,7 +873,7 @@ CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate
 
 ##### Wertelistenfelder
 
-Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Werts eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
+Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Wertes eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
 
 
 ##### Mehrsprachige Felder
@@ -1059,6 +1059,58 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
         <td></td>
         <td>false</td>
         <td>false</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Maßangaben
+
+Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe besteht aus folgenden Unterfeldern, für die jeweils pro Maßangabe eine eigene Spalte angelegt wird:
+
+* *inputValue*: Der gemessene Zahlenwert
+* *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *cm*, *m*, *mm*
+* *measurementPosition*: Feld "Gemessen an". Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementComment*: Kommentar, mehrsprachiges Textfeld
+* *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein)
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dimensionLength.0.inputValue</th>
+        <th>dimensionLength.0.inputRangeEndValue</th>
+        <th>dimensionLength.0.inputUnit</th>
+        <th>dimensionLength.0.measurementPosition</th>
+        <th>dimensionLength.0.measurementComment.de</th>
+        <th>dimensionLength.0.measurementComment.en</th>
+        <th>dimensionLength.0.isImprecise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>50</td>
+        <td></td>
+        <td>cm</td>
+        <td>Minimale Ausdehnung</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>10</td>
+        <td>15</td>
+        <td>m</td>
+        <td>Maximale Ausdehnung</td>
+        <td></td>
+        <td></td>
+        <td>true</td>
       </tr>
     </tbody>
   </table>

@@ -1117,6 +1117,44 @@ Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßa
 </div>
 
 
+##### Literaturangaben
+
+Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere Literaturangaben enthalten können. Eine Literaturangabe besteht aus folgenden Unterfeldern, für die jeweils pro Literaturangabe eine eigene Spalte angelegt wird:
+
+* *quotation*: Literaturzitat
+* *zenonId*: Zenon-ID
+* *doi*: DOI
+* *page*: Seite
+* *figure*: Abbildung
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>literature.0.quotation</th>
+        <th>literature.0.zenonId</th>
+        <th>literature.0.doi</th>
+        <th>literature.0.page</th>
+        <th>literature.0.figure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
 <hr>
 
 

@@ -192,7 +192,9 @@ export module CSVMatrixExpansion {
         
         return (dating: Dating): string[] => {
 
-            const { type, begin, end, margin, source, isImprecise, isUncertain } = dating;
+            let { type, begin, end, margin, source, isImprecise, isUncertain } = dating;
+
+            if (type === 'scientific') begin = undefined;
 
             const expandedDating = [
                 type ? type : '',

@@ -128,11 +128,8 @@ export module GeojsonParser {
             geometry: feature.geometry
         };
 
-        if (feature.properties['shortDescription']) {
-            resource['shortDescription'] = feature.properties['shortDescription'];
-        }
-        if (feature.properties['gazId']) resource['gazId'] = feature.properties['gazId'];
-        if (feature.properties['id']) resource['id'] = feature.properties['id'];
+        if (feature.properties['gazId']) resource.gazId = feature.properties['gazId'];
+        if (feature.properties['id']) resource.id = feature.properties['id'];
 
         return { resource: resource };
     }

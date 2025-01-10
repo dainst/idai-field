@@ -24,35 +24,45 @@
     padding: 15px 50px;
     hyphens: auto;
     text-align: justify;
-    counter-reset: h2Counter;
+    counter-reset: h1Counter;
+
+    h1 {
+      font-size: 26px;
+      counter-reset: h2Counter;
+
+      &::before {
+        counter-increment: h1Counter;
+        content: counter(h1Counter) '. ';
+      }
+    }
 
     h2 {
-      font-size: 1.5em;
+      font-size: 22px;
       counter-reset: h3Counter;
 
       &::before {
         counter-increment: h2Counter;
-        content: counter(h2Counter) '. ';
+        content: counter(h1Counter) '.' counter(h2Counter) ' ';
       }
     }
 
     h3 {
-      font-size: 1.3em;
+      font-size: 19px;
       counter-reset: h4Counter;
 
       &::before {
         counter-increment: h3Counter;
-        content: counter(h2Counter) '.' counter(h3Counter) ' ';
+        content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) ' ';
       }
     }
 
     h4 {
-      font-size: 1.1em;
+      font-size: 17px;
       counter-reset: h5Counter;
 
       &::before {
         counter-increment: h4Counter;
-        content: counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) ' ';
+        content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) ' ';
       }
     }
 
@@ -62,13 +72,14 @@
 
       &::before {
         counter-increment: h5Counter;
-        content: counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) '.' counter(h5Counter) ' ';
+        content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) '.' counter(h5Counter) ' ';
       }
     }
 
+    p[align=center] + h1,
     p[align=center] + h2,
     p[align=center] + h3,
-    p[align=center] + h4,
+    p[align=center] + h4
     p[align=center] + h5 {
       margin-top: 35px;
     } 

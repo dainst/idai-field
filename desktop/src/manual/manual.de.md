@@ -1,4 +1,4 @@
-## Erste Schritte
+# Erste Schritte
 
 Beim ersten Start der Anwendung werden Sie dazu aufgefordert, Ihren Namen einzugeben. Empfohlen wird, Vor- und Nachnamen anzugeben. Der eingetragene Name wird bei allen von Ihnen vorgenommenen Änderungen in der Datenbank hinterlegt und erleichtert die gemeinsame Bearbeitung von Datensätzen im Projekt, indem bei der Datensynchronisation Änderungen eindeutig zugeordnet werden können. Per Klick auf den Namen oben rechts in der Navigationsleiste oder über das Untermenü **Einstellungen**, das Sie über das Menü "Field" (MacOS) bzw. "Werkzeuge" (Windows) erreichen, können Sie den Namen der Benutzerin/des Benutzers zu einem späteren Zeitpunkt ändern.
 
@@ -17,7 +17,7 @@ Sicherungen Ihrer Projektdaten anzulegen.
 <hr>
 
 
-## Ressourcen
+# Ressourcen
 
 Nach dem Anlegen bzw. Öffnen eines Projekts befinden Sie sich zunächst im Tab **Übersicht** (gekennzeichnet
 durch ein Haus-Symbol), in dem alle Maßnahmen und Orte des Projekts verwaltet werden.
@@ -46,7 +46,7 @@ In Abhängigkeit von der Maßnahmenkategorie können innerhalb eines Maßnahmen-
 Ressourcen verschiedener Kategorien angelegt werden (etwa stratigraphische Einheiten innerhalb eines Schnitts
 oder Räume innerhalb eines Gebäudes).
 
-### Hierarchische Anordnung
+## Hierarchische Anordnung
 
 Ressourcen können in hierarchischen Strukturen angeordnet werden, beispielsweise um Funde einer
 stratigraphischen Einheit zuzuweisen. Benutzen Sie den Button "Untergeordnete Ressourcen anzeigen"
@@ -60,7 +60,7 @@ jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere E
 <p align="center"><img src="images/de/resources/navpath.png" alt="Navigationspfad"/></p>
 
 
-### Ressourcen verwalten
+## Ressourcen verwalten
 
 Ressourcen in der Liste können per Klick ausgewählt werden. Bei gedrückter Strg/Cmd- oder Shift-Taste lassen
 sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf eine oder mehrere ausgewählte
@@ -87,14 +87,14 @@ dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* 
 <hr>
 
 
-## Bilder
+# Bilder
 
 Bilder können in ein Field-Projekt importiert werden, um sie anschließend mit Ressourcen zu verknüpfen oder als Kartenhintergründe zu verwenden. Für jedes importierte Bild wird automatisch eine Bildressource angelegt, in der Metadaten des Bildes eingetragen werden können.
 
 Bilddateien können über eine Synchronisationsverbindung optional mit anderen Rechnern geteilt werden (siehe Kapitel *Synchronisation*). Ist eine Bilddatei nicht auf dem Rechner vorhanden, wird stattdessen eine Platzhaltergrafik angezeigt.
 
 
-### Bilder importieren
+## Bilder importieren
 
 Bilder können auf zwei verschiedene Arten in die Anwendung importiert werden: über das Menü  "Werkzeuge" ➝ "Bilderverwaltung" sowie über die Option "Bilder verknüpfen" im Kontextmenü einer Ressource (erreichbar per Rechtsklick auf die gewünschte Ressource). In letzterem Fall wird das Bild nach dem Import automatisch mit der entsprechenden Ressource verknüpft (siehe Abschnitt *Bilder mit Ressourcen verknüpfen*).
 
@@ -105,7 +105,7 @@ Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien 
 Unterstützte Bildformate sind *jpg/jpeg*, *png* und *tif/tiff*.
 
 
-### Bildvarianten
+## Bildvarianten
 
 Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Einstellungen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
 
@@ -117,17 +117,17 @@ Insgesamt verwaltet die Anwendung für jedes Bild bis zu drei verschiedene Varia
 Eine Übersicht der aktuell im Bilderverzeichnis vorliegenden Daten können Sie über das Menü "Projekt" ➝ "Datenübersicht" abrufen.
 
 
-### Bilder verwalten
+## Bilder verwalten
 
 Öffnen Sie zur Verwaltung der Bilder das Menü "Werkzeuge" ➝ "Bilderverwaltung". Hier können Sie sämtliche Bilder des Projekts einsehen und durchsuchen (siehe dazu auch das Kapitel *Suche*).
 
 
-#### Metadaten bearbeiten
+### Metadaten bearbeiten
 
 Sie können die Metadaten eines Bildes einsehen, indem Sie per Doppelklick auf das gewünschte Bild die Bildansicht öffnen. Klicken Sie den Bearbeiten-Button, um den Editor aufzurufen und die Metadaten zu editieren. Zur Verfügung stehen hier die Felder, die im Konfigurationsedtior für das Formular der entsprechenden Bildkategorie konfiguriert wurden.
 
 
-#### Bilder löschen
+### Bilder löschen
 
 Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die entsprechenden Bilder in der Bilderverwaltung. Über den Button "Löschen" können sie anschließend entfernt werden:
 
@@ -136,7 +136,7 @@ Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die e
 Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis des Projekts gelöscht werden (bei einer bestehenden Synchronisationsverbindung auch auf anderen Rechnern). Verknüpfungen mit Ressourcen gehen beim Löschen verloren.
 
 
-### Bilder mit Ressourcen verknüpfen
+## Bilder mit Ressourcen verknüpfen
 
 Um eines oder mehrere Bilder mit einer Ressource zu verknüpfen, wählen Sie die Option "Bilder verknüpfen" im Kontextmenü der entsprechenden Ressource und klicken anschließend auf den Plus-Button. Sie haben nun die Wahl zwischen zwei Optionen:
 
@@ -150,16 +150,16 @@ Verknüpfungen können auch über die Bilderverwaltung hinzugefügt oder entfern
 <p align="center"><img src="images/de/images/link_buttons.png" alt="Buttons 'Verknüpfungen entfernen' und 'Verknüpfen'"/></p>
 
 
-#### Hauptbild festlegen
+### Hauptbild festlegen
 
 Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **Hauptbild** mit einem Stern-Symbol markiert. Dieses Hauptbild wird bei der Ressource als Vorschaubild angezeigt. Sie können das Hauptbild wechseln, indem Sie die Option "Bilder verknüpfen" im Kontextmenü der Ressource auswählen und das gewünschte Bild in der Liste verknüpfter Bilder selektieren. Klicken Sie anschließend den Button "Als Hauptbild festlegen":
 
 <p align="center"><img src="images/de/images/main_image.png" alt="Button 'Als Hauptbild festlegen'"/></p>
 
 
-### Kartenhintergründe
+## Kartenhintergründe
 
-#### Georeferenzierung
+### Georeferenzierung
 
 Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung eingelesen werden. Unterstützt werden Dateien im GeoTIFF-Format mit der Dateiendung *tif/tiff* sowie World-Files mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw*, *pgw*, *tifw*, *tiffw* und *tfw*.
 
@@ -170,7 +170,7 @@ World-Files können auf zwei verschiedene Arten importiert werden: Ist der Datei
 <p align="center"><img src="images/de/images/worldfile_import.png" alt="Georeferenzierung hinzufügen"/></p>
 
 
-#### Kartenhintergründe konfigurieren
+### Kartenhintergründe konfigurieren
 
 Ein Kartenhintergund kann entweder für eine bestimmte Maßnahme konfiguriert werden oder für das gesamte Projekt. Wechseln Sie in den Übersichts-Tab (Haussymbol), wenn der Kartenhintergrund im gesamten Projekt zur Verfügung stehen soll, oder in den Tab der gewünschten Maßnahme. Öffnen Sie dort das Kartenhintergründe-Menü über den Button rechts oben auf der Karte und klicken den Bearbeiten-Button. Über den Plus-Button können Sie nun neue Kartenhintergünde hinzufügen, wobei alle Bilder zur Auswahl stehen, für die über den Import eines World-Files Georeferenzierungsdaten hinzugefügt wurden.
 
@@ -185,7 +185,7 @@ Der blaue Button "Als Standard-Kartenhintergrund festlegen" (Stern-Symbol) recht
 Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speichern.
 
 
-#### Kartenhintergründe anzeigen
+### Kartenhintergründe anzeigen
 
 Über das Kartenhintergründe-Menü können konfigurierte Kartenhintergründe jederzeit ein- und ausgeblendet werden. Klicken Sie dazu den Augen-Button links neben dem entsprechenden Eintrag in der Liste. Die hier vorgenommenen Einstellungen werden (anders als die Liste der grundsätzlich für den Tab zur Verfügung stehenden Kartenhintergründe) nicht in der Datenbank gespeichert und somit auch nicht über eine Synchronisationsverbindung geteilt, sodass auf unterschiedlichen Rechnern unterschiedliche Kartenhintergründe ein- und ausgeblendet sein können.
 
@@ -193,7 +193,7 @@ Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speic
 <hr>
 
 
-## Suche
+# Suche
 
 In der **Übersicht**, den **Maßnahmen-Tabs** sowie in der **Bilderverwaltung** stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um die Menge der aktuell
 angezeigten Ressourcen anhand grundlegender Suchkriterien  (Bezeichner, Kurzbeschreibung, Kategorie)
@@ -205,7 +205,7 @@ Dieser Modus ermöglicht es Ihnen einerseits, über Hierarchieebenen hinweg und 
 Projektes zu suchen und dabei andererseits zusätzliche feldspezifische Suchkriterien zu definieren.
 
 
-### Suchfilter
+## Suchfilter
 
 Der Suchfilter stellt eine schnelle Möglichkeit dar, Ressourcen nach bestimmten Kriterien anzuzeigen bzw.
 auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Kategoriefilter* (blauer Button).
@@ -219,7 +219,7 @@ Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der **Bild
 Raster angezeigten Bilder vom Suchfilter betroffen.
 
 
-#### Kategoriefilter
+### Kategoriefilter
 
 <p align="center"><img src="images/de/search/filter_menu.png" alt="Kategoriefilter-Auswahl"/></p>
 
@@ -234,7 +234,7 @@ Welche Kategorien zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext 
 können Maßnahmenkategorien gewählt werden, in der Bilderverwaltung Bildkategorien etc. 
 
 
-#### Textfilter
+### Textfilter
 
 Suchbegriffe werden derzeit mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
  
@@ -266,7 +266,7 @@ sowohl (1) als auch (2) als Suchtreffer. Eine Suche nach "Schn" liefert (1), (2)
 nach "itt" oder "chni" hingegen nichts.
 
 
-#### Platzhaltersuche
+### Platzhaltersuche
 
 Im Textfilter ist auch eine Platzhaltersuche möglich: Statt eines Zeichens können Sie innerhalb eckiger
 Klammern eine Menge unterschiedlicher erlaubter Zeichen angeben. Ein solcher Platzhalter kann pro Suchanfrage
@@ -287,7 +287,7 @@ Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem 
 muss.
 
 
-#### Suchergebnisse aus anderen Kontexten
+### Suchergebnisse aus anderen Kontexten
 
 Werden bei gesetztem Suchfilter keine Suchergebnisse im aktuellen Kontext gefunden, werden unterhalb des
 Textfelds Suchergebnisse aus anderen Kontexten angezeigt.
@@ -298,7 +298,7 @@ Durch einen Klick auf eine der angezeigten Ressourcen wechseln Sie sofort in den
 wählen die entsprechende Ressource aus.
 
 
-### Erweiterter Suchmodus
+## Erweiterter Suchmodus
 
 In der **Übersicht** und in den **Maßnahmen-Tabs** können Sie durch einen Klick auf den Lupen-Button in
 den erweiterten Suchmodus wechseln.
@@ -327,7 +327,7 @@ beschränkt. Das Programm zeigt die weiteren Ressourcen nicht an, weist aber dar
 die ausgeblendeten Ressourcen zugreifen zu können.
  
 
-#### Feldspezifische Suchkriterien
+### Feldspezifische Suchkriterien
  
 Ist der erweiterte Suchmodus aktiviert, können Sie eine Suche über spezifische Felder einer Ressource
 anstoßen, indem Sie auf den Plus-Button links neben dem Kategoriefilter-Button klicken. Dabei werden Felder
@@ -355,12 +355,12 @@ Suchkriterien auch nachträglich wieder entfernen, indem Sie das Menü durch ein
 <hr>
 
 
-## Synchronisation
+# Synchronisation
 
 Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen Field-Desktop-Installationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen sowie hinzugefügte oder gelöschte Bilder), die auf einem anderen Rechner in Field Desktop vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
 
 
-### Projekt herunterladen
+## Projekt herunterladen
 
 Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Desktop-Installation oder auf einem Field-Server vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Projekt" den Menüpunkt **Herunterladen...** aus und geben Sie die Zugangsdaten ein:
 
@@ -376,7 +376,7 @@ Sobald Sie gültige Angaben für die Adresse, den Projektnamen und das Passwort 
 Der Download kann bei größeren Projekten unter Umständen eine längere Zeit dauern. Das heruntergeladene Projekt wird anschließend automatisch geöffnet und eine Synchronisationsverbindung unter Verwendung der gleichen Zugangsdaten hergestellt.
 
 
-### Synchronisation konfigurieren
+## Synchronisation konfigurieren
 
 Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Projekt" ➝ "Synchronisieren..." konfiguriert werden.
 
@@ -392,7 +392,7 @@ Sobald Sie eine gültige Adresse und das korrekte Passwort eingegeben haben, wir
 Über den Schalter **Synchronisation aktivieren** können Sie die Verbindung starten bzw. unterbrechen. Bestätigen Sie Ihre Einstellungen zuletzt über den Button **Einstellungen übernehmen**.
 
 
-### Synchronisationsstatus
+## Synchronisationsstatus
 
 Das Wolken-Icon oben rechts in der Navigationsleiste zeigt den atuellen Status der von Ihnen eingerichteten Synchronisationsverbindung an.
 
@@ -401,7 +401,7 @@ Das Wolken-Icon oben rechts in der Navigationsleiste zeigt den atuellen Status d
 Konnte die Verbindung erfolgreich hergestellt werden, zeigt das Icon einen Haken an. Werden gerade Dateien herunter- oder hochgeladen, wird dies durch einen Pfeil signalisiert. Im Falle eines Fehlers erscheint ein Ausrufezeichen. Zusätzliche Informationen zum Synchronisationsstatus können Sie abfragen, indem Sie den Mauszeiger über das Icon bewegen.
 
 
-### Konflikte
+## Konflikte
 
 Zu Konflikten kann es kommen, wenn eine Ressource gleichzeitig auf mehreren Computern bearbeitet wird oder wenn sich zwei Datenbanken miteinander synchronisieren, in denen zuvor die gleiche Ressource bearbeitet wurde. In solchen Fällen stehen sich zwei unterschiedliche Versionen der Ressource gegenüber: die *aktuelle Version* (die in der Ressourcenverwaltung und anderen Bereichen der Anwendung angezeigt wird) und die *konkurrierende Version* (die im Hintergrund gespeichert bleibt, aber vorerst nicht angezeigt wird). Die Versionen können sich in der Anzahl der ausgefüllten Felder unterscheiden; möglicherweise wurden auch verschiedene Werte in die gleichen Felder eingetragen.
 
@@ -410,7 +410,7 @@ Für jede Ressource mit Konflikten wird eine Warnung angezeigt (siehe Kapitel *W
 Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 
 
 
-### Synchronisationsverbindungen zur eigenen Field-Desktop-Installation erlauben
+## Synchronisationsverbindungen zur eigenen Field-Desktop-Installation erlauben
 
 Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt herzustellen, indem Sie ihnen die Zugangsdaten mitteilen, die Sie im Menü **Einstellungen** im Abschnitt **Synchronisation** finden können:
 
@@ -422,7 +422,7 @@ Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt 
 <hr>
 
 
-## Projektkonfiguration
+# Projektkonfiguration
 
 Eine mit Field Desktop verwaltete Datenbank enthält eine Reihe von Ressourcen, die immer einer bestimmten **Kategorie** angehören, beispielsweise "Ort", "Fund" oder "Abbildung". Dabei wird unterschieden zwischen **Oberkategorien** (z. B. "Fund") und **Unterkategorien** (z. B. "Ziegel" oder "Keramik"). Eine Ressource der Unterkategorie gehört dabei immer auch der Oberkategorie an (ein Ziegel ist gleichzeitig ein Fund).
 
@@ -435,14 +435,14 @@ Durch **Relationen** werden Beziehungen zwischen Ressourcen angegeben (z. B.: Er
 Über das Menü "Werkzeuge" ➝ "Projektkonfiguration" erreichen Sie den Konfigurationseditor, der es Ihnen erlaubt, die im Projekt verfügbaren Kategorien, Felder und Wertelisten anzupassen und zu erweitern. Änderungen an der Konfiguration werden bei bestehender Synchronisationsverbindung an andere Nutzer und Nutzerinnen übertragen, sobald sie über den "Speichern"-Button bestätigt werden.
 
 
-### Bezeichner und Anzeigenamen
+## Bezeichner und Anzeigenamen
 
 Alle Elemente der Projektkonfiguration (Kategorien, Felder usw.) besitzen jeweils einen **Bezeichner** zur eindeutigen Identifikation. Dieser Bezeichner wird in der Datenbank gespeichert und auch beim Import oder Export von Ressourcen verwendet. Im Konfigurationseditor wird er jeweils in magentafarbener Schrift dargestellt.
 
 Darüber hinaus können **Anzeigenamen** für jede der konfigurierten Projektsprachen eingetragen werden. Diese Texte werden zur Anzeige in allen anderen Bereichen der Anwendung verwendet und auch im Konfigurationseditor in schwarzer Schrift angezeigt. Ist kein Anzeigename vorhanden, wird stattdessen der Bezeichner angezeigt.
 
 
-### Kategorien und Formulare
+## Kategorien und Formulare
 
 In der linken Seitenleiste des Editors werden die aktuell für das Projekt konfigurierten Kategorien aufgelistet. Über das Filtermenü links oben können Sie die Auswahl der angezeigten Kategorien auf einen bestimmten Bereich der Anwendung beschränken (z. B. "Schnitt" für die Beschränkung auf Kategorien, die innerhalb eines Schnitt-Tabs angelegt werden können). Bei Wahl der Option "Alle" werden sämtliche Kategorien des Projekts aufgeführt.
 
@@ -451,14 +451,14 @@ In der linken Seitenleiste des Editors werden die aktuell für das Projekt konfi
 Wenn Sie eine Kategorie in der Liste auswählen, wird auf der rechten Seite das für diese Kategorie konfigurierte Formular mit den entsprechenden Feldgruppen und Feldern angezeigt.
 
 
-#### Hinzufügen von Oberkategorien
+### Hinzufügen von Oberkategorien
 
 Über den grünen Plus-Button unten in der Liste können Sie eine neue Oberkategorie zum Projekt hinzufügen. Dabei haben Sie die Auswahl zwischen allen Oberkategorien der Field-Kategoriebibliothek, die aktuell noch nicht für das Projekt konfiguriert sind. Über das Textfeld oberhalb der Liste können Sie die angezeigten Kategorien und Formulare filtern. Für jede Kategorie werden die verfügbaren Formulare aufgelistet; bei Klick auf eines der Formulare sehen Sie auf der rechten Seite die entsprechenden Feldgruppen und Felder. Bestätigen Sie Ihre Auswahl über den Button "Kategorie hinzufügen".
 
 Beachten Sie bitte, dass keine neuen Oberkategorien über den Konfigurationseditor hinzugefügt werden können.
 
 
-#### Hinzufügen von Unterkategorien
+### Hinzufügen von Unterkategorien
 
 Möchten Sie eine neue Unterkategorie zu einer bestehenden Oberkategorie hinzufügen, klicken Sie auf den kleinen Plus-Button, der rechts neben der entsprechenden Oberkategorie angezeigt wird. Fehlt der Plus-Button, so ist das Anlegen von Unterkategorien für diese Kategorie nicht möglich.
 
@@ -467,7 +467,7 @@ Analog zum Hinzufügen von Oberkategorien haben Sie auch hier die Auswahl zwisch
 Projektspezifische Kategorien werden in der Liste blau markiert, sofern die Option "Eigene Kategorien/Felder hervorheben" im Menü "Projektkonfiguration" aktiviert ist.
 
 
-#### Kategorien verwalten
+### Kategorien verwalten
 
 Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -476,7 +476,7 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 * *Löschen*: Entfernt die Kategorie nach einer Sicherheitsabfrage. Wurden bereits Ressourcen dieser Kategorie im Projekt angelegt, so bleiben diese erhalten, werden allerdings nicht mehr angezeigt, bis die Kategorie erneut hinzugefügt wurde. Da beim Löschen auch sämtliche Anpassungen des für die Kategorie ausgewählten Formulars verloren gehen, sollte eine Kategorie allerdings im Regelfall nicht gelöscht werden, wenn bereits Ressourcen mit dem entsprechenden Formular angelegt wurden.
 
 
-#### Kategorien bearbeiten
+### Kategorien bearbeiten
 
 Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Kategorieliste kann der Kategorieeditor geöffnet werden, in dem die Eigenschaften der Kategorie editiert werden können:
 
@@ -491,7 +491,7 @@ Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hin
 * *Verweise*: Geben Sie hier URLs an, wenn Sie auf weitere Informationen zur Kategorie oder Kategoriedefinitionen in anderen Systemen verweisen möchten.
 
 
-##### QR-Codes
+#### QR-Codes
 
 Ist die Verwendung von QR-Codes für eine Kategorie aktiviert, kann jeder Ressource der Kategorie ein einzigartiger QR-Code zugewiesen werden. Es können dabei sowohl neue Codes generiert als auch bestehende Codes per Kamera-Scan übernommen und mit der jeweiligen Ressource verknüpft werden. Der QR-Code kann anschließend auf verschiedene Arten eingesetzt werden:
 * Aufrufen der Ressource per Kamera-Scan (über den QR-Code-Button der Suchleiste)
@@ -505,7 +505,7 @@ Zur Konfiguration von QR-Codes stehen im Kategorieeditor folgende Optionen berei
 * *Zu druckende Felder*: Wählen Sie bis zu drei Felder aus, die zusätzlich zum Ressourcen-Bezeichner auf dem QR-Code-Etikett gedruckt werden sollen. Aktivieren Sie jeweils die Option "Feldbezeichnung drucken", wenn der Anzeigename des Feldes vor dem Feldinhalt auf dem Etikett erscheinen soll.
 
 
-#### Hierarchie
+### Hierarchie
 
 Die Kategorie bestimmt, an welcher Stelle der Ressourcenhierarchie eine Ressource angelegt werden kann: So können beispielsweise Funde innerhalb von stratigraphischen Einheiten angelegt werden, nicht aber umgekehrt. Mit den beiden Buttons rechts oben über der Formularanzeige können Sie sich anzeigen lassen, unterhalb von Ressourcen welcher Kategorien eine Ressource der ausgewählten Kategorie angelegt werden kann bzw. Ressourcen welcher Kategorien sie beinhalten kann.
 
@@ -514,17 +514,17 @@ Die Kategorie bestimmt, an welcher Stelle der Ressourcenhierarchie eine Ressourc
 Die Kategorienhierarchie kann aktuell nicht im Konfigurationseditor geändert werden. Für neu angelegte Unterkategorien gelten die hierarchischen Restriktionen der Oberkategorie.
 
 
-### Gruppen
+## Gruppen
 
 Rechts neben der Kategorieliste werden die Feldgruppen des derzeit ausgewählten Kategorieformulars angezeigt. Klicken Sie auf eine Gruppe, um rechts davon die entsprechenden Felder anzuzeigen.
 
 
-#### Hinzufügen von Gruppen
+### Hinzufügen von Gruppen
 
 Über den grünen Plus-Button unten in der Liste können Sie eine neue Gruppe zum Formular hinzufügen. Dabei können Sie eine der Gruppen auswählen, die bereits in anderen für das Projekt konfigurierten Formularen enthalten sind, oder eine neue Gruppe erstellen. Hierzu geben Sie den Bezeichner der neuen Gruppe in das Textfeld oberhalb der Liste ein und wählen die Option "Neue Gruppe erstellen". Es öffnet sich der Gruppeneditor, in dem Sie den Anzeigenamen der neuen Gruppe eintragen können.
 
 
-#### Gruppen verwalten
+### Gruppen verwalten
 
 Bei einem Rechtsklick auf eine Gruppe wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -532,21 +532,21 @@ Bei einem Rechtsklick auf eine Gruppe wird ein Kontextmenü eingeblendet, das di
 * *Löschen*: Entfernt die Gruppe aus dem Formular. Bitte beachten Sie, dass eine Gruppe nur dann gelöscht werden kann, wenn sie keine Felder enthält. Verschieben Sie vor dem Löschen der Gruppe alle Felder in andere Gruppen oder entfernen Sie sie.
 
 
-### Felder
+## Felder
 
 Rechts neben der Gruppenliste werden die Felder angezeigt, die in der ausgewählten Gruppe enthalten sind. Klicken Sie auf einen Eintrag in der Felderliste, um weitere Informationen zum Feld einzublenden (Beschreibung, Eingabetyp und gegebenenfalls die zugeordnete Werteliste).
 
 Felder, die aus dem Formular der Oberkategorie stammen, werden durch das Icon der Oberkategorie markiert und können nicht bearbeitet oder gelöscht werden. Wechseln Sie dazu ins Formular der entsprechenden Oberkategorie.
 
 
-#### Hinzufügen von Feldern
+### Hinzufügen von Feldern
 
 Klicken Sie auf den Plus-Button unten in der Feldliste, um ein neues Feld zur Gruppe hinzuzufügen. Sie haben dabei zunächst die Auswahl aus allen Feldern, die für die ausgewählte Kategorie zur Verfügung stehen und die noch nicht zum Formular hinzugefügt wurden. Wählen Sie einen Eintrag in der Liste aus, um auf der rechten Seite Informationen über das Feld einzublenden. Um ein neues Feld anzulegen, geben Sie den gewünschten Bezeichner in das Eingabefeld oberhalb der Liste ein und wählen Sie die Option "Neues Feld erstellen". Es öffnet sich der Feldeditor, in dem Sie die Eigenschaften des Feldes angeben können (siehe Abschnitt *Felder bearbeiten*).
 
 Projektspezifische Felder werden in der Liste blau markiert, sofern die Option "Eigene Kategorien/Felder hervorheben" im Menü "Projektkonfiguration" aktiviert ist.
 
 
-#### Felder verwalten
+### Felder verwalten
 
 Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -554,7 +554,7 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 * *Löschen*: Löscht das Feld nach einer Sicherheitsabfrage. Wurden bereits Daten für dieses Feld in Ressourcen eingetragen, so gehen diese nicht verloren, werden aber nicht mehr angezeigt, bis das Feld erneut hinzugefügt wird. Diese Option steht nur für projektspezifische Felder zur Verfügung. Felder, die einem ausgewählten Formular der Field-Formularbibliothek angehören, können nicht gelöscht, sondern lediglich im Feldeditor ausgeblendet werden. 
 
 
-#### Felder bearbeiten
+### Felder bearbeiten
 
 Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Feldliste kann der Feldeditor geöffnet werden, in dem die Eigenschaften des Feldes editiert werden können:
 
@@ -562,122 +562,122 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Anzeigenamen des Feldes eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
 
 
-#### Eingabetyp ändern
+### Eingabetyp ändern
 
 Über das Auswahlfeld *Eingabetyp* im Feldeditor können Sie den Eingabetyp des Feldes wechseln. Bitte beachten Sie, dass Sie für die mit Field mitgelieferten Felder nur Eingabetypen wählen können, deren Datenformat mit dem standardmäßig eingestellten Eingabetyp kompatibel sind (beispielsweise ist der Wechsel von einem einzeiligen Textfeld auf ein mehrzeiliges Textfeld möglich, nicht aber der Wechsel von einem Datierungsfeld zu einem Checkbox-Auswahlfeld). Bei projektspezifischen Feldern können Sie den Eingabetyp jederzeit frei ändern.
 
 Bereits eingetragene Felddaten werden auch nach einem Wechsel des Eingabetyps weiterhin angezeigt. Im Ressourceneditor werden mit dem aktuellen Eingabetyp inkompatible Daten allerdings entsprechend markiert und können dort nicht mehr editiert, sondern nur noch gelöscht werden.
 
-##### Einzeiliger Text
+#### Einzeiliger Text
 Eingabe eines einzeiligen Textes (wahlweise einsprachig oder mehrsprachig)
 <p align="center"><img src="images/de/configuration/input_type_input.png" alt="Eingabetyp 'Einzeiliger Text'"/></p>
 
-##### Einzeiliger Text mit Mehrfachauswahl
+#### Einzeiliger Text mit Mehrfachauswahl
 Eingabe mehrerer einzeiliger Texte (wahlweise einsprachig oder mehrsprachig)
 <p align="center"><img src="images/de/configuration/input_type_multi_input.png" alt="Eingabetyp 'Einzeiliger Text mit Mehrfachauswahl'"/></p>
   
-#####  Mehrzeiliger Text
+####  Mehrzeiliger Text
 Eingabe eines mehrzeiligen, mehrsprachigen Textes
 <p align="center"><img src="images/de/configuration/input_type_text.png" alt="Eingabetyp 'Mehrzeiliger Text mit Mehrfachauswahl'"/></p>
 
-##### Ganzzahl
+#### Ganzzahl
 Eingabe einer positiven oder negativen Ganzzahl
 <p align="center"><img src="images/de/configuration/input_type_int.png" alt="Eingabetyp 'Ganzzahl'"/></p>
 
-##### Positive Ganzzahl
+#### Positive Ganzzahl
 Eingabe einer positiven Ganzzahl
 <p align="center"><img src="images/de/configuration/input_type_unsigned_int.png" alt="Eingabetyp 'Positive Ganzzahl'"/></p>
 
-##### Kommazahl
+#### Kommazahl
 Eingabe einer positiven oder negativen Kommazahl
 <p align="center"><img src="images/de/configuration/input_type_float.png" alt="Eingabetyp 'Kommazahl'"/></p>
 
-##### Positive Kommazahl
+#### Positive Kommazahl
 Eingabe einer positiven Kommazahl
 <p align="center"><img src="images/de/configuration/input_type_unsigned_float.png" alt="Eingabetyp 'Positive Kommazahl'"/></p>
 
-##### URL
+#### URL
 Eingabe einer URL
 <p align="center"><img src="images/de/configuration/input_type_url.png" alt="Eingabetyp 'URL'"/></p>
 
-##### Dropdown-Liste
+#### Dropdown-Liste
 Auswahl eines Wertes aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_dropdown.png" alt="Eingabetyp 'Dropdown-Liste'"/></p>
 
-##### Dropdown-Liste (Bereich)
+#### Dropdown-Liste (Bereich)
 Auswahl eines Wertes oder eines Wertebereichs (von/bis, zwei Werte) aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_dropdown_range.png" alt="Eingabetyp 'Dropdown-Liste (Bereich)'"/></p>
 
-##### Radiobutton
+#### Radiobutton
 Auswahl eines Werte aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_radio.png" alt="Eingabetyp 'Radiobutton'"/></p>
 
-##### Ja / Nein
+#### Ja / Nein
 Angabe von Ja oder Nein
 <p align="center"><img src="images/de/configuration/input_type_boolean.png" alt="Eingabetyp 'Ja / Nein'"/></p>
 
-##### Checkboxen
+#### Checkboxen
 Auswahl eines oder mehrerer Werte aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_checkboxes.png" alt="Eingabetyp 'Checkboxen'"/></p>
 
-##### Datierungsangabe
+#### Datierungsangabe
 Angabe einer oder mehrerer Datierungen. Mögliche Datierungstypen sind: Zeitraum, Exakt, Vor, Nach, Naturwissenschaftlich.
 <p align="center"><img src="images/de/configuration/input_type_dating.png" alt="Eingabetyp 'Datierungsangabe'"/></p>
 
-##### Datum
+#### Datum
 Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden.
 <p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
 
-##### Maßangabe
+#### Maßangabe
 Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
 <p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
 
-##### Literaturangabe
+#### Literaturangabe
 Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
 <p align="center"><img src="images/de/configuration/input_type_literature.png" alt="Eingabetyp 'Literaturangabe'"/></p>
 
-##### Kompositfeld
+#### Kompositfeld
 Kompositfelder können mehrere Einträge enthalten, die jeweils aus einer beliebigen Anzahl von Unterfeldern bestehen. Jedes Unterfeld besitzt einen eigenen Namen und Eingabetyp (siehe Abschnitt *Unterfelder*).
 <p align="center"><img src="images/de/configuration/input_type_composite_field.png" alt="Eingabetyp 'Kompositfeld'"/></p>
 
 
-#### Felder verstecken
+### Felder verstecken
 
 Felder können versteckt werden, indem die Einstellung *Feld anzeigen* im Feldeditor deaktiviert wird. Das Feld wird daraufhin weder in der Ressourcenansicht noch im Ressourceneditor angezeigt. Ob versteckte Felder im Konfigurationseditor angezeigt werden, hängt von der Einstellung "Versteckte Felder anzeigen" im Menü "Projektkonfiguration" ab. Bereits eingetragene Daten bleiben auch nach dem Verstecken weiterhin erhalten und werden beim erneuten Aktivieren der Option *Feld anzeigen* wieder eingeblendet. Einige Felder, die für die Funktionalität der Anwendung wesentlich sind, können nicht versteckt werden (etwa der Bezeichner); in diesen Fällen wird die Option nicht angezeigt.
 
 
-#### Eingabe in mehreren Sprachen erlauben
+### Eingabe in mehreren Sprachen erlauben
 
 Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede der konfigurierten Projektsprachen ein eigener Text in das Feld eingegeben werden. Die Einstellung kann nur für Felder der Eingabetypen "Einzeiliger Text", "Einzeiliger Text mit Mehrfachauswahl" und "Mehrzeiliger Text" ausgewählt werden und ist standardmäßig aktiviert.
 
 
-#### Feldspezifische Suche
+### Feldspezifische Suche
 
 Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für ein Feld eine feldspezifische Suche im erweiterten Suchmodus durchgeführt werden kann (siehe Abschnitt *Erweiterter Suchmodus* im Kapitel *Suche*). Für Felder der Kategorie "Projekt" sowie für Felder einiger Eingabetypen kann diese Einstellung nicht aktiviert werden; in diesen Fällen ist sie ausgegraut.
 
 
-#### Werteliste wechseln
+### Werteliste wechseln
 
 Die aktuell ausgewählte Werteliste kann per Klick auf den Button "Werteliste wechseln" durch eine andere Werteliste ausgetauscht werden. Dabei kann entweder eine bestehende Werteliste ausgewählt oder eine neue Liste angelegt werden (siehe Abschnitt *Wertelisten*).
 
 Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden.
 
 
-#### Unterfelder
+### Unterfelder
 
 Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Kompositfeld" gewählt ist. Legen Sie hier fest, aus welchen Unterfeldern jeder Eintrag des Kompositfelds besteht. Die Reihenfolge der Unterfelder lässt sich per Drag & Drop ändern.
 
 Um ein neues Unterfeld anzulegen, geben Sie den gewünschten Namen in das Eingabefeld ein und bestätigen die Eingabe per Klick auf den Plus-Button. Es öffnet sich ein neues Editorfenster, in dem Sie das Unterfeld ähnlich wie ein gewöhnliches Feld konfigurieren können (Eingabetyp, Anzeigename, Beschreibung usw.).
 
 
-##### Bedingungen für die Anzeige von Unterfeldern
+#### Bedingungen für die Anzeige von Unterfeldern
 
 Optional lässt sich im Unterfeldeditor eine Bedingung für die Anzeige des Unterfelds festlegen. Ist eine Bedingung gesetzt, steht das Unterfeld bei der Dateneingabe nur dann zur Auswahl, wenn bei einem anderen Unterfeld ein bestimmter Wert (oder einer von mehreren Werten) gesetzt ist.
 
 Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Unterfelds" zunächst ein anderes Unterfeld des gleichen Kompositfelds aus. Zur Auswahl stehen dabei Unterfelder der Eingabetypen "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" und "Checkboxen". Die möglichen Werte des gewählten Unterfelds werden nun angezeigt und können selektiert werden. Das aktuelle Unterfeld wird bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Unterfeld mindestens einer der selektierten Werte gesetzt ist.
 
 
-### Anpassen der Reihenfolge und der Gruppenzugehörigkeit
+## Anpassen der Reihenfolge und der Gruppenzugehörigkeit
 
 Die Reihenfolge von Ober- und Unterkategorien, Gruppen und Feldern lässt sich per Drag & Drop ändern. Dazu klicken Sie auf das Icon links im Listeneintrag, halten die Maustaste gedrückt und schieben das Element an die gewünschte Position.
 
@@ -686,7 +686,7 @@ Die Reihenfolge von Ober- und Unterkategorien, Gruppen und Feldern lässt sich p
 Auf die gleiche Weise können Felder auch einer anderen Gruppe zugeordnet werden: Ziehen Sie das Feld einfach auf den Eintrag der entsprechenden Gruppe in der Gruppenliste. Beachten Sie dabei, dass Änderungen der Feld- oder Gruppenreihenfolge bzw. der Gruppenzugehörigkeit nicht automatisch vom Formular einer Oberkategorie auf Formulare der entsprechenden Unterkategorien übertragen werden (und umgekehrt).
 
 
-### Wertelisten
+## Wertelisten
 
 Über das Menü "Projektkonfiguration" ➝ "Wertelistenverwaltung" kann eine Übersicht sämtlicher Wertelisten aufgerufen werden, die mit Field mitgeliefert werden. Die hier aufgeführten Wertelisten werden entweder von den Feldern der Standard-Formulare verwendet oder wurden im Rahmen von Projekten angelegt, die Field bereits eingesetzt haben.
 
@@ -697,14 +697,14 @@ Verwenden Sie das Textfeld oberhalb der Liste, um die Wertelisten auf Basis beli
 Bitte beachten Sie, dass sämtliche Änderungen, die in der Wertelistenverwaltung vorgenommen werden, anschließend per Klick auf den "Speichern"-Button des Konfigurationseditors bestätigt werden müssen, bevor sie für das Projekt angewendet werden.
 
 
-#### Erstellen und Erweitern von Wertelisten
+### Erstellen und Erweitern von Wertelisten
 
 Um eine neue Werteliste anzulegen, geben Sie den gewünschten Bezeichner in das Textfeld ein und wählen Sie die Option "Neue Werteliste erstellen". Es öffnet sich der Wertelisteneditor, in dem Sie die gewünschten Werte eintragen und weitere Einstellungen vornehmen können (siehe Abschnitt *Wertelisten bearbeiten*).
 
 Anstatt eine komplett neue Werteliste anzulegen, können Sie alternativ eine bereits bestehende erweitern. Öffnen Sie dazu per Rechtsklick auf den entsprechenden Listeneintrag das Kontextmenü, wählen Sie die Option *Werteliste erweitern* und geben Sie einen Bezeichner für Ihre Erweiterungsliste ein. Alle Werte der ausgewählten Werteliste werden übernommen und können nun im Editor durch zusätzliche Werte ergänzt werden. Sie haben außerdem die Möglichkeit, existierende Werte zu verstecken und die Reihenfolge anzupassen. Bitte beachten Sie, dass Erweiterungslisten sowie projektspezifische Listen nicht erweitert werden können.
 
 
-#### Projektspezifische Wertelisten verwalten
+### Projektspezifische Wertelisten verwalten
 
 Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -712,7 +712,7 @@ Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmen
 * *Löschen*: Löscht die Werteliste nach einer Sicherheitsabfrage. Das Löschen einer Werteliste ist nicht möglich, solange sie von einem oder mehreren Feldern verwendet wird. Wählen Sie in diesem Fall zunächst eine andere Werteliste für die entsprechenden Felder aus.
 
 
-#### Wertelisten bearbeiten
+### Wertelisten bearbeiten
 
 Über das Kontextmenü oder per Doppelklick auf eine Werteliste kann ein Editor geöffnet werden, in dem die Eigenschaften der Werteliste bearbeitet werden können:
 
@@ -722,7 +722,7 @@ Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmen
 * *Automatische Sortierung*: Ist diese Option aktiviert, werden die Werte stets in alphanumerischer Reihenfolge angezeigt. Sie können die Option deaktivieren, um die Werte anschließend per Drag & Drop in die gewünschte Reihenfolge zu bringen.
 
 
-#### Werte bearbeiten
+### Werte bearbeiten
 
 Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
 
@@ -731,7 +731,7 @@ Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
 * *Verweise*: Geben Sie hier URLs an, um auf zugrunde liegende Definitionen in anderen Systemen zu verweisen.
 
 
-### Projektsprachen auswählen
+## Projektsprachen auswählen
 
 Über das Menü "Projektkonfiguration" ➝ "Projektsprachen auswählen..." können Sie die Sprachen festlegen, für die im Projekt Daten eingegeben werden sollen. Bei Freitextfeldern, für die im Konfigurationseditor die Option "Eingabe in mehreren Sprachen erlauben" aktiviert ist, kann für jede Projektsprache ein eigener Text eingegeben werden.
 Darüber hinaus werden im Konfigurationseditor für jede Projektsprache automatisch leere Eingabefelder für die Anzeigetexte und Beschreibungen von Kategorien, Feldern, Gruppen, Wertelisten und Werten eingeblendet.
@@ -739,7 +739,7 @@ Darüber hinaus werden im Konfigurationseditor für jede Projektsprache automati
 Bitte beachten Sie, dass bereits eingegebene Texte nicht mehr angezeigt werden, wenn die entsprechende Sprache aus der Liste der Projektsprachen entfernt wird. Sie bleiben allerdings in der Datenbank erhalten und werden wieder eingeblendet, wenn die Sprache zu einem späteren Zeitpunkt erneut als Projektsprache ausgewählt wird.
 
 
-### Konfiguration importieren
+## Konfiguration importieren
 
 Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." auf, um eine bereits existierende Konfiguration aus einem anderen Projekt zu übernehmen. 
 Im Auswahlmenü "Quelle" können Sie zwischen zwei verschiedenen Importmöglichkeiten wählen:
@@ -750,7 +750,7 @@ Im Auswahlmenü "Quelle" können Sie zwischen zwei verschiedenen Importmöglichk
 Das Ergebnis des Imports kann nun im Editor überprüft und per Klick auf den "Speichern"-Button übernommen werden. Bitte beachten Sie, dass dabei sämtliche bisherigen Konfigurationseinstellungen durch die importierte Konfiguration ersetzt werden.
 
 
-### Konfiguration exportieren
+## Konfiguration exportieren
 
 Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren..." auf, um die Konfiguration des aktuell geöffneten Projekts als Field-Konfigurationsdatei (Dateiendung *.configuration*) zu speichern. Exportiert wird dabei der im Konfigurationseditor angezeigte Stand inklusive eventueller ungespeicherter Änderungen. In der erzeugten Datei sind auch alle projektspezifischen Wertelisten enthalten.
 
@@ -760,7 +760,7 @@ Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren.
 <hr>
 
 
-## Matrix
+# Matrix
 
 In der Ansicht **Matrix** (erreichbar über das Menu "Werkzeuge") finden Sie für jeden Schnitt des Projekts
 eine Matrix vor, die automatisch aus den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird.
@@ -773,7 +773,7 @@ Wählen Sie den Schnitt, für den Sie eine Matrix generieren möchten, über den
 Toolbar aus.
 
 
-### Optionen
+## Optionen
 
 Über den **Optionsbutton** in der rechten oberen Ecke der Matrixansicht können Sie verschiedene Einstellungen
 vornehmen, mit denen Sie die Darstellung der Matrix individuell anpassen können. Die gewählten Einstellungen
@@ -783,7 +783,7 @@ erhalten.
 <p align="center"><img src="images/de/matrix/matrix_tools.png" alt="Optionsmenü"/></p>
 
 
-#### Relationen
+### Relationen
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
   (Feldgruppe "Zeit") erstellt.
@@ -791,14 +791,14 @@ erhalten.
   geschnitten von" und "Gleich wie" (Feldgruppe "Lage") erstellt.
 
 
-#### Kanten
+### Kanten
 
 * *Gerade*: Alle Kanten bestehen aus geraden Linien.
 * *Gebogen*: Kanten können gebogen sein, wenn keine direkte Verbindungslinie zwischen zwei Einheiten der
   Matrix gezogen werden kann.
 
 
-#### Gruppierung nach Grobdatierung
+### Gruppierung nach Grobdatierung
 
 Aktivieren Sie diese Option, um die stratigraphischen Einheiten in der Matrix anhand des Eintrags im Feld
 "Grobdatierung" zu gruppieren. Sind als Grobdatierung zwei Werte (von/bis) eingetragen, wird jeweils nur
@@ -808,7 +808,7 @@ Grobdatierung werden nun nahe beieinander platziert und mit einem Rechteck umrah
 <p align="center"><img src="images/de/matrix/matrix_phases.png" alt="Gruppierung nach Grobdatierung"/></p>
 
 
-### Navigation
+## Navigation
 
 Bewegen Sie die Maus bei gedrückter **rechter Maustaste**, um die Position der Matrix innerhalb des
 Anzeigebereichs zu verändern. Verwenden Sie das **Mausrad** oder die **Zoom-Buttons** in der linken oberen
@@ -821,7 +821,7 @@ Grüne Linien zeigen Verbindungen zu Einheiten auf höheren Ebenen an, blaue zu 
 und orange zu Einheiten auf der gleichen Ebene innerhalb der Matrix.
 
 
-### Editierung
+## Editierung
 
 Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um den
 Editor zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Durch die Editierung der
@@ -830,7 +830,7 @@ innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speichern** w
 Grundlage der geänderten Daten aktualisiert.
 
 
-### Anzeige von Teilmatrizen
+## Anzeige von Teilmatrizen
 
 Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilmatrizen aus ausgewählten Einheiten
 der Matrix generiert werden. Verwenden Sie die Buttons auf der rechten Seite der Toolbar, um Einheiten zu
@@ -858,11 +858,11 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 <hr>
 
 
-## Import und Export
+# Import und Export
 
-### Formate
+## Formate
 
-#### CSV
+### CSV
 
 CSV ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
 
@@ -871,24 +871,24 @@ Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie; jede Spal
 CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
 
 
-##### Wertelistenfelder
+#### Wertelistenfelder
 
 Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Wertes eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
 
 
-##### Ja/Nein-Felder
+#### Ja/Nein-Felder
 
 Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) eingetragen werden.
 
 
-##### Mehrsprachige Felder
+#### Mehrsprachige Felder
 
 Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldnamen getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
 
 In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
 
 
-##### Listenfelder
+#### Listenfelder
 
 Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
@@ -926,7 +926,7 @@ Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe"
 </div>
 
 
-##### Relationen
+#### Relationen
 
 Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix "relations". Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
 
@@ -964,7 +964,7 @@ Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhinterg
 </div>
 
 
-##### Datierungsangaben
+#### Datierungsangaben
 
 Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung besteht aus folgenden Unterfeldern, für die jeweils pro Datierung eine eigene Spalte angelegt wird:
 
@@ -1070,7 +1070,7 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 </div>
 
 
-##### Maßangaben
+#### Maßangaben
 
 Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe besteht aus folgenden Unterfeldern, für die jeweils pro Maßangabe eine eigene Spalte angelegt wird:
 
@@ -1122,7 +1122,7 @@ Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßa
 </div>
 
 
-##### Literaturangaben
+#### Literaturangaben
 
 Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere Literaturangaben enthalten können. Eine Literaturangabe besteht aus folgenden Unterfeldern, für die jeweils pro Literaturangabe eine eigene Spalte angelegt wird:
 
@@ -1159,17 +1159,19 @@ Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere 
 </div>
 
 
-##### Kompositfelder
+#### Kompositfelder
 
 Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Für jedes konfigurierte Unterfeld wird pro Eintrag eine Spalte angelegt (bei mehrsprachigen Textfeldern entsprechend eine Spalte für jede Sprache). Im Spaltenkopf wird jeweils der Bezeichner des Unterfelds angegeben.
 
 
-##### Dropdown-Listen (Bereich)
+#### Dropdown-Listen (Bereich)
 
 Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden beiden Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
 
 * *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
 * *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
+
+*Beispiel:*
 
 <div class="table-container">
   <table>
@@ -1199,7 +1201,7 @@ Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden bei
 <hr>
 
 
-## Warnungen
+# Warnungen
 
 Aus verschiedenen Gründen, etwa Änderungen der Projektkonfiguration, können in einem Projekt inkonsistente oder anderweitig fehlerhafte Daten entstehen. In diesen Fällen zeigt die Anwendung eine Warnung an und stellt Möglichkeiten zur Behebung des Problems bereit. Fehlerhafte Ressourcen werden mit einem roten Balken neben dem Listeneintrag der entsprechenden Ressource markiert. In der Navigationsleiste oben rechts wird zudem ein Icon angezeigt, das die Anzahl der Ressourcen angibt, für die Warnungen aufgrund von Datenproblemen vorliegen:
 
@@ -1209,61 +1211,61 @@ Mit einem Klick auf das Icon oder über das Kontextmenü einer betroffenen Resso
 
 Wählen Sie eine der angezeigten Ressourcen aus, um die Liste der vorliegenden Warnungen für diese Ressource einzusehen. Für die meisten Warnungen werden Tools angeboten, mit denen sich die Fehler beheben lassen; viele Warnungen können außerdem durch eine Anpassung der Projektkonfiguration gelöst werden. Legen Sie bitte in jedem Fall im Vorfeld ein **Backup** des Projekts über das Menü "Projekt" ➝ "Backup erstellen..." an. Nähere Informationen zu den Ursachen und Lösungsmöglichkeiten der einzelnen Warnungstypen finden Sie im Folgenden.
 
-### Warnungstypen
-#### Konflikt
+## Warnungstypen
+### Konflikt
 Es existieren mehrere Versionen der Ressource, die miteinander in Konflikt stehen.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Die Ressource wurde auf verschiedenen Rechern gleichzeitig bei bestehender Synchronisationsverbindung   bearbeitet.
 * Die Ressource wurde auf verschiedenen Rechern ohne bestehende Synchronisationsverbindung bearbeitet; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Button *Konflikt lösen*: Lösen Sie die Konflikte im Ressourceneditor (siehe Abschnitt *Konflikte* des Kapitels *Synchronisation*).
 
-#### Unkonfigurierte Kategorie
+### Unkonfigurierte Kategorie
 Für die Ressource ist eine Kategorie eingetragen, die nicht in der Projektkonfiguration gefunden werden kann. Die Ressource wird daher nicht angezeigt.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Die Kategorie wurde im Konfigurationseditor gelöscht.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Button *Neue Kategorie auswählen*: Wählen Sie eine der für das Projekt konfigurierten Kategorien aus. Die gewählte Kategorie wird anschließend für die betroffene Ressource gesetzt. Optional können Sie die neue Kategorie für alle Ressourcen setzen, bei denen die gleiche unkonfigurierte Kategorie eingetragen ist.
 * Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
 * Fügen Sie im Konfigurationseditor eine Kategorie gleichen Namens hinzu.
 
-#### Unkonfiguriertes Feld
+### Unkonfiguriertes Feld
 Es wurden Daten in ein Feld eingetragen, das in der Projektkonfiguration nicht gefunden werden kann. Die eingetragenen Daten werden daher nicht angezeigt.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Das Feld wurde im Konfigurationseditor gelöscht.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld übertragen. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
 * Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht. Optional können Sie die Felddaten bei allen Ressourcen löschen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
 * Fügen Sie im Konfigurationseditor für die Kategorie der betroffenen Ressource ein Feld gleichen Namens hinzu.
 
-#### Ungültige Felddaten
+### Ungültige Felddaten
 Die in ein Feld eingetragenen Daten entsprechen nicht dem Eingabetyp, der für das Feld gewählt wurde.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Der Eingabetyp des Feldes wurde im Konfigurationseditor geändert.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die ungültigen Felddaten zu entfernen und gegebenenfalls neu einzutragen.
 * Button *Felddaten konvertieren*: Die Daten werden automatisch in das korrekte Format des jeweiligen Eingabetyps konvertiert. Optional können Sie die Daten bei allen Ressourcen konvertieren lassen, bei denen im gleichen Feld ungültige Daten eingetragen sind. Bitte beachten Sie, dass eine automatische Konvertierung nicht in allen Fällen möglich ist und dieser Button daher nicht immer zur Verfügung steht.
 * Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld verschoben. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen im gleichen Feld ungültige Daten eingetragen sind (gültige Daten verbleiben im ursprünglichen Feld).
 
-#### Nicht in Werteliste enthaltener Wert
+### Nicht in Werteliste enthaltener Wert
 In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Die Werteliste des Feldes wurde im Konfigurationseditor durch eine andere ausgetauscht.
 * Werte wurden im Wertelisten-Editor aus einer projektspezifischen Werteliste entfernt.
 * Der Eingabetyp des Feldes wurde im Konfigurationseditor von einem Eingabetyp, der die freie Eingabe von Text erlaubt, zu einem Eingabetyp mit Werteliste geändert.
 * Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Es wurden Einträge aus dem entsprechenden Feld in den Projekteigenschaften entfernt.
 * Beim Feld *Kampagne*: Werte wurden aus dem gleichnamigen Feld der übergeordneten Ressource entfernt (für das Feld *Kampagne* dürfen lediglich Werte ausgewählt werden, die in der übergeordneten Ressource gesetzt wurden).
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die nicht in der Werteliste enthaltenen Werte zu entfernen und gegebenenfalls durch andere Werte zu ersetzen.
 * Button *Wert korrigieren*: Wählen Sie aus der für das Feld konfigurierten Werteliste einen neuen Wert aus. Der bisherige Wert wird durch den ausgewählten Wert ersetzt. Optional können Sie den neuen Wert bei allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist und die die gleiche Werteliste verwenden.
 * Button *Wert löschen*: Der im Feld eingetragene Wert wird vollständig gelöscht. Optional können Sie den Wert aus allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist.
@@ -1272,53 +1274,53 @@ In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für d
 * Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Fügen Sie den fehlenden Wert dem entsprechenden Feld in den Projekteigenschaften hinzu.
 * Beim Feld *Kampagne*: Setzen Sie den Wert bei der übergeordneten Ressource, falls dort noch nicht vorhanden.
 
-#### Fehlende Zielressource einer Relation
+### Fehlende Zielressource einer Relation
 Eine als Ziel einer Relation angegebene Ressource kann nicht gefunden werden.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
 * Button *Relation bereinigen*: Alle Verweise auf nicht existierende Ressourcen werden aus der Relation gelöscht.
 
-#### Fehlende oder ungültige übergeordnete Ressource
+### Fehlende oder ungültige übergeordnete Ressource
 Die Ressource besitzt keine gültige übergeordnete Ressource. Dies kann entweder bedeuten, dass für die Ressource keine übergeordnete Ressource gesetzt wurde, dass die angegebene übergeordnete Ressource nicht gefunden werden kann oder dass sie aufgrund ihrer Kategorie keine gültige übergeordnete Ressource ist. Die Ressource wird daher nicht angezeigt.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
 * Die Ressource wurde mit einer veralteten Version von Field Desktop angelegt.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
 * Button *Übergeordnete Ressource neu setzen*: Wählen Sie eine neue Ressource als übergeordnete Ressource aus. Die Ressource wird in den Kontext der gewählten Ressource verschoben.
 * Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
 
-#### Fehlendes Bezeichner-Präfix
+### Fehlendes Bezeichner-Präfix
 Der Bezeichner der Ressource enthält nicht das für die entsprechende Kategorie konfigurierte Präfix.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Die Ressource wurde angelegt, bevor das Bezeichner-Präfix konfiguriert wurde.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Bezeichner neu einzutragen.
 
-#### Uneindeutiger Bezeichner
+### Uneindeutiger Bezeichner
 Der Bezeichner der Ressource wird auch von einer oder mehreren anderen Ressourcen verwendet. Es kann daher zu Fehlern beim Import und Export von Daten kommen.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Die Bezeichner wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung eingetragen; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um einen neuen Bezeichner einzutragen.
 
-#### Ressourcenlimit überschritten
+### Ressourcenlimit überschritten
 Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konfigurierte Ressourcenlimit erlaubt.
 
-##### Mögliche Ursachen
+#### Mögliche Ursachen
 * Die Ressourcen wurden angelegt, bevor das Ressourcenlimit konfiguriert wurde.
 * Die Ressourcen wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung angelegt; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
 
-##### Mögliche Lösungen
+#### Mögliche Lösungen
 * Löschen Sie Ressourcen der entsprechenden Kategorie, bis das Ressourcenlimit eingehalten wird.
 * Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.

@@ -18,22 +18,46 @@
     padding: 15px 0;
     hyphens: auto;
     text-align: justify;
+    counter-reset: h2Counter;
 
     h2 {
       font-size: 1.5em;
+      counter-reset: h3Counter;
+
+      &::before {
+        counter-increment: h2Counter;
+        content: counter(h2Counter) '. ';
+      }
     }
 
     h3 {
       font-size: 1.3em;
+      counter-reset: h4Counter;
+
+      &::before {
+        counter-increment: h3Counter;
+        content: counter(h2Counter) '.' counter(h3Counter) ' ';
+      }
     }
 
     h4 {
       font-size: 1.1em;
+      counter-reset: h5Counter;
+
+      &::before {
+        counter-increment: h4Counter;
+        content: counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) ' ';
+      }
     }
 
     h5 {
       font-size: 16px;
       font-weight: 500;
+
+      &::before {
+        counter-increment: h5Counter;
+        content: counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) '.' counter(h5Counter) ' ';
+      }
     }
 
     p[align=center] + h2,
@@ -115,10 +139,17 @@
       padding: 0;
     }
 
+    counter-reset: tableOfContentsCounter;
+
     .nav {
       margin: 5px 12px;
 
       .nav-link {
+        &::before {
+          counter-increment: tableOfContentsCounter;
+          content: counter(tableOfContentsCounter) '. ';
+        }
+
         &.active {
           background-color: $primary-button-color;
         }

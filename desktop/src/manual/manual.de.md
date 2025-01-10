@@ -860,16 +860,30 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
 # Import und Export
 
+## Import
+
+Rufen Sie das Menü "Werkzeuge" ➝ "Import" auf, um Ressourcen in das aktuell geöffnete Projekt zu importieren.
+
+* *Quelle*: Wählen Sie die Art der Importquelle aus. Es stehen zwei Optionen zur Auswahl:
+    * *Datei*: Die zu importierenden Daten werden aus einer Datei eingelesen, die auf Ihrem Computer, einem angeschlossenen Speichermedium oder einem anderen über das Netzwerk verfügbaren Computer vorliegt.
+    * *HTTP*: Die zu importierenden Daten werden per HTTP oder HTTPS anhand einer URL geladen. Bitte beachten Sie, dass ein Import von Dateien der Formate *Shapefile* und *Katalog* bei Auswahl dieser Option nicht möglich ist. 
+* *Pfad*: Wählen Sie über einen Dateiauswahldialog die gewünschte Importdatei aus (nur verfügbar bei Quelle "Datei")  
+* *URL*: Geben Sie die URL ein, unter der die zu importierenden Daten zur Verfügung stehen (nur verfügbar bei Quelle "HTTP")
+
+Abhängig vom Format der ausgewählten Datei, das anhand der Dateiendung erkannt wird, können weitere Optionen verfügbar sein (siehe Abschnitt zum entsprechenden Format im Unterkapitel *Formate*).
+
+Starten Sie den Importprozess über den Button **Import starten**.
+
+
 ## Formate
 
 ### CSV
 
 CSV ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
 
-Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie; jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Unterkapitel "Export").
+Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie; jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
 
 CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
-
 
 #### Wertelistenfelder
 

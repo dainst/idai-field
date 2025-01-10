@@ -362,7 +362,7 @@ Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen v
 
 ## Projekt herunterladen
 
-Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Desktop-Installation oder auf einem Field-Server vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Projekt" den Menüpunkt **Herunterladen...** aus und geben Sie die Zugangsdaten ein:
+Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Desktop-Installation oder auf einem Field-Server vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu den Menüpunkt "Projekt" ➝ "Herunterladen..." aus und geben Sie die Zugangsdaten ein:
 
 * *Adresse*: Tragen Sie hier die Adresse des Projekts ein, das Sie herunterladen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Servers, der über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Server des DAI).
 * *Projektname*: Der Name des Projekts, das Sie herunterladen möchten.

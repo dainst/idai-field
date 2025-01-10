@@ -351,7 +351,7 @@ In order to collaborate on a single project, data can be synchronized between mu
 
 ## Download project
 
-To work with an existing project that is available on another Field Desktop installation or a Field server, first download the project. To do this, select **Download...** from the "Project" menu and enter the access data:
+To work with an existing project that is available on another Field Desktop installation or a Field server, first download the project. To do this, select the menu item "Project" ➝ "Download..." and enter the access data:
 
 * *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which Field Desktop is currently open (this address can be viewed in the settings section *Your address*) or the address of a Field server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the server of the DAI).
 * *Project name*: The name of the project you want to download.

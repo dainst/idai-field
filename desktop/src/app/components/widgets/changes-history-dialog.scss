@@ -16,9 +16,9 @@
     }
   }
 
-  .list-body{
-    max-height: 300px;
-    overflow: scroll;
+  .list-body{    
+    max-height: 70vh;
+    overflow: auto;
   }
 
   .list-row {

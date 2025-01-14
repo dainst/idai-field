@@ -1,6 +1,6 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'projects'|'configuration'|'geometryEdit'|'mapLayersEdit'
     |'georeferenceEdit'|'configurationEdit'|'configurationValuelistEdit'|'configurationSubfieldEdit'
-    |'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'|'qrCodeScanner'|'printSettingsModal';
+    |'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'|'qrCodeScanner'|'historyModal'|'printSettingsModal';
 
     
 /**

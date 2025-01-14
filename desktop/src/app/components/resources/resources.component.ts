@@ -21,7 +21,7 @@ import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
-import { ChangesHistoryDialogComponent } from '../widgets/changes-history-dialog.component';
+import { ChangesHistoryModalComponent } from '../widgets/changes-history-modal.component';
 
 
 @Component({
@@ -192,12 +192,12 @@ export class ResourcesComponent implements OnDestroy {
 
 
     public async editQRCode(document: Document) {
-        this.initDialog(document, QrCodeEditorModalComponent, MenuContext.QR_CODE_EDITOR)
+        this.initModal(document, QrCodeEditorModalComponent, MenuContext.QR_CODE_EDITOR)
     }
 
     public async showHistory(document: Document) {
         
-        this.initDialog(document, ChangesHistoryDialogComponent, MenuContext.HISTORY_MODAL)
+        this.initModal(document, ChangesHistoryModalComponent, MenuContext.HISTORY_MODAL)
     }
 
 
@@ -439,7 +439,7 @@ export class ResourcesComponent implements OnDestroy {
         }
     }
 
-    private async initDialog(document: Document, component, menuContext){
+    private async initModal(document: Document, component, menuContext){
 
         try {
             this.menuService.setContext(menuContext);

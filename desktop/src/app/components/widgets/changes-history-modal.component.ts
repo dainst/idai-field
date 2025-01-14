@@ -4,12 +4,12 @@ import { Document } from 'idai-field-core';
 
 
 @Component({
-    selector: 'changes-history-dialog',
-    templateUrl: './changes-history-dialog.html',
-    styleUrls: ['./changes-history-dialog.scss']
+    selector: 'changes-history-modal',
+    templateUrl: './changes-history-modal.html',
+    styleUrls: ['./changes-history-modal.scss']
 })
 
-export class ChangesHistoryDialogComponent {
+export class ChangesHistoryModalComponent {
 
     public escapeKeyPressed: boolean;
     public document: Document;

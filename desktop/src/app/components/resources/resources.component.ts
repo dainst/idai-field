@@ -211,12 +211,10 @@ export class ResourcesComponent implements OnDestroy {
         }
     }
 
-
+    //  TODO create a private function for the code in common between editQRCode() and showHistory()
     public async showHistory(document: Document) {
 
         try {
-            this.menuService.setContext(MenuContext.QR_CODE_EDITOR);
-
             const modalRef: NgbModalRef = this.modalService.open(
                 ChangesHistoryDialogComponent,
                 { animation: false, backdrop: 'static', keyboard: false,  windowClass : "history-modal-content" }

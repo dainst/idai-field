@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { clone, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Valuelist } from 'idai-field-core';
 import { AddValuelistModalComponent } from '../../../add/valuelist/add-valuelist-modal.component';

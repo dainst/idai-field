@@ -22,7 +22,6 @@ test.describe('configuration --', () => {
 
     async function createSubfieldAndValuelist(subfieldName: string, valuelistName: string, valueName: string) {
 
-        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
         await EditConfigurationPage.typeInNewSubfield(subfieldName);
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
@@ -879,6 +878,7 @@ test.describe('configuration --', () => {
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.typeInSearchFilterInput('compositeField');
         await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
         await createSubfieldAndValuelist('subfield1', 'new-valuelist-1', 'value1a');
         await createSubfieldAndValuelist('subfield2', 'new-valuelist-2', 'value2a');
         await EditConfigurationPage.clickConfirm();
@@ -922,6 +922,7 @@ test.describe('configuration --', () => {
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.typeInSearchFilterInput('compositeField');
         await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
         await createSubfieldAndValuelist('subfield1', 'new-valuelist', 'value1');
         
         await EditConfigurationPage.typeInNewSubfield('subfield2');

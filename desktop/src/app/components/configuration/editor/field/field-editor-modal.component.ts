@@ -126,11 +126,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (!this.isValuelistSectionVisible() && this.getInputType() !== Field.InputType.COMPOSITE
-                && this.getClonedFormDefinition().valuelists) {
-            delete this.getClonedFormDefinition().valuelists[this.field.name];
-        }
-
         if (isEmpty(this.getClonedFieldDefinition())) {
             delete this.getClonedFormDefinition().fields[this.field.name];
         }
@@ -164,6 +159,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
 
     public setInputType(newInputType: Field.InputType) {
+
+        if (this.getClonedFormDefinition().valuelists
+                && !(Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType())
+                    && Field.InputType.VALUELIST_INPUT_TYPES.includes(newInputType))) {
+            delete this.getClonedFormDefinition().valuelists[this.field.name];
+            delete this.clonedField.valuelist;
+        }
 
         if (!this.availableInputTypes.find(inputType => inputType.name === newInputType).searchable) {
             delete this.getClonedFieldDefinition().constraintIndexed;

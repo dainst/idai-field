@@ -22,6 +22,7 @@ export module MenuContext {
     export const CONFIGURATION_MANAGEMENT = 'configurationManagement';
     export const WARNINGS = 'warnings';
     export const QR_CODE_EDITOR = 'qrCodeEditor';
+    export const HISTORY_MODAL = 'historyModal';
     export const QR_CODE_SCANNER = 'qrCodeScanner';
     export const PRINT_SETTINGS_MODAL = 'printSettingsModal';
 }

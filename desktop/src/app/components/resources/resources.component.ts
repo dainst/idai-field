@@ -192,42 +192,12 @@ export class ResourcesComponent implements OnDestroy {
 
 
     public async editQRCode(document: Document) {
-
-        try {
-            this.menuService.setContext(MenuContext.QR_CODE_EDITOR);
-
-            const modalRef: NgbModalRef = this.modalService.open(
-                QrCodeEditorModalComponent,
-                { animation: false, backdrop: 'static', keyboard: false }
-            );
-            modalRef.componentInstance.document = document;
-            await modalRef.componentInstance.initialize();
-            AngularUtility.blurActiveElement();
-            await modalRef.result;
-        } catch (err) {
-            console.error(err);
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-        }
+        this.initDialog(document, QrCodeEditorModalComponent, MenuContext.QR_CODE_EDITOR)
     }
 
-    //  TODO create a private function for the code in common between editQRCode() and showHistory()
     public async showHistory(document: Document) {
-
-        try {
-            const modalRef: NgbModalRef = this.modalService.open(
-                ChangesHistoryDialogComponent,
-                { animation: false, backdrop: 'static', keyboard: false,  windowClass : "history-modal-content" }
-            );
-            modalRef.componentInstance.document = document;
-            await modalRef.componentInstance.initialize();
-            AngularUtility.blurActiveElement();
-            await modalRef.result;
-        } catch (err) {
-            console.error(err);
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-        }
+        
+        this.initDialog(document, ChangesHistoryDialogComponent, MenuContext.HISTORY_MODAL)
     }
 
 
@@ -466,6 +436,25 @@ export class ResourcesComponent implements OnDestroy {
             }
         } else {
             await this.routingService.jumpToResource(movedDocuments[0], false);
+        }
+    }
+
+    private async initDialog(document: Document, component, menuContext){
+
+        try {
+            this.menuService.setContext(menuContext);
+            const modalRef: NgbModalRef = this.modalService.open(
+                component,
+                { animation: false, backdrop: 'static', keyboard: false,  windowClass : "history-modal-content" }
+            );
+            modalRef.componentInstance.document = document;
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 }

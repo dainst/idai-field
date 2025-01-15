@@ -16,7 +16,8 @@ import { UtilTranslations } from '../../../../../util/util-translations';
 
 @Component({
     selector: 'subfields-section',
-    templateUrl: './subfields-section.html'
+    templateUrl: './subfields-section.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -18,7 +18,8 @@ const remote = window.require('@electron/remote');
     templateUrl: './import-configuration-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

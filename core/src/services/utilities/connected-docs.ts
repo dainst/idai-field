@@ -1,6 +1,6 @@
 import { flatMap, flow, subtract } from 'tsfun';
-import { Document, toResourceId  } from '../../model/document';
-import { Resource } from '../../model/resource';
+import { Document, toResourceId  } from '../../model/document/document';
+import { Resource } from '../../model/document/resource';
 import { Relation } from '../../model/configuration/relation';
 import { Datastore } from '../../datastore/datastore';
 import { updateRelations } from './update-relations';
@@ -37,8 +37,8 @@ export namespace ConnectedDocs {
             true
         );
 
-        for (const doc of docsToUpdate) {
-            await datastore.convert(doc);
+        for (const document of docsToUpdate) {
+            await datastore.convert(document);
         }
 
         await updateDocs(datastore, docsToUpdate);

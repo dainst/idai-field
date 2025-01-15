@@ -5,7 +5,8 @@ import { Labels, Valuelist } from 'idai-field-core';
 
 @Component({
     selector: 'valuelist-view',
-    templateUrl: './valuelist-view.html'
+    templateUrl: './valuelist-view.html',
+    standalone: false
 })
 /**
  *  @author Sebastian Cuy

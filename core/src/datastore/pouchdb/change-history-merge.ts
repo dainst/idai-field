@@ -1,5 +1,5 @@
-import { Document } from '../../model/document';
-import { Action } from '../../model/action';
+import { Document } from '../../model/document/document';
+import { Action } from '../../model/document/action';
 
 
 /**

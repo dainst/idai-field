@@ -15,9 +15,7 @@ gulp.task('copy-core', () => {
         .pipe(gulp.dest('node_modules/idai-field-core'));
 });
 
-gulp.task('copy-shapefile-tool', () => {
-
-    return gulp.src('java/target/shapefile-tool-*-jar-with-dependencies.jar')
-        .pipe(rename('shapefile-tool.jar'))
-        .pipe(gulp.dest('tools'));
+gulp.task('copy-gdal', () => {
+    return gulp.src('node_modules/gdal3.js/dist/package/gdal3WebAssembly.*')
+        .pipe(gulp.dest('lib/gdal'));
 });

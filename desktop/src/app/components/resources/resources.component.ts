@@ -25,7 +25,8 @@ import { ChangesHistoryModalComponent } from '../widgets/changes-history-modal.c
 
 
 @Component({
-    templateUrl: './resources.html'
+    templateUrl: './resources.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

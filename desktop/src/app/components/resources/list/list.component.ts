@@ -13,7 +13,8 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 @Component({
     selector: 'list',
-    templateUrl: './list.html'
+    templateUrl: './list.html',
+    standalone: false
 })
 /**
  * @author Fabian Z.

@@ -7,7 +7,8 @@ import { ResourcesComponent } from '../resources.component';
 
 @Component({
     selector: 'list-button-group',
-    templateUrl: './list-button-group.html'
+    templateUrl: './list-button-group.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

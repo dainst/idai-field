@@ -3,7 +3,7 @@ import { Server } from 'http';
 import PouchDB from 'pouchdb-node';
 import { IdGenerator, PouchdbDatastore, SyncService, SyncStatus } from '../../../src/datastore';
 import { doc } from '../../test-helpers';
-import { Document } from '../../../src/model/document';
+import { Document } from '../../../src/model/document/document';
 
 /**
  * @author Sebastian Cuy

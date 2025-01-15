@@ -9,6 +9,13 @@ defmodule FieldHub.CouchService do
   require Logger
 
   @doc """
+  Sends a HEAD request to the configurated CouchDB's base url.
+  """
+  def ping_couch() do
+    HTTPoison.head("#{base_url()}/")
+  end
+
+  @doc """
   Authenticate with credentials.
 
   Returns `:ok` if credentials are valid, otherwise `{:error, reason}`.

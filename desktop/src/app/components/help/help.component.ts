@@ -20,7 +20,8 @@ const FALLBACK_LANGUAGE = 'en';
     templateUrl: './help.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

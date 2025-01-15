@@ -9,7 +9,8 @@ import { CategoryForm, ProjectConfiguration, Document, Relation } from 'idai-fie
     templateUrl: './link-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 export class LinkModalComponent {
 
@@ -48,7 +49,7 @@ export class LinkModalComponent {
     private getIdsToIgnore(): string[] {
 
         return intersection(this.imageDocuments.map(document => {
-            return document.resource.relations[Relation.Image.DEPICTS];
+            return document.resource.relations[Relation.Image.DEPICTS] ?? [];
         }));
     }
 }

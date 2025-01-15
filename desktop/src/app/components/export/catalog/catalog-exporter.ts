@@ -1,11 +1,11 @@
 import { Resource, StringUtils, Datastore } from 'idai-field-core';
 import { ImageRelationsManager } from '../../../services/image-relations-manager';
 import { Settings } from '../../../services/settings/settings';
-import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { getExportDocuments } from './get-export-documents';
 
 const fs = window.require('fs');
 const remote = window.require('@electron/remote');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 export const ERROR_FAILED_TO_COPY_IMAGES = 'export.catalog.failedToCopyImages';
@@ -53,8 +53,8 @@ export module CatalogExporter {
         );
 
         try {
-            await getAsynchronousFs().createCatalogZip(
-                outputFilePath, tmpDir + CATALOG_JSONL, CATALOG_JSONL, imgDir, CATALOG_IMAGES
+            await ipcRenderer.invoke(
+                'createCatalogZip', outputFilePath, tmpDir + CATALOG_JSONL, CATALOG_JSONL, imgDir, CATALOG_IMAGES
             );
         } catch (err) {
             console.error(err); // TODO Improve error handling

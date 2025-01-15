@@ -4,10 +4,10 @@ import { Reader } from './reader';
 import { ReaderErrors } from './reader-errors';
 import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/catalog/catalog-exporter';
 import { Settings } from '../../../../app/services/settings/settings';
-import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
 const fs = window.require('fs');
 const remote = window.require('@electron/remote');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 /**
@@ -35,7 +35,7 @@ export class CatalogFilesystemReader implements Reader {
             if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
 
             try {
-                await getAsynchronousFs().extractZip(this.filePath, tmpDir);
+                await ipcRenderer.invoke('extractZip', this.filePath, tmpDir);
 
                 const idGenerator = new IdGenerator();
                 const replacementMap: Map<string> = {};

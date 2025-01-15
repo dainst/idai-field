@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Labels, IndexFacade, Tree, InPlace, ConfigReader, Indexer,
-    DocumentConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
+    DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -47,7 +47,8 @@ import { M } from '../messages/m';
         '(window:keyup)': 'onKeyUp($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -130,7 +131,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private menuNavigator: MenuNavigator,
                 private modalService: NgbModal,
                 private documentCache: DocumentCache,
-                private documentConverter: DocumentConverter,
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private utilTranslations: UtilTranslations,
@@ -784,7 +784,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            this.documentConverter,
             this.projectConfiguration,
             true
         );

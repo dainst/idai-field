@@ -16,7 +16,8 @@ import { SettingsProvider } from '../../../../services/settings/settings-provide
     templateUrl: './add-group-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

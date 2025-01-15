@@ -24,7 +24,8 @@ const CREDENTIALS_TIMER_INTERVAL: number = 500;
     templateUrl: './download-project.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

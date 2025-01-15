@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { ConfigurationDocument } from '../../model/configuration-document';
-import { Document } from '../../model/document';
-import { NewDocument } from '../../model/document';
+import { ConfigurationDocument } from '../../model/document/configuration-document';
+import { Document } from '../../model/document/document';
+import { NewDocument } from '../../model/document/document';
 import { ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../datastore-errors';
 import { ChangeHistoryMerge } from './change-history-merge';
@@ -288,7 +288,7 @@ export class PouchdbDatastore {
      */
     public fetchRevision(resourceId: string, revisionId: string): Promise<Document> {
 
-        return this.fetch(resourceId, { rev: revisionId });
+        return this.fetch(resourceId, { rev: revisionId }, true);
     }
 
 

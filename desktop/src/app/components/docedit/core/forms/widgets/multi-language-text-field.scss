@@ -1,5 +1,5 @@
-$default-border-color: #ced4da;
-$focused-border-color: #7998cb;
+$default-border-color: #dee2e6;
+$focused-border-color: #9bacc7;
 
 multi-language-text-field {
   position: relative;
@@ -36,6 +36,7 @@ multi-language-text-field {
       margin-left: -1px;
       color: grey !important;
       user-select: none;
+      transition: none;
 
       &.active {
         transition: border-top-color 0.15s ease-in-out,
@@ -55,12 +56,13 @@ multi-language-text-field {
     }
 
     .additional-languages-dropdown {
-      height: 34px !important;
+      height: 33px !important;
     }
 
     .additional-languages-dropdown-menu {
-      top: 1px !important;
+      top: -2px !important;
       border-top: none;
+      border-color: $focused-border-color;
 
       .additional-languages-dropdown-list {
         button {

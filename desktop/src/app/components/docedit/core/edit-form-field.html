@@ -16,6 +16,9 @@
 <form-field-simple-multi-input *ngIf="field.inputType === 'simpleMultiInput'"
     [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-simple-multi-input>
 
+<form-field-valuelist-multi-input *ngIf="field.inputType === 'valuelistMultiInput'"
+    [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-valuelist-multi-input>
+
 <form-field-dropdown *ngIf="field.inputType === 'dropdown'"
     [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown>
 
@@ -31,18 +34,13 @@
 <form-field-checkboxes *ngIf="field.inputType === 'checkboxes'"
     [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-checkboxes>
 
-<form-field-dating *ngIf="field.inputType === 'dating'"
-    [fieldContainer]="fieldContainer" [field]="field" [languages]="languages"></form-field-dating>
-
 <form-field-date *ngIf="field.inputType === 'date'"
     [fieldContainer]="fieldContainer" [field]="field"></form-field-date>
 
-<form-field-dimension *ngIf="field.inputType === 'dimension'"
-    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
-    [languages]="languages"></form-field-dimension>
-
-<form-field-literature *ngIf="field.inputType === 'literature'"
-    [fieldContainer]="fieldContainer" [field]="field"></form-field-literature>
+<form-field-object-array *ngIf="field.inputType === 'dating' || field.inputType === 'dimension'
+        || field.inputType === 'literature'"
+    [fieldContainer]="fieldContainer" [field]="field" [inputType]="field.inputType"
+    [languages]="languages"></form-field-object-array>
 
 <form-field-composite *ngIf="field.inputType === 'composite'"
     [resource]="resource" [field]="field" [languages]="languages"></form-field-composite>

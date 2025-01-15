@@ -3,8 +3,9 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'form-field-simple-input',
-    template: `<input [(ngModel)]="fieldContainer[fieldName]" (keyup)="deleteIfEmpty($event.target.value)"
-                      class="form-control">`
+    template: `<input [(ngModel)]="fieldContainer[fieldName]" (input)="deleteIfEmpty()"
+                      class="form-control">`,
+    standalone: false
 })
 
 /**
@@ -18,8 +19,8 @@ export class SimpleInputComponent {
     @Input() fieldName: string;
 
 
-    public deleteIfEmpty(value: string) {
+    public deleteIfEmpty() {
 
-        if (value === '') delete this.fieldContainer[this.fieldName];
+        if (this.fieldContainer[this.fieldName] === '') delete this.fieldContainer[this.fieldName];
     }
 }

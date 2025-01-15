@@ -6,7 +6,8 @@ import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
 @Component({
     selector: 'thumbnail',
-    templateUrl: './thumbnail.html'
+    templateUrl: './thumbnail.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

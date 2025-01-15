@@ -82,40 +82,6 @@ describe('getSuggestions', () => {
     });
 
 
-    test('only suggest resources with an isRecordedIn relation to the same resource if the option' +
-            'sameMainCategoryResource is set', async () => {
-
-        const document: Document = doc('shortDescription', 'identifier', 'Category', 'id');
-        document.resource.relations['relation'] = [''];
-        document.resource.relations['isRecordedIn'] = ['operationId'];
-
-        const relationDefinition: Relation = {
-            name: 'relation',
-            domain: [],
-            range: ['RangeCategory'],
-            sameMainCategoryResource: true,
-            editable: false,
-            visible: false,
-            inputType: 'relation'
-        };
-
-        await getSuggestions(datastore, document.resource, relationDefinition, '', 0, 10);
-
-        expect(datastore.find).toHaveBeenCalledWith({
-            q: '',
-            offset: 0,
-            limit: 10,
-            categories: ['RangeCategory'],
-            constraints: {
-                'id:match': {
-                    value: ['id'],
-                    subtract: true
-                }, 'isChildOf:contain': { value: 'operationId', searchRecursively: true },
-            }
-        });
-    });
-
-
     test('show suggestions for new document without id', async () => {
 
         const document: Document = doc('shortDescription', 'identifier', 'Category','id');
@@ -126,7 +92,6 @@ describe('getSuggestions', () => {
             name: 'relation',
             domain: [],
             range: ['RangeCategory'],
-            sameMainCategoryResource: true,
             editable: false,
             visible: false,
             inputType: 'relation'

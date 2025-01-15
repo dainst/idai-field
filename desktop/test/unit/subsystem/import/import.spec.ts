@@ -1,9 +1,9 @@
+import { nop } from 'tsfun';
 import { CategoryForm, PouchdbDatastore } from 'idai-field-core';
 import { ImportErrors } from '../../../../src/app/components/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../src/app/components/import/importer';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { cleanUp, createApp, createHelpers, setupSettingsService } from '../subsystem-helper';
-import { nop } from 'tsfun';
 
 const PouchDB = require('pouchdb-node');
 
@@ -614,8 +614,8 @@ describe('Import/Subsystem', () => {
 
         const feature1 = (await helpers.getDocument('f1')).resource;
         const feature2 = (await helpers.getDocument('f2')).resource;
-        expect(feature1.relations.isAfter.length).toBe(0);
-        expect(feature2.relations.isBefore.length).toBe(0);
+        expect(feature1.relations.isAfter).toBeUndefined();
+        expect(feature2.relations.isBefore).toBeUndefined();
     });
 
 
@@ -813,64 +813,6 @@ describe('Import/Subsystem', () => {
         const feature = (await helpers.getDocument('101')).resource;
         expect(trench.shortDescription).toBe('original');
         expect(feature.shortDescription).toBe('new');
-    });
-
-
-    test('handle broken relation', async () => {
-
-        // Let's assume a previous import from the same import file has been interrupted,
-        // such that only feature1 has been imported.
-        //
-        // What we want in this case is to continue the import process
-        // and also save the time already invested.
-        //
-        // We ignore the records from the import file which already exist in the db;
-        // however, we try to reconstruct relations
-
-        await create(
-            {
-                id: 'tr1',
-                identifier: 'trench1',
-                category: 'Trench',
-                shortDescription: 'original',
-                relations: {}
-            },
-            {
-                id: '99',
-                identifier: 'feature1',
-                category: 'Feature',
-                shortDescription: 'original',
-                relations: { isAfter: ['100'], isRecordedIn: ['tr1'] }
-            }
-        );
-
-        await parseAndImport(
-            {
-                separator: '',
-                sourceType: '',
-                format: 'native',
-                mergeMode: false,
-                permitDeletions: false,
-                selectedOperationId: 'tr1'
-            },
-
-            // This one gets ignored, except for its relation
-            '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed",'
-                + '"relations": { "isAfter": ["feature2"] } }\n'
-
-            // Consider only this one.
-            // The inverse relation is only implicit. In a full import, it is supposed
-            // to be generated from the 'feature1' record of the import file. We
-            // reconstruct this behaviour here also in the differential import case.
-                + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new" }'
-        );
-
-        const feature1 = (await helpers.getDocument('99')).resource;
-        const feature2 = (await helpers.getDocument('101')).resource;
-        expect(feature1.shortDescription).toBe('original');
-        expect(feature2.shortDescription).toBe('new');
-        expect(feature1.relations['isAfter']).toEqual(['100','101']);
-        expect(feature2.relations['isBefore']).toEqual(['99']);
     });
 
 

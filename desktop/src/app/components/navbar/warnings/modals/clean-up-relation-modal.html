@@ -4,9 +4,16 @@
 </div>
 
 <div id="clean-up-relation-modal-body" class="modal-body warnings-tool-modal-body">
-    <span i18n="@@navbar.taskbar.cleanUpRelation.confirmation">
+    <span i18n="@@navbar.taskbar.cleanUpRelation.confirmation.question">
         Möchten Sie die Relation <span [innerHTML]="getRelationLabelHTML()"></span> wirklich bereinigen?
+    </span>
+    <span *ngIf="warningType === 'missingRelationTargets'"
+          i18n="@@navbar.taskbar.cleanUpRelation.confirmation.info.missing">
         Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.
+    </span>
+    <span *ngIf="warningType === 'invalidRelationTargets'"
+          i18n="@@navbar.taskbar.cleanUpRelation.confirmation.info.invalid">
+        Alle Verweise auf ungültige Zielressourcen werden dabei entfernt.
     </span>
 </div>
 

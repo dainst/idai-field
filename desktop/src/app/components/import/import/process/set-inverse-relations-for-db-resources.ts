@@ -1,7 +1,7 @@
 import { includedIn, is, isNot, keysValues, on } from 'tsfun';
 import { Lookup, Resource, updateRelations, Document, Relation } from 'idai-field-core';
 import { AssertIsAllowedRelationDomainType } from '../types';
-import { assertSameOperationRestriction, unionOfDocuments } from '../utils';
+import { unionOfDocuments } from '../utils';
 
 
 /**
@@ -21,7 +21,6 @@ export function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
         targetsLookup: Lookup<[Array<Resource.Id>, Array<Document>]>,
         inverseRelationsMap: Relation.InverseRelationsMap,
-        sameOperationRelations: string[],
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Array<Document> {
 
@@ -32,8 +31,7 @@ export function setInverseRelationsForDbResources(
         assertCategoryIsInRange(document, makeIdCategoryMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainCategory);
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);
 
-        updateRelations(document, copyOfTargetDocuments, inverseRelationsMap)
-            .forEach(assertSameOperationRestriction(document, sameOperationRelations));
+        updateRelations(document, copyOfTargetDocuments, inverseRelationsMap);
 
         return copyOfTargetDocuments;
     }

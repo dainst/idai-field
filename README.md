@@ -5,7 +5,9 @@
 [![Manual](https://img.shields.io/badge/Manual-field.idai.world-green)](https://field.idai.world/manual)
 <!-- badges: end -->
 
-Field is the German Archaeological Institutes take on digital field and find recording. For an overview of the genesis and the idea behind Field, check out one of our latest articles: 
+Field is a modern take on flexible field and find recording for archaeological excavations. It is developed as a cooperation between the German Archaeological Institute ([DAI](https://www.dainst.org)) and the Head Office of the GBV Common Library Network ([GBV](https://en.gbv.de/)). Field is completely Open Source and free to use!
+
+For an overview of the genesis and the idea behind Field, check out one of our latest articles: 
 
 S. Hohl – T. Kleinke – F. Riebschläger – J. Watson, **iDAI.field: developing software for the documentation of archaeological fieldwork**, AeC 34, 1, 2023, 85–94, doi: [10.19282/ac.34.1.2023.10](https://doi.org/10.19282/ac.34.1.2023.10).
 

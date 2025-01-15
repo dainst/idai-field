@@ -33,9 +33,6 @@ jobs:
       - name: Run Field Hub integration tests
         run: npm run test:hub-integration
         working-directory: desktop
-      - name: Run Java tools tests
-        run: mvn -f java/pom.xml test
-        working-directory: desktop
   E2E:
     timeout-minutes: 90
     runs-on: macos-latest
@@ -54,6 +51,7 @@ jobs:
         working-directory: desktop
   Build:
     name: Build (${{ matrix.os.name }})
+    if: ${{ (github.ref == 'refs/heads/master') || (contains(github.event.head_commit.message, '[build]')) }}
     strategy:
       matrix:
         os:
@@ -87,7 +85,7 @@ jobs:
       run: npm run build
       working-directory: core
     - name: Build desktop
-      run: npm run build:all
+      run: npm run build
       working-directory: desktop
     - name: Create macOS package
       run: npm run package:mac

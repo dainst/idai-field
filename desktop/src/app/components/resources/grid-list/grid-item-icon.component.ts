@@ -6,6 +6,7 @@ import { CategoryForm } from 'idai-field-core';
 @Component({
     selector: 'grid-item-icon',
     templateUrl: './grid-item-icon.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

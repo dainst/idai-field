@@ -7,7 +7,8 @@ import { CategoryForm } from 'idai-field-core';
     templateUrl: './swap-category-form-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

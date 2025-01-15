@@ -7,7 +7,8 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './duplicate-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

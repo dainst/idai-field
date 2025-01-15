@@ -1,9 +1,10 @@
-import {Component, Output, EventEmitter, Input} from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 
 @Component({
     selector: 'zoom-buttons',
-    templateUrl: './zoom-buttons.html'
+    templateUrl: './zoom-buttons.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

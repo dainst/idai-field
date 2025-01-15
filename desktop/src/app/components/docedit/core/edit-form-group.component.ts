@@ -13,7 +13,8 @@ type StratigraphicalRelationInfo = {
 
 @Component({
     selector: 'edit-form-group',
-    templateUrl: './edit-form-group.html'
+    templateUrl: './edit-form-group.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -40,7 +41,7 @@ export class EditFormGroup implements OnChanges {
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
-        if (this.scrollTargetField) this.scrollToTargetField();
+        this.autoScroll();
     }
 
 
@@ -125,6 +126,16 @@ export class EditFormGroup implements OnChanges {
     }
 
 
+    private async autoScroll() {
+
+        if (this.scrollTargetField) {
+            this.scrollToTargetField();
+        } else {
+            this.scrollToTop();
+        }
+    }
+
+
     private async scrollToTargetField() {
 
         await AngularUtility.refresh();
@@ -148,6 +159,13 @@ export class EditFormGroup implements OnChanges {
 
         await AngularUtility.refresh();
         const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
+        containerElement.parentElement.scrollTo(0, scrollY);
+    }
+
+
+    private scrollToTop() {
+
+        const containerElement: HTMLElement = this.elementRef.nativeElement;
         containerElement.parentElement.scrollTo(0, scrollY);
     }
 

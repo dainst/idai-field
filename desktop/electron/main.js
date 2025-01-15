@@ -5,14 +5,19 @@ const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
+const log = require('electron-log');
 const autoUpdate = require('./auto-update.js');
-require('./asynchronous-fs.js');
 
 remoteMain.initialize();
 
+if (global.mode !== 'development') {
+    process.chdir(electron.app.getAppPath().replace('app.asar', ''));
+}
+log.info('Working directory:', process.cwd());
+
 let menuContext = 'loading';
 
-const mainLanguages = ['de', 'en', 'it', 'tr', 'uk'];
+const mainLanguages = ['de', 'en', 'it', 'pt', 'tr', 'uk'];
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
@@ -203,8 +208,8 @@ if (global.mode === 'test') {
     global.switches.provide_reset = true;
 }
 
-global.toolsPath = global.mode === 'production' ?
-    electron.app.getAppPath().replace('app.asar', 'tools')
+global.toolsPath = global.mode === 'production'
+    ? electron.app.getAppPath().replace('app.asar', 'tools')
     : 'tools';
 
 global.samplesPath = global.mode === 'production'
@@ -216,10 +221,11 @@ global.manualPath = global.mode === 'production'
     : './manual';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
-process.env['NODE_OPTIONS'] = '--no-deprecation';
 
 
 // -- OTHER GLOBALS
+
+require('./services/services');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

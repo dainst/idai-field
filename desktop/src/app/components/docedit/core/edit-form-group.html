@@ -1,5 +1,5 @@
 <div *ngFor="let field of fieldDefinitions" [id]="getFieldId(field)">
-    <div *ngIf="shouldShow(field)" class="card bg-light">
+    <div *ngIf="shouldShow(field)" class="card bg-light edit-form-field-container">
         <div class="card-header h4">
             <span class="card-title">{{labels[field.name]}}</span>
 

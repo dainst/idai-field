@@ -9,7 +9,8 @@ const DROPAREA = 'droparea';
 
 @Component({
     selector: 'image-grid',
-    templateUrl: './image-grid.html'
+    templateUrl: './image-grid.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -67,15 +68,15 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    public async onCellMouseEnter(doc: ImageDocument) {
+    public async onCellMouseEnter(document: ImageDocument) {
 
-        if (!this.showLinkBadges) return;
+        if (!this.showLinkBadges || !document.resource.relations.depicts) return;
 
-        for (const depictsRelId of doc.resource.relations.depicts) {
+        for (const depictsRelationTargetId of document.resource.relations.depicts) {
 
-            if (!this.resourceIdentifiers[depictsRelId]) {
-                const target = await this.datastore.get(depictsRelId);
-                this.resourceIdentifiers[depictsRelId] = target.resource.identifier;
+            if (!this.resourceIdentifiers[depictsRelationTargetId]) {
+                const target = await this.datastore.get(depictsRelationTargetId);
+                this.resourceIdentifiers[depictsRelationTargetId] = target.resource.identifier;
             }
         }
     }
@@ -150,7 +151,7 @@ export class ImageGridComponent implements OnChanges {
                 originalFilename: '',
                 width: 1,
                 height: this.compressDropArea ? 0.2 : 1,
-                relations: { depicts: [] }
+                relations: {}
             }
         } as any].concat(this.documents);
     }

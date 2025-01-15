@@ -53,11 +53,15 @@ export module FieldConverter {
             if (!fieldDefinition) continue;
 
             if (fieldDefinition.inputType === 'dating') {
-                for (let dating of resource[field]) Dating.setNormalizedYears(dating);
+                for (let dating of resource[field]) {
+                    Dating.addNormalizedValues(dating);
+                }
             }
 
             if (fieldDefinition.inputType === 'dimension') {
-                for (let dimension of resource[field]) Dimension.addNormalizedValues(dimension);
+                for (let dimension of resource[field]) {
+                    Dimension.addNormalizedValues(dimension);
+                }
             }
         }
         return document;

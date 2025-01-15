@@ -7,7 +7,7 @@ import { Loading } from '../../widgets/loading';
 import { WinningSide } from './revision-selector.component';
 import { formatContent } from './format-content';
 import { ConflictResolving } from './conflict-resolving';
-import { Languages } from '../../../services/languages';
+import { Language, Languages } from '../../../services/languages';
 import { DifferingField, DifferingFieldType } from './field-diff';
 
 
@@ -16,7 +16,8 @@ import { DifferingField, DifferingFieldType } from './field-diff';
  */
 @Component({
     selector: 'docedit-conflicts-tab',
-    templateUrl: './docedit-conflicts-tab.html'
+    templateUrl: './docedit-conflicts-tab.html',
+    standalone: false
 })
 export class DoceditConflictsTabComponent implements OnChanges {
 
@@ -26,7 +27,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public conflictedRevisions: Array<Document> = [];
     public selectedRevision: Document|undefined;
     public differingFields: Array<DifferingField>;
+
     private relationTargets: { [targetId: string]: Document|undefined };
+    private availableLanguages: { [languageCode: string]: Language };
 
 
     constructor(private datastore: Datastore,
@@ -36,7 +39,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 private changeDetectorRef: ChangeDetectorRef,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
-                private labels: Labels) {}
+                private labels: Labels) {
+
+        this.availableLanguages = Languages.getAvailableLanguages();
+    }
 
 
     public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
@@ -50,7 +56,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         (key: string) => this.utilTranslations.getTranslation(key),
         (value: string) => this.decimalPipe.transform(value),
         this.labels,
-        Languages.getAvailableLanguages()
+        this.availableLanguages
     );
 
 
@@ -149,13 +155,24 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public setWinningSide(winningSide: WinningSide) {
 
-        for (let field of this.differingFields) field.rightSideWinning = winningSide === 'right';
+        for (let field of this.differingFields) {
+            this.setWinningSideForField(field, winningSide === 'right');
+        }
     }
 
 
     public setWinningSideForField(field: DifferingField, rightSideWinning: boolean) {
 
+        if (!this.isSelectable(field, rightSideWinning)) return false;
         field.rightSideWinning = rightSideWinning;
+    }
+    
+
+    public isSelectable(field: DifferingField, rightSideWinning: boolean): boolean {
+
+        if (field.name !== Resource.CATEGORY || !rightSideWinning) return true;
+
+        return this.selectedRevision.resource.category !== undefined;
     }
 
 

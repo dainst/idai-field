@@ -122,15 +122,35 @@
              [class.disabled]="!dotGraph"
              ngbTooltip="Matrix exportieren"
              i18n-ngbTooltip="@@matrix.view.tooltips.export"
-             placement="left"
+             [ngbPopover]="exportMenu" 
+             [autoClose]="'outside'"
+             placement="bottom-right"
              container="body"
              triggers="manual"
              #exportTooltip="ngbTooltip"
+             #exportPopover="ngbPopover"
              (mouseover)="exportTooltip.open()"
              (mouseleave)="exportTooltip.close()"
-             (click)="exportTooltip.close(); exportGraph();">
+             (click)="exportPopover.toggle(); exportTooltip.close();">
             <span class="mdi mdi-file-export"></span>
         </div>
+        <ng-template #exportMenu>
+            <div id="export-matrix-menu">
+                <div class="popover-custom-title">
+                    <span i18n="@@matrix.export.selectFormat">Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</span>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item popover-item"
+                        (click)="exportPopover.close(); exportGraph('dot');">
+                        <span class="button-label">Dot (Graphviz)</span>
+                    </li>
+                    <li class="list-group-item popover-item"
+                        (click)="exportPopover.close(); exportGraph('svg');">
+                        <span class="button-label">SVG</span>
+                    </li>
+                </ul>
+            </div>
+        </ng-template>
     </div>
 </div>
 

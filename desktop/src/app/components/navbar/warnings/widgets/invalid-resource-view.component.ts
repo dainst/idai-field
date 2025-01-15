@@ -11,7 +11,8 @@ type InvalidResourceViewField = {
 
 @Component({
     selector: 'invalid-resource-view',
-    templateUrl: './invalid-resource-view.html'
+    templateUrl: './invalid-resource-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

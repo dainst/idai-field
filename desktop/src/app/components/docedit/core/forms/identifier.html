@@ -5,7 +5,7 @@
           [class.focused]="focused">{{identifierPrefix}}</span>
     <input #inputField
            [(ngModel)]="identifierBody"
-           (keyup)="update($event.target.value)"
+           (input)="update()"
            (focus)="focused = true"
            (blur)="focused = false"
            class="form-control"

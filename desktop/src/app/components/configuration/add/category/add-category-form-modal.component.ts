@@ -17,7 +17,8 @@ import { Naming } from '../naming';
     templateUrl: './add-category-form-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

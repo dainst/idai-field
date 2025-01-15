@@ -34,7 +34,7 @@ async function chooseFilepath(projectName: string, appState: AppState,
         defaultPath: getDefaultPath(appState.getFolderPath('configurationExport'), projectName)
     };
 
-    const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
+    const saveDialogReturnValue = await remote.dialog.showSaveDialog(remote.getCurrentWindow(), options);
     const filePath: string = saveDialogReturnValue.filePath;
 
     if (filePath) {

@@ -29,7 +29,8 @@ type PrintedField = {
     templateUrl: './qr-code-editor-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Danilo Guzzo

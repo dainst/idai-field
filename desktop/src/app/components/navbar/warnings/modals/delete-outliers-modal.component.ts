@@ -11,7 +11,8 @@ import { AffectedDocument } from '../affected-document';
     templateUrl: './delete-outliers-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

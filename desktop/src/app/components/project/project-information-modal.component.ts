@@ -17,7 +17,8 @@ import { Routing } from '../../services/routing';
     templateUrl: './project-information-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

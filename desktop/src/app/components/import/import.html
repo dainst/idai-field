@@ -48,7 +48,7 @@
                         <input class="form-control" id="importUrlInput"
                                type="text"
                                [(ngModel)]="importState.url"
-                               (keyup)="updateFormat()">
+                               (input)="updateFormat()">
                     </div>
 
                     <div *ngIf="!importState.format" class="import-info" i18n="@@import.format.info">
@@ -58,7 +58,7 @@
 
                     <div *ngIf="importState.format === 'csv'" class="import-info" i18n="@@import.csv.info">
                         Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören.
-                        Bitte beachten Sie, dass die Spaltenköpfe den Namen der Felder entsprechen müssen,
+                        Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen,
                         die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im
                         <a href="#" routerLink="../export">Export-Menü</a> eine Schemadatei generiert werden.
                      </div>
@@ -201,12 +201,7 @@
                         Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                     </div>
 
-                    <div *ngIf="isJavaInstallationMissing()" class="import-info text-danger" i18n="@@import.shapefile.javaWarning">
-                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java JDK 8 oder höher
-                        erforderlich.
-                    </div>
-
-                    <div *ngIf="importState.format === 'shapefile' && !isJavaInstallationMissing()" class="import-info" i18n="@@import.shapefile.info">
+                    <div *ngIf="importState.format === 'shapefile'" class="import-info" i18n="@@import.shapefile.info">
                         Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
                         Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per

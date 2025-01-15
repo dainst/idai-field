@@ -17,7 +17,8 @@ import { M } from '../../../messages/m';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -64,6 +65,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
     public isRelationSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.RELATION;
+
+    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
 
     public isCustomField = () => this.field.source === 'custom';
 
@@ -234,13 +237,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         } else {
             return '';
         }
-    }
-
-
-    public isI18nCompatible(): boolean {
-
-        return Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
-            && !['staff', 'campaigns'].includes(this.field.name);
     }
 
 

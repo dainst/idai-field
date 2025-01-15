@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .row-wrapper {
   display: grid;
   grid-template-columns: 4fr 6fr 9fr 130px;
@@ -36,8 +38,8 @@
     background-color: #fff;
 
     &:hover {
-      color: darken(#868e96, 5%);
-      background-color: darken($list-item-hover-color, 5%);
+      color: color.adjust(#868e96, $lightness: -5%);
+      background-color: color.adjust($list-item-hover-color, $lightness: -5%);
     }
 
     &.move-into-button {
@@ -92,7 +94,7 @@
     }
   
     .btn-small:hover {
-      background-color: darken($list-item-hover-color, 5%);
+      background-color: color.adjust($list-item-hover-color, $lightness: -5%);
     }
   
     .list-edit-button,

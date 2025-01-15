@@ -8,7 +8,8 @@ import { SettingsProvider } from '../../../../services/settings/settings-provide
 
 @Component({
     selector: 'form-field-multi-input',
-    templateUrl: './multi-input.html'
+    templateUrl: './multi-input.html',
+    standalone: false
 })
 
 /**

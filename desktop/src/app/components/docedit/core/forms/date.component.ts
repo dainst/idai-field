@@ -8,7 +8,8 @@ import { ComponentHelpers } from '../../../component-helpers';
 
 @Component({
     selector: 'form-field-date',
-    templateUrl: './date.html'
+    templateUrl: './date.html',
+    standalone: false
 })
 export class DateComponent implements OnChanges {
 

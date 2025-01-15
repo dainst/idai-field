@@ -1,6 +1,7 @@
 //
 // Variables
 // --------------------------------------------------
+@use 'sass:color';
 
 $list-item-hover-color: #ededed;
 
@@ -48,8 +49,8 @@ $ctrl-button-bg:                  rgba(85, 114, 161, 0);
 // Sidebar & Popover
 $sidebar-bg-color: #f8f9fa;
 $popover-bg-color: transparentize($sidebar-bg-color, 0.08);
-$popover-header-bg-color: darken($popover-bg-color, 5%);
-$popover-header-hover-bg-color: darken($popover-header-bg-color, 3%);
+$popover-header-bg-color: color.adjust($popover-bg-color, $lightness: -5%);
+$popover-header-hover-bg-color: color.adjust($popover-header-bg-color, $lightness: -3%);
 $resources-listing-item-wide-width: 300px;
 $resources-listing-item-slim-width: 258px;
 

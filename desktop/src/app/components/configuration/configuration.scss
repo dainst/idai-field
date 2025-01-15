@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @import './browse/configuration-category';
 @import './browse/configuration-field';
 @import './browse/configuration-field-drag-element';
@@ -154,7 +156,7 @@
 
           .custom-category {
             .category-item:hover {
-              background-color: darken($custom-highlight-color, 5%) !important;
+              background-color: color.adjust($custom-highlight-color, $lightness: -5%) !important;
             }
           }
         }
@@ -170,7 +172,7 @@
 
         .custom-category {
           &.selected-category .category-item {
-            background-color: darken($custom-highlight-color, 5%) !important;
+            background-color: color.adjust($custom-highlight-color, $lightness: -5%) !important;
           }
         }
 

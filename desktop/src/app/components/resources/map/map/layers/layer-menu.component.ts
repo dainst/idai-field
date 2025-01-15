@@ -15,7 +15,8 @@ import { Loading } from '../../../../widgets/loading';
 @Component({
     selector: 'layer-menu',
     templateUrl: './layer-menu.html',
-    host: { '(window:keydown)': 'onKeyDown($event)' }
+    host: { '(window:keydown)': 'onKeyDown($event)' },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

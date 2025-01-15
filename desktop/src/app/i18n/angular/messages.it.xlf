@@ -11,7 +11,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
-        <source> Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
+        <source>Slide <x id="INTERPOLATION" equiv-text="ueryList&lt;NgbSli"/> of <x id="INTERPOLATION_1" equiv-text="EventSource = N"/> </source>
         <target state="translated">Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> / <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
@@ -583,14 +583,6 @@
           <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.shapefile.javaWarning" datatype="html">
-        <source> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </source>
-        <target state="translated">Per eseguire l'importazione dal formato shapefile è necessario installare Java 8 o versione successiva.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">207</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
         <source>Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
         <target state="translated">Durante l'importazione dal formato shapefile non vengono create nuove risorse, ma vengono aggiunte geometrie alle risorse esistenti. Si prega di notare che le geometrie già presenti vengono sovrascritte. L'assegnazione dei record di dati avviene per identificatore (campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). I record dei dati nello shapefile che non possono essere assegnati vengono ignorati. </target>
@@ -773,14 +765,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">147</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="export.shapefile.javaWarning" datatype="html">
-        <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher erforderlich. </source>
-        <target state="translated">Per eseguire un'esportazione dal formato shapefile è necessario installare Java JDK 8 o versione successiva.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/export/export.html</context>
-          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.invalidFields.heading" datatype="html">
@@ -1071,14 +1055,6 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.fieldLabel" datatype="html">
-        <source> Feldbezeichnung </source>
-        <target state="translated">Denominazione del campo</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.createSpecificField" datatype="html">
         <source>Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
         <target state="translated">Creare campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
@@ -1141,14 +1117,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">172</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.groupLabel" datatype="html">
-        <source> Gruppenbezeichnung </source>
-        <target state="translated">Denominazione del gruppo</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
-          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificGroup" datatype="html">
@@ -1507,14 +1475,6 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valueLabel" datatype="html">
-        <source> Anzeigetext </source>
-        <target state="translated">Testo visualizzato</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/value-editor-modal.component.ts</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.valueDescription" datatype="html">
         <source> Beschreibung </source>
         <target state="translated">Descrizione</target>
@@ -1653,14 +1613,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.categoryLabel" datatype="html">
-        <source> Kategoriebezeichnung </source>
-        <target state="translated">Denominazione della categoria</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/category-editor-modal.component.ts</context>
-          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix" datatype="html">
@@ -3577,14 +3529,6 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.literature.add" datatype="html">
-        <source>Hinzufügen...</source>
-        <target state="translated">Aggiungere...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
         <source>Literaturzitat:</source>
         <target state="translated">Citazione bibliografica:</target>
@@ -3713,14 +3657,6 @@
           <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.dating.add" datatype="html">
-        <source>Hinzufügen...</source>
-        <target state="translated">Aggiungere...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
-          <context context-type="linenumber">105</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.catalogCriteria.none" datatype="html">
         <source>Kein Kriterium</source>
         <target state="translated">Nessun criterio</target>
@@ -3762,14 +3698,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
           <context context-type="linenumber">59</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.dimension.add" datatype="html">
-        <source>Hinzufügen...</source>
-        <target state="translated">Aggiungere...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
-          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.singleValue" datatype="html">
@@ -4960,14 +4888,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.missingIdentifierShapefile" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.</source>
-        <target state="translated">Si è verificato un errore durante l'importazione: sono state trovate una o più caratteristiche senza l'attributo "identificatore".</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</source>
         <target state="translated">Si è verificato un errore durante l'importazione: una o più risorse contenevano voci non valide per resource.id.</target>
@@ -5104,14 +5024,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.invalidGeometry" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].</source>
-        <target state="translated">Si è verificato un errore durante l'importazione: Dati geometrici non validi nella riga [0].</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.rollbackError" datatype="html">
         <source>Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.</source>
         <target state="translated">Si è verificato un errore nel tentativo di cancellare i dati già importati.</target>
@@ -5203,30 +5115,6 @@
       <trans-unit id="messages.import.error.shapefile.readError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.</source>
         <target state="translated">Si è verificato un errore durante l'importazione: non è stato possibile leggere il file. Si prega di selezionare uno shapefile valido (.shp).</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.error.shapefile.unsupportedGeometryType" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</source>
-        <target state="translated">Si è verificato un errore durante l'importazione: Il tipo di geometria [0] non è supportato.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.error.shapefile.jsonlWriteError" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</source>
-        <target state="translated">Si è verificato un errore durante l'importazione: Non è stato possibile creare il file temporaneo [0].</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.error.shapefile.generic" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</source>
-        <target state="translated">Si è verificato un errore durante l'importazione: non è stato possibile importare lo shapefile.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5448,14 +5336,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.mustBeInSameOperation" datatype="html">
-        <source>Ressourcen liegen in unterschiedlichen Maßnahmen: '[0]', '[1]'</source>
-        <target state="translated">Le risorse si trovano in diverse operazioni: '[0]', '[1]'</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
         <target state="translated">La categoria non può essere modificata durante l'importazione. E' interessato: "[0]"</target>
@@ -5616,14 +5496,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.export.shapefile.error.tempFolderCreation" datatype="html">
-        <source>Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.</source>
-        <target state="translated">Si è verificato un errore durante l'esportazione: impossibile creare la directory temporanea [0].</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.export.shapefile.error.zipFileCreation" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.</source>
         <target state="translated">Si è verificato un errore durante l'esportazione: impossibile creare il file zip [0].</target>
@@ -5635,14 +5507,6 @@
       <trans-unit id="messages.export.shapefile.error.write" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</source>
         <target state="translated">Si è verificato un errore durante l'esportazione: impossibile scrivere lo shapefile.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.export.shapefile.error.getResources" datatype="html">
-        <source>Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</source>
-        <target state="translated">Si è verificato un errore durante l'esportazione: impossibile leggere le risorse dal database.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6027,14 +5891,6 @@
       <trans-unit id="messages.resources.error.resourceMissingDuringSyncing" datatype="html">
         <source>Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.</source>
         <target state="translated">La risorsa non è accessibile. Per favore aspettare che la sincronizzazione sia completa e poi riprovare.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.resources.error.cannotMoveWithSameOperationRelations" datatype="html">
-        <source>Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.</source>
-        <target state="translated">La risorsa [0] non può essere spostata in un'altra operazione perché sono state impostate relazioni che possono essere impostate solo tra risorse appartenenti della stessa operazione. Rimuovere le relazioni e riprovare.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8369,14 +8225,6 @@
           <context context-type="linenumber">84,95</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation" datatype="html">
-        <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> wirklich bereinigen? Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt. </source>
-        <target state="translated">Sei sicuro di voler rimuovere la relazione <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> ? Tutti i riferimenti a risorse non esistenti verranno rimossi. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.component.ts</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.info" datatype="html">
         <source>Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> entsprechen. </source>
         <target state="translated">I dati registrati sul campo<x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> possono essere convertiti automaticamente, cosicché siano conformi al tipo di input <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> . </target>
@@ -8814,8 +8662,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.info" datatype="html">
-        <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe der CSV-Datei den Feldnamen entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
-        <target state="needs-translation">Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe der CSV-Datei den Feldnamen entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </target>
+        <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
+        <target state="needs-translation">Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>
@@ -8891,6 +8739,222 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">172,175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.question" datatype="html">
+        <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </source>
+        <target state="needs-translation">Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.single" datatype="html">
+        <source>Ungültige Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="needs-translation">Ungültige Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">74,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.multiple" datatype="html">
+        <source>Ungültige Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="needs-translation">Ungültige Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">78,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidRelationTargets.multiple" datatype="html">
+        <source>Die Kategorien mehrerer als Zielressourcen der Relation angegebenen Ressourcen sind keine gültigen Zielkategorien.</source>
+        <target state="needs-translation">Die Kategorien mehrerer als Zielressourcen der Relation angegebenen Ressourcen sind keine gültigen Zielkategorien.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">151,154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteField.body.notAllowed" datatype="html">
+        <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
+        <target state="needs-translation">Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.warningsExist" datatype="html">
+        <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
+        <target state="needs-translation">Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">700</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relation.inverse.none" datatype="html">
+        <source>Keine Gegenrelation</source>
+        <target state="needs-translation">Keine Gegenrelation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">147</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.missing" datatype="html">
+        <source>Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</source>
+        <target state="needs-translation">Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
+          <context context-type="linenumber">11,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.invalid" datatype="html">
+        <source>Alle Verweise auf ungültige Zielressourcen werden dabei entfernt.</source>
+        <target state="needs-translation">Alle Verweise auf ungültige Zielressourcen werden dabei entfernt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidRelationTargets.single" datatype="html">
+        <source>Die Kategorie einer als Zielressource der Relation angegebenen Ressource ist keine gültige Zielkategorie.</source>
+        <target state="needs-translation">Die Kategorie einer als Zielressource der Relation angegebenen Ressource ist keine gültige Zielkategorie.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">146,149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.invalidRelationTargets" datatype="html">
+        <source>Ungültige Zielressourcen:</source>
+        <target state="needs-translation">Ungültige Zielressourcen:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">214</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteField.header.notAllowed" datatype="html">
+        <source>Feld löschen nicht möglich</source>
+        <target state="needs-translation">Feld löschen nicht möglich</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.export.selectFormat" datatype="html">
+        <source>Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</source>
+        <target state="needs-translation">Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.warnings.invalidRelationTargets" datatype="html">
+        <source>Ungültige Zielressourcen von Relationen</source>
+        <target state="needs-translation">Ungültige Zielressourcen von Relationen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">169</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relation.targetCategories" datatype="html">
+        <source>Erlaubte Zielkategorien</source>
+        <target state="needs-translation">Erlaubte Zielkategorien</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relation.inverse" datatype="html">
+        <source>Gegenrelation</source>
+        <target state="needs-translation">Gegenrelation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.error.noAllowedTargetCategories" datatype="html">
+        <source>Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</source>
+        <target state="needs-translation">Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1093</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.objectArray.add" datatype="html">
+        <source>Hinzufügen...</source>
+        <target state="needs-translation">Hinzufügen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/object-array.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.valuelistMultiInput.selectable" datatype="html">
+        <source>Dieser Wert steht bei der Dateneingabe zur Auswahl.</source>
+        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe zur Auswahl.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.valuelistMultiInput.unselectable" datatype="html">
+        <source>Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</source>
+        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.valuelistMultiInput" datatype="html">
+        <source>Projekt-Werteliste</source>
+        <target state="needs-translation">Projekt-Werteliste</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">201</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="viewModal.noProjectImages" datatype="html">
+        <source>Mit dem Projekt sind keine Bilder verknüpft.</source>
+        <target state="needs-translation">Mit dem Projekt sind keine Bilder verknüpft.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
+          <context context-type="linenumber">74,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.label" datatype="html">
+        <source>Anzeigename</source>
+        <target state="needs-translation">Anzeigename</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/group/group-editor-modal.html</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valueLabel" datatype="html">
+        <source>Anzeigetext</source>
+        <target state="needs-translation">Anzeigetext</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
+          <context context-type="linenumber">9,11</context>
         </context-group>
       </trans-unit>
     </body>

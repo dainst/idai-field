@@ -4,7 +4,8 @@ import { Document, Named, FieldDocument, Groups, ProjectConfiguration, Datastore
 
 @Component({
     selector: 'document-info',
-    templateUrl: './document-info.html'
+    templateUrl: './document-info.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

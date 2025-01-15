@@ -10,7 +10,8 @@ const remote = window.require('@electron/remote');
 
 @Component({
     selector: 'drop-area',
-    templateUrl: './drop-area.html'
+    templateUrl: './drop-area.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

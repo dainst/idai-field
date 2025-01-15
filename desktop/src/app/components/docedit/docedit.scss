@@ -10,15 +10,17 @@
 @import 'core/forms/date';
 @import 'core/forms/dropdown';
 @import 'core/forms/dropdown-range';
-@import 'core/forms/dimension';
-@import 'core/forms/dating';
-@import 'core/forms/literature';
-@import 'core/forms/composite/composite-entry-modal';
 @import 'core/forms/input';
 @import 'core/forms/multi-input';
+@import 'core/forms/valuelist-multi-input';
 @import 'core/forms/identifier';
 @import 'core/forms/type-relation/type-relation';
-@import 'core/forms/composite/composite';
+@import 'core/forms/array-field/object-array-entry-modal';
+@import 'core/forms/array-field/dating-entry-modal';
+@import 'core/forms/array-field/dimension-entry-modal';
+@import 'core/forms/array-field/literature-entry-modal';
+@import 'core/forms/array-field/composite/composite-entry-modal';
+@import 'core/forms/array-field/composite/composite';
 @import 'core/forms/widgets/outliers';
 @import 'core/forms/widgets/empty-valuelist-info';
 @import 'core/forms/widgets/invalid-field-data';
@@ -35,6 +37,7 @@
 
   textarea {
     width: 100%;
+    min-height: 112px;
     resize: vertical;
   }
 
@@ -142,7 +145,7 @@
 }
 
 #document-edit-wrapper,
-.composite-entry-modal {
+.object-array-entry-modal {
   searchable-select {
     .ng-select {
       .ng-select-container {
@@ -178,6 +181,10 @@
           right: 0;
           top: 11px;
         }
+      }
+
+      &.ng-select-opened .ng-arrow-wrapper {
+        top: 10px !important;
       }
     }
   }

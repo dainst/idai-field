@@ -324,7 +324,7 @@ function assertRelationsValid(documents: Array<Document>, typeCategoryNames: str
                 for (const target_ of document.resource.relations[Relation.Image.ISDEPICTEDIN]) {
                     const target = lookup[target_];
                     if (target === undefined
-                        || !target.resource.relations[Relation.Image.DEPICTS].includes(document.resource.id)) {
+                        || !target.resource.relations[Relation.Image.DEPICTS]?.includes(document.resource.id)) {
                         throw [ImportCatalogErrors.INVALID_RELATIONS];
                     }
                 }
@@ -337,7 +337,7 @@ function assertRelationsValid(documents: Array<Document>, typeCategoryNames: str
             for (const target_ of document.resource.relations[Relation.Image.DEPICTS]) {
                 const target = lookup[target_];
                 if (target === undefined
-                    || !target.resource.relations[Relation.Image.ISDEPICTEDIN].includes(document.resource.id)) {
+                    || !target.resource.relations[Relation.Image.ISDEPICTEDIN]?.includes(document.resource.id)) {
                     throw [ImportCatalogErrors.INVALID_RELATIONS];
                 }
             }

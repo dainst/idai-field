@@ -20,7 +20,8 @@ const CREDENTIALS_TIMER_INTERVAL: number = 500;
     templateUrl: './synchronization-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

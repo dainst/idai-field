@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .view-modal-drop-area-popover {
   .popover-body {
     padding: 5px !important;
@@ -11,13 +13,13 @@
       color: $primary-button-color;
   
       &:hover {
-        background: darken(white, 5%)
+        background: color.adjust(white, $lightness: -5%);
       }
     }
 
     #add-images-button {
       border-bottom-style: solid;
-      border-bottom-color: lighten($primary-button-color, 33%);
+      border-bottom-color: color.adjust($primary-button-color, $lightness: 33%);
     }
 
     label {

@@ -1,7 +1,7 @@
 import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, any } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
-import { FieldResource } from '../field-resource';
+import { FieldResource } from '../document/field-resource';
 import { Field } from './field';
 import { Group, GroupDefinition } from './group';
 import { Valuelist } from './valuelist';

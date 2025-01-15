@@ -1,5 +1,4 @@
 const fsPromises = window.require('fs').promises;
-const extract = require('extract-zip');
 
 
 // If called from Electron app: Return fs.promises instance from Electron main process via window['filesystem']
@@ -21,10 +20,7 @@ const filesystem = {
     readdir: (path: string) => callFsFunction('readdir', path),
     mkdir: (path: string, options: any) => callFsFunction('mkdir', path, options),
     rm: (path: string, options: any) => callFsFunction('rm', path, options),
-    unlink: (path: string) => callFsFunction('unlink', path),
-    extractZip: (source: string, destination: string) => callFsFunction('extractZip', source, destination),
-    createCatalogZip: (outputFilePath, filePath, fileName, imageDirPath, imageDirName) =>
-        callFsFunction('createCatalogZip', outputFilePath, filePath, fileName, imageDirPath, imageDirName)
+    unlink: (path: string) => callFsFunction('unlink', path)
 };
 
 
@@ -37,9 +33,7 @@ const fsPromisesWrapper = {
     readdir: (path: string) => fsPromises.readdir(path),
     mkdir: (path: string, options: any) => fsPromises.mkdir(path, options),
     rm: (path: string, options: any) => fsPromises.rm(path, options),
-    unlink: (path: string) => fsPromises.unlink(path),
-    extractZip: (source: string, destination: string) => extractZip(source, destination),
-    createCatalogZip: () => {} // Not used in tests
+    unlink: (path: string) => fsPromises.unlink(path)
 };
 
 
@@ -85,10 +79,4 @@ async function getFileInfos(paths: string[]): Promise<any> {
         const dirCheck = stat.isDirectory();
         return { ...{ size }, ...{ isDirectory: dirCheck } };
     }));
-}
-
-
-function extractZip(source: string, destination: string): Promise<any> {
-
-    return extract(source, { dir: destination });
 }

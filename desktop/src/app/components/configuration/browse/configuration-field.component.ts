@@ -10,7 +10,8 @@ import { getInputTypeLabel } from '../../../util/get-input-type-label';
 
 @Component({
     selector: 'configuration-field',
-    templateUrl: './configuration-field.html'
+    templateUrl: './configuration-field.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

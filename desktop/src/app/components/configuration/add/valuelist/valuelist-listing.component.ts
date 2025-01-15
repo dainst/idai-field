@@ -11,7 +11,8 @@ import { scrollTo } from '../../../../angular/scrolling';
 
 @Component({
     selector: 'valuelist-listing',
-    templateUrl: './valuelist-listing.html'
+    templateUrl: './valuelist-listing.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

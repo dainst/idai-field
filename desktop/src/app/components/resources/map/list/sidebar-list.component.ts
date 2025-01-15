@@ -19,7 +19,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './sidebar-list.html',
     host: {
         '(window:contextmenu)': 'handleClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

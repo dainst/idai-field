@@ -59,11 +59,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
     public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
     public static IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT = 'M.Import.ParserErrors.invalidGeojsonImportStruct';
-    public static IMPORT_PARSER_INVALID_GEOMETRY = 'M.Import.ParserErrors.invalidGeometry';
     public static IMPORT_PARSER_MISSING_IDENTIFIER = 'M.Import.ParserErrors.missingIdentifier';
-    public static IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE = 'M.Import.ParserErrors.missingIdentifierShapefile';
     public static IMPORT_PARSER_ID_MUST_NOT_BE_SET = 'M.Import.ParserErrors.parsing.idnottobeset';
-    public static IMPORT_PARSER_SHAPEFILE_GENERIC = 'M.Import.ParserErrors.shapefile.generic';
     public static IMPORT_PARSER_CATALOG_GENERIC = 'M.Import.ParserErrors.catalog.generic';
     public static IMPORT_PARSER_IDENTIFIER_FORMAT = 'M.Import.ParserErrors.identifierFormat';
     public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
@@ -84,8 +81,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_READER_ROLLBACK = 'M.Import.ReaderErrors.rollbackError';
     public static IMPORT_READER_INVALID_OPERATION_RESOURCE = 'M.Import.ReaderErrors.invalidOperationResource';
     public static IMPORT_READER_SHAPEFILE_READ_ERROR = 'M.Import.ReaderErrors.shapefile.readError';
-    public static IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'M.Import.ReaderErrors.shapefile.unsupportedGeometryType';
-    public static IMPORT_READER_SHAPEFILE_JSONL_WRITE = 'M.Import.ReaderErrors.shapefile.jsonlWriteError';
+
 
     // ImportPackage ValidationErrors
     public static IMPORT_VALIDATION_MISSING_PROPERTY = 'M.Import.ValidationErrors.missingProperty';
@@ -142,13 +138,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
     public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
-    public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
     public static IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING = 'M.Import.ImportErrors.mustNotBeEmptyString';
     public static IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.categoryCannotBeChanged';
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
     public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
     public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
+    public static IMPORT_ERROR_WARNINGS_EXIST = 'M.Import.ImportErros.warningsExist';
 
     // Import Package - ImportCatalogErrors
     public static IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH = 'M.Import.ImportCatalogErrors.identifierClash';
@@ -165,10 +161,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG = 'export.error.catalog.imagesNotExclusiveToCatalog';
     public static EXPORT_CATALOG_FAILED_TO_COPY_IMAGES = 'export.error.catalog.failedToCopyImages';
     public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
-    public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
-    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_SHAPEFILE_ERROR_WRITE = 'export.shapefile.error.write';
-    public static EXPORT_SHAPEFILE_ERROR_GET_RESOURCES = 'export.shapefile.error.getResources';
+    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE = 'export.csv.warning.invalidFieldData.single';
     public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_MULTIPLE = 'export.csv.warning.invalidFieldData.multiple';
 
@@ -238,7 +232,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
     public static RESOURCES_ERROR_PARENT_RESOURCE_DELETED = 'resources.error.parentResourceDeleted';
     public static RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING = 'resources.error.resourceMissingDuringSyncing';
-    public static RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS = 'resources.error.cannotMoveWithSameOperationRelations';
     public static RESOURCES_ERROR_CANNOT_MOVE_CHILDREN = 'resources.error.cannotMoveChildren';
     public static RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE = 'resources.error.qrCodeScanningFailure';
     public static RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND = 'resources.error.qrCodeResourceNotFound';
@@ -442,10 +435,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.error.missingIdentifier:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE] = {
-            content: $localize `:@@messages.import.error.missingIdentifierShapefile:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.`,
-            level: 'danger'
-        };
         this.msgs[M.IMPORT_PARSER_ID_MUST_NOT_BE_SET] = {
             content: $localize `:@@messages.import.error.parser.idnottobeset:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.`,
             level: 'danger'
@@ -514,10 +503,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.error.genericDatastoreError:Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_PARSER_INVALID_GEOMETRY] = {
-            content: $localize `:@@messages.import.error.invalidGeometry:Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].`,
-            level: 'danger'
-        };
+
         this.msgs[M.IMPORT_READER_ROLLBACK] = {
             content: $localize `:@@messages.import.error.rollbackError:Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.`,
             level: 'danger'
@@ -564,18 +550,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_READER_SHAPEFILE_READ_ERROR] = {
             content: $localize `:@@messages.import.error.shapefile.readError:Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.`,
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE] = {
-            content: $localize `:@@messages.import.error.shapefile.unsupportedGeometryType:Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.`,
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_READER_SHAPEFILE_JSONL_WRITE] = {
-            content: $localize `:@@messages.import.error.shapefile.jsonlWriteError:Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.`,
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_PARSER_SHAPEFILE_GENERIC] = {
-            content: $localize `:@@messages.import.error.shapefile.generic:Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CATALOG_GENERIC] = {
@@ -698,10 +672,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.error.categoryOnlyAllowedOnUpdate:Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\'`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_MUST_BE_IN_SAME_OPERATION] = {
-            content: $localize `:@@messages.import.error.mustBeInSameOperation:Ressourcen liegen in unterschiedlichen Maßnahmen: \'[0]\', \'[1]\'`,
-            level: 'danger'
-        };
         this.msgs[M.IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED] = {
             content: $localize `:@@messages.import.error.categoryCannotBeChanged:Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: \'[0]\'`,
             level: 'danger'
@@ -724,6 +694,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE] = {
             content: $localize `:@@messages.import.error.emptyObjectInResource:Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_ERROR_WARNINGS_EXIST] = {
+            content: $localize `:@@messages.import.error.warningsExist:Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED] = {
@@ -782,20 +756,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.export.error.catalog.failedToCopyImages:Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.`,
             level: 'danger'
         };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION] = {
-            content: $localize `:@@messages.export.shapefile.error.tempFolderCreation:Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.`,
-            level: 'danger'
-        };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
-            content: $localize `:@@messages.export.shapefile.error.zipFileCreation:Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.`,
-            level: 'danger'
-        };
         this.msgs[M.EXPORT_SHAPEFILE_ERROR_WRITE] = {
             content: $localize `:@@messages.export.shapefile.error.write:Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.`,
             level: 'danger'
         };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES] = {
-            content: $localize `:@@messages.export.shapefile.error.getResources:Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.`,
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
+            content: $localize `:@@messages.export.shapefile.error.zipFileCreation:Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE] = {
@@ -1025,10 +991,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING] = {
             content: $localize `:@@messages.resources.error.resourceMissingDuringSyncing:Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.`,
-            level: 'danger'
-        };
-        this.msgs[M.RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS] = {
-            content: $localize `:@@messages.resources.error.cannotMoveWithSameOperationRelations:Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_CANNOT_MOVE_CHILDREN] = {

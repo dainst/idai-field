@@ -12,7 +12,8 @@ import { CreatePrintSettingsProfileModalComponent } from './create-print-setting
     templateUrl: './print-settings-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -14,7 +14,7 @@
                 [class.small-search-input]="extendedSearch"
                 [class.big-search-input]="!isFilterMenuAvailable()"
                 [(ngModel)]="q"
-                (keyup)="onKeyUp($event)"
+                (input)="onInput($event)"
                 (focus)="focused = true; showSuggestions();"
                 (blur)="focused = false"
                 name="searchInput"

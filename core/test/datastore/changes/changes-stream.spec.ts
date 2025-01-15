@@ -13,7 +13,6 @@ describe('ChangesStream', () => {
     let pouchdbDatastore;
     let datastore;
     let indexFacade;
-    let documentConverter;
     let documentCache;
     let projectConfiguration;
     let getUsername;
@@ -45,12 +44,10 @@ describe('ChangesStream', () => {
 
         indexFacade = jasmine.createSpyObj('MockIndexFacade',
             ['put', 'putToSingleIndex', 'get', 'remove', 'getCount', 'notifyObservers']);
-        documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
         documentCache.reassign.and.callFake(document => document);
 
         getUsername = () => 'localuser';
-        documentConverter.convert.and.returnValue(doc);
         indexFacade.getCount.and.returnValue(0);
         documentCache.get.and.returnValue({ resource: { id: '1', identifier: '1' } });
 
@@ -75,7 +72,6 @@ describe('ChangesStream', () => {
             datastore,
             indexFacade,
             documentCache,
-            documentConverter,
             projectConfiguration,
             getUsername);
     });
@@ -90,17 +86,7 @@ describe('ChangesStream', () => {
     });
 
 
-    it('send through category converter', async done => {
-
-        await onChange(doc);
-        expect(documentConverter.convert).toHaveBeenCalledWith(doc);
-        done();
-    });
-
-
     it('detect that it is remote change', async done => {
-
-        documentConverter.convert.and.returnValue(doc);
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
@@ -114,8 +100,6 @@ describe('ChangesStream', () => {
             user: 'localuser', // same user
             date: new Date('2018-02-08T01:00:00.00Z')
         };
-
-        documentConverter.convert.and.returnValue(doc);
 
         await onChange(doc);
         expect(indexFacade.put).not.toHaveBeenCalled();
@@ -146,8 +130,6 @@ describe('ChangesStream', () => {
         pouchdbDatastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         pouchdbDatastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
-        documentConverter.convert.and.returnValue(doc);
-
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
         done();
@@ -176,8 +158,6 @@ describe('ChangesStream', () => {
 
         pouchdbDatastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         pouchdbDatastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
-
-        documentConverter.convert.and.returnValue(doc);
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalled();

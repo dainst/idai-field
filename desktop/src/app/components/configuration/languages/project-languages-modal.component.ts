@@ -11,7 +11,8 @@ import { M } from '../../messages/m';
     templateUrl: './project-languages-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

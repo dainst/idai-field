@@ -61,6 +61,12 @@ export module WarningFilters {
                 type: 'missingRelationTargets'
             },
             {
+                label: translations.getTranslation('warnings.invalidRelationTargets'),
+                constraintName: 'invalidRelationTargets:exist',
+                count: 0,
+                type: 'invalidRelationTargets'
+            },
+            {
                 label: translations.getTranslation('warnings.missingOrInvalidParent'),
                 constraintName: 'missingOrInvalidParent:exist',
                 count: 0,

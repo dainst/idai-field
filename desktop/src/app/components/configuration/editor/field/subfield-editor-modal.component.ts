@@ -24,7 +24,8 @@ export type SubfieldEditorData = {
     templateUrl: './subfield-editor-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

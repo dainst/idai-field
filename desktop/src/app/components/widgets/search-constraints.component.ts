@@ -18,8 +18,9 @@ type SearchInputType = 'input'|'dropdown'|'boolean'|'exists';
 
 
 @Component({
-   template: ''
- })
+    template: '',
+    standalone: false
+})
 /**
  * @author Thomas Kleinke
  */

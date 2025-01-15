@@ -1,6 +1,6 @@
-import { isArray, isObject } from 'tsfun';
-import { Document } from '../model/document';
-import { OptionalRange } from '../model/optional-range';
+import { isArray, isObject, isString } from 'tsfun';
+import { Document } from '../model/document/document';
+import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
@@ -29,6 +29,7 @@ export module Migrator {
         migratePeriodFields(document);
         migrateSingleToMultipleValues(document);
         migrateDatings(document, projectConfiguration);
+        migrateProjectValuelistFields(document);
     }
 
 
@@ -72,6 +73,7 @@ export module Migrator {
 
 
     function migrateDatings(document: Document, projectConfiguration: ProjectConfiguration) {
+
         const category: CategoryForm = projectConfiguration.getCategory(document);
         if (!category) return;
 
@@ -84,5 +86,22 @@ export module Migrator {
                     if (dating.type === 'exact') dating.type = 'single';
                 })
             });
+    }
+
+
+    function migrateProjectValuelistFields(document: Document) {
+
+        if (document.resource.category !== 'Project') return;
+
+        const fieldNames: string[] = ['staff', 'campaigns'];
+
+        for (let fieldName of fieldNames) {
+            const fieldData: any = document.resource[fieldName];
+            if (isArray(fieldData) && fieldData.every(element => isString(element))) {
+                document.resource[fieldName] = fieldData.map(value => {
+                    return { value, selectable: true };
+                });
+            }
+        }
     }
 }

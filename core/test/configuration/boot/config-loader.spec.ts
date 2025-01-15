@@ -25,7 +25,7 @@ describe('ConfigLoader', () => {
             libraryForms,
             {},
             languageConfiguration,
-            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
         configReader.exists.and.returnValue(true);
         configReader.getValuelistsLanguages.and.returnValue({});
@@ -259,68 +259,6 @@ describe('ConfigLoader', () => {
         expect((pconf.getRelationsForDomainCategory('A1') as any)[0].range).toContain('B');
         expect((pconf.getRelationsForDomainCategory('A2') as any)[0].range).toContain('B2');
         expect((pconf.getRelationsForDomainCategory('C') as any)[0].range).toContain('D');
-
-        done();
-    });
-
-
-    // TODO Adjust title / check if this test is still necessary
-    it('preprocess - convert sameOperation to sameMainCategoryResource', async done => {
-
-        const builtInCategories: Map<BuiltInCategoryDefinition> = {
-            T: {
-                fields: {},
-                minimalForm: {
-                    groups: []
-                },
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true
-            },
-            A: { 
-                parent: 'T',
-                fields: {},
-                minimalForm: {
-                    groups: []
-                }
-             },
-            B: {
-                parent: 'T',
-                fields: {},
-                minimalForm: {
-                    groups: []
-                }
-            }
-        };
-
-        const customForms: Map<CustomFormDefinition> = {
-            A: { fields: {} },
-            B: { fields: {} },
-            T: { fields: {} }
-        };
-
-        applyConfig();
-
-        let pconf;
-        try {
-            pconf = await configLoader.go(
-                {},
-                builtInCategories,
-                [{
-                    name: 'abc',
-                    domain: ['A'],
-                    range: ['B'],
-                    sameMainCategoryResource: false,
-                    editable: false,
-                    inputType: 'relation'
-                }],
-                {},
-                getConfigurationDocument(customForms, {})
-            );
-        } catch(err) {
-            fail(err);
-        }
-
-        expect(pconf.getRelationsForDomainCategory('A')[0].sameMainCategoryResource).toBe(false);
 
         done();
     });

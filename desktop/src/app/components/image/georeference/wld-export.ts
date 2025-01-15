@@ -44,6 +44,7 @@ async function openFileSelectionDialog(fileName: string, appState: AppState): Pr
     const defaultPath: string = getDefaultPath(fileName, appState);
 
     const saveDialogReturnValue = await remote.dialog.showSaveDialog(
+        remote.getCurrentWindow(),
         {
             defaultPath,
             filters: [

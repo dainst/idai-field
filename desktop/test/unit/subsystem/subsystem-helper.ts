@@ -1,5 +1,5 @@
 import { sameset } from 'tsfun';
-import { AppConfigurator, DocumentConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
+import { AppConfigurator, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource, SyncService, ImageStore,
     ImageSyncService, Indexer } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
@@ -128,13 +128,11 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
     await imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
 
     const documentCache = new DocumentCache();
-    const documentConverter = new DocumentConverter(projectConfiguration);
 
     const datastore = new Datastore(
         pouchdbDatastore,
         createdIndexFacade,
         documentCache,
-        documentConverter,
         projectConfiguration,
         () => settingsProvider.getSettings().username
     );
@@ -143,7 +141,6 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         createdIndexFacade,
         pouchdbDatastore.getDb(),
         documentCache,
-        documentConverter,
         projectConfiguration,
         false
     );
@@ -153,7 +150,6 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         datastore,
         createdIndexFacade,
         documentCache,
-        documentConverter,
         projectConfiguration,
         () => settingsProvider.getSettings().username
     );

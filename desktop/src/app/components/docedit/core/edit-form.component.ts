@@ -7,7 +7,8 @@ import { AngularUtility } from '../../../angular/angular-utility';
 
 @Component({
     selector: 'edit-form',
-    templateUrl: './edit-form.html'
+    templateUrl: './edit-form.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

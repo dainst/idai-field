@@ -7,7 +7,8 @@ import { AppState } from '../../../services/app-state';
 
 @Component({
     selector: 'view-modal-drop-area',
-    templateUrl: './view-modal-drop-area.html'
+    templateUrl: './view-modal-drop-area.html',
+    standalone: false
 })
 export class ViewModalDropAreaComponent extends DropAreaComponent {
 

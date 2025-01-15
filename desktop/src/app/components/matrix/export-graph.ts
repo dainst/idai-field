@@ -8,23 +8,23 @@ import { AngularUtility } from '../../angular/angular-utility';
 const remote = window.require('@electron/remote');
 
 
+export type MatrixExportFormat = 'dot'|'svg';
+
+
 /**
  * @author Thomas Kleinke
  */
 export async function exportGraph(projectName: string, trenchIdentifier: string, appState: AppState,
-                                  modalService: NgbModal, dotGraph: string, svgGraph?: string) {
+                                  modalService: NgbModal, graph: string, format: MatrixExportFormat) {
 
-    const filePath: string = await chooseFilepath(projectName, trenchIdentifier, appState, svgGraph !== undefined);
+    const filePath: string = await chooseFilepath(projectName, trenchIdentifier, appState, format);
     if (!filePath) throw 'canceled';
 
     const modalRef: NgbModalRef = openExportModal(modalService);
     await AngularUtility.refresh(500);
 
     try {
-        await writeFile(
-            filePath,
-            filePath.endsWith('.gv') ? dotGraph : svgGraph
-        );
+        await writeFile(filePath, graph);
     } catch (errWithParams) {
         throw errWithParams;
     } finally {
@@ -34,12 +34,15 @@ export async function exportGraph(projectName: string, trenchIdentifier: string,
 
 
 async function chooseFilepath(projectName: string, trenchIdentifier: string, appState: AppState,
-                              includeSvgOption: boolean): Promise<string> {
+                              format: MatrixExportFormat): Promise<string> {
 
-    const saveDialogReturnValue = await remote.dialog.showSaveDialog({
-        defaultPath: getDefaultPath(projectName, trenchIdentifier, appState),
-        filters: getFilters(includeSvgOption)
-    });
+    const saveDialogReturnValue = await remote.dialog.showSaveDialog(
+        remote.getCurrentWindow(),
+        {
+            defaultPath: getDefaultPath(projectName, trenchIdentifier, appState),
+            filters: getFilters(format)
+        }
+    );
 
     const filePath: string = saveDialogReturnValue.filePath;
     
@@ -63,14 +66,14 @@ function getDefaultPath(projectName: string, trenchIdentifier: string, appState?
 }
 
 
-function getFilters(includeSvgOption: boolean): any[] {
+function getFilters(format: MatrixExportFormat): any[] {
 
-    const result: any[] = [];
-
-    result.push({ name: 'Dot (Graphviz)', extensions: [ 'gv' ] });
-    if (includeSvgOption) result.push({ name: 'SVG', extensions: [ 'svg' ] });
-
-    return result;
+    switch (format) {
+        case 'dot':
+            return [{ name: 'Dot (Graphviz)', extensions: [ 'gv' ] }];
+        case 'svg':
+            return [{ name: 'SVG', extensions: [ 'svg' ] }];
+    }
 }
 
 

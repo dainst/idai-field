@@ -8,7 +8,6 @@ import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../components/export/export-runner';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
-import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { SettingsProvider } from '../../services/settings/settings-provider';
@@ -32,7 +31,8 @@ const path = window.require('path');
     templateUrl: './import.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * Delegates calls to the Importer, waits for
@@ -46,7 +46,6 @@ const path = window.require('path');
 export class ImportComponent implements OnInit {
 
     public operations: Array<Document> = [];
-    public javaInstalled: boolean = true;
     public running: boolean = false;
     public ignoredIdentifiers: string[] = [];
 
@@ -79,8 +78,6 @@ export class ImportComponent implements OnInit {
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 
-    public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
-
     public isDefaultFormat = () => Importer.isDefault(this.importState.format);
 
     public isMergeMode = () => this.importState.mergeMode;
@@ -103,7 +100,6 @@ export class ImportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.updateCategories();
-        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
 
@@ -135,7 +131,6 @@ export class ImportComponent implements OnInit {
         return !this.running
             && this.ignoredIdentifiers.length < 2
             && this.importState.format !== undefined
-            && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
             && (this.importState.format !== 'csv' || this.importState.selectedCategory)
             && (this.importState.sourceType === 'file'
                 ? this.importState.filePath !== undefined

@@ -1,0 +1,53 @@
+/**
+ * @author Thomas Kleinke
+ */
+.composite-entry-modal-body {
+  padding-bottom: 16px !important;
+
+  .docedit-subfield-section:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  .mdi-information-outline {
+    position: relative;
+    bottom: 2px;
+    font-size: 20px;
+  }
+
+  .invalid-data {
+    font-style: italic;
+    pointer-events: none;
+  }
+
+  .form-check-label,
+  label {
+    font-size: 15px;
+    user-select: none;
+  }
+
+  input,
+  textarea {
+    font-size: 13px;
+  }
+
+  input:not([type]),
+  input[type="text"],
+  .btn-danger {
+    height: 33px;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    top: 1.5px !important;
+  }
+
+  .btn-danger {
+    width: 34px;
+  }
+
+  .mdi-delete {
+    position: relative;
+    bottom: 3px;
+    right: 5px;
+  }
+}

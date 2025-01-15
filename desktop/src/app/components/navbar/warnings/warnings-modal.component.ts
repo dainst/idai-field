@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map, flatten, isArray, nop } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
-    WarningType, ConfigReader, Group, Resource, Field, Tree, MissingRelationTargetWarnings, InvalidDataUtil,
-    OutlierWarnings } from 'idai-field-core';
+import { Map, flatten, intersect, isArray, nop } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
+    RelationTargetWarnings } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -36,6 +36,7 @@ type WarningSection = {
     inputType?: Field.InputType;
     dataLabel?: string;
     outlierValues?: string[];
+    relationTargets?: Array<Document>;
 }
 
 
@@ -43,7 +44,8 @@ type WarningSection = {
     templateUrl: './warnings-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -126,10 +128,12 @@ export class WarningsModalComponent {
     }
 
 
-    public getMissingRelationTargetIds(section: WarningSection): string[] {
+    public getRelationTargetIds(section: WarningSection): string[] {
 
         return this.selectedDocument.resource.relations[section.fieldName]?.filter(targetId => {
-            return this.selectedDocument.warnings?.missingRelationTargets?.targetIds.includes(targetId);
+            const warnings: RelationTargetWarnings
+                = this.selectedDocument.warnings?.[section.type] as RelationTargetWarnings;
+            return warnings?.targetIds.includes(targetId);
         }) ?? [];
     }
 
@@ -389,7 +393,8 @@ export class WarningsModalComponent {
         componentInstance.document = this.selectedDocument;
         componentInstance.relationName = section.fieldName;
         componentInstance.relationLabel = this.getFieldOrRelationLabel(section);
-        componentInstance.invalidTargetIds = this.getMissingRelationTargetIds(section);
+        componentInstance.invalidTargetIds = this.getRelationTargetIds(section);
+        componentInstance.warningType = section.type;
 
         await this.modals.awaitResult(
             result,
@@ -490,9 +495,10 @@ export class WarningsModalComponent {
                         );
                         break;
                     case 'missingRelationTargets':
+                    case 'invalidRelationTargets':
                         this.sections = this.sections.concat(await this.createSections(
                             type as WarningType, document,
-                            (document.warnings[type] as MissingRelationTargetWarnings).relationNames
+                            (document.warnings[type] as RelationTargetWarnings).relationNames
                         ));
                         break;
                     case 'outliers':
@@ -538,7 +544,8 @@ export class WarningsModalComponent {
             section.unconfiguredCategoryName = document.resource.category;
         } else if (document.resource.category !== 'Configuration') {
             section.category = this.projectConfiguration.getCategory(document.resource.category);
-            if (fieldName && type !== 'unconfiguredFields' && type !== 'missingRelationTargets') {
+            if (fieldName
+                    && !['unconfiguredFields', 'missingRelationTargets', 'invalidRelationTargets'].includes(type)) {
                 section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
             }
         };
@@ -556,7 +563,22 @@ export class WarningsModalComponent {
                 : flatten(Object.values(outlierValues));
         }
 
+        if (type === 'invalidRelationTargets') {
+           section.relationTargets = await this.fetchRelationTargets(document, fieldName);
+        }
+
         return section;
+    }
+
+
+    private fetchRelationTargets(document: FieldDocument, fieldName: string): Promise<Array<Document>> {
+
+        const targetIds: string[] = intersect(
+            document.resource.relations[fieldName],
+            document.warnings.invalidRelationTargets.targetIds
+        );
+
+        return this.datastore.getMultiple(targetIds);
     }
 
 

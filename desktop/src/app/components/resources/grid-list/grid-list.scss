@@ -15,8 +15,8 @@ grid-list {
   #grid-list {
     height: calc(100vh - #{$navbar-height + $toolbar-height});
     margin-top: 2px;
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: -12px;
+    margin-right: -12px;
     border-top: 1px solid #e9ecef;
 
     loading-icon {

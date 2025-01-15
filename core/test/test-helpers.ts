@@ -1,8 +1,8 @@
 import { sameset, update } from 'tsfun';
 import { Datastore } from '../src/datastore/datastore';
 import { CategoryForm, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
-import { Document, toResourceId } from '../src/model/document';
-import { Resource } from '../src/model/resource';
+import { Document, toResourceId } from '../src/model/document/document';
+import { Resource } from '../src/model/document/resource';
 import { Tree } from '../src/tools/forest';
 import { Lookup } from '../src/tools/utils';
 

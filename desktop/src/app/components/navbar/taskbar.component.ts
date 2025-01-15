@@ -6,7 +6,8 @@ const remote = window.require('@electron/remote');
 
 @Component({
     selector: 'taskbar',
-    templateUrl: './taskbar.html'
+    templateUrl: './taskbar.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

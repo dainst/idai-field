@@ -1,4 +1,4 @@
-import { Document } from '../../src/model/document';
+import { Document } from '../../src/model/document/document';
 import { RelationsManager } from '../../src/services/relations-manager';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
 
@@ -10,7 +10,7 @@ import { ProjectConfiguration } from '../../src/services/project-configuration';
 describe('RelationsManager', () => {
 
     const projectConfiguration = new ProjectConfiguration({
-        forms: [{ item: { name: 'Operation' }, trees: []}, { item: { name: 'object'}, trees: []}] as any,
+        forms: [{ item: { name: 'Operation' }, trees: [] }, { item: { name: 'object'}, trees: [] }] as any,
         categories: {},
         relations: [
             {

@@ -2,8 +2,8 @@ import { on, set } from 'tsfun';
 import { childrenOf } from '../../basic-index-configuration';
 import { Datastore } from '../../datastore/datastore';
 import { Relation } from '../../model/configuration/relation';
-import { toResourceId, Document } from '../../model/document';
-import { Resource } from '../../model/resource';
+import { toResourceId, Document } from '../../model/document/document';
+import { Resource } from '../../model/document/resource';
 
 
 /**

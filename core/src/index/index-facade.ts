@@ -1,9 +1,9 @@
 import { Observable, Observer } from 'rxjs';
 import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values } from 'tsfun';
 import { Field } from '../model/configuration/field';
-import { Document } from '../model/document';
-import { Query } from '../model/query';
-import { Resource } from '../model/resource';
+import { Document } from '../model/document/document';
+import { Query } from '../model/datastore/query';
+import { Resource } from '../model/document/resource';
 import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
 import { Named } from '../tools/named';

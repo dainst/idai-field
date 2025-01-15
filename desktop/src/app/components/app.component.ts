@@ -19,7 +19,8 @@ const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 @Component({
     selector: 'idai-field-app',
-    templateUrl: './app.html'
+    templateUrl: './app.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -165,6 +166,10 @@ export class AppComponent {
             $localize `:@@util.warnings.missingRelationTargets:Fehlende Zielressourcen von Relationen`
         );
         this.utilTranslations.addTranslation(
+            'warnings.invalidRelationTargets',
+            $localize `:@@util.warnings.invalidRelationTargets:Ungültige Zielressourcen von Relationen`
+        );
+        this.utilTranslations.addTranslation(
             'warnings.missingOrInvalidParent',
             $localize `:@@util.warnings.missingOrInvalidParent:Fehlende oder ungültige übergeordnete Ressource`
         );
@@ -191,6 +196,10 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'inputTypes.multiInput',
             $localize `:@@config.inputType.multiInput:Einzeiliger Text (Liste)`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.valuelistMultiInput',
+            $localize `:@@config.inputType.valuelistMultiInput:Projekt-Werteliste`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.text',

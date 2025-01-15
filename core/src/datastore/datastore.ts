@@ -1,16 +1,16 @@
 import { clone } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
-import { Document } from '../model/document';
-import { NewDocument } from '../model/document';
-import { Query } from '../model/query';
+import { Document } from '../model/document/document';
+import { NewDocument } from '../model/document/document';
+import { Query } from '../model/datastore/query';
 import { Name } from '../tools/named';
-import { DocumentConverter } from './document-converter';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Indexer } from '../index';
+import { Migrator } from './migrator';
 
 
 export type FindOptions = {
@@ -50,10 +50,8 @@ export class Datastore {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private documentConverter: DocumentConverter,
                 private projectConfiguration: ProjectConfiguration,
-                private getUser: () => Name) {
-    }
+                private getUser: () => Name) {}
     
 
     /**
@@ -158,9 +156,20 @@ export class Datastore {
 
     private async updateIndex(document: Document, notifyObservers: boolean = true): Promise<Document> {
 
-        const previousVersion: Document = this.documentCache.get(document.resource.id);
+        const previousIdentifier: string|undefined = this.documentCache.get(document.resource.id)?.resource.identifier;
+    
+        document = this.updateCache(document);
 
-        await this.convert(document, notifyObservers);
+        Migrator.migrate(document, this.projectConfiguration);
+        await this.updateWarnings(document, notifyObservers, previousIdentifier);
+
+        return this.updateCache(document);
+    }
+
+
+    private updateCache(document: Document) {
+        
+        const previousVersion: Document = this.documentCache.get(document.resource.id);
 
         return !previousVersion
             ? this.documentCache.set(document)
@@ -174,7 +183,7 @@ export class Datastore {
 
         for (let document of documents) {
             const previousVersion: Document = this.documentCache.get(document.resource.id);
-            this.documentConverter.convert(document);
+            Migrator.migrate(document, this.projectConfiguration);
             const updatedDocument: Document = !previousVersion
                 ? this.documentCache.set(document)
                 : this.documentCache.reassign(document);
@@ -185,7 +194,6 @@ export class Datastore {
             this.indexFacade,
             this.datastore.getDb(),
             this.documentCache,
-            this.documentConverter,
             this.projectConfiguration,
             true
         );
@@ -236,8 +244,7 @@ export class Datastore {
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean })
-            : Promise<Document> => {
+    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean }): Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
 
@@ -295,7 +302,7 @@ export class Datastore {
 
     public convert: Datastore.Convert = async (document: Document, notifyObservers: boolean = true) => {
         
-        this.documentConverter.convert(document);
+        Migrator.migrate(document, this.projectConfiguration);
         await this.updateWarnings(document, notifyObservers);
     }  
 
@@ -326,7 +333,7 @@ export class Datastore {
     public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
         const revision: Document = await this.datastore.fetchRevision(docId, revisionId);
-        this.documentConverter.convert(revision);
+        Migrator.migrate(revision, this.projectConfiguration);
         return revision;
     }
 
@@ -437,14 +444,15 @@ export class Datastore {
     }
 
 
-    private async updateWarnings(document: Document, notifyObservers: boolean) {
+    private async updateWarnings(document: Document, notifyObservers: boolean, previousIdentifier?: string) {
 
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
 
         this.indexFacade.put(document);
-        
-        const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
-        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        if (!previousIdentifier) {
+            previousIdentifier = this.documentCache.get(document.resource.id)?.resource.identifier;
+        }
 
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this,

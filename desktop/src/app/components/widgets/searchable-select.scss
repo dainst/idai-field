@@ -27,6 +27,10 @@
       }
     }
 
+    &.ng-select-opened .ng-arrow-wrapper {
+      bottom: 1px !important;
+    }
+
     &.ng-select-focused .ng-select-container {
       border-color: #7998cb !important;
       box-shadow: none !important;

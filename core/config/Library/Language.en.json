@@ -30,7 +30,7 @@
     },
     "dimensionThickness": {
       "label": "Thickness",
-      "description": "Thickness or strength of the object"
+      "description": "Thickness of the object"
     },
     "dimensionVerticalExtent": {
       "label": "Vertical extent",
@@ -461,7 +461,8 @@
           "label": "History"
         },
         "hasRestoration": {
-          "label": "Restoration"
+          "label": "Restoration",
+          "description": "Have restoration and conservation measures been undertaken?"
         },
         "architecturalOrders": {
           "label": "Architectural orders"
@@ -479,7 +480,8 @@
           "label": "Building type"
         },
         "condition": {
-          "label": "Condition"
+          "label": "Condition",
+          "description": "Description of the conservation status"
         },
         "conditionAmount": {
           "label": "Preservation assessment",

@@ -14,7 +14,8 @@ import { scrollTo } from '../../angular/scrolling';
     templateUrl: './document-picker.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

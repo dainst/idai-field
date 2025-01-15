@@ -1,8 +1,10 @@
+@use 'sass:color';
+
 $tab-bg-color: $gray-100;
 $tab-bg-color-hover: $navbar-default-bg;
-$tab-separator-color: darken($navbar-default-bg, 4%);
+$tab-separator-color: color.adjust($navbar-default-bg, $lightness: -4%);
 $navbar-link-color: $gray-800;
-$link-hover-color: lighten($navbar-link-color, 30%);
+$link-hover-color: color.adjust($navbar-link-color, $lightness: 30%);
 $border-radius: 4px;
 
 @import 'taskbar';
@@ -163,7 +165,7 @@ $border-radius: 4px;
   &:not(.active) a.nav-link {
     .mdi-close:hover {
       color: $navbar-link-color;
-      background-color: lighten($navbar-default-bg, 5%);
+      background-color: color.adjust($navbar-default-bg, $lightness: 50%);
     }
   }
 

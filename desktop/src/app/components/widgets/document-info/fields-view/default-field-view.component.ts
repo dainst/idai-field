@@ -7,7 +7,8 @@ import { UtilTranslations } from '../../../../util/util-translations';
 
 @Component({
     selector: 'default-field-view',
-    templateUrl: './default-field-view.html'
+    templateUrl: './default-field-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

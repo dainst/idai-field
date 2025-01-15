@@ -6,7 +6,8 @@ type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon
 
 @Component({
     selector: 'form-field-geometry',
-    templateUrl: './geometry.html'
+    templateUrl: './geometry.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

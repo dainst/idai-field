@@ -2,9 +2,10 @@ import { DecimalPipe, HashLocationStrategy, IMAGE_CONFIG, LocationStrategy, regi
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
+import localePt from '@angular/common/locales/pt';
 import localeTr from '@angular/common/locales/tr';
 import localeUk from '@angular/common/locales/uk';
-import { APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
+import { LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -67,6 +68,7 @@ const remote = window.require('@electron/remote');
 
 registerLocaleData(localeDe, 'de');
 registerLocaleData(localeIt, 'it');
+registerLocaleData(localePt, 'pt');
 registerLocaleData(localeTr, 'tr');
 registerLocaleData(localeUk, 'uk');
 
@@ -136,23 +138,20 @@ registerLocaleData(localeUk, 'uk');
             provide: AppInitializerServiceLocator,
             useFactory: () => new AppInitializerServiceLocator()
         },
-        {
-            provide: APP_INITIALIZER,
-            multi: true,
-            deps: [
-                AppInitializerServiceLocator,
-                SettingsService,
-                PouchdbDatastore,
-                ImageStore,
-                ExpressServer,
-                DocumentCache,
-                ThumbnailGenerator,
-                InitializationProgress,
-                ConfigReader,
-                ConfigLoader
-            ],
-            useFactory: appInitializerFactory,
-        },
+        provideAppInitializer(() => {
+            return appInitializerFactory(
+                inject(AppInitializerServiceLocator),
+                inject(SettingsService),
+                inject(PouchdbDatastore),
+                inject(ImageStore),
+                inject(ExpressServer),
+                inject(DocumentCache),
+                inject(ThumbnailGenerator),
+                inject(InitializationProgress),
+                inject(ConfigReader),
+                inject(ConfigLoader)
+            )();
+        }),
         InitializationProgress,
         {
             provide: Messages,

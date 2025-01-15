@@ -8,7 +8,8 @@ import { Document, Named, ProjectConfiguration } from 'idai-field-core';
     templateUrl: './delete-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

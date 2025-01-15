@@ -1,7 +1,4 @@
-version: "3.7"
-
 services:
-
   couchdb:
     image: couchdb:3.3.2
     ports:

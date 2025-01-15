@@ -1,5 +1,5 @@
 import { ProjectConfiguration } from '../../../src/services/project-configuration';
-import { Document } from '../../../src/model/document';
+import { Document } from '../../../src/model/document/document';
 import { ConnectedDocs } from '../../../src/services/utilities/connected-docs'
 import { Relation } from '../../../src/model';
 import { Name, Named } from '../../../src/tools';

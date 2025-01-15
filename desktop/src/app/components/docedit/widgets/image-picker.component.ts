@@ -13,7 +13,8 @@ import { getImageSuggestions } from './get-image-suggestions';
     templateUrl: './image-picker.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Fabian Z.

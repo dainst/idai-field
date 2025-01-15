@@ -66,7 +66,6 @@ describe('importDocuments', () => {
         context = {
             operationCategories,
             inverseRelationsMap: {},
-            sameOperationRelations: [],
             settings: { username: 'user1'} as Settings
         };
 

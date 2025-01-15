@@ -1,0 +1,36 @@
+<div *ngFor="let entry of getEntries()">
+    <div class="input-group mb-2">
+        <button *ngIf="entry.selectable"
+                class="btn btn-success selectable-toggle"
+                type="button"
+                ngbTooltip="Dieser Wert steht bei der Dateneingabe zur Auswahl."
+                i18n-ngbTooltip="@@docedit.forms.valuelistMultiInput.selectable"
+                container="body"
+                placement="left"
+                (click)="toggleSelectable(entry)">
+            <span class="mdi mdi-check-circle"></span>
+        </button>
+        <button *ngIf="!entry.selectable"
+                class="btn btn-secondary selectable-toggle"
+                type="button"
+                ngbTooltip="Dieser Wert steht bei der Dateneingabe nicht zur Auswahl."
+                i18n-ngbTooltip="@@docedit.forms.valuelistMultiInput.unselectable"
+                container="body"
+                placement="left"
+                (click)="toggleSelectable(entry)">
+            <span class="mdi mdi-minus-circle"></span>
+        </button>
+        <input [value]="entry.value" type="text" disabled class="form-control">
+        <button class="btn btn-danger delete-multi-input-entry" type="button" (click)="deleteEntry(entry)">
+            <span class="mdi mdi-delete"></span>
+        </button>
+    </div>
+</div>
+
+<div class="input-group mb-2">
+    <input [(ngModel)]="newEntry.value" type="text" class="form-control">
+    <button class="btn btn-success add-multi-input-entry" [disabled]="!isValidEntry(newEntry)" type="button"
+            (click)="addNewEntry()">
+        <span class="mdi mdi-plus-circle"></span>
+    </button>
+</div>

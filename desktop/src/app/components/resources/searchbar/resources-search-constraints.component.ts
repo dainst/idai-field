@@ -11,7 +11,8 @@ import { ResourcesSearchBarComponent } from './resources-search-bar.component';
     templateUrl: '../../widgets/search-constraints.html',
     host: {
         '(document:click)': 'handleClick($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

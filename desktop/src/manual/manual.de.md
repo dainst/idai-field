@@ -660,7 +660,7 @@ Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiter
 
 Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Kompositfeld" gewählt ist. Legen Sie hier fest, aus welchen Unterfeldern jeder Eintrag des Kompositfelds besteht. Die Reihenfolge der Unterfelder lässt sich per Drag & Drop ändern.
 
-Um ein neues Unterfeld anzulegen, geben Sie den gewünschten Namen in das Eingabefeld ein und bestätigen die Eingabe per Klick auf den Plus-Button.  Es öffnet sich ein neues Editorfenster, in dem Sie das Unterfeld ähnlich wie ein gewöhnliches Feld konfigurieren können (Eingabetyp, Anzeigename, Beschreibung usw.).
+Um ein neues Unterfeld anzulegen, geben Sie den gewünschten Namen in das Eingabefeld ein und bestätigen die Eingabe per Klick auf den Plus-Button. Es öffnet sich ein neues Editorfenster, in dem Sie das Unterfeld ähnlich wie ein gewöhnliches Feld konfigurieren können (Eingabetyp, Anzeigename, Beschreibung usw.).
 
 
 ##### Bedingungen für die Anzeige von Unterfeldern
@@ -734,7 +734,20 @@ Bitte beachten Sie, dass bereits eingegebene Texte nicht mehr angezeigt werden, 
 
 ### Konfiguration importieren
 
-Um eine bereits existierende Konfiguration aus einem anderen Projekt zu übernehmen, öffnen Sie das neue Projekt, wechseln in den Konfigurationseditor und rufen die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." auf. Wählen Sie das Projekt, deren Konfiguration Sie übernehmen möchten, anschließend aus der Liste aus, und bestätigen Sie Ihre Auswahl per Klick auf den "OK"-Button. Das Ergebnis des Imports kann nun im Editor überprüft und per Klick auf den "Speichern"-Button übernommen werden. Bitte beachten Sie, dass dabei sämtliche bisherigen Konfigurationseinstellungen durch die importierte Konfiguration ersetzt werden.
+Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." auf, um eine bereits existierende Konfiguration aus einem anderen Projekt zu übernehmen. 
+Im Auswahlmenü "Quelle" können Sie zwischen zwei verschiedenen Importmöglichkeiten wählen:
+
+* *Datei*: Importieren Sie eine Field-Konfigurationsdatei (Dateiendung *.configuration*), die zuvor in einem anderen Projekt über das Menü "Projektkonfiguration" ➝ "Konfiguration exportieren..." erstellt wurde.
+* *Projekt*: Importieren Sie die Konfiguration eines anderen auf dem gleichen Computer vorliegenden Projekts.
+
+Das Ergebnis des Imports kann nun im Editor überprüft und per Klick auf den "Speichern"-Button übernommen werden. Bitte beachten Sie, dass dabei sämtliche bisherigen Konfigurationseinstellungen durch die importierte Konfiguration ersetzt werden.
+
+
+### Konfiguration exportieren
+
+Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren..." auf, um die Konfiguration des aktuell geöffneten Projekts als Field-Konfigurationsdatei (Dateiendung *.configuration*) zu speichern. Exportiert wird dabei der im Konfigurationseditor angezeigte Stand inklusive eventueller ungespeicherter Änderungen. In der erzeugten Datei sind auch alle projektspezifischen Wertelisten enthalten.
+
+Über die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." kann die Datei anschließend wieder importiert werden, um die Konfiguration in ein anderes Projekt zu übernehmen oder den gespeicherten Stand der Konfiguration im gleichen Projekt wiederherzustellen.
 
 
 <hr>

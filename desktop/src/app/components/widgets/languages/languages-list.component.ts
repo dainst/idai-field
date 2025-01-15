@@ -6,7 +6,8 @@ import { LanguagePickerModalComponent } from './language-picker-modal.component'
 
 @Component({
     selector: 'languages-list',
-    templateUrl: './languages-list.html'
+    templateUrl: './languages-list.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -1,10 +1,11 @@
 import { Component} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from 'idai-field-core';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'changes-history-modal',
+    imports: [CommonModule],
     templateUrl: './changes-history-modal.html',
     styleUrls: ['./changes-history-modal.scss']
 })
@@ -31,9 +32,8 @@ export class ChangesHistoryModalComponent {
     }
 
     public async initialize() {
-        // this.category = this.projectConfiguration.getCategory(this.document.resource.category);
-        // this.printedFields = await this.getPrintedFields();
-        1
+        // TODO remove this function  ( called in private function initModal() ) 
+         1
     }
 
     public formatDateTime( date: string | Date, locale: string = 'de-DE' ) { 

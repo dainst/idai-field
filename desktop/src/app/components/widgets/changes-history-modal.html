@@ -5,8 +5,7 @@
 <div class="modal-body">
     <h6>The resource <b>{{document.resource.identifier}}</b> has been created by the user {{document.created.user}} the {{formatDateTime(document.created.date)}}</h6>
     <div id="changes-history-modal-body" class="modal-body">
-        <!-- {{document.modified[0].date}}   -->
-        <div *ngIf="document.modified">
+        <div *ngIf="document.modified[0].user">
             <div id="list">               
                 <div id="list-header">  
                     <div class="list-header-field" i18n="@@changes.list.colnames.date">Änderungsdatum</div>

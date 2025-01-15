@@ -47,7 +47,6 @@ import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-lang
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
 import { IdentifierComponent } from './core/forms/identifier.component';
-import { ChangesHistoryModalComponent } from '../widgets/changes-history-modal.component';
 import { CompositeComponent } from './core/forms/array-field/composite/composite.component';
 import { CompositeEntryModalComponent } from './core/forms/array-field/composite/composite-entry-modal.component';
 import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input.component';
@@ -114,8 +113,7 @@ import { LiteratureEntryModalComponent } from './core/forms/array-field/literatu
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent,
         CompositeComponent,
-        CompositeEntryModalComponent,
-        ChangesHistoryModalComponent
+        CompositeEntryModalComponent
     ],
     exports: [
         DoceditComponent,

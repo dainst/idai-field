@@ -212,7 +212,7 @@ export class DoceditComponent {
             ChangesHistoryModalComponent, 
             { animation: false, backdrop: 'static', keyboard: false,  windowClass : "history-modal-content" }
         );
-    
+        
         modalRef.componentInstance.document = this.documentHolder.clonedDocument;
     }
 

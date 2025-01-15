@@ -1,28 +1,23 @@
 <div class="modal-header">
-    <h5  class="modal-title" i18n="@@widgets.historyModal.header">{{document.resource.identifier}} Änderunghistorie</h5>
+    <h5  class="modal-title" i18n="@@widgets.historyModal.header">Änderunghistorie</h5>
 </div>
 
 <div class="modal-body">
+    <h6>The resource <b>{{document.resource.identifier}}</b> has been created by the user {{document.created.user}} the {{formatDateTime(document.created.date)}}</h6>
     <div id="changes-history-modal-body" class="modal-body">
-        <div *ngIf="document" id="ifdocument">            
-            <div id="list">                
+        <!-- {{document.modified[0].date}}   -->
+        <div *ngIf="document.modified">
+            <div id="list">               
                 <div id="list-header">  
-                    <div class="list-header-field" i18n="@@changes.list.colnames.date">Datum</div>
-                    <div class="list-header-field" i18n="@@changes.list.colnames.action">Aktion</div>
+                    <div class="list-header-field" i18n="@@changes.list.colnames.date">Änderungsdatum</div>
                     <div class="list-header-field" i18n="@@changes.list.colnames.user">Benutzer</div>
                 </div>            
                 <div class="list-body">
                     <div *ngFor="let modification of document.modified.reverse()" 
                         class = "list-row">                    
                         <div class= "list-body-field" [textContent]="formatDateTime(modification.date)"></div>
-                        <div class= "list-body-field" i18n="@@changes.list.value.modified"  > Geändert </div>
                         <div class= "list-body-field" [textContent]="modification.user"></div>      
                     </div> 
-                    <div class = "list-row">       
-                        <div class= "list-body-field" [textContent]="formatDateTime(document.created.date)"></div>
-                        <div class= "list-body-field" i18n="@@changes.list.value.created"> Erstellt  </div>
-                        <div class= "list-body-field" [textContent]="document.created.user"></div> 
-                    </div>
                 </div>
             </div>
         </div>    

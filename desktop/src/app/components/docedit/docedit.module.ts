@@ -74,6 +74,7 @@ import { LiteratureEntryModalComponent } from './core/forms/array-field/literatu
         WidgetsModule,
         ImageGridModule,
         ImageRowModule,
+        // CommonModule,
         ChangesHistoryModalComponent
     ],
     declarations: [

@@ -30,6 +30,11 @@ export class ChangesHistoryModalComponent {
         if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 
+    public async initialize() {
+        // this.category = this.projectConfiguration.getCategory(this.document.resource.category);
+        // this.printedFields = await this.getPrintedFields();
+        1
+    }
 
     public formatDateTime( date: string | Date, locale: string = 'de-DE' ) { 
         return new Date(date).toLocaleString(locale);

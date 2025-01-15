@@ -193,6 +193,7 @@ export class ResourcesComponent implements OnDestroy {
 
 
     public async editQRCode(document: Document) {
+
         this.initModal(document, QrCodeEditorModalComponent, MenuContext.QR_CODE_EDITOR)
     }
 

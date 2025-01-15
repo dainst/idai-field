@@ -874,6 +874,13 @@ Abhängig vom Format der ausgewählten Datei, das anhand der Dateiendung erkannt
 
 Starten Sie den Importprozess über den Button **Import starten**.
 
+Unterstützte Import-Formate sind:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.shp)
+* JSON Lines (.jsonl)
+* Katalog (.catalog)
+
 
 ## Export
 
@@ -882,6 +889,12 @@ Rufen Sie das Menü "Werkzeuge" ➝ "Export" auf, um Ressourcen des aktuell geö
 Wählen Sie im Dropdown-Menü **Format** das gewünschte Exportformat aus. Abhängig vom Format können weitere Optionen verfügbar sein (siehe Abschnitt zum entsprechenden Format im Unterkapitel *Formate*).
 
 Nach Klick auf den Button **Export starten** öffnet sich ein Dateiauswahldialog, über den Sie Namen und Zielverzeichnis der zu erstellenden Datei festlegen können. Anschließend startet der Exportprozess.
+
+Unterstützte Export-Formate sind:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.zip)
+* Katalog (.catalog)
 
 
 ## Formate

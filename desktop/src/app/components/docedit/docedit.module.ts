@@ -73,9 +73,7 @@ import { LiteratureEntryModalComponent } from './core/forms/array-field/literatu
         MessagesModule,
         WidgetsModule,
         ImageGridModule,
-        ImageRowModule,
-        // CommonModule,
-        ChangesHistoryModalComponent
+        ImageRowModule    
     ],
     declarations: [
         ConflictDeletedModalComponent,
@@ -116,7 +114,8 @@ import { LiteratureEntryModalComponent } from './core/forms/array-field/literatu
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent,
         CompositeComponent,
-        CompositeEntryModalComponent
+        CompositeEntryModalComponent,
+        ChangesHistoryModalComponent
     ],
     exports: [
         DoceditComponent,

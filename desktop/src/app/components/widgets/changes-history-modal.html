@@ -3,7 +3,7 @@
 </div>
 
 <div class="modal-body">
-    <h6>The resource <b>{{document.resource.identifier}}</b> has been created by the user {{document.created.user}} the {{formatDateTime(document.created.date)}}</h6>
+    <p  i18n="@@document.created.information.text">Die Ressource <b>{{document.resource.identifier}}</b>  wurde vom Benutzer  {{document.created.user}} am {{formatDateTime(document.created.date)}} erstellt.</p>
     <div id="changes-history-modal-body" class="modal-body">
         <div *ngIf="document.modified[0].user">
             <div id="list">               

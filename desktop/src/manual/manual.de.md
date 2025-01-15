@@ -875,13 +875,22 @@ Abhängig vom Format der ausgewählten Datei, das anhand der Dateiendung erkannt
 Starten Sie den Importprozess über den Button **Import starten**.
 
 
+## Export
+
+Rufen Sie das Menü "Werkzeuge" ➝ "Export" auf, um Ressourcen des aktuell geöffneten Projekts zu exportieren.
+
+Wählen Sie im Dropdown-Menü **Format** das gewünschte Exportformat aus. Abhängig vom Format können weitere Optionen verfügbar sein (siehe Abschnitt zum entsprechenden Format im Unterkapitel *Formate*).
+
+Nach Klick auf den Button **Export starten** öffnet sich ein Dateiauswahldialog, über den Sie Namen und Zielverzeichnis der zu erstellenden Datei festlegen können. Anschließend startet der Exportprozess.
+
+
 ## Formate
 
 ### CSV
 
 CSV ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
 
-Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie; jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
+Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie. Jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
 
 CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
 

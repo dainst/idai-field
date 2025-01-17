@@ -1256,6 +1256,19 @@ Darüber hinaus stehen die folgenden Optionen zur Auswahl:
 * *Feldtrennzeichen*: Tragen Sie das Zeichen ein, das in der CSV-Datei als Feldtrennzeichen verwendet wird (die Standardeinstellung ist das Komma). Geben Sie das gleiche Zeichen an, das Sie beim Erstellen der CSV-Datei (z. B. in Field Desktop über das Menü "Export" oder in einem Tabellenkalkulationsprogramm) gewählt haben. In der Regel wird als Feldtrennzeichen für CSV-Dateien entweder das Komma oder das Semikolon verwendet. Wenn es beim Import zu Fehlern kommt, prüfen Sie bitte zunächst, ob Sie das richtige Feldtrennzeichen eingetragen haben, da die Datei andernfalls nicht korrekt gelesen werden kann.
 
 
+#### Export-Optionen
+
+Wählen Sie zunächst die Art des CSV-Export aus. Sie können zwischen den folgenden beiden Optionen wählen:
+* *Komplett*: Es werden alle Ressourcen anhand der gewählten Einstellungen zu Kontext und Kategorie (siehe unten) exportiert.
+* *Nur Schema*: Es wird lediglich die Kopfzeile mit den Spaltenköpfen aller für die gewählte Kategorie konfigurierten Feldern exportiert. Die ausgegebene Datei kann beispielsweise als Ausgangspunkt für die Erstellung einer Importdatei genutzt werden.
+
+Darüber hinaus stehen die folgenden Optionen zur Auswahl:
+* *Kontext*: Wählen Sie hier optional eine Maßnahme aus, deren Ressourcen exportiert werden sollen. Bei Auswahl der standardmäßig verwendeten Option "Keine Einschränkung" werden alle Ressourcen des Projekts exportiert, die der ausgewählten Kategorie angehören. Diese Option steht ausschließlich bei Auswahl der Option *Komplett* zur Auswahl.
+* *Kategorie*: Wählen Sie hier die gewünschte Kategorie aus. Es werden ausschließlich Ressourcen der gewählten Kategorie exportiert. Zur Auswahl stehen nur Kategorien, von denen Ressourcen im gewählten Kontext existieren. In Klammern wird die Anzahl der in diesem Kontext vorhandenen Ressourcen angezeigt.
+* *Feldtrennzeichen*: Tragen Sie das Zeichen ein, das in der zu erstellenden CSV-Datei als Feldtrennzeichen verwendet werden soll (die Standardeinstellung ist das Komma).
+* *Hierarchische Relationen zusammenfassen*: Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation *isChildOf* zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option ist standardmäßig aktiviert und sollte im Normalfall nicht deaktiviert werden. Bei Deaktivierung der Option werden statt der Spalte *relations.isChildOf* die beiden Spalten *relations.liesWithin* und *relations.isRecordedIn* angelegt. In der Spalte *relations.liesWithin* wird dabei die direkt übergeordnete Ressource gesetzt (falls es sich bei der übergeordneten Ressource um keine Maßnahme handelt), in der Spalte *relations.isRecordedIn* dagegen die Maßnahme, der die Ressource untergeordnet ist. 
+
+
 <hr>
 
 

@@ -67,11 +67,6 @@ export class FixOutliersModalComponent {
             constraints: { ['outlierValues:contain']: this.outlierValue }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
-        /** TODO: 
-         * checkbox fields should be treated differently due to the option of multiple value selection: 
-         * if field is checkboxes, move only docs where the field has same inputtype and same 
-         * valuelist to affectedDocs! - all other can proceed the same as before
-         */
         for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
             const affectedDocument: AffectedDocument = { document: document, fields: [] };
@@ -79,6 +74,7 @@ export class FixOutliersModalComponent {
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
+                if (this.inputType == 'checkboxes' && field.inputType != 'checkboxes') continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
                     affectedDocument.fields.push(field);

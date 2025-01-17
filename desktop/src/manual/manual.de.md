@@ -1191,11 +1191,11 @@ Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere 
     <tbody>
       <tr>
         <td>A</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, 22-23 September 2022), «Archeologia e Calcolatori», 34.1, 85-94</td>
+        <td>002038255</td>
+        <td>https://doi.org/10.19282/ac.34.1.2023.10</td>
+        <td>90</td>
+        <td>3</td>
       </tr>
     </tbody>
   </table>

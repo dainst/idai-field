@@ -19,7 +19,8 @@ const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 @Component({
     selector: 'idai-field-app',
-    templateUrl: './app.html'
+    templateUrl: './app.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -195,6 +196,10 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'inputTypes.multiInput',
             $localize `:@@config.inputType.multiInput:Einzeiliger Text (Liste)`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.valuelistMultiInput',
+            $localize `:@@config.inputType.valuelistMultiInput:Projekt-Werteliste`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.text',

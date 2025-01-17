@@ -3,7 +3,8 @@ import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/cor
 
 @Component({
     selector: 'form-field-identifier',
-    templateUrl: './identifier.html'
+    templateUrl: './identifier.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -29,14 +30,14 @@ export class IdentifierComponent implements OnChanges {
     }
 
 
-    public update(value: string) {
+    public update() {
 
-        if (value === '') {
+        if (this.identifierBody === '') {
             delete this.fieldContainer[this.fieldName];
         } else {
             this.fieldContainer[this.fieldName] = this.identifierPrefix
-                ? this.identifierPrefix + value
-                : value;
+                ? this.identifierPrefix + this.identifierBody
+                : this.identifierBody;
         }
     }
 

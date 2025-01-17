@@ -10,7 +10,8 @@ import { MatrixSelection, MatrixSelectionChange } from './matrix-selection';
 
 @Component({
     selector: 'graph',
-    templateUrl: './graph.html'
+    templateUrl: './graph.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

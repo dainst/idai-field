@@ -28,7 +28,8 @@ type Criterion = {
     templateUrl: './type-relation-picker.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

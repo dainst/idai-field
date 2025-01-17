@@ -8,26 +8,27 @@ describe('DatingUtil', () => {
 
     it('translate back to original state', () => {
 
-        const dat: Dating = {
-
+        const dating: Dating = {
             type: 'single',
             begin: {
                 inputYear: 2000,
                 inputType: 'bce',
                 year: undefined
-            }
+            },
+            isImprecise: false,
+            isUncertain: false
         };
 
-        Dating.addNormalizedValues(dat);
-        expect(dat.begin.year).not.toBeUndefined();
-        const reverted = Dating.revert(dat);
+        Dating.addNormalizedValues(dating);
+        expect(dating.begin.year).not.toBeUndefined();
+        const reverted = Dating.revert(dating);
         expect(reverted.begin.year).toBeUndefined();
     });
 
 
     it('range translate back to original state', () => {
 
-        const dat: Dating = {
+        const dating: Dating = {
 
             type: 'range',
             begin: {
@@ -39,13 +40,15 @@ describe('DatingUtil', () => {
                 inputYear: 1000,
                 inputType: 'bce',
                 year: undefined
-            }
+            },
+            isImprecise: false,
+            isUncertain: false
         };
 
-        Dating.addNormalizedValues(dat);
-        expect(dat.begin.year).not.toBeUndefined();
-        expect(dat.end.year).not.toBeUndefined();
-        const reverted = Dating.revert(dat);
+        Dating.addNormalizedValues(dating);
+        expect(dating.begin.year).not.toBeUndefined();
+        expect(dating.end.year).not.toBeUndefined();
+        const reverted = Dating.revert(dating);
         expect(reverted.begin.year).toBeUndefined();
         expect(reverted.end.year).toBeUndefined();
     });
@@ -53,19 +56,21 @@ describe('DatingUtil', () => {
 
     it('remove empty field', () => {
 
-        const dat: Dating = {
+        const dating: Dating = {
 
             type: 'single',
             begin: {
                 inputYear: 2000,
                 inputType: 'bce',
                 year: -2001
-            }
+            },
+            isImprecise: false,
+            isUncertain: false
         };
-        delete dat.begin.inputYear;
-        delete dat.begin.inputType;
+        delete dating.begin.inputYear;
+        delete dating.begin.inputType;
 
-        const reverted = Dating.revert(dat);
+        const reverted = Dating.revert(dating);
         expect(reverted.begin).toBeUndefined();
     });
 });

@@ -7,7 +7,8 @@ import { Valuelist } from 'idai-field-core';
     templateUrl: './extend-valuelist-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

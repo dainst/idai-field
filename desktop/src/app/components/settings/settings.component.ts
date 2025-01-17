@@ -20,7 +20,8 @@ const remote = window.require('@electron/remote');
     templateUrl: './settings.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

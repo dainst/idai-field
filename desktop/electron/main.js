@@ -221,7 +221,6 @@ global.manualPath = global.mode === 'production'
     : './manual';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
-process.env['NODE_OPTIONS'] = '--no-deprecation';
 
 
 // -- OTHER GLOBALS

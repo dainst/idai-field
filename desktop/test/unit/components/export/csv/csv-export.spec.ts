@@ -382,41 +382,41 @@ describe('CSVExport', () => {
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
-        expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
-        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.de"');
-        expect(result[0][6]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][3]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementPosition"');
+        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.en"');
+        expect(result[0][6]).toBe('"dimensionX.0.measurementComment.de"');
         expect(result[0][7]).toBe('"dimensionX.0.isImprecise"');
         expect(result[0][8]).toBe('"dimensionX.1.inputValue"');
         expect(result[0][9]).toBe('"dimensionX.1.inputRangeEndValue"');
-        expect(result[0][10]).toBe('"dimensionX.1.measurementPosition"');
-        expect(result[0][11]).toBe('"dimensionX.1.measurementComment.en"');
-        expect(result[0][12]).toBe('"dimensionX.1.measurementComment.de"');
-        expect(result[0][13]).toBe('"dimensionX.1.inputUnit"');
+        expect(result[0][10]).toBe('"dimensionX.1.inputUnit"');
+        expect(result[0][11]).toBe('"dimensionX.1.measurementPosition"');
+        expect(result[0][12]).toBe('"dimensionX.1.measurementComment.en"');
+        expect(result[0][13]).toBe('"dimensionX.1.measurementComment.de"');
         expect(result[0][14]).toBe('"dimensionX.1.isImprecise"');
         expect(result[0][15]).toBe('"custom"');
 
         expect(result[1][1]).toBe('"100"');
-        expect(result[1][4]).toBe('"Comment 1"');
-        expect(result[1][5]).toBe('"Kommentar 1"');
+        expect(result[1][5]).toBe('"Comment 1"');
+        expect(result[1][6]).toBe('"Kommentar 1"');
         expect(result[1][8]).toBe('"200"');
-        expect(result[1][10]).toBe('"def"');
-        expect(result[1][11]).toBe('"Comment 2"');
-        expect(result[1][12]).toBe('""');
+        expect(result[1][11]).toBe('"def"');
+        expect(result[1][12]).toBe('"Comment 2"');
+        expect(result[1][13]).toBe('""');
 
         expect(result[2][1]).toBe('"300"');
         expect(result[2][2]).toBe('"400"');
-        expect(result[2][4]).toBe('""');
         expect(result[2][5]).toBe('""');
-        expect(result[2][11]).toBe('""');
+        expect(result[2][6]).toBe('""');
         expect(result[2][12]).toBe('""');
+        expect(result[2][13]).toBe('""');
         expect(result[2][15]).toBe('"custom"');
 
         expect(result[3][1]).toBe('""');
-        expect(result[3][4]).toBe('""');
         expect(result[3][5]).toBe('""');
-        expect(result[3][11]).toBe('""');
+        expect(result[3][6]).toBe('""');
         expect(result[3][12]).toBe('""');
+        expect(result[3][13]).toBe('""');
     });
 
 
@@ -432,9 +432,9 @@ describe('CSVExport', () => {
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
-        expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
-        expect(result[0][5]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][3]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementPosition"');
+        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.en"');
         expect(result[0][6]).toBe('"dimensionX.0.isImprecise"');
 
         expect(result[1][1]).toBe('""');
@@ -449,9 +449,9 @@ describe('CSVExport', () => {
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
-        expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
-        expect(result[0][5]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][3]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementPosition"');
+        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.en"');
         expect(result[0][6]).toBe('"dimensionX.0.isImprecise"');
     });
 
@@ -473,26 +473,26 @@ describe('CSVExport', () => {
 
         expect(result[0][1]).toBe('"dimensionX.0.inputValue"');
         expect(result[0][2]).toBe('"dimensionX.0.inputRangeEndValue"');
-        expect(result[0][3]).toBe('"dimensionX.0.measurementPosition"');
-        expect(result[0][4]).toBe('"dimensionX.0.measurementComment.en"');
-        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.de"');
-        expect(result[0][6]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][3]).toBe('"dimensionX.0.inputUnit"');
+        expect(result[0][4]).toBe('"dimensionX.0.measurementPosition"');
+        expect(result[0][5]).toBe('"dimensionX.0.measurementComment.en"');
+        expect(result[0][6]).toBe('"dimensionX.0.measurementComment.de"');
         expect(result[0][7]).toBe('"dimensionX.0.isImprecise"');
         expect(result[0][8]).toBe('"dimensionY.0.inputValue"');
         expect(result[0][9]).toBe('"dimensionY.0.inputRangeEndValue"');
-        expect(result[0][10]).toBe('"dimensionY.0.measurementPosition"');
-        expect(result[0][11]).toBe('"dimensionY.0.measurementComment.en"');
-        expect(result[0][12]).toBe('"dimensionY.0.measurementComment.unspecifiedLanguage"');
-        expect(result[0][13]).toBe('"dimensionY.0.inputUnit"');
+        expect(result[0][10]).toBe('"dimensionY.0.inputUnit"');
+        expect(result[0][11]).toBe('"dimensionY.0.measurementPosition"');
+        expect(result[0][12]).toBe('"dimensionY.0.measurementComment.en"');
+        expect(result[0][13]).toBe('"dimensionY.0.measurementComment.unspecifiedLanguage"');
         expect(result[0][14]).toBe('"dimensionY.0.isImprecise"');
 
         expect(result[1][1]).toBe('"100"');
-        expect(result[1][4]).toBe('"A1"');
-        expect(result[1][5]).toBe('"A2"');
+        expect(result[1][5]).toBe('"A1"');
+        expect(result[1][6]).toBe('"A2"');
         expect(result[2][8]).toBe('"300"');
         expect(result[2][9]).toBe('"400"');
-        expect(result[2][11]).toBe('""');
-        expect(result[2][12]).toBe('"B"');
+        expect(result[2][12]).toBe('""');
+        expect(result[2][13]).toBe('"B"');
     });
 
 

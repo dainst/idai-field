@@ -40,7 +40,8 @@ const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
     templateUrl: './matrix-view.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * Responsible for the calculation of the graph.

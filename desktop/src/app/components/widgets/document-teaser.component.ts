@@ -4,7 +4,8 @@ import { Document, Labels, ProjectConfiguration, Resource } from 'idai-field-cor
 
 @Component({
     selector: 'document-teaser',
-    templateUrl: './document-teaser.html'
+    templateUrl: './document-teaser.html',
+    standalone: false
 })
 export class DocumentTeaserComponent {
 

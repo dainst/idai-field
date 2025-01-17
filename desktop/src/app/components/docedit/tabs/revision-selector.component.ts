@@ -11,7 +11,8 @@ export type WinningSide = 'left'|'right'|'mixed';
  */
  @Component({
     selector: 'revision-selector',
-    templateUrl: './revision-selector.html'
+    templateUrl: './revision-selector.html',
+    standalone: false
 })
 export class RevisionSelectorComponent {
 

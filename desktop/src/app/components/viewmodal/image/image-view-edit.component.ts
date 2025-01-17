@@ -7,7 +7,8 @@ import { ImageUploadResult } from '../../image/upload/image-uploader';
 
 @Component({
     selector: 'image-view-edit',
-    templateUrl: './image-view-edit.html'
+    templateUrl: './image-view-edit.html',
+    standalone: false
 })
 /**
  * @author F.Z.

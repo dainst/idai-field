@@ -6,7 +6,8 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './delete-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 
 /**

@@ -5,7 +5,8 @@ import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
 @Component({
     selector: 'image-grid-cell',
-    templateUrl: './image-grid-cell.html'
+    templateUrl: './image-grid-cell.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

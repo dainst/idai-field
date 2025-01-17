@@ -16,7 +16,8 @@ const path = window.require('path');
 
 @Component({
     selector: 'georeference-view',
-    templateUrl: './georeference-view.html'
+    templateUrl: './georeference-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -10,7 +10,8 @@ import { MenuContext } from '../../services/menu-context';
 
 @Component({
     selector: 'language-settings',
-    templateUrl: './language-settings.html'
+    templateUrl: './language-settings.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

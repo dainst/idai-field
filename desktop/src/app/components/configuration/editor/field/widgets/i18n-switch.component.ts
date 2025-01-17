@@ -4,7 +4,8 @@ import { Field } from 'idai-field-core';
 
 @Component({
     selector: 'i18n-switch',
-    templateUrl: './i18n-switch.html'
+    templateUrl: './i18n-switch.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

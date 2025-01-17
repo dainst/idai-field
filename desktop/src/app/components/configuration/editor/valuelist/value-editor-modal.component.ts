@@ -10,7 +10,8 @@ import { ConfigurationUtil } from '../../configuration-util';
     templateUrl: './value-editor-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

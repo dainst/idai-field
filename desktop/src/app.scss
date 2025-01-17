@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $mdi-font-path: 'fonts' !default;
 @import '../node_modules/@mdi/font/css/materialdesignicons';
 
@@ -88,19 +90,19 @@ body,
 }
 
 .btn-primary:hover {
-  background-color: lighten($primary-button-color, 10%);
-  border-color: lighten($primary-button-color, 10%);
+  background-color: color.adjust($primary-button-color, $lightness: 10%);
+  border-color: color.adjust($primary-button-color, $lightness: 10%);
 }
 
 .btn-primary:disabled, .btn-primary.disabled {
-  background-color: darken($primary-button-color, 10%);
-  border-color: darken($primary-button-color, 10%);
+  background-color: color.adjust($primary-button-color, $lightness: -10%);
+  border-color: color.adjust($primary-button-color, $lightness: -10%);
   cursor: not-allowed;
 }
 
 .btn-primary:active, .btn-primary.active {
-  background-color: saturate($primary-button-color, 10%);
-  border-color: saturate($primary-button-color, 10%);
+  background-color: color.adjust($primary-button-color, $saturation: 10%);
+  border-color: color.adjust($primary-button-color, $saturation: 10%);
 }
 
 .btn-outline-primary {
@@ -110,14 +112,14 @@ body,
 }
 
 .btn-outline-primary:hover {
-  border-color: lighten($primary-button-color, 10%);
+  border-color: color.adjust($primary-button-color, $lightness: 10%);
   color: $primary-button-color;
   background-color: white;
 }
 
 .btn-outline-primary:disabled, .btn-outline-primary.disabled {
-  border-color: darken($primary-button-color, 10%);
-  color: darken($primary-button-color, 10%);
+  border-color: color.adjust($primary-button-color, $lightness: -10%);
+  color: color.adjust($primary-button-color, $lightness: -10%);
   cursor: not-allowed;
   background-color: white;
 }
@@ -129,25 +131,25 @@ body,
 }
 
 .btn-secondary:hover {
-  background-color: lighten(#727b84, 10%);
-  border-color: lighten(#6c757d, 10%);
+  background-color: color.adjust(#727b84, $lightness: 10%);
+  border-color: color.adjust(#6c757d, $lightness: 10%);
   color: #fff;
 }
 
 .btn-secondary:disabled, .btn-primary.disabled {
-  background-color: darken(#727b84, 10%);
-  border-color: darken(#6c757d, 10%);
+  background-color: color.adjust(#727b84, $lightness: -10%);
+  border-color: color.adjust(#6c757d, $lightness: -10%);
   cursor: not-allowed;
 }
 
 .btn-secondary:active, .btn-secondary.active {
-  background-color: saturate(#727b84, 10%);
-  background-color: saturate(#6c757d, 10%);
+  background-color: color.adjust(#727b84, $saturation: 10%);
+  background-color: color.adjust(#6c757d, $saturation: 10%);
 }
 
 .btn-success:disabled, .btn-success.disabled {
-  background-color: darken(#6ca378, 10%);
-  border-color: darken(#6ca378, 10%);
+  background-color: color.adjust(#6ca378, $lightness: -10%);
+  border-color: color.adjust(#6ca378, $lightness: -10%);
   cursor: not-allowed;
 }
 
@@ -165,7 +167,7 @@ body,
   }
 
   &.active {
-    background-color: lighten($link-color, 50%);
+    background-color: color.adjust($link-color, $lightness: 50%);
   }
 }
 
@@ -360,7 +362,7 @@ a {
 }
 
 .custom-marking {
-  color: darken($custom-highlight-color, 50%);
+  color: color.adjust($custom-highlight-color, $lightness: -50%);
 }
 
 .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11,

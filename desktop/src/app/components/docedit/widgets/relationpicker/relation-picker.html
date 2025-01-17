@@ -4,7 +4,7 @@
                            [values]="getAvailableTargetIds()"
                            [getLabel]="getTargetLabel"
                            [initiallyOpened]="true"
-                           (onValueSelected)="onTargetSelected($event)"
+                           (onValueSelected)="selectTarget($event)"
                            (onBlur)="onBlur()"
                            (onScrollToEnd)="loadNextChunk()"
                            (onSearchTermChanged)="search($event)"></searchable-select>

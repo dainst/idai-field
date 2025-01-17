@@ -4,7 +4,8 @@ import { UploadStatus } from './upload-status';
 
 @Component({
     selector: 'upload-modal',
-    templateUrl: './upload-modal.html'
+    templateUrl: './upload-modal.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

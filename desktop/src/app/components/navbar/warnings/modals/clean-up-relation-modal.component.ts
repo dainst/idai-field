@@ -8,7 +8,8 @@ import { Datastore, Document, WarningType } from 'idai-field-core';
     templateUrl: './clean-up-relation-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -29,6 +29,6 @@
     <textarea *ngIf="fieldContainer.geometry && fieldContainer.geometry.type !== ''"
               class="form-control geometry-coordinates-textarea"
               [(ngModel)]="coordinates"
-              (keyup)="parseCoordinates(false)"
+              (input)="parseCoordinates(false)"
               (blur)="parseCoordinates(true)">{{coordinates}}</textarea>
 </div>

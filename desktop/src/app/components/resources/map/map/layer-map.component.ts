@@ -16,7 +16,8 @@ const fs = window.require('fs');
 
 @Component({
     selector: 'layer-map',
-    templateUrl: './layer-map.html'
+    templateUrl: './layer-map.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

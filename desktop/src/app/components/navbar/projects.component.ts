@@ -6,7 +6,8 @@ import { ProjectLabelProvider } from '../../services/project-label-provider';
 
 @Component({
     selector: 'projects',
-    templateUrl: './projects.html'
+    templateUrl: './projects.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

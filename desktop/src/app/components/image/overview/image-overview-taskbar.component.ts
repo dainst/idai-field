@@ -21,7 +21,8 @@ import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-prog
     templateUrl: './image-overview-taskbar.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

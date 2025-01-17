@@ -23,7 +23,8 @@ export namespace ImageViewModalComponent {
     templateUrl: './image-view-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

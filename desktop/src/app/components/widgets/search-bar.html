@@ -2,7 +2,7 @@
     <div class="input-group">
         <input #searchInput
                [(ngModel)]="q"
-               (keyup)="onKeyUp($event)"
+               (input)="onInput($event)"
                name="searchInput"
                type="text"
                class="form-control search-bar-input"

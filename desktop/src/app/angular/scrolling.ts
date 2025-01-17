@@ -27,9 +27,9 @@ function isVisible(elementId: string, scrollViewport: CdkVirtualScrollViewport):
     if (!element) return false;
 
     const elementRect: ClientRect = element.getBoundingClientRect();
-    const sidebarRect: ClientRect = scrollViewport.getElementRef().nativeElement.getBoundingClientRect();
+    const viewportRect: ClientRect = scrollViewport.getElementRef().nativeElement.getBoundingClientRect();
 
-    return elementRect.top > sidebarRect.top && elementRect.bottom <= sidebarRect.bottom;
+    return elementRect.top > viewportRect.top && elementRect.bottom <= viewportRect.bottom;
 }
 
 

@@ -14,7 +14,8 @@ import { Messages } from '../../../../../messages/messages';
     templateUrl: './composite-entry-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

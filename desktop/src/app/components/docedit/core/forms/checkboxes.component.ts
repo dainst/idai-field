@@ -4,7 +4,8 @@ import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource, Field
 
 @Component({
     selector: 'form-field-checkboxes',
-    templateUrl: './checkboxes.html'
+    templateUrl: './checkboxes.html',
+    standalone: false
 })
 
 /**

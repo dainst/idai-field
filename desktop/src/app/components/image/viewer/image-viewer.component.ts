@@ -23,7 +23,8 @@ type LoadingResult = {
     templateUrl: './image-viewer.html',
     host: {
         '(window:resize)': 'onResize()'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

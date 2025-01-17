@@ -16,7 +16,8 @@ import { DatingEntryModalComponent } from './dating-entry-modal.component';
 
 @Component({
     selector: 'form-field-object-array',
-    templateUrl: './object-array.html'
+    templateUrl: './object-array.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

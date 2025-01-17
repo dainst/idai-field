@@ -7,7 +7,8 @@ import { CategoryForm, Labels } from 'idai-field-core';
     templateUrl: './delete-category-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

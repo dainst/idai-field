@@ -5,7 +5,8 @@ const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 @Component({
     selector: 'taskbar-update',
-    templateUrl: './taskbar-update.html'
+    templateUrl: './taskbar-update.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

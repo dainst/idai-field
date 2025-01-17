@@ -9,7 +9,8 @@ import { CategoryForm, ProjectConfiguration, Document, Relation } from 'idai-fie
     templateUrl: './link-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 export class LinkModalComponent {
 

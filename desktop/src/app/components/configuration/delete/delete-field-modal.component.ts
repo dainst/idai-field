@@ -7,7 +7,8 @@ import { Field } from 'idai-field-core';
     templateUrl: './delete-field-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

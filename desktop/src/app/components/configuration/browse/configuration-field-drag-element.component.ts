@@ -6,7 +6,8 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 @Component({
     selector: 'configuration-field-drag-element',
-    templateUrl: './configuration-field-drag-element.html'
+    templateUrl: './configuration-field-drag-element.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

@@ -11,7 +11,8 @@ import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.com
     templateUrl: '../../../widgets/search-constraints.html',
     host: {
         '(document:click)': 'handleClick($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -5,7 +5,8 @@ import { Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
 
 @Component({
     selector: 'fields-view',
-    templateUrl: './fields-view.html'
+    templateUrl: './fields-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

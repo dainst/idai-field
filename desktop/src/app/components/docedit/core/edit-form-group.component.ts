@@ -13,7 +13,8 @@ type StratigraphicalRelationInfo = {
 
 @Component({
     selector: 'edit-form-group',
-    templateUrl: './edit-form-group.html'
+    templateUrl: './edit-form-group.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 configuration-field {
   .card {
     margin-top: 1px;
@@ -68,7 +70,7 @@ configuration-field {
       .card-header.opened,
       .card-header:hover:not(.parent-element),
       .card-body {
-          background-color: darken($custom-highlight-color, 5%) !important;
+          background-color: color.adjust($custom-highlight-color, $lightness: -5%) !important;
       }
     }
 

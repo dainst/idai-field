@@ -4,7 +4,8 @@ import { CategoryForm, Labels } from 'idai-field-core';
 
 @Component({
     selector: 'category-preview',
-    templateUrl: './category-preview.html'
+    templateUrl: './category-preview.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

@@ -9,7 +9,8 @@ import { AngularUtility } from '../../../../angular/angular-utility';
     templateUrl: './delete-field-data-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -8,7 +8,8 @@ import { Language, Languages } from '../../../services/languages';
     templateUrl: './language-picker-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

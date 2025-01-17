@@ -4,7 +4,8 @@ import { EditableValue } from 'idai-field-core';
 
 @Component({
     selector: 'form-field-valuelist-multi-input',
-    templateUrl: './valuelist-multi-input.html'
+    templateUrl: './valuelist-multi-input.html',
+    standalone: false
 })
 
 /**

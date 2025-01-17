@@ -17,7 +17,8 @@ import { M } from '../../../messages/m';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

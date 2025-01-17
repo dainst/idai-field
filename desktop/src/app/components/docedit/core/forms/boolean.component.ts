@@ -3,7 +3,8 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'form-field-boolean',
-    templateUrl: './boolean.html'
+    templateUrl: './boolean.html',
+    standalone: false
 })
 
 /**

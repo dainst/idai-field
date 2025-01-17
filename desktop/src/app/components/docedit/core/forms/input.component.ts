@@ -7,7 +7,8 @@ import { SettingsProvider } from '../../../../services/settings/settings-provide
 
 @Component({
     selector: 'form-field-input',
-    templateUrl: './input.html'
+    templateUrl: './input.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

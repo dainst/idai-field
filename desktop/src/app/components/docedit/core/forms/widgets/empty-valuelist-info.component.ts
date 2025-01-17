@@ -8,7 +8,8 @@ type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
 
 @Component({
     selector: 'empty-valuelist-info',
-    templateUrl: './empty-valuelist-info.html'
+    templateUrl: './empty-valuelist-info.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

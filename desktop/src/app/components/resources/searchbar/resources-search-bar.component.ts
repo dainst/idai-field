@@ -12,7 +12,8 @@ import { ViewFacade } from '../view/view-facade';
     templateUrl: './resources-search-bar.html',
     host: {
         '(document:click)': 'handleClick($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

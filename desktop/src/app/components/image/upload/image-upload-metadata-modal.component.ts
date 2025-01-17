@@ -19,7 +19,8 @@ import { AngularUtility } from '../../../angular/angular-utility';
     templateUrl: './image-upload-metadata-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 export class ImageUploadMetadataModalComponent implements OnInit {
 

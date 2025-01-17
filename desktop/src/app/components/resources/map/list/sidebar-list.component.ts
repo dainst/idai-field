@@ -19,7 +19,8 @@ import { WarningsService } from '../../../../services/warnings/warnings-service'
     templateUrl: './sidebar-list.html',
     host: {
         '(window:contextmenu)': 'handleClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

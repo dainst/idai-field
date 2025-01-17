@@ -19,7 +19,8 @@ const PLACEHOLDER_WIDTH = 150;
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:resize)': 'onResize()'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

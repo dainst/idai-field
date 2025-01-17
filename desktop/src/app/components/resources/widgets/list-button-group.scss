@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $activated-color: #868e96;
 $button-width: 24px;
 
@@ -22,18 +24,18 @@ $button-width: 24px;
     }
 
     &:hover {
-      background-color: darken($list-item-hover-color, 5%) !important;
+      background-color: color.adjust($list-item-hover-color, $lightness: -5%) !important;
 
       .arrow-deactivated {
-        color: darken($activated-color, 1%) !important;
+        color: color.adjust($activated-color, $lightness: -1%) !important;
       }
     }
 
     &:active {
-      background-color: darken($list-item-hover-color, 10%) !important;
+      background-color: color.adjust($list-item-hover-color, $lightness: -10%) !important;
 
       .arrow-deactivated {
-        color: darken($activated-color, 3%) !important;
+        color: color.adjust($activated-color, $lightness: -3%) !important;
       }
     }
   }

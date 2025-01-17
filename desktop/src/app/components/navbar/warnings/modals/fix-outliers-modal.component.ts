@@ -117,7 +117,6 @@ export class FixOutliersModalComponent {
 
     public isPreselectedValue(value: string) {
         
-        /* TODO: This should (maybe) not be here! */ 
         return this.document.resource[this.field.name].includes(value);
     }
 

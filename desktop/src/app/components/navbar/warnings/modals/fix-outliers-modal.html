@@ -19,7 +19,7 @@
     <div *ngIf="inputType == 'checkboxes'">
         <div *ngFor="let value of getValues()" class="checkbox form-check form-check-inline">
             <label class="form-check-label">
-                <input class="form-check-input" [value]="value" type="checkbox" (click)="toggleCheckboxValue(value)" [checked]="isPreselectedValue(value)">
+                <input class="form-check-input" [value]="value" type="checkbox" (click)="toggleCheckboxValue(value)" [checked]="isPreselectedValue(value)" [disabled]="isPreselectedValue(value)">
                 {{getValueLabel(value)}}
             </label>
         </div>

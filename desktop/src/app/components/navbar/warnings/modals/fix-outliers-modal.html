@@ -9,7 +9,7 @@
         Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
     </div>
 
-    <div *ngIf="inputType == 'dropdown'">
+    <div *ngIf="inputType != 'checkboxes'">
         <searchable-select [selectedValue]="selectedValues[0]"
                            [values]="getValues()"
                            [getLabel]="getValueLabel"

@@ -903,28 +903,35 @@ Unterstützte Export-Formate sind:
 
 CSV ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
 
-Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie. Jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden. Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
-
 CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
 
-#### Wertelistenfelder
+#### Aufbau
+
+Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie. Jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden.
+
+Obligatorisch ist die Angabe des Bezeichners in der Spalte *identifier*. Alle weiteren Felder sind optional.
+
+Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
+
+
+##### Wertelistenfelder
 
 Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Wertes eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
 
 
-#### Ja/Nein-Felder
+##### Ja/Nein-Felder
 
 Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) eingetragen werden.
 
 
-#### Mehrsprachige Felder
+##### Mehrsprachige Felder
 
 Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldnamen getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
 
 In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
 
 
-#### Listenfelder
+##### Listenfelder
 
 Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
@@ -962,7 +969,7 @@ Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe"
 </div>
 
 
-#### Relationen
+##### Relationen
 
 Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix "relations". Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
 
@@ -1000,7 +1007,7 @@ Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhinterg
 </div>
 
 
-#### Datierungsangaben
+##### Datierungsangaben
 
 Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung besteht aus folgenden Unterfeldern, für die jeweils pro Datierung eine eigene Spalte angelegt wird:
 
@@ -1106,7 +1113,7 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 </div>
 
 
-#### Maßangaben
+##### Maßangaben
 
 Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe besteht aus folgenden Unterfeldern, für die jeweils pro Maßangabe eine eigene Spalte angelegt wird:
 
@@ -1158,7 +1165,7 @@ Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßa
 </div>
 
 
-#### Literaturangaben
+##### Literaturangaben
 
 Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere Literaturangaben enthalten können. Eine Literaturangabe besteht aus folgenden Unterfeldern, für die jeweils pro Literaturangabe eine eigene Spalte angelegt wird:
 
@@ -1195,12 +1202,12 @@ Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere 
 </div>
 
 
-#### Kompositfelder
+##### Kompositfelder
 
 Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Für jedes konfigurierte Unterfeld wird pro Eintrag eine Spalte angelegt (bei mehrsprachigen Textfeldern entsprechend eine Spalte für jede Sprache). Im Spaltenkopf wird jeweils der Bezeichner des Unterfelds angegeben.
 
 
-#### Dropdown-Listen (Bereich)
+##### Dropdown-Listen (Bereich)
 
 Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden beiden Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
 
@@ -1232,6 +1239,21 @@ Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden bei
     </tbody>
   </table>
 </div>
+
+
+#### Import-Optionen
+
+Bei einem CSV-Import können entweder neue Ressourcen erstellt oder bereits vorhandene Ressourcen bearbeitet werden. Sie können zwischen den folgenden beiden Optionen wählen:
+
+* *Neue Ressourcen importieren*: Ist diese Option aktiviert, wird für jede Zeile der CSV-Tabelle eine neue Ressource angelegt.  Datensätze, deren Bezeichner (Feld *identifier*) bereits vergeben ist, werden ignoriert.
+* *Vorhandene Ressource ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der CSV-Tabelle ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte *identifier*). Datensätze in der CSV-Tabelle, die nicht zugeordnet werden können, werden ignoriert.
+
+Darüber hinaus stehen die folgenden Optionen zur Auswahl:
+* *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressource ergänzen* verfügbar.
+* *Nicht konfigurierte Felder ignorieren*: Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen, sobald nicht konfigurierte Felder in der Datei gefunden werden.
+* *Kategorie auswählen*: Falls der Bezeichner der Kategorie im Dateinamen steht (durch Punkte vom Rest des Dateinamens abgetrennt), wird die Kategorie automatisch erkannt (z. B. "example.find.csv" für eine CSV-Datei, die Ressourcen der Kategorie "Fund" enthält). Enthält der Dateiname keinen Kategoriebezeichner, muss die Kategorie manuell über dieses Dropdown-Menü ausgewählt werden.
+* *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der CSV-Datei für alle Datensätze bereits eine übergeordnete Ressource in der Spalte *relations.isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
+* *Feldtrennzeichen*: Tragen Sie das Zeichen ein, das in der CSV-Datei als Feldtrennzeichen verwendet wird (die Standardeinstellung ist das Komma). Geben Sie das gleiche Zeichen an, das Sie beim Erstellen der CSV-Datei (z. B. in Field Desktop über das Menü "Export" oder in einem Tabellenkalkulationsprogramm) gewählt haben. In der Regel wird als Feldtrennzeichen für CSV-Dateien entweder das Komma oder das Semikolon verwendet. Wenn es beim Import zu Fehlern kommt, prüfen Sie bitte zunächst, ob Sie das richtige Feldtrennzeichen eingetragen haben, da die Datei andernfalls nicht korrekt gelesen werden kann.
 
 
 <hr>

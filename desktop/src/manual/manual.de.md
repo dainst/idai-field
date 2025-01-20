@@ -1269,6 +1269,94 @@ Darüber hinaus stehen die folgenden Optionen zur Auswahl:
 * *Hierarchische Relationen zusammenfassen*: Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation *isChildOf* zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option ist standardmäßig aktiviert und sollte im Normalfall nicht deaktiviert werden. Bei Deaktivierung der Option werden statt der Spalte *relations.isChildOf* die beiden Spalten *relations.liesWithin* und *relations.isRecordedIn* angelegt. In der Spalte *relations.liesWithin* wird dabei die direkt übergeordnete Ressource gesetzt (falls es sich bei der übergeordneten Ressource um keine Maßnahme handelt), in der Spalte *relations.isRecordedIn* dagegen die Maßnahme, der die Ressource untergeordnet ist. 
 
 
+### GeoJSON
+
+GeoJSON ist ein offenes Format zum Austausch von räumlichen Daten, basierend auf dem Format JSON. In Field Desktop kann es zum Import und Export von Geometrien eingesetzt werden.
+
+Beim GeoJSON-Import werden **keine neuen Ressourcen** angelegt, sondern existierenden Ressourcen **Geometrien hinzugefügt**. Verwenden Sie zum Import neuer Ressourcen eines der beiden Formate *CSV* oder *JSON Lines* und fügen Sie den auf diese Weise importierten Ressourcen anschließend per GeoJSON-Import Geometrien hinzu.
+
+
+#### Aufbau
+
+Der Aufbau einer GeoJSON-Datei richtet sich nach der <a href="https://geojson.org" target="_blank">GeoJSON-Spezifikation</a>. Für den Import oder Export im Kontext von Field gelten zusätzlich die folgenden Regeln:
+
+Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ "FeatureCollection" enthalten. Dieses Objekt beinhaltet wiederum einzelne Objekte vom Typ "Feature".
+
+*Beispiel*:
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          ...
+        },
+        {
+          "type": "Feature",
+          ...
+        }
+      ]
+    }
+
+Jedes Objekt vom Typ "Feature" entspricht einer Ressource in Field und der dazugehörigen Geometrie. Ein Feature enthält stets die beiden Felder *geometry* und *properties*: Während das Feld *geometry* die Geometriedaten beinhaltet, stellen die Daten im Feld *properties* die Verknüpfung zur Ressource in Field her.
+
+##### Geometrie
+
+Unterstützt werden die folgenden Geometrie-Typen:
+
+* *Point* (Punkt)
+* *MultiPoint* (Multipunkt)
+* *LineString* (Polyline)
+* *MultiLineString* (Multipolyline)
+* *Polygon* (Polygon)
+* *MultiPolygon* (Multipolygon)
+
+Die Koordinaten werden gemäß der GeoJSON-Spezifikation angegeben.
+
+
+##### Eigenschaften
+
+Im Objekt "properties" werden beim Export die folgenden Felder der jeweiligen Ressource ausgegeben:
+
+* *identifier*: Der Bezeichner der Ressource
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie
+* *shortDescription*: Die Kurzbeschreibung der Ressource. Die Ausgabe ist abhängig von der Konfiguration des Feldes *Kurzbeschreibung* der entsprechenden Kategorie:
+    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung als String
+    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein Objekt mit den Sprachkürzeln als Feldnamen
+    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste
+
+Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Das Feld *identifier* im Objekt *properties* muss also gesetzt sein, damit ein GeoJSON-Import erfolgreich durchgeführt werden kann. Weitere Felder des Objekts *properties* werden beim Import **nicht** berücksichtigt, es wird ausschließlich die Geometrie in der entsprechenden Ressource aktualisiert. Bitte beachten Sie, dass bereits vorhandene Geometrien beim Import überschrieben werden. Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert.
+
+
+##### Beispiel
+
+Dieses Beispiel zeigt den Inhalt einer GeoJSON-Exportdatei für eine Ressource mit einer Punktgeometrie. Für den Import müssen die beiden Felder *category* und *shortDescription* im Objekt *properties* nicht gesetzt sein.
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              28.189335972070695,
+              40.14122423529625
+            ]
+          },
+          "properties": {
+            "identifier": "F1",
+            "category": "Find",
+            "shortDescription": {
+              "de": "Beispielfund",
+              "en": "Example find"
+            }
+          }
+        }
+      ]
+    }
+
+
 <hr>
 
 

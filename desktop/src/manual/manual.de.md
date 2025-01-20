@@ -881,6 +881,8 @@ Unterstützte Import-Formate sind:
 * JSON Lines (.jsonl)
 * Katalog (.catalog)
 
+Für das Anlegen neuer Ressourcen oder das Editieren bestehender Ressourcen eignen sich die Formate *CSV* und *JSON Lines*. Geometrien können über die Formate *GeoJSON*, *Shapefile* oder *JSON Lines* hinzugefügt buw. bearbeitet werden. Das Format *Katalog* kann zum Austausch von Field-Typenkatalogen eingesetzt werden.
+
 
 ## Export
 

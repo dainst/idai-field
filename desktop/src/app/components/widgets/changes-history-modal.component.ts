@@ -39,4 +39,9 @@ export class ChangesHistoryModalComponent {
     public formatDateTime( date: string | Date, locale: string = 'de-DE' ) { 
         return new Date(date).toLocaleString(locale);
     }
+
+    public sortModificationsBy(prop: string) {
+        return this.document.modified.sort((a, b) => a[prop] < b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
+      }
+
 }

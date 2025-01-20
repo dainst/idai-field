@@ -12,7 +12,9 @@
                     <div class="list-header-field" i18n="@@changes.list.colnames.user">Benutzer</div>
                 </div>            
                 <div class="list-body">
-                    <div *ngFor="let modification of document.modified.reverse()" 
+                    <!-- <div *ngFor="let modification of document.modified.reverse()"  -->
+                    <!-- <div *ngFor="let modification of document.modified" -->
+                      <div *ngFor="let modification of sortModificationsBy('date')"
                         class = "list-row">                    
                         <div class= "list-body-field" [textContent]="formatDateTime(modification.date)"></div>
                         <div class= "list-body-field" [textContent]="modification.user"></div>      

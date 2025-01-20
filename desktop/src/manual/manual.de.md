@@ -1273,7 +1273,7 @@ Darüber hinaus stehen die folgenden Optionen zur Auswahl:
 
 ### GeoJSON
 
-GeoJSON ist ein offenes Format zum Austausch von räumlichen Daten, basierend auf dem Format JSON. In Field Desktop kann es zum Import und Export von Geometrien eingesetzt werden.
+GeoJSON ist ein offenes Format zum Austausch von Vektor-Geodaten, basierend auf dem Format JSON. In Field Desktop kann es zum Import und Export von Geometrien eingesetzt werden.
 
 Beim GeoJSON-Import werden **keine neuen Ressourcen** angelegt, sondern existierenden Ressourcen **Geometrien hinzugefügt**. Verwenden Sie zum Import neuer Ressourcen eines der beiden Formate *CSV* oder *JSON Lines* und fügen Sie den auf diese Weise importierten Ressourcen anschließend per GeoJSON-Import Geometrien hinzu.
 
@@ -1358,6 +1358,45 @@ Dieses Beispiel zeigt den Inhalt einer GeoJSON-Exportdatei für eine Ressource m
       ]
     }
 
+
+### Shapefile
+
+Shapefile ist ein weit verbreitetes Format zum Austausch von Vektor-Geodaten und kann im Kontext von Field Desktop alternativ zum Format GeoJSON eingesetzt werden.
+
+Wie beim GeoJSON-Import werden auch beim Shapefile-Import **keine neuen Ressourcen** angelegt, sondern existierenden Ressourcen **Geometrien hinzugefügt**. Verwenden Sie zum Import neuer Ressourcen eines der beiden Formate *CSV* oder *JSON Lines* und fügen Sie den auf diese Weise importierten Ressourcen anschließend per Shapefile-Import Geometrien hinzu.
+
+
+#### Aufbau
+
+Ein Shapefile besteht jeweils aus einer Gruppe mehrerer Dateien, von denen einige optional sind. Beim Export in Field Desktop werden Dateien mit den folgenden Endungen angelegt:
+* *shp*: Enthält die eigentlichen Geodaten
+* *dbf*: Enthält die Daten der Attributtabelle, d. h. Sachdaten der zugehörigen Ressource (siehe Sektion *Attributtabelle*).
+* *shx*: Stellt die Verknüpfung zwischen Geo- und Sachdaten her
+* *cpg*: Gibt den Zeichensatz an, der in der *dbf*-Datei verwendet wird.
+* *prj*: Gibt die Projektion an. Diese Datei wird nur dann exportiert, wenn in den Projekteigenschaften eine Auswahl im Feld *Koordinatenbezugssystem* getroffen wurde.
+
+Da ein Shapefile immer nur Geometrien eines einzigen Typs enthalten kann, werden beim Export in Field Desktop insgesamt drei Shapefiles (bestehend jeweils aus den vier bzw. fünf oben angegebenen Dateien) für die einzelnen Geometrietypen erstellt. Einfachtypen werden dabei im Shapefile als Mehrfachtypen gespeichert:
+  * Dateiname "multipoints.\*", enthält Geometrien der Typen *Punkt* und *Multipunkt*
+  * Dateiname "multipolylines.\*", enthält Geometrien der Typen *Polyline* und *Multipolyline*
+  * Dateiname "multipolygons.\*", enthält Geometrien der Typen *Polygon* und *Multipolygon*
+
+Alle Dateien werden in einem Zip-Archiv gebündelt ausgegeben.
+
+Beim Import müssen alle dem Shapefile zugehörigen Dateien gemeinsam in einem Verzeichnis liegen. Wählen Sie im Dateiauswahldialog des Import-Menüs die Datei mit der Endung *shp* aus; alle übrigen Dateien werden automatisch erkannt. Bitte beachten Sie, dass Zip-Archive beim Import **nicht** unterstützt werden. Um eine in Field Desktop exportierte Shapedatei in ein anderes Projekt zu importieren, muss die entsprechende Zip-Datei also zunächst entpackt werden.
+
+
+##### Attributtabelle
+
+Beim Export werden die folgenden Felder in der Attributtabelle des Shapefiles ausgegeben:
+
+* *identifier*: Der Bezeichner der Ressource
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie
+* *sdesc*: Die Kurzbeschreibung der Ressource. Die Ausgabe ist abhängig von der Konfiguration des Feldes *Kurzbeschreibung* der entsprechenden Kategorie:
+    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung
+    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein eigenes Feld für jede Sprache mit dem Sprachkürzel im Feldnamen, getrennt durch einen Unterstrich (z. B. *sdesc\_de* oder *scdesc\_en*) 
+    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste
+  
+Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Das Feld *identifier* in der Attributtabelle muss also gesetzt sein, damit ein Shapefile-Import erfolgreich durchgeführt werden kann. Weitere Felder der Attributtabelle werden beim Import **nicht** berücksichtigt, es wird ausschließlich die Geometrie in der entsprechenden Ressource aktualisiert. Bitte beachten Sie, dass bereits vorhandene Geometrien beim Import überschrieben werden. Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert.
 
 <hr>
 

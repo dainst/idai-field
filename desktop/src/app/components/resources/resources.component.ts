@@ -447,7 +447,7 @@ export class ResourcesComponent implements OnDestroy {
             this.menuService.setContext(menuContext);
             const modalRef: NgbModalRef = this.modalService.open(
                 component,
-                { animation: false, backdrop: 'static', keyboard: false,  windowClass : "history-modal-content" }
+                { animation: false, backdrop: 'static', keyboard: false}
             );
             modalRef.componentInstance.document = document;
             await modalRef.componentInstance.initialize();

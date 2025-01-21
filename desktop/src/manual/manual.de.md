@@ -932,6 +932,27 @@ Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird 
 
 In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
 
+*Beispiel:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>description.de</th>
+        <th>description.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 ##### Dropdown-Listen (Bereich)
 
@@ -1508,7 +1529,7 @@ Für Felder, in denen Werte in verschiedenen Sprachen eingetragen werden können
     {
       "identifier": "A",
       "category": "Feature",
-      "description": { "de": "Beispiel", "en": "example" }
+      "description": { "de": "Beispieltext", "en": "Example text" }
     }
 
 

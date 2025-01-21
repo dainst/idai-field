@@ -933,6 +933,40 @@ Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird 
 In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
 
 
+##### Dropdown-Listen (Bereich)
+
+Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden beiden Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
+
+* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
+* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
+
+*Beispiel:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>period.value</th>
+        <th>period.endValue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Eisenzeitlich</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Frühbronzezeitlich</td>
+        <td>Spätbronzezeitlich</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 ##### Datumsfelder
 
 Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat bzw. ein bestimmtes Jahr angegeben werden kann.
@@ -1234,40 +1268,6 @@ Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere 
 Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Für jedes konfigurierte Unterfeld wird pro Eintrag eine Spalte angelegt (bei mehrsprachigen Textfeldern entsprechend eine Spalte für jede Sprache). Im Spaltenkopf wird jeweils der Bezeichner des Unterfelds angegeben.
 
 
-##### Dropdown-Listen (Bereich)
-
-Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden beiden Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
-
-* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
-* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
-
-*Beispiel:*
-
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>identifier</th>
-        <th>period.value</th>
-        <th>period.endValue</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>A</td>
-        <td>Eisenzeitlich</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>B</td>
-        <td>Frühbronzezeitlich</td>
-        <td>Spätbronzezeitlich</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-
 #### Import-Optionen
 
 Bei einem CSV-Import können entweder neue Ressourcen erstellt oder bereits vorhandene Ressourcen bearbeitet werden. Sie können zwischen den folgenden beiden Optionen wählen:
@@ -1512,6 +1512,23 @@ Für Felder, in denen Werte in verschiedenen Sprachen eingetragen werden können
     }
 
 
+##### Dropdown-Listen (Bereich)
+
+Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfeldern enthält:
+
+* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
+* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "period1": { "value": "Eisenzeitlich" },
+      "period2": { "value": "Frühbronzezeitlich", "endValue": "Spätbronzezeitlich" }
+    }
+
+
 ##### Datumsfelder
 
 Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein Monat oder Jahr angegeben werden kann.
@@ -1616,23 +1633,6 @@ Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere 
 ##### Kompositfelder
 
 Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Jeder Eintrag ist ein Objekt, dessen Feldnamen jeweils den Bezeichnern der Unterfelder entsprechen, die für das Kompositfeld konfiguriert wurden.
-
-
-##### Dropdown-Listen (Bereich)
-
-Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfeldern enthält:
-
-* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
-* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
-
-*Beispiel:*
-
-    {
-      "identifier": "A",
-      "category": "Feature",
-      "period1": { "value": "Eisenzeitlich" },
-      "period2": { "value": "Frühbronzezeitlich", "endValue": "Spätbronzezeitlich" }
-    }
 
 
 #### Import-Optionen

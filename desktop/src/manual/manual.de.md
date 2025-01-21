@@ -933,6 +933,33 @@ Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird 
 In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
 
 
+##### Datumsfelder
+
+Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat bzw. ein bestimmtes Jahr angegeben werden kann.
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>date1</th>
+        <th>date2</th>
+        <th>date3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>12.01.2025</td>
+        <td>09.2008</td>
+        <td>1995</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 ##### Listenfelder
 
 Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
@@ -1484,6 +1511,20 @@ Für Felder, in denen Werte in verschiedenen Sprachen eingetragen werden können
       "description": { "de": "Beispiel", "en": "example" }
     }
 
+
+##### Datumsfelder
+
+Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein Monat oder Jahr angegeben werden kann.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "date1": "12.01.2025",
+      "date2": "09.2008",
+      "date3": "1995"
+    }
 
 ##### Listenfelder
 

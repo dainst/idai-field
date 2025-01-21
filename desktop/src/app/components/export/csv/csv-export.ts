@@ -30,7 +30,6 @@ export type InvalidField = {
  */
 export module CSVExport {
 
-
     /**
      * Creates a header line and lines for each record.
      * If resources is empty, still a header line gets created.

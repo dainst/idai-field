@@ -152,6 +152,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
     public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
     public static IMPORT_CATALOG_ERROR_INVALID_RELATIONS = 'M.Import.ImportCatalogErrors.invalidRelations';
+    public static IMPORT_CATALOG_ERROR_INVALID_CATEGORY = 'M.Import.ImportCatalogErrors.invalidCategory';
     public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG = 'M.Import.ImportCatalogErrors.ownerMustNotImportCatalog';
     public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES = 'M.Import.ImportCatalogErrors.ownerMustNotOverwriteExistingImages';
 
@@ -726,6 +727,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_INVALID_RELATIONS] = {
             content: $localize `:@@messages.import.catalog.error.invalidRelations:Katalogimport abgebrochen. Ungültige Relationen.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_INVALID_CATEGORY] = {
+            content: $localize `:@@messages.import.catalog.error.unconfiguredCategory:Katalogimport abgebrochen. Die Kategorie \'[0]\' ist keine konfigurierte Unterkategorie von \'Typ'\ oder \'Abbildung'\.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN] = {

@@ -1,13 +1,13 @@
 #list {
   background: white;
   margin-bottom: -20px;
-
+  width:100%;
+  
   #list-header {
     user-select: none;
     display: grid;
-    grid-template-columns: 210px 160px;
+    grid-template-columns: 15vh 17vh;
     font-size: 16px;
-    font-weight: 500;    
     
     .list-header-field {
       min-width: fit-content;
@@ -25,7 +25,7 @@
   .list-row {
     user-select: none;
     display: grid;
-    grid-template-columns: 210px 160px;
+    grid-template-columns: 15vh 17vh;
     font-size: 16px;
     font-weight: 500;
   

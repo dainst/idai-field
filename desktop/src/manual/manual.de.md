@@ -903,7 +903,7 @@ Unterstützte Export-Formate sind:
 
 ### CSV
 
-CSV ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
+CSV (Dateiendung *csv*) ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
 
 CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
 
@@ -1271,7 +1271,7 @@ Darüber hinaus stehen die folgenden Optionen zur Auswahl:
 
 ### GeoJSON
 
-GeoJSON ist ein offenes Format zum Austausch von Vektor-Geodaten, basierend auf dem Format JSON. In Field Desktop kann es zum Import und Export von Geometrien eingesetzt werden.
+GeoJSON (Dateiendungen *geojson* und *json*) ist ein offenes Format zum Austausch von Vektor-Geodaten, basierend auf dem Format JSON. In Field Desktop kann es zum Import und Export von Geometrien eingesetzt werden.
 
 Beim GeoJSON-Import werden **keine neuen Ressourcen** angelegt, sondern existierenden Ressourcen **Geometrien hinzugefügt**. Verwenden Sie zum Import neuer Ressourcen eines der beiden Formate *CSV* oder *JSON Lines* und fügen Sie den auf diese Weise importierten Ressourcen anschließend per GeoJSON-Import Geometrien hinzu.
 
@@ -1399,7 +1399,7 @@ Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Da
 
 ### JSON Lines
 
-JSON Lines ist ein auf JSON basierendes Textformat, bei dem jede Zeile der Datei einem JSON-Objekt entspricht. Es kann in Field Desktop zum Anlegen und Bearbeiten von Ressourcen (inklusive Geometrien) verwendet werden.
+JSON Lines (Dateiendung *jsonl*) ist ein auf JSON basierendes Textformat, bei dem jede Zeile der Datei einem JSON-Objekt entspricht. Es kann in Field Desktop zum Anlegen und Bearbeiten von Ressourcen (inklusive Geometrien) verwendet werden.
 
 Das Format JSON Lines steht beim Export **nicht** zur Verfügung. Bitte beachten Sie, dass über das Menü "Projekt" ➝ "Backup erstellen..." angelegte Backup-Dateien zwar ebenfalls das Format JSON Lines und die Dateiendung *jsonl* verwenden, allerdings **nicht** über das Menü "Import" eingelesen werden können. Backups können ausschließlich über das Menü "Projekt" ➝ "Backup einlesen..." wiederhergestellt werden.
 

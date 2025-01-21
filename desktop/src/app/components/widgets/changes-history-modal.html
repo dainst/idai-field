@@ -6,7 +6,7 @@
     <p  i18n="@@document.created.information.text">Die Ressource <b>{{document.resource.identifier}}</b>  wurde vom Benutzer  {{document.created.user}} am {{formatDateTime(document.created.date)}} erstellt.</p>
     <div id="changes-history-modal-body" class="modal-body" >
         <div *ngIf="document.modified[0].user">
-            <div id="list">               
+            <div id="list" class="col-lg-12 col-md-12 col-sm-12">               
                 <div id="list-header">  
                     <div class="list-header-field" i18n="@@changes.list.colnames.date" >
                         <span>Änderungsdatum </span>

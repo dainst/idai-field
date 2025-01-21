@@ -4,14 +4,14 @@
   width:100%;
   
   #list-header {
+    min-width: 100%;
     user-select: none;
     display: grid;
-    grid-template-columns: 15vh 17vh;
+    grid-template-columns: 184px 240px;
     font-size: 16px;
     
-    .list-header-field {
-      min-width: fit-content;
-      padding: 10px 5px 5px 10px;
+    .list-header-field {      
+      padding: 5px 5px 5px 10px;
       color: rgb(73, 80, 87);
       border: solid 1px rgb(221, 221, 221);
     }
@@ -23,14 +23,15 @@
   }
 
   .list-row {
+    min-width: 100%;
     user-select: none;
     display: grid;
-    grid-template-columns: 15vh 17vh;
+    grid-template-columns: 184px 240px;
     font-size: 16px;
     font-weight: 500;
   
     .list-body-field {
-      padding: 10px 5px 5px 10px;
+      padding: 5px 5px 5px 10px;
       color: rgb(73, 80, 87);
       border: solid 1px rgb(221, 221, 221);
       border-top: none; 

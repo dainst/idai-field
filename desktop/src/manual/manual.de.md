@@ -998,16 +998,20 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" ein
     <thead>
       <tr>
         <th>identifier</th>
-        <th>date1</th>
-        <th>date2</th>
-        <th>date3</th>
+        <th>date</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>A</td>
         <td>12.01.2025</td>
+      </tr>
+      <tr>
+        <td>B</td>
         <td>09.2008</td>
+      </tr>
+      <tr>
+        <td>C</td>
         <td>1995</td>
       </tr>
     </tbody>

@@ -31,17 +31,22 @@ export class ChangesHistoryModalComponent {
         if (event.key === 'Escape') this.escapeKeyPressed = false;
     }
 
+
     public async initialize() {
-        // TODO remove this function  ( called in private function initModal() ) 
-         1
+        this.sortDownBy("date")
     }
+
 
     public formatDateTime( date: string | Date, locale: string = 'de-DE' ) { 
         return new Date(date).toLocaleString(locale);
     }
 
-    public sortModificationsBy(prop: string) {
-        return this.document.modified.sort((a, b) => a[prop] < b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
-      }
+    public sortUpBy(documentKey: string) {
+        this.document.modified.sort((a, b) => a[documentKey] > b[documentKey] ? 1 : a[documentKey] === b[documentKey] ? 0 : -1);
+    }
 
+
+    public sortDownBy(documentKey: string) {
+        this.document.modified.sort((a, b) => a[documentKey] < b[documentKey] ? 1 : a[documentKey] === b[documentKey] ? 0 : -1);
+    }
 }

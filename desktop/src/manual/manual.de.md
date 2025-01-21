@@ -1674,6 +1674,22 @@ Darüber hinaus stehen die folgenden Optionen zur Auswahl:
 * *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der JSON-Lines-Datei für alle Datensätze bereits eine übergeordnete Ressource über die Relation *isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
 
 
+### Katalog
+
+Das ausschließlich von Field Desktop verwendete Katalog-Format (Dateiendung *catalog*) kann dazu verwendet werden, Typenkataloge, die über das Menü "Werkzeuge" ➝ "Typenverwaltung" angelegt wurden, zwischen verschiedenen Projekten zu teilen.
+
+Exportiert wird jeweils ein Typenkatalog mitsamt aller darin enthaltenen Typen sowie verknüpfter Bilder. Verknüpfte Funde werden **nicht** exportiert.
+
+Nach dem Import der Katalogdatei in ein anderes Projekt kann der Typenkatalog wie gewohnt in der Typenverwaltung eingesehen und zur Bestimmung von Funden eingesetzt werden. Die Bearbeitung eines aus einem anderen Projekt importierten Katalogs ist **nicht** möglich: Importierte Typenkataloge sowie verknüpfte Bilder können als Ganzes wieder aus dem Projekt gelöscht, allerdings nicht editiert, erweitert oder in Teilen gelöscht werden. Es ist jedoch möglich, den Typenkatalog durch den Import einer neuen Katalogdatei durch eine aktualisierte Version zu ersetzen. Bereits angelegte Verknüpfungen zu Funden bleiben dabei erhalten. Ebenso können Typenkataloge, die nach dem Export zu einem späteren Zeitpunkt wieder in das gleiche Projekt importiert werden, bearbeitet und erweitert werden.
+
+Bitte beachten Sie, dass beim Import von Typenkatalogen in ein anderes Projekt eine identische Konfiguration für die Kategorien der exportierten Ressourcen ("Typenkatalog", "Typ", "Abbildung" bzw. eventuell genutzte Unterkategorien) in beiden Projekten vorhanden sein sollte. Nicht im Zielprojekt konfigurierte Felder werden **nicht** angezeigt. Enthält die Katalogdatei Ressourcen, die einer im Zielprojekt nicht vorhandenen Unterkategorie angehören, schlägt der Importprozess fehl. 
+
+#### Export-Optionen
+
+Beim Export von Katalogdateien steht die folgende Option zur Verfügung:
+
+* *Katalog*: Wählen Sie hier den zu exportierenden Typenkatalog aus. Diese Option wird nur angezeigt, wenn im aktuell geöffneten Projekt Typenkataloge vorhanden sind. Aus anderen Projekten importierte Kataloge stehen nicht zur Auswahl.
+
 <hr>
 
 

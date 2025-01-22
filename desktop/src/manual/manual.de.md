@@ -1779,6 +1779,18 @@ Eine als Ziel einer Relation angegebene Ressource kann nicht gefunden werden.
 * Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
 * Button *Relation bereinigen*: Alle Verweise auf nicht existierende Ressourcen werden aus der Relation gelöscht.
 
+### Ungültige Zielressource einer Relation
+Die Kategorie einer als Ziel einer Relation angegebenen Ressource ist keine gültige Zielkategorie dieser Relation.
+
+#### Mögliche Ursachen
+* Die Liste der für diese Relation erlaubten Zielkategorien wurde im Konfigurationseditor bearbeitet.
+* Die Kategorie der Ressource wurde geändert.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um den Verweis auf die ungültige Zielressource aus der Relation zu entfernen.
+* Button *Relation bereinigen*: Alle Verweise auf ungültige Zielressourcen werden aus der Relation gelöscht.
+* Fügen Sie die Kategorie der Zielressource im Konfigurationseditor als gültige Zielkategorie der entsprechenden Relation hinzu.
+
 ### Fehlende oder ungültige übergeordnete Ressource
 Die Ressource besitzt keine gültige übergeordnete Ressource. Dies kann entweder bedeuten, dass für die Ressource keine übergeordnete Ressource gesetzt wurde, dass die angegebene übergeordnete Ressource nicht gefunden werden kann oder dass sie aufgrund ihrer Kategorie keine gültige übergeordnete Ressource ist. Die Ressource wird daher nicht angezeigt.
 

@@ -1766,6 +1766,18 @@ A resource specified as the target of a relation cannot be found.
 * Make sure that the data of all team members working with the Field project is synchronized.
 * Button *Clean up relation*: All references to non-existent resources are deleted from the relation.
 
+### Invalid target resource of a relation
+The category of a resource specified as the target of a relation is not a valid target category of this relation.
+
+#### Possible causes
+* The list of allowed target categories of the relation has been edited in the configuration editor.
+* The category of the resource has been changed.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to remove the reference to the invalid target resource from the relation.
+* Button *Clean up relation*: All references to invalid target resources are deleted from the relation.
+* Add the category of the target resource as a valid target category of the corresponding relation in the configuration editor.
+
 ### Missing or invalid parent resource
 The resource does not have a valid parent resource. This can either mean that no parent resource has been set for the resource, that the specified parent resource cannot be found or that it is not a valid parent resource due to its category. The resource is therefore not displayed.
 

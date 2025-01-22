@@ -1480,6 +1480,7 @@ Aus Gründen der Übersichtlichkeit werden die Beispiele im Folgenden jeweils in
 Felder vom Eingabetyp *Relation* werden im Objekt *relations* gebündelt. Die Feldnamen des Objekts entsprechen den Bezeichnern der Relationen, als Feldwert wird jeweils ein Array mit den Bezeichnern der Zielressourcen eingetragen.
 
 Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Relationen verwendet werden:
+
 * *isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; wird bei Ressourcen auf oberster Ebene nicht gesetzt
 * *depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen
 * *isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern
@@ -1667,11 +1668,11 @@ Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Ein
 Bei einem JSON-Lines-Import können entweder neue Ressourcen erstellt oder bereits vorhandene Ressourcen bearbeitet werden. Sie können zwischen den folgenden beiden Optionen wählen:
 
 * *Neue Ressourcen importieren*: Ist diese Option aktiviert, wird für jede Zeile der JSON-Lines-Datei eine neue Ressource angelegt.  Datensätze, deren Bezeichner (Feld *identifier*) bereits vergeben sind, werden ignoriert.
-* *Vorhandene Ressource ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der JSON-Lines-Datei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld *identifier*). Datensätze in der JSON-Lines-Datei, die nicht zugeordnet werden können, werden ignoriert.
+* *Vorhandene Ressourcen ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der JSON-Lines-Datei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld *identifier*). Datensätze in der JSON-Lines-Datei, die nicht zugeordnet werden können, werden ignoriert.
 
 Darüber hinaus stehen die folgenden Optionen zur Auswahl:
 
-* *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), denen in der Importdatei der Wert *null* zugewiesen ist. Nicht aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressource ergänzen* verfügbar.
+* *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), denen in der Importdatei der Wert *null* zugewiesen ist. Nicht aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressourcen ergänzen* verfügbar.
 * *Nicht konfigurierte Felder ignorieren*: Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen, sobald nicht konfigurierte Felder in der Datei gefunden werden.
 * *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der JSON-Lines-Datei für alle Datensätze bereits eine übergeordnete Ressource über die Relation *isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
 

@@ -1419,6 +1419,7 @@ Wie beim GeoJSON-Import werden auch beim Shapefile-Import **keine neuen Ressourc
 #### Aufbau
 
 Ein Shapefile besteht jeweils aus einer Gruppe mehrerer Dateien, von denen einige optional sind. Beim Export in Field Desktop werden Dateien mit den folgenden Endungen angelegt:
+
 * *shp*: Enthält die eigentlichen Geodaten
 * *dbf*: Enthält die Daten der Attributtabelle, d. h. Sachdaten der zugehörigen Ressource (siehe Unterkapitel *Attributtabelle*).
 * *shx*: Stellt die Verknüpfung zwischen Geo- und Sachdaten her
@@ -1426,6 +1427,7 @@ Ein Shapefile besteht jeweils aus einer Gruppe mehrerer Dateien, von denen einig
 * *prj*: Gibt die Projektion an. Diese Datei wird nur dann exportiert, wenn in den Projekteigenschaften eine Auswahl im Feld *Koordinatenbezugssystem* getroffen wurde.
 
 Da ein Shapefile immer nur Geometrien eines einzigen Typs enthalten kann, werden beim Export in Field Desktop insgesamt drei Shapefiles (bestehend jeweils aus den vier bzw. fünf oben angegebenen Dateien) für die einzelnen Geometrietypen erstellt. Einfachtypen werden dabei im Shapefile als Mehrfachtypen gespeichert:
+
   * Dateiname "multipoints.\*", enthält Geometrien der Typen *Punkt* und *Multipunkt*
   * Dateiname "multipolylines.\*", enthält Geometrien der Typen *Polyline* und *Multipolyline*
   * Dateiname "multipolygons.\*", enthält Geometrien der Typen *Polygon* und *Multipolygon*
@@ -1443,7 +1445,7 @@ Beim Export werden die folgenden Felder in der Attributtabelle des Shapefiles au
 * *category*: Der Bezeichner der für die Ressource gewählten Kategorie
 * *sdesc*: Die Kurzbeschreibung der Ressource. Die Ausgabe ist abhängig von der Konfiguration des Feldes *Kurzbeschreibung* der entsprechenden Kategorie:
     * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung
-    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein eigenes Feld für jede Sprache mit dem Sprachkürzel im Feldnamen, getrennt durch einen Unterstrich (z. B. *sdesc\_de* oder *scdesc\_en*) 
+    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein eigenes Feld für jede Sprache mit dem Sprachkürzel im Feldnamen, getrennt durch einen Unterstrich (z. B. *sdesc\_de* oder *sdesc\_en*) 
     * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste
   
 Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Das Feld *identifier* in der Attributtabelle muss also gesetzt sein, damit ein Shapefile-Import erfolgreich durchgeführt werden kann. Weitere Felder der Attributtabelle werden beim Import **nicht** berücksichtigt, es wird ausschließlich die Geometrie in der entsprechenden Ressource aktualisiert. Bitte beachten Sie, dass bereits vorhandene Geometrien beim Import überschrieben werden. Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert.

@@ -388,7 +388,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
-        <source> Vorhandene Ressource ergänzen </source>
+        <source>Vorhandene Ressourcen ergänzen</source>
         <target state="translated">Update existing resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>

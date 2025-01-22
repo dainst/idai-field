@@ -1,6 +1,6 @@
 # First steps
 
-The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on  data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (MacOS) or "Tools" (Windows).
+The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (MacOS) or "Tools" (Windows).
 
 Initially, the test project will be active, allowing you to experiment with the application's functionality using a set of sample data. Please note that as long as the test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for the test project.  
 
@@ -829,6 +829,569 @@ from the current selection:
   still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a
   fast way to check if two units are connected across multiple relations/resources.
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
+
+
+<hr>
+
+
+# Import and export
+
+## Import
+
+Select the menu item "Tools" ➝ "Import" to import resources into the currently opened project.
+
+* *Source*: Select the type of import source. There are two options to choose from:
+    * *File*: The data to be imported is read from a file existing on your computer, a connected storage medium or another computer available via the network.
+    * *HTTP*: The data to be imported is loaded via HTTP or HTTPS using a URL. Please note that it is not possible to import files in the formats *Shapefile* and *Catalog* if this option is selected. 
+* *Path*: Select the desired import file via a file selection dialog (only available for source option "File")
+* *URL*: Enter the URL where the data to be imported can be found (only available for source option "HTTP")
+
+Depending on the format of the selected file, which is recognized based on the file extension, further options may be available (see subsection on the corresponding format in section *Formats*).
+
+Start the import process using the **Start import** button.
+
+Supported import formats are:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.shp)
+* JSON Lines (.jsonl)
+* Catalog (.catalog)
+
+The formats *CSV* and *JSON Lines* are suitable for creating new resources or editing existing resources. Geometries can be added or edited using the formats *GeoJSON*, *Shapefile* or *JSON Lines*. The *Catalog* format can be used to exchange Field type catalogs.
+
+
+## Export
+
+Select the menu item "Tools" ➝ "Import" to export resources from the currently opened project.
+
+First, select the desired export format from the dropdown menu **Format**. Depending on the format, further options may be available (see subsection on the corresponding format in section *Formats*).
+
+After clicking the button **Start export**, a file selection dialog opens where you can specify the name and target directory of the file to be created. Then the export process starts.
+
+Supported export formats are:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.zip)
+* Catalog (.catalog)
+
+
+## Formats
+
+### CSV
+
+CSV (file extension *csv*) is the main file format for importing and exporting resource data in the context of Field Desktop. CSV files can be read and edited by all common spreadsheet applications.
+
+CSV files **do not contain geodata**. Use one of the two formats *GeoJSON* or *Shapefile* to export geodata or add it to existing resources via import.
+
+
+#### Structure
+
+A CSV file only ever contains resources of a single category. Each column corresponds to one of the fields that have been configured for the form used in the project for this category. Please note that the column header must contain the unique field identifier as displayed for the respective field in magenta in the menu "Project configuration". The multilingual display names that are displayed in other areas of the application **cannot** be used in CSV files.
+
+It is mandatory to specify the identifier in the *identifier* column. All other fields are optional.
+
+For a quick overview and as a template for the CSV import, you can use the option *Schema only* in the menu "Tools" ➝ "Export" to create an empty CSV file with pre-filled column headers for all fields of a category (see section *Export options*).
+
+
+##### Valuelist fields
+
+For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
+
+
+##### Yes/No fields
+
+The values *true* (Yes) and *false* (No) can be entered for fields of the input type "Yes / No".
+
+
+##### Multilingual fields
+
+If values in different languages can be entered in a field, a separate column is created in the CSV file for each language. The column header contains the language code (separated from the field identifier by a dot), as displayed in magenta in the menu "Settings" for each language (e.g. "shortDescription.en" for the English text of the short description).
+
+In projects created with older versions of Field Desktop and due to changes to the project configuration, it is possible that a value without a language specification is present in a multilingual field. In these cases, the text "unspecifiedLanguage" is added to the column header instead of the language code.
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>description.de</th>
+        <th>description.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Dropdown lists (range)
+
+Fields of the input type "Dropdown list (range)" consist of up to two subfields, for each of which a separate column is created:
+
+* *value*: The identifier of the selected value; if two values are selected, the first of the two values
+* *endValue*: The identifier of the second selected value if two values are selected
+
+*Example (the value identifiers are identical with the German labels in this case):*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>period.value</th>
+        <th>period.endValue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Eisenzeitlich</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Frühbronzezeitlich</td>
+        <td>Spätbronzezeitlich</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Date fields
+
+A value in the format "day.month.year" is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>12.01.2025</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>09.2008</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>1995</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### List fields
+
+For fields of the input types "Checkboxes” and "Single line text (List)” (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon (e.g. "Granite;Limestone;Slate”).
+
+For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field” and "Single line text (List)” (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+
+*Example of a field of the input type "Single line text (List)” with input in multiple languages:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>exampleField.0.de</th>
+        <th>exampleField.0.en</th>
+        <th>exampleField.1.de</th>
+        <th>exampleField.1.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Wert A1</td>
+        <td>Value A1</td>
+        <td>Wert A2</td>
+        <td>Value A2</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Wert B1</td>
+        <td>Value B1</td>
+        <td>Wert B2</td>
+        <td>Value B2</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Relations
+
+The column header contains the prefix "relations” before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
+
+In addition to the relations listed in the project configuration in the form of the respective category, the following columns can be used:
+* *relations.isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
+* *relations.depicts* (only for image resources): Links the image to one or more resources
+* *relations.isDepictedIn* (not for image resources): Links the resource to one or more images
+* *relations.isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target
+* *relations.hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource
+
+To link images to the project or set them up as map layers at project level, enter the project identifier in the column *relations.depicts* or *relations.isMapLayerOf*.
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>relations.isAbove</th>
+        <th>relations.isChildOf</th>
+        <th>relations.isDepictedIn</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>B;C;D</td>
+        <td>E</td>
+        <td>Image1.png;Image2.png</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Datings
+
+Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
+
+* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (before), *after* (After), *scientific* (Scientific)
+* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* 
+* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
+* *margin*: Tolerance margin in years for dating type *scientific*
+* *source*: Source of the dating, multilingual text field
+*isImprecise*: Specification "Imprecise”. Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+*isUncertain*: Specification "Uncertain”. Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+
+The year specifications *begin* and *end* consist of two subfields:
+
+* *inputType*: The time scale. Possible values are: *bce* (BC), *ce* (AD), *bp* (BP)
+* *inputYear*: The year
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dating.0.type</th>
+        <th>dating.0.begin.inputType</th>
+        <th>dating.0.begin.inputYear</th>
+        <th>dating.0.end.inputType</th>
+        <th>dating.0.end.inputYear</th>
+        <th>dating.0.margin</th>
+        <th>dating.0.source.de</th>
+        <th>dating.0.source.en</th>
+        <th>dating.0.isImprecise</th>
+        <th>dating.0.isUncertain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>range</td>
+        <td>bce</td>
+        <td>100</td>
+        <td>ce</td>
+        <td>200</td>
+        <td></td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>single</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>750</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>before</td>
+        <td></td>
+        <td></td>
+        <td>bp</td>
+        <td>20</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td>after</td>
+        <td>bce</td>
+        <td>350</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>E</td>
+        <td>scientific</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>1200</td>
+        <td>50</td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Dimensions
+
+Fields of the input type "Dimension” are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
+
+* *inputValue*: The measured numerical value
+* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
+* *measurementPosition*: Field "As measured by”. The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementComment*: Comment, multilingual text field
+* *isImprecise*: Specification "Imprecise”. Possible values are: *true* (yes), *false* (no)
+
+*Example (the value identifiers in the column "dimensionLength.0.measurementPosition" are identical with the German labels in this case):*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dimensionLength.0.inputValue</th>
+        <th>dimensionLength.0.inputRangeEndValue</th>
+        <th>dimensionLength.0.inputUnit</th>
+        <th>dimensionLength.0.measurementPosition</th>
+        <th>dimensionLength.0.measurementComment.de</th>
+        <th>dimensionLength.0.measurementComment.en</th>
+        <th>dimensionLength.0.isImprecise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>50</td>
+        <td></td>
+        <td>cm</td>
+        <td>Minimale Ausdehnung</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>10</td>
+        <td>15</td>
+        <td>m</td>
+        <td>Maximale Ausdehnung</td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Bibliographic eferences
+
+Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields, for which a separate column is created for each bibliographic reference:
+
+* *quotation*: Literature quotation
+* *zenonId*: Zenon ID
+* *doi*: DOI
+* *page*: Page
+* *figure*: Figure
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>literature.0.quotation</th>
+        <th>literature.0.zenonId</th>
+        <th>literature.0.doi</th>
+        <th>literature.0.page</th>
+        <th>literature.0.figure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, 22-23 September 2022), «Archeologia e Calcolatori», 34.1, 85-94</td>
+        <td>002038255</td>
+        <td>https://doi.org/10.19282/ac.34.1.2023.10</td>
+        <td>90</td>
+        <td>3</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Composite fields
+
+Fields of the input type "Composite field” are list fields, each of which can contain several entries. One column is created per entry for each configured subfield (for multilingual text fields, one column for each language). The identifier of the subfield is specified in the column header.
+
+
+#### Import options
+
+Using CSV import, you can either create new resources or edit existing resources. You can choose between the following two options:
+
+* *Import new resources*: If this option is activated, a new resource is created for each row of the CSV table. Resources whose identifiers (column *identifier*) have already been assigned are ignored.
+* *Update existing resources*: If this option is activated, existing resources will be merged with the data from the CSV table. Fields in the import record overwrite fields with the same identifier in the existing data record. Fields in the existing record that are not present in the import record remain unchanged. The category cannot be changed. The assignment of records is performed based on the identifier field (column *identifier*). Records in the CSV table that cannot be assigned are ignored.
+
+The following options are also available:
+* *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) for which the field in the import file is empty are deleted. Fields not listed as columns in the CSV table remain unchanged. This option is only available if the option *Update existing resources* is selected.
+* *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
+* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by dots), the category is automatically recognized (e.g. "example.find.csv” for a CSV file containing resources of the category "Find”). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
+* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" or "Image”). This option is only available if the option *Import new resources* is selected.
+* *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is the comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export” menu or in a spreadsheet application). In most cases, either the comma or the semicolon is used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
+
+
+#### Export options
+
+First select the type of CSV export. You can choose between the following two options:
+* *Complete*: All resources are exported based on the selected settings for context and category (see below).
+* *Schema only*: Only the header row with the column headers of all fields configured for the selected category will be exported. The exported file can be used as a starting point for creating an import file.
+
+The following options are also available:
+* *Context*: Optionally select an operation here whose resources are to be exported. If the default option "No restriction” is selected, all resources of the selected category are exported. This option is only available if the option *Complete* is selected.
+* *Category*: Select the desired category here. Only resources of the selected category are exported. In this dropdown menu, only categories for which resources exist in the selected context are available for selection. The number of resources available in the selected context is displayed in brackets.
+* *Field separator*: Enter the character to be used as the field separator in the CSV file to be created (the default setting is the comma).
+* *Combine hierarchical relations*: If this option is activated, the hierarchical relations are combined into the simplified relation *isChildOf*, which specifies the direct parent resource in each case. This option is activated by default and should not be deactivated in most cases. If the option is deactivated, the two columns *relations.liesWithin* and *relations.isRecordedIn* are created instead of the column *relations.isChildOf*. In the column *relations.liesWithin*, the direct parent resource is set (if the parent resource is not an operation), while the operation in which the resource has been recorded is set in the column *relations.isRecordedIn*. 
+
+
+### GeoJSON
+
+GeoJSON (file extensions *geojson* and *json*) is an open format for exchanging vector geodata based on the JSON format. It can be used in Field Desktop to import and export geometries.
+
+When importing GeoJSON files, **no new resources** are created. Instead, **geometries are added** to existing resources. To import new resources, use one of the two formats *CSV* or *JSON Lines* and then add geometries to the newly created resources using the GeoJSON import.
+
+
+#### Structure
+
+The structure of a GeoJSON file is based on the <a href="https://geojson.org" target="_blank">GeoJSON specification</a>. The following additional rules apply for import or export in the context of Field Desktop:
+
+A GeoJSON file must always contain an object of the type "FeatureCollection" at the top level. This object in turn contains individual objects of the type "Feature".
+
+*Example:*
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          ...
+        },
+        {
+          "type": "Feature",
+          ...
+        }
+      ]
+    }
+
+
+Each object of the type "Feature" corresponds to a resource in Field and the associated geometry. A feature always contains the two fields *geometry* and *properties*: While the *geometry* field contains the geometry data, the data in the *properties* field establishes the link to the resource in Field.
+
+
+##### Geometry
+
+The following geometry types are supported:
+
+* *Point* (Point)
+* *MultiPoint* (Multipoint)
+* *LineString* (Polyline)
+* *MultiLineString* (Multipolyline)
+* *Polygon* (Polygon)
+* *MultiPolygon* (Multipolygon)
+
+The coordinates are specified in accordance with the GeoJSON specification.
+
+
+##### Properties
+
+The following fields of the respective resource are written into the object *properties* during export:
+
+* *identifier*: The identifier of the resource
+* *category*: The identifier of the category selected for the resource
+* *shortDescription*: The short description of the resource. The output depends on the configuration of the *shortDescription* field of the corresponding category:
+    * Single line text without input in multiple languages: The text of the short description as a string
+    * Single line text with input in multiple languages / Multiline text: An object with the language codes as field names
+    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+
+During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the object *properties* to import GeoJSON data successfully. Other fields of the *properties* object are **not** considered during the import; only the geometry in the corresponding resource is updated. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
+
+
+##### Example
+
+This example shows the content of a GeoJSON export file for a resource with a point geometry. The two fields *category* and *shortDescription* in the object *properties* do not need to be set for import.
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              28.189335972070695,
+              40.14122423529625
+            ]
+          },
+          "properties": {
+            "identifier": "F1",
+            "category": "Find",
+            "shortDescription": {
+              "de": "Beispielfund",
+              "en": "Example find"
+            }
+          }
+        }
+      ]
+    }
+
+
+<hr>
 
 
 # Warnings

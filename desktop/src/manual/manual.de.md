@@ -913,7 +913,7 @@ Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie. Jede Spal
 
 Obligatorisch ist die Angabe des Bezeichners in der Spalte *identifier*. Alle weiteren Felder sind optional.
 
-Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option "Nur Schema" im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
+Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option *Nur Schema* im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
 
 
 ##### Wertelistenfelder
@@ -928,7 +928,7 @@ Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false
 
 ##### Mehrsprachige Felder
 
-Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldnamen getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
+Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldbezeichner getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
 
 In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
 
@@ -956,12 +956,12 @@ In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowi
 
 ##### Dropdown-Listen (Bereich)
 
-Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus den folgenden beiden Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
+Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus bis zu zwei Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
 
 * *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
 * *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
 
-*Beispiel:*
+*Beispiel (die Werte-Bezeichner sind in diesem Fall jeweils identisch mit dem deutschen Anzeigetext):*
 
 <div class="table-container">
   <table>
@@ -1023,7 +1023,7 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" ein
 
 Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
-Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden für jeden Listeneintrag die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
+Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
 
 *Beispiel für ein Feld des Eingabetyps "Einzeiliger Text (Liste)" mit Mehrsprachigkeit:*
 <div class="table-container">
@@ -1210,7 +1210,7 @@ Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßa
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein)
 
-*Beispiel:*
+*Beispiel (die Werte-Bezeichner in der Spalte "dimensionLength.0.measurementPosition" sind in diesem Fall jeweils identisch mit dem deutschen Anzeigetext):*
 <div class="table-container">
   <table>
     <thead>
@@ -1297,11 +1297,11 @@ Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Ein
 
 Bei einem CSV-Import können entweder neue Ressourcen erstellt oder bereits vorhandene Ressourcen bearbeitet werden. Sie können zwischen den folgenden beiden Optionen wählen:
 
-* *Neue Ressourcen importieren*: Ist diese Option aktiviert, wird für jede Zeile der CSV-Tabelle eine neue Ressource angelegt.  Datensätze, deren Bezeichner (Feld *identifier*) bereits vergeben sind, werden ignoriert.
-* *Vorhandene Ressource ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der CSV-Tabelle ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte *identifier*). Datensätze in der CSV-Tabelle, die nicht zugeordnet werden können, werden ignoriert.
+* *Neue Ressourcen importieren*: Ist diese Option aktiviert, wird für jede Zeile der CSV-Tabelle eine neue Ressource angelegt. Datensätze, deren Bezeichner (Spalte *identifier*) bereits vergeben sind, werden ignoriert.
+* *Vorhandene Ressourcen ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der CSV-Tabelle ergänzt. Felder des Importdatensatzes überschreiben dabei Felder mit dem gleichen Bezeichner im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte *identifier*). Datensätze in der CSV-Tabelle, die nicht zugeordnet werden können, werden ignoriert.
 
 Darüber hinaus stehen die folgenden Optionen zur Auswahl:
-* *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressource ergänzen* verfügbar.
+* *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressourcen ergänzen* verfügbar.
 * *Nicht konfigurierte Felder ignorieren*: Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen, sobald nicht konfigurierte Felder in der Datei gefunden werden.
 * *Kategorie auswählen*: Falls der Bezeichner der Kategorie im Dateinamen steht (durch Punkte vom Rest des Dateinamens abgetrennt), wird die Kategorie automatisch erkannt (z. B. "example.find.csv" für eine CSV-Datei, die Ressourcen der Kategorie "Fund" enthält). Enthält der Dateiname keinen Kategoriebezeichner, muss die Kategorie manuell über dieses Dropdown-Menü ausgewählt werden.
 * *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der CSV-Datei für alle Datensätze bereits eine übergeordnete Ressource in der Spalte *relations.isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
@@ -1330,7 +1330,7 @@ Beim GeoJSON-Import werden **keine neuen Ressourcen** angelegt, sondern existier
 
 #### Aufbau
 
-Der Aufbau einer GeoJSON-Datei richtet sich nach der <a href="https://geojson.org" target="_blank">GeoJSON-Spezifikation</a>. Für den Import oder Export im Kontext von Field gelten zusätzlich die folgenden Regeln:
+Der Aufbau einer GeoJSON-Datei richtet sich nach der <a href="https://geojson.org" target="_blank">GeoJSON-Spezifikation</a>. Für den Import oder Export im Kontext von Field Desktop gelten zusätzlich die folgenden Regeln:
 
 Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ "FeatureCollection" enthalten. Dieses Objekt beinhaltet wiederum einzelne Objekte vom Typ "Feature".
 
@@ -1368,7 +1368,7 @@ Die Koordinaten werden gemäß der GeoJSON-Spezifikation angegeben.
 
 ##### Eigenschaften
 
-Im Objekt "properties" werden beim Export die folgenden Felder der jeweiligen Ressource ausgegeben:
+Im Objekt *properties* werden beim Export die folgenden Felder der jeweiligen Ressource ausgegeben:
 
 * *identifier*: Der Bezeichner der Ressource
 * *category*: Der Bezeichner der für die Ressource gewählten Kategorie

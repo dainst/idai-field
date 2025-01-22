@@ -9,12 +9,12 @@
             <div id="list" class="col-lg-12 col-md-12 col-sm-12">               
                 <div id="list-header">  
                     <div class="list-header-field" i18n="@@changes.list.colnames.date" >
-                        <span>Änderungsdatum </span>
+                        <span (click)="toggleColumnSort('date')">Änderungsdatum </span>
                         <span class="sort-arrow-up arrow-up mdi-16px" (click)="sortDownBy('date')"></span>
                         <span class="sort-arrow-down arrow-down" (click)="sortUpBy('date')"></span>
                     </div>
                     <div class="list-header-field" i18n="@@changes.list.colnames.user">
-                        <span>Benutzer </span>
+                        <span (click)="toggleColumnSort('user')">Benutzer </span>
                         <span class="sort-arrow-up arrow-up" (click)="sortDownBy('user')"></span>
                         <span class="sort-arrow-down arrow-down" (click)="sortUpBy('user')"></span>
                     </div>

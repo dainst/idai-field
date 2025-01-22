@@ -14,6 +14,8 @@ export class ChangesHistoryModalComponent {
 
     public escapeKeyPressed: boolean;
     public document: Document;
+    public toggledDate: boolean;
+    public toggledUser: boolean;
 
     constructor( public activeModal: NgbActiveModal,
     ) {}
@@ -41,6 +43,7 @@ export class ChangesHistoryModalComponent {
         return new Date(date).toLocaleString(locale);
     }
 
+
     public sortUpBy(documentKey: string) {
         this.document.modified.sort((a, b) => a[documentKey] > b[documentKey] ? 1 : a[documentKey] === b[documentKey] ? 0 : -1);
     }
@@ -48,5 +51,15 @@ export class ChangesHistoryModalComponent {
 
     public sortDownBy(documentKey: string) {
         this.document.modified.sort((a, b) => a[documentKey] < b[documentKey] ? 1 : a[documentKey] === b[documentKey] ? 0 : -1);
+    }
+   
+    public toggleColumnSort (colname: string) {        
+        if(colname === 'user'){            
+            this.toggledUser ? this.sortDownBy(colname) : this.sortUpBy(colname);
+            this.toggledUser = !this.toggledUser;
+        }else{
+            this.toggledDate ? this.sortDownBy(colname) : this.sortUpBy(colname);
+            this.toggledDate = !this.toggledDate;
+        }
     }
 }

@@ -1359,7 +1359,7 @@ The following fields of the respective resource are written into the object *pro
     * Single line text with input in multiple languages / Multiline text: An object with the language codes as field names
     * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
 
-During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the object *properties* to import GeoJSON data successfully. Other fields of the *properties* object are **not** considered during the import; only the geometry in the corresponding resource is updated. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
+During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the object *properties* in order to successfully import GeoJSON data. Other fields of the *properties* object are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
 
 
 ##### Example
@@ -1389,6 +1389,48 @@ This example shows the content of a GeoJSON export file for a resource with a po
         }
       ]
     }
+
+
+### Shapefile
+
+Shapefile is a widely used format for exchanging vector geodata and can be used as an alternative to the GeoJSON format in the context of Field Desktop.
+
+As with the GeoJSON import, **no new resources** are created when importing Shapefile data. Instead, **geometries are added** to existing resources. To import new resources, use one of the two formats *CSV* or *JSON Lines* and then add geometries to the newly created resources using the Shapefile import.
+
+
+#### Structure
+
+A Shapefile consists of a group of several files, some of which are optional. When exporting from Field Desktop, files with the following extensions are created:
+
+* *shp*: Contains the actual geodata
+* *dbf*: Contains the attribute table data, i.e. data of the associated resource (see section *Attribute table*).
+* *shx*: Establishes the link between geodata and attribute data
+* *cpg*: Specifies the encoding used in the *dbf* file.
+* *prj*: Specifies the projection. This file is only exported if a selection has been made in the field *Coordinate reference system*  of the project properties.
+
+As a Shapefile can only ever contain geometries of a single type, a total of three Shapefiles (each consisting of the four or five files specified above) are created for the individual geometry types when exporting from Field Desktop. Single types are saved in the shapefile as multiple types, which leads to the following files:
+
+  * File name “multipoints.\*”, contains geometries of the types *Point* and *Multipoint*
+  * File name “multipolylines.\*”, contains geometries of the types *Polyline* and *Multipolyline*
+  * File name “multipolygons.\*”, contains geometries of the types *Polygon* and *Multipolygon*
+
+All files are bundled in a zip archive.
+
+When importing, all files belonging to the Shapefile must be in the same directory. In the file selection dialog of the import menu, select the file with the extension *shp*; all other files will be recognized automatically. Please note that zip archives are **not** supported during import. In order to import a Shapefile exported from Field Desktop into another project, the corresponding zip file must first be unpacked.
+
+
+##### Attribute table
+
+The following fields are included in the attribute table of the Shapefile during export:
+
+* *identifier*: The identifier of the resource
+* *category*: The identifier of the category selected for the resource
+* *sdesc*: The short description of the resource. The output depends on the configuration of the field *short description* of the corresponding category:
+    * Single line text without input in multiple languages: The text of the short description
+    * Single line text with input in multiple languages / Multiline text: A separate field for each language with the language code in the field name, separated by an underscore (e.g. *sdesc\_de* or *sdesc\_en*) 
+    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+  
+During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the attribute table in order to successfully import Shapefile data. Other fields in the attribute table are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
 
 
 <hr>

@@ -18,7 +18,7 @@
   }
 
   .list-body{    
-    max-height: 66vh;
+    max-height: calc(80vh - 230px);
     overflow: auto;
   }
 

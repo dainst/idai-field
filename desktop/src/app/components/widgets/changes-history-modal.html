@@ -8,21 +8,17 @@
         <div *ngIf="document.modified[0].user">
             <div id="list" class="col-lg-12 col-md-12 col-sm-12">               
                 <div id="list-header">  
-                    <div class="list-header-field"
+                    <div class="list-header-field text-right"
                         i18n="@@changes.list.colnames.date" 
                         (click)="toggleColumnSort('date')" 
                         [ngClass]="toggledDate ? 'arrow-down' : 'arrow-up'">
-                        <span class="text-left">Änderungsdatum </span>
-                        <!-- <span class="sort-arrow-up arrow-up mdi-16px" (click)="sortDownBy('date')"></span>
-                        <span class="sort-arrow-down arrow-down" (click)="sortUpBy('date')"></span> -->
+                        <span class="box-left">Änderungsdatum </span>
                     </div>
-                    <div class="list-header-field" 
+                    <div class="list-header-field text-right" 
                         i18n="@@changes.list.colnames.user"
                         (click)="toggleColumnSort('user')"
                         [ngClass]="toggledUser ? 'arrow-down' : 'arrow-up'">
-                        <span class="text-left">Benutzer </span>
-                        <!-- <span class="sort-arrow-up arrow-up" (click)="sortDownBy('user')"></span>
-                        <span class="sort-arrow-down arrow-down" (click)="sortUpBy('user')"></span> -->
+                        <span class="box-left">Benutzer </span>
                     </div>
                 </div>            
                 <div class="list-body">

@@ -488,7 +488,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
-        <source>Vorhandene Ressource ergänzen</source>
+        <source>Vorhandene Ressourcen ergänzen</source>
         <target state="translated">Mevcut girdileri güncelle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -833,7 +833,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
         <source>Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.</source>
-        <target state="translated">Lütfen unutmayın: Bir yedeği geri yükledikten sonra, tüm küçük resimler orijinal resim verilerine göre yeniden hesaplanacaktır. Bu nedenle uygulama başlangıçta normalden daha yavaş çalışabilir.</target>
+        <target state="translated">Lütfen unutmayın: Bir yedeği geri yükledikten sonra, tüm küçük resimler orijinal görsel verilerine göre yeniden hesaplanacaktır. Bu nedenle uygulama başlangıçta normalden daha yavaş çalışabilir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -3943,7 +3943,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
         <source>Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.</source>
-        <target state="translated">Bu yol genellikle varsayılan ayarında bırakılabilir. Field Desktop tarafından kullanılan görüntü dizini farklı kullanıcılar tarafından paylaşılan bir ağ cihazında (NAS) bulunuyorsa bunu değiştirmek gerekebilir. Uygulama bu yolun altındaki her proje için bir alt dizin oluşturur. Bu dizinlerde saklanan görüntü dosyaları tamamen Field Desktop tarafından yönetilir. Görüntü dosyaları oraya elle yerleştirilmemeli, resim genel görünümüne veya kaynak görünümünün resimler sekmesine aktarılmalıdır.</target>
+        <target state="translated">Bu yol genellikle varsayılan ayarında bırakılabilir. Field Desktop tarafından kullanılan görüntü dizini farklı kullanıcılar tarafından paylaşılan bir ağ cihazında (NAS) bulunuyorsa bunu değiştirmek gerekebilir. Uygulama bu dizinin altındaki her proje için bir alt dizin oluşturur. Bu dizinlerde saklanan görüntü dosyaları tamamen Field Desktop tarafından yönetilir. Görüntü dosyaları oraya elle yerleştirilmemelidir, Görsel Yönetimi menüsüne veya girdinin görseller sekmesine aktarılmalıdır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -8255,7 +8255,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden in allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="konvertiert"/> konvertiert (falls möglich). </source>
-        <target state="needs-translation">Lütfen unutmayın: Bu eylem, tüm <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdilerindeki <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanındaki geçersiz verileri (mümkünse) dönüştürecektir. </target>
+        <target state="translated">Lütfen unutmayın: Bu işlem, (mümkünse) <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/>kategorideki tüm girdilerdeki <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> geçersiz veri alanlarını <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="konvertiert"/> dönüştürecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">43,27</context>
@@ -8667,7 +8667,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warningsModal.singleResourceAffected" datatype="html">
         <source>Nur diese Ressource ist betroffen.</source>
-        <target state="needs-translation">Nur diese Ressource ist betroffen.</target>
+        <target state="translated">Sadece bu girdi etkileniyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -8715,7 +8715,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.info" datatype="html">
         <source>Matrix wird exportiert...</source>
-        <target state="needs-translation">Matrix wird exportiert...</target>
+        <target state="translated">Matrix dışa aktarılıyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/export-graph-modal.html</context>
           <context context-type="linenumber">4</context>
@@ -8739,7 +8739,7 @@
       </trans-unit>
       <trans-unit id="configuration.relation.inverse.none" datatype="html">
         <source>Keine Gegenrelation</source>
-        <target state="needs-translation">Keine Gegenrelation</target>
+        <target state="translated">Ters bağıntı yok</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">147</context>
@@ -8747,7 +8747,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.question" datatype="html">
         <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </source>
-        <target state="needs-translation">Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </target>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> ilişkisini gerçekten silmek istiyor musunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">7,9</context>
@@ -8807,7 +8807,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.missing" datatype="html">
         <source>Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</source>
-        <target state="needs-translation">Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</target>
+        <target state="translated">Bu işlemde var olmayan girdilere yapılan tüm referanslar kaldırılacaktır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">11,13</context>
@@ -8815,7 +8815,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.invalid" datatype="html">
         <source>Alle Verweise auf ungültige Zielressourcen werden dabei entfernt.</source>
-        <target state="needs-translation">Alle Verweise auf ungültige Zielressourcen werden dabei entfernt.</target>
+        <target state="translated">İşlem sırasında geçersiz hedef girdilere yapılan tüm referanslar kaldırılacaktır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">15,17</context>
@@ -8907,7 +8907,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.valuelistMultiInput" datatype="html">
         <source>Projekt-Werteliste</source>
-        <target state="needs-translation">Projekt-Werteliste</target>
+        <target state="translated">Proje değer listesi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">201</context>
@@ -8923,7 +8923,7 @@
       </trans-unit>
       <trans-unit id="configuration.label" datatype="html">
         <source>Anzeigename</source>
-        <target state="needs-translation">Anzeigename</target>
+        <target state="translated">Etiket</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">24,26</context>
@@ -8947,7 +8947,7 @@
       </trans-unit>
       <trans-unit id="configuration.valueLabel" datatype="html">
         <source>Anzeigetext</source>
-        <target state="needs-translation">Anzeigetext</target>
+        <target state="translated">Etiket</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
           <context context-type="linenumber">9,11</context>

@@ -1,37 +1,57 @@
 <div class="modal-header">
-    <h5  class="modal-title" i18n="@@widgets.historyModal.header">Änderunghistorie</h5>
+    <h5  class="modal-title" i18n="@@widgets.historyModal.header">
+        Bearbeitungshistorie der <b>{{document.resource.identifier}}</b>
+    </h5>
+
 </div>
 
-<div class="modal-body">
-    <p  i18n="@@document.created.information.text">Die Ressource <b>{{document.resource.identifier}}</b>  wurde vom Benutzer  {{document.created.user}} am {{formatDateTime(document.created.date)}} erstellt.</p>
-    <div id="changes-history-modal-body" class="modal-body" >
-        <div *ngIf="document.modified[0].user">
-            <div id="list" class="col-lg-12 col-md-12 col-sm-12">               
-                <div id="list-header">  
-                    <div class="list-header-field text-right"
-                        i18n="@@changes.list.colnames.date" 
-                        (click)="toggleColumnSort('date')" 
-                        [ngClass]="toggledDate ? 'arrow-down' : 'arrow-up'">
-                        <span class="box-left">Änderungsdatum </span>
-                    </div>
-                    <div class="list-header-field text-right" 
-                        i18n="@@changes.list.colnames.user"
-                        (click)="toggleColumnSort('user')"
-                        [ngClass]="toggledUser ? 'arrow-down' : 'arrow-up'">
-                        <span class="box-left">Benutzer </span>
-                    </div>
-                </div>            
-                <div class="list-body">
-                    <div *ngFor="let modification of document.modified"
-                        class = "list-row">                    
-                        <div class= "list-body-field" [textContent]="formatDateTime(modification.date)"></div>
-                        <div class= "list-body-field" [textContent]="modification.user"></div>      
-                    </div> 
+<div id="changes-history-modal-body" class="modal-body" >
+    <div class="resource-creation-info-row">
+        <span class="resource-creation-info-label" i18n="@@resource.creator.name">Erstellt von: </span>
+        <span class="resource-creation-info-text">{{document.created.user | slice:0:32}}</span>
+    </div>    
+    <div class="resource-creation-info-row">
+        <span class="resource-creation-info-label" i18n="@@resource.creation.date">Erstellungsdatum: </span>
+        <span class="resource-creation-info-text">{{formatDateTime(document.created.date)}}</span>
+    </div>
+    
+    
+
+    <div *ngIf="document.modified[0].user.length>=1; else noChangeTemplate">
+        <br />
+        <div id="list" class="col-lg-12 col-md-12 col-sm-12">               
+            <div id="list-header">  
+                <div class="list-header-field text-right"
+                    i18n="@@changes.list.colnames.date" 
+                    (click)="toggleColumnSort('date')" 
+                    [ngClass]="toggledDate ? 'arrow-down' : 'arrow-up'">
+                    <span class="box-left">Änderungsdatum </span>
                 </div>
+                <div class="list-header-field text-right" 
+                    i18n="@@changes.list.colnames.user"
+                    (click)="toggleColumnSort('user')"
+                    [ngClass]="toggledUser ? 'arrow-down' : 'arrow-up'">
+                    <span class="box-left">Benutzer </span>
+                </div>
+            </div>            
+            <div class="list-body">
+                <div *ngFor="let modification of document.modified"
+                    class = "list-row">                    
+                    <div class= "list-body-field" [textContent]="formatDateTime(modification.date)"></div>
+                    <div class= "list-body-field" [textContent]="modification.user.slice(0,32)"></div>      
+                </div> 
             </div>
-        </div>    
-    </div>   
-</div>
+        </div>
+    </div>  
+
+    <div #noChangeTemplate [hidden]="document.modified[0].user.length>=1">
+        <div id ="no-change-div" i18n="@@text.when.no.change">
+            <br />
+            Es wurde noch keine Änderung für die Ressource aufgeführt.    
+        </div>
+    </div>
+</div>   
+<br />
 
 <div class="modal-footer">
     <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"

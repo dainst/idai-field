@@ -2,7 +2,6 @@
     <h5 class="modal-title" i18n="@@widgets.historyModal.header">
         Bearbeitungshistorie der Ressource<b>{{document.resource.identifier}}</b>
     </h5>
-
 </div>
 
 <div id="changes-history-modal-body" class="modal-body" >
@@ -34,9 +33,9 @@
             </div>            
             <div class="list-body">
                 <div *ngFor="let modification of document.modified"
-                    class = "list-row">                    
-                    <div class= "list-body-field" [textContent]="formatDateTime(modification.date)"></div>
-                    <div class= "list-body-field" [textContent]="modification.user.slice(0,32)"></div>      
+                    class="list-row">                    
+                    <div class="list-body-field" [textContent]="formatDateTime(modification.date)"></div>
+                    <div class="list-body-field" [textContent]="modification.user.slice(0,32)"></div>      
                 </div> 
             </div>
         </div>
@@ -55,5 +54,3 @@
     <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')" i18n="@@widgets.changeHistoryModal.buttons.cancel">Abbrechen</button>
 </div>
-
-

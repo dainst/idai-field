@@ -560,6 +560,7 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 
 * *Anzeigename*: Der Name des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Anzeigenamen des Feldes eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
+* *Verweise*: Geben Sie hier URLs an, um auf weitere Informationen zum Feld oder zugrunde liegenden Definitionen in anderen Systemen zu verweisen.
 
 
 ### Eingabetyp ändern

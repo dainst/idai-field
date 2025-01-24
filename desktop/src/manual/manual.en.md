@@ -545,6 +545,7 @@ Via the context menu or by double-clicking on an entry in the field list, the fi
 
 * *Label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
 * *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field label and is intended to help with data entry.
+* *References*: Specify URLs here to reference more information about the field or field definitions in other systems.
 
 
 ### Change input type

@@ -1,7 +1,11 @@
-<div class="modal-header">
-    <h5 class="modal-title" i18n="@@widgets.historyModal.header">
-        Bearbeitungshistorie der Ressource<b>{{document.resource.identifier}}</b>
-    </h5>
+<div id="changes-history-modal-header" class="modal-header">
+    <div class="text-truncate heading">
+        <span class="modal-header-label" i18n="@@widgets.historyModal.header.label">Bearbeitungshistorie der Ressource:</span>
+        <span class="modal-header-resource-name">{{document.resource.identifier}}</span>
+    </div>
+    <button id="changes-history-close-button" class="btn btn-primary btn-square" (click)="activeModal.close()">
+        <span class="mdi mdi-close"></span>
+    </button>
 </div>
 
 <div id="changes-history-modal-body" class="modal-body" >
@@ -49,8 +53,3 @@
     </div>
 </div>   
 <br />
-
-<div class="modal-footer">
-    <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
-            (click)="activeModal.dismiss('cancel')" i18n="@@widgets.changeHistoryModal.buttons.cancel">Abbrechen</button>
-</div>

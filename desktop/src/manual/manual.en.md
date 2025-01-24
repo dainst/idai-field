@@ -626,6 +626,11 @@ Specification of one or more bibliographic references. Optionally, the Zenon ID,
 Composite fields can contain multiple entries, each consisting of any number of subfields. Each subfield has its own name and input type (see section *Subfields*).
 <p align="center"><img src="images/en/configuration/input_type_composite_field.png" alt="Input type 'Composite field'"/></p>
 
+#### Relation
+Reference to one or more other resources that belong to one of the configured target categories (see section *Allowed target categories*). Optionally, an inverse relation can be configured, which is automatically set in the target resources (see section *Inverse relation*).
+<p align="center"><img src="images/en/configuration/input_type_relation.png" alt="Input type 'Relation'"/></p>
+
+
 
 ### Hide fields
 
@@ -661,6 +666,31 @@ To create a new subfield, enter the desired name in the input field and confirm 
 Optionally, a condition for displaying the subfield can be set in the subfield editor. If a condition is set, the subfield will be available during data entry only if another subfield has a specific value (or one of several values) set.
 
 To set a condition, first select another subfield of the same composite field in the dropdown field "Condition for display of subfield". Subfields of the input types "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes / No" and "Checkboxes" are available for selection. The possible values of the chosen subfield are now displayed and can be selected. The current subfield is only displayed during data entry if at least one of the selected values is set for the subfield selected as a condition field.
+
+
+### Allowed target categories
+
+This section appears only if the input type "Relation" is selected. Only resources of the categories selected here can be chosen as targets of the relation. If a supercategory is selected, all of its subcategories are also automatically considered allowed target categories.
+
+Please note that target resources already entered in the field are not automatically removed if a category is removed from the list of allowed target categories. In this case, a corresponding warning is displayed for the affected resources.
+
+
+### Inverse relation
+
+This section only appears if the input type "Relation" is selected. Optionally, another field of input type "Relation" can be selected here, which is automatically updated in entered target resources to reflect the opposite direction of the relation.
+
+*Example:* The inverse relation "Lies above" is configured for the relation "Lies below". If the target resource "B" is entered in resource "A" in the relation field "Lies below", the target resource "A" is automatically entered in resource "B" in the "Lies above" relation field.
+
+Only fields that have already been created and meet the following criteria appear in the selection field *Inverse relation*:
+
+* The field in question must be of input type "Relation".
+* The field in question must be configured under the same identifier for all allowed target categories of the field currently being edited.
+* The category to which the field currently being edited belongs must be set as an allowed target category for the field in question.
+* The field currently being edited must be allowed to be entered as an inverse relation for all allowed target categories of the field in question in accordance with these criteria.
+
+After selecting an inverse relation and confirming the changes using the *OK* button, the inverse relations in other fields are automatically added or updated accordingly.
+
+Please note that resource data that has already been entered is not automatically updated when another inverse relation is selected.
 
 
 ## Adjusting order and group assignment
@@ -997,11 +1027,11 @@ A value in the format "day.month.year" is entered for fields of the input type "
 
 ##### List fields
 
-For fields of the input types "Checkboxes” and "Single line text (List)” (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon (e.g. "Granite;Limestone;Slate”).
+For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon (e.g. "Granite;Limestone;Slate").
 
-For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field” and "Single line text (List)” (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
 
-*Example of a field of the input type "Single line text (List)” with input in multiple languages:*
+*Example of a field of the input type "Single line text (List)" with input in multiple languages:*
 
 <div class="table-container">
   <table>
@@ -1036,7 +1066,7 @@ For fields of the input types "Dating", "Dimension", "Bibliographic reference", 
 
 ##### Relations
 
-The column header contains the prefix "relations” before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
+The column header contains the prefix "relations" before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
 
 In addition to the relations listed in the project configuration in the form of the respective category, the following columns can be used:
 * *relations.isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
@@ -1080,8 +1110,8 @@ Fields of the input type "Dating" are list fields, each of which can contain sev
 * *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
 * *margin*: Tolerance margin in years for dating type *scientific*
 * *source*: Source of the dating, multilingual text field
-* *isImprecise*: Specification "Imprecise”. Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
-* *isUncertain*: Specification "Uncertain”. Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
 
 The year specifications *begin* and *end* consist of two subfields:
 
@@ -1180,14 +1210,14 @@ The year specifications *begin* and *end* consist of two subfields:
 
 ##### Dimensions
 
-Fields of the input type "Dimension” are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
+Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
 
 * *inputValue*: The measured numerical value
 * *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
 * *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
-* *measurementPosition*: Field "As measured by”. The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field
-* *isImprecise*: Specification "Imprecise”. Possible values are: *true* (yes), *false* (no)
+* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
 
 *Example (the value identifiers in the column "dimensionLength.0.measurementPosition" are identical with the German labels in this case):*
 <div class="table-container">
@@ -1270,7 +1300,7 @@ Fields of the input type "Bibliographic reference" are list fields, each of whic
 
 ##### Composite fields
 
-Fields of the input type "Composite field” are list fields, each of which can contain several entries. One column is created per entry for each configured subfield (for multilingual text fields, one column for each language). The identifier of the subfield is specified in the column header.
+Fields of the input type "Composite field" are list fields, each of which can contain several entries. One column is created per entry for each configured subfield (for multilingual text fields, one column for each language). The identifier of the subfield is specified in the column header.
 
 
 #### Import options
@@ -1284,9 +1314,9 @@ The following options are also available:
 
 * *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) for which the field in the import file is empty are deleted. Fields not listed as columns in the CSV table remain unchanged. This option is only available if the option *Update existing resources* is selected.
 * *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
-* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by dots), the category is automatically recognized (e.g. "example.find.csv” for a CSV file containing resources of the category "Find”). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
-* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image”). This option is only available if the option *Import new resources* is selected.
-* *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is the comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export” menu or in a spreadsheet application). In most cases, either the comma or the semicolon is used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
+* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by dots), the category is automatically recognized (e.g. "example.find.csv" for a CSV file containing resources of the category "Find"). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
+* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
+* *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is the comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export" menu or in a spreadsheet application). In most cases, either the comma or the semicolon is used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
 
 
 #### Export options
@@ -1298,7 +1328,7 @@ First select the type of CSV export. You can choose between the following two op
 
 The following options are also available:
 
-* *Context*: Optionally select an operation here whose resources are to be exported. If the default option "No restriction” is selected, all resources of the selected category are exported. This option is only available if the option *Complete* is selected.
+* *Context*: Optionally select an operation here whose resources are to be exported. If the default option "No restriction" is selected, all resources of the selected category are exported. This option is only available if the option *Complete* is selected.
 * *Category*: Select the desired category here. Only resources of the selected category are exported. In this dropdown menu, only categories for which resources exist in the selected context are available for selection. The number of resources available in the selected context is displayed in brackets.
 * *Field separator*: Enter the character to be used as the field separator in the CSV file to be created (the default setting is the comma).
 * *Combine hierarchical relations*: If this option is activated, the hierarchical relations are combined into the simplified relation *isChildOf*, which specifies the direct parent resource in each case. This option is activated by default and should not be deactivated in most cases. If the option is deactivated, the two columns *relations.liesWithin* and *relations.isRecordedIn* are created instead of the column *relations.isChildOf*. In the column *relations.liesWithin*, the direct parent resource is set (if the parent resource is not an operation), while the operation in which the resource has been recorded is set in the column *relations.isRecordedIn*. 
@@ -1413,9 +1443,9 @@ A Shapefile consists of a group of several files, some of which are optional. Wh
 
 As a Shapefile can only ever contain geometries of a single type, a total of three Shapefiles (each consisting of the four or five files specified above) are created for the individual geometry types when exporting from Field Desktop. Single types are saved in the shapefile as multiple types, which leads to the following files:
 
-  * File name "multipoints.\*”, contains geometries of the types *Point* and *Multipoint*
-  * File name "multipolylines.\*”, contains geometries of the types *Polyline* and *Multipolyline*
-  * File name "multipolygons.\*”, contains geometries of the types *Polygon* and *Multipolygon*
+  * File name "multipoints.\*", contains geometries of the types *Point* and *Multipoint*
+  * File name "multipolylines.\*", contains geometries of the types *Polyline* and *Multipolyline*
+  * File name "multipolygons.\*", contains geometries of the types *Polygon* and *Multipolygon*
 
 All files are bundled in a zip archive.
 
@@ -1440,7 +1470,7 @@ During import, data records are assigned via the identifier. It is therefore man
 
 JSON Lines (file extension *jsonl*) is a JSON-based text format in which each line of the file corresponds to a JSON object. It can be used in Field Desktop to create and edit resources (including geometries).
 
-The JSON Lines format is **not** available for export. Please note that backup files created via the menu "Project” ➝ "Create backup...” also use the JSON Lines format and the *jsonl* file extension, but **cannot** be imported via the "Import” menu. Backups can only be restored via the menu "Project” ➝ "Restore backup...”.
+The JSON Lines format is **not** available for export. Please note that backup files created via the menu "Project" ➝ "Create backup..." also use the JSON Lines format and the *jsonl* file extension, but **cannot** be imported via the "Import" menu. Backups can only be restored via the menu "Project" ➝ "Restore backup...".
 
 
 #### Structure
@@ -1455,7 +1485,7 @@ An object can also contain the following optional fields:
 * *relations*: Contains all fields of the input type *Relation* (see section *Relations*)
 * *geometry*: The geometry of the resource (see section *Geometry*)
 
-In addition, the object can contain any number of fields that have been configured for the form that is used in the project for this category. Please note that the unique field identifier must be specified as displayed in magenta in the menu "Project configuration”  for the respective field. The multilingual display names that are displayed in other areas of the application **cannot** be used as field names in JSON Lines files.
+In addition, the object can contain any number of fields that have been configured for the form that is used in the project for this category. Please note that the unique field identifier must be specified as displayed in magenta in the menu "Project configuration"  for the respective field. The multilingual display names that are displayed in other areas of the application **cannot** be used as field names in JSON Lines files.
 
 For reasons of clarity, the examples below are each displayed in several lines. In actual import files, each JSON object must occupy **exactly one line** for the import to be successful.
 
@@ -1504,17 +1534,17 @@ Geometries can be specified in accordance with the GeoJSON specification. In the
 
 ##### Valuelist fields
 
-For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration” at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
+For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
 
 
 ##### Yes/No fields
 
-The values *true* (yes) and *false* (no) can be entered for fields of the input type "Yes / No”.
+The values *true* (yes) and *false* (no) can be entered for fields of the input type "Yes / No".
 
 
 ##### Multilingual fields
 
-For fields in which values can be entered in different languages, an object must be created whose field names correspond to the codes of the languages used. The language codes are displayed in magenta in the menu "Settings” for each language.
+For fields in which values can be entered in different languages, an object must be created whose field names correspond to the codes of the languages used. The language codes are displayed in magenta in the menu "Settings" for each language.
 
 *Example:*
 
@@ -1527,7 +1557,7 @@ For fields in which values can be entered in different languages, an object must
 
 ##### Dropdown lists (range)
 
-For fields of the input type "Dropdown list (range)”, an object is entered that contains the following two subfields:
+For fields of the input type "Dropdown list (range)", an object is entered that contains the following two subfields:
 
 * *value*: The identifier of the selected value; if two values are selected, the first of the two values
 * *endValue*: The identifier of the second selected value if two values are selected
@@ -1544,7 +1574,7 @@ For fields of the input type "Dropdown list (range)”, an object is entered tha
 
 ##### Date fields
 
-A value in the format "day.month.year” is entered for fields of the input type "date”. The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+A value in the format "day.month.year" is entered for fields of the input type "date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
 
 *Example:*
 
@@ -1559,7 +1589,7 @@ A value in the format "day.month.year” is entered for fields of the input type
 
 ##### List fields
 
-Fields of the input types "Single line text (list)”, "Checkboxes”, "Dating", "Dimension”, "Bibliographic reference” and "Composite field” can contain several entries. An array is therefore entered for these fields.
+Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Dimension", "Bibliographic reference" and "Composite field" can contain several entries. An array is therefore entered for these fields.
 
 
 ##### Datings
@@ -1571,8 +1601,8 @@ Fields of the input type "Dating" are list fields, each of which can contain sev
 * *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
 * *margin*: Tolerance margin in years for dating type *scientific*
 * *source*: Source of the dating, multilingual text field
-* *isImprecise*: Specification "Imprecise”. Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
-* *isUncertain*: Specification "Uncertain”. Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
 
 The year specifications *begin* and *end* consist of two subfields:
 
@@ -1596,14 +1626,14 @@ The year specifications *begin* and *end* consist of two subfields:
 
 ##### Dimensions
 
-Fields of the input type "Dimension” are list fields, each of which can contain several dimension entries. A dimension entry is an object that consists of the following subfields:
+Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry is an object that consists of the following subfields:
 
 * *inputValue*: The measured numerical value
 * *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
 * *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
-* *measurementPosition*: Field "As measured by”. The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field
-* *isImprecise*: Specification "Imprecise”. Possible values are: *true* (yes), *false* (no)
+* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
 
 *Example (the value identifiers in the field "measurementPosition" are identical with the German labels in this case):*
 
@@ -1633,11 +1663,11 @@ Fields of the input type "Bibliographic reference" are list fields, each of whic
       "category": ‘Type’, 
       "literature": [
         {
-          "quotation": ‘Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, September 22-23, 2022), ’Archeologia e Calcolatori”, 34.1, 85-94”,
+          "quotation": ‘Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, September 22-23, 2022), ’Archeologia e Calcolatori", 34.1, 85-94",
           "zenonId": ‘002038255’,
           "doi": ‘https://doi.org/10.19282/ac.34.1.2023.10’,
           "page": ‘90’,
-          "figure": ”3”
+          "figure": "3"
         }
       ]
     }
@@ -1645,7 +1675,7 @@ Fields of the input type "Bibliographic reference" are list fields, each of whic
 
 ##### Composite fields
 
-Fields of the input type "Composite field” are list fields that can each contain several entries. Each entry is an object whose field names correspond to the identifiers of the subfields that have been configured for the composite field.
+Fields of the input type "Composite field" are list fields that can each contain several entries. Each entry is an object whose field names correspond to the identifiers of the subfields that have been configured for the composite field.
 
 
 #### Import options
@@ -1659,18 +1689,18 @@ The following options are also available:
 
 * *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) to which the value *null* is assigned in the import file are deleted. Fields that are not listed remain unchanged. This option is only available if the option *Update existing resources* is selected.
 * *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
-* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified via the relation *isChildOf* for all records in the JSON Lines file, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image”). This option is only available if the option *Import new resources* is selected.
+* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified via the relation *isChildOf* for all records in the JSON Lines file, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
 
 
 ### Catalog
 
-The Catalog format (file extension *catalog*) used exclusively by Field Desktop can be used to share type catalogs created via the menu "Tools” ➝ "Type management” between different projects.
+The Catalog format (file extension *catalog*) used exclusively by Field Desktop can be used to share type catalogs created via the menu "Tools" ➝ "Type management" between different projects.
 
 A type catalog is exported together with all its types as well as linked images. Linked finds are **not** exported.
 
 After importing the catalog file into another project, the type catalog can be viewed as usual in the type management and used for find identification. It is **not** possible to edit a catalog imported from another project: Imported type catalogs and their linked images can be deleted from the project as a whole, but not edited, extended or partly deleted (i.e. just some specific types or linked images). However, it is possible to replace the type catalog with an updated version by importing a new catalog file. Any already created links to finds are retained. This restriction also does not apply to type catalogs that are imported back into the same project at a later date after export. In these cases, the catalog can be fully edited and expanded.
 
-Please note that when importing type catalogs into another project, there should be an identical configuration for the categories of the exported resources ("Type catalog”, "Type”, "Image" or any subcategories used) in both projects. Fields not configured in the target project are **not** displayed. If the catalog file contains resources that belong to a subcategory which does not exist in the target project, the import process will fail. 
+Please note that when importing type catalogs into another project, there should be an identical configuration for the categories of the exported resources ("Type catalog", "Type", "Image" or any subcategories used) in both projects. Fields not configured in the target project are **not** displayed. If the catalog file contains resources that belong to a subcategory which does not exist in the target project, the import process will fail. 
 
 
 #### Export options

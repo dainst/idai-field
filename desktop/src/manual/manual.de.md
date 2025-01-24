@@ -640,6 +640,10 @@ Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID
 Kompositfelder können mehrere Einträge enthalten, die jeweils aus einer beliebigen Anzahl von Unterfeldern bestehen. Jedes Unterfeld besitzt einen eigenen Namen und Eingabetyp (siehe Abschnitt *Unterfelder*).
 <p align="center"><img src="images/de/configuration/input_type_composite_field.png" alt="Eingabetyp 'Kompositfeld'"/></p>
 
+#### Relation
+Verweis auf eine oder mehrere andere Ressourcen, die einer der konfigurierten Zielkategorien angehören (siehe Abschnitt *Erlaubte Zielkategorien*). Optional kann eine Gegenrelation konfiguriert werden, die automatisch in den Zielressourcen gesetzt wird (siehe Abschnitt *Gegenrelation*).
+<p align="center"><img src="images/de/configuration/input_type_relation.png" alt="Eingabetyp 'Relation'"/></p>
+
 
 ### Felder verstecken
 
@@ -660,7 +664,7 @@ Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für
 
 Die aktuell ausgewählte Werteliste kann per Klick auf den Button "Werteliste wechseln" durch eine andere Werteliste ausgetauscht werden. Dabei kann entweder eine bestehende Werteliste ausgewählt oder eine neue Liste angelegt werden (siehe Abschnitt *Wertelisten*).
 
-Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden.
+Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden; darüber hinaus wird eine entsprechende Warnung für die Ressource angezeigt.
 
 
 ### Unterfelder
@@ -675,6 +679,31 @@ Um ein neues Unterfeld anzulegen, geben Sie den gewünschten Namen in das Eingab
 Optional lässt sich im Unterfeldeditor eine Bedingung für die Anzeige des Unterfelds festlegen. Ist eine Bedingung gesetzt, steht das Unterfeld bei der Dateneingabe nur dann zur Auswahl, wenn bei einem anderen Unterfeld ein bestimmter Wert (oder einer von mehreren Werten) gesetzt ist.
 
 Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Unterfelds" zunächst ein anderes Unterfeld des gleichen Kompositfelds aus. Zur Auswahl stehen dabei Unterfelder der Eingabetypen "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" und "Checkboxen". Die möglichen Werte des gewählten Unterfelds werden nun angezeigt und können selektiert werden. Das aktuelle Unterfeld wird bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Unterfeld mindestens einer der selektierten Werte gesetzt ist.
+
+
+### Erlaubte Zielkategorien
+
+Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Relation" gewählt ist. Lediglich Ressourcen der hier gewählten Kategorien können als Ziele der Relation ausgewählt werden. Wird eine Oberkategorie gewählt, so gelten automatisch auch alle ihre Unterkategorien als erlaubte Zielkategorien.
+
+Bitte beachten Sie, dass bereits in das Feld eingetragene Zielressourcen nicht automatisch entfernt werden, wenn eine Kategorie aus der Liste der erlaubten Zielkategorien entfernt wird. In diesem Fall wird für die betroffenen Ressourcen jeweils eine entsprechende Warnung angezeigt.
+
+
+### Gegenrelation
+
+Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Relation" gewählt ist. Optional kann hier ein anderes Feld des Eingabetyps "Relation" ausgewählt werden, das automatisch in eingetragenen Zielressourcen aktualisiert wird, um die Gegenrichtung der Relation anzuzeigen.
+
+*Beispiel:* Für die Relation "Liegt unter" ist die Gegenrelation "Liegt über" konfiguriert. Wird in der Ressource "A" im Relationsfeld "Liegt unter" die Zielressource "B" eingetragen, so wird automatisch in der Ressource "B" im Relationsfeld "Liegt über" die Zielressource "A" eingetragen.
+
+Im Auswahlfeld *Gegenrelation* erscheinen lediglich bereits angelegte Felder, die den folgenden Kriterien entsprechen:
+
+* Das infrage kommende Feld muss den Eingabetyp "Relation" besitzen.
+* Das infrage kommende Feld muss bei allen erlaubten Zielkategorien des aktuell bearbeiteten Feldes unter dem gleichen Bezeichner konfiguriert sein.
+* Die Kategorie, der das aktuell bearbeitete Feld angehört, muss für das infrage kommende Feld als erlaubte Zielkategorie eingetragen sein.
+* Das aktuell bearbeitete Feld muss für alle erlaubten Zielkategorien des infrage kommenden Feldes gemäß dieser Kriterien als Gegenrelation eingetragen werden können.
+
+Nach Auswahl einer Gegenrelation und Bestätigung der Änderungen über den Button *OK* werden die Gegenrelationen in anderen Feldern automatisch entsprechend ergänzt bzw. aktualisiert.
+
+Bitte beachten Sie, dass bereits eingetragene Ressourcendaten bei Auswahl einer anderen Gegenrelation nicht automatisch angepasst werden.
 
 
 ## Anpassen der Reihenfolge und der Gruppenzugehörigkeit

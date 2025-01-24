@@ -31,11 +31,6 @@ $deactivated-button-color: lightgray;
   @extend .mdi-arrow-up;
 }
 
-.arrow-down {
-  @extend .mdi;
-  @extend .mdi-arrow-down;
-}
-
 .arrow-top-right {
   @extend .mdi;
   @extend .mdi-arrow-top-right;

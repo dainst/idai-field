@@ -1,7 +1,12 @@
+.history-modal-content .modal-content {
+  user-select: none;
+  width: fit-content;
+}
+
 #list {
   background: white;
   margin-bottom: -20px;
-  width:100%;
+  width: 100%;
   
   #list-header {
     min-width: 100%;
@@ -15,10 +20,9 @@
       color: rgb(73, 80, 87);
       border: solid 1px rgb(221, 221, 221);
     }
-
   }
 
-  .list-body{    
+  .list-body {    
     max-height: calc(80vh - 230px);
     overflow: auto;
   }
@@ -40,41 +44,33 @@
   }
 }
 
-.list-header-field:hover{
+.list-header-field:hover {
   background-color: rgb(200, 200, 200, 0.2);
 }
 
-.box-left{
-  float:left;
+.box-left {
+  float: left;
   margin-right: 4pt;
 }
 
-.text-right{
-  text-align:right;
-  // margin-right: 4pt;
+.text-right {
+  text-align: right;
 }
 
 .resource-creation-info-label {
   font-weight: bold;
-  // color: rgb(53, 126, 126);
   color: #484948;
-  font-style:italic;
+  font-style: italic;
   width: 200px;
   float:left;
 }
+
 .resource-creation-info-text {
-  // font-weight: bold;
-  // color: #3a6632;
-  
   color: black;
 }
-
 
 #no-change-div {
   font-style:italic;
   color:#8f9190;
   font-size: small;
-  // text-align: center;
-  // margin-top: 6pt;
-  // margin-top: 4pt;
 }

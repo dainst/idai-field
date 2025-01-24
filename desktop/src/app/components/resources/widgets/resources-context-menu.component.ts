@@ -80,11 +80,13 @@ export class ResourcesContextMenuComponent implements OnChanges {
             && (!this.isReadonly() || !this.isTypeResource());
     }
 
+
     public isShowHistoryOptionAvailable(): boolean {
 
         return this.contextMenu.documents.length === 1 && !this.isReadonly();
     }
 
+    
     public isWarningsOptionAvailable(): boolean {
 
         return this.contextMenu.documents.length === 1

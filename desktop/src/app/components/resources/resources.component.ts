@@ -194,12 +194,12 @@ export class ResourcesComponent implements OnDestroy {
 
     public async editQRCode(document: Document) {
 
-        this.initModal(document, QrCodeEditorModalComponent, MenuContext.QR_CODE_EDITOR)
+        await this.openModal(document, QrCodeEditorModalComponent, MenuContext.QR_CODE_EDITOR);
     }
 
     public async showHistory(document: Document) {
         
-        this.initModal(document, ChangesHistoryModalComponent, MenuContext.HISTORY_MODAL)
+        await this.openModal(document, ChangesHistoryModalComponent, MenuContext.HISTORY_MODAL);
     }
 
 
@@ -441,12 +441,13 @@ export class ResourcesComponent implements OnDestroy {
         }
     }
 
-    private async initModal(document: Document, component, menuContext){
+
+    private async openModal(document: Document, componentClass: any, menuContext: MenuContext) {
 
         try {
             this.menuService.setContext(menuContext);
             const modalRef: NgbModalRef = this.modalService.open(
-                component,
+                componentClass,
                 { animation: false, backdrop: 'static', keyboard: false}
             );
             modalRef.componentInstance.document = document;

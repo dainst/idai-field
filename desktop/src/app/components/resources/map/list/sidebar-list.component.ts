@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { to } from 'tsfun';
 import { FieldDocument } from 'idai-field-core';
 import { ResourcesComponent } from '../../resources.component';
@@ -12,7 +13,7 @@ import { MenuContext } from '../../../../services/menu-context';
 import { Menus } from '../../../../services/menus';
 import { ComponentHelpers } from '../../../component-helpers';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
     selector: 'sidebar-list',

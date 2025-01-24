@@ -50,6 +50,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (!this.scrollTargetField) this.focusFirstInputElement();
     }
 
+    
     ngOnChanges() {
         
         if (isUndefinedOrEmpty(this.originalGroups)) return;

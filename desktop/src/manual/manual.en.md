@@ -877,7 +877,11 @@ from the current selection:
 
 ## Export
 
-Use the export button on the far right of the toolbar to export the currently displayed matrix as a file. You can choose between two different file formats:
+Use the export button on the far right of the toolbar to export the currently displayed matrix as a file.
+
+<p align="center"><img src="images/en/matrix/export_matrix.png" alt="Export button"/></p>
+
+You can choose between two different file formats:
 
 * *Dot (Graphviz)*: A format for describing graphs that can be read by the open source software Graphviz, among others. (File extension *gv*)
 * *SVG*: A format for displaying vector graphics. (File extension *svg*)

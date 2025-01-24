@@ -900,7 +900,11 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
 ## Export
 
-Verwenden Sie den Export-Button ganz rechts in der Toolbar, um die aktuell dargestellte Matrix als Datei zu exportieren. Sie können dabei zwischen zwei verschiedenen Dateiformaten wählen:
+Verwenden Sie den Export-Button ganz rechts in der Toolbar, um die aktuell dargestellte Matrix als Datei zu exportieren.
+
+<p align="center"><img src="images/de/matrix/export_matrix.png" alt="Export-Button"/></p>
+
+Sie können dabei zwischen zwei verschiedenen Dateiformaten wählen:
 
 * *Dot (Graphviz)*: Ein Format zur Beschreibung von Graphen, das u. a. von der OpenSource-Software Graphviz eingelesen werden kann. (Dateiendung *gv*)
 * *SVG*: Ein Format zur Darstellung von Vektorgrafiken. (Dateiendung *svg*)

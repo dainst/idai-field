@@ -67,7 +67,7 @@ export module GeojsonParser {
 
         const docs: Array<Document> = [];
         for (let feature of content.features) {
-            const document: any = makeDoc(feature);
+            const document: any = createDocument(feature);
             docs.push(document);
         }
         return docs;
@@ -107,30 +107,30 @@ export module GeojsonParser {
         if (!feature.properties['identifier']) return [ParserErrors.MISSING_IDENTIFIER];
         if (typeof feature.properties['identifier'] !== 'string') return [ParserErrors.WRONG_IDENTIFIER_FORMAT];
 
-        if (feature.type === undefined) return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
-        if (feature.type !== 'Feature') return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
-
-        if (feature.geometry && feature.geometry.type
-            && supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
-
-            return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
+        if (feature.type === undefined) {
+            return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
+        } else if (feature.type !== 'Feature') {
+            return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
+        } else if (feature.geometry && feature.geometry.type
+                && supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
+            return [
+                ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT,
+                'geometry type "' + feature.geometry.type + '" not supported.'
+            ];
         }
     }
 
 
-    function makeDoc(feature: any): any {
+    function createDocument(feature: any): any {
 
-        const resource = {
+        const resource: any = {
             identifier: feature.properties['identifier'],
             geometry: feature.geometry
         };
 
-        if (feature.properties['shortDescription']) {
-            (resource as any)['shortDescription'] = feature.properties['shortDescription'];
-        }
-        if (feature.properties['gazId']) (resource as any)['gazId'] = feature.properties['gazId'];
-        if (feature.properties['id']) (resource as any)['id'] = feature.properties['id'];
+        if (feature.properties['gazId']) resource.gazId = feature.properties['gazId'];
+        if (feature.properties['id']) resource.id = feature.properties['id'];
 
-        return { resource: resource }
+        return { resource: resource };
     }
 }

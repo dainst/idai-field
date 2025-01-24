@@ -10,6 +10,8 @@
      class="circular-button add-relation"
      [class.with-margin]="relations[relationDefinition.name]?.length > 0"
      type="button"
-     (click)="createRelation()">+</div>
+     (click)="createRelation()">
+     <span class="mdi mdi-plus"></span>
+</div>
 <div *ngIf="!isPlusButtonAvailable() && relations[relationDefinition.name]?.length > 1"
      class="relation-picker-group-space"></div>

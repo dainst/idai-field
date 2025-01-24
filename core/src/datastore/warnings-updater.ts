@@ -35,7 +35,7 @@ export module WarningsUpdater {
      */
     export function updateIndexIndependentWarnings(document: Document, projectConfiguration: ProjectConfiguration) {
 
-        if (document.resource.category === 'Configuration') return;
+        if (document.resource.category === 'Configuration' || document.project) return;
 
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
 
@@ -58,7 +58,7 @@ export module WarningsUpdater {
                                                        updateAll: boolean = false) {
 
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-        if (!category) return;
+        if (!category || document.project) return;
 
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);

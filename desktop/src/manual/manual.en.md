@@ -774,6 +774,19 @@ Use the menu option "Project configuration" ➝ "Export configuration..." to sav
 The file can then be imported again via the menu option "Project configuration" ➝ "Import configuration..." in order to transfer the configuration to another project or restore the saved configuration state in the same project.
 
 
+## JSON export API
+
+The project configuration can be retrieved in JSON format via an API endpoint. The endpoint is available via the following URL when the application is open:
+
+http://localhost:3000/configuration/PROJECT
+
+Replace "PROJECT" with the name of the project whose configuration you want to access.
+
+When accessing the API endpoint, the password that is entered as "Your password" in the section "Synchronization" of the menu "Settings" must be entered. The password is transmitted via *Basic Auth*; when the URL is entered in the browser, an input dialog appears. It is not necessary to enter the user name, the corresponding field can remain empty.
+
+Please note that the JSON output of the API endpoint **cannot** be imported via the menu option "Import configuration...". Use the menu option "Export configuration..." to obtain a configuration file suitable for this purpose.
+
+
 <hr>
 
 

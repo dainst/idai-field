@@ -787,6 +787,19 @@ Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren.
 Über die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." kann die Datei anschließend wieder importiert werden, um die Konfiguration in ein anderes Projekt zu übernehmen oder den gespeicherten Stand der Konfiguration im gleichen Projekt wiederherzustellen.
 
 
+## JSON-Export-API
+
+Über einen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Der Endpunkt ist bei geöffneter Anwendung über die folgende URL verfügbar:
+
+http://localhost:3000/configuration/PROJECT
+
+Ersetzen Sie "PROJECT" mit dem Namen des Projekts, auf dessen Konfiguration Sie zugreifen möchten.
+
+Beim Zugriff auf den API-Endpunkt muss dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe des Passworts erfoglt per *Basic Auth*, beim Aufruf im Browser erscheint dazu ein Eingabefenster. Die Eingabe des Usernamens ist nicht erforderlich, das entsprechende Feld kann leer bleiben.
+
+Bitte beachten Sie, dass die JSON-Ausgabe des API-Endpunkts **nicht** über die Menüoption "Konfiguration importieren..." eingelesen werden kann. Verwenden Sie die Menüoption "Konfiguration exportieren...", um eine für diesen Zweck geeignete Konfigurationsdatei zu erhalten.
+
+
 <hr>
 
 

@@ -76,13 +76,37 @@
       }
     }
 
+    h1, h2, h3, h4, h5 {
+      margin-top: 25px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
     p[align=center] + h1,
     p[align=center] + h2,
     p[align=center] + h3,
-    p[align=center] + h4
+    p[align=center] + h4,
     p[align=center] + h5 {
       margin-top: 35px;
-    } 
+    }
+
+    hr + h1,
+    hr + h2,
+    hr + h3,
+    hr + h4,
+    hr + h5 {
+      margin-top: 0;
+    }
+
+    hr {
+      margin: 40px 0;
+    }
+
+    p[align=center] + hr {
+      margin-top: 50px;
+    }
 
     pre {
       background-color: #e9ecef;

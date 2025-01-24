@@ -875,6 +875,14 @@ from the current selection:
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
 
 
+## Export
+
+Use the export button on the far right of the toolbar to export the currently displayed matrix as a file. You can choose between two different file formats:
+
+* *Dot (Graphviz)*: A format for describing graphs that can be read by the open source software Graphviz, among others. (File extension *gv*)
+* *SVG*: A format for displaying vector graphics. (File extension *svg*)
+
+
 <hr>
 
 

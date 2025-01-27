@@ -1,13 +1,16 @@
 import { Component} from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from 'idai-field-core';
+import { Menus } from '../../services/menus';
+// import { MenuContext } from '../../services/menu-context';
 
 
 @Component({
-    selector: 'changes-history-modal',
-    imports: [CommonModule],
-    templateUrl: './changes-history-modal.html'
+    templateUrl: './changes-history-modal.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    },
+    standalone: false
 })
 /**  
  * @author Nicolas Antunes  
@@ -20,24 +23,21 @@ export class ChangesHistoryModalComponent {
     public toggledDate: boolean;
     public toggledUser: boolean;
 
+    
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal, private menus: Menus
+    ) {}
+
+    public closeModal = () => this.activeModal.close();
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.escapeKeyPressed) {
-            this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape') {
+            this.closeModal();
         }        
     }
-
-
-    public async onKeyUp(event: KeyboardEvent) {
-
-        if (event.key === 'Escape') this.escapeKeyPressed = false;
-    }
-
-
+    
     public async initialize() {
 
         this.sortDownBy('date');

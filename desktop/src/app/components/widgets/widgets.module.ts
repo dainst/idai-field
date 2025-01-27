@@ -30,7 +30,8 @@ import { DefaultFieldViewComponent } from './document-info/fields-view/default-f
 import { UrlFieldViewComponent } from './document-info/fields-view/url-field-view.component';
 import { SearchableSelectComponent } from './searchable-select.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
-
+import { CommonModule } from '@angular/common';
+import { ChangesHistoryModalComponent } from './changes-history-modal.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.c
         DragDropModule,
         NgSelectModule,
         ScrollingModule,
+        CommonModule
     ],
     declarations: [
         DocumentPickerComponent,
@@ -61,6 +63,7 @@ import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.c
         CategoryIconComponent,
         PagingButtonsComponent,
         EditSaveDialogComponent,
+        ChangesHistoryModalComponent,
         LanguagesListComponent,
         QrCodeScannerModalComponent,
         DeletionInProgressModalComponent,

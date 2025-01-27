@@ -2,14 +2,23 @@ defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
   alias FieldPublication.CouchService
-  alias FieldPublication.OpenSearchService
   alias FieldPublication.Projects
+  alias FieldPublication.Publications.Search
 
   alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
     Publication,
     Base
   }
+
+  @moduledoc """
+  This module contains functions to retrieve, create, update and list publications within the
+  FieldPublication system.
+
+  This primarily concerns the publication metadata that resides in the application's core
+  database. If you want to access the publications' actual research data use the respective modules,
+  see `FieldPublication.Publications.Data` and `FieldPublication.Publications.Search`.
+  """
 
   @doc """
   Initializes a new publication based on some user input.
@@ -19,10 +28,9 @@ defmodule FieldPublication.Publications do
         source_project_name: source_project_name,
         project_name: project_name,
         delete_existing_publication: delete_existing,
-        drafted_by: drafted_by
+        drafted_by: drafted_by,
+        draft_date: draft_date
       }) do
-    draft_date = Date.utc_today()
-
     changeset =
       %Publication{
         project_name: project_name,
@@ -60,7 +68,13 @@ defmodule FieldPublication.Publications do
   end
 
   def get(project_name, draft_date) when is_binary(draft_date) and is_binary(project_name) do
-    get(project_name, Date.from_iso8601!(draft_date))
+    case Date.from_iso8601(draft_date) do
+      {:ok, %Date{} = parsed} ->
+        get(project_name, parsed)
+
+      _ ->
+        {:error, :invalid_date}
+    end
   end
 
   def get(project_name, %Date{} = draft_date) when is_binary(project_name) do
@@ -263,7 +277,7 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.hierarchy_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication),
-         {:ok, %{status: 200}} <- OpenSearchService.initialize_publication_indices(publication) do
+         {:ok, %{status: 200}} <- Search.initialize_search_indices(publication) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(publication, :_rev, rev)}
     else
@@ -299,7 +313,8 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_hierarchy_doc(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_database(database) do
+           CouchService.delete_database(database),
+         :ok <- Search.delete_search_indices(publication) do
       {:ok, :deleted}
     else
       error ->
@@ -343,7 +358,7 @@ defmodule FieldPublication.Publications do
     "#{project_key}_#{draft_date}_task"
   end
 
-  def get_doc_id(publication) do
+  def get_doc_id(%Publication{} = publication) do
     Base.construct_doc_id(publication, Publication)
   end
 end

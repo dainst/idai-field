@@ -1,7 +1,7 @@
 import { Map } from 'tsfun';
 import { IndexDefinition } from './index/constraint-index';
-import { Query } from './model/query';
-import { Resource } from './model/resource';
+import { Query } from './model/datastore/query';
+import { Resource } from './model/document/resource';
 
 
 export const childrenOf = (id: Resource.Id): Query => ({
@@ -37,6 +37,8 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'outlierValues:contain': { path: 'warnings.outliers.values', pathArray: ['warnings', 'outliers', 'values'], type: 'contain' },
     'missingRelationTargets:exist': { path: 'warnings.missingRelationTargets', pathArray: ['warnings', 'missingRelationTargets'], type: 'exist' },
     'missingRelationTargetIds:contain': { path: 'warnings.missingRelationTargets.targetIds', pathArray: ['warnings', 'missingRelationTargets', 'targetIds'], type: 'contain' },
+    'invalidRelationTargets:exist': { path: 'warnings.invalidRelationTargets', pathArray: ['warnings', 'invalidRelationTargets'], type: 'exist' },
+    'invalidRelationTargetIds:contain': { path: 'warnings.invalidRelationTargets.targetIds', pathArray: ['warnings', 'invalidRelationTargets', 'targetIds'], type: 'contain' },
     'missingIdentifierPrefix:exist': { path: 'warnings.missingIdentifierPrefix', pathArray: ['warnings', 'missingIdentifierPrefix'], type: 'exist' },
     'nonUniqueIdentifier:exist': { path: 'warnings.nonUniqueIdentifier', pathArray: ['warnings', 'nonUniqueIdentifier'], type: 'exist' },
     'resourceLimitExceeded:exist': { path: 'warnings.resourceLimitExceeded', pathArray: ['warnings', 'resourceLimitExceeded'], type: 'exist' },

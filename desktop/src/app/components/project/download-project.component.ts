@@ -14,8 +14,8 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
-const address = typeof window !== 'undefined' ? window.require('address') : require('address');
+const PouchDB = window.require('pouchdb-browser');
+const address = window.require('address');
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
@@ -24,7 +24,8 @@ const CREDENTIALS_TIMER_INTERVAL: number = 500;
     templateUrl: './download-project.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

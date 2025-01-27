@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h5 *ngIf="isNew" i18n="@@docedit.createEntry">Eintrag anlegen</h5>
+    <h5 *ngIf="!isNew" i18n="@@docedit.editEntry">Eintrag bearbeiten</h5>
+</div>
+
+<div *ngIf="entry" class="modal-body bg-light literature-entry-modal-body">
+    <div class="mb-3">
+        <label i18n="@@docedit.forms.literature.quotation">Literaturzitat:</label>
+        <input [(ngModel)]="entry.quotation" class="form-control" name="quotation" type="text">
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label i18n="@@docedit.forms.literature.zenonId">Zenon-ID:</label>
+            <input [(ngModel)]="entry.zenonId" class="form-control" name="zenonId" type="text">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label i18n="@@docedit.forms.literature.doi">DOI:</label>
+            <input [(ngModel)]="entry.doi" class="form-control" name="doi" type="text">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label i18n="@@docedit.forms.literature.page">Seite:</label>
+            <input [(ngModel)]="entry.page" class="form-control" name="page" type="text">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label i18n="@@docedit.forms.literature.figure">Abbildung:</label>
+            <input [(ngModel)]="entry.figure" class="form-control" name="figure" type="text">
+        </div>
+    </div>
+</div>
+
+<div *ngIf="entry" class="modal-footer">
+    <button id="confirm-button" class="btn btn-primary"
+            [disabled]="!validate()"
+            (click)="confirm()">
+        <span i18n="@@buttons.ok">OK</span>
+    </button>
+    <div id="cancel-button" class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

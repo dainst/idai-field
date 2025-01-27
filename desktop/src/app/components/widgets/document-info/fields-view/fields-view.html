@@ -1,6 +1,6 @@
 <div *ngFor="let group of groups" class="card">
-	<div class="card-header">
-		<button class="btn btn-block" (click)="toggleGroupSection(group)">{{getGroupLabel(group)}}</button>
+	<div class="card-header d-grid">
+		<button class="btn" (click)="toggleGroupSection(group)">{{getGroupLabel(group)}}</button>
 	</div>
 	<div *ngIf="showGroupSection(group.name)" class="collapse show">
 		<div class="card-body">

@@ -32,7 +32,8 @@ type GridListSection = 'documents'|'linkedDocuments';
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

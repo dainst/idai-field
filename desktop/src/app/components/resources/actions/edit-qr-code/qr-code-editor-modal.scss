@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 #qr-code-editor-modal-body {
   height: 412x;
   text-align: center;
@@ -39,7 +41,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
       user-select: none;
-      background-color: white;
+      color: black;
+      background-color: white !important;
     }
   }
 
@@ -70,13 +73,13 @@
       color: $primary-button-color;
   
       &:hover {
-        background: darken(white, 5%)
+        background: color.adjust(white, $lightness: -5%);
       }
     }
 
     #generate-qr-code-button {
       border-bottom-style: solid;
-      border-bottom-color: lighten($primary-button-color, 33%);
+      border-bottom-color: color.adjust($primary-button-color, $lightness: 33%);
     }
   }
 }
@@ -217,4 +220,4 @@
       }
     }
   }
-} 
+}

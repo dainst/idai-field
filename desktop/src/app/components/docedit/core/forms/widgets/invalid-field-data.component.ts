@@ -4,7 +4,8 @@ import { Field, FieldsViewField, Resource, Labels, InvalidDataUtil } from 'idai-
 
 @Component({
     selector: 'invalid-field-data',
-    templateUrl: './invalid-field-data.html'
+    templateUrl: './invalid-field-data.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -12,7 +12,7 @@
             (click)="applyingChanges || !isChanged() || confirm()">
         <span class="button-label" i18n="@@buttons.ok">OK</span>
     </button>
-    <button class="btn btn-primary btn-square"
+    <button id="cancel-button" class="btn btn-primary btn-square"
             [class.disabled]="applyingChanges"
             (click)="applyingChanges || cancel()">
         <span class="mdi mdi-close"></span>
@@ -21,8 +21,8 @@
 
 <div class="modal-body configuration-editor-modal-body category-editor-modal-body">
     <div class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.categoryLabel">
-            Kategoriebezeichnung
+        <div class="configuration-editor-section-title" i18n="@@configuration.label">
+            Anzeigename
         </div>
         <multi-language-input [translations]="clonedLabel"
             [defaultTranslations]="category.defaultLabel"
@@ -113,7 +113,7 @@
                [class.disabled]="!isScanCodeUsageActivated()"
                i18n="@@configuration.qrCodes.printedFields">Zu druckende Felder:</label>
         <div *ngFor="let index of [0, 1, 2]">
-            <div *ngIf="printedFields.length >= index" class="form-group row">
+            <div *ngIf="printedFields.length >= index" class="row mb-3">
                 <div class="col-md-9"
                      ngbTooltip="{{getTooltip('printedField', index)}}"
                      container="body">

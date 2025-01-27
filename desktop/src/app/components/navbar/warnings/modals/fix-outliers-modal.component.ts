@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { equal, flatten, isArray, isObject, isString, set, Map } from 'tsfun';
+import { equal, flatten, isArray, isObject, isString, set } from 'tsfun';
 import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
      Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
@@ -12,7 +12,8 @@ import { AffectedDocument } from '../affected-document';
     templateUrl: './fix-outliers-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

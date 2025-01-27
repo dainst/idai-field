@@ -14,11 +14,11 @@ describe('languages', () => {
         it: { code: 'it', label: 'IT', isMainLanguage: true },
         fr: { code: 'fr', label: 'FR', isMainLanguage: false },
         uk: { code: 'uk', label: 'UK', isMainLanguage: false },
-        es: { code: 'es', label: 'ES', isMainLanguage: false },
+        es: { code: 'es', label: 'ES', isMainLanguage: false }
     };
     
 
-    it('get field languages for i18n string', () => {
+    test('get field languages for i18n string', () => {
 
         const projectLanguages: string[] = ['de', 'en', 'fr'];
         const settingsLanguages: string[] = ['en', 'it', 'es', 'de'];
@@ -32,7 +32,7 @@ describe('languages', () => {
     });
 
 
-    it('get field languages for string', () => {
+    test('get field languages for string', () => {
 
         const projectLanguages: string[] = ['de', 'en', 'fr'];
         const settingsLanguages: string[] = ['en', 'it', 'es', 'de'];
@@ -46,7 +46,7 @@ describe('languages', () => {
     });
 
 
-    it('get field languages for undefined value', () => {
+    test('get field languages for undefined value', () => {
 
         const projectLanguages: string[] = ['de', 'en', 'fr'];
         const settingsLanguages: string[] = ['en', 'it', 'es', 'de'];
@@ -59,7 +59,7 @@ describe('languages', () => {
     });
 
 
-    it('get field languages for multiple documents', () => {
+    test('get field languages for multiple documents', () => {
 
         const projectLanguages: string[] = ['de', 'en', 'fr'];
         const settingsLanguages: string[] = ['en', 'it', 'es', 'de'];
@@ -77,7 +77,7 @@ describe('languages', () => {
     });
 
 
-    it('get field languages for multiple documents containing string values', () => {
+    test('get field languages for multiple documents containing string values', () => {
 
         const projectLanguages: string[] = ['de', 'en', 'fr'];
         const settingsLanguages: string[] = ['en', 'it', 'es', 'de'];
@@ -95,7 +95,7 @@ describe('languages', () => {
     });
 
 
-    it('get unselected languages', () => {
+    test('get unselected languages', () => {
 
         const selectedLanguages: string[] = ['de', 'en', 'fr'];
         const unselectedLanguages: Map<Language> = Languages.getUnselectedLanguages(languages, selectedLanguages);

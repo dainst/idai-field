@@ -39,16 +39,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-group-append">
-                    <button class="btn btn-danger"
-                            (click)="deleteSubfield(subfield)">
-                        <span class="mdi mdi-delete"></span>
-                    </button>
-                    <button class="btn btn-info edit-subfield-button"
-                            (click)="editSubfield(subfield)">
-                        <span class="mdi mdi-pencil"></span>
-                    </button>
-                </div>
+                <button class="btn btn-danger"
+                        (click)="deleteSubfield(subfield)">
+                    <span class="mdi mdi-delete"></span>
+                </button>
+                <button class="btn btn-info edit-subfield-button"
+                        (click)="editSubfield(subfield)">
+                    <span class="mdi mdi-pencil"></span>
+                </button>
             </div>
             <div *cdkDragPreview class="subfield-drag-preview subfield form-control">
                 <div>
@@ -66,12 +64,10 @@
                type="text"
                placeholder="{{newSubfieldInputPlaceholder}}"
                class="form-control">
-        <div class="input-group-append">
-            <button id="create-subfield-button" class="btn btn-success" type="button"
-                    [disabled]="!isValidSubfieldName(newSubfieldName)"
-                    (click)="createSubfield()">
-                <span class="mdi mdi-plus"></span>
-            </button>
-        </div>
+        <button id="create-subfield-button" class="btn btn-success" type="button"
+                [disabled]="!isValidSubfieldName(newSubfieldName)"
+                (click)="createSubfield()">
+            <span class="mdi mdi-plus"></span>
+        </button>
     </div>
 </div>

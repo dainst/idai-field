@@ -7,7 +7,8 @@ import { Field } from 'idai-field-core';
     templateUrl: './delete-field-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -20,6 +21,9 @@ export class DeleteFieldModalComponent {
     constructor(public activeModal: NgbActiveModal) {}
 
 
+    public isDeletionAllowed = () => !this.field['inverse'];
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
@@ -28,7 +32,7 @@ export class DeleteFieldModalComponent {
 
     public confirmDeletion() {
 
-        this.activeModal.close();
+        if (this.isDeletionAllowed()) this.activeModal.close();
     }
 
 

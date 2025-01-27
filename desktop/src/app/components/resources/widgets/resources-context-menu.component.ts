@@ -13,7 +13,8 @@ export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit
 
 @Component({
     selector: 'resources-context-menu',
-    templateUrl: './resources-context-menu.html'
+    templateUrl: './resources-context-menu.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

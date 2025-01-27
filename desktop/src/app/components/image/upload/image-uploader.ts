@@ -18,7 +18,7 @@ import { createDisplayVariant } from '../../../services/imagestore/create-displa
 import { ImagesState } from '../overview/view/images-state';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 
-const path = typeof window !== 'undefined' ? window.require('path') : require('path');
+const path = window.require('path');
 
 
 export interface ImageUploadResult {
@@ -70,7 +70,8 @@ export class ImageUploader {
         const imageFilePaths: string[] = filePaths.filter(filePath =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
         if (imageFilePaths.length) {
-            const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
+            const metadata: ImageMetadata|undefined
+                = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
             if (!metadata) return uploadResult;
 
             const menuContext: MenuContext = this.menuService.getContext();

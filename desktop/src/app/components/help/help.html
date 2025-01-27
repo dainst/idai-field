@@ -1,18 +1,36 @@
 <div #help class="help row" (scroll)="updateActiveChapter()">
-
     <div class="col">
-
         <div class="row">
             <div id="table-of-contents-placeholder" class="col-md-2"></div>
             <div class="col-md-1"></div>
-            <ul id="table-of-contents" class="col-md-2 nav flex-column">
-                <li *ngFor="let chapter of chapters" class="nav nav-pills flex-column"
-                    (click)="scrollToChapter(chapter)">
-                    <a class="nav-link" [class.active]="chapter === activeChapter" href="javascript: void(0);">
-                        {{chapter.label}}
-                    </a>
-                </li>
-            </ul>
+            <div id="table-of-contents" class="col-md-2 nav flex-column">
+                <div id="search-container">
+                    <input class="form-control"
+                            placeholder="Suchen..."
+                            i18n-placeholder="@@widgets.searchBar.placeholder"
+                            (input)="onSearchInputKeyUp($event, $event.target.value)">
+                    <div class="btn-group-vertical">
+                        <div class="btn btn-primary browse-search-results-button"
+                             [class.disabled]="!hasSearchResults"
+                             (click)="scrollToPreviousSearchResult()">
+                            <span class="mdi mdi-arrow-up"></span>
+                        </div>
+                        <div class="btn btn-primary browse-search-results-button"
+                             [class.disabled]="!hasSearchResults"
+                             (click)="scrollToNextSearchResult()">
+                            <span class="mdi mdi-arrow-down"></span>
+                        </div>
+                    </div>
+                </div>
+                <ul>
+                    <li *ngFor="let chapter of chapters" class="nav nav-pills flex-column"
+                        (click)="scrollToChapter(chapter)">
+                        <a class="nav-link" [class.active]="chapter === activeChapter" href="javascript: void(0);">
+                            {{chapter.label}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
             <div id="help-container"
                  class="col-md-8"
@@ -20,6 +38,5 @@
                  [innerHtml]="html">
             </div>
         </div>
-
     </div>
 </div>

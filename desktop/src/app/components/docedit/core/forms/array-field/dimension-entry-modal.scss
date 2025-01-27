@@ -1,0 +1,40 @@
+/**
+ * @author Thomas Kleinke
+ */
+ .dimension-entry-modal-body {
+  .input-unit-select {
+    position: relative;
+    left: 4px;
+  }
+
+  .input-unit-select,
+  .measurement-position-select {
+    width: unset;
+  }
+
+  .value-inputs-container {
+    height: 33px;
+
+    .value-input,
+    .range-end-input {
+      width: 120px;
+    }
+
+    .value-separator {
+      position: relative;
+      top: 2px;
+      margin: 0 7px;
+      user-select: none;
+    }
+  }
+
+  .measured-by-label {
+    position: relative;
+    bottom: 1px;
+    margin-bottom: 0;
+  }
+
+  .form-check {
+    padding-left: 0;
+  }
+}

@@ -12,7 +12,8 @@ const DEFAULT_PADDING: number = 10;
 
 @Component({
     selector: 'map',
-    template: '<div id="map-container"></div>'
+    template: '<div id="map-container"></div>',
+    standalone: false
 })
 
 /**

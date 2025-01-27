@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="settings && syncTarget" id="synchronization-modal" class="modal-body">
-    <div class="form-group">
+    <div class="mb-3">
         <label for="sync-target-address-input"
                 class="control-label col-form-label"
                 i18n="@@settings.synchronization.address">Adresse</label>
@@ -23,7 +23,7 @@
     </div>
 
     <div id="synchronization-slider" class="row">
-        <div class="col-auto mr-auto">
+        <div class="col-auto me-auto">
             <span i18n="@@settings.synchronization.activate">
                     Synchronisation aktivieren
             </span>
@@ -39,7 +39,7 @@
     </div>
 
     <div id="thumbs-synchronization-slider" class="row">
-        <div class="col-auto mr-auto">
+        <div class="col-auto me-auto">
             <span i18n="@@settings.synchronization.thumbnailImageFiles"
                     class="image-syncing-option-label"
                     [class.disabled]="!syncTarget.isSyncActive">
@@ -59,7 +59,7 @@
     </div>
 
     <div id="originals-upload-synchronization-slider" class="row">
-        <div class="col-auto mr-auto">
+        <div class="col-auto me-auto">
             <span i18n="@@settings.synchronization.originalImageFilesUpload"
                     class="image-syncing-option-label"
                     [class.disabled]="!syncTarget.isSyncActive">
@@ -79,7 +79,7 @@
     </div>
 
     <div id="originals-download-synchronization-slider" class="row">
-        <div class="col-auto mr-auto">
+        <div class="col-auto me-auto">
             <span i18n="@@settings.synchronization.originalImageFilesDownload"
                     class="image-syncing-option-label"
                     [class.disabled]="!syncTarget.isSyncActive">

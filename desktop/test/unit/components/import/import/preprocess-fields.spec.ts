@@ -3,7 +3,7 @@ import { preprocessFields } from '../../../../../src/app/components/import/impor
 
 describe('preprocessFields', () => {
 
-    it('deletions permitted', () => {
+    test('deletions permitted', () => {
 
         const docs: any = [{ resource: { a: null, relations: {}, category: 'O' } }];
         preprocessFields(docs, { permitDeletions: true});
@@ -11,7 +11,7 @@ describe('preprocessFields', () => {
     });
 
 
-    it('deletions not permitted', () => {
+    test('deletions not permitted', () => {
 
         const docs: any = [{ resource: { a: null, relations: {}, category: 'O' } }];
         preprocessFields(docs, { permitDeletions: false });

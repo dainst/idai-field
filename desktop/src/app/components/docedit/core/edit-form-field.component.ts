@@ -6,7 +6,8 @@ import { Language } from '../../../services/languages';
 
 @Component({
     selector: 'edit-form-field',
-    templateUrl: './edit-form-field.html'
+    templateUrl: './edit-form-field.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { compareVersions } from 'compare-versions';
 import { isArray } from 'tsfun';
 import { ConfigReader, ConfigurationDocument, Document } from 'idai-field-core';
@@ -10,8 +9,8 @@ import { Messages } from '../../messages/messages';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { AppState } from '../../../services/app-state';
 
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const PouchDB = window.require('pouchdb-browser');
+const remote = window.require('@electron/remote');
 
 
 @Component({
@@ -19,7 +18,8 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
     templateUrl: './import-configuration-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**
@@ -40,8 +40,7 @@ export class ImportConfigurationModalComponent {
                 private configReader: ConfigReader,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
-                private appState: AppState,
-                private i18n: I18n) {}
+                private appState: AppState) {}
 
 
     public selectProject = (project: string) => this.selectedProject = project;
@@ -69,10 +68,10 @@ export class ImportConfigurationModalComponent {
             {
                 properties: ['openFile'],
                 defaultPath: this.appState.getFolderPath('configurationImport'),
-                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
                 filters: [
                     {
-                        name: this.i18n({ id: 'configuration.importModal.filters.configuration', value: 'Field-Konfiguration' }),
+                        name: $localize `:@@configuration.importModal.filters.configuration:Field-Konfiguration`,
                         extensions: ['configuration']
                     }
                 ]

@@ -1,4 +1,3 @@
-import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Converter } from 'showdown';
 import { HttpReader } from '../../components/import/reader/http-reader';
@@ -12,13 +11,13 @@ export type Chapter = { id: string, label: string };
  */
 export module HelpLoader {
 
-    export async function load(filePath: string, folderPath: string, http: HttpClient, domSanitizer: DomSanitizer) {
+    export async function load(filePath: string, folderPath: string, http: HttpClient) {
 
         const markdown: string = await getMarkdown(filePath, folderPath, http);
         const htmlString: string = createMarkdownConverter().makeHtml(markdown);
 
         return {
-            html: domSanitizer.bypassSecurityTrustHtml(htmlString),
+            html: htmlString,
             chapters: getChapters(htmlString)
         };
     }

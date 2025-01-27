@@ -15,18 +15,18 @@
             <option *ngFor="let catalog of availableCatalogs"
                     value={{catalog.identifier}}>{{catalog.identifier}}</option>
         </select>
-        <div class="type-search-bar float-left">
+        <div class="type-search-bar float-start">
             <search-bar [showFiltersMenu]="false"
                         (onQueryStringChanged)="setQueryString($event)">
             </search-bar>
         </div>
         <paging-buttons *ngIf="totalDocumentCount > 0"
-            [currentPage]="getCurrentPage()"
-            [pageCount]="getPageCount()"
-            [canTurnPage]="canTurnPage()"
-            [canTurnPageBack]="canTurnPageBack()"
-            (onTurnPage)="turnPage()"
-            (onTurnPageBack)="turnPageBack()">
+                        [currentPage]="getCurrentPage()"
+                        [pageCount]="getPageCount()"
+                        [canTurnPage]="canTurnPage()"
+                        [canTurnPageBack]="canTurnPageBack()"
+                        (onTurnPage)="turnPage()"
+                        (onTurnPageBack)="turnPageBack()">
         </paging-buttons>
         <button id="close-button" type="button" class="btn btn-primary btn-square"
                 (click)="activeModal.dismiss('cancel')">
@@ -36,11 +36,10 @@
 
     <div class="modal-body">
         <div *ngFor="let typeDocumentWithLinkedImages of typeDocumentsWithLinkedImages">
-            <dai-type-row
-                    [document]="typeDocument(typeDocumentWithLinkedImages)"
-                    [images]="images(typeDocumentWithLinkedImages)"
-                    (onSelect)="activeModal.close(typeDocument(typeDocumentWithLinkedImages))">
-            </dai-type-row>
+            <type-row [document]="typeDocument(typeDocumentWithLinkedImages)"
+                      [images]="images(typeDocumentWithLinkedImages)"
+                      (onSelect)="activeModal.close(typeDocument(typeDocumentWithLinkedImages))">
+            </type-row>
         </div>
     </div>
 </div>

@@ -8,7 +8,8 @@ import { StoragePlaceEditMode } from './storage-place-scanner';
     templateUrl: './scan-storage-place-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

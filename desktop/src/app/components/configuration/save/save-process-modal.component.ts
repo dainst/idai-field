@@ -3,7 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-    templateUrl: './save-process-modal.html'
+    templateUrl: './save-process-modal.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

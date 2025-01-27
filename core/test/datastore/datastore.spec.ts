@@ -1,4 +1,3 @@
-import { DocumentConverter } from '../../src/datastore/document-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
@@ -15,6 +14,7 @@ describe('Datastore', () => {
     let mockdb: any;
     let mockIndexFacade: any;
 
+
     function createMockedDatastore(mockdb: any) {
 
         const forms = [createCategory('Find')];
@@ -29,7 +29,6 @@ describe('Datastore', () => {
             mockdb,
             mockIndexFacade,
             documentCache,
-            new DocumentConverter(projectConfiguration),
             projectConfiguration,
             () => 'username'
         );
@@ -38,7 +37,7 @@ describe('Datastore', () => {
 
     function verifyIsDocument(document) {
 
-        expect(document.resource.identifier).toEqual('');
+        expect(document.resource.id).toBeDefined();
     }
 
 
@@ -288,6 +287,7 @@ describe('Datastore', () => {
                     }
                 }
             ]),
+            Promise.resolve([]),
             Promise.resolve([]),
             Promise.resolve([]),
             Promise.resolve([])

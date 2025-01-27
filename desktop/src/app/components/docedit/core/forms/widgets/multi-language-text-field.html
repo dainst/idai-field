@@ -30,14 +30,14 @@
     <input *ngIf="!multiLine" #inputField [(ngModel)]="selectedText"
         [class.focused]="focused"
         [class.with-tabs]="hasTabs()"
-        (keyup)="onChanges($event.target.value)"
+        (input)="onChanges($event.target.value)"
         (focus)="focused = true"
         (blur)="onBlur()"
         class="form-control">
     <textarea *ngIf="multiLine" #inputField [(ngModel)]="selectedText"
         [class.focused]="focused"
         [class.with-tabs]="hasTabs()"
-        (keyup)="onChanges($event.target.value)"
+        (input)="onChanges($event.target.value)"
         (focus)="focused = true"
         (blur)="onBlur()"
         class="form-control"></textarea>

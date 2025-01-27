@@ -19,7 +19,7 @@ export class DoceditRelationsPage {
 
     public static clickAddRelationForGroupWithIndex(relationName) {
 
-        return click('#edit-form-element-' + relationName + ' .circular-button.add-relation');
+        return click('#edit-form-element-' + relationName.replace(':', '-') + ' .circular-button.add-relation');
     };
 
 
@@ -44,7 +44,7 @@ export class DoceditRelationsPage {
 
     public static async getRelationElementByName(relationName, pickerIndex) {
 
-        const relationPickerGroupElement = await getLocator('#edit-form-element-' + relationName);
+        const relationPickerGroupElement = await getLocator('#edit-form-element-' + relationName.replace(':', '-'));
         return (await relationPickerGroupElement.locator('.relation-picker')).nth(pickerIndex);
     };
 
@@ -53,7 +53,7 @@ export class DoceditRelationsPage {
 
     public static async typeInRelation(relationName, input) {
 
-        await typeIn('#edit-form-element-' + relationName + ' input', input);
+        await typeIn('#edit-form-element-' + relationName.replace(':', '-') + ' input', input);
         return pause(1000);
     };
 }

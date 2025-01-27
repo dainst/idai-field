@@ -1,7 +1,7 @@
 import { getAsynchronousFs } from '../get-asynchronous-fs';
 import { Settings } from './settings';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 /**

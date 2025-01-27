@@ -1,5 +1,5 @@
 import { WarningsUpdater } from '../../src/datastore/warnings-updater';
-import { Warnings } from '../../src/model/warnings';
+import { Warnings } from '../../src/model/document/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 import { CategoryForm } from '../../src/model/configuration/category-form';
@@ -339,7 +339,7 @@ describe('WarningsUpdater', () => {
     });
 
 
-    it('set relation target warnings', async done => {
+    it('set missing relation target warnings', async done => {
 
         const documents = [
             createDocument('1'),
@@ -357,7 +357,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        await WarningsUpdater.updateRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
+        await WarningsUpdater.updateMissingRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
 
         expect(documents[0].warnings?.missingRelationTargets).toEqual({
             relationNames: ['relation2', 'relation3'],
@@ -371,7 +371,7 @@ describe('WarningsUpdater', () => {
     });
 
 
-    it('remove relation target warnings', async done => {
+    it('remove missing relation target warnings', async done => {
 
         const documents = [
             createDocument('1'),
@@ -393,7 +393,7 @@ describe('WarningsUpdater', () => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        await WarningsUpdater.updateRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
+        await WarningsUpdater.updateMissingRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
 
         expect(documents[0].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
@@ -404,7 +404,7 @@ describe('WarningsUpdater', () => {
     });
 
 
-    it('remove relation target warnings in linking resources', async done => {
+    it('remove missing relation target warnings in linking resources', async done => {
 
         const documents = [
             createDocument('1'),
@@ -429,13 +429,125 @@ describe('WarningsUpdater', () => {
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
 
-        await WarningsUpdater.updateRelationTargetWarning(
+        await WarningsUpdater.updateMissingRelationTargetWarning(
             documents[0], mockIndexFacade, mockDocumentCache, mockDatastore, true
         );
 
         expect(documents[1].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargetIds:contain');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('set invalid relation target warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].resource.relations['relation'] = ['2'];
+
+        const mockIndexFacade = getMockIndexFacade();
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockProjectConfiguration = getMockProjectConfiguration(undefined, undefined);
+        mockProjectConfiguration.isAllowedRelationDomainCategory.and.returnValue(false);
+
+        await WarningsUpdater.updateInvalidRelationTargetWarning(
+            documents[0], mockIndexFacade, mockProjectConfiguration, mockDocumentCache
+        );
+
+        expect(documents[0].warnings?.invalidRelationTargets).toEqual({
+            relationNames: ['relation'],
+            targetIds: ['2']
+        });
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargetIds:contain');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('remove invalid relation target warnings', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[0].warnings = Warnings.createDefault();
+        documents[0].warnings.invalidRelationTargets = {
+            relationNames: ['relation'],
+            targetIds: ['2']
+        };
+
+        documents[0].resource.relations['relation'] = ['2'];
+
+        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockProjectConfiguration = getMockProjectConfiguration(undefined, undefined);
+
+        await WarningsUpdater.updateInvalidRelationTargetWarning(
+            documents[0], mockIndexFacade, mockProjectConfiguration, mockDocumentCache
+        );
+
+        expect(documents[0].warnings).toBeUndefined();
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargetIds:contain');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
+
+        done();
+    });
+
+
+    it('remove invalid relation target warnings in linking resources', async done => {
+
+        const documents = [
+            createDocument('1'),
+            createDocument('2')
+        ];
+
+        documents[1].warnings = Warnings.createDefault();
+        documents[1].warnings.invalidRelationTargets = {
+            relationNames: ['relation'],
+            targetIds: ['1']
+        };
+
+        documents[1].resource.relations['relation'] = ['1'];
+
+        const mockIndexFacade = getMockIndexFacade();
+    
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        const mockProjectConfiguration = getMockProjectConfiguration(undefined, undefined);
+
+        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
+        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
+
+        await WarningsUpdater.updateInvalidRelationTargetWarning(
+            documents[0], mockIndexFacade, mockProjectConfiguration, mockDocumentCache, mockDatastore, true
+        );
+
+        expect(documents[1].warnings).toBeUndefined();
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'invalidRelationTargets:exist');
+        expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'invalidRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
         done();
@@ -775,7 +887,7 @@ describe('WarningsUpdater', () => {
             createDocument('1')
         ];
 
-        documents[0].resource.staff = ['Person'];
+        documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
         documents[1].resource.editor = ['outlierValue1'];
         documents[1].resource.dropdown = 'outlierValue2';
@@ -812,6 +924,50 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
 
+        done();
+    });
+
+
+    it('do not set outlier warnings for unselectable values from project field', async done => {
+
+        const categoryDefinition = {
+            name: 'Category',
+            identifierPrefix: 'C',
+            groups: [
+                {
+                    fields: [
+                        {
+                            name: 'editor',
+                            inputType: Field.InputType.CHECKBOXES,
+                            valuelistFromProjectField: 'staff'
+                        }
+                    ]
+                }
+            ]
+        } as any;
+
+        const documents = [
+            createDocument('project', 'Project'),
+            createDocument('1')
+        ];
+
+        documents[0].resource.staff = [{ value: 'Person', selectable: false }];
+
+        documents[1].resource.editor = ['Person'];
+
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        const mockIndexFacade = getMockIndexFacade();
+
+        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+        mockDocumentCache.get.and.callFake(resourceId => {
+            return documents.find(document => document.resource.id === resourceId);
+        });
+
+        await WarningsUpdater.updateOutlierWarning(
+            documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
+        );
+
+        expect(documents[1].warnings).toBeUndefined();
         done();
     });
 
@@ -880,7 +1036,7 @@ describe('WarningsUpdater', () => {
             createDocument('1')
         ];
 
-        documents[0].resource.staff = ['Person'];
+        documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.outliers = {
@@ -954,7 +1110,7 @@ describe('WarningsUpdater', () => {
             createDocument('3')
         ];
 
-        documents[0].resource.staff = ['Person'];
+        documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
         documents[1].warnings = Warnings.createDefault();
         documents[1].warnings.outliers = { fields: { editor: ['outlierValue'] }, values: ['outlierValue'] };

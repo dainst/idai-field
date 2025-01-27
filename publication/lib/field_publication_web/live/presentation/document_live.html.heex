@@ -11,6 +11,9 @@
   />
   <% category = Data.get_field_value(@doc, "category") %>
   <%= cond do
+    @doc == :not_found ->
+      "Document not found in selected publication."
+
     category == "Project" ->
       DocumentComponents.Project.render(%{
         doc: @doc,
@@ -19,17 +22,6 @@
         top_level_docs: @top_level_docs,
         project_map_layers: @project_map_layers
       })
-
-    # category == "Type" ->
-    # TODO
-
-    # category == "TypeCatalogue" ->
-    # TODO
-
-    # category == "Trench" ->
-    # TODO
-
-    # ...
 
     category in @image_categories ->
       DocumentComponents.Image.render(%{

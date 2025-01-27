@@ -1,4 +1,4 @@
-import { ConfigurationDocument } from '../../src/model/configuration-document';
+import { ConfigurationDocument } from '../../src/model/document/configuration-document';
 import { CategoryForm } from '../../src/model/configuration/category-form';
 
 

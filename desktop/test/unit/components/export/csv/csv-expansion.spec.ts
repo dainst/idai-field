@@ -1,7 +1,6 @@
 import { Field, I18N } from 'idai-field-core';
 import { val } from 'tsfun';
 import { CSVExpansion } from '../../../../../src/app/components/export/csv/csv-expansion';
-import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
 
 
 /**
@@ -9,7 +8,7 @@ import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
  */
 describe('CSVExpansion', () => {
 
-    it('expand object', () => {
+    test('expand object', () => {
 
         const result = CSVExpansion.objectExpand(
             [
@@ -20,7 +19,7 @@ describe('CSVExpansion', () => {
                 ]
             ] as any,
             val(['abc.a', 'abc.b']),
-            expandHomogeneousItems(({ a, b }: any) => [a, b ? b : ''], 2)
+            CSVExpansion.expandHomogeneousItems(({ a, b }: any) => [a, b ? b : ''], 2)
             )([{ index: 1, field: { name: 'abc', inputType: 'input' } }]);
 
         expect(result[0]).toEqual(['l', 'abc.a', 'abc.b', 'r']);
@@ -29,7 +28,7 @@ describe('CSVExpansion', () => {
     });
 
 
-    it('expand objectArray', () => {
+    test('expand objectArray', () => {
 
         const result = CSVExpansion.objectArrayExpand(
             [
@@ -42,7 +41,7 @@ describe('CSVExpansion', () => {
             ['de'],
             'b',
             (languages: string[]) => val(val(['abc.0.a'].concat(languages.map(language => 'abc.0.b.' + language)))),
-            (languages: string[]) => expandHomogeneousItems(({ a, b }: any) => {
+            (languages: string[]) => CSVExpansion.expandHomogeneousItems(({ a, b }: any) => {
                 return [a].concat(b ? languages.map(language => b[language]) : []);
             }, 1 + languages.length)
         )([{ index: 1, field: { name: 'abc', inputType: Field.InputType.INPUT } }]);
@@ -53,11 +52,9 @@ describe('CSVExpansion', () => {
     });
 
 
-    it('expandHomogeneousItems', () => {
+    test('expandHomogeneousItems', () => {
 
-        const result =
-            expandHomogeneousItems
-            (({ a, b }: any) => [a, b], 2)
+        const result = CSVExpansion.expandHomogeneousItems(({ a, b }: any) => [a, b], 2)
             (2, 2)
             (['A', 'B', { a: 1, b: 2 }, { a: 3, b: 4 }, 'E']);
 
@@ -65,7 +62,7 @@ describe('CSVExpansion', () => {
     });
 
 
-    it('expand i18n string', () => {
+    test('expand i18n string', () => {
 
         const result = CSVExpansion.i18nStringExpand(
             [
@@ -79,7 +76,7 @@ describe('CSVExpansion', () => {
             ] as any,
             ['de', 'en', 'es'],
             (languages: string[]) => { return (fieldName) => languages.map(language => fieldName + '.' + language) },
-            (languages: string[]) => expandHomogeneousItems(content =>
+            (languages: string[]) => CSVExpansion.expandHomogeneousItems(content =>
                 languages.map(language => {
                     return content === 'G' && language === I18N.UNSPECIFIED_LANGUAGE
                         ? 'G'

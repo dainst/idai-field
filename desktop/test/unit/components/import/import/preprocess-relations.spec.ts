@@ -6,23 +6,23 @@ describe('preprocessRelations', () => {
     const inverseRelationsMap: any = {
         isAfter: 'isBefore',
         isBefore: 'isAfter'
-    }
+    };
 
     const context: any = {
         inverseRelationsMap: inverseRelationsMap
-    }
+    };
 
     const options: any = {
         useIdentifiersInRelations: true
-    }
+    };
 
 
-    it('leave things as they are', () => {
+    test('leave things as they are', () => {
 
         const docs: any[] = [
             { resource: { identifier: 'F1', category: 'Feature', relations: { isAfter: ['F2']}}},
             { resource: { identifier: 'F2', category: 'Feature', relations: { isBefore: ['F1']}}}
-        ]
+        ];
 
         complementInverseRelationsBetweenImportDocs(context, options, docs);
 
@@ -33,12 +33,12 @@ describe('preprocessRelations', () => {
     });
 
 
-    it('complement a relations', () => {
+    test('complement a relations', () => {
 
         const docs: any[] = [
             { resource: { identifier: 'F1', category: 'Feature', relations: { }}},
             { resource: { identifier: 'F2', category: 'Feature', relations: { isBefore: ['F1']}}}
-        ]
+        ];
 
         complementInverseRelationsBetweenImportDocs(context, options, docs);
 
@@ -49,13 +49,13 @@ describe('preprocessRelations', () => {
     });
 
 
-    it('complement a relation and leave one as it is', () => {
+    test('complement a relation and leave one as it is', () => {
 
         const docs: any[] = [
             { resource: { identifier: 'F1', category: 'Feature', relations: { isAfter: ['F2']}}},
             { resource: { identifier: 'F2', category: 'Feature', relations: { isBefore: ['F1']}}},
             { resource: { identifier: 'F3', category: 'Feature', relations: { isAfter: ['F2']}}}
-        ]
+        ];
 
         complementInverseRelationsBetweenImportDocs(context, options, docs);
 

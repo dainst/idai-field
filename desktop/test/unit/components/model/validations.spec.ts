@@ -1,7 +1,6 @@
 import { Field, ProjectConfiguration, Forest } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validations } from '../../../../src/app/model/validations';
-import InputType = Field.InputType;
 
 
 /**
@@ -47,17 +46,18 @@ describe('Validations', () => {
                         { name: 'dimension8', label: 'dimension8', inputType: 'dimension' },
                         { name: 'dimension9', label: 'dimension9', inputType: 'dimension' },
                         { name: 'dimension10', label: 'dimension10', inputType: 'dimension'},
-                        { name: 'dimension11', label: 'dimension11', inputType: 'dimension', inputTypeOptions: { validation: { permissive: true }} },
+                        { name: 'dimension11', label: 'dimension11', inputType: 'dimension',
+                            inputTypeOptions: { validation: { permissive: true }} },
                         { name: 'dimension12', label: 'dimension12', inputType: 'dimension' },
                         { name: 'literature1', label: 'literature1', inputType: 'literature' },
                         { name: 'literature2', label: 'literature2', inputType: 'literature' },
                         { name: 'literature3', label: 'literature3', inputType: 'literature' },
                         { name: 'literature4', label: 'literature4', inputType: 'literature' },
                         { name: 'literature5', label: 'literature5', inputType: 'literature' },
-                        { name: 'period1', label: 'period1', inputType: InputType.DROPDOWNRANGE },
-                        { name: 'period2', label: 'period2', inputType: InputType.DROPDOWNRANGE },
-                        { name: 'period3', label: 'period3', inputType: InputType.DROPDOWNRANGE },
-                        { name: 'period4', label: 'period4', inputType: InputType.DROPDOWNRANGE },
+                        { name: 'period1', label: 'period1', inputType: Field.InputType.DROPDOWNRANGE },
+                        { name: 'period2', label: 'period2', inputType: Field.InputType.DROPDOWNRANGE },
+                        { name: 'period3', label: 'period3', inputType: Field.InputType.DROPDOWNRANGE },
+                        { name: 'period4', label: 'period4', inputType: Field.InputType.DROPDOWNRANGE },
                         {
                             name: 'composite1', label: 'composite1', inputType: 'composite',
                             subfields: [
@@ -162,10 +162,7 @@ describe('Validations', () => {
     });
 
 
-    it('validate defined fields', () => {
-
-        const datastore = jasmine.createSpyObj('datastore', ['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('validate defined fields', () => {
 
         const doc = {
             resource: {
@@ -182,10 +179,7 @@ describe('Validations', () => {
     });
 
 
-    it('validate defined fields - exclude period, periodEnd if dating defined for category', () => {
-
-        const datastore = jasmine.createSpyObj('datastore', ['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('validate defined fields - exclude period, periodEnd if dating defined for category', () => {
 
         const doc = {
             resource: {
@@ -202,10 +196,7 @@ describe('Validations', () => {
     });
 
 
-    it('validate defined fields - do not allow non-relation fields with the same name as relation fields', () => {
-
-        const datastore = jasmine.createSpyObj('datastore', ['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('validate defined fields - do not allow non-relation fields with the same name as relation fields', () => {
 
         const doc = {
             resource: {
@@ -222,10 +213,7 @@ describe('Validations', () => {
     });
 
 
-    it('validate defined fields - detect default image fields as valid', () => {
-
-        const datastore = jasmine.createSpyObj('datastore', ['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('validate defined fields - detect default image fields as valid', () => {
 
         const doc = {
             resource: {
@@ -243,10 +231,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report nothing when omitting optional property', () => {
-
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('should report nothing when omitting optional property', () => {
 
         const doc = {
             resource: {
@@ -257,16 +242,15 @@ describe('Validations', () => {
             }
         };
 
-
         try {
             Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
         } catch (errWithParams) {
-            fail(errWithParams);
+            throw new Error(errWithParams);
         }
     });
 
 
-    it('should report error when omitting mandatory property', () => {
+    test('should report error when omitting mandatory property', () => {
 
         const doc = {
             resource: {
@@ -278,14 +262,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
     });
 
 
-    it('should report error when leaving mandatory property empty', () => {
+    test('should report error when leaving mandatory property empty', () => {
 
         const doc = {
             resource: {
@@ -298,14 +282,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
     });
 
 
-    it('should report invalid numeric field', () => {
+    test('should report invalid numeric field', () => {
 
         const doc = {
             resource: {
@@ -319,14 +303,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
         }
     });
 
 
-    it('should report invalid numeric fields', () => {
+    test('should report invalid numeric fields', () => {
 
         const doc = {
             resource: {
@@ -341,14 +325,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
         }
     });
 
 
-    it('should report only newly entered invalid numeric fields', () => {
+    test('should report only newly entered invalid numeric fields', () => {
 
         const previousVersion: any = {
             resource: {
@@ -377,14 +361,14 @@ describe('Validations', () => {
         try {
             Validations.assertCorrectnessOfNumericalValues(currentVersion, projectConfiguration, true,
                 previousVersion);
-            fail();
+                throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number2, number3']);
         }
     });
 
 
-    it('should report invalid URL field', () => {
+    test('should report invalid URL field', () => {
 
         const doc = {
             resource: {
@@ -398,14 +382,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfUrls(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1']);
         }
     });
 
 
-    it('should report invalid URL fields', () => {
+    test('should report invalid URL fields', () => {
 
         const doc = {
             resource: {
@@ -420,14 +404,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfUrls(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2']);
         }
     });
 
 
-    it('should only report newly entered invalid URL fields', () => {
+    test('should only report newly entered invalid URL fields', () => {
 
         const previousVersion: any = {
             resource: {
@@ -455,14 +439,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfUrls(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url2, url3']);
         }
     });
 
 
-    it('should report invalid dating fields', () => {
+    test('should report invalid dating fields', () => {
 
         const doc = {
             resource: {
@@ -497,7 +481,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDatingValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -510,7 +494,7 @@ describe('Validations', () => {
     });
 
 
-    it('should only report newly entered invalid dating fields', () => {
+    test('should only report newly entered invalid dating fields', () => {
 
         const previousVersion: any = {
             resource: {
@@ -539,7 +523,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDatingValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -552,7 +536,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report invalid dimension fields', async done => {
+    test('should report invalid dimension fields', async () => {
 
         const doc = {
             resource: {
@@ -589,21 +573,21 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDimensionValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
                     ValidationErrors.INVALID_DIMENSION_VALUES,
                     'T',
-                    'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8, dimension9, dimension10, dimension12'
+                    'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8, dimension9, '
+                        + 'dimension10, dimension12'
                 ]
             );
         }
-        done();
     });
 
 
-    it('should only report newly entered invalid dimension fields', async done => {
+    test('should only report newly entered invalid dimension fields', async () => {
 
         const previousVersion: any = {
             resource: {
@@ -631,7 +615,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDimensionValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -641,11 +625,10 @@ describe('Validations', () => {
                 ]
             );
         }
-        done();
     });
 
 
-    it('should report invalid dropdownRange fields', () => {
+    test('should report invalid dropdownRange fields', () => {
 
         const doc = {
             resource: {
@@ -665,7 +648,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfOptionalRangeValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -678,7 +661,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report invalid literature fields', async done => {
+    test('should report invalid literature fields', async () => {
 
         const doc = {
             resource: {
@@ -701,17 +684,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfLiteratureValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4, literature5']
             );
         }
-        done();
     });
 
 
-    it('should report invalid composite fields', async done => {
+    test('should report invalid composite fields', async () => {
 
         const doc = {
             resource: {
@@ -734,17 +716,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfCompositeValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3, composite4, composite5']
             );
         }
-        done();
     });
 
 
-    it('should only report newly entered invalid composite fields', async done => {
+    test('should only report newly entered invalid composite fields', async () => {
 
         const previousVersion: any = {
             resource: {
@@ -772,17 +753,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfCompositeValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3']
             );
         }
-        done();
     });
 
 
-    it('should only report newly entered invalid literature fields', async done => {
+    test('should only report newly entered invalid literature fields', async () => {
 
         const previousVersion: any = {
             resource: {
@@ -810,17 +790,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfLiteratureValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature2, literature3']
             );
         }
-        done();
     });
 
 
-    it('should report incorrect beginning and end dates', () => {
+    test('should report incorrect beginning and end dates', () => {
 
         const correctDocument1 = {
             resource: {
@@ -859,12 +838,12 @@ describe('Validations', () => {
             Validations.assertCorrectnessOfBeginningAndEndDates(correctDocument1);
             Validations.assertCorrectnessOfBeginningAndEndDates(correctDocument2);
         } catch (errWithParams) {
-            fail();
+            throw new Error(errWithParams);
         }
 
         try {
             Validations.assertCorrectnessOfBeginningAndEndDates(incorrectDocument);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE, 'T']
@@ -873,7 +852,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report fields with too many characters', async done => {
+    test('should report fields with too many characters', async () => {
 
         const doc = {
             resource: {
@@ -887,12 +866,11 @@ describe('Validations', () => {
 
         try {
             Validations.assertMaxCharactersRespected(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.MAX_CHARACTERS_EXCEEDED, 'T', 'shortInput', 10]
             );
         }
-        done();
     });
 });

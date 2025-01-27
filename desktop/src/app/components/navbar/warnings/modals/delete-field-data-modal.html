@@ -15,7 +15,7 @@
          ngbTooltip="Nur diese Ressource ist betroffen." 
          i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
          container="body">
-        <div class="col-auto mr-auto">
+        <div class="col-auto me-auto">
             <span i18n="@@navbar.taskbar.deleteFieldData.all">Bei allen Ressourcen dieser Kategorie löschen</span>
         </div>
         <div class="col-auto">
@@ -38,7 +38,7 @@
         </div>
         <div *ngIf="warningType === 'invalidFields'" class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.deleteFieldData.all.info.invalid">
-            Bitte beachten Sie: Durch diese Aktion werden bei <b>{{countAffected}}</b> allen Ressourcen der
+            Bitte beachten Sie: Durch diese Aktion werden bei allen <b>{{countAffected}}</b> Ressourcen der
             Kategorie <b>{{getCategoryLabel()}}</b> sämtliche ungültigen Daten im
             Feld <span [innerHTML]="getFieldLabelHTML()"></span> gelöscht. Gültige Daten bleiben erhalten.
         </div>

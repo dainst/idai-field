@@ -1,5 +1,20 @@
-import { GazetteerProperties, Geojson } from './geojson-parser';
+import { Geojson } from './geojson-parser';
 import { ParserErrors } from './parser-errors';
+
+
+export interface GazetteerProperties {
+
+    prefName: {
+        title: string;
+    };
+    identifier: string;
+    id: string;
+    gazId: string;
+    category: string;
+    geometry: { type: string };
+    parent: string;
+    relations: any;
+}
 
 
 /**

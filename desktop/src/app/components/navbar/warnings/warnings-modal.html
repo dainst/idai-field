@@ -62,13 +62,21 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.multiple">
                             Ungültige Werte im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.single">
                             Fehlende Zielressource der Relation <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length > 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple">
                             Fehlende Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.single">
+                            Ungültige Zielressource der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.multiple">
+                            Ungültige Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
                         </span>
                         <span *ngIf="section.type === 'missingOrInvalidParent'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingOrInvalidParent">
@@ -122,17 +130,27 @@
                             Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length === 1"
                               i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.single">
                             Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden.
                             Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
                             vollständig abgeschlossen.
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length > 1"
                               i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.multiple">
                             Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden.
                             Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
                             vollständig abgeschlossen.
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.info.invalidRelationTargets.single">
+                            Die Kategorie einer als Zielressource der Relation angegebenen Ressource ist keine gültige
+                            Zielkategorie.
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.info.invalidRelationTargets.multiple">
+                            Die Kategorien mehrerer als Zielressourcen der Relation angegebenen Ressourcen sind keine
+                            gültigen Zielkategorien.
                         </span>
                         <span *ngIf="section.type === 'missingOrInvalidParent'"
                               i18n="@@navbar.taskbar.warnings.info.missingOrInvalidParent">
@@ -192,6 +210,13 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="section.type === 'invalidRelationTargets'" class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.invalidRelationTargets">Ungültige Zielressourcen:</b></div>
+                        <div class="data-info-content">
+                            <document-teaser *ngFor="let targetDocument of section.relationTargets"
+                                             [document]="targetDocument"></document-teaser>
+                        </div>
+                    </div>
                     <span *ngIf="section.type === 'conflicts'">
                         <button class="btn btn-primary solve-conflict-button"
                                 (click)="openConflictResolver()">
@@ -200,8 +225,9 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
+                    <span *ngIf="section.type === 'invalidFields' || section.type === 'invalidRelationTargets'
+                            || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
+                            || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
@@ -267,7 +293,8 @@
                                   i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type == 'missingRelationTargets'">
+                    <span *ngIf="section.type === 'missingRelationTargets'
+                            || section.type === 'invalidRelationTargets'">
                         <button class="btn btn-danger clean-up-relation-button"
                                 (click)="openCleanUpRelationModal(section)">
                             <span class="mdi mdi-delete"></span>

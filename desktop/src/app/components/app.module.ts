@@ -1,15 +1,15 @@
-import { DecimalPipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { DecimalPipe, HashLocationStrategy, IMAGE_CONFIG, LocationStrategy, registerLocaleData } from '@angular/common';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeIt from '@angular/common/locales/it';
+import localePt from '@angular/common/locales/pt';
 import localeTr from '@angular/common/locales/tr';
 import localeUk from '@angular/common/locales/uk';
-import { APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
+import { LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
     IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
     ImageStore, ImageSyncService, ConfigurationSerializer } from 'idai-field-core';
@@ -63,11 +63,12 @@ import { ProjectLabelProvider } from '../services/project-label-provider';
 import { AppState } from '../services/app-state';
 
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 registerLocaleData(localeDe, 'de');
 registerLocaleData(localeIt, 'it');
+registerLocaleData(localePt, 'pt');
 registerLocaleData(localeTr, 'tr');
 registerLocaleData(localeUk, 'uk');
 
@@ -80,7 +81,6 @@ registerLocaleData(localeUk, 'uk');
         SettingsModule,
         BrowserModule,
         FormsModule,
-        HttpClientModule,
         NgbModule,
         // NgbModule.forRoot(),
         MessagesModule,
@@ -104,16 +104,15 @@ registerLocaleData(localeUk, 'uk');
         Languages,
         {
             provide: Labels,
-            useFactory: (languages: Languages, projectConfiguration: ProjectConfiguration) => {
-                return new Labels(() => languages.get(), projectConfiguration);
+            useFactory: (languages: Languages) => {
+                return new Labels(() => languages.get());
             },
-            deps: [Languages, ProjectConfiguration]
+            deps: [Languages]
         },
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-        I18n,
         {
             provide: ConfigReader,
             useFactory: () => new ConfigReader()
@@ -139,23 +138,20 @@ registerLocaleData(localeUk, 'uk');
             provide: AppInitializerServiceLocator,
             useFactory: () => new AppInitializerServiceLocator()
         },
-        {
-            provide: APP_INITIALIZER,
-            multi: true,
-            deps: [
-                AppInitializerServiceLocator,
-                SettingsService,
-                PouchdbDatastore,
-                ImageStore,
-                ExpressServer,
-                DocumentCache,
-                ThumbnailGenerator,
-                InitializationProgress,
-                ConfigReader,
-                ConfigLoader
-            ],
-            useFactory: appInitializerFactory,
-        },
+        provideAppInitializer(() => {
+            return appInitializerFactory(
+                inject(AppInitializerServiceLocator),
+                inject(SettingsService),
+                inject(PouchdbDatastore),
+                inject(ImageStore),
+                inject(ExpressServer),
+                inject(DocumentCache),
+                inject(ThumbnailGenerator),
+                inject(InitializationProgress),
+                inject(ConfigReader),
+                inject(ConfigLoader)
+            )();
+        }),
         InitializationProgress,
         {
             provide: Messages,
@@ -219,26 +215,20 @@ registerLocaleData(localeUk, 'uk');
             provide: RelationsManager,
             useFactory: (
                 datastore: Datastore,
-                projectConfiguration: ProjectConfiguration,
+                projectConfiguration: ProjectConfiguration
             ) => new RelationsManager(datastore, projectConfiguration),
             deps: [Datastore, ProjectConfiguration]
         },
         ImageRelationsManager,
         {
             provide: Validator,
-            useFactory: (
-                DocumentDatastore: Datastore,
-                projectConfiguration: ProjectConfiguration) => {
-
-                return new Validator(
-                    projectConfiguration,
-                    (q: Query) => DocumentDatastore.find(q),
-                );
+            useFactory: (DocumentDatastore: Datastore, projectConfiguration: ProjectConfiguration) => {
+                return new Validator(projectConfiguration, (q: Query) => DocumentDatastore.find(q));
             },
             deps: [Datastore, ProjectConfiguration]
         },
         ImportValidator,
-        { provide: MD, useClass: M},
+        { provide: MD, useClass: M },
         {
             provide: SyncService,
             useFactory: (pouchdbDatastore: PouchdbDatastore) => new SyncService(pouchdbDatastore),
@@ -273,7 +263,9 @@ registerLocaleData(localeUk, 'uk');
         MenuModalLauncher,
         ViewModalLauncher,
         ProjectLabelProvider,
-        AppState
+        AppState,
+        { provide: IMAGE_CONFIG, useValue: { disableImageSizeWarning: true, disableImageLazyLoadWarning: true } },
+        provideHttpClient(withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent]
 })

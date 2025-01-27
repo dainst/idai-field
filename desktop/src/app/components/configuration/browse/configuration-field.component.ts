@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
-import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels, ProjectConfiguration,
+    Relation } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -9,7 +10,8 @@ import { getInputTypeLabel } from '../../../util/get-input-type-label';
 
 @Component({
     selector: 'configuration-field',
-    templateUrl: './configuration-field.html'
+    templateUrl: './configuration-field.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -20,6 +22,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     @Input() category: CategoryForm;
     @Input() field: Field;
     @Input() configurationDocument: ConfigurationDocument;
+    @Input() clonedProjectConfiguration: ProjectConfiguration;
     @Input() hidden: boolean;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
@@ -41,16 +44,21 @@ export class ConfigurationFieldComponent implements OnChanges {
                 private settingsProvider: SettingsProvider) {}
 
 
-    public getFieldId = (field: Field) => 'field-' + field.name.replace(':', '-');
+    public getFieldId = () => 'field-' + this.field.name.replace(':', '-');
 
+    public getInputTypeLabel = () => getInputTypeLabel(
+        this.field.inputType, this.utilTranslations
+    );
+    
+    public getCategoryLabel = (categoryName: string) => this.labels.get(
+        this.clonedProjectConfiguration.getCategory(categoryName)
+    );
 
-    ngOnChanges() {
+    public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
+        relationName, this.clonedProjectConfiguration.getRelations()
+    );
 
-        if (!this.category || !this.field) return;
-
-        this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
-        this.updateLabelAndDescription();
-    }
+    public getInverseRelation = () => (this.field as Relation).inverse;
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -63,9 +71,14 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
 
-    public getInputTypeLabel = () => getInputTypeLabel(
-        this.field.inputType, this.utilTranslations
-    );
+
+    ngOnChanges() {
+
+        if (!this.category || !this.field) return;
+
+        this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
+        this.updateLabelAndDescription();
+    }
 
 
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
@@ -73,6 +86,17 @@ export class ConfigurationFieldComponent implements OnChanges {
         return this.configurationDocument.resource
             .forms[this.category.libraryId ?? this.category.name]
             .fields[this.field.name];
+    }
+
+
+    public getRange(): string[] {
+        
+        const range: string[] = (this.field as Relation).range;
+        
+        return range?.filter(categoryName => {
+            const parentCategory = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
+            return !parentCategory || !range.includes(parentCategory.name);
+        });
     }
 
 

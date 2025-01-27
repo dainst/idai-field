@@ -1,31 +1,27 @@
 <div *ngFor="let languageCode of usedLanguages">
     <div class="input-group mb-2">
-        <div class="input-group-prepend">
-            <span class="input-group-text language-label">
-                <label class="col-form-label">{{getLanguageLabel(languageCode)}}</label>
-            </span>
-        </div>
+        <span class="input-group-text language-label">
+            <label class="col-form-label">{{getLanguageLabel(languageCode)}}</label>
+        </span>
         <div class="language-input">
             <input [(ngModel)]="translations[languageCode]"
                    type="text" class="form-control"
                    [disabled]="disabled">
         </div>
-        <div class="input-group-append">
-            <button *ngIf="isDeleteButtonVisible(languageCode)"
-                    class="btn btn-danger"
-                    type="button"
-                    [disabled]="disabled"
-                    (click)="deleteTranslation(languageCode)">
-                <span class="mdi mdi-delete"></span>
-            </button>
-            <button *ngIf="isRestoreButtonVisible(languageCode)"
-                    class="btn btn-primary restore-button"
-                    type="button"
-                    [disabled]="disabled"
-                    (click)="restoreDefaultTranslation(languageCode)">
-                <span class="mdi mdi-restore"></span>
-            </button>
-        </div>
+        <button *ngIf="isDeleteButtonVisible(languageCode)"
+                class="btn btn-danger"
+                type="button"
+                [disabled]="disabled"
+                (click)="deleteTranslation(languageCode)">
+            <span class="mdi mdi-delete"></span>
+        </button>
+        <button *ngIf="isRestoreButtonVisible(languageCode)"
+                class="btn btn-primary restore-button"
+                type="button"
+                [disabled]="disabled"
+                (click)="restoreDefaultTranslation(languageCode)">
+            <span class="mdi mdi-restore"></span>
+        </button>
     </div>
 </div>
 
@@ -36,11 +32,9 @@
         <option *ngFor="let languageCode of unusedLanguages"
                 [value]="languageCode">{{getLanguageLabel(languageCode)}}</option>
     </select>
-    <div class="input-group-append">
-        <button class="btn btn-success" type="button"
-                [disabled]="disabled || !newTranslationLanguage"
-                (click)="addNewTranslation()">
-            <span class="mdi mdi-plus"></span>
-        </button>
-    </div>
+    <button class="btn btn-success" type="button"
+            [disabled]="disabled || !newTranslationLanguage"
+            (click)="addNewTranslation()">
+        <span class="mdi mdi-plus"></span>
+    </button>
 </div>

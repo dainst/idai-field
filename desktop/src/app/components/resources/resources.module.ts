@@ -20,7 +20,6 @@ import { BaseList } from './base-list';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { ListComponent } from './list/list.component';
 import { RowComponent } from './list/row.component';
-import { GeometryViewComponent } from './map/list/geometry-view.component';
 import { SidebarListComponent } from './map/list/sidebar-list.component';
 import { EditableMapComponent } from './map/map/editable-map.component';
 import { LayerMapComponent } from './map/map/layer-map.component';
@@ -56,7 +55,7 @@ import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/sca
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @NgModule({
@@ -73,7 +72,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
     ],
     declarations: [
         ResourcesComponent,
-        GeometryViewComponent,
         MapComponent,
         LayerMapComponent,
         EditableMapComponent,
@@ -113,36 +111,18 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         StoragePlaceScanner,
         {
             provide: NavigationService,
-            useFactory: (projectConfiguration: ProjectConfiguration,
-                         routingService: Routing,
-                         viewFacade: ViewFacade,
-                         messages: Messages) => {
-
+            useFactory: (projectConfiguration: ProjectConfiguration, routingService: Routing, viewFacade: ViewFacade, messages: Messages) => {
                 return new NavigationService(projectConfiguration, routingService, viewFacade, messages);
             },
             deps: [ProjectConfiguration, Routing, ViewFacade, Messages]
         },
         {
             provide: ResourcesStateManager,
-            useFactory: (datastore: Datastore,
-                         indexFacade: IndexFacade,
-                         stateSerializer: StateSerializer,
-                         projectConfiguration: ProjectConfiguration,
-                         settingsProvider: SettingsProvider,
-                         tabManager: TabManager) => {
-
+            useFactory: (datastore: Datastore, indexFacade: IndexFacade, stateSerializer: StateSerializer, projectConfiguration: ProjectConfiguration, settingsProvider: SettingsProvider, tabManager: TabManager) => {
                 const projectIdentifier: string = settingsProvider.getSettings().selectedProject;
-                if (!projectIdentifier) throw 'project not set';
-
-                return new ResourcesStateManager(
-                    datastore,
-                    indexFacade,
-                    stateSerializer,
-                    tabManager,
-                    projectIdentifier,
-                    projectConfiguration,
-                    remote.getGlobal('switches').suppress_map_load_for_test
-                );
+                if (!projectIdentifier)
+                    throw 'project not set';
+                return new ResourcesStateManager(datastore, indexFacade, stateSerializer, tabManager, projectIdentifier, projectConfiguration, remote.getGlobal('switches').suppress_map_load_for_test);
             },
             deps: [
                 Datastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsProvider,
@@ -151,24 +131,8 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         },
         {
             provide: ViewFacade,
-            useFactory: function(
-                datastore: Datastore,
-                changesStream: ChangesStream,
-                resourcesStateManager: ResourcesStateManager,
-                loading: Loading,
-                indexFacade: IndexFacade,
-                messages: Messages,
-                syncService: SyncService
-            ) {
-                return new ViewFacade(
-                    datastore,
-                    changesStream,
-                    resourcesStateManager,
-                    loading,
-                    indexFacade,
-                    messages,
-                    syncService
-                );
+            useFactory: function (datastore: Datastore, changesStream: ChangesStream, resourcesStateManager: ResourcesStateManager, loading: Loading, indexFacade: IndexFacade, messages: Messages, syncService: SyncService) {
+                return new ViewFacade(datastore, changesStream, resourcesStateManager, loading, indexFacade, messages, syncService);
             },
             deps: [
                 Datastore,
@@ -180,12 +144,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
                 SyncService
             ]
         },
-    ],
-    exports: [
-        GeometryViewComponent
-    ],
-    entryComponents: [
-        MoveModalComponent
     ]
 })
 

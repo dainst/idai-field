@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Labels, IndexFacade, Tree, InPlace, ConfigReader, Indexer,
-    DocumentConverter, DocumentCache, PouchdbDatastore } from 'idai-field-core';
+    DocumentCache, PouchdbDatastore } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -48,7 +47,8 @@ import { M } from '../messages/m';
         '(window:keyup)': 'onKeyUp($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -70,14 +70,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public escapeKeyPressed: boolean = false;
 
     public categoriesFilterOptions: Array<CategoriesFilter> = [
-        { name: 'all', label: this.i18n({ id: 'configuration.categoriesFilter.all', value: 'Alle' }) },
-        { name: 'project', label: this.i18n({ id: 'configuration.categoriesFilter.project', value: 'Projekt' }) },
-        { name: 'trench', isRecordedInCategory: 'Trench', label: this.i18n({ id: 'configuration.categoriesFilter.trench', value: 'Schnitt' }) },
-        { name: 'building', isRecordedInCategory: 'Building', label: this.i18n({ id: 'configuration.categoriesFilter.building', value: 'Bauwerk' }) },
-        { name: 'survey', isRecordedInCategory: 'Survey', label: this.i18n({ id: 'configuration.categoriesFilter.survey', value: 'Survey' }) },
-        { name: 'images', label: this.i18n({ id: 'configuration.categoriesFilter.images', value: 'Bilderverwaltung' }) },
-        { name: 'types', label: this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' }) },
-        { name: 'inventory', label: this.i18n({ id: 'navbar.tabs.inventory', value: 'Inventarisierung' }) }
+        { name: 'all', label: $localize `:@@configuration.categoriesFilter.all:Alle` },
+        { name: 'project', label: $localize `:@@configuration.categoriesFilter.project:Projekt` },
+        { name: 'trench', isRecordedInCategory: 'Trench', label: $localize `:@@configuration.categoriesFilter.trench:Schnitt` },
+        { name: 'building', isRecordedInCategory: 'Building', label: $localize `:@@configuration.categoriesFilter.building:Bauwerk` },
+        { name: 'survey', isRecordedInCategory: 'Survey', label: $localize `:@@configuration.categoriesFilter.survey:Survey` },
+        { name: 'images', label: $localize `:@@configuration.categoriesFilter.images:Bilderverwaltung` },
+        { name: 'types', label: $localize `:@@navbar.tabs.types:Typenverwaltung` },
+        { name: 'inventory', label: $localize `:@@navbar.tabs.inventory:Inventarisierung` }
     ];
 
     public availableInputTypes: Array<InputType> = [
@@ -101,10 +101,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'dimension', customFields: true },
         { name: 'literature', customFields: true },
         { name: 'composite', customFields: true },
-        { name: 'geometry'  },
-        { name: 'instanceOf' },
-        { name: 'relation' },
+        { name: 'relation', customFields: true },
         { name: 'derivedRelation' },
+        { name: 'instanceOf' },
+        { name: 'geometry' },
         { name: 'category' },
         { name: 'identifier' }
     ];
@@ -131,12 +131,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private menuNavigator: MenuNavigator,
                 private modalService: NgbModal,
                 private documentCache: DocumentCache,
-                private documentConverter: DocumentConverter,
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private utilTranslations: UtilTranslations,
-                private appState: AppState,
-                private i18n: I18n) {}
+                private appState: AppState) {}
 
 
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
@@ -429,6 +427,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.availableInputTypes = field.source === 'custom'
             ? this.availableInputTypes.filter(inputType => inputType.customFields)
             : this.availableInputTypes;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.initialize();
 
         this.modals.awaitResult(result,
@@ -544,9 +543,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const modalRef: NgbModalRef = this.modalService.open(
                 EditSaveDialogComponent, { keyboard: false, animation: false }
             );
-            modalRef.componentInstance.changeMessage = this.i18n({
-                id: 'configuration.changes', value: 'An der Konfiguration wurden Änderungen vorgenommen.'
-            });
+            modalRef.componentInstance.changeMessage
+                = $localize `:@@configuration.changes:An der Konfiguration wurden Änderungen vorgenommen.`;
             modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
 
             const result: string = await modalRef.result;
@@ -605,7 +603,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             const changedConfigurationDocument: ConfigurationDocument = ConfigurationDocument.deleteField(
                 this.configurationDocument, category, field
             );
-            await this.updateProjectConfiguration(changedConfigurationDocument);
+            await this.updateProjectConfiguration(changedConfigurationDocument, true);
         } catch (errWithParams) {
             // TODO Show user-readable error messages
             console.error(errWithParams);
@@ -681,8 +679,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     private async loadCategories(selectedCategoriesFilterName?: string, selectedCategoryName?: string) {
 
-        this.topLevelCategoriesArray = Tree.flatten(this.clonedProjectConfiguration.getCategories())
-            .filter(category => !category.parentCategory);
+        this.topLevelCategoriesArray = this.clonedProjectConfiguration.getTopLevelCategories();
 
         if (this.selectedCategory) {
             this.selectCategory(this.clonedProjectConfiguration.getCategory(this.selectedCategory.name));
@@ -787,7 +784,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            this.documentConverter,
             this.projectConfiguration,
             true
         );

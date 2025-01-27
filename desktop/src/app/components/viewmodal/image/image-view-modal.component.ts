@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { on, is, first, isEmpty } from 'tsfun';
 import { Datastore, Document, FieldDocument, ImageDocument, Relation } from 'idai-field-core';
@@ -24,7 +23,8 @@ export namespace ImageViewModalComponent {
     templateUrl: './image-view-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -45,8 +45,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
                 menuService: Menus,
                 messages: Messages,
                 private datastore: Datastore,
-                private imageRelationsManager: ImageRelationsManager,
-                private i18n: I18n) {
+                private imageRelationsManager: ImageRelationsManager) {
 
         super(activeModal, modalService, routingService, menuService, messages);
     }
@@ -150,8 +149,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
     public getRemoveLinksTooltip(): string {
 
         return this.selected.length === 1
-            ? this.i18n({ id: 'docedit.tabs.images.tooltips.removeLink', value: 'Verknüpfung löschen' })
-            : this.i18n({ id: 'docedit.tabs.images.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
+            ? $localize `:@@docedit.tabs.images.tooltips.removeLink:Verknüpfung löschen`
+            : $localize `:@@docedit.tabs.images.tooltips.removeLinks:Verknüpfungen löschen`;
     }
 
 

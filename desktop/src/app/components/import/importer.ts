@@ -14,7 +14,6 @@ import { CsvParser } from './parser/csv-parser';
 import { GazGeojsonParserAddOn } from './parser/gaz-geojson-parser-add-on';
 import { GeojsonParser } from './parser/geojson-parser';
 import { NativeJsonlParser } from './parser/native-jsonl-parser';
-import { ShapefileParser } from './parser/shapefile-parser';
 import { CatalogFilesystemReader } from './reader/catalog-filesystem-reader';
 import { FilesystemReader } from './reader/filesystem-reader';
 import { HttpReader } from './reader/http-reader';
@@ -93,19 +92,19 @@ export module Importer {
      */
     export async function doImport(services: ImporterServices, context: ImporterContext,
                                    generateId: () => string, options: ImporterOptions,
-                                   documents: Array<Document>, typeCategoryNames: string[]): Promise<ImporterReport> {
+                                   documents: Array<Document>, typeCategoryNames: string[],
+                                   imageCategoryNames: string[]): Promise<ImporterReport> {
 
         if (options.format === 'catalog') {
             const { errors, successfulImports } =
-                await (buildImportCatalog(services, context.settings, typeCategoryNames))(documents);
+                await (buildImportCatalog(services, context.settings, typeCategoryNames, imageCategoryNames))(documents);
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 
         const operationCategoryNames = context.operationCategories;
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = Relation.makeInverseRelationsMap(context.projectConfiguration.getRelations());
-        const sameOperationRelations = context.projectConfiguration.getRelations()
-            .filter(relation => relation.sameMainCategoryResource).map(to('name'));
+
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
         const find = findByIdentifier(services.datastore);
@@ -117,7 +116,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -128,7 +128,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -138,7 +139,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -218,9 +220,8 @@ export module Importer {
                     GazGeojsonParserAddOn.postProcess
                 );
             case 'geojson':
-                return GeojsonParser.getParse(undefined, undefined);
             case 'shapefile':
-                return ShapefileParser.parse;
+                return GeojsonParser.getParse();
             case 'native':
                 return NativeJsonlParser.parse;
             case 'catalog':

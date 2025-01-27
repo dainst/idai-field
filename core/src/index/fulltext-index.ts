@@ -1,6 +1,6 @@
 import { flatMap, flow, filter, isEmpty, map, forEach, not, flatten, isString } from 'tsfun';
-import { Document } from '../model/document';
-import { Resource } from '../model/resource';
+import { Document } from '../model/document/document';
+import { Resource } from '../model/document/resource';
 import { ResultSets } from './result-sets';
 import { StringUtils } from '../tools/string-utils';
 import { I18N } from '../tools';

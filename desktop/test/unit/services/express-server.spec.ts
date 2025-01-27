@@ -1,13 +1,13 @@
 import Ajv from 'ajv';
+import { nop } from 'tsfun';
 import { IdGenerator, PouchdbDatastore, ImageStore, base64Encode} from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
-// Not explicitly exported by idai-field-core, because it is only used for tests.
-import schema from '../../../../core/api-schemas/files-list.json';
+import * as schema from '../../../../core/api-schemas/files-list.json';
 
 const fs = require('fs');
-const request = typeof window !== 'undefined' ? window.require('supertest') : require('supertest');
+const request = require('supertest');
 
 
 describe('ExpressServer', () => {
@@ -27,7 +27,9 @@ describe('ExpressServer', () => {
     let imageStore: ImageStore;
 
 
-    beforeAll(async done => {
+    beforeAll(async () => {
+
+        jest.spyOn(console, 'log').mockImplementation(nop);
 
         fs.mkdirSync(testFilePath, { recursive: true });
 
@@ -47,27 +49,25 @@ describe('ExpressServer', () => {
         );
 
         await pouchdbDatastore.createEmptyDb(testProjectIdentifier);
-
-        done();
     });
 
 
     // Re-initialize image store data for each test.
-    beforeEach(async done => {
+    beforeEach(async () => {
 
         await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
-        done();
     });
 
 
-    afterEach(async done => {
+    afterEach(async () => {
 
         await imageStore.deleteData(testProjectIdentifier);
-        done();
     });
 
 
-    afterAll(async done => {
+    afterAll(async () => {
+
+        (console.log as any).mockRestore();
 
         await pouchdbDatastore.destroyDb(testProjectIdentifier);
 
@@ -80,11 +80,10 @@ describe('ExpressServer', () => {
         });
 
         fs.rmSync(testFilePath, { recursive: true });
-        done();
     });
 
 
-    it('/files/:project without credentials returns 401', async done => {
+    test('/files/:project without credentials returns 401', async () => {
 
         request(expressMainApp)
             .get('/files/test_tmp_project')
@@ -92,12 +91,11 @@ describe('ExpressServer', () => {
             .expect(401)
             .end((err: Error, res: any) => {
                 if (err) fail(err);
-                done();
             });
     });
 
 
-    it('/files/:project returns an empty index', async done => {
+    test('/files/:project returns an empty index', async () => {
 
         try {
             const response = await request(expressMainApp)
@@ -109,15 +107,14 @@ describe('ExpressServer', () => {
             // Body should be {}
             expect(Object.keys(response.body).length).toBe(0);
             expect(validate(response.body)).toBe(true);
-
-            done();
-        } catch (e) {
-            fail(e);
+        } catch (err) {
+            throw new Error(err);
         }
     });
 
 
-    it('/files/:project/:uuid is able to store thumbnail images', async done => {
+    test('/files/:project/:uuid is able to store thumbnail images', async () => {
+
         try {
             await request(expressMainApp)
                 .put(`/files/test_tmp_project/1?type=thumbnail_image`)
@@ -125,14 +122,14 @@ describe('ExpressServer', () => {
                 .set('Content-Type', 'image/x-www-form-urlencoded')
                 .set('Authorization', `Basic ${base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
-            done();
-        } catch (e) {
-            fail(e);
+        } catch (err) {
+            throw new Error(err);
         }
     });
 
 
-    it('/files/:project/:uuid is able to store original images', async done => {
+    test('/files/:project/:uuid is able to store original images', async () => {
+
         try {
             await request(expressMainApp)
                 .put(`/files/test_tmp_project/1?type=original_image`)
@@ -140,14 +137,14 @@ describe('ExpressServer', () => {
                 .set('Content-Type', 'image/x-www-form-urlencoded')
                 .set('Authorization', `Basic ${base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(200);
-            done();
-        } catch (e) {
-            fail(e);
+        } catch (err) {
+            throw new Error(err);
         }
     });
 
 
-    it('/files/:project/:uuid is able to block original images (large files)', async done => {
+    test('/files/:project/:uuid is able to block original images (large files)', async () => {
+
         try {
             expressServer.setAllowLargeFileUploads(false);
             await request(expressMainApp)
@@ -156,14 +153,13 @@ describe('ExpressServer', () => {
                 .set('Content-Type', 'image/x-www-form-urlencoded')
                 .set('Authorization', `Basic ${base64Encode(testProjectIdentifier + ':' + password)}`)
                 .expect(409);
-            done();
-        } catch (e) {
-            fail(e);
+        } catch (err) {
+            throw new Error(err);
         }
     });
 
 
-    it('/files/:project returns an index of previously stored images', async done => {
+    test('/files/:project returns an index of previously stored images', async () => {
 
         try {
             const uuids = ['1', '2'];
@@ -185,15 +181,13 @@ describe('ExpressServer', () => {
 
             expect(Object.keys(response.body).length).toBe(2);
             expect(validate(response.body)).toBe(true);
-
-            done();
-        } catch (e) {
-            fail(e);
+        } catch (err) {
+            throw new Error(err);
         }
     });
 
 
-    it('/files/:project returns previously deleted images marked as deleted', async done => {
+    test('/files/:project returns previously deleted images marked as deleted', async () => {
 
         try {
             const uuids = ['1', '2', '3'];
@@ -224,10 +218,8 @@ describe('ExpressServer', () => {
             expect(response.body[uuids[1]].deleted).toBe(false);
             expect(response.body[uuids[2]].deleted).toBe(false);
             expect(validate(response.body)).toBe(true);
-
-            done();
-        } catch (e) {
-            fail(e);
+        } catch (err) {
+            throw new Error(err);
         }
     });
 });

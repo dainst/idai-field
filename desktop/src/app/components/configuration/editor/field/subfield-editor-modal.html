@@ -4,7 +4,7 @@
 </div>
 
 <div class="modal-body configuration-editor-modal-body subfield-editor-modal-body">
-    <div *ngIf="isConditionSectionVisible()" class="configuration-editor-section form-group">
+    <div *ngIf="isConditionSectionVisible()" class="configuration-editor-section mb-3">
         <div class="configuration-editor-section-title" i18n="@@configuration.conditionalSubfield">
             Bedingung für Anzeige des Unterfelds
         </div>
@@ -56,7 +56,7 @@
                          (onChanged)="setInputType($event)">
     </input-type-selector>
     <div *ngIf="isI18nCompatible()"
-         class="configuration-editor-section form-group configuration-editor-switch-section">
+         class="configuration-editor-section configuration-editor-switch-section mb-3">
         <div class="configuration-editor-section-title" i18n="@@configuration.basicSettings">
             Grundeinstellungen
         </div>
@@ -64,8 +64,8 @@
                      (onChanged)="setInputType($event)"></i18n-switch>
     </div>
     <div class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
-            Feldbezeichnung
+        <div class="configuration-editor-section-title" i18n="@@configuration.label">
+            Anzeigename
         </div>
         <multi-language-input [translations]="data.label"
             [defaultTranslations]="subfield.defaultLabel ?? {}"

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
 import { CategoryForm, Query, Datastore, Constraint, Document, ConfigurationDocument } from 'idai-field-core';
 import { Loading } from './loading';
@@ -15,7 +14,8 @@ import { scrollTo } from '../../angular/scrolling';
     templateUrl: './document-picker.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -53,8 +53,7 @@ export class DocumentPickerComponent implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private loading: Loading,
-                private messages: Messages,
-                private i18n: I18n) {}
+                private messages: Messages) {}
 
 
     public isLoading = () => this.loading.isLoading('documentPicker');
@@ -258,7 +257,7 @@ export class DocumentPickerComponent implements OnChanges {
         return {
             resource: {
                 id: 'project',
-                identifier: this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' }),
+                identifier: $localize `:@@widgets.documentPicker.project:Projekt`,
                 category: 'Project'
             }
         } as any;
@@ -270,7 +269,7 @@ export class DocumentPickerComponent implements OnChanges {
         return {
             resource: {
                 id: 'configuration',
-                identifier: this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' }),
+                identifier: $localize `:@@navbar.tabs.configuration:Projektkonfiguration`,
                 category: 'Configuration'
             }
         } as any;
@@ -282,7 +281,7 @@ export class DocumentPickerComponent implements OnChanges {
         return {
             resource: {
                 id: 'inventoryRegister',
-                identifier: this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' }),
+                identifier: $localize `:@@util.inventoryRegister:Inventarverzeichnis`,
                 category: 'InventoryRegister'
             }
         } as any;
@@ -294,7 +293,7 @@ export class DocumentPickerComponent implements OnChanges {
         return this.showProjectOption
             && this.isCategoryOptionVisible(
                 'Project',
-                this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
+                $localize `:@@widgets.documentPicker.project:Projekt`
             );
     }
 
@@ -304,7 +303,7 @@ export class DocumentPickerComponent implements OnChanges {
         return this.showConfigurationOption
             && this.isCategoryOptionVisible(
                 'Configuration',
-                this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' })
+                $localize `:@@navbar.tabs.configuration:Projektkonfiguration`
             );
     }
 
@@ -314,7 +313,7 @@ export class DocumentPickerComponent implements OnChanges {
         return this.showInventoryRegisterOption
             && this.isCategoryOptionVisible(
                 'InventoryRegister',
-                this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' })
+                $localize `:@@util.inventoryRegister:Inventarverzeichnis`
             );
     }
 

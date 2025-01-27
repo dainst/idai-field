@@ -5,7 +5,7 @@
 <div *ngIf="settings" id="print-settings-modal-body" class="modal-body bg-light">
     <div class="mb-3">
         <label i18n="@@resources.printSettingsModal.settingsProfile">Einstellungsprofil</label>
-        <div class="input-group mb-2">
+        <div class="input-group">
             <select [(ngModel)]="settings.selectedProfile"
                     (change)="updateSelectedProfile()"        
                     class="form-control">
@@ -14,17 +14,15 @@
                     {{getProfileLabel(profile)}}
                 </option>
             </select>
-            <div class="input-group-append">
-                <button class="btn btn-danger"
-                        type="button"
-                        ngbTooltip="Einstellungsprofil löschen"
-                        i18n-ngbTooltip="@@resources.deletePrintSettingsProfile"
-                        container="body"
-                        placement="top"
-                        (click)="deleteSelectedProfile()">
-                    <span class="mdi mdi-delete"></span>
-                </button>
-            </div>
+            <button class="btn btn-danger"
+                    type="button"
+                    ngbTooltip="Einstellungsprofil löschen"
+                    i18n-ngbTooltip="@@resources.deletePrintSettingsProfile"
+                    container="body"
+                    placement="top"
+                    (click)="deleteSelectedProfile()">
+                <span class="mdi mdi-delete"></span>
+            </button>
         </div>
         <button id="add-new-profile-button"
                 class="btn btn-success btn-square"
@@ -39,7 +37,7 @@
 
     <div class="mb-3">
         <label i18n="@@resources.printSettingsModal.size">Etikettgröße</label>
-        <div class="row mb-2">
+        <div class="row">
             <label class="col-sm-3 col-form-label"
                    i18n="@@resources.printSettingsModal.size.width">Breite (mm)</label>
             <div class="col-sm-3">
@@ -55,7 +53,7 @@
 
     <div class="mb-3">
         <label i18n="@@resources.printSettingsModal.borderMargin">Abstand vom Rand</label>
-        <div class="row mb-2">
+        <div class="row">
             <label class="col-sm-3 col-form-label"
                    i18n="@@resources.printSettingsModal.borderMargin.left">Links (mm)</label>
             <div class="col-sm-3">
@@ -74,7 +72,7 @@
         <input type="number" class="form-control" [(ngModel)]="selectedProfile.scale">
     </div>
 
-    <div class="mb-3">
+    <div>
         <label i18n="@@resources.printSettingsModal.fontWeight">Schriftstärke</label>
         <select class="form-control" [(ngModel)]="selectedProfile.fontWeight">
             <option [value]="500" i18n="@@resources.printSettingsModal.fontWeight.light">Leicht</option>

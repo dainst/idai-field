@@ -10,7 +10,8 @@ import {ComponentHelpers} from '../../component-helpers';
     templateUrl: './category-switcher-button.html',
     host: {
         '(document:click)': 'handleClick($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

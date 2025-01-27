@@ -1,8 +1,8 @@
 import { is, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, size, isUndefinedOrEmpty,
     separate, cond, pairWith, left, subsetOf } from 'tsfun';
-import { Resource } from '../model/resource';
+import { Resource } from '../model/document/resource';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
-import { Query } from '../model/query';
+import { Query } from '../model/datastore/query';
 import { SortUtil } from '../tools/sort-util';
 import { Name } from '../tools/named';
 

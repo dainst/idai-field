@@ -9,8 +9,7 @@ export interface Relation extends Field {
 
     domain: string[];
     range: string[];
-    inverse?: any;
-    sameMainCategoryResource?: boolean;
+    inverse?: string;
 }
 
 

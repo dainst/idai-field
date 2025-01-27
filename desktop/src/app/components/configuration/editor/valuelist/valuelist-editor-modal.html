@@ -11,7 +11,7 @@
             (click)="applyingChanges || !isChanged() || confirm()">
         <span class="button-label" i18n="@@buttons.ok">OK</span>
     </button>
-    <button class="btn btn-primary btn-square"
+    <button id="cancel-valuelist-button" class="btn btn-primary btn-square"
             [class.disabled]="applyingChanges"
             (click)="applyingChanges || cancel()">
         <span class="mdi mdi-close"></span>
@@ -38,7 +38,7 @@
         </div>
         <references-input [references]="getClonedValuelistDefinition().references"></references-input>
     </div>
-    <div class="configuration-editor-section form-group">
+    <div class="configuration-editor-section mb-3">
         <div class="configuration-editor-section-title" i18n="@@configuration.values">Werte</div>
         <div>
             <div id="sort-label">
@@ -68,25 +68,23 @@
                         {{getValueLabel(valueId)}}
                         <code>{{valueId}}</code>
                     </div>
-                    <div class="input-group-append">
-                        <button *ngIf="isInherited(valueId)"
-                                class="btn btn-primary"
-                                (click)="toggleHidden(valueId)">
-                            <span class="mdi"
-                                [class.mdi-eye]="isHidden(valueId)"
-                                [class.mdi-eye-off]="!isHidden(valueId)">
-                            </span>
-                        </button>
-                        <button *ngIf="!isInherited(valueId)"
-                                class="btn btn-danger"
-                                (click)="deleteValue(valueId)">
-                            <span class="mdi mdi-delete"></span>
-                        </button>
-                        <button class="btn btn-info"
-                                (click)="editValue(valueId)">
-                            <span class="mdi mdi-pencil"></span>
-                        </button>
-                    </div>
+                    <button *ngIf="isInherited(valueId)"
+                            class="btn btn-primary"
+                            (click)="toggleHidden(valueId)">
+                        <span class="mdi"
+                            [class.mdi-eye]="isHidden(valueId)"
+                            [class.mdi-eye-off]="!isHidden(valueId)">
+                        </span>
+                    </button>
+                    <button *ngIf="!isInherited(valueId)"
+                            class="btn btn-danger"
+                            (click)="deleteValue(valueId)">
+                        <span class="mdi mdi-delete"></span>
+                    </button>
+                    <button class="btn btn-info"
+                            (click)="editValue(valueId)">
+                        <span class="mdi mdi-pencil"></span>
+                    </button>
                 </div>
                 <div *cdkDragPreview class="value-drag-preview value-item form-control">
                     {{getValueLabel(valueId)}}
@@ -101,13 +99,11 @@
                    type="text"
                    placeholder="{{inputPlaceholder}}"
                    class="form-control">
-            <div class="input-group-append">
-                <button id="add-value-button" class="btn btn-success" type="button"
-                        [disabled]="!isValidValue(newValueId)"
-                        (click)="addValue(newValueId)">
-                    <span class="mdi mdi-plus"></span>
-                </button>
-            </div>
+            <button id="add-value-button" class="btn btn-success" type="button"
+                    [disabled]="!isValidValue(newValueId)"
+                    (click)="addValue(newValueId)">
+                <span class="mdi mdi-plus"></span>
+            </button>
         </div>
     </div>
 </div>

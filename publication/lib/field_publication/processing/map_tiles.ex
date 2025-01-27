@@ -8,6 +8,14 @@ defmodule FieldPublication.Processing.MapTiles do
 
   @tile_size 256
 
+  @moduledoc """
+  This module contains functions for creating image tiles from raw image data to be served as
+  TileLayer sources in OpenLayer maps.
+
+  The result will be a nested directory structure with a specific file name pattern representing
+  different zoom levels and x/y coordinates for each tiled image.
+  """
+
   def evaluate_state(%Publication{} = publication) do
     FileService.initialize!(publication.project_name)
 

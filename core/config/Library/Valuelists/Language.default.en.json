@@ -667,7 +667,8 @@
       "Silber": "silver",
       "Stahl": "steel",
       "Zink": "zinc",
-      "Zinn": "tin"
+      "Zinn": "tin",
+      "Billon": "Billon"
     }
   },
   "Burial-positionArms-default": {
@@ -788,7 +789,19 @@
       "Antiochia am Orontes": "Antioch on the Orontes",
       "Apameia Kibotos": "Apamea Cibotus",
       "Apameia am Orontes": "Apamea, Syria",
-      "Apulien": "Apulia"
+      "Apulien": "Apulia",
+      "Etrurien": "Etruria",
+      "Korinth": "Corinth",
+      "Gallien": "Gaul",
+      "Italien": "Italy",
+      "Karthago": "Carthage",
+      "Milas": "Milas",
+      "Naxos": "Naxos",
+      "Paros": "Paros",
+      "Priene": "Priene",
+      "Rhodos": "Rhodes",
+      "Samos": "Samos",
+      "Sardinien": "Sardinia"
     }
   },
   "Metal-objectType-default": {
@@ -1083,7 +1096,10 @@
   "Stone-origin-default": {
     "values": {
       "Kreta": "Crete",
-      "Sizilien": "Sicily"
+      "Sizilien": "Sicily",
+      "Anatolien": "Anatolia",
+      "Chimtou": "Chimtou",
+      "Harz": "Harz"
     }
   },
   "Pottery-materialType-default": {
@@ -1094,6 +1110,24 @@
   "Pottery-coatInside-default": {
     "values": {
       "Redslip": "Engobe vermelho (Red slip)"
+    }
+  },
+  "PlasterFragment-plasterComponents-default": {
+    "values": {
+      "Grus": "grus",
+      "Sand": "sand"
+    }
+  },
+  "Metal-decorationTechnique-default": {
+    "values": {
+      "Stempel": "stamped",
+      "Bemalung": "painted",
+      "Emaille": "enamel",
+      "Reliefdekor": "relief decoration",
+      "Riefeldekor": "grooved decoration",
+      "Stempeldekor": "stamped (decorative)",
+      "Vergoldung": "gilding",
+      "Ritzungen": "scratched"
     }
   }
 }

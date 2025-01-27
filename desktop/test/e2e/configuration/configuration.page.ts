@@ -1,5 +1,6 @@
 import { click, getLocator, getText, rightClick, typeIn, waitForNotExist } from '../app';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { AddFieldModalPage } from './add-field-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
 
 
@@ -121,6 +122,19 @@ export class ConfigurationPage {
     }
 
 
+    public static async getValues() {
+
+        return getLocator('valuelist-view code');
+    }
+
+
+    public static async getInverseRelation(relationName: string) {
+
+        const relationField = await this.getField(relationName);
+        return relationField.locator('.inverse-relation-label');
+    }
+
+
     // get text
 
     public static async getValue(index: number) {
@@ -130,9 +144,9 @@ export class ConfigurationPage {
     }
 
 
-    public static async getValues() {
+    public static async getInverseRelationLabel(relationName: string) {
 
-        return getLocator('valuelist-view code');
+        return getText(await this.getInverseRelation(relationName));
     }
 
 
@@ -184,5 +198,53 @@ export class ConfigurationPage {
         await EditConfigurationPage.clickToggleScanCodesSlider();
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();
+    }
+
+
+    public static async createRelation(categoryName: string, relationName: string, relationLabel: string,
+                                       targetCategoryNames: string[],
+                                       targetSupercategoryNames: Array<string|undefined>,
+                                       supercategoryName?: string) {
+
+        await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput(relationName);
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('relation', 'field');
+        await EditConfigurationPage.typeInTranslation(0, 0, relationLabel, 'field');
+
+        await ConfigurationPage.selectTargetCategories(targetCategoryNames, targetSupercategoryNames);
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    }
+
+
+    public static async addRelation(categoryName: string, relationName: string, targetCategoryNames: string[],
+                                    targetSupercategoryNames: Array<string|undefined>, supercategoryName?: string) {
+
+        await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+        await ConfigurationPage.clickAddFieldButton();        
+        await AddFieldModalPage.typeInSearchFilterInput(relationName);
+        await AddFieldModalPage.clickSelectField(relationName);
+        await AddFieldModalPage.clickConfirmSelection();
+        
+        await ConfigurationPage.selectTargetCategories(targetCategoryNames, targetSupercategoryNames);
+        
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    }
+
+
+    private static async selectTargetCategories(targetCategoryNames: string[],
+                                         targetSupercategoryNames: Array<string|undefined>) {
+
+        for (let i = 0; i < targetCategoryNames.length; i++) {
+            await CategoryPickerPage.clickSelectCategory(
+                targetCategoryNames[i],
+                targetSupercategoryNames[i],
+                'target-category-picker-container'
+            );
+        }
     }
 }

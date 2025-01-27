@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take, to } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
@@ -9,7 +8,6 @@ import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../components/export/export-runner';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
-import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { SettingsProvider } from '../../services/settings/settings-provider';
@@ -25,15 +23,16 @@ import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const path = typeof window !== 'undefined' ? window.require('path') : require('path');
+const remote = window.require('@electron/remote');
+const path = window.require('path');
 
 
 @Component({
     templateUrl: './import.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * Delegates calls to the Importer, waits for
@@ -47,7 +46,6 @@ const path = typeof window !== 'undefined' ? window.require('path') : require('p
 export class ImportComponent implements OnInit {
 
     public operations: Array<Document> = [];
-    public javaInstalled: boolean = true;
     public running: boolean = false;
     public ignoredIdentifiers: string[] = [];
 
@@ -70,8 +68,7 @@ export class ImportComponent implements OnInit {
                 private tabManager: TabManager,
                 private menuService: Menus,
                 private appState: AppState,
-                private labels: Labels,
-                private i18n: I18n) {
+                private labels: Labels) {
 
         this.resetOperationIfNecessary();
     }
@@ -80,8 +77,6 @@ export class ImportComponent implements OnInit {
     public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels, this.projectConfiguration);
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
-
-    public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
     public isDefaultFormat = () => Importer.isDefault(this.importState.format);
 
@@ -105,7 +100,6 @@ export class ImportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.updateCategories();
-        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
 
@@ -137,7 +131,6 @@ export class ImportComponent implements OnInit {
         return !this.running
             && this.ignoredIdentifiers.length < 2
             && this.importState.format !== undefined
-            && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
             && (this.importState.format !== 'csv' || this.importState.selectedCategory)
             && (this.importState.sourceType === 'file'
                 ? this.importState.filePath !== undefined
@@ -293,7 +286,8 @@ export class ImportComponent implements OnInit {
             () => this.idGenerator.generateId(),
             options,
             documents,
-            this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
+            this.projectConfiguration.getTypeCategories().map(to(Named.NAME)),
+            this.projectConfiguration.getImageCategories().map(to(Named.NAME))
         );
     }
 
@@ -389,7 +383,7 @@ export class ImportComponent implements OnInit {
             {
                 properties: ['openFile'],
                 defaultPath: this.appState.getFolderPath('import'),
-                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
                 filters: this.getFileFilters()
             }
         );
@@ -407,7 +401,7 @@ export class ImportComponent implements OnInit {
 
         return [
             {
-                name: this.i18n({ id: 'import.selectFile.filters.all', value: 'Alle unterstützten Formate' }),
+                name: $localize `:@@import.selectFile.filters.all:Alle unterstützten Formate`,
                 extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog']
             },
             {
@@ -427,7 +421,7 @@ export class ImportComponent implements OnInit {
                 extensions: ['shp']
             },
             {
-                name: this.i18n({ id: 'import.selectFile.filters.catalog', value: 'Field-Typenkatalog' }),
+                name: $localize `:@@import.selectFile.filters.catalog:Field-Typenkatalog`,
                 extensions: ['catalog']
             }
         ];

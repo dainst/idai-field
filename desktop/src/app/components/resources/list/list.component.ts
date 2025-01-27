@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { set } from 'tsfun';
 import { FieldDocument, Named, CategoryForm, Tree, ProjectConfiguration, FieldResource, Valuelist, 
     Labels } from 'idai-field-core';
@@ -14,7 +13,8 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 @Component({
     selector: 'list',
-    templateUrl: './list.html'
+    templateUrl: './list.html',
+    standalone: false
 })
 /**
  * @author Fabian Z.
@@ -37,7 +37,6 @@ export class ListComponent extends BaseList implements OnChanges {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
-                private i18n: I18n,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
@@ -101,7 +100,7 @@ export class ListComponent extends BaseList implements OnChanges {
             Languages.getAvailableLanguages(),
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
-            this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' })
+            $localize `:@@languages.noLanguage:Ohne Sprachangabe`
         );
 
         if (this.availableLanguages.length > 0) this.selectedLanguage = this.availableLanguages[0];

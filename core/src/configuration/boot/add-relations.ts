@@ -1,33 +1,28 @@
-import { isEmpty, not, on, subtract, Map } from 'tsfun';
+import { isEmpty, not, Map } from 'tsfun';
 import { Relation } from '../../model/configuration/relation';
 import { Named } from '../../tools/named';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
+import { Field } from '../../model/configuration/field';
+import { getParentForm } from './get-parent-form';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function addRelations(relationsToAdd: Array<Relation>) {
+export function addRelations(builtInRelations: Array<Relation>) {
 
-    return (configuration: [any, any]) => {
+    return (configuration: [Map<TransientFormDefinition>, Array<Relation>]) => {
 
         let [forms, relations] = configuration;
-
         if (!relations) return;
 
+        const relationsToAdd = builtInRelations.concat(getCustomRelations(forms));
+
         for (let relationToAdd of relationsToAdd) {
-            expandInherits(forms, relationToAdd, Relation.DOMAIN);
-
-            relations.filter(on(Named.NAME)(relationToAdd))
-                .forEach((relation: any) => {
-                    relation.domain = subtract(relationToAdd.domain)(relation.domain)
-                });
-            relations = relations.filter(not(on(Relation.DOMAIN, isEmpty)));
-
-            relations.splice(0,0, relationToAdd);
-
-            expandInherits(forms, relationToAdd, Relation.RANGE);
+            relations.splice(0, 0, relationToAdd);
+            addSubcategories(forms, relationToAdd, Relation.DOMAIN);
+            addSubcategories(forms, relationToAdd, Relation.RANGE);
             expandOnEmpty(forms, relationToAdd, Relation.RANGE);
             expandOnEmpty(forms, relationToAdd, Relation.DOMAIN);
         }
@@ -37,38 +32,48 @@ export function addRelations(relationsToAdd: Array<Relation>) {
 }
 
 
-function expandInherits(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: string) {
+function getCustomRelations(forms: Map<TransientFormDefinition>): Array<Relation> {
 
-    if (!relation) return;
-    if (!(relation as any)[itemSet]) return;
+    return Object.keys(forms).reduce((result, formName) => {
+        const form = forms[formName];
+        const relations = Object.values(form.fields).filter(field => {
+            if (field.inputType !== Field.InputType.RELATION) return false;
+            return !getParentForm(form, Object.values(forms))?.fields[field.name];
+        });
+        relations.forEach((relation: Relation) => relation.domain = [form.categoryName]);
+        return result.concat(relations);
+    }, []);
+}
+
+
+function addSubcategories(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: 'domain'|'range') {
+
+    if (!relation?.[itemSet]) return;
 
     const newItems: string[] = [];
-    for (let item of (relation as any)[itemSet]) {
-        if (item.indexOf(':inherit') !== -1) {
-            for (let form of Object.values(forms)) {
-                if (form.parent === item.split(':')[0] && !newItems.includes(form.categoryName)) {
-                    newItems.push(form.categoryName);
-                }
+
+    for (let categoryName of relation[itemSet]) {
+        for (let form of Object.values(forms)) {
+            if (form.parent === categoryName && !newItems.includes(form.categoryName)) {
+                newItems.push(form.categoryName);
             }
-            newItems.push(item.split(':')[0]);
-        } else {
-            newItems.push(item);
         }
+        newItems.push(categoryName);
     }
+
     relation[itemSet] = newItems;
 }
 
 
-function expandOnEmpty(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: string) {
+function expandOnEmpty(forms: Map<TransientFormDefinition>, relation: Relation, itemSet: 'domain'|'range') {
 
     if (not(isEmpty)(relation[itemSet])) return;
 
-    let opposite = Relation.RANGE;
-    if (itemSet === Relation.RANGE) opposite = Relation.DOMAIN;
+    const opposite: 'domain'|'range' = (itemSet === Relation.RANGE) ? Relation.DOMAIN : Relation.RANGE;
 
     relation[itemSet] = [];
     for (let form of Object.values(forms)) {
-        if (relation[opposite].indexOf(form.categoryName) === -1) {
+        if (!relation[opposite].includes(form.categoryName)) {
             relation[itemSet].push(form.categoryName);
         }
     }

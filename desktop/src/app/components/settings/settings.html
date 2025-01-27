@@ -1,7 +1,7 @@
 <div class="settings row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
         <div class="row">
-            <div class="col default-nav bg-light text-right">
+            <div class="col default-nav bg-light text-end">
                 <button id="save-settings-button" class="btn btn-primary"
                         [ngClass]="{ 'disabled': saving }"
                         (click)="saving || save()">
@@ -12,11 +12,11 @@
         </div>
 
         <div class="row">
-            <div #settingsContainer class="form-group col default-container">
+            <div #settingsContainer class="col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <h5 i18n="@@settings.general">Allgemeine Einstellungen</h5>
 
-                    <div class="form-group" style="margin-bottom: 0;">
+                    <div class="mb-3" style="margin-bottom: 0;">
                         <label class="control-label col-form-label"
                                i18n="@@settings.languages">
                             Sprachen
@@ -30,8 +30,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" style="margin-bottom: 0; margin-top: 15px;">
-
+                    <div class="mb-3" style="margin-bottom: 0; margin-top: 15px;">
                         <label class="control-label col-form-label"
                                for="username-input"
                                i18n="@@settings.userName">
@@ -53,8 +52,7 @@
 
                     <h5 style="margin-top: 32px;" i18n="@@settings.synchronization">Synchronisation</h5>
 
-                    <div class="form-group">
-
+                    <div class="mb-3">
                         <label class="control-label col-form-label" i18n="@@settings.synchronization.ownAddress">Eigene Adresse</label>
                         <pre><code>http://{{ipAddress}}:3000</code></pre>
 
@@ -71,7 +69,7 @@
                         </div>
 
                         <div class="row" style="margin: 15px 0 0;">
-                            <div class="col-auto mr-auto">
+                            <div class="col-auto me-auto">
                                 <span i18n="@@settings.synchronization.allowUploads">Originalbilder empfangen</span>
                             </div>
                             <div class="col-auto">
@@ -95,7 +93,7 @@
                         <h5 style="margin-top: 32px;" i18n="@@settings.update">Update</h5>
 
                         <div class="row" style="margin: 15px 0 0;">
-                            <div class="col-auto mr-auto">
+                            <div class="col-auto me-auto">
                                 <span i18n="@@settings.update.activate">Automatische Prüfung auf Updates aktivieren</span>
                             </div>
                             <div class="col-auto">
@@ -110,18 +108,20 @@
 
                     <hr>
 
-                    <button id="advanced-settings-button"
-                            type="button" class="btn btn-link btn-block" (click)="toggleAdvancedSettings()"
-                            [attr.aria-expanded]="!advancedSettingsCollapsed" aria-controls="advanced-settings">
-                        <span *ngIf="advancedSettingsCollapsed"
-                              i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
-                        <span *ngIf="!advancedSettingsCollapsed"
-                              i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>
-                    </button>
+                    <div class="d-grid">
+                        <button id="advanced-settings-button"
+                                type="button" class="btn btn-link" (click)="toggleAdvancedSettings()"
+                                [attr.aria-expanded]="!advancedSettingsCollapsed" aria-controls="advanced-settings">
+                            <span *ngIf="advancedSettingsCollapsed"
+                                i18n="@@settings.showAdvanced">Erweiterte Optionen</span>
+                            <span *ngIf="!advancedSettingsCollapsed"
+                                i18n="@@settings.hideAdvanced">Erweiterte Optionen ausblenden</span>
+                        </button>
+                    </div>
                     <div id="advanced-settings" [ngbCollapse]="advancedSettingsCollapsed">
                         <h5 style="margin-top: 32px;" i18n="@@settings.images">Bilder</h5>
 
-                        <div id="advanced-settings" class="form-group">
+                        <div id="advanced-settings">
                             <label class="control-label col-form-label"
                                 for="imagestorepath-input"
                                 i18n="@@settings.images.path">
@@ -132,12 +132,10 @@
                                     [ngModel]="settings.imagestorePath"
                                     (ngModelChange)="settings.imagestorePath = $event"
                                     class="form-control">
-                                <div class="input-group-append">
-                                    <label for="imagestorepath-input" class="btn btn-secondary"
-                                            (click)="chooseImagestoreDirectory()">
-                                        <span class="mdi mdi-folder"></span>
-                                    </label>
-                                </div>
+                                <label for="imagestorepath-input" class="btn btn-secondary"
+                                        (click)="chooseImagestoreDirectory()">
+                                    <span class="mdi mdi-folder"></span>
+                                </label>
                             </div>
                             <div class="small-info-text" i18n="@@settings.images.path.info">
                                 Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig

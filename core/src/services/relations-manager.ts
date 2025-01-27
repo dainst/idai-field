@@ -1,15 +1,15 @@
 import { append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract } from 'tsfun';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
 import { ConnectedDocs } from './utilities/connected-docs'
-import { NewDocument } from '../model/document';
+import { NewDocument } from '../model/document/document';
 import { ProjectConfiguration } from './project-configuration'
 import { ON_RESOURCE_ID } from '../constants';
-import { Query } from '../model/query'
-import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
+import { Query } from '../model/datastore/query'
 import { childrenOf } from '../basic-index-configuration';
 import { Name, Named } from '../tools/named';
+import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
 
 
 /**
@@ -79,7 +79,8 @@ export class RelationsManager {
         const documentsToBeDeleted =
             flow(descendants,
                 subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
-                append(document));
+                append(document)
+            );
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
     }

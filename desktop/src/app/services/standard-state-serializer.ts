@@ -3,7 +3,7 @@ import { getAsynchronousFs } from './get-asynchronous-fs';
 import { SettingsProvider } from './settings/settings-provider';
 import { StateSerializer } from './state-serializer';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 export type StateType = 'app-state'|'resources-state'|'matrix-state'|'tabs-state'|'configuration-state'|'images-state';

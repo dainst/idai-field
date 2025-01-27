@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .row-wrapper {
   display: grid;
   grid-template-columns: 4fr 6fr 9fr 130px;
@@ -36,8 +38,8 @@
     background-color: #fff;
 
     &:hover {
-      color: darken(#868e96, 5%);
-      background-color: darken($list-item-hover-color, 5%);
+      color: color.adjust(#868e96, $lightness: -5%);
+      background-color: color.adjust($list-item-hover-color, $lightness: -5%);
     }
 
     &.move-into-button {
@@ -84,22 +86,26 @@
     }
   }
 
-  .mdi-delete {
-    color: #dc3545;
-  }
+  .list-action-buttons {
+    border-radius: 0;
 
-  .btn-small:hover {
-    background-color: darken($list-item-hover-color, 5%);
-  }
+    .mdi-delete {
+      color: #dc3545;
+    }
+  
+    .btn-small:hover {
+      background-color: color.adjust($list-item-hover-color, $lightness: -5%);
+    }
+  
+    .list-edit-button,
+    .list-move-button,
+    .list-delete-button {
+      border-radius: 32px !important;
+    }
 
-  .list-edit-button,
-  .list-move-button,
-  .list-delete-button {
-    border-radius: 32px !important;
-  }
-
-  .hidden-option {
-    opacity: 0;
+    .hidden-option {
+      opacity: 0;
+    }
   }
 }
 

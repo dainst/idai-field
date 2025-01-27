@@ -2,13 +2,13 @@
     <category-icon [category]="document.resource.category" size="35"></category-icon>
 
     <div *ngIf="document.resource.identifier || document.resource.shortDescription"
-         class="teasercontent media-body ml-2">
+         class="teasercontent media-body ms-2">
         <div class="title">{{document.resource.identifier}}</div>
         <div class="subtitle">{{getShortDescription()}}</div>
     </div>
 
     <div *ngIf="!(document.resource.identifier || document.resource.shortDescription)"
-         class="teasercontent media-body ml-2">
+         class="teasercontent media-body ms-2">
         <div class="new title" i18n="@@components.documents.documentTeaser.newResource">Neue Ressource</div>
     </div>
 </div>

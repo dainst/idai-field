@@ -5,7 +5,7 @@ import { ObjectUtils, Name, ObserverUtil } from 'idai-field-core';
 import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Injectable()

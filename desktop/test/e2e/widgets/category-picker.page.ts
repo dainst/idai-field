@@ -8,15 +8,15 @@ export class CategoryPickerPage {
 
     // click
 
-    public static async clickSelectCategory(categoryName: string, supercategoryName?: string) {
+    public static async clickSelectCategory(categoryName: string, supercategoryName?: string, containerId?: string) {
 
-        await click(await this.getCategory(categoryName, supercategoryName));
+        await click(await this.getCategory(categoryName, supercategoryName, containerId));
     }
 
 
-    public static async clickOpenContextMenu(categoryName: string, supercategoryName?: string) {
+    public static async clickOpenContextMenu(categoryName: string, supercategoryName?: string, containerId?: string) {
 
-        await rightClick(await this.getCategory(categoryName, supercategoryName));
+        await rightClick(await this.getCategory(categoryName, supercategoryName, containerId));
     }
 
 
@@ -28,9 +28,10 @@ export class CategoryPickerPage {
     }
     
 
-    public static getCategory(categoryName: string, supercategoryName?: string) {
+    public static getCategory(categoryName: string, supercategoryName?: string, containerId?: string) {
 
-        return getLocator('#choose-category-option-'
+        const prefix: string = containerId ? '#' + containerId + ' ' : '';
+        return getLocator(prefix + '#choose-category-option-'
             + (supercategoryName ? supercategoryName.replace(':', '-').toLowerCase() + '-' : '')
             + categoryName.replace(':', '-').toLowerCase());
     }
@@ -38,9 +39,9 @@ export class CategoryPickerPage {
 
     // text
 
-    public static async getCategoryLabel(categoryName: string, supercategoryName?: string) {
+    public static async getCategoryLabel(categoryName: string, supercategoryName?: string, containerId?: string) {
 
-        const element = await (await this.getCategory(categoryName, supercategoryName))
+        const element = await (await this.getCategory(categoryName, supercategoryName, containerId))
             .locator('.category-label');
 
         return getText(element);

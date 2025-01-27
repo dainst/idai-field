@@ -15,8 +15,6 @@ import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager } from './layers/layer-manager';
 
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }
      interface Draw { Line: L.PM.Draw.Line } } }
@@ -27,7 +25,8 @@ type DrawMode = 'None'|'Line'|'Poly';
 
 @Component({
     selector: 'editable-map',
-    templateUrl: './editable-map.html'
+    templateUrl: './editable-map.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

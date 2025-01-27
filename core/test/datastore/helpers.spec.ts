@@ -1,5 +1,5 @@
 import { dissocIndices, isProjectDocument, sortRevisionsByLastModified } from '../../src/datastore/helpers';
-import { Document } from '../../src/model/document';
+import { Document } from '../../src/model/document/document';
 
 
 describe('helpers', () => {

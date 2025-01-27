@@ -9,7 +9,7 @@
             <h6>{{label}}</h6>
             <code class="category-name">{{category.name}}</code>
         </div>
-        <div class="col header header-right text-right">
+        <div class="col header header-right text-end">
             <hierarchical-relations-info *ngIf="!category.isAbstract"
                                          [category]="category"
                                          [mode]="'liesWithin'"
@@ -91,6 +91,7 @@
                 <configuration-field [field]="field"
                                      [category]="category"
                                      [configurationDocument]="configurationDocument"
+                                     [clonedProjectConfiguration]="clonedProjectConfiguration"
                                      [hidden]="isHidden(field)"
                                      [availableInputTypes]="availableInputTypes"
                                      [contextMenu]="contextMenu"
@@ -111,9 +112,9 @@
         <div id="add-field-button"
              class="circular-button green-button"
              [class.with-description]="description"
-            (click)="addField()"
-            ngbTooltip="Feld hinzufügen"
-            i18n-ngbTooltip="@@configuration.addField">
+             (click)="addField()"
+             ngbTooltip="Feld hinzufügen"
+             i18n-ngbTooltip="@@configuration.addField">
             <span class="mdi mdi-plus"></span>
         </div>
     </div>

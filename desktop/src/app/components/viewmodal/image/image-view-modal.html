@@ -16,11 +16,11 @@
     <div *ngIf="isEditingAllowed()" id="image-view-modal-buttons" class="bg-light">
         <span *ngIf="selected.length && mode === 'edit'" id="image-view-modal-selection-buttons">
             <button *ngIf="selected.length === 1 && !isMainImage(selected[0])" id="set-main-image" type="button"
-                class="btn btn-primary btn-square mr-2" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
+                class="btn btn-primary btn-square me-2" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
                 i18n-ngbTooltip="@@docedit.tabs.images.tooltips.setMainImage" placement="right" container="body">
                 <span class="mdi mdi-star"></span>
             </button>
-            <button id="delete-images" type="button" class="btn btn-danger btn-square mr-2" (click)="removeLinks()"
+            <button id="delete-images" type="button" class="btn btn-danger btn-square me-2" (click)="removeLinks()"
                 ngbTooltip="{{getRemoveLinksTooltip()}}" placement="right" container="body">
                 <span class="mdi mdi-link-off"></span>
             </button>
@@ -38,7 +38,12 @@
                 (click)="setMode('view')"
                 ngbTooltip="Ansicht"
                 i18n-ngbTooltip="@@image-view-modal.modal.view"
-                placement="left">
+                placement="left"
+                triggers="manual"
+                #viewImagesTooltip="ngbTooltip"
+                (mouseover)="viewImagesTooltip.open()"
+                (mouseleave)="viewImagesTooltip.close()"
+                (mousedown)="viewImagesTooltip.close()">
                 <span class="mdi mdi-image"></span>
             </button>
             <button class="btn btn-link btn-square m-0"
@@ -48,7 +53,12 @@
                 (click)="setMode('edit')"
                 ngbTooltip="Bearbeiten"
                 i18n-ngbTooltip="@@image-view-modal.modal-edit"
-                placement="left">
+                placement="left"
+                triggers="manual"
+                #editImagesTooltip="ngbTooltip"
+                (mouseover)="editImagesTooltip.open()"
+                (mouseleave)="editImagesTooltip.close()"
+                (mousedown)="editImagesTooltip.close()">
                 <span class="mdi mdi-image-edit"></span>
             </button>
         </div>
@@ -60,9 +70,15 @@
             <div *ngIf="!images || images.length === 0"
                  id="no-images-placeholder"
                  class="d-flex align-items-center justify-content-center">
-                <div class="alert alert-info" i18n="@@viewModal.noImages">
-                    Mit dieser Ressource sind keine Bilder verknüpft.
-                </div>
+                @if (linkedDocument.resource.category === 'Project') {
+                    <div class="alert alert-info" i18n="@@viewModal.noProjectImages">
+                        Mit dem Projekt sind keine Bilder verknüpft.
+                    </div>
+                } @else {
+                    <div class="alert alert-info" i18n="@@viewModal.noImages">
+                        Mit dieser Ressource sind keine Bilder verknüpft.
+                    </div>
+                }
             </div>
     
             <document-info [document]="selectedImage?.document"
@@ -71,7 +87,7 @@
                            (onStartEdit)="startEdit(true)"
                            (onJumpToResource)="jumpToResource($event)"></document-info>
     
-            <image-viewer *ngIf="selectedImage" [image]="selectedImage?.document"></image-viewer>
+            <image-viewer *ngIf="selectedImage" [imageDocument]="selectedImage?.document"></image-viewer>
     
             <image-row [images]="images"
                        [selectedImage]="selectedImage"

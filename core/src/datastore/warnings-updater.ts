@@ -1,21 +1,21 @@
 import { equal, is, isArray, isObject, on, set, to, Map } from 'tsfun';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 import { Named } from '../tools/named';
 import { CategoryForm } from '../model/configuration/category-form';
 import { BaseField, Field } from '../model/configuration/field';
 import { ValuelistUtil } from '../tools/valuelist-util';
-import { Resource } from '../model/resource';
-import { ImageResource } from '../model/image-resource';
-import { MissingRelationTargetWarnings, OutlierWarnings, Warnings } from '../model/warnings';
+import { Resource } from '../model/document/resource';
+import { ImageResource } from '../model/document/image-resource';
+import { RelationTargetWarnings, OutlierWarnings, Warnings } from '../model/document/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
-import { Query } from '../model/query';
+import { Query } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
 import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
-import { FieldResource } from '../model/field-resource';
+import { FieldResource } from '../model/document/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
-import { Relation } from '../model';
+import { Relation } from '../model/configuration/relation';
 
 
 /**
@@ -35,7 +35,7 @@ export module WarningsUpdater {
      */
     export function updateIndexIndependentWarnings(document: Document, projectConfiguration: ProjectConfiguration) {
 
-        if (document.resource.category === 'Configuration') return;
+        if (document.resource.category === 'Configuration' || document.project) return;
 
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
 
@@ -58,11 +58,13 @@ export module WarningsUpdater {
                                                        updateAll: boolean = false) {
 
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-        if (!category) return;
+        if (!category || document.project) return;
 
         await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);
-        await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
+        await updateMissingRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
+        await updateInvalidRelationTargetWarning(document, indexFacade, projectConfiguration, documentCache, datastore,
+            updateAll);
         await updateMissingOrInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache,
             datastore, updateAll);
         await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
@@ -150,17 +152,13 @@ export module WarningsUpdater {
     }
 
 
-    export async function updateRelationTargetWarning(document: Document, indexFacade: IndexFacade,
-                                                      documentCache: DocumentCache, datastore?: Datastore,
-                                                      updateRelationTargets: boolean = false) {
+    export async function updateMissingRelationTargetWarning(document: Document, indexFacade: IndexFacade,
+                                                             documentCache: DocumentCache, datastore?: Datastore,
+                                                             updateRelationTargets: boolean = false) {
     
-        const warnings: MissingRelationTargetWarnings = { relationNames: [], targetIds: [] };
+        const warnings: RelationTargetWarnings = { relationNames: [], targetIds: [] };
 
-        const relationNames: string[] = Object.keys(document.resource.relations).filter(relationName => {
-            return !Relation.Hierarchy.ALL.includes(relationName);
-        });
-
-        for (let relationName of relationNames) {
+        for (let relationName of getRelationNames(document)) {
             for (let targetId of document.resource.relations[relationName]) {
                 if (!documentCache.get(targetId)) {
                     if (!warnings.relationNames.includes(relationName)) warnings.relationNames.push(relationName);
@@ -182,7 +180,48 @@ export module WarningsUpdater {
         }
 
         if (updateRelationTargets) {
-            await updateRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.id);
+            await updateMissingRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.id);
+        }
+    }
+
+
+    export async function updateInvalidRelationTargetWarning(document: Document, indexFacade: IndexFacade,
+                                                             projectConfiguration: ProjectConfiguration,
+                                                             documentCache: DocumentCache, datastore?: Datastore,
+                                                             updateRelationTargets: boolean = false) {
+    
+        const warnings: RelationTargetWarnings = { relationNames: [], targetIds: [] };
+
+        for (let relationName of getRelationNames(document)) {
+            for (let targetId of document.resource.relations[relationName]) {
+                const targetDocument: Document = documentCache.get(targetId);
+                if (!targetDocument) continue;
+                if (!projectConfiguration.isAllowedRelationDomainCategory(
+                    document.resource.category, targetDocument.resource.category, relationName
+                )) {
+                    if (!warnings.relationNames.includes(relationName)) warnings.relationNames.push(relationName);
+                    if (!warnings.targetIds.includes(targetId)) warnings.targetIds.push(targetId);
+                }
+
+            }
+        }
+
+        if (warnings.relationNames.length > 0) {
+            if (!document.warnings) document.warnings = Warnings.createDefault();
+            document.warnings.invalidRelationTargets = warnings;
+            updateIndex(indexFacade, document, ['invalidRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['invalidRelationTargetIds:contain']);
+        } else if (document.warnings?.invalidRelationTargets) {
+            delete document.warnings.invalidRelationTargets;
+            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
+            updateIndex(indexFacade, document, ['invalidRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['invalidRelationTargetIds:contain']);
+        }
+
+        if (updateRelationTargets) {
+            await updateInvalidRelationTargetWarnings(
+                datastore, documentCache, indexFacade, projectConfiguration, document.resource.id
+            );
         }
     }
 
@@ -293,7 +332,7 @@ export module WarningsUpdater {
         }
 
         const valuelist: Valuelist = ValuelistUtil.getValuelist(
-            field, projectDocument, projectConfiguration, parentResource
+            field, projectDocument, projectConfiguration, parentResource, [], true
         );
         return valuelist
             ? set(ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])
@@ -346,8 +385,8 @@ export module WarningsUpdater {
     }
 
 
-    async function updateRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
-                                                indexFacade: IndexFacade, id: string) {
+    async function updateMissingRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
+                                                       indexFacade: IndexFacade, id: string) {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'missingRelationTargetIds:contain': id },
@@ -355,7 +394,22 @@ export module WarningsUpdater {
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
-            await updateRelationTargetWarning(document, indexFacade, documentCache, datastore);
+            await updateMissingRelationTargetWarning(document, indexFacade, documentCache, datastore);
+        }
+    }
+
+
+    async function updateInvalidRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
+                                                       indexFacade: IndexFacade, projectConfiguration: ProjectConfiguration,
+                                                       id: string) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: { 'invalidRelationTargetIds:contain': id },
+            sort: { mode: 'none' }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of documents) {
+            await updateInvalidRelationTargetWarning(document, indexFacade, projectConfiguration, documentCache, datastore);
         }
     }
 
@@ -495,5 +549,13 @@ export module WarningsUpdater {
             : Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN)
                 ? documentCache.get(document.resource.relations.isRecordedIn[0])
                 : undefined;
+    }
+
+
+    function getRelationNames(document: Document): string[] {
+
+        return Object.keys(document.resource.relations).filter(relationName => {
+            return !Relation.Hierarchy.ALL.includes(relationName);
+        });
     }
 }

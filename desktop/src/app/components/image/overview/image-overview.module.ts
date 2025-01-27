@@ -36,11 +36,6 @@ import { ImageDocumentsManager } from '../../../components/image/overview/view/i
         RemoveLinkModalComponent,
         DeleteModalComponent,
     ],
-    entryComponents: [
-        LinkModalComponent,
-        RemoveLinkModalComponent,
-        DeleteModalComponent
-    ],
     providers: [
         ImagesState,
         {

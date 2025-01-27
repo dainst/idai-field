@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $mdi-font-path: 'fonts' !default;
 @import '../node_modules/@mdi/font/css/materialdesignicons';
 
@@ -62,8 +64,12 @@ html {
 
 body {
   position: relative;
-  font-family: 'Open SansVariable', sans-serif !important;
   overflow: hidden;
+}
+
+body,
+.popover {
+  font-family: 'Open SansVariable', sans-serif !important;
 }
 
 #idaifieldlogo {
@@ -84,19 +90,19 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: lighten($primary-button-color, 10%);
-  border-color: lighten($primary-button-color, 10%);
+  background-color: color.adjust($primary-button-color, $lightness: 10%);
+  border-color: color.adjust($primary-button-color, $lightness: 10%);
 }
 
 .btn-primary:disabled, .btn-primary.disabled {
-  background-color: darken($primary-button-color, 10%);
-  border-color: darken($primary-button-color, 10%);
+  background-color: color.adjust($primary-button-color, $lightness: -10%);
+  border-color: color.adjust($primary-button-color, $lightness: -10%);
   cursor: not-allowed;
 }
 
 .btn-primary:active, .btn-primary.active {
-  background-color: saturate($primary-button-color, 10%);
-  border-color: saturate($primary-button-color, 10%);
+  background-color: color.adjust($primary-button-color, $saturation: 10%);
+  border-color: color.adjust($primary-button-color, $saturation: 10%);
 }
 
 .btn-outline-primary {
@@ -106,14 +112,14 @@ body {
 }
 
 .btn-outline-primary:hover {
-  border-color: lighten($primary-button-color, 10%);
+  border-color: color.adjust($primary-button-color, $lightness: 10%);
   color: $primary-button-color;
   background-color: white;
 }
 
 .btn-outline-primary:disabled, .btn-outline-primary.disabled {
-  border-color: darken($primary-button-color, 10%);
-  color: darken($primary-button-color, 10%);
+  border-color: color.adjust($primary-button-color, $lightness: -10%);
+  color: color.adjust($primary-button-color, $lightness: -10%);
   cursor: not-allowed;
   background-color: white;
 }
@@ -125,25 +131,25 @@ body {
 }
 
 .btn-secondary:hover {
-  background-color: lighten(#727b84, 10%);
-  border-color: lighten(#6c757d, 10%);
+  background-color: color.adjust(#727b84, $lightness: 10%);
+  border-color: color.adjust(#6c757d, $lightness: 10%);
   color: #fff;
 }
 
 .btn-secondary:disabled, .btn-primary.disabled {
-  background-color: darken(#727b84, 10%);
-  border-color: darken(#6c757d, 10%);
+  background-color: color.adjust(#727b84, $lightness: -10%);
+  border-color: color.adjust(#6c757d, $lightness: -10%);
   cursor: not-allowed;
 }
 
 .btn-secondary:active, .btn-secondary.active {
-  background-color: saturate(#727b84, 10%);
-  background-color: saturate(#6c757d, 10%);
+  background-color: color.adjust(#727b84, $saturation: 10%);
+  background-color: color.adjust(#6c757d, $saturation: 10%);
 }
 
 .btn-success:disabled, .btn-success.disabled {
-  background-color: darken(#6ca378, 10%);
-  border-color: darken(#6ca378, 10%);
+  background-color: color.adjust(#6ca378, $lightness: -10%);
+  border-color: color.adjust(#6ca378, $lightness: -10%);
   cursor: not-allowed;
 }
 
@@ -161,7 +167,7 @@ body {
   }
 
   &.active {
-    background-color: lighten($link-color, 50%);
+    background-color: color.adjust($link-color, $lightness: 50%);
   }
 }
 
@@ -180,7 +186,7 @@ html [type='button'],
 /* override popover styles */
 .popover {
   padding: 0 !important;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: none !important;
   border-radius: 0.3rem;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   min-width: 200px;
@@ -270,10 +276,10 @@ html [type='button'],
 .form-control {
   border-radius: 1px !important;
   -webkit-appearance: none;
+}
 
-  &:focus {
-    box-shadow: none;
-  }
+input:focus, .form-control:focus {
+  box-shadow: none  !important;
 }
 
 select.form-control:not([size]):not([multiple]) {
@@ -324,6 +330,10 @@ select.form-control:not([size]):not([multiple]) {
   top: 14px;
 }
 
+.modal {
+  z-index: 1055;
+}
+
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
@@ -352,5 +362,20 @@ a {
 }
 
 .custom-marking {
-  color: darken($custom-highlight-color, 50%);
+  color: color.adjust($custom-highlight-color, $lightness: -50%);
+}
+
+.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11,
+.col-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8,
+.col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4,
+.col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-auto {
+  position: relative;
+}
+
+label {
+  margin-bottom: 8px;
+}
+
+#file-path-input {
+  height: 38px;
 }

@@ -175,4 +175,19 @@ defmodule FieldHub.CouchServiceTest do
              }
            ] = CouchService.get_docs_by_category(@project, ["Image", "Drawing"]) |> Enum.to_list()
   end
+
+  test "get_last_n_changes/1 returns the correct amount of changes last changes" do
+    assert [
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _}
+           ] = CouchService.get_last_n_changes(@project, 5)
+
+    assert [
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _}
+           ] = CouchService.get_last_n_changes(@project, 2)
+  end
 end

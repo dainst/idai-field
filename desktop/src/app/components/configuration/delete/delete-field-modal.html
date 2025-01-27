@@ -1,14 +1,21 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@configuration.deleteField.header">Feld löschen?</h5>
+    <h5 *ngIf="isDeletionAllowed()" class="modal-title" i18n="@@configuration.deleteField.header">Feld löschen?</h5>
+    <h5 *ngIf="!isDeletionAllowed()" class="modal-title" i18n="@@configuration.deleteField.header.notAllowed">Feld löschen nicht möglich</h5>
 </div>
 
-<div class="modal-body">
-    <span i18n="@@configuration.deleteField.body">Möchten Sie das Feld <code>{{field.name}}</code> wirklich löschen?</span>
+<div class="modal-body configuration-delete-modal-body">
+    <span *ngIf="isDeletionAllowed()"
+          i18n="@@configuration.deleteField.body">Möchten Sie das Feld <code>{{field.name}}</code> wirklich löschen?</span>
+    <span *ngIf="!isDeletionAllowed()"
+          i18n="@@configuration.deleteField.body.notAllowed">
+          Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird.
+    </span>
 </div>
 
 <div class="modal-footer">
     <div id="delete-field-button"
          class="btn btn-danger"
+         [class.disabled]="!isDeletionAllowed()"
          (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>
     </div>

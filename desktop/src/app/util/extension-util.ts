@@ -1,4 +1,4 @@
-const path = typeof window !== 'undefined' ? window.require('path') : require('path');
+const path = window.require('path');
 
 
 /**

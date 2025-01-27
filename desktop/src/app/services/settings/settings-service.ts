@@ -11,9 +11,9 @@ import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';
 import { SettingsErrors } from './settings-errors';
 
-const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = window.require('@electron/remote');
+const PouchDB = window.require('pouchdb-browser');
 
 
 type validationMode = 'settings'|'synchronization'|'none';

@@ -1,5 +1,5 @@
 <div *ngIf="field && category"
-     [id]="getFieldId(field)"
+     [id]="getFieldId()"
      class="card"
      [class.custom]="highlightAsCustomField()"
      [class.hidden-element]="hidden"
@@ -21,7 +21,7 @@
         <p *ngIf="description" class="card-text">{{description}}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="input-type-colon">:</span>
+                <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="oneliner-colon">:</span>
                 <span>{{getInputTypeLabel()}}</span>
             </li>
             <li *ngIf="field.valuelist" class="list-group-item">
@@ -32,6 +32,19 @@
                     Die Werteliste für dieses Feld entspricht den Einträgen im Feld 
                     <code>{{field.valuelistFromProjectField}}</code> der Projekteinstellungen.
                 </span>
+            </li>
+            <li *ngIf="getRange()" class="list-group-item">
+                <b i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</b>:
+                <div *ngFor="let categoryName of getRange()" class="target-category">
+                    <category-icon [category]="categoryName"
+                                   [customProjectConfiguration]="clonedProjectConfiguration"
+                                   size="25"></category-icon>
+                    <span class="target-category-label">{{getCategoryLabel(categoryName)}}</span>
+                </div>
+            </li>
+            <li *ngIf="getInverseRelation()" class="list-group-item inverse-relation">
+                <b i18n="@@configuration.relation.inverse">Gegenrelation</b><span class="oneliner-colon">:</span>
+                <span class="inverse-relation-label">{{getRelationLabel(getInverseRelation())}}</span>
             </li>
         </ul>
     </div>

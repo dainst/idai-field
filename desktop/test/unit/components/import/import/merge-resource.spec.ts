@@ -1,4 +1,4 @@
-import * as tsfun from 'tsfun';
+import { clone } from 'tsfun';
 import { Resource, Relation } from 'idai-field-core';
 import { GEOMETRY, mergeResource, RELATIONS } from '../../../../../src/app/components/import/import/process/merge-resource';
 import { ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
@@ -26,13 +26,13 @@ describe('mergeResource', () => {
 
     beforeEach(() => {
 
-        target = tsfun.clone(template);
+        target = clone(template);
         target['anotherField'] = 'field1';
-        source = tsfun.clone(template);
+        source = clone(template);
     });
 
 
-    it('delete fields', () => {
+    test('delete fields', () => {
 
         const source = {
             anotherField: null
@@ -44,7 +44,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('overwrite fields', () => {
+    test('overwrite fields', () => {
 
         const source: Resource = {
             id: 'id1',
@@ -61,7 +61,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field', () => {
+    test('merge object field', () => {
 
         target['object'] = { aField: 'aOriginalValue', cField: 'cOriginalValue' };
         source['object'] = { aField: 'aChangedValue', bField: 'bNewValue' };
@@ -74,7 +74,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field - create target', () => {
+    test('merge object field - create target', () => {
 
         source['object'] = { aField: 'aNewValue' };
 
@@ -84,7 +84,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field - delete item in target object', () => {
+    test('merge object field - delete item in target object', () => {
 
         target['object'] = { aField: 'aOriginalValue', bField: 'bOriginalValue' };
         source['object'] = { bField: null };
@@ -96,7 +96,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field - delete target object after deleting item in target object', () => {
+    test('merge object field - delete target object after deleting item in target object', () => {
 
         target['object'] = { aField: 'aOriginalValue' };
         source['object'] = { aField: null };
@@ -107,7 +107,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field - delete one field and add another', () => {
+    test('merge object field - delete one field and add another', () => {
 
         target['object'] = { aField: 'aOriginalValue' };
         source['object'] = { aField: null, bField: 'bValue' };
@@ -119,7 +119,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field - delete object field', () => {
+    test('merge object field - delete object field', () => {
 
         target['object'] = { aField: 'aOriginalValue' };
         source['object'] = null;
@@ -130,7 +130,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field - create field - remove null', () => {
+    test('merge object field - create field - remove null', () => {
 
         target['object'] = undefined;
         source['object'] = { value: 1, endValue: null };
@@ -142,7 +142,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge object field - create field - create not if all null', () => {
+    test('merge object field - create field - create not if all null', () => {
 
         target['object'] = undefined;
         source['object'] = { value: null };
@@ -153,7 +153,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field', () => {
+    test('merge objectArray field', () => {
 
         target['objectArray'] = [{ aField: 'aOriginalValue', cField: 'cOriginalValue' }];
         source['objectArray'] = [{ aField: 'aChangedValue', bField: 'bNewValue' }];
@@ -166,7 +166,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - create target object', () => {
+    test('merge objectArray field - create target object', () => {
 
         target['objectArray'] = undefined;
         source['objectArray'] = [{ aField: 'aNewValue' }];
@@ -177,7 +177,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - create target object - remove null', () => {
+    test('merge objectArray field - create target object - remove null', () => {
 
         target['objectArray'] = undefined;
         source['objectArray'] = [{ aField: 1, bField: null }];
@@ -189,7 +189,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - create target object - create not if all null', () => {
+    test('merge objectArray field - create target object - create not if all null', () => {
 
         target['objectArray'] = undefined;
         source['objectArray'] = [{ aField: null }];
@@ -200,10 +200,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - delete target object', () => {
+    test('merge objectArray field - delete target object', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [{aField: null}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' }];
+        source['objectArray'] = [{ aField: null }];
 
         const result = mergeResource(target, source);
 
@@ -211,9 +211,9 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - delete target object with null entry', () => {
+    test('merge objectArray field - delete target object with null entry', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' }];
         source['objectArray'] = [null];
 
         const result = mergeResource(target, source);
@@ -222,21 +222,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - delete target object (interpret emptied objects as null)', () => {
+    test('merge objectArray field - delete target object (interpret emptied objects as null)', () => {
 
-        target['objectArray'] = [{aField: { aNested: 'aOriginalValue' }}];
-        source['objectArray'] = [{aField: { aNested: null }}];
-
-        const result = mergeResource(target, source);
-
-        expect(result['objectArray']).toBeUndefined();
-    });
-
-
-    it('merge objectArray field - delete target object (interpret emptied objects as null) - case 2', () => {
-
-        target['objectArray'] = [{aField: { aNested: 'aOriginalValue' }}];
-        source['objectArray'] = [{aField: { aNested: null, bNested: null }}];
+        target['objectArray'] = [{ aField: { aNested: 'aOriginalValue' } }];
+        source['objectArray'] = [{ aField: { aNested: null } }];
 
         const result = mergeResource(target, source);
 
@@ -244,10 +233,21 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - do not copy a field containing only null values if target does not exist', () => {
+    test('merge objectArray field - delete target object (interpret emptied objects as null) - case 2', () => {
 
-        target['objectArray'] = [{/* aField is undefined */ bField: 'bValue'}];
-        source['objectArray'] = [{ aField: { aNested: null }}];
+        target['objectArray'] = [{ aField: { aNested: 'aOriginalValue' } }];
+        source['objectArray'] = [{ aField: { aNested: null, bNested: null } }];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray']).toBeUndefined();
+    });
+
+
+    test('merge objectArray field - do not copy a field containing only null values if target does not exist', () => {
+
+        target['objectArray'] = [{ /* aField is undefined */ bField: 'bValue' }];
+        source['objectArray'] = [{ aField: { aNested: null } }];
 
         const result = mergeResource(target, source);
 
@@ -256,10 +256,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - create a nested object if target does not exist', () => {
+    test('merge objectArray field - create a nested object if target does not exist', () => {
 
-        target['objectArray'] = [{/* aField is undefined */ bField: 'bValue'}];
-        source['objectArray'] = [{ aField: { aNested: 'aNestedValue' }}];
+        target['objectArray'] = [{ /* aField is undefined */ bField: 'bValue'}];
+        source['objectArray'] = [{ aField: { aNested: 'aNestedValue' } }];
 
         const result = mergeResource(target, source);
 
@@ -268,10 +268,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - leave nested fields as is, if not deleted by null', () => {
+    test('merge objectArray field - leave nested fields as is, if not deleted by null', () => {
 
-        target['objectArray'] = [{ aField: { aNested: 'aNestedOriginalValue' }}];
-        source['objectArray'] = [{ aField: { bNested: null }}];
+        target['objectArray'] = [{ aField: { aNested: 'aNestedOriginalValue' } }];
+        source['objectArray'] = [{ aField: { bNested: null } }];
 
         const result = mergeResource(target, source);
 
@@ -280,32 +280,20 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - delete target object (interpret deeply nested, emptied objects as null)', () => {
+    test('merge objectArray field - delete target object (interpret deeply nested, emptied objects as null)', () => {
 
-        target['objectArray'] = [{aField: { aNested: { aDeeplyNested: 'aOriginalValue' }}}];
-        source['objectArray'] = [{aField: { aNested: { aDeeplyNested: null } }}];
+        target['objectArray'] = [{ aField: { aNested: { aDeeplyNested: 'aOriginalValue' } } }];
+        source['objectArray'] = [{ aField: { aNested: { aDeeplyNested: null } } }];
 
         const result = mergeResource(target, source);
         expect(result['objectArray']).toBeUndefined();
     });
 
 
-    it('merge objectArray field - delete one target object', () => {
+    test('merge objectArray field - delete one target object', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'},{bField: 'bOriginalValue'}];
-        source['objectArray'] = [undefined, {bField: null}];
-
-        const result = mergeResource(target, source);
-
-        expect(result['objectArray'].length).toBe(1);
-        expect(result['objectArray'][0]['aField']).toBe('aOriginalValue');
-    });
-
-
-    it('merge objectArray field - target object to delete is not defined', () => {
-
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [undefined, {bField: null}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' },{ bField: 'bOriginalValue' }];
+        source['objectArray'] = [undefined, { bField: null }];
 
         const result = mergeResource(target, source);
 
@@ -314,10 +302,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - target object to delete is not defined - 2 undefined', () => {
+    test('merge objectArray field - target object to delete is not defined', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [undefined, undefined ,{bField: null}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' }];
+        source['objectArray'] = [undefined, { bField: null }];
 
         const result = mergeResource(target, source);
 
@@ -326,10 +314,22 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - change one target object and add one target object', () => {
+    test('merge objectArray field - target object to delete is not defined - 2 undefined', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [{aField: 'aChangedValue'}, {bField: 'bNewValue'}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' }];
+        source['objectArray'] = [undefined, undefined ,{ bField: null }];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray'].length).toBe(1);
+        expect(result['objectArray'][0]['aField']).toBe('aOriginalValue');
+    });
+
+
+    test('merge objectArray field - change one target object and add one target object', () => {
+
+        target['objectArray'] = [{ aField: 'aOriginalValue' }];
+        source['objectArray'] = [{ aField: 'aChangedValue' }, { bField: 'bNewValue' }];
 
         const result = mergeResource(target, source);
 
@@ -338,10 +338,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore undefined-valued field', () => {
+    test('merge objectArray field - ignore undefined-valued field', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
-        source['objectArray'] = [undefined, {bField: 'bChangedValue'}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' }, { bField: 'bOriginalValue' }];
+        source['objectArray'] = [undefined, { bField: 'bChangedValue' }];
 
         const result = mergeResource(target, source);
 
@@ -350,10 +350,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore undefined-valued field, add array object', () => {
+    test('merge objectArray field - ignore undefined-valued field, add array object', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [undefined, {bField: 'bNewValue'}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' }];
+        source['objectArray'] = [ undefined, { bField: 'bNewValue' }];
 
         const result = mergeResource(target, source);
 
@@ -362,10 +362,10 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - ignore undefined-valued field, add two array objects', () => {
+    test('merge objectArray field - ignore undefined-valued field, add two array objects', () => {
 
-        target['objectArray'] = [{aField: 'aOriginalValue'}];
-        source['objectArray'] = [undefined, {bField: 'bNewValue'}, {cField: 'cNewValue'}];
+        target['objectArray'] = [{ aField: 'aOriginalValue' }];
+        source['objectArray'] = [undefined, { bField: 'bNewValue' }, { cField: 'cNewValue' }];
 
         const result = mergeResource(target, source);
 
@@ -375,7 +375,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge objectArray field - create target objectArray', () => {
+    test('merge objectArray field - create target objectArray', () => {
 
         source['objectArray'] = [{aField: 'aNewValue'}];
 
@@ -385,7 +385,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('dont overwrite identifier, id', () => {
+    test('dont overwrite identifier, id', () => {
 
         const source: Resource = {
             id: 'id2',
@@ -404,7 +404,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge array fields', () => {
+    test('merge array fields', () => {
 
         target['array'] = [1, 2, 7];
         // we choose to make it shorter than the target array for the test
@@ -416,7 +416,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('overwrite, do not merge geometry', () => {
+    test('overwrite, do not merge geometry', () => {
 
         target[GEOMETRY] = { a: 1 };
         source[GEOMETRY] = { b: 2 };
@@ -427,7 +427,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge relations', () => {
+    test('merge relations', () => {
 
         target[RELATIONS] = { a: ['a1', 'a2'] };
         source[RELATIONS] = {
@@ -440,7 +440,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('merge relations, do not overwrite RECORDED_IN', () => {
+    test('merge relations, do not overwrite RECORDED_IN', () => {
 
         target[RELATIONS][RECORDED_IN] = ['a', 'b'];
         source[RELATIONS][RECORDED_IN] = ['c'];
@@ -450,9 +450,9 @@ describe('mergeResource', () => {
     });
 
 
-    it('null or undefined values in object arrays are not considered as array of heterogeneous types', () => {
+    test('null or undefined values in object arrays are not considered as array of heterogeneous types', () => {
 
-        const o = {a: 1};
+        const o = { a: 1 };
 
         source['array'] = [o, null, null];
         mergeResource(target, source);
@@ -465,60 +465,60 @@ describe('mergeResource', () => {
             source['array'] = [undefined, o];
             mergeResource(target, source);
         } catch (expected) {
-            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) throw new Error('Test failure');
         }
 
         try {
             source['array'] = [null, o];
             mergeResource(target, source);
         } catch (expected) {
-            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) throw new Error('Test failure');
         }
 
         try {
             source['array'] = [null, o, undefined, o];
             mergeResource(target, source);
         } catch (expected) {
-            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) fail();
+            if (expected[0] === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) throw new Error('Test failure');
         }
     });
 
 
     // err cases
 
-    it('array of heterogeneous categories - top level', () => {
+    test('array of heterogeneous categories - top level', () => {
 
-        source['array'] = [{a: 1}, 2];
+        source['array'] = [{ a: 1 }, 2];
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 
 
-    it('array of heterogeneous categories - nested', () => {
+    test('array of heterogeneous categories - nested', () => {
 
-        source['array'] = { b: [{a: 1}, 2] };
+        source['array'] = { b: [{ a: 1 }, 2] };
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 
 
-    it('array of heterogeneous categories - non-object array must not contain undefined', () => {
+    test('array of heterogeneous categories - non-object array must not contain undefined', () => {
 
         source['array'] = [2, undefined];
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
@@ -527,20 +527,20 @@ describe('mergeResource', () => {
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 
 
-    it('array of heterogeneous categories - non-object array cannot contain null', () => {
+    test('array of heterogeneous categories - non-object array cannot contain null', () => {
 
         source['array'] = [2, null];
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
@@ -549,14 +549,14 @@ describe('mergeResource', () => {
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
         }
     });
 
 
-    it('attempted to change category', () => {
+    test('attempted to change category', () => {
 
         const source: Resource = {
             id: 'id2',
@@ -569,74 +569,74 @@ describe('mergeResource', () => {
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.CATEGORY_CANNOT_BE_CHANGED, identifier]);
         }
     });
 
 
-    it('merge objectArray field - target object to delete is not defined - do not allow empty entries', () => {
+    test('merge objectArray field - target object to delete is not defined - do not allow empty entries', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}];
         source['objectArray'] = [undefined, undefined ,{bField: 'bNewValue'}];
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
         }
     });
 
-    it('merge objectArray field - throw if the deletion would occur but there are still objects to the right side', () => {
+    test('merge objectArray field - throw if the deletion would occur but there are still objects to the right side', () => {
 
         target['objectArray'] = [{aField: 'aOriginalValue'}, {bField: 'bOriginalValue'}];
         source['objectArray'] = [{aField: null}];
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
         }
     });
 
 
-    it('merge objectArray field - ignore null-valued field, do not add array object, if this would result in empty entries', () => {
+    test('merge objectArray field - ignore null-valued field, do not add array object, if this would result in empty entries', () => {
 
         target['objectArray'] = undefined;
         source['objectArray'] = [null, {bField: 'bNewValue'}];
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]);
         }
     });
 
 
-    it('violate precondition in target', () => {
+    test('violate precondition in target', () => {
 
         target['anotherField'] = { a: {} };
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual('Precondition violated in mergeResource. Identifier: identifier1');
         }
     });
 
 
-    it('violate precondition in source', () => {
+    test('violate precondition in source', () => {
 
         source['anotherField'] = { a: {} };
 
         try {
             mergeResource(target, source);
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual('Precondition violated in mergeResource. Identifier: identifier1');
         }

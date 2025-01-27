@@ -19,7 +19,8 @@ import { ConfigurationUtil } from '../../configuration-util';
         '(window:keydown)': 'onKeyDown($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

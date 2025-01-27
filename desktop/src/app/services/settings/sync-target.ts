@@ -1,6 +1,6 @@
 import { FileSyncPreference } from 'idai-field-core';
 
-const address = typeof window !== 'undefined' ? window.require('address') : require('address');
+const address = window.require('address');
 
 
 export interface SyncTarget {

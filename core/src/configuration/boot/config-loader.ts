@@ -1,5 +1,5 @@
 import { clone, Map } from 'tsfun';
-import { ConfigurationDocument } from '../../model/configuration-document';
+import { ConfigurationDocument } from '../../model/document/configuration-document';
 import { Relation } from '../../model/configuration/relation';
 import { LanguageConfiguration } from '../model/language/language-configuration';
 import { LanguageConfigurations } from '../model/language/language-configurations';
@@ -15,7 +15,7 @@ import { Valuelist } from '../../model/configuration/valuelist';
 import { Template } from '../../model/configuration/template';
 
 
-const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it', 'tr', 'uk'];
+const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it', 'pt', 'tr', 'uk'];
 
 
 /**

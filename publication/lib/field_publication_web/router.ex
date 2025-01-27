@@ -6,6 +6,8 @@ defmodule FieldPublicationWeb.Router do
   import FieldPublicationWeb.UserAuth
   import FieldPublicationWeb.Gettext.Plug
 
+  import FieldPublicationWeb.Cantaloupe, only: [set_forward_headers_for_cantaloupe: 2]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -27,7 +29,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through :ensure_image_published
 
     scope "/iiif" do
-      pipe_through :forward_headers
+      pipe_through :set_forward_headers_for_cantaloupe
 
       forward("/", ReverseProxyPlug,
         status_callbacks: %{
@@ -44,6 +46,7 @@ defmodule FieldPublicationWeb.Router do
 
   scope "/api/json" do
     get "/raw/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
+    get "/extended/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's
@@ -74,7 +77,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through [:browser, :require_administrator]
 
     live_session :require_administrator,
-      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
+      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_is_admin}] do
       live "/users", Management.UserLive, :index
       live "/users/new", Management.UserLive, :new
       live "/users/:name/edit", Management.UserLive, :edit

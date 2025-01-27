@@ -1,8 +1,9 @@
+import { nop } from 'tsfun';
 import { BackupLoadingComponent } from '../../../../src/app/components/backup/backup-loading.component';
 import { Backup } from '../../../../src/app/components/backup/backup';
 import { M } from '../../../../src/app/components/messages/m';
 
-import PouchDB = require('pouchdb-node');
+const PouchDB = require('pouchdb-node');
 
 
 /**
@@ -10,33 +11,52 @@ import PouchDB = require('pouchdb-node');
  */
 describe('BackupLoadingComponent', () => {
 
-    const unittestdb = 'unittestdb';
+    const databaseName = 'unittestdb';
 
-    let c: BackupLoadingComponent;
+    let backupLoadingComponent: BackupLoadingComponent;
     let messages: any;
-    let settingsProvider: any;
     let settingsService: any;
     let backupProvider: any;
-    let tabManager: any;
-    let menuService: any;
 
 
-    afterEach(done => new PouchDB(unittestdb).destroy().then(done));
+    beforeAll(() => {
+
+        jest.spyOn(console, 'error').mockImplementation(nop);
+    });
 
 
     beforeEach(() => {
 
-        spyOn(console, 'warn');
+        messages = {
+            add: jest.fn()
+        };
+        
+        settingsService = {
+            addProject: jest.fn()
+        };
+        
+        backupProvider = {
+            dump: jest.fn(),
+            readDump: jest.fn()
+        };
 
-        const modalService = jasmine.createSpyObj('modalService', ['open']);
-        messages = jasmine.createSpyObj('messages', ['add']);
-        settingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
-        settingsService = jasmine.createSpyObj('settingsService', ['addProject']);
-        backupProvider = jasmine.createSpyObj('backupProvider', ['dump', 'readDump']);
-        tabManager = jasmine.createSpyObj('tabManager', ['openActiveTab']);
-        menuService = jasmine.createSpyObj('menuService', ['setContext']);
+        const modalService: any = {
+            open: jest.fn()
+        };
 
-        c = new BackupLoadingComponent(
+        const settingsProvider: any = {
+            getSettings: jest.fn().mockReturnValue({ dbs: ['selectedproject'] })
+        };
+        
+        const tabManager: any = {
+            openActiveTab: jest.fn()
+        };
+        
+        const menuService: any = {
+            setContext: jest.fn()
+        };
+
+        backupLoadingComponent = new BackupLoadingComponent(
             modalService,
             messages,
             settingsProvider,
@@ -44,71 +64,73 @@ describe('BackupLoadingComponent', () => {
             backupProvider,
             tabManager,
             menuService,
-            undefined,
             undefined
         );
-
-        settingsProvider.getSettings.and.returnValue({ dbs: ['selectedproject'] } as any);
     });
 
 
-    it('load backup: project not specified', async done => {
+    afterEach(async () => {
 
-        c.projectIdentifier = '';
-        c.path = './test/store/backup_test_file.txt';
-        await c.loadBackup();
+        await new PouchDB(databaseName).destroy();
+    });
+
+
+    afterAll(() => {
+
+        (console.error as any).mockRestore();
+    });
+
+
+    test('load backup: project not specified', async () => {
+
+        backupLoadingComponent.projectIdentifier = '';
+        backupLoadingComponent.path = './test/store/backup_test_file.txt';
+        await backupLoadingComponent.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER]);
-        done();
     });
 
 
-    it('load backup: filenotexists', async done => {
+    test('load backup: filenotexists', async () => {
 
-        c.projectIdentifier = unittestdb;
-        c.path = './test/store/backup_test_file.txt';
+        backupLoadingComponent.projectIdentifier = databaseName;
+        backupLoadingComponent.path = './test/store/backup_test_file.txt';
 
-        backupProvider.readDump.and.returnValue(Promise.reject(Backup.FILE_NOT_EXIST));
-        await c.loadBackup();
+        backupProvider.readDump.mockReturnValue(Promise.reject(Backup.FILE_NOT_EXIST));
+        await backupLoadingComponent.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
-        done();
     });
 
 
-    it('load backup: cannotreaddb', async done => {
+    test('load backup: cannotreaddb', async () => {
 
-        spyOn(console, 'error');
+        backupLoadingComponent.projectIdentifier = databaseName;
+        backupLoadingComponent.path = './package.json';
 
-        c.projectIdentifier = unittestdb;
-        c.path = './package.json';
-
-        backupProvider.readDump.and.returnValue(Promise.reject('reason'));
-        await c.loadBackup();
+        backupProvider.readDump.mockReturnValue(Promise.reject('reason'));
+        await backupLoadingComponent.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_GENERIC]);
-        done();
     });
 
 
-    it('readDump: show success message', async done => {
+    test('readDump: show success message', async () => {
 
-        c.projectIdentifier = unittestdb;
-        c.path = './package.json';
-        await c.loadBackup();
+        backupLoadingComponent.projectIdentifier = databaseName;
+        backupLoadingComponent.path = './package.json';
+        await backupLoadingComponent.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_SUCCESS]);
-        done();
     });
 
 
-    it('readDump: create new project via settings', async done => {
+    test('readDump: create new project via settings', async () => {
 
-        c.projectIdentifier = unittestdb;
-        c.path = './package.json';
-        await c.loadBackup();
+        backupLoadingComponent.projectIdentifier = databaseName;
+        backupLoadingComponent.path = './package.json';
+        await backupLoadingComponent.loadBackup();
 
-        expect(settingsService.addProject).toHaveBeenCalledWith(unittestdb);
-        done();
+        expect(settingsService.addProject).toHaveBeenCalledWith(databaseName);
     });
 });

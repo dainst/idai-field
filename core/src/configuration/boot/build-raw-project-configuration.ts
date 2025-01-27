@@ -36,6 +36,7 @@ import { getParentForm } from './get-parent-form';
 
 
 const CATEGORIES = 0;
+const RELATIONS = 1;
 
 
 /**
@@ -71,7 +72,6 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         = buildFields(builtInFieldDefinitions, languageConfigurations, valuelists, 'fields');
     const commonFields: Map<Field>
         = buildFields(commonFieldDefinitions, languageConfigurations, valuelists, 'commons');
-    applyLanguagesToRelations(languageConfigurations, relationDefinitions);
 
     setDefaultConstraintIndexed(categories, builtInFields, commonFields);
 
@@ -90,12 +90,10 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         applyLanguagesToForms(languageConfigurations, categories, selectedForms),
         prepareRawProjectConfiguration,
         addRelations(relationDefinitions),
-        updateStruct(
-            CATEGORIES,
-            processForms(
-                validateFields, languageConfigurations, categoriesOrder, relationDefinitions, categories,
-                selectedParentForms, includeAllRelations
-            )
+        applyLanguagesToRelationFields(languageConfigurations),
+        removeCustomRelationFields,
+        processForms(
+            validateFields, languageConfigurations, categoriesOrder, categories, selectedParentForms, includeAllRelations
         )
     );
 
@@ -156,20 +154,21 @@ function buildFields(fieldDefinitions: Map<BuiltInFieldDefinition>, languageConf
 function processForms(validateFields: any,
                       languageConfigurations: LanguageConfigurations,
                       categoriesOrder: string[],
-                      relations: Array<Relation>,
                       categories: Map<TransientCategoryDefinition>,
                       selectedParentForms?: string[],
-                      includeInvisibleRelations: boolean = false): Mapping<Map<TransientFormDefinition>, Forest<CategoryForm>> {
+                      includeInvisibleRelations: boolean = false) {
 
-    return compose(
-        validateFields,
-        makeCategoryForest(relations, categories, selectedParentForms, includeInvisibleRelations),
-        Forest.map(curry(setGroupLabels, languageConfigurations)),
-        orderCategories(categoriesOrder),
-        linkParentAndChildInstances
-    );
+    return (configuration: [Map<TransientFormDefinition>, Array<Relation>]) => {
+        return [compose(
+            validateFields,
+            makeCategoryForest(configuration[RELATIONS], categories, selectedParentForms, includeInvisibleRelations),
+            Forest.map(curry(setGroupLabels, languageConfigurations)),
+            orderCategories(categoriesOrder),
+            linkParentAndChildInstances
+        )(configuration[CATEGORIES]), configuration[RELATIONS]];
+
+    }
 }
-
 
 function setDefaultConstraintIndexed(categories:  Map<TransientCategoryDefinition>, builtInFields: Map<Field>,
                                      commonFields: Map<Field>) {
@@ -234,7 +233,7 @@ function replaceValuelistIdsWithValuelists(valuelists: Map<Valuelist>) {
         }
 
         return forms;
-    }
+    };
 }
 
 
@@ -275,7 +274,27 @@ function applyLanguagesToForms(languageConfigurations: LanguageConfigurations,
         }
         
         return forms;
-    }
+    };
+}
+
+
+function applyLanguagesToRelationFields(languageConfigurations: LanguageConfigurations) {
+
+    return (configuration: [Map<TransientFormDefinition>, Array<Relation>]) => {
+        applyLanguagesToRelations(languageConfigurations, configuration[RELATIONS]);
+        return configuration;
+    };
+};
+
+
+function removeCustomRelationFields(configuration: [Map<TransientFormDefinition>, Array<Relation>]) {
+
+    Object.values(configuration[CATEGORIES]).forEach(form => {
+        Object.values(form.fields).filter(field => field.inputType === Field.InputType.RELATION)
+            .forEach(field => delete form.fields[field.name]);
+    });
+
+    return configuration;
 }
 
 
@@ -290,7 +309,7 @@ function removeUnusedForms(selectedFormsNames: string[]): Mapping<Map<TransientF
         );
 
         return formsToRemove.reduce(withDissoc, forms) as Map<TransientFormDefinition>;
-    }
+    };
 }
 
 

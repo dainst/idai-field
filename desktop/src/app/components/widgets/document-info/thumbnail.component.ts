@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Datastore, FieldResource, ImageVariant } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
 
 @Component({
     selector: 'thumbnail',
-    templateUrl: './thumbnail.html'
+    templateUrl: './thumbnail.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -23,8 +23,7 @@ export class ThumbnailComponent implements OnChanges {
 
 
     constructor(private imageUrlMaker: ImageUrlMaker,
-                private datastore: Datastore,
-                private i18n: I18n) {}
+                private datastore: Datastore) {}
 
 
     public isThumbnailFound = (): boolean => !this.thumbnailPlaceholderCategory;
@@ -41,14 +40,8 @@ export class ThumbnailComponent implements OnChanges {
     public getNumberOfImagesTooltip(): string {
 
         return this.getNumberOfImages() === 1
-            ? this.i18n({
-                id: 'widgets.documentInfo.thumbnail.oneLinkedImage',
-                value: 'Ein verknüpftes Bild'
-            })
-            : this.getNumberOfImages() + ' ' + this.i18n({
-                id: 'widgets.documentInfo.thumbnail.linkedImages',
-                value: 'verknüpfte Bilder'
-            });
+            ? $localize `:@@widgets.documentInfo.thumbnail.oneLinkedImage:Ein verknüpftes Bild`
+            : this.getNumberOfImages() + ' ' + $localize `:@@widgets.documentInfo.thumbnail.linkedImages:verknüpfte Bilder`;
     }
 
 

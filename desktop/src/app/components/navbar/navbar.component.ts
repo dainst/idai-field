@@ -1,6 +1,5 @@
 import { Component, DoCheck, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Tab } from '../../services/tabs/tab';
 import { TabUtil } from '../../services/tabs/tab-util';
@@ -14,7 +13,8 @@ import { MenuModalLauncher } from '../../services/menu-modal-launcher';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:resize)': 'onResize()'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -31,8 +31,7 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
-                private menuModalLauncher: MenuModalLauncher,
-                private i18n: I18n) {
+                private menuModalLauncher: MenuModalLauncher) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
         this.menuModalLauncher.projectPropertiesNotifications().subscribe(() => this.onResize());
@@ -107,29 +106,29 @@ export class NavbarComponent implements DoCheck {
         if (!this.activeRoute) return '';
 
         if (this.activeRoute.startsWith('/images')) {
-            return this.i18n({ id: 'navbar.tabs.images', value: 'Bilder' });
+            return $localize `:@@navbar.tabs.images:Bilder`;
         } else if (this.activeRoute.startsWith('/resources/types')) {
-            return this.i18n({ id: 'navbar.tabs.types', value: 'Typenverwaltung' });
+            return $localize `:@@navbar.tabs.types:Typenverwaltung`;
         } else if (this.activeRoute.startsWith('/resources/inventory')) {
-            return this.i18n({ id: 'navbar.tabs.inventory', value: 'Inventarisierung' });
+            return $localize `:@@navbar.tabs.inventory:Inventarisierung`;
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
         } else if (this.activeRoute.startsWith('/downloadProject')) {
-            return this.i18n({ id: 'navbar.tabs.downloadProject', value: 'Projekt herunterladen' });
+            return $localize `:@@navbar.tabs.downloadProject:Projekt herunterladen`;
         } else if (this.activeRoute.startsWith('/import')) {
-            return this.i18n({ id: 'navbar.tabs.import', value: 'Import' });
+            return $localize `:@@navbar.tabs.import:Import`;
         } else if (this.activeRoute.startsWith('/export')) {
-            return this.i18n({ id: 'navbar.tabs.export', value: 'Export' });
+            return $localize `:@@navbar.tabs.export:Export`;
         } else if (this.activeRoute.startsWith('/backup-creation')) {
-            return this.i18n({ id: 'navbar.tabs.backupCreation', value: 'Backup erstellen' });
+            return $localize `:@@navbar.tabs.backupCreation:Backup erstellen`;
         } else if (this.activeRoute.startsWith('/backup-loading')) {
-            return this.i18n({ id: 'navbar.tabs.backupLoading', value: 'Backup einlesen' });
+            return $localize `:@@navbar.tabs.backupLoading:Backup einlesen`;
         } else if (this.activeRoute.startsWith('/help')) {
-            return this.i18n({ id: 'navbar.tabs.help', value: 'Hilfe' });
+            return $localize `:@@navbar.tabs.help:Hilfe`;
         } else if (this.activeRoute.startsWith('/settings')) {
-            return this.i18n({ id: 'navbar.tabs.settings', value: 'Einstellungen' });
+            return $localize `:@@navbar.tabs.settings:Einstellungen`;
         } else if (this.activeRoute.startsWith('/configuration')) {
-            return this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' });
+            return $localize `:@@navbar.tabs.configuration:Projektkonfiguration`;
         } else {
             return '';
         }

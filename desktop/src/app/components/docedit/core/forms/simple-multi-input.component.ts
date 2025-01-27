@@ -3,7 +3,8 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'form-field-simple-multi-input',
-    templateUrl: './simple-multi-input.html'
+    templateUrl: './simple-multi-input.html',
+    standalone: false
 })
 
 /**

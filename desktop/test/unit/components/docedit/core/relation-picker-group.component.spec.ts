@@ -27,7 +27,7 @@ describe('RelationPickerGroupComponent', () => {
     });
 
 
-    it('should create an empty relation array if no relation array exists and a new relation is created', () => {
+    test('should create an empty relation array if no relation array exists and a new relation is created', () => {
 
         relationPickerGroupComponent.ngOnChanges();
         relationPickerGroupComponent.createRelation();

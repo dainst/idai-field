@@ -1,6 +1,6 @@
 import { DatastoreErrors } from '../../../src/datastore/datastore-errors';
 import { PouchdbDatastore } from '../../../src/datastore/pouchdb/pouchdb-datastore';
-import { Document } from '../../../src/model/document';
+import { Document } from '../../../src/model/document/document';
 import { doc } from '../../test-helpers';
 
 

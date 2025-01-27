@@ -1,8 +1,7 @@
 defmodule FieldPublicationWeb.Api.Image do
   alias FieldPublication.FileService
   use FieldPublicationWeb, :controller
-  # TODO: Sanitize?
-  # TODO: Send 404 if applicable
+
   def raw(conn, %{"project_name" => name, "uuid" => uuid} = _params) do
     base_path = FileService.get_raw_image_data_path(name)
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels, ProjectConfiguration } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field/field-editor-modal.component';
@@ -16,7 +16,8 @@ import { Naming } from '../naming';
     templateUrl: './add-field-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -28,6 +29,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
+    public clonedProjectConfiguration: ProjectConfiguration;
     public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<void>;
 
     public searchTerm: string = '';
@@ -72,7 +74,11 @@ export class AddFieldModalComponent {
 
         if (!this.selectedField) return;
 
-        this.addSelectedField();
+        if (this.selectedField.inputType === Field.InputType.RELATION) {
+            this.createNewField(this.selectedField);
+        } else {
+            this.addSelectedField();
+        }
     }
 
 
@@ -87,8 +93,8 @@ export class AddFieldModalComponent {
         this.fields = this.configurationIndex.findFields(
             this.searchTerm,
             this.category.source === 'custom' ? this.category.parentCategory.name : this.category.name
-        )
-            .concat(this.configurationIndex.findFields(this.searchTerm, 'commons'))
+        ).concat(this.configurationIndex.findFields(this.searchTerm, 'commons'))
+            .concat(this.configurationIndex.findFields(this.searchTerm, 'customRelations'))
             .filter(field => (field.visible || field.editable)
                 && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name))
             .sort((field1, field2) => SortUtil.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
@@ -114,7 +120,7 @@ export class AddFieldModalComponent {
     }
 
 
-    private async createNewField() {
+    private async createNewField(template?: Field) {
 
         const [result, componentInstance] = this.modals.make<FieldEditorModalComponent>(
             FieldEditorModalComponent,
@@ -126,17 +132,18 @@ export class AddFieldModalComponent {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = {
-            name: this.emptyField.name,
-            inputType: 'input',
-            label: {},
-            defaultLabel: {},
-            description: {},
-            defaultDescription: {},
+            name: template?.name ?? this.emptyField.name,
+            inputType: template?.inputType ?? 'input',
+            label: template?.label ?? {},
+            defaultLabel: template?.defaultLabel ?? {},
+            description: template?.description ?? {},
+            defaultDescription: template?.defaultDescription ?? {},
             source: 'custom'
         };
         componentInstance.groupName = this.groupName;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.new = true;
         componentInstance.initialize();
 

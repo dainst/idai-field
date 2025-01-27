@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Map } from 'tsfun';
 import { Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
@@ -14,7 +13,8 @@ type StratigraphicalRelationInfo = {
 
 @Component({
     selector: 'edit-form-group',
-    templateUrl: './edit-form-group.html'
+    templateUrl: './edit-form-group.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -35,14 +35,13 @@ export class EditFormGroup implements OnChanges {
 
     constructor(private labelsService: Labels,
                 private projectConfiguration: ProjectConfiguration,
-                private elementRef: ElementRef,
-                private i18n: I18n) {}
+                private elementRef: ElementRef) {}
 
 
     ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
-        if (this.scrollTargetField) this.scrollToTargetField();
+        this.autoScroll();
     }
 
 
@@ -66,7 +65,7 @@ export class EditFormGroup implements OnChanges {
             case Relation.Position.FILLS:
                 return {
                     imageName: 'above',
-                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.aboveBelow', value: 'Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.' })
+                    tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.aboveBelow:Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.`
                 };
             case Relation.Position.BELOW:
             case Relation.Position.CUTBY:
@@ -74,18 +73,18 @@ export class EditFormGroup implements OnChanges {
             case Relation.Position.FILLEDBY:
                 return {
                     imageName: 'below',
-                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.aboveBelow', value: 'Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.' })
+                    tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.aboveBelow:Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.`
                 };
             case Relation.SAME_AS:
             case Relation.Position.BONDSWITH:
                 return {
                     imageName: 'same',
-                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.above', value: 'Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.' })
+                    tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.above:Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.`
                 };
             case Relation.Position.BORDERS:
                 return {
                     imageName: 'none',
-                    tooltip: this.i18n({ id: 'docedit.stratigraphicalRelationInfo.none', value: 'Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.' })
+                    tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.none:Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.`
                 };
             default:
                 return undefined;
@@ -127,6 +126,16 @@ export class EditFormGroup implements OnChanges {
     }
 
 
+    private async autoScroll() {
+
+        if (this.scrollTargetField) {
+            this.scrollToTargetField();
+        } else {
+            this.scrollToTop();
+        }
+    }
+
+
     private async scrollToTargetField() {
 
         await AngularUtility.refresh();
@@ -150,6 +159,13 @@ export class EditFormGroup implements OnChanges {
 
         await AngularUtility.refresh();
         const scrollY: number = element.getBoundingClientRect().top - containerElement.getBoundingClientRect().top;
+        containerElement.parentElement.scrollTo(0, scrollY);
+    }
+
+
+    private scrollToTop() {
+
+        const containerElement: HTMLElement = this.elementRef.nativeElement;
         containerElement.parentElement.scrollTo(0, scrollY);
     }
 

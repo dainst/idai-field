@@ -1,8 +1,9 @@
+import { nop } from 'tsfun';
 import { Backup } from '../../../../src/app/components/backup/backup';
 
-import fs = require('fs');
-import rimraf = require('rimraf');
-import PouchDB = require('pouchdb-node');
+const fs = require('fs');
+const rimraf = require('rimraf');
+const PouchDB = require('pouchdb-node');
 
 
 /**
@@ -13,7 +14,10 @@ describe('Backup', () => {
     const backupFilePath = process.cwd() + '/test/store/backup_test_file.txt';
 
 
-    beforeEach(() => spyOn(console, 'warn'));
+    beforeAll(() => {
+        
+        jest.spyOn(console, 'warn').mockImplementation(nop);
+    });
 
 
     afterEach(done => {
@@ -24,7 +28,13 @@ describe('Backup', () => {
     });
 
 
-    it('do a backup', async done => {
+    afterAll(() => {
+
+        (console.warn as any).mockRestore();
+    });
+
+
+    test('do a backup', async () => {
 
         const db = await new PouchDB('unittest');
         await db.put({ '_id' : 'a1', a: { b: 'c' }});
@@ -40,6 +50,5 @@ describe('Backup', () => {
         expect(docs[1]['_id']).toEqual('a2');
 
         db.close();
-        done();
     });
 });

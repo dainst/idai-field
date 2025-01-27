@@ -27,19 +27,13 @@ export module MessagesConversion {
 
         if (msg === ReaderErrors.FILE_UNREADABLE) replacement = M.IMPORT_READER_FILE_UNREADABLE;
         if (msg === ReaderErrors.SHAPEFILE_READ) replacement = M.IMPORT_READER_SHAPEFILE_READ_ERROR;
-        if (msg === ReaderErrors.SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE) replacement = M.IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE;
-        if (msg === ReaderErrors.SHAPEFILE_JSONL_WRITE) replacement = M.IMPORT_READER_SHAPEFILE_JSONL_WRITE;
-        if (msg === ReaderErrors.SHAPEFILE_GENERIC) replacement = M.IMPORT_PARSER_SHAPEFILE_GENERIC;
         if (msg === ReaderErrors.CATALOG_GENERIC) replacement = M.IMPORT_PARSER_CATALOG_GENERIC;
 
-        if (msg === ParserErrors.SHAPEFILE_GENERIC) replacement = M.IMPORT_PARSER_SHAPEFILE_GENERIC;
         if (msg === ParserErrors.FILE_INVALID_JSON) replacement = M.IMPORT_PARSER_INVALID_JSON;
         if (msg === ParserErrors.FILE_INVALID_JSONL) replacement = M.IMPORT_PARSER_INVALID_JSONL;
         if (msg === ParserErrors.MANDATORY_CSV_FIELD_MISSING) replacement = M.IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING;
         if (msg === ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT) replacement = M.IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT;
-        if (msg === ParserErrors.INVALID_GEOMETRY) replacement = M.IMPORT_PARSER_INVALID_GEOMETRY;
         if (msg === ParserErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_PARSER_MISSING_IDENTIFIER;
-        if (msg === ParserErrors.MISSING_IDENTIFIER_SHAPEFILE) replacement = M.IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE;
         if (msg === ParserErrors.ID_MUST_NOT_BE_SET) replacement = M.IMPORT_PARSER_ID_MUST_NOT_BE_SET;
         if (msg === ParserErrors.WRONG_IDENTIFIER_FORMAT) replacement = M.IMPORT_PARSER_IDENTIFIER_FORMAT;
         if (msg === ParserErrors.CSV_GENERIC) replacement = M.IMPORT_PARSER_GENERIC_CSV_ERROR;
@@ -83,7 +77,6 @@ export module MessagesConversion {
         if (msg === ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.PARENT_MUST_NOT_BE_ARRAY) replacement = M.IMPORT_PARENT_MUST_NOT_BE_ARRAY;
         if (msg === ImportErrors.MUST_BE_ARRAY) replacement = M.IMPORT_MUST_BE_ARRAY;
-        if (msg === ImportErrors.MUST_BE_IN_SAME_OPERATION) replacement = M.IMPORT_MUST_BE_IN_SAME_OPERATION;
         if (msg === ImportErrors.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE) replacement = M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE;
         if (msg === ImportErrors.TARGET_CATEGORY_RANGE_MISMATCH) replacement = M.IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH;
         if (msg === ImportErrors.MUST_NOT_BE_EMPTY_STRING) replacement = M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING;
@@ -93,6 +86,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.EMPTY_OBJECT_IN_RESOURCE) replacement = M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE;
         if (msg === ImportErrors.INVALID_IDENTIFIER_PREFIX) replacement = M.MODEL_VALIDATION_INVALID_IDENTIFIER_PREFIX;
         if (msg === ImportErrors.RESOURCE_LIMIT_EXCEEDED) replacement = M.IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED;
+        if (msg === ImportErrors.WARNINGS_EXIST) replacement = M.IMPORT_ERROR_WARNINGS_EXIST;
 
         if (msg === ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH) replacement = M.IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH;
         if (msg === ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG) replacement = M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG;
@@ -101,6 +95,7 @@ export module MessagesConversion {
         if (msg === ImportCatalogErrors.DIFFERENT_PROJECT_ENTRIES) replacement = M.IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES;
         if (msg === ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS) replacement = M.IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS;
         if (msg === ImportCatalogErrors.INVALID_RELATIONS) replacement = M.IMPORT_CATALOG_ERROR_INVALID_RELATIONS;
+        if (msg === ImportCatalogErrors.INVALID_CATEGORY) replacement = M.IMPORT_CATALOG_ERROR_INVALID_CATEGORY;
 
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_READER_ROLLBACK;
         if (msg === ImportErrors.INVALID_FIELDS) {

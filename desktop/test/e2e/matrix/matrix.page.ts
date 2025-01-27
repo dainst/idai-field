@@ -1,4 +1,4 @@
-import { click, waitForExist, getLocator } from '../app';
+import { click, waitForExist, getLocator, waitForNotExist } from '../app';
 
 
 /**
@@ -20,7 +20,7 @@ export class MatrixPage {
     }
 
 
-    public static async clickClearSelectionButton() {
+    public static clickClearSelectionButton() {
 
         return click('#clear-selection-button');
     }
@@ -28,13 +28,15 @@ export class MatrixPage {
 
     public static async clickCreateGraphFromSelectionButton() {
 
-        return click('#create-graph-from-selection-button');
+        await click('#create-graph-from-selection-button');
+        await waitForNotExist('.loading-icon');
     }
 
 
-    public static clickReloadGraphButton() {
+    public static async clickReloadGraphButton() {
 
-        return click('#reload-graph-button');
+        await click('#reload-graph-button');
+        await waitForNotExist('.loading-icon');
     }
 
 
@@ -44,21 +46,24 @@ export class MatrixPage {
     }
 
 
-    public static clickTemporalRelationsRadioButton() {
+    public static async clickTemporalRelationsRadioButton() {
 
-        return click('#relations-radio-temporal-label');
+        await click('#relations-radio-temporal-label');
+        await waitForNotExist('.loading-icon');
     }
 
 
-    public static clickSpatialRelationsRadioButton() {
+    public static async clickSpatialRelationsRadioButton() {
 
-        return click('#relations-radio-spatial-label');
+        await click('#relations-radio-spatial-label');
+        await waitForNotExist('.loading-icon');
     }
 
 
-    public static clickPeriodCheckbox() {
+    public static async clickPeriodCheckbox() {
 
-        return click('#period-check-label');
+        await click('#period-check-label');
+        await waitForNotExist('.loading-icon');
     }
 
 
@@ -114,10 +119,10 @@ export class MatrixPage {
 
     public static async performSelectOperation(index) {
 
-        await waitForExist('.dropdown');
-        await click('.dropdown');
+        await click('#operation-selection-button');
         await waitForExist('.dropdown .dropdown-menu');
         await click((await getLocator('.dropdown .dropdown-menu button')).nth(index));
+        await waitForNotExist('.loading-icon');
     }
 
 

@@ -11,6 +11,10 @@ export interface TransientFieldDefinition extends BuiltInFieldDefinition, I18N.L
     defaultDescription?: I18N.String;
     defaultConstraintIndexed?: boolean;
     subfields?: Array<TransientSubfieldDefinition>;
+
+    // For relation fields
+    range?: string[];
+    inverse?: string;
 }
 
 

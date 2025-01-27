@@ -16,7 +16,8 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 @Component({
     selector: 'configuration-category',
-    templateUrl: './configuration-category.html'
+    templateUrl: './configuration-category.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -169,6 +170,7 @@ export class ConfigurationCategoryComponent implements OnChanges {
         );
 
         componentInstance.configurationDocument = this.configurationDocument;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.category = this.category;
         componentInstance.groupName = this.selectedGroup;
         componentInstance.availableInputTypes = this.availableInputTypes;

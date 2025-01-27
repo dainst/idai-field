@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Graphviz } from '@hpcc-js/wasm-graphviz';
 import { isEmpty, on, is, not, isUndefined } from 'tsfun';
 import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
     Relation, Labels, CategoryForm, Valuelist } from 'idai-field-core';
@@ -12,6 +13,12 @@ import { Edges, EdgesBuilder, GraphRelationsConfiguration } from './edges-builde
 import { TabManager } from '../../services/tabs/tab-manager';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
+import { exportGraph, MatrixExportFormat } from './export-graph';
+import { SettingsProvider } from '../../services/settings/settings-provider';
+import { AppState } from '../../services/app-state';
+import { Messages } from '../messages/messages';
+import { M } from '../messages/m';
+import { AngularUtility } from '../../angular/angular-utility';
 import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
 import IS_BEFORE = Relation.Time.BEFORE;
 import IS_AFTER = Relation.Time.AFTER;
@@ -26,8 +33,6 @@ import FILLS = Relation.Position.FILLS;
 import IS_FILLED_BY = Relation.Position.FILLEDBY;
 import SAME_AS = Relation.SAME_AS;
 
-const Viz = require('viz.js');
-
 const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
 
 
@@ -35,7 +40,8 @@ const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
     templateUrl: './matrix-view.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * Responsible for the calculation of the graph.
@@ -45,10 +51,8 @@ const SUPPORTED_OPERATION_CATEGORIES = ['Trench', 'ExcavationArea'];
  */
 export class MatrixViewComponent implements OnInit {
 
-    /**
-     * The latest svg calculated with GraphViz via DotBuilder based on our component's current settings.
-     */
-    public graph: string|undefined;
+    public dotGraph: string|undefined;
+    public svgGraph: string|undefined;
 
     public graphFromSelection: boolean = false;
     public selection: MatrixSelection = new MatrixSelection();
@@ -56,6 +60,7 @@ export class MatrixViewComponent implements OnInit {
     public operations: Array<FieldDocument> = [];
     public selectedOperation: FieldDocument|undefined;
     public configuredOperationCategories: string[] = [];
+    public graphvizFailure: boolean = false;
 
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
@@ -69,7 +74,10 @@ export class MatrixViewComponent implements OnInit {
                 private loading: Loading,
                 private tabManager: TabManager,
                 private menuService: Menus,
-                private labels: Labels) {}
+                private labels: Labels,
+                private settingsProvider: SettingsProvider,
+                private appState: AppState,
+                private messages: Messages) {}
 
 
     public getDocumentLabel = (document: any) => Document.getLabel(document, this.labels, this.projectConfiguration);
@@ -108,6 +116,7 @@ export class MatrixViewComponent implements OnInit {
 
         await this.matrixState.load();
         await this.populateOperations();
+
         this.operationsLoaded = true;
     }
 
@@ -157,22 +166,70 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public calculateGraph() {
+    public async calculateGraph() {
 
-        const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
-            this.featureDocuments,
-            this.totalFeatureDocuments,
-            MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
-        );
+        this.loading.start();
 
-        const graph: string = DotBuilder.build(
-            this.projectConfiguration,
-            this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
-            edges,
-            this.matrixState.getLineMode() === 'curved'
-        );
+        this.resetGraph();
+    
+        await AngularUtility.blurActiveElement();
+        await AngularUtility.refresh(500);
 
-        this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
+        let dotGraph: string;
+
+        try {
+            dotGraph = this.buildDotGraph();
+        } catch (err) {
+            console.error(err);
+            this.messages.add([M.MATRIX_ERROR_GENERIC]);
+            return this.loading.stop();
+        }
+  
+        this.svgGraph = await this.buildSvgGraph(dotGraph);
+        this.dotGraph = dotGraph;
+
+        this.loading.stop();
+    }
+
+
+    public async exportGraph(format: MatrixExportFormat) {
+
+        if (!this.dotGraph) return;
+
+        try {
+            await exportGraph(
+                this.settingsProvider.getSettings().selectedProject,
+                this.selectedOperation.resource.identifier,
+                this.appState,
+                this.modalService,
+                format === 'dot' ? this.dotGraph : this.svgGraph,
+                format
+            ); 
+            this.messages.add([M.EXPORT_SUCCESS]);
+        } catch (err) {
+            if (err != 'canceled') this.messages.add(err);
+        }
+    }
+
+
+    public async selectOperation(operation: FieldDocument) {
+
+        if (operation === this.selectedOperation) return;
+
+        this.selection.clear(false);
+
+        this.selectedOperation = operation;
+        this.matrixState.setSelectedOperationId(this.selectedOperation.resource.id);
+        this.featureDocuments = [];
+        this.graphFromSelection = false;
+        this.svgGraph = undefined;
+        
+        this.loading.start();
+
+        await this.loadFeatureDocuments(operation);
+        this.calculateGraph();
+
+        this.loading.stop();
     }
 
 
@@ -195,26 +252,7 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async selectOperation(operation: FieldDocument) {
-
-        if (operation === this.selectedOperation) return;
-
-        this.selection.clear(false);
-
-        this.selectedOperation = operation;
-        this.matrixState.setSelectedOperationId(this.selectedOperation.resource.id);
-        this.featureDocuments = [];
-        this.graphFromSelection = false;
-        this.graph = undefined;
-
-        await this.loadFeatureDocuments(operation);
-        this.calculateGraph();
-    }
-
-
     private async loadFeatureDocuments(operation: FieldDocument) {
-
-        this.loading.start();
 
         const categories = this.projectConfiguration.getFeatureCategories().map(Named.toName);
 
@@ -223,30 +261,54 @@ export class MatrixViewComponent implements OnInit {
             categories: categories
         });
         this.totalFeatureDocuments = this.featureDocuments = result.documents as Array<FeatureDocument>;
-
-        this.loading.stop();
     }
 
 
-    private async openEditorModal(docToEdit: FeatureDocument) {
+    private resetGraph() {
 
-        this.menuService.setContext(MenuContext.DOCEDIT);
+        this.dotGraph = undefined;
+        this.svgGraph = undefined;
+        this.graphvizFailure = false;
+    }
 
-        const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
-        doceditRef.componentInstance.setDocument(docToEdit);
 
-        const reset = async () => {
-            this.featureDocuments = [];
-            this.selectedOperation = undefined;
-            await this.populateOperations();
-        };
+    private buildDotGraph(): string {
 
-        await doceditRef.result
-            .then(reset, reason => {
-                this.menuService.setContext(MenuContext.DEFAULT);
-                if (reason === 'deleted') return reset();
-            });
+        const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
+            this.featureDocuments,
+            this.totalFeatureDocuments,
+            MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
+        );
+
+        return DotBuilder.build(
+            this.projectConfiguration,
+            this.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
+            edges,
+            this.matrixState.getLineMode() === 'curved'
+        );
+    }
+
+
+    /**
+     * Graphviz sometimes randomly fails for larger graphs. For that reason, we try again multiple
+     * times in case of an error.
+     */
+    private async buildSvgGraph(dotGraph: string, retries: number = 4): Promise<string> {
+
+        try {
+            const graphviz: Graphviz = await Graphviz.load();
+            const graph: string = graphviz.dot(dotGraph);
+            Graphviz.unload();
+            return graph;
+        } catch (err) {
+            Graphviz.unload();
+            if (retries > 0) {
+                return await this.buildSvgGraph(dotGraph, --retries);   
+            } else {
+                this.graphvizFailure = true;
+                return undefined;
+            }
+        }
     }
 
 
@@ -278,6 +340,29 @@ export class MatrixViewComponent implements OnInit {
             ? this.labels.getValueLabel(valuelist, value)
             : value;
     }
+
+
+    private async openEditorModal(docToEdit: FeatureDocument) {
+
+        this.menuService.setContext(MenuContext.DOCEDIT);
+
+        const doceditRef = this.modalService.open(DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
+        doceditRef.componentInstance.setDocument(docToEdit);
+
+        const reset = async () => {
+            this.featureDocuments = [];
+            this.selectedOperation = undefined;
+            await this.populateOperations();
+        };
+
+        await doceditRef.result
+            .then(reset, reason => {
+                this.menuService.setContext(MenuContext.DEFAULT);
+                if (reason === 'deleted') return reset();
+            });
+    }
+
 
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 

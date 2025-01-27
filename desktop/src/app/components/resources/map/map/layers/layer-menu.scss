@@ -1,6 +1,7 @@
 /**
  * @author: Thomas Kleinke
  */
+@use 'sass:color';
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
@@ -92,7 +93,7 @@ $layer-menu-remove-button-color: #c82333;
         }
 
         .layer-group-save-button:hover {
-          color: lighten($layer-menu-save-button-color, 10%) !important;
+          color: color.adjust($layer-menu-save-button-color, $lightness: 10%) !important;
         }
 
         .layer-menu-add-button {
@@ -106,7 +107,7 @@ $layer-menu-remove-button-color: #c82333;
           }
         }
 
-        .form-group {
+        fieldset {
           margin-bottom: 0;
           clear: right;
 
@@ -140,7 +141,7 @@ $layer-menu-remove-button-color: #c82333;
             color: $layer-menu-remove-button-color;
 
             &:hover {
-              color: lighten($layer-menu-remove-button-color, 20%) !important;
+              color: color.adjust($layer-menu-remove-button-color, $lightness: 20%) !important;
             }
           }
 
@@ -182,7 +183,7 @@ $layer-menu-remove-button-color: #c82333;
 .layer-menu-button:hover,
 .layer-group-edit-button:hover,
 .layer-menu-default-layer-button:hover {
-  color: lighten($layer-menu-button-color, 10%) !important;
+  color: color.adjust($layer-menu-button-color, $lightness: 10%) !important;
 }
 
 .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {

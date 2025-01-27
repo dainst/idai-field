@@ -1,17 +1,17 @@
 import { Component, Output, EventEmitter, Input, ElementRef, ViewChild } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Document } from 'idai-field-core';
 import { ImageUploader, ImageUploadResult } from '../upload/image-uploader';
 import { Messages } from '../../messages/messages';
 import { MsgWithParams } from '../../messages/msg-with-params';
 import { AppState } from '../../../services/app-state';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Component({
     selector: 'drop-area',
-    templateUrl: './drop-area.html'
+    templateUrl: './drop-area.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -31,8 +31,7 @@ export class DropAreaComponent {
 
     public constructor(protected imageUploader: ImageUploader,
                        protected messages: Messages,
-                       protected appState: AppState,
-                       protected i18n: I18n) {}
+                       protected appState: AppState) {}
 
 
     public onDragOver(event: any) {
@@ -71,10 +70,10 @@ export class DropAreaComponent {
             {
                 properties: ['openFile', 'multiSelections'],
                 defaultPath: this.appState.getFolderPath('imageUpload'),
-                buttonLabel: this.i18n({ id: 'openFileDialog.select', value: 'Auswählen' }),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
                 filters: [
                     {
-                        name: this.i18n({ id: 'import.selectFile.filters.all', value: 'Alle unterstützten Formate' }),
+                        name: $localize `:@@import.selectFile.filters.all:Alle unterstützten Formate`,
                         extensions: ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes)
                     },
                     {

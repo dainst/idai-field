@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Component({
     selector: 'taskbar',
-    templateUrl: './taskbar.html'
+    templateUrl: './taskbar.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

@@ -3,8 +3,8 @@ import { ExtensionUtil } from '../../../util/extension-util';
 import { AppState } from '../../../services/app-state';
 import { ImageUploader } from '../upload/image-uploader';
 
-const { dialog } = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const remote = window.require('@electron/remote');
+const fs = window.require('fs');
 
 
 export async function downloadWldFile(imageDocument: ImageDocument, appState: AppState) {
@@ -43,7 +43,8 @@ async function openFileSelectionDialog(fileName: string, appState: AppState): Pr
 
     const defaultPath: string = getDefaultPath(fileName, appState);
 
-    const saveDialogReturnValue = await dialog.showSaveDialog(
+    const saveDialogReturnValue = await remote.dialog.showSaveDialog(
+        remote.getCurrentWindow(),
         {
             defaultPath,
             filters: [

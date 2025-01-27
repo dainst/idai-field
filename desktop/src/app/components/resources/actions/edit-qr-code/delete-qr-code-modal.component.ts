@@ -7,7 +7,8 @@ import { FieldDocument } from 'idai-field-core';
     templateUrl: './delete-qr-code-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

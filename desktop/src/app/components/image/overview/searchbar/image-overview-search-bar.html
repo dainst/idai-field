@@ -1,17 +1,16 @@
-<form id="search-bar" class="form-inline">
+<form id="search-bar" class="d-flex flex-row align-items-center flex-wrap">
     <div class="input-group" style="flex-grow: 1;">
         <input #searchInput
             class="form-control search-bar-input"
             [(ngModel)]="q"
             (focus)="focused = true"
             (blur)="focused = false"
-            (keyup)="onKeyUp($event)"
+            (input)="onInput($event)"
             name="searchInput"
             type="text"
             placeholder="Suchen..."
             i18n-placeholder="@@widgets.searchBar.placeholder">
 
-        <div class="input-group-append">
             <image-overview-search-constraints [category]="getSelectedCategory()">
             </image-overview-search-constraints>
 
@@ -44,6 +43,5 @@
                     </category-picker>
                 </div>
             </ng-template>
-        </div>
     </div>
 </form>

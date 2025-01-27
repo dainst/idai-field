@@ -16,7 +16,7 @@ import { PrintSettingsModalComponent } from './print-settings/print-settings-mod
 import { PrintSettings } from './print-settings/print-settings';
 
 
-const QRCode = require('qrcode');
+const QRCode = window.require('qrcode');
 
 
 type PrintedField = {
@@ -29,7 +29,8 @@ type PrintedField = {
     templateUrl: './qr-code-editor-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Danilo Guzzo

@@ -24,7 +24,8 @@ import { WarningsService } from '../../services/warnings/warnings-service';
 
 
 @Component({
-    templateUrl: './resources.html'
+    templateUrl: './resources.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

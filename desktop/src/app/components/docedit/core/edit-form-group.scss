@@ -1,25 +1,30 @@
 edit-form-group {
-  .card-header {
-    border-radius: 0 !important;
-    border-top-left-radius: 7px !important;
-    border-top-right-radius: 7px !important;
-    padding-top: 5px;
-    padding-bottom: 10px;
-    border-bottom: none;
+  .edit-form-field-container {
+    margin-right: 15px;
 
-    .card-title {
-      font-size: 15px !important;
-    }
-
-    .mdi-information-outline {
-      position: relative;
-      top: 3px;
-    }
-
-    .relation-image {
-      position: absolute;
-      top: 6px;
-      margin-left: 14px;
+    .card-header {
+      border-radius: 0 !important;
+      border-top-left-radius: 7px !important;
+      border-top-right-radius: 7px !important;
+      padding-top: 5px;
+      padding-bottom: 10px;
+      border-bottom: none;
+  
+      .card-title {
+        font-size: 15px !important;
+      }
+  
+      .mdi-information-outline {
+        position: relative;
+        top: 3px;
+      }
+  
+      .relation-image {
+        position: absolute;
+        top: 6px;
+        margin-left: 14px;
+        user-select: none;
+      }
     }
   }
 }

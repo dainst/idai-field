@@ -5,18 +5,14 @@ valuelist-search-bar {
     border-right: none;
   }
 
-  .input-group-append {
-    z-index: 100;
+  #valuelist-filter-button .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 50px;
 
-    #valuelist-filter-button .btn {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      width: 50px;
-
-      .mdi {
-        position: relative;
-        right: 1px;
-      }
+    .mdi {
+      position: relative;
+      right: 1px;
     }
   }
 
@@ -33,12 +29,14 @@ valuelist-search-bar {
   #valuelist-filter-menu {
     user-select: none;
 
-    .form-group {
-      margin-bottom: 0;
-
+    fieldset {
       .form-check-inline {
-        padding-left: 10px;
+        padding-left: 33px;
         padding-bottom: 10px;
+
+        .form-check-label {
+          padding-left: 0;
+        }
 
         &:first-child {
           padding-top: 10px;

@@ -1,13 +1,14 @@
 import Ajv from 'ajv';
-import { ImageSyncService, PouchdbDatastore, ImageStore, IdGenerator, ImageVariant, base64Encode } from 'idai-field-core';
+import { nop } from 'tsfun';
+import { ImageSyncService, PouchdbDatastore, ImageStore, IdGenerator, ImageVariant,
+    base64Encode } from 'idai-field-core';
 import { ExpressServer } from '../../../../src/app/services/express-server';
 import { FsAdapter } from '../../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../../src/app/services/imagestore/thumbnail-generator';
-
-import schema from 'idai-field-core/api-schemas/files-list.json';
+import * as schema from '../../../../../core/api-schemas/files-list.json';
 
 const fs = require('fs');
-const request = typeof window !== 'undefined' ? window.require('supertest') : require('supertest');
+const request = require('supertest');
 
 
 /**
@@ -32,7 +33,9 @@ describe('ImageSyncService', () => {
     const validate = ajv.compile(schema);
 
 
-    beforeAll(async done => {
+    beforeAll(async () => {
+
+        jest.spyOn(console, 'log').mockImplementation(nop);
 
         fs.mkdirSync(localFilePath, { recursive: true });
         fs.mkdirSync(expressServerFilePath, { recursive: true });
@@ -54,12 +57,12 @@ describe('ImageSyncService', () => {
         );
 
         await pouchdbDatastore.createEmptyDb(testProjectIdentifier);
-
-        done();
     });
 
 
-    afterAll(async done => {
+    afterAll(async () => {
+
+        (console.log as any).mockRestore();
 
         await pouchdbDatastore.destroyDb(testProjectIdentifier);
 
@@ -73,27 +76,25 @@ describe('ImageSyncService', () => {
 
         fs.rmSync(localFilePath, { recursive: true });
         fs.rmSync(expressServerFilePath, { recursive: true });
-        done();
     });
 
 
     // Re-initialize image store data for each test.
-    beforeEach(async done => {
+    beforeEach(async () => {
 
         await imageStore.init(`${localFilePath}imagestore/`, testProjectIdentifier);
         await imageStoreExpressServer.init(`${expressServerFilePath}imagestore/`, testProjectIdentifier);
-        done();
     });
 
 
-    afterEach(async done => {
+    afterEach(async () => {
+
         await imageStore.deleteData(testProjectIdentifier);
         await imageStoreExpressServer.deleteData(testProjectIdentifier);
-        done();
     });
 
 
-    it('locally added images are evaluated correctly by diff function', async done => {
+    test('locally added images are evaluated correctly by diff function', async () => {
 
         try {
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
@@ -121,14 +122,13 @@ describe('ImageSyncService', () => {
             const diff = await ImageSyncService.evaluateDifference(localData, response.body, ImageVariant.THUMBNAIL);
 
             expect(Object.keys(diff.missingRemotely).includes('some_uuid')).toBe(true);
-            done();
         } catch (err) {
-            fail(err);
+            throw new Error(err);
         }
     });
 
 
-    it('remotely added images are evaluated correctly by diff function', async done => {
+    test('remotely added images are evaluated correctly by diff function', async () => {
 
         try {
             await imageStoreExpressServer.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
@@ -156,14 +156,13 @@ describe('ImageSyncService', () => {
             const diff = await ImageSyncService.evaluateDifference(localData, response.body, ImageVariant.THUMBNAIL);
 
             expect(Object.keys(diff.missingLocally).includes('some_uuid')).toBe(true);
-            done();
         } catch (err) {
-            fail(err);
+            throw new Error(err);
         }
     });
 
 
-    it('locally deleted images are evaluated correctly by diff function', async done => {
+    test('locally deleted images are evaluated correctly by diff function', async () => {
 
         try {
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
@@ -195,14 +194,13 @@ describe('ImageSyncService', () => {
             const diff = await ImageSyncService.evaluateDifference(localData, response.body, ImageVariant.THUMBNAIL);
 
             expect(diff.deleteRemotely.includes('some_uuid')).toBe(true);
-            done();
         } catch (err) {
-            fail(err);
+            throw new Error(err);
         }
     });
 
 
-    it('remotely deleted images are evaluated correctly by diff function', async done => {
+    test('remotely deleted images are evaluated correctly by diff function', async () => {
 
         try {
             await imageStore.store('some_uuid', mockImage, testProjectIdentifier, ImageVariant.ORIGINAL);
@@ -234,9 +232,8 @@ describe('ImageSyncService', () => {
             const diff = await ImageSyncService.evaluateDifference(localData, response.body, ImageVariant.THUMBNAIL);
 
             expect(diff.deleteLocally.includes('some_uuid')).toBe(true);
-            done();
         } catch (err) {
-            fail(err);
+            throw new Error(err);
         }
     });
 });

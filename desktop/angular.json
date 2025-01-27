@@ -27,6 +27,10 @@
             "translation": "src/app/i18n/angular/messages.it.xlf",
             "baseHref": "/"
           },
+          "pt": {
+            "translation": "src/app/i18n/angular/messages.pt.xlf",
+            "baseHref": "/"
+          },
           "tr": {
             "translation": "src/app/i18n/angular/messages.tr.xlf",
             "baseHref": "/"
@@ -74,6 +78,11 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "idai-field-core",
+              "showdown",
+              "svg-pan-zoom",
+              "tsfun",
+              "viz.js",
+              "web-worker",
               "xml-utils"
             ],
             "vendorChunk": true,
@@ -88,6 +97,9 @@
             },
             "it": {
               "localize": ["it"]
+            },
+            "pt": {
+              "localize": ["pt"]
             },
             "tr": {
               "localize": ["tr"]
@@ -120,36 +132,38 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "idai-field:build"
+            "buildTarget": "idai-field:build"
           },
           "configurations": {
             "en": {
-              "browserTarget": "idai-field:build:en"
+              "buildTarget": "idai-field:build:en"
             },
             "it": {
-              "browserTarget": "idai-field:build:it"
+              "buildTarget": "idai-field:build:it"
+            },
+            "pt": {
+              "buildTarget": "idai-field:build:pt"
             },
             "tr": {
-              "browserTarget": "idai-field:build:tr"
+              "buildTarget": "idai-field:build:tr"
             },
             "uk": {
-              "browserTarget": "idai-field:build:uk"
+              "buildTarget": "idai-field:build:uk"
             },
             "production": {
-              "browserTarget": "idai-field:build:production"
+              "buildTarget": "idai-field:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "idai-field:build"
+            "buildTarget": "idai-field:build"
           }
         }
       }
     }
   },
-  "defaultProject": "idai-field",
   "cli": {
     "analytics": false
   }

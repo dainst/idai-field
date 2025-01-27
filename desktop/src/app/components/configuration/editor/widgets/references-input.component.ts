@@ -4,7 +4,8 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'references-input',
-    templateUrl: './references-input.html'
+    templateUrl: './references-input.html',
+    standalone: false
 })
 /**
 * @author Thomas Kleinke

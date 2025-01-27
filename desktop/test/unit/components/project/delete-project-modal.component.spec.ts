@@ -17,9 +17,18 @@ describe('DeleteProjectModalComponent', () => {
 
 
     beforeEach(() => {
-        settingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings'])
-        settingsService = jasmine.createSpyObj('settingsService', ['deleteProject']);
-        messages = jasmine.createSpyObj('messages', ['add']);
+
+        settingsProvider = {
+            getSettings: jest.fn()
+        };
+
+        settingsService = {
+            deleteProject: jest.fn()
+        };
+
+        messages = {
+            add: jest.fn()
+        };
 
         deleteProjectModalComponent = new DeleteProjectModalComponent(
             { close: () => {} } as NgbActiveModal,
@@ -31,15 +40,14 @@ describe('DeleteProjectModalComponent', () => {
     });
 
 
-    it('cannot delete last project', async done => {
+    test('cannot delete last project', async () => {
 
-        settingsProvider.getSettings.and.returnValue({ dbs: ['current'], selectedProject: 'current' });
+        settingsProvider.getSettings.mockReturnValue({ dbs: ['current'], selectedProject: 'current' });
 
         deleteProjectModalComponent.projectIdentifier = 'current';
         deleteProjectModalComponent.confirmDeletionProjectIdentifier = 'current';
 
         await deleteProjectModalComponent.confirmDeletion();
         expect(messages.add).toHaveBeenCalledWith([M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST]);
-        done();
     });
 });

@@ -27,7 +27,7 @@
                          [disabled]="hidden"
                          (onChanged)="setInputType($event)">
     </input-type-selector>
-    <div class="configuration-editor-section configuration-editor-switch-section form-group">
+    <div class="configuration-editor-section configuration-editor-switch-section mb-3">
         <div class="configuration-editor-section-title"
              i18n="@@configuration.basicSettings">
             Grundeinstellungen
@@ -69,8 +69,8 @@
         </div>
     </div>
     <div class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.fieldLabel">
-            Feldbezeichnung
+        <div class="configuration-editor-section-title" i18n="@@configuration.label">
+            Anzeigename
         </div>
         <multi-language-input [translations]="clonedLabel"
             [defaultTranslations]="field.defaultLabel"
@@ -124,4 +124,32 @@
                        [subfieldI18nStrings]="subfieldI18nStrings"
                        [applyChanges]="applyChanges"
                        (onDrag)="dragging = $event"></subfields-section>
+
+
+
+    <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title"
+             i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</div>
+        <div id="target-category-picker-container">
+            <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
+                             [selectedCategories]="selectedTargetCategoryNames"
+                             [customProjectConfiguration]="clonedProjectConfiguration"
+                             [allowPickingAbstractCategories]="true"
+                             (onCategoryPicked)="toggleTargetCategory($event)"></category-picker>
+        </div>
+    </div>
+
+    <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title"
+             i18n="@@configuration.relation.inverse">Gegenrelation</div>
+        <select id="inverse-relation-select" (change)="setInverseRelation($event.target.value)"
+                class="form-control">
+            <option value="" i18n="@@configuration.relation.inverse.none">Keine Gegenrelation</option>
+            <option *ngFor="let relationName of availableInverseRelations"
+                    [value]="relationName"
+                    [selected]="isSelectedInverseRelation(relationName)">
+                {{getRelationLabel(relationName)}}
+            </option>
+        </select>
+    </div>
 </div>

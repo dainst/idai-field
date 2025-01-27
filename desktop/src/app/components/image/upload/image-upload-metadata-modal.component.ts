@@ -1,7 +1,6 @@
-import { isArray } from 'tsfun';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, ProjectConfiguration, CategoryForm, Datastore, Labels } from 'idai-field-core';
+import { Document, ProjectConfiguration, CategoryForm, Datastore, Labels, ValuelistUtil, Valuelist } from 'idai-field-core';
 import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { ImagesState } from '../overview/view/images-state';
 import { AngularUtility } from '../../../angular/angular-utility';
@@ -20,7 +19,8 @@ import { AngularUtility } from '../../../angular/angular-utility';
     templateUrl: './image-upload-metadata-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 export class ImageUploadMetadataModalComponent implements OnInit {
 
@@ -114,10 +114,11 @@ export class ImageUploadMetadataModalComponent implements OnInit {
 
     private async loadProjectDocumentData() {
 
-        const projectDocument: Document = await this.datastore.get('project');
+        const staffValuelist: Valuelist = ValuelistUtil.getValuelistFromProjectField(
+            'staff',
+            await this.datastore.get('project')
+        );
 
-        if (projectDocument.resource.staff && isArray(projectDocument.resource.staff)) {
-            this.projectStaff = projectDocument.resource['staff'];
-        }
+        this.projectStaff = Object.keys(staffValuelist.values);
     }
 }

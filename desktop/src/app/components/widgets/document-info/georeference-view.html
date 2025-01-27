@@ -14,8 +14,8 @@
 </ng-template>
 
 <div *ngIf="document.resource.georeference || !readonly" class="card">
-    <div class="card-header">
-        <button class="btn btn-block"
+    <div class="card-header d-grid">
+        <button class="btn"
                 i18n="@@imageView.georeferenceView.georeferenceData"
                 (click)="toggle()">Georeferenzdaten</button>
     </div>

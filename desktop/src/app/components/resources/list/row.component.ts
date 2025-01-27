@@ -14,7 +14,8 @@ import { Language } from '../../../services/languages';
 
 @Component({
     selector: 'row',
-    templateUrl: './row.html'
+    templateUrl: './row.html',
+    standalone: false
 })
 /**
  * @author Fabian Z.
@@ -87,9 +88,13 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
+    public onInput(event: KeyboardEvent, fieldName: string) {
 
         this.setValue(fieldName, event.target['value']);
+    }
+
+
+    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
         if (event.key === 'Enter') {
             await this.stopEditing(fieldName, this.document.resource[fieldName]);

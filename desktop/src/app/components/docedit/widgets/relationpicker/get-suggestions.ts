@@ -30,20 +30,12 @@ function makeQuery(resource: Resource, relationDefinition: Relation, searchTerm:
 function makeConstraints(resource: Resource,
                          relationDefinition: Relation): { [constraintName: string]: Constraint } {
 
-    const constraints: { [constraintName: string]: Constraint } = {
+    return {
         'id:match': {
             value: getForbiddenIds(resource, relationDefinition),
             subtract: true
         }
     };
-
-    if (relationDefinition.sameMainCategoryResource
-            && Resource.hasRelations(resource, 'isRecordedIn')) {
-        (constraints as Constraints)[CHILDOF_CONTAIN] =
-            { value: resource.relations['isRecordedIn'][0], searchRecursively: true };
-    }
-
-    return constraints;
 }
 
 

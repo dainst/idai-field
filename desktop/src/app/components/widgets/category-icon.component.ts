@@ -1,5 +1,4 @@
 import { Component, OnChanges, Input } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isString } from 'tsfun';
 import { CategoryForm, Labels, ProjectConfiguration, StringUtils } from 'idai-field-core';
 
@@ -10,7 +9,8 @@ type Character = string;
     selector: 'category-icon',
     template: '<div class="category-icon" [style.width]="pxSize" [style.height]="pxSize" [style.font-size]="pxSize" [style.line-height]="pxSize" [style.background-color]="color">' +
         '<span class="character" [style.color]="textColor">{{character}}</span>' +
-    '</div>'
+        '</div>',
+    standalone: false
 })
 
 /**
@@ -30,8 +30,7 @@ export class CategoryIconComponent implements OnChanges {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private labels: Labels,
-                private i18n: I18n) {}
+                private labels: Labels) {}
 
 
     ngOnChanges() {
@@ -80,9 +79,8 @@ export class CategoryIconComponent implements OnChanges {
 
     private setValuesForConfigurationCategory() {
 
-        this.character = this.i18n({
-            id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
-        })[0];
+        const categoryLabel: string = $localize `:@@navbar.tabs.configuration:Projektkonfiguration`;
+        this.character = categoryLabel[0];
         this.color = 'black';
         this.textColor = 'white';
     }
@@ -90,9 +88,8 @@ export class CategoryIconComponent implements OnChanges {
 
     private setValuesForInventoryRegisterCategory() {
 
-        this.character = this.i18n({
-            id: 'util.inventoryRegister', value: 'Inventarverzeichnis'
-        })[0];
+        const categoryLabel: string = $localize `:@@util.inventoryRegister:Inventarverzeichnis`;
+        this.character = categoryLabel[0];
         this.color = 'black';
         this.textColor = 'white';
     }

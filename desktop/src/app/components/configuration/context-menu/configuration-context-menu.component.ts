@@ -8,7 +8,8 @@ export type ConfigurationContextMenuAction = 'edit'|'extend'|'swap'|'delete';
 
 @Component({
     selector: 'configuration-context-menu',
-    templateUrl: './configuration-context-menu.html'
+    templateUrl: './configuration-context-menu.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

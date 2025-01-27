@@ -2303,10 +2303,9 @@ describe('buildRawProjectConfiguration', () => {
         const relationDefinitions: Array<Relation> = [{
             name: 'isAbove',
             inverse: 'isBelow',
-            domain: ['P:inherit'],
-            range: ['P:inherit'],
-            inputType: 'relation',
-            sameMainCategoryResource: true
+            domain: ['P'],
+            range: ['P'],
+            inputType: 'relation'
         }];
 
         const result = buildRaw(
@@ -2570,6 +2569,106 @@ describe('buildRawProjectConfiguration', () => {
         expect(forms['A'].groups[1].fields[1].defaultLabel.en).toBe('Field 2');
         expect(forms['A'].groups[1].fields[2].label.en).toBe('Field 3');
         expect(forms['A'].groups[1].fields[2].defaultLabel.en).toBe(undefined);
+    });
+
+
+    it('apply labels for custom relation in supercategory', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []   
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A': {
+                fields: {},
+                description: {}
+            },
+            'B': {
+                parent: 'A',
+                fields: {},
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                groups: []
+            },
+            'B:default': {
+                categoryName: 'B',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                groups: []
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    customRelation: { inputType: Field.InputType.RELATION, range: ['A'] }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['customRelation'] }
+                ]
+            },
+            'B:default': {
+                fields: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['customRelation'] }
+                ]
+            }
+        };
+
+        const customLanguageConfiguration: LanguageConfiguration = {
+            relations: {
+                customRelation: { label: 'Custom relation label' }
+            }
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: {
+                en: [customLanguageConfiguration, {}]
+            },
+            default: {
+                en: [{}]
+            },
+            custom: {
+                en: [customLanguageConfiguration]
+            }
+        };
+
+        const rawConfiguration: RawProjectConfiguration = buildRawProjectConfiguration(
+            builtInCategories,
+            libraryCategories,
+            libraryForms,
+            customForms,
+            {}, {}, {}, {}, [],
+            languageConfigurations
+        );
+
+        const forms: Map<CategoryForm> = Named.arrayToMap(Tree.flatten<CategoryForm>(rawConfiguration.forms));
+
+        expect(rawConfiguration.relations[0].label.en).toBe('Custom relation label');
+        expect(rawConfiguration.relations[0].defaultLabel.en).toBeUndefined();
+
+        expect(forms['A'].groups[0].fields[0].label.en).toBe('Custom relation label');
+        expect(forms['A'].groups[0].fields[0].defaultLabel.en).toBeUndefined();
+        expect(forms['B'].groups[0].fields[0].label.en).toBe('Custom relation label');
+        expect(forms['B'].groups[0].fields[0].defaultLabel.en).toBeUndefined();
     });
 
 

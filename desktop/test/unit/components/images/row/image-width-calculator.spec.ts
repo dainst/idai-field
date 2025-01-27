@@ -6,7 +6,7 @@ import { ImageWidthCalculator } from '../../../../../src/app/components/image/ro
  */
 describe('ImageWidthCalculator', () => {
 
-   it('calculate width', () => {
+    test('calculate width', () => {
 
        expect(
            ImageWidthCalculator.computeWidth(200, 100, 50, 1000)
@@ -18,7 +18,7 @@ describe('ImageWidthCalculator', () => {
    });
 
 
-   it('round results', () => {
+   test('round results', () => {
 
        expect(
            ImageWidthCalculator.computeWidth(1900, 490, 50, 1000)
@@ -26,7 +26,7 @@ describe('ImageWidthCalculator', () => {
    });
 
 
-   it('consider max width', () => {
+   test('consider max width', () => {
 
         expect(
             ImageWidthCalculator.computeWidth(500, 100, 50, 100)

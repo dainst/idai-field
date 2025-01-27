@@ -1,6 +1,7 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { isEmpty } from 'tsfun';
-import { Relation, Resource } from 'idai-field-core';
+import { Relation, Resource, Document } from 'idai-field-core';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 /**
@@ -8,14 +9,20 @@ import { Relation, Resource } from 'idai-field-core';
  */
 @Component({
     selector: 'relation-picker-group',
-    templateUrl: './relation-picker-group.html'
+    templateUrl: './relation-picker-group.html',
+    standalone: false
 })
-export class RelationPickerGroupComponent implements OnChanges {
+export class RelationPickerGroupComponent implements OnChanges, AfterViewChecked {
 
     @Input() resource: Resource;
     @Input() relationDefinition: Relation;
 
+    @ViewChild('plusButton') plusButtonElement: ElementRef;
+
     public relations: any;
+
+    private creating: boolean = false;
+    private autoScroll: boolean = false;
 
 
     public ngOnChanges() {
@@ -24,12 +31,33 @@ export class RelationPickerGroupComponent implements OnChanges {
     }
 
 
-    public createRelation() {
+    public async ngAfterViewChecked() {
+        
+        if (this.autoScroll && this.plusButtonElement) {
+            await AngularUtility.refresh();
+            this.plusButtonElement.nativeElement.scrollIntoViewIfNeeded(false);
+            this.autoScroll = false;
+        }
+    }
+
+
+    public onTargetSelected(target: Document) {
+
+        if (this.creating) {
+            this.creating = false;
+            if (target) this.autoScroll = true;
+        }
+    }
+
+
+    public async createRelation() {
 
         if (!this.relations[this.relationDefinition.name])
             this.relations[this.relationDefinition.name] = [];
 
         this.relations[this.relationDefinition.name].push('');
+
+        this.creating = true;
     }
 
 
@@ -42,12 +70,7 @@ export class RelationPickerGroupComponent implements OnChanges {
     }
 
 
-    // Button not shown when waiting for input
-    public showPlusButton(): boolean {
-
-        if ((this.relationDefinition.name === 'isRecordedIn' || this.relationDefinition.name === 'liesWithin') &&
-                (this.relations[this.relationDefinition.name] &&
-                    this.relations[this.relationDefinition.name].length > 0)) return false;
+    public isPlusButtonAvailable(): boolean {
 
         return !this.relations[this.relationDefinition.name]
             || isEmpty(this.relations[this.relationDefinition.name])

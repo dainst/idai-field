@@ -1,4 +1,4 @@
-import { NewDocument } from '../../model/document';
+import { NewDocument } from '../../model/document/document';
 import { I18N } from '../../tools';
 import { sampleDataLabels } from './sample-data-labels';
 
@@ -10,12 +10,12 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': 'test',
             'shortName': getI18nString('testProject'),
             'staff': [
-                sampleDataLabels[locale]['person'] + ' 1',
-                sampleDataLabels[locale]['person'] + ' 2'
+                { value: sampleDataLabels[locale]['person'] + ' 1', selectable: true },
+                { value: sampleDataLabels[locale]['person'] + ' 2', selectable: true }
             ],
             'campaigns': [
-                sampleDataLabels[locale]['testCampaign'] + ' 1',
-                sampleDataLabels[locale]['testCampaign'] + ' 2'
+                { value: sampleDataLabels[locale]['testCampaign'] + ' 1', selectable: true },
+                { value: sampleDataLabels[locale]['testCampaign'] + ' 2', selectable: true }
             ],
             'relations': {
                 'hasMapLayer': ['o25', 'o26'],

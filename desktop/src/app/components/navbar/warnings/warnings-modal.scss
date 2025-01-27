@@ -7,8 +7,12 @@
 
   .modal-title {
     position: relative;
-    top: 5px;
     left: 9px;
+  }
+
+  #close-warnings-modal-button {
+    position: absolute;
+    right: 7px;
   }
 }
 
@@ -78,7 +82,7 @@
         }
     
         b {
-            font-weight: 600;
+          font-weight: 600;
         }
         
         .warning-info {
@@ -87,14 +91,18 @@
 
         .data-info {
           margin-bottom: 14px;
-        }
 
-        .data-info-content {
-          margin-top: 10px;
-          padding: 7px; 
-          background-color: rgba(0, 0, 0, 0.03);
-          border: 1px solid rgba(0, 0, 0, 0.125);
-          border-radius: 10px;
+          .data-info-content {
+            margin-top: 10px;
+            padding: 7px; 
+            background-color: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 10px;
+
+            document-teaser:not(:last-child) .document-teaser {
+              margin-bottom: 5px;
+            }
+          }
         }
 
         hr {

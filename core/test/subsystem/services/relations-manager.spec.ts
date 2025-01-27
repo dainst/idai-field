@@ -1,4 +1,3 @@
-import {flatten} from 'tsfun';
 import { Document, FieldDocument, ImageDocument } from '../../../src/model';
 import { doc } from '../../test-helpers';
 import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
@@ -14,35 +13,6 @@ describe('subsystem/relations-manager', () => {
     beforeEach(async done => {
         app = await createCoreApp();
         helpers = await createHelpers(app);
-        done();
-    });
-
-
-    xit('get - include antescendants', async done => {
-
-        await helpers.createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type']
-        ]);
-
-        // const results = await app.relationsManager.getAntescendents('t1');
-        // const lookup = makeDocumentsLookup(results);
-        // expect(lookup['tc1'].resource.id).toBe('tc1');
-        // expect(lookup['t1'].resource.id).toBe('t1');
-        done();
-    });
-
-
-    xit('getDescendantsCount', async done => {
-
-        const documentsLookup = await helpers.createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type'],
-            ['tc2', 'TypeCatalog', ['t2']],
-            ['t2', 'Type']
-        ]);
-
-        // expect(await app.relationsManager.getDescendantsCount(documentsLookup['tc1'], documentsLookup['tc2'])).toBe(2);
         done();
     });
 
@@ -65,8 +35,8 @@ describe('subsystem/relations-manager', () => {
         t1 = await app.datastore.get('t1') as any;
         t2 = await app.datastore.get('t2') as any;
 
-        expect(t2.resource.relations.isBefore).toEqual([]);
-        expect(t1.resource.relations.isAfter).toEqual([]);
+        expect(t2.resource.relations.isBefore).toBeUndefined();
+        expect(t1.resource.relations.isAfter).toBeUndefined();
 
         expect(t2old.resource.relations.isBefore).toEqual(['t1']);
 
@@ -95,8 +65,10 @@ describe('subsystem/relations-manager', () => {
         await app.relationsManager.remove(tc1, { descendants: true });
 
         const documents = (await app.datastore.find({})).documents;
-        expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
+        expect(documents[0].resource.relations.depicts).toBeUndefined();
+        expect(documents[1].resource.relations.depicts).toBeUndefined();
         await helpers.expectDocuments('i1', 'i2');
+
         done();
     });
 

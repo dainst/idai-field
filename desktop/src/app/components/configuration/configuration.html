@@ -10,8 +10,7 @@
         <div id="configuration-toolbar" class="row">
             <div id="categories-filter" class="dropdown"
                  ngbDropdown placement="bottom-left" role="group">
-
-                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                <button id="categories-filter-button" class="btn btn-outline-primary" ngbDropdownToggle>
                     <span *ngIf="selectedCategoriesFilter"
                         id="selected-categories-filter-label">
                         {{selectedCategoriesFilter.label}}

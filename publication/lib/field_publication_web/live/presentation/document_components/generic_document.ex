@@ -20,7 +20,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
 
   alias FieldPublicationWeb.Presentation.Components.ViewSelection
 
-  import FieldPublicationWeb.CoreComponents
   import FieldPublicationWeb.Presentation.Components.Typography
 
   def render(assigns) do
@@ -113,23 +112,34 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             </div>
           <% end %>
           <.group_heading>
-            Raw data
+            Data formats
           </.group_heading>
-          <a
-            class="mb-1"
-            target="_blank"
-            href={~p"/api/raw/csv/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"}
-          >
-            <.icon name="hero-table-cells-solid" /> Download CSV
-          </a>
-          <br />
-          <a
-            class="mb-1"
-            target="_blank"
-            href={~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"}
-          >
-            <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
-          </a>
+          <ul class="ml-0 list-none">
+            <li>
+              <a
+                class="mb-1"
+                target="_blank"
+                href={
+                  ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (raw)
+              </a>
+            </li>
+            <li>
+              <a
+                class="mb-1"
+                target="_blank"
+                href={
+                  ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                }
+              >
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (extended)
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

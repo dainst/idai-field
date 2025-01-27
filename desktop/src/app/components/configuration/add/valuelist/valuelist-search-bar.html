@@ -4,53 +4,51 @@
            class="form-control"
            [(ngModel)]="searchQuery.queryString"
            (ngModelChange)="submitQuery()">
-    <div class="input-group-append">
-        <span id="valuelist-filter-button">
-            <div class="btn btn-primary"
-                #popover="ngbPopover"
-                [ngbPopover]="filterMenu"
-                [autoClose]="false"
-                placement="bottom-right">
-                <span class="mdi mdi-filter"></span>
-            </div>
+    <span id="valuelist-filter-button">
+        <div class="btn btn-primary"
+            #popover="ngbPopover"
+            [ngbPopover]="filterMenu"
+            [autoClose]="false"
+            placement="bottom-right">
+            <span class="mdi mdi-filter"></span>
+        </div>
 
-            <ng-template #filterMenu>
-                <div id="valuelist-filter-menu">
-                    <div class="popover-custom-title">
-                        <span i18n="@@configuation.filterResults">Suchergebnisse filtern:</span>
-                    </div>
-                    <fieldset class="form-group">
-                        <div class="form-check form-check-inline">
-                            <input id="custom-filter"
-                                    class="form-check-input"
-                                    name="custom-filter"
-                                    type="checkbox"
-                                    [checked]="searchQuery.onlyCustom"
-                                    (change)="toggleCustomFilter()">
-                            <label id="custom-filter-label"
-                                    class="form-check-label"
-                                    for="custom-filter"
-                                    i18n="@@configuration.customFilter">
-                                Projektspezifische Wertelisten
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input id="in-use-filter"
-                                    class="form-check-input"
-                                    name="in-use-filter"
-                                    type="checkbox"
-                                    [checked]="searchQuery.onlyInUse"
-                                    (change)="toggleInUseFilter()">
-                            <label id="custom-filter-label"
-                                    class="form-check-label"
-                                    for="in-use-filter"
-                                    i18n="@@configuration.inUseFilter">
-                                Verwendete Wertelisten
-                            </label>
-                        </div>
-                    </fieldset>
+        <ng-template #filterMenu>
+            <div id="valuelist-filter-menu">
+                <div class="popover-custom-title">
+                    <span i18n="@@configuation.filterResults">Suchergebnisse filtern:</span>
                 </div>
-            </ng-template>
-        </span>
-    </div>
+                <fieldset>
+                    <div class="form-check form-check-inline">
+                        <input id="custom-filter"
+                                class="form-check-input"
+                                name="custom-filter"
+                                type="checkbox"
+                                [checked]="searchQuery.onlyCustom"
+                                (change)="toggleCustomFilter()">
+                        <label id="custom-filter-label"
+                                class="form-check-label"
+                                for="custom-filter"
+                                i18n="@@configuration.customFilter">
+                            Projektspezifische Wertelisten
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input id="in-use-filter"
+                                class="form-check-input"
+                                name="in-use-filter"
+                                type="checkbox"
+                                [checked]="searchQuery.onlyInUse"
+                                (change)="toggleInUseFilter()">
+                        <label id="custom-filter-label"
+                                class="form-check-label"
+                                for="in-use-filter"
+                                i18n="@@configuration.inUseFilter">
+                            Verwendete Wertelisten
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+        </ng-template>
+    </span>
 </div>

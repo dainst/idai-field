@@ -11,7 +11,8 @@ import { M } from '../messages/m';
     templateUrl: './update-username-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Danilo Guzzo

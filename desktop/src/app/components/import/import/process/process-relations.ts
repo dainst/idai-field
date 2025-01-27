@@ -41,7 +41,6 @@ import LIESWITHIN = Relation.Hierarchy.LIESWITHIN;
 export async function processRelations(documents: Array<Document>, validator: ImportValidator,
                                        operationCategoryNames: string[], get: Get,
                                        inverseRelationsMap: Relation.InverseRelationsMap,
-                                       sameOperationRelations: string[],
                                        { mergeMode, operationId }: ImportOptions) {
 
     const assertIsAllowedRelationDomainCategory = (domainCategoryName: string, rangeCategoryName: string,
@@ -61,9 +60,9 @@ export async function processRelations(documents: Array<Document>, validator: Im
         documentsLookup,
         targetsLookup as any,
         inverseRelationsMap,
-        sameOperationRelations,
         assertIsAllowedRelationDomainCategory,
-        mergeMode);
+        mergeMode
+    );
 }
 
 

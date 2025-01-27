@@ -2,13 +2,15 @@ defmodule FieldPublication.Publications.Data do
   @moduledoc """
   This module handles access to a publication's research database.
 
-  You can retrieve the raw documents or an extended version with the publication's configuration applied. The
-  latter will group the data fields and add translated labels for the different value types, relations etc. (if
-  there are any defined in the configuration). The extended version will be returned as a standardized struct,
-  see the `Document` struct definition below.
+  You can retrieve the raw documents or an extended version with the publication's configuration
+  applied. The latter will group the data fields and add translated labels for the different
+  value types, relations etc. (if there are any defined in the configuration). The extended
+  version will be returned as a standardized struct, see the
+  `FieldPublication.Publications.Data.Document` struct definition below.
   """
 
   require FieldPublicationWeb.Gettext
+  require Logger
 
   alias FieldPublication.{
     Publications,
@@ -138,6 +140,13 @@ defmodule FieldPublication.Publications.Data do
     |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
     end)
+    |> case do
+      %{"error" => "not_found"} ->
+        {:error, :not_found}
+
+      doc ->
+        doc
+    end
   end
 
   def get_raw_documents(uuids, %Publication{database: db}) do
@@ -153,7 +162,8 @@ defmodule FieldPublication.Publications.Data do
             doc
 
           other ->
-            {:error, other}
+            Logger.error(inspect(other))
+            {:error, :not_found}
         end
       end)
     end)
@@ -165,7 +175,13 @@ defmodule FieldPublication.Publications.Data do
     config = Publications.get_configuration(publication)
 
     get_raw_document(uuid, publication)
-    |> apply_project_configuration(config, publication, include_relations)
+    |> case do
+      {:error, _} ->
+        {:error, :not_found}
+
+      doc ->
+        apply_project_configuration(doc, config, publication, include_relations)
+    end
   end
 
   def get_extended_documents(

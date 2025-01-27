@@ -1,7 +1,7 @@
 import { createDocuments, NiceDocs, Relation } from 'idai-field-core';
 import { buildImportCatalog,
         ImportCatalogErrors } from '../../../../../src/app/components/import/import/import-catalog';
-import { createApp, createHelpers } from '../../subsystem-helper';
+import { cleanUp, createApp, createHelpers } from '../../subsystem-helper';
 
 
 describe('subsystem/import/importCatalog', () => {
@@ -11,14 +11,11 @@ describe('subsystem/import/importCatalog', () => {
     let helpers;
 
 
-    beforeEach(async done => {
+    beforeEach(async () => {
 
         app = await createApp();
         helpers = createHelpers(app);
         helpers.createProjectDir();
-
-        spyOn(console, 'error');
-        // spyOn(console, 'warn');
 
         importCatalog = buildImportCatalog(
             {
@@ -31,23 +28,28 @@ describe('subsystem/import/importCatalog', () => {
                 username: app.settingsProvider.getSettings().username,
                 selectedProject: app.settingsProvider.getSettings().selectedProject
             },
-            ['Type']
+            ['Type'],
+            ['Image']
         );
-        done();
     });
 
 
-    it('import a TypeCatalog resource', async done => {
+    afterEach(async () =>{
+        
+        await cleanUp();
+    });
+
+
+    test('import a TypeCatalog resource', async () => {
 
         const documentsLookup = await createDocuments([['tc1', 'TypeCatalog']]);
         await importCatalog([documentsLookup['tc1']]);
 
         await helpers.expectDocuments('project', 'tc1');
-        done();
     });
 
 
-    it('reimport', async done => {
+    test('reimport', async () => {
 
         const documents: NiceDocs = [
             ['tr1', 'Trench'],
@@ -72,11 +74,10 @@ describe('subsystem/import/importCatalog', () => {
 
         const newDocument = await app.datastore.get('t1');
         expect(newDocument.resource.relations['hasInstance']).toEqual(['f1'])
-        done();
     });
 
 
-    it('reimport - image removed', async done => {
+    test('reimport - image removed', async () => {
 
         await helpers.createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
@@ -95,11 +96,10 @@ describe('subsystem/import/importCatalog', () => {
         helpers.expectImagesDontExist('i1');
         const newDocument = await app.datastore.get('t1');
         expect(newDocument.resource.relations[Relation.Image.ISDEPICTEDIN]).toBeUndefined();
-        done();
     });
 
 
-    it('reimport deletion - type resource was connected to other resource previously', async done => {
+    test('reimport deletion - type resource was connected to other resource previously', async () => {
 
         const documents: NiceDocs = [
             ['tc1', 'TypeCatalog', ['t1']],
@@ -116,11 +116,10 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toEqual(ImportCatalogErrors.CONNECTED_TYPE_DELETED);
         expect(result.errors[0][1]).toEqual('identifiert1');
-        done();
     });
 
 
-    it('reimport deletion - type resource was unconnected', async done => {
+    test('reimport deletion - type resource was unconnected', async () => {
 
         await helpers.createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
@@ -134,11 +133,10 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.errors).toEqual([]);
 
         await helpers.expectDocuments('project', 'tc1');
-        done();
     });
 
 
-    it('reimport - reject for project owner if catalog already exists', async done => {
+    test('reimport - reject for project owner if catalog already exists', async () => {
 
         await helpers.createDocuments([
             ['tc1', 'TypeCatalog'],
@@ -153,11 +151,10 @@ describe('subsystem/import/importCatalog', () => {
         expect(results.successfulImports).toBe(0);
         expect(results.errors[0][0]).toEqual(ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG);
         expect(results.errors[0][1]).toEqual('identifiertc1');
-        done();
     });
 
 
-    it('reimport - reject for project owner if images would be overwritten', async done => {
+    test('reimport - reject for project owner if images would be overwritten', async () => {
 
         await helpers.createDocuments([
             ['i1', 'Image'],
@@ -173,11 +170,10 @@ describe('subsystem/import/importCatalog', () => {
         const results = await importCatalog(Object.values(catalog));
         expect(results.successfulImports).toBe(0);
         expect(results.errors[0][0]).toEqual(ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES);
-        done();
     });
 
 
-    it('document.project differs between resources', async done => {
+    test('document.project differs between resources', async () => {
 
         const catalog = createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
@@ -188,11 +184,10 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.DIFFERENT_PROJECT_ENTRIES);
-        done();
     });
 
 
-    it('no type catalog resource', async done => {
+    test('no type catalog resource', async () => {
 
         const catalog = createDocuments([
             ['t1', 'Type']
@@ -200,11 +195,23 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS);
-        done();
     });
 
 
-    it('invalid relations - image not connected', async done => {
+    test('invalid category', async () => {
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog'],
+            ['i1', 'InvalidCategory']
+        ]);
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_CATEGORY);
+        expect(result.errors[0][1]).toBe('InvalidCategory');
+    });
+
+
+    test('invalid relations - image not connected', async () => {
 
         const catalog = createDocuments([
             ['tc1', 'TypeCatalog'],
@@ -213,11 +220,10 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
-        done();
     });
 
 
-    it('invalid relations - type resource not connected', async done => {
+    test('invalid relations - type resource not connected', async () => {
 
         const catalog = createDocuments([
             ['tc1', 'TypeCatalog'],
@@ -226,11 +232,10 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
-        done();
     });
 
 
-    it('invalid relations - link between image and resources wrong', async done => {
+    test('invalid relations - link between image and resources wrong', async () => {
 
         const catalog = createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
@@ -247,11 +252,10 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
-        done();
     });
 
 
-    it('invalid relations - relation points to non import resource', async done => {
+    test('invalid relations - relation points to non import resource', async () => {
 
         const catalog = createDocuments([
             ['tc1', 'TypeCatalog'],
@@ -263,11 +267,10 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
-        done();
     });
 
 
-    it('clean up leftover images placed by reader if import goes wrong', async done => {
+    test('clean up leftover images placed by reader if import goes wrong', async () => {
 
         await helpers.createImageInProjectDir('i1');
 
@@ -288,11 +291,10 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.errors.length > 0).toBeTruthy();
 
         helpers.expectImagesDontExist('i1');
-        done();
     });
 
 
-    it('will not import on identifier clashes', async done => {
+    test('will not import on identifier clashes', async () => {
 
         await helpers.createDocuments([
             ['tr1', 'Trench'],
@@ -314,12 +316,11 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH);
         expect(result.errors[0][1]).toBe('identifierf1');
-        done();
     });
 
 
     // see comment in assertNoIdentifierClashes
-    it('will not import on identifier clashes - especially not if target document is owned by user', async done => {
+    test('will not import on identifier clashes - especially not if target document is owned by user', async () => {
 
         await helpers.createDocuments([
             ['tr1', 'Trench'],
@@ -339,6 +340,5 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH);
         expect(result.errors[0][1]).toBe('identifierf1');
-        done();
     });
 });

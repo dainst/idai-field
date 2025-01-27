@@ -11,12 +11,13 @@ import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';
 import { MapComponent } from './map.component';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = window.require('fs');
 
 
 @Component({
     selector: 'layer-map',
-    templateUrl: './layer-map.html'
+    templateUrl: './layer-map.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

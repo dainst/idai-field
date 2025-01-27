@@ -80,12 +80,12 @@ export module CSVHeadingsExpansion {
                 return flatMap(i => [
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition'
                 ].concat(languages.map(language => {
                     return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'
                         + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
                 })).concat([
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise'
                 ]))(range(n));
             }

@@ -1,11 +1,13 @@
 <ng-container *ngFor="let message of getActiveMessages(); let index = index">
     <div *ngIf="!message.hidden" id="message-{{index}}" class="alert-container">
         <div class="alert alert-{{message.level}}" style="display: inline-block;">
-            <button *ngIf="message.level == 'danger' || message.level == 'warning'" type="button" class="close"
+            <button *ngIf="message.level == 'danger' || message.level == 'warning'"
+                    type="button" class="close"
                     (click)="closeAlert(message)" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <button *ngIf="alwaysShowClose && message.level !== 'danger' && message.level !== 'warning'" type="button" class="close"
+            <button *ngIf="alwaysShowClose && message.level !== 'danger' && message.level !== 'warning'"
+                    type="button" class="close"
                     (click)="closeAlert(message)" aria-label="Close">
                 <span aria-hidden="true" class="close-success">&times;</span>
             </button>

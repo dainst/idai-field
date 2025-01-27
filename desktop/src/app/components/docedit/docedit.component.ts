@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { includedIn, isNot } from 'tsfun';
 import { DatastoreErrors, Document, Datastore, Field, FieldDocument, Group, ImageDocument, CategoryForm,
     Name, ProjectConfiguration, Labels, Resource } from 'idai-field-core';
@@ -23,7 +22,8 @@ import { MessagesConversion } from './messages-conversion';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * Uses the document edit forms of idai-field-core and adds styling
@@ -60,8 +60,7 @@ export class DoceditComponent {
                 private datastore: Datastore,
                 private labels: Labels,
                 private loading: Loading,
-                private menuService: Menus,
-                private i18n: I18n) {}
+                private menuService: Menus) {}
 
 
     public isChanged = () => this.documentHolder.isChanged();
@@ -279,7 +278,7 @@ export class DoceditComponent {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0
-            ? this.i18n({ id: 'docedit.parentLabel.project', value: 'Projekt' })
+            ? $localize `:@@docedit.parentLabel.project:Projekt`
             : document.resource.id
                 ? undefined
                 : (await this.datastore.get(
@@ -299,9 +298,8 @@ export class DoceditComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 EditSaveDialogComponent, { keyboard: false, animation: false }
             );
-            modalRef.componentInstance.changeMessage = this.i18n({
-                id: 'docedit.saveModal.resourceChanged', value: 'Die Ressource wurde geändert.'
-            });
+            modalRef.componentInstance.changeMessage
+                = $localize `:@@docedit.saveModal.resourceChanged:Die Ressource wurde geändert.`;
             modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
 
             const result: string = await modalRef.result;

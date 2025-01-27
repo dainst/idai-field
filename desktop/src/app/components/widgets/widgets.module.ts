@@ -87,8 +87,7 @@ import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.c
         QrCodeScannerModalComponent,
         LanguagesListComponent,
         SearchableSelectComponent
-    ],
-    entryComponents: []
+    ]
 })
 
 export class WidgetsModule {}

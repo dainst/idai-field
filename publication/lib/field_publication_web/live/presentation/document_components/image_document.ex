@@ -65,7 +65,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
           <hr class="mt-4" />
 
           <.group_heading>
-            Raw data
+            Data formats
           </.group_heading>
           <ul class="ml-0 list-none">
             <li>
@@ -80,20 +80,22 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
               <a
                 target="_blank"
                 href={
-                  ~p"/api/raw/csv/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                  ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
                 }
               >
-                <.icon name="hero-table-cells-solid" /> Download CSV
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (raw)
               </a>
             </li>
             <li>
               <a
                 target="_blank"
                 href={
-                  ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                  ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
                 }
               >
-                <span class="text-center inline-block w-[20px]" style="block">{}</span> Download JSON
+                <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                View JSON (extended)
               </a>
             </li>
             <li>

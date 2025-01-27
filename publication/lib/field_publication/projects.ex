@@ -15,9 +15,12 @@ defmodule FieldPublication.Projects do
   alias FieldPublication.Publications
 
   @moduledoc """
-  Contains functions to retrieve, create, update and list projects within the FieldPublication system. Projects in this sense are used to control access
-  to publications which in turn attach themselves to a project. This means the primary data in FieldPublication is not handled by this module, but by
-  `FieldPublication.Publications` and its submodules.
+  This module contains functions to retrieve, create, update and list projects within
+  the FieldPublication system.
+
+  Projects in this sense are used to control access to publications which in turn attach
+  themselves to a project. This means the primary data in FieldPublication is not handled
+  by this module, but by `FieldPublication.Publications` and its submodules.
   """
 
   @doc """

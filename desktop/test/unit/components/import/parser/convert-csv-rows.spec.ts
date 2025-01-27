@@ -10,7 +10,7 @@ import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARR
  */
 describe('convertCsvRows', () => {
 
-    it('three fields', () => {
+    test('three fields', () => {
 
         const struct = convertCsvRows(',')(
             'identifier,shortDescription,custom\n' +
@@ -23,7 +23,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('two lines', () => {
+    test('two lines', () => {
 
         const structs = convertCsvRows(',')(
             'a\n' +
@@ -36,7 +36,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('parse content with quotes', () => {
+    test('parse content with quotes', () => {
 
         const structs = convertCsvRows(',')(
             'field1,field2,field3,field4,field5,field6\n' +
@@ -52,7 +52,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('parse linebreaks in field values', () => {
+    test('parse linebreaks in field values', () => {
 
         const structs = convertCsvRows(',')(
             'field1,field2,field3\n' +
@@ -73,7 +73,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('implode struct', () => {
+    test('implode struct', () => {
 
         const content =
             'a.b\n' +
@@ -85,7 +85,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('implode array with nested structure', () => {
+    test('implode array with nested structure', () => {
 
         const content =
             'identifier,array.0.begin.year,array.0.end.year,array.0.source,array.0.label\n' +
@@ -103,7 +103,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('parse last field in file even if empty', () => {
+    test('parse last field in file even if empty', () => {
 
         const struct = convertCsvRows(',')(
             'a,b\n' +
@@ -115,7 +115,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('parse empty fields on different levels', () => {
+    test('parse empty fields on different levels', () => {
 
         const struct = convertCsvRows(',')(
             'identifier,a\n' +
@@ -140,7 +140,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('parse field that contains only linebreak as empty field', () => {
+    test('parse field that contains only linebreak as empty field', () => {
 
         const struct = convertCsvRows(',')(
             'a\n' +
@@ -151,7 +151,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('can set array entry to null', () => {
+    test('can set array entry to null', () => {
 
         const struct = convertCsvRows(',')(
             'identifier,a.0\n'
@@ -163,59 +163,59 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('arrays with 1 entry are legal', () => {
+    test('arrays with 1 entry are legal', () => {
 
         convertCsvRows(',')('a.0');
         convertCsvRows(',')('a.0.c');
     });
 
 
-    it('legal case where one entry is longer than the other', () => {
+    test('legal case where one entry is longer than the other', () => {
 
         try {
             convertCsvRows(',')('a.12.a,a.120.b');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
-            if (expected[0] !== CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE) fail();
+            if (expected[0] !== CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE) throw new Error('Test failure');
         }
     });
 
     // err cases
 
-    it('inconsistent headings found', () => {
+    test('inconsistent headings found', () => {
 
         try {
             convertCsvRows(',')('a,a.0.a');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([CSV_INVALID_HEADING, 'a']);
         }
     });
 
 
-    it('inconsistent headings found - array', () => {
+    test('inconsistent headings found - array', () => {
 
         try {
             convertCsvRows(',')('a.10,a.10.a');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([CSV_INVALID_HEADING, 'a.10']);
         }
     });
 
 
-    it('inconsistent headings found - object', () => {
+    test('inconsistent headings found - object', () => {
 
         try {
             convertCsvRows(',')('a.b,a.b.c');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([CSV_INVALID_HEADING, 'a.b']);
         }
     });
 
 
-    it('do not throw invalid heading error for fields that begin with the same name', () => {
+    test('do not throw invalid heading error for fields that begin with the same name', () => {
 
         try {
             convertCsvRows(',')('abc,abcd');
@@ -227,80 +227,80 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('row entries does not match headings length', () => {
+    test('row entries does not match headings length', () => {
 
         try {
             convertCsvRows(';')('a;b;c\n;');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_ROW_LENGTH_MISMATCH, 1]);
         }
 
         try {
             convertCsvRows(';')('a;b;c\n;;;');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_ROW_LENGTH_MISMATCH, 1]);
         }
     });
 
 
-    it('path item mismatch at first element', () => {
+    test('path item mismatch at first element', () => {
 
         try {
             convertCsvRows(',')('a.b,0.d');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, ['a.b', '0.d']]);
         }
     });
 
 
-    it('path item mismatch at nested element', () => {
+    test('path item mismatch at nested element', () => {
 
         try {
             convertCsvRows(',')('a.b.a.a,a.b.0.b');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, ['a.a', '0.b']]);
         }
     });
 
 
-    it('incomplete array detected', () => {
+    test('incomplete array detected', () => {
 
         try {
             convertCsvRows(',')('a.b.0.a,a.b.0.b,a.b.2');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, [0, 2]]);
         }
     });
 
 
-    it('incomplete array detected - array does not start at 0', () => {
+    test('incomplete array detected - array does not start at 0', () => {
 
         try {
             convertCsvRows(',')('a.b.1.a,a.b.2.b,a.b.3');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, [1, 2, 3]]);
         }
     });
 
 
-    it('empty heading entry', () => {
+    test('empty heading entry', () => {
 
         try {
             convertCsvRows(',')(',b');
-            fail();
+            throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ParserErrors.CSV_HEADING_EMPTY_ENTRY]);
         }
     });
 
 
-    it('ignore zero-width characters', () => {
+    test('ignore zero-width characters', () => {
 
         const struct = convertCsvRows(',')(
             '\uFEFFa\n' +
@@ -315,7 +315,7 @@ describe('convertCsvRows', () => {
     });
 
 
-    it('ignore empty rows', () => {
+    test('ignore empty rows', () => {
 
         const struct = convertCsvRows(',')(
             'identifier,shortDescription,custom\n' +

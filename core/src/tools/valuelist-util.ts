@@ -1,11 +1,11 @@
-import { clone, filter, includedIn, isArray, isDefined, isNot, isString } from 'tsfun';
-import { Document } from '../model/document';
-import { Resource } from '../model/resource';
+import { filter, includedIn, isArray, isDefined, isNot, isObject, isString } from 'tsfun';
+import { Document } from '../model/document/document';
+import { Resource } from '../model/document/resource';
 import { Valuelist } from '../model/configuration/valuelist';
-import { OptionalRange } from '../model/optional-range';
+import { OptionalRange } from '../model/input-types/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
-import { CategoryForm, Dimension } from '../model';
+import { CategoryForm, Dimension, EditableValue } from '../model';
 import { ProjectConfiguration } from '../services';
 
 
@@ -35,14 +35,19 @@ export module ValuelistUtil {
     }
 
 
+    /**
+     * @param valuesToInclude These values will always be kept even if unselectable
+     */
     export function getValuelist(field: Field, projectDocument: Document, projectConfiguration: ProjectConfiguration,
-                                 parentResource?: Resource): Valuelist {
+                                 parentResource?: Resource, valuesToInclude?: string[],
+                                 includeUnselectable: boolean = false): Valuelist {
 
         const valuelist: Valuelist|string[] = field.valuelist
             ? field.valuelist
             : field.valuelistFromProjectField
-                ? getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument)
-                : undefined;
+                ? getValuelistFromProjectField(
+                    field.valuelistFromProjectField, projectDocument, valuesToInclude, includeUnselectable
+                ) : undefined;
         if (!valuelist) return undefined;
 
         const parentCategory: CategoryForm = parentResource ?
@@ -56,23 +61,31 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelistFromProjectField(fieldName: string, projectDocument: Document): Valuelist {
+    export function getValuelistFromProjectField(fieldName: string, projectDocument: Document,
+                                                 valuesToInclude?: string[],
+                                                 includeUnselectable: boolean = false): Valuelist {
 
-        const id = 'project-' + fieldName;
-        const field: string[]|undefined = projectDocument.resource[fieldName];
+        const valuelistId: string = 'project-' + fieldName;
+        const fieldData: Array<EditableValue>|undefined = projectDocument.resource[fieldName];
 
-        return field && isArray(field)
-            ? {
-                values: field.reduce((values: { [fieldId: string]: ValuelistValue }, fieldName: string) => {
-                    values[fieldName] = {};
-                    return values;
-                }, {}), id: id
+        if (!fieldData || !isArray(fieldData) || !fieldData.every(element => isObject(element) && element.value)) {
+            return { values: {}, id: valuelistId };
+        }
+
+        const values: { [valueId: string]: ValuelistValue } = fieldData.reduce((values, entry) => {
+            if (entry.selectable || includeUnselectable || valuesToInclude?.includes(entry.value)) {
+                values[entry.value] = {};
             }
-        : { values: {}, id: id };
+            return values;
+        }, {});
+        
+        return {
+            values, id: valuelistId
+        };
     }
 
 
-    function getValuesOfParentField(valuelist: Valuelist,  fieldName: string, parentResource: Resource): Valuelist {
+    function getValuesOfParentField(valuelist: Valuelist, fieldName: string, parentResource: Resource): Valuelist {
 
         const parentValues: string[] = parentResource[fieldName] ?? [];
 

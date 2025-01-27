@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, DocumentConverter, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
+import { AppConfigurator, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
     PouchdbDatastore, ProjectConfiguration, Document } from 'idai-field-core';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
@@ -14,9 +14,7 @@ import { Messages } from '../components/messages/messages';
 import { M } from '../components/messages/m';
 import { ImageDocumentsManager } from '../components/image/overview/view/image-documents-manager';
 
-const ipcRenderer = typeof window !== 'undefined'
-    ? window.require('electron').ipcRenderer
-    : require('electron').ipcRenderer;
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 @Injectable()
@@ -89,7 +87,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -115,7 +112,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -132,7 +128,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -150,7 +145,6 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );
@@ -187,7 +181,6 @@ export class AppController {
             this.indexFacade,
             db,
             this.documentCache,
-            new DocumentConverter(this.projectConfiguration),
             this.projectConfiguration,
             false
         );

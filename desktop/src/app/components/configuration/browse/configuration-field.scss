@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 configuration-field {
   .card {
     margin-top: 1px;
@@ -5,6 +7,7 @@ configuration-field {
 
     .card-header {
       min-height: 55px;
+      padding: 12px 20px;
       background-color: #fff;
       border: none;
       transition: background-color .25s ease;
@@ -67,12 +70,26 @@ configuration-field {
       .card-header.opened,
       .card-header:hover:not(.parent-element),
       .card-body {
-          background-color: darken($custom-highlight-color, 5%) !important;
+          background-color: color.adjust($custom-highlight-color, $lightness: -5%) !important;
       }
     }
 
-    .input-type-colon {
+    .oneliner-colon {
       margin-right: 4px;
+    }
+
+    .target-category {
+      position: relative;
+      left: 10px;
+      margin-top: 8px;
+
+      .target-category-label {
+        margin-left: 5px;
+      }
+
+      &:first-of-type {
+        margin-top: 5px;
+      }
     }
 
     &.hidden-element {

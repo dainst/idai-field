@@ -1,11 +1,9 @@
 <div *ngIf="!edit" class="input-group mb-2">
     <input type="text" disabled class="form-control"
            [value]="getGeometryTypeLabel()">
-    <div class="input-group-append">
-        <button class="btn btn-info" type="button" (click)="edit = true;">
-            <span class="mdi mdi-pencil"></span>
-        </button>
-    </div>
+    <button class="btn btn-info" type="button" (click)="edit = true;">
+        <span class="mdi mdi-pencil"></span>
+    </button>
 </div>
 
 <div *ngIf="edit">
@@ -31,6 +29,6 @@
     <textarea *ngIf="fieldContainer.geometry && fieldContainer.geometry.type !== ''"
               class="form-control geometry-coordinates-textarea"
               [(ngModel)]="coordinates"
-              (keyup)="parseCoordinates(false)"
+              (input)="parseCoordinates(false)"
               (blur)="parseCoordinates(true)">{{coordinates}}</textarea>
 </div>

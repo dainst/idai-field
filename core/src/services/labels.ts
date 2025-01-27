@@ -1,7 +1,6 @@
 import { isString } from 'tsfun';
 import { I18N } from '../tools/i18n';
 import { Valuelist } from '../model/configuration/valuelist';
-import { ProjectConfiguration } from './project-configuration';
 import { CategoryForm } from '../model/configuration/category-form';
 import { SortUtil } from '../tools/sort-util';
 import { Relation } from '../model/configuration/relation';
@@ -13,8 +12,7 @@ import { Field } from '../model/configuration/field';
  */
 export class Labels {
 
-    constructor(private getLanguages: () => string[],
-                private projectConfiguration: ProjectConfiguration) {}
+    constructor(private getLanguages: () => string[]) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {
@@ -66,9 +64,9 @@ export class Labels {
     }
 
 
-    public getRelationLabel(relationName: string): string {
+    public getRelationLabel(relationName: string, relations: Array<Relation>): string {
 
-        const relation: Relation = this.projectConfiguration.getRelations().find(relation => {
+        const relation: Relation = relations.find(relation => {
             return relation.name === relationName;
         });
         if (!relation) return undefined;

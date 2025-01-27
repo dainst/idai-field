@@ -2,8 +2,14 @@
   #category-color {
     width: 38px;
     height: 38px;
-    padding: 1px 3px;
-    border-radius: 0.3rem !important;
+    padding: 5px;
+    border-radius: 0.25rem !important;
+    cursor: default;
+
+    &::-webkit-color-swatch {
+      border: none;
+      border-radius: 0.25rem !important;
+    }
 
     &.with-restore-default-color-button {
       float: left;

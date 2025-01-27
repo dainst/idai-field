@@ -1,11 +1,10 @@
 import { Feature, FeatureCollection, GeometryObject } from 'geojson';
-import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore } from 'idai-field-core';
+import { isObject } from 'tsfun';
+import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore, FieldGeometryType, I18N } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 
-const geojsonRewind = typeof window !== 'undefined'
-    ? window.require('@mapbox/geojson-rewind')
-    : require('@mapbox/geojson-rewind');
+const geojsonRewind = window.require('@mapbox/geojson-rewind');
 
 
 /**
@@ -13,22 +12,27 @@ const geojsonRewind = typeof window !== 'undefined'
  */
 export module GeoJsonExporter {
 
-    export async function performExport(datastore: Datastore, outputFilePath: string,
-                                        operationId: string): Promise<void> {
+    export async function performExport(datastore: Datastore, outputFilePath: string, operationId: string,
+                                        explodeShortDescription: boolean = false,
+                                        geometryTypes?: Array<FieldGeometryType>) {
 
-        const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId);
-        const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(documents);
+        const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId, geometryTypes);
+        const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(documents, explodeShortDescription);
 
         return writeFile(outputFilePath, featureCollection);
     }
 
 
-    async function getGeometryDocuments(datastore: Datastore,
-                                        operationId: string): Promise<Array<FieldDocument>> {
+    async function getGeometryDocuments(datastore: Datastore, operationId: string,
+                                        geometryTypes?: Array<FieldGeometryType>): Promise<Array<FieldDocument>> {
 
         const query: Query = createQuery(operationId);
-        const result = await datastore.find(query);
-        return result.documents as Array<FieldDocument>;
+        const result: Datastore.FindResult = await datastore.find(query);
+        const documents: Array<FieldDocument> = result.documents as Array<FieldDocument>;
+
+        return geometryTypes
+            ? documents.filter(document => geometryTypes.includes(document.resource.geometry.type))
+            : documents;
     }
 
 
@@ -47,11 +51,12 @@ export module GeoJsonExporter {
     }
 
 
-    function createFeatureCollection(documents: Array<FieldDocument>): FeatureCollection<GeometryObject> {
+    function createFeatureCollection(documents: Array<FieldDocument>,
+                                     explodeShortDescription: boolean): FeatureCollection<GeometryObject> {
 
         const featureCollection: FeatureCollection<GeometryObject> = {
             type: 'FeatureCollection',
-            features: documents.map(createFeature)
+            features: documents.map(document => createFeature(document, explodeShortDescription))
         };
 
         geojsonRewind(featureCollection);
@@ -60,18 +65,18 @@ export module GeoJsonExporter {
     }
 
 
-    function createFeature(document: FieldDocument): Feature<GeometryObject> {
+    function createFeature(document: FieldDocument, explodeShortDescription: boolean): Feature<GeometryObject> {
 
         return {
             type: 'Feature',
             geometry: getGeometry(document),
-            properties: getProperties(document)
+            properties: getProperties(document, explodeShortDescription)
         };
     }
 
 
     async function writeFile(outputFilePath: string,
-                       featureCollection: FeatureCollection<GeometryObject>): Promise<void> {
+                             featureCollection: FeatureCollection<GeometryObject>) {
 
         const json: string = JSON.stringify(featureCollection, null, 2);
 
@@ -117,16 +122,37 @@ export module GeoJsonExporter {
     }
 
 
-    function getProperties(document: FieldDocument): any {
+    function getProperties(document: FieldDocument, explodeShortDescription: boolean): any {
 
         const properties: any = {
             identifier: document.resource.identifier,
-            shortDescription: document.resource.shortDescription,
             category: document.resource.category
         };
 
-        if (!properties.shortDescription) delete properties.shortDescription;
+        addShortDescription(properties, document, explodeShortDescription);
 
         return properties;
+    }
+
+
+    function addShortDescription(properties: any, document: FieldDocument, explodeShortDescription: boolean) {
+
+        const shortDescription: I18N.String|string = document.resource.shortDescription;
+        if (!shortDescription) return;
+
+        if (explodeShortDescription) {
+            if (isObject(shortDescription)) {
+                Object.keys(shortDescription).forEach(languageCode => {
+                    const suffix: string = languageCode !== I18N.UNSPECIFIED_LANGUAGE
+                        ? '_' + languageCode
+                        : '';
+                    properties['sdesc' + suffix] = shortDescription[languageCode];
+                });
+            } else {
+                properties['sdesc'] = shortDescription;
+            }
+        } else {
+            properties.shortDescription = shortDescription;
+        }
     }
 }

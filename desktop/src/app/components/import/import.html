@@ -1,7 +1,7 @@
 <div class="import row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
         <div class="row">
-            <div class="col default-nav bg-light text-right">
+            <div class="col default-nav bg-light text-end">
                 <button id="importStartButton"
                         class="btn btn-primary"
                         [ngClass]="{ 'disabled': !isReady() }"
@@ -13,9 +13,9 @@
         </div>
 
         <div class="row">
-            <div class="form-group col default-container">
+            <div class="col default-container mb-3">
                 <div *ngIf="ignoredIdentifiers.length < 2" class="col-lg-6 mx-lg-auto py-4">
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="control-label col-form-label" for="importSourceSelect"
                                i18n="@@import.source">Quelle</label>
                         <select id="importSourceSelect" class="form-control"
@@ -26,31 +26,29 @@
                         </select>
                     </div>
 
-                    <div *ngIf="importState.sourceType === 'file'" class="form-group">
+                    <div *ngIf="importState.sourceType === 'file'" class="mb-3">
                         <label class="control-label col-form-label" i18n="@@import.path">Pfad</label>
-                        <div class="input-group">
+                        <div id="path-input-group" class="input-group">
                             <input id="file-path-input"
                                    [ngModel]="importState.filePath"
                                    class="form-control"
                                    placeholder="Datei auswählen..."
                                    i18n-placeholder="@@import.chooseFile"
                                    disabled>
-                            <div class="input-group-append">
-                                <label for="file-path-input"
-                                       class="btn btn-secondary"
-                                       (click)="selectFile()">
-                                    <span class="mdi mdi-folder"></span>
-                                </label>
-                            </div>
+                            <label for="file-path-input"
+                                    class="btn btn-secondary"
+                                    (click)="selectFile()">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
                         </div>
                     </div>
 
-                    <div *ngIf="importState.sourceType === 'http'" class="form-group">
+                    <div *ngIf="importState.sourceType === 'http'" class="mb-3">
                         <label class="control-label col-form-label" i18n="@@import.url">URL</label>
                         <input class="form-control" id="importUrlInput"
                                type="text"
                                [(ngModel)]="importState.url"
-                               (keyup)="updateFormat()">
+                               (input)="updateFormat()">
                     </div>
 
                     <div *ngIf="!importState.format" class="import-info" i18n="@@import.format.info">
@@ -60,35 +58,33 @@
 
                     <div *ngIf="importState.format === 'csv'" class="import-info" i18n="@@import.csv.info">
                         Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören.
-                        Bitte beachten Sie, dass die Spaltenköpfe den Namen der Felder entsprechen müssen,
+                        Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen,
                         die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im
                         <a href="#" routerLink="../export">Export-Menü</a> eine Schemadatei generiert werden.
                      </div>
 
                     <div *ngIf="isDefaultFormat()">
-                        <div
-                            (click)="setMergeMode(false)"
-                            id="radiobutton-merge-mode-false">
-                            <div class="form-group form-check-inline">
-                            <input type="radio"
-                                class="form-check-input"
-                                name="radiobutton-merge-mode"
-                                [checked]="!isMergeMode()" />
-                            <label for="radiobutton-merge-mode-false"
-                                class="form-check-label"
-                                i18n="@@import.regularOption.label">
-                                Neue Ressourcen importieren</label>
-                            </div>
-                            <div class="import-info"
-                                i18n="@@import.defaultOption.info">
-                                Datensätze, deren Bezeichner (Feld <em>identifier</em>)
-                                bereits vergeben ist, werden ignoriert.
-                            </div>
+                        <div (click)="setMergeMode(false)"
+                             id="radiobutton-merge-mode-false">
+                            <div class="form-check">
+                                <input type="radio"
+                                    class="form-check-input"
+                                    name="radiobutton-merge-mode"
+                                    [checked]="!isMergeMode()" />
+                                <label for="radiobutton-merge-mode-false"
+                                    class="form-check-label"
+                                    i18n="@@import.regularOption.label">
+                                    Neue Ressourcen importieren</label>
+                                </div>
+                                <div class="import-info"
+                                    i18n="@@import.defaultOption.info">
+                                    Datensätze, deren Bezeichner (Feld <em>identifier</em>)
+                                    bereits vergeben ist, werden ignoriert.
+                                </div>
                         </div>
-                        <div
-                            (click)="setMergeMode(true)"
-                            id="radiobutton-merge-mode-true">
-                            <div class="form-group form-check-inline">
+                        <div (click)="setMergeMode(true)"
+                             id="radiobutton-merge-mode-true">
+                            <div class="form-check">
                                 <input type="radio"
                                     class="form-check-input"
                                     name="radiobutton-merge-mode"
@@ -96,7 +92,7 @@
                                 <label for="radiobutton-merge-mode-true"
                                     class="form-check-label"
                                     i18n="@@import.mergeOption.label">
-                                    Vorhandene Ressource ergänzen
+                                    Vorhandene Ressourcen ergänzen
                                 </label>
                             </div>
 
@@ -123,7 +119,7 @@
                             </div>
                         </div>
                         <div *ngIf="shouldDisplayPermitDeletionsOption()">
-                            <div class="form-group form-check-inline">
+                            <div class="form-check-inline">
                                 <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
                                         [(ngModel)]="importState.permitDeletions">
                                 <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.permitDeletions">
@@ -146,7 +142,7 @@
                                 unverändert.
                             </div>
                         </div>
-                        <div class="form-group form-check-inline">
+                        <div class="form-check-inline">
                             <input type="checkbox" id="ignore-unconfigured-fields-checkbox" class="form-check-input"
                                     [(ngModel)]="importState.ignoreUnconfiguredFields">
                             <label for="ignore-unconfigured-fields-checkbox" class="form-check-label"
@@ -160,7 +156,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" *ngIf="importState.format === 'csv' && importState.filePath && !importState.typeFromFileName">
+                    <div class="mb-3" *ngIf="importState.format === 'csv' && importState.filePath && !importState.typeFromFileName">
                         <label class="control-label col-form-label"
                                for="importTypeSelect"
                                i18n="@@import.format.importCategorySelect">Kategorie</label>
@@ -176,7 +172,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group" *ngIf="shouldDisplayImportIntoOperation()">
+                    <div class="mb-3" *ngIf="shouldDisplayImportIntoOperation()">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@import.assignToOperation.label">Daten einer Maßnahme zuordnen</label>
@@ -189,7 +185,7 @@
                         </select>
                     </div>
 
-                    <div *ngIf="importState.format === 'csv'" class="form-group">
+                    <div *ngIf="importState.format === 'csv'" class="mb-3">
                         <label class="control-label col-form-label"
                                i18n="@@import.csv.separator">Feldtrennzeichen</label>
                         <input class="form-control" id="separatorInput"
@@ -205,12 +201,7 @@
                         Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                     </div>
 
-                    <div *ngIf="isJavaInstallationMissing()" class="import-info text-danger" i18n="@@import.shapefile.javaWarning">
-                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java JDK 8 oder höher
-                        erforderlich.
-                    </div>
-
-                    <div *ngIf="importState.format === 'shapefile' && !isJavaInstallationMissing()" class="import-info" i18n="@@import.shapefile.info">
+                    <div *ngIf="importState.format === 'shapefile'" class="import-info" i18n="@@import.shapefile.info">
                         Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
                         Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
                         Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per

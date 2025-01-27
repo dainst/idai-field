@@ -5,7 +5,8 @@ import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
 @Component({
     selector: 'image-grid-cell',
-    templateUrl: './image-grid-cell.html'
+    templateUrl: './image-grid-cell.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -20,7 +21,7 @@ export class ImageGridCellComponent {
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
     @Input() showGeoIcon: boolean = false;
-    @Input() resourceIdentifiers: {[id: string]: string} = {};
+    @Input() resourceIdentifiers: { [id: string]: string } = {};
     @Input() nrOfColumns: number = 0;
 
 

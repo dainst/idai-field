@@ -3,7 +3,7 @@ import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 import { AppState } from '../../services/app-state';
 import { M } from '../messages/m';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 /**
@@ -34,7 +34,7 @@ async function chooseFilepath(projectName: string, appState: AppState,
         defaultPath: getDefaultPath(appState.getFolderPath('configurationExport'), projectName)
     };
 
-    const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
+    const saveDialogReturnValue = await remote.dialog.showSaveDialog(remote.getCurrentWindow(), options);
     const filePath: string = saveDialogReturnValue.filePath;
 
     if (filePath) {

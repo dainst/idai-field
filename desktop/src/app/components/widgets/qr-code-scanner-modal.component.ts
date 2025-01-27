@@ -17,7 +17,8 @@ type Camera = {
     templateUrl: './qr-code-scanner-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Danilo Guzzo

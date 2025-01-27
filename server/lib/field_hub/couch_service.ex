@@ -6,8 +6,14 @@ defmodule FieldHub.CouchService do
   @moduledoc """
   Bundles functions for directly interacting with the CouchDB.
   """
-
   require Logger
+
+  @doc """
+  Sends a HEAD request to the configurated CouchDB's base url.
+  """
+  def ping_couch() do
+    HTTPoison.head("#{base_url()}/")
+  end
 
   @doc """
   Authenticate with credentials.
@@ -335,6 +341,85 @@ defmodule FieldHub.CouchService do
       "#{base_url()}/#{project_identifier}",
       headers()
     )
+  end
+
+  @doc """
+  Returns up to n last changes for the specified project.
+  If the project has less than n changes or is new, less or no change would be returned.
+
+  __Parameters__
+  - `project_identifier` - The name of the project.
+
+  ## Example
+  iex> get_last_n_changes("project_a",1)
+  [
+    %{
+      "changes" => [%{"rev" => "2-4f773e67d44d4bc99008713d9f9d164f"}],
+      "doc" => %{
+        "_id" => "988d0107-952f-4eaf-8c1f-4a25a0c5b15c",
+        "_rev" => "2-4f773e67d44d4bc99008713d9f9d164f",
+        "created" => %{
+          "date" => "2023-10-17T14:56:31.120Z",
+          "user" => "anonymous"
+        },
+        "modified" => [
+          %{"date" => "2023-10-17T14:57:55.929Z", "user" => "anonymous"}
+        ],
+        "resource" => %{
+          "category" => "Survey",
+          "id" => "988d0107-952f-4eaf-8c1f-4a25a0c5b15c",
+          "identifier" => "area 190",
+          "relations" => %{}
+        }
+      },
+      "id" => "988d0107-952f-4eaf-8c1f-4a25a0c5b15c",
+      "seq" => "6-g1AAAACLeJzLYWBgYMpgTmHgzcvPy09JdcjLz8gvLskBCScyJNX___8_K4M5kTkXKMBuYW5iaZpkgK4Yh_Y8FiDJ0ACk_qOaYpJmlpSSiq4nCwA51yqW"
+    }
+  ]
+
+  """
+  def get_last_n_changes(project_identifier, n) do
+    HTTPoison.get!(
+      "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=100&include_docs=true",
+      get_user_credentials()
+      |> headers()
+    )
+    |> Map.get(:body)
+    |> Jason.decode!()
+    |> Map.get("results")
+    |> Enum.reject(fn change ->
+      doc = change["doc"]
+      Map.has_key?(doc, "_deleted")
+    end)
+    |> Enum.sort_by(
+      &extract_most_recent_change_info/1,
+      &compare_change_info/2
+    )
+    |> Enum.take(n)
+  end
+
+  def extract_most_recent_change_info(%{"doc" => %{"modified" => []}} = change) do
+    {:ok, creation_date, _seconds} = DateTime.from_iso8601(change["doc"]["created"]["date"])
+    user_name = change["doc"]["created"]["user"]
+
+    {:created, creation_date, user_name}
+  end
+
+  def extract_most_recent_change_info(change) do
+    last_modification = List.last(change["doc"]["modified"])
+
+    {:ok, modification_date, _seconds} = DateTime.from_iso8601(last_modification["date"])
+    user_name = last_modification["user"]
+
+    {:modified, modification_date, user_name}
+  end
+
+  defp compare_change_info({_, a, _}, {_, b, _}) do
+    if DateTime.compare(a, b) == :gt do
+      true
+    else
+      false
+    end
   end
 
   @doc """

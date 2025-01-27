@@ -1,5 +1,5 @@
-import {NewDocument, Document} from 'idai-field-core';
-import {DuplicationUtil} from '../../../../src/app/components/docedit/duplication-util';
+import { NewDocument, Document } from 'idai-field-core';
+import { DuplicationUtil } from '../../../../src/app/components/docedit/duplication-util';
 
 
 /**
@@ -14,14 +14,15 @@ describe('DuplicationUtil', () => {
 
     beforeAll(() => {
 
-        validator = jasmine.createSpyObj('validator', ['assertIdentifierIsUnique']);
-        validator.assertIdentifierIsUnique.and.callFake(async (document: NewDocument) => {
-            if (identifiers.includes(document.resource.identifier)) throw 'duplicate identifier';
-        });
+        validator = {
+            assertIdentifierIsUnique: jest.fn(async (document: NewDocument) => {
+                if (identifiers.includes(document.resource.identifier)) throw 'duplicate identifier';
+            })
+        };
     });
 
 
-    it('do not include non-hierarchy relations, id and geometry in template', () => {
+    test('do not include non-hierarchy relations, id and geometry in template', () => {
 
         const document: Document = {
             _id: 't1',
@@ -56,7 +57,7 @@ describe('DuplicationUtil', () => {
     });
 
 
-    it('split identifiers', () => {
+    test('split identifiers', () => {
 
        expect(DuplicationUtil.splitIdentifier('test1'))
            .toEqual({ baseIdentifier: 'test', identifierNumber: 1, minDigits: 1 });
@@ -78,7 +79,7 @@ describe('DuplicationUtil', () => {
     });
 
 
-    it('set unique identifier', async done => {
+    test('set unique identifier', async () => {
 
         identifiers = ['test1', 'test2', 'test3'];
         const document: NewDocument = { resource: { identifier: 'test1', relations: {}, category: 'Find' } };
@@ -88,11 +89,10 @@ describe('DuplicationUtil', () => {
         );
 
         expect(document.resource.identifier).toEqual('test4');
-        done();
     });
 
 
-    it('keep min number of digits', async done => {
+    test('keep min number of digits', async () => {
 
         identifiers = ['test-0001'];
         const document: NewDocument = { resource: { identifier: 'test-0001', relations: {}, category: 'Find' } };
@@ -102,6 +102,5 @@ describe('DuplicationUtil', () => {
         );
 
         expect(document.resource.identifier).toEqual('test-0002');
-        done();
     });
 });

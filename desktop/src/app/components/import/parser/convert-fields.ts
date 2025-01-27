@@ -1,4 +1,4 @@
-import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
+import { includedIn, is, isNot, isnt, on, Path, to, clone } from 'tsfun';
 import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource, Named } from 'idai-field-core';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
@@ -98,9 +98,11 @@ function convertDating(container: any, fieldName: string) {
         if (dating === undefined) throw 'Undefined dating found';
         if (dating === null) continue;
 
+        if (dating.type === 'scientific') dating.begin = clone(dating.end);
+
         try {
-            convertInt(dating, ['begin','inputYear']);
-            convertInt(dating, ['end','inputYear']);
+            convertInt(dating, ['begin', 'inputYear']);
+            convertInt(dating, ['end', 'inputYear']);
             convertInt(dating, 'margin');
             convertBoolean(dating, 'isImprecise');
             convertBoolean(dating, 'isUncertain');

@@ -1,10 +1,13 @@
-import { Field, Valuelist } from 'idai-field-core';
+import { Field, Valuelist, Relation } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../src/app/services/configuration/index/configuration-index';
 
 
+/**
+ * @author Thomas Kleinke
+ */
 describe('ConfigurationIndex', () => {
 
-    it('find category forms', () => {
+    test('find category forms', () => {
 
         const forms = [
             {
@@ -19,11 +22,12 @@ describe('ConfigurationIndex', () => {
                 },
                 parentCategory: {
                     name: 'A:parent'
-                }
+                },
+                groups: []
             }
-        ]
+        ];
         const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
-        index.createSubIndices(forms as any, [], [], [], []);
+        index.createSubIndices(forms as any, [], [], [], [], []);
 
         expect(index.findCategoryForms( '', 'A:parent')[0].name).toEqual('A:default');
         expect(index.findCategoryForms('A', 'A:parent')[0].name).toEqual('A:default');
@@ -35,7 +39,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('get children of category form', () => {
+    test('get children of category form', () => {
 
         const forms = [
             {
@@ -44,7 +48,8 @@ describe('ConfigurationIndex', () => {
                 defaultLabel: {},
                 parentCategory: {
                     name: 'ParentA:default'
-                }
+                },
+                groups: []
             },
             {
                 name: 'B:default',
@@ -52,16 +57,18 @@ describe('ConfigurationIndex', () => {
                 defaultLabel: {},
                 parentCategory: {
                     name: 'ParentA:default'
-                }
+                },
+                groups: []
             },
             {
                 name: 'C:default',
                 label: {},
                 defaultLabel: {},
+                groups: []
             }
-        ]
+        ];
         const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
-        index.createSubIndices(forms as any, [], [], [], []);
+        index.createSubIndices(forms as any, [], [], [], [], []);
 
         const result = index.getCategoryFormChildren('ParentA:default');
         expect(result[0].name).toEqual('A:default');
@@ -69,7 +76,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('find fields', () => {
+    test('find fields', () => {
 
         const categories = [
             {
@@ -107,7 +114,7 @@ describe('ConfigurationIndex', () => {
             }
         ];
         const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
-        index.createSubIndices([], categories, [], [], []);
+        index.createSubIndices([], categories, [], [], [], []);
 
         expect(index.findFields('', 'A')[0].name).toEqual('field1');
         expect(index.findFields('field', 'A')[0].name).toEqual('field1');
@@ -123,7 +130,54 @@ describe('ConfigurationIndex', () => {
     });
 
 
-   it('find valuelists', () => {
+    test('find custom relations', () => {
+
+        const relations: Array<Relation> = [
+            {
+                name: 'relation1',
+                source: 'custom'  as Field.SourceType,
+                inputType: Field.InputType.RELATION as Field.InputType,
+                label: {
+                    de: 'Erste Relation',
+                    en: 'First relation'
+                },
+                defaultLabel: {
+                    de: 'Erste Relation',
+                    en: 'First relation'
+                },
+                domain: [],
+                range: []
+            }, {
+                name: 'relation2',
+                source: 'builtIn' as Field.SourceType,
+                inputType: Field.InputType.RELATION as Field.InputType,
+                label: {
+                    de: 'Zweite Relation',
+                    en: 'Second relation'
+                },
+                defaultLabel: {
+                    de: 'Zweite Relation',
+                    en: 'Second relation'
+                },
+                domain: [],
+                range: []
+            }
+        ];
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
+        index.createSubIndices([], [], relations, [], [], []);
+
+        expect(index.findFields('', 'customRelations').length).toBe(1);
+        expect(index.findFields('', 'customRelations')[0].name).toEqual('relation1');
+        expect(index.findFields('relation', 'customRelations')[0].name).toEqual('relation1');
+        expect(index.findFields('relation1', 'customRelations')[0].name).toEqual('relation1');
+        expect(index.findFields('Erste', 'customRelations')[0].name).toEqual('relation1');
+        expect(index.findFields('relation2', 'customRelations').length).toBe(0);
+        expect(index.findFields('Zweite', 'customRelations').length).toBe(0);
+        expect(index.findFields('Abc', 'customRelations').length).toBe(0);
+    });
+
+
+    test('find valuelists', () => {
 
         const valuelists: Array<Valuelist> = [
             {
@@ -149,7 +203,7 @@ describe('ConfigurationIndex', () => {
             }
         ];
         const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
-        index.createSubIndices([], [], [], valuelists, []);
+        index.createSubIndices([], [], [], [], valuelists, []);
 
         expect(index.findValuelists('')[0].id).toEqual('valuelist-1');
         expect(index.findValuelists('valuelist')[0].id).toEqual('valuelist-1');
@@ -170,7 +224,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('find groups', () => {
+    test('find groups', () => {
 
         const forms = [
             {
@@ -203,9 +257,9 @@ describe('ConfigurationIndex', () => {
                     }
                 ]
             }
-        ]
+        ];
         const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
-        index.createSubIndices([], [], [], [], forms as any);
+        index.createSubIndices([], [], [], [], [], forms as any);
 
         expect(index.findGroups('').length).toBe(3);
         expect(index.findGroups('blueGroup').length).toBe(1);
@@ -221,7 +275,7 @@ describe('ConfigurationIndex', () => {
     });
 
 
-    it('get valuelist usage', () => {
+    test('get valuelist usage', () => {
 
         const valuelists: Array<Valuelist> = [
             {
@@ -266,7 +320,7 @@ describe('ConfigurationIndex', () => {
         };
 
         const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
-        index.createSubIndices([], [], [], valuelists, [category1, category2]);
+        index.createSubIndices([], [], [], [], valuelists, [category1, category2]);
 
         const result1 = index.getValuelistUsage('valuelist-1');
         expect(result1[0].category).toBe(category1);

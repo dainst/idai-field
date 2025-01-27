@@ -4,7 +4,8 @@ import { Loading } from './loading';
 
 @Component({
     selector: 'loading-icon',
-    templateUrl: './loading-icon.html'
+    templateUrl: './loading-icon.html',
+    standalone: false
 })
 
 /**

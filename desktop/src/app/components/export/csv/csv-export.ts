@@ -30,7 +30,6 @@ export type InvalidField = {
  */
 export module CSVExport {
 
-
     /**
      * Creates a header line and lines for each record.
      * If resources is empty, still a header line gets created.
@@ -47,7 +46,9 @@ export module CSVExport {
                                      combineHierarchicalRelations: boolean = true,
                                      addScanCode: boolean = false) {
 
-        fieldDefinitions = fieldDefinitions.filter(field => field.inputType !== Field.InputType.RELATION);
+        fieldDefinitions = fieldDefinitions.filter(field => {
+            return !Field.InputType.RELATION_INPUT_TYPES.includes(field.inputType);
+        });
 
         const headings: string[] = makeHeadings(
             fieldDefinitions, relations, combineHierarchicalRelations, addScanCode

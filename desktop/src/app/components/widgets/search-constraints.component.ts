@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, Renderer2 } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { aFilter, clone, is, on } from 'tsfun';
 import { CategoryForm, ConstraintIndex, Datastore, Field, ProjectConfiguration, Valuelist,
     ValuelistUtil, Labels, IndexType } from 'idai-field-core';
@@ -19,8 +18,9 @@ type SearchInputType = 'input'|'dropdown'|'boolean'|'exists';
 
 
 @Component({
-   template: ''
- })
+    template: '',
+    standalone: false
+})
 /**
  * @author Thomas Kleinke
  */
@@ -48,8 +48,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           private projectConfiguration: ProjectConfiguration,
                           private datastore: Datastore,
                           private renderer: Renderer2,
-                          protected labels: Labels,
-                          protected i18n: I18n) {}
+                          protected labels: Labels) {}
 
 
     public getValueLabel = (value: string, existsQuery: boolean = false): string => {
@@ -57,16 +56,16 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         switch (value) {
             case 'KNOWN':
                 return existsQuery
-                    ? this.i18n({ id: 'boolean.yes', value: 'Ja' })
-                    : this.i18n({ id: 'resources.searchBar.constraints.options.anyValue', value: '- Beliebiger Wert -' });
+                    ? $localize `:@@boolean.yes:Ja`
+                    : $localize `:@@resources.searchBar.constraints.options.anyValue:- Beliebiger Wert -`;
             case 'UNKNOWN':
                 return existsQuery
-                    ? this.i18n({ id: 'boolean.no', value: 'Nein' })
-                    : this.i18n({ id: 'resources.searchBar.constraints.options.noValue', value: '- Kein Wert -' });
+                    ? $localize `:@@boolean.no:Nein`
+                    : $localize `:@@resources.searchBar.constraints.options.noValue:- Kein Wert -`;
             case 'true':
-                return this.i18n({ id: 'boolean.yes', value: 'Ja' });
+                return $localize `:@@boolean.yes:Ja`;
             case 'false':
-                return this.i18n({ id: 'boolean.no', value: 'Nein' });
+                return $localize `:@@boolean.no:Nein`;
             default:
                 return this.labels.getValueLabel(this.selectedField.valuelist, value);
         }
@@ -112,14 +111,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public getTooltip() {
 
         return this.constraintListItems.length === 0
-            ? this.i18n({
-                id: 'resources.searchBar.constraints.tooltips.setupAdditionalSearchCriteria',
-                value: 'Weitere Suchkriterien einstellen'
-            })
-            : this.i18n({
-                id: 'resources.searchBar.constraints.tooltips.activeSearchCriteria',
-                value: 'Aktive Suchkriterien'
-            });
+            ? $localize `:@@resources.searchBar.constraints.tooltips.setupAdditionalSearchCriteria:Weitere Suchkriterien einstellen`
+            : $localize `:@@resources.searchBar.constraints.tooltips.activeSearchCriteria:Aktive Suchkriterien`;
     }
 
 
@@ -192,29 +185,17 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public getBooleanSearchTermLabel(searchTerm: string): string {
 
         return (searchTerm === 'true' || searchTerm === 'KNOWN')
-            ? this.i18n({
-                id: 'boolean.yes',
-                value: 'Ja'
-            })
-            : this.i18n({
-                id: 'boolean.no',
-                value: 'Nein'
-            });
+            ? $localize `:@@boolean.yes:Ja`
+            : $localize `:@@boolean.no:Nein`;
     }
 
 
     public getExistIndexSearchTermLabel(searchTerm: string): string {
 
         if (searchTerm === 'KNOWN') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.anyValue',
-                value: 'Beliebiger Wert'
-            });
+            return $localize `:@@resources.searchBar.constraints.anyValue:Beliebiger Wert`;
         } else {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.noValue',
-                value: 'Kein Wert'
-            });
+            return $localize `:@@resources.searchBar.constraints.noValue:Kein Wert`;
         }
     }
 
@@ -424,14 +405,14 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const fieldLabel: string = this.labels.get(field);
 
         return fieldLabel + ' / ' + fieldLabel
-            + this.i18n({ id: 'searchConstraints.dropdownRange.from', value: ' (von)' });
+            + $localize `:@@searchConstraints.dropdownRange.from: (von)`;
     }
 
 
     private getDropdownRangeEndLabel(field: Field): string {
 
         return this.labels.get(field)
-            + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
+            + $localize `:@@searchConstraints.dropdownRange.to: (bis)`;
     }
 
 

@@ -1,7 +1,7 @@
 #document-edit-wrapper {
   main {
     .container-fluid {
-      height: calc(100vh - 154px);
+      height: calc(100vh - 153px);
 
       .row {
         height: 100%;
@@ -43,14 +43,15 @@
         }
 
         .forms-container {
-          padding-right: 15px;
+          padding-right: 0;
           padding-left: 0;
           height: 100%;
 
           .scrollable-group {
-            height: calc(100% - 30px);
+            height: 100%;
             overflow-y: auto;
-            margin-top: 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
 
             input:not([type]),
             input[type="text"],
@@ -62,7 +63,7 @@
             input[type="checkbox"],
             input[type="radio"] {
               position: relative;
-              top: 1px;
+              top: 0.5px;
             }
 
             input[type="radio"] {
@@ -72,6 +73,10 @@
             .form-check-label,
             label {
               user-select: none;
+            }
+
+            label {
+              margin-bottom: 0;
             }
 
             .card-title {
@@ -84,13 +89,22 @@
               box-shadow: none;
             }
 
-            .btn-success,
-            .btn-danger:not(.btn-sm),
-            .btn-info,
-            .btn-outline-primary {
-              height: 33px;
-              width: 34px;
-              padding: 0;
+            .input-group {
+              .btn-success,
+              .btn-danger:not(.btn-sm),
+              .btn-info,
+              .btn-outline-primary,
+              .btn-secondary {
+                height: 33px;
+                width: 34px;
+                padding: 0;
+              }
+            }
+
+            .delete-multi-input-entry .mdi,
+            .mdi-plus-circle {
+              position: relative;
+              right: 1px;
             }
 
             .card-footer:last-child {

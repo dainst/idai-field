@@ -1,5 +1,5 @@
 import { Map, to } from 'tsfun';
-import { DocumentConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
+import { ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
     DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
     ProjectConfiguration, Document, Labels, ImageVariant, FileInfo } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
@@ -148,7 +148,7 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress) => {
 
     const projectIdentifier = settings.dbs[0];
-    const labels: Labels = new Labels(new Languages().get, null);
+    const labels: Labels = new Labels(new Languages().get);
     const projectName = labels.getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
     await progress.setProjectName(
@@ -232,7 +232,6 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
         serviceLocator.indexFacade,
         db,
         documentCache,
-        new DocumentConverter(serviceLocator.projectConfiguration),
         serviceLocator.projectConfiguration,
         false,
         (count) => progress.setIndexingProgress(count),

@@ -18,7 +18,7 @@ Field Publication relies on several services:
 
 The [docker-compose.yml](docker-compose.yml) defines all three services for development. For starting the dockerized services run:
 ```
-docker-compose up
+docker compose up
 ```
 
 ## 2. Running the setup
@@ -41,3 +41,13 @@ iex -S mix phx.server
 ```
 
 Now you can visit [`localhost:4001`](http://localhost:4001) in your browser and should see the landing page. The next step would be to login as the COUCHDB_USER as defined in the [docker-compose.yml](docker-compose.yml). 
+
+
+## 4. Seed Project for Development
+By running
+
+```
+mix seed
+```
+
+you can add a local copy of 'testopolis' as a finished publication for testing during development.

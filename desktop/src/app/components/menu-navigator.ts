@@ -7,7 +7,7 @@ import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 
-const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 @Injectable()

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { clone, equal, isEmpty, Map } from 'tsfun';
+import { clone, equal, intersection, isEmpty, Map, set, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations } from 'idai-field-core';
+    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
+    CustomFieldDefinition } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -17,7 +17,8 @@ import { M } from '../../../messages/m';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -28,6 +29,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
+    public clonedProjectConfiguration: ProjectConfiguration;
 
     public clonedField: Field|undefined;
     public hideable: boolean;
@@ -35,17 +37,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public i18nCompatible: boolean;
     public subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     public dragging: boolean;
+    public topLevelCategoriesArray: Array<CategoryForm>;
+    public selectedTargetCategoryNames: string[];
+    public availableInverseRelations: string[];
 
-    protected changeMessage = this.i18n({
-        id: 'configuration.fieldChanged', value: 'Das Feld wurde geändert.'
-    });
+    protected changeMessage = $localize `:@@configuration.fieldChanged:Das Feld wurde geändert.`;
 
 
     constructor(activeModal: NgbActiveModal,
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private i18n: I18n) {
+                private labels: Labels) {
 
         super(activeModal, modals, menuService, messages);
     }
@@ -61,6 +64,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
+    public isRelationSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.RELATION;
+
+    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
+
     public isCustomField = () => this.field.source === 'custom';
 
 
@@ -68,9 +75,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         super.initialize();
 
+        this.topLevelCategoriesArray = this.clonedProjectConfiguration.getTopLevelCategories();
+
         if (this.new) {
             this.getClonedFormDefinition().fields[this.field.name] = {
-                inputType: 'input',
+                inputType: this.field.inputType,
                 constraintIndexed: false
             };
             this.clonedConfigurationDocument = ConfigurationDocument.addField(
@@ -93,6 +102,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             result[subfield.name] = { label: subfield.label, description: subfield.description };
             return result;
         }, {}) ?? {};
+
+        this.initializeSelectedTargetCategories();
+        this.updateAvailableInverseRelations();
     }
 
 
@@ -107,15 +119,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add([M.CONFIGURATION_ERROR_NO_SUBFIELDS]);
         }
 
+        if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
+            return this.messages.add([M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES]);
+        }
+
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
-        }
-
-        if (!this.isValuelistSectionVisible() && this.getInputType() !== Field.InputType.COMPOSITE
-                && this.getClonedFormDefinition().valuelists) {
-            delete this.getClonedFormDefinition().valuelists[this.field.name];
         }
 
         if (isEmpty(this.getClonedFieldDefinition())) {
@@ -129,7 +140,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             });
         }
 
-        await super.confirm(this.isValuelistChanged());
+        if (this.getCustomFieldDefinition()?.inverse) this.deleteInverseRelations();
+
+        if (this.isRelationSectionVisible()) {
+            this.getClonedFieldDefinition().range = this.getRange();
+            if (this.getClonedFieldDefinition().inverse) this.updateInverseRelations();
+        } else {
+            delete this.getClonedFieldDefinition().range;
+            delete this.getClonedFieldDefinition().inverse;
+        }
+
+        await super.confirm(true);
     }
 
 
@@ -140,18 +161,27 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public setInputType(newInputType: string) {
+    public setInputType(newInputType: Field.InputType) {
+
+        if (this.getClonedFormDefinition().valuelists
+                && !(Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType())
+                    && Field.InputType.VALUELIST_INPUT_TYPES.includes(newInputType))) {
+            delete this.getClonedFormDefinition().valuelists[this.field.name];
+            delete this.clonedField.valuelist;
+        }
 
         if (!this.availableInputTypes.find(inputType => inputType.name === newInputType).searchable) {
             delete this.getClonedFieldDefinition().constraintIndexed;
         }
         if (newInputType === this.field.inputType && !this.getCustomFieldDefinition()?.inputType) {
             delete this.getClonedFieldDefinition().inputType;
+            this.clonedField.inputType = this.field.inputType;
             if (this.getCustomFieldDefinition()?.constraintIndexed) {
                 this.getClonedFieldDefinition().constraintIndexed = this.field.constraintIndexed;
             }
         } else {
             this.getClonedFieldDefinition().inputType = newInputType;
+            this.clonedField.inputType = newInputType;
         }
     }
 
@@ -201,25 +231,52 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getConstraintIndexedTooltip(): string {
 
        if (this.category.name === 'Project') {
-            return this.i18n({
-                id: 'configuration.fieldSpecificSearch.notAllowedForProjectFields',
-                value: 'Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.'
-            });
+            return $localize `:@@configuration.fieldSpecificSearch.notAllowedForProjectFields:Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.`;
         } else if (!this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable) {
-            return this.i18n({
-                id: 'configuration.fieldSpecificSearch.notAllowedForInputType',
-                value: 'Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.'
-            });
+            return $localize `:@@configuration.fieldSpecificSearch.notAllowedForInputType:Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.`;
         } else {
             return '';
         }
     }
 
 
-    public isI18nCompatible(): boolean {
+    public getRelationLabel(relationName: string) {
 
-        return Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
-            && !['staff', 'campaigns'].includes(this.field.name);
+        if (relationName === this.field.name) {
+            const label: string = this.labels.getFromI18NString(this.clonedLabel);
+            return label?.length ? label : relationName;
+        } else {
+            return this.labels.getRelationLabel(relationName, this.clonedProjectConfiguration.getRelations());
+        }
+    }
+
+
+    public toggleTargetCategory(category: CategoryForm) {
+        
+        if (this.selectedTargetCategoryNames.includes(category.name)) {
+            this.selectedTargetCategoryNames = this.selectedTargetCategoryNames.filter(categoryName => {
+                return categoryName != category.name
+                    && this.clonedProjectConfiguration.getCategory(categoryName).parentCategory?.name !== category.name
+                    && category.parentCategory?.name !== categoryName;
+            });
+        } else {
+            const categoryNames: string[] = [category].concat(category.children).map(to(Named.NAME));
+            this.selectedTargetCategoryNames = set(this.selectedTargetCategoryNames.concat(categoryNames));
+        }
+
+        this.updateAvailableInverseRelations();
+    }
+
+
+    public setInverseRelation(relationName) {
+
+        this.getClonedFieldDefinition().inverse = relationName;
+    }
+
+
+    public isSelectedInverseRelation(relationName) {
+
+        return this.getClonedFieldDefinition().inverse === relationName;
     }
 
 
@@ -231,6 +288,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
             || this.isSubfieldsChanged()
+            || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
+            || this.getCustomFieldDefinition()?.inverse !== this.getClonedFieldDefinition().inverse
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
@@ -273,6 +332,121 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    private initializeSelectedTargetCategories() {
+
+        const range: string[] = this.getClonedFieldDefinition().range ?? [];
+
+        this.selectedTargetCategoryNames = range.reduce((result, categoryName) => {
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            return result.concat([categoryName])
+                .concat(category.children.map(to(Named.NAME)));
+        }, []);
+    }
+
+
+    private getRange(): string[] {
+
+        const result: string[] = this.selectedTargetCategoryNames.filter(categoryName => {
+            const parentCategory: CategoryForm 
+                = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
+            return !parentCategory || !this.selectedTargetCategoryNames.includes(parentCategory.name);
+        });
+
+        result.sort();
+
+        return result;
+    }
+
+
+    private updateAvailableInverseRelations() {
+
+        const relationNames: string[][] = this.getRange()
+            .map(categoryName => { 
+                const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+                const formDefinition: CustomFormDefinition = this.getClonedFormDefinition(category);
+
+                return Object.keys(formDefinition.fields)
+                    .filter(fieldName => {
+                        const fieldDefinition: CustomFieldDefinition = formDefinition.fields[fieldName];
+                        return fieldDefinition.inputType === Field.InputType.RELATION
+                            && this.isValidInverseRelation(
+                                fieldDefinition, categoryName, this.category.name, fieldName
+                            );
+                    });
+            });
+        
+        this.availableInverseRelations = intersection(relationNames);
+        
+        if (!this.availableInverseRelations.includes(this.getClonedFieldDefinition().inverse)) {
+            delete this.getClonedFieldDefinition().inverse;
+        }
+    }
+
+
+    private isValidInverseRelation(relationDefinition: CustomFieldDefinition, domain: string, expectedRange: string,
+                                   inverseRelationName: string, inverse: boolean = true,
+                                   checkedCategories: Map<string[]> = {}): boolean {
+
+        const range: string[] = relationDefinition === this.getClonedFieldDefinition()
+            ? this.getRange()
+            : relationDefinition?.range;
+
+        if (!range?.includes(expectedRange)) {
+            return false;
+        } else {
+            if (!checkedCategories[domain]) checkedCategories[domain] = [];
+            checkedCategories[domain].push(expectedRange);
+            for (let categoryName of range) {
+                if (checkedCategories[categoryName]?.includes(domain)) continue;
+    
+                const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+                const relationToCheck: string = inverse ? this.field.name : inverseRelationName;
+                const fieldDefinition: CustomFieldDefinition = this.getClonedFormDefinition(category)
+                    .fields[relationToCheck];
+                if (!this.isValidInverseRelation(
+                    fieldDefinition, categoryName, domain, inverseRelationName, !inverse, checkedCategories
+                )) return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    private deleteInverseRelations(categoryNames: string[] = this.getCustomFieldDefinition().range ?? [],
+                                   inverse: boolean = false) {
+        
+        const relationToEdit: string = inverse ? this.field.name : this.getCustomFieldDefinition().inverse;
+
+        categoryNames.forEach(categoryName => {
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            const fieldDefinition: CustomFieldDefinition = this.getClonedFormDefinition(category)
+                .fields[relationToEdit];
+            if (fieldDefinition.inverse) {
+                delete fieldDefinition.inverse;
+                this.deleteInverseRelations(fieldDefinition.range, !inverse);
+            }
+        });
+    }
+
+
+    private updateInverseRelations(categoryNames: string[] = this.getRange(), inverse: boolean = false) {
+
+        const relationToEdit: string = inverse ? this.field.name : this.getClonedFieldDefinition().inverse;
+        const relationToSet: string = inverse ? this.getClonedFieldDefinition().inverse : this.field.name;
+
+        categoryNames.forEach(categoryName => {
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            const fieldDefinition: CustomFieldDefinition = this.getClonedFormDefinition(category)
+                .fields[relationToEdit];
+            if (fieldDefinition.inverse !== relationToSet) {
+                fieldDefinition.inverse = relationToSet;
+                this.updateInverseRelations(fieldDefinition.range, !inverse);
+            }
+        });
+    }
+
+
     protected getLabel(): I18N.String {
 
         return this.field.label;
@@ -289,7 +463,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         CustomLanguageConfigurations.update(
             this.getClonedLanguageConfigurations(), this.clonedLabel, this.clonedDescription,
-            this.category, this.field
+            this.category, this.clonedField
         );
 
         Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {

@@ -6,7 +6,7 @@
         </div>
 
         <button *ngIf="shouldShowArrowBottomRight()"
-                class="hierarchy-button btn float-right align-middle"
+                class="hierarchy-button btn float-end align-middle"
                 ngbTooltip="Untergeordnete Ressourcen ansehen"
                 i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
                 placement="left"
@@ -22,7 +22,7 @@
             </span>
         </button>
 
-        <div *ngIf="shouldShowArrowUpForSearchMode()" class="hierarchy-button jump-to-view-button btn float-right align-middle"
+        <div *ngIf="shouldShowArrowUpForSearchMode()" class="hierarchy-button jump-to-view-button btn float-end align-middle"
              (click)="jumpToResourceInSameView(); $event.stopPropagation();"
              placement="right"
              container="body"
@@ -31,7 +31,7 @@
             <span class="arrow-up mdi-16px"></span>
         </div>
         <button *ngIf="shouldShowArrowTopRightForSearchMode()"
-             class="hierarchy-button jump-to-view-button btn float-right align-middle"
+             class="hierarchy-button jump-to-view-button btn float-end align-middle"
              (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
              placement="right"
              container="body"
@@ -40,7 +40,7 @@
             <span class="arrow-top-right mdi-18px"></span>
         </button>
         <button *ngIf="shouldShowArrowTopRight()"
-                class="hierarchy-button jump-to-view-button btn float-right align-middle"
+                class="hierarchy-button jump-to-view-button btn float-end align-middle"
                 ngbTooltip="Zur Maßnahme wechseln"
                 i18n-ngbTooltip="@@resources.jumpToView.tooltip"
                 placement="right"
@@ -59,6 +59,7 @@
                [value]="document.resource.identifier"
                (focus)="startEditing('identifier', document.resource.identifier)"
                (blur)="stopEditing('identifier', document.resource.identifier)"
+               (input)="onInput($event, 'identifier')"
                (keyup)="onKeyUp($event, 'identifier')"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
     </div>
@@ -66,6 +67,7 @@
         <input [value]="getShortDescription()"
                (focus)="startEditing('shortDescription', document.resource.shortDescription)"
                (blur)="stopEditing('shortDescription', document.resource.shortDescription)"
+               (input)="onInput($event, 'shortDescription')"
                (keyup)="onKeyUp($event, 'shortDescription')"
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
@@ -78,8 +80,8 @@
                            (onValueSelected)="onShortDescriptionValueChanged($event)"
                            (dblclick)="$event.stopPropagation();"></searchable-select>
     </div>
-    <div class="btn-group align-middle">
-        <button class="btn btn-small btn-link float-right list-edit-button"
+    <div class="btn-group align-middle list-action-buttons">
+        <button class="btn btn-small btn-link float-end list-edit-button"
                 ngbTooltip="Bearbeiten"
                 i18n-ngbTooltip="@@resources.list.editButton.tooltip"
                 placement="bottom"
@@ -93,7 +95,7 @@
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
         <button [class.hidden-option]="!isMoveOptionAvailable()"
-                class="btn btn-small btn-link float-right list-move-button"
+                class="btn btn-small btn-link float-end list-move-button"
                 ngbTooltip="Verschieben"
                 i18n-ngbTooltip="@@resources.list.moveButton.tooltip"
                 placement="bottom"
@@ -107,7 +109,7 @@
             <span class="mdi mdi-file-tree mdi-18px"></span>
         </button>
         <button [class.hidden-option]="!isDeleteOptionAvailable()"
-                class="btn btn-small btn-link float-right list-delete-button"
+                class="btn btn-small btn-link float-end list-delete-button"
                 ngbTooltip="Löschen"
                 i18n-ngbTooltip="@@resources.list.deleteButton.tooltip"
                 placement="bottom"

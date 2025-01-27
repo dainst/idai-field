@@ -1,12 +1,10 @@
-version: '3.5'
-
 services:
   couchdb:
     image: couchdb:3.3.2
     container_name: field-hub-db
     environment:
-      - COUCHDB_ADMIN_NAME
-      - COUCHDB_PASSWORD
+      - COUCHDB_USER=${COUCHDB_ADMIN_NAME}
+      - COUCHDB_PASSWORD=${COUCHDB_ADMIN_PASSWORD}
     ports:
       - 5984:5984
     volumes:

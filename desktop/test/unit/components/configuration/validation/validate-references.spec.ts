@@ -1,30 +1,26 @@
 import { validateReferences } from '../../../../../src/app/components/configuration/validation/validate-references';
+import { M } from '../../../../../src/app/components/messages/m';
 
 
 describe('validate references', () => {
 
-    it('perform validation', () => {
+    test('perform validation', () => {
         
-        try {
-            validateReferences(['http://www.example.de']);
-        } catch(err) {
-            fail();
-        }
-
-        try {
-            validateReferences(['https://www.example.de']);
-        } catch(err) {
-            fail();
-        }
+        validateReferences(['http://www.example.de']);
+        validateReferences(['https://www.example.de']);
 
         try {
             validateReferences(['www.example.de']);
-            fail();
-        } catch(err) {}
+            throw new Error('Test failure');
+        } catch(err) {
+            expect(err).toEqual([M.CONFIGURATION_ERROR_INVALID_REFERENCE, 'www.example.de']);
+        }
 
         try {
             validateReferences(['abc']);
-            fail();
-        } catch(err) {}
+            throw new Error('Test failure');
+        } catch(err) {
+            expect(err).toEqual([M.CONFIGURATION_ERROR_INVALID_REFERENCE, 'abc']);
+        }
     });
 });

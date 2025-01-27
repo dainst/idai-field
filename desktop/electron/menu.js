@@ -256,7 +256,7 @@ const getTemplate = (mainWindow, context, config) => {
                     modal.show();
                 });
                 modal.on('close', () => {
-                    parentWindow.focus();
+                    modal.getParentWindow().focus();
                 });
 
                 ipcMain.once('close-info-modal', () => {

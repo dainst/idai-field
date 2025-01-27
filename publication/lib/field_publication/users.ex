@@ -5,7 +5,7 @@ defmodule FieldPublication.Users do
   alias FieldPublication.DatabaseSchema.User
 
   @moduledoc """
-  Bundles (CouchDB) user related functions.
+  This module contains (CouchDB) user related functions.
   """
 
   @doc """

@@ -4,7 +4,7 @@ import { removeNullProperties } from '../../../../../src/app/components/import/i
 
 describe('removeNullProperties', () => {
 
-    it('empty string not allowed', () => {
+    test('empty string not allowed', () => {
 
         const resource = { aField: '' };
 
@@ -17,7 +17,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('remove if null', () => {
+    test('remove if null', () => {
 
         const resource = { aField: 'aValue', bField: null };
 
@@ -27,7 +27,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('delete completely if null', () => {
+    test('delete completely if null', () => {
 
         const resource = { aField: null };
 
@@ -36,7 +36,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('composite field - collapse if deletions not permitted', () => {
+    test('composite field - collapse if deletions not permitted', () => {
 
         const resource = { aField: { aSubfield: null }};
 
@@ -45,7 +45,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('objectArray - convert null to undefined and remove undefined values of the right hand side', () => {
+    test('objectArray - convert null to undefined and remove undefined values of the right hand side', () => {
 
         const resource = { aField: [null, { aField: 'aValue'}, null] };
 
@@ -54,7 +54,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('objectArray - collapse null array', () => {
+    test('objectArray - collapse null array', () => {
 
         const resource = { aField: [null] };
 
@@ -63,7 +63,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('objectArray - collapse null array but leave object', () => {
+    test('objectArray - collapse null array but leave object', () => {
 
         const resource = { aField: [null], bField: 'bValue' };
 
@@ -73,7 +73,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('objectArray - convert null to undefined in object', () => {
+    test('objectArray - convert null to undefined in object', () => {
 
         const resource = { aField: [{ a: null }] };
 
@@ -82,7 +82,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('composite field - array - empty string not allowed', () => {
+    test('composite field - array - empty string not allowed', () => {
 
         const resource = { aField: [''] };
 
@@ -95,7 +95,7 @@ describe('removeNullProperties', () => {
     });
 
 
-    it('composite field - empty string not allowed', () => {
+    test('composite field - empty string not allowed', () => {
 
         const resource = { aField: { aSubfield: ''}};
 

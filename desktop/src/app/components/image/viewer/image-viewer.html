@@ -1,14 +1,24 @@
-<div id="image-container">
-    <div class="d-flex align-items-center justify-content-center">
-        <div *ngIf="isOriginalNotFoundWarningVisible()" class="alert alert-info" role="alert"
-             i18n="@@image.originalNotFoundWarning">
-            Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
-        </div>
-        <img *ngIf="isImageContainerVisible() && containsOriginal(imageContainer)"
-             [src]="imageContainer?.imgSrc"
-             (load)="stopLoading()">
-        <img *ngIf="isImageContainerVisible() && !containsOriginal(imageContainer)"
-             [src]="imageContainer?.thumbSrc">
-        <loading-icon *ngIf="loadingIconVisible" [context]="'image-viewer'"></loading-icon>
+<div #container
+     id="image-container"
+     [class.panning-disabled]="!isOriginal"
+     [class.panning]="panning">
+    <div *ngIf="isOriginalNotFoundWarningVisible()" class="alert alert-info" role="alert"
+         i18n="@@image.originalNotFoundWarning">
+        Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
     </div>
+    <div #overlay id="image-overlay"></div>
+    <img *ngIf="isImageContainerVisible()"
+         #image
+         id="image"
+         [src]="imageUrl">
+     <img *ngIf="isImageContainerVisible()"
+          #preloadImage
+          id="preload-image"
+          [src]="imageUrl"
+          (load)="onImageLoaded()">
+    <zoom-buttons [zoomInEnabled]="isOriginal && getScale() < maxZoom"
+                  [zoomOutEnabled]="isOriginal && getScale() > 1"
+                  (onZoomInClicked)="zoomIn()"
+                  (onZoomOutClicked)="zoomOut()"></zoom-buttons>
+    <loading-icon *ngIf="loadingIconVisible" [context]="'image-viewer'"></loading-icon>
 </div>

@@ -10,7 +10,8 @@ import { ValuelistUsage } from '../../../services/configuration/index/valuelist-
     templateUrl: './delete-valuelist-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

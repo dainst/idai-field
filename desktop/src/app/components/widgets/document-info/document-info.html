@@ -11,7 +11,9 @@
                 (click)="tooltip.close(); toggleExpandAllGroups();">
             <span class="mdi mdi-unfold-more-horizontal"></span>
         </button>
-        <div class="identifier-label">{{document.resource.identifier}}</div>
+        <div class="identifier-label"
+             [ngbTooltip]="document.resource.identifier"
+             container="body">{{document.resource.identifier}}</div>
         <button *ngIf="!isReadonly() && !showCloseButton" class="edit-button btn btn-light" (click)="startEdit()">
             <span class="mdi mdi-pencil"></span>
         </button>

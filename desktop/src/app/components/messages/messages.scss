@@ -7,7 +7,7 @@ messages {
   top: 10px;
   right: 0;
   left: 0;
-  z-index: 1060;
+  z-index: 1200;
   pointer-events: none;
 
   .alert-container {
@@ -23,13 +23,25 @@ messages {
       -webkit-app-region: no-drag;
 
       .close {
-        padding-left: 16px;
+        float: right;
+        padding: 0 0 0 16px;
+        color: black;
+        background-color: transparent;
+        opacity: 0.5;
+        border: none;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
         cursor: default !important;
         user-select: none;
-      }
 
-      .close:focus {
-        outline: none;
+        &:focus {
+          outline: none;
+        }
+
+        &:hover {
+          opacity: 0.75;
+        }
       }
     }
   }

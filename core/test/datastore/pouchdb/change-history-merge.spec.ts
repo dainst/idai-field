@@ -1,4 +1,4 @@
-import { Document } from '../../../src/model/document';
+import { Document } from '../../../src/model/document/document';
 import { ChangeHistoryMerge } from '../../../src/datastore/pouchdb/change-history-merge';
 
 /**

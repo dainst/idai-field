@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 
 type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon'|'MultiPolygon';
@@ -7,7 +6,8 @@ type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon
 
 @Component({
     selector: 'form-field-geometry',
-    templateUrl: './geometry.html'
+    templateUrl: './geometry.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -20,7 +20,7 @@ export class GeometryComponent implements OnChanges {
     public edit: boolean;
 
 
-    constructor(private i18n: I18n) {}
+    constructor() {}
 
 
     ngOnChanges() {
@@ -31,21 +31,21 @@ export class GeometryComponent implements OnChanges {
 
     public getGeometryTypeLabel(): string {
 
-        if (!this.fieldContainer.geometry) return this.i18n({ id: 'geometry.none', value: 'Keine Geometrie'});
+        if (!this.fieldContainer.geometry) return $localize `:@@geometry.none:Keine Geometrie`;
 
         switch(this.fieldContainer.geometry.type) {
             case 'Point':
-                return this.i18n({ id: 'geometry.point', value: 'Punkt'});
+                return $localize `:@@geometry.point:Punkt`;
             case 'MultiPoint':
-                return this.i18n({ id: 'geometry.multiPoint', value: 'Multipunkt'});
+                return $localize `:@@geometry.multiPoint:Multipunkt`;
             case 'LineString':
-                return this.i18n({ id: 'geometry.polyline', value: 'Polyline'});
+                return $localize `:@@geometry.polyline:Polyline`;
             case 'MultiLineString':
-                return this.i18n({ id: 'geometry.multiPolyline', value: 'Multipolyline'});
+                return $localize `:@@geometry.multiPolyline:Multipolyline`;
             case 'Polygon':
-                return this.i18n({ id: 'geometry.polygon', value: 'Polygon'});
+                return $localize `:@@geometry.polygon:Polygon`;
             case 'MultiPolygon':
-                return this.i18n({ id: 'geometry.multiPolygon', value: 'Multipolygon'});
+                return $localize `:@@geometry.multiPolygon:Multipolygon`;
             default:
                 return '';
         }

@@ -607,13 +607,13 @@ Selection of Yes or No
 Selection of one or more values from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
 
-#### Dating
-Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
-<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
-
 #### Date
 Selection of a date from a calendar. The input field can also be used to enter only month or year information.
 <p align="center"><img src="images/en/configuration/input_type_date.png" alt="Input type 'Date'"/></p>
+
+#### Dating
+Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
+<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
 
 #### Dimension
 Specification of one or more dimensions. Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.

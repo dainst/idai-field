@@ -32,13 +32,13 @@ const loadMarkdown = (url: string): Promise<string> => {
 const setHeadingIds = (markdown: string): string => {
 
     return markdown.replace(
-        /(^|\n)## .*\n/g,
+        /(^|\n)# .*\n/g,
         (text: string) => {
             const heading: string = text
-                .replace('## ', '')
+                .replace('# ', '')
                 .replace(/\n/g, '');
             const id: string = heading.replace(' ', '-').toLowerCase();
-            return `<h2 id="${id}">${heading}</h2>\n`;
+            return `<h1 id="${id}">${heading}</h1>\n`;
         }
     );
 };
@@ -46,10 +46,10 @@ const setHeadingIds = (markdown: string): string => {
 
 const getChapters = (markdown: string): Chapter[] => {
 
-    const matches = markdown.match(/<h2 id=".*">.*<\/h2>/g);
+    const matches = markdown.match(/<h1 id=".*">.*<\/h1>/g);
 
     return matches.map(match => {
-        const result = /<h2 id="(.*)">(.*)<\/h2>/g.exec(match);
+        const result = /<h1 id="(.*)">(.*)<\/h1>/g.exec(match);
         return {
             id: result[1],
             label: result[2]

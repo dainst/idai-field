@@ -488,8 +488,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
-        <source> Vorhandene Ressource ergänzen </source>
-        <target state="translated">Існуючі дані/ресурс доповнити</target>
+        <source>Vorhandene Ressourcen ergänzen</source>
+        <target state="translated">Існуючі дані/ресурси доповнити</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
@@ -8719,7 +8719,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.info" datatype="html">
         <source>Matrix wird exportiert...</source>
-        <target state="needs-translation">Matrix wird exportiert...</target>
+        <target state="translated">Матриця експортується...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/export-graph-modal.html</context>
           <context context-type="linenumber">4</context>

@@ -21,7 +21,7 @@
   "stoneShort": "ST",
   "building": "Edifício",
   "buildingShort": "E",
-  "room": "Room",
+  "room": "compartimento",
   "roomShort": "R",
   "mapLayer": "Mapa de fundo"
 }

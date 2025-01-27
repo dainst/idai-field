@@ -251,8 +251,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
-        <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
-        <target state="translated">Formatos de ficheiro suportados: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Imagens podem ser importadas através de <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>gestor de imagens<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
+        <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
+        <target state="translated">Formatos de ficheiro suportados:<x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/>. Imagens podem ser importadas através de <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>gestor de imagens<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">235</context>
@@ -275,8 +275,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
-        <source>Vorhandene Ressource ergänzen</source>
-        <target state="translated">Atualizar recursos existentes</target>
+        <source>Vorhandene Ressourcen ergänzen</source>
+        <target state="translated">Actualizar recursos existentes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
@@ -527,8 +527,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
-        <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="translated">Cria cópia de segurança (backup) do projeto aberto. Backups regulares permitem aumentar a segurança dos dados e restaurar a base de dados a partir da última gravação no caso de perda de dados. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Tenha em atenção que as imagens originais não são guardadas no ficheiro de backup. Estas podem ser encontradas na pasta especificada nas <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>definições<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> e devem ser gravadas separadamente. </target>
+        <source>Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
+        <target state="translated">Cria cópia de segurança (backup) do projeto aberto. Backups regulares permitem aumentar a segurança dos dados e restaurar a base de dados a partir da última gravação no caso de perda de dados. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Tenha em atenção que as imagens originais não são guardadas no ficheiro de backup. Estas podem ser encontradas na pasta especificada nas <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>definições<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> e devem ser gravadas separadamente. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -3264,8 +3264,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
-        <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden sollen: </source>
-        <target state="translated">Por favor selecione o novo recurso superior aos quais os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> serão atribuídos: </target>
+        <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden sollen: </source>
+        <target state="translated">Por favor selecione o novo recurso superior aos quais os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> recursos<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> serão atribuídos: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -3698,7 +3698,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
         <source>Slide <x id="INTERPOLATION" equiv-text="ueryList&lt;NgbSli"/> of <x id="INTERPOLATION_1" equiv-text="EventSource = N"/> </source>
-        <target state="translated">Diapositivo <x id="INTERPOLATION" equiv-text="lse);   private"/> de <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
+        <target state="translated">Diapositivo<x id="INTERPOLATION" equiv-text="ueryList&lt;NgbSli"/> de <x id="INTERPOLATION_1" equiv-text="EventSource = N"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -3771,7 +3771,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="tring;    disab"/></source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="tring;    disab"/></target>
+        <target state="translated"><x id="INTERPOLATION"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">112</context>
@@ -7115,7 +7115,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.unconfigured" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht."/> gelöscht. </source>
-        <target state="needs-translation">Por favor note que através desta ação em todos os recursos na categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> todos os dados inseridos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> vão ser apagados. </target>
+        <target state="translated">Por favor note que através desta ação em todos os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> recursos na categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> todos os dados inseridos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht."/> vão ser apagados. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">63,30</context>
@@ -7130,16 +7130,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.outlierValues.single" datatype="html">
-        <source>Ungültiger Wert im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Valor não valido no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <source>Ungültiger Wert im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Valor não valido no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">59,53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple" datatype="html">
-        <source>Fehlende Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Recursos de destinação da relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ausentes</target>
+        <source>Fehlende Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Falta de recursos de destinação da relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">73,65</context>
@@ -7258,32 +7258,32 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
-        <source>Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="translated">Por favor note que através desta ação em todos os recursos da categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> vão ser apagados todos os dados inválidos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Dados válidos mantém-se. </target>
+        <source>Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht. G"/> gelöscht. Gültige Daten bleiben erhalten. </source>
+        <target state="translated">Por favor note que através desta ação em todos os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> recursos da categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> vão ser apagados todos os dados inválidos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht. G"/> . Dados válidos mantém-se. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">56,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.outlierValues.multiple" datatype="html">
-        <source>Ungültige Werte im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Valores não válidos no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <source>Ungültige Werte im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Valores não válidos no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">63,57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingRelationTargets.single" datatype="html">
-        <source>Fehlende Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Recurso de destinação da relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ausente</target>
+        <source>Fehlende Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Falte de recurso de destinação da relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">68,61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingIdentifierPrefix" datatype="html">
-        <source>Fehlendes Präfix im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Prefixo no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> em falta</target>
+        <source>Fehlendes Präfix im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Prefixo no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/> em falta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">93,73</context>
@@ -7322,8 +7322,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.resourceLimitExceeded.single" datatype="html">
-        <source>Es darf nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>eine<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressource der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angelegt werden. </source>
-        <target state="translated">Só pode ser criada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>uma<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> recurso da categoria <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. </target>
+        <source>Es darf nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>eine<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressource der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i"/> angelegt werden. </source>
+        <target state="translated">Só pode ser criada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>um<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> recurso da categoria <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">158,135</context>
@@ -7991,23 +7991,23 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.     &lt;"/> Ressourcen der unkonfigurierten Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.     &lt;"/> gelöscht. </source>
-        <target state="needs-translation">Por favor note que esta ação apaga todos os recursos da categoria não configurada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated">Por favor note que esta ação apaga todos <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.     &lt;"/> os recursos da categoria não configurada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="category}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gelöscht.     &lt;"/> . </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">52,26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredField" datatype="html">
-        <source>Unkonfiguriertes Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Campo não configurado <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <source>Unkonfiguriertes Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Campo não configurado <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">57,50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidField" datatype="html">
-        <source>Ungültige Daten im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Dados inválidos no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <source>Ungültige Daten im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Dados inválidos no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">61,54</context>
@@ -8046,8 +8046,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredCategory" datatype="html">
-        <source>Unkonfigurierte Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated">Categoria não configurada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <source>Unkonfigurierte Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="edCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Categoria não configurada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="edCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
           <context context-type="linenumber">98</context>
@@ -8231,7 +8231,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden in allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> ungültige Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="konvertiert"/> konvertiert (falls möglich). </source>
-        <target state="needs-translation">Por favor note que através desta ação todos os recursos na categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> com dados inválidos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> vão ser convertidos (se possível). </target>
+        <target state="translated">Por favor note que através desta ação todos os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> recursos na categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> com dados inválidos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="konvertiert"/> vão ser convertidos (se possível). </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">43,27</context>
@@ -8239,7 +8239,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.multiple.info.invalid" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> ungültige Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> verschoben. Gültige Daten verbleiben im ursprünglichen Feld. </source>
-        <target state="needs-translation">Por favor note que através desta ação vão ser transferidos em todos os recursos da categoria<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> os valores inválidos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> para o campo <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Valores válidos permanecem no campo de origem. </target>
+        <target state="translated">Por favor note que através desta ação vão ser transferidos em todos os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> recursos da categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ungültige Daten"/> os valores inválidos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> para o campo <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> . Valores válidos permanecem no campo de origem. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
           <context context-type="linenumber">66,46</context>
@@ -8247,7 +8247,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.multiple.info.unconfigured" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> verschoben. </source>
-        <target state="needs-translation">Por favor note que através desta ação vão ser transferidos em todos os recursos da categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> todos os dados inseridos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> para o campo <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. </target>
+        <target state="translated">Por favor note que através desta ação vão ser transferidos em todos os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> recursos da categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> todos os dados inseridos no campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> para o campo <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
           <context context-type="linenumber">66,38</context>
@@ -8335,7 +8335,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/> Ressourcen gelöscht. </source>
-        <target state="needs-translation">Por favor note que através desta ação o valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> não incluído na lista de valores vai ser apagado em todos os recursos. </target>
+        <target state="translated">Por favor note que através desta ação o valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/> não incluído na lista de valores vai ser apagado em todos os recursos <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen gelö"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">44,29</context>
@@ -8367,7 +8367,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </source>
-        <target state="needs-translation">Por favor note que através desta ação vai ser substituído o valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, não contido na lista de valores, pelo valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getValueLabel(selectedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> em todos os campos de todos os recursos. </target>
+        <target state="translated">Por favor note que através desta ação vai ser substituído o valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> , não contido na lista de valores, pelo valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> em todos os campos <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> de todos os recursos. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">50,33</context>
@@ -8538,8 +8538,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewCategory.multiple.info" datatype="html">
-        <source>Bitte beachten Sie: Durch diese Aktion wird für alle Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(selectedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_2" equiv-text="{{selectedCategory.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>) gesetzt. </source>
-        <target state="translated">Por favor note que através desta ação vai ser substituída a categoria não configurada <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> pela categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(selectedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_2" equiv-text="{{selectedCategory.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>). </target>
+        <source>Bitte beachten Sie: Durch diese Aktion wird für alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code&gt;{{select"/> Ressourcen der unkonfigurierten Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text=".category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/> die Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="electedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code&gt;{{select"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_3" equiv-text="name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/>) gesetzt. </source>
+        <target state="translated">Por favor note que através desta ação vai ser substituída a <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code&gt;{{select"/> categoria não configurada pela <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text=".category}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/> categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="electedCategory)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="(&lt;code&gt;{{select"/> (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_3" equiv-text="name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=") gesetzt."/>). </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
           <context context-type="linenumber">52,34</context>
@@ -8586,8 +8586,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="translated">Mover <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{documents.length}} Ressourcen&lt;/b&gt; verschieben?     &lt;/h5&gt;     &lt;h5 *ngIf=&quot;documents.length === 1 &amp;&amp; hasVa"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
+        <target state="translated">Mover <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{documents.length}} Ressourcen&lt;/b&gt; verschieben?     &lt;/h5&gt;     &lt;h5 *ngIf=&quot;documents.length === 1 &amp;&amp; hasVa"/><x id="INTERPOLATION"/>recursos <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
           <context context-type="linenumber">48</context>
@@ -8627,7 +8627,7 @@
       </trans-unit>
       <trans-unit id="import.csv.info" datatype="html">
         <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
-        <target state="needs-translation">Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </target>
+        <target state="translated">Todos os recursos definisos no ficheiro CSV devem pertencer à mesma categoria. Tenha atenção que todos os títulos de coluna devem corresponder aos campos que foram configurados para a respectiva categoria. Como rascunho pode ser gerada um esquema de ficheiro no <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>menu de exportação<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>
@@ -8635,7 +8635,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warningsModal.singleResourceAffected" datatype="html">
         <source>Nur diese Ressource ist betroffen.</source>
-        <target state="needs-translation">Nur diese Ressource ist betroffen.</target>
+        <target state="translated">Só este recurso é afectado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -8667,7 +8667,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.existingQrCodeSaved" datatype="html">
         <source>Der eingescannte QR-Code wurde erfolgreich gespeichert.</source>
-        <target state="needs-translation">Der eingescannte QR-Code wurde erfolgreich gespeichert.</target>
+        <target state="translated">O código QR escaneado foi salvo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">984</context>
@@ -8675,7 +8675,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.export" datatype="html">
         <source>Matrix exportieren</source>
-        <target state="needs-translation">Matrix exportieren</target>
+        <target state="translated">Exportar matriz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">122</context>
@@ -8683,7 +8683,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.info" datatype="html">
         <source>Matrix wird exportiert...</source>
-        <target state="needs-translation">Matrix wird exportiert...</target>
+        <target state="translated">A matriz está a ser exportada...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/export-graph-modal.html</context>
           <context context-type="linenumber">4</context>
@@ -8691,7 +8691,7 @@
       </trans-unit>
       <trans-unit id="messages.matrix.error.generic" datatype="html">
         <source>Bei der Generierung der Matrix ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Bei der Generierung der Matrix ist ein Fehler aufgetreten.</target>
+        <target state="translated">Ao gerar a matriz ocorreu um erro.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1130</context>
@@ -8699,7 +8699,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.tooBigWarning" datatype="html">
         <source>Die Matrix überschreitet die maximale Darstellungsgröße. Bitte verwenden Sie die Exportfunktion, um die Matrix zur Anzeige in einem externen Viewer als Dot-Datei zu speichern.</source>
-        <target state="needs-translation">Die Matrix überschreitet die maximale Darstellungsgröße. Bitte verwenden Sie die Exportfunktion, um die Matrix zur Anzeige in einem externen Viewer als Dot-Datei zu speichern.</target>
+        <target state="translated">A matriz ultrapassa o tamanho máximo de apresentação. Por favor utilize a função de exportação para guardar a matriz para ser guardada num Viewer externo como ficheiro Dot.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">172,175</context>
@@ -8707,7 +8707,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.multiple" datatype="html">
         <source>Ungültige Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Ungültige Zielressourcen der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Recursos de destinação inválidos na relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">78,80</context>
@@ -8715,7 +8715,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.body.notAllowed" datatype="html">
         <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
-        <target state="needs-translation">Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </target>
+        <target state="translated">O campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> não pode ser apagado enquanto é definido como relação contrária. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">10,12</context>
@@ -8723,7 +8723,7 @@
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedTargetCategories" datatype="html">
         <source>Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</source>
-        <target state="needs-translation">Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</target>
+        <target state="translated">Por favor seleccione pelo menos uma categoria como categoria de destino permitida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1093</context>
@@ -8731,7 +8731,7 @@
       </trans-unit>
       <trans-unit id="configuration.relation.inverse.none" datatype="html">
         <source>Keine Gegenrelation</source>
-        <target state="needs-translation">Keine Gegenrelation</target>
+        <target state="translated">Sem relação contrária</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">147</context>
@@ -8739,7 +8739,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.question" datatype="html">
         <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </source>
-        <target state="needs-translation">Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </target>
+        <target state="translated">Quer realmente corrigir a relação <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> ? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">7,9</context>
@@ -8747,7 +8747,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.missing" datatype="html">
         <source>Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</source>
-        <target state="needs-translation">Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</target>
+        <target state="translated">Todas as referências a recursos não existentes vão ser apagadas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">11,13</context>
@@ -8755,7 +8755,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.invalid" datatype="html">
         <source>Alle Verweise auf ungültige Zielressourcen werden dabei entfernt.</source>
-        <target state="needs-translation">Alle Verweise auf ungültige Zielressourcen werden dabei entfernt.</target>
+        <target state="translated">Todas as referências a recursos de destinação inválidos vão ser apagadas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">15,17</context>
@@ -8763,7 +8763,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.single" datatype="html">
         <source>Ungültige Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Ungültige Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Recurso de destinação inválido na relação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">74,76</context>
@@ -8771,7 +8771,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidRelationTargets.single" datatype="html">
         <source>Die Kategorie einer als Zielressource der Relation angegebenen Ressource ist keine gültige Zielkategorie.</source>
-        <target state="needs-translation">Die Kategorie einer als Zielressource der Relation angegebenen Ressource ist keine gültige Zielkategorie.</target>
+        <target state="translated">A categoria de um recurso de destinação da relação de recurso não é uma categoria de destinação válida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">146,149</context>
@@ -8779,7 +8779,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidRelationTargets.multiple" datatype="html">
         <source>Die Kategorien mehrerer als Zielressourcen der Relation angegebenen Ressourcen sind keine gültigen Zielkategorien.</source>
-        <target state="needs-translation">Die Kategorien mehrerer als Zielressourcen der Relation angegebenen Ressourcen sind keine gültigen Zielkategorien.</target>
+        <target state="translated">A categoria de vários recursos de destinação da relação de recurso não é uma categoria de destinação válida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">151,154</context>
@@ -8787,7 +8787,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.invalidRelationTargets" datatype="html">
         <source>Ungültige Zielressourcen:</source>
-        <target state="needs-translation">Ungültige Zielressourcen:</target>
+        <target state="translated">Recursos de destinação inválidos:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">214</context>
@@ -8795,7 +8795,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.header.notAllowed" datatype="html">
         <source>Feld löschen nicht möglich</source>
-        <target state="needs-translation">Feld löschen nicht möglich</target>
+        <target state="translated">Apagar campo não é possível</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">3</context>
@@ -8803,7 +8803,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.selectFormat" datatype="html">
         <source>Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</source>
-        <target state="needs-translation">Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</target>
+        <target state="translated">Por favor seleccione o formato de ficheiro para a exportação da matriz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">140</context>
@@ -8811,7 +8811,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.invalidRelationTargets" datatype="html">
         <source>Ungültige Zielressourcen von Relationen</source>
-        <target state="needs-translation">Ungültige Zielressourcen von Relationen</target>
+        <target state="translated">Falta de recursos de destinação de relações</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">169</context>
@@ -8819,7 +8819,7 @@
       </trans-unit>
       <trans-unit id="configuration.relation.targetCategories" datatype="html">
         <source>Erlaubte Zielkategorien</source>
-        <target state="needs-translation">Erlaubte Zielkategorien</target>
+        <target state="translated">Categorias de destinação permitidas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">37</context>
@@ -8831,7 +8831,7 @@
       </trans-unit>
       <trans-unit id="configuration.relation.inverse" datatype="html">
         <source>Gegenrelation</source>
-        <target state="needs-translation">Gegenrelation</target>
+        <target state="translated">Relação contrária</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">46</context>
@@ -8843,7 +8843,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.warningsExist" datatype="html">
         <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="needs-translation">Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</target>
+        <target state="translated">Existem aviso para o recurso [0]. Por favor corriga os problemas e importe de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">700</context>
@@ -8851,7 +8851,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.objectArray.add" datatype="html">
         <source>Hinzufügen...</source>
-        <target state="needs-translation">Hinzufügen...</target>
+        <target state="translated">Adicionar...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/object-array.html</context>
           <context context-type="linenumber">14</context>
@@ -8859,7 +8859,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.valuelistMultiInput.unselectable" datatype="html">
         <source>Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</source>
-        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</target>
+        <target state="translated">Este valor não está disponível na inserção de dados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
           <context context-type="linenumber">16</context>
@@ -8867,7 +8867,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.valuelistMultiInput.selectable" datatype="html">
         <source>Dieser Wert steht bei der Dateneingabe zur Auswahl.</source>
-        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe zur Auswahl.</target>
+        <target state="translated">Este valor está disponível na inserção de dados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
           <context context-type="linenumber">6</context>
@@ -8875,7 +8875,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.valuelistMultiInput" datatype="html">
         <source>Projekt-Werteliste</source>
-        <target state="needs-translation">Projekt-Werteliste</target>
+        <target state="translated">lista de valores do projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">201</context>
@@ -8883,7 +8883,7 @@
       </trans-unit>
       <trans-unit id="viewModal.noProjectImages" datatype="html">
         <source>Mit dem Projekt sind keine Bilder verknüpft.</source>
-        <target state="needs-translation">Mit dem Projekt sind keine Bilder verknüpft.</target>
+        <target state="translated">Não há imagens ligadas a este projeto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">74,76</context>
@@ -8891,7 +8891,7 @@
       </trans-unit>
       <trans-unit id="configuration.label" datatype="html">
         <source>Anzeigename</source>
-        <target state="needs-translation">Anzeigename</target>
+        <target state="translated">nome de exibição</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">24,26</context>
@@ -8915,7 +8915,7 @@
       </trans-unit>
       <trans-unit id="configuration.valueLabel" datatype="html">
         <source>Anzeigetext</source>
-        <target state="needs-translation">Anzeigetext</target>
+        <target state="translated">texto de exibição</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -8923,7 +8923,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.unconfiguredCategory" datatype="html">
         <source>Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</target>
+        <target state="translated">Importação de catálogo interrompida. A categoria '[0]' não é uma subcategoria 'tipo' ou 'figura'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">733</context>

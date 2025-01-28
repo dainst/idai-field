@@ -1,6 +1,6 @@
-## First steps
+# First steps
 
-The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on  data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (MacOS) or "Tools" (Windows).
+The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (MacOS) or "Tools" (Windows).
 
 Initially, the test project will be active, allowing you to experiment with the application's functionality using a set of sample data. Please note that as long as the test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for the test project.  
 
@@ -19,7 +19,7 @@ your project data regularly.
 <hr>
 
 
-## Resources
+# Resources
 
 After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
 home symbol) where all of the project's operations and places are managed.
@@ -47,7 +47,7 @@ Depending on the category of the operation, resources of different categories ca
 operation tab via the plus button (e.g. stratigraphical units within a trench or rooms within a building).
 
 
-### Hierarchical ordering
+## Hierarchical ordering
 
 Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphic unit. Use the button 
 "Show child resources" (symbol: rectangular arrow down right) to switch to the lower hierarchy level. The child resources are now displayed (e.g. the finds of a stratigraphic unit), and resources that are newly created via the plus button appear at this hierarchy level accordingly.
@@ -58,7 +58,7 @@ switch to another level by clicking one of the buttons of the navigation path.
 <p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
 
 
-### Manage resources
+## Manage resources
 
 Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd or Shift key, multiple resources
 can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
@@ -83,14 +83,14 @@ multiple resources are selected, only the *Move* and *Delete* options are availa
 <hr>
 
 
-## Images
+# Images
 
 Images can be imported into a Field project to be subsequently linked to resources or used as map layers. For each imported image, an image resource is automatically created where metadata of the image can be entered.
 
 Image files can optionally be shared with other computers via a synchronization connection (see chapter *Synchronization*). If an image file is not available on the computer, a placeholder graphic is displayed instead.
 
 
-### Import images
+## Import images
 
 Images can be imported into the application in two different ways: via the menu "Tools" ➝ "Image management" and via the "Link images" option in the context menu of a resource (accessible by right-clicking on the desired resource). In the latter case, the image will be automatically linked to the corresponding resource after import (see section *Link images to resources*).
 
@@ -100,7 +100,7 @@ To start the import, click the plus button and select the files you want to add 
 Supported image formats are *jpg/jpeg*, *png* and *tif/tiff*.
 
 
-### Image variants
+## Image variants
 
 For each imported image, the application creates a copy as well as a smaller version as a preview image and stores it in the **Images directory**, whose path you can see in the settings under "Advanced settings". The files in this folder are managed by the application and must not be edited, renamed or deleted manually, otherwise errors may occur when viewing or synchronizing images.
 
@@ -112,17 +112,17 @@ In total, the application manages up to three different variants for each image:
 You can open an overview of the data currently present in the image directory via the menu "Project" ➝ "Data overview".
 
 
-### Manage images
+## Manage images
 
 To manage images, open the menu "Tools" ➝ "Image management". Here you can view and search through all the images in the project (see also chapter *Search*).
 
 
-#### Edit metadata
+### Edit metadata
 
 You can view the metadata of an image by double-clicking on the desired image to open the image view. Click the edit button to open the editor and extend or alter the metadata. Available here are the fields configured in the configuration editor for the form of the corresponding image category.
 
 
-#### Delete images
+### Delete images
 
 To remove imported images from the project, select the corresponding images in the image management. They can then be removed via the "Delete" button:
 
@@ -131,7 +131,7 @@ To remove imported images from the project, select the corresponding images in t
 Please note that this will also delete the corresponding files in the project's images directory (and on other computers if a synchronization connection is established). Links to resources will be lost when deleting an image.
 
 
-### Link images to resources
+## Link images to resources
 
 To link one or more images to a resource, select the "Link images" option in the context menu of the corresponding resource and click the plus button. You now have the choice between two options:
 
@@ -145,16 +145,16 @@ Links can also be added or removed via the image management. To do this, select 
 <p align="center"><img src="images/en/images/link_buttons.png" alt="Buttons 'Remove links' and 'Link'"/></p>
 
 
-#### Set main image
+### Set main image
 
 If a resource is linked to multiple images, one of the images is marked with a star icon as the **main image**. This main image is displayed as a preview image for the resource. You can change the main image by selecting the "Link images" option in the context menu of the resource and selecting the desired image in the list of linked images. Then click the button "Set as main image":
 
 <p align="center"><img src="images/en/images/main_image.png" alt="Button 'Set as main image'"/></p>
 
 
-### Map layers
+## Map layers
 
-#### Georeferencing
+### Georeferencing
 
 Before an image can be used as a map layer, georeferencing information must first be provided. Supported are files in GeoTIFF format with the file extension *tif/tiff* as well as world files with the file extensions *wld*, *jpgw*, *jpegw*, *jgw*, *pngw*, *pgw*, *tifw*, *tiffw* and *tfw*.
 
@@ -165,7 +165,7 @@ World files can be imported in two different ways: If the file name of the world
 <p align="center"><img src="images/en/images/worldfile_import.png" alt="Add georeference"/></p>
 
 
-#### Configure map layers
+### Configure map layers
 
 A map layer can be configured either for a specific operation or for the entire project. Switch to the overview tab (house icon) if you want the map layer to be available in the entire project, or to the tab of the desired operation. There, open the map layer menu via the button at the top right of the map and click the edit button. You can now add new map layers via the plus button. All images for which georeference data has been added are available for selection.
 
@@ -180,7 +180,7 @@ You can remove a layer from the list by clicking the red button "Remove map laye
 Click the "Save" button to save the changes to the database.
 
 
-#### Display map layers
+### Display map layers
 
 Configured map layers can be shown or hidden at any time via the map layer menu. To do this, click the eye button to the left of the corresponding entry in the list. The settings made here are not saved in the database (unlike the list of map layers available for the tab) and are therefore not shared via a synchronization connection, so that different map layers can be shown and hidden on different computers.
 
@@ -188,7 +188,7 @@ Configured map layers can be shown or hidden at any time via the map layer menu.
 <hr>
 
 
-## Search
+# Search
 
 In the **overview**, in the **operation tabs** as well as in the **image management**, a **search filter** is available. You can use it to restrict the currently displayed resources by
 the means of some basic search criteria (identifier, short description, category).
@@ -198,7 +198,7 @@ mode** while in the **overview** or one of the **operation tabs**. This mode all
 bypassing hierarchical orderings, to search over the whole project and to define additional field specific
 search criteria.
 
-### Search filter
+## Search filter
 
 The search filter is a fast way to show or hide resources based on specific criteria. It consists of a
 *text filter* (an input field) and a *category filter* (a blue button).
@@ -211,7 +211,7 @@ sidebar and on the map (in map view) respectively the elements of the list (in l
 management**, all images shown in the grid are affected by the search filter.
 
 
-#### Category filter
+### Category filter
 
 <p align="center"><img src="images/en/search/filter_menu.png" alt="Category filter selection"/></p>
 
@@ -225,7 +225,7 @@ The current context decides which categories are available: In the overview you 
 categories, in the image management image categories etc.
 
 
-#### Text filter
+### Text filter
 
 Search terms are currently compared with the resource fields "Identifier" and "Short description".
  
@@ -257,7 +257,7 @@ term "t0" returns (1) as well as (2) as results. A search for "tr" returns (1), 
 for "ench" or "ren" returns nothing.
 
 
-#### Placeholder search
+### Placeholder search
 
 When entering text into the text filter field, placeholders can be used: Instead of a single character, you
 can specify a set of different allowed characters within square brackets. Such a placeholder can be used one
@@ -277,7 +277,7 @@ characters for the third digit. All following characters are allowed due to the 
 A search for "Landscape-00[01]1" returns (1) and (4), as the digit after the placeholder must be a 1.
 
 
-#### Search results from other contexts
+### Search results from other contexts
 
 If no search results are found in the current context, search results from other contexts are shown below the
 text input field.
@@ -288,7 +288,7 @@ By clicking one of the resources, you can immediately switch to the correspondin
 resource.
 
 
-### Extended search mode
+## Extended search mode
 
 In the **overview** as well as in the **operation tabs**, you can switch to the extended search mode by
 clicking the magnifier button.
@@ -316,7 +316,7 @@ the maximum being exceeded. Add further search criteria or leave the extended se
 these resources. 
 
 
-#### Field specific search criteria
+### Field specific search criteria
  
 If the extended search mode is activated, you can start a search over specific fields of a resource by
 clicking the plus button to the left of the category filter button. Fields available for search are those
@@ -344,14 +344,14 @@ criterion to remove.
 <hr>
 
 
-## Synchronization
+# Synchronization
 
 In order to collaborate on a single project, data can be synchronized between multiple Field Desktop installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources as well as added or deleted images) coming from an Field Desktop application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline – in that case the databases will be synchronized as soon as the network connection is established again.
 
 
-### Download project
+## Download project
 
-To work with an existing project that is available on another Field Desktop installation or a Field server, first download the project. To do this, select **Download...** from the "Project" menu and enter the access data:
+To work with an existing project that is available on another Field Desktop installation or a Field server, first download the project. To do this, select the menu item "Project" ➝ "Download..." and enter the access data:
 
 * *Address*: Enter the address of the computer from which you want to download the project. This can either be the network address of another computer on which Field Desktop is currently open (this address can be viewed in the settings section *Your address*) or the address of a Field server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the server of the DAI).
 * *Project name*: The name of the project you want to download.
@@ -365,7 +365,7 @@ As soon as you have entered a valid address, project name and password, the amou
 Please note that the download may take a longer time for larger projects. The downloaded project will be opened automatically afterwards and a synchronization connection will be established using the same credentials.
 
 
-### Configure synchronization
+## Configure synchronization
 
 Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
 
@@ -380,7 +380,7 @@ As soon as you have entered a valid address and the correct password, the amount
 
 Finally, confirm your settings by clicking the **Apply settings** button.
 
-### Synchronization state
+## Synchronization state
 
 The cloud icon in the top right corner of the navigation bar shows the current state of your configured synchronization connection.
 
@@ -388,7 +388,7 @@ The cloud icon in the top right corner of the navigation bar shows the current s
 
 If a connection has been successfully established, the icon shows a checkmark. When data is being uploaded or downloaded, this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
 
-### Conflicts
+## Conflicts
 
 Conflicts can occur when a resource is edited at the same time on multiple computers or when two databases synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *current version* (which is displayed in resource management and other areas of the application) and the *competing version* (which is stored in the background, but is not shown without taking further steps). The two versions can differ in the number of filled-in fields, but also by having different values in the same fields.
 
@@ -396,7 +396,7 @@ A warning is shown for each resource with conflicts (see chapter *Warnings*). Yo
 
 To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
 
-### Allow synchronization connections to your own Field Desktop installation
+## Allow synchronization connections to your own Field Desktop installation
 
 You can allow others to establish a synchronization connection with your project by providing them with the credentials that can be found in the **Settings** menu in the section **Synchronization**:
 
@@ -408,7 +408,7 @@ You can allow others to establish a synchronization connection with your project
 <hr>
 
 
-## Project configuration
+# Project configuration
 
 A database managed with Field Desktop contains a number of resources that always belong to a specific **category**, for example "Place", "Find" or "Image". A distinction is made between **supercategories** (e.g. "Find") and **subcategories** (e.g. "Brick" or "Pottery"). A resource of the subcategory always belongs to the supercategory as well (a brick is also a find).
 
@@ -421,7 +421,14 @@ Which fields are specifically available for a category in the resource editor is
 Via the "Tools" ➝ "Project configuration" menu, you can access the configuration editor, which allows you to adjust and extend the categories, fields and valuelists available in the project. If a synchronization connection is established, changes to the configuration will be transferred to other users as soon as they are confirmed via the "Save" button.
 
 
-### Categories and forms
+## Identifiers and labels
+
+All elements of the project configuration (categories, fields, valuelists, etc.) each have an **identifier** for unique identification. This identifier is saved in the database and is also used when importing or exporting resources. It is displayed in magenta in the configuration editor.
+
+In addition, **labels** can be added for each of the configured project languages. These texts are used for display in all other areas of the application and are also displayed in black in the configuration editor. If there is no label, the identifier is displayed instead.
+
+
+## Categories and forms
 
 The left sidebar of the editor lists the categories currently configured for the project. Using the filter menu at the top left, you can limit the selection of displayed categories to a specific part of the application (e.g. "Trench" for limiting to categories that can be created within a trench tab). If you select the "All" option, all categories of the project will be listed.
 
@@ -430,14 +437,14 @@ The left sidebar of the editor lists the categories currently configured for the
 When you select a category in the list, the form configured for that category is displayed on the right side with the corresponding field groups and fields.
 
 
-#### Add supercategories
+### Add supercategories
 
 Using the green plus button at the bottom of the list, you can add a new supercategory to the project. A new window opens where you can choose between all supercategories of the Field category library that are not already configured for the project. You can filter the displayed categories and forms using the text field above the list. For each category, the available forms are listed; when you select one of the forms, you will see the corresponding field groups and fields on the right side. Confirm your selection by clicking the "Add category" button.
 
-Please note that currently no new supercategories can be added via the configuration editor.
+Please note that no new supercategories can be added via the configuration editor.
 
 
-#### Add subcategories
+### Add subcategories
 
 If you want to add a new subcategory to an existing supercategory, click on the small plus button displayed to the right of the corresponding supercategory. If the plus button is missing, it is not possible to create subcategories for this category.
 
@@ -446,7 +453,7 @@ Similar to adding supercategories, you also have the choice between different fo
 Project specific categories are highlighted in blue in the list, provided that the "Highlight custom categories/fields" option is enabled in the "Project configuration" menu.
 
 
-#### Manage categories
+### Manage categories
 
 Right-clicking on a category brings up a context menu that provides the following options:
 
@@ -455,11 +462,11 @@ Right-clicking on a category brings up a context menu that provides the followin
 * *Delete*: Removes the category after a confirmation prompt. If resources of this category have already been created in the project, they will not be lost, but will no longer be displayed until the category is added again. Since deleting also loses all customizations of the form selected for the category, however, a category should not be deleted in most cases if resources have already been created based on the corresponding form.
 
 
-#### Edit categories
+### Edit categories
 
 Via the context menu or by double-clicking on an entry in the category list, the category editor can be opened, in which the properties of the category can be edited:
 
-* *Category label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
+* *Label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
 * *Color*: The color of the category icon as well as the geometries displayed for resources of this category on the map.
 * *QR codes*: Enables the use of QR codes for resources of this category (see section *QR codes*).
 * *Identifier prefix*: Optionally enter here a text with which the identifier of resources of this category should always start. Please note that already existing identifiers will not be adjusted automatically.
@@ -469,7 +476,7 @@ You can also specify the following properties for project-specific categories:
 * *Description*: A description text that informs in which contexts the category should be used.
 * *References*: Specify URLs here if you want to reference more information about the category or category definitions in other systems.
 
-##### QR codes
+#### QR codes
 
 If the use of QR codes is enabled for a category, a unique QR code can be assigned to each resource of the category. Either a new code can be generated or an existing code can be read by camera scan and linked to the respective resource. The QR code can then be used in various ways:
 * Accessing the resource by camera scan (via the QR code button in the search bar)
@@ -480,10 +487,10 @@ Please note that QR codes can only be used for the categories "Find", "Find coll
 The following options are available in the category editor for configuring QR codes:
 * *Use QR codes for identification*: Enable this option to allow the use of QR codes for resources of the category
 * *Automatically create for new resources*: Enable this option if a QR code should be generated automatically for every newly created resource
-* *Fields to print*: Select up to three fields to be printed on the QR code label in addition to the resource identifier. Activate the option "Print field label" if you want the field label to appear before the field content on the label.
+* *Fields to print*: Select up to three fields to be printed on the QR code label in addition to the resource identifier. Activate the option "Print field label" if you want the field label to appear before the field content on the printed label.
 
 
-#### Hierarchy
+### Hierarchy
 
 The category determines where in the resource hierarchy a resource can be created: For example, finds can be created within stratigraphic units, but not vice versa. With the two buttons on the top right above the form display you can see below resources of which categories a resource of the selected category can be created and resources of which categories it can contain.
 
@@ -492,17 +499,17 @@ The category determines where in the resource hierarchy a resource can be create
 The category hierarchy cannot currently be changed in the configuration editor. For newly created subcategories, the hierarchical restrictions of the supercategory apply.
 
 
-### Groups
+## Groups
 
 To the right of the category list, the field groups of the currently selected category form are displayed. Click on a group to display the corresponding fields to the right of it.
 
 
-#### Add groups
+### Add groups
 
 You can add a new group to the form using the green plus button at the bottom of the list. You can select one of the groups already included in other forms configured for the project or create a new group. To do this, enter the name of the new group in the text field above the list and select the "Create new group" option. The group editor will open where you can enter the display label of the new group.
 
 
-#### Manage groups
+### Manage groups
 
 Right-clicking on a group brings up a context menu with the following options:
 
@@ -510,21 +517,21 @@ Right-clicking on a group brings up a context menu with the following options:
 * *Delete*: Removes the group from the form. Please note that a group can only be deleted if it does not contain any fields. Before deleting the group, move all the fields to other groups or remove them.
 
 
-### Fields
+## Fields
 
 To the right of the group list, the fields that are included in the selected group are displayed. Click on an entry in the fields list to display more information about the field (description, input type, and the assigned valuelist, if any).
 
 Fields inherited from the supercategory form are marked by the supercategory icon and cannot be edited or deleted. To do this, switch to the form of the corresponding supercategory.
 
 
-#### Add fields
+### Add fields
 
 Click the plus button at the bottom of the field list to add a new field to the group. You can choose between all the fields available for the selected category that have not yet been added to the form. Select an entry in the list to show information about the field on the right side. To create a new field, enter the desired identifier in the input field above the list and select the "Create new field" option. The field editor opens, where you can specify the properties of the field (see section *Edit field*).
 
 Project-specific fields are highlighted in blue in the list, provided that the "Highlight custom categories/fields" option is enabled in the "Project configuration" menu.
 
 
-#### Manage fields
+### Manage fields
 
 Right-clicking on a field brings up a context menu that provides the following options:
 
@@ -532,131 +539,162 @@ Right-clicking on a field brings up a context menu that provides the following o
 * *Delete*: Deletes the field after a confirmation prompt. If data for this field has already been entered in resources, it will not be lost, but will no longer be displayed until the field is added again. This option is only available for project specific fields. Fields that belong to a form selected from the Field form library cannot be deleted, only hidden in the field editor. 
 
 
-#### Edit fields
+### Edit fields
 
 Via the context menu or by double-clicking on an entry in the field list, the field editor can be opened, in which the properties of the field can be edited:
 
-* *Field label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
+* *Label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
 * *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field label and is intended to help with data entry.
+* *References*: Specify URLs here to reference more information about the field or field definitions in other systems.
 
 
-#### Change input type
+### Change input type
 
 The *Input type* checkbox in the field editor allows you to change the input type of the field. Please note that for the fields that come with Field Desktop, you can only select input types whose data format is compatible with the default input type (for example, it is possible to change from a single-line text field to a multi-line text field, but not to change from a dating field to a checkbox selection field). For project-specific fields, you can freely change the input type at any time.
 
 Field data that has already been entered will continue to be displayed even after the input type has been changed. In the resource editor, however, data that is incompatible with the current input type is marked accordingly and can no longer be edited there, only deleted.
 
 
-##### Single line text
+#### Single line text
 Input of a single line text (optionally monolingual or multilingual)
 <p align="center"><img src="images/en/configuration/input_type_input.png" alt="Input type 'Single line text'"/></p>
 
-##### Single line text with multiple selection
+#### Single line text with multiple selection
 Input of multiple single line texts (optionally monolingual or multilingual)
 <p align="center"><img src="images/en/configuration/input_type_multi_input.png" alt="Input type 'Single line text with multiple selection'"/></p>
   
-##### Multiline text
+#### Multiline text
 Input of a multiline, multilingual text
 <p align="center"><img src="images/en/configuration/input_type_text.png" alt="Input type 'Multiline text'"/></p>
 
-##### Whole number
+#### Whole number
 Input of a positive or negative whole number
 <p align="center"><img src="images/en/configuration/input_type_int.png" alt="Input type 'Whole number'"/></p>
 
-##### Positive whole number
+#### Positive whole number
 Input of a positive whole number
 <p align="center"><img src="images/en/configuration/input_type_unsigned_int.png" alt="Input type 'Positive whole number'"/></p>
 
-##### Decimal number
+#### Decimal number
 Input of a positive or negative decimal number
 <p align="center"><img src="images/en/configuration/input_type_float.png" alt="Input type 'Decimal number'"/></p>
 
-##### Positive decimal number
+#### Positive decimal number
 Input of a positive decimal number
 <p align="center"><img src="images/en/configuration/input_type_unsigned_float.png" alt="Input type 'Positive decimal number'"/></p>
 
-##### URL
+#### URL
 Input of an URL
 <p align="center"><img src="images/en/configuration/input_type_url.png" alt="Input type 'URL'"/></p>
 
-##### Dropdown list
+#### Dropdown list
 Selection of a value from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_dropdown.png" alt="Input type 'Dropdown list'"/></p>
 
-##### Dropdown list (range)
+#### Dropdown list (range)
 Selection of a value or a range of values (from/to, two values) from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_dropdown_range.png" alt="Input type 'Dropdown list (range)'"/></p>
 
-##### Radiobutton
+#### Radiobutton
 Selection of a value from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_radio.png" alt="Input type 'Radiobutton'"/></p>
 
-##### Yes / No
+#### Yes / No
 Selection of Yes or No
 <p align="center"><img src="images/en/configuration/input_type_boolean.png" alt="Input type 'Yes / No'"/></p>
 
-##### Checkboxes
+#### Checkboxes
 Selection of one or more values from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
 
-##### Dating
-Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
-<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
-
-##### Date
+#### Date
 Selection of a date from a calendar. The input field can also be used to enter only month or year information.
 <p align="center"><img src="images/en/configuration/input_type_date.png" alt="Input type 'Date'"/></p>
 
-##### Dimension
+#### Dating
+Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
+<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
+
+#### Dimension
 Specification of one or more dimensions. Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
 <p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
 
-##### Bibliographic reference
+#### Bibliographic reference
 Specification of one or more bibliographic references. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
 <p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Input type 'Bibliographic reference'"/></p>
 
-##### Composite field
+#### Composite field
 Composite fields can contain multiple entries, each consisting of any number of subfields. Each subfield has its own name and input type (see section *Subfields*).
 <p align="center"><img src="images/en/configuration/input_type_composite_field.png" alt="Input type 'Composite field'"/></p>
 
+#### Relation
+Reference to one or more other resources that belong to one of the configured target categories (see section *Allowed target categories*). Optionally, an inverse relation can be configured, which is automatically set in the target resources (see section *Inverse relation*).
+<p align="center"><img src="images/en/configuration/input_type_relation.png" alt="Input type 'Relation'"/></p>
 
-#### Hide fields
+
+
+### Hide fields
 
 Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.
 
 
-#### Allow input in multiple languages
+### Allow input in multiple languages
 
 If the option *Allow input in multiple languages* is enabled, a separate text can be entered in the field for each of the configured project languages. The setting is only available for fields of the input types "Single line text", "Single line text with multiple selection" and "Multiline text" and is activated by default.
 
 
-#### Field specific search
+### Field specific search
 
 The setting *Allow field specific search* in the field editor determines whether a field specific search can be performed for a field in extended search mode (see the *Extended search mode* section in the *Search* chapter). For fields of the category "Project" as well as for fields of some input types this setting cannot be activated; in these cases it is grayed out.
 
 
-#### Replace valuelist
+### Replace valuelist
 
 The currently selected valuelist can be replaced by another one by clicking the "Replace valuelist" button. Either an existing valuelist can be selected or a new list can be created (see section *Valuelists*).
 
 If data has already been entered for the field, it will continue to be displayed even if the values entered are not included in the new valuelist. In this case, the corresponding values are marked as incompatible in the resource editor and can be deleted there.
 
 
-#### Subfields
+### Subfields
 
 This section appears only if the input type "Composite field" is selected and allows defining the subfields each entry of the composite field consists of. The order of the subfields can be changed via drag & drop.
 
 To create a new subfield, enter the desired name in the input field and confirm it by clicking the plus button.  A new editor window will open where you can configure the subfield in a similar way to a normal field (input type, label, description, etc.).
 
 
-##### Subfield conditions
+#### Subfield conditions
 
 Optionally, a condition for displaying the subfield can be set in the subfield editor. If a condition is set, the subfield will be available during data entry only if another subfield has a specific value (or one of several values) set.
 
 To set a condition, first select another subfield of the same composite field in the dropdown field "Condition for display of subfield". Subfields of the input types "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes / No" and "Checkboxes" are available for selection. The possible values of the chosen subfield are now displayed and can be selected. The current subfield is only displayed during data entry if at least one of the selected values is set for the subfield selected as a condition field.
 
 
-### Adjusting order and group assignment
+### Allowed target categories
+
+This section appears only if the input type "Relation" is selected. Only resources of the categories selected here can be chosen as targets of the relation. If a supercategory is selected, all of its subcategories are also automatically considered allowed target categories.
+
+Please note that target resources already entered in the field are not automatically removed if a category is removed from the list of allowed target categories. In this case, a corresponding warning is displayed for the affected resources.
+
+
+### Inverse relation
+
+This section only appears if the input type "Relation" is selected. Optionally, another field of input type "Relation" can be selected here, which is automatically updated in entered target resources to reflect the opposite direction of the relation.
+
+*Example:* The inverse relation "Lies above" is configured for the relation "Lies below". If the target resource "B" is entered in resource "A" in the relation field "Lies below", the target resource "A" is automatically entered in resource "B" in the "Lies above" relation field.
+
+Only fields that have already been created and meet the following criteria appear in the selection field *Inverse relation*:
+
+* The field in question must be of input type "Relation".
+* The field in question must be configured under the same identifier for all allowed target categories of the field currently being edited.
+* The category to which the field currently being edited belongs must be set as an allowed target category for the field in question.
+* The field currently being edited must be allowed to be entered as an inverse relation for all allowed target categories of the field in question in accordance with these criteria.
+
+After selecting an inverse relation and confirming the changes using the *OK* button, the inverse relations in other fields are automatically added or updated accordingly.
+
+Please note that resource data that has already been entered is not automatically updated when another inverse relation is selected.
+
+
+## Adjusting order and group assignment
 
 The order of supercategories, subcategories, groups and fields can be changed using drag & drop. To do so, click on the handle icon on the left of the list entry, hold down the mouse button and move the element to the desired position.
 
@@ -665,7 +703,7 @@ The order of supercategories, subcategories, groups and fields can be changed us
 Fields can also be assigned to another group in the same way: Simply drag the field to the entry of the corresponding group in the group list. Note that changes to the field/group order or group assignment are not automatically transferred from the form of a supercategory to forms of the corresponding subcategories (and vice versa).
 
 
-### Valuelists
+## Valuelists
 
 The "Project configuration" ➝ "Valuelist management" menu opens an overview of all the valuelists that come with Field. The valuelists listed here are either used by the fields of the standard forms or were created in the context of projects that have already used Field.
 
@@ -676,14 +714,14 @@ Use the text field above the list to filter the valuelists based on any search t
 Please note that all changes made in the valuelist management window must subsequently be confirmed by clicking on the "Save" button of the configuration editor before they are applied to the project.
 
 
-#### Create and extend valuelists
+### Create and extend valuelists
 
 To create a new valuelist, enter the desired identifier in the text field and select the "Create new valuelist" option. The valuelist editor will open, where you can enter the desired values and make further settings (see section *Edit valuelists*).
 
 Instead of creating a completely new valuelist, you can alternatively extend an already existing one. To do this, right-click on the corresponding list entry to open the context menu, select the *Extend valuelist* option and enter an identifier for your extension list. All values of the selected valuelist are taken over and can now be supplemented by additional values in the editor. You also have the option to hide existing values and adjust their order. Please note that extension lists as well as project specific lists cannot be extended.
 
 
-#### Manage project specific valuelists
+### Manage project specific valuelists
 
 Right-clicking on a project specific valuelist brings up a context menu that provides the following options:
 
@@ -691,17 +729,17 @@ Right-clicking on a project specific valuelist brings up a context menu that pro
 * *Delete*: Deletes the valuelist after a confirmation prompt. Deleting a valuelist is not possible as long as it is used by one or more fields. In this case, first select another valuelist for the corresponding fields.
 
 
-#### Edit valuelists
+### Edit valuelists
 
 Via the context menu or by double-clicking on a valuelist, an editor can be opened in which the properties of the list can be edited:
 
 * *Valuelist description*: A description text where you can specify more detailed information about the valuelist. This text is displayed in valuelist management when the list is selected.
 * *References*: Specify URLs here to reference more information about the valuelist or definitions in other systems.
-* *Values*: Use the "New value" text field to enter values to be included in the value list. The value editor opens in each case, which can also be called later by clicking on the edit button next to each value (see section *Edit values*).
+* *Values*: Use the text field "New value" to enter the desired identifier of a new value to be included in the valuelist. The value editor opens in each case, which can also be called later by clicking on the edit button next to each value (see section *Edit values*).
 * *Automatic sorting*: If this option is enabled, the values will always be displayed in alphanumeric order. You can deactivate the option in order to subsequently drag and drop the values into the desired order.
 
 
-#### Edit values
+### Edit values
 
 The value editor allows you to customize the properties of a value:
 
@@ -710,7 +748,7 @@ The value editor allows you to customize the properties of a value:
 * *References*: Specify URLs here to reference definitions in other systems.
 
 
-### Select project languages
+## Select project languages
 
 The menu "Project configuration" ➝ "Select project languages..." allows you to specify the languages for which data is to be entered in the project. For text fields for which the option "Allow input in multiple languages" is activated in the configuration editor, a separate text can be entered for each project language.
 In addition, empty input fields for the labels and descriptions of categories, fields, groups, valuelists and values are automatically displayed in the configuration editor for each project language.
@@ -718,7 +756,7 @@ In addition, empty input fields for the labels and descriptions of categories, f
 Please note that texts that have already been entered will no longer be displayed if the corresponding language is removed from the list of project languages. However, they will remain in the database and will be displayed again if the language is once more selected as a project language at a later time.
 
 
-### Import configuration
+## Import configuration
 
 Use the menu option "Project configuration" ➝ "Import configuration..." to import an existing configuration from another project. 
 In the dropdown menu "Source", you can choose between two different import options:
@@ -729,17 +767,30 @@ In the dropdown menu "Source", you can choose between two different import optio
 The result of the import can now be checked in the editor and accepted by clicking the "Save" button. Please note that all previous configuration settings will be replaced by the imported configuration.
 
 
-### Export configuration
+## Export configuration
 
 Use the menu option "Project configuration" ➝ "Export configuration..." to save the configuration of the opened project as a Field configuration file (file extension *.configuration*). This will export the state currently displayed in the configuration editor, including any unsaved changes. The generated file also contains all project-specific valuelists.
 
 The file can then be imported again via the menu option "Project configuration" ➝ "Import configuration..." in order to transfer the configuration to another project or restore the saved configuration state in the same project.
 
 
+## JSON export API
+
+The project configuration can be retrieved in JSON format via an API endpoint. The endpoint is available via the following URL when the application is open:
+
+http://localhost:3000/configuration/PROJECT
+
+Replace "PROJECT" with the name of the project whose configuration you want to access.
+
+When accessing the API endpoint, the password that is entered as "Your password" in the section "Synchronization" of the menu "Settings" must be entered. The password is transmitted via *Basic Auth*; when the URL is entered in the browser, an input dialog appears. It is not necessary to enter the user name, the corresponding field can remain empty.
+
+Please note that the JSON output of the API endpoint **cannot** be imported via the menu option "Import configuration...". Use the menu option "Export configuration..." to obtain a configuration file suitable for this purpose.
+
+
 <hr>
 
 
-## Matrix
+# Matrix
 
 The **Matrix** view (accessible via the menu "Tools") displays a matrix for each trench of the project,
 generated automatically from the stratigraphical units of the respective trench. The edges of the matrix are
@@ -751,7 +802,7 @@ Choose the trench for which a matrix shall be generated via the dropdown button 
 toolbar.
 
 
-### Options
+## Options
 
 Via the **Options button** in the upper right corner of the matrix view, you can customize the matrix
 visualization by adjusting different settings. The chosen settings are applied to all matrices for all of the
@@ -760,7 +811,7 @@ project's trenches and are preserved when restarting the application.
 <p align="center"><img src="images/en/matrix/matrix_tools.png" alt="Options menu"/></p>
 
 
-#### Relations
+### Relations
 
 * *Temporal*: Edges are built based on the relations "Before", "After" and "Contemporary with" (field group
 "Time"). 
@@ -768,13 +819,13 @@ project's trenches and are preserved when restarting the application.
 (field group "Position").
 
 
-#### Edges
+### Edges
 
 * *Straight*: All edges are composed of straight lines.
 * *Curved*: Edges may be curved if there is no direct connecting line between two units of the matrix.
 
 
-#### Group by period
+### Group by period
 
 Activate this option in order to group the stratigraphical units of the matrix based on the value of the field
 "Period". If two values are set for the field (from/until), the value of "Period (from)" is used in each case.
@@ -783,7 +834,7 @@ Stratigraphical units with equal period values are placed close to each other an
 <p align="center"><img src="images/en/matrix/matrix_phases.png" alt="Group by period"/></p>
 
 
-### Navigation
+## Navigation
 
 Move the mouse with the **right mouse button** pressed in order to change the position of the matrix within
 the display area. Use the **mouse wheel** or the **zoom buttons** in the upper left corner of the display area
@@ -795,7 +846,7 @@ lines show connections to units on higher levels, blue ones to units on lower le
 on the same level of the matrix. 
 
 
-### Editing
+## Editing
 
 By default, the **edit mode** is active: Click a unit in the matrix in order to open up the editor allowing
 you to make changes to the corresponding resource. In this way, you can also change the position of the unit
@@ -803,7 +854,7 @@ within the matrix by editing the relations in the field groups "Time" respective
 **Save**, the matrix is updated automatically on the basis of the changed data. 
 
 
-### Display of sub-matrices
+## Display of sub-matrices
 
 To facilitate the overview in large matrices, sub-matrices can also be generated from selected units of the
 matrix. Use the buttons on the right side of the toolbar in order to select units and create a new sub-matrix
@@ -824,7 +875,871 @@ from the current selection:
 * *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
 
 
-## Warnings
+## Export
+
+Use the export button on the far right of the toolbar to export the currently displayed matrix as a file.
+
+<p align="center"><img src="images/en/matrix/export_matrix.png" alt="Export button"/></p>
+
+You can choose between two different file formats:
+
+* *Dot (Graphviz)*: A format for describing graphs that can be read by the open source software Graphviz, among others. (File extension *gv*)
+* *SVG*: A format for displaying vector graphics. (File extension *svg*)
+
+
+<hr>
+
+
+# Import and export
+
+## Import
+
+Select the menu item "Tools" ➝ "Import" to import resources into the currently opened project.
+
+* *Source*: Select the type of import source. There are two options to choose from:
+    * *File*: The data to be imported is read from a file existing on your computer, a connected storage medium or another computer available via the network.
+    * *HTTP*: The data to be imported is loaded via HTTP or HTTPS using a URL. Please note that it is not possible to import files in the formats *Shapefile* and *Catalog* if this option is selected. 
+* *Path*: Select the desired import file via a file selection dialog (only available for source option "File")
+* *URL*: Enter the URL where the data to be imported can be found (only available for source option "HTTP")
+
+Depending on the format of the selected file, which is recognized based on the file extension, further options may be available (see subsection on the corresponding format in section *Formats*).
+
+Start the import process using the **Start import** button.
+
+Supported import formats are:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.shp)
+* JSON Lines (.jsonl)
+* Catalog (.catalog)
+
+The formats *CSV* and *JSON Lines* are suitable for creating new resources or editing existing resources. Geometries can be added or edited using the formats *GeoJSON*, *Shapefile* or *JSON Lines*. The *Catalog* format can be used to exchange Field type catalogs.
+
+
+## Export
+
+Select the menu item "Tools" ➝ "Import" to export resources from the currently opened project.
+
+First, select the desired export format from the dropdown menu **Format**. Depending on the format, further options may be available (see subsection on the corresponding format in section *Formats*).
+
+After clicking the button **Start export**, a file selection dialog opens where you can specify the name and target directory of the file to be created. Then the export process starts.
+
+Supported export formats are:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.zip)
+* Catalog (.catalog)
+
+
+## Formats
+
+### CSV
+
+CSV (file extension *csv*) is the main file format for importing and exporting resource data in the context of Field Desktop. CSV files can be read and edited by all common spreadsheet applications.
+
+CSV files **do not contain geodata**. Use one of the two formats *GeoJSON* or *Shapefile* to export geodata or add it to existing resources via import.
+
+
+#### Structure
+
+A CSV file only ever contains resources of a single category. Each column corresponds to one of the fields that have been configured for the form used in the project for this category. Please note that the column header must contain the unique field identifier as displayed for the respective field in magenta in the menu "Project configuration". The multilingual display names that are displayed in other areas of the application **cannot** be used in CSV files.
+
+It is mandatory to specify the identifier in the *identifier* column. All other fields are optional.
+
+For a quick overview and as a template for the CSV import, you can use the option *Schema only* in the menu "Tools" ➝ "Export" to create an empty CSV file with pre-filled column headers for all fields of a category (see section *Export options*).
+
+
+##### Valuelist fields
+
+For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
+
+
+##### Yes/No fields
+
+The values *true* (Yes) and *false* (No) can be entered for fields of the input type "Yes / No".
+
+
+##### Multilingual fields
+
+If values in different languages can be entered in a field, a separate column is created in the CSV file for each language. The column header contains the language code (separated from the field identifier by a dot), as displayed in magenta in the menu "Settings" for each language (e.g. "shortDescription.en" for the English text of the short description).
+
+In projects created with older versions of Field Desktop and due to changes to the project configuration, it is possible that a value without a language specification is present in a multilingual field. In these cases, the text "unspecifiedLanguage" is added to the column header instead of the language code.
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>description.de</th>
+        <th>description.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Dropdown lists (range)
+
+Fields of the input type "Dropdown list (range)" consist of up to two subfields, for each of which a separate column is created:
+
+* *value*: The identifier of the selected value; if two values are selected, the first of the two values
+* *endValue*: The identifier of the second selected value if two values are selected
+
+*Example (the value identifiers are identical with the German labels in this case):*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>period.value</th>
+        <th>period.endValue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Eisenzeitlich</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Frühbronzezeitlich</td>
+        <td>Spätbronzezeitlich</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Date fields
+
+A value in the format "day.month.year" is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>12.01.2025</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>09.2008</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>1995</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### List fields
+
+For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon (e.g. "Granite;Limestone;Slate").
+
+For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+
+*Example of a field of the input type "Single line text (List)" with input in multiple languages:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>exampleField.0.de</th>
+        <th>exampleField.0.en</th>
+        <th>exampleField.1.de</th>
+        <th>exampleField.1.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Wert A1</td>
+        <td>Value A1</td>
+        <td>Wert A2</td>
+        <td>Value A2</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Wert B1</td>
+        <td>Value B1</td>
+        <td>Wert B2</td>
+        <td>Value B2</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Relations
+
+The column header contains the prefix "relations" before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
+
+In addition to the relations listed in the project configuration in the form of the respective category, the following columns can be used:
+* *relations.isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
+* *relations.depicts* (only for image resources): Links the image to one or more resources
+* *relations.isDepictedIn* (not for image resources): Links the resource to one or more images
+* *relations.isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target
+* *relations.hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource
+
+To link images to the project or set them up as map layers at project level, enter the project identifier in the column *relations.depicts* or *relations.isMapLayerOf*.
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>relations.isAbove</th>
+        <th>relations.isChildOf</th>
+        <th>relations.isDepictedIn</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>B;C;D</td>
+        <td>E</td>
+        <td>Image1.png;Image2.png</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Datings
+
+Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
+
+* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific)
+* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* 
+* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
+* *margin*: Tolerance margin in years for dating type *scientific*
+* *source*: Source of the dating, multilingual text field
+* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+
+The year specifications *begin* and *end* consist of two subfields:
+
+* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP)
+* *inputYear*: The year
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dating.0.type</th>
+        <th>dating.0.begin.inputType</th>
+        <th>dating.0.begin.inputYear</th>
+        <th>dating.0.end.inputType</th>
+        <th>dating.0.end.inputYear</th>
+        <th>dating.0.margin</th>
+        <th>dating.0.source.de</th>
+        <th>dating.0.source.en</th>
+        <th>dating.0.isImprecise</th>
+        <th>dating.0.isUncertain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>range</td>
+        <td>bce</td>
+        <td>100</td>
+        <td>ce</td>
+        <td>200</td>
+        <td></td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>single</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>750</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>before</td>
+        <td></td>
+        <td></td>
+        <td>bp</td>
+        <td>20</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td>after</td>
+        <td>bce</td>
+        <td>350</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>E</td>
+        <td>scientific</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>1200</td>
+        <td>50</td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Dimensions
+
+Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
+
+* *inputValue*: The measured numerical value
+* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
+* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementComment*: Comment, multilingual text field
+* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
+
+*Example (the value identifiers in the column "dimensionLength.0.measurementPosition" are identical with the German labels in this case):*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dimensionLength.0.inputValue</th>
+        <th>dimensionLength.0.inputRangeEndValue</th>
+        <th>dimensionLength.0.inputUnit</th>
+        <th>dimensionLength.0.measurementPosition</th>
+        <th>dimensionLength.0.measurementComment.de</th>
+        <th>dimensionLength.0.measurementComment.en</th>
+        <th>dimensionLength.0.isImprecise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>50</td>
+        <td></td>
+        <td>cm</td>
+        <td>Minimale Ausdehnung</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>10</td>
+        <td>15</td>
+        <td>m</td>
+        <td>Maximale Ausdehnung</td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Bibliographic eferences
+
+Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields, for which a separate column is created for each bibliographic reference:
+
+* *quotation*: Literature quotation
+* *zenonId*: Zenon ID
+* *doi*: DOI
+* *page*: Page
+* *figure*: Figure
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>literature.0.quotation</th>
+        <th>literature.0.zenonId</th>
+        <th>literature.0.doi</th>
+        <th>literature.0.page</th>
+        <th>literature.0.figure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, 22-23 September 2022), «Archeologia e Calcolatori», 34.1, 85-94</td>
+        <td>002038255</td>
+        <td>https://doi.org/10.19282/ac.34.1.2023.10</td>
+        <td>90</td>
+        <td>3</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Composite fields
+
+Fields of the input type "Composite field" are list fields, each of which can contain several entries. One column is created per entry for each configured subfield (for multilingual text fields, one column for each language). The identifier of the subfield is specified in the column header.
+
+
+#### Import options
+
+Using CSV import, you can either create new resources or edit existing resources. You can choose between the following two options:
+
+* *Import new resources*: If this option is activated, a new resource is created for each row of the CSV table. Resources whose identifiers (column *identifier*) have already been assigned are ignored.
+* *Update existing resources*: If this option is activated, existing resources will be merged with the data from the CSV table. Fields in the import record overwrite fields with the same identifier in the existing data record. Fields in the existing record that are not present in the import record remain unchanged. The category cannot be changed. The assignment of records is performed based on the identifier field (column *identifier*). Records in the CSV table that cannot be assigned are ignored.
+
+The following options are also available:
+
+* *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) for which the field in the import file is empty are deleted. Fields not listed as columns in the CSV table remain unchanged. This option is only available if the option *Update existing resources* is selected.
+* *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
+* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by dots), the category is automatically recognized (e.g. "example.find.csv" for a CSV file containing resources of the category "Find"). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
+* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
+* *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is the comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export" menu or in a spreadsheet application). In most cases, either the comma or the semicolon is used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
+
+
+#### Export options
+
+First select the type of CSV export. You can choose between the following two options:
+
+* *Complete*: All resources are exported based on the selected settings for context and category (see below).
+* *Schema only*: Only the header row with the column headers of all fields configured for the selected category will be exported. The exported file can be used as a starting point for creating an import file.
+
+The following options are also available:
+
+* *Context*: Optionally select an operation here whose resources are to be exported. If the default option "No restriction" is selected, all resources of the selected category are exported. This option is only available if the option *Complete* is selected.
+* *Category*: Select the desired category here. Only resources of the selected category are exported. In this dropdown menu, only categories for which resources exist in the selected context are available for selection. The number of resources available in the selected context is displayed in brackets.
+* *Field separator*: Enter the character to be used as the field separator in the CSV file to be created (the default setting is the comma).
+* *Combine hierarchical relations*: If this option is activated, the hierarchical relations are combined into the simplified relation *isChildOf*, which specifies the direct parent resource in each case. This option is activated by default and should not be deactivated in most cases. If the option is deactivated, the two columns *relations.liesWithin* and *relations.isRecordedIn* are created instead of the column *relations.isChildOf*. In the column *relations.liesWithin*, the direct parent resource is set (if the parent resource is not an operation), while the operation in which the resource has been recorded is set in the column *relations.isRecordedIn*. 
+
+
+### GeoJSON
+
+GeoJSON (file extensions *geojson* and *json*) is an open format for exchanging vector geodata based on the JSON format. It can be used in Field Desktop to import and export geometries.
+
+When importing GeoJSON files, **no new resources** are created. Instead, **geometries are added** to existing resources. To import new resources, use one of the two formats *CSV* or *JSON Lines* and then add geometries to the newly created resources using the GeoJSON import.
+
+
+#### Structure
+
+The structure of a GeoJSON file is based on the <a href="https://geojson.org" target="_blank">GeoJSON specification</a>. The following additional rules apply for import or export in the context of Field Desktop:
+
+A GeoJSON file must always contain an object of the type "FeatureCollection" at the top level. This object in turn contains individual objects of the type "Feature".
+
+*Example:*
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          ...
+        },
+        {
+          "type": "Feature",
+          ...
+        }
+      ]
+    }
+
+
+Each object of the type "Feature" corresponds to a resource in Field and the associated geometry. A feature always contains the two fields *geometry* and *properties*: While the *geometry* field contains the geometry data, the data in the *properties* field establishes the link to the resource in Field.
+
+
+##### Geometry
+
+The following geometry types are supported:
+
+* *Point* (Point)
+* *MultiPoint* (Multipoint)
+* *LineString* (Polyline)
+* *MultiLineString* (Multipolyline)
+* *Polygon* (Polygon)
+* *MultiPolygon* (Multipolygon)
+
+The coordinates are specified in accordance with the GeoJSON specification.
+
+
+##### Properties
+
+The following fields of the respective resource are written into the object *properties* during export:
+
+* *identifier*: The identifier of the resource
+* *category*: The identifier of the category selected for the resource
+* *shortDescription*: The short description of the resource. The output depends on the configuration of the *shortDescription* field of the corresponding category:
+    * Single line text without input in multiple languages: The text of the short description as a string
+    * Single line text with input in multiple languages / Multiline text: An object with the language codes as field names
+    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+
+During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the object *properties* in order to successfully import GeoJSON data. Other fields of the *properties* object are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
+
+
+##### Example
+
+This example shows the content of a GeoJSON export file for a resource with a point geometry. The two fields *category* and *shortDescription* in the object *properties* do not need to be set for import.
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              28.189335972070695,
+              40.14122423529625
+            ]
+          },
+          "properties": {
+            "identifier": "F1",
+            "category": "Find",
+            "shortDescription": {
+              "de": "Beispielfund",
+              "en": "Example find"
+            }
+          }
+        }
+      ]
+    }
+
+
+### Shapefile
+
+Shapefile is a widely used format for exchanging vector geodata and can be used as an alternative to the GeoJSON format in the context of Field Desktop.
+
+As with the GeoJSON import, **no new resources** are created when importing Shapefile data. Instead, **geometries are added** to existing resources. To import new resources, use one of the two formats *CSV* or *JSON Lines* and then add geometries to the newly created resources using the Shapefile import.
+
+
+#### Structure
+
+A Shapefile consists of a group of several files, some of which are optional. When exporting from Field Desktop, files with the following extensions are created:
+
+* *shp*: Contains the actual geodata
+* *dbf*: Contains the attribute table data, i.e. data of the associated resource (see section *Attribute table*).
+* *shx*: Establishes the link between geodata and attribute data
+* *cpg*: Specifies the encoding used in the *dbf* file.
+* *prj*: Specifies the projection. This file is only exported if a selection has been made in the field *Coordinate reference system*  of the project properties.
+
+As a Shapefile can only ever contain geometries of a single type, a total of three Shapefiles (each consisting of the four or five files specified above) are created for the individual geometry types when exporting from Field Desktop. Single types are saved in the shapefile as multiple types, which leads to the following files:
+
+  * File name "multipoints.\*", contains geometries of the types *Point* and *Multipoint*
+  * File name "multipolylines.\*", contains geometries of the types *Polyline* and *Multipolyline*
+  * File name "multipolygons.\*", contains geometries of the types *Polygon* and *Multipolygon*
+
+All files are bundled in a zip archive.
+
+When importing, all files belonging to the Shapefile must be in the same directory. In the file selection dialog of the import menu, select the file with the extension *shp*; all other files will be recognized automatically. Please note that zip archives are **not** supported during import. In order to import a Shapefile exported from Field Desktop into another project, the corresponding zip file must first be unpacked.
+
+
+##### Attribute table
+
+The following fields are included in the attribute table of the Shapefile during export:
+
+* *identifier*: The identifier of the resource
+* *category*: The identifier of the category selected for the resource
+* *sdesc*: The short description of the resource. The output depends on the configuration of the field *short description* of the corresponding category:
+    * Single line text without input in multiple languages: The text of the short description
+    * Single line text with input in multiple languages / Multiline text: A separate field for each language with the language code in the field name, separated by an underscore (e.g. *sdesc\_de* or *sdesc\_en*) 
+    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+  
+During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the attribute table in order to successfully import Shapefile data. Other fields in the attribute table are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
+
+
+### JSON Lines
+
+JSON Lines (file extension *jsonl*) is a JSON-based text format in which each line of the file corresponds to a JSON object. It can be used in Field Desktop to create and edit resources (including geometries).
+
+The JSON Lines format is **not** available for export. Please note that backup files created via the menu "Project" ➝ "Create backup..." also use the JSON Lines format and the *jsonl* file extension, but **cannot** be imported via the "Import" menu. Backups can only be restored via the menu "Project" ➝ "Restore backup...".
+
+
+#### Structure
+
+The basic format of a JSON Lines file is based on the <a href="https://jsonlines.org" target="_blank">JSON Lines documentation</a>. Each JSON object corresponds to a resource in Field and contains the following mandatory fields:
+
+* *identifier*: The identifier of the resource
+* *category*: The identifier of the category selected for the resource
+
+An object can also contain the following optional fields:
+
+* *relations*: Contains all fields of the input type *Relation* (see section *Relations*)
+* *geometry*: The geometry of the resource (see section *Geometry*)
+
+In addition, the object can contain any number of fields that have been configured for the form that is used in the project for this category. Please note that the unique field identifier must be specified as displayed in magenta in the menu "Project configuration"  for the respective field. The multilingual display names that are displayed in other areas of the application **cannot** be used as field names in JSON Lines files.
+
+For reasons of clarity, the examples below are each displayed in several lines. In actual import files, each JSON object must occupy **exactly one line** for the import to be successful.
+
+
+##### Relations
+
+Fields of the input type *Relation* are bundled in the object *relations*. The field names of the object correspond to the identifiers of the relations; in each case an array with the identifiers of the target resources is entered as the field value.
+
+In addition to the relations listed in the project configuration in the form of the respective category, the following relations can be used:
+
+* *isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
+* *depicts* (only for image resources): Links the image to one or more resources
+* *isDepictedIn* (not for image resources): Links the resource to one or more images
+* *isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target
+* *hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource
+
+To link images to the project or set them up as map layers at project level, add the project identifier to the array for the relation *depicts* or *isMapLayerOf*.
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+    }
+
+
+##### Geometry
+
+Geometries can be specified in accordance with the GeoJSON specification. In the field *geometry*, an object is entered whose structure corresponds to that of the *geometry* object within a GeoJSON feature (see section *GeoJSON*).
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.189335972070695,
+          40.14122423529625
+        ]
+      }
+    }
+
+
+##### Valuelist fields
+
+For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
+
+
+##### Yes/No fields
+
+The values *true* (yes) and *false* (no) can be entered for fields of the input type "Yes / No".
+
+
+##### Multilingual fields
+
+For fields in which values can be entered in different languages, an object must be created whose field names correspond to the codes of the languages used. The language codes are displayed in magenta in the menu "Settings" for each language.
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "description": { "de": "Beispieltext", "en": "Example text" }
+    }
+
+
+##### Dropdown lists (range)
+
+For fields of the input type "Dropdown list (range)", an object is entered that contains the following two subfields:
+
+* *value*: The identifier of the selected value; if two values are selected, the first of the two values
+* *endValue*: The identifier of the second selected value if two values are selected
+
+*Example (the value identifiers are identical with the German labels in this case):*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "period1": { "value": "Eisenzeitlich" },
+      "period2": { "value": "Frühbronzezeitlich", "endValue": "Spätbronzezeitlich" }
+    }
+
+
+##### Date fields
+
+A value in the format "day.month.year" is entered for fields of the input type "date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "date1": "12.01.2025",
+      "date2": "09.2008",
+      "date3": "1995"
+    }
+
+
+##### List fields
+
+Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Dimension", "Bibliographic reference" and "Composite field" can contain several entries. An array is therefore entered for these fields.
+
+
+##### Datings
+
+Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating is an object that consists of the following subfields:
+
+* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific)
+* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* 
+* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
+* *margin*: Tolerance margin in years for dating type *scientific*
+* *source*: Source of the dating, multilingual text field
+* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+
+The year specifications *begin* and *end* consist of two subfields:
+
+* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP)
+* *inputYear*: The year
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Feature", 
+      "dating": [
+        { "type": "range", "begin": { "inputType": "bce", "inputYear": 100 }, "end": { "inputType": "ce", "inputYear": 200 }, "source": { "de": "Beispieltext", "en": "Example text" }, "isImprecise": false, "isUncertain": false },
+        { "type": "single", "end": { "inputType": "ce", "inputYear": 750 }, "isImprecise": true, "isUncertain": false },
+        { "type": "before", "end": { "inputType": "bp", "inputYear": 20 }, "isImprecise": false, "isUncertain": true },
+        { "type": "after", "begin": { "inputType": "bce", "inputYear": 350 }, "isImprecise": false, "isUncertain": false },
+        { "type": "scientific", "end": { "inputType": "ce", "inputYear": 1200 }, "margin": 50, "isImprecise": false, "isUncertain": false }
+      ]
+    }
+
+
+##### Dimensions
+
+Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry is an object that consists of the following subfields:
+
+* *inputValue*: The measured numerical value
+* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
+* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementComment*: Comment, multilingual text field
+* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
+
+*Example (the value identifiers in the field "measurementPosition" are identical with the German labels in this case):*
+
+    {
+      "identifier": "A",
+      "category": "Feature", 
+      "dimensionLength": [
+        { "inputValue": 50, "inputUnit": "cm", "measurementPosition": "Minimale Ausdehnung", "measurementComment": { "de": "Beispieltext", "en": "Example text" }, "isImprecise": false },
+        { "inputValue": 10, "inputRangeEndValue": 15, "inputUnit": "m", "measurementPosition": "Maximale Ausdehnung", "isImprecise": true }
+      ]
+    }
+
+##### Bibliographic eferences
+
+Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields:
+
+* *quotation*: Literature quotation
+* *zenonId*: Zenon ID
+* *doi*: DOI
+* *page*: Page
+* *figure*: Figure
+
+*Example:*
+
+    {
+      "identifier": ‘A’,
+      "category": ‘Type’, 
+      "literature": [
+        {
+          "quotation": ‘Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, September 22-23, 2022), ’Archeologia e Calcolatori", 34.1, 85-94",
+          "zenonId": ‘002038255’,
+          "doi": ‘https://doi.org/10.19282/ac.34.1.2023.10’,
+          "page": ‘90’,
+          "figure": "3"
+        }
+      ]
+    }
+
+
+##### Composite fields
+
+Fields of the input type "Composite field" are list fields that can each contain several entries. Each entry is an object whose field names correspond to the identifiers of the subfields that have been configured for the composite field.
+
+
+#### Import options
+
+Using JSON Lines import, you can either create new resources or edit existing resources. You can choose between the following two options:
+
+* *Import new resources*: If this option is activated, a new resource is created for each line of the JSON Lines file. Resources whose identifiers (column *identifier*) have already been assigned are ignored.
+* *Update existing resources*: If this option is activated, existing resources will be merged with the data from the JSON Lines file. Fields in the import record overwrite fields with the same identifier in the existing data record. Fields in the existing record that are not present in the import record remain unchanged. The category cannot be changed. The assignment of records is performed based on the field *identifier*. Records in the JSON Lines file that cannot be assigned are ignored.
+
+The following options are also available:
+
+* *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) to which the value *null* is assigned in the import file are deleted. Fields that are not listed remain unchanged. This option is only available if the option *Update existing resources* is selected.
+* *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
+* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified via the relation *isChildOf* for all records in the JSON Lines file, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
+
+
+### Catalog
+
+The Catalog format (file extension *catalog*) used exclusively by Field Desktop can be used to share type catalogs created via the menu "Tools" ➝ "Type management" between different projects.
+
+A type catalog is exported together with all its types as well as linked images. Linked finds are **not** exported.
+
+After importing the catalog file into another project, the type catalog can be viewed as usual in the type management and used for find identification. It is **not** possible to edit a catalog imported from another project: Imported type catalogs and their linked images can be deleted from the project as a whole, but not edited, extended or partly deleted (i.e. just some specific types or linked images). However, it is possible to replace the type catalog with an updated version by importing a new catalog file. Any already created links to finds are retained. This restriction also does not apply to type catalogs that are imported back into the same project at a later date after export. In these cases, the catalog can be fully edited and expanded.
+
+Please note that when importing type catalogs into another project, there should be an identical configuration for the categories of the exported resources ("Type catalog", "Type", "Image" or any subcategories used) in both projects. Fields not configured in the target project are **not** displayed. If the catalog file contains resources that belong to a subcategory which does not exist in the target project, the import process will fail. 
+
+
+#### Export options
+
+The following option is available when exporting catalog files:
+
+* *Catalog*: Select the type catalog to be exported here. This option is only displayed if there are type catalogs in the currently open project. Catalogs imported from other projects are not available for selection.
+
+
+<hr>
+
+
+# Warnings
 
 For various reasons, such as changes to the project configuration, inconsistent or otherwise incorrect data may occur in a project. In these cases, the application displays a warning and provides options for solving the problem. Faulty resources are marked with a red bar next to the list entry of the corresponding resource. Furthermore, an icon is displayed in the navigation bar at the top right, indicating the number of resources for which there are warnings due to data problems:
 
@@ -834,61 +1749,61 @@ Clicking the icon or using the context menu of an affected resource takes you to
 
 Select one of the displayed resources to view the list of existing warnings for that resource. For most warnings, tools are provided that can be used to resolve the errors; many warnings can also be resolved by adjusting the project configuration. In any case, please create a **backup** of the project in advance via the menu "Project" ➝ "Create backup...". Further information on the causes and possible solutions for the individual warning types can be found below.
 
-### Warning types
-#### Conflict
+## Warning types
+### Conflict
 There are multiple versions of the resource that are in conflict with each other.
 
-##### Possible causes
+#### Possible causes
 * The resource was edited on different computers at the same time with an existing synchronization connection.
 * The resource was edited on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
 
-##### Possible solutions
+#### Possible solutions
 * Button *Resolve conflict*: Resolve the conflicts in the resource editor (see section *Conflicts* of chapter *Synchronization*).
 
-#### Unconfigured category
+### Unconfigured category
 A category is set for the resource that cannot be found in the project configuration. The resource is therefore not displayed.
 
-##### Possible causes
+#### Possible causes
 * The category has been deleted in the configuration editor.
 
-##### Possible solutions
+#### Possible solutions
 * Button *Select new category*: Select one of the categories configured for the project. The selected category is then set for the affected resource. Optionally, you can set the new category for all resources for which the same unconfigured category is specified.
 * Button *Delete resource*: The affected resource is deleted completely.
 * Add a category with the same name in the configuration editor.
 
-#### Unconfigured field
+### Unconfigured field
 Data has been entered in a field that cannot be found in the project configuration. The entered data is therefore not displayed.
 
-##### Possible causes
+#### Possible causes
 * The field has been deleted in the configuration editor.
 
-##### Possible solutions
+#### Possible solutions
 * Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which data has been entered in the same unconfigured field.
 * Button *Delete field data*: The data entered in the field is deleted completely. Optionally, you can delete the field data for all resources for which data has been entered in the same unconfigured field.
 * Add a field with the same name for the category of the affected resource in the configuration editor.
 
-#### Invalid field data
+### Invalid field data
 The data entered in a field does not correspond to the input type selected for the field.
 
-##### Possible causes
+#### Possible causes
 * The input type of the field has been changed in the configuration editor.
 
-##### Possible solutions
+#### Possible solutions
 * Button *Edit*: Open the resource in the resource editor to remove the invalid field data and re-enter it if necessary.
 * Button *Convert field data*: The data is automatically converted to the correct format for the respective input type. Optionally, you can have the data converted for all resources where invalid data has been entered in the same field. Please note that automatic conversion is not possible in all cases and this button is therefore not always available.
 * Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which invalid data has been entered in the same field (valid data remains in the original field).
 
-#### Value not included in valuelist
+### Value not included in valuelist
 One or more values are entered in a field that are not contained in the valuelist configured for the field.
 
-##### Possible causes
+#### Possible causes
 * The valuelist of the field has been replaced with a different one in the configuration editor.
 * Values have been removed from a project-specific valuelist in the valuelist editor.
 * The input type of the field has been changed in the configuration editor from an input type that allows the free entry of text to an input type with a valuelist.
 * For fields that use the values entered in the fields *Staff* and *Campaigns* of the project properties: Entries have been removed from the corresponding field in the project properties.
 * For the field *Campaign*: Values have been removed from the field of the same name in the parent resource (only values that have been set in the parent resource may be selected for the field *Campaign*).
 
-##### Possible solutions
+#### Possible solutions
 * Button *Edit*: Open the resource in the resource editor to remove the values not included in the valuelist and replace them with other values if necessary.
 * Button *Fix value*: Select a new value from the valuelist configured for the field. The previous value is replaced by the selected value. Optionally, you can set the new value for all fields of all resources in which the same value is entered and which use the same valuelist.
 * Button *Delete value*: The value entered in the field is deleted completely. Optionally, you can delete the value from all fields of all resources in which the same value is entered.
@@ -897,53 +1812,65 @@ One or more values are entered in a field that are not contained in the valuelis
 * For fields that are based on the values entered in the *Staff* and *Campaigns* fields of the project properties: Add the missing value to the corresponding field in the project properties.
 * For the field *Campaign*: Set the value in the parent resource if it does not already exist there.
 
-#### Missing target resource of a relation
+### Missing target resource of a relation
 A resource specified as the target of a relation cannot be found.
 
-##### Possible causes
+#### Possible causes
 * A synchronization process has not been fully completed.
 
-##### Possible solutions
+#### Possible solutions
 * Make sure that the data of all team members working with the Field project is synchronized.
 * Button *Clean up relation*: All references to non-existent resources are deleted from the relation.
 
-#### Missing or invalid parent resource
+### Invalid target resource of a relation
+The category of a resource specified as the target of a relation is not a valid target category of this relation.
+
+#### Possible causes
+* The list of allowed target categories of the relation has been edited in the configuration editor.
+* The category of the resource has been changed.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to remove the reference to the invalid target resource from the relation.
+* Button *Clean up relation*: All references to invalid target resources are deleted from the relation.
+* Add the category of the target resource as a valid target category of the corresponding relation in the configuration editor.
+
+### Missing or invalid parent resource
 The resource does not have a valid parent resource. This can either mean that no parent resource has been set for the resource, that the specified parent resource cannot be found or that it is not a valid parent resource due to its category. The resource is therefore not displayed.
 
-##### Possible causes
+#### Possible causes
 * A synchronization process has not been fully completed.
 * The resource was created with an outdated version of Field Desktop.
 
-##### Possible solutions
+#### Possible solutions
 * Make sure that the data of all team members working with the Field project is synchronized.
 * Button *Set new parent resource*: Select a new resource as the parent resource. The resource is moved to the context of the selected resource.
 * Button *Delete resource*: The affected resource is deleted completely.
 
-#### Missing identifier prefix
+### Missing identifier prefix
 The identifier of the resource does not contain the prefix configured for the corresponding category.
 
-##### Possible causes
+#### Possible causes
 * The resource was created before the identifier prefix was configured.
 
-##### Possible solutions
+#### Possible solutions
 * Button *Edit*: Open the resource editor to re-enter the identifier.
 
-#### Ambiguous identifier
+### Ambiguous identifier
 The identifier of the resource is also used by one or more other resources. Therefore, errors can occur when importing and exporting data.
 
-##### Possible causes
+#### Possible causes
 * The identifiers were entered on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
 
-##### Possible solutions
+#### Possible solutions
 * Button *Edit*: Open the resource editor to enter a new identifier.
 
-#### Resource limit exceeded
+### Resource limit exceeded
 There are more resources of a particular category than the resource limit configured for this category allows.
 
-##### Possible causes
+#### Possible causes
 * The resources were created before the resource limit was configured.
 * The resources were created on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
 
-##### Possible solutions
+#### Possible solutions
 * Delete resources of the corresponding category until the resource limit is met.
 * Increase the resource limit in the configuration editor.

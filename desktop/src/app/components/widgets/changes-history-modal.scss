@@ -45,6 +45,7 @@
   .list-body {    
     max-height: calc(80vh - 230px);
     overflow: auto;
+    padding-bottom: 1ex;
   }
 
   .list-row {

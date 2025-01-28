@@ -1,8 +1,8 @@
-<div id="view-modal-header" class="modal-header">
+<div class="modal-header">
     <div id="heading-label"
          i18n="@@@@widgets.historyModal.header">
          Bearbeitungshistorie der Ressource:
-         <span id="resource-name-title">{{document.resource.identifier}}</span>
+         <div id="resource-name-title" class="text-truncate">{{document.resource.identifier}}</div>
     </div>
     <button id="changes-history-close-button" class="btn btn-primary btn-square" (click)="closeModal()">
         <span class="mdi mdi-close"></span>
@@ -41,7 +41,7 @@
                 <div *ngFor="let modification of document.modified"
                     class="list-row">                    
                     <div class="list-body-field" [textContent]="formatDateTime(modification.date)"></div>
-                    <div class="list-body-field" [textContent]="modification.user"></div>      
+                    <div class="list-body-field text-truncate" [textContent]="modification.user"></div>      
                 </div> 
             </div>
         </div>

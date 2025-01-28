@@ -1023,7 +1023,7 @@ Fields of the input type "Dropdown list (range)" consist of up to two subfields,
 
 ##### Date fields
 
-A value in the format "day.month.year" is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year, or a specific year.
+A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year, or a specific year.
 
 <div class="table-container">
   <table>
@@ -1341,7 +1341,7 @@ The following options are also available:
 * *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) for which the field in the import file is empty are deleted. Fields not listed as columns in the CSV table remain unchanged. This option is only available if the option *Update existing resources* is selected.
 * *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
 * *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by a dot), the category is automatically recognized (e.g. "example.find.csv" for a CSV file containing resources of the category "Find"). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
-* *Assign data to an operation*: Select one of the operations present in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if the *identifier* of a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
+* *Assign data to an operation*: Select one of the operations present in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if the identifier of a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
 * *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export" menu or in a spreadsheet application). In most cases, either comma or semicolon are used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
 
 
@@ -1565,7 +1565,7 @@ For fields that allow a selection from a valuelist, the identifier of the corres
 
 ##### Yes/No fields
 
-The values *true* (yes) and *false* (no) can be entered without quotes for fields of the input type "Yes / No".
+The values *true* (yes) and *false* (no) can be entered as boolean values (without quotes) for fields of the input type "Yes / No".
 
 
 *Example:*

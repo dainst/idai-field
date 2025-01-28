@@ -183,7 +183,7 @@
         },
         "epsgId": {
           "label": "Código EPSG",
-          "description": "Identificação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
+          "description": "Indicação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
         },
         "externalReference": {
           "label": "Página do projeto",
@@ -488,7 +488,7 @@
           "description": "Qual a amostra retirada? Quais as análises são para ser efetuadas?"
         },
         "storagePlace": {
-          "label": "Lugar de"
+          "label": "Depósito"
         }
       }
     },
@@ -527,25 +527,25 @@
         },
         "stampPositioning": {
           "description": "Rotação do carimbo no reverso em comparação com a parte da frente; Indicação em 1-12h, análogo ao relógio (exemplo: '12' sem rotação)",
-          "label": "posição do carimbo"
+          "label": "Posição do carimbo"
         },
         "manufacturingMethod": {
           "label": "Técnica de produção"
         },
         "denomination": {
-          "description": "nome da unidade da moeda",
-          "label": "valor facial"
+          "description": "Nome da unidade da moeda",
+          "label": "Valor facial"
         },
         "mintingRuler": {
-          "description": "indivíduo ou entidade responsável pela cunhagem da moeda",
-          "label": "titular da cunhagem"
+          "description": "Indivíduo ou entidade responsável pela cunhagem da moeda",
+          "label": "Titular da cunhagem"
         },
         "frontSideDescription": {
           "label": "Descrição frente",
           "description": "Descrição da frente da moeda"
         },
         "mint": {
-          "label": "casa da moeda",
+          "label": "Casa da moeda",
           "description": "Local onde a moeda foi cunhada"
         }
       }
@@ -554,10 +554,10 @@
       "label": "Fotografia",
       "fields": {
         "originalFormat": {
-          "label": "formato original"
+          "label": "Formato original"
         },
         "viewingDirection": {
-          "label": "direcção de vista"
+          "label": "Direção de vista"
         }
       }
     },
@@ -1150,7 +1150,7 @@
         },
         "publicationMaterialSummary": {
           "label": "Material",
-          "description": "descrição detalhada da publicação"
+          "description": "Descrição detalhada da publicação"
         },
         "instanceOf": {
           "label": "Classificação tipológica"
@@ -1172,15 +1172,15 @@
           "description": "Peso em gramas"
         },
         "storagePlace": {
-          "label": "depósito",
+          "label": "Depósito",
           "description": "depósito do achado"
         },
         "conditionPercent": {
-          "label": "estado de preservação em porcento",
-          "description": "quantia preservada em porcento"
+          "label": "Estado de preservação em porcento",
+          "description": "Quantia preservada em porcento"
         }
       },
-      "label": "achado"
+      "label": "Achado"
     },
     "Opening": {
       "fields": {
@@ -1246,7 +1246,7 @@
       "label": "Área de investigação"
     },
     "SurveyUnit": {
-      "label": "Unidade de prospecção"
+      "label": "Unidade de prospeção"
     },
     "Area": {
       "label": "Área"
@@ -1255,7 +1255,7 @@
       "label": "Escavação",
       "fields": {
         "isIllegal": {
-          "label": "escavação clandestina"
+          "label": "Escavação clandestina"
         }
       }
     },
@@ -1266,7 +1266,7 @@
       "label": "Edifício"
     },
     "StorageRoom": {
-      "label": "Sala"
+      "label": "Espaço de armazenamento"
     },
     "StorageShelf": {
       "label": "Prateleira"
@@ -1311,7 +1311,7 @@
           "label": "Elemento arquitetónico"
         },
         "workmanship": {
-          "label": "fabricação",
+          "label": "Fabricação",
           "description": "Descrição da qualidade da pedra tratada para, por exemplo, uma inscrição"
         },
         "color": {
@@ -1319,7 +1319,7 @@
           "label": "Cor e intensidade"
         }
       },
-      "label": "pedra"
+      "label": "Pedra"
     },
     "Room": {
       "fields": {
@@ -1335,7 +1335,7 @@
           "label": "Parte preservada"
         }
       },
-      "label": "compartimento"
+      "label": "Espaço"
     },
     "Grave": {
       "fields": {
@@ -1463,11 +1463,11 @@
           "description": "Peso em gramas"
         },
         "storagePlace": {
-          "description": "depósito da colecção de achados",
-          "label": "depósito"
+          "description": "Depósito da coleção de achados",
+          "label": "Depósito"
         }
       },
-      "label": "Colecção de achados"
+      "label": "Coleção de achados"
     },
     "Metal": {
       "fields": {
@@ -1487,7 +1487,7 @@
         },
         "materialDescription": {
           "label": "Descrição do material",
-          "description": "descrição do material utilizado; se possível descrição exata do metal ou ligação"
+          "description": "Descrição do material utilizado; se possível descrição exata do metal ou ligação"
         },
         "manufacturingMethod": {
           "label": "Técnica de produção"
@@ -1507,18 +1507,18 @@
           "label": "Pintura"
         },
         "composition": {
-          "description": "descrição da composição do estuque",
-          "label": "composição do estuque"
+          "description": "Descrição da composição do estuque",
+          "label": "Composição do estuque"
         },
         "color": {
           "label": "Cor e intensidade",
           "description": "Cor, se reconhecível"
         },
         "plasterComponents": {
-          "label": "componentes do estuque"
+          "label": "Componentes do estuque"
         }
       },
-      "label": "fragmento de estuque"
+      "label": "Fragmento de estuque"
     },
     "BuildingPart": {
       "fields": {
@@ -1567,7 +1567,7 @@
       "label": "Área da prospeção"
     },
     "Profile": {
-      "label": "perfil"
+      "label": "Perfil"
     },
     "FindDrawing": {
       "label": "Desenho do achado",
@@ -1608,7 +1608,7 @@
   },
   "forms": {
     "Feature:archaeoDox": {
-      "label": "unidade estratigráfica",
+      "label": "Unidade estratigráfica",
       "fields": {
         "shortDescription": {
           "label": "Descrição breve (classificação)"
@@ -1637,10 +1637,10 @@
       "label": "Sítio de descoberta"
     },
     "Profile:archaeoDox": {
-      "label": "Desenho de perfil",
+      "label": "Desenho do perfil",
       "fields": {
         "archaeoDox:viewingDirection": {
-          "label": "direcção de vista"
+          "label": "Direção de vista"
         }
       }
     },
@@ -1653,7 +1653,7 @@
           "label": "Material"
         },
         "archaeoDox:typeOfWare": {
-          "label": "tipo de cerâmica"
+          "label": "Tipo de cerâmica"
         }
       }
     },
@@ -1677,12 +1677,12 @@
           "label": "Descrição breve (classificação)"
         },
         "archaeoDox:soilProperties": {
-          "label": "características do sedimento"
+          "label": "Características do sedimento"
         }
       }
     },
     "Planum:archaeoDox": {
-      "label": "desenho em plano"
+      "label": "Desenho em plano"
     }
   }
 }

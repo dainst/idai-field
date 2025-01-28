@@ -1577,6 +1577,19 @@ Geometrien können gemäß der GeoJSON-Spezifikation angegeben werden. Im Feld *
 Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Wertes eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
 
 
+##### Numerische Felder
+
+Für Felder der Eingabetypen "Ganzzahl", "Positive Ganzzahl", "Kommazahl" und "Positive Kommazahl" kann jeweils ein numerischer Wert (ohne Anführungszeichen) eingetragen werden.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "FindCollection",
+      "amount": 12
+    }
+
+
 ##### Ja/Nein-Felder
 
 Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) als boolesche Werte (ohne Anführungszeichen) eingetragen werden.

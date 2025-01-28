@@ -1563,6 +1563,19 @@ Geometries can be specified in accordance with the GeoJSON specification. In the
 For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
 
 
+##### Numeric fields
+
+A numerical value (without quotation marks) can be entered in fields of the input types "Whole number", "Positive whole number", "Decimal number" and "Positive decimal number".
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "FindCollection",
+      "amount": 12
+    }
+
+
 ##### Yes/No fields
 
 The values *true* (yes) and *false* (no) can be entered as boolean values (without quotes) for fields of the input type "Yes / No".

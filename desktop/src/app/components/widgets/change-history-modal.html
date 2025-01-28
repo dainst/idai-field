@@ -10,7 +10,7 @@
 </div>
 
 <div id="change-history-modal-body" class="modal-body">
-    <div class="list col-lg-12 col-md-12 col-sm-12 resource-creation-info">
+    <div class="list resource-creation-info">
         <div class="list-row">
             <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creator.name">Erstellt von: </span>
             <span>{{document.created.user}}</span>
@@ -22,7 +22,7 @@
     </div>
 
     <div *ngIf="document.modified[0].user.length; else noChangeTemplate" id="changes-table">
-        <div class="list col-lg-12 col-md-12 col-sm-12">               
+        <div class="list">               
             <div id="list-header">  
                 <div class="list-header-field text-right"
                     i18n="@@widgets.changeHistoryModal.changes.table.colnames.date" 

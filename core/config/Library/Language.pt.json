@@ -1,9 +1,9 @@
 {
   "groups": {
-    "stem": "Dados de base",
+    "stem": "Dados-mestre",
     "properties": "Propriedades",
     "time": "Cronologia",
-    "position": "Posição / Contexto",
+    "position": "Posição/Contexto",
     "dimension": "Dimensões",
     "identification": "Determinação",
     "other": "Outros",
@@ -25,7 +25,7 @@
       "description": "Indicação da altura na extensão máxima/mínima"
     },
     "dimensionDepth": {
-      "label": "Profundiade",
+      "label": "Profundidade",
       "description": "Indicação da profundidade na extensão máxima/mínima"
     },
     "dimensionThickness": {
@@ -34,7 +34,7 @@
     },
     "dimensionVerticalExtent": {
       "label": "Nível",
-      "description": "Nível margem superior / margem inferior"
+      "description": "Nível margem superior/margem inferior"
     },
     "dimensionPerimeter": {
       "label": "Perímetro",
@@ -54,7 +54,7 @@
     },
     "processor": {
       "label": "Editor/editora",
-      "description": "Nomes dos responsáveis pelo recurso ou objeto durante a campanha. NOTA: Os nomes das pessoas que editam a base de dados são registados automaticamente e, portanto, não são necessários aqui."
+      "description": "Nomes dos responsáveis pelo recurso ou objeto durante a campanha. Importante: Os nomes das pessoas que editam a base de dados são registados automaticamente e, portanto, não são necessárias indicar aqui."
     },
     "campaign": {
       "label": "Campanha"
@@ -83,7 +83,7 @@
     },
     "date": {
       "label": "Data",
-      "description": "Data do registo / da execução"
+      "description": "Data do registo/da execução"
     },
     "orientation": {
       "label": "Orientação",
@@ -174,12 +174,12 @@
     "Project": {
       "fields": {
         "contactMail": {
-          "label": "Endereço de correio de contacto",
-          "description": "Endereço de correio do projeto ou da pessoa de contacto"
+          "label": "Endereço de correio eletrónico de contacto",
+          "description": "Endereço de correio eletrónico do projeto ou da pessoa de contacto"
         },
         "contactPerson": {
           "label": "Pessoa de contacto",
-          "description": "Pessoa de contato do projeto"
+          "description": "Pessoa de contacto do projeto"
         },
         "epsgId": {
           "label": "Código EPSG",
@@ -206,7 +206,7 @@
           "description": "Entrada como número decimal, valores negativos são possíveis"
         },
         "license": {
-          "label": "License information"
+          "label": "informações de licença"
         },
         "projectURI": {
           "label": "URL do projeto",
@@ -219,7 +219,7 @@
           "label": "Campanhas"
         },
         "projectSupervisor": {
-          "label": "Supervisor",
+          "label": "Supervisor/a",
           "description": "Pessoa responsável pelo projeto"
         },
         "bibliographicReferences": {
@@ -284,7 +284,7 @@
         },
         "publicationDatingFinds": {
           "label": "Datação (achados)",
-          "description": "por exemplo: vestígios de sepultamento disturbados (2./3. séc. d. C.)"
+          "description": "por exemplo: vestígios de sepultamento disturbados (2º/3º séc. d. C.)"
         },
         "conditionAmount": {
           "label": "Parte preservada",
@@ -345,11 +345,11 @@
           "description": "Nome da localidade ou área cadastral"
         },
         "buildingHistory": {
-          "label": "História do sítio",
-          "description": "Tratado sobre projetos de arqueologia da arquitectura no sítio de descoberta"
+          "label": "História do edifício",
+          "description": "Tratado sobre projetos de arqueologia da arquitetura no sítio de descoberta"
         },
         "buildingResearchHistory": {
-          "label": "Histórico da investigação",
+          "label": "História da investigação",
           "description": "História precedente de todas as investigações feitas ao edifício, incluindo escavações"
         },
         "description": {
@@ -357,14 +357,14 @@
           "description": "Campo de descrição livre"
         },
         "excavationHistory": {
-          "label": "Histórico da escavação",
+          "label": "História das escavações",
           "description": "Sumário sobre os projetos executados no sítio de descoberta"
         },
         "siteClassification": {
           "label": "Classificação do sítio"
         },
         "gazId": {
-          "label": "Gazetteer-ID",
+          "label": "Gazetteer ID",
           "description": "Número ID do léxico local"
         },
         "findSituation": {
@@ -381,7 +381,7 @@
       }
     },
     "Feature": {
-      "label": "Unidade etratigráfica",
+      "label": "Unidade estratigráfica",
       "fields": {
         "featureBorders": {
           "description": "determinação dos limites da unidade estratigráfica",
@@ -464,10 +464,10 @@
         },
         "distinguishingCriteria": {
           "label": "Critério de distinção",
-          "description": "Qual o critério utlizado para discernir a unidade estratigráfica?"
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?"
         },
         "soilType": {
-          "label": "T",
+          "label": "Tipo de sedimento",
           "description": "Designação do sedimento de acordo com a carta pedológica"
         }
       }
@@ -527,7 +527,7 @@
         },
         "stampPositioning": {
           "description": "Rotação do carimbo no reverso em comparação com a parte da frente; Indicação em 1-12h, análogo ao relógio (exemplo: '12' sem rotação)",
-          "label": "posição da estampagem"
+          "label": "posição do carimbo"
         },
         "manufacturingMethod": {
           "label": "Técnica de produção"
@@ -635,13 +635,13 @@
     "Burial": {
       "fields": {
         "ageDetermination": {
-          "label": "determinação da idade"
+          "label": "Determinação da idade"
         },
         "ageDeterminationBasis": {
           "label": "Base para a determinação da idade"
         },
         "sexDetermination": {
-          "label": "determinação do sexo"
+          "label": "Determinação do sexo"
         },
         "sexDeterminationBasis": {
           "label": "Base para a determinação do sexo"
@@ -675,7 +675,7 @@
         },
         "publicationDatingFinds": {
           "label": "Datação (achados)",
-          "description": "por exemplo: vestígios de sepultamento disturbados (2./3. séc. d. C.)"
+          "description": "por exemplo: vestígios de sepultamento disturbados (2º/3º séc. d. C.)"
         },
         "positionLegs": {
           "label": "Posição das pernas"
@@ -701,7 +701,7 @@
     "Wood": {
       "fields": {
         "typeOfWood": {
-          "description": "determinação do tipo de madeiro no objeto",
+          "description": "Determinação do tipo de madeiro no objeto",
           "label": "Tipo de madeira"
         },
         "paintCondition": {
@@ -756,7 +756,7 @@
           "label": "Comentário sobre o estado de preservação"
         },
         "distinguishingCriteria": {
-          "description": "Qual o critério escolhida para determinar a borda da unidade estratigráfica?",
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?",
           "label": "Critério de distinção"
         },
         "floorClassification": {
@@ -876,7 +876,7 @@
           "label": "Exterior: cor e intensidade da argila"
         },
         "clayColorBreak": {
-          "label": "Fratura: cor da argila e intensidade"
+          "label": "Fratura: cor e intensidade da argila"
         },
         "clayHardness": {
           "label": "Dureza da argila (escala de Mohs)"
@@ -1033,7 +1033,7 @@
           "label": "Forma e utilização da telha"
         },
         "brickUsage": {
-          "label": "Utilização da telha na arquitectura"
+          "label": "Utilização da telha na arquitetura"
         },
         "clayColorOutside": {
           "label": "Exterior: cor e intensidade da argila"
@@ -1088,14 +1088,14 @@
       "fields": {
         "isNatural": {
           "label": "Natural",
-          "description": "O estrato é natural? (Por exemplo \"Sim\" para uma erosão)"
+          "description": "O depósito é natural? (por exemplo: 'sim' em caso de erosão)"
         },
         "consistency": {
           "label": "Consistência"
         },
         "distinguishingCriteria": {
           "label": "Critério de distinção",
-          "description": "Qual o critério escolhida para determinar a borda da unidade estratigráfica?"
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?"
         },
         "layerClassification": {
           "label": "Definição ou classificação do depósito"
@@ -1227,7 +1227,7 @@
       "label": "Elemento de estilo"
     },
     "Roof": {
-      "label": "telhado",
+      "label": "Telhado",
       "fields": {
         "material": {
           "label": "Material"
@@ -1341,7 +1341,7 @@
       "fields": {
         "publicationDatingFinds": {
           "label": "Datação (achados)",
-          "description": "por exemplo: restos de sepultura disturbados: peças de enterro (2º/3º séc. d. C.)"
+          "description": "por exemplo: vestígios de sepultura disturbados: peças de enterro (2º/3º séc. d. C.)"
         },
         "findingPlace": {
           "description": "Para a entrada de vários recursos como sítio de descoberta, por exemplo: (PE07 So 04,002)",
@@ -1377,7 +1377,7 @@
           "label": "Tomba"
         },
         "distinguishingCriteria": {
-          "description": "Qual o critério utlizado para discernir a unidade estratigráfica?",
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?",
           "label": "Critério de distinção"
         },
         "soilType": {
@@ -1532,10 +1532,10 @@
       "fields": {
         "biologicalAge": {
           "description": "Idade à morte do indivíduo ou animal (por exemplo Infans I)",
-          "label": "grupo etário"
+          "label": "Grupo etário"
         },
         "objectType": {
-          "label": "Identificação ou tipo de"
+          "label": "Denominação ou tipo de objeto"
         },
         "boneClassification": {
           "label": "Classificação dos ossos"
@@ -1547,8 +1547,8 @@
           "label": "Grão de cremação dos ossos (de acordo com Wahl 1982)"
         },
         "sex": {
-          "label": "sexo",
-          "description": "sexo do indivíduo ou animal"
+          "label": "Sexo",
+          "description": "Sexo do indivíduo ou animal"
         },
         "species": {
           "label": "Espécie animal",

@@ -30,7 +30,7 @@
       }
     },
     "Image": {
-      "label": "Imagem",
+      "label": "Figura",
       "fields": {
         "height": {
           "label": "Altura"
@@ -106,13 +106,19 @@
       "label": "Espólio associado"
     },
     "abuts": {
-      "label": ""
+      "label": "Se apoia a"
     },
     "isStoredIn": {
       "label": "É armazenado em"
     },
     "isStoragePlaceOf": {
       "label": "É lugar de armazenamento de"
+    },
+    "isAbuttedBy": {
+      "label": "Ao qual de apoia"
+    },
+    "bondsWith": {
+      "label": "Une"
     }
   }
 }

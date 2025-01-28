@@ -918,7 +918,7 @@ The formats *CSV* and *JSON Lines* are suitable for creating new resources or ed
 
 ## Export
 
-Select the menu item "Tools" ➝ "Import" to export resources from the currently opened project.
+Select the menu item "Tools" ➝ "Export" to export resources from the currently opened project.
 
 First, select the desired export format from the dropdown menu **Format**. Depending on the format, further options may be available (see subsection on the corresponding format in section *Formats*).
 
@@ -942,7 +942,7 @@ CSV files **do not contain geodata**. Use one of the two formats *GeoJSON* or *S
 
 #### Structure
 
-A CSV file only ever contains resources of a single category. Each column corresponds to one of the fields that have been configured for the form used in the project for this category. Please note that the column header must contain the unique field identifier as displayed for the respective field in magenta in the menu "Project configuration". The multilingual display names that are displayed in other areas of the application **cannot** be used in CSV files.
+A CSV file only ever contains resources of a single category. Each column belongs to one of the fields that have been configured for the form used in the project for this category. Depending on the input type, more than one column can be necessary to describe one field. Please note that the column header must contain the unique field identifier as displayed for the respective field in magenta in the menu "Project configuration". The multilingual display names that are displayed in other areas of the application **cannot** be used in CSV files.
 
 It is mandatory to specify the identifier in the *identifier* column. All other fields are optional.
 
@@ -951,7 +951,7 @@ For a quick overview and as a template for the CSV import, you can use the optio
 
 ##### Valuelist fields
 
-For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
+For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" in all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
 
 
 ##### Yes/No fields
@@ -1023,7 +1023,7 @@ Fields of the input type "Dropdown list (range)" consist of up to two subfields,
 
 ##### Date fields
 
-A value in the format "day.month.year" is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+A value in the format "day.month.year" is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year, or a specific year.
 
 <div class="table-container">
   <table>
@@ -1053,7 +1053,7 @@ A value in the format "day.month.year" is entered for fields of the input type "
 
 ##### List fields
 
-For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon (e.g. "Granite;Limestone;Slate").
+For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon without space between values (e.g. "Granite;Limestone;Slate").
 
 For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
 
@@ -1334,15 +1334,15 @@ Fields of the input type "Composite field" are list fields, each of which can co
 Using CSV import, you can either create new resources or edit existing resources. You can choose between the following two options:
 
 * *Import new resources*: If this option is activated, a new resource is created for each row of the CSV table. Resources whose identifiers (column *identifier*) have already been assigned are ignored.
-* *Update existing resources*: If this option is activated, existing resources will be merged with the data from the CSV table. Fields in the import record overwrite fields with the same identifier in the existing data record. Fields in the existing record that are not present in the import record remain unchanged. The category cannot be changed. The assignment of records is performed based on the identifier field (column *identifier*). Records in the CSV table that cannot be assigned are ignored.
+* *Update existing resources*: If this option is activated, existing resources will be merged with the data from the CSV table. Fields in the import record overwrite fields with the same identifier in the existing data record. Fields in the existing record that are not present in the import record remain unchanged. The category cannot be changed via import. The assignment of import records to existing records is performed based on the identifier field (column *identifier*). Records in the CSV table that cannot be assigned are ignored.
 
 The following options are also available:
 
 * *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) for which the field in the import file is empty are deleted. Fields not listed as columns in the CSV table remain unchanged. This option is only available if the option *Update existing resources* is selected.
 * *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
-* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by dots), the category is automatically recognized (e.g. "example.find.csv" for a CSV file containing resources of the category "Find"). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
-* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
-* *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is the comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export" menu or in a spreadsheet application). In most cases, either the comma or the semicolon is used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
+* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by a dot), the category is automatically recognized (e.g. "example.find.csv" for a CSV file containing resources of the category "Find"). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
+* *Assign data to an operation*: Select one of the operations present in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if the *identifier* of a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
+* *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export" menu or in a spreadsheet application). In most cases, either comma or semicolon are used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
 
 
 #### Export options
@@ -1350,13 +1350,13 @@ The following options are also available:
 First select the type of CSV export. You can choose between the following two options:
 
 * *Complete*: All resources are exported based on the selected settings for context and category (see below).
-* *Schema only*: Only the header row with the column headers of all fields configured for the selected category will be exported. The exported file can be used as a starting point for creating an import file.
+* *Schema only*: Only the header row with the column headers of all fields configured for the selected category will be exported. The exported file can be used as a template for creating an import file.
 
 The following options are also available:
 
-* *Context*: Optionally select an operation here whose resources are to be exported. If the default option "No restriction" is selected, all resources of the selected category are exported. This option is only available if the option *Complete* is selected.
-* *Category*: Select the desired category here. Only resources of the selected category are exported. In this dropdown menu, only categories for which resources exist in the selected context are available for selection. The number of resources available in the selected context is displayed in brackets.
-* *Field separator*: Enter the character to be used as the field separator in the CSV file to be created (the default setting is the comma).
+* *Context*: Optionally select an operation here. The export will be restricted to resources from this operation. If the default option "No restriction" is selected, all resources of the selected category are exported. This option is only available if the option *Complete* is selected.
+* *Category*: Select the desired category here. Only resources of the selected category are exported. In this dropdown menu, only categories for which resources exist in the selected context are available for selection. The number of resources available in the selected context is displayed in parentheses.
+* *Field separator*: Enter the character to be used as the field separator in the CSV file to be created (the default setting is comma).
 * *Combine hierarchical relations*: If this option is activated, the hierarchical relations are combined into the simplified relation *isChildOf*, which specifies the direct parent resource in each case. This option is activated by default and should not be deactivated in most cases. If the option is deactivated, the two columns *relations.liesWithin* and *relations.isRecordedIn* are created instead of the column *relations.isChildOf*. In the column *relations.liesWithin*, the direct parent resource is set (if the parent resource is not an operation), while the operation in which the resource has been recorded is set in the column *relations.isRecordedIn*. 
 
 
@@ -1565,8 +1565,16 @@ For fields that allow a selection from a valuelist, the identifier of the corres
 
 ##### Yes/No fields
 
-The values *true* (yes) and *false* (no) can be entered for fields of the input type "Yes / No".
+The values *true* (yes) and *false* (no) can be entered without quotes for fields of the input type "Yes / No".
 
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "hasDisturbance": true
+    }
 
 ##### Multilingual fields
 
@@ -1600,7 +1608,7 @@ For fields of the input type "Dropdown list (range)", an object is entered that 
 
 ##### Date fields
 
-A value in the format "day.month.year" is entered for fields of the input type "date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the input type "date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year or a specific year.
 
 *Example:*
 

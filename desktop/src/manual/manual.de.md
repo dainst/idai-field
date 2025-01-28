@@ -964,7 +964,7 @@ CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate
 
 #### Aufbau
 
-Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie. Jede Spalte entspricht dabei einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden.
+Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie. Jede Spalte gehört zu einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Abhängig vom Eingabetyp kann mehr als eine Spalte nötig sein, um ein Feld zu beschreiben. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden.
 
 Obligatorisch ist die Angabe des Bezeichners in der Spalte *identifier*. Alle weiteren Felder sind optional.
 
@@ -1045,7 +1045,7 @@ Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus bis zu zwei Unter
 
 ##### Datumsfelder
 
-Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat bzw. ein bestimmtes Jahr angegeben werden kann.
+Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
 
 *Beispiel:*
 <div class="table-container">
@@ -1076,7 +1076,7 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" ein
 
 ##### Listenfelder
 
-Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
+Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
 Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
 
@@ -1353,13 +1353,13 @@ Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Ein
 Bei einem CSV-Import können entweder neue Ressourcen erstellt oder bereits vorhandene Ressourcen bearbeitet werden. Sie können zwischen den folgenden beiden Optionen wählen:
 
 * *Neue Ressourcen importieren*: Ist diese Option aktiviert, wird für jede Zeile der CSV-Tabelle eine neue Ressource angelegt. Datensätze, deren Bezeichner (Spalte *identifier*) bereits vergeben sind, werden ignoriert.
-* *Vorhandene Ressourcen ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der CSV-Tabelle ergänzt. Felder des Importdatensatzes überschreiben dabei Felder mit dem gleichen Bezeichner im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte *identifier*). Datensätze in der CSV-Tabelle, die nicht zugeordnet werden können, werden ignoriert.
+* *Vorhandene Ressourcen ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der CSV-Tabelle ergänzt. Felder des Importdatensatzes überschreiben dabei Felder mit dem gleichen Bezeichner im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann durch den Import nicht verändert werden. Die Zuordnung von Importdatensätzen zu existierenden Datensätzen geschieht per Bezeichner (Spalte *identifier*). Datensätze in der CSV-Tabelle, die nicht zugeordnet werden können, werden ignoriert.
 
 Darüber hinaus stehen die folgenden Optionen zur Auswahl:
 * *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressourcen ergänzen* verfügbar.
 * *Nicht konfigurierte Felder ignorieren*: Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen, sobald nicht konfigurierte Felder in der Datei gefunden werden.
-* *Kategorie auswählen*: Falls der Bezeichner der Kategorie im Dateinamen steht (durch Punkte vom Rest des Dateinamens abgetrennt), wird die Kategorie automatisch erkannt (z. B. "example.find.csv" für eine CSV-Datei, die Ressourcen der Kategorie "Fund" enthält). Enthält der Dateiname keinen Kategoriebezeichner, muss die Kategorie manuell über dieses Dropdown-Menü ausgewählt werden.
-* *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der CSV-Datei für alle Datensätze bereits eine übergeordnete Ressource in der Spalte *relations.isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
+* *Kategorie auswählen*: Falls der Bezeichner der Kategorie im Dateinamen steht (durch einen Punkt vom Rest des Dateinamens abgetrennt), wird die Kategorie automatisch erkannt (z. B. "example.find.csv" für eine CSV-Datei, die Ressourcen der Kategorie "Fund" enthält). Enthält der Dateiname keinen Kategoriebezeichner, muss die Kategorie manuell über dieses Dropdown-Menü ausgewählt werden.
+* *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der CSV-Datei für alle Datensätze bereits der jeweilige *identifier* einer übergeordneten Ressource in der Spalte *relations.isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
 * *Feldtrennzeichen*: Tragen Sie das Zeichen ein, das in der CSV-Datei als Feldtrennzeichen verwendet wird (die Standardeinstellung ist das Komma). Geben Sie das gleiche Zeichen an, das Sie beim Erstellen der CSV-Datei (z. B. in Field Desktop über das Menü "Export" oder in einem Tabellenkalkulationsprogramm) gewählt haben. In der Regel wird als Feldtrennzeichen für CSV-Dateien entweder das Komma oder das Semikolon verwendet. Wenn es beim Import zu Fehlern kommt, prüfen Sie bitte zunächst, ob Sie das richtige Feldtrennzeichen eingetragen haben, da die Datei andernfalls nicht korrekt gelesen werden kann.
 
 
@@ -1370,7 +1370,7 @@ Wählen Sie zunächst die Art des CSV-Exports aus. Sie können zwischen den folg
 * *Nur Schema*: Es wird lediglich die Kopfzeile mit den Spaltenköpfen aller für die gewählte Kategorie konfigurierten Feldern exportiert. Die ausgegebene Datei kann beispielsweise als Ausgangspunkt für die Erstellung einer Importdatei genutzt werden.
 
 Darüber hinaus stehen die folgenden Optionen zur Auswahl:
-* *Kontext*: Wählen Sie hier optional eine Maßnahme aus, deren Ressourcen exportiert werden sollen. Bei Auswahl der standardmäßig verwendeten Option "Keine Einschränkung" werden alle Ressourcen des Projekts exportiert, die der ausgewählten Kategorie angehören. Diese Option steht ausschließlich bei Auswahl der Option *Komplett* zur Auswahl.
+* *Kontext*: Wählen Sie hier optional eine Maßnahme aus, deren Ressourcen exportiert werden sollen. Bei Auswahl der standardmäßig verwendeten Option "Keine Einschränkung" werden alle Ressourcen des Projektes exportiert, die der ausgewählten Kategorie angehören. Diese Option steht ausschließlich bei Auswahl der Option *Komplett* zur Auswahl.
 * *Kategorie*: Wählen Sie hier die gewünschte Kategorie aus. Es werden ausschließlich Ressourcen der gewählten Kategorie exportiert. Zur Auswahl stehen nur Kategorien, von denen Ressourcen im gewählten Kontext existieren. In Klammern wird die Anzahl der in diesem Kontext vorhandenen Ressourcen angezeigt.
 * *Feldtrennzeichen*: Tragen Sie das Zeichen ein, das in der zu erstellenden CSV-Datei als Feldtrennzeichen verwendet werden soll (die Standardeinstellung ist das Komma).
 * *Hierarchische Relationen zusammenfassen*: Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation *isChildOf* zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option ist standardmäßig aktiviert und sollte im Normalfall nicht deaktiviert werden. Bei Deaktivierung der Option werden statt der Spalte *relations.isChildOf* die beiden Spalten *relations.liesWithin* und *relations.isRecordedIn* angelegt. In der Spalte *relations.liesWithin* wird dabei die direkt übergeordnete Ressource gesetzt (falls es sich bei der übergeordneten Ressource um keine Maßnahme handelt), in der Spalte *relations.isRecordedIn* dagegen die Maßnahme, der die Ressource untergeordnet ist. 
@@ -1579,8 +1579,15 @@ Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Be
 
 ##### Ja/Nein-Felder
 
-Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) eingetragen werden.
+Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) ohne Anführungszeichen eingetragen werden.
 
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "hasDisturbance": true
+    }
 
 ##### Mehrsprachige Felder
 
@@ -1614,7 +1621,7 @@ Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetrag
 
 ##### Datumsfelder
 
-Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein Monat oder Jahr angegeben werden kann.
+Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein Monat eines Jahres oder ein Jahr angegeben werden kann.
 
 *Beispiel:*
 

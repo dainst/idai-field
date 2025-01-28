@@ -196,7 +196,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
         <source>Keine Ressourcen gefunden.</source>
-        <target state="translated">Sem resultados.</target>
+        <target state="translated">Nenhum recurso encontrado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -252,7 +252,7 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
-        <target state="translated">Formatos de ficheiro suportados:<x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/>. Imagens podem ser importadas através de <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>gestor de imagens<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
+        <target state="translated">Formatos de ficheiro suportados: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/>. Imagens podem ser importadas através do <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>gestor de imagens<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">235</context>
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source>Vorhandene Ressourcen ergänzen</source>
-        <target state="translated">Actualizar recursos existentes</target>
+        <target state="translated">Atualizar recursos existentes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
@@ -471,24 +471,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
-        <source> Keine Ressourcen gefunden. </source>
-        <target state="translated">Nenhum Recurso encontrado.</target>
+        <source>Keine Ressourcen gefunden.</source>
+        <target state="translated">Nenhum recurso encontrado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">356</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
-        <source> Keine Kataloge gefunden. </source>
-        <target state="translated">Nenhum Catálogo encontrado.</target>
+        <source>Keine Kataloge gefunden.</source>
+        <target state="translated">Nenhum catálogo encontrado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">360</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
-        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">Os dados exportados incluem geometrias e os campos <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descrição curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
+        <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="translated">Os dados exportados incluem geometrias e os campos identificador <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (identifier) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, descrição breve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (shortDescription) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e categoria <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (category) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">360</context>
@@ -503,8 +503,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
-        <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">Os dados exportados incluem geometrias e campos <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>descrição curta<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
+        <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
+        <target state="translated">Os dados exportados incluem geometrias e campos identificador <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (identifier) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, descrição breve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (shortdesc) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e categoria <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (category) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">140</context>
@@ -520,7 +520,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.createBackup" datatype="html">
         <source>Backup erstellen</source>
-        <target state="translated">Criar backup</target>
+        <target state="translated">Criar cópia de segurança</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">47</context>
@@ -528,7 +528,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
         <source>Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="translated">Cria cópia de segurança (backup) do projeto aberto. Backups regulares permitem aumentar a segurança dos dados e restaurar a base de dados a partir da última gravação no caso de perda de dados. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Tenha em atenção que as imagens originais não são guardadas no ficheiro de backup. Estas podem ser encontradas na pasta especificada nas <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>definições<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> e devem ser gravadas separadamente. </target>
+        <target state="translated">Cria cópia de segurança do projeto aberto. Cópias de segurança regulares permitem aumentar a segurança dos dados e restaurar a base de dados a partir da última gravação no caso de perda de dados. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Tenha em atenção que as imagens originais não são guardadas na cópia segurança. Estas podem ser encontradas na pasta especificada nas <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>definições<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> e devem ser gravadas separadamente. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -559,8 +559,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
-        <source> Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann. </source>
-        <target state="translated">Atenção: após o restauro do backup, todas as imagens de pŕe-visualização serão geradas de novo a partir das imagens originais. Assim, a aplicação pode inicialmente parecer mais lenta do que o normal.</target>
+        <source>Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.</source>
+        <target state="translated">Atenção: após o restauro uma cópia de segurança, todas as imagens de pŕe-visualização serão geradas de novo a partir das imagens originais. Assim, a aplicação pode inicialmente parecer mais lenta do que o normal.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -660,15 +660,15 @@
       </trans-unit>
       <trans-unit id="configuration.extendValuelist" datatype="html">
         <source>Werteliste erweitern</source>
-        <target state="translated">Extender lista de valores</target>
+        <target state="translated">Ampliar lista de valores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.extendValuelistInfo" datatype="html">
-        <source> Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated">Por favor introduza um identificador para a sua extensão da lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </target>
+        <source>Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text=".id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=".     &lt;/spa"/>. </source>
+        <target state="translated">Por favor introduza um identificador para a sua extensão da lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text=".id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=".     &lt;/spa"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -763,8 +763,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificField" datatype="html">
-        <source>Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
-        <target state="translated">Criar campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </target>
+        <source>Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> erstellen </source>
+        <target state="translated">Criar campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">182</context>
@@ -787,8 +787,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.valuelistForDimensionSubfield" datatype="html">
-        <source> Werteliste (Unterfeld "Gemessen an") </source>
-        <target state="translated">Lista de valores (Subfield "As measured by")</target>
+        <source>Werteliste (Unterfeld "Gemessen an")</source>
+        <target state="translated">Lista de valores (campo inferior "Medido por")</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.html</context>
           <context context-type="linenumber">96,104</context>
@@ -819,16 +819,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.createSpecificGroup" datatype="html">
-        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
-        <target state="translated">Criar grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
+        <source>Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> erstellen </source>
+        <target state="translated">Criar grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.component.ts</context>
           <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSpecificGroup" datatype="html">
-        <source> Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
-        <target state="translated">Editar grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
+        <source>Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="bearbeiten"/> bearbeiten </source>
+        <target state="translated">Editar grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="bearbeiten"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/group-editor-modal.html</context>
           <context context-type="linenumber">22</context>
@@ -884,7 +884,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.dropdown" datatype="html">
         <source>Dropdown-Liste</source>
-        <target state="translated">Lista dropdown</target>
+        <target state="translated">Menu drop-down</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -892,7 +892,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.dropdownRange" datatype="html">
         <source>Dropdown-Liste (Bereich)</source>
-        <target state="translated">Lista dropdown (range)</target>
+        <target state="translated">Menu drop-down (extensão)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
         <source>Maßangabe</source>
-        <target state="translated">Identificação da dimensão</target>
+        <target state="translated">Indicação da dimensão</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1128,7 +1128,7 @@
       </trans-unit>
       <trans-unit id="configuration.saveInfo.general" datatype="html">
         <source>Möchten Sie die von Ihnen vorgenommenen Änderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre Änderungen das gesamte Projekt betreffen.</source>
-        <target state="translated">Tem a certeza que pretende gravar as alterações que fez na configuração? Atente que as modificações irão afetar todo o projeto.</target>
+        <target state="translated">Tem a certeza que pretende gravar as alterações que fez na configuração? Tenha atenção que as modificações irão afetar todo o projeto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -1240,7 +1240,7 @@
       </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.linkedImages" datatype="html">
         <source>verknüpfte Bilder</source>
-        <target state="translated">imagens ligadas</target>
+        <target state="translated">Imagens ligadas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/thumbnail.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1248,7 +1248,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
         <source>Es werden Daten hochgeladen.</source>
-        <target state="translated">Upload em curso.</target>
+        <target state="translated">Carregamento em curso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -1256,7 +1256,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.downloading" datatype="html">
         <source>Es werden Daten heruntergeladen.</source>
-        <target state="translated">Descarregamento em curso.</target>
+        <target state="translated">Descarregamento de dados em curso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-sync-status.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -2544,7 +2544,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDimensionValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</source>
-        <target state="translated">Por favor insira no campo '[1]' uma intervenção válida.</target>
+        <target state="translated">Por favor insira no campo '[1]' uma indicação de dimensão válida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2640,7 +2640,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.noSubfields" datatype="html">
         <source>Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.</source>
-        <target state="translated">Por favor crie pelo menos dois subcampos ou mude o tipo de entrada do campo.</target>
+        <target state="translated">Por favor crie pelo menos dois campos inferiores ou mude o tipo de entrada do campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2648,7 +2648,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.valueUsedInSubfieldCondition" datatype="html">
         <source>Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.</source>
-        <target state="translated">O valor "[0]" não pode ser apagado enquanto for configurado para ser o valor requisito para o subcampo "[1]" do campo "[2]" da categoria "[3]".</target>
+        <target state="translated">O valor "[0]" não pode ser apagado enquanto for configurado para ser o valor requisito para o campo inferior "[1]" do campo "[2]" da categoria "[3]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2972,7 +2972,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDimensionValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</source>
-        <target state="translated">Por favor insira nos seguintes campos intervenções válidas: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos indicações de dimensão válidas: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3036,7 +3036,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.valuelists" datatype="html">
         <source>Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
-        <target state="translated">A lista de valores deste subcampo não pode ser removida ou trocada porque foi configurado como campo requisito para o subcampo "[0]".</target>
+        <target state="translated">A lista de valores deste campo inferior não pode ser removida ou trocada porque foi configurado como campo requisito para o campo inferior "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3044,7 +3044,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.inputType" datatype="html">
         <source>Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
-        <target state="translated">O tipo de entrada deste subcampo não pode ser alterada porque foi configurado como campo requisito para o subcampo "[0]".</target>
+        <target state="translated">O tipo de entrada deste campo inferior não pode ser alterada porque foi configurado como campo requisito para o campo inferior "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3124,7 +3124,7 @@
       </trans-unit>
       <trans-unit id="configuration.editSubfield" datatype="html">
         <source>Unterfeld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten</source>
-        <target state="translated">Editar o subcampo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <target state="translated">Editar o campo inferior <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.component.ts</context>
           <context context-type="linenumber">200</context>
@@ -3546,7 +3546,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValue" datatype="html">
         <source>Ungültige Maßangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="translated">Intervenções inválidas '[1]' de um recurso da categoria '[0]'.</target>
+        <target state="translated">Indicação de dimensão inválidas '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3554,7 +3554,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValues" datatype="html">
         <source>Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="translated">Intervenções inválidas nos seguintes campos de um recurso da categoria '[0]': [1].</target>
+        <target state="translated">Indicação de dimensão inválidas nos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3578,7 +3578,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.connected_type_deleted" datatype="html">
         <source>Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]</source>
-        <target state="translated">Actualização de um catálogo existente foi interrompido. A versão existente contém tipos ligados a achados que não existem no ficheiro de importação. Por favor remova as ligações e recomeçe a importação. Tipos afetados: [0]</target>
+        <target state="translated">Atualização de um catálogo existente foi interrompido. A versão existente contém tipos ligados a achados que não existem no ficheiro de importação. Por favor remova as ligações e recomeçe a importação. Tipos afetados: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3915,7 +3915,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Atenção:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ao importar uma cópia de segurança pode ser que a base de dados destinatária com a designação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>seja completamente sobrescrita<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Atenção:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ao importar uma cópia de segurança pode ser que a base de dados destinatária com a designação <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/> seja completamente sobrescrita <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -3923,7 +3923,7 @@
       </trans-unit>
       <trans-unit id="project.identifier" datatype="html">
         <source>Projektkennung</source>
-        <target state="translated">identificador de projeto</target>
+        <target state="translated">Identificador de projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">60</context>
@@ -4123,7 +4123,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
         <source>Gemessen an</source>
-        <target state="translated">Medido na</target>
+        <target state="translated">Medido por</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">144</context>
@@ -4219,7 +4219,7 @@
       </trans-unit>
       <trans-unit id="configuration.subfields" datatype="html">
         <source>Unterfelder</source>
-        <target state="translated">Subcampos</target>
+        <target state="translated">Campos inferiores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -4243,7 +4243,7 @@
       </trans-unit>
       <trans-unit id="configuration.conditionalSubfield" datatype="html">
         <source>Bedingung für Anzeige des Unterfelds</source>
-        <target state="translated">Condição para visualizar o subcampo</target>
+        <target state="translated">Condição para visualizar o campo inferior</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
           <context context-type="linenumber">14</context>
@@ -4251,7 +4251,7 @@
       </trans-unit>
       <trans-unit id="configuration.createSubfield" datatype="html">
         <source>Unterfeld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="translated">Criar o subcampo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <target state="translated">Criar o campo inferior <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{subfield.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
           <context context-type="linenumber">14,3</context>
@@ -4283,7 +4283,7 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.single" datatype="html">
         <source>Es wurde bereits eine Ressource dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
-        <target state="translated">Um recurso desta categoria já foi criado. Por favor note que o prefixo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> foi automaticamente adicionado aos identificadores existentes. </target>
+        <target state="translated">Um recurso desta categoria já foi criado. Por favor note que o prefixo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> foi automaticamente adicionado aos identificadores existentes. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">80</context>
@@ -4291,7 +4291,7 @@
       </trans-unit>
       <trans-unit id="configuration.identifierPrefix.warning.multiple" datatype="html">
         <source>Es wurden bereits <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> Ressourcen dieser Kategorie angelegt. Bitte beachten Sie, dass das Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> automatisch für schon existierende Bezeichner gesetzt wird. </source>
-        <target state="translated">Foram criados <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> recursos desta categoria. Por favor note que o prefixo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> foi automaticamente adicionado aos identificadores existentes. </target>
+        <target state="translated">Foram criados <x id="INTERPOLATION" equiv-text="{{numberOfCategoryResources}}"/> recursos desta categoria. Por favor note que o prefixo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> foi automaticamente adicionado aos identificadores existentes. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">94</context>
@@ -5731,7 +5731,7 @@
       </trans-unit>
       <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
         <source>gemessen an</source>
-        <target state="translated">medido na</target>
+        <target state="translated">Medido por</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5827,7 +5827,7 @@
       </trans-unit>
       <trans-unit id="configuration.newSubfield" datatype="html">
         <source>Neues Unterfeld</source>
-        <target state="translated">Novo subcampo</target>
+        <target state="translated">Novo campo inferior</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7155,7 +7155,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier" datatype="html">
         <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Bezeichner<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>identificador<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ambíguo</target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Identificador<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ambíguo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">87,77</context>
@@ -7999,7 +7999,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredField" datatype="html">
         <source>Unkonfiguriertes Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="translated">Campo não configurado <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Não foi configurada o campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">57,50</context>
@@ -8047,7 +8047,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unconfiguredCategory" datatype="html">
         <source>Unkonfigurierte Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="edCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="translated">Categoria não configurada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="edCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Não foi configurada a categoria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="edCategoryName}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
           <context context-type="linenumber">98</context>
@@ -8271,7 +8271,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.composite.outliers.tooltip" datatype="html">
         <source>Ein Unterfeld dieses Eintrags beinhaltet Werte, die nicht in der konfigurierten Werteliste enthalten sind.</source>
-        <target state="translated">Um subcampo desta entrada contem valores que não estão incluídos na lista de valores configurados.</target>
+        <target state="translated">Um campo inferior desta entrada contem valores que não estão incluídos na lista de valores configurados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/composite/composite.component.ts</context>
           <context context-type="linenumber">84,95</context>
@@ -8627,7 +8627,7 @@
       </trans-unit>
       <trans-unit id="import.csv.info" datatype="html">
         <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
-        <target state="translated">Todos os recursos definisos no ficheiro CSV devem pertencer à mesma categoria. Tenha atenção que todos os títulos de coluna devem corresponder aos campos que foram configurados para a respectiva categoria. Como rascunho pode ser gerada um esquema de ficheiro no <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>menu de exportação<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
+        <target state="translated">Todos os recursos definidos no ficheiro CSV devem pertencer à mesma categoria. Tenha atenção que todos os títulos de coluna devem corresponder aos campos que foram configurados para a respectiva categoria. Como rascunho pode ser gerada um esquema de ficheiro no <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>menu de exportação<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>
@@ -8635,7 +8635,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warningsModal.singleResourceAffected" datatype="html">
         <source>Nur diese Ressource ist betroffen.</source>
-        <target state="translated">Só este recurso é afectado.</target>
+        <target state="translated">Só este recurso é afetado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -8875,7 +8875,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.valuelistMultiInput" datatype="html">
         <source>Projekt-Werteliste</source>
-        <target state="translated">lista de valores do projeto</target>
+        <target state="translated">Lista de valores do projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">201</context>
@@ -8891,7 +8891,7 @@
       </trans-unit>
       <trans-unit id="configuration.label" datatype="html">
         <source>Anzeigename</source>
-        <target state="translated">nome de exibição</target>
+        <target state="translated">Nome de exibição</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">24,26</context>
@@ -8915,7 +8915,7 @@
       </trans-unit>
       <trans-unit id="configuration.valueLabel" datatype="html">
         <source>Anzeigetext</source>
-        <target state="translated">texto de exibição</target>
+        <target state="translated">Texto de exibição</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
           <context context-type="linenumber">9,11</context>

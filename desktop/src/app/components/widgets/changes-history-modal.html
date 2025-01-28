@@ -1,17 +1,8 @@
-<!-- <div id="changes-history-modal-header" class="modal-header">
-    <div class="text-truncate heading">
-        <span class="modal-header-label" i18n="@@widgets.historyModal.header.label">Bearbeitungshistorie der Ressource:</span>
-        <span class="modal-header-resource-name">{{document.resource.identifier}}</span>
-    </div>
-    <button id="changes-history-close-button" class="btn btn-primary btn-square" (click)="closeModal()">
-        <span class="mdi mdi-close"></span>
-    </button>
-</div> -->
-
 <div id="view-modal-header" class="modal-header">
-    <div class="text-truncate heading"
+    <div id="heading-label"
          i18n="@@@@widgets.historyModal.header">
-         Bearbeitungshistorie der Ressource: <b>{{document.resource.identifier}}</b>
+         Bearbeitungshistorie der Ressource:
+         <span id="resource-name-title">{{document.resource.identifier}}</span>
     </div>
     <button id="changes-history-close-button" class="btn btn-primary btn-square" (click)="closeModal()">
         <span class="mdi mdi-close"></span>
@@ -19,17 +10,19 @@
 </div>
 
 <div id="changes-history-modal-body" class="modal-body">
-    <div class="resource-creation-info-row">
-        <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creator.name">Erstellt von: </span>
-        <span class="resource-creation-info-text">{{document.created.user}}</span>
-    </div>    
-    <div class="resource-creation-info-row">
-        <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creation.date">Erstellungsdatum: </span>
-        <span class="resource-creation-info-text">{{formatDateTime(document.created.date)}}</span>
+    <div class="list col-lg-12 col-md-12 col-sm-12 resource-creation-info">
+        <div class="list-row">
+            <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creator.name">Erstellt von: </span>
+            <span>{{document.created.user}}</span>
+        </div>    
+        <div class="list-row">
+            <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creation.date">Erstellungsdatum: </span>
+            <span>{{formatDateTime(document.created.date)}}</span>
+        </div>
     </div>
-    
+
     <div *ngIf="document.modified[0].user.length; else noChangeTemplate" id="changes-table">
-        <div id="list" class="col-lg-12 col-md-12 col-sm-12">               
+        <div class="list col-lg-12 col-md-12 col-sm-12">               
             <div id="list-header">  
                 <div class="list-header-field text-right"
                     i18n="@@widgets.changeHistoryModal.changes.table.colnames.date" 
@@ -48,7 +41,7 @@
                 <div *ngFor="let modification of document.modified"
                     class="list-row">                    
                     <div class="list-body-field" [textContent]="formatDateTime(modification.date)"></div>
-                    <div class="list-body-field text-truncate" [textContent]="modification.user"></div>      
+                    <div class="list-body-field" [textContent]="modification.user"></div>      
                 </div> 
             </div>
         </div>
@@ -56,9 +49,7 @@
 
     <div #noChangeTemplate [hidden]="document.modified[0].user.length>=1">
         <div id ="no-change-div" i18n="@@widgets.changeHistoryModal.text.when.no.change">
-            <br />
             Es wurde noch keine Änderung für die Ressource aufgeführt.    
         </div>
     </div>
 </div>   
-<br />

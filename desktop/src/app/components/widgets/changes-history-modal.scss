@@ -1,13 +1,28 @@
+#heading-label {
+  padding-left: 1ex;
+  font-size: larger;
+  width: 90%;
+}
+
+#resource-name-title {
+  font-weight: bold; 
+}
+
 .history-modal-content .modal-content {
   user-select: none;
   width: fit-content;
 }
 
-#changes-table {
-  padding-top: 1em;
+#no-change-div {
+  padding: 1em;
 }
 
-#list {
+#changes-table {
+  padding-top : 1em;
+  padding-bottom : 1em;
+}
+
+.list {
   background: white;
   margin-bottom: -20px;
   width: 100%;
@@ -16,7 +31,7 @@
     min-width: 100%;
     user-select: none;
     display: grid;
-    grid-template-columns: 184px 280px;
+    grid-template-columns: 20ex 34ex;
     font-size: 16px;
     padding-top: 1em;
     
@@ -36,9 +51,10 @@
     min-width: 100%;
     user-select: none;
     display: grid;
-    grid-template-columns: 184px 280px;
+    grid-template-columns: 20ex 34ex;
     font-size: 16px;
     font-weight: 500;
+    overflow-x: hidden;
   
     .list-body-field {
       padding: 5px 5px 5px 10px;
@@ -62,17 +78,16 @@
   text-align: right;
 }
 
+.resource-creation-info {
+  margin: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
 .resource-creation-info-label {
   font-weight: bold;
   color: #484948;
   font-style: italic;
-  width: 200px;
-  float:left;
-  padding-left: 1em;
-}
-
-.resource-creation-info-text {
-  color: black;
 }
 
 #no-change-div {
@@ -81,16 +96,7 @@
   font-size: small;
 }
 
-.modal-header-label {
-  // font-size: small;
-  // background-color: #484948;
-  float: left;
-  color: rgb(29, 74, 92);
-  padding-left: 2%;
-}
-
 .modal-header-resource-name {
-  // font-weight: bold;
   font-size: large;
   color: rgb(29, 63, 128);
   float: left;

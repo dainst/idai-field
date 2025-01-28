@@ -16,7 +16,7 @@
     "languageConfiguration": {
       "relations": {
         "isPresentIn": {
-          "label": "Está presente no desenho de perfil/de plano"
+          "label": "Está presente no desenho de perfil/em plano"
         }
       }
     }

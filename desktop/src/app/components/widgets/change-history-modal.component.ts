@@ -6,7 +6,7 @@ import { Menus } from '../../services/menus';
 
 
 @Component({
-    templateUrl: './changes-history-modal.html',
+    templateUrl: './change-history-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     },

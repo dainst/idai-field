@@ -14,7 +14,7 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
-import { ChangesHistoryModalComponent } from '../widgets/changes-history-modal.component';
+import { ChangesHistoryModalComponent } from '../widgets/change-history-modal.component';
 
 
 @Component({

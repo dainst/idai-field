@@ -31,7 +31,7 @@ import { UrlFieldViewComponent } from './document-info/fields-view/url-field-vie
 import { SearchableSelectComponent } from './searchable-select.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { CommonModule } from '@angular/common';
-import { ChangesHistoryModalComponent } from './changes-history-modal.component';
+import { ChangesHistoryModalComponent } from './change-history-modal.component';
 
 @NgModule({
     imports: [

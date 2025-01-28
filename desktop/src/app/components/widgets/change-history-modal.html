@@ -21,7 +21,8 @@
         </div>
     </div>
 
-    <div *ngIf="document.modified[0].user.length; else noChangeTemplate" id="changes-table">
+    <div> 
+        @if (document.modified.length > 0) {
         <div class="list">               
             <div id="list-header">  
                 <div class="list-header-field text-right"
@@ -38,18 +39,22 @@
                 </div>
             </div>            
             <div class="list-body">
-                <div *ngFor="let modification of document.modified"
-                    class="list-row">                    
-                    <div class="list-body-field" [textContent]="formatDateTime(modification.date)"></div>
-                    <div class="list-body-field text-truncate" [textContent]="modification.user"></div>      
+                <div class="list-row">
+                    @for (modification of document.modified; track modification.date) {                    
+                        <div class="list-body-field" [textContent]="formatDateTime(modification.date)"></div>
+                        <div class="list-body-field text-truncate" [textContent]="modification.user"></div>
+                    }      
                 </div> 
             </div>
         </div>
-    </div>  
-
-    <div #noChangeTemplate [hidden]="document.modified[0].user.length>=1">
-        <div id ="no-change-div" i18n="@@widgets.changeHistoryModal.text.when.no.change">
-            Es wurde noch keine Änderung für die Ressource aufgeführt.    
-        </div>
+        }
+    
+       @else if (document.modified.length == 0) {
+            <div id ="no-change-div" i18n="@@widgets.changeHistoryModal.text.when.no.change">
+                Es wurde noch keine Änderung für die Ressource aufgeführt.    
+            </div>
+        }        
     </div>
+
+
 </div>   

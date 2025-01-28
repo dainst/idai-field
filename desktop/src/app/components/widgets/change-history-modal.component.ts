@@ -39,7 +39,7 @@ export class ChangesHistoryModalComponent {
     }
     
     public async initialize() {
-
+        
         this.sortDownBy('date');
     }
 

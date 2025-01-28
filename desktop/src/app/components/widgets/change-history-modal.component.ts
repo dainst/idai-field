@@ -52,13 +52,29 @@ export class ChangesHistoryModalComponent {
 
     public sortUpBy(documentKey: string) {
 
-        this.document.modified.sort((a, b) => a[documentKey] > b[documentKey] ? 1 : a[documentKey] === b[documentKey] ? 0 : -1);
+        this.document.modified.sort((a, b) => {
+            if (a[documentKey] > b[documentKey]) {
+                return 1;
+            } else if (a[documentKey] === b[documentKey]) {
+                return 0;
+            } else {
+                return -1;
+            }
+          });
     }
 
 
     public sortDownBy(documentKey: string) {
 
-        this.document.modified.sort((a, b) => a[documentKey] < b[documentKey] ? 1 : a[documentKey] === b[documentKey] ? 0 : -1);
+        this.document.modified.sort((a, b) => {
+            if (a[documentKey] < b[documentKey]) {
+                return 1;
+            } else if (a[documentKey] === b[documentKey]) {
+                return 0;
+            } else {
+                return -1;
+            }
+          });
     }
    
 

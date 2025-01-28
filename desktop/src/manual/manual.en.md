@@ -915,6 +915,8 @@ Supported import formats are:
 
 The formats *CSV* and *JSON Lines* are suitable for creating new resources or editing existing resources. Geometries can be added or edited using the formats *GeoJSON*, *Shapefile* or *JSON Lines*. The *Catalog* format can be used to exchange Field type catalogs.
 
+Please note that new images can only be imported via the menu "Tools" ➝ "Image management". However, the resource data of already imported images can be edited via CSV or JSON Lines import.
+
 
 ## Export
 
@@ -1340,7 +1342,7 @@ The following options are also available:
 
 * *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) for which the field in the import file is empty are deleted. Fields not listed as columns in the CSV table remain unchanged. This option is only available if the option *Update existing resources* is selected.
 * *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
-* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by a dot), the category is automatically recognized (e.g. "example.find.csv" for a CSV file containing resources of the category "Find"). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu.
+* *Select category*: If the identifier of the category is a part of the file name (separated from the rest of the file name by a dot), the category is automatically recognized (e.g. "example.find.csv" for a CSV file containing resources of the category "Find"). If the file name does not contain a category identifier, the category must be selected manually using this dropdown menu. Please note that the category "Image" and its subcategories are not available for selection if the option *Import new resources* has been activated.
 * *Assign data to an operation*: Select one of the operations present in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if the identifier of a parent resource has already been specified in the column *relations.isChildOf* of the CSV file for all records, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
 * *Field separator*: Enter the character that is used as the field separator in the CSV file (the default setting is comma). Enter the same character that you selected when creating the CSV file (e.g. in Field Desktop via the "Export" menu or in a spreadsheet application). In most cases, either comma or semicolon are used as the field separator for CSV files. If errors occur during import, please first check whether you have entered the correct field separator, as the file cannot be read correctly otherwise.
 

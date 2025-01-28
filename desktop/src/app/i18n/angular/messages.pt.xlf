@@ -552,7 +552,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
         <source>Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen.</source>
-        <target state="translated">Por favor, insira o caminho completo de um ficheiro da cópia de segurança, assim como o nome da base de dados / projeto de destinação. O nome do projeto de destinação não pode ser igual ao do projeto atualmente aberto.</target>
+        <target state="translated">Por favor, insira o caminho completo de um ficheiro da cópia de segurança, assim como o nome da base de dados/projeto de destinação. O nome do projeto de destinação não pode ser igual ao do projeto atualmente aberto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">86</context>
@@ -740,7 +740,7 @@
       </trans-unit>
       <trans-unit id="configuration.addSupercategory" datatype="html">
         <source>Oberkategorie hinzufügen</source>
-        <target state="translated">Adicionar supercategoria</target>
+        <target state="translated">Adicionar categoria superior</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">103</context>
@@ -752,7 +752,7 @@
       </trans-unit>
       <trans-unit id="configuration.addSubcategory" datatype="html">
         <source>Unterkategorie hinzufügen</source>
-        <target state="translated">Adicionar subcategoria</target>
+        <target state="translated">Adicionar categoria inferior</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">128</context>
@@ -908,7 +908,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.boolean" datatype="html">
         <source>Ja / Nein</source>
-        <target state="translated">Sim / Não</target>
+        <target state="translated">Sim/Não</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1888,7 +1888,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.differingLanguages" datatype="html">
         <source>Texte / Übersetzungen</source>
-        <target state="translated">Designações / Traduções</target>
+        <target state="translated">Designações/Traduções</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
@@ -3211,8 +3211,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
-        <source>Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
-        <target state="translated">A categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> não pode ser apagada enquanto tiver subcategorias. Por favor apage todas as subcategorias. </target>
+        <source>Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
+        <target state="translated">A categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> não pode ser apagada enquanto tiver categoria inferiors. Por favor apage todas as categoria inferiors. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">38</context>
@@ -7723,7 +7723,7 @@
       </trans-unit>
       <trans-unit id="configuration.printedFieldSlotDisabled" datatype="html">
         <source>Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.</source>
-        <target state="translated">Este campo foi selecionado para a sobrecategoria e não pode ser alterada para a atual categoria.</target>
+        <target state="translated">Este campo foi selecionado para a categoria superior e não pode ser alterada para a atual categoria.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8723,7 +8723,7 @@
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedTargetCategories" datatype="html">
         <source>Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</source>
-        <target state="translated">Por favor seleccione pelo menos uma categoria como categoria de destino permitida.</target>
+        <target state="translated">Por favor selecione pelo menos uma categoria como categoria de destino permitida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1093</context>
@@ -8803,7 +8803,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.selectFormat" datatype="html">
         <source>Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</source>
-        <target state="translated">Por favor seleccione o formato de ficheiro para a exportação da matriz.</target>
+        <target state="translated">Por favor selecione o formato de ficheiro para a exportação da matriz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">140</context>
@@ -8923,7 +8923,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.unconfiguredCategory" datatype="html">
         <source>Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</source>
-        <target state="translated">Importação de catálogo interrompida. A categoria '[0]' não é uma subcategoria 'tipo' ou 'figura'.</target>
+        <target state="translated">Importação de catálogo interrompida. A categoria '[0]' não é uma categoria inferior 'tipo' ou 'figura'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">733</context>

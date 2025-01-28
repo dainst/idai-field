@@ -25,7 +25,7 @@
           "label": "Sistema de referência de coordenadas"
         },
         "shortName": {
-          "label": "Nome curto"
+          "label": "Nome de projeto"
         }
       }
     },
@@ -103,7 +103,7 @@
       "label": "Classificação tipológica"
     },
     "hasInstance": {
-      "label": "Espólio associado"
+      "label": "Achados associado"
     },
     "abuts": {
       "label": "Se apoia a"
@@ -115,10 +115,10 @@
       "label": "É lugar de armazenamento de"
     },
     "isAbuttedBy": {
-      "label": "Ao qual de apoia"
+      "label": "Ao qual se apoia"
     },
     "bondsWith": {
-      "label": "Une"
+      "label": "Une-se a"
     }
   }
 }

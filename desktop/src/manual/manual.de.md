@@ -1594,7 +1594,7 @@ Für Felder der Eingabetypen "Ganzzahl", "Positive Ganzzahl", "Kommazahl" und "P
 
 Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) als boolesche Werte (ohne Anführungszeichen) eingetragen werden.
 
-*Example:*
+*Beispiel:*
 
     {
       "identifier": "A",

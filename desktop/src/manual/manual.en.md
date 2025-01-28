@@ -1706,14 +1706,14 @@ Fields of the input type "Bibliographic reference" are list fields, each of whic
 *Example:*
 
     {
-      "identifier": ‘A’,
-      "category": ‘Type’, 
+      "identifier": "A",
+      "category": "Type", 
       "literature": [
         {
-          "quotation": ‘Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, September 22-23, 2022), ’Archeologia e Calcolatori", 34.1, 85-94",
-          "zenonId": ‘002038255’,
-          "doi": ‘https://doi.org/10.19282/ac.34.1.2023.10’,
-          "page": ‘90’,
+          "quotation": "Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, September 22-23, 2022), "Archeologia e Calcolatori", 34.1, 85-94",
+          "zenonId": "002038255",
+          "doi": "https://doi.org/10.19282/ac.34.1.2023.10",
+          "page": "90",
           "figure": "3"
         }
       ]

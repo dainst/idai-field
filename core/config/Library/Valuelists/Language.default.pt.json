@@ -676,7 +676,7 @@
   },
   "Wood-objectType-default": {
     "values": {
-      "Architektur": "",
+      "Architektur": "Arquitetura",
       "Altar": "Altar",
       "Anhänger": "Pendente",
       "Gefäß": "Contentor",
@@ -2153,7 +2153,7 @@
   },
   "damages-default": {
     "values": {
-      "totalCollapse": "Perda total / colapso",
+      "totalCollapse": "Perda total/colapso",
       "partialCollapse": "Colapso parcial",
       "missingconst": "",
       "looseconst": "",

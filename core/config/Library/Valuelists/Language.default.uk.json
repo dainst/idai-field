@@ -1364,7 +1364,9 @@
       "Obolus": "Оболюс",
       "Miliarense (leicht)": "Miliarense (легкий)",
       "Drachme": "Драхма",
-      "Dupondius": "Дюпондіус"
+      "Dupondius": "Дюпондіус",
+      "Hemidrachme": "Гемидрахма",
+      "Semuncia": "Семунція"
     }
   },
   "Coin-manufacturingMethod-default": {

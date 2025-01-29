@@ -17,11 +17,11 @@
     <div class="list resource-creation-info">
         <div class="list-row">
             <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creator.name">Erstellt von: </span>
-            <span class="text-truncate" [ngbTooltip]="document.created.user" [textContent]="document.created.user"></span>
+            <span class="text-truncate" [ngbTooltip]="documentCreation.user" [textContent]="documentCreation.user"></span>
         </div>    
         <div class="list-row">
             <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creation.date">Erstellungsdatum: </span>
-            <span [textContent]="formatDateTime(document.created.date)"></span>
+            <span [textContent]="formatDateTime(documentCreation.date)"></span>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
             </div>            
             <div class="list-body">
                 <div class="list-row">
-                    @for (modification of document.modified; track modification.date) {                    
+                    @for (modification of documentModificationList; track modification.date) {                    
                         <div class="list-body-field" [textContent]="formatDateTime(modification.date)"></div>
                         <div class="list-body-field text-truncate" [textContent]="modification.user" [ngbTooltip]="modification.user"></div>
                     }      

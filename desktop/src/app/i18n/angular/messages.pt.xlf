@@ -560,7 +560,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
         <source>Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.</source>
-        <target state="translated">Atenção: após o restauro uma cópia de segurança, todas as imagens de pŕe-visualização serão geradas de novo a partir das imagens originais. Assim, a aplicação pode inicialmente parecer mais lenta do que o normal.</target>
+        <target state="translated">Atenção: após o restauro uma cópia de segurança, todas as miniaturas das imagens serão geradas de novo a partir das imagens originais. Assim, a aplicação pode inicialmente parecer mais lenta do que o normal.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -1372,7 +1372,7 @@
       </trans-unit>
       <trans-unit id="project.cancelModal.info" datatype="html">
         <source>Bitte beachten Sie, dass der Download im Falle eines Abbruchs von vorn beginnt, wenn Sie das Projekt zu einem späteren Zeitpunkt erneut herunterladen.</source>
-        <target state="translated">Tenha em atenção que se interromper o descarregamento, este irá reiniciar do princípio se voltar a descarregar o projeto mais tarde.</target>
+        <target state="translated">Tenha em atenção que se interromper o descarregamento, este irá começar do início se voltar a descarregar o projeto mais tarde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/cancel-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -1479,8 +1479,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.address.info" datatype="html">
-        <source> Als Adresse kann sowohl die URL eines Field-Servers als auch die Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden. </source>
-        <target state="translated">Tanto o URL de um servidor Field como o endereço de rede de outra instação Field Desktop podem ser introduzidos neste endereço.</target>
+        <source>Als Adresse kann sowohl die URL eines Field-Servers als auch die Netzwerkadresse einer anderen Field-Desktop-Installation angegeben werden.</source>
+        <target state="translated">Tanto o URL de um servidor Field como o endereço de rede de outra instalação Field Desktop podem ser introduzidos neste endereço.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">97</context>
@@ -1496,7 +1496,7 @@
       </trans-unit>
       <trans-unit id="project.download.thumbnailImageFiles" datatype="html">
         <source>Vorschaubilder herunterladen</source>
-        <target state="translated">Descarregar amostras das imagens</target>
+        <target state="translated">Descarregar miniaturas das imagens</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project.component.ts</context>
           <context context-type="linenumber">173</context>
@@ -1512,7 +1512,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.thumbnailImageFiles" datatype="html">
         <source>Vorschaubilder synchronisieren <x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/> </source>
-        <target state="translated">Sincronizar amostras das imagens<x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/>. </target>
+        <target state="translated">Sincronizar miniaturas das imagens<x id="INTERPOLATION" equiv-text="{{thumbnailImageSizesMsg}}"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">109</context>
@@ -1536,7 +1536,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
         <source>Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
-        <target state="translated">O atual recurso foi entretanto apagado por uma outra pessoa. Pode voltar a criar o recurso de novo ao selecionar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Gravar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se clicar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, o recurso será descartado. </target>
+        <target state="translated">O atual recurso foi entretanto apagado por uma outra pessoa. Pode voltar a criar o recurso de novo ao selecionar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Gravar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se clicar <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> o recurso será descartado. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
           <context context-type="linenumber">24</context>
@@ -2104,7 +2104,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.deselect" datatype="html">
         <source>Auswahl aufheben</source>
-        <target state="translated">Desselecionar</target>
+        <target state="translated">Remover seleção</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">136</context>
@@ -3164,7 +3164,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
         <source>Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mehr geändert werden. </source>
-        <target state="translated">Inserir aqui um identificador única do novo projeto. Caracteres permitidos são minúsculas do alfabeto latino, números, subtraços e hífens. O identificador deve começar por uma letra e pode ter no máximo <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> caracteres. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> pode ser alterada mais tarde. </target>
+        <target state="translated">Inserir aqui um identificador único do novo projeto. Caracteres permitidos são minúsculas do alfabeto latino, números, subtraços e hífens. O identificador deve começar por uma letra e pode ter no máximo <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> caracteres. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> pode ser alterada mais tarde. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -3212,7 +3212,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.hasChildren" datatype="html">
         <source>Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie Unterkategorien besitzt. Bitte entfernen Sie zunächst die Unterkategorien. </source>
-        <target state="translated">A categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> não pode ser apagada enquanto tiver categoria inferiors. Por favor apage todas as categoria inferiors. </target>
+        <target state="translated">A categoria <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> não pode ser apagada enquanto tiver categoria inferiores. Por favor apague todas as categoria inferiores. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">38</context>
@@ -3289,7 +3289,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemove" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated">A visualização de grandes resultados de pesquisa pode demorar dependente to dispositivo e da quantia de resultados. Daí que a visualização atual será reduzida a <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> recursos. Clique aqui para visualizar todos os resultados.</target>
+        <target state="translated">A visualização de grandes resultados de pesquisa pode demorar dependente to dispositivo e da quantia de resultados. Por isso a visualização atual será reduzida a <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> recursos. Clique aqui para visualizar todos os resultados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
           <context context-type="linenumber">33</context>
@@ -3306,7 +3306,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated">A visualização de grandes resultados de pesquisa pode demorar dependente to dispositivo e da quantia de resultados. Daí que a visualização atual será reduzida a <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> recursos. Clique aqui para visualizar todos os resultados.</target>
+        <target state="translated">A visualização de grandes resultados de pesquisa pode demorar dependente to dispositivo e da quantia de resultados. Por isso a visualização atual será reduzida a <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> recursos. Clique aqui para visualizar todos os resultados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -4355,7 +4355,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier" datatype="html">
         <source>Projektkennung:</source>
-        <target state="translated">identificador de projeto:</target>
+        <target state="translated">Identificador de projeto:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -4471,7 +4471,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.thumbnails" datatype="html">
         <source>Vorschau-Bilddateien:</source>
-        <target state="translated">Pré-visualização de ficheiros de imagens:</target>
+        <target state="translated">Ficheiros de miniaturas de imagens:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">73</context>
@@ -4518,8 +4518,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
-        <source>Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
-        <target state="translated">O grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> não pode ser apagado enquanto tiver campos atribuídos. Por favor mova os campos para outro grupo ou apage-os. </target>
+        <source>Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
+        <target state="translated">O grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{group.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> não pode ser apagado enquanto tiver campos atribuídos. Por favor mova os campos para outro grupo ou apague-os. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
           <context context-type="linenumber">27,11</context>
@@ -4534,8 +4534,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.isInUse.multiple" datatype="html">
-        <source>Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
-        <target state="translated">A lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> enquanto tiver campos atribuídos. Por favor mova os campos para outra lista de valores. </target>
+        <source>Die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie Feldern zugewiesen ist. Bitte weisen Sie den Feldern zunächst eine andere Werteliste zu. </source>
+        <target state="translated">A lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> não pode ser apagada enquanto tiver campos atribuídos. Por favor mova os campos para outra lista de valores. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.html</context>
           <context context-type="linenumber">46</context>
@@ -7307,7 +7307,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.nonUniqueIdentifier" datatype="html">
         <source>Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es können dadurch Fehler beim Import und Export von Daten auftreten.</source>
-        <target state="translated">O identificador deste recurso é utilisado várias vezes e consequentemente não é único. Podem occorer erros ao exportar e importar dados.</target>
+        <target state="translated">O identificador deste recurso é utilizado várias vezes e consequentemente não é único. Podem ocorrer erros ao exportar e importar dados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">136,144</context>
@@ -8054,8 +8054,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unconfiguredCategory" datatype="html">
-        <source>Die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> ist für dieses Projekt nicht konfiguriert. Die Ressource wird daher nicht angezeigt. </source>
-        <target state="translated">A categoria <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> não está configurada para este projeto. Daí que recurso não é visualizado. </target>
+        <source>Die Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="CategoryName}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="ist für diese"/> ist für dieses Projekt nicht konfiguriert. Die Ressource wird daher nicht angezeigt. </source>
+        <target state="translated">A categoria <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{section.unconfiguredCategoryName}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> não está configurada para este projeto. Por isso o recurso não é visualizado. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">100,94</context>
@@ -8119,7 +8119,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unconfiguredField.2" datatype="html">
         <source>Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.</source>
-        <target state="translated">Daí que os dados inseridos neste campo não são visualizados.</target>
+        <target state="translated">Por isso os dados inseridos neste campo não são visualizados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">109,115</context>
@@ -8166,8 +8166,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fieldData.none" datatype="html">
-        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></source>
-        <target state="translated"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>nenhum<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
+        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="Keine&lt;/i&gt;&lt;/div&gt;     &lt;button class=&quot;btn btn-danger delete-invalid-field-data-button&quot; type=&quot;button&quot; (clic"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></source>
+        <target state="translated"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Nenhum<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">178,162</context>
@@ -8515,7 +8515,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.unsupportedVersion" datatype="html">
         <source>Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</source>
-        <target state="translated">O ficheiro de configuração foi criada com a atual versão de Field Desktop (versão [0]) e daí que não pode ser carregada. Por favor atualize a aplicação e reinicie o processo de importação de novo.</target>
+        <target state="translated">O ficheiro de configuração foi criada com a atual versão de Field Desktop (versão [0]) e por isso não pode ser carregada. Por favor atualize a aplicação e reinicie o processo de importação de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8715,7 +8715,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.body.notAllowed" datatype="html">
         <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
-        <target state="translated">O campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> não pode ser apagado enquanto é definido como relação contrária. </target>
+        <target state="translated">O campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> não pode ser apagado enquanto for definido como relação contrária. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">10,12</context>
@@ -8795,7 +8795,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.header.notAllowed" datatype="html">
         <source>Feld löschen nicht möglich</source>
-        <target state="translated">Apagar campo não é possível</target>
+        <target state="translated">Não é possível apagar campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">3</context>

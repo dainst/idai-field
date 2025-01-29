@@ -1,10 +1,6 @@
 import { Component} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-// import { DocumentHolder } from '../docedit/document-holder';
 import { Document } from 'idai-field-core';
-// import { Resource } from 'idai-field-core';
-// import { Menus } from '../../services/menus';
-// import { MenuContext } from '../../services/menu-context';
 
 
 @Component({
@@ -20,7 +16,6 @@ import { Document } from 'idai-field-core';
 export class ChangesHistoryModalComponent {
 
     public document: Document;
-    // public resource: Resource;
 
     public escapeKeyPressed: boolean;
     public documentCreation: any;

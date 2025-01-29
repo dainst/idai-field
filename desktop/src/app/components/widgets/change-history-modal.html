@@ -2,7 +2,11 @@
     <div id="heading-label"
          i18n="@@@@widgets.historyModal.header">
          Bearbeitungshistorie der Ressource:
-         <div id="resource-name-title" class="text-truncate">{{document.resource.identifier}}</div>
+         <div id="resource-name-title" 
+              class="text-truncate"
+              [ngbTooltip]="document.resource.identifier" 
+              [textContent]="document.resource.identifier">
+        </div>
     </div>
     <button id="change-history-close-button" class="btn btn-primary btn-square" (click)="closeModal()">
         <span class="mdi mdi-close"></span>
@@ -13,11 +17,11 @@
     <div class="list resource-creation-info">
         <div class="list-row">
             <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creator.name">Erstellt von: </span>
-            <span>{{document.created.user}}</span>
+            <span class="text-truncate" [ngbTooltip]="document.created.user" [textContent]="document.created.user"></span>
         </div>    
         <div class="list-row">
             <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creation.date">Erstellungsdatum: </span>
-            <span>{{formatDateTime(document.created.date)}}</span>
+            <span [textContent]="formatDateTime(document.created.date)"></span>
         </div>
     </div>
 
@@ -42,19 +46,16 @@
                 <div class="list-row">
                     @for (modification of document.modified; track modification.date) {                    
                         <div class="list-body-field" [textContent]="formatDateTime(modification.date)"></div>
-                        <div class="list-body-field text-truncate" [textContent]="modification.user"></div>
+                        <div class="list-body-field text-truncate" [textContent]="modification.user" [ngbTooltip]="modification.user"></div>
                     }      
                 </div> 
             </div>
         </div>
-        }
-    
+        }    
        @else if (document.modified.length == 0) {
             <div id ="no-change-div" i18n="@@widgets.changeHistoryModal.text.when.no.change">
                 Es wurde noch keine Änderung für die Ressource aufgeführt.    
             </div>
         }        
     </div>
-
-
 </div>   

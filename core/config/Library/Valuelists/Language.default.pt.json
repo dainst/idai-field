@@ -424,7 +424,7 @@
   "Burial-burialDocumentation-default": {
     "values": {
       "Endoskopie": "Endoscopia",
-      "Foto": "Foto",
+      "Foto": "Fotografia",
       "Histologie": "",
       "LM": "",
       "REM": "",
@@ -676,7 +676,7 @@
   },
   "Wood-objectType-default": {
     "values": {
-      "Architektur": "",
+      "Architektur": "Arquitetura",
       "Altar": "Altar",
       "Anhänger": "Pendente",
       "Gefäß": "Contentor",
@@ -2153,7 +2153,7 @@
   },
   "damages-default": {
     "values": {
-      "totalCollapse": "Perda total / colapso",
+      "totalCollapse": "Perda total/colapso",
       "partialCollapse": "Colapso parcial",
       "missingconst": "",
       "looseconst": "",
@@ -2201,7 +2201,7 @@
       "NE": "NE",
       "E": "E",
       "SE": "SE",
-      "S": "S",
+      "S": "Q",
       "SW": "SO",
       "W": "O",
       "NW": "NO"

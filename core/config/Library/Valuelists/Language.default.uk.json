@@ -1339,7 +1339,35 @@
       "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
       "Medaillon": "Медальйон",
       "Silber-Mehrfaches": "Срібло кратне",
-      "Victoriatus": "Вікторіатус"
+      "Victoriatus": "Вікторіатус",
+      "Tetradrachme": "Тетрадрахма",
+      "Quadrans": "Квадранти",
+      "Doppelter Sesterz": "Подвійний сестерцій",
+      "Denar": "Денарій",
+      "Denar (serratus)": "Денарій (серратус)",
+      "Didrachme": "Дідрахма",
+      "Diobol": "Діобол",
+      "Distater": "Дистатер",
+      "Bruchteil": "Частка",
+      "Cistophor": "Цистофор",
+      "Siliqua": "Силіка",
+      "Solidus": "Солідус",
+      "Stater": "Статтер",
+      "Tremissis": "Треміссіс",
+      "Triens": "Трієнс",
+      "Uncia": "Унція",
+      "Reduzierte Siliqua": "Знижений вміст кремнезему",
+      "Reduzierter Aes 2": "Зменшення Aes 2",
+      "Semis": "Напівфабрикат",
+      "Quinar Aureus": "Квінар Ауреус",
+      "Miliarense (schwer)": "Miliarense (важкий)",
+      "Obolus": "Оболюс",
+      "Miliarense (leicht)": "Miliarense (легкий)",
+      "Drachme": "Драхма",
+      "Dupondius": "Дюпондіус",
+      "Hemidrachme": "Гемидрахма",
+      "Semuncia": "Семунція",
+      "Kontorniat": "Конторніат"
     }
   },
   "Coin-manufacturingMethod-default": {
@@ -1363,7 +1391,8 @@
       "Stahl": "Сталь",
       "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
       "Zink": "Цинк",
-      "Zinn": "Олово"
+      "Zinn": "Олово",
+      "Billon": "Білліон"
     }
   },
   "Coin-mint-default": {
@@ -1590,7 +1619,12 @@
       "Arpi": "Арпі",
       "Aruad": "Аруад",
       "Argos Amphilochicum": "Аргос Амфілохікум",
-      "Larissa": "Ларисо"
+      "Larissa": "Ларисо",
+      "Aydın": "Айдін",
+      "Abdera": "Абдера",
+      "Antiochia (Antakya)": "Антіохія (Антакія)",
+      "Akkon": "Акр",
+      "Alabanda": "Алабанда"
     }
   },
   "Coin-stampPositioning-default": {

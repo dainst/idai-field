@@ -217,6 +217,8 @@ export class DoceditComponent {
         );
         
         modalRef.componentInstance.document = this.documentHolder.clonedDocument;
+        modalRef.componentInstance.documentCreation = this.documentHolder.clonedDocument.created;
+        modalRef.componentInstance.documentModificationList = this.documentHolder.clonedDocument.modified.slice();
     }
 
 

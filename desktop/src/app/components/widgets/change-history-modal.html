@@ -1,7 +1,7 @@
 <div class="modal-header">
     <div id="heading-label"
          i18n="@@@@widgets.historyModal.header">
-         Bearbeitungshistorie der Ressource:
+         Bearbeitungshistorie von:
          <div id="resource-name-title" 
               class="text-truncate"
               [ngbTooltip]="document.resource.identifier" 
@@ -22,6 +22,10 @@
         <div class="list-row">
             <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.creation.date">Erstellungsdatum: </span>
             <span [textContent]="formatDateTime(documentCreation.date)"></span>
+        </div>
+        <div class="list-row">
+            <span class="resource-creation-info-label" i18n="@@widgets.changeHistoryModal.category">Kategorie: </span>
+            <span [textContent]="document.resource.category"></span>
         </div>
     </div>
 

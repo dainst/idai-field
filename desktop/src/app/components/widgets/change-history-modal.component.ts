@@ -28,9 +28,9 @@ export class ChangesHistoryModalComponent {
 
 
     public async initialize() {
-        this.document;
-        this.documentModificationList = this.document.modified.slice();
+        
         this.documentCreation = this.document.created;
+        this.documentModificationList = this.document.modified.slice();
         this.sortDownBy('date');
     }
 

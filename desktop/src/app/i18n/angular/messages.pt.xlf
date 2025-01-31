@@ -1920,7 +1920,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
         <source>Ressource mehrfach erstellen</source>
-        <target state="translated">Criar múltiplas instâncias</target>
+        <target state="translated">Criar múltiplos recursos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -1928,7 +1928,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html">
         <source>Ressource vervielfältigen</source>
-        <target state="translated">Duplicar recurso</target>
+        <target state="translated">Multiplicar recurso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -1968,15 +1968,15 @@
       </trans-unit>
       <trans-unit id="buttons.duplicate" datatype="html">
         <source>Vervielfältigen</source>
-        <target state="translated">Duplicar</target>
+        <target state="translated">Multiplicar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="translated">Criar <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> </target>
+        <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
+        <target state="translated">Criar <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> em <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -1992,7 +1992,7 @@
       </trans-unit>
       <trans-unit id="buttons.createMultipleInstances" datatype="html">
         <source>Mehrfach erstellen</source>
-        <target state="translated">Criar múltiplas instâncias</target>
+        <target state="translated">Criar múltiplas vezes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">29</context>
@@ -2015,8 +2015,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
-        <source> Ressource wird vervielfältigt... </source>
-        <target state="translated">Duplicando recurso...</target>
+        <source>Ressource wird vervielfältigt...</source>
+        <target state="translated">Multiplicando recurso...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">93</context>
@@ -2624,7 +2624,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.nameLength" datatype="html">
         <source>Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</source>
-        <target state="translated">O nome de projeto para a língua [0] tem [1] carateres a mais.</target>
+        <target state="translated">O nome de projeto para a língua [0] tem [1] caracteres a mais.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2664,7 +2664,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.notANumber" datatype="html">
         <source>Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</source>
-        <target state="translated">Por favor insira um valor númerico como limite de recursos.</target>
+        <target state="translated">Por favor insira um valor numérico como limite de recursos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2836,7 +2836,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapForm" datatype="html">
         <source>Formular wechseln</source>
-        <target state="translated">Mudar formulário</target>
+        <target state="translated">Substituir formulário</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -2848,7 +2848,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.header" datatype="html">
         <source>Formular wechseln?</source>
-        <target state="translated">Mudar formulário?</target>
+        <target state="translated">Substituir formulário?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -2856,7 +2856,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen.</source>
-        <target state="translated">Por favor introduza o identificador do formulário selecionado para confirmar a troca.</target>
+        <target state="translated">Por favor introduza o identificador do formulário selecionado para confirmar a substituição.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -3020,7 +3020,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
         <source>Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</source>
-        <target state="translated">O identificador de projeto contém carateres não permitidos.</target>
+        <target state="translated">O identificador de projeto contém caracteres não permitidos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6363,7 +6363,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.warning.changes.parent" datatype="html">
         <source>Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen.</source>
-        <target state="translated">Por favor note que todas as alterações que fizer neste formulário e todos os formulários subordinados vão ser perdidas ao mudar o formulário.</target>
+        <target state="translated">Por favor note que todas as alterações que fizer neste formulário e todos os formulários subordinados vão ser perdidas ao substituir o formulário.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -6371,7 +6371,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.warning.changes.child" datatype="html">
         <source>Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen.</source>
-        <target state="translated">Por favor note que todas as alterações que fizer neste formulário vão ser perdidas ao mudar o formulário.</target>
+        <target state="translated">Por favor note que todas as alterações que fizer neste formulário vão ser perdidas ao substituir o formulário.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
@@ -7027,7 +7027,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierLength" datatype="html">
         <source>Die angegebene Projektkennung ist um [0] Zeichen zu lang.</source>
-        <target state="translated">A identificador de projeto inserido tem [0] carateres a mais.</target>
+        <target state="translated">A identificador de projeto inserido tem [0] caracteres a mais.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7555,7 +7555,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html">
         <source>Kamera auswählen:</source>
-        <target state="translated">Selecionar máquina fotográfica:</target>
+        <target state="translated">Selecionar câmera:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">149</context>
@@ -7683,7 +7683,7 @@
       </trans-unit>
       <trans-unit id="widgets.qrCodeScanner.cameraNotFound" datatype="html">
         <source>Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</source>
-        <target state="translated">Não foi encontrada uma máquina fotográfica. Por favor verifique se o seu dispositivo tem uma máquina fotográfica e se foram concedidas as autorizações necessárias.</target>
+        <target state="translated">Não foi encontrada uma câmera. Por favor verifique se o seu dispositivo tem uma câmera e se foram concedidas as autorizações necessárias.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">123,149</context>

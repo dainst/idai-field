@@ -2568,7 +2568,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="translated">No campo '[1]' podem ser inseridos no máximo [2] carateres.</target>
+        <target state="translated">No campo '[1]' podem ser inseridos no máximo [2] caracteres.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2904,7 +2904,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.sameProjectIdentifier" datatype="html">
         <source>Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</source>
-        <target state="translated">Por favor selecionar ua outra destinação que o projeto atualmente selecionado.</target>
+        <target state="translated">Por favor selecionar uma outra destinação que o projeto atualmente selecionado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3418,7 +3418,7 @@
       </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
-        <target state="translated">Ocorreu um erro desconhecido. Pode verificar os detalhes na "Developer Console".</target>
+        <target state="translated">Ocorreu um erro desconhecido. Pode verificar os detalhes na console de desenvolvedor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3578,7 +3578,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.connected_type_deleted" datatype="html">
         <source>Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]</source>
-        <target state="translated">Atualização de um catálogo existente foi interrompido. A versão existente contém tipos associados a achados que não existem no ficheiro de importação. Por favor remova as associações e recomeçe a importação. Tipos afetados: [0]</target>
+        <target state="translated">Atualização de um catálogo existente foi interrompido. A versão existente contém tipos associados a achados que não existem no ficheiro de importação. Por favor remova as associações e recomece a importação. Tipos afetados: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6051,7 +6051,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.notupdated" datatype="html">
         <source>Fehlgeschlagene Zuordnung per Bezeichner '[0]'. Ressource nicht vorhanden.</source>
-        <target state="translated">Falha de atribuição pelo identificador "[0]". Recurso não existente.</target>
+        <target state="translated">Falha de atribuição através do identificador "[0]". Recurso não existente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6263,7 +6263,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="translated">No campo '[1]' da categoria '[0]' devem ser inseridos no máximo [2] carateres.</target>
+        <target state="translated">No campo '[1]' da categoria '[0]' devem ser inseridos no máximo [2] caracteres.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6779,7 +6779,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
         <source>Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</source>
-        <target state="translated">Falta de definição de "Registado durante intervenção". Deve ser efectuada uma atribuição.</target>
+        <target state="translated">Falta de definição de "Registado durante intervenção". Deve ser efetuada uma atribuição.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8843,7 +8843,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.warningsExist" datatype="html">
         <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="translated">Existem aviso para o recurso [0]. Por favor corriga os problemas e importe de novo.</target>
+        <target state="translated">Existem aviso para o recurso [0]. Por favor corrija os problemas e importe de novo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">700</context>

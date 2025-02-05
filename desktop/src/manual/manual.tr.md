@@ -124,37 +124,37 @@ Görüntüleri yönetmek için "Araçlar" ➝ "Görüntü yönetimi" menüsünü
 
 ### Görüntüleri sil
 
-To remove imported images from the project, select the corresponding images in the image management. They can then be removed via the "Delete" button:
+Projeden içe aktarılan görüntüleri kaldırmak için, görüntü yönetiminde karşılık gelen görüntüleri seçin. Daha sonra "Sil" düğmesiyle kaldırılabilirler:
 
-<p align="center"><img src="images/en/images/delete_button.png" alt="Button 'Delete'"/></p>
+<p align="center"><img src="images/en/images/delete_button.png" alt="'Sil' Butonu"/></p>
 
-Please note that this will also delete the corresponding files in the project's images directory (and on other computers if a synchronization connection is established). Links to resources will be lost when deleting an image.
-
-
-## Link images to resources
-
-To link one or more images to a resource, select the "Link images" option in the context menu of the corresponding resource and click the plus button. You now have the choice between two options:
-
-* *Add new images*: New images will be imported into the project and linked to the resource.
-* *Link existing images*: Select one or more images from those already present in the project to be linked to the resource.
-
-Select images in the list and choose the "Remove link" option to unlink images from the resource. The images themselves remain in the project.
-
-Links can also be added or removed via the image management. To do this, select the desired images and click the button "Link" (blue button) or "Remove links" (red button) in the top bar:
-
-<p align="center"><img src="images/en/images/link_buttons.png" alt="Buttons 'Remove links' and 'Link'"/></p>
+Lütfen bunun aynı zamanda projenin görüntüler dizinindeki (ve bir senkronizasyon bağlantısı kurulmuşsa diğer bilgisayarlardaki) ilgili dosyaları da sileceğini unutmayın. Bir görüntü silindiğinde girdilerle bağlantıları kaybolacaktır.
 
 
-### Set main image
+## Görselleri girdilere bağlayın
 
-If a resource is linked to multiple images, one of the images is marked with a star icon as the **main image**. This main image is displayed as a preview image for the resource. You can change the main image by selecting the "Link images" option in the context menu of the resource and selecting the desired image in the list of linked images. Then click the button "Set as main image":
+Bir veya daha fazla görüntüyü bir girdiye bağlamak için, ilgili girdinin kontekst menüsünde "Görselleri bağla" seçeneğini seçin ve artı düğmesine tıklayın. Artık iki seçenek arasında seçim yapabilirsiniz:
 
-<p align="center"><img src="images/en/images/main_image.png" alt="Button 'Set as main image'"/></p>
+* *Yeni görseller ekle*: Yeni görseller projeye aktarılacak ve girdiye bağlanacak.
+* *Mevcut görselleri bağla*: Projede halihazırda mevcut olan görsellerden bir veya daha fazlasını seçerek girdiye bağla.
+
+Listedeki görüntüleri seçin ve görüntüleri girdiden ayırmak için "Bağlantıyı kaldır" seçeneğini seçin. Görüntülerin kendisi projede kalır.
+
+Bağlantılar ayrıca görüntü yönetimi aracılığıyla eklenebilir veya kaldırılabilir. Bunu yapmak için, istediğiniz görüntüleri seçin ve üst çubuktaki "Bağla" (mavi düğme) veya "Bağlantıları kaldır" (kırmızı düğme) düğmesine tıklayın:
+
+<p align="center"><img src="images/en/images/link_buttons.png" alt="'Bağla' ve 'Bağlantı Kaldır' Butonları"/></p>
 
 
-## Map layers
+### Ana görüntü ayarla
 
-### Georeferencing
+Bir girdi birden fazla görüntüye bağlıysa, görüntülerden biri **ana görüntü** olarak bir yıldız simgesiyle işaretlenir. Bu ana görüntü, girdi için bir önizleme görseli olarak görüntülenir. Girdinin kontekst menüsünde "Görüntüleri bağla" seçeneğini belirleyerek ve bağlı görüntüler listesinde istediğiniz görüntüyü seçerek ana görüntüyü değiştirebilirsiniz. Ardından "Ana görüntü olarak ayarla" düğmesine tıklayın:
+
+<p align="center"><img src="images/en/images/main_image.png" alt="'Ana görüntü olarak ayarla' Butonu"/></p>
+
+
+## Harita katmanları
+
+### Coğrafi referanslama
 
 Before an image can be used as a map layer, georeferencing information must first be provided. Supported are files in GeoTIFF format with the file extension *tif/tiff* as well as world files with the file extensions *wld*, *jpgw*, *jpegw*, *jgw*, *pngw*, *pgw*, *tifw*, *tiffw* and *tfw*.
 

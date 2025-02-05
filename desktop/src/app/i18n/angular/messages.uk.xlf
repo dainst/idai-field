@@ -8703,7 +8703,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.existingQrCodeSaved" datatype="html">
         <source>Der eingescannte QR-Code wurde erfolgreich gespeichert.</source>
-        <target state="needs-translation">Der eingescannte QR-Code wurde erfolgreich gespeichert.</target>
+        <target state="translated">Відсканований QR-код успішно збережено.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">984</context>
@@ -8727,7 +8727,7 @@
       </trans-unit>
       <trans-unit id="messages.matrix.error.generic" datatype="html">
         <source>Bei der Generierung der Matrix ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Bei der Generierung der Matrix ist ein Fehler aufgetreten.</target>
+        <target state="translated">Під час генерації матриці сталася помилка.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1130</context>
@@ -8743,7 +8743,7 @@
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedTargetCategories" datatype="html">
         <source>Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</source>
-        <target state="needs-translation">Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</target>
+        <target state="translated">Будь ласка, оберіть принаймні одну категорію як дозволену цільову категорію.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1093</context>
@@ -8855,7 +8855,7 @@
       </trans-unit>
       <trans-unit id="configuration.relation.targetCategories" datatype="html">
         <source>Erlaubte Zielkategorien</source>
-        <target state="needs-translation">Erlaubte Zielkategorien</target>
+        <target state="translated">Дозволені цільові категорії</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">37</context>
@@ -8867,7 +8867,7 @@
       </trans-unit>
       <trans-unit id="configuration.relation.inverse" datatype="html">
         <source>Gegenrelation</source>
-        <target state="needs-translation">Gegenrelation</target>
+        <target state="translated">Зустрічний зв'язок</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">46</context>
@@ -8879,7 +8879,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.warningsExist" datatype="html">
         <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="needs-translation">Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</target>
+        <target state="translated">Для ресурсу [0] є попередження. Будь ласка, виправте основні проблеми, а потім перезапустіть імпорт.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">700</context>
@@ -8959,7 +8959,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.unconfiguredCategory" datatype="html">
         <source>Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</target>
+        <target state="translated">Імпорт каталогу скасовано. Категорія '[0]' не є налаштованою підкатегорією 'Тип' або 'Зображення'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">733</context>

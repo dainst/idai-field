@@ -290,31 +290,30 @@ ve girdiyi seçebilirsiniz.
 
 ## Detaylı arama modu
 
-In the **overview** as well as in the **operation tabs**, you can switch to the extended search mode by
-clicking the magnifier button.
+**Genel bakış** ve **İşlem sekmelerinde** genişletilmiş arama moduna geçmek için
+büyüteç butonuna tıklayın.
  
-<p align="center"><img src="images/en/search/extended_search_button.png" alt="Extended search mode button"/></p>
+<p align="center"><img src="images/en/search/extended_search_button.png" alt="Detaylı arama modu butonu"/></p>
 
-The extended search mode allows searching over larger amounts of data:
+Detaylı arama modu, daha büyük miktardaki veriler üzerinde arama yapmanıza olanak tanır:
 
-* In the **overview**, the search is performed over all of the project's resources.
-* In the **operation tabs**, the search is performed over all of the operation's resources.
+* **Genel Bakış** kısmında, arama projenin tüm girdileri üzerinden gerçekleştirilir.
+* **İşlem sekmelerinde**, işlemin tüm girdileri üzerinde arama yapılır.
 
-In both cases all the resources found get shown in the list on the left side. The buttons "Show in context"
-(Symbol: Arrow up) respectively "Show in context of an operation" (Symbol: Arrow up right) allow you to
-switch to the hierarchical context of a resource; in doing so the extended search mode is ended and a new tab
-is opened if necessary.
+Her iki durumda da bulunan tüm girdiler sol taraftaki listede gösterilir. "Kontekstte göster" 
+(Yukarı ok işareti) ve sırasıyla "Bir işlemin kontekstinde göster" (Sağ yukarı ok işareti) butonları 
+bir kaydın hiyerarşik kontekstine geçmenizi sağlar; bunu yaparken genişletilmiş arama modu sonlandırılır ve 
+gerekirse yeni bir sekme açılır.
 
-<p align="center"><img src="images/en/search/show_in_context.png" alt="Show in context"/></p>
+<p align="center"><img src="images/en/search/show_in_context.png" alt="Kontekstte göster"/></p>
 
-While in extended search mode, it is not possible to create resources, which is indicated by the deactivated
-create button. In order to create new resources, please leave the extended search mode.
+Detaylı arama modundayken, devre dışı bırakılmış oluştur düğmesiyle girdi oluşturmak mümkün değildir. 
+Yeni girdiler oluşturmak için lütfen detaylı arama modundan çıkın.
 
-The number of search results shown simultaneously is restricted to a maximum of **200** for performance
-reasons. Other resources are not displayed by the application and instead a notice is shown informing about
-the maximum being exceeded. Add further search criteria or leave the extended search mode in order to access
-these resources. 
-
+Performans nedenleriyle aynı anda gösterilen arama sonuçlarının sayısı maksimum **200** ile sınırlandırılmıştır. 
+Diğer kaynaklar uygulama tarafından görüntülenmez ve bunun yerine maksimumun aşıldığına dair bir bildirim gösterilir. 
+Bu girdilere erişmek için daha fazla arama kriteri ekleyin 
+veya genişletilmiş arama modundan çıkın.
 
 ### Field specific search criteria
  

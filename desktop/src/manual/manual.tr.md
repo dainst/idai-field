@@ -211,65 +211,65 @@ ile sırasıyla haritadaki (harita görünümünde) tüm girdileri ve listenin �
 **Görüntü yönetiminde**, ızgarada gösterilen tüm görüntüler arama filtresinden etkilenir.
 
 
-### Category filter
+### Kategori filtresi
 
-<p align="center"><img src="images/en/search/filter_menu.png" alt="Category filter selection"/></p>
+<p align="center"><img src="images/en/search/filter_menu.png" alt="Kategori filtre seçimi"/></p>
 
-The category filter button allows you to choose a resource category. There are supercategories and
-subcategories: If you choose a subcategory (e.g. "Layer"), only the resources of the respective category are
-shown. In contrast, if you choose a supercategory (e.g. "Stratigraphical unit"), the resources of the
-selected category as well as all of its subcategories (e.g. "Layer", "Grave", "Architecture", "Floor" etc.)
-are included. Click again to select only the supercategory itself.
+Kategori filtre düğmesi bir girdi kategorisi seçmenize olanak tanır. Üst ve alt kategoriler bulunmaktadır: Bir alt kategori seçerseniz (örneğin "Tabaka"),
+yalnızca ilgili kategorinin girdileri gösterilir. 
+Buna karşılık, bir üst kategori seçerseniz (örneğin "Stratigrafik birim"), 
+seçili kategorinin girdileri ve tüm alt kategorileri (örneğin "Katman", "Mezar", "Mimarlık", "Zemin" vb.) dahil edilir.
+Yalnızca üst kategoriyi seçmek için tekrar tıklayın.
 
-The current context decides which categories are available: In the overview you can choose operation
-categories, in the image management image categories etc.
+Mevcut kontekst hangi kategorilerin kullanılabileceğini belirler: Genel bakışta işlem kategorilerini, 
+görüntü yönetiminde görüntü kategorilerini vb. düzenleyebilirsiniz.
 
 
-### Text filter
+### Metin filtresi
 
-Search terms are currently compared with the resource fields "Identifier" and "Short description".
+Arama terimleri mevcut "Tanımlayıcı" ve "Kısa açıklama" girdi alanlarıyla karşılaştırılır.
  
-*Example:*
+*Örnek:*
  
-The following three trenches are shown in the overview:
+Genel görünümde aşağıdaki üç açma gösterilmektedir:
 
     (1)
-    Identifier: "T01"
-    Short description: "Trench-01"
+    Tanımlayıcı: "T01"
+    Kısa açıklama: "Açma-01"
     
     (2)
-    Identifier: "T02"
-    Short description: "Trench-02"
+    Tanımlayıcı:  "T02"
+    Kısa açıklama: "Açma-02"
     
     (3)
-    Identifier: "mt1"
-    Short description: "My trench 1" 
+    Tanımlayıcı:  "mt1"
+    Kısa açıklama: "Benim Açmam 1" 
 
-**Possible search terms** are the text strings of the identifiers and short descriptions, each split by space
-characters or hyphens, as in the example: "T01", "T02", "mt1", "Trench", "01", "02", "My", "1".  
+**Uygun arama terimleri** tanımlayıcıların ve kısa açıklamaların metin dizeleridir ve her biri boşluk karakterleri veya tirelerle ayrılmıştır, 
+örnekte olduğu gibi: "T01", "T02", "mt1", "Açma", "01", "02", "Benim", "1".
 
-Therefore, a search for the term "t01" returns the resource (1), and a search for "my" returns (3) as a
-result. **Capitalization** is ignored. 
+Bu nedenle, sonuçlarda "t01" terimi için yapılan bir arama (1) girdisini verir ve "benim" için yapılan bir arama (3) değerini verir.
+**Büyük-küçük harf kullanımı** göz ardı edilir.
   
-The search performed is a so-called **prefix search**, which means that in each case the beginning of the
-search term is checked: As the identifiers of (1) and (2) start with the text string "t0", a search for the
-term "t0" returns (1) as well as (2) as results. A search for "tr" returns (1), (2) and (3), while a search
-for "ench" or "ren" returns nothing.
+Yapılan arama, her durumda arama teriminin başlangıcının kontrol edildiği bir çeşit **(başlangıç terimi) aramasıdır**: 
+(1) ve (2) tanımlayıcıları "t0" metin dizesiyle başladığından, "t0" terimi için yapılan bir arama (1) ve (2) sonuçlarını döndürür. 
+"aç" için yapılan bir arama (1), (2) ve (3) sonuçlarını döndürürken, 
+"çm" veya "çma" için yapılan bir arama hiçbir şey döndürmez.
 
 
-### Placeholder search
+### Yer tutucu arama
 
-When entering text into the text filter field, placeholders can be used: Instead of a single character, you
-can specify a set of different allowed characters within square brackets. Such a placeholder can be used one
-time per search query.
+Metin filtresi alanına metin girerken, yer tutucular kullanılabilir: 
+Tek bir karakter yerine, köşeli parantez içinde izin verilen farklı karakterler kümesi belirtebilirsiniz. 
+Böyle bir yer tutucu, arama sorgusu başına bir kez kullanılabilir.
 
 *Example:*
 
-    (1) Identifier: "Landscape-0001"
-    (2) Identifier: "Landscape-0009"
-    (3) Identifier: "Landscape-0010"
-    (4) Identifier: "Landscape-0011"
-    (5) Identifier: "Landscape-0022"
+    (1) Tanımlayıcı: "Arazi-0001"
+    (2) Tanımlayıcı: "Arazi-0009"
+    (3) Tanımlayıcı: "Arazi-0010"
+    (4) Tanımlayıcı: "Arazi-0011"
+    (5) Tanımlayıcı: "Arazi-0022"
 
 A search for "Landscape-00[01]" returns (1), (2), (3), (4), because 0 as well as 1 are defined as allowed
 characters for the third digit. All following characters are allowed due to the prefix search.

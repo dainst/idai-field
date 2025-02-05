@@ -263,7 +263,7 @@ Metin filtresi alanına metin girerken, yer tutucular kullanılabilir:
 Tek bir karakter yerine, köşeli parantez içinde izin verilen farklı karakterler kümesi belirtebilirsiniz. 
 Böyle bir yer tutucu, arama sorgusu başına bir kez kullanılabilir.
 
-*Example:*
+*Örnek:*
 
     (1) Tanımlayıcı: "Arazi-0001"
     (2) Tanımlayıcı: "Arazi-0009"
@@ -271,24 +271,24 @@ Böyle bir yer tutucu, arama sorgusu başına bir kez kullanılabilir.
     (4) Tanımlayıcı: "Arazi-0011"
     (5) Tanımlayıcı: "Arazi-0022"
 
-A search for "Landscape-00[01]" returns (1), (2), (3), (4), because 0 as well as 1 are defined as allowed
-characters for the third digit. All following characters are allowed due to the prefix search.
+"Arazi-00[01]" için yapılan bir arama (1), (2), (3), (4) döndürür çünkü 0 ve 1 üçüncü basamak için 
+izin verilen karakterler olarak tanımlanmıştır. Başlangıç terimi araması nedeniyle tüm takip eden karakterlere izin verilir.
 
-A search for "Landscape-00[01]1" returns (1) and (4), as the digit after the placeholder must be a 1.
-
-
-### Search results from other contexts
-
-If no search results are found in the current context, search results from other contexts are shown below the
-text input field.
-
-<p align="center"><img src="images/en/search/other_contexts.png" alt="Search results from other contexts"/></p>
-
-By clicking one of the resources, you can immediately switch to the corresponding context and select the
-resource.
+"Arazi-00[01]1" araması (1) ve (4) değerlerini döndürür, çünkü yer tutucudan sonraki rakam 1 olmalıdır.
 
 
-## Extended search mode
+### Diğer kontekstlerden gelen arama sonuçları
+
+Mevcut bağlamda hiçbir arama sonucu bulunamazsa, metin giriş alanının altında diğer kontekstlerden 
+gelen arama sonuçları gösterilir.
+
+<p align="center"><img src="images/en/search/other_contexts.png" alt="Diğer kontekstlerden arama sonuçları"/></p>
+
+Girdilerden birine tıklayarak hemen ilgili bağlama geçebilir 
+ve girdiyi seçebilirsiniz.
+
+
+## Detaylı arama modu
 
 In the **overview** as well as in the **operation tabs**, you can switch to the extended search mode by
 clicking the magnifier button.

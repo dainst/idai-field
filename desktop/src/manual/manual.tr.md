@@ -188,27 +188,27 @@ Ayarlanan harita katmanları, harita katmanı menüsü üzerinden her an göster
 <hr>
 
 
-# Search
+# Arama
 
-In the **overview**, in the **operation tabs** as well as in the **image management**, a **search filter** is available. You can use it to restrict the currently displayed resources by
-the means of some basic search criteria (identifier, short description, category).
+**Genel Bakış**'ta, **İşlem sekmelerinde** ve **Görüntü Yönetimi**'nde bir **Arama Filtresi** mevcuttur. Bunu, halihazırda görüntülenen kayıtları ayırt etmek için kullanabilirsiniz:
+Bazı temel arama kriterlerinin (tanımlayıcı, kısa açıklama, kategori) araçları.
 
-If you want to express more complex search queries, you can furthermore switch into the **extended search
-mode** while in the **overview** or one of the **operation tabs**. This mode allows you to expand the search
-bypassing hierarchical orderings, to search over the whole project and to define additional field specific
-search criteria.
+Daha karmaşık arama sorguları işletmek istiyorsanız **Genel Bakış** veya **İşlem sekmelerinden** birindeyken **gelişmiş arama moduna** geçebilirsiniz.
+Bu mod, hiyerarşik sıralamaları atlayarak 
+aramayı detaylandırmanıza, tüm projede arama yapmanıza 
+ve ek alan özel arama ölçütleri tanımlamanıza olanak tanır.
 
-## Search filter
+## Arama filtresi
 
-The search filter is a fast way to show or hide resources based on specific criteria. It consists of a
-*text filter* (an input field) and a *category filter* (a blue button).
+Arama filtresi, belirli ölçütlere göre girdileri göstermenin veya gizlemenin hızlı bir yoludur. Şunlardan oluşur:
+*metin filtresi* (bir arama kutucuğu) ve bir *kategori filtresi* (mavi buton).
 
-<p align="center"><img src="images/en/search/search_filter.png" alt="Search filter"/></p>
+<p align="center"><img src="images/en/search/search_filter.png" alt="Arama filtresi"/></p>
 
-After entering a search term and/or choosing a category, only the resources matching these filter
-criteria are shown. In the **overview** and the **operation tabs**, this affects all resources in the left
-sidebar and on the map (in map view) respectively the elements of the list (in list view). In the **image
-management**, all images shown in the grid are affected by the search filter.
+Bir arama terimi girdikten ve/veya bir kategori seçtikten sonra, yalnızca bu filtre kriterlerine uyan kayıtlar gösterilir. 
+**Genel bakış** ve **işlem sekmelerinde**, bu durum sol kenar çubuğundaki tüm girdiler 
+ile sırasıyla haritadaki (harita görünümünde) tüm girdileri ve listenin öğelerini (liste görünümünde) etkiler. 
+**Görüntü yönetiminde**, ızgarada gösterilen tüm görüntüler arama filtresinden etkilenir.
 
 
 ### Category filter

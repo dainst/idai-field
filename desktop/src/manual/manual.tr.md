@@ -19,14 +19,14 @@ Projenizin verilerini düzenli olarak güncelleyin.
 <hr>
 
 
-# Resources
+# Girdiler
 
-After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
-home symbol) where all of the project's operations and places are managed.
+Bir proje oluşturduktan veya mevcut bir projeyi açtıktan sonra, **Genel Bakış** sekmesinden başlayabilirsiniz 
+(Projenin tüm operasyonlarının ve yerlerinin yönetildiği yer (ev sembolü).
 
-Use the green plus button at the bottom of the resources list to create a new operation.
+Yeni bir işlem oluşturmak için girdiler listesinin altındaki yeşil artı butonunu kullanın.
 
-<p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
+<p align="center"><img src="images/en/resources/create_operation.png" alt="İşlem girdisi oluştur"/></p>
 
 In the process, you firstly choose the category of the operation, before you may optionally create a geometry
 for the new resource. Afterwards the editor is opened, where all data of the operation can be filled in.

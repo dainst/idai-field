@@ -155,7 +155,7 @@
     "querystring-es3": "^0.2.1",
     "reflect-metadata": "0.1.12",
     "rxjs": "~6.5.4",
-    "sharp": "0.33.4",
+    "sharp": "0.33.5",
     "showdown": "2.0.3",
     "svg-pan-zoom": "3.6.0",
     "systemjs": "0.21.5",

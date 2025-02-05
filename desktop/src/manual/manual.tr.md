@@ -19,7 +19,7 @@ Projenizin verilerini düzenli olarak güncelleyin.
 <hr>
 
 
-# Girdiler
+# Girdiler (Ç.N. Yabancı dildeki 'Resources' ifadesi 'Girdi' olarak verilmiştir)
 
 Bir proje oluşturduktan veya mevcut bir projeyi açtıktan sonra, **Genel Bakış** sekmesinden başlayabilirsiniz 
 (Projenin tüm operasyonlarının ve yerlerinin yönetildiği yer (ev sembolü).
@@ -33,38 +33,38 @@ Daha sonra işlemin tüm verilerinin doldurulabildiği editör açılacaktır.
 Seçilen işlem kategorisine bağlı olarak, gruplar halinde düzenlenmiş farklı alanlar mevcuttur.
 Sol taraftaki butonlara tıklayarak alan grupları arasında geçiş yapabilirsiniz.
 
-Girdi yeşil kaydet düğmesiyle kaydedilmeden önce, en azından **tanımlayıcı** alanının
+Girdiyi yeşil kaydet butonuyla kaydetmeden önce, en azından **tanımlayıcı** alanının
 temel bilgiler bölümünün doldurulması gerekmektedir.
 
 <p align="center"><img src="images/en/resources/save_operation.png" alt="İşlem girdisini kaydet"/></p>
 
-Yeni işlem artık kaynak listesinde görüntüleniyor. Yeni bir sekmede açmak için "İşleme geç" düğmesini kullanın 
+Yeni işlem artık kaynak listesinde görüntüleniyor. Yeni bir sekmede açmak için "İşleme geç" butonunu kullanın 
 (Yukarı sağa ok işareti).
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="İşlem girdisini aç"/></p>
 
-Depending on the category of the operation, resources of different categories can be created within an
-operation tab via the plus button (e.g. stratigraphical units within a trench or rooms within a building).
+İşlemin kategorisine bağlı olarak, bir girdi sekmesi içinde artı butonu ile farklı kategorilerde (örneğin bir açmadaki stratigrafik birimler veya bir yapının odaları)
+gibi alt girdiler oluşturulabilir.
 
 
-## Hierarchical ordering
+## Hiyerarşik sıralama
 
-Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphic unit. Use the button 
-"Show child resources" (symbol: rectangular arrow down right) to switch to the lower hierarchy level. The child resources are now displayed (e.g. the finds of a stratigraphic unit), and resources that are newly created via the plus button appear at this hierarchy level accordingly.
+Girdiler örneğin buluntuları bir stratigrafik birime atamak için, hiyerarşik yapılar halinde düzenlenebilir. 
+Alt hiyerarşi seviyesine geçmek için "Alt girdileri göster" (aşağı sağa köşeli ok) butonunu kullanın. Alt kaynaklar artık görüntülenecek ve artı butonuyla yeni oluşturulan girdiler (örneğin, bir stratigrafik birimin buluntuları) buna göre bu hiyerarşi seviyesinde görünecektir.
 
-The navigation path above the resources list indicates the currently selected hierarchy level. You can always
-switch to another level by clicking one of the buttons of the navigation path.
+Girdiler listesinin üstündeki gezinme yolu, şu anda seçili olan hiyerarşi düzeyini gösterir. Her zaman
+Gezinme yolundaki butonlardan birine tıklayarak bir sonraki seviyeye geçebilirsiniz.
 
-<p align="center"><img src="images/en/resources/navpath.png" alt="Navigation path"/></p>
+<p align="center"><img src="images/en/resources/navpath.png" alt="Gezinme yolu"/></p>
 
 
-## Manage resources
+## Girdilerin yönetilmesi
 
-Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd or Shift key, multiple resources
-can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
-providing the following options:
+Listedeki girdiler tıklanarak seçilebilir. Ctrl/Cmd veya Shift tuşuna basılı tutarak birden fazla girdi
+aynı anda seçilebilir. Listedeki bir veya daha fazla seçili girdiye sağ tıklayarak aşağıdaki seçenekleri içeren
+bir kontekst menüsü açılır:
 
-* *Show warnings*: Displays the warnings available for this resource (only available for resources with warnings, see chapter *Warnings*)
+* *Uyarıları göster*: Bu girdi için mevcut uyarıları görüntüler (sadece uyarı içeren girdiler için geçerlidir, *Uyarılar* bölümüne bakın)
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
 * *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed
 * *Add QR code*: Opens a window in which a new QR code can be generated for the resource or an existing QR code can be linked via camera scan

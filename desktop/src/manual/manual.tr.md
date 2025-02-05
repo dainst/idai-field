@@ -104,25 +104,25 @@ Desteklenen görsel formatları *jpg/jpeg*, *png* ve *tif/tiff*'tir.
 
 Her içe aktarılan görüntü için uygulama bir kopya ve önizleme görüntüsü olarak daha küçük bir varyasyonunu oluşturur ve bunu **Görüntüler dizinine** kaydeder; bu dosya yolunu "Gelişmiş ayarlar"daki ayarlarda görebilirsiniz. Bu klasördeki dosyalar uygulama tarafından yönetildiği için manuel olarak düzenlenmemeli, yeniden adlandırılmamalı veya silinmemelidir. Aksi takdirde görüntüleri ön izlemede veya senkronize ederken hatalar oluşabilir.
 
-In total, the application manages up to three different variants for each image:
-* *Original image*: The unmodified image file as it was imported into the project
-* *Thumbnail image*: An automatically generated low-resolution variant of the image that is displayed as a preview image in the application (for example, in image management or for resources with linked images)
-* *Image optimized for display*: For certain images, another variant is created for display in the application. Files in TIFF format are converted to JPEG and images with very high resolution are reduced in size. This step takes place when the project is loaded, which can lead to a one-time extension of the loading time by a few minutes, depending on the amount of existing image files.
+Uygulama her görüntü için toplamda üç farklı varyasyonu yönetir:
+* *Esas görüntü*: Projeye aktarıldığı haliyle değiştirilmemiş görüntü dosyası
+* *Küçük resim görüntüsü*: Uygulamada (örneğin, görüntü yönetiminde veya bağlantılı görüntülere sahip girdiler için) ön izleme görüntüsü olarak görüntülenen görselin otomatik olarak oluşturulmuş düşük çözünürlüklü bir çeşidi 
+* *Görüntüleme için optimize edilmiş görüntü*: Belirli görüntüler için uygulamada görüntülenmek üzere başka bir varyasyon oluşturulur. TIFF formatındaki dosyalar JPEG'e dönüştürülür ve çok yüksek çözünürlüklü görüntülerin boyutu küçültülür. Bu adım, proje yüklenirken gerçekleşir ve mevcut görüntü dosyalarının miktarına bağlı olarak yükleme süresinin birkaç dakika uzamasına yol açabilir.
 
-You can open an overview of the data currently present in the image directory via the menu "Project" ➝ "Data overview".
-
-
-## Manage images
-
-To manage images, open the menu "Tools" ➝ "Image management". Here you can view and search through all the images in the project (see also chapter *Search*).
+Görüntü dizininde bulunan verilerin genel görünümünü "Proje" ➝ "Verilere genel bakış" menüsünden açabilirsiniz.
 
 
-### Edit metadata
+## Görüntü yönetimi
 
-You can view the metadata of an image by double-clicking on the desired image to open the image view. Click the edit button to open the editor and extend or alter the metadata. Available here are the fields configured in the configuration editor for the form of the corresponding image category.
+Görüntüleri yönetmek için "Araçlar" ➝ "Görüntü yönetimi" menüsünü açın. Burada projedeki tüm görselleri görüntüleyebilir ve arayabilirsiniz (ayrıca *Arama* bölümüne bakın).
 
 
-### Delete images
+### Meta verileri düzenle
+
+İstediğiniz görüntüye çift tıklayarak görüntü ön izlemesini açarak bir görüntünün meta verilerini görüntüleyebilirsiniz. Düzenleyiciyi açmak ve meta verileri eklemek veya değiştirmek için düzenle düğmesine tıklayın. Burada, görüntü kategorisine karşılık gelen bilgiler için konfigürasyon düzenleyicisinde yapılandırılan alanlar mevcuttur.
+
+
+### Görüntüleri sil
 
 To remove imported images from the project, select the corresponding images in the image management. They can then be removed via the "Delete" button:
 

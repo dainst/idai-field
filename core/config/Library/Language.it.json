@@ -66,7 +66,7 @@
     },
     "processor": {
       "label": "Responsabile",
-      "description": "La persona o le persone responsabili della risorsa o dell'oggetto durante la campagna. Importante: i nomi delle persone che inseriscono o modificano la voce nella banca dati vengono salvati automaticamente e quindi non devono essere inseriti qui"
+      "description": "La persona o le persone responsabili della risorsa o dell'oggetto durante la campagna. Importante: i nomi delle persone che inseriscono o modificano la voce nella banca dati vengono salvati automaticamente e quindi non devono essere inseriti qui."
     },
     "campaign": {
       "label": "Campagna"

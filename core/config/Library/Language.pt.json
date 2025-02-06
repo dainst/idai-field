@@ -388,7 +388,7 @@
           "label": "Limites da unidade estratigráfica"
         },
         "comparison": {
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência",
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência",
           "label": "Comparação/Comparações"
         },
         "hasDisturbance": {
@@ -415,7 +415,7 @@
         },
         "comparison": {
           "label": "Comparação/Comparações",
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência"
         },
         "condition": {
           "label": "Estado de preservação",
@@ -798,7 +798,7 @@
         },
         "sample": {
           "label": "Amostra",
-          "description": "Detalhes sobre a amostra retirada"
+          "description": "Indicações sobre a amostra retirada"
         },
         "purpose": {
           "label": "Utilização",
@@ -970,7 +970,7 @@
         },
         "comparison": {
           "label": "Comparação/Comparações",
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência"
         },
         "featureSegmentBorders": {
           "description": "Determinação dos limites do segmento de depósito",
@@ -1115,7 +1115,7 @@
       "fields": {
         "comparison": {
           "label": "Comparação/Comparações",
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência"
         }
       },
       "label": "Grupo de depósitos"
@@ -1145,7 +1145,7 @@
           "description": "Parte preservada em comparação com o original"
         },
         "comparison": {
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência",
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência",
           "label": "Comparação/Comparações"
         },
         "publicationMaterialSummary": {

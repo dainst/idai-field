@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from 'idai-field-core';
 
 const moment = window.require('moment');
-const remote = window.require('@electron/remote');
 
 @Component({
     templateUrl: './change-history-modal.html',
@@ -33,7 +32,7 @@ export class ChangesHistoryModalComponent {
         
         this.documentCreation = this.document.created;
         this.documentModificationList = this.document.modified.slice();
-        this.sortDownBy('date');
+        this.sortBy('date', false);
     }
 
 
@@ -48,51 +47,35 @@ export class ChangesHistoryModalComponent {
     }
 
 
-    // public formatDateTime( date: string | Date, locale: string = 'de-DE') {
-        
-    //     return new Date(date).toLocaleString(locale);
-    // }
-
     public formatDateTime( time: string | Date) {
         
         return moment(time).format('YYYY-MM-DD HH:mm:ss');
     }
 
-    public sortUpBy(documentKey: string) {
+
+    public sortBy(documentKey: string, ascending: boolean = true) {
 
         this.documentModificationList.sort((a, b) => {
-            if (a[documentKey] > b[documentKey]) {
-                return 1;
-            } else if (a[documentKey] === b[documentKey]) {
-                return 0;
+            const documentValueA = a[documentKey].toLowerCase();
+            const documentValueB = b[documentKey].toLowerCase();
+            if (documentValueA < documentValueB) {
+                return ascending ? -1 : 1; 
+            } else if (documentValueA > documentValueB) {
+                return ascending ? 1 : -1; 
             } else {
-                return -1;
+                return 0;
             }
-          });
+        });
     }
 
-
-    public sortDownBy(documentKey: string) {
-
-        this.documentModificationList.sort((a, b) => {
-            if (a[documentKey] < b[documentKey]) {
-                return 1;
-            } else if (a[documentKey] === b[documentKey]) {
-                return 0;
-            } else {
-                return -1;
-            }
-          });
-    }
-   
 
     public toggleColumnSort(columnName: string) {
 
         if (columnName === 'user') {            
-            this.toggledUser ? this.sortDownBy(columnName) : this.sortUpBy(columnName);
+            this.toggledUser ? this.sortBy(columnName, false) : this.sortBy(columnName, true);
             this.toggledUser = !this.toggledUser;
         } else {
-            this.toggledDate ? this.sortDownBy(columnName) : this.sortUpBy(columnName);
+            this.toggledDate ? this.sortBy(columnName, false) : this.sortBy(columnName, true);
             this.toggledDate = !this.toggledDate;
         }
     }

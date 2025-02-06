@@ -315,29 +315,30 @@ Diğer kaynaklar uygulama tarafından görüntülenmez ve bunun yerine maksimumu
 Bu girdilere erişmek için daha fazla arama kriteri ekleyin 
 veya genişletilmiş arama modundan çıkın.
 
-### Field specific search criteria
+
+### Alana özgü arama kriterleri
  
-If the extended search mode is activated, you can start a search over specific fields of a resource by
-clicking the plus button to the left of the category filter button. Fields available for search are those
-corresponding to the selected category. You can choose as many fields as you want in order to combine
-multiple search criteria. Of course, you can also use the field specific search criteria in combination with
-the text filter. 
+Detaylı arama modu etkinleştirilirse, kategori filtresi düğmesinin solundaki artı düğmesine tıklayarak
+bir girdinin belirli alanlarında arama başlatabilirsiniz. 
+Arama için kullanılabilir alanlar, seçili kategoriye karşılık gelen alanlardır. 
+Birden fazla arama kriterini birleştirmek için istediğiniz kadar alan seçebilirsiniz. 
+Elbette, alan belirli arama kriterini metin filtresiyle birlikte de kullanabilirsiniz. 
 
-<p align="center"><img src="images/en/search/criteria_search.png" alt="Field specific search criteria"/></p>
+<p align="center"><img src="images/en/search/criteria_search.png" alt="Alana özgü arama kriterleri"/></p>
 
-In case of a text field, just enter the search term directly; for fields with valuelists, choose the term
-from a list of all allowed values in a dropdown menu. 
+Metin alanı olması durumunda, doğrudan arama terimini girmeniz yeterlidir.
+Değer listeleri olan alanlar için, açılır menüdeki tüm izin verilen değerlerin listesinden terimi seçin.
 
-**Important**: In contrast to the search filter, no prefix search is performed in this case. The chosen search
-term must match the content of the resource field exactly for the resource to appear in the list of search
-results. 
+**Önemli:** Arama filtresinin aksine, bu durumda başlangıç terimi araması yapılmaz. 
+Girdinin arama sonuçları listesinde görünmesi için seçilen arama teriminin 
+kaynak alanının içeriğiyle tam olarak eşleşmesi gerekir.
 
-As an alternative to specifying a particular search term, you can also search for all resources in which the
-field is set (option "Any value") or not set (option "No value"). 
+Belirli bir arama terimi belirtmek yerine, alanın ayarlandığı 
+("Herhangi bir değer" seçeneği) veya ayarlanmadığı ("Değer yok" seçeneği) ile tüm kaynaklarda da arama yapabilirsiniz.
 
-The number appearing next to the category filter button indicates the number of active search criteria. You can
-remove search criteria by clicking the number. This opens up the menu again and you can choose the search
-criterion to remove.
+Kategori filtresi düğmesinin yanında görünen sayı, etkin arama kriteri sayısını gösterir.
+Numaraya tıklayarak arama kriterini kaldırabilirsiniz. 
+Bu işlem, menüyü tekrar açar ve kaldırılacak arama kriterini seçebilirsiniz.
 
 
 <hr>

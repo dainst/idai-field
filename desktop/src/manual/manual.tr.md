@@ -365,28 +365,28 @@ Geçerli bir adres, proje adı ve şifre girdiğinizde, kısa bir hesaplama sür
 Lütfen daha büyük projeler için indirmenin daha uzun sürebileceğini unutmayın. İndirilen proje daha sonra otomatik olarak açılacak ve aynı kimlik bilgileri kullanılarak bir senkronizasyon bağlantısı kurulacaktır.
 
 
-## Configure synchronization
+## Senkronizasyonu konfigüre etme
 
-Both downloaded and newly created projects can be synchronized with other databases at any time. Synchronization can be configured via the menu "Project" ➝ "Synchronize...".
+Hem indirilen hem de yeni oluşturulan projeler her zaman diğer veritabanlarıyla senkronize edilebilir. Senkronizasyon "Proje" ➝ "Senkronize et..." menüsü üzerinden yapılandırılabilir.
 
-* *Address*: The address of the database with which you want to establish a synchronization connection. This can either be the network address of another computer where Field Desktop is currently open (this address can be viewed in the settings section *Your address*), or the address of a Field Hub server that is accessible via the internet or a local network (e.g. *https://server.field.idai.world* for the Field Hub server of the DAI). 
-* *Password*: The password of the project or Field Desktop installation you want to establish the synchronization connection with.
-* *Enable synchronization*: Use this switch to start or interrupt the connection.
-* *Synchronize preview images*: This option is enabled by default. If you have a weak internet connection and want to upload/download as little data as possible, you may want to disable it.
-* *Upload original images*: Enable this option if you want to upload images in their original image resolution.
-* *Download original images*: Enable this option if you want to download images in their original image resolution. Depending on the number and size of images managed in the project, this may involve downloading several gigabytes of data. Make sure you have a sufficient internet connection and enough hard disk space before enabling this option.
- 
-As soon as you have entered a valid address and the correct password, the amount of image data to upload/download will be shown besides the respective options after a short computation time. Please note that the amount of data may increase if additional images are imported into the project at a later time.
+* *Adres*: Eşitleme bağlantısı kurmak istediğiniz veritabanının adresi. Bu, Field Desktop'ın şu anda açık olduğu başka bir bilgisayarın ağ adresi olabilir (bu adres ayarlar bölümünde *Adresiniz* olarak görüntülenebilir) veya internet veya yerel ağ üzerinden erişilebilen bir Field Hub sunucusunun adresi olabilir (örneğin DAI'nin Field Hub sunucusu için *https://server.field.idai.world*).
+* *Şifre*: Senkronizasyon bağlantısını kurmak istediğiniz projenin veya Field Desktop kurulumunun şifresi.
+* *Senkronizasyonu etkinleştir*: Bağlantıyı başlatmak veya kesmek için bu anahtarı kullanın.
+* *Ön izleme görüntülerini senkronize et*: Bu seçenek varsayılan olarak etkindir. Zayıf bir internet bağlantınız varsa ve mümkün olduğunca az veri yüklemek/indirmek istiyorsanız, bunu devre dışı bırakmak isteyebilirsiniz.
+* *Esas görüntüleri yükle*: Görüntüleri orijinal çözünürlüklerinde yüklemek istiyorsanız bu seçeneği etkinleştirin.
+* *Esas görüntüleri indir*: Görüntüleri orijinal çözünürlüklerinde indirmek istiyorsanız bu seçeneği etkinleştirin. Projede yönetilen görüntü sayısına ve boyutuna bağlı olarak, birkaç gigabayt verinin indirilmesi gerekebilir. Bu seçeneği etkinleştirmeden önce yeterli bir internet bağlantınız ve sabit disk alanınız olduğundan emin olun.
 
-Finally, confirm your settings by clicking the **Apply settings** button.
+Geçerli bir adres ve doğru şifreyi girer girmez, kısa bir hesaplama süresinden sonra ilgili seçeneklerin yanında yüklenecek/indirilecek görüntü verisi miktarı gösterilecektir. Lütfen daha sonra projeye ek görüntüler aktarılırsa veri miktarının artabileceğini unutmayın.
 
-## Synchronization state
+Son olarak **Ayarları uygula** butonuna tıklayarak ayarlarınızı onaylayın.
 
-The cloud icon in the top right corner of the navigation bar shows the current state of your configured synchronization connection.
+## Senkronizasyon durumu
 
-<p align="center"><img src="images/en/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
+Gezinme çubuğunun sağ üst köşesindeki bulut simgesi, yapılandırılmış senkronizasyon bağlantınızın geçerli durumunu gösterir.
 
-If a connection has been successfully established, the icon shows a checkmark. When data is being uploaded or downloaded, this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
+<p align="center"><img src="images/en/synchronization/synchronization_icon.png" alt="Senkronizasyon simgesi"/></p>
+
+Bağlantı başarıyla kurulmuşsa, simge bir onay işareti gösterir. Veriler yüklenirken veya indirilirken bu bir okla gösterilir. Hatalar durumunda bir ünlem işareti gösterilir. Eşitleme durumuyla ilgili ek bilgiler, fare işaretçisini simgenin üzerine getirerek görülebilir.
 
 ## Conflicts
 

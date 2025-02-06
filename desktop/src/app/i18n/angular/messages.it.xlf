@@ -8251,7 +8251,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.all.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </source>
-        <target state="translated">Nota bene: questa azione sostituisce il valore &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{outlierValue}}"/&gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/&gt; non incluso nella lista dei valori in tutti i campi di tutte le &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION_1" equiv-text="&amp;lt;/b"/&gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/&gt; risorse &lt;&gt; con il valore selezionato &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION_2" equiv-text="{{getValueLabel(selectedValue)}}"/&gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/&gt;. </target>
+        <target state="translated">Nota bene: questa azione sostituisce il valore &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{outlierValue}}"/&gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/&gt; non incluso nella lista dei valori in tutti i campi di tutte le &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION_1" equiv-text="&amp;lt;/b"/&gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/&gt; risorse &lt;&gt; con il valore selezionato &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION_2" equiv-text="{{getValueLabel(selectedValue)}}"/&gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/&gt;.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">50,33</context>
@@ -8799,7 +8799,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.missing" datatype="html">
         <source>Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</source>
-        <target state="translated">Tutti i riferimenti a risorse non esistenti saranno rimossi durante il processo.</target>
+        <target state="translated">Tutti i riferimenti a risorse inesistenti vengono rimossi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">11,13</context>

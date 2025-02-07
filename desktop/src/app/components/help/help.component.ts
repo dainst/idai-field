@@ -36,6 +36,7 @@ export class HelpComponent implements OnInit {
 
     private htmlString: string;
     private searchResultIndex: number;
+    private searchTimeout: any;
 
     @ViewChild('help', { static: false }) rootElement: ElementRef;
 
@@ -97,24 +98,14 @@ export class HelpComponent implements OnInit {
     }
 
 
-    public async search(searchTerm: string) {
+    public triggerSearch(searchTerm) {
 
-        searchTerm = searchTerm?.trim();
+        if (this.searchTimeout) clearTimeout(this.searchTimeout);
 
-        const updatedHtmlString: string = searchTerm.length > 2
-            ? this.replaceSearchString(searchTerm)
-            : this.htmlString;
-
-        this.html = this.domSanitizer.bypassSecurityTrustHtml(updatedHtmlString);
-
-        await AngularUtility.refresh();
-
-        this.searchResults = document.getElementsByClassName('search-result');
-        this.hasSearchResults = this.searchResults?.length > 0;
-        this.searchResultIndex = 0;
-
-        if (this.searchResults.length > 0) this.scrollToSearchResult(0);
-        this.changeDetectorRef.detectChanges();
+        this.searchTimeout = setTimeout(() => {
+            this.search(searchTerm);
+            this.searchTimeout = undefined;
+        }, 300);
     }
 
 
@@ -141,6 +132,27 @@ export class HelpComponent implements OnInit {
         } else {
             this.scrollToSearchResult(0);
         }
+    }
+
+
+    private async search(searchTerm: string) {
+
+        searchTerm = searchTerm?.trim();
+
+        const updatedHtmlString: string = searchTerm.length > 2
+            ? this.replaceSearchString(searchTerm)
+            : this.htmlString;
+
+        this.html = this.domSanitizer.bypassSecurityTrustHtml(updatedHtmlString);
+
+        await AngularUtility.refresh();
+
+        this.searchResults = document.getElementsByClassName('search-result');
+        this.hasSearchResults = this.searchResults?.length > 0;
+        this.searchResultIndex = 0;
+
+        if (this.searchResults.length > 0) this.scrollToSearchResult(0);
+        this.changeDetectorRef.detectChanges();
     }
 
     

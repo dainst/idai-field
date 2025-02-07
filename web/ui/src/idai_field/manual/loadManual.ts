@@ -1,9 +1,13 @@
 import { flow } from 'tsfun';
 import { getUserInterfaceLanguage } from '../../shared/languages';
 import { Chapter } from './Manual';
+import { getLatestDesktopVersion } from '../getLatestDesktopVersion';
 
 
-export const loadManual = async (url: string): Promise<{ markdown: string, chapters: Chapter[] }> => {
+export const loadManual = async (): Promise<{ markdown: string, chapters: Chapter[] }> => {
+
+    const latestVersion: string = await getLatestDesktopVersion();
+    const url: string = 'https://raw.githubusercontent.com/dainst/idai-field/v' + latestVersion + '/desktop/src/manual';
 
     const markdownText: string = flow(
         await loadMarkdown(url),

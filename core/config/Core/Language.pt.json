@@ -25,12 +25,12 @@
           "label": "Sistema de referência de coordenadas"
         },
         "shortName": {
-          "label": "Nome curto"
+          "label": "Nome de projeto"
         }
       }
     },
     "Image": {
-      "label": "Imagem",
+      "label": "Figura",
       "fields": {
         "height": {
           "label": "Altura"
@@ -103,16 +103,22 @@
       "label": "Classificação tipológica"
     },
     "hasInstance": {
-      "label": "Espólio associado"
+      "label": "Achados associado"
     },
     "abuts": {
-      "label": ""
+      "label": "Se apoia a"
     },
     "isStoredIn": {
       "label": "É armazenado em"
     },
     "isStoragePlaceOf": {
       "label": "É lugar de armazenamento de"
+    },
+    "isAbuttedBy": {
+      "label": "Ao qual se apoia"
+    },
+    "bondsWith": {
+      "label": "Une-se a"
     }
   }
 }

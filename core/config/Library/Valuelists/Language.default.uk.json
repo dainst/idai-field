@@ -665,7 +665,7 @@
       "scharriert": "рифлений",
       "unbehauen": "необтесаний",
       "bossiert": "рельєфний/випуклий",
-      "gestockt": "накладений"
+      "gestockt": "накладений/витесаний"
     }
   },
   "Architecture-brickwork-default": {
@@ -723,7 +723,8 @@
       "Mauerdurchbruch": "Пролом стіни",
       "Mosaik": "Мозаїка",
       "Türzusetzung": "Просідання дверей",
-      "Wandgestaltung": "Дизайн/декорування стін"
+      "Wandgestaltung": "Дизайн/декорування стін",
+      "Opus sectile": "Опус сектантський"
     }
   },
   "Architecture-wallType-default": {
@@ -883,7 +884,9 @@
       "Stampflehm": "Утрамбована глина",
       "Terrazzo": "Тераццо",
       "Webmatten": "Плетені циновки",
-      "Ziegel": "Цегла"
+      "Ziegel": "Цегла",
+      "Opus sectile": "Опус сектантський",
+      "Opus signinum": "Опус сигнінум (Opus signinum)"
     }
   },
   "Inscription-objectType-default": {
@@ -916,7 +919,8 @@
     "values": {
       "Glasur": "Глазур/інвертріатура",
       "Schwarzfirnis": "Чорний лак",
-      "Tongrundig": "Глинистий грунт"
+      "Tongrundig": "Глинистий грунт",
+      "Redslip": "Engobe vermelho (Червоний слиз)"
     }
   },
   "Pottery-coatInsideType-default": {
@@ -994,7 +998,8 @@
       "Topf": "Горщик",
       "Unbestimmt": "невизначений",
       "Vorratsgefäß": "Посуд для зберігання",
-      "Schale": "Чаша/Миска"
+      "Schale": "Чаша/Миска",
+      "Kasserole": "Запіканка"
     }
   },
   "Pottery-vesselFormSpecific-default": {
@@ -1031,7 +1036,9 @@
       "Lutrophore": "Лютрофор",
       "Miscellanea": "Міскеланея",
       "Pelike": "Пеліке",
-      "Pithos": "Пітос"
+      "Pithos": "Пітос",
+      "Kotyle": "Котило",
+      "Pyxis": "Піксіс"
     }
   },
   "Grave-graveType-default": {
@@ -1056,7 +1063,8 @@
       "Urnengrab": "Могила для урни",
       "Brandgrubengrab": "Могила у ямі для випічки",
       "Felsnischengrab": "Висічена у скелі гробниця",
-      "Ziegelplattengrab": "Могила з цегляних плиток"
+      "Ziegelplattengrab": "Могила з цегляних плиток",
+      "Doliengrab": "Могила Дольєна"
     }
   },
   "Grave-tombBuilding-default": {
@@ -1167,7 +1175,8 @@
       "stark abgerieben": "Сильно обтерто",
       "starke Sinter- oder Mörtelablagerungen": "Важкі відкладення агломерату або розчину",
       "verrieben": "зтертий",
-      "verwaschen": "розмито"
+      "verwaschen": "розмито",
+      "versintert": "спечений"
     }
   },
   "Terracotta-vesselForm-default": {
@@ -1339,7 +1348,35 @@
       "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
       "Medaillon": "Медальйон",
       "Silber-Mehrfaches": "Срібло кратне",
-      "Victoriatus": "Вікторіатус"
+      "Victoriatus": "Вікторіатус",
+      "Tetradrachme": "Тетрадрахма",
+      "Quadrans": "Квадранти",
+      "Doppelter Sesterz": "Подвійний сестерцій",
+      "Denar": "Денарій",
+      "Denar (serratus)": "Денарій (серратус)",
+      "Didrachme": "Дідрахма",
+      "Diobol": "Діобол",
+      "Distater": "Дистатер",
+      "Bruchteil": "Частка",
+      "Cistophor": "Цистофор",
+      "Siliqua": "Силіка",
+      "Solidus": "Солідус",
+      "Stater": "Статтер",
+      "Tremissis": "Треміссіс",
+      "Triens": "Трієнс",
+      "Uncia": "Унція",
+      "Reduzierte Siliqua": "Знижений вміст кремнезему",
+      "Reduzierter Aes 2": "Зменшення Aes 2",
+      "Semis": "Напівфабрикат",
+      "Quinar Aureus": "Квінар Ауреус",
+      "Miliarense (schwer)": "Miliarense (важкий)",
+      "Obolus": "Оболюс",
+      "Miliarense (leicht)": "Miliarense (легкий)",
+      "Drachme": "Драхма",
+      "Dupondius": "Дюпондіус",
+      "Hemidrachme": "Гемидрахма",
+      "Semuncia": "Семунція",
+      "Kontorniat": "Конторніат"
     }
   },
   "Coin-manufacturingMethod-default": {
@@ -1363,7 +1400,8 @@
       "Stahl": "Сталь",
       "Unsicher bzw. unbestimmbar": "Негарантовано або невизначено",
       "Zink": "Цинк",
-      "Zinn": "Олово"
+      "Zinn": "Олово",
+      "Billon": "Білліон"
     }
   },
   "Coin-mint-default": {
@@ -1590,7 +1628,12 @@
       "Arpi": "Арпі",
       "Aruad": "Аруад",
       "Argos Amphilochicum": "Аргос Амфілохікум",
-      "Larissa": "Ларисо"
+      "Larissa": "Ларисо",
+      "Aydın": "Айдін",
+      "Abdera": "Абдера",
+      "Antiochia (Antakya)": "Антіохія (Антакія)",
+      "Akkon": "Акр",
+      "Alabanda": "Алабанда"
     }
   },
   "Coin-stampPositioning-default": {
@@ -1884,7 +1927,8 @@
     "values": {
       "Muschelschale (Bivalvia)": "Раковина мідії (Bivalvia)",
       "Schuppe": "Луска",
-      "Schneckenhaus (Gastropoda)": "Раковина равлика (черевоногі молюски)"
+      "Schneckenhaus (Gastropoda)": "Раковина равлика (черевоногі молюски)",
+      "Coxa": "Кокса"
     }
   },
   "Brick-manufacturingMethod-default": {
@@ -1935,7 +1979,8 @@
       "Teil-Körperbestattung": "Часткове поховання тіла",
       "Brandbestattung": "Кремаційне поховання",
       "Kenotaph": "Кенотаф",
-      "Körperbestattung": "Поховання тіла"
+      "Körperbestattung": "Поховання тіла",
+      "Ossuar": "Костел"
     }
   },
   "Coin-mintingRuler-default": {
@@ -2012,7 +2057,11 @@
       "Glasierte Keramik": "Глазурована кераміка",
       "Prähistorische Keramik": "Доісторична кераміка",
       "Attische Rotfigurige Keramik": "Аттикова червонофігурна кераміка",
-      "Bemalte Ware (floral)": "Розписний виріб (флористично)"
+      "Bemalte Ware (floral)": "Розписний виріб (флористично)",
+      "Campana A": "Кампанія /експедиція A",
+      "Campana B": "Кампанія /експедиція Б",
+      "Campana B Imitation": "Кампанія /експедиція Б спроба",
+      "Campana C": "Кампанія /експедиція В"
     }
   },
   "Pottery-temperAmount-default": {
@@ -2053,12 +2102,14 @@
       "Infans II (7-13)": "Діти II (7-13)",
       "Juvenil (13-18/20)": "Неповнолітні (13-18/20)",
       "Matur (40-60)": "Зрілі (40-60)",
-      "Fetus/Neonatus": "Плід/новонароджений"
+      "Fetus/Neonatus": "Плід/новонароджений",
+      "Senil (60 <)": "Старечий вік (60 <)"
     }
   },
   "Architecture-mark-default": {
     "values": {
-      "A": "А"
+      "A": "А",
+      "AC": "Вiд народження Христа"
     }
   },
   "Terracotta-vesselFormSpecific-default": {
@@ -2068,7 +2119,8 @@
       "Balsamarium": "Бальзамарій",
       "Faltenbecher": "Складний стаканчик",
       "Alabastron": "Алабастрон",
-      "Dattelflasche": "Фінікова пляшка"
+      "Dattelflasche": "Фінікова пляшка",
+      "Kopfflasche": "Пляшка що ставиться на горловину"
     }
   }
 }

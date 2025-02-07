@@ -97,15 +97,30 @@ export class HelpComponent implements OnInit {
     }
 
 
-    public async onSearchInputKeyUp(event: KeyboardEvent, searchTerm: string) {
+    public async search(searchTerm: string) {
 
-        if (event.key === 'Enter') {
-            this.scrollToNextSearchResult();
-        } else if (!['Alt', 'Shift', 'Control', 'Tab', 'Meta', 'ArrowTop', 'ArrowRight', 'ArrowDown', 'ArrowLeft']
-                .includes(event.key)) {
-            await this.search(searchTerm);
-            this.hasSearchResults = this.searchResults?.length > 0;
-        }
+        searchTerm = searchTerm?.trim();
+
+        const updatedHtmlString: string = searchTerm.length > 2
+            ? this.replaceSearchString(searchTerm)
+            : this.htmlString;
+
+        this.html = this.domSanitizer.bypassSecurityTrustHtml(updatedHtmlString);
+
+        await AngularUtility.refresh();
+
+        this.searchResults = document.getElementsByClassName('search-result');
+        this.hasSearchResults = this.searchResults?.length > 0;
+        this.searchResultIndex = 0;
+
+        if (this.searchResults.length > 0) this.scrollToSearchResult(0);
+        this.changeDetectorRef.detectChanges();
+    }
+
+
+    public async onSearchInputKeyUp(event: KeyboardEvent) {
+        
+        if (event.key === 'Enter') this.scrollToNextSearchResult();
     }
 
 
@@ -126,26 +141,6 @@ export class HelpComponent implements OnInit {
         } else {
             this.scrollToSearchResult(0);
         }
-    }
-
-
-    private async search(searchTerm: string) {
-
-        searchTerm = searchTerm?.trim();
-
-        const updatedHtmlString: string = searchTerm.length > 2
-            ? this.replaceSearchString(searchTerm)
-            : this.htmlString;
-
-        this.html = this.domSanitizer.bypassSecurityTrustHtml(updatedHtmlString);
-
-        await AngularUtility.refresh();
-
-        this.searchResults = document.getElementsByClassName('search-result');
-        this.searchResultIndex = 0;
-
-        if (this.searchResults.length > 0) this.scrollToSearchResult(0);
-        this.changeDetectorRef.detectChanges();
     }
 
     

@@ -8,7 +8,8 @@
                     <input class="form-control"
                             placeholder="Suchen..."
                             i18n-placeholder="@@widgets.searchBar.placeholder"
-                            (input)="onSearchInputKeyUp($event, $event.target.value)">
+                            (input)="onSearchInputValueChanged($event.target.value)"
+                            (keyup)="onSearchInputKeyUp($event)">
                     <div class="btn-group-vertical">
                         <div class="btn btn-primary browse-search-results-button"
                              [class.disabled]="!hasSearchResults"

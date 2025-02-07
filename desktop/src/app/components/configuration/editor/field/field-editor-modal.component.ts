@@ -37,7 +37,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public i18nCompatible: boolean;
     public subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     public dragging: boolean;
-    public topLevelCategoriesArray: Array<CategoryForm>;
+    public selectableTargetCategories: Array<CategoryForm>;
     public selectedTargetCategoryNames: string[];
     public availableInverseRelations: string[];
 
@@ -75,7 +75,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         super.initialize();
 
-        this.topLevelCategoriesArray = this.clonedProjectConfiguration.getTopLevelCategories();
+        this.selectableTargetCategories = this.getSelectableTargetCategories();
 
         if (this.new) {
             this.getClonedFormDefinition().fields[this.field.name] = {
@@ -489,5 +489,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     private isHidden(): boolean {
 
         return ConfigurationDocument.isHidden(this.getClonedFormDefinition())(this.field);
+    }
+
+
+    private getSelectableTargetCategories(): Array<CategoryForm> {
+
+        return this.clonedProjectConfiguration.getTopLevelCategories()
+            .filter(category => category.name !== 'Project');
     }
 }

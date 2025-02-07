@@ -31,7 +31,7 @@ export class RelationPickerGroupComponent implements OnChanges, AfterViewChecked
     }
 
 
-    public async ngAfterViewChecked() {
+    async ngAfterViewChecked() {
         
         if (this.autoScroll && this.plusButtonElement) {
             await AngularUtility.refresh();

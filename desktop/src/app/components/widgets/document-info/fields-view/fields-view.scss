@@ -9,8 +9,11 @@ depicts-relations-view {
     background-color: transparent !important;
 
     .card-header {
+      margin-top: -1px;
       padding: 0;
       background-color: $popover-header-bg-color;
+      border-top: 1px solid #ced4da;
+      border-bottom: 1px solid #ced4da;
 
       &:hover {
         background-color: $popover-header-hover-bg-color;

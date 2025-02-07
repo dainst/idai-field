@@ -133,7 +133,7 @@ export class HelpComponent implements OnInit {
 
         searchTerm = searchTerm?.trim();
 
-        const updatedHtmlString: string = searchTerm.length
+        const updatedHtmlString: string = searchTerm.length > 2
             ? this.replaceSearchString(searchTerm)
             : this.htmlString;
 

@@ -1,11 +1,123 @@
-h2 {
-    font-size: 25px;
+#markdown-viewer {
+    hyphens: auto;
+    text-align: justify;
+    counter-reset: h1Counter;
 }
 
-h3 {
-    font-size: 21px;
+#markdown-viewer h1 {
+      font-size: 26px;
+      counter-reset: h2Counter;
 }
 
-h4 {
-    font-size: 18px;
+#markdown-viewer h1::before {
+    counter-increment: h1Counter;
+    content: counter(h1Counter) '. ';
+}
+
+
+#markdown-viewer h2 {
+    font-size: 22px;
+    counter-reset: h3Counter;
+}
+
+#markdown-viewer h2::before {
+    counter-increment: h2Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) ' ';
+}
+
+#markdown-viewer h3 {
+    font-size: 19px;
+    counter-reset: h4Counter;
+}
+
+#markdown-viewer h3::before {
+    counter-increment: h3Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) ' ';
+}
+
+#markdown-viewer h4 {
+    font-size: 17px;
+    counter-reset: h5Counter;
+}
+
+#markdown-viewer h4::before {
+    counter-increment: h4Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) ' ';
+}
+
+#markdown-viewer h5 {
+    font-size: 16px;
+}
+
+#markdown-viewer h5::before {
+    counter-increment: h5Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) '.' counter(h5Counter) ' ';
+}
+
+#markdown-viewer h1,
+#markdown-viewer h2,
+#markdown-viewer h3,
+#markdown-viewer h4,
+#markdown-viewer h5 {
+    margin-top: 25px;
+}
+
+#markdown-viewer h1:first-child {
+    margin-top: 0;
+}
+
+#markdown-viewer p[align=center] + h1,
+#markdown-viewer p[align=center] + h2,
+#markdown-viewer p[align=center] + h3,
+#markdown-viewer p[align=center] + h4,
+#markdown-viewer p[align=center] + h5 {
+    margin-top: 35px;
+}
+
+#markdown-viewer hr + h1,
+#markdown-viewer hr + h2,
+#markdown-viewer hr + h3,
+#markdown-viewer hr + h4,
+#markdown-viewer hr + h5 {
+    margin-top: 0;
+}
+
+#markdown-viewer hr {
+    margin: 40px 0;
+}
+
+#markdown-viewer p[align=center] + hr {
+    margin-top: 50px;
+}
+
+#markdown-viewer pre {
+    background-color: #f7f7f7;
+    padding: 10px;
+}
+
+#markdown-viewer img {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#markdown-viewer .table-container {
+    width: 100%;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+}
+
+#markdown-viewer th,
+#markdown-viewer td {  
+    padding: 0 7px;
+    border-style: solid;
+    border-width: 1px;
+    white-space: nowrap;
+}
+  
+#markdown-viewer th {
+    background-color: #c5d1dc;
+    font-weight: normal;
+}
+
+#markdown-viewer td {
+    background-color: #f7f7f7;
 }

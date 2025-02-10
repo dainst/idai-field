@@ -11,14 +11,14 @@ image-overview-search-constraints {
     text-align: left;
     border-left-width: 0 !important;
     border-right: 0;
-    border-color: lightgrey;
+    border-color: #dee2e6;
 
     &.focused {
-      border-color: #7998cb !important;
+      border-color: rgb(155, 171.5, 198.5) !important;
     }
 
     &:active {
-      border-color: #ced4da !important;
+      border-color: #dee2e6 !important;
     }
 
     .badge {

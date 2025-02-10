@@ -938,7 +938,7 @@ Unterstützte Import-Formate sind:
 
 Für das Anlegen neuer Ressourcen oder das Editieren bestehender Ressourcen eignen sich die Formate *CSV* und *JSON Lines*. Geometrien können über die Formate *GeoJSON*, *Shapefile* oder *JSON Lines* hinzugefügt bzw. bearbeitet werden. Das Format *Katalog* kann zum Austausch von Field-Typenkatalogen eingesetzt werden.
 
-Bitte beachten Sie, dass neue Bilder ausschließlich über das Menü "Werkzeuge" ➝ "Bilderverwaltung" importiert werden können. Die Ressourcendaten bereits importierter Bilder können allerdings per *CSV*- oder *JSON-Lines*-Import bearbeitet werden.
+Bitte beachten Sie, dass neue Bilder ausschließlich über das Menü "Werkzeuge" ➝ "Bilderverwaltung" importiert werden können. Die Ressourcendaten bereits importierter Bilder können allerdings per CSV- oder JSON-Lines-Import bearbeitet werden.
 
 
 ## Export
@@ -985,9 +985,9 @@ Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false
 
 ##### Mehrsprachige Felder
 
-Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldbezeichner getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
+Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldbezeichner getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. *shortDescription.en* für den englischen Text der Kurzbeschreibung).
 
-In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "*unspecifiedLanguage*" angefügt.
+In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text *unspecifiedLanguage* angefügt.
 
 *Beispiel:*
 
@@ -1015,8 +1015,8 @@ In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowi
 
 Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus bis zu zwei Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
 
-* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
-* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
+* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte.
+* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind.
 
 *Beispiel (die Werte-Bezeichner sind in diesem Fall jeweils identisch mit dem deutschen Anzeigetext):*
 
@@ -1116,14 +1116,14 @@ Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe"
 
 ##### Relationen
 
-Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix "*relations*". Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
+Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix *relations*. Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
 
 Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Spalten verwendet werden:
-* *relations.isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; bleibt bei Ressourcen auf oberster Ebene leer
-* *relations.depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen
-* *relations.isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern
-* *relations.isMapLayerOf* (nur bei Bildressourcen): Fügt das Bild als Kartenhintergrund im Kontext der als Ziel angegebenen Ressource hinzu
-* *relations.hasMapLayer* (nicht bei Bildressourcen): Fügt im Kontext dieser Ressource eines oder mehrere Bilder als Kartenhintergrund hinzu
+* *relations.isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; bleibt bei Ressourcen auf oberster Ebene leer.
+* *relations.depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen.
+* *relations.isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern.
+* *relations.isMapLayerOf* (nur bei Bildressourcen): Fügt das Bild als Kartenhintergrund im Kontext der als Ziel angegebenen Ressource hinzu.
+* *relations.hasMapLayer* (nicht bei Bildressourcen): Fügt im Kontext dieser Ressource eines oder mehrere Bilder als Kartenhintergrund hinzu.
 
 Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhintergrund einzurichten, tragen Sie in der Spalte *relations.depicts* bzw. *relations.isMapLayerOf* die Projektkennung ein.
 
@@ -1154,18 +1154,18 @@ Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhinterg
 
 Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung besteht aus folgenden Unterfeldern, für die jeweils pro Datierung eine eigene Spalte angelegt wird:
 
-* *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich)
-* *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird
-* *end*: Jahresangabe, die bei den Datierungstypen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird
-* *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*
-* *source*: Grundlage der Datierung, mehrsprachiges Textfeld
-* *isImprecise*: Angabe "Ungenau". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein)
-* *isUncertain*: Angabe "Unsicher". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein)
+* *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich).
+* *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird.
+* *end*: Jahresangabe, die bei den Datierungstypen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird.
+* *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*.
+* *source*: Grundlage der Datierung, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
+* *isUncertain*: Angabe "Unsicher". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
 
 Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 
-* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP)
-* *inputYear*: Die Jahreszahl
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP).
+* *inputYear*: Die Jahreszahl.
 
 *Beispiel:*
 <div class="table-container">
@@ -1260,12 +1260,12 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 
 Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe besteht aus folgenden Unterfeldern, für die jeweils pro Maßangabe eine eigene Spalte angelegt wird:
 
-* *inputValue*: Der gemessene Zahlenwert
-* *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt
-* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*
+* *inputValue*: Der gemessene Zahlenwert.
+* *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*.
 * *measurementPosition*: Feld "Gemessen an". Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
-* *measurementComment*: Kommentar, mehrsprachiges Textfeld
-* *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein)
+* *measurementComment*: Kommentar, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 
 *Beispiel (die Werte-Bezeichner in der Spalte "dimensionLength.0.measurementPosition" sind in diesem Fall jeweils identisch mit dem deutschen Anzeigetext):*
 <div class="table-container">
@@ -1389,7 +1389,7 @@ Beim GeoJSON-Import werden **keine neuen Ressourcen** angelegt, sondern existier
 
 Der Aufbau einer GeoJSON-Datei richtet sich nach der <a href="https://geojson.org" target="_blank">GeoJSON-Spezifikation</a>. Für den Import oder Export im Kontext von Field Desktop gelten zusätzlich die folgenden Regeln:
 
-Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ "*FeatureCollection*" enthalten. Dieses Objekt beinhaltet wiederum einzelne Objekte vom Typ "*Feature*".
+Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ *FeatureCollection* enthalten. Dieses Objekt beinhaltet wiederum einzelne Objekte vom Typ *Feature*.
 
 *Beispiel:*
 
@@ -1407,7 +1407,7 @@ Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ "*Featur
       ]
     }
 
-Jedes Objekt vom Typ "*Feature*" entspricht einer Ressource in Field und der dazugehörigen Geometrie. Ein Feature enthält stets die beiden Felder *geometry* und *properties*: Während das Feld *geometry* die Geometriedaten beinhaltet, stellen die Daten im Feld *properties* die Verknüpfung zur Ressource in Field her.
+Jedes Objekt vom Typ *Feature* entspricht einer Ressource in Field und der dazugehörigen Geometrie. Ein Feature enthält stets die beiden Felder *geometry* und *properties*: Während das Feld *geometry* die Geometriedaten beinhaltet, stellen die Daten im Feld *properties* die Verknüpfung zur Ressource in Field her.
 
 ##### Geometrie
 
@@ -1485,9 +1485,9 @@ Ein Shapefile besteht jeweils aus einer Gruppe mehrerer Dateien, von denen einig
 
 Da ein Shapefile immer nur Geometrien eines einzigen Typs enthalten kann, werden beim Export in Field Desktop insgesamt drei Shapefiles (bestehend jeweils aus den vier bzw. fünf oben angegebenen Dateien) für die einzelnen Geometrietypen erstellt. Einfachtypen werden dabei im Shapefile als Mehrfachtypen gespeichert:
 
-  * Dateiname "multipoints.\*", enthält Geometrien der Typen *Punkt* und *Multipunkt*
-  * Dateiname "multipolylines.\*", enthält Geometrien der Typen *Polyline* und *Multipolyline*
-  * Dateiname "multipolygons.\*", enthält Geometrien der Typen *Polygon* und *Multipolygon*
+  * Dateiname "multipoints.\*", enthält Geometrien der Typen *Punkt* und *Multipunkt*.
+  * Dateiname "multipolylines.\*", enthält Geometrien der Typen *Polyline* und *Multipolyline*.
+  * Dateiname "multipolygons.\*", enthält Geometrien der Typen *Polygon* und *Multipolygon*.
 
 Alle Dateien werden in einem Zip-Archiv gebündelt ausgegeben.
 
@@ -1712,11 +1712,11 @@ Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßa
 
 Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere Literaturangaben enthalten können. Eine Literaturangabe ist ein Objekt, das aus folgenden Unterfeldern besteht:
 
-* *quotation*: Literaturzitat.
-* *zenonId*: Zenon-ID.
-* *doi*: DOI.
-* *page*: Seite.
-* *figure*: Abbildung.
+* *quotation*: Literaturzitat
+* *zenonId*: Zenon-ID
+* *doi*: DOI
+* *page*: Seite
+* *figure*: Abbildung
 
 *Beispiel:*
 

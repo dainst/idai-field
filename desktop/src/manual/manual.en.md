@@ -963,9 +963,9 @@ The values *true* (Yes) and *false* (No) can be entered for fields of the input 
 
 ##### Multilingual fields
 
-If values in different languages can be entered in a field, a separate column is created in the CSV file for each language. The column header contains the language code (separated from the field identifier by a dot), as displayed in magenta in the menu "Settings" for each language (e.g. "shortDescription.en" for the English text of the short description).
+If values in different languages can be entered in a field, a separate column is created in the CSV file for each language. The column header contains the language code (separated from the field identifier by a dot), as displayed in magenta in the menu "Settings" for each language (e.g. *shortDescription.en* for the English text of the short description).
 
-In projects created with older versions of Field Desktop and due to changes to the project configuration, it is possible that a value without a language specification is present in a multilingual field. In these cases, the text "unspecifiedLanguage" is added to the column header instead of the language code.
+In projects created with older versions of Field Desktop and due to changes to the project configuration, it is possible that a value without a language specification is present in a multilingual field. In these cases, the text *unspecifiedLanguage* is added to the column header instead of the language code.
 
 *Example:*
 
@@ -1094,7 +1094,7 @@ For fields of the input types "Dating", "Dimension", "Bibliographic reference", 
 
 ##### Relations
 
-The column header contains the prefix "relations" before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
+The column header contains the prefix *relations* before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
 
 In addition to the relations listed in the project configuration in the form of the respective category, the following columns can be used:
 * *relations.isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources.
@@ -1134,7 +1134,7 @@ To link images to the project or set them up as map layers at project level, ent
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
 
 * *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific).
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* .
+* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range*.
 * *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*.
 * *margin*: Tolerance margin in years for dating type *scientific*.
 * *source*: Source of the dating, multilingual text field.
@@ -1143,8 +1143,8 @@ Fields of the input type "Dating" are list fields, each of which can contain sev
 
 The year specifications *begin* and *end* consist of two subfields:
 
-* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP)
-* *inputYear*: The year
+* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP).
+* *inputYear*: The year.
 
 *Example:*
 
@@ -1373,7 +1373,7 @@ When importing GeoJSON files, **no new resources** are created. Instead, **geome
 
 The structure of a GeoJSON file is based on the <a href="https://geojson.org" target="_blank">GeoJSON specification</a>. The following additional rules apply for import or export in the context of Field Desktop:
 
-A GeoJSON file must always contain an object of the type "FeatureCollection" at the top level. This object in turn contains individual objects of the type "Feature".
+A GeoJSON file must always contain an object of the type *FeatureCollection* at the top level. This object in turn contains individual objects of the type *Feature*.
 
 *Example:*
 
@@ -1392,7 +1392,7 @@ A GeoJSON file must always contain an object of the type "FeatureCollection" at 
     }
 
 
-Each object of the type "Feature" corresponds to a resource in Field and the associated geometry. A feature always contains the two fields *geometry* and *properties*: While the *geometry* field contains the geometry data, the data in the *properties* field establishes the link to the resource in Field.
+Each object of the type *Feature* corresponds to a resource in Field and the associated geometry. A feature always contains the two fields *geometry* and *properties*: While the *geometry* field contains the geometry data, the data in the *properties* field establishes the link to the resource in Field.
 
 
 ##### Geometry
@@ -1655,8 +1655,8 @@ Fields of the input type "Dating" are list fields, each of which can contain sev
 
 The year specifications *begin* and *end* consist of two subfields:
 
-* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP)
-* *inputYear*: The year
+* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP).
+* *inputYear*: The year.
 
 *Example:*
 

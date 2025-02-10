@@ -11,6 +11,7 @@
 
 #markdown-viewer h1::before {
     counter-increment: h1Counter;
+    content: counter(h1Counter) '. ';
 }
 
 
@@ -21,6 +22,7 @@
 
 #markdown-viewer h2::before {
     counter-increment: h2Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) ' ';
 }
 
 #markdown-viewer h3 {
@@ -30,6 +32,7 @@
 
 #markdown-viewer h3::before {
     counter-increment: h3Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) ' ';
 }
 
 #markdown-viewer h4 {
@@ -39,6 +42,7 @@
 
 #markdown-viewer h4::before {
     counter-increment: h4Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) ' ';
 }
 
 #markdown-viewer h5 {
@@ -47,6 +51,7 @@
 
 #markdown-viewer h5::before {
     counter-increment: h5Counter;
+    content: counter(h1Counter) '.' counter(h2Counter) '.' counter(h3Counter) '.' counter(h4Counter) '.' counter(h5Counter) ' ';
 }
 
 #markdown-viewer h1,
@@ -57,7 +62,7 @@
     margin-top: 25px;
 }
 
-#markdown-viewer h2:first-child {
+#markdown-viewer h1:first-child {
     margin-top: 0;
 }
 

@@ -922,8 +922,8 @@ Rufen Sie das Menü "Werkzeuge" ➝ "Import" auf, um Ressourcen in das aktuell g
 * *Quelle*: Wählen Sie die Art der Importquelle aus. Es stehen zwei Optionen zur Auswahl:
     * *Datei*: Die zu importierenden Daten werden aus einer Datei eingelesen, die auf Ihrem Computer, einem angeschlossenen Speichermedium oder einem anderen über das Netzwerk verfügbaren Computer vorliegt.
     * *HTTP*: Die zu importierenden Daten werden per HTTP oder HTTPS anhand einer URL geladen. Bitte beachten Sie, dass ein Import von Dateien der Formate *Shapefile* und *Katalog* bei Auswahl dieser Option nicht möglich ist. 
-* *Pfad*: Wählen Sie über einen Dateiauswahldialog die gewünschte Importdatei aus (nur verfügbar bei Quelle "Datei")  
-* *URL*: Geben Sie die URL ein, unter der die zu importierenden Daten zur Verfügung stehen (nur verfügbar bei Quelle "HTTP")
+* *Pfad*: Wählen Sie über einen Dateiauswahldialog die gewünschte Importdatei aus (nur verfügbar bei Quelle "Datei").  
+* *URL*: Geben Sie die URL ein, unter der die zu importierenden Daten zur Verfügung stehen (nur verfügbar bei Quelle "HTTP").
 
 Abhängig vom Format der ausgewählten Datei, das anhand der Dateiendung erkannt wird, können weitere Optionen verfügbar sein (siehe Abschnitt zum entsprechenden Format im Unterkapitel *Formate*).
 
@@ -938,7 +938,7 @@ Unterstützte Import-Formate sind:
 
 Für das Anlegen neuer Ressourcen oder das Editieren bestehender Ressourcen eignen sich die Formate *CSV* und *JSON Lines*. Geometrien können über die Formate *GeoJSON*, *Shapefile* oder *JSON Lines* hinzugefügt bzw. bearbeitet werden. Das Format *Katalog* kann zum Austausch von Field-Typenkatalogen eingesetzt werden.
 
-Bitte beachten Sie, dass neue Bilder ausschließlich über das Menü "Werkzeuge" ➝ "Bilderverwaltung" importiert werden können. Die Ressourcendaten bereits importierter Bilder können allerdings per CSV- oder JSON-Lines-Import bearbeitet werden.
+Bitte beachten Sie, dass neue Bilder ausschließlich über das Menü "Werkzeuge" ➝ "Bilderverwaltung" importiert werden können. Die Ressourcendaten bereits importierter Bilder können allerdings per *CSV*- oder *JSON-Lines*-Import bearbeitet werden.
 
 
 ## Export
@@ -987,7 +987,7 @@ Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false
 
 Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldbezeichner getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. "shortDescription.en" für den englischen Text der Kurzbeschreibung).
 
-In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "unspecifiedLanguage" angefügt.
+In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text "*unspecifiedLanguage*" angefügt.
 
 *Beispiel:*
 
@@ -1116,7 +1116,7 @@ Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe"
 
 ##### Relationen
 
-Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix "relations". Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
+Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix "*relations*". Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
 
 Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Spalten verwendet werden:
 * *relations.isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; bleibt bei Ressourcen auf oberster Ebene leer
@@ -1389,7 +1389,7 @@ Beim GeoJSON-Import werden **keine neuen Ressourcen** angelegt, sondern existier
 
 Der Aufbau einer GeoJSON-Datei richtet sich nach der <a href="https://geojson.org" target="_blank">GeoJSON-Spezifikation</a>. Für den Import oder Export im Kontext von Field Desktop gelten zusätzlich die folgenden Regeln:
 
-Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ "FeatureCollection" enthalten. Dieses Objekt beinhaltet wiederum einzelne Objekte vom Typ "Feature".
+Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ "*FeatureCollection*" enthalten. Dieses Objekt beinhaltet wiederum einzelne Objekte vom Typ "*Feature*".
 
 *Beispiel:*
 
@@ -1407,7 +1407,7 @@ Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ "Feature
       ]
     }
 
-Jedes Objekt vom Typ "Feature" entspricht einer Ressource in Field und der dazugehörigen Geometrie. Ein Feature enthält stets die beiden Felder *geometry* und *properties*: Während das Feld *geometry* die Geometriedaten beinhaltet, stellen die Daten im Feld *properties* die Verknüpfung zur Ressource in Field her.
+Jedes Objekt vom Typ "*Feature*" entspricht einer Ressource in Field und der dazugehörigen Geometrie. Ein Feature enthält stets die beiden Felder *geometry* und *properties*: Während das Feld *geometry* die Geometriedaten beinhaltet, stellen die Daten im Feld *properties* die Verknüpfung zur Ressource in Field her.
 
 ##### Geometrie
 
@@ -1427,12 +1427,12 @@ Die Koordinaten werden gemäß der GeoJSON-Spezifikation angegeben.
 
 Im Objekt *properties* werden beim Export die folgenden Felder der jeweiligen Ressource ausgegeben:
 
-* *identifier*: Der Bezeichner der Ressource
-* *category*: Der Bezeichner der für die Ressource gewählten Kategorie
+* *identifier*: Der Bezeichner der Ressource.
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie.
 * *shortDescription*: Die Kurzbeschreibung der Ressource. Die Ausgabe ist abhängig von der Konfiguration des Feldes *Kurzbeschreibung* der entsprechenden Kategorie:
-    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung als String
-    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein Objekt mit den Sprachkürzeln als Feldnamen
-    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste
+    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung als String.
+    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein Objekt mit den Sprachkürzeln als Feldnamen.
+    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste.
 
 Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Das Feld *identifier* im Objekt *properties* muss also gesetzt sein, damit ein GeoJSON-Import erfolgreich durchgeführt werden kann. Weitere Felder des Objekts *properties* werden beim Import **nicht** berücksichtigt, es wird ausschließlich die Geometrie in der entsprechenden Ressource aktualisiert. Bitte beachten Sie, dass bereits vorhandene Geometrien beim Import überschrieben werden. Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert.
 
@@ -1477,9 +1477,9 @@ Wie beim GeoJSON-Import werden auch beim Shapefile-Import **keine neuen Ressourc
 
 Ein Shapefile besteht jeweils aus einer Gruppe mehrerer Dateien, von denen einige optional sind. Beim Export in Field Desktop werden Dateien mit den folgenden Endungen angelegt:
 
-* *shp*: Enthält die eigentlichen Geodaten
+* *shp*: Enthält die eigentlichen Geodaten.
 * *dbf*: Enthält die Daten der Attributtabelle, d. h. Sachdaten der zugehörigen Ressource (siehe Unterkapitel *Attributtabelle*).
-* *shx*: Stellt die Verknüpfung zwischen Geo- und Sachdaten her
+* *shx*: Stellt die Verknüpfung zwischen Geo- und Sachdaten her.
 * *cpg*: Gibt den Zeichensatz an, der in der *dbf*-Datei verwendet wird.
 * *prj*: Gibt die Projektion an. Diese Datei wird nur dann exportiert, wenn in den Projekteigenschaften eine Auswahl im Feld *Koordinatenbezugssystem* getroffen wurde.
 
@@ -1498,12 +1498,12 @@ Beim Import müssen alle dem Shapefile zugehörigen Dateien gemeinsam in einem V
 
 Beim Export werden die folgenden Felder in der Attributtabelle des Shapefiles ausgegeben:
 
-* *identifier*: Der Bezeichner der Ressource
-* *category*: Der Bezeichner der für die Ressource gewählten Kategorie
+* *identifier*: Der Bezeichner der Ressource.
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie.
 * *sdesc*: Die Kurzbeschreibung der Ressource. Die Ausgabe ist abhängig von der Konfiguration des Feldes *Kurzbeschreibung* der entsprechenden Kategorie:
-    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung
-    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein eigenes Feld für jede Sprache mit dem Sprachkürzel im Feldnamen, getrennt durch einen Unterstrich (z. B. *sdesc\_de* oder *sdesc\_en*) 
-    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste
+    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung.
+    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein eigenes Feld für jede Sprache mit dem Sprachkürzel im Feldnamen, getrennt durch einen Unterstrich (z. B. *sdesc\_de* oder *sdesc\_en*).
+    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste.
   
 Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Das Feld *identifier* in der Attributtabelle muss also gesetzt sein, damit ein Shapefile-Import erfolgreich durchgeführt werden kann. Weitere Felder der Attributtabelle werden beim Import **nicht** berücksichtigt, es wird ausschließlich die Geometrie in der entsprechenden Ressource aktualisiert. Bitte beachten Sie, dass bereits vorhandene Geometrien beim Import überschrieben werden. Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert.
 
@@ -1519,13 +1519,13 @@ Das Format JSON Lines steht beim Export **nicht** zur Verfügung. Bitte beachten
 
 Das grundsätzliche Format einer JSON-Lines-Datei richtet sich nach der <a href="https://jsonlines.org" target="_blank">JSON-Lines-Dokumentation</a>. Jedes JSON-Objekt entspricht einer Ressource in Field und enthält obligatorisch die folgenden Felder:
 
-* *identifier*: Der Bezeichner der Ressource
-* *category*: Der Bezeichner der für die Ressource gewählten Kategorie
+* *identifier*: Der Bezeichner der Ressource.
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie.
 
 Ein Objekt kann außerdem die folgenden optionalen Felder enthalten:
 
-* *relations*: Enthält alle Felder vom Eingabetyp *Relation* (siehe Unterkapitel *Relationen*)
-* *geometry*: Die Geometrie der Ressource (siehe Unterkapitel *Geometrie*)
+* *relations*: Enthält alle Felder vom Eingabetyp *Relation* (siehe Unterkapitel *Relationen*).
+* *geometry*: Die Geometrie der Ressource (siehe Unterkapitel *Geometrie*).
 
 Darüber hinaus kann das Objekt eine beliebige Anzahl derjenigen Felder enthalten, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass dabei der eindeutige Feldbezeichner angegeben werden muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können als Feldnamen in JSON-Lines-Dateien **nicht** verwendet werden.
 
@@ -1538,11 +1538,11 @@ Felder vom Eingabetyp *Relation* werden im Objekt *relations* gebündelt. Die Fe
 
 Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Relationen verwendet werden:
 
-* *isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; wird bei Ressourcen auf oberster Ebene nicht gesetzt
-* *depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen
-* *isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern
-* *isMapLayerOf* (nur bei Bildressourcen): Fügt das Bild als Kartenhintergrund im Kontext der als Ziel angegebenen Ressource hinzu
-* *hasMapLayer* (nicht bei Bildressourcen): Fügt im Kontext dieser Ressource eines oder mehrere Bilder als Kartenhintergrund hinzu
+* *isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; wird bei Ressourcen auf oberster Ebene nicht gesetzt.
+* *depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen.
+* *isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern.
+* *isMapLayerOf* (nur bei Bildressourcen): Fügt das Bild als Kartenhintergrund im Kontext der als Ziel angegebenen Ressource hinzu.
+* *hasMapLayer* (nicht bei Bildressourcen): Fügt im Kontext dieser Ressource eines oder mehrere Bilder als Kartenhintergrund hinzu.
 
 Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhintergrund einzurichten, tragen Sie im Array der Relation *depicts* bzw. *isMapLayerOf* die Projektkennung ein.
 
@@ -1621,8 +1621,8 @@ Für Felder, in denen Werte in verschiedenen Sprachen eingetragen werden können
 
 Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfeldern enthält:
 
-* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte
-* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind
+* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte.
+* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind.
 
 *Beispiel:*
 
@@ -1657,18 +1657,18 @@ Felder der Eingabetypen "Einzeiliger Text (Liste)", "Checkboxen", "Datierungsang
 
 Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung ist ein Objekt, das aus folgenden Unterfeldern besteht:
 
-* *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich)
-* *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird
-* *end*: Jahresangabe, die bei den Datierungstypen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird
-* *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*
-* *source*: Grundlage der Datierung, mehrsprachiges Textfeld
-* *isImprecise*: Angabe "Ungenau". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein)
-* *isUncertain*: Angabe "Unsicher". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein)
+* *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich).
+* *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird.
+* *end*: Jahresangabe, die bei den Datierungstypen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird.
+* *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*.
+* *source*: Grundlage der Datierung, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
+* *isUncertain*: Angabe "Unsicher". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
 
 Die Jahresangaben *begin* und *end* sind wiederum Objekte, die aus zwei Unterfeldern bestehen:
 
-* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP)
-* *inputYear*: Die Jahreszahl
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP).
+* *inputYear*: Die Jahreszahl.
 
 *Beispiel:*
 
@@ -1689,12 +1689,12 @@ Die Jahresangaben *begin* und *end* sind wiederum Objekte, die aus zwei Unterfel
 
 Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe ist ein Objekt, das aus folgenden Unterfeldern besteht:
 
-* *inputValue*: Der gemessene Zahlenwert
-* *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt
-* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*
+* *inputValue*: Der gemessene Zahlenwert.
+* *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*.
 * *measurementPosition*: Feld "Gemessen an". Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
-* *measurementComment*: Kommentar, mehrsprachiges Textfeld
-* *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein)
+* *measurementComment*: Kommentar, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 
 *Beispiel:*
 
@@ -1712,11 +1712,11 @@ Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßa
 
 Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere Literaturangaben enthalten können. Eine Literaturangabe ist ein Objekt, das aus folgenden Unterfeldern besteht:
 
-* *quotation*: Literaturzitat
-* *zenonId*: Zenon-ID
-* *doi*: DOI
-* *page*: Seite
-* *figure*: Abbildung
+* *quotation*: Literaturzitat.
+* *zenonId*: Zenon-ID.
+* *doi*: DOI.
+* *page*: Seite.
+* *figure*: Abbildung.
 
 *Beispiel:*
 

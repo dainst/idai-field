@@ -899,8 +899,8 @@ Select the menu item "Tools" ➝ "Import" to import resources into the currently
 * *Source*: Select the type of import source. There are two options to choose from:
     * *File*: The data to be imported is read from a file existing on your computer, a connected storage medium or another computer available via the network.
     * *HTTP*: The data to be imported is loaded via HTTP or HTTPS using a URL. Please note that it is not possible to import files in the formats *Shapefile* and *Catalog* if this option is selected. 
-* *Path*: Select the desired import file via a file selection dialog (only available for source option "File")
-* *URL*: Enter the URL where the data to be imported can be found (only available for source option "HTTP")
+* *Path*: Select the desired import file via a file selection dialog (only available for source option "File").
+* *URL*: Enter the URL where the data to be imported can be found (only available for source option "HTTP").
 
 Depending on the format of the selected file, which is recognized based on the file extension, further options may be available (see subsection on the corresponding format in section *Formats*).
 
@@ -993,8 +993,8 @@ In projects created with older versions of Field Desktop and due to changes to t
 
 Fields of the input type "Dropdown list (range)" consist of up to two subfields, for each of which a separate column is created:
 
-* *value*: The identifier of the selected value; if two values are selected, the first of the two values
-* *endValue*: The identifier of the second selected value if two values are selected
+* *value*: The identifier of the selected value; if two values are selected, the first of the two values.
+* *endValue*: The identifier of the second selected value if two values are selected.
 
 *Example (the value identifiers are identical with the German labels in this case):*
 
@@ -1097,11 +1097,11 @@ For fields of the input types "Dating", "Dimension", "Bibliographic reference", 
 The column header contains the prefix "relations" before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
 
 In addition to the relations listed in the project configuration in the form of the respective category, the following columns can be used:
-* *relations.isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
-* *relations.depicts* (only for image resources): Links the image to one or more resources
-* *relations.isDepictedIn* (not for image resources): Links the resource to one or more images
-* *relations.isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target
-* *relations.hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource
+* *relations.isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources.
+* *relations.depicts* (only for image resources): Links the image to one or more resources.
+* *relations.isDepictedIn* (not for image resources): Links the resource to one or more images.
+* *relations.isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target.
+* *relations.hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource.
 
 To link images to the project or set them up as map layers at project level, enter the project identifier in the column *relations.depicts* or *relations.isMapLayerOf*.
 
@@ -1133,13 +1133,13 @@ To link images to the project or set them up as map layers at project level, ent
 
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
 
-* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific)
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* 
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
-* *margin*: Tolerance margin in years for dating type *scientific*
-* *source*: Source of the dating, multilingual text field
-* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
-* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific).
+* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* .
+* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*.
+* *margin*: Tolerance margin in years for dating type *scientific*.
+* *source*: Source of the dating, multilingual text field.
+* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).
+* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).
 
 The year specifications *begin* and *end* consist of two subfields:
 
@@ -1240,12 +1240,12 @@ The year specifications *begin* and *end* consist of two subfields:
 
 Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
 
-* *inputValue*: The measured numerical value
-* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
+* *inputValue*: The measured numerical value.
+* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension.
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*.
 * *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
-* *measurementComment*: Comment, multilingual text field
-* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
+* *measurementComment*: Comment, multilingual text field.
+* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 
 *Example (the value identifiers in the column "dimensionLength.0.measurementPosition" are identical with the German labels in this case):*
 <div class="table-container">
@@ -1413,12 +1413,12 @@ The coordinates are specified in accordance with the GeoJSON specification.
 
 The following fields of the respective resource are written into the object *properties* during export:
 
-* *identifier*: The identifier of the resource
-* *category*: The identifier of the category selected for the resource
+* *identifier*: The identifier of the resource.
+* *category*: The identifier of the category selected for the resource.
 * *shortDescription*: The short description of the resource. The output depends on the configuration of the *shortDescription* field of the corresponding category:
-    * Single line text without input in multiple languages: The text of the short description as a string
-    * Single line text with input in multiple languages / Multiline text: An object with the language codes as field names
-    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+    * Single line text without input in multiple languages: The text of the short description as a string.
+    * Single line text with input in multiple languages / Multiline text: An object with the language codes as field names.
+    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist.
 
 During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the object *properties* in order to successfully import GeoJSON data. Other fields of the *properties* object are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
 
@@ -1463,17 +1463,17 @@ As with the GeoJSON import, **no new resources** are created when importing Shap
 
 A Shapefile consists of a group of several files, some of which are optional. When exporting from Field Desktop, files with the following extensions are created:
 
-* *shp*: Contains the actual geodata
+* *shp*: Contains the actual geodata.
 * *dbf*: Contains the attribute table data, i.e. data of the associated resource (see section *Attribute table*).
-* *shx*: Establishes the link between geodata and attribute data
+* *shx*: Establishes the link between geodata and attribute data.
 * *cpg*: Specifies the encoding used in the *dbf* file.
 * *prj*: Specifies the projection. This file is only exported if a selection has been made in the field *Coordinate reference system*  of the project properties.
 
 As a Shapefile can only ever contain geometries of a single type, a total of three Shapefiles (each consisting of the four or five files specified above) are created for the individual geometry types when exporting from Field Desktop. Single types are saved in the shapefile as multiple types, which leads to the following files:
 
-  * File name "multipoints.\*", contains geometries of the types *Point* and *Multipoint*
-  * File name "multipolylines.\*", contains geometries of the types *Polyline* and *Multipolyline*
-  * File name "multipolygons.\*", contains geometries of the types *Polygon* and *Multipolygon*
+  * File name "multipoints.\*", contains geometries of the types *Point* and *Multipoint*.
+  * File name "multipolylines.\*", contains geometries of the types *Polyline* and *Multipolyline*.
+  * File name "multipolygons.\*", contains geometries of the types *Polygon* and *Multipolygon*.
 
 All files are bundled in a zip archive.
 
@@ -1484,12 +1484,12 @@ When importing, all files belonging to the Shapefile must be in the same directo
 
 The following fields are included in the attribute table of the Shapefile during export:
 
-* *identifier*: The identifier of the resource
-* *category*: The identifier of the category selected for the resource
+* *identifier*: The identifier of the resource.
+* *category*: The identifier of the category selected for the resource.
 * *sdesc*: The short description of the resource. The output depends on the configuration of the field *short description* of the corresponding category:
-    * Single line text without input in multiple languages: The text of the short description
-    * Single line text with input in multiple languages / Multiline text: A separate field for each language with the language code in the field name, separated by an underscore (e.g. *sdesc\_de* or *sdesc\_en*) 
-    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+    * Single line text without input in multiple languages: The text of the short description.
+    * Single line text with input in multiple languages / Multiline text: A separate field for each language with the language code in the field name, separated by an underscore (e.g. *sdesc\_de* or *sdesc\_en*).
+    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist.
   
 During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the attribute table in order to successfully import Shapefile data. Other fields in the attribute table are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
 
@@ -1505,13 +1505,13 @@ The JSON Lines format is **not** available for export. Please note that backup f
 
 The basic format of a JSON Lines file is based on the <a href="https://jsonlines.org" target="_blank">JSON Lines documentation</a>. Each JSON object corresponds to a resource in Field and contains the following mandatory fields:
 
-* *identifier*: The identifier of the resource
-* *category*: The identifier of the category selected for the resource
+* *identifier*: The identifier of the resource.
+* *category*: The identifier of the category selected for the resource.
 
 An object can also contain the following optional fields:
 
-* *relations*: Contains all fields of the input type *Relation* (see section *Relations*)
-* *geometry*: The geometry of the resource (see section *Geometry*)
+* *relations*: Contains all fields of the input type *Relation* (see section *Relations*).
+* *geometry*: The geometry of the resource (see section *Geometry*).
 
 In addition, the object can contain any number of fields that have been configured for the form that is used in the project for this category. Please note that the unique field identifier must be specified as displayed in magenta in the menu "Project configuration"  for the respective field. The multilingual display names that are displayed in other areas of the application **cannot** be used as field names in JSON Lines files.
 
@@ -1524,11 +1524,11 @@ Fields of the input type *Relation* are bundled in the object *relations*. The f
 
 In addition to the relations listed in the project configuration in the form of the respective category, the following relations can be used:
 
-* *isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
-* *depicts* (only for image resources): Links the image to one or more resources
-* *isDepictedIn* (not for image resources): Links the resource to one or more images
-* *isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target
-* *hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource
+* *isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources.
+* *depicts* (only for image resources): Links the image to one or more resources.
+* *isDepictedIn* (not for image resources): Links the resource to one or more images.
+* *isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target.
+* *hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource.
 
 To link images to the project or set them up as map layers at project level, add the project identifier to the array for the relation *depicts* or *isMapLayerOf*.
 
@@ -1608,8 +1608,8 @@ For fields in which values can be entered in different languages, an object must
 
 For fields of the input type "Dropdown list (range)", an object is entered that contains the following two subfields:
 
-* *value*: The identifier of the selected value; if two values are selected, the first of the two values
-* *endValue*: The identifier of the second selected value if two values are selected
+* *value*: The identifier of the selected value; if two values are selected, the first of the two values.
+* *endValue*: The identifier of the second selected value if two values are selected.
 
 *Example (the value identifiers are identical with the German labels in this case):*
 
@@ -1645,13 +1645,13 @@ Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Di
 
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating is an object that consists of the following subfields:
 
-* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific)
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* 
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
-* *margin*: Tolerance margin in years for dating type *scientific*
-* *source*: Source of the dating, multilingual text field
-* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
-* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific).
+* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range*.
+* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*.
+* *margin*: Tolerance margin in years for dating type *scientific*.
+* *source*: Source of the dating, multilingual text field.
+* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).
+* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).
 
 The year specifications *begin* and *end* consist of two subfields:
 
@@ -1677,12 +1677,12 @@ The year specifications *begin* and *end* consist of two subfields:
 
 Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry is an object that consists of the following subfields:
 
-* *inputValue*: The measured numerical value
-* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
+* *inputValue*: The measured numerical value.
+* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension.
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*.
 * *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
-* *measurementComment*: Comment, multilingual text field
-* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
+* *measurementComment*: Comment, multilingual text field.
+* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 
 *Example (the value identifiers in the field "measurementPosition" are identical with the German labels in this case):*
 

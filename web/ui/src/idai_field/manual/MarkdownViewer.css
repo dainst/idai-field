@@ -14,7 +14,6 @@
     content: counter(h1Counter) '. ';
 }
 
-
 #markdown-viewer h2 {
     font-size: 22px;
     counter-reset: h3Counter;

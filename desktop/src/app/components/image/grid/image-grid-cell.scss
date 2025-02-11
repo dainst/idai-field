@@ -1,9 +1,13 @@
 image-grid-cell {
   .icons {
     position: absolute;
-    top: 7px;
-    right: 7px;
+    top: 6px;
+    right: 5px;
     overflow: hidden;
+
+    .badge {
+      margin-right: 4px;
+    }
   }
 
   img {

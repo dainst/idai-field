@@ -1,0 +1,30 @@
+.add-relation-button {
+  display: block;
+  width: 35px;
+  height: 35px;
+  position: relative !important;
+  user-select: none;
+  scroll-margin: 10px;
+  background-color: white;
+  transition: none !important;
+
+  &.with-margin {
+    margin-top: 5px;
+  }
+
+  .mdi {
+    position: relative;
+    bottom: 4px;
+    font-size: 20px;
+    color: black;
+    transition: none !important;
+  }
+
+  &:hover {
+    background-color: $green-button-color;
+
+    .mdi {
+      color: white;
+    }
+  }
+}

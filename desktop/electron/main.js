@@ -249,7 +249,8 @@ const createWindow = () => {
             preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),
             webSecurity: global.mode === 'production'
         },
-        titleBarStyle: 'hiddenInset'
+        titleBarStyle: 'hiddenInset',
+        title: 'Field Desktop'
     });
 
     remoteMain.enable(mainWindow.webContents);
@@ -284,8 +285,6 @@ const createWindow = () => {
         electron.shell.openExternal(url);
         return { action: 'deny' };
     });
-
-    return mainWindow;
 };
 
 

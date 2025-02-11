@@ -11,7 +11,7 @@
 
     &:hover {
       color: #fff !important;
-      background-color: #28a745;
+      background-color: $green-button-color;
       transition: color .3s ease, background-color .3s ease;
     }
   }

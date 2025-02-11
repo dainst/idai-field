@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { to } from 'tsfun';
 import { FieldDocument } from 'idai-field-core';
 import { ResourcesComponent } from '../../resources.component';
@@ -42,6 +43,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     constructor(private navigationService: NavigationService,
                 private warningsService: WarningsService,
+                private modalService: NgbModal,
                 resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 viewFacade: ViewFacade,
@@ -146,6 +148,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 break;
             case 'move':
                 await this.resourcesComponent.moveDocuments(this.contextMenu.documents as Array<FieldDocument>);
+                break;
+            case 'show-history':
+                await this.resourcesComponent.showHistory(this.selectedDocument);
                 break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument(this.contextMenu.documents as Array<FieldDocument>);

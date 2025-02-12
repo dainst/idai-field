@@ -7,7 +7,7 @@
 
 <div *ngIf="isPlusButtonAvailable()"
      #plusButton
-     class="circular-button add-relation-button"
+     class="circular-button add-relation"
      [class.with-margin]="relations[relationDefinition.name]?.length > 0"
      type="button"
      (click)="createRelation()">

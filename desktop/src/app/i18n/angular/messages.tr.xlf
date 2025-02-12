@@ -785,7 +785,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
         <source>Datenbank wird gesichert.</source>
-        <target state="translated">Veritabanı kaydediliyor...</target>
+        <target state="translated">Veri tabanı kaydediliyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation-modal.component.ts</context>
           <context context-type="linenumber">14</context>
@@ -800,8 +800,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
-        <source>Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="translated">Şu anda açık olan projenin yedeğini oluşturur. Düzenli yedeklemeler veri güvenliğini artırır ve veri kaybı durumunda veritabanının son kaydedilen durumdan geri yüklenmesine olanak tanır. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Görüntü orijinallerinin yedekleme dosyasında saklanmadığını lütfen unutmayın. Bunlar, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/> Ayarlar<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> kısmında belirtilen dizinde bulunabilir ve ayrı olarak kaydedilmelidir. </target>
+        <source>Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
+        <target state="translated">Şu anda açık olan projenin yedeğini oluşturur. Düzenli yedeklemeler veri güvenliğini artırır ve veri kaybı durumunda veri tabanının son kaydedilen durumdan geri yüklenmesine olanak tanır. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Görüntü orijinallerinin yedekleme dosyasında saklanmadığını lütfen unutmayın. Bunlar, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/> Ayarlar<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> kısmında belirtilen dizinde bulunabilir ve ayrı olarak kaydedilmelidir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -809,7 +809,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.modal.info" datatype="html">
         <source>Datenbank wird eingelesen.</source>
-        <target state="translated">Veritabanı geri yükleniyor...</target>
+        <target state="translated">Veri tabanı geri yükleniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading-modal.component.ts</context>
           <context context-type="linenumber">14</context>
@@ -841,7 +841,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Önemli: <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Bir yedekleme dosyasını geri yüklerken, belirtilen tanımlayıcının muhtemelen mevcut hedef veritabanının <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>üzerine tamamen yazılacaktır<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Önemli: <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Bir yedekleme dosyasını geri yüklerken, belirtilen tanımlayıcının muhtemelen mevcut hedef veri tabanının <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>üzerine tamamen yazılacaktır<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -4607,7 +4607,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.write.success" datatype="html">
         <source>Die Datenbank wurde erfolgreich gesichert.</source>
-        <target state="translated">Veritabanı başarıyla kaydedildi.</target>
+        <target state="translated">Veri tabanı başarıyla kaydedildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4623,7 +4623,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.write.error.generic" datatype="html">
         <source>Beim Sichern der Datenbank ist ein Fehler aufgetreten.</source>
-        <target state="translated">Veritabanının yedeğini oluştururken bir hata oluştu.</target>
+        <target state="translated">Veri tabanının yedeğini oluştururken bir hata oluştu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5383,7 +5383,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.owner_must_not_overwrite_existing_images" datatype="html">
         <source>Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.</source>
-        <target state="translated">İçe aktarma iptal edildi. İçe aktarma dosyası, veritabanında zaten mevcut olan görüntüleri içerir.</target>
+        <target state="translated">İçe aktarma iptal edildi. İçe aktarma dosyası, veri tabanında zaten mevcut olan görüntüleri içerir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

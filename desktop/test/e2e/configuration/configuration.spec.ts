@@ -944,7 +944,8 @@ test.describe('configuration --', () => {
         expect(await ConfigurationPage.getValue(1)).toEqual('value2');
 
         await EditConfigurationPage.clickConfirmSubfield();
-        await EditConfigurationPage.clickCancel();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
     });
 
 
@@ -1057,7 +1058,8 @@ test.describe('configuration --', () => {
         expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
         expect(await getText(await options.nth(1))).toBe('Relation 1');
 
-        await EditConfigurationPage.clickCancel();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
     });
 
 
@@ -1073,6 +1075,7 @@ test.describe('configuration --', () => {
         await NavbarPage.awaitAlert('Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.');
         await NavbarPage.clickCloseAllMessages();
 
-        await EditConfigurationPage.clickCancel();
+        await EditConfigurationPage.clickCancel(true);
+        await AddFieldModalPage.clickCancel();
     });
 });

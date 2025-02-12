@@ -112,6 +112,7 @@ const setUp = async (mainWindow) => {
         });
         modal.on('close', () => {
             modal.getParentWindow().focus();
+            autoUpdater.quitAndInstall();
         });
 
         ipcMain.once('close-download-finished-modal', () => {

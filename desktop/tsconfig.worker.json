@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/worker",
+    "lib": [
+      "es2018",
+      "webworker"
+    ],
+    "types": []
+  },
+  "include": [
+    "src/**/*.worker.ts",
+    "node_modules/idai-field-core/**/*.d.ts"
+  ]
+}

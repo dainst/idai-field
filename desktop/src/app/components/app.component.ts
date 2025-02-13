@@ -72,6 +72,12 @@ export class AppComponent {
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
             this.menuModalLauncher.openUpdateUsernameModal(true);
         }
+
+        const projectName: string = settingsProvider.getSettings().selectedProject;
+        const backupDirectoryPath: string = remote.getGlobal('appDataPath') + '/backup';
+        const worker = new Worker(new URL('./app.worker', import.meta.url));
+        worker.onmessage = ({ data }) => console.log(data);
+        worker.postMessage({ projectName, backupDirectoryPath });
     }
 
 

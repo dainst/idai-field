@@ -89,7 +89,9 @@
             "extractLicenses": false,
             "buildOptimizer": false,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "webWorkerTsConfig": "tsconfig.worker.json",
+            "preserveSymlinks": true
           },
           "configurations": {
             "en": {

@@ -244,6 +244,7 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
+            nodeIntegrationInWorker: true,
             enableRemoteModule: true,
             contextIsolation: false,
             preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),

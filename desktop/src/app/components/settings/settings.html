@@ -121,31 +121,52 @@
                     <div id="advanced-settings" [ngbCollapse]="advancedSettingsCollapsed" [animation]="false">
                         <h5 i18n="@@settings.images">Bilder</h5>
 
-                        <div id="advanced-settings">
-                            <label class="control-label col-form-label"
-                                for="imagestorepath-input"
-                                i18n="@@settings.images.path">
-                                Pfad
+                        <label class="control-label col-form-label"
+                            for="imagestorepath-input"
+                            i18n="@@settings.images.path">
+                            Pfad
+                        </label>
+                        <div class="input-group"> 
+                            <input id="imagestorepath-input"
+                                [ngModel]="settings.imagestorePath"
+                                (ngModelChange)="settings.imagestorePath = $event"
+                                class="form-control">
+                            <label for="imagestorepath-input" class="btn btn-secondary"
+                                    (click)="chooseDirectoryPath('imagestorePath')">
+                                <span class="mdi mdi-folder"></span>
                             </label>
-                            <div class="input-group"> 
-                                <input id="imagestorepath-input"
-                                    [ngModel]="settings.imagestorePath"
-                                    (ngModelChange)="settings.imagestorePath = $event"
-                                    class="form-control">
-                                <label for="imagestorepath-input" class="btn btn-secondary"
-                                        (click)="chooseImagestoreDirectory()">
-                                    <span class="mdi mdi-folder"></span>
-                                </label>
-                            </div>
-                            <div class="small-info-text" i18n="@@settings.images.path.info">
-                                Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
-                                sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem
-                                Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.
-                                Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
-                                Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field
-                                verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
-                                Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
-                            </div>
+                        </div>
+                        <div class="small-info-text" i18n="@@settings.images.path.info">
+                            Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
+                            sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem
+                            Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.
+                            Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
+                            Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field
+                            verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
+                            Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
+                        </div>
+
+                        <h5 i18n="@@settings.backups">Automatische Backups</h5>
+
+                        <label class="control-label col-form-label"
+                            for="backup-directory-path-input"
+                            i18n="@@settings.backups.path">
+                            Pfad
+                        </label>
+                        <div class="input-group"> 
+                            <input id="backup-directory-path-input"
+                                [ngModel]="settings.backupDirectoryPath"
+                                (ngModelChange)="settings.backupDirectoryPath = $event"
+                                class="form-control">
+                            <label for="backup-directory-path-input" class="btn btn-secondary"
+                                    (click)="chooseDirectoryPath('backupDirectoryPath')">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </div>
+                        <div class="small-info-text" i18n="@@settings.backups.path.info">
+                            Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller
+                            auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem
+                            die erstellten Backup-Dateien abgelegt werden.
                         </div>
                     </div>
                 </div>

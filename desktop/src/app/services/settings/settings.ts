@@ -15,6 +15,7 @@ export interface Settings {
     projectNames?: { [projectIdentifier: string]: I18N.String };
     selectedProject: string;
     imagestorePath: string;
+    backupDirectoryPath: string;
     hideHiddenFieldsInConfigurationEditor?: boolean;
     highlightCustomElements?: boolean;
     allowLargeFileUploads?: boolean;

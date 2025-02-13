@@ -117,18 +117,18 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     }
 
 
-    public async chooseImagestoreDirectory() {
+    public async chooseDirectoryPath(type: 'imagestorePath'|'backupDirectoryPath') {
 
         const result: any = await remote.dialog.showOpenDialog(
             remote.getCurrentWindow(),
             {
                 properties: ['openDirectory', 'createDirectory'],
-                defaultPath: this.settings.imagestorePath
+                defaultPath: this.settings[type]
             }
         );
 
         if (result && result.filePaths.length > 0) {
-            this.settings.imagestorePath = result.filePaths[0];
+            this.settings[type] = result.filePaths[0];
         }
     }
 

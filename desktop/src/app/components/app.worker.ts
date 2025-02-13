@@ -6,6 +6,8 @@ const fs = require('fs');
 const PouchDB = require('pouchdb-browser').default;
 
 
+suppressDeprecationWarnings();
+
 addEventListener('message', async ({ data }) => {
 
     const projectName: string = data.projectName;
@@ -34,4 +36,14 @@ export async function dump(filePath: string, project: string) {
     };
     await new PouchDB(project).dump(memoryStream, { attachments: false });
     fs.writeFileSync(filePath, dumpedString);
+}
+
+
+function suppressDeprecationWarnings() {
+
+    const warnFunction = console.warn;
+
+    console.warn = function() {
+      if (!arguments[0].includes('deprecated')) return warnFunction.apply(console, arguments);
+    };
 }

@@ -90,8 +90,7 @@
             "buildOptimizer": false,
             "optimization": false,
             "namedChunks": true,
-            "webWorkerTsConfig": "tsconfig.worker.json",
-            "preserveSymlinks": true
+            "webWorkerTsConfig": "tsconfig.worker.json"
           },
           "configurations": {
             "en": {

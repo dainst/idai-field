@@ -3,13 +3,12 @@
   "compilerOptions": {
     "outDir": "./out-tsc/worker",
     "lib": [
-      "es2018",
+      "es2022",
       "webworker"
     ],
-    "types": []
+    "types": ["node"]
   },
   "include": [
     "src/**/*.worker.ts",
-    "node_modules/idai-field-core/**/*.d.ts"
   ]
 }

@@ -21,7 +21,8 @@ describe('ImageSyncService', () => {
     let remoteImageStore: RemoteImageStore;
 
     const mockImage: Buffer = fs.readFileSync(process.cwd() + '/test/test-data/logo.png');
-    const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
+    const imagestorePath = process.cwd() + '/test/test-temp/imagestore/';
+    const backupDirectoryPath = process.cwd() + '/test/test-temp/backups/';
     const testProjectIdentifier = 'test_tmp_project';
     const hubContainer = 'field-hub-client-integration-test';
 
@@ -56,7 +57,8 @@ describe('ImageSyncService', () => {
         username: 'not_relevant_for_the_tests',
         dbs: [],
         selectedProject: 'not_relevant_for_the_tests',
-        imagestorePath: testFilePath,
+        imagestorePath: imagestorePath,
+        backupDirectoryPath,
         isAutoUpdateActive: true
     };
 
@@ -68,7 +70,7 @@ describe('ImageSyncService', () => {
         settingsProviderMock.setSettings(settingsMock);
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
-        await imageStore.init(testFilePath, testProjectIdentifier);
+        await imageStore.init(imagestorePath, testProjectIdentifier);
 
         remoteImageStore = new RemoteImageStore(settingsProviderMock, null);
 
@@ -80,7 +82,7 @@ describe('ImageSyncService', () => {
     // Re-initialize image store data for each test.
     beforeEach(async () => {
 
-        await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
+        await imageStore.init(`${imagestorePath}imagestore/`, testProjectIdentifier);
 
         const command = `docker exec ${hubContainer} /app/bin/field_hub eval `
             + `'FieldHub.CLI.create_project("${testProjectIdentifier}", "${syncTarget.password}")'`;
@@ -100,7 +102,7 @@ describe('ImageSyncService', () => {
 
     afterAll(() => {
 
-        fs.rmSync(testFilePath, { recursive: true });
+        fs.rmSync(imagestorePath, { recursive: true });
     });
 
 

@@ -1,381 +1,437 @@
-@use 'sass:color';
+@use "sass:color";
 
-$mdi-font-path: 'fonts' !default;
-@import '../node_modules/@mdi/font/css/materialdesignicons';
+$mdi-font-path: "fonts" !default;
+@import "../node_modules/@mdi/font/css/materialdesignicons";
 
-@import '@fontsource/open-sans/variable-full.css';
-@import "@fontsource/open-sans/variable-full-italic.css";
+@import "@fontsource/roboto/300.css";
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/500.css";
+@import "@fontsource/roboto/700.css";
+@import "@fontsource/roboto/400-italic.css";
+@import "@fontsource/roboto/300-italic.css";
+@import "@fontsource/roboto/500-italic.css";
+@import "@fontsource/roboto/700-italic.css";
 
-@import 'app/components/variables';
-@import 'app/components/messages/messages';
-@import 'bootstrap';
-@import 'app/components/initialization';
-@import 'app/components/spinner';
-@import 'app/components/buttons';
-@import 'app/components/slider';
-@import 'app/components/navbar/navbar';
-@import 'app/components/default-page';
-@import 'app/components/resources/resources';
-@import 'app/components/import/import';
-@import 'app/components/export/export';
-@import 'app/components/settings/settings';
-@import 'app/components/viewmodal/view-modal';
-@import 'app/components/widgets/widgets';
-@import 'app/components/docedit/docedit';
-@import 'app/components/image/image';
-@import 'app/components/matrix/matrix-view';
-@import 'app/components/help/help';
-@import 'app/components/configuration/configuration';
-@import 'app/components/project/project';
-@import 'app/components/backup/backup';
+@import "app/components/variables";
+@import "app/components/messages/messages";
+@import "bootstrap";
+@import "app/components/initialization";
+@import "app/components/spinner";
+@import "app/components/buttons";
+@import "app/components/slider";
+@import "app/components/navbar/navbar";
+@import "app/components/default-page";
+@import "app/components/resources/resources";
+@import "app/components/import/import";
+@import "app/components/export/export";
+@import "app/components/settings/settings";
+@import "app/components/viewmodal/view-modal";
+@import "app/components/widgets/widgets";
+@import "app/components/docedit/docedit";
+@import "app/components/image/image";
+@import "app/components/matrix/matrix-view";
+@import "app/components/help/help";
+@import "app/components/configuration/configuration";
+@import "app/components/project/project";
+@import "app/components/backup/backup";
 
 .search-help-tooltip {
-  .tooltip-inner {
-    width: 400px;
-    max-width: 400px;
-  }
-  animation-name: delayedFadeIn;
-  animation-duration: 1s; /* Adjust this duration */
+    .tooltip-inner {
+        width: 400px;
+        max-width: 400px;
+    }
+    animation-name: delayedFadeIn;
+    animation-duration: 1s; /* Adjust this duration */
 }
 
 .tooltip > div {
-  animation-name: delayedFadeIn;
-  animation-duration: 1s; /* Adjust this duration */
+    animation-name: delayedFadeIn;
+    animation-duration: 1s; /* Adjust this duration */
 }
 
 .tooltip {
-  pointer-events: none;
+    pointer-events: none;
 
-  .arrow {
-    width: 0.5rem !important;
-  }
+    .arrow {
+        width: 0.5rem !important;
+    }
 }
 
 @keyframes delayedFadeIn {
-  0% { opacity: 0; }
-  75% { opacity: 0; } /* Set this to 99% for no fade-in. */
-  100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 0;
+    } /* Set this to 99% for no fade-in. */
+    100% {
+        opacity: 1;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif !important;
 }
 
 body,
 .popover {
-  font-family: 'Open SansVariable', sans-serif !important;
+    font-family: "Roboto" !important;
 }
 
 #idaifieldlogo {
-  height: 35px;
+    height: 35px;
 }
 
 .btn {
-  text-transform: none !important;
+    text-transform: none !important;
 }
 
-.btn:focus, .btn.focus {
-  box-shadow: none;
+.btn:focus,
+.btn.focus {
+    box-shadow: none;
 }
 
 .btn-primary {
-  background-color: $primary-button-color;
-  border-color: $primary-button-color;
+    background-color: $primary-button-color;
+    border-color: $primary-button-color;
 }
 
 .btn-primary:hover {
-  background-color: color.adjust($primary-button-color, $lightness: 10%);
-  border-color: color.adjust($primary-button-color, $lightness: 10%);
+    background-color: color.adjust($primary-button-color, $lightness: 10%);
+    border-color: color.adjust($primary-button-color, $lightness: 10%);
 }
 
-.btn-primary:disabled, .btn-primary.disabled {
-  background-color: color.adjust($primary-button-color, $lightness: -10%);
-  border-color: color.adjust($primary-button-color, $lightness: -10%);
-  cursor: not-allowed;
+.btn-primary:disabled,
+.btn-primary.disabled {
+    background-color: color.adjust($primary-button-color, $lightness: -10%);
+    border-color: color.adjust($primary-button-color, $lightness: -10%);
+    cursor: not-allowed;
 }
 
-.btn-primary:active, .btn-primary.active {
-  background-color: color.adjust($primary-button-color, $saturation: 10%);
-  border-color: color.adjust($primary-button-color, $saturation: 10%);
+.btn-primary:active,
+.btn-primary.active {
+    background-color: color.adjust($primary-button-color, $saturation: 10%);
+    border-color: color.adjust($primary-button-color, $saturation: 10%);
 }
 
 .btn-outline-primary {
-  border-color: $primary-button-color;
-  color: $primary-button-color;
-  background-color: white;
+    border-color: $primary-button-color;
+    color: $primary-button-color;
+    background-color: white;
 }
 
 .btn-outline-primary:hover {
-  border-color: color.adjust($primary-button-color, $lightness: 10%);
-  color: $primary-button-color;
-  background-color: white;
+    border-color: color.adjust($primary-button-color, $lightness: 10%);
+    color: $primary-button-color;
+    background-color: white;
 }
 
-.btn-outline-primary:disabled, .btn-outline-primary.disabled {
-  border-color: color.adjust($primary-button-color, $lightness: -10%);
-  color: color.adjust($primary-button-color, $lightness: -10%);
-  cursor: not-allowed;
-  background-color: white;
+.btn-outline-primary:disabled,
+.btn-outline-primary.disabled {
+    border-color: color.adjust($primary-button-color, $lightness: -10%);
+    color: color.adjust($primary-button-color, $lightness: -10%);
+    cursor: not-allowed;
+    background-color: white;
 }
 
 .btn-secondary {
-  color: #fff;
-  background-color: #727b84;
-  border-color: #6c757d;
+    color: #fff;
+    background-color: #727b84;
+    border-color: #6c757d;
 }
 
 .btn-secondary:hover {
-  background-color: color.adjust(#727b84, $lightness: 10%);
-  border-color: color.adjust(#6c757d, $lightness: 10%);
-  color: #fff;
+    background-color: color.adjust(#727b84, $lightness: 10%);
+    border-color: color.adjust(#6c757d, $lightness: 10%);
+    color: #fff;
 }
 
-.btn-secondary:disabled, .btn-primary.disabled {
-  background-color: color.adjust(#727b84, $lightness: -10%);
-  border-color: color.adjust(#6c757d, $lightness: -10%);
-  cursor: not-allowed;
+.btn-secondary:disabled,
+.btn-primary.disabled {
+    background-color: color.adjust(#727b84, $lightness: -10%);
+    border-color: color.adjust(#6c757d, $lightness: -10%);
+    cursor: not-allowed;
 }
 
-.btn-secondary:active, .btn-secondary.active {
-  background-color: color.adjust(#727b84, $saturation: 10%);
-  background-color: color.adjust(#6c757d, $saturation: 10%);
+.btn-secondary:active,
+.btn-secondary.active {
+    background-color: color.adjust(#727b84, $saturation: 10%);
+    background-color: color.adjust(#6c757d, $saturation: 10%);
 }
 
-.btn-success:disabled, .btn-success.disabled {
-  background-color: color.adjust(#6ca378, $lightness: -10%);
-  border-color: color.adjust(#6ca378, $lightness: -10%);
-  cursor: not-allowed;
+.btn-success:disabled,
+.btn-success.disabled {
+    background-color: color.adjust(#6ca378, $lightness: -10%);
+    border-color: color.adjust(#6ca378, $lightness: -10%);
+    cursor: not-allowed;
 }
 
-.btn-danger:disabled, .btn-danger.disabled {
-  cursor: not-allowed;
+.btn-danger:disabled,
+.btn-danger.disabled {
+    cursor: not-allowed;
 }
 
 .btn-light {
-  color: $link-color;
+    color: $link-color;
 }
 
 .btn-link {
-  &:hover {
-    background-color: rgba(200, 200, 200, 0.2);
-  }
+    &:hover {
+        background-color: rgba(200, 200, 200, 0.2);
+    }
 
-  &.active {
-    background-color: color.adjust($link-color, $lightness: 50%);
-  }
+    &.active {
+        background-color: color.adjust($link-color, $lightness: 50%);
+    }
 }
 
 .md-form {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* override needed for buttons to look good in chrome with bootstrap 4 */
 button,
-html [type='button'],
-[type='reset'],
-[type='submit'] {
-  -webkit-appearance: none;
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: none;
 }
 
 /* override popover styles */
 .popover {
-  padding: 0 !important;
-  border: none !important;
-  border-radius: 0.3rem;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
-  min-width: 200px;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0.3rem;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    min-width: 200px;
 }
 
 .popover-body {
-  padding: 0 !important;
+    padding: 0 !important;
 }
 
 .popover-header,
 .popover-custom-title {
-  background-color: #eee;
-  font-size: 1.1em;
-  user-select: none;
-  cursor: default;
+    background-color: #eee;
+    font-size: 1.1em;
+    user-select: none;
+    cursor: default;
 }
 
 .popover-header {
-  font-weight: normal;
-  border-radius: 0;
+    font-weight: normal;
+    border-radius: 0;
 }
 
 .popover-custom-title {
-  padding: 10px 10px 8px 10px;
-  border-top-left-radius: 0.3rem;
-  border-top-right-radius: 0.3rem;
+    padding: 10px 10px 8px 10px;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
 
-  &:last-child {
-    border-radius: 0.3rem;
-  }
+    &:last-child {
+        border-radius: 0.3rem;
+    }
 }
 
 .popover-body .list-group {
-  max-height: calc(100vh - 230px);
-  overflow: auto;
-  border-bottom-left-radius: 0.3rem;
-  border-bottom-right-radius: 0.3rem;
+    max-height: calc(100vh - 230px);
+    overflow: auto;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
 }
 
 .popover-item {
-  cursor: default;
-  border: 0 !important;
-  border-radius: 0 !important;
+    cursor: default;
+    border: 0 !important;
+    border-radius: 0 !important;
 }
 
 .popover-item:hover {
-  background-color: $list-item-hover-color;
-  transition: background-color .5s ease;
+    background-color: $list-item-hover-color;
+    transition: background-color 0.5s ease;
 }
 
 /* Cards */
 /* override ugly styling of list-group-items inside cards in bootstrap 4 */
 .card > .list-group {
-  > .list-group-item {
-    border-width: 1px 0 0;
-  }
-  > .list-group-item:first-child {
-    border-width: 0;
-  }
+    > .list-group-item {
+        border-width: 1px 0 0;
+    }
+    > .list-group-item:first-child {
+        border-width: 0;
+    }
 }
 
 .card {
-  border-radius: 0 !important;
-  border: none !important;
-  background-color: #eee;
+    border-radius: 0 !important;
+    border: none !important;
+    background-color: #eee;
 }
 
 .card-header {
-  border-radius: 0 !important;
+    border-radius: 0 !important;
 }
 
 .card-title {
-  font-weight: normal !important;
-  font-size: 17px !important;
-  margin: 0 !important;
+    font-weight: normal !important;
+    font-size: 17px !important;
+    margin: 0 !important;
 }
 
 .card-block {
-  padding: 10px !important;
+    padding: 10px !important;
 }
 
 .card-block .form-control {
-  margin: 0;
-  font-size: 13px;
+    margin: 0;
+    font-size: 13px;
 }
 
 .form-control {
-  border-radius: 1px !important;
-  -webkit-appearance: none;
+    border-radius: 1px !important;
+    -webkit-appearance: none;
 }
 
-input:focus, .form-control:focus {
-  box-shadow: none  !important;
+input:focus,
+.form-control:focus {
+    box-shadow: none !important;
 }
 
 select.form-control:not([size]):not([multiple]) {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-position: calc(100% - 7px) 50%;
-  background-repeat: no-repeat;
-  background-image: url(img/chevron-down.png);
-  padding-right: 1.5em;
-  height: auto;
-  user-select: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: calc(100% - 7px) 50%;
+    background-repeat: no-repeat;
+    background-image: url(img/chevron-down.png);
+    padding-right: 1.5em;
+    height: auto;
+    user-select: none;
 
-  &:disabled {
-    background-image: url(img/chevron-down-disabled.png);
-  }
+    &:disabled {
+        background-image: url(img/chevron-down-disabled.png);
+    }
 }
 
 .form-check .form-check-label {
-  font-size: 15px;
-  padding-left: 1.4rem;
+    font-size: 15px;
+    padding-left: 1.4rem;
 }
 
 .fade {
-  transition: none;
+    transition: none;
 }
 
 /* wider modals */
 .modal-lg {
-  min-width: 86%;
+    min-width: 86%;
 }
 
 .modal-header {
-  user-select: none;
+    user-select: none;
 }
 
 .modal-body {
-  p {
-    user-select: none;
-  }
+    p {
+        user-select: none;
+    }
 }
 
 .modal-content {
-  border: none;
-  overflow: hidden;
+    border: none;
+    overflow: hidden;
 }
 
 .modal-dialog:not(.modal-dialog-centered) {
-  top: 14px;
+    top: 14px;
 }
 
 .modal {
-  z-index: 1055;
+    z-index: 1055;
 }
 
 ::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 7px;
-  height: 7px;
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, .5);
-  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 a {
-  -webkit-user-drag: none;
+    -webkit-user-drag: none;
 }
 
 .alert {
-  text-align: center;
-  user-select: none;
+    text-align: center;
+    user-select: none;
 }
 
 .small-info-text {
-  font-size: 14px;
-  margin-top: 13px;
-  user-select: none;
+    font-size: 14px;
+    margin-top: 13px;
+    user-select: none;
 }
 
 .custom-marking {
-  color: color.adjust($custom-highlight-color, $lightness: -50%);
+    color: color.adjust($custom-highlight-color, $lightness: -50%);
 }
 
-.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11,
-.col-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8,
-.col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4,
-.col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-auto {
-  position: relative;
+.col,
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12,
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-lg-1,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-auto {
+    position: relative;
 }
 
 label {
-  margin-bottom: 8px;
+    margin-bottom: 8px;
 }
 
 #file-path-input {
-  height: 38px;
+    height: 38px;
 }

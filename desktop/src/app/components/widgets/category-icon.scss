@@ -1,19 +1,19 @@
 .category-icon {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Open SansVariable', sans-serif !important;
-  font-weight: lighter;
-  background-color: #eeeeee;
-  border-radius: 50%;
-  padding: 0;
-  filter: saturate(50%);
-
-  .character {
-    margin-top: -1%;
-    font-size: 70%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Roboto", sans-serif !important;
     font-weight: lighter;
-    color: white;
-    user-select: none;
-  }
+    background-color: #eeeeee;
+    border-radius: 50%;
+    padding: 0;
+    filter: saturate(50%);
+
+    .character {
+        margin-top: -1%;
+        font-size: 70%;
+        font-weight: lighter;
+        color: white;
+        user-select: none;
+    }
 }

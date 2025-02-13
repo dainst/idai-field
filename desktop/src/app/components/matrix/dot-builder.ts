@@ -1,59 +1,86 @@
-import { isNot, includedIn, isDefined, isEmpty, flatMap, to, on, copy, is, not } from 'tsfun';
+import {
+    isNot,
+    includedIn,
+    isDefined,
+    isEmpty,
+    flatMap,
+    to,
+    on,
+    copy,
+    is,
+    not,
+} from 'tsfun';
 import { Document, CategoryForm, ProjectConfiguration } from 'idai-field-core';
 import { Edges } from './edges-builder';
-
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export module DotBuilder {
-
-    export function build(projectConfiguration: ProjectConfiguration,
-                          groups: { [group: string]: Array<Document> },
-                          edges: { [id: string]: Edges },
-                          curvedLineMode = true): string {
-
+    export function build(
+        projectConfiguration: ProjectConfiguration,
+        groups: { [group: string]: Array<Document> },
+        edges: { [id: string]: Edges },
+        curvedLineMode = true
+    ): string {
         const documents: Array<Document> = getDocuments(groups);
 
-        return 'digraph { newrank=true; '
-            + createNodeDefinitions(projectConfiguration, groups)
-            + createRootDocumentMinRankDefinition(documents, edges)
-            + createAboveEdgesDefinitions(documents, edges)
-            + createSameRankEdgesDefinitions(documents, edges)
-            + (!curvedLineMode ? ' splines=ortho }' : '}');
+        return (
+            'digraph { newrank=true; ' +
+            createNodeDefinitions(projectConfiguration, groups) +
+            createRootDocumentMinRankDefinition(documents, edges) +
+            createAboveEdgesDefinitions(documents, edges) +
+            createSameRankEdgesDefinitions(documents, edges) +
+            (!curvedLineMode ? ' splines=ortho }' : '}')
+        );
     }
 
-
-    function getDocuments(groups: { [group: string]: Array<Document> }): Array<Document> {
-
-        return flatMap<any, any>(group => groups[group])(Object.keys(groups))
+    function getDocuments(groups: {
+        [group: string]: Array<Document>;
+    }): Array<Document> {
+        return flatMap<any, any>((group) => groups[group])(Object.keys(groups));
     }
 
-
-    function createSameRankEdgesDefinitions(documents: Array<Document>,
-                                            edges: { [id: string]: Edges }): string {
-
+    function createSameRankEdgesDefinitions(
+        documents: Array<Document>,
+        edges: { [id: string]: Edges }
+    ): string {
         if (!hasSameRankEdges(edges)) return '';
 
-        const result: string =
-            documents
-                .reduce(([defs, processedSameRankTargetIds]: [Array<string|undefined>, string[]], document) => {
-                    const [def, updatedProcessedSameRankTargetIds] = createSameRankEdgesDefinition(
-                        documents, document, edges[document.resource.id], processedSameRankTargetIds
-                    );
-                    return [defs.concat(def), updatedProcessedSameRankTargetIds];
-                }, [[], []])[0]
-                .filter(isDefined)
-                .join(' ');
+        const result: string = documents
+            .reduce(
+                (
+                    [defs, processedSameRankTargetIds]: [
+                        Array<string | undefined>,
+                        string[]
+                    ],
+                    document
+                ) => {
+                    const [def, updatedProcessedSameRankTargetIds] =
+                        createSameRankEdgesDefinition(
+                            documents,
+                            document,
+                            edges[document.resource.id],
+                            processedSameRankTargetIds
+                        );
+                    return [
+                        defs.concat(def),
+                        updatedProcessedSameRankTargetIds,
+                    ];
+                },
+                [[], []]
+            )[0]
+            .filter(isDefined)
+            .join(' ');
 
         return result.length > 0 ? result + ' ' : result;
     }
 
-
-    function createAboveEdgesDefinitions(documents: Array<Document>,
-                                         edges: { [id: string]: Edges }): string {
-
+    function createAboveEdgesDefinitions(
+        documents: Array<Document>,
+        edges: { [id: string]: Edges }
+    ): string {
         const result: string = documents
             .map(createAboveEdgesDefinition(documents, edges))
             .filter(isDefined)
@@ -62,205 +89,280 @@ export module DotBuilder {
         return result.length > 0 ? result + ' ' : result;
     }
 
+    function createRootDocumentMinRankDefinition(
+        documents: Array<Document>,
+        edges: { [id: string]: Edges }
+    ): string {
+        const rootDocuments = documents.filter(
+            isRootDocument(documents, edges)
+        );
 
-    function createRootDocumentMinRankDefinition(documents: Array<Document>,
-                                                 edges: { [id: string]: Edges }): string {
-
-        const rootDocuments = documents.filter(isRootDocument(documents, edges));
-
-        return rootDocuments.length === 0 ? '' :
-            '{rank=min "'
-            + rootDocuments
-                .map(to(['resource','identifier']))
-                .join('", "')
-            + '"} ';
+        return rootDocuments.length === 0
+            ? ''
+            : '{rank=min "' +
+                  rootDocuments
+                      .map(to(['resource', 'identifier']))
+                      .join('", "') +
+                  '"} ';
     }
 
-
-    function createNodeDefinitions(projectConfiguration: ProjectConfiguration,
-                                   groups: { [group: string]: Array<Document> }): string {
-
-        return 'node [style=filled, fontname="Open SansVariable"] '
-            + Object
-                .keys(groups)
-                .map(group => createNodeDefinitionsForGroup(
-                    projectConfiguration, group, groups[group])
+    function createNodeDefinitions(
+        projectConfiguration: ProjectConfiguration,
+        groups: { [group: string]: Array<Document> }
+    ): string {
+        return (
+            'node [style=filled, fontname="Roboto"] ' +
+            Object.keys(groups)
+                .map((group) =>
+                    createNodeDefinitionsForGroup(
+                        projectConfiguration,
+                        group,
+                        groups[group]
+                    )
                 )
-                .join('');
+                .join('')
+        );
     }
 
-
-    function createNodeDefinitionsForGroup(projectConfiguration: ProjectConfiguration,
-                                           group: string, documents: Array<Document>): string {
-
-        const nodeDefinitions: string =
-            documents
-                .map(createNodeDefinition(projectConfiguration))
-                .join('');
+    function createNodeDefinitionsForGroup(
+        projectConfiguration: ProjectConfiguration,
+        group: string,
+        documents: Array<Document>
+    ): string {
+        const nodeDefinitions: string = documents
+            .map(createNodeDefinition(projectConfiguration))
+            .join('');
 
         return group === 'UNKNOWN'
             ? nodeDefinitions
-            : 'subgraph "cluster ' + group + '" '
-                + '{label="' + group + '" '
-                + 'fontname="Open SansVariable" '
-                + 'color=grey '
-                + 'bgcolor=aliceblue '
-                + 'style=dashed '
-                + nodeDefinitions + '} ';
+            : 'subgraph "cluster ' +
+                  group +
+                  '" ' +
+                  '{label="' +
+                  group +
+                  '" ' +
+                  'fontname="Roboto" ' +
+                  'color=grey ' +
+                  'bgcolor=aliceblue ' +
+                  'style=dashed ' +
+                  nodeDefinitions +
+                  '} ';
     }
 
-
-    function getRelationTargetIdentifiers(documents: Array<Document>, targetIds: string[]): string[] {
-
-        return targetIds
-            .map(findIdentifierIn(documents))
-            .filter(not(isEmpty))
+    function getRelationTargetIdentifiers(
+        documents: Array<Document>,
+        targetIds: string[]
+    ): string[] {
+        return targetIds.map(findIdentifierIn(documents)).filter(not(isEmpty));
     }
 
-
-    function isRootDocument(documents: Array<Document>, edges: { [id: string]: Edges },
-                            processedDocuments: string[] = []) {
-
+    function isRootDocument(
+        documents: Array<Document>,
+        edges: { [id: string]: Edges },
+        processedDocuments: string[] = []
+    ) {
         return (document: Document): boolean => {
-
             const documentEdges: Edges = edges[document.resource.id];
 
-            if (isEmpty(documentEdges.aboveIds) || !isEmpty(documentEdges.belowIds)) return false;
+            if (
+                isEmpty(documentEdges.aboveIds) ||
+                !isEmpty(documentEdges.belowIds)
+            )
+                return false;
 
             processedDocuments.push(document.resource.id);
 
-            return !isSameRankNonRootDocument(documents, documentEdges.sameRankIds, processedDocuments, edges);
-        }
+            return !isSameRankNonRootDocument(
+                documents,
+                documentEdges.sameRankIds,
+                processedDocuments,
+                edges
+            );
+        };
     }
 
-
-    function isSameRankNonRootDocument(documents: Array<Document>, sameRankRelationTargets: string[],
-                                       processedDocuments: string[], edges: { [id: string]: Edges }) {
-
-        return (undefined !==
+    function isSameRankNonRootDocument(
+        documents: Array<Document>,
+        sameRankRelationTargets: string[],
+        processedDocuments: string[],
+        edges: { [id: string]: Edges }
+    ) {
+        return (
+            undefined !==
             sameRankRelationTargets
                 .filter(isNot(includedIn(processedDocuments)))
-                .find(isNonRootDocument(documents, processedDocuments, edges)));
+                .find(isNonRootDocument(documents, processedDocuments, edges))
+        );
     }
 
-
-    function isNonRootDocument(documents: Array<Document>,
-                               processedDocuments: string[], edges: { [id: string]: Edges }) {
-
+    function isNonRootDocument(
+        documents: Array<Document>,
+        processedDocuments: string[],
+        edges: { [id: string]: Edges }
+    ) {
         return (targetId: string) => {
-
-            const targetDocument = documents.find(on(['resource','id'], is(targetId)));
-            return (targetDocument
-                && !isRootDocument(documents, edges, processedDocuments)(targetDocument)) === true;
-        }
+            const targetDocument = documents.find(
+                on(['resource', 'id'], is(targetId))
+            );
+            return (
+                (targetDocument &&
+                    !isRootDocument(
+                        documents,
+                        edges,
+                        processedDocuments
+                    )(targetDocument)) === true
+            );
+        };
     }
 
+    function createSameRankEdgesDefinition(
+        documents: Array<Document>,
+        document: Document,
+        edges: Edges,
+        processedSameRankTargetIds: string[]
+    ): [string | undefined, string[]] {
+        const targetIds: string[] | undefined = edges.sameRankIds.filter(
+            isNot(includedIn(processedSameRankTargetIds))
+        );
 
-    function createSameRankEdgesDefinition(documents: Array<Document>, document: Document, edges: Edges,
-                                           processedSameRankTargetIds: string[]): [string|undefined, string[]] {
+        const updatedProcessedSameRankTargetIds: string[] = copy(
+            processedSameRankTargetIds
+        ).concat(document.resource.id);
 
-        const targetIds: string[]|undefined = edges.sameRankIds
-            .filter(isNot(includedIn(processedSameRankTargetIds)));
+        if (isEmpty(targetIds))
+            return [undefined, copy(updatedProcessedSameRankTargetIds)];
 
-        const updatedProcessedSameRankTargetIds: string[] =
-            copy(processedSameRankTargetIds).concat(document.resource.id);
-
-        if (isEmpty(targetIds)) return [undefined, copy(updatedProcessedSameRankTargetIds)];
-
-        return [createEdgesDefinitions(targetIds, documents, document)
-            + ' '
-            + createSameRankDefinition(
-                getRelationTargetIdentifiers(documents, [document.resource.id].concat(targetIds))
-            ), updatedProcessedSameRankTargetIds];
+        return [
+            createEdgesDefinitions(targetIds, documents, document) +
+                ' ' +
+                createSameRankDefinition(
+                    getRelationTargetIdentifiers(
+                        documents,
+                        [document.resource.id].concat(targetIds)
+                    )
+                ),
+            updatedProcessedSameRankTargetIds,
+        ];
     }
 
-
-    function createEdgesDefinitions(targetIds: string[], documents: Document[], document: Document) {
-
+    function createEdgesDefinitions(
+        targetIds: string[],
+        documents: Document[],
+        document: Document
+    ) {
         return targetIds
-            .map(targetId => {
-                const targetIdentifiers = getRelationTargetIdentifiers(documents, [targetId]);
-                return targetIdentifiers.length === 0 ? '' :
-                    createEdgesDefinition(document.resource.identifier, targetIdentifiers)
-                    + ' [dir="none", class="same-rank-' + document.resource.id
-                    + ' same-rank-' + targetId + '"]';
+            .map((targetId) => {
+                const targetIdentifiers = getRelationTargetIdentifiers(
+                    documents,
+                    [targetId]
+                );
+                return targetIdentifiers.length === 0
+                    ? ''
+                    : createEdgesDefinition(
+                          document.resource.identifier,
+                          targetIdentifiers
+                      ) +
+                          ' [dir="none", class="same-rank-' +
+                          document.resource.id +
+                          ' same-rank-' +
+                          targetId +
+                          '"]';
             })
             .join(' ');
     }
 
-
     function createSameRankDefinition(targetIdentifiers: string[]): string {
-
         return '{rank=same "' + targetIdentifiers.join('", "') + '"}';
     }
 
-
     function findIdentifierIn(documents: Array<Document>) {
-
         return (id: string): string => {
-
-            const document: Document|undefined = documents.find(on(['resource','id'], is(id)));
+            const document: Document | undefined = documents.find(
+                on(['resource', 'id'], is(id))
+            );
             return document ? document.resource.identifier : '';
-        }
+        };
     }
 
-
-    function createAboveEdgesDefinition(documents: Array<Document>,
-                                        edges: { [id: string]: Edges }) {
-
-        return (document: Document): string|undefined => {
-
+    function createAboveEdgesDefinition(
+        documents: Array<Document>,
+        edges: { [id: string]: Edges }
+    ) {
+        return (document: Document): string | undefined => {
             const targetIds = edges[document.resource.id].aboveIds;
             if (targetIds.length === 0) return;
 
             return targetIds
-                .map(createEdgeDefinition(documents, document.resource.id, document.resource.identifier))
+                .map(
+                    createEdgeDefinition(
+                        documents,
+                        document.resource.id,
+                        document.resource.identifier
+                    )
+                )
                 .join(' ');
-        }
+        };
     }
 
-
-    function createEdgeDefinition(documents: Array<Document>, resourceId: string, resourceIdentifier: string) {
-
+    function createEdgeDefinition(
+        documents: Array<Document>,
+        resourceId: string,
+        resourceIdentifier: string
+    ) {
         return (targetId: string): string => {
-
-            return '"' + resourceIdentifier + '" -> "' + findIdentifierIn(documents)(targetId) + '"'
-                + ' [class="above-' + resourceId + ' below-' + targetId + '"'
-                + '  arrowsize="0.37" arrowhead="normal"]';
-        }
+            return (
+                '"' +
+                resourceIdentifier +
+                '" -> "' +
+                findIdentifierIn(documents)(targetId) +
+                '"' +
+                ' [class="above-' +
+                resourceId +
+                ' below-' +
+                targetId +
+                '"' +
+                '  arrowsize="0.37" arrowhead="normal"]'
+            );
+        };
     }
 
-
-    function createEdgesDefinition(resourceIdentifier: string, targetIdentifiers: string[]): string {
-
+    function createEdgesDefinition(
+        resourceIdentifier: string,
+        targetIdentifiers: string[]
+    ): string {
         return targetIdentifiers.length == 1
             ? '"' + resourceIdentifier + '" -> "' + targetIdentifiers[0] + '"'
-            : '"' + resourceIdentifier + '" -> {"' + targetIdentifiers.join('", "') + '"}';
+            : '"' +
+                  resourceIdentifier +
+                  '" -> {"' +
+                  targetIdentifiers.join('", "') +
+                  '"}';
     }
-
 
     function createNodeDefinition(projectConfiguration: ProjectConfiguration) {
-
         return (document: Document) => {
-
-            return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
-                + ' [id="node-' + document.resource.id + '" fillcolor="'
-                + projectConfiguration.getCategory(document).color
-                + '" color="'
-                + projectConfiguration.getCategory(document).color
-                + '" fontcolor="'
-                + CategoryForm.getTextColorForCategory(projectConfiguration.getCategory(document))
-                + '"] ';
-        }
+            return (
+                '"' +
+                document.resource.identifier +
+                '"' + // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
+                ' [id="node-' +
+                document.resource.id +
+                '" fillcolor="' +
+                projectConfiguration.getCategory(document).color +
+                '" color="' +
+                projectConfiguration.getCategory(document).color +
+                '" fontcolor="' +
+                CategoryForm.getTextColorForCategory(
+                    projectConfiguration.getCategory(document)
+                ) +
+                '"] '
+            );
+        };
     }
 
-
     function hasSameRankEdges(edges: { [id: string]: Edges }): boolean {
-
         return isDefined(
-                Object
-                    .values(edges)
-                    .find(not(on('sameRankIds', isEmpty)))
-            );
+            Object.values(edges).find(not(on('sameRankIds', isEmpty)))
+        );
     }
 }

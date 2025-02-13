@@ -75,6 +75,7 @@ export async function setupSettingsService(pouchdbDatastore, projectIdentifier =
         dbs: [projectIdentifier],
         selectedProject: '',
         imagestorePath: process.cwd() + '/test/test-temp/imagestore',
+        backupDirectoryPath: process.cwd() + '/test/test-temp/backups',
         username: 'synctestuser'
     });
 

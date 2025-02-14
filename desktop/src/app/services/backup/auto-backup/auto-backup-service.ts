@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ChangesStream } from 'idai-field-core';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 
@@ -17,8 +16,7 @@ export class AutoBackupService {
     private worker: Worker;
 
 
-    constructor(private settingsProvider: SettingsProvider,
-                private changesStream: ChangesStream) {}
+    constructor(private settingsProvider: SettingsProvider) {}
 
 
     public start() {
@@ -38,7 +36,5 @@ export class AutoBackupService {
             command: 'start',
             settings
         });
-
-        this.changesStream.changesNotifications().subscribe(() => this.triggerBackup());
     }
 }

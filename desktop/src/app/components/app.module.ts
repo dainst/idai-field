@@ -61,6 +61,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { WarningsService } from '../services/warnings/warnings-service';
 import { ProjectLabelProvider } from '../services/project-label-provider';
 import { AppState } from '../services/app-state';
+import { AutoBackupService } from '../services/backup/auto-backup-service';
 
 
 const remote = window.require('@electron/remote');
@@ -263,6 +264,7 @@ registerLocaleData(localeUk, 'uk');
         MenuModalLauncher,
         ViewModalLauncher,
         ProjectLabelProvider,
+        AutoBackupService,
         AppState,
         { provide: IMAGE_CONFIG, useValue: { disableImageSizeWarning: true, disableImageLazyLoadWarning: true } },
         provideHttpClient(withInterceptorsFromDi())

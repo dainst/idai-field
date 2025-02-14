@@ -12,6 +12,7 @@ import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
+import { AutoBackupService } from '../services/backup/auto-backup-service';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -38,6 +39,7 @@ export class AppComponent {
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
                 appState: AppState,
+                autoBackupService: AutoBackupService,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
@@ -73,11 +75,7 @@ export class AppComponent {
             this.menuModalLauncher.openUpdateUsernameModal(true);
         }
 
-        const projectName: string = settingsProvider.getSettings().selectedProject;
-        const backupDirectoryPath: string = settingsProvider.getSettings().backupDirectoryPath;
-        const worker = new Worker(new URL('./app.worker', import.meta.url));
-        worker.onmessage = ({ data }) => console.log(data);
-        worker.postMessage({ projectName, backupDirectoryPath });
+        autoBackupService.start();
     }
 
 

@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-const replicationStream = require('../../../node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream');
+const replicationStream = require('../../../../node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream');
 const stream = require('stream');
 const fs = require('fs');
 const PouchDB = require('pouchdb-browser').default;

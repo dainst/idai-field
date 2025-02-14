@@ -10,6 +10,7 @@ import { Settings } from './settings';
 import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';
 import { SettingsErrors } from './settings-errors';
+import { AutoBackupService } from '../backup/auto-backup/auto-backup-service';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 const remote = window.require('@electron/remote');
@@ -43,7 +44,8 @@ export class SettingsService {
                 private synchronizationService: SyncService,
                 private imageSyncService: ImageSyncService,
                 private settingsProvider: SettingsProvider,
-                private configReader: ConfigReader) {}
+                private configReader: ConfigReader,
+                private autoBackupService: AutoBackupService) {}
 
 
     public async bootProjectDb(selectedProject: string,
@@ -102,6 +104,8 @@ export class SettingsService {
         this.expressServer.setAllowLargeFileUploads(settings.allowLargeFileUploads);
 
         await this.settingsProvider.setSettingsAndSerialize(settings);
+
+        this.autoBackupService.updateSettings();
 
         return settings;
     }

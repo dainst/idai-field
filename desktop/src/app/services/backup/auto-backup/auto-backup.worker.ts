@@ -18,18 +18,21 @@ addEventListener('message', async ({ data }) => {
         case 'start':
             start(data.settings);
             break;
+        case 'updateSettings':
+            updateSettings(data.settings);
+            break;
     }
 });
 
 
 async function start(newSettings: AutoBackupSettings) {
 
-    initialize(newSettings);
+    updateSettings(newSettings);
     await run();
 }
 
 
-function initialize(newSettings: AutoBackupSettings) {
+function updateSettings(newSettings: AutoBackupSettings) {
 
     settings = newSettings;
     settingsUpdated = true;

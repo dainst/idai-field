@@ -21,21 +21,37 @@ export class AutoBackupService {
 
     public start() {
 
-        const settings: AutoBackupSettings = {
-            backupsInfoFilePath: remote.getGlobal('appDataPath') + '/backups.json',
-            backupDirectoryPath: this.settingsProvider.getSettings().backupDirectoryPath,
-            projects: this.settingsProvider.getSettings().dbs,
-            selectedProject: this.settingsProvider.getSettings().selectedProject,
-            interval: AUTO_BACKUP_INTERVAL
-        };
-
         this.worker = new Worker(new URL('./auto-backup.worker', import.meta.url));
 
         this.worker.onmessage = ({ data }) => console.log(data);
 
         this.worker.postMessage({
             command: 'start',
-            settings
+            settings: this.getSettings()
         });
     }
+
+
+    public updateSettings() {
+
+        if (!this.worker) return;
+
+        this.worker.postMessage({
+            command: 'updateSettings',
+            settings: this.getSettings()
+        });
+    }
+
+
+    private getSettings(): AutoBackupSettings {
+
+        return {
+            backupsInfoFilePath: remote.getGlobal('appDataPath') + '/backups.json',
+            backupDirectoryPath: this.settingsProvider.getSettings().backupDirectoryPath,
+            projects: this.settingsProvider.getSettings().dbs,
+            selectedProject: this.settingsProvider.getSettings().selectedProject,
+            interval: AUTO_BACKUP_INTERVAL
+        };
+    }
+
 }

@@ -4,6 +4,13 @@ const fs = require('fs');
 const PouchDb = require('pouchdb-browser').default;
 
 
+type Settings = {
+    backupsInfoFilePath: string;
+    backupDirectoryPath: string;
+    projects: string[];
+};
+
+
 type BackupsInfo = {
     backups: { [project: string]: Array<Backup> };
 };
@@ -16,39 +23,32 @@ type Backup = {
 };
 
 
+let settings: Settings;
 const projectQueue: string[] = [];
-
-let backupsInfoFilePath: string;
-let backupDirectoryPath: string;
-let projects: string[];
 
 
 addEventListener('message', async ({ data }) => {
 
-    const command: string = data.command;
-    if (data.settings?.backupsInfoFilePath) backupsInfoFilePath = data.settings.backupsInfoFilePath;
-    if (data.settings?.backupDirectoryPath) backupDirectoryPath = data.settings.backupDirectoryPath;
-    if (data.settings?.projects) projects = data.settings.projects;
-
-    switch (command) {
+    switch (data.command) {
         case 'start':
-            start();
+            start(data.settings);
             break;
     }
 });
 
 
-async function start() {
+async function start(newSettings: Settings) {
 
-    initialize();
+    initialize(newSettings);
     await update();
     await runNextInQueue();
 }
 
 
-function initialize() {
+function initialize(newSettings: Settings) {
 
-    if (!fs.existsSync(backupDirectoryPath)) fs.mkdirSync(backupDirectoryPath);
+    settings = newSettings;
+    if (!fs.existsSync(settings.backupDirectoryPath)) fs.mkdirSync(settings.backupDirectoryPath);
 }
 
 
@@ -56,7 +56,7 @@ async function update() {
 
     const backupsInfo: BackupsInfo = loadBackupsInfo();
 
-    for (let project of projects) {
+    for (let project of settings.projects) {
         if (await needsBackup(project, backupsInfo)) {
             projectQueue.push(project);
         }
@@ -101,7 +101,7 @@ async function needsBackup(project: string, backupsInfo: BackupsInfo): Promise<b
 function cleanUpBackupsInfo(backupsInfo: BackupsInfo) {
 
     Object.entries(backupsInfo.backups).forEach(([project, backups]) => {
-        backupsInfo.backups[project] = backups.filter(backup => fs.existsSync(backupDirectoryPath + '/' + backup.fileName));
+        backupsInfo.backups[project] = backups.filter(backup => fs.existsSync(settings.backupDirectoryPath + '/' + backup.fileName));
     });
 
     serializeBackupsInfo(backupsInfo);
@@ -113,7 +113,7 @@ async function createBackup(project: string) {
     const updateSequence: number = await getUpdateSequence(project);
     const creationDate: Date = new Date();
     const backupFileName: string = project + '_' + creationDate.toISOString().replace(/:/g, '-') + '.jsonl';
-    const backupFilePath: string = backupDirectoryPath + '/' + backupFileName;
+    const backupFilePath: string = settings.backupDirectoryPath + '/' + backupFileName;
 
     await createBackupInWorker(project, backupFilePath);
     addToBackupsInfo(project, backupFileName, updateSequence, creationDate);
@@ -153,15 +153,15 @@ function addToBackupsInfo(project: string, fileName: string, updateSequence: num
 
 function deserializeBackupsInfo(): BackupsInfo {
 
-    if (!fs.existsSync(backupsInfoFilePath)) return { backups: {} };
+    if (!fs.existsSync(settings.backupsInfoFilePath)) return { backups: {} };
 
-    return JSON.parse(fs.readFileSync(backupsInfoFilePath, 'utf-8'));
+    return JSON.parse(fs.readFileSync(settings.backupsInfoFilePath, 'utf-8'));
 }
 
 
 function serializeBackupsInfo(backupsInfo: BackupsInfo) {
 
-    fs.writeFileSync(backupsInfoFilePath, JSON.stringify(backupsInfo, null, 2));
+    fs.writeFileSync(settings.backupsInfoFilePath, JSON.stringify(backupsInfo, null, 2));
 }
 
 

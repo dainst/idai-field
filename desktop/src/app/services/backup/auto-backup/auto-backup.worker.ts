@@ -9,7 +9,6 @@ const PouchDb = require('pouchdb-browser').default;
 
 
 let settings: AutoBackupSettings;
-const projectQueue: string[] = [];
 
 
 addEventListener('message', async ({ data }) => {
@@ -25,8 +24,7 @@ addEventListener('message', async ({ data }) => {
 async function start(newSettings: AutoBackupSettings) {
 
     initialize(newSettings);
-    await update();
-    await runNextInQueue();
+    await run();
 }
 
 
@@ -37,26 +35,32 @@ function initialize(newSettings: AutoBackupSettings) {
 }
 
 
-async function update() {
+async function run() {
 
-    const backupsInfo: BackupsInfo = loadBackupsInfo();
+    const projectsToBackup: string[] = await getProjectsToBackup();
 
-    for (let project of settings.projects) {
-        if (await needsBackup(project, backupsInfo)) {
-            projectQueue.push(project);
-        }
+    for (let project of projectsToBackup) {
+        await createBackup(project);
     }
+
+    setTimeout(run, settings.interval);
 }
 
 
-async function runNextInQueue() {
+async function getProjectsToBackup() {
 
-    if (!projectQueue.length) return;
+    const backupsInfo: BackupsInfo = loadBackupsInfo();
+    const projects: string[] = settings.projects;
 
-    const project: string = projectQueue.shift();
-    await createBackup(project);
+    const result: string[] = [];
 
-    runNextInQueue();
+    for (let project of projects) {
+        if (await needsBackup(project, backupsInfo)) {
+            result.push(project);
+        }
+    }
+
+    return result;
 }
 
 

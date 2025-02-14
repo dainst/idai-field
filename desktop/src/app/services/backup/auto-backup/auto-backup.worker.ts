@@ -1,8 +1,8 @@
 /// <reference lib="webworker" />
 
-import { AutoBackupSettings } from './model/auto-backup-settings';
-import { Backup } from './model/backup';
-import { BackupsInfo } from './model/backups-info';
+import { AutoBackupSettings } from '../model/auto-backup-settings';
+import { Backup } from '../model/backup';
+import { BackupsInfo } from '../model/backups-info';
 
 const fs = require('fs');
 const PouchDb = require('pouchdb-browser').default;
@@ -108,7 +108,7 @@ async function createBackup(project: string) {
 async function createBackupInWorker(project: string, targetFilePath: string) {
 
     return new Promise<void>((resolve, reject) => {
-        const worker = new Worker((new URL('./create-backup.worker', import.meta.url)));
+        const worker = new Worker((new URL('../create-backup.worker', import.meta.url)));
         worker.onmessage = ({ data }) => {
             if (data.success) {
                 resolve();

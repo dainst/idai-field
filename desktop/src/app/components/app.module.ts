@@ -61,7 +61,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { WarningsService } from '../services/warnings/warnings-service';
 import { ProjectLabelProvider } from '../services/project-label-provider';
 import { AppState } from '../services/app-state';
-import { AutoBackupService } from '../services/backup/auto-backup-service';
+import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
 
 
 const remote = window.require('@electron/remote');

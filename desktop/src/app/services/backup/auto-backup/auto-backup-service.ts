@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SettingsProvider } from '../settings/settings-provider';
-import { AutoBackupSettings } from './model/auto-backup-settings';
+import { SettingsProvider } from '../../settings/settings-provider';
+import { AutoBackupSettings } from '../model/auto-backup-settings';
 
 const remote = window.require('@electron/remote');
 
@@ -12,6 +12,7 @@ const remote = window.require('@electron/remote');
 export class AutoBackupService {
 
     private worker: Worker;
+
 
     constructor(private settingsProvider: SettingsProvider) {}
 

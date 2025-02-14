@@ -12,7 +12,7 @@ import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
-import { AutoBackupService } from '../services/backup/auto-backup-service';
+import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;

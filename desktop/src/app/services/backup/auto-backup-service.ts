@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SettingsProvider } from '../settings/settings-provider';
 
+const remote = window.require('@electron/remote');
+
 
 @Injectable()
 /**
@@ -8,15 +10,25 @@ import { SettingsProvider } from '../settings/settings-provider';
  */
 export class AutoBackupService {
 
+    private worker: Worker;
+
     constructor(private settingsProvider: SettingsProvider) {}
 
 
     public start() {
 
-        const projectName: string = this.settingsProvider.getSettings().selectedProject;
+        const backupsInfoFilePath: string = remote.getGlobal('appDataPath') + '/backups.json';
         const backupDirectoryPath: string = this.settingsProvider.getSettings().backupDirectoryPath;
-        const worker = new Worker(new URL('./create-backup.worker', import.meta.url));
-        worker.onmessage = ({ data }) => console.log(data);
-        worker.postMessage({ projectName, backupDirectoryPath });
-    }    
+        this.worker = new Worker(new URL('./auto-backup.worker', import.meta.url));
+
+        this.worker.onmessage = ({ data }) => console.log(data);
+        this.worker.postMessage({
+            command: 'start',
+            settings: {
+                backupsInfoFilePath,
+                backupDirectoryPath,
+                projects: this.settingsProvider.getSettings().dbs
+            }
+        });
+    }
 }

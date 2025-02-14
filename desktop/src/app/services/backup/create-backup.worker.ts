@@ -10,16 +10,16 @@ suppressDeprecationWarnings();
 
 addEventListener('message', async ({ data }) => {
 
-    const projectName: string = data.projectName;
-    const backupDirectoryPath: string = data.backupDirectoryPath;
-    const targetFilePath: string = backupDirectoryPath + '/' + projectName + '.jsonl';
+    const project: string = data.project;
+    const targetFilePath: string = data.targetFilePath;
 
-    if (!fs.existsSync(backupDirectoryPath)) fs.mkdirSync(backupDirectoryPath);
+   try {
+        await dump(targetFilePath, project);
+    } catch (err) {
+        postMessage({ success: false, error: err });
+    }
 
-    await dump(targetFilePath, projectName);
-
-    const response = 'Backup of project ' + projectName + ' successful!';
-    postMessage(response);
+    postMessage({ success: true });
 });
 
 

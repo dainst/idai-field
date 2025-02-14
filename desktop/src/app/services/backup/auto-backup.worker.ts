@@ -1,29 +1,14 @@
 /// <reference lib="webworker" />
 
+import { AutoBackupSettings } from './model/auto-backup-settings';
+import { Backup } from './model/backup';
+import { BackupsInfo } from './model/backups-info';
+
 const fs = require('fs');
 const PouchDb = require('pouchdb-browser').default;
 
 
-type Settings = {
-    backupsInfoFilePath: string;
-    backupDirectoryPath: string;
-    projects: string[];
-};
-
-
-type BackupsInfo = {
-    backups: { [project: string]: Array<Backup> };
-};
-
-
-type Backup = {
-    fileName: string;
-    updateSequence: number;
-    creationDate: Date;
-};
-
-
-let settings: Settings;
+let settings: AutoBackupSettings;
 const projectQueue: string[] = [];
 
 
@@ -37,7 +22,7 @@ addEventListener('message', async ({ data }) => {
 });
 
 
-async function start(newSettings: Settings) {
+async function start(newSettings: AutoBackupSettings) {
 
     initialize(newSettings);
     await update();
@@ -45,7 +30,7 @@ async function start(newSettings: Settings) {
 }
 
 
-function initialize(newSettings: Settings) {
+function initialize(newSettings: AutoBackupSettings) {
 
     settings = newSettings;
     if (!fs.existsSync(settings.backupDirectoryPath)) fs.mkdirSync(settings.backupDirectoryPath);

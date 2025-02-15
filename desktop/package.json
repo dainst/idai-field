@@ -116,6 +116,7 @@
     "@angular/router": "19.0.5",
     "@electron/remote": "2.1.2",
     "@fontsource/open-sans": "^4.5.8",
+    "@fontsource/inter": "^4.2.2",
     "@geoman-io/leaflet-geoman-free": "2.10.0",
     "@hpcc-js/wasm-graphviz": "1.6.1",
     "@mapbox/geojson-rewind": "0.5.2",

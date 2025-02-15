@@ -2,41 +2,41 @@
  * @author: Thomas Kleinke
  */
 
-@import './layers/layer-menu';
+@import "./layers/layer-menu";
 
 #map-container {
-  z-index: 1008;
-  width: 100%;
-  height: calc(100vh - #{$navbar-height + $toolbar-height});
-  user-select: none;
-
-  .leaflet-control-zoom {
     z-index: 1008;
-    border: 1px solid rgba(0, 0, 0, 0.35) !important;
+    width: 100%;
+    height: calc(100vh - #{$navbar-height + $toolbar-height});
+    user-select: none;
 
-    .leaflet-control-zoom-in,
-    .leaflet-control-zoom-out {
-      font-family: 'Open SansVariable';
-      font-weight: normal;
-      cursor: default !important;
+    .leaflet-control-zoom {
+        z-index: 1008;
+        border: 1px solid rgba(0, 0, 0, 0.35) !important;
+
+        .leaflet-control-zoom-in,
+        .leaflet-control-zoom-out {
+            font-family: "InterVariable";
+            font-weight: normal;
+            cursor: default !important;
+        }
+
+        .leaflet-control-zoom-in {
+            border-top-left-radius: 4px !important;
+            border-top-right-radius: 4px !important;
+
+            border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
+
+            &:hover {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
+            }
+        }
+
+        .leaflet-control-zoom-out {
+            border-bottom-left-radius: 4px !important;
+            border-bottom-right-radius: 4px !important;
+        }
     }
-
-    .leaflet-control-zoom-in {
-      border-top-left-radius: 4px !important;
-      border-top-right-radius: 4px !important;
-
-      border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
-
-      &:hover {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.35) !important;
-      }
-    }
-
-    .leaflet-control-zoom-out {
-      border-bottom-left-radius: 4px !important;
-      border-bottom-right-radius: 4px !important;
-    }
-  }
 }
 
 #mouse-position-coordinates-x,
@@ -47,70 +47,70 @@
 #map-editor-button-add-polyline,
 #map-editor-button-add-point,
 #map-editor-button-drag {
-  position: absolute;
-  z-index: 1008;
+    position: absolute;
+    z-index: 1008;
 }
 
 #mouse-position-coordinates-x,
 #mouse-position-coordinates-y {
-  z-index: 1008;
-  left: 52px;
-  pointer-events: none;
+    z-index: 1008;
+    left: 52px;
+    pointer-events: none;
 }
 
 #mouse-position-coordinates-x {
-  z-index: 1008;
-  top: 11px;
+    z-index: 1008;
+    top: 11px;
 }
 
 #mouse-position-coordinates-y {
-  z-index: 1008;
-  top: 32px;
+    z-index: 1008;
+    top: 32px;
 }
 
 #map-editor-buttons {
-  z-index: 1008;
-
-  .mdi-24px {
-    position: relative;
-    bottom: 3px;
-  }
-
-  #map-editor-ok-abort-buttons {
     z-index: 1008;
-    position: absolute;
-    right: 8px;
-    bottom: 8px;
 
-    #map-editor-ok-button-group {
-      margin-right: 8px;
+    .mdi-24px {
+        position: relative;
+        bottom: 3px;
     }
-  }
 
-  #map-editor-button-delete,
-  #map-editor-button-delete-disabled,
-  #map-editor-button-add-polygon,
-  #map-editor-button-add-polyline,
-  #map-editor-button-add-point,
-  #map-editor-button-drag {
-    bottom: 8px;
-    height: 38px;
-    width: 38px;
-    padding: 3px;
-  }
+    #map-editor-ok-abort-buttons {
+        z-index: 1008;
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
 
-  #map-editor-button-delete,
-  #map-editor-button-delete-disabled {
-    left: 10px;
-  }
+        #map-editor-ok-button-group {
+            margin-right: 8px;
+        }
+    }
 
-  #map-editor-button-add-polygon,
-  #map-editor-button-add-polyline,
-  #map-editor-button-add-point {
-    left: 56px;
-  }
+    #map-editor-button-delete,
+    #map-editor-button-delete-disabled,
+    #map-editor-button-add-polygon,
+    #map-editor-button-add-polyline,
+    #map-editor-button-add-point,
+    #map-editor-button-drag {
+        bottom: 8px;
+        height: 38px;
+        width: 38px;
+        padding: 3px;
+    }
 
-  #map-editor-button-drag {
-    left: 102px;
-  }
+    #map-editor-button-delete,
+    #map-editor-button-delete-disabled {
+        left: 10px;
+    }
+
+    #map-editor-button-add-polygon,
+    #map-editor-button-add-polyline,
+    #map-editor-button-add-point {
+        left: 56px;
+    }
+
+    #map-editor-button-drag {
+        left: 102px;
+    }
 }

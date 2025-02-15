@@ -1,176 +1,196 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Field Desktop</title>
 
-    <title>Field Desktop</title>
+        <link rel="icon" href="favicon.png" type="image/png" />
 
-    <link rel="icon" href="favicon.png" type="image/png">
+        <style>
+            body {
+                margin: 0;
+            }
 
-    <style>
-        body {
-            margin: 0;
-        }
+            @keyframes init-fade-in {
+                0% {
+                    opacity: 0;
+                }
+                20% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
 
-        @keyframes init-fade-in {
-            0% {
+            #initialization {
+                position: absolute;
+                top: calc(50vh - 170px);
+                width: 100%;
+            }
+
+            #initialization.with-error-messages {
+                transition: top 1s;
+                top: calc(50vh - 268px);
+            }
+
+            #application-logo {
+                text-align: center;
+                margin-bottom: 15px;
+                animation: 1.5s ease-in-out init-fade-in;
+            }
+
+            .icon img {
+                width: 140px;
+                height: 140px;
+                -webkit-user-drag: none;
+                user-select: none;
+            }
+
+            #version-info {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 40px;
+                font-family: "Open SansVariable";
+                user-select: none;
+                animation: 1.5s ease-in-out init-fade-in;
+            }
+
+            #version-info-idai-field {
+                font-weight: bold;
+            }
+
+            #initialization-progress {
+                width: 500px;
+                position: absolute;
+                left: calc(50vw - 250px);
+                animation: 1.5s ease-in-out init-fade-in;
+            }
+
+            #initialization-info,
+            #initialization-detail-info {
+                width: 100%;
+                position: absolute;
+                left: 0;
+                text-align: center;
+                font-family: "Open SansVariable";
+                user-select: none;
+                animation: 1.5s ease-in-out init-fade-in;
+            }
+
+            #initialization-info {
+                margin-top: 42px;
+            }
+
+            #initialization-detail-info {
+                margin-top: 84px;
+            }
+
+            #initialization-info-project-name {
+                font-weight: bold;
+            }
+
+            #error-messages-container {
+                position: relative;
+                top: 92px;
+                width: 500px;
+                max-height: 138px;
+                margin: auto;
+                border: 1px solid rgba(0, 0, 0, 0.125) !important;
+                border-radius: 0.25rem !important;
                 opacity: 0;
+                transition: opacity 1s;
             }
-            20% {
+
+            #error-messages-header {
+                user-select: none;
+            }
+
+            #error-messages-body {
+                max-height: 88px;
+                overflow-y: auto;
+            }
+
+            #reload-button {
+                position: relative;
+                top: 25px;
+                width: fit-content;
+                margin: auto;
+                display: block;
                 opacity: 0;
+                transition: opacity 1s;
             }
-            100% {
-                opacity: 1;
+
+            #reload-button.with-error-messages {
+                top: 123px;
             }
-        }
+        </style>
 
-        #initialization {
-            position: absolute;
-            top: calc(50vh - 170px);
-            width: 100%;
-        }
+        <script>
+            window.__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
+            window.__Zone_disable_on_property = true; // disable patch onProperty such as onclick
+            window.__zone_symbol__UNPATCHED_EVENTS = [
+                "scroll",
+                "mousemove",
+                "pointermove",
+                "wheel",
+                "mouseout",
+                "pointerout",
+            ]; // disable patch specified eventNames
+        </script>
+    </head>
 
-        #initialization.with-error-messages {
-            transition: top 1s;
-            top: calc(50vh - 268px);
-        }
-
-        #application-logo {
-            text-align: center;
-            margin-bottom: 15px;
-            animation: 1.5s ease-in-out init-fade-in;
-        }
-
-        .icon img {
-            width: 140px;
-            height: 140px;
-            -webkit-user-drag: none;
-            user-select: none;
-        }
-
-        #version-info {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 40px;
-            font-family: 'Open SansVariable';
-            user-select: none;
-            animation: 1.5s ease-in-out init-fade-in;
-        }
-
-        #version-info-idai-field {
-            font-weight: bold;
-        }
-
-        #initialization-progress {
-            width: 500px;
-            position: absolute;
-            left: calc(50vw - 250px);
-            animation: 1.5s ease-in-out init-fade-in;
-        }
-
-        #initialization-info,
-        #initialization-detail-info {
-            width: 100%;
-            position: absolute;
-            left: 0;
-            text-align: center;
-            font-family: 'Open SansVariable';
-            user-select: none;
-            animation: 1.5s ease-in-out init-fade-in;
-        }
-
-        #initialization-info {
-            margin-top: 42px;
-        }
-
-        #initialization-detail-info {
-            margin-top: 84px;
-        }
-
-        #initialization-info-project-name {
-            font-weight: bold;
-        }
-
-        #error-messages-container {
-            position: relative;
-            top: 92px;
-            width: 500px;
-            max-height: 138px;
-            margin: auto;
-            border: 1px solid rgba(0, 0, 0, 0.125) !important;
-            border-radius: 0.25rem !important;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-
-        #error-messages-header {
-            user-select: none;
-        }
-
-        #error-messages-body {
-            max-height: 88px;
-            overflow-y: auto;
-        }
-
-        #reload-button {
-            position: relative;
-            top: 25px;
-            width: fit-content;
-            margin: auto;
-            display: block;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-
-        #reload-button.with-error-messages {
-            top: 123px;
-        }
-    </style>
-
-    <script>
-        window.__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
-        window.__Zone_disable_on_property = true; // disable patch onProperty such as onclick
-        window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'pointermove', 'wheel', 'mouseout', 'pointerout']; // disable patch specified eventNames
-    </script>
-</head>
-
-<body>
-    <idai-field-app>
-        <div id="initialization">
-            <div id="application-logo" class="icon">
-                <img src="img/logo.png">
+    <body>
+        <idai-field-app>
+            <div id="initialization">
+                <div id="application-logo" class="icon">
+                    <img src="img/logo.png" />
+                </div>
+                <div id="version-info">
+                    <span id="version-info-idai-field">Field Desktop</span>
+                    <span id="version-info-number">3.5.0</span>
+                </div>
+                <div id="initialization-progress" class="progress">
+                    <div
+                        id="initialization-progress-bar"
+                        class="progress-bar"
+                    ></div>
+                </div>
+                <div id="initialization-info">
+                    <span id="initialization-info-message-1"></span>
+                    <span id="initialization-info-project-name"></span>
+                    <span id="initialization-info-project-identifier"></span>
+                    <span id="initialization-info-message-2"></span>
+                </div>
+                <div id="initialization-detail-info"></div>
+                <div id="error-messages-container" class="card bg-light">
+                    <div id="error-messages-header" class="card-header"></div>
+                    <div id="error-messages-body" class="card-body"></div>
+                </div>
+                <div id="reload-button" class="btn btn-primary"></div>
             </div>
-            <div id="version-info">
-                <span id="version-info-idai-field">Field Desktop</span>
-                <span id="version-info-number">3.5.0</span>
-            </div>
-            <div id="initialization-progress" class="progress">
-                <div id="initialization-progress-bar" class="progress-bar"></div>
-            </div>
-            <div id="initialization-info">
-                <span id="initialization-info-message-1"></span>
-                <span id="initialization-info-project-name"></span>
-                <span id="initialization-info-project-identifier"></span>
-                <span id="initialization-info-message-2"></span>
-            </div>
-            <div id="initialization-detail-info"></div>
-            <div id="error-messages-container" class="card bg-light">
-                <div id="error-messages-header" class="card-header"></div>
-                <div id="error-messages-body" class="card-body"></div>
-            </div>
-            <div id="reload-button" class="btn btn-primary"></div>
-        </div>
 
-        <div id="font-preloading">
-            <span style="font-family: Open SansVariable; font-style: italic;"></span>
-            <span style="font-family: Open SansVariable; font-weight: lighter;"></span>
-            <span style="font-family: Open SansVariable; font-weight: 400;"></span>
-            <span style="font-family: Open SansVariable; font-weight: 500;"></span>
-            <span class="mdi mdi-home" style="opacity: 0;"></span>
-        </div>
-    </idai-field-app>
-</body>
+            <div id="font-preloading">
+                <span
+                    style="font-family: InterVariable; font-style: italic"
+                ></span>
+                <span
+                    style="font-family: InterVariable; font-weight: lighter"
+                ></span>
+                <span
+                    style="font-family: InterVariable; font-weight: 400"
+                ></span>
+                <span
+                    style="font-family: InterVariable; font-weight: 500"
+                ></span>
+                <span class="mdi mdi-home" style="opacity: 0"></span>
+            </div>
+        </idai-field-app>
+    </body>
 </html>

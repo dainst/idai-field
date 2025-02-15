@@ -1,72 +1,72 @@
 body {
-  font-family: 'Open SansVariable';
-  user-select: none;
-  overflow: hidden;
+    font-family: "InterVariable";
+    user-select: none;
+    overflow: hidden;
 }
 
 #modal-container {
-  background-color: white;
-  border-radius: 9px;
-  padding: 10px;
-  overflow: hidden;
+    background-color: white;
+    border-radius: 9px;
+    padding: 10px;
+    overflow: hidden;
 }
 
 #modal-container.with-border {
-  border: 1px solid;
-  border-color: #eaeaea;
-  margin: 10px;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    border: 1px solid;
+    border-color: #eaeaea;
+    margin: 10px;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
 }
 
 #heading {
-  margin-bottom: 15px;
-  font-size: 16px;
-  font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 #info-message {
-  height: 36px;
-  margin-bottom: 10px;
-  font-size: 15px;
+    height: 36px;
+    margin-bottom: 10px;
+    font-size: 15px;
 }
 
 #buttons {
-  text-align: right;
+    text-align: right;
 }
 
 .modal-button {
-  border: none;
-  border-radius: 2rem;
-  color: white;
-  font-weight: 400;
-  font-size: 16px;
-  padding: 6px 12px;
-  height: 38px;
-  outline: none;
-  transition: background-color 0.15s ease-in-out;
+    border: none;
+    border-radius: 2rem;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 6px 12px;
+    height: 38px;
+    outline: none;
+    transition: background-color 0.15s ease-in-out;
 }
 
 .success-button {
-  background-color: #28a745;
+    background-color: #28a745;
 }
 
 .success-button:hover {
-  background-color: #21884b;
+    background-color: #21884b;
 }
 
 .success-button:active {
-  background-color: #1e7e34;
+    background-color: #1e7e34;
 }
 
 .secondary-button {
-  margin-left: 3px;
-  background-color: #727b84;
+    margin-left: 3px;
+    background-color: #727b84;
 }
 
 .secondary-button:hover {
-  background-color: #8d959c;
+    background-color: #8d959c;
 }
 
 .secondary-button:active {
-  background-color: #545b62;
+    background-color: #545b62;
 }

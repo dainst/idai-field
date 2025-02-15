@@ -1,35 +1,8 @@
 <div class="resources-nav row bg-light">
-    <div class="d-flex"
-         [class.col-md-6]="!isInGridListView() || isInExtendedSearchMode()"
-         [class.col-md-12]="isInGridListView() && !isInExtendedSearchMode()">
-        <navigation></navigation>
-        <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
-             [class.document-limit-exceeded]="isDocumentLimitExceeded()">
-            <span *ngIf="viewFacade.getTotalDocumentCount() === 1"
-                  i18n="@@resources.searchResultsInfo.resourcesFound.single">
-                Eine Ressource gefunden
-            </span>
-            <span *ngIf="viewFacade.getTotalDocumentCount() !== 1"
-                  i18n="@@resources.searchResultsInfo.resourcesFound.multiple">
-                {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
-            </span>
-            <div *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
-                <span i18n="@@resources.searchResultsInfo.documentLimitExceeded">
-                    Limitiert auf {{viewFacade.getDocuments().length}} Ressourcen
-                </span>
-            </div>
-        </div>
-        <div *ngIf="isDocumentLimitExceeded()" id="remove-document-limit"
-             class="btn btn-warning btn-square" (click)="removeLimit()"
-             ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
-             i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemove">
-            <span class="mdi mdi-reload-alert"></span>
-        </div>
-    </div>
-
-    <div *ngIf="!isInGridListView() || isInExtendedSearchMode()" class="col-md-6 me-md-auto">
-        <div class="d-flex row">
-            <div id="search-bar-container" class="flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center w-100" >
+        <!-- Left Side: Search Bar and Buttons -->
+        <div *ngIf="!isInGridListView() || isInExtendedSearchMode()" class="d-flex">
+            <div id="search-bar-container">
                 <resources-search-bar [filterOptions]="filterOptions"
                                       [q]="getQueryString()"
                                       [categories]="getCategoryFilters()"
@@ -39,7 +12,7 @@
                 </resources-search-bar>
             </div>
 
-            <div *ngIf="!isInGridListView()" id="buttons-container">
+            <div *ngIf="!isInGridListView()" id="buttons-container" class="ms-2">
                 <div class="resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
@@ -72,8 +45,40 @@
                 </div>
             </div>
         </div>
+
+        <!-- Right Side: Other search -->
+        <div class="d-flex align-items-center">
+            <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
+                 [class.document-limit-exceeded]="isDocumentLimitExceeded()">
+                <span *ngIf="viewFacade.getTotalDocumentCount() === 1"
+                      i18n="@@resources.searchResultsInfo.resourcesFound.single">
+                    Eine Ressource gefunden
+                </span>
+                <span *ngIf="viewFacade.getTotalDocumentCount() !== 1"
+                      i18n="@@resources.searchResultsInfo.resourcesFound.multiple">
+                    {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
+                </span>
+                <div *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
+                    <span i18n="@@resources.searchResultsInfo.documentLimitExceeded">
+                        Limitiert auf {{viewFacade.getDocuments().length}} Ressourcen
+                    </span>
+                </div>
+            </div>
+
+            <div *ngIf="isDocumentLimitExceeded()" id="remove-document-limit"
+                 class="btn btn-warning btn-square ms-2" (click)="removeLimit()"
+                 ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
+                 i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemove">
+                <span class="mdi mdi-reload-alert"></span>
+            </div>
+
+            <div id="navigation" class="ms-3">
+                <navigation></navigation>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <div class="row resources-container">
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">

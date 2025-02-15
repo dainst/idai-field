@@ -1,11 +1,18 @@
 #search-bar {
   .input-group {
-    width: 100%;
+    width: 290px;
   }
 
   .search-bar-input {
     height: 38px;
     padding: 9px;
+    background-color: #F2F2F7;
+    border: 1px solid #D1D1D6;
+    border-radius: 12px  0% 0% 12px !important;
+  }
+
+  .search-bar::placeholder {
+    color: white !important;
   }
 
   .mdi-filter {

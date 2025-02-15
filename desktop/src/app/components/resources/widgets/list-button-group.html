@@ -1,63 +1,77 @@
 <div class="sidebar-list-button-group">
-    <div *ngIf="shouldShowQrCodeButton()"
-         class="btn btn-outline-primary"
-         ngbTooltip="QR-Code verwalten"
-         i18n-ngbTooltip="@@resources.contextMenu.editQrCode"
-         #qrCodeTooltip="ngbTooltip"
-         placement="right"
-         container="body"
-         (click)="openQrCodeEditor(); $event.stopPropagation();"
-         (mousedown)="qrCodeTooltip.close()">
+    <div
+        *ngIf="shouldShowQrCodeButton()"
+        class="btn btn-outline-primary"
+        ngbTooltip="QR-Code verwalten"
+        i18n-ngbTooltip="@@resources.contextMenu.editQrCode"
+        #qrCodeTooltip="ngbTooltip"
+        placement="right"
+        container="body"
+        (click)="openQrCodeEditor(); $event.stopPropagation();"
+        (mousedown)="qrCodeTooltip.close()"
+    >
         <span class="mdi mdi-qrcode"></span>
     </div>
 
-    <div *ngIf="shouldShowArrowBottomRight()"
-         class="btn btn-outline-primary hierarchy-button"
-         placement="right"
-         container="body"
-         ngbTooltip="Untergeordnete Ressourcen anzeigen"
-         i18n-ngbTooltip="@@resources.showChildResources.tooltip"
-         #arrowBottomRightTooltip="ngbTooltip"
-         (click)="moveInto(); $event.stopPropagation();"
-         (mousedown)="arrowBottomRightTooltip.close()">
-        <span [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0"
-              class="arrow-bottom-right sidebar-list-button-group-inner">
+    <div
+        *ngIf="shouldShowArrowBottomRight()"
+        class="btn btn-outline-primary hierarchy-button"
+        placement="right"
+        container="body"
+        ngbTooltip="Untergeordnete Ressourcen anzeigen"
+        i18n-ngbTooltip="@@resources.showChildResources.tooltip"
+        #arrowBottomRightTooltip="ngbTooltip"
+        (click)="moveInto(); $event.stopPropagation();"
+        (mousedown)="arrowBottomRightTooltip.close()"
+    >
+        <span
+            [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0"
+            class="mdi mdi-chevron-right mdi-24px 0sidebar-list-button-group-inner center-icon"
+        >
         </span>
     </div>
 
-    <div *ngIf="shouldShowArrowTopRightForSearchMode()"
-         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
-         ngbTooltip="Im Kontext der Maßnahme anzeigen"
-         #arrowTopRightForSearchmodeTooltip="ngbTooltip"
-         i18n-ngbTooltip="@@resources.showInOperationContext.tooltip"
-         placement="right"
-         container="body"
-         (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
-         (mousedown)="arrowTopRightForSearchmodeTooltip.close()">
-        <span class="arrow-top-right mdi-18px"></span>
+    <div
+        *ngIf="shouldShowArrowTopRightForSearchMode()"
+        class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
+        ngbTooltip="Im Kontext der Maßnahme anzeigen"
+        #arrowTopRightForSearchmodeTooltip="ngbTooltip"
+        i18n-ngbTooltip="@@resources.showInOperationContext.tooltip"
+        placement="right"
+        container="body"
+        (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
+        (mousedown)="arrowTopRightForSearchmodeTooltip.close()"
+    >
+        <span class="arrow-top-right mdi-24px"></span>
     </div>
 
-    <div *ngIf="shouldShowArrowUpForSearchMode()"
-         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
-         ngbTooltip="Im Kontext anzeigen"
-         #arrowUpTooltip="ngbTooltip"
-         i18n-ngbTooltip="@@resources.showInContext.tooltip"
-         placement="right"
-         container="body"
-         (click)="jumpToResourceInSameView(); $event.stopPropagation();"
-         (mousedown)="arrowUpTooltip.close()">
-        <span class="arrow-up mdi-16px"></span>
+    <div
+        *ngIf="shouldShowArrowUpForSearchMode()"
+        class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
+        ngbTooltip="Im Kontext anzeigen"
+        #arrowUpTooltip="ngbTooltip"
+        i18n-ngbTooltip="@@resources.showInContext.tooltip"
+        placement="right"
+        container="body"
+        (click)="jumpToResourceInSameView(); $event.stopPropagation();"
+        (mousedown)="arrowUpTooltip.close()"
+    >
+        <!-- <span class="arrow-up mdi-16px"></span> -->
+        <span class="mdi mdi-chevron-up mdi-24px"></span>
     </div>
 
-    <div *ngIf="shouldShowArrowTopRight()"
-         class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
-         ngbTooltip="Zur Maßnahme wechseln"
-         #arrowTopRightTooltip="ngbTooltip"
-         i18n-ngbTooltip="@@resources.jumpToView.tooltip"
-         placement="right"
-         container="body"
-         (click)="jumpToView(); $event.stopPropagation();"
-         (mousedown)="arrowTopRightTooltip.close()">
-        <span class="arrow-top-right mdi-18px"></span>
+    <div
+        *ngIf="shouldShowArrowTopRight()"
+        class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
+        ngbTooltip="Zur Maßnahme wechseln"
+        #arrowTopRightTooltip="ngbTooltip"
+        i18n-ngbTooltip="@@resources.jumpToView.tooltip"
+        placement="right"
+        container="body"
+        (click)="jumpToView(); $event.stopPropagation();"
+        (mousedown)="arrowTopRightTooltip.close()"
+    >
+        <!-- <span class="arrow-top-right mdi-18px"></span> -->
+        <span class="mdi mdi-pan-top-right mdi-24px"></span>
     </div>
 </div>

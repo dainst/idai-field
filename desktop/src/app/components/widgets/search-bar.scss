@@ -1,6 +1,10 @@
 #search-bar {
   .input-group {
-    width: 290px;
+    width: 100%;
+  }
+
+  ::placeholder{
+    color:#6e6e71;
   }
 
   .search-bar-input {
@@ -9,10 +13,6 @@
     background-color: #F2F2F7;
     border: 1px solid #D1D1D6;
     border-radius: 12px  0% 0% 12px !important;
-  }
-
-  .search-bar::placeholder {
-    color: white !important;
   }
 
   .mdi-filter {

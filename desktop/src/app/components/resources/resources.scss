@@ -45,6 +45,7 @@ $deactivated-button-color: lightgray;
   color: $deactivated-button-color;
 }
 
+
 .resources-nav {
   position: relative;
   z-index: 1009;
@@ -77,6 +78,17 @@ $deactivated-button-color: lightgray;
     }
   }
 }
+
+#info-and-button-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  #right-side-container.hierarchy-active {
+    margin-right: 20%;
+  }
+
 
 #search-results-info {
   @extend .alert;

@@ -1,81 +1,69 @@
 <div class="resources-nav row bg-light">
-    <div class="d-flex justify-content-between align-items-center w-100" >
+    <div class="d-flex align-items-center w-100">
         <!-- Left Side: Search Bar and Buttons -->
-        <div *ngIf="!isInGridListView() || isInExtendedSearchMode()" class="d-flex">
-            <div id="search-bar-container">
-                <resources-search-bar [filterOptions]="filterOptions"
-                                      [q]="getQueryString()"
-                                      [categories]="getCategoryFilters()"
-                                      [extendedSearch]="isInExtendedSearchMode()"
-                                      (onQueryStringChanged)="setQueryString($event)"
-                                      (onCategoriesChanged)="setCategoryFilters($event)">
-                </resources-search-bar>
-            </div>
+        <div id="left-side-container" class="d-flex flex-grow-1">
+            <div *ngIf="!isInGridListView() || isInExtendedSearchMode()" class="d-flex w-100">
+                <div id="search-bar-container">
+                    <resources-search-bar [filterOptions]="filterOptions" [q]="getQueryString()"
+                        [categories]="getCategoryFilters()" [extendedSearch]="isInExtendedSearchMode()"
+                        (onQueryStringChanged)="setQueryString($event)"
+                        (onCategoriesChanged)="setCategoryFilters($event)">
+                    </resources-search-bar>
+                </div>
 
-            <div *ngIf="!isInGridListView()" id="buttons-container" class="ms-2">
-                <div class="resources-mode-buttons">
-                    <button id="map-mode-button"
-                            (click)="switchMode('map')"
-                            ngbTooltip="Kartendarstellung"
-                            i18n-ngbTooltip="@@resources.tooltips.mode.map"
-                            placement="left"
-                            triggers="manual"
-                            #mapModeTooltip="ngbTooltip"
-                            (mouseover)="mapModeTooltip.open()"
-                            (mouseleave)="mapModeTooltip.close()"
-                            (mousedown)="mapModeTooltip.close()"
-                            class="btn btn-link btn-square m-0"
-                            [class.active]="isCurrentMode('map')">
-                        <span class="mdi mdi-map"></span>
-                    </button>
-                    <button id="list-mode-button"
-                            (click)="switchMode('list')"
-                            class="btn btn-link btn-square m-0"
-                            ngbTooltip="Listendarstellung"
-                            i18n-ngbTooltip="@@resources.tooltips.mode.list"
-                            placement="left"
-                            triggers="manual"
-                            #listModeTooltip="ngbTooltip"
-                            (mouseover)="listModeTooltip.open()"
-                            (mouseleave)="listModeTooltip.close()"
-                            (mousedown)="listModeTooltip.close()"
-                            [class.active]="isCurrentMode('list')">
-                        <span class="mdi mdi-table"></span>
-                    </button>
+                <div *ngIf="!isInGridListView()" id="buttons-container" class="ms-2">
+                    <div class="resources-mode-buttons">
+                        <button id="map-mode-button" (click)="switchMode('map')" ngbTooltip="Kartendarstellung"
+                            i18n-ngbTooltip="@@resources.tooltips.mode.map" placement="left" triggers="manual"
+                            #mapModeTooltip="ngbTooltip" (mouseover)="mapModeTooltip.open()"
+                            (mouseleave)="mapModeTooltip.close()" (mousedown)="mapModeTooltip.close()"
+                            class="btn btn-link btn-square m-0" [class.active]="isCurrentMode('map')">
+                            <span class="mdi mdi-map"></span>
+                        </button>
+                        <button id="list-mode-button" (click)="switchMode('list')" class="btn btn-link btn-square m-0"
+                            ngbTooltip="Listendarstellung" i18n-ngbTooltip="@@resources.tooltips.mode.list"
+                            placement="left" triggers="manual" #listModeTooltip="ngbTooltip"
+                            (mouseover)="listModeTooltip.open()" (mouseleave)="listModeTooltip.close()"
+                            (mousedown)="listModeTooltip.close()" [class.active]="isCurrentMode('list')">
+                            <span class="mdi mdi-table"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Right Side: Other search -->
-        <div class="d-flex align-items-center">
-            <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
-                 [class.document-limit-exceeded]="isDocumentLimitExceeded()">
-                <span *ngIf="viewFacade.getTotalDocumentCount() === 1"
-                      i18n="@@resources.searchResultsInfo.resourcesFound.single">
-                    Eine Ressource gefunden
-                </span>
-                <span *ngIf="viewFacade.getTotalDocumentCount() !== 1"
-                      i18n="@@resources.searchResultsInfo.resourcesFound.multiple">
-                    {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
-                </span>
-                <div *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
-                    <span i18n="@@resources.searchResultsInfo.documentLimitExceeded">
-                        Limitiert auf {{viewFacade.getDocuments().length}} Ressourcen
-                    </span>
+        <div id="right-side-container" class="d-flex flex-grow-1 justify-content-end" [ngClass]="{'hierarchy-active': isInExtendedSearchMode()}">
+            <div id="info-and-button-wrapper" class="position-relative d-flex align-items-center">
+                <div *ngIf="isDocumentLimitExceeded()" id="remove-document-limit"
+                    class="btn btn-warning btn-square ms-2" (click)="removeLimit()"
+                    ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
+                    i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemove">
+                    <span class="mdi mdi-reload-alert"></span>
                 </div>
-            </div>
 
-            <div *ngIf="isDocumentLimitExceeded()" id="remove-document-limit"
-                 class="btn btn-warning btn-square ms-2" (click)="removeLimit()"
-                 ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
-                 i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemove">
-                <span class="mdi mdi-reload-alert"></span>
+                <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info">
+                    <span *ngIf="viewFacade.getTotalDocumentCount() === 1"
+                        i18n="@@resources.searchResultsInfo.resourcesFound.single">
+                        Eine Ressource gefunden
+                    </span>
+                    <span *ngIf="viewFacade.getTotalDocumentCount() !== 1"
+                        i18n="@@resources.searchResultsInfo.resourcesFound.multiple">
+                        {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
+                    </span>
+                    <div *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
+                        <span i18n="@@resources.searchResultsInfo.documentLimitExceeded">
+                            Limitiert auf {{viewFacade.getDocuments().length}} Ressourcen
+                        </span>
+                    </div>
+                </div>
             </div>
 
             <div id="navigation" class="ms-3">
                 <navigation></navigation>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -83,10 +71,8 @@
 <div class="row resources-container">
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">
         <resources-map *ngIf="viewFacade.getMode() === 'map'"></resources-map>
-        <list *ngIf="viewFacade.getMode() === 'list'"
-              [documents]="viewFacade.getDocuments()"
-              [selectedDocument]="viewFacade.getSelectedDocument()"></list>
-        <grid-list *ngIf="viewFacade.getMode() === 'grid'"
-                   [documents]="viewFacade.getDocuments()"></grid-list>
+        <list *ngIf="viewFacade.getMode() === 'list'" [documents]="viewFacade.getDocuments()"
+            [selectedDocument]="viewFacade.getSelectedDocument()"></list>
+        <grid-list *ngIf="viewFacade.getMode() === 'grid'" [documents]="viewFacade.getDocuments()"></grid-list>
     </div>
 </div>

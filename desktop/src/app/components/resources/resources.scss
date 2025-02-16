@@ -86,7 +86,7 @@ $deactivated-button-color: lightgray;
   }
 
   #right-side-container.hierarchy-active {
-    margin-right: 20%;
+    margin-right: clamp(25px, 20%, 250px);
   }
 
 

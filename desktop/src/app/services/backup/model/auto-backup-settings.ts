@@ -5,4 +5,5 @@ export interface AutoBackupSettings {
     projects: string[];
     selectedProject: string;
     interval: number;
+    maxWorkers: number;
 }

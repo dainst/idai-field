@@ -5,6 +5,7 @@ import { AutoBackupSettings } from '../model/auto-backup-settings';
 const remote = window.require('@electron/remote');
 
 const AUTO_BACKUP_INTERVAL: number = 5000;
+const MAX_WORKERS: number = 3;
 
 
 @Injectable()
@@ -50,7 +51,8 @@ export class AutoBackupService {
             backupDirectoryPath: this.settingsProvider.getSettings().backupDirectoryPath,
             projects: this.settingsProvider.getSettings().dbs,
             selectedProject: this.settingsProvider.getSettings().selectedProject,
-            interval: AUTO_BACKUP_INTERVAL
+            interval: AUTO_BACKUP_INTERVAL,
+            maxWorkers: MAX_WORKERS
         };
     }
 

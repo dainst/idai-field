@@ -11,6 +11,10 @@ const PouchDb = require('pouchdb-browser').default;
 let settings: AutoBackupSettings;
 let settingsUpdated: boolean = false;
 
+const projectQueue: string[] = [];
+const idleWorkers: Array<Worker> = [];
+const activeWorkers: Array<Worker> = [];
+
 
 addEventListener('message', async ({ data }) => {
 
@@ -28,6 +32,7 @@ addEventListener('message', async ({ data }) => {
 async function start(newSettings: AutoBackupSettings) {
 
     updateSettings(newSettings);
+    createWorkers();
     await run();
 }
 
@@ -36,37 +41,96 @@ function updateSettings(newSettings: AutoBackupSettings) {
 
     settings = newSettings;
     settingsUpdated = true;
-    if (!fs.existsSync(settings.backupDirectoryPath)) fs.mkdirSync(settings.backupDirectoryPath);
+}
+
+
+function createWorkers() {
+
+    for (let i = 0; i < settings.maxWorkers; i++) {
+        idleWorkers.push(createWorker());
+    }
+}
+
+
+function createWorker() {
+
+    const worker = new Worker((new URL('../create-backup.worker', import.meta.url)));
+    worker.onmessage = ({ data }) => {
+        if (data.success) {
+            addToBackupsInfo(data.project, data.targetFilePath, data.updateSequence, data.creationDate);
+            onWorkerFinished(worker);
+        } else {
+            console.error('Error while creating backup file:', data.error);
+            onWorkerFinished(worker);
+        }
+    }
+
+    return worker;
+}
+
+
+function onWorkerFinished(worker: Worker) {
+
+    activeWorkers.splice(activeWorkers.indexOf(worker), 1);
+    idleWorkers.push(worker);
+
+    startNextWorker();
 }
 
 
 async function run() {
 
-    const projectsToBackup: string[] = await getProjectsToBackup(settingsUpdated);
-    settingsUpdated = false;
-
-    for (let project of projectsToBackup) {
-        await createBackup(project);
+    if (!activeWorkers.length && !projectQueue.length) {
+        await fillQueue(settingsUpdated);
+        startWorkers();
+        settingsUpdated = false;
     }
 
     setTimeout(run, settings.interval);
 }
 
 
-async function getProjectsToBackup(allProjects: boolean) {
+async function fillQueue(allProjects: boolean) {
 
     const backupsInfo: BackupsInfo = loadBackupsInfo();
     const projects: string[] = allProjects ? settings.projects : [settings.selectedProject];
 
-    const result: string[] = [];
-
     for (let project of projects) {
         if (await needsBackup(project, backupsInfo)) {
-            result.push(project);
+            projectQueue.push(project);
         }
     }
+}
 
-    return result;
+
+function startWorkers() {
+
+    let allRunning: boolean = false;
+    do {
+        allRunning = !startNextWorker();
+    } while (!allRunning);
+}
+
+
+function startNextWorker(): boolean {
+
+    if (!idleWorkers.length || !projectQueue.length) return false;
+
+    const project: string = projectQueue.shift();
+    const worker: Worker = idleWorkers.shift();
+    activeWorkers.push(worker);
+
+    if (!fs.existsSync(settings.backupDirectoryPath)) fs.mkdirSync(settings.backupDirectoryPath);
+
+    const creationDate: Date = new Date();
+
+    worker.postMessage({
+        project,
+        targetFilePath: getBackupFilePath(project, creationDate),
+        creationDate
+    });
+
+    return true;
 }
 
 
@@ -103,41 +167,20 @@ function cleanUpBackupsInfo(backupsInfo: BackupsInfo) {
 }
 
 
-async function createBackup(project: string) {
+function getBackupFilePath(project: string, creationDate: Date): string {
 
-    const updateSequence: number = await getUpdateSequence(project);
-    const creationDate: Date = new Date();
     const backupFileName: string = project + '_' + creationDate.toISOString().replace(/:/g, '-') + '.jsonl';
-    const backupFilePath: string = settings.backupDirectoryPath + '/' + backupFileName;
-
-    await createBackupInWorker(project, backupFilePath);
-    addToBackupsInfo(project, backupFileName, updateSequence, creationDate);
+    return settings.backupDirectoryPath + '/' + backupFileName;
 }
 
 
-async function createBackupInWorker(project: string, targetFilePath: string) {
-
-    return new Promise<void>((resolve, reject) => {
-        const worker = new Worker((new URL('../create-backup.worker', import.meta.url)));
-        worker.onmessage = ({ data }) => {
-            if (data.success) {
-                resolve();
-            } else {
-                reject(data.error);
-            }
-        }
-        worker.postMessage({ project, targetFilePath });
-    });
-}
-
-
-function addToBackupsInfo(project: string, fileName: string, updateSequence: number, creationDate: Date) {
+function addToBackupsInfo(project: string, targetFilePath: string, updateSequence: number, creationDate: Date) {
 
     const backupsInfo: BackupsInfo = deserializeBackupsInfo();
 
     if (!backupsInfo.backups[project]) backupsInfo.backups[project] = [];
     backupsInfo.backups[project].push({
-        fileName,
+        fileName: targetFilePath.split('/').pop(),
         updateSequence,
         creationDate
     });

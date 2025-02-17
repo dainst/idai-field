@@ -12,6 +12,7 @@ addEventListener('message', async ({ data }) => {
 
     const project: string = data.project;
     const targetFilePath: string = data.targetFilePath;
+    const creationDate: Date = data.creationDate;
 
    try {
         await dump(targetFilePath, project);
@@ -19,7 +20,13 @@ addEventListener('message', async ({ data }) => {
         postMessage({ success: false, error: err });
     }
 
-    postMessage({ success: true });
+    postMessage({
+        success: true,
+        project,
+        targetFilePath,
+        updateSequence: await getUpdateSequence(project),
+        creationDate
+    });
 });
 
 
@@ -46,4 +53,10 @@ function suppressDeprecationWarnings() {
     console.warn = function() {
       if (!arguments[0].includes('deprecated')) return warnFunction.apply(console, arguments);
     };
+}
+
+
+async function getUpdateSequence(project: string): Promise<number|undefined> {
+
+    return (await new PouchDB(project).info()).update_seq;
 }

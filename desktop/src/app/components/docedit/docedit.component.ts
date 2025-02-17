@@ -14,6 +14,7 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
+import { ChangesHistoryModalComponent } from '../widgets/change-history-modal.component';
 
 
 @Component({
@@ -205,6 +206,19 @@ export class DoceditComponent {
             this.loading.stop('docedit');
             this.operationInProgress = 'none';
         }
+    }
+
+    
+    public showChangeHistory() {
+
+        const modalRef: NgbModalRef = this.modalService.open( 
+            ChangesHistoryModalComponent, 
+            { animation: false, backdrop: 'static', keyboard: false, windowClass: 'history-modal-content' }
+        );
+        
+        modalRef.componentInstance.document = this.documentHolder.clonedDocument;
+        modalRef.componentInstance.documentCreation = this.documentHolder.clonedDocument.created;
+        modalRef.componentInstance.documentModificationList = this.documentHolder.clonedDocument.modified.slice();
     }
 
 

@@ -21,6 +21,7 @@ import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
+import { ChangesHistoryModalComponent } from '../widgets/change-history-modal.component';
 
 
 @Component({
@@ -193,22 +194,12 @@ export class ResourcesComponent implements OnDestroy {
 
     public async editQRCode(document: Document) {
 
-        try {
-            this.menuService.setContext(MenuContext.QR_CODE_EDITOR);
+        await this.openModal(document, QrCodeEditorModalComponent, MenuContext.QR_CODE_EDITOR);
+    }
 
-            const modalRef: NgbModalRef = this.modalService.open(
-                QrCodeEditorModalComponent,
-                { animation: false, backdrop: 'static', keyboard: false }
-            );
-            modalRef.componentInstance.document = document;
-            await modalRef.componentInstance.initialize();
-            AngularUtility.blurActiveElement();
-            await modalRef.result;
-        } catch (err) {
-            console.error(err);
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-        }
+    public async showHistory(document: Document) {
+        
+        await this.openModal(document, ChangesHistoryModalComponent, MenuContext.HISTORY_MODAL);
     }
 
 
@@ -447,6 +438,26 @@ export class ResourcesComponent implements OnDestroy {
             }
         } else {
             await this.routingService.jumpToResource(movedDocuments[0], false);
+        }
+    }
+
+
+    private async openModal(document: Document, componentClass: any, menuContext: MenuContext) {
+
+        try {
+            this.menuService.setContext(menuContext);
+            const modalRef: NgbModalRef = this.modalService.open(
+                componentClass,
+                { animation: false, backdrop: 'static', keyboard: false}
+            );
+            modalRef.componentInstance.document = document;
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 }

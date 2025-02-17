@@ -247,7 +247,8 @@ const createWindow = () => {
             enableRemoteModule: true,
             contextIsolation: false,
             preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),
-            webSecurity: global.mode === 'production'
+            webSecurity: global.mode === 'production',
+            backgroundThrottling: false
         },
         titleBarStyle: 'hiddenInset',
         title: 'Field Desktop'

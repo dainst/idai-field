@@ -9,7 +9,6 @@ const PouchDb = require('pouchdb-browser').default;
 
 
 let settings: AutoBackupSettings;
-let settingsUpdated: boolean = false;
 
 const projectQueue: string[] = [];
 const idleWorkers: Array<Worker> = [];
@@ -20,27 +19,20 @@ addEventListener('message', async ({ data }) => {
 
     switch (data.command) {
         case 'start':
-            start(data.settings);
+            settings = data.settings;
+            start();
             break;
         case 'updateSettings':
-            updateSettings(data.settings);
+            settings = data.settings;
             break;
     }
 });
 
 
-async function start(newSettings: AutoBackupSettings) {
+async function start() {
 
-    updateSettings(newSettings);
     createWorkers();
     await run();
-}
-
-
-function updateSettings(newSettings: AutoBackupSettings) {
-
-    settings = newSettings;
-    settingsUpdated = true;
 }
 
 
@@ -81,21 +73,19 @@ function onWorkerFinished(worker: Worker) {
 async function run() {
 
     if (!activeWorkers.length && !projectQueue.length) {
-        await fillQueue(settingsUpdated);
+        await fillQueue();
         startWorkers();
-        settingsUpdated = false;
     }
 
     setTimeout(run, settings.interval);
 }
 
 
-async function fillQueue(allProjects: boolean) {
+async function fillQueue() {
 
     const backupsInfo: BackupsInfo = loadBackupsInfo();
-    const projects: string[] = allProjects ? settings.projects : [settings.selectedProject];
 
-    for (let project of projects) {
+    for (let project of settings.projects) {
         if (await needsBackup(project, backupsInfo)) {
             projectQueue.push(project);
         }
@@ -117,7 +107,7 @@ function startNextWorker(): boolean {
     if (!idleWorkers.length || !projectQueue.length) return false;
 
     const project: string = projectQueue.shift();
-    const worker: Worker = idleWorkers.shift();
+    const worker: Worker = idleWorkers.pop();
     activeWorkers.push(worker);
 
     if (!fs.existsSync(settings.backupDirectoryPath)) fs.mkdirSync(settings.backupDirectoryPath);
@@ -148,9 +138,7 @@ async function needsBackup(project: string, backupsInfo: BackupsInfo): Promise<b
     const updateSequence = await getUpdateSequence(project);
     if (!updateSequence) return false;
 
-    const backups: Array<Backup> = backupsInfo.backups[project] ?? [];   
-    if (!backups.length) return true;
-     
+    const backups: Array<Backup> = backupsInfo.backups[project] ?? [];
     return backups.find(backup => {
         return updateSequence === backup.updateSequence;
     }) === undefined;

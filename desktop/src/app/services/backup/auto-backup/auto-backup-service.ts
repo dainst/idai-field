@@ -30,10 +30,12 @@ export class AutoBackupService {
             command: 'start',
             settings: this.getSettings()
         });
+
+        this.settingsProvider.settingsChangesNotifications().subscribe(() => this.updateSettings());
     }
 
 
-    public updateSettings() {
+    private updateSettings() {
 
         if (!this.worker) return;
 
@@ -54,5 +56,4 @@ export class AutoBackupService {
             maxWorkers: MAX_WORKERS
         };
     }
-
 }

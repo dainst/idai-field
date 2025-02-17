@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
-    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N,
-    validateUrl } from 'idai-field-core';
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N, validateUrl,
+    ObserverUtil } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
@@ -10,7 +11,6 @@ import { Settings } from './settings';
 import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';
 import { SettingsErrors } from './settings-errors';
-import { AutoBackupService } from '../backup/auto-backup/auto-backup-service';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 const remote = window.require('@electron/remote');
@@ -36,6 +36,9 @@ type validationMode = 'settings'|'synchronization'|'none';
  */
 export class SettingsService {
 
+    private changesObservers: Array<Observer<void>> = [];
+
+
     constructor(private imagestore: ImageStore,
                 private pouchdbDatastore: PouchdbDatastore,
                 private expressServer: ExpressServer,
@@ -44,8 +47,11 @@ export class SettingsService {
                 private synchronizationService: SyncService,
                 private imageSyncService: ImageSyncService,
                 private settingsProvider: SettingsProvider,
-                private configReader: ConfigReader,
-                private autoBackupService: AutoBackupService) {}
+                private configReader: ConfigReader) {}
+
+
+    public changesNotifications =
+        (): Observable<void> => ObserverUtil.register(this.changesObservers);
 
 
     public async bootProjectDb(selectedProject: string,
@@ -105,7 +111,7 @@ export class SettingsService {
 
         await this.settingsProvider.setSettingsAndSerialize(settings);
 
-        this.autoBackupService.updateSettings();
+        ObserverUtil.notify(this.changesObservers, null);
 
         return settings;
     }

@@ -50,12 +50,10 @@ export class SettingsService {
                 private configReader: ConfigReader) {}
 
 
-    public changesNotifications =
-        (): Observable<void> => ObserverUtil.register(this.changesObservers);
+    public changesNotifications = (): Observable<void> => ObserverUtil.register(this.changesObservers);
 
 
-    public async bootProjectDb(selectedProject: string,
-                               projectDocument?: Document,
+    public async bootProjectDb(selectedProject: string, projectDocument?: Document,
                                destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {

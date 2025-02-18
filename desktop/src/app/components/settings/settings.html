@@ -168,6 +168,31 @@
                             auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem
                             die erstellten Backup-Dateien abgelegt werden.
                         </div>
+                        <label class="control-label col-form-label"
+                               i18n="@@settings.backups.keep">Backup-Dateien aufbewahren</label>
+                        <div class="row">
+                            <div class="col-md-4 form-floating">
+                                <input id="daily-backups-input" type="number" min="1" [ngModel]="settings.keepBackups.daily"
+                                       (ngModelChange)="settings.keepBackups.daily = $event"
+                                        class="form-control">
+                                <label for="daily-backups-input"
+                                        i18n="@@settings.backups.keep.daily">Täglich</label>
+                            </div>
+                            <div class="col-md-4 form-floating">
+                                <input id="weekly-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.weekly"
+                                       (ngModelChange)="settings.keepBackups.weekly = $event"
+                                       class="form-control">
+                                <label for="weekly-backups-input"
+                                       i18n="@@settings.backups.keep.weekly">Wöchentlich</label>
+                            </div>
+                            <div class="col-md-4 form-floating">
+                                <input id="monthly-backups-input" type="number" min="0"[ngModel]="settings.keepBackups.monthly"
+                                       (ngModelChange)="settings.keepBackups.monthly = $event"
+                                        class="form-control">
+                                <label for="monthly-backups-input"
+                                        i18n="@@settings.backups.keep.monthly">Monatlich</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

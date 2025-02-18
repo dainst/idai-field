@@ -141,6 +141,8 @@ function startNextWorker(): boolean {
 
 async function needsBackup(project: string, backupsInfo: BackupsInfo): Promise<boolean> {
 
+    if (project === 'test') return false;
+
     const updateSequence = await getUpdateSequence(project);
     if (!updateSequence) return false;
 

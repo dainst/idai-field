@@ -69,19 +69,29 @@ function onWorkerFinished(worker: Worker) {
     activeWorkers.splice(activeWorkers.indexOf(worker), 1);
     idleWorkers.push(worker);
 
-    startNextWorker();
+    if (!activeWorkers.length && !projectQueue.length) {
+        postMessage({ running: false });
+    } else {
+        startNextWorker();
+    }
 }
 
 
 async function run() {
 
     if (!activeWorkers.length && !projectQueue.length) {
+        postMessage({ running: true });
+
         const backupsInfo: BackupsInfo = deserializeBackupsInfo();
         deleteOldBackups(backupsInfo);
         cleanUpBackupsInfo(backupsInfo);
         serializeBackupsInfo(backupsInfo);
         await fillQueue(backupsInfo);
         startWorkers();
+
+        if (!activeWorkers.length && !projectQueue.length) {
+            postMessage({ running: false });
+        }
     }
 
     setTimeout(run, settings.interval);

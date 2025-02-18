@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
+import { ObserverUtil } from 'idai-field-core';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 
@@ -14,17 +16,26 @@ const AUTO_BACKUP_INTERVAL: number = 5000;
  */
 export class AutoBackupService {
 
+    public running: boolean = false;
+
     private worker: Worker;
+    private stopObservers: Array<Observer<void>> = [];
 
 
     constructor(private settingsProvider: SettingsProvider) {}
+
+
+    public stopNotifications = (): Observable<void> => ObserverUtil.register(this.stopObservers);
 
 
     public start() {
 
         this.worker = new Worker(new URL('./auto-backup.worker', import.meta.url));
 
-        this.worker.onmessage = ({ data }) => console.log(data);
+        this.worker.onmessage = ({ data }) => {
+            this.running = data.running;
+            if (!this.running) ObserverUtil.notify(this.stopObservers, null);
+        };
 
         this.worker.postMessage({
             command: 'start',

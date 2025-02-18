@@ -13,6 +13,9 @@ import { ConfigurationChangeNotifications } from './configuration/notifications/
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
 import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
+import { QuittingModalComponent } from './widgets/quitting-modal.component';
+import { Modals } from '../services/modals';
+import { MenuContext } from '../services/menu-context';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -32,6 +35,9 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
+    private closing: boolean = false;
+
+
     constructor(router: Router,
                 menuNavigator: MenuNavigator,
                 appController: AppController,
@@ -39,13 +45,14 @@ export class AppComponent {
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
                 appState: AppState,
-                autoBackupService: AutoBackupService,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
                 private menuModalLauncher: MenuModalLauncher,
-                private datastore: Datastore) {
+                private datastore: Datastore,
+                private autoBackupService: AutoBackupService,
+                private modals: Modals) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -75,13 +82,13 @@ export class AppComponent {
             this.menuModalLauncher.openUpdateUsernameModal(true);
         }
 
-        autoBackupService.start();
+        this.autoBackupService.start();
     }
 
 
     private listenToSettingsChangesFromMenu() {
 
-        ipcRenderer.on('settingChanged', async (event: any, setting: string, newValue: boolean) => {
+        ipcRenderer.on('settingChanged', async (_: any, setting: string, newValue: boolean) => {
             const settings: Settings = this.settingsProvider.getSettings();
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
@@ -93,7 +100,16 @@ export class AppComponent {
     private handleCloseRequests() {
 
         ipcRenderer.on('requestClose', () => {
-            if (!this.datastore.updating) ipcRenderer.send('close');
+            if (this.closing || this.datastore.updating) return;
+            if (this.autoBackupService.running) {
+                this.closing = true;
+                this.modals.make<QuittingModalComponent>(
+                    QuittingModalComponent, MenuContext.MODAL, undefined, undefined, false
+                );
+                this.autoBackupService.stopNotifications().subscribe(() => ipcRenderer.send('close'));
+            } else {
+                ipcRenderer.send('close');
+            }
         });
     }
 

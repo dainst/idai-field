@@ -3,9 +3,9 @@ import { SettingsProvider } from '../../settings/settings-provider';
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 
 const remote = window.require('@electron/remote');
+const os = window.require('os');
 
 const AUTO_BACKUP_INTERVAL: number = 5000;
-const MAX_WORKERS: number = 3;
 
 
 @Injectable()
@@ -54,7 +54,23 @@ export class AutoBackupService {
             projects: this.settingsProvider.getSettings().dbs,
             keepBackups: this.settingsProvider.getSettings().keepBackups,
             interval: AUTO_BACKUP_INTERVAL,
-            maxWorkers: MAX_WORKERS
+            maxWorkers: this.getMaxWorkers()
         };
+    }
+
+
+    private getMaxWorkers(): number {
+
+        const cores: any[] = os.cpus() ?? [];
+
+        console.log('CPU Cores:', cores);
+
+        if (cores.length < 4) {
+            return 1;
+        } else if (cores.length < 8) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 }

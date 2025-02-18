@@ -39,6 +39,8 @@ async function start() {
 
 function createWorkers() {
 
+    console.log('Max backup workers:', settings.maxWorkers);
+
     for (let i = 0; i < settings.maxWorkers; i++) {
         idleWorkers.push(createWorker());
     }

@@ -52,6 +52,7 @@ export class AutoBackupService {
             backupsInfoFilePath: remote.getGlobal('appDataPath') + '/backups.json',
             backupDirectoryPath: this.settingsProvider.getSettings().backupDirectoryPath,
             projects: this.settingsProvider.getSettings().dbs,
+            keepBackups: this.settingsProvider.getSettings().keepBackups,
             interval: AUTO_BACKUP_INTERVAL,
             maxWorkers: MAX_WORKERS
         };

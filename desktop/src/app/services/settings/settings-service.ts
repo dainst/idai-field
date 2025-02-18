@@ -109,6 +109,10 @@ export class SettingsService {
         this.expressServer.setPassword(settings.hostPassword);
         this.expressServer.setAllowLargeFileUploads(settings.allowLargeFileUploads);
 
+        if (settings.keepBackups.daily < 1) settings.keepBackups.daily = 1;
+        if (settings.keepBackups.weekly < 0) settings.keepBackups.weekly = 0;
+        if (settings.keepBackups.monthly < 0) settings.keepBackups.monthly = 0;
+
         await this.settingsProvider.setSettingsAndSerialize(settings);
 
         ObserverUtil.notify(this.changesObservers, null);

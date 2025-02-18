@@ -1,5 +1,6 @@
 import { I18N } from 'idai-field-core';
 import { SyncTarget } from './sync-target';
+import { KeepBackupsSettings } from './keep-backups-settings';
 
 const remote = window.require('@electron/remote');
 
@@ -19,6 +20,7 @@ export interface Settings {
     hideHiddenFieldsInConfigurationEditor?: boolean;
     highlightCustomElements?: boolean;
     allowLargeFileUploads?: boolean;
+    keepBackups: KeepBackupsSettings;
 }
 
 

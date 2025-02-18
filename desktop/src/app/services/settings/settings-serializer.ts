@@ -56,6 +56,10 @@ export class SettingsSerializer {
             configToWrite['projectNames'] = settings.projectNames;
         }
 
+        if (settings.keepBackups) {
+            configToWrite['keepBackups'] = settings.keepBackups;
+        } 
+
         return this.writeConfigFile(configToWrite);
     }
 

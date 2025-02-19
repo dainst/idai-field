@@ -1,44 +1,42 @@
 <div id="list">
-    <div *ngIf="categoriesMap">
-        <div id="list-header">
-            <div class="list-header-field" i18n="@@resources.list.headers.category">Kategorie</div>
-            <div class="list-header-field" i18n="@@resources.list.headers.identifier">Bezeichner</div>
-            <div class="list-header-field">
-                <span i18n="@@resources.list.headers.shortDescription">Kurzbeschreibung</span>
-                <span class="list-header-language-label"></span>
-                <div *ngIf="selectedLanguage" id="list-languages-dropdown" class="dropdown"
-                    ngbDropdown placement="bottom-right" role="group">
-                    <button *ngIf="availableLanguages.length > 1" class="btn btn-link" ngbDropdownToggle>
-                        <span id="selected-language-label">
-                            {{selectedLanguage.label}}
-                        </span>
-                    </button>
-                    <div id="list-languages-dropdown-menu" class="dropdown-menu" ngbDropdownMenu>
-                        <div id="list-languages-dropdown-list">
-                            <button *ngFor="let language of getUnselectedLanguages()"
-                                    class="dropdown-item"
-                                    (click)="selectLanguage(language)">
-                                {{language.label}}
-                            </button>
-                        </div>
+    <div id="list-header">
+        <div class="list-header-field" i18n="@@resources.list.headers.category">Kategorie</div>
+        <div class="list-header-field" i18n="@@resources.list.headers.identifier">Bezeichner</div>
+        <div class="list-header-field">
+            <span i18n="@@resources.list.headers.shortDescription">Kurzbeschreibung</span>
+            <span class="list-header-language-label"></span>
+            <div *ngIf="selectedLanguage" id="list-languages-dropdown" class="dropdown"
+                ngbDropdown placement="bottom-right" role="group">
+                <button *ngIf="availableLanguages.length > 1" class="btn btn-link" ngbDropdownToggle>
+                    <span id="selected-language-label">
+                        {{selectedLanguage.label}}
+                    </span>
+                </button>
+                <div id="list-languages-dropdown-menu" class="dropdown-menu" ngbDropdownMenu>
+                    <div id="list-languages-dropdown-list">
+                        <button *ngFor="let language of getUnselectedLanguages()"
+                                class="dropdown-item"
+                                (click)="selectLanguage(language)">
+                            {{language.label}}
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="list-header-field"></div>
-            <div id="header-placeholder" class="list-header-field"></div>
         </div>
-        <div id="list-body">
-            <cdk-virtual-scroll-viewport [itemSize]="itemSize">
-                <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
-                    <row [document]="document"
-                         [category]="getCategory(document)"
-                         [availableLanguages]="availableLanguages"
-                         [selectedLanguage]="selectedLanguage"
-                         [shortDescriptionValuelist]="getShortDescriptionValuelist(document)"
-                         [shortDescriptionValues]="getShortDescriptionValues(document)"></row>
-                </div>
-            </cdk-virtual-scroll-viewport>
-        </div>
+        <div class="list-header-field"></div>
+        <div id="header-placeholder" class="list-header-field"></div>
+    </div>
+    <div id="list-body">
+        <cdk-virtual-scroll-viewport [itemSize]="itemSize">
+            <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
+                <row [document]="document"
+                        [category]="getCategory(document)"
+                        [availableLanguages]="availableLanguages"
+                        [selectedLanguage]="selectedLanguage"
+                        [shortDescriptionValuelist]="getShortDescriptionValuelist(document)"
+                        [shortDescriptionValues]="getShortDescriptionValues(document)"></row>
+            </div>
+        </cdk-virtual-scroll-viewport>
     </div>
 </div>
 <div id="list-background" class="bg-light">

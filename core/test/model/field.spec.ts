@@ -62,12 +62,12 @@ import { Field } from '../../src/model/configuration/field';
         )).toBe(true);
 
         expect(Field.isValidFieldData(
-            { liesWithin: ['a', 'b'] },
+            ['a', 'b'],
             makeField(Field.InputType.RELATION)
         )).toBe(true);
 
         expect(Field.isValidFieldData(
-            { isInstanceOf: ['a', 'b'] },
+            ['a', 'b'],
             makeField(Field.InputType.INSTANCE_OF)
         )).toBe(true);
     });

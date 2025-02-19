@@ -98,6 +98,8 @@ export module Field {
                 return isString(fieldData) || isObject(fieldData);
             case InputType.SIMPLE_MULTIINPUT:
             case InputType.CHECKBOXES:
+            case InputType.RELATION:
+            case InputType.INSTANCE_OF:
                 return isArray(fieldData) && fieldData.every(element => isString(element));
             case InputType.MULTIINPUT:
                 return isArray(fieldData) && fieldData.every(element => isString(element) || isObject(element));
@@ -137,11 +139,6 @@ export module Field {
                 });
             case InputType.GEOMETRY:
                 return fieldData.type !== undefined && fieldData.coordinates !== undefined;
-            case InputType.RELATION:
-            case InputType.INSTANCE_OF:
-                return isObject(fieldData) && Object.values(fieldData).every(relationTargets => {
-                    return isArray(relationTargets) && relationTargets.every(element => isString(element));
-                });
             default:
                 return true;
         }

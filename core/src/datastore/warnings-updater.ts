@@ -26,7 +26,8 @@ export module WarningsUpdater {
     const FIELDS_TO_SKIP = [
         Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE,
         ImageResource.GEOREFERENCE, ImageResource.ORIGINAL_FILENAME
-    ];
+    ].concat(Relation.Hierarchy.ALL)
+    .concat(Relation.Image.ALL);
 
 
     /**
@@ -193,6 +194,8 @@ export module WarningsUpdater {
         const warnings: RelationTargetWarnings = { relationNames: [], targetIds: [] };
 
         for (let relationName of getRelationNames(document)) {
+            if (document.warnings?.unconfiguredFields.includes(relationName)) continue;
+
             for (let targetId of document.resource.relations[relationName]) {
                 const targetDocument: Document = documentCache.get(targetId);
                 if (!targetDocument) continue;
@@ -490,10 +493,13 @@ export module WarningsUpdater {
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
 
         return Object.keys(document.resource)
+            .concat(Object.keys(document.resource.relations))
             .filter(fieldName => !FIELDS_TO_SKIP.includes(fieldName))
             .reduce((result, fieldName) => {
-                const fieldContent: any = document.resource[fieldName];
                 const field: Field = fieldDefinitions.find(on(Named.NAME, is(fieldName)));
+                const fieldContent: any = field && Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field?.inputType)
+                    ? document.resource.relations[fieldName]
+                    : document.resource[fieldName];
                 updateWarningsForField(warnings, fieldName, field, fieldContent);
                 return result;
             }, warnings);

@@ -185,8 +185,12 @@
                     <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'"
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
-                        <div *ngIf="section.dataLabel" class="data-info-content" [innerHTML]="section.dataLabel"></div>
-                        <div *ngIf="!section.dataLabel" class="data-info-content"
+                        <div *ngIf="section.dataLabel && !section.isRelationField" class="data-info-content" [innerHTML]="section.dataLabel"></div>
+                        <div *ngIf="section.isRelationField" class="data-info-content">
+                            <document-teaser *ngFor="let targetDocument of section.relationTargets"
+                                             [document]="targetDocument"></document-teaser>
+                        </div>
+                        <div *ngIf="!section.dataLabel && !section.isRelationField" class="data-info-content"
                              i18n="@@navbar.taskbar.warnings.fieldData.none"><i>Keine</i></div>
                     </div>
                     <div *ngIf="section.type === 'unconfiguredCategory'" class="data-info">

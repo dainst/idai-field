@@ -217,6 +217,7 @@ export module Field {
         export const SUBFIELD_INPUT_TYPES: Array<InputType> = [INPUT, SIMPLE_INPUT, TEXT, BOOLEAN, DROPDOWN, RADIO,
             CHECKBOXES, FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
         export const RELATION_INPUT_TYPES: Array<InputType> = [RELATION, INSTANCE_OF, DERIVED_RELATION];
+        export const EDITABLE_RELATION_INPUT_TYPES: Array<InputType> = [RELATION, INSTANCE_OF];
 
         const INTERCHANGEABLE_INPUT_TYPES: Array<Array<InputType>> = [
             [INPUT, SIMPLE_INPUT, TEXT, DROPDOWN, RADIO],

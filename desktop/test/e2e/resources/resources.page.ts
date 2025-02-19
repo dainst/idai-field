@@ -400,10 +400,10 @@ export class ResourcesPage {
 
 
     public static async performCreateRelation(identifier: string, targetIdentifier: string,
-                                              relationName: string) {
+                                              relationName: string, timeTab: boolean = false) {
 
         await this.openEditByDoubleClickResource(identifier);
-        await DoceditPage.clickGotoTimeTab();
+        if (timeTab) await DoceditPage.clickGotoTimeTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex(relationName);
         await DoceditRelationsPage.typeInRelation(relationName, targetIdentifier);
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);

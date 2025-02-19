@@ -515,7 +515,7 @@ test.describe('resources/state --', () => {
         await ResourcesPage.performCreateResource('c4', 'feature');
         await ResourcesPage.clickHierarchyButton('c4');
         await ResourcesPage.performCreateResource('c5', 'feature');
-        await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith');
+        await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith', true);
 
         await ResourcesPage.clickSelectResource('c5');
         await FieldsViewPage.clickAccordionTab(1);

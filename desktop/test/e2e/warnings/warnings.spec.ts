@@ -96,6 +96,32 @@ test.describe('warnings --', () => {
     }
 
 
+    async function createUnconfiguredRelationFieldWarnings(resourceIdentifiers: string[], relationName: string) {
+
+        await navigateTo('configuration');
+        await ConfigurationPage.createRelation(
+            'Place', relationName, relationName, ['Trench'], ['Operation']
+        );
+
+        const completeRelationName: string =  'test:' + relationName;
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        for (let identifier of resourceIdentifiers) {
+            await ResourcesPage.performCreateResource(identifier, 'place');
+            await ResourcesPage.performCreateRelation(identifier, 'S1', completeRelationName);
+        }
+
+        await navigateTo('configuration');
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickOpenContextMenuForField(completeRelationName);
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        await ConfigurationPage.clickConfirmFieldDeletionButton();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+    }
+
+
     async function createInvalidFieldDataWarnings(resourceIdentifiers: string[], fieldName: string,
                                                   inputValue: string, inputType: Field.InputType) {
 
@@ -653,6 +679,44 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickDeleteFieldDataButton(0);
         await DeleteModalPage.clickMultipleSwitch();
         await DeleteModalPage.typeInConfirmValue('test:field');
+        await DeleteModalPage.clickConfirmButton();
+
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+    });
+
+
+    test('solve single warning for unconfigured relation field via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredRelationFieldWarnings(['1', '2'], 'relation');
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await expectResourcesInWarningsModal(['1', '2']);
+        await expectSectionTitles(['Unkonfiguriertes Feld test:relation']);
+
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await DeleteModalPage.clickConfirmButton();
+        await waitForNotExist(await WarningsModalPage.getResource('1'));
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+    });
+
+
+    test('solve multiple warnings for unconfigured relation fields via warnings modal', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createUnconfiguredRelationFieldWarnings(['1', '2'], 'relation');
+        
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await DeleteModalPage.clickMultipleSwitch();
+        await DeleteModalPage.typeInConfirmValue('test:relation');
         await DeleteModalPage.clickConfirmButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());

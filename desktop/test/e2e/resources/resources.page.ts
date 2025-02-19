@@ -415,6 +415,6 @@ export class ResourcesPage {
 
         await this.performCreateResource('1', 'feature-architecture');
         await this.performCreateResource('2', 'feature-architecture');
-        await this.performCreateRelation('2', '1', 'isBefore');
+        await this.performCreateRelation('2', '1', 'isBefore', true);
     }
 }

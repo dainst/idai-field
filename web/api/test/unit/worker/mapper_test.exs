@@ -16,7 +16,7 @@ defmodule Api.Worker.MapperTest do
     assert resource.category == "Operation"
   end
 
-  test "convert Project category document" do
+  test "convert project document" do
     change = %{ id: "?", doc: %{ resource: %{
       type: "Project",
       identifier: "Proj-A",
@@ -29,6 +29,38 @@ defmodule Api.Worker.MapperTest do
     assert resource.category == "Project"
     assert resource.id == "Proj-A"
     assert change_id == "Proj-A"
+  end
+
+  test "convert staff and campaign fields" do
+    change = %{ id: "?", doc: %{ resource: %{
+      :type => "Project",
+      :identifier => "Proj-A",
+      :id => "id-A",
+      "staff" => [%{ "value" => "A", "selectable" => true }, %{ "value" => "B", "selectable" => false }],
+      "campaigns" => [%{ "value" => "C", "selectable" => false }, %{ "value" => "D", "selectable" => true }]
+    }}}
+    %{id: change_id, doc: %{ resource: resource }} = change
+      |> Mapper.rename_type_to_category
+      |> Mapper.process(nil)
+
+    assert resource["staff"] == ["A", "B"]
+    assert resource["campaigns"] == ["C", "D"]
+  end
+
+  test "keep string values in staff and campaign fields" do
+    change = %{ id: "?", doc: %{ resource: %{
+      :type => "Project",
+      :identifier => "Proj-A",
+      :id => "id-A",
+      "staff" => ["A", "B"],
+      "campaigns" => ["C", "D"]
+    }}}
+    %{id: change_id, doc: %{ resource: resource }} = change
+      |> Mapper.rename_type_to_category
+      |> Mapper.process(nil)
+
+    assert resource["staff"] == ["A", "B"]
+    assert resource["campaigns"] == ["C", "D"]
   end
 
   test "leave deletion unchanged" do

@@ -130,7 +130,7 @@ export class NavigationComponent {
                     labels[id].text = this.getShortenedLabel(labels[id].text, maxSingleLabelCharacters);
                     labels[id].shortened = true;
                 }
-            })
+            });
         }
     }
 

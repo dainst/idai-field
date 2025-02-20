@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -10,7 +10,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     },
     standalone: false
 })
-
 /**
  * @author Thomas Kleinke
  */

@@ -16,6 +16,7 @@ export class NavigationService {
 
     private moveIntoObservers: Array<Observer<any>> = [];
 
+
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: Routing,
                 private viewFacade: ViewFacade,

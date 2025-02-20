@@ -17,7 +17,6 @@
             <div *ngIf="cell['document'].id != 'droparea'"   
                  (click)="handleClick(cell['document'], $event)"
                  (dblclick)="onDoubleClick.emit(cell['document'])"
-                 (mouseenter)="onCellMouseEnter(cell['document'])"
                  [id]="'resource-' + cell['document'].resource.identifier.replace('.', '_')"
                  class="cell"
                  [class.selected]="selected.includes(cell['document'])">
@@ -26,7 +25,6 @@
                         [cell]="cell"
                         [main]="main"
                         [nrOfColumns]="nrOfColumns"
-                        [resourceIdentifiers]="resourceIdentifiers"
                         [showLinkBadges]="showLinkBadges"
                         [showIdentifier]="showIdentifier"
                         [showShortDescription]="showShortDescription"

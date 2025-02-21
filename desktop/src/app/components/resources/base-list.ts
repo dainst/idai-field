@@ -10,6 +10,7 @@ import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { scrollTo } from '../../angular/scrolling';
 import { NavigationPathSegment } from './view/state/navigation-path-segment';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 @Component({
@@ -41,9 +42,15 @@ export class BaseList implements AfterViewChecked {
                 protected menuService: Menus) {
 
         this.navigationPath = this.viewFacade.getNavigationPath();
+
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             if (this.navigationPath) this.lastSelectedSegment = NavigationPath.getSelectedSegment(this.navigationPath);
             this.navigationPath = path;
+        });
+
+        this.viewFacade.populateDocumentsNotifications().subscribe(async () => {
+            await AngularUtility.refresh();
+            this.scrollTarget = undefined;
         });
     }
 

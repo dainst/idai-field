@@ -101,6 +101,8 @@ export class BaseList implements AfterViewChecked {
         this.scrollToBottomElement = scrollToBottomElement;
         this.scrollOnlyIfInvisible = scrollOnlyIfInvisible;
 
+        // Set waitingForScroll to false automatically after 200 milliseconds as a fallback for the case 
+        // that the scroll target has been deleted via synchronization
         setTimeout(() => this.waitingForScroll = false, 200);
     }
 

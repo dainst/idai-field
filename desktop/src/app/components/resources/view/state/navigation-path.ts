@@ -77,22 +77,22 @@ export module NavigationPath {
      *
      * @return a new path object with updated state
      */
-    export function setNewSelectedSegmentDoc(navigationPath: NavigationPath,
+    export function setNewSelectedSegmentDoc(path: NavigationPath,
                                              newSelectedSegmentDoc: FieldDocument|undefined): NavigationPath {
 
         if (newSelectedSegmentDoc) {
-            navigationPath.segments = rebuildElements(
-                navigationPath.segments,
-                navigationPath.selectedSegmentId,
+            path.segments = rebuildElements(
+                path.segments,
+                path.selectedSegmentId,
                 newSelectedSegmentDoc
             );
         }
 
-        navigationPath.selectedSegmentId = newSelectedSegmentDoc
+        path.selectedSegmentId = newSelectedSegmentDoc
             ? newSelectedSegmentDoc.resource.id
             : undefined;
 
-        return navigationPath;
+        return path;
     }
 
 

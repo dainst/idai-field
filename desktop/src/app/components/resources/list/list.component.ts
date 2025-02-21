@@ -42,8 +42,8 @@ export class ListComponent extends BaseList implements OnChanges {
 
         super(resourcesComponent, viewFacade, loading, menuService);
 
-        this.viewFacade.navigationPathNotifications().subscribe(path => {
-            if (!this.selectedDocument) this.scrollToNextNavigationPathSegmentResource(path);
+        this.viewFacade.navigationPathNotifications().subscribe(() => {
+            if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();
         });
     }
 

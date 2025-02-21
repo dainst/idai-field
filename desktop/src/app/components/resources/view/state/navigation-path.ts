@@ -214,24 +214,6 @@ export module NavigationPath {
     }
 
 
-    /*
-     * @returns The next segment in the given navigation path following the currently selected segment
-     */
-    export function getNextSegment(path: NavigationPath) {
-
-        if (!path.segments.length) return undefined;
-
-        const selectedSegment: NavigationPathSegment = NavigationPath.getSelectedSegment(path);
-        const index: number = path.segments.indexOf(selectedSegment);
-
-        return index === path.segments.length - 1
-            ? undefined
-            : index === -1
-                ? path.segments[0]
-                : path.segments[index + 1];
-    }
-
-
     function getViewContext(path: NavigationPath): ViewContext {
 
         return path.selectedSegmentId

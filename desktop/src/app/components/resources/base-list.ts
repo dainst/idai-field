@@ -32,6 +32,7 @@ export class BaseList implements AfterViewChecked {
     private scrollTarget: FieldDocument;
     private scrollToBottomElement: boolean = false;
     private scrollOnlyIfInvisible: boolean = false;
+    private lastSelectedSegment: NavigationPathSegment;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -41,7 +42,8 @@ export class BaseList implements AfterViewChecked {
 
         this.navigationPath = this.viewFacade.getNavigationPath();
         this.viewFacade.navigationPathNotifications().subscribe(path => {
-           this.navigationPath = path;
+            if (this.navigationPath) this.lastSelectedSegment = NavigationPath.getSelectedSegment(this.navigationPath);
+            this.navigationPath = path;
         });
     }
 
@@ -84,10 +86,9 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    protected scrollToNextNavigationPathSegmentResource(path: NavigationPath) {
+    protected scrollToLastSelectedSegmentResource() {
 
-        const segment: NavigationPathSegment = NavigationPath.getNextSegment(path);
-        if (segment) this.scrollTo(segment.document, false, false, true);
+        if (this.lastSelectedSegment) this.scrollTo(this.lastSelectedSegment.document, false, false, true);
     }
 
 

@@ -6,6 +6,7 @@ import { MsgWithParams } from '../../messages/msg-with-params';
 import { AppState } from '../../../services/app-state';
 
 const remote = window.require('@electron/remote');
+const webUtils = window.require('electron').webUtils;
 
 
 @Component({
@@ -135,7 +136,7 @@ export class DropAreaComponent {
     private static getFilePaths(event: any): string[] {
 
         return event?.dataTransfer?.files
-            ? Array.from(event?.dataTransfer?.files).map((file: any) => file.path)
+            ? Array.from(event?.dataTransfer?.files).map((file: any) => webUtils.getPathForFile(file))
             : [];
     }
 }

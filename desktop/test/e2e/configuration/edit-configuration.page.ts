@@ -81,9 +81,10 @@ export class EditConfigurationPage {
     }
 
 
-    public static clickCancel() {
+    public static async clickCancel(discard: boolean = false) {
 
-        return click('#cancel-button');
+        await click('#cancel-button');
+        if (discard) await click('#overview-save-confirmation-modal-discard-button');
     }
 
 

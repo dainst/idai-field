@@ -16,6 +16,7 @@ export class NavigationService {
 
     private moveIntoObservers: Array<Observer<any>> = [];
 
+
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: Routing,
                 private viewFacade: ViewFacade,
@@ -40,6 +41,9 @@ export class NavigationService {
 
 
     public async moveInto(document: FieldDocument|undefined) {
+
+        const navigationPath = this.viewFacade.getNavigationPath();
+        if (navigationPath.selectedSegmentId === document?.resource.id) return;
 
         await this.viewFacade.moveInto(document);
         ObserverUtil.notify(this.moveIntoObservers, undefined);

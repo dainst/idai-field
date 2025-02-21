@@ -26,15 +26,15 @@
         <div class="list-header-field"></div>
         <div id="header-placeholder" class="list-header-field"></div>
     </div>
-    <div id="list-body">
+    <div id="list-body" [class.invisible]="waitingForScroll">
         <cdk-virtual-scroll-viewport [itemSize]="itemSize">
             <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
                 <row [document]="document"
-                        [category]="getCategory(document)"
-                        [availableLanguages]="availableLanguages"
-                        [selectedLanguage]="selectedLanguage"
-                        [shortDescriptionValuelist]="getShortDescriptionValuelist(document)"
-                        [shortDescriptionValues]="getShortDescriptionValues(document)"></row>
+                     [category]="getCategory(document)"
+                     [availableLanguages]="availableLanguages"
+                     [selectedLanguage]="selectedLanguage"
+                     [shortDescriptionValuelist]="getShortDescriptionValuelist(document)"
+                     [shortDescriptionValues]="getShortDescriptionValues(document)"></row>
             </div>
         </cdk-virtual-scroll-viewport>
     </div>

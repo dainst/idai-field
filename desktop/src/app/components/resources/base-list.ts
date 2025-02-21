@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { FieldDocument } from 'idai-field-core';
 import { ResourcesComponent } from './resources.component';
@@ -9,6 +9,7 @@ import { ViewFacade } from '../../components/resources/view/view-facade';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { scrollTo } from '../../angular/scrolling';
+import { NavigationPathSegment } from './view/state/navigation-path-segment';
 
 
 @Component({
@@ -19,15 +20,18 @@ import { scrollTo } from '../../angular/scrolling';
  * @author Philipp Gerth
  * @author Thomas Kleinke
  */
-export class BaseList {
+export class BaseList implements AfterViewChecked {
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
     public navigationPath: NavigationPath;
+    public waitingForScroll: boolean = false;
     
     public readonly itemSize: number;
 
     private scrollTarget: FieldDocument;
+    private scrollToBottomElement: boolean = false;
+    private scrollOnlyIfInvisible: boolean = false;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -36,7 +40,17 @@ export class BaseList {
                 protected menuService: Menus) {
 
         this.navigationPath = this.viewFacade.getNavigationPath();
-        this.viewFacade.navigationPathNotifications().subscribe(path => this.navigationPath = path);
+        this.viewFacade.navigationPathNotifications().subscribe(path => {
+           this.navigationPath = path;
+        });
+    }
+
+
+    ngAfterViewChecked() {
+        
+        if (this.scrollTarget && this.scrollViewport) {
+            this.performScrolling();
+        }
     }
 
 
@@ -70,24 +84,43 @@ export class BaseList {
     }
 
 
-    protected scrollTo(scrollTarget: FieldDocument|undefined, bottomElement: boolean = false) {
+    protected scrollToNextNavigationPathSegmentResource(path: NavigationPath) {
 
-        if (!scrollTarget) return;
+        const segment: NavigationPathSegment = NavigationPath.getNextSegment(path);
+        if (segment) this.scrollTo(segment.document, false, false);
+    }
 
+
+    protected scrollTo(scrollTarget: FieldDocument, scrollToBottomElement: boolean = false,
+                       scrollOnlyIfInvisible: boolean = true) {
+
+        this.waitingForScroll = true;
         this.scrollTarget = scrollTarget;
+        this.scrollToBottomElement = scrollToBottomElement;
+        this.scrollOnlyIfInvisible = scrollOnlyIfInvisible;
 
-        const index = this.viewFacade.getDocuments()
-            .findIndex(document => document.resource.id === scrollTarget.resource.id);
+        setTimeout(() => this.waitingForScroll = false, 200);
+    }
 
-        if (!this.scrollViewport) {
-            setTimeout(() => {
-                if (this.scrollTarget === scrollTarget) this.scrollTo(scrollTarget, bottomElement);
-            }, 100);
-        } else {
-            scrollTo(
-                index, 'resource-' + scrollTarget.resource.identifier, this.itemSize,
-                this.scrollViewport, bottomElement
-            );
-        }
+
+    private performScrolling() {
+
+        const index: number = this.viewFacade.getDocuments()
+            .findIndex(document => document.resource.id === this.scrollTarget.resource.id);
+        if (index === -1) return;
+
+        scrollTo(
+            index,
+            'resource-' + this.scrollTarget.resource.identifier,
+            this.itemSize,
+            this.scrollViewport,
+            this.scrollToBottomElement,
+            this.scrollOnlyIfInvisible
+        );
+
+        this.scrollTarget = undefined;
+        this.scrollToBottomElement = false;
+
+        setTimeout(() => this.waitingForScroll = false, 0);
     }
 }

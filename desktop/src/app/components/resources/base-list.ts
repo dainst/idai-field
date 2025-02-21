@@ -94,6 +94,8 @@ export class BaseList implements AfterViewChecked {
     protected scrollTo(scrollTarget: FieldDocument, scrollToBottomElement: boolean = false,
                        scrollOnlyIfInvisible: boolean = true) {
 
+        if (!scrollTarget) return;
+                        
         this.waitingForScroll = true;
         this.scrollTarget = scrollTarget;
         this.scrollToBottomElement = scrollToBottomElement;

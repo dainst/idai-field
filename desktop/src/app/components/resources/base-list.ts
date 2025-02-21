@@ -87,23 +87,23 @@ export class BaseList implements AfterViewChecked {
     protected scrollToNextNavigationPathSegmentResource(path: NavigationPath) {
 
         const segment: NavigationPathSegment = NavigationPath.getNextSegment(path);
-        if (segment) this.scrollTo(segment.document, false, false);
+        if (segment) this.scrollTo(segment.document, false, false, true);
     }
 
 
     protected scrollTo(scrollTarget: FieldDocument, scrollToBottomElement: boolean = false,
-                       scrollOnlyIfInvisible: boolean = true) {
+                       scrollOnlyIfInvisible: boolean = true, waitForScroll: boolean = false) {
 
         if (!scrollTarget) return;
                         
-        this.waitingForScroll = true;
+        if (waitForScroll) this.waitingForScroll = true;
         this.scrollTarget = scrollTarget;
         this.scrollToBottomElement = scrollToBottomElement;
         this.scrollOnlyIfInvisible = scrollOnlyIfInvisible;
 
         // Set waitingForScroll to false automatically after 200 milliseconds as a fallback for the case 
         // that the scroll target has been deleted via synchronization
-        setTimeout(() => this.waitingForScroll = false, 200);
+        if (waitForScroll) setTimeout(() => this.waitingForScroll = false, 200);
     }
 
 

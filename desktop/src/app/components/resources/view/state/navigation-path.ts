@@ -134,14 +134,12 @@ export module NavigationPath {
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
         const oldNavPath = NavigationPath.clone(navPath);
-        navPath.segments
-            = takeWhile(differentFrom(firstToBeExcluded), oldNavPath.segments);
+        navPath.segments = takeWhile(differentFrom(firstToBeExcluded), oldNavPath.segments);
 
         if (navPath.selectedSegmentId) {
-
-            const stillSelectedSegment = navPath.segments
-                .find(_ => _.document.resource.id === navPath.selectedSegmentId);
-
+            const stillSelectedSegment: NavigationPathSegment = navPath.segments.find(segment => {
+                return segment.document.resource.id === navPath.selectedSegmentId;
+            });
             if (!stillSelectedSegment) navPath.selectedSegmentId = undefined;
         }
 
@@ -180,8 +178,7 @@ export module NavigationPath {
         }
 
         return (!navPath.selectedSegmentId && operationId !== undefined
-            && Document.hasRelationTarget(document, 'isRecordedIn',
-                operationId)
+            && Document.hasRelationTarget(document, 'isRecordedIn',operationId)
             && !Document.hasRelations(document, 'liesWithin'));
     }
 
@@ -204,8 +201,7 @@ export module NavigationPath {
     }
 
 
-    export function replaceSegmentsIfNecessary(navPath: NavigationPath,
-                                               newSegments: Array<NavigationPathSegment>,
+    export function replaceSegmentsIfNecessary(navPath: NavigationPath, newSegments: Array<NavigationPathSegment>,
                                                newSelectedSegmentId: string): NavigationPath {
 
         if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) {
@@ -243,8 +239,7 @@ export module NavigationPath {
     }
 
 
-    function rebuildElements(oldSegments: Array<NavigationPathSegment>,
-                             oldSelectedSegmentId: string|undefined,
+    function rebuildElements(oldSegments: Array<NavigationPathSegment>, oldSelectedSegmentId: string|undefined,
                              newSelectedSegmentDoc: FieldDocument): Array<NavigationPathSegment> {
 
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)

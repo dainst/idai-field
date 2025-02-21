@@ -1,125 +1,149 @@
-<div id="{{makeId()}}"
-     class="row-wrapper">
+<div id="{{makeId()}}" class="row-wrapper">
     <div class="label-field">
         <div class="category-label" [class.text-info]="isNewResource()">
             <i>{{getCategoryLabel()}}</i>
         </div>
 
-        <button *ngIf="shouldShowArrowBottomRight()"
-                class="hierarchy-button btn float-end align-middle"
-                ngbTooltip="Untergeordnete Ressourcen ansehen"
-                i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
-                placement="left"
-                container="body"
-                triggers="manual"
-                #moveIntoTooltip="ngbTooltip"
-                (mouseover)="moveIntoTooltip.open()"
-                (mouseleave)="moveIntoTooltip.close()"
-                (mousedown)="moveIntoTooltip.close()"
-                (click)="moveInto()">
-            <span class="arrow-bottom-right"
-                  [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0">
+        <button
+            *ngIf="shouldShowArrowBottomRight()"
+            class="hierarchy-button btn float-end align-middle"
+            ngbTooltip="Untergeordnete Ressourcen ansehen"
+            i18n-ngbTooltip="@@resources.moveIntoButton.tooltip"
+            placement="left"
+            container="body"
+            triggers="manual"
+            #moveIntoTooltip="ngbTooltip"
+            (mouseover)="moveIntoTooltip.open()"
+            (mouseleave)="moveIntoTooltip.close()"
+            (mousedown)="moveIntoTooltip.close()"
+            (click)="moveInto()"
+        >
+            <span
+                class="mdi mdi-chevron-right mdi-24px"
+                [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0"
+            >
             </span>
         </button>
 
-        <div *ngIf="shouldShowArrowUpForSearchMode()" class="hierarchy-button jump-to-view-button btn float-end align-middle"
-             (click)="jumpToResourceInSameView(); $event.stopPropagation();"
-             placement="right"
-             container="body"
-             ngbTooltip="Im Kontext anzeigen"
-             i18n-ngbTooltip="@@resources.showInContext.tooltip">
-            <span class="arrow-up mdi-16px"></span>
+        <div
+            *ngIf="shouldShowArrowUpForSearchMode()"
+            class="hierarchy-button jump-to-view-button btn float-end align-middle"
+            (click)="jumpToResourceInSameView(); $event.stopPropagation();"
+            placement="right"
+            container="body"
+            ngbTooltip="Im Kontext anzeigen"
+            i18n-ngbTooltip="@@resources.showInContext.tooltip"
+        >
+            <span class="mdi mdi-chevron-up mdi-24px"></span>
         </div>
-        <button *ngIf="shouldShowArrowTopRightForSearchMode()"
-             class="hierarchy-button jump-to-view-button btn float-end align-middle"
-             (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
-             placement="right"
-             container="body"
-             ngbTooltip="Im Kontext der Maßnahme anzeigen"
-             i18n-ngbTooltip="@@resources.showInOperationContext.tooltip">
-            <span class="arrow-top-right mdi-18px"></span>
-        </button>
-        <button *ngIf="shouldShowArrowTopRight()"
-                class="hierarchy-button jump-to-view-button btn float-end align-middle"
-                ngbTooltip="Zur Maßnahme wechseln"
-                i18n-ngbTooltip="@@resources.jumpToView.tooltip"
-                placement="right"
-                container="body"
-                triggers="manual"
-                #jumpToViewTooltip="ngbTooltip"
-                (mouseover)="jumpToViewTooltip.open()"
-                (mouseleave)="jumpToViewTooltip.close()"
-                (mousedown)="jumpToViewTooltip.close()"
-                (click)="jumpToView()">
-            <span class="arrow-top-right mdi-18px"></span>
+        <button
+            *ngIf="shouldShowArrowTopRightForSearchMode()"
+            class="hierarchy-button jump-to-view-button btn float-end align-middle"
+            (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
+            placement="right"
+            container="body"
+            ngbTooltip="Im Kontext der Maßnahme anzeigen"
+            i18n-ngbTooltip="@@resources.showInOperationContext.tooltip"
+        ></button>
+        <button
+            *ngIf="shouldShowArrowTopRight()"
+            class="hierarchy-button jump-to-view-button btn float-end align-middle"
+            ngbTooltip="Zur Maßnahme wechseln"
+            i18n-ngbTooltip="@@resources.jumpToView.tooltip"
+            placement="right"
+            container="body"
+            triggers="manual"
+            #jumpToViewTooltip="ngbTooltip"
+            (mouseover)="jumpToViewTooltip.open()"
+            (mouseleave)="jumpToViewTooltip.close()"
+            (mousedown)="jumpToViewTooltip.close()"
+            (click)="jumpToView()"
+        >
+            <span class="mdi mdi-chevron-right mdi-24px"></span>
         </button>
     </div>
     <div class="input-field">
-        <input #identifierInput
-               [value]="document.resource.identifier"
-               (focus)="startEditing('identifier', document.resource.identifier)"
-               (blur)="stopEditing('identifier', document.resource.identifier)"
-               (input)="onInput($event, 'identifier')"
-               (keyup)="onKeyUp($event, 'identifier')"
-               (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
+        <input
+            #identifierInput
+            [value]="document.resource.identifier"
+            (focus)="startEditing('identifier', document.resource.identifier)"
+            (blur)="stopEditing('identifier', document.resource.identifier)"
+            (input)="onInput($event, 'identifier')"
+            (keyup)="onKeyUp($event, 'identifier')"
+            (dblclick)="$event.stopPropagation();"
+            class="form-control form-control-sm identifier-input"
+        />
     </div>
     <div *ngIf="!shortDescriptionValuelist" class="input-field">
-        <input [value]="getShortDescription()"
-               (focus)="startEditing('shortDescription', document.resource.shortDescription)"
-               (blur)="stopEditing('shortDescription', document.resource.shortDescription)"
-               (input)="onInput($event, 'shortDescription')"
-               (keyup)="onKeyUp($event, 'shortDescription')"
-               (dblclick)="$event.stopPropagation();"
-               class="form-control form-control-sm">
+        <input
+            [value]="getShortDescription()"
+            (focus)="startEditing('shortDescription', document.resource.shortDescription)"
+            (blur)="stopEditing('shortDescription', document.resource.shortDescription)"
+            (input)="onInput($event, 'shortDescription')"
+            (keyup)="onKeyUp($event, 'shortDescription')"
+            (dblclick)="$event.stopPropagation();"
+            class="form-control form-control-sm"
+        />
     </div>
-    <div *ngIf="shortDescriptionValuelist" class="input-field dropdown-input-field">
-        <searchable-select [selectedValue]="getSelectedShortDescriptionValue()"
-                           [values]="shortDescriptionValues"
-                           [getLabel]="getValueLabel"
-                           customPanelClass="row-select-panel"
-                           (onValueSelected)="onShortDescriptionValueChanged($event)"
-                           (dblclick)="$event.stopPropagation();"></searchable-select>
+    <div
+        *ngIf="shortDescriptionValuelist"
+        class="input-field dropdown-input-field"
+    >
+        <searchable-select
+            [selectedValue]="getSelectedShortDescriptionValue()"
+            [values]="shortDescriptionValues"
+            [getLabel]="getValueLabel"
+            customPanelClass="row-select-panel"
+            (onValueSelected)="onShortDescriptionValueChanged($event)"
+            (dblclick)="$event.stopPropagation();"
+        ></searchable-select>
     </div>
     <div class="btn-group align-middle list-action-buttons">
-        <button class="btn btn-small btn-link float-end list-edit-button"
-                ngbTooltip="Bearbeiten"
-                i18n-ngbTooltip="@@resources.list.editButton.tooltip"
-                placement="bottom"
-                container="body"
-                triggers="manual"
-                #editTooltip="ngbTooltip"
-                (mouseover)="editTooltip.open()"
-                (mouseleave)="editTooltip.close()"
-                (mousedown)="editTooltip.close()"
-                (click)="editDocument()">
+        <button
+            class="btn btn-small btn-link float-end list-edit-button"
+            ngbTooltip="Bearbeiten"
+            i18n-ngbTooltip="@@resources.list.editButton.tooltip"
+            placement="bottom"
+            container="body"
+            triggers="manual"
+            #editTooltip="ngbTooltip"
+            (mouseover)="editTooltip.open()"
+            (mouseleave)="editTooltip.close()"
+            (mousedown)="editTooltip.close()"
+            (click)="editDocument()"
+        >
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
-        <button [class.hidden-option]="!isMoveOptionAvailable()"
-                class="btn btn-small btn-link float-end list-move-button"
-                ngbTooltip="Verschieben"
-                i18n-ngbTooltip="@@resources.list.moveButton.tooltip"
-                placement="bottom"
-                container="body"
-                triggers="manual"
-                #moveTooltip="ngbTooltip"
-                (mouseover)="isMoveOptionAvailable() && moveTooltip.open()"
-                (mouseleave)="moveTooltip.close()"
-                (mousedown)="moveTooltip.close()"
-                (click)="isMoveOptionAvailable() && moveDocument()">
+        <button
+            [class.hidden-option]="!isMoveOptionAvailable()"
+            class="btn btn-small btn-link float-end list-move-button"
+            ngbTooltip="Verschieben"
+            i18n-ngbTooltip="@@resources.list.moveButton.tooltip"
+            placement="bottom"
+            container="body"
+            triggers="manual"
+            #moveTooltip="ngbTooltip"
+            (mouseover)="isMoveOptionAvailable() && moveTooltip.open()"
+            (mouseleave)="moveTooltip.close()"
+            (mousedown)="moveTooltip.close()"
+            (click)="isMoveOptionAvailable() && moveDocument()"
+        >
             <span class="mdi mdi-file-tree mdi-18px"></span>
         </button>
-        <button [class.hidden-option]="!isDeleteOptionAvailable()"
-                class="btn btn-small btn-link float-end list-delete-button"
-                ngbTooltip="Löschen"
-                i18n-ngbTooltip="@@resources.list.deleteButton.tooltip"
-                placement="bottom"
-                container="body"
-                triggers="manual"
-                #deleteTooltip="ngbTooltip"
-                (mouseover)="isMoveOptionAvailable() && deleteTooltip.open()"
-                (mouseleave)="deleteTooltip.close()"
-                (mousedown)="deleteTooltip.close()"
-                (click)="isDeleteOptionAvailable() && deleteDocument()">
+        <button
+            [class.hidden-option]="!isDeleteOptionAvailable()"
+            class="btn btn-small btn-link float-end list-delete-button"
+            ngbTooltip="Löschen"
+            i18n-ngbTooltip="@@resources.list.deleteButton.tooltip"
+            placement="bottom"
+            container="body"
+            triggers="manual"
+            #deleteTooltip="ngbTooltip"
+            (mouseover)="isMoveOptionAvailable() && deleteTooltip.open()"
+            (mouseleave)="deleteTooltip.close()"
+            (mousedown)="deleteTooltip.close()"
+            (click)="isDeleteOptionAvailable() && deleteDocument()"
+        >
             <span class="mdi mdi-delete mdi-18px"></span>
         </button>
     </div>

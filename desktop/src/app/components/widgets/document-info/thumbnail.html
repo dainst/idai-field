@@ -1,14 +1,13 @@
-<div *ngIf="thumbnailUrl"
-     class="thumbnail-container d-flex align-items-center justify-content-center">
-     <img *ngIf="isThumbnailFound()"
+<div class="thumbnail-container d-flex align-items-center justify-content-center">
+     <img *ngIf="thumbnailUrl && isThumbnailFound()"
           [src]="thumbnailUrl"
           (click)="onImageClicked()">
-     <div *ngIf="!isThumbnailFound()"
+     <div *ngIf="thumbnailUrl && !isThumbnailFound()"
           class="thumbnail-placeholder"
           (click)="onImageClicked()">
           <category-icon [category]="thumbnailPlaceholderCategory" [size]="60"></category-icon>
      </div>
-    <div class="badge bg-secondary"
+    <div *ngIf="thumbnailUrl" class="badge bg-secondary"
          ngbTooltip="{{getNumberOfImagesTooltip()}}" placement="bottom" container="body">
          <span class="mdi mdi-image"> {{getNumberOfImages()}}</span>
     </div>

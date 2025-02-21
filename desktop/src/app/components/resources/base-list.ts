@@ -10,6 +10,7 @@ import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { scrollTo } from '../../angular/scrolling';
 import { NavigationPathSegment } from './view/state/navigation-path-segment';
+import { AngularUtility } from '../../angular/angular-utility';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class BaseList implements AfterViewChecked {
     private scrollTarget: FieldDocument;
     private scrollToBottomElement: boolean = false;
     private scrollOnlyIfInvisible: boolean = false;
+    private lastSelectedSegment: NavigationPathSegment;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -40,8 +42,15 @@ export class BaseList implements AfterViewChecked {
                 protected menuService: Menus) {
 
         this.navigationPath = this.viewFacade.getNavigationPath();
+
         this.viewFacade.navigationPathNotifications().subscribe(path => {
-           this.navigationPath = path;
+            if (this.navigationPath) this.lastSelectedSegment = NavigationPath.getSelectedSegment(this.navigationPath);
+            this.navigationPath = path;
+        });
+
+        this.viewFacade.populateDocumentsNotifications().subscribe(async () => {
+            await AngularUtility.refresh();
+            this.scrollTarget = undefined;
         });
     }
 
@@ -84,10 +93,9 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    protected scrollToNextNavigationPathSegmentResource(path: NavigationPath) {
+    protected scrollToLastSelectedSegmentResource() {
 
-        const segment: NavigationPathSegment = NavigationPath.getNextSegment(path);
-        if (segment) this.scrollTo(segment.document, false, false, true);
+        if (this.lastSelectedSegment) this.scrollTo(this.lastSelectedSegment.document, false, false, true);
     }
 
 

@@ -29,7 +29,7 @@ export class ListComponent extends BaseList implements OnChanges {
     public availableLanguages: Array<Language>;
     public selectedLanguage: Language|undefined;
 
-    public readonly itemSize: number = 41;
+    public readonly itemSize: number = 42;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,

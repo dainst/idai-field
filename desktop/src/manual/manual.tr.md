@@ -421,60 +421,60 @@ Girdi düzenleyicide bir kategori için hangi alanların özel olarak kullanıla
 Projede bulunan kategorileri, alanları ve değer listelerini ayarlamanıza ve genişletmenize olanak tanıyan yapılandırma düzenleyicisine "Araçlar" ➝ "Proje konfigürasyonu" menüsü üzerinden erişebilirsiniz. Bir senkronizasyon bağlantısı kurulmuş ise konfigürasyondaki değişiklikler "Kaydet" düğmesiyle onaylanır onaylanmaz diğer kullanıcılara aktarılır.
 
 
-## Identifiers and labels
+## Tanımlayıcılar ve etiketler
 
-All elements of the project configuration (categories, fields, valuelists, etc.) each have an **identifier** for unique identification. This identifier is saved in the database and is also used when importing or exporting resources. It is displayed in magenta in the configuration editor.
+Proje yapılandırmasının tüm öğeleri (kategoriler, alanlar, değer listeleri, vb.) her biri, benzersiz tanımlama için bir **tanımlayıcı**ya sahiptir. Bu tanımlayıcı veri tabanında kaydedilir ve ayrıca girdileri içe veya dışa aktarırken kullanılır. Konfigürasyon düzenleyicisinde fuşya renginde görüntülenir.
 
-In addition, **labels** can be added for each of the configured project languages. These texts are used for display in all other areas of the application and are also displayed in black in the configuration editor. If there is no label, the identifier is displayed instead.
-
-
-## Categories and forms
-
-The left sidebar of the editor lists the categories currently configured for the project. Using the filter menu at the top left, you can limit the selection of displayed categories to a specific part of the application (e.g. "Trench" for limiting to categories that can be created within a trench tab). If you select the "All" option, all categories of the project will be listed.
-
-<p align="center"><img src="images/en/configuration/categories_filter.png" alt="Categories filter menu"/></p>
-
-When you select a category in the list, the form configured for that category is displayed on the right side with the corresponding field groups and fields.
+Ek olarak, yapılandırılmış proje dillerinin her biri için **etiketler** eklenebilir. Bu metinler uygulamanın diğer tüm alanlarında görüntülenmek üzere kullanılır ve yapılandırma düzenleyicisinde siyah olarak da görüntülenir. Etiket yoksa bunun yerine tanımlayıcısı görüntülenir.
 
 
-### Add supercategories
+## Kategoriler ve formlar
 
-Using the green plus button at the bottom of the list, you can add a new supercategory to the project. A new window opens where you can choose between all supercategories of the Field category library that are not already configured for the project. You can filter the displayed categories and forms using the text field above the list. For each category, the available forms are listed; when you select one of the forms, you will see the corresponding field groups and fields on the right side. Confirm your selection by clicking the "Add category" button.
+Editörün sol kenar çubuğu, proje için mevcut yapılandırılmış kategorileri listeler. Sol üstteki filtre menüsünü kullanarak, görüntülenen kategorilerin seçimini uygulamanın belirli bir kısmıyla (örneğin, bir açma sekmesi içinde oluşturulabilecek kategorilerle filtrelemek için "Açma") sınırlayabilirsiniz. "Tümü" seçeneğini seçerseniz, projenin tüm kategorileri listelenir.
 
-Please note that no new supercategories can be added via the configuration editor.
+<p align="center"><img src="images/en/configuration/categories_filter.png" alt="Kategori filtre menüsü"/></p>
 
-
-### Add subcategories
-
-If you want to add a new subcategory to an existing supercategory, click on the small plus button displayed to the right of the corresponding supercategory. If the plus button is missing, it is not possible to create subcategories for this category.
-
-Similar to adding supercategories, you also have the choice between different forms for each category. If you want to create your own category, enter the desired category name in the text field above the list and select the "Create new category" option. The category editor will open, where you can set the category's properties (see the *Edit category* section). For a newly created category, a new form is also created automatically, which inherits the fields of the selected form of the parent category.
-
-Project specific categories are highlighted in blue in the list, provided that the "Highlight custom categories/fields" option is enabled in the "Project configuration" menu.
+Listede bir kategoriyi seçtiğinizde, o kategori için yapılandırılmış form, ilgili alan grupları ve alanlarıyla birlikte sağ tarafta görüntülenir.
 
 
-### Manage categories
+### Üst kategoriler ekleme
 
-Right-clicking on a category brings up a context menu that provides the following options:
+Listenin altındaki yeşil artı düğmesini kullanarak projeye yeni bir üst kategori ekleyebilirsiniz. Proje için henüz yapılandırılmamış olan Field Desktop kategori listesinden, tüm üst kategoriler arasından seçim yapabileceğiniz yeni bir pencere açılır. Listenin üstündeki metin alanını kullanarak görüntülenen kategorileri ve formları filtreleyebilirsiniz. Her kategori için kullanılabilir formlar listelenir; formlardan birini seçtiğinizde, sağ tarafta karşılık gelen alan gruplarını ve alanları göreceksiniz. "Kategori ekle" düğmesine tıklayarak seçiminizi onaylayın.
 
-* *Edit*: Opens the category editor (see section *Edit categories*).
-* *Swap form*: Opens a menu to select another form for this category. Please note that any changes made to the current form and category will be lost in this process. If this is a supercategory, this will also affect all subcategories and their forms.
-* *Delete*: Removes the category after a confirmation prompt. If resources of this category have already been created in the project, they will not be lost, but will no longer be displayed until the category is added again. Since deleting also loses all customizations of the form selected for the category, however, a category should not be deleted in most cases if resources have already been created based on the corresponding form.
+Lütfen konfigürasyon düzenleyicisi üzerinden yeni süper kategorilerin eklenemeyeceğini unutmayın.
 
 
-### Edit categories
+### Alt kategoriler ekleme
 
-Via the context menu or by double-clicking on an entry in the category list, the category editor can be opened, in which the properties of the category can be edited:
+Mevcut bir üst kategoriye yeni bir alt kategori eklemek istiyorsanız ilgili üst kategorinin sağında görüntülenen küçük artı düğmesine tıklayın. Artı düğmesi görünmüyorsa bu kategori için alt kategoriler oluşturmak mümkün değildir.
 
-* *Label*: The display label of the category, which will be shown in all areas of the application. You can enter labels for different languages.
-* *Color*: The color of the category icon as well as the geometries displayed for resources of this category on the map.
-* *QR codes*: Enables the use of QR codes for resources of this category (see section *QR codes*).
-* *Identifier prefix*: Optionally enter here a text with which the identifier of resources of this category should always start. Please note that already existing identifiers will not be adjusted automatically.
-* *Resource limit*: Optionally enter a number here to specify the maximum number of resources that can be created for this category. If the input field is left blank, any number of resources can be created. This option is only available for operation categories and the category "Place".
+Üst kategori eklemeye benzer şekilde, her kategori için farklı formlar arasında seçim yapabilirsiniz. Kendi kategorinizi oluşturmak istiyorsanız, listenin üstündeki metin alanına istediğiniz kategori adını girin ve "Yeni kategori oluştur" seçeneğini belirleyin. Kategori düzenleyicisi açılır ve burada kategorinin özelliklerini ayarlayabilirsiniz (bkz. *Kategorileri düzenleme* bölümü). Yeni oluşturulan bir kategoride üst kategorinin seçili form alanlarını devralan yeni bir form otomatik olarak oluşturulur.
 
-You can also specify the following properties for project-specific categories:
-* *Description*: A description text that informs in which contexts the category should be used.
-* *References*: Specify URLs here if you want to reference more information about the category or category definitions in other systems.
+"Proje konfigürasyonu" menüsünde "Özel kategorileri/alanları vurgula" seçeneği etkinleştirildiği takdirde, listede proje özel kategorileri mavi renkle vurgulanır.
+
+
+### Kategorileri yönetme
+
+Bir kategoriye sağ tıklandığında aşağıdaki seçenekleri sunan bir içerik menüsü açılır:
+
+* *Düzenle*: Kategori düzenleyicisini açar (bkz. *Kategorileri düzenleme* bölümü).
+* *Formu değiştir*: Bu kategori için başka bir form seçmek üzere bir menü açar. Lütfen mevcut form ve kategoride yapılan tüm değişikliklerin bu işlem sırasında kaybolacağını unutmayın. Bir üst kategori üzerinde işlem yapılıyorsa bu durum tüm alt kategorileri ve formlarını da etkileyecektir.
+* *Sil*: Onayladıktan sonra kategoriyi kaldırır. Projede zaten bu kategoride girdiler mevcutsa silinmezler ancak kategori tekrar eklenene kadar görüntülenmezler. Ayrıca silme işlemi kategoride seçilen formun tüm özelleştirmelerini kaldıracaktır. Söz konusu forma göre oluşturulan girdileriniz varsa ilgili kategoriler silinmemelidir.
+
+
+### Kategorileri düzenleme
+
+Kontekst menüsü üzerinden veya kategori listesindeki bir girişe çift tıklanarak, kategorinin özelliklerinin düzenlenebileceği kategori düzenleyicisi açılabilir:
+
+* *Etiket*: Uygulamanın tüm alanlarında gösterilecek kategorinin görüntüleme etiketi. Farklı diller için etiketler girebilirsiniz.
+* *Renk*: Kategori simgesinin rengi ve haritada bu kategorideki kaynaklar için gösterilen geometriler.
+* *QR kodları*: Bu kategorideki kaynaklar için QR kodlarının kullanılmasını sağlar (bkz. *QR kodları* bölümü).
+* *Tanımlayıcı öneki*: İsteğe bağlı olarak bu kategorinin kaynaklarının tanımlayıcısının her zaman başlaması gereken bir metni buraya girin. Lütfen halihazırda var olan tanımlayıcıların otomatik olarak ayarlanmayacağını unutmayın.
+* *Kaynak sınırı*: İsteğe bağlı olarak bu kategori için oluşturulabilecek maksimum kaynak sayısını belirtmek için buraya bir sayı girin. Giriş alanı boş bırakılırsa, herhangi bir sayıda kaynak oluşturulabilir. Bu seçenek yalnızca işlem kategorileri ve "Yer" kategorisi için kullanılabilir.
+
+Proje özel kategoriler için aşağıdaki özellikleri de belirtebilirsiniz:
+* *Açıklama*: Kategorinin hangi bağlamlarda kullanılması gerektiğini belirten bir açıklama metni.
+* *Referanslar*: Kategori veya kategori tanımları hakkında diğer sistemlerde daha fazla bilgiye başvurmak istiyorsanız, burada URL'leri belirtin.
 
 #### QR codes
 

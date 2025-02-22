@@ -13,7 +13,11 @@ import { Menus } from '../../../../services/menus';
 import { ComponentHelpers } from '../../../component-helpers';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
 
-
+interface DocumentCategory {
+    name: string;
+    documents: FieldDocument[];
+    isExpanded: boolean;
+}
 @Component({
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
@@ -36,6 +40,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
     public readonly itemSize: number = 59;
+
+    public groupedDocuments: DocumentCategory[] = [];
 
     private lastSelectedDocument: FieldDocument|undefined;
 
@@ -62,6 +68,31 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         });
     }
 
+    public groupDocuments() {
+        const documents = this.viewFacade.getDocuments();
+        if (!Array.isArray(documents)) return;
+        const groups: { [type: string]: FieldDocument[] } = {};
+        for (const doc of documents) {
+            const type = doc.resource.type || 'Undefined';
+            if (!groups[type]) {
+                groups[type] = [];
+            }
+            groups[type].push(doc);
+        }
+        this.groupedDocuments = Object.keys(groups).map(type => ({
+            name: type,
+            documents: groups[type],
+            isExpanded: false
+        }));
+    }
+
+    public toggleCategory(category: DocumentCategory) {
+        category.isExpanded = !category.isExpanded;
+    }
+
+    ngOnInit() {
+        this.groupDocuments();
+    }
 
     ngAfterViewInit() {
 
@@ -250,7 +281,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (!this.lastSelectedDocument || !this.selectedDocument) return false;
 
         const documents: Array<FieldDocument> = this.viewFacade.getDocuments();
-        
+
         const lastSelectedDocumentIndex: number = documents.findIndex(document => {
             return document.resource.id === this.lastSelectedDocument.resource.id; }
         );

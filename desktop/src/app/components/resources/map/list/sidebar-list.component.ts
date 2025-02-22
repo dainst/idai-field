@@ -13,11 +13,14 @@ import { Menus } from '../../../../services/menus';
 import { ComponentHelpers } from '../../../component-helpers';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
 
-interface DocumentCategory {
+
+
+export interface CategoryGroup {
     name: string;
-    documents: FieldDocument[];
-    isExpanded: boolean;
+    documents: any[]; // Replace 'any' with your document type
+    isExpanded?: boolean;
 }
+
 @Component({
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
@@ -41,7 +44,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public readonly itemSize: number = 59;
 
-    public groupedDocuments: DocumentCategory[] = [];
 
     private lastSelectedDocument: FieldDocument|undefined;
 
@@ -68,34 +70,10 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         });
     }
 
-    public groupDocuments() {
-        const documents = this.viewFacade.getDocuments();
-        if (!Array.isArray(documents)) return;
-        const groups: { [type: string]: FieldDocument[] } = {};
-        for (const doc of documents) {
-            const type = doc.resource.type || 'Undefined';
-            if (!groups[type]) {
-                groups[type] = [];
-            }
-            groups[type].push(doc);
-        }
-        this.groupedDocuments = Object.keys(groups).map(type => ({
-            name: type,
-            documents: groups[type],
-            isExpanded: false
-        }));
-    }
 
-    public toggleCategory(category: DocumentCategory) {
-        category.isExpanded = !category.isExpanded;
-    }
 
-    ngOnInit() {
-        this.groupDocuments();
-    }
 
     ngAfterViewInit() {
-
         this.sidebarElement.nativeElement.focus();
     }
 

@@ -559,83 +559,83 @@ Zaten girilmiş olan alan verileri, giriş türü değiştirilse bile görüntü
 Tek satırlık bir metnin girişi (isteğe bağlı olarak tek dilli veya çok dilli olabilir)
 <p align="center"><img src="images/en/configuration/input_type_input.png" alt="Input type 'Tek satırlık metin'"/></p>
 
-#### Single line text with multiple selection
-Input of multiple single line texts (optionally monolingual or multilingual)
-<p align="center"><img src="images/en/configuration/input_type_multi_input.png" alt="Input type 'Single line text with multiple selection'"/></p>
+#### Çoklu seçimli tek satırlık metin
+Birden fazla tek satırlık metnin girişi (isteğe bağlı olarak tek dilli veya çok dilli olabilir)
+<p align="center"><img src="images/en/configuration/input_type_multi_input.png" alt="Giriş türü 'Çoklu seçimli tek satırlık metin'"/></p>
   
-#### Multiline text
-Input of a multiline, multilingual text
-<p align="center"><img src="images/en/configuration/input_type_text.png" alt="Input type 'Multiline text'"/></p>
+#### Çok satırlı metin
+Çok satırlı, çok dilli bir metnin girişi
+<p align="center"><img src="images/en/configuration/input_type_text.png" alt="Giriş türü 'Çok satırlı metin'"/></p>
 
-#### Whole number
-Input of a positive or negative whole number
-<p align="center"><img src="images/en/configuration/input_type_int.png" alt="Input type 'Whole number'"/></p>
+#### Tam sayı
+Pozitif veya negatif tam sayı girişi
+<p align="center"><img src="images/en/configuration/input_type_int.png" alt="Giriş türü 'Tam sayı'"/></p>
 
-#### Positive whole number
-Input of a positive whole number
-<p align="center"><img src="images/en/configuration/input_type_unsigned_int.png" alt="Input type 'Positive whole number'"/></p>
+#### Pozitif tam sayı
+Pozitif tam sayı girişi
+<p align="center"><img src="images/en/configuration/input_type_unsigned_int.png" alt="Giriş türü 'Pozitif tam sayı'"/></p>
 
-#### Decimal number
-Input of a positive or negative decimal number
-<p align="center"><img src="images/en/configuration/input_type_float.png" alt="Input type 'Decimal number'"/></p>
+#### Ondalık sayı
+Pozitif veya negatif ondalık sayı girişi
+<p align="center"><img src="images/en/configuration/input_type_float.png" alt="Giriş türü 'Ondalık sayı'"/></p>
 
-#### Positive decimal number
-Input of a positive decimal number
-<p align="center"><img src="images/en/configuration/input_type_unsigned_float.png" alt="Input type 'Positive decimal number'"/></p>
+#### Pozitif ondalık sayı
+Pozitif ondalık sayı girişi
+<p align="center"><img src="images/en/configuration/input_type_unsigned_float.png" alt="Giriş türü 'Pozitif ondalık sayı'"/></p>
 
 #### URL
-Input of an URL
-<p align="center"><img src="images/en/configuration/input_type_url.png" alt="Input type 'URL'"/></p>
+Bir URL girişi
+<p align="center"><img src="images/en/configuration/input_type_url.png" alt="Giriş türü 'URL'"/></p>
 
-#### Dropdown list
-Selection of a value from a valuelist
-<p align="center"><img src="images/en/configuration/input_type_dropdown.png" alt="Input type 'Dropdown list'"/></p>
+#### Açılır liste
+Değer listesinden bir değerin seçilmesi
+<p align="center"><img src="images/en/configuration/input_type_dropdown.png" alt="Giriş türü 'Açılır liste'"/></p>
 
-#### Dropdown list (range)
-Selection of a value or a range of values (from/to, two values) from a valuelist
-<p align="center"><img src="images/en/configuration/input_type_dropdown_range.png" alt="Input type 'Dropdown list (range)'"/></p>
+#### Açılır liste (aralık)
+Değer listesinden bir değerin veya değer aralığının (iki değer arasından) seçilmesi
+<p align="center"><img src="images/en/configuration/input_type_dropdown_range.png" alt="Giriş türü 'Açılır liste (aralık)'"/></p>
 
-#### Radiobutton
-Selection of a value from a valuelist
-<p align="center"><img src="images/en/configuration/input_type_radio.png" alt="Input type 'Radiobutton'"/></p>
+#### Radyo düğmesi
+Değer listesinden bir değerin seçilmesi
+<p align="center"><img src="images/en/configuration/input_type_radio.png" alt="Giriş türü 'Radyo düğmesi'"/></p>
 
-#### Yes / No
-Selection of Yes or No
-<p align="center"><img src="images/en/configuration/input_type_boolean.png" alt="Input type 'Yes / No'"/></p>
+#### Evet / Hayır (ç.n. Boolean)
+Evet veya Hayır Seçimi
+<p align="center"><img src="images/en/configuration/input_type_boolean.png" alt="Giriş türü 'Evet / Hayır'"/></p>
 
-#### Checkboxes
-Selection of one or more values from a valuelist
-<p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
+#### Onay Kutuları
+Bir değer listesinden bir veya daha fazla değerin seçimi
+<p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Giriş türü 'Onay Kutuları'"/></p>
 
-#### Date
-Selection of a date from a calendar. The input field can also be used to enter only month or year information.
-<p align="center"><img src="images/en/configuration/input_type_date.png" alt="Input type 'Date'"/></p>
+#### Tarih
+Takvimden bir tarih seçimi. Giriş alanı yalnızca ay veya yıl bilgilerini girmek için de kullanılabilir.
+<p align="center"><img src="images/en/configuration/input_type_date.png" alt="Giriş türü 'Tarih'"/></p>
 
-#### Dating
-Specification of one or more datings. Possible dating types are: Period, Single year, Before, After, Scientific.
-<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
+#### Tarihleme
+Bir veya daha fazla tarihlemenin belirtilmesi. Olası tarihleme türleri şunlardır: Dönem, Tek yıl, Önce, Sonra, Bilimsel.
+<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Giriş türü 'Tarihleme'"/></p>
 
-#### Dimension
-Specification of one or more dimensions. Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
-<p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
+#### Boyut
+Bir veya daha fazla boyutun belirtilmesi. Tek bir değer veya bir aralık belirtilebilir. "Ölçüldüğü şekilde" seçeneği açılır alt alanının seçenekleri arasından değerler seçilebilir.
+<p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Giriş türü 'Boyut'"/></p>
 
-#### Bibliographic reference
-Specification of one or more bibliographic references. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
-<p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Input type 'Bibliographic reference'"/></p>
+#### Bibliyografik referans
+Bir veya daha fazla bibliyografik referansın belirtilmesi. İsteğe bağlı olarak Zenon ID, DOI, sayfa numarası ve şekil numarası belirtilebilir.
+<p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Giriş türü 'Bibliografik referans'"/></p>
 
-#### Composite field
-Composite fields can contain multiple entries, each consisting of any number of subfields. Each subfield has its own name and input type (see section *Subfields*).
-<p align="center"><img src="images/en/configuration/input_type_composite_field.png" alt="Input type 'Composite field'"/></p>
+#### Bileşik alan
+Bileşik alanlar, her biri herhangi sayıda alt alandan oluşan birden fazla giriş içerebilir. Her alt alanın kendi adı ve giriş türü vardır (bkz. bölüm *Alt Alanlar*).
+<p align="center"><img src="images/en/configuration/input_type_composite_field.png" alt="Giriş türü 'Bileşik alan'"/></p>
 
-#### Relation
-Reference to one or more other resources that belong to one of the configured target categories (see section *Allowed target categories*). Optionally, an inverse relation can be configured, which is automatically set in the target resources (see section *Inverse relation*).
-<p align="center"><img src="images/en/configuration/input_type_relation.png" alt="Input type 'Relation'"/></p>
+#### İlişki
+Konfigüre edilmiş hedef kategorilerinden birine ait bir veya daha fazla başka girdiye bağlantı (bkz. bölüm *İzin verilen hedef kategorileri*). İsteğe bağlı olarak, hedef girdilerde otomatik olarak ayarlanan bir ters ilişki konfigüre edilebilir (bkz. bölüm *Ters ilişki*).
+<p align="center"><img src="images/en/configuration/input_type_relation.png" alt="Giriş türü 'İlişki'"/></p>
 
 
 
-### Hide fields
+### Alanları gizle
 
-Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.
+Alanlar, alan düzenleyicisindeki *Alanı göster* ayarı devre dışı bırakılarak gizlenebilir. Alan daha sonra ne girdi görünümünde ne de girdi düzenleyicisinde görüntülenir. Gizli alanların yapılandırma düzenleyicisinde görüntülenip görüntülenmeyeceği, "Proje konfigürasyonu" menüsündeki "Gizli alanları göster" ayarına bağlıdır. Önceden girilmiş olan veriler gizlendikten sonra bile korunur ve *Alanı göster* seçeneği tekrar etkinleştirildiğinde tekrar görüntülenir. Uygulamanın işlevselliği için önemli olan bazı alanlar (girdi tanımlayıcısı gibi) gizlenemez; bu durumlarda seçenek görüntülenmez.
 
 
 ### Allow input in multiple languages

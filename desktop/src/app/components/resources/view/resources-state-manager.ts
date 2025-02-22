@@ -269,15 +269,15 @@ export class ResourcesStateManager {
 
         let resourcesState = ResourcesState.makeDefaults();
 
-        if (this.project === 'test') {
-            if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults();
-        } else {
+        if (!this.suppressLoadMapInTestProject) {
             const loadedState = await this.serializer.load('resources-state');
-            if (loadedState.overviewState) resourcesState.overviewState = loadedState.overviewState;
-            if (loadedState.operationViewStates) {
+            if (loadedState?.overviewState) {
+                loadedState.overviewState.bypassHierarchy = resourcesState.overviewState.bypassHierarchy;
+                resourcesState.overviewState = loadedState.overviewState;
+            }
+            if (loadedState?.operationViewStates) {
                 resourcesState.operationViewStates = loadedState.operationViewStates;
             }
-
             resourcesState = ResourcesState.complete(resourcesState);
         }
 

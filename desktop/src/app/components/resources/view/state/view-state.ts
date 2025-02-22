@@ -28,11 +28,10 @@ export interface ViewState {
 
 export module ViewState {
 
-    export function build(mode: ResourcesViewMode = 'map'): ViewState {
-
+    export function build(mode: ResourcesViewMode = 'map', bypassHierarchy: boolean = false): ViewState {
         return {
             operation: undefined,
-            bypassHierarchy: false,
+            bypassHierarchy: bypassHierarchy,
             expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
             mode: mode,
@@ -50,7 +49,6 @@ export module ViewState {
         if (!viewState.mode) viewState.mode = 'map';
         if (viewState.expandAllGroups === undefined) viewState.expandAllGroups = false;
         if (viewState.limitSearchResults === undefined) viewState.limitSearchResults = true;
-        viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();
         viewState.customConstraints = {};

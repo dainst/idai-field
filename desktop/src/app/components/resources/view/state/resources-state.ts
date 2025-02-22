@@ -224,7 +224,7 @@ export module ResourcesState {
     export function makeDefaults(): ResourcesState {
 
         return {
-            overviewState: ViewState.build(),
+            overviewState: ViewState.build('map', true),
             typesManagementState: ViewState.build('grid'),
             inventoryState: ViewState.build('grid'),
             operationViewStates: {},

@@ -62,22 +62,22 @@ Gezinme yolundaki butonlardan birine tıklayarak bir sonraki seviyeye geçebilir
 
 Listedeki girdiler tıklanarak seçilebilir. Ctrl/Cmd veya Shift tuşuna basılı tutarak birden fazla girdi
 aynı anda seçilebilir. Listedeki bir veya daha fazla seçili girdiye sağ tıklayarak aşağıdaki seçenekleri içeren
-bir kontekst menüsü açılır:
+bir içerik menüsü açılır:
 
 * *Uyarıları göster*: Bu girdi için mevcut uyarıları görüntüler (sadece uyarı içeren girdiler için geçerlidir, *Uyarılar* bölümüne bakın)
 * *Düzenle*: Düzenleyiciyi açar (ayrıca listedeki girdiye çift tıklanarak da kullanılabilir)
 * *Görselleri bağla*: Görsellerin seçili girdiye bağlanabileceği veya bağlı görsellerin kaldırılabileceği bir pencere açar
 * *QR kodu ekle*: Girdi için yeni bir QR kodunun oluşturulabileceği veya mevcut bir QR kodunun kamera taraması yoluyla bağlanabileceği bir pencere açar
 * *QR kodunu yönet*: Girdinin QR kodunu görüntüler ve bir QR kodu etiketi yazdırmaya olanak tanır (alternatif olarak kaynağın liste öğesinin sağ tarafındaki QR kodu düğmesinden de erişilebilir)
-* *Taşı*: Girdilerin geçerli kontekstlerinden kaldırılmasına ve başka bir üst girdiye atanmasını sağlar
+* *Taşı*: Girdilerin geçerli içeriklerinden kaldırılmasına ve başka bir üst girdiye atanmasını sağlar
 * *Sil*: Bir güvenlik kontrolünden sonra girdileri kaldırır (isteğe bağlı olarak, yalnızca silmek istediğiniz girdilere bağlı
 tüm görselleri de silebilirsiniz)
 * *Depolama yerini tara*: Kamera taramasıyla depolama yerinin QR kodunu tarayarak kaynak için yeni bir depolama yeri ayarlar (yalnızca "Bul", "Koleksiyonu bul" ve "Örnek" kategorilerinin girdileri ile ilgili alt kategoriler için kullanılabilir)
 
-Ayrıca, kontekst menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
+Ayrıca, içerik menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
 birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kullanılabilir. QR kodlarını ekleme veya yönetme seçenekleri yalnızca konfigürasyon düzenleyicisinde karşılık gelen kategori için QR kodlarının kullanımı ayarlanmışsa kullanılabilir (bkz. *Konfigürasyon* bölümündeki *Kategorileri düzenle* bölümü).
 
-<p align="center"><img src="images/en/resources/context_menu.png" alt="Kontekst menüsü"/></p>
+<p align="center"><img src="images/en/resources/context_menu.png" alt="İçerik menüsü"/></p>
 
 
 <hr>
@@ -92,7 +92,7 @@ Görüntü dosyaları isteğe bağlı olarak bir senkronizasyon bağlantısı ar
 
 ## Görüntüleri içe aktarma
 
-Görüntüler uygulamaya iki farklı şekilde aktarılabilir: "Araçlar" ➝ "Görüntü yönetimi" menüsü ve bir girdinin kontekst menüsündeki "Görüntüleri bağla" seçeneği (istenen girdiye sağ tıklanarak erişilebilir). İkinci durumda, görüntü içe aktarma işleminden sonra otomatik olarak ilgili girdiye bağlanacaktır (bkz. *Görüntüleri girdilere bağla* bölümü).
+Görüntüler uygulamaya iki farklı şekilde aktarılabilir: "Araçlar" ➝ "Görüntü yönetimi" menüsü ve bir girdinin içerik menüsündeki "Görüntüleri bağla" seçeneği (istenen girdiye sağ tıklanarak erişilebilir). İkinci durumda, görüntü içe aktarma işleminden sonra otomatik olarak ilgili girdiye bağlanacaktır (bkz. *Görüntüleri girdilere bağla* bölümü).
 
 <p align="center"><img src="images/en/images/droparea.png" alt="İçe aktar butonu"/></p>
 
@@ -133,7 +133,7 @@ Lütfen bunun aynı zamanda projenin görüntüler dizinindeki (ve bir senkroniz
 
 ## Görselleri girdilere bağlayın
 
-Bir veya daha fazla görüntüyü bir girdiye bağlamak için, ilgili girdinin kontekst menüsünde "Görselleri bağla" seçeneğini seçin ve artı düğmesine tıklayın. Artık iki seçenek arasında seçim yapabilirsiniz:
+Bir veya daha fazla görüntüyü bir girdiye bağlamak için, ilgili girdinin içerik menüsünde "Görselleri bağla" seçeneğini seçin ve artı düğmesine tıklayın. Artık iki seçenek arasında seçim yapabilirsiniz:
 
 * *Yeni görseller ekle*: Yeni görseller projeye aktarılacak ve girdiye bağlanacak.
 * *Mevcut görselleri bağla*: Projede halihazırda mevcut olan görsellerden bir veya daha fazlasını seçerek girdiye bağla.
@@ -147,7 +147,7 @@ Bağlantılar ayrıca görüntü yönetimi aracılığıyla eklenebilir veya kal
 
 ### Ana görüntü ayarla
 
-Bir girdi birden fazla görüntüye bağlıysa, görüntülerden biri **ana görüntü** olarak bir yıldız simgesiyle işaretlenir. Bu ana görüntü, girdi için bir önizleme görseli olarak görüntülenir. Girdinin kontekst menüsünde "Görüntüleri bağla" seçeneğini belirleyerek ve bağlı görüntüler listesinde istediğiniz görüntüyü seçerek ana görüntüyü değiştirebilirsiniz. Ardından "Ana görüntü olarak ayarla" düğmesine tıklayın:
+Bir girdi birden fazla görüntüye bağlıysa, görüntülerden biri **ana görüntü** olarak bir yıldız simgesiyle işaretlenir. Bu ana görüntü, girdi için bir önizleme görseli olarak görüntülenir. Girdinin içerik menüsünde "Görüntüleri bağla" seçeneğini belirleyerek ve bağlı görüntüler listesinde istediğiniz görüntüyü seçerek ana görüntüyü değiştirebilirsiniz. Ardından "Ana görüntü olarak ayarla" düğmesine tıklayın:
 
 <p align="center"><img src="images/en/images/main_image.png" alt="'Ana görüntü olarak ayarla' Butonu"/></p>
 
@@ -221,7 +221,7 @@ Buna karşılık, bir üst kategori seçerseniz (örneğin "Stratigrafik birim")
 seçili kategorinin girdileri ve tüm alt kategorileri (örneğin "Katman", "Mezar", "Mimarlık", "Zemin" vb.) dahil edilir.
 Yalnızca üst kategoriyi seçmek için tekrar tıklayın.
 
-Mevcut kontekst hangi kategorilerin kullanılabileceğini belirler: Genel bakışta işlem kategorilerini, 
+Mevcut içerik hangi kategorilerin kullanılabileceğini belirler: Genel bakışta işlem kategorilerini, 
 görüntü yönetiminde görüntü kategorilerini vb. düzenleyebilirsiniz.
 
 
@@ -277,12 +277,12 @@ izin verilen karakterler olarak tanımlanmıştır. Başlangıç terimi araması
 "Arazi-00[01]1" araması (1) ve (4) değerlerini döndürür, çünkü yer tutucudan sonraki rakam 1 olmalıdır.
 
 
-### Diğer kontekstlerden gelen arama sonuçları
+### Diğer içeriklerden gelen arama sonuçları
 
-Mevcut bağlamda hiçbir arama sonucu bulunamazsa, metin giriş alanının altında diğer kontekstlerden 
+Mevcut içerikte hiçbir arama sonucu bulunamazsa, metin giriş alanının altında diğer içeriklerden 
 gelen arama sonuçları gösterilir.
 
-<p align="center"><img src="images/en/search/other_contexts.png" alt="Diğer kontekstlerden arama sonuçları"/></p>
+<p align="center"><img src="images/en/search/other_contexts.png" alt="Diğer içeriklerden arama sonuçları"/></p>
 
 Girdilerden birine tıklayarak hemen ilgili bağlama geçebilir 
 ve girdiyi seçebilirsiniz.
@@ -300,12 +300,12 @@ Detaylı arama modu, daha büyük miktardaki veriler üzerinde arama yapmanıza 
 * **Genel Bakış** kısmında, arama projenin tüm girdileri üzerinden gerçekleştirilir.
 * **İşlem sekmelerinde**, işlemin tüm girdileri üzerinde arama yapılır.
 
-Her iki durumda da bulunan tüm girdiler sol taraftaki listede gösterilir. "Kontekstte göster" 
-(Yukarı ok işareti) ve sırasıyla "Bir işlemin kontekstinde göster" (Sağ yukarı ok işareti) butonları 
-bir kaydın hiyerarşik kontekstine geçmenizi sağlar; bunu yaparken genişletilmiş arama modu sonlandırılır ve 
+Her iki durumda da bulunan tüm girdiler sol taraftaki listede gösterilir. "içerikte göster" 
+(Yukarı ok işareti) ve sırasıyla "Bir işlemin içeriğinde göster" (Sağ yukarı ok işareti) butonları 
+bir kaydın hiyerarşik içeriğine geçmenizi sağlar; bunu yaparken genişletilmiş arama modu sonlandırılır ve 
 gerekirse yeni bir sekme açılır.
 
-<p align="center"><img src="images/en/search/show_in_context.png" alt="Kontekstte göster"/></p>
+<p align="center"><img src="images/en/search/show_in_context.png" alt="İçerikte göster"/></p>
 
 Detaylı arama modundayken, devre dışı bırakılmış oluştur düğmesiyle girdi oluşturmak mümkün değildir. 
 Yeni girdiler oluşturmak için lütfen detaylı arama modundan çıkın.
@@ -464,64 +464,64 @@ Bir kategoriye sağ tıklandığında aşağıdaki seçenekleri sunan bir içeri
 
 ### Kategorileri düzenleme
 
-Kontekst menüsü üzerinden veya kategori listesindeki bir girişe çift tıklanarak, kategorinin özelliklerinin düzenlenebileceği kategori düzenleyicisi açılabilir:
+İçerik menüsü üzerinden veya kategori listesindeki bir girişe çift tıklanarak, kategorinin özelliklerinin düzenlenebileceği pencere açılabilir:
 
 * *Etiket*: Uygulamanın tüm alanlarında gösterilecek kategorinin görüntüleme etiketi. Farklı diller için etiketler girebilirsiniz.
-* *Renk*: Kategori simgesinin rengi ve haritada bu kategorideki kaynaklar için gösterilen geometriler.
-* *QR kodları*: Bu kategorideki kaynaklar için QR kodlarının kullanılmasını sağlar (bkz. *QR kodları* bölümü).
-* *Tanımlayıcı öneki*: İsteğe bağlı olarak bu kategorinin kaynaklarının tanımlayıcısının her zaman başlaması gereken bir metni buraya girin. Lütfen halihazırda var olan tanımlayıcıların otomatik olarak ayarlanmayacağını unutmayın.
-* *Kaynak sınırı*: İsteğe bağlı olarak bu kategori için oluşturulabilecek maksimum kaynak sayısını belirtmek için buraya bir sayı girin. Giriş alanı boş bırakılırsa, herhangi bir sayıda kaynak oluşturulabilir. Bu seçenek yalnızca işlem kategorileri ve "Yer" kategorisi için kullanılabilir.
+* *Renk*: Kategori simgesinin ve haritada bu kategorideki girdiler için gösterilen geometrilerin rengi.
+* *QR kodları*: Bu kategorideki girdilerde QR kodlarının kullanılmasını sağlar (bkz. *QR kodları* bölümü).
+* *Tanımlayıcı ön eki*: İsteğe bağlı olarak bu kategorinin kaynaklarının tanımlayıcısının her zaman başlaması gereken bir metni buraya girin. Lütfen halihazırda var olan tanımlayıcıların otomatik olarak güncellenmeyeceğini unutmayın.
+* *Girdi sınırı*: İsteğe bağlı olarak bu kategori için oluşturulabilecek maksimum girdi sayısını belirtmek için buraya bir sayı girin. Giriş alanı boş bırakılırsa, herhangi bir sayıda girdi oluşturulabilir. Bu seçenek yalnızca işlem kategorileri ve "Yer" kategorisi için kullanılabilir.
 
-Proje özel kategoriler için aşağıdaki özellikleri de belirtebilirsiniz:
+Projeye özel kategoriler için aşağıdaki özellikleri de belirtebilirsiniz:
 * *Açıklama*: Kategorinin hangi bağlamlarda kullanılması gerektiğini belirten bir açıklama metni.
-* *Referanslar*: Kategori veya kategori tanımları hakkında diğer sistemlerde daha fazla bilgiye başvurmak istiyorsanız, burada URL'leri belirtin.
+* *Referanslar*: Kategori veya kategori tanımları hakkında diğer sistemlerde daha fazla bilgiye ulaşmak istiyorsanız, burada kaynak URL'leri belirtin.
 
-#### QR codes
+#### QR kodları
 
-If the use of QR codes is enabled for a category, a unique QR code can be assigned to each resource of the category. Either a new code can be generated or an existing code can be read by camera scan and linked to the respective resource. The QR code can then be used in various ways:
-* Accessing the resource by camera scan (via the QR code button in the search bar)
-* Printing QR code labels (via the context menu of the resource)
-* Setting the storage location of a resource via camera scan of the QR code linked to the storage location (via the context menu of the resource)
-Please note that QR codes can only be used for the categories "Find", "Find collection", "Sample" and "Storage location" as well as the respective subcategories.
+Bir kategori için QR kodlarının kullanımı etkinleştirilirse, kategorinin her girdisine benzersiz bir QR kodu atanabilir. Yeni bir kod oluşturulabilir, mevcut bir kod kamera taramasıyla okunabilir veya ilgili girdiye bağlanabilir. QR kodu daha sonra çeşitli şekillerde kullanılabilir:
+* Kamera taramasıyla (arama çubuğundaki QR kod butonu) girdiye erişim
+* QR kod etiketlerinin yazdırılması (girdinin içerik menüsü aracılığıyla)
+* Depolama yerine bağlı QR kodunun (girdinin içerik menüsü üzerinden) kamera taraması yoluyla bir girdinin depodaki yerinin ayarlanması
+QR kodlarının yalnızca "Buluntu", "Buluntu Koleksiyonu", "Numune" ve "Depolama yeri" kategorileri ile bunların alt kategorileri için kullanılabileceğini lütfen unutmayın.
 
-The following options are available in the category editor for configuring QR codes:
-* *Use QR codes for identification*: Enable this option to allow the use of QR codes for resources of the category
-* *Automatically create for new resources*: Enable this option if a QR code should be generated automatically for every newly created resource
-* *Fields to print*: Select up to three fields to be printed on the QR code label in addition to the resource identifier. Activate the option "Print field label" if you want the field label to appear before the field content on the printed label.
-
-
-### Hierarchy
-
-The category determines where in the resource hierarchy a resource can be created: For example, finds can be created within stratigraphic units, but not vice versa. With the two buttons on the top right above the form display you can see below resources of which categories a resource of the selected category can be created and resources of which categories it can contain.
-
-<p align="center"><img src="images/en/configuration/hierarchy.png" alt="Hierarchy info buttons"/></p>
-
-The category hierarchy cannot currently be changed in the configuration editor. For newly created subcategories, the hierarchical restrictions of the supercategory apply.
+QR kodlarını konfigüre etmek için kategori düzenleyicide aşağıdaki seçenekler kullanılabilir:
+* *Tanımlama için QR kodlarını kullan*: Kategorinin girdilerinde QR kodlarının kullanılmasına izin vermek için bu seçeneği etkinleştirin
+* *Yeni girdiler için otomatik olarak oluştur*: Her yeni oluşturulan girdi için otomatik olarak bir QR kodu oluşturulması gerekiyorsa bu seçeneği etkinleştirin
+* *Yazdırılacak alanlar*: Girdi tanımlayıcısına ek olarak QR kod etiketinde yazdırılacak en fazla üç alanı seçin. Alan etiketinin yazdırılan etikette, içerik bilgisinden önce görünmesini istiyorsanız "Alan etiketini yazdır" seçeneğini etkinleştirin.
 
 
-## Groups
+### Hiyerarşi
 
-To the right of the category list, the field groups of the currently selected category form are displayed. Click on a group to display the corresponding fields to the right of it.
+Kategori, bir girdinin, hiyerarşik olarak nerede oluşturulabileceğini belirler: Örneğin, buluntular stratigrafik birimler içinde oluşturulabilir, ancak tersi mümkün değildir. Form görüntüsünün hemen üstündeki sağ üstteki iki düğmeyle, seçili kategorinin hangi kategorilerdeki girdilerinin oluşturulabileceğini ve hangi kategorilerdeki girdileri içerebileceğini aşağıda görebilirsiniz.
 
+<p align="center"><img src="images/en/configuration/hierarchy.png" alt="Hiyerarşi bilgi butonları"/></p>
 
-### Add groups
-
-You can add a new group to the form using the green plus button at the bottom of the list. You can select one of the groups already included in other forms configured for the project or create a new group. To do this, enter the name of the new group in the text field above the list and select the "Create new group" option. The group editor will open where you can enter the display label of the new group.
-
-
-### Manage groups
-
-Right-clicking on a group brings up a context menu with the following options:
-
-* *Edit*: Opens the group editor where you can enter the display label of the group. You can enter labels for different languages. The group editor can also be opened by double-clicking on the group.
-* *Delete*: Removes the group from the form. Please note that a group can only be deleted if it does not contain any fields. Before deleting the group, move all the fields to other groups or remove them.
+Kategori hiyerarşisi mevcut konfigürasyon düzenleyicisinde değiştirilemez. Yeni oluşturulan alt kategoriler için, üst kategorinin hiyerarşik kısıtlamaları geçerlidir.
 
 
-## Fields
+## Gruplar
 
-To the right of the group list, the fields that are included in the selected group are displayed. Click on an entry in the fields list to display more information about the field (description, input type, and the assigned valuelist, if any).
+Kategori listesinin sağında, şu anda seçili kategori formunun alan grupları görüntülenir. Bir gruba tıklayarak sağındaki ilgili alanları görüntüleyin.
 
-Fields inherited from the supercategory form are marked by the supercategory icon and cannot be edited or deleted. To do this, switch to the form of the corresponding supercategory.
+
+### Grupları ekleyin
+
+Listenin altındaki yeşil artı düğmesini kullanarak forma yeni bir grup ekleyebilirsiniz. Proje için yapılandırılmış diğer formlarda bulunan gruplardan birini seçebilir veya yeni bir grup oluşturabilirsiniz. Bunu yapmak için listenin üstündeki metin alanına yeni grubun adını girin ve "Yeni grup oluştur" seçeneğine tıklayın. Yeni grubun görüntü etiketini girebileceğiniz grup düzenleyicisi açılır.
+
+
+### Grupları yönetme
+
+Bir gruba sağ tıklandığında aşağıdaki seçeneklerin bulunduğu bir içerik menüsü açılır:
+
+* *Düzenle*: Grubun görüntü etiketini girebileceğiniz grup düzenleyicisini açar. Farklı diller için etiketler girebilirsiniz. Grup düzenleyicisi ayrıca gruba çift tıklanarak da açılabilir.
+* *Sil*: Grubu formdan kaldırır. Lütfen bir grubun yalnızca herhangi bir alan içermiyorsa silinebileceğini unutmayın. Grubu silmeden önce tüm alanları diğer gruplara taşıyın veya kaldırın.
+
+
+## Alanlar
+
+Grup listesinin sağında, seçili gruba dahil olan alanlar görüntülenir. Alanlar listesindeki bir girdiye tıklayarak alan hakkında daha fazla bilgi (açıklama, giriş türü ve varsa atanmış değer listesi) görüntüleyin.
+
+Süper kategori formundan devralınan alanlar süper kategori simgesiyle işaretlenir ve düzenlenemez veya silinemez. Bunu yapmak için, karşılık gelen süper kategorinin formuna geçin.
 
 
 ### Add fields

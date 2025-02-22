@@ -7,6 +7,23 @@
               (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
 <cdk-virtual-scroll-viewport [itemSize]="itemSize" id="sidebar-viewport">
+    <div *ngFor="let category of viewFacade.getGroupedDocuments()" class="category-group">
+        <div class="category-header" 
+             (click)="viewFacade.toggleCategoryExpansion(category.name)">
+            {{ category.name }} ({{ category.documents.length }})
+            <span class="toggle-icon">
+                {{ category.isExpanded ? '▼' : '▶' }}
+            </span>
+        </div>
+        <div *ngIf="category.isExpanded" class="category-items">
+            <div *ngFor="let document of category.documents" 
+                 class="category-item"
+                 (click)="select(document, $event)"
+                 [class.selected]="selectedDocument?.resource.id === document.resource.id">
+                {{ document.resource.identifier }}
+            </div>
+        </div>
+    </div>
     <ul #sidebar id="sidebar" class="resources-listing"
         tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
         <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"

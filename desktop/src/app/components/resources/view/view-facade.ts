@@ -11,6 +11,13 @@ import { ResourcesState } from './state/resources-state';
 export type ResourcesViewMode = 'map'|'list'|'grid';
 
 
+export interface CategoryGroup {
+    name: string;
+    documents: FieldDocument[];
+    isExpanded: boolean;
+}
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -19,6 +26,7 @@ export class ViewFacade {
 
     private documentsManager: DocumentsManager;
     private ready: boolean;
+    private categoryExpansionStates: { [categoryName: string]: boolean } = {};
 
 
     constructor(datastore: Datastore,
@@ -64,6 +72,7 @@ export class ViewFacade {
     public getCustomConstraints = () => ResourcesState.getCustomConstraints(this.resourcesStateManager.get());
 
     public getDocuments = () => this.documentsManager.getDocuments();
+    
 
     public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
 
@@ -179,5 +188,29 @@ export class ViewFacade {
         return this.syncService.getStatus() === SyncStatus.Pulling
             ? M.RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING
             : M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED;
+    }
+
+    getGroupedDocuments(): CategoryGroup[] {
+        const documents = this.getDocuments();
+        const groups = new Map<string, CategoryGroup>();
+        
+        documents.forEach(document => {
+            const categoryName = document.resource.category || 'Uncategorized';
+            if (!groups.has(categoryName)) {
+                groups.set(categoryName, { 
+                    name: categoryName,
+                    documents: [],
+                    isExpanded: this.categoryExpansionStates[categoryName] ?? false
+                });
+            }
+            groups.get(categoryName)!.documents.push(document);
+        });
+
+        return Array.from(groups.values());
+    }
+
+    toggleCategoryExpansion(categoryName: string): void {
+        this.categoryExpansionStates[categoryName] 
+            = !this.categoryExpansionStates[categoryName];
     }
 }

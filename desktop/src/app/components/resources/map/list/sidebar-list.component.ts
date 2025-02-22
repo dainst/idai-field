@@ -14,6 +14,13 @@ import { ComponentHelpers } from '../../../component-helpers';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
 
 
+
+export interface CategoryGroup {
+    name: string;
+    documents: any[]; // Replace 'any' with your document type
+    isExpanded?: boolean;
+}
+
 @Component({
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
@@ -36,6 +43,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
     public readonly itemSize: number = 59;
+
 
     private lastSelectedDocument: FieldDocument|undefined;
 
@@ -63,8 +71,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
-    ngAfterViewInit() {
 
+
+    ngAfterViewInit() {
         this.sidebarElement.nativeElement.focus();
     }
 
@@ -250,7 +259,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (!this.lastSelectedDocument || !this.selectedDocument) return false;
 
         const documents: Array<FieldDocument> = this.viewFacade.getDocuments();
-        
+
         const lastSelectedDocumentIndex: number = documents.findIndex(document => {
             return document.resource.id === this.lastSelectedDocument.resource.id; }
         );

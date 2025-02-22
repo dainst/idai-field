@@ -8,7 +8,7 @@
 
 <cdk-virtual-scroll-viewport [itemSize]="itemSize" id="sidebar-viewport">
     <div *ngFor="let category of viewFacade.getGroupedDocuments()" class="category-group">
-        <div class="category-header" 
+        <div class="category-header"
              (click)="viewFacade.toggleCategoryExpansion(category.name)">
             {{ category.name }} ({{ category.documents.length }})
             <span class="toggle-icon">
@@ -16,7 +16,7 @@
             </span>
         </div>
         <div *ngIf="category.isExpanded" class="category-items">
-            <div *ngFor="let document of category.documents" 
+            <div *ngFor="let document of category.documents"
                  class="category-item"
                  (click)="select(document, $event)"
                  [class.selected]="selectedDocument?.resource.id === document.resource.id">
@@ -24,31 +24,6 @@
             </div>
         </div>
     </div>
-    <ul #sidebar id="sidebar" class="resources-listing"
-        tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
-        <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
-             class="resources-listing-item resources-listing-item-wide"
-             (contextmenu)="contextMenu.open($event, getSelection())"
-             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-             [class.has-warnings]="document.warnings"
-             [class.selected]="selectedDocument?.resource.id === document.resource.id"
-             [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
-             [id]="'resource-' + document.resource.identifier">
-            <document-teaser (click)="select(document, $event)"
-                             (contextmenu)="select(document, $event, false)"
-                             (dblclick)="editDocument(document)"
-                             [document]="document"></document-teaser>
-            <list-button-group [document]="document"></list-button-group>
-        </li>
-        <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">
-            <div id="document-limit-info" (click)="resourcesComponent.removeLimit()"
-                 ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
-                 i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemoveTooltip">
-                <span class="mdi mdi-24px mdi-reload-alert"></span>
-                <span i18n="@@resources.searchResultsInfo.documentLimitRemove"></span>
-            </div>
-        </li>
-    </ul>
 </cdk-virtual-scroll-viewport>
 
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"

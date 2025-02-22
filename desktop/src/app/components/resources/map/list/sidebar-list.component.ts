@@ -14,13 +14,6 @@ import { ComponentHelpers } from '../../../component-helpers';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
 
 
-
-export interface CategoryGroup {
-    name: string;
-    documents: any[]; // Replace 'any' with your document type
-    isExpanded?: boolean;
-}
-
 @Component({
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
@@ -71,12 +64,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
-
-
     ngAfterViewInit() {
         this.sidebarElement.nativeElement.focus();
     }
-
 
     ngOnChanges() {
 

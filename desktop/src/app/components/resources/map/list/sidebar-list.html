@@ -10,17 +10,16 @@
     <div *ngFor="let category of viewFacade.getGroupedDocuments()" class="category-group">
         <div class="category-header"
              (click)="viewFacade.toggleCategoryExpansion(category.name)">
+             <span [class]="'mdi mdi-24px ' + (category.isExpanded ? 'mdi-chevron-down' : 'mdi-chevron-right')"></span>
             {{ category.name }} ({{ category.documents.length }})
-            <span class="toggle-icon">
-                {{ category.isExpanded ? '▼' : '▶' }}
-            </span>
         </div>
         <div *ngIf="category.isExpanded" class="category-items">
             <div *ngFor="let document of category.documents"
                  class="category-item"
                  (click)="select(document, $event)"
                  [class.selected]="selectedDocument?.resource.id === document.resource.id">
-                {{ document.resource.identifier }}
+                <span>{{ document.resource.identifier }}</span>
+            <span class="mdi mdi-information-outline mdi-24px"></span>
             </div>
         </div>
     </div>

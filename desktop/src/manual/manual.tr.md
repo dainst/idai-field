@@ -756,27 +756,27 @@ Ayrıca her proje dili için kategori, alan, grup, değer listesi ile değerleri
 Lütfen unutmayın; daha önce girilmiş olan metinler, ilgili proje dilleri listesinden kaldırılırsa artık görüntülenmeyecektir. Ancak bunlar veri tabanında kalacaklar ve söz konusu dil daha sonra bir kez daha proje dili olarak seçilirse tekrar görüntüleneceklerdir.
 
 
-## Import configuration
+## Konfigürasyonu içe aktarma
 
-Use the menu option "Project configuration" ➝ "Import configuration..." to import an existing configuration from another project. 
-In the dropdown menu "Source", you can choose between two different import options:
+Mevcut bir konfigürasyonu başka bir projeden içe aktarmak için "Proje konfigürasyonu" ➝ "Konfigürasyonu içe aktar..." menü seçeneğini kullanın .
+"Kaynak" açılır menüsünde iki farklı içe aktarma seçeneği arasından seçim yapabilirsiniz:
 
-* *File*: Import a Field configuration file (file extension *.configuration*) that was previously created in another project via the menu "Project configuration" ➝ "Export configuration...".
-* *Project*: Import the configuration of another project available on the same computer.
+* *Dosya*: Daha önce başka bir projede oluşturulmuş bir Alan yapılandırma dosyasını (dosya uzantısı *.configuration*) "Proje konfigürasyonu" ➝ "Konfigürasyonu içe aktar..." menüsü üzerinden içe aktarın.
+* *Proje*: Aynı bilgisayarda bulunan başka bir projenin konfigürasyonunu içe aktar.
 
-The result of the import can now be checked in the editor and accepted by clicking the "Save" button. Please note that all previous configuration settings will be replaced by the imported configuration.
-
-
-## Export configuration
-
-Use the menu option "Project configuration" ➝ "Export configuration..." to save the configuration of the opened project as a Field configuration file (file extension *.configuration*). This will export the state currently displayed in the configuration editor, including any unsaved changes. The generated file also contains all project-specific valuelists.
-
-The file can then be imported again via the menu option "Project configuration" ➝ "Import configuration..." in order to transfer the configuration to another project or restore the saved configuration state in the same project.
+İçe aktarmanın sonucu artık düzenleyicide kontrol edilebilir ve "Kaydet" düğmesine tıklanarak kabul edilebilir. Lütfen unutmayın; tüm önceki ayarlar içe aktarılan konfigürasyonla değiştirilecektir.
 
 
-## JSON export API
+## Konfigürasyonu dışa aktarma
 
-The project configuration can be retrieved in JSON format via an API endpoint. The endpoint is available via the following URL when the application is open:
+Açılan projenin konfigürasyonunu Field yapılandırma dosyası (dosya uzantısı *.configuration*) olarak kaydetmek için "Proje konfigürasyonu" ➝ "Konfigürasyonu dışa aktar..." menü seçeneğini kullanın. Bu, yapılandırma düzenleyicisinde mevcut görüntülenen durumu, kaydedilmemiş değişiklikler dahil olmak üzere dışa aktaracaktır. Oluşturulan dosya ayrıca tüm projeye özgü değer listelerini içerir.
+
+Daha sonra konfigürasyonu başka bir projeye aktarmak veya aynı projede kaydedilmiş yapılandırma durumunu geri yüklemek için dosya "Proje konfigürasyonu" ➝ "Konfigürasyonu içe aktar..." menü seçeneği üzerinden tekrar içe aktarılabilir.
+
+
+## JSON dışa aktarma API'si
+
+Proje konfigürasyonu bir API erişim noktası aracılığıyla JSON biçiminde alınabilir. Erişim noktası, uygulama açıkken aşağıdaki URL aracılığıyla kullanılabilir:
 
 http://localhost:3000/configuration/PROJECT
 

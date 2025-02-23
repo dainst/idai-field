@@ -685,75 +685,75 @@ Bu bölüm yalnızca "İlişki" giriş türü seçildiğinde görünür. İsteğ
 *Ters ilişki* seçim alanında yalnızca daha önce oluşturulmuş ve aşağıdaki ölçütleri karşılayan alanlar görünür:
 
 * Söz konusu alanın giriş tipi "İlişki" olmalıdır.
-* Düzenlenen alanın tüm izin verilen hedef kategorileri için söz konusu alanın aynı tanımlayıcı altında yapılandırılması gerekir.
+* Düzenlenen alanın tüm izin verilen hedef kategorileri, söz konusu alanın aynı tanımlayıcısı altında konfigüre edilmesi gerekir.
 * Düzenlenen alanın ait olduğu kategori, söz konusu alan için izin verilen hedef kategori olarak ayarlanmalıdır.
 * Düzenlenmekte olan alanın, bu kriterlere uygun olarak söz konusu alanın tüm izin verilen hedef kategorileri için ters ilişki olarak girilmesine izin verilmesi gerekmektedir.
 
 Ters ilişki seçilip *Tamam* butonu ile değişiklikler onaylandığında, diğer alanlardaki ters ilişkiler de otomatik olarak eklenir veya güncellenir.
 
-Daha önce girilmiş olan kaynak verilerinin, başka bir ters ilişki seçildiğinde otomatik olarak güncellenmeyeceğini lütfen unutmayın.
+Lütfen unutmayın; daha önce kaydedilmiş girdi verileri, başka bir ters ilişki seçildiğinde otomatik olarak güncellenmeyecektir.
 
 
-## Adjusting order and group assignment
+## Sıralama ve grup atamasını ayarlama
 
-The order of supercategories, subcategories, groups and fields can be changed using drag & drop. To do so, click on the handle icon on the left of the list entry, hold down the mouse button and move the element to the desired position.
+Üst kategorilerin, alt kategorilerin, grupların ve alanların sırası sürükle bırak işlemiyle değiştirilebilir. Bunu yapmak için, liste girişinin solundaki tutamak simgesine tıklayın, fare düğmesini basılı tutun ve öğeyi istediğiniz konuma taşıyın.
 
-<p align="center"><img src="images/en/configuration/drag_and_drop_handle.png" alt="Drag and drop handle"/></p>
+<p align="center"><img src="images/en/configuration/drag_and_drop_handle.png" alt="Sürükle ve bırak tutamağı"/></p>
 
-Fields can also be assigned to another group in the same way: Simply drag the field to the entry of the corresponding group in the group list. Note that changes to the field/group order or group assignment are not automatically transferred from the form of a supercategory to forms of the corresponding subcategories (and vice versa).
-
-
-## Valuelists
-
-The "Project configuration" ➝ "Valuelist management" menu opens an overview of all the valuelists that come with Field. The valuelists listed here are either used by the fields of the standard forms or were created in the context of projects that have already used Field.
-
-Use the text field above the list to filter the valuelists based on any search terms. The search takes into account valuelist identifiers as well as identifiers and display labels of individual values. Using the button to the right of the search field, you can open the filter menu, which allows you to selectively display only project specific (i.e. newly created) valuelists and/or valuelists currently used within the project.
-
-<p align="center"><img src="images/en/configuration/valuelists_filter.png" alt="Valuelists filter menu"/></p>
-
-Please note that all changes made in the valuelist management window must subsequently be confirmed by clicking on the "Save" button of the configuration editor before they are applied to the project.
+Alanlar aynı şekilde başka bir gruba da atanabilir: Alanı grup listesindeki ilgili grubun girişine sürüklemeniz yeterlidir. Lütfen unutmayın; alan/grup sırasındaki veya grup atamasındaki değişiklikler otomatik olarak bir üst kategorinin formundan ilgili alt (veya tam tersi) kategorilerin formlarına aktarılmaz.
 
 
-### Create and extend valuelists
+## Değer Listeleri
 
-To create a new valuelist, enter the desired identifier in the text field and select the "Create new valuelist" option. The valuelist editor will open, where you can enter the desired values and make further settings (see section *Edit valuelists*).
+"Proje konfigürasyonu" ➝ "Değer listesi yönetimi" menüsü, Field ile birlikte gelen tüm değer listelerinin genel görünümünü açar. Burada listelenen değer listeleri, standart formların alanları tarafından kullanılır veya Field'da daha önce kullanmış projeler bağlamında oluşturulmuştur.
 
-Instead of creating a completely new valuelist, you can alternatively extend an already existing one. To do this, right-click on the corresponding list entry to open the context menu, select the *Extend valuelist* option and enter an identifier for your extension list. All values of the selected valuelist are taken over and can now be supplemented by additional values in the editor. You also have the option to hide existing values and adjust their order. Please note that extension lists as well as project specific lists cannot be extended.
+Listenin üstündeki metin alanını kullanarak değer listelerini herhangi bir arama terimine göre filtreleyin. Aramada değer listesi tanımlayıcılarının yanı sıra tanımlayıcıları ve bireysel değerlerin görüntüleme etiketlerini de bulunacaktır. Arama alanının sağındaki düğmeyi kullanarak, yalnızca projeye özgü (yani yeni oluşturulmuş) değer listelerini ve/veya projede şu anda kullanılan değer listelerini seçilebilir halde görüntülemenize olanak tanıyan filtre menüsünü açabilirsiniz.
 
+<p align="center"><img src="images/en/configuration/valuelists_filter.png" alt="Değer listesi filtre menüsü"/></p>
 
-### Manage project specific valuelists
-
-Right-clicking on a project specific valuelist brings up a context menu that provides the following options:
-
-* *Edit*: Opens the valuelist editor (see section *Edit valuelists*).
-* *Delete*: Deletes the valuelist after a confirmation prompt. Deleting a valuelist is not possible as long as it is used by one or more fields. In this case, first select another valuelist for the corresponding fields.
+Lütfen unutmayın; değer listesi yönetim penceresinde yapılan tüm değişiklikler projeye uygulanması için konfigürasyon düzenleyicisinin "Kaydet" butonuna tıklanarak onaylanması gerekmektedir.
 
 
-### Edit valuelists
+### Değer listeleri oluşturma ve genişletme
 
-Via the context menu or by double-clicking on a valuelist, an editor can be opened in which the properties of the list can be edited:
+Yeni bir değer listesi oluşturmak için, metin alanına istediğiniz tanımlayıcıyı girin ve "Yeni değer listesi oluştur" seçeneğini seçin. İstediğiniz değerleri girebileceğiniz ve daha fazla ayar yapabileceğiniz değer listesi düzenleyicisi açılır (bkz. *Değer listelerini düzenleme* bölümü).
 
-* *Valuelist description*: A description text where you can specify more detailed information about the valuelist. This text is displayed in valuelist management when the list is selected.
-* *References*: Specify URLs here to reference more information about the valuelist or definitions in other systems.
-* *Values*: Use the text field "New value" to enter the desired identifier of a new value to be included in the valuelist. The value editor opens in each case, which can also be called later by clicking on the edit button next to each value (see section *Edit values*).
-* *Automatic sorting*: If this option is enabled, the values will always be displayed in alphanumeric order. You can deactivate the option in order to subsequently drag and drop the values into the desired order.
+Tamamen yeni bir değer listesi oluşturmak yerine, alternatif olarak halihazırda var olan bir listeyi düzenleyebilirsiniz. Bunu yapmak için, ilgili liste girişine sağ tıklayarak içerik menüsünü açın, *Değer listesini genişlet* seçeneğini seçin ve genişletme listeniz için bir tanımlayıcı girin. Seçilen değer listesinin tüm değerleri devralınır ve artık düzenleyicide ek değerlerle desteklenebilir. Ayrıca, var olan değerleri gizleyebilir ve sıralarını ayarlayabilirsiniz. Lütfen unutmayın; genişletme listeleri ve projeye özgü listeler genişletilemeyecektir.
 
 
-### Edit values
+### Proje özel değer listelerini yönetin
 
-The value editor allows you to customize the properties of a value:
+Projeye özgü bir değer listesine sağ tıklandığında aşağıdaki seçenekleri sağlayan bir içerik menüsü açılır:
 
-* *Label*: The display label of the value. You can enter labels for different languages.
-* *Description*: A description text where you can specify more detailed information about the value. This text is displayed in the configuration editor as a tooltip for the corresponding value.
-* *References*: Specify URLs here to reference definitions in other systems.
+* *Düzenle*: Değer listesi düzenleyicisini açar (bkz. *Değer listelerini düzenleme* bölümü).
+* *Sil*: Onay isteminden sonra değer listesini siler. Bir veya daha fazla alan tarafından kullanıldığı sürece bir değer listesini silmek mümkün değildir. Bu durumda, önce karşılık gelen alanlar için başka bir değer listesi seçin.
 
 
-## Select project languages
+### Değer listelerini düzenleme
 
-The menu "Project configuration" ➝ "Select project languages..." allows you to specify the languages for which data is to be entered in the project. For text fields for which the option "Allow input in multiple languages" is activated in the configuration editor, a separate text can be entered for each project language.
-In addition, empty input fields for the labels and descriptions of categories, fields, groups, valuelists and values are automatically displayed in the configuration editor for each project language.
+İçerik menüsü aracılığıyla veya bir değer listesine çift tıklanarak, listenin özelliklerinin düzenlenebileceği bir düzenleyici açılabilir:
 
-Please note that texts that have already been entered will no longer be displayed if the corresponding language is removed from the list of project languages. However, they will remain in the database and will be displayed again if the language is once more selected as a project language at a later time.
+* *Değer listesi açıklaması*: Değer listesi hakkında daha ayrıntılı bilgi belirtebileceğiniz bir açıklama metni. Bu metin, liste seçildiğinde değer listesi yönetiminde görüntülenir.
+* *Referanslar*: Diğer sistemlerdeki değer listesi veya tanımlar hakkında daha fazla bilgiye başvurmak için burada URL'leri belirtin.
+* *Değerler*: Değer listesine dahil edilecek yeni bir değerin istenen tanımlayıcısını girmek için "Yeni değer" metin alanını kullanın. Her durumda değer düzenleyicisi açılır ve bu düzenleyici daha sonra her değerin yanındaki düzenleme düğmesine tıklanarak da çağrılabilir (bkz. *Değerleri düzenleme* bölümü).
+* *Otomatik sıralama*: Bu seçenek etkinleştirilirse, değerler her zaman alfanümerik sırayla görüntülenir. Değerleri daha sonra istediğiniz sıraya sürükleyip bırakmak için bu seçeneği devre dışı bırakabilirsiniz.
+
+
+### Değerleri düzenleme
+
+Değer düzenleyici, bir değeri özelleştirmenize olanak tanır:
+
+* *Etiket*: Değerin görüntü etiketi. Farklı diller için etiketler girebilirsiniz.
+* *Açıklama*: Değer hakkında daha ayrıntılı bilgi belirtebileceğiniz bir açıklama metni. Bu metin, konfigürasyon düzenleyicisinde ilgili değer için bir araç ipucu olarak görüntülenir.
+* *Referanslar*: Diğer sistemlerdeki tanımlara referans vermek için burada URL'leri belirtin.
+
+
+## Proje dillerini değiştirme
+
+"Proje konfigürasyonu" ➝ "Proje dillerini seç..." menüsü, projeye veri girilecek dilleri belirtmenize olanak tanır. Konfigürasyon düzenleyicisinde "Birden fazla dilde girişe izin ver" seçeneğinin etkinleştirildiği metin alanlarında, her proje dili için ayrı bir metin girilebilir.
+Ayrıca her proje dili için kategori, alan, grup, değer listesi ile değerlerin etiketleri ve açıklamaları için boş giriş alanları otomatik olarak konfigürasyon düzenleyicisinde görüntülenir.
+
+Lütfen unutmayın; daha önce girilmiş olan metinler, ilgili proje dilleri listesinden kaldırılırsa artık görüntülenmeyecektir. Ancak bunlar veri tabanında kalacaklar ve söz konusu dil daha sonra bir kez daha proje dili olarak seçilirse tekrar görüntüleneceklerdir.
 
 
 ## Import configuration

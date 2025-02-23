@@ -958,7 +958,7 @@ Bir değer listesinden seçim yapılmasına izin veren alanlar için, karşılı
 
 ##### Evet/Hayır alanları
 
-"Evet/Hayır" giriş türündeki alanlar için *doğru* (Evet) ve *yanlış* (Hayır) değerleri girilebilir.
+"Evet/Hayır" giriş türündeki alanlar için *true* (Evet) ve *false* (Hayır) değerleri girilebilir.
 
 
 ##### Çok dilli alanlar
@@ -1092,20 +1092,20 @@ Field Desktop'ın eski sürümleriyle oluşturulan projelerde ve proje yapıland
 </div>
 
 
-##### Relations
+##### İlişkiler
 
-The column header contains the prefix "relations" before the name of the relation (separated by a dot). The identifiers of the target resources are entered, separated by a semicolon.
+Sütun başlığı, ilişkinin adından önce "ilişkiler (relations)" ön ekini içerir (bir noktayla ayrılmış). Hedef girdilerin tanımlayıcıları, noktalı virgülle ayrılmış şekilde girilir.
 
-In addition to the relations listed in the project configuration in the form of the respective category, the following columns can be used:
-* *relations.isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
-* *relations.depicts* (only for image resources): Links the image to one or more resources
-* *relations.isDepictedIn* (not for image resources): Links the resource to one or more images
-* *relations.isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target
-* *relations.hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource
+Proje yapılandırmasında ilgili kategori biçiminde listelenen ilişkilere ek olarak, aşağıdaki sütunlar kullanılabilir:
+* *relations.isChildOf*: Hiyerarşideki doğrudan üst girdiyi belirtir; en üst düzey girdilerde boş kalır
+* *relations.depicts* (yalnızca görüntü girdileri için): Görüntüyü bir veya daha fazla girdiye bağlar
+* *relations.isDepictedIn* (görüntü girdileri için değil): Girdiyi bir veya daha fazla görüntüye bağlar
+* *relations.isMapLayerOf* (yalnızca görüntü girdileri için): Görüntüyü, hedef olarak belirtilen girdi bağlamında bir harita katmanı olarak ekler
+* *relations.hasMapLayer* (görüntü girdileri için değil): Bu girdi bağlamında bir veya daha fazla görüntüyü harita katmanı olarak ekler
 
-To link images to the project or set them up as map layers at project level, enter the project identifier in the column *relations.depicts* or *relations.isMapLayerOf*.
+Görüntüleri projeye bağlamak veya proje düzeyinde harita katmanları olarak ayarlamak için *relations.depicts* veya *relations.isMapLayerOf* sütununa proje tanımlayıcısını girin.
 
-*Example:*
+*Örnek:*
 
 <div class="table-container">
   <table>
@@ -1122,31 +1122,31 @@ To link images to the project or set them up as map layers at project level, ent
         <td>A</td>
         <td>B;C;D</td>
         <td>E</td>
-        <td>Image1.png;Image2.png</td>
+        <td>Goruntu1.png;Goruntu2.png</td>
       </tr>
     </tbody>
   </table>
 </div>
 
 
-##### Datings
+##### Tarihlendirme
 
-Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
+"Tarihlendirme" giriş türündeki alanlar, her biri birkaç tarihlendirme girişi içerebilen liste alanlarıdır. Bir tarihlendirme, her tarihlendirme değeri için ayrı bir sütun oluşturulan aşağıdaki alt alanlardan oluşur:
 
-* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific)
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* 
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
-* *margin*: Tolerance margin in years for dating type *scientific*
-* *source*: Source of the dating, multilingual text field
-* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
-* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *type*: Tarihlendirme türü. Olası değerler şunlardır: *range* (Dönem), *single* (Tek yıl), *before* (Önce), *after* (Sonra), *scientific* (Bilimsel)
+* *begin*: Tarihlendirme türü *after* ve tarihlendirme türü *range* için başlangıç ​​tarihi için ayarlanan yıl belirtimi
+* *end*: Tarihlendirme türü *single*, *before* ve *scientific* için ve tarihlendirme türü *range* için bitiş tarihi için ayarlanan yıl belirtimi
+* *margin*: Tarihlendirme türü *scientific* için yıl cinsinden tolerans aralığı
+* *source*: Tarihlendirmenin kaynağı, çok dilli metin alanı
+* *isImprecise*: Belirtim "Kesin değil". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
+* *isUncertain*: Belirtim "Belirsiz". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
-The year specifications *begin* and *end* consist of two subfields:
+Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 
-* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP)
-* *inputYear*: The year
+* *inputType*: Zaman ölçeği. Olası değerler şunlardır: *bce* (MÖ.), *ce* (MS.), *bp* (GÖ.)
+* *inputYear*: Yıl
 
-*Example:*
+*Örnek:*
 
 <div class="table-container">
   <table>
@@ -1160,7 +1160,7 @@ The year specifications *begin* and *end* consist of two subfields:
         <th>dating.0.end.inputYear</th>
         <th>dating.0.margin</th>
         <th>dating.0.source.de</th>
-        <th>dating.0.source.en</th>
+        <th>dating.0.source.tr</th>
         <th>dating.0.isImprecise</th>
         <th>dating.0.isUncertain</th>
       </tr>
@@ -1175,7 +1175,7 @@ The year specifications *begin* and *end* consist of two subfields:
         <td>200</td>
         <td></td>
         <td>Beispieltext</td>
-        <td>Example text</td>
+        <td>Örnek metin</td>
         <td>false</td>
         <td>false</td>
       </tr>

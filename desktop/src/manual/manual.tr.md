@@ -1335,47 +1335,47 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 
 CSV içe aktarmayı kullanarak yeni girdiler oluşturabilir veya mevcut girdileri düzenleyebilirsiniz. Aşağıdaki iki seçenek arasından seçim yapabilirsiniz:
 
-* *Yeni girdileri içe aktar*: Bu seçenek etkinleştirilirse, CSV tablosunun her satırı için yeni bir girdi oluşturulur. Tanımlayıcıları (*identifier* sütunu) daha önce atanmış olan girdiler yok sayılır.
-* *Mevcut girdileri güncelle*: Bu seçenek etkinleştirilirse, mevcut girdiler CSV tablosundaki verilerle birleştirilir. İçe aktarma kaydındaki alanlar, mevcut veri kaydındaki aynı tanımlayıcıya sahip alanların üzerine yazar. İçe aktarma kaydında bulunmayan mevcut kayıttaki alanlar değişmeden kalır. Kategori değiştirilemez. Kayıtların atanması tanımlayıcı alanına (*identifier* sütununa) göre gerçekleştirilir. Atanamayan CSV tablosundaki kayıtlar yok sayılır.
+* *Yeni girdileri içe aktar*: Bu seçenek etkinleştirilirse, CSV tablosunun her satırından yeni bir girdi oluşturulur. Tanımlayıcıları (*identifier* sütunu) daha önce atanmış olan girdiler yok sayılır.
+* *Mevcut girdileri güncelle*: Bu seçenek etkinleştirilirse, mevcut girdiler CSV tablosundaki verilerle birleştirilir. İçe aktarma kaydındaki alanlar, mevcut veri kaydındaki aynı tanımlayıcıya sahip alanların üzerine yazar. İçe aktarma kaydında bulunmayan mevcut kayıtlardaki alanlar değişmeden kalır. Kategori değiştirilemez. Kayıtların atanması, tanımlayıcı alanına (*identifier* sütununa) göre gerçekleştirilir. Atanamayan CSV tablosundaki kayıtlar yok sayılır.
 
 Aşağıdaki seçenekler de mevcuttur:
 
-* *Silmelere izin ver*: Bu seçenek etkinleştirilirse, alanlar yalnızca değiştirilemez, aynı zamanda silinebilir. İçe aktarma dosyasındaki alanın boş olduğu tüm alanlar (ilişkiler dahil) silinir. CSV tablosunda sütun olarak listelenmeyen alanlar değişmeden kalır. Bu seçenek yalnızca *Mevcut girdileri güncelle* seçeneği seçildiğinde kullanılabilir.
-* *Kondigüre edilmemiş alanları yoksay*: Bu seçenek etkinleştirilirse içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada konfigüre edilmemiş alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
-* *Kategori seç*: Kategorinin tanımlayıcısı dosya adının bir parçasıysa (dosya adının geri kalanından noktalarla ayrılmışsa), kategori otomatik olarak tanınır (ör. "Buluntu" kategorisinin girdilerini içeren bir CSV dosyası için "example.find.csv"). Dosya adı bir kategori tanımlayıcısı içermiyorsa, kategori bu açılır menü kullanılarak manuel olarak seçilmelidir.
+* *Silmelere izin ver*: Bu seçenek etkinleştirilirse, alanlar yalnızca değiştirilemez, aynı zamanda silinebilir. İçe aktarma dosyasındaki alanın boş olduğu tüm alanlar (ilişkiler dahil) silinir. CSV tablosunda sütun olarak listelenmeyen alanlar değişmeden kalır. Bu seçenek yalnızca *Mevcut girdileri güncelle* tercihi seçildiğinde kullanılabilir.
+* *Konfigüre edilmemiş alanları yoksay*: Bu seçenek etkinleştirilirse içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada konfigüre edilmemiş alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
+* *Kategori seç*: Kategorinin tanımlayıcısı, dosya adının bir parçasıysa (dosya adının geri kalanından noktalarla ayrılmışsa), kategori otomatik olarak tanınır (ör. "Buluntu" kategorisinin girdilerini içeren bir CSV dosyası için "example.find.csv"). Dosya adı bir kategori tanımlayıcısı içermiyorsa, kategori bu açılır menü kullanılarak manuel olarak seçilmelidir.
 * *Bir işleme veri atayın*: Projede oluşturulan ve tüm yeni oluşturulan girdilerin atanacağı işlemlerden birini seçin. CSV dosyasının *relations.isChildOf* sütununda tüm kayıtlar için bir üst girdi zaten belirtilmişse veya kategorinin girdilerinin bir işlem içinde oluşturulması gerekmiyorsa (örneğin "Yer", "İşlem" ve "Görüntü" kategorileri için geçerlidir) bir işlem belirtmeniz gerekmez. Bu seçenek yalnızca *Yeni girdileri içe aktar* seçeneği seçiliyse kullanılabilir.
-* *Alan ayırıcı*: CSV dosyasında alan ayırıcı olarak kullanılan karakteri girin (varsayılan ayar virgüldür). CSV dosyasını oluştururken seçtiğiniz karakteri girin (örneğin Field Desktop'ta "Dışa Aktar" menüsü aracılığıyla veya bir elektronik tablo uygulamasında). Çoğu durumda, CSV dosyaları için alan ayırıcı olarak virgül veya noktalı virgül kullanılır. Eğer içe aktarma sırasında hata oluşursa, lütfen öncelikle doğru alan ayırıcısını girip girmediğinizi kontrol edin, aksi takdirde dosya doğru okunamaz.
+* *Alan ayırıcı*: CSV dosyasında alan ayırıcı olarak kullanılan karakteri girin (varsayılan ayar virgüldür). CSV dosyasını oluştururken (örneğin Field Desktop'ta "Dışa Aktar" menüsü aracılığıyla veya bir elektronik tablo uygulamasında) seçtiğiniz karakteri girin. Çoğu durumda, CSV dosyaları için alan ayırıcı olarak virgül veya noktalı virgül kullanılır. Eğer içe aktarma sırasında hata oluşursa, lütfen öncelikle doğru alan ayırıcısını doğru girip girmediğinizi kontrol edin, aksi takdirde dosya doğru okunamaz.
 
 
-#### Export options
+#### Dışa aktarma seçenekleri
 
-First select the type of CSV export. You can choose between the following two options:
+Önce CSV dışa aktarma türünü seçin. Aşağıdaki iki seçenek arasından seçim yapabilirsiniz:
 
-* *Complete*: All resources are exported based on the selected settings for context and category (see below).
-* *Schema only*: Only the header row with the column headers of all fields configured for the selected category will be exported. The exported file can be used as a starting point for creating an import file.
+* *Tümü*: Tüm girdiler, kontekst ve kategori için seçilen ayarlara göre dışa aktarılır (aşağıya bakın).
+* *Yalnızca şema*: Yalnızca seçili kategori için konfigüre edilmiş tüm alanların sütun başlıklarını içeren başlık satırı dışa aktarılacaktır. Dışa aktarılan dosya, bir içe aktarma dosyası oluşturmak için şablon olarak kullanılabilir.
 
-The following options are also available:
+Aşağıdaki seçenekler de mevcuttur:
 
-* *Context*: Optionally select an operation here whose resources are to be exported. If the default option "No restriction" is selected, all resources of the selected category are exported. This option is only available if the option *Complete* is selected.
-* *Category*: Select the desired category here. Only resources of the selected category are exported. In this dropdown menu, only categories for which resources exist in the selected context are available for selection. The number of resources available in the selected context is displayed in brackets.
-* *Field separator*: Enter the character to be used as the field separator in the CSV file to be created (the default setting is the comma).
-* *Combine hierarchical relations*: If this option is activated, the hierarchical relations are combined into the simplified relation *isChildOf*, which specifies the direct parent resource in each case. This option is activated by default and should not be deactivated in most cases. If the option is deactivated, the two columns *relations.liesWithin* and *relations.isRecordedIn* are created instead of the column *relations.isChildOf*. In the column *relations.liesWithin*, the direct parent resource is set (if the parent resource is not an operation), while the operation in which the resource has been recorded is set in the column *relations.isRecordedIn*. 
+* *Kontekst*: İsteğe bağlı olarak girdileri dışa aktarılacak bir işlemi burada seçin. Varsayılan seçenek "Kısıtlama yok" olarak seçilirse, seçilen kategorinin tüm girdileri dışa aktarılır. Bu seçenek yalnızca *Tümü* seçeneği seçildiğinde kullanılabilir.
+* *Kategori*: Burada istediğiniz kategoriyi seçin. Yalnızca seçilen kategorinin girdileri dışa aktarılır. Bu açılır menüde, yalnızca seçilen kontekstte girdileri bulunan kategoriler seçilebilir. Seçilen kontekstte bulunan girdi sayısı parantez içinde gösterilir.
+* *Alan ayırıcı*: Oluşturulacak CSV dosyasında alan ayırıcı olarak kullanılacak karakteri girin (varsayılan ayar virgüldür).
+* *Hiyerarşik ilişkileri birleştirin*: Bu seçenek etkinleştirilirse, hiyerarşik ilişkiler her durumda doğrudan üst girdiyi belirten basitleştirilmiş *isChildOf* ilişkisine birleştirilir. Bu seçenek varsayılan olarak etkinleştirilir ve çoğu durumda devre dışı bırakılmamalıdır. Seçenek devre dışı bırakılırsa, *relations.liesWithin* ve *relations.isRecordedIn* sütunları *relations.isChildOf* sütunu yerine oluşturulur. *relations.liesWithin* sütununda, doğrudan (üst girdi bir işlem değilse) üst girdi ayarlanır, girdinin kaydedildiği işlem ise *relations.isRecordedIn* sütununda ayarlanır.
 
 
 ### GeoJSON
 
-GeoJSON (file extensions *geojson* and *json*) is an open format for exchanging vector geodata based on the JSON format. It can be used in Field Desktop to import and export geometries.
+GeoJSON (dosya uzantıları *geojson* ve *json*), JSON formatına dayalı vektör coğrafi verilerini değiştirmek için açık bir formattır. Field Desktop'ta geometrileri içe ve dışa aktarmak için kullanılabilir.
 
-When importing GeoJSON files, **no new resources** are created. Instead, **geometries are added** to existing resources. To import new resources, use one of the two formats *CSV* or *JSON Lines* and then add geometries to the newly created resources using the GeoJSON import.
+GeoJSON dosyalarını içe aktarırken, **yeni girdi** oluşturulmaz. Bunun yerine, mevcut girdilere **geometriler eklenir**. Yeni girdileri içe aktarmak için, *CSV* veya *JSON Lines* formatlarından birini kullanın ve ardından GeoJSON içe aktarmayı kullanarak yeni oluşturulan girdilere geometriler ekleyin.
 
 
-#### Structure
+#### Yapısı
 
-The structure of a GeoJSON file is based on the <a href="https://geojson.org" target="_blank">GeoJSON specification</a>. The following additional rules apply for import or export in the context of Field Desktop:
+Bir GeoJSON dosyasının yapısı <a href="https://geojson.org" target="_blank">GeoJSON Specification</a> dokümanına dayanır. Field Desktop bağlamında içe veya dışa aktarım için aşağıdaki ek kurallar geçerlidir:
 
-A GeoJSON file must always contain an object of the type "FeatureCollection" at the top level. This object in turn contains individual objects of the type "Feature".
+Bir GeoJSON dosyası her zaman en üst düzeyde "FeatureCollection" türünde bir nesne içermelidir. Bu nesne de sırayla "Feature" türünde bireysel nesneler içerir.
 
-*Example:*
+*Örnek:*
 
     {
       "type": "FeatureCollection",
@@ -1392,33 +1392,33 @@ A GeoJSON file must always contain an object of the type "FeatureCollection" at 
     }
 
 
-Each object of the type "Feature" corresponds to a resource in Field and the associated geometry. A feature always contains the two fields *geometry* and *properties*: While the *geometry* field contains the geometry data, the data in the *properties* field establishes the link to the resource in Field.
+"Feature" türündeki her nesne, Field'daki bir girdiye ve ilişkili geometriye karşılık gelir. Bir feature her zaman *geometry* ve *properties* alanlarını içerir: *geometry* alanı geometri verilerini içerirken, *properties* alanındaki veriler Field'daki girdiye bağlantı kurar.
 
 
-##### Geometry
+##### Geometri
 
-The following geometry types are supported:
+Aşağıdaki geometri türleri desteklenmektedir:
 
-* *Point* (Point)
-* *MultiPoint* (Multipoint)
-* *LineString* (Polyline)
-* *MultiLineString* (Multipolyline)
-* *Polygon* (Polygon)
-* *MultiPolygon* (Multipolygon)
+* *Point* (Nokta)
+* *MultiPoint* (Çoklu Nokta)
+* *LineString* (Çizgi)
+* *MultiLineString* (Çoklu Çizgi)
+* *Polygon* (Poligon/Alan)
+* *MultiPolygon* (Çoklu Poligon)
 
-The coordinates are specified in accordance with the GeoJSON specification.
+Koordinatlar GeoJSON spesifikasyonuna uygun olarak belirtilmiştir.
 
 
-##### Properties
+##### Özellikler
 
-The following fields of the respective resource are written into the object *properties* during export:
+İlgili kaynağın aşağıdaki alanları, dışa aktarma sırasında nesne *özellikleri*ne yazılır:
 
-* *identifier*: The identifier of the resource
-* *category*: The identifier of the category selected for the resource
-* *shortDescription*: The short description of the resource. The output depends on the configuration of the *shortDescription* field of the corresponding category:
-    * Single line text without input in multiple languages: The text of the short description as a string
-    * Single line text with input in multiple languages / Multiline text: An object with the language codes as field names
-    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+* *tanımlayıcı*: Kaynağın tanımlayıcısı
+* *kategori*: Kaynak için seçilen kategorinin tanımlayıcısı
+* *kısaAçıklama*: Kaynağın kısa açıklaması. Çıktı, ilgili kategorinin *kısaAçıklama* alanının yapılandırmasına bağlıdır:
+* Birden fazla dilde girişi olmayan tek satırlık metin: Kısa açıklamanın dize olarak metni
+* Birden fazla dilde girişi olan tek satırlık metin / Çok satırlı metin: Alan adları olarak dil kodlarına sahip bir nesne
+* Açılır liste / Radyo düğmesi: Yapılandırılmış değer listesinden seçilen değerin tanımlayıcısı
 
 During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the object *properties* in order to successfully import GeoJSON data. Other fields of the *properties* object are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
 

@@ -1411,21 +1411,21 @@ Koordinatlar GeoJSON spesifikasyonuna uygun olarak belirtilmiştir.
 
 ##### Özellikler
 
-İlgili kaynağın aşağıdaki alanları, dışa aktarma sırasında nesne *özellikleri*ne yazılır:
+İlgili girdinin aşağıdaki alanları, dışa aktarma sırasında nesne *properties*ine yazılır:
 
-* *tanımlayıcı*: Kaynağın tanımlayıcısı
-* *kategori*: Kaynak için seçilen kategorinin tanımlayıcısı
-* *kısaAçıklama*: Kaynağın kısa açıklaması. Çıktı, ilgili kategorinin *kısaAçıklama* alanının yapılandırmasına bağlıdır:
-* Birden fazla dilde girişi olmayan tek satırlık metin: Kısa açıklamanın dize olarak metni
-* Birden fazla dilde girişi olan tek satırlık metin / Çok satırlı metin: Alan adları olarak dil kodlarına sahip bir nesne
-* Açılır liste / Radyo düğmesi: Yapılandırılmış değer listesinden seçilen değerin tanımlayıcısı
+* *identifier*: Girdinin tanımlayıcısı
+* *category*: Girdi için seçilen kategorinin tanımlayıcısı
+* *shortDescription*: Girdinin kısa açıklaması. Çıktı, ilgili kategorinin *shortDescription* alanının konfigürasyonuna bağlıdır:
+    * Birden fazla dilde girişi olmayan tek satırlık metin: Kısa açıklamanın "string" olarak metni
+    * Birden fazla dilde girişi olan tek satırlık metin / Çok satırlı metin: Alan adları olarak dil kodlarına sahip bir nesne
+    * Açılır liste / Radyo düğmesi: Konfigüre edilmiş değer listesinden seçilen değerin tanımlayıcısı
 
-During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the object *properties* in order to successfully import GeoJSON data. Other fields of the *properties* object are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
+İçe aktarma sırasında, veri kayıtları tanımlayıcı aracılığıyla atanır. Bu nedenle, GeoJSON verilerini başarıyla içe aktarmak için nesne *properties*'inde *identifier* alanını ayarlamak zorunludur. *properties* nesnesinin diğer alanları içe aktarma sırasında **dikkate alınmaz**; yalnızca ilgili girdideki geometri güncellenir. Lütfen unutmayın; içe aktarma sırasında mevcut geometrilerin üzerine yazılacaktır. İçe aktarma dosyasındaki atanamayan kayıtlar yok sayılır.
 
 
-##### Example
+##### Örnek
 
-This example shows the content of a GeoJSON export file for a resource with a point geometry. The two fields *category* and *shortDescription* in the object *properties* do not need to be set for import.
+Bu örnek, nokta geometrisi olan bir girdiden bir GeoJSON dışa aktarma dosyasının içeriğini gösterir. Nesne *properties* içindeki iki alanın *category* ve *shortDescription* içe aktarma için ayarlanması gerekmez.
 
     {
       "type": "FeatureCollection",
@@ -1444,7 +1444,7 @@ This example shows the content of a GeoJSON export file for a resource with a po
             "category": "Find",
             "shortDescription": {
               "de": "Beispielfund",
-              "en": "Example find"
+              "tr": "Örnek buluntu"
             }
           }
         }
@@ -1454,33 +1454,33 @@ This example shows the content of a GeoJSON export file for a resource with a po
 
 ### Shapefile
 
-Shapefile is a widely used format for exchanging vector geodata and can be used as an alternative to the GeoJSON format in the context of Field Desktop.
+Shapefile, vektör coğrafi verilerini değiştirmek için yaygın olarak kullanılan bir formattır ve Field Desktop bağlamında GeoJSON formatına alternatif olarak kullanılabilir.
 
-As with the GeoJSON import, **no new resources** are created when importing Shapefile data. Instead, **geometries are added** to existing resources. To import new resources, use one of the two formats *CSV* or *JSON Lines* and then add geometries to the newly created resources using the Shapefile import.
-
-
-#### Structure
-
-A Shapefile consists of a group of several files, some of which are optional. When exporting from Field Desktop, files with the following extensions are created:
-
-* *shp*: Contains the actual geodata
-* *dbf*: Contains the attribute table data, i.e. data of the associated resource (see section *Attribute table*).
-* *shx*: Establishes the link between geodata and attribute data
-* *cpg*: Specifies the encoding used in the *dbf* file.
-* *prj*: Specifies the projection. This file is only exported if a selection has been made in the field *Coordinate reference system*  of the project properties.
-
-As a Shapefile can only ever contain geometries of a single type, a total of three Shapefiles (each consisting of the four or five files specified above) are created for the individual geometry types when exporting from Field Desktop. Single types are saved in the shapefile as multiple types, which leads to the following files:
-
-  * File name "multipoints.\*", contains geometries of the types *Point* and *Multipoint*
-  * File name "multipolylines.\*", contains geometries of the types *Polyline* and *Multipolyline*
-  * File name "multipolygons.\*", contains geometries of the types *Polygon* and *Multipolygon*
-
-All files are bundled in a zip archive.
-
-When importing, all files belonging to the Shapefile must be in the same directory. In the file selection dialog of the import menu, select the file with the extension *shp*; all other files will be recognized automatically. Please note that zip archives are **not** supported during import. In order to import a Shapefile exported from Field Desktop into another project, the corresponding zip file must first be unpacked.
+GeoJSON içe aktarımında olduğu gibi, Shapefile verileri içe aktarılırken **yeni girdi** oluşturulmaz. Bunun yerine, mevcut kaynaklara **geometriler** eklenir. Yeni girdileri içe aktarmak için, *CSV* veya *JSON Lines* biçiminden birini kullanın ve ardından Shapefile içe aktarımını kullanarak yeni oluşturulan girdilere geometriler ekleyin.
 
 
-##### Attribute table
+#### Yapısı
+
+Bir Shapefile, bazıları isteğe bağlı olan birkaç dosyadan oluşan bir gruptan oluşur. Field Desktop'tan dışa aktarırken, aşağıdaki uzantılara sahip dosyalar oluşturulur:
+
+* *shp*: Esas coğrafi verileri içerir
+* *dbf*: Öznitelik tablosu verilerini, yani ilişkili girdinin verilerini içerir (bkz. *Öznitelik tablosu* bölümü).
+* *shx*: Coğrafi veriler ile öznitelik verileri arasındaki bağlantıyı kurar
+* *cpg*: *dbf* dosyasında kullanılan kodlamayı belirtir.
+* *prj*: Projeksiyonu belirtir. Bu dosya yalnızca proje özelliklerinin *Koordinat referans sistemi* alanında bir seçim yapılmışsa dışa aktarılır.
+
+Bir Shapefile yalnızca tek bir türdeki geometrileri içerebildiğinden, Field Desktop'tan dışa aktarırken her bir geometri türü için toplam üç Shapefile (her biri yukarıda belirtilen dört veya beş dosyadan oluşur) oluşturulur. Tekil türler, Shapefile'da birden fazla tür olarak kaydedilir ve aşağıdaki türden dosyalar üretilir:
+
+  * Dosya adı "multipoints.\*", *Nokta* ve *Çoklu nokta* tiplerinde geometriler içerir
+  * Dosya adı "multipolylines.\*", *Çizgi* ve *Çoklu çizgi* tiplerinde geometriler içerir
+  * Dosya adı "multipolygons.\*", *Poligon* ve *Çoklu poligon* tiplerinde geometriler içerir
+
+Tüm dosyalar bir zip arşivinde toplanmaktadır.
+
+İçe aktarırken, Shapefile'a ait tüm dosyalar aynı dizinde olmalıdır. İçe aktarma menüsünün dosya seçimi iletişim kutusunda, *shp* uzantılı dosyayı seçin; diğer tüm dosyalar otomatik olarak tanınacaktır. Lütfen unutmayın; zip arşivleri içe aktarma sırasında **desteklenmez**. Field Desktop'tan dışa aktarılan bir Shapefile'ı başka bir projeye içe aktarmak için, önce ilgili zip dosyasının paketinden çıkarılması gerekir.
+
+
+##### Öznitelik tablosu
 
 The following fields are included in the attribute table of the Shapefile during export:
 

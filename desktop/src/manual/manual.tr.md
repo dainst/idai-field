@@ -967,7 +967,7 @@ Bir alana farklı dillerde değerler girilebiliyorsa, CSV dosyasında her dil i�
 
 Field Desktop'ın eski sürümleriyle oluşturulan projelerde ve proje yapılandırmasındaki değişiklikler nedeniyle, çok dilli bir alanda, dil belirtimi olmayan bir değer bulunabilir. Bu durumlarda, sütun başlığına dil kodu yerine "unspecifiedLanguage" metni eklenir.
 
-*Example:*
+*Örnek:*
 
 <div class="table-container">
   <table>
@@ -975,28 +975,28 @@ Field Desktop'ın eski sürümleriyle oluşturulan projelerde ve proje yapıland
       <tr>
         <th>identifier</th>
         <th>description.de</th>
-        <th>description.en</th>
+        <th>description.tr</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>A</td>
         <td>Beispieltext</td>
-        <td>Example text</td>
+        <td>Örnek metin</td>
       </tr>
     </tbody>
   </table>
 </div>
 
 
-##### Dropdown lists (range)
+##### Açılır listeler (aralık)
 
-Fields of the input type "Dropdown list (range)" consist of up to two subfields, for each of which a separate column is created:
+"Açılır liste (aralık)" giriş türündeki alanlar, her biri için ayrı bir sütun oluşturulan en fazla iki alt alandan oluşur:
 
-* *value*: The identifier of the selected value; if two values are selected, the first of the two values
-* *endValue*: The identifier of the second selected value if two values are selected
+* *value*: Seçili değerin tanımlayıcısı; iki değer seçilirse, iki değerden ilki
+* *endValue*: İki değer seçilirse, ikinci seçili değerin tanımlayıcısı
 
-*Example (the value identifiers are identical with the German labels in this case):*
+*Örnek:*
 
 <div class="table-container">
   <table>
@@ -1010,22 +1010,22 @@ Fields of the input type "Dropdown list (range)" consist of up to two subfields,
     <tbody>
       <tr>
         <td>A</td>
-        <td>Eisenzeitlich</td>
+        <td>Demir Çağı</td>
         <td></td>
       </tr>
       <tr>
         <td>B</td>
-        <td>Frühbronzezeitlich</td>
-        <td>Spätbronzezeitlich</td>
+        <td>Erken Tunç Çağı</td>
+        <td>Geç Tunç Çağı</td>
       </tr>
     </tbody>
   </table>
 </div>
 
 
-##### Date fields
+##### Tarih alanları
 
-A value in the format "day.month.year" is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+"Tarih (Date)" giriş türündeki alanlar için "gün.ay.yıl" biçiminde bir değer girilir. Gün ve ay girişleri isteğe bağlıdır, böylece yalnızca belirli bir ay veya yıl girilebilir.
 
 <div class="table-container">
   <table>
@@ -1053,13 +1053,13 @@ A value in the format "day.month.year" is entered for fields of the input type "
 </div>
 
 
-##### List fields
+##### Liste alanları
 
-For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon (e.g. "Granite;Limestone;Slate").
+"Onay kutuları" ve "Tek satırlık metin (Liste)" (birden fazla dilde giriş olmadan) giriş türlerindeki alanlar için, alan için yalnızca bir sütun oluşturulur. Alan değerleri birbirinden noktalı virgülle ayrılır (örneğin "Granit; Kireçtaşı; Kayrak Taşı").
 
-For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+"Tarih", "Boyut", "Bibliyografik referans", "Bileşik alan" ve "Tek satırlık metin (Liste)" (birden fazla dilde giriş ile) giriş türlerindeki alanlar için, ilgili alt alanlar veya diller için karşılık gelen sütunlar **her liste girişi için** oluşturulur. İlgili girişi tanımlamak için alan adından sonra bir sayı eklenir (0'dan başlar ve noktalarla ayrılır).
 
-*Example of a field of the input type "Single line text (List)" with input in multiple languages:*
+*Birden fazla dilde giriş ile "Tek satırlık metin (Liste)" giriş türündeki bir alana örnek:*
 
 <div class="table-container">
   <table>
@@ -1067,25 +1067,25 @@ For fields of the input types "Dating", "Dimension", "Bibliographic reference", 
       <tr>
         <th>identifier</th>
         <th>exampleField.0.de</th>
-        <th>exampleField.0.en</th>
+        <th>exampleField.0.tr</th>
         <th>exampleField.1.de</th>
-        <th>exampleField.1.en</th>
+        <th>exampleField.1.tr</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>A</td>
         <td>Wert A1</td>
-        <td>Value A1</td>
+        <td>Değer A1</td>
         <td>Wert A2</td>
-        <td>Value A2</td>
+        <td>Değer A2</td>
       </tr>
       <tr>
         <td>B</td>
         <td>Wert B1</td>
-        <td>Value B1</td>
+        <td>Değer B1</td>
         <td>Wert B2</td>
-        <td>Value B2</td>
+        <td>Değer B2</td>
       </tr>
     </tbody>
   </table>

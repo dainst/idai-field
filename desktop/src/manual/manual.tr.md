@@ -624,11 +624,11 @@ Bir veya daha fazla bibliyografik referansın belirtilmesi. İsteğe bağlı ola
 <p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Giriş türü 'Bibliografik referans'"/></p>
 
 #### Bileşik alan
-Bileşik alanlar, her biri herhangi sayıda alt alandan oluşan birden fazla giriş içerebilir. Her alt alanın kendi adı ve giriş türü vardır (bkz. bölüm *Alt Alanlar*).
+Bileşik alanlar, her biri herhangi sayıda alt alandan oluşan birden fazla giriş içerebilir. Her alt alanın kendi adı ve giriş türü vardır (bkz. *Alt Alanlar* bölümü).
 <p align="center"><img src="images/en/configuration/input_type_composite_field.png" alt="Giriş türü 'Bileşik alan'"/></p>
 
 #### İlişki
-Konfigüre edilmiş hedef kategorilerinden birine ait bir veya daha fazla başka girdiye bağlantı (bkz. bölüm *İzin verilen hedef kategorileri*). İsteğe bağlı olarak, hedef girdilerde otomatik olarak ayarlanan bir ters ilişki konfigüre edilebilir (bkz. bölüm *Ters ilişki*).
+Konfigüre edilmiş hedef kategorilerinden birine ait bir veya daha fazla başka girdiye bağlantı (bkz. *İzin verilen hedef kategorileri* bölümü). İsteğe bağlı olarak, hedef girdilerde otomatik olarak ayarlanan bir ters ilişki konfigüre edilebilir (bkz. *Ters ilişki* bölümü).
 <p align="center"><img src="images/en/configuration/input_type_relation.png" alt="Giriş türü 'İlişki'"/></p>
 
 
@@ -650,7 +650,7 @@ Alan düzenleyicisindeki *Alana özel aramaya izin ver* ayarı, genişletilmiş 
 
 ### Değer listesini değiştirme
 
-Halihazırda seçili olan değer listesi, "Değer listesini değiştir" düğmesine tıklanarak başka bir değer listesiyle değiştirilebilir. Hazır bir değer listesi seçilebilir veya yeni bir liste oluşturulabilir (bkz. bölüm *Değer Listeleri*).
+Halihazırda seçili olan değer listesi, "Değer listesini değiştir" düğmesine tıklanarak başka bir değer listesiyle değiştirilebilir. Hazır bir değer listesi seçilebilir veya yeni bir liste oluşturulabilir (bkz. *Değer Listeleri* bölümü).
 
 Alana daha önce veri girilmişse, girilen değerler yeni değer listesine dahil edilmese bile görüntülenmeye devam edecektir. Bu durumda, çakışan değerler girdi düzenleyicide uyumsuz olarak işaretlenir ve orada silinebilir.
 
@@ -937,35 +937,35 @@ Desteklenen dışa aktarma biçimleri şunlardır:
 
 ### CSV
 
-CSV (file extension *csv*) is the main file format for importing and exporting resource data in the context of Field Desktop. CSV files can be read and edited by all common spreadsheet applications.
+CSV (dosya uzantısı *csv*), Field Desktop bağlamında girdi verilerini içe ve dışa aktarmak için kullanılan ana dosya biçimidir. CSV dosyaları tüm yaygın elektronik tablo uygulamaları tarafından okunabilir ve düzenlenebilir.
 
-CSV files **do not contain geodata**. Use one of the two formats *GeoJSON* or *Shapefile* to export geodata or add it to existing resources via import.
-
-
-#### Structure
-
-A CSV file only ever contains resources of a single category. Each column corresponds to one of the fields that have been configured for the form used in the project for this category. Please note that the column header must contain the unique field identifier as displayed for the respective field in magenta in the menu "Project configuration". The multilingual display names that are displayed in other areas of the application **cannot** be used in CSV files.
-
-It is mandatory to specify the identifier in the *identifier* column. All other fields are optional.
-
-For a quick overview and as a template for the CSV import, you can use the option *Schema only* in the menu "Tools" ➝ "Export" to create an empty CSV file with pre-filled column headers for all fields of a category (see section *Export options*).
+CSV dosyaları **coğrafi veri içermez**. Coğrafi verileri dışa aktarmak veya içe aktarma yoluyla mevcut girdilere eklemek için iki formattan birini kullanın: *GeoJSON* veya *Shapefile*.
 
 
-##### Valuelist fields
+#### Yapısı
 
-For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
+Bir CSV dosyası yalnızca tek bir kategorinin girdilerini içerir. Her sütun, bu kategori için projede kullanılan form için yapılandırılmış alanlardan birine karşılık gelir. Lütfen unutmayın; sütun başlığı, "Proje konfigürasyonu" menüsünde ilgili alan için fuşya renginde görüntülenen benzersiz alan tanımlayıcısına sahip olması zorunludur. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları CSV dosyalarında **kullanılamaz**.
+
+*Tanımlayıcı* sütununda tanımlayıcıyı belirtmek zorunludur. Diğer tüm alanlar isteğe bağlıdır.
+
+Veriye hızlı bir genel bakış veya CSV içe aktarma için bir şablon olarak, bir kategorinin tüm alanlarının önceden doldurulmuş sütun başlıklarına sahip boş bir CSV dosyası oluşturmak için "Araçlar" ➝ "Dışa aktar" menüsündeki *Yalnızca şema* seçeneğini kullanabilirsiniz (bkz. *Dışa aktarma seçenekleri* bölümü).
 
 
-##### Yes/No fields
+##### Değer listesi alanları
 
-The values *true* (Yes) and *false* (No) can be entered for fields of the input type "Yes / No".
+Bir değer listesinden seçim yapılmasına izin veren alanlar için, karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, ilgili değer listesinin görüntülendiği tüm yerlerde "Proje konfigürasyonu" menüsünde her değer için fuşya renginde görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
 
 
-##### Multilingual fields
+##### Evet/Hayır alanları
 
-If values in different languages can be entered in a field, a separate column is created in the CSV file for each language. The column header contains the language code (separated from the field identifier by a dot), as displayed in magenta in the menu "Settings" for each language (e.g. "shortDescription.en" for the English text of the short description).
+"Evet/Hayır" giriş türündeki alanlar için *doğru* (Evet) ve *yanlış* (Hayır) değerleri girilebilir.
 
-In projects created with older versions of Field Desktop and due to changes to the project configuration, it is possible that a value without a language specification is present in a multilingual field. In these cases, the text "unspecifiedLanguage" is added to the column header instead of the language code.
+
+##### Çok dilli alanlar
+
+Bir alana farklı dillerde değerler girilebiliyorsa, CSV dosyasında her dil için ayrı bir sütun oluşturulur. Sütun başlığı, her dil için "Ayarlar" menüsünde fuşya renginde gösterilen (bir nokta ile alan tanımlayıcısından ayrılmış) dil kodunu içerir (örneğin, kısa açıklamanın İngilizce metni için "shortDescription.en").
+
+Field Desktop'ın eski sürümleriyle oluşturulan projelerde ve proje yapılandırmasındaki değişiklikler nedeniyle, çok dilli bir alanda, dil belirtimi olmayan bir değer bulunabilir. Bu durumlarda, sütun başlığına dil kodu yerine "unspecifiedLanguage" metni eklenir.
 
 *Example:*
 

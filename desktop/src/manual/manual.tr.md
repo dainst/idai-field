@@ -599,7 +599,7 @@ Değer listesinden bir değerin veya değer aralığının (iki değer arasında
 Değer listesinden bir değerin seçilmesi
 <p align="center"><img src="images/en/configuration/input_type_radio.png" alt="Giriş türü 'Radyo düğmesi'"/></p>
 
-#### Evet / Hayır (ç.n. Boolean)
+#### Evet / Hayır
 Evet veya Hayır Seçimi
 <p align="center"><img src="images/en/configuration/input_type_boolean.png" alt="Giriş türü 'Evet / Hayır'"/></p>
 
@@ -633,40 +633,40 @@ Konfigüre edilmiş hedef kategorilerinden birine ait bir veya daha fazla başka
 
 
 
-### Alanları gizle
+### Alanları gizleme
 
-Alanlar, alan düzenleyicisindeki *Alanı göster* ayarı devre dışı bırakılarak gizlenebilir. Alan daha sonra ne girdi görünümünde ne de girdi düzenleyicisinde görüntülenir. Gizli alanların yapılandırma düzenleyicisinde görüntülenip görüntülenmeyeceği, "Proje konfigürasyonu" menüsündeki "Gizli alanları göster" ayarına bağlıdır. Önceden girilmiş olan veriler gizlendikten sonra bile korunur ve *Alanı göster* seçeneği tekrar etkinleştirildiğinde tekrar görüntülenir. Uygulamanın işlevselliği için önemli olan bazı alanlar (girdi tanımlayıcısı gibi) gizlenemez; bu durumlarda seçenek görüntülenmez.
-
-
-### Allow input in multiple languages
-
-If the option *Allow input in multiple languages* is enabled, a separate text can be entered in the field for each of the configured project languages. The setting is only available for fields of the input types "Single line text", "Single line text with multiple selection" and "Multiline text" and is activated by default.
+Alanlar, alan düzenleyicisindeki *Alanı göster* ayarı devre dışı bırakılarak gizlenebilir. Alan daha sonra ne girdi görünümünde ne de girdi düzenleyicisinde görüntülenir. Gizli alanların yapılandırma düzenleyicisinde görüntülenip görüntülenmeyeceği, "Proje konfigürasyonu" menüsündeki "Gizlenmiş alanları göster" ayarına bağlıdır. Önceden girilmiş olan veriler gizlendikten sonra bile korunur ve *Alanı göster* seçeneği tekrar etkinleştirildiğinde tekrar görüntülenir. Uygulamanın işlevselliği için önemli olan bazı alanlar (girdi tanımlayıcısı gibi) gizlenemez; bu durumlarda seçenek görüntülenmez.
 
 
-### Field specific search
+### Birden fazla dilde girişe izin verme
 
-The setting *Allow field specific search* in the field editor determines whether a field specific search can be performed for a field in extended search mode (see the *Extended search mode* section in the *Search* chapter). For fields of the category "Project" as well as for fields of some input types this setting cannot be activated; in these cases it is grayed out.
-
-
-### Replace valuelist
-
-The currently selected valuelist can be replaced by another one by clicking the "Replace valuelist" button. Either an existing valuelist can be selected or a new list can be created (see section *Valuelists*).
-
-If data has already been entered for the field, it will continue to be displayed even if the values entered are not included in the new valuelist. In this case, the corresponding values are marked as incompatible in the resource editor and can be deleted there.
+*Birden fazla dilde girişe izin ver* seçeneği etkinleştirilirse, konfigüre edilmiş proje dillerinin her biri için alana ayrı bir metin girilebilir. Ayar varsayılan olarak etkindir ve yalnızca "Tek satır metin", "Çoklu seçimli tek satır metin" ve "Çok satırlı metin" giriş türlerinin alanları için kullanılabilir.
 
 
-### Subfields
+### Alana özel arama
 
-This section appears only if the input type "Composite field" is selected and allows defining the subfields each entry of the composite field consists of. The order of the subfields can be changed via drag & drop.
-
-To create a new subfield, enter the desired name in the input field and confirm it by clicking the plus button.  A new editor window will open where you can configure the subfield in a similar way to a normal field (input type, label, description, etc.).
+Alan düzenleyicisindeki *Alana özel aramaya izin ver* ayarı, genişletilmiş arama modundaki bir alan için alana özgü bir arama yapılıp yapılamayacağını belirler (bkz. *Arama* bölümündeki *Detaylı arama modu* bölümü). "Proje" kategorisindeki alanlar ve bazı giriş türlerindeki alanlar için bu ayar etkinleştirilemez; bu durumda gri renktedir.
 
 
-#### Subfield conditions
+### Değer listesini değiştirme
 
-Optionally, a condition for displaying the subfield can be set in the subfield editor. If a condition is set, the subfield will be available during data entry only if another subfield has a specific value (or one of several values) set.
+Halihazırda seçili olan değer listesi, "Değer listesini değiştir" düğmesine tıklanarak başka bir değer listesiyle değiştirilebilir. Hazır bir değer listesi seçilebilir veya yeni bir liste oluşturulabilir (bkz. bölüm *Değer Listeleri*).
 
-To set a condition, first select another subfield of the same composite field in the dropdown field "Condition for display of subfield". Subfields of the input types "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes / No" and "Checkboxes" are available for selection. The possible values of the chosen subfield are now displayed and can be selected. The current subfield is only displayed during data entry if at least one of the selected values is set for the subfield selected as a condition field.
+Alana daha önce veri girilmişse, girilen değerler yeni değer listesine dahil edilmese bile görüntülenmeye devam edecektir. Bu durumda, çakışan değerler girdi düzenleyicide uyumsuz olarak işaretlenir ve orada silinebilir.
+
+
+### Alt alanlar
+
+Bu bölüm yalnızca "Bileşik alan" giriş türü seçildiğinde görünür ve bileşik alanın her girişinin hangi alt alanlardan oluştuğunu tanımlamaya izin verir. Alt alanların sıralaması sürükle ve bırak yoluyla değiştirilebilir.
+
+Yeni bir alt alan oluşturmak için, giriş alanına istediğiniz adı girin ve artı düğmesine tıklayarak onaylayın. Alt alanı normal bir alana benzer şekilde  (giriş türü, etiket, açıklama, vb.) konfigüre edebileceğiniz yeni bir düzenleyici penceresi açılacaktır.
+
+
+#### Alt alan koşulları
+
+İsteğe bağlı olarak, alt alan düzenleyicisinde alt alanı görüntülemek için bir koşul ayarlanabilir. Bir koşul ayarlandığı zaman, alt alan yalnızca başka bir alt alanın belirli bir değeri (veya birkaç değerden biri) ayarlanmışsa veri girişi sırasında kullanılabilir.
+
+Bir koşul belirlemek için, önce "Alt alanın görüntülenme koşulu" açılan kısımda, aynı bileşik alanın başka bir alt alanını seçin. "Açılır liste", "Açılır liste (aralık)", "Radiobutton", "Evet / Hayır" ve "Onay kutuları" giriş türlerinin alt alanları seçilebilir. Seçilen alt alanın olası değerleri artık görüntülenir ve seçilebilir. Geçerli alt alan, yalnızca koşul alanı olarak seçilen alt alan için seçilen değerlerden en az biri ayarlanmışsa veri girişi sırasında görüntülenir.
 
 
 ### Allowed target categories

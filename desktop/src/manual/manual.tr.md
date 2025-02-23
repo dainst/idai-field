@@ -1138,8 +1138,8 @@ Görüntüleri projeye bağlamak veya proje düzeyinde harita katmanları olarak
 * *end*: Tarihlendirme türü *single*, *before* ve *scientific* için ve tarihlendirme türü *range* için bitiş tarihi için ayarlanan yıl belirtimi
 * *margin*: Tarihlendirme türü *scientific* için yıl cinsinden tolerans aralığı
 * *source*: Tarihlendirmenin kaynağı, çok dilli metin alanı
-* *isImprecise*: Belirtim "Kesin değil". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
-* *isUncertain*: Belirtim "Belirsiz". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
+* *isImprecise*: "Hassas olmayan". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
+* *isUncertain*: "Belirsiz". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
 Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 
@@ -1236,18 +1236,18 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 </div>
 
 
-##### Dimensions
+##### Boyutlar
 
-Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
+"Boyut" giriş türündeki alanlar, her biri birkaç boyut girişi içerebilen liste alanlarıdır. Bir boyut girişi, her boyut için ayrı bir sütun oluşturulan aşağıdaki alt alanlardan oluşur:
 
-* *inputValue*: The measured numerical value
-* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
-* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
-* *measurementComment*: Comment, multilingual text field
-* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
+* *inputValue*: Ölçülen sayısal değer
+* *inputRangeEndValue*: Boyutta bir aralık verilecekse ölçülen ikinci sayısal değer
+* *inputUnit*: Ölçüm birimi. Olası değerler: *mm*, *cm*, *m*
+* *measurementPosition*: Alan "Ölçüldüğü gibi". Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *measurementComment*: Yorum/açıklama, çok dilli metin alanı
+* *isImprecise*: "Hassas olmayan". Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
-*Example (the value identifiers in the column "dimensionLength.0.measurementPosition" are identical with the German labels in this case):*
+*Örnek:*
 <div class="table-container">
   <table>
     <thead>
@@ -1258,7 +1258,7 @@ Fields of the input type "Dimension" are list fields, each of which can contain 
         <th>dimensionLength.0.inputUnit</th>
         <th>dimensionLength.0.measurementPosition</th>
         <th>dimensionLength.0.measurementComment.de</th>
-        <th>dimensionLength.0.measurementComment.en</th>
+        <th>dimensionLength.0.measurementComment.tr</th>
         <th>dimensionLength.0.isImprecise</th>
       </tr>
     </thead>
@@ -1268,9 +1268,9 @@ Fields of the input type "Dimension" are list fields, each of which can contain 
         <td>50</td>
         <td></td>
         <td>cm</td>
-        <td>Minimale Ausdehnung</td>
+        <td>Minimum genişleme</td>
         <td>Beispieltext</td>
-        <td>Example text</td>
+        <td>Örnek metin</td>
         <td>false</td>
       </tr>
       <tr>
@@ -1278,7 +1278,7 @@ Fields of the input type "Dimension" are list fields, each of which can contain 
         <td>10</td>
         <td>15</td>
         <td>m</td>
-        <td>Maximale Ausdehnung</td>
+        <td>Maksimum genişleme</td>
         <td></td>
         <td></td>
         <td>true</td>
@@ -1288,17 +1288,17 @@ Fields of the input type "Dimension" are list fields, each of which can contain 
 </div>
 
 
-##### Bibliographic eferences
+##### Bibliyografik referanslar
 
-Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields, for which a separate column is created for each bibliographic reference:
+"Bibliyografik referans" giriş türündeki alanlar, her biri birkaç referans girişi içerebilen liste alanlarıdır. Bir giriş, her bibliyografik referans için ayrı bir sütun oluşturulan aşağıdaki alt alanlardan oluşur:
 
-* *quotation*: Literature quotation
+* *quotation*: Literatür alıntısı
 * *zenonId*: Zenon ID
 * *doi*: DOI
-* *page*: Page
-* *figure*: Figure
+* *page*: Sayfa
+* *figure*: Şekil
 
-*Example:*
+*Örnek:*
 
 <div class="table-container">
   <table>
@@ -1326,10 +1326,9 @@ Fields of the input type "Bibliographic reference" are list fields, each of whic
 </div>
 
 
-##### Composite fields
+##### Bileşik alanlar
 
-Fields of the input type "Composite field" are list fields, each of which can contain several entries. One column is created per entry for each configured subfield (for multilingual text fields, one column for each language). The identifier of the subfield is specified in the column header.
-
+"Bileşik alan" giriş türündeki alanlar, her biri birkaç giriş içerebilen liste alanlarıdır. Her yapılandırılmış alt alan için giriş başına (çok dilli metin alanları için her dil için ayrı) bir sütun oluşturulur. Alt alanın tanımlayıcısı sütun başlığında belirtilir.
 
 #### Import options
 

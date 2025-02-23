@@ -1482,40 +1482,40 @@ Tüm dosyalar bir zip arşivinde toplanmaktadır.
 
 ##### Öznitelik tablosu
 
-The following fields are included in the attribute table of the Shapefile during export:
+Aşağıdaki alanlar, dışa aktarma sırasında Shapefile'ın öznitelik tablosuna dahil edilir:
 
-* *identifier*: The identifier of the resource
-* *category*: The identifier of the category selected for the resource
-* *sdesc*: The short description of the resource. The output depends on the configuration of the field *short description* of the corresponding category:
-    * Single line text without input in multiple languages: The text of the short description
-    * Single line text with input in multiple languages / Multiline text: A separate field for each language with the language code in the field name, separated by an underscore (e.g. *sdesc\_de* or *sdesc\_en*) 
-    * Dropdown list / Radiobutton: The identifier of the selected value from the configured valuelist
+* *identifier*: Girdinin tanımlayıcısı
+* *category*: Girdi için seçilen kategorinin tanımlayıcısı
+* *sdesc*: Girdinin kısa açıklaması. Çıktı, ilgili kategorinin *short description* alanının konfigürasyonuna bağlıdır:
+    * Birden fazla dilde giriş yapılmayan tek satırlık metin: Kısa açıklamanın metni
+    * Birden fazla dilde giriş yapılan tek satırlık metin / Çok satırlı metin: Alan adında dil kodu bulunan ve alt çizgiyle ayrılmış her dil için ayrı bir alan (örn. *sdesc\_de* veya *sdesc\_tr*)
+    * Açılır liste / Radyo düğmesi: Konfigüre edilmiş değer listesinden seçilen değerin tanımlayıcısı
   
-During import, data records are assigned via the identifier. It is therefore mandatory to set the field *identifier* in the attribute table in order to successfully import Shapefile data. Other fields in the attribute table are **not** considered during the import; only the geometry is updated in the corresponding resource. Please note that existing geometries are overwritten during the import. Records in the import file that cannot be assigned are ignored.
+İçe aktarma sırasında, veri kayıtları tanımlayıcı aracılığıyla atanır. Bu nedenle, Shapefile verilerini başarıyla içe aktarmak için nitelik tablosunda *identifier* alanını ayarlamak zorunludur. Öznitelik tablosundaki diğer alanlar içe aktarma sırasında **dikkate alınmaz**; yalnızca ilgili girdideki geometri güncellenir. Lütfen unutmayın; içe aktarma sırasında mevcut geometrilerin üzerine yazılacaktır. İçe aktarma dosyasındaki atanamayan kayıtlar yok sayılır.
 
 
 ### JSON Lines
 
-JSON Lines (file extension *jsonl*) is a JSON-based text format in which each line of the file corresponds to a JSON object. It can be used in Field Desktop to create and edit resources (including geometries).
+JSON Lines (dosya uzantısı *jsonl*), dosyanın her satırının bir JSON nesnesine karşılık geldiği JSON tabanlı bir metin biçimidir. Field Desktop'ta (geometriler dahil) girdileri oluşturmak ve düzenlemek için kullanılabilir.
 
-The JSON Lines format is **not** available for export. Please note that backup files created via the menu "Project" ➝ "Create backup..." also use the JSON Lines format and the *jsonl* file extension, but **cannot** be imported via the "Import" menu. Backups can only be restored via the menu "Project" ➝ "Restore backup...".
+JSON Lines formatı, doğrudan dışa aktarmada **kullanılamaz**. Lütfen unutmayın; "Proje" ➝ "Yedek oluştur..." menüsü aracılığıyla oluşturulan yedekleme dosyaları da JSON Lines biçimini ve *jsonl* dosya uzantısını kullanmaktadır. Ancak "İçe Aktar" menüsü aracılığıyla içe aktarılamaz. Yedeklemeler yalnızca "Proje" ➝ "Yedeği geri yükle..." menüsüyle geri yüklenebilir.
 
 
-#### Structure
+#### Yapısı
 
-The basic format of a JSON Lines file is based on the <a href="https://jsonlines.org" target="_blank">JSON Lines documentation</a>. Each JSON object corresponds to a resource in Field and contains the following mandatory fields:
+JSON Lines dosyasının temel biçimi <a href="https://jsonlines.org" target="_blank">JSON Lines Documentation</a> sayfasına dayanır. Her JSON nesnesi Field'daki bir girdiye karşılık gelir ve aşağıdaki zorunlu alanları içerir:
 
-* *identifier*: The identifier of the resource
-* *category*: The identifier of the category selected for the resource
+* *identifier*: Girdinin tanımlayıcısı
+* *category*: Girdi için seçilen kategorinin tanımlayıcısı
 
-An object can also contain the following optional fields:
+Bir nesne ayrıca aşağıdaki isteğe bağlı alanları da içerebilir:
 
-* *relations*: Contains all fields of the input type *Relation* (see section *Relations*)
-* *geometry*: The geometry of the resource (see section *Geometry*)
+* *relations*: *İlişki* giriş türünün tüm alanlarını içerir (bkz. *İlişkiler* bölümü)
+* *geometry*: Girdinin geometrisi (bkz. *Geometri* bölümü)
 
-In addition, the object can contain any number of fields that have been configured for the form that is used in the project for this category. Please note that the unique field identifier must be specified as displayed in magenta in the menu "Project configuration"  for the respective field. The multilingual display names that are displayed in other areas of the application **cannot** be used as field names in JSON Lines files.
+Ek olarak, nesne bu kategori için projede kullanılan form için yapılandırılmış herhangi bir sayıda alan içerebilir. Lütfen unutmayın; benzersiz alan tanımlayıcısının ilgili alanı, "Proje konfigürasyonu" menüsünde fuşya renginde görüntülendiği şekilde belirtilmelidir. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları JSON Lines dosyalarında alan adı olarak **kullanılamaz**.
 
-For reasons of clarity, the examples below are each displayed in several lines. In actual import files, each JSON object must occupy **exactly one line** for the import to be successful.
+Netlik sağlamak için, aşağıdaki örneklerin her biri birkaç satırda gösterilmektedir. Gerçek içe aktarma dosyalarında, içe aktarma işleminin başarılı olması için her JSON nesnesinin **tam olarak bir satır** kaplaması gerekir.
 
 
 ##### Relations

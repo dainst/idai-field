@@ -2,7 +2,7 @@
 
 Uygulamayı ilk başlattığınızda adınızı girmeniz istenecektir. Adınızı ve soyadınızı girmeniz önerilir. Girdiğiniz ad, yaptığınız tüm değişiklikler için veritabanında saklanır ve veri senkronizasyonu sırasında değişikliklerin kimin yaptığını belirterek proje veri kayıtlarında ortak çalışmayı kolaylaştırır. Daha sonra, gezinme çubuğunun sağ üst köşesindeki adınıza tıklayarak veya "Field" (MacOS) veya "Araçlar" (Windows) menüsü üzerinden erişebileceğiniz **Ayarlar** alt menüsü aracılığıyla kullanıcı adını değiştirebilirsiniz.
 
-Başlangıçta, test projesi etkin olacak ve bir dizi örnek veri kullanarak uygulamanın işlevselliğini denemenize olanak tanıyacaktır. Lütfen test projesi seçili olduğu sürece, yeni oluşturulan tüm veri kümelerinin silineceğini ve uygulama yeniden başlatıldığında tüm değişikliklerin sıfırlanacağını unutmayın. Bu nedenle, test projesi için diğer Field Desktop projeleri veya veritabanlarıyla senkronizasyon gerçekleştirilmez.
+Başlangıçta, test projesi etkin olacak ve bir dizi örnek veri kullanarak uygulamanın işlevselliğini denemenize olanak tanıyacaktır. Lütfen unutmayın; test projesi seçili olduğu sürece, yeni oluşturulan tüm veri kümelerinin silinecek ve uygulama yeniden başlatıldığında tüm değişikliklerin sıfırlanacaktır. Bu nedenle, test projesi için diğer Field Desktop projeleri veya veritabanlarıyla senkronizasyon gerçekleştirilmez.
 
 Field Desktop ile üretken bir şekilde çalışabilmek ve kendi projenizi oluşturabilmek için öncelikle şu adımları izlemelisiniz:
 
@@ -38,7 +38,7 @@ temel bilgiler bölümünün doldurulması gerekmektedir.
 
 <p align="center"><img src="images/en/resources/save_operation.png" alt="İşlem girdisini kaydet"/></p>
 
-Yeni işlem artık kaynak listesinde görüntüleniyor. Yeni bir sekmede açmak için "İşleme geç" butonunu kullanın 
+Yeni işlem artık girdi listesinde görüntüleniyor. Yeni bir sekmede açmak için "İşleme geç" butonunu kullanın 
 (Yukarı sağa ok işareti).
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="İşlem girdisini aç"/></p>
@@ -50,7 +50,7 @@ gibi alt girdiler oluşturulabilir.
 ## Hiyerarşik sıralama
 
 Girdiler örneğin buluntuları bir stratigrafik birime atamak için, hiyerarşik yapılar halinde düzenlenebilir. 
-Alt hiyerarşi seviyesine geçmek için "Alt girdileri göster" (aşağı sağa köşeli ok) butonunu kullanın. Alt kaynaklar artık görüntülenecek ve artı butonuyla yeni oluşturulan girdiler (örneğin, bir stratigrafik birimin buluntuları) buna göre bu hiyerarşi seviyesinde görünecektir.
+Alt hiyerarşi seviyesine geçmek için "Alt girdileri göster" (aşağı sağa köşeli ok) butonunu kullanın. Alt girdiler artık görüntülenecek ve artı butonuyla yeni oluşturulan girdiler (örneğin, bir stratigrafik birimin buluntuları) buna göre bu hiyerarşi seviyesinde görünecektir.
 
 Girdiler listesinin üstündeki gezinme yolu, şu anda seçili olan hiyerarşi düzeyini gösterir. Her zaman
 Gezinme yolundaki butonlardan birine tıklayarak bir sonraki seviyeye geçebilirsiniz.
@@ -72,7 +72,7 @@ bir içerik menüsü açılır:
 * *Taşı*: Girdilerin geçerli içeriklerinden kaldırılmasına ve başka bir üst girdiye atanmasını sağlar
 * *Sil*: Bir güvenlik kontrolünden sonra girdileri kaldırır (isteğe bağlı olarak, yalnızca silmek istediğiniz girdilere bağlı
 tüm görselleri de silebilirsiniz)
-* *Depolama yerini tara*: Kamera taramasıyla depolama yerinin QR kodunu tarayarak kaynak için yeni bir depolama yeri ayarlar (yalnızca "Bul", "Koleksiyonu bul" ve "Örnek" kategorilerinin girdileri ile ilgili alt kategoriler için kullanılabilir)
+* *Depolama yerini tara*: Kamera taramasıyla depolama yerinin QR kodunu tarayarak girdi için yeni bir depolama yeri ayarlar (yalnızca "Bul", "Koleksiyonu bul" ve "Örnek" kategorilerinin girdileri ile ilgili alt kategoriler için kullanılabilir)
 
 Ayrıca, içerik menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
 birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kullanılabilir. QR kodlarını ekleme veya yönetme seçenekleri yalnızca konfigürasyon düzenleyicisinde karşılık gelen kategori için QR kodlarının kullanımı ayarlanmışsa kullanılabilir (bkz. *Konfigürasyon* bölümündeki *Kategorileri düzenle* bölümü).
@@ -128,7 +128,7 @@ Projeden içe aktarılan görüntüleri kaldırmak için, görüntü yönetimind
 
 <p align="center"><img src="images/en/images/delete_button.png" alt="'Sil' Butonu"/></p>
 
-Lütfen bunun aynı zamanda projenin görüntüler dizinindeki (ve bir senkronizasyon bağlantısı kurulmuşsa diğer bilgisayarlardaki) ilgili dosyaları da sileceğini unutmayın. Bir görüntü silindiğinde girdilerle bağlantıları kaybolacaktır.
+Lütfen unutmayın; bu aynı zamanda projenin görüntüler dizinindeki (ve bir senkronizasyon bağlantısı kurulmuşsa diğer bilgisayarlardaki) ilgili dosyaları da **silebilir**. Bir görüntü silindiğinde girdilerle bağlantıları kaybolacaktır.
 
 
 ## Görselleri girdilere bağlayın
@@ -311,7 +311,7 @@ Detaylı arama modundayken, devre dışı bırakılmış oluştur düğmesiyle g
 Yeni girdiler oluşturmak için lütfen detaylı arama modundan çıkın.
 
 Performans nedenleriyle aynı anda gösterilen arama sonuçlarının sayısı maksimum **200** ile sınırlandırılmıştır. 
-Diğer kaynaklar uygulama tarafından görüntülenmez ve bunun yerine maksimumun aşıldığına dair bir bildirim gösterilir. 
+Diğer girdiler uygulama tarafından görüntülenmez ve bunun yerine maksimumun aşıldığına dair bir bildirim gösterilir. 
 Bu girdilere erişmek için daha fazla arama kriteri ekleyin 
 veya genişletilmiş arama modundan çıkın.
 
@@ -331,10 +331,10 @@ Değer listeleri olan alanlar için, açılır menüdeki tüm izin verilen değe
 
 **Önemli:** Arama filtresinin aksine, bu durumda başlangıç terimi araması yapılmaz. 
 Girdinin arama sonuçları listesinde görünmesi için seçilen arama teriminin 
-kaynak alanının içeriğiyle tam olarak eşleşmesi gerekir.
+girdi alanının içeriğiyle tam olarak eşleşmesi gerekir.
 
 Belirli bir arama terimi belirtmek yerine, alanın ayarlandığı 
-("Herhangi bir değer" seçeneği) veya ayarlanmadığı ("Değer yok" seçeneği) ile tüm kaynaklarda da arama yapabilirsiniz.
+("Herhangi bir değer" seçeneği) veya ayarlanmadığı ("Değer yok" seçeneği) ile tüm girdilerde de arama yapabilirsiniz.
 
 Kategori filtresi düğmesinin yanında görünen sayı, etkin arama kriteri sayısını gösterir.
 Numaraya tıklayarak arama kriterini kaldırabilirsiniz. 
@@ -362,7 +362,7 @@ Başka bir Field Desktop kurulumunda veya bir Field sunucusunda bulunan mevcut b
 
 Geçerli bir adres, proje adı ve şifre girdiğinizde, kısa bir hesaplama süresinin ardından ilgili seçeneklerin yanında indirilecek görüntü verisinin miktarı gösterilecektir.
 
-Lütfen daha büyük projeler için indirmenin daha uzun sürebileceğini unutmayın. İndirilen proje daha sonra otomatik olarak açılacak ve aynı kimlik bilgileri kullanılarak bir senkronizasyon bağlantısı kurulacaktır.
+Lütfen unutmayın; daha büyük projelerin indirmesi daha uzun sürebilir. İndirilen proje daha sonra otomatik olarak açılacak ve aynı kimlik bilgileri kullanılarak bir senkronizasyon bağlantısı kurulacaktır.
 
 
 ## Senkronizasyonu konfigüre etme
@@ -376,7 +376,7 @@ Hem indirilen hem de yeni oluşturulan projeler her zaman diğer veritabanlarıy
 * *Esas görüntüleri yükle*: Görüntüleri orijinal çözünürlüklerinde yüklemek istiyorsanız bu seçeneği etkinleştirin.
 * *Esas görüntüleri indir*: Görüntüleri orijinal çözünürlüklerinde indirmek istiyorsanız bu seçeneği etkinleştirin. Projede yönetilen görüntü sayısına ve boyutuna bağlı olarak, birkaç gigabayt verinin indirilmesi gerekebilir. Bu seçeneği etkinleştirmeden önce yeterli bir internet bağlantınız ve sabit disk alanınız olduğundan emin olun.
 
-Geçerli bir adres ve doğru şifreyi girer girmez, kısa bir hesaplama süresinden sonra ilgili seçeneklerin yanında yüklenecek/indirilecek görüntü verisi miktarı gösterilecektir. Lütfen daha sonra projeye ek görüntüler aktarılırsa veri miktarının artabileceğini unutmayın.
+Geçerli bir adres ve doğru şifreyi girer girmez, kısa bir hesaplama süresinden sonra ilgili seçeneklerin yanında yüklenecek/indirilecek görüntü verisi miktarı gösterilecektir. Lütfen unutmayın; daha sonra projeye ek görüntüler aktarılırsa veri miktarının artabilecektir.
 
 Son olarak **Ayarları uygula** butonuna tıklayarak ayarlarınızı onaylayın.
 
@@ -441,7 +441,7 @@ Listede bir kategoriyi seçtiğinizde, o kategori için yapılandırılmış for
 
 Listenin altındaki yeşil artı düğmesini kullanarak projeye yeni bir üst kategori ekleyebilirsiniz. Proje için henüz yapılandırılmamış olan Field Desktop kategori listesinden, tüm üst kategoriler arasından seçim yapabileceğiniz yeni bir pencere açılır. Listenin üstündeki metin alanını kullanarak görüntülenen kategorileri ve formları filtreleyebilirsiniz. Her kategori için kullanılabilir formlar listelenir; formlardan birini seçtiğinizde, sağ tarafta karşılık gelen alan gruplarını ve alanları göreceksiniz. "Kategori ekle" düğmesine tıklayarak seçiminizi onaylayın.
 
-Lütfen konfigürasyon düzenleyicisi üzerinden yeni süper kategorilerin eklenemeyeceğini unutmayın.
+Lütfen unutmayın; konfigürasyon düzenleyicisi üzerinden yeni üst kategoriler eklenemeyecektir.
 
 
 ### Alt kategoriler ekleme
@@ -458,7 +458,7 @@ Mevcut bir üst kategoriye yeni bir alt kategori eklemek istiyorsanız ilgili ü
 Bir kategoriye sağ tıklandığında aşağıdaki seçenekleri sunan bir içerik menüsü açılır:
 
 * *Düzenle*: Kategori düzenleyicisini açar (bkz. *Kategorileri düzenleme* bölümü).
-* *Formu değiştir*: Bu kategori için başka bir form seçmek üzere bir menü açar. Lütfen mevcut form ve kategoride yapılan tüm değişikliklerin bu işlem sırasında kaybolacağını unutmayın. Bir üst kategori üzerinde işlem yapılıyorsa bu durum tüm alt kategorileri ve formlarını da etkileyecektir.
+* *Formu değiştir*: Bu kategori için başka bir form seçmek üzere bir menü açar. Lütfen unutmayın; mevcut form ve kategoride yapılan tüm değişiklikler bu işlem sırasında kaybolacaktır. Bir üst kategori üzerinde işlem yapılıyorsa bu durum tüm alt kategorileri ve formlarını da etkileyecektir.
 * *Sil*: Onayladıktan sonra kategoriyi kaldırır. Projede zaten bu kategoride girdiler mevcutsa silinmezler ancak kategori tekrar eklenene kadar görüntülenmezler. Ayrıca silme işlemi kategoride seçilen formun tüm özelleştirmelerini kaldıracaktır. Söz konusu forma göre oluşturulan girdileriniz varsa ilgili kategoriler silinmemelidir.
 
 
@@ -469,7 +469,7 @@ Bir kategoriye sağ tıklandığında aşağıdaki seçenekleri sunan bir içeri
 * *Etiket*: Uygulamanın tüm alanlarında gösterilecek kategorinin görüntüleme etiketi. Farklı diller için etiketler girebilirsiniz.
 * *Renk*: Kategori simgesinin ve haritada bu kategorideki girdiler için gösterilen geometrilerin rengi.
 * *QR kodları*: Bu kategorideki girdilerde QR kodlarının kullanılmasını sağlar (bkz. *QR kodları* bölümü).
-* *Tanımlayıcı ön eki*: İsteğe bağlı olarak bu kategorinin kaynaklarının tanımlayıcısının her zaman başlaması gereken bir metni buraya girin. Lütfen halihazırda var olan tanımlayıcıların otomatik olarak güncellenmeyeceğini unutmayın.
+* *Tanımlayıcı ön eki*: İsteğe bağlı olarak bu kategorinin girdi tanımlayıcısının her zaman başlaması gereken bir metni buraya girin. Lütfen unutmayın; halihazırda var olan tanımlayıcılar otomatik olarak güncellenmeyecektir.
 * *Girdi sınırı*: İsteğe bağlı olarak bu kategori için oluşturulabilecek maksimum girdi sayısını belirtmek için buraya bir sayı girin. Giriş alanı boş bırakılırsa, herhangi bir sayıda girdi oluşturulabilir. Bu seçenek yalnızca işlem kategorileri ve "Yer" kategorisi için kullanılabilir.
 
 Projeye özel kategoriler için aşağıdaki özellikleri de belirtebilirsiniz:
@@ -482,7 +482,7 @@ Bir kategori için QR kodlarının kullanımı etkinleştirilirse, kategorinin h
 * Kamera taramasıyla (arama çubuğundaki QR kod butonu) girdiye erişim
 * QR kod etiketlerinin yazdırılması (girdinin içerik menüsü aracılığıyla)
 * Depolama yerine bağlı QR kodunun (girdinin içerik menüsü üzerinden) kamera taraması yoluyla bir girdinin depodaki yerinin ayarlanması
-QR kodlarının yalnızca "Buluntu", "Buluntu Koleksiyonu", "Numune" ve "Depolama yeri" kategorileri ile bunların alt kategorileri için kullanılabileceğini lütfen unutmayın.
+Lütfen unutmayın; QR kodları yalnızca "Buluntu", "Buluntu Koleksiyonu", "Numune" ve "Depolama yeri" kategorileri ile bunların alt kategorileri için kullanılabilecektir.
 
 QR kodlarını konfigüre etmek için kategori düzenleyicide aşağıdaki seçenekler kullanılabilir:
 * *Tanımlama için QR kodlarını kullan*: Kategorinin girdilerinde QR kodlarının kullanılmasına izin vermek için bu seçeneği etkinleştirin
@@ -514,7 +514,7 @@ Listenin altındaki yeşil artı düğmesini kullanarak forma yeni bir grup ekle
 Bir gruba sağ tıklandığında aşağıdaki seçeneklerin bulunduğu bir içerik menüsü açılır:
 
 * *Düzenle*: Grubun görüntü etiketini girebileceğiniz grup düzenleyicisini açar. Farklı diller için etiketler girebilirsiniz. Grup düzenleyicisi ayrıca gruba çift tıklanarak da açılabilir.
-* *Sil*: Grubu formdan kaldırır. Lütfen bir grubun yalnızca herhangi bir alan içermiyorsa silinebileceğini unutmayın. Grubu silmeden önce tüm alanları diğer gruplara taşıyın veya kaldırın.
+* *Sil*: Grubu formdan kaldırır. Lütfen unutmayın; bir grup yalnızca herhangi bir alan içermiyorsa silinebilir. Grubu silmeden önce tüm alanları diğer gruplara taşıyın veya kaldırın.
 
 
 ## Alanlar
@@ -666,32 +666,32 @@ Yeni bir alt alan oluşturmak için, giriş alanına istediğiniz adı girin ve 
 
 İsteğe bağlı olarak, alt alan düzenleyicisinde alt alanı görüntülemek için bir koşul ayarlanabilir. Bir koşul ayarlandığı zaman, alt alan yalnızca başka bir alt alanın belirli bir değeri (veya birkaç değerden biri) ayarlanmışsa veri girişi sırasında kullanılabilir.
 
-Bir koşul belirlemek için, önce "Alt alanın görüntülenme koşulu" açılan kısımda, aynı bileşik alanın başka bir alt alanını seçin. "Açılır liste", "Açılır liste (aralık)", "Radiobutton", "Evet / Hayır" ve "Onay kutuları" giriş türlerinin alt alanları seçilebilir. Seçilen alt alanın olası değerleri artık görüntülenir ve seçilebilir. Geçerli alt alan, yalnızca koşul alanı olarak seçilen alt alan için seçilen değerlerden en az biri ayarlanmışsa veri girişi sırasında görüntülenir.
+Bir koşul belirlemek için, önce "Alt alanın görüntülenme koşulu" olarak açılan kısımda bir alt alanını seçin. "Açılır liste", "Açılır liste (aralık)", "Radiobutton", "Evet / Hayır" ve "Onay kutuları" giriş türlerinin alt alanları seçilebilir. Artık seçilen alt alanın olası değerleri görüntülenecek ve seçilebilecektir. Geçerli alt alan, yalnızca koşul alanı olarak seçilen alt alanda seçilen değerlerden en az biri ayarlandığı takdirde veri girişi sırasında görüntülenir.
 
 
-### Allowed target categories
+### İzin verilen hedef kategorileri
 
-This section appears only if the input type "Relation" is selected. Only resources of the categories selected here can be chosen as targets of the relation. If a supercategory is selected, all of its subcategories are also automatically considered allowed target categories.
+Bu bölüm yalnızca "İlişki" giriş türü seçildiğinde görünür. İlişkinin hedefleri olarak, yalnızca burada seçilen kategorilerin girdileri seçilebilir. Bir üst kategori seçilirse, tüm alt kategorileri de otomatik olarak izin verilen hedef kategoriler olarak kabul edilir.
 
-Please note that target resources already entered in the field are not automatically removed if a category is removed from the list of allowed target categories. In this case, a corresponding warning is displayed for the affected resources.
+Lütfen unutmayın; alana girilen hedef girdiler, bir kategori izin verilen hedef kategorileri listesinden kaldırılırsa bile otomatik olarak kaldırılmayacaktır. Bu durumda, etkilenen girdilere ilişkin bir uyarı görüntülenir.
 
 
-### Inverse relation
+### Ters ilişki
 
-This section only appears if the input type "Relation" is selected. Optionally, another field of input type "Relation" can be selected here, which is automatically updated in entered target resources to reflect the opposite direction of the relation.
+Bu bölüm yalnızca "İlişki" giriş türü seçildiğinde görünür. İsteğe bağlı olarak, burada "İlişki" giriş türünde başka bir alan seçilebilir ve bu, girilen hedef girdilerde ilişkinin zıt yönünü yansıtacak şekilde otomatik olarak güncellenir.
 
-*Example:* The inverse relation "Lies above" is configured for the relation "Lies below". If the target resource "B" is entered in resource "A" in the relation field "Lies below", the target resource "A" is automatically entered in resource "B" in the "Lies above" relation field.
+*Örnek:* "Üstünde" ters ilişkisi "Altında" ilişkisi için yapılandırılmıştır. Hedef girdi "B", "Altında" ilişki alanında girdi "A"ya kaydedilirse, hedef girdi "A" otomatik olarak "Üstünde" ilişki alanında girdi "B"ye kaydedilir.
 
-Only fields that have already been created and meet the following criteria appear in the selection field *Inverse relation*:
+*Ters ilişki* seçim alanında yalnızca daha önce oluşturulmuş ve aşağıdaki ölçütleri karşılayan alanlar görünür:
 
-* The field in question must be of input type "Relation".
-* The field in question must be configured under the same identifier for all allowed target categories of the field currently being edited.
-* The category to which the field currently being edited belongs must be set as an allowed target category for the field in question.
-* The field currently being edited must be allowed to be entered as an inverse relation for all allowed target categories of the field in question in accordance with these criteria.
+* Söz konusu alanın giriş tipi "İlişki" olmalıdır.
+* Düzenlenen alanın tüm izin verilen hedef kategorileri için söz konusu alanın aynı tanımlayıcı altında yapılandırılması gerekir.
+* Düzenlenen alanın ait olduğu kategori, söz konusu alan için izin verilen hedef kategori olarak ayarlanmalıdır.
+* Düzenlenmekte olan alanın, bu kriterlere uygun olarak söz konusu alanın tüm izin verilen hedef kategorileri için ters ilişki olarak girilmesine izin verilmesi gerekmektedir.
 
-After selecting an inverse relation and confirming the changes using the *OK* button, the inverse relations in other fields are automatically added or updated accordingly.
+Ters ilişki seçilip *Tamam* butonu ile değişiklikler onaylandığında, diğer alanlardaki ters ilişkiler de otomatik olarak eklenir veya güncellenir.
 
-Please note that resource data that has already been entered is not automatically updated when another inverse relation is selected.
+Daha önce girilmiş olan kaynak verilerinin, başka bir ters ilişki seçildiğinde otomatik olarak güncellenmeyeceğini lütfen unutmayın.
 
 
 ## Adjusting order and group assignment

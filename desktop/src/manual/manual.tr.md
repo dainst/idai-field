@@ -778,60 +778,60 @@ Daha sonra konfigürasyonu başka bir projeye aktarmak veya aynı projede kayded
 
 Proje konfigürasyonu bir API erişim noktası aracılığıyla JSON biçiminde alınabilir. Erişim noktası, uygulama açıkken aşağıdaki URL aracılığıyla kullanılabilir:
 
-http://localhost:3000/configuration/PROJECT
+http://localhost:3000/configuration/PROJE
 
-Replace "PROJECT" with the name of the project whose configuration you want to access.
+"PROJE" ifadesini, yapılandırmasına erişmek istediğiniz projenin adıyla değiştirin.
 
-When accessing the API endpoint, the password that is entered as "Your password" in the section "Synchronization" of the menu "Settings" must be entered. The password is transmitted via *Basic Auth*; when the URL is entered in the browser, an input dialog appears. It is not necessary to enter the user name, the corresponding field can remain empty.
+API erişim noktasına bağlanırken "Ayarlar" menüsünün "Senkronizasyon" bölümünde "Şifreniz" olarak girilen şifre girilmelidir. Şifre *Temel Kimlik Doğrulama* yoluyla iletilir; tarayıcıya URL girildiğinde bir giriş iletişim kutusu görüntülenir. Kullanıcı adını girmek gerekli değildir, ilgili alan boş kalabilir.
 
-Please note that the JSON output of the API endpoint **cannot** be imported via the menu option "Import configuration...". Use the menu option "Export configuration..." to obtain a configuration file suitable for this purpose.
+Lütfen unutmayın; API erişim noktasının JSON çıktısı "Konfigürasyonu içe aktar..." menü seçeneği üzerinden içe aktarılamaz. Buna uygun bir konfigürasyon dosyası elde etmek için "Konfigürasyonu dışa aktar..." menü seçeneğini kullanın.
 
 
 <hr>
 
 
-# Matrix
+# Matris
 
-The **Matrix** view (accessible via the menu "Tools") displays a matrix for each trench of the project,
-generated automatically from the stratigraphical units of the respective trench. The edges of the matrix are
-built on the basis of the relations created for the units.
+**Matris** görünümü ("Araçlar" menüsü üzerinden erişilebilir), projenin her bir açmasında, 
+ilgili açmanın stratigrafik birimlerinden otomatik olarak oluşturulan bir matris görüntüler. 
+Matrisin kenarları, birimler arası ilişkiler esas alınarak oluşturulur.
 
-<p align="center"><img src="images/en/matrix/trench_selection.png" alt="Trench selection"/></p>
+<p align="center"><img src="images/en/matrix/trench_selection.png" alt="Açma seçimi"/></p>
 
-Choose the trench for which a matrix shall be generated via the dropdown button on the left side of the
-toolbar.
-
-
-## Options
-
-Via the **Options button** in the upper right corner of the matrix view, you can customize the matrix
-visualization by adjusting different settings. The chosen settings are applied to all matrices for all of the
-project's trenches and are preserved when restarting the application.
-
-<p align="center"><img src="images/en/matrix/matrix_tools.png" alt="Options menu"/></p>
+Araç çubuğunun sol tarafındaki açılır menü butonunu kullanarak 
+matrisin oluşturulacağı açmayı seçin.
 
 
-### Relations
+## Seçenekler
 
-* *Temporal*: Edges are built based on the relations "Before", "After" and "Contemporary with" (field group
-"Time"). 
-* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts", "Cut by" and "Equivalent to"
-(field group "Position").
+Matris görünümünün sağ üst köşesindeki **Seçenekler** düğmesi aracılığıyla, farklı ayarları yaparak matris
+görselleştirmesini özelleştirebilirsiniz. Seçilen ayarlar, projenin tüm
+açmalarındaki tüm matrislere uygulanır ve uygulama yeniden başlatıldığında korunur.
 
-
-### Edges
-
-* *Straight*: All edges are composed of straight lines.
-* *Curved*: Edges may be curved if there is no direct connecting line between two units of the matrix.
+<p align="center"><img src="images/en/matrix/matrix_tools.png" alt="Seçenekler menüsü"/></p>
 
 
-### Group by period
+### İlişkiler
 
-Activate this option in order to group the stratigraphical units of the matrix based on the value of the field
-"Period". If two values are set for the field (from/until), the value of "Period (from)" is used in each case.
-Stratigraphical units with equal period values are placed close to each other and framed by a rectangle. 
+* *Zamansal*: Kenarlar, "Önce", "Sonra" ve "ile Çağdaş" (alan grubu
+"Zaman") ilişkilerine dayanarak oluşturulur.
+* *Konumsal*: Kenarlar, "Üstünde", "Altında", "Kes(iş)mektedir", "Tarafından kesilmiştir" ve "Benzer"
+(alan grubu "Konum") ilişkilerine dayanarak oluşturulur.
 
-<p align="center"><img src="images/en/matrix/matrix_phases.png" alt="Group by period"/></p>
+
+### Kenarlar
+
+* *Düz*: Tüm kenarlar düz çizgilerden oluşur.
+* *Eğri*: Matrisin iki birimi arasında doğrudan bir bağlantı çizgisi yoksa kenarlar eğri olabilir.
+
+
+### Döneme göre gruplandırma
+
+Matrisin stratigrafik birimlerini "Dönem" alanının değerine göre gruplamak için bu seçeneği etkinleştirin. Alan için iki değer (başlangıç/bitiş) ayarlanırsa, her durumda "Dönem (başlangıç)" değeri kullanılır.
+Alan için iki değer (başlangıç/bitiş) ayarlanırsa, her durumda "Dönem (başlangıç)" değeri kullanılır.
+Eşit dönem değerlerine sahip stratigrafik birimler birbirine yakın yerleştirilir ve bir dikdörtgenle çerçevelenir.
+
+<p align="center"><img src="images/en/matrix/matrix_phases.png" alt="Döneme göre gruplandır"/></p>
 
 
 ## Navigation

@@ -834,104 +834,106 @@ Eşit dönem değerlerine sahip stratigrafik birimler birbirine yakın yerleşti
 <p align="center"><img src="images/en/matrix/matrix_phases.png" alt="Döneme göre gruplandır"/></p>
 
 
-## Navigation
+## Gezinme
 
-Move the mouse with the **right mouse button** pressed in order to change the position of the matrix within
-the display area. Use the **mouse wheel** or the **zoom buttons** in the upper left corner of the display area
-to adjust the zoom level. By using the **left mouse button**, you can interact with units of the matrix; the
-type of interaction (editing or selection) depends on the selected interaction mode.
+Görüntüleme alanındaki matrisin konumunu değiştirmek için **sağ fare düğmesi** basılıyken fareyi hareket ettirin. 
+Yakınlaştırma seviyesini ayarlamak için görüntüleme alanının sol üst köşesindeki **fare tekerleğini** veya **yakınlaştırma düğmelerini** kullanın. 
+**Sol fare düğmesini** kullanarak matrisin birimleriyle etkileşim kurabilirsiniz; 
+etkileşim türü (düzenleme veya seçim) seçilen etkileşim moduna bağlıdır.
 
-When the mouse cursor is moved over a unit, the edges starting at this unit are highlighted in color: Green
-lines show connections to units on higher levels, blue ones to units on lower levels and orange ones to units
-on the same level of the matrix. 
-
-
-## Editing
-
-By default, the **edit mode** is active: Click a unit in the matrix in order to open up the editor allowing
-you to make changes to the corresponding resource. In this way, you can also change the position of the unit
-within the matrix by editing the relations in the field groups "Time" respectively "Position". After clicking
-**Save**, the matrix is updated automatically on the basis of the changed data. 
+Fare imleci bir birim üzerine getirildiğinde, bu birimden başlayan kenarlar renkle vurgulanır: 
+Yeşil çizgiler daha yüksek seviyelerdeki birimlere, mavi çizgiler daha düşük seviyelerdeki birimlere ve 
+turuncu çizgiler ise matrisin aynı seviyesindeki birimlere olan bağlantıları gösterir.
 
 
-## Display of sub-matrices
+## Düzenleme
 
-To facilitate the overview in large matrices, sub-matrices can also be generated from selected units of the
-matrix. Use the buttons on the right side of the toolbar in order to select units and create a new sub-matrix
-from the current selection: 
-
-<p align="center"><img src="images/en/matrix/interaction_mode_buttons.png" alt="Interaction mode buttons"/></p>
-
-* *Edit mode*: Units can be edited by left click.
-* *Single selection mode*: Units can be selected and deselected separately by left click.
-* *Group selection mode*: Units can be selected in groups by drawing a rectangle using the mouse.
-
-<p align="center"><img src="images/en/matrix/subgraph_buttons.png" alt="Sub-matrix creation buttons"/></p>
-
-* *Deselect*: All units are deselected.
-* *Create matrix from selection*: A new matrix is generated consisting only of the selected units. Edges are
-  still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a
-  fast way to check if two units are connected across multiple relations/resources.
-* *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
+Varsayılan olarak, **düzenleme modu** etkindir: 
+İlgili girdide değişiklik yapmanıza olanak tanıyan düzenleyiciyi açmak için matristeki bir birime tıklayın. 
+Bu şekilde, sırasıyla "Zaman" ve "Konum" alan gruplarındaki ilişkileri düzenleyerek matris içindeki birimin konumunu da değiştirebilirsiniz. 
+**Kaydet**'e tıkladıktan sonra, matris değiştirilen verilere göre otomatik olarak güncellenir.
 
 
-## Export
+## Alt matrislerin gösterimi
 
-Use the export button on the far right of the toolbar to export the currently displayed matrix as a file.
+Büyük matrislerde genel bakışı kolaylaştırmak için, alt matrisler matrisin seçili birimlerinden de üretilebilir. 
+Birimleri seçmek ve geçerli seçimden yeni bir alt matris oluşturmak
+için araç çubuğunun sağ tarafındaki düğmeleri kullanın: 
 
-<p align="center"><img src="images/en/matrix/export_matrix.png" alt="Export button"/></p>
+<p align="center"><img src="images/en/matrix/interaction_mode_buttons.png" alt="Etkileşim modu düğmeleri"/></p>
 
-You can choose between two different file formats:
+* *Düzenleme modu*: Birimler sol tıklamayla düzenlenebilir.
+* *Tek seçim modu*: Birimler sol tıklamayla ayrı ayrı seçilebilir ve seçimleri kaldırılabilir.
+* *Grup seçim modu*: Birimler fare kullanılarak bir dikdörtgen çizilerek gruplar halinde seçilebilir.
 
-* *Dot (Graphviz)*: A format for describing graphs that can be read by the open source software Graphviz, among others. (File extension *gv*)
-* *SVG*: A format for displaying vector graphics. (File extension *svg*)
+<p align="center"><img src="images/en/matrix/subgraph_buttons.png" alt="Alt matris oluşturma butonu"/></p>
+
+* *Seçimi kaldır*: Tüm birimlerin seçimini kaldırır.
+* *Seçimden matris oluştur*: Yalnızca seçili birimlerden oluşan yeni bir matris oluşturulur.
+  Kenarlar hala açmanın tüm stratigrafik birimlerine göre oluşturulur;
+  bu işlev ile iki birimin birden fazla ilişki/girdi boyunca bağlı olup olmadığı hızlıca kontrol edilebilir.
+* *Matrisi yeniden yükle*: Seçili açmanın tüm stratigrafik birimlerini içeren esas matris geri yüklenir.
+
+
+## Dışa aktarma
+
+Şu anda görüntülenen matrisi bir dosya olarak dışa aktarmak için araç çubuğunun en sağındaki dışa aktarma düğmesini kullanın.
+
+<p align="center"><img src="images/en/matrix/export_matrix.png" alt="Dışa aktarma butonu"/></p>
+
+İki farklı dosya biçimi arasından seçim yapabilirsiniz:
+
+* *Dot (Graphviz)*: Açık kaynaklı Graphviz yazılımı (ve benzerleri) tarafından okunabilen grafikleri tanımlamak için kullanılan bir format. (Dosya uzantısı *gv*)
+* *SVG*: Vektör grafiklerini görüntülemek için bir format. (Dosya uzantısı *svg*)
 
 
 <hr>
 
 
-# Import and export
+# İçe ve dışa aktarma
 
-## Import
+## İçe aktarma
 
-Select the menu item "Tools" ➝ "Import" to import resources into the currently opened project.
+Halihazırda açık olan projeye girdileri içe aktarmak için "Araçlar" ➝ "İçe aktar" menü öğesini seçin.
 
-* *Source*: Select the type of import source. There are two options to choose from:
-    * *File*: The data to be imported is read from a file existing on your computer, a connected storage medium or another computer available via the network.
-    * *HTTP*: The data to be imported is loaded via HTTP or HTTPS using a URL. Please note that it is not possible to import files in the formats *Shapefile* and *Catalog* if this option is selected. 
-* *Path*: Select the desired import file via a file selection dialog (only available for source option "File")
-* *URL*: Enter the URL where the data to be imported can be found (only available for source option "HTTP")
+* *Kaynak*: İçe aktarma kaynağının türünü seçin. Seçebileceğiniz iki seçenek vardır:
+* *Dosya*: İçe aktarılacak veriler bilgisayarınızda bulunan bir dosyadan, bağlı bir depolama ortamından veya ağ üzerinden erişilebilen başka bir bilgisayardan okunur.
+* *HTTP*: İçe aktarılacak veriler bir URL kullanılarak HTTP veya HTTPS üzerinden yüklenir. Bu seçenek seçildiğinde *Shapefile* ve *Catalog* formatlarındaki dosyaları içe aktarmanın mümkün olmadığını lütfen unutmayın.
+* *Dosya yolu*: Bir dosya seçimi iletişim kutusu aracılığıyla istenen içe aktarma dosyasını seçin (yalnızca "Dosya" kaynak seçeneği için kullanılabilir)
+* *URL*: İçe aktarılacak verilerin bulunabileceği URL'yi girin (yalnızca "HTTP" kaynak seçeneği için kullanılabilir)
 
-Depending on the format of the selected file, which is recognized based on the file extension, further options may be available (see subsection on the corresponding format in section *Formats*).
+Seçilen dosyanın dosya uzantısına göre tanınan biçimine bağlı olarak, daha fazla seçenek mevcut olabilir (*Formatlar* bölümündeki ilgili dosya biçimine ilişkin alt bölüme bakın).
 
-Start the import process using the **Start import** button.
+**İçe aktarmayı başlat** düğmesini kullanarak içe aktarma işlemini başlatın.
 
-Supported import formats are:
+Desteklenen içe aktarma biçimleri şunlardır:
 * CSV (.csv)
 * GeoJSON (.geojson, .json)
 * Shapefile (.shp)
 * JSON Lines (.jsonl)
 * Catalog (.catalog)
 
-The formats *CSV* and *JSON Lines* are suitable for creating new resources or editing existing resources. Geometries can be added or edited using the formats *GeoJSON*, *Shapefile* or *JSON Lines*. The *Catalog* format can be used to exchange Field type catalogs.
+*CSV* ve *JSON Lines* formatları yeni girdiler oluşturmak veya mevcut girdileri düzenlemek için uygundur. Geometriler *GeoJSON*, *Shapefile* veya *JSON Lines* formatları kullanılarak eklenebilir veya düzenlenebilir. *Catalog* formatı Field tipi katalogları değiştirmek için kullanılabilir.
+
+Lütfen yeni resimlerin yalnızca "Araçlar" ➝ "Görüntü yönetimi" menüsü üzerinden içe aktarılabileceğini unutmayın. Ancak önceden içe aktarılan resimlerin girdi verileri CSV veya JSON Satırları içe aktarımı yoluyla düzenlenebilir.
 
 
-## Export
+## Dışa aktarma
 
-Select the menu item "Tools" ➝ "Import" to export resources from the currently opened project.
+Halihazırda açık olan projeden girdileri dışa aktarmak için "Araçlar" ➝ "Dışa Aktar" menü öğesini seçin.
 
-First, select the desired export format from the dropdown menu **Format**. Depending on the format, further options may be available (see subsection on the corresponding format in section *Formats*).
+İlk olarak, açılır menüden **Format** ile istediğiniz dışa aktarma biçimini seçin. Dosya biçimine bağlı olarak, daha fazla seçenek mevcut olabilir (*Formatlar* bölümündeki ilgili dosya biçimine ilişkin alt bölüme bakın).
 
-After clicking the button **Start export**, a file selection dialog opens where you can specify the name and target directory of the file to be created. Then the export process starts.
+**Dışa Aktarmayı Başlat** düğmesine tıkladıktan sonra, oluşturulacak dosyanın adını ve hedef dizinini belirtebileceğiniz bir dosya seçimi iletişim kutusu açılır. Ardından dışa aktarma işlemi başlar.
 
-Supported export formats are:
+Desteklenen dışa aktarma biçimleri şunlardır:
 * CSV (.csv)
 * GeoJSON (.geojson, .json)
 * Shapefile (.zip)
 * Catalog (.catalog)
 
 
-## Formats
+## Formatlar (ç.n. Dosya Biçimleri)
 
 ### CSV
 

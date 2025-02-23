@@ -6,12 +6,11 @@ fields-view,
 georeference-view,
 depicts-relations-view {
   .card {
-    background-color: transparent !important;
 
     .card-header {
       margin-top: -1px;
       padding: 0;
-      background-color: $popover-header-bg-color;
+      background-color: white;
       border-top: 1px solid #ced4da;
       border-bottom: 1px solid #ced4da;
 
@@ -21,16 +20,16 @@ depicts-relations-view {
 
       .btn {
         text-align: left;
-        font-size: 14px;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: white;
 
-        &:active {
-          border-color: transparent;
-        }
       }
     }
 
     .card-body {
-      padding: 10px 0 0 0;
+    //   padding: 10px 0 0 0;
+      background-color: white;
     }
   }
 }

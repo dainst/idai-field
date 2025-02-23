@@ -1,13 +1,13 @@
 @use 'sass:color';
 
 #popover-menu {
-  background-color: $popover-bg-color;
   position: absolute;
   left: $resources-listing-item-wide-width;
   height: 100%;
   width: $teaser-width;
   z-index: 1009;
   overflow: hidden;
+  background-color: white;
 
   #info-header {
     position: relative;
@@ -26,7 +26,6 @@
   .document-info-header {
     height: 40px;
     padding: 11px;
-    background-color: $popover-header-bg-color;
     border-bottom: 1px solid #ced4da;
     text-align: center;
     font-size: 14px;
@@ -47,4 +46,8 @@
       }
     }
   }
+
+
+
+
 }

@@ -8,9 +8,9 @@ field-view {
     }
 
     .field-label {
-      font-weight: normal;
-      font-size: $font-size-medium;
-      color: gray;
+      font-weight: 600;
+      font-size:16px;
+      color: black;
       margin-bottom: 2px;
       user-select: none;
     }
@@ -25,7 +25,7 @@ field-view {
       padding-top: 3px;
       padding-bottom: 3px;
       cursor: default;
-    
+
       &:hover {
         background-color: $list-item-hover-color;
         transition: background-color .5s ease;

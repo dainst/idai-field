@@ -1025,7 +1025,7 @@ Field Desktop'ın eski sürümleriyle oluşturulan projelerde ve proje yapıland
 
 ##### Tarih alanları
 
-"Tarih (Date)" giriş türündeki alanlar için "gün.ay.yıl" biçiminde bir değer girilir. Gün ve ay girişleri isteğe bağlıdır, böylece yalnızca belirli bir ay veya yıl girilebilir.
+"Tarih (Date)" giriş türündeki alanlar için "Gün.Ay.Yıl" biçiminde bir değer girilir. Gün ve ay girişleri isteğe bağlıdır, böylece yalnızca belirli bir ay veya yıl girilebilir.
 
 <div class="table-container">
   <table>
@@ -1138,8 +1138,8 @@ Görüntüleri projeye bağlamak veya proje düzeyinde harita katmanları olarak
 * *end*: Tarihlendirme türü *single*, *before* ve *scientific* için ve tarihlendirme türü *range* için bitiş tarihi için ayarlanan yıl belirtimi
 * *margin*: Tarihlendirme türü *scientific* için yıl cinsinden tolerans aralığı
 * *source*: Tarihlendirmenin kaynağı, çok dilli metin alanı
-* *isImprecise*: "Hassas olmayan". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
-* *isUncertain*: "Belirsiz". *bilimsel* tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
+* *isImprecise*: "Hassas olmayan". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
+* *isUncertain*: "Belirsiz". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
 Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 
@@ -1604,28 +1604,28 @@ Farklı dillerde değer girilebilen alanlarda, kullanılan dillerin kodlarına k
     }
 
 
-##### Dropdown lists (range)
+##### Açılır listeler (aralık)
 
-For fields of the input type "Dropdown list (range)", an object is entered that contains the following two subfields:
+"Açılır liste (aralık)" giriş türündeki alanlar için, aşağıdaki iki alt alanı içeren bir nesne girilir:
 
-* *value*: The identifier of the selected value; if two values are selected, the first of the two values
-* *endValue*: The identifier of the second selected value if two values are selected
+* *value*: Seçilen değerin tanımlayıcısı; iki değer seçilirse, iki değerden ilki
+* *endValue*: İki değer seçilirse, ikinci seçilen değerin tanımlayıcısı
 
-*Example (the value identifiers are identical with the German labels in this case):*
+*Örnek:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "period1": { "value": "Eisenzeitlich" },
-      "period2": { "value": "Frühbronzezeitlich", "endValue": "Spätbronzezeitlich" }
+      "period1": { "value": "Demir Çağı" },
+      "period2": { "value": "Erken Tunç Çağı", "endValue": "Geç Tunç Çağı" }
     }
 
 
-##### Date fields
+##### Tarih alanları
 
-A value in the format "day.month.year" is entered for fields of the input type "date". The entries for day and month are optional, so that it is possible to enter only a specific month or year.
+"Gün.Ay.Yıl" (GG.AA.YYYY) biçimindeki bir değer, "date" giriş türündeki alanlar için girilir. Gün ve ay girişleri isteğe bağlıdır, böylece yalnızca yılın belirli bir ayını veya belirli bir yılı girmek mümkündür.
 
-*Example:*
+*Örnek:*
 
     {
       "identifier": "A",
@@ -1636,35 +1636,35 @@ A value in the format "day.month.year" is entered for fields of the input type "
     }
 
 
-##### List fields
+##### Liste alanları
 
-Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Dimension", "Bibliographic reference" and "Composite field" can contain several entries. An array is therefore entered for these fields.
+"Tek satır metin (liste)", "Onay kutuları", "Tarih", "Boyut", "Bibliyografik referans" ve "Bileşik alan" giriş türlerinin alanları birkaç giriş içerebilir. Bu nedenle bu alanlar için bir dizi girilir.
 
 
-##### Datings
+##### Tarihlendirme
 
-Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating is an object that consists of the following subfields:
+"Tarihlendirme" giriş türündeki alanlar, her biri birkaç tarihlendirme girişi içerebilen liste alanlarıdır. Tarihlendirme, aşağıdaki alt alanlardan oluşan bir nesnedir:
 
-* *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific)
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range* 
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*
-* *margin*: Tolerance margin in years for dating type *scientific*
-* *source*: Source of the dating, multilingual text field
-* *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
-* *isUncertain*: Specification "Uncertain". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no)
+* *type*: Tarihlendirme türü. Olası değerler şunlardır: *range* (Dönem), *single* (Tek yıl), *before* (Önce), *after* (Sonra), *scientific* (Bilimsel)
+* *begin*: Tarihlendirme türü *after* ve tarihlendirme türü *range* için başlangıç ​​tarihi için ayarlanan yıl belirtimi
+* *end*: Tarihlendirme türü *single*, *before* ve *scientific* için ve tarihlendirme türü *range* için bitiş tarihi için ayarlanan yıl belirtimi
+* *margin*: Tarihlendirme türü *scientific* için yıl cinsinden tolerans aralığı
+* *source*: Tarihlendirmenin kaynağı, çok dilli metin alanı
+* *isImprecise*: "Hassas olmayan". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
+* *isUncertain*: "Belirsiz". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
-The year specifications *begin* and *end* consist of two subfields:
+Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 
-* *inputType*: The time scale. Possible values are: *bce* (BCE), *ce* (CE), *bp* (BP)
-* *inputYear*: The year
+* *inputType*: Zaman ölçeği. Olası değerler şunlardır: *bce* (MÖ.), *ce* (MS.), *bp* (GÖ.)
+* *inputYear*: Yıl
 
-*Example:*
+*Örnek:*
 
     {
       "identifier": "A",
       "category": "Feature", 
       "dating": [
-        { "type": "range", "begin": { "inputType": "bce", "inputYear": 100 }, "end": { "inputType": "ce", "inputYear": 200 }, "source": { "de": "Beispieltext", "en": "Example text" }, "isImprecise": false, "isUncertain": false },
+        { "type": "range", "begin": { "inputType": "bce", "inputYear": 100 }, "end": { "inputType": "ce", "inputYear": 200 }, "source": { "de": "Beispieltext", "tr": "Örnek metin" }, "isImprecise": false, "isUncertain": false },
         { "type": "single", "end": { "inputType": "ce", "inputYear": 750 }, "isImprecise": true, "isUncertain": false },
         { "type": "before", "end": { "inputType": "bp", "inputYear": 20 }, "isImprecise": false, "isUncertain": true },
         { "type": "after", "begin": { "inputType": "bce", "inputYear": 350 }, "isImprecise": false, "isUncertain": false },

@@ -6559,7 +6559,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> içinde oluştur </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> içinde oluştur </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">82</context>

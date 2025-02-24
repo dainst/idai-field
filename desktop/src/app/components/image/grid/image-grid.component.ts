@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef } from '@angular/core';
-import { Datastore, ImageDocument, ImageVariant } from 'idai-field-core';
+import { ImageDocument, ImageVariant } from 'idai-field-core';
 import { constructGrid } from './construct-grid';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 
@@ -38,14 +38,12 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick = new EventEmitter<any>();
 
     public rows = [];
-    public resourceIdentifiers: { [id: string]: string } = {};
 
     private calcGridTimeout: any;
     private calcGridPromise: Promise<void>|undefined;
 
 
     constructor(private element: ElementRef,
-                private datastore: Datastore,
                 private imageUrlMaker: ImageUrlMaker) {}
 
 
@@ -65,20 +63,6 @@ export class ImageGridComponent implements OnChanges {
 
         if (this.showDropArea) this.insertStubForDropArea();
         this.calcGrid();
-    }
-
-
-    public async onCellMouseEnter(document: ImageDocument) {
-
-        if (!this.showLinkBadges || !document.resource.relations.depicts) return;
-
-        for (const depictsRelationTargetId of document.resource.relations.depicts) {
-
-            if (!this.resourceIdentifiers[depictsRelationTargetId]) {
-                const target = await this.datastore.get(depictsRelationTargetId);
-                this.resourceIdentifiers[depictsRelationTargetId] = target.resource.identifier;
-            }
-        }
     }
 
 

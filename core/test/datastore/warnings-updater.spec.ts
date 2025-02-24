@@ -90,6 +90,7 @@ describe('WarningsUpdater', () => {
         documents[0].resource.identifier = '1';
         documents[0].resource.number = 'text';
         documents[0].resource.unconfiguredField = 'text';
+        documents[0].resource.relations.unconfiguredRelation = ['target'];
 
         documents[1].resource.identifier = 'C2';
         delete documents[1].resource.category;
@@ -104,7 +105,7 @@ describe('WarningsUpdater', () => {
         WarningsUpdater.updateIndexIndependentWarnings(documents[2], mockProjectConfiguration);
         
         expect(documents[0].warnings).toEqual({
-            unconfiguredFields: ['unconfiguredField'],
+            unconfiguredFields: ['unconfiguredField', 'unconfiguredRelation'],
             invalidFields: ['number'],
             conflicts: true,
             missingIdentifierPrefix: true

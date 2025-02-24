@@ -32,7 +32,7 @@
         {{parentDocument.resource.identifier}}
     </div>
 
-    <thumbnail *ngIf="showThumbnail"
+    <thumbnail *ngIf="isThumbnailShown()"
                [resource]="document.resource"
                (onClick)="clickThumbnail()"></thumbnail>
 

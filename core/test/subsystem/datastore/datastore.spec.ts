@@ -211,8 +211,8 @@ describe('subsystem/datastore', () => {
         await app.datastore.create(document1);
         document2 = await app.datastore.create(document2);
 
-        expect(document2.warnings?.missingRelationTargets?.relationNames).toEqual(['isAbove'])
-        expect(document2.warnings?.missingRelationTargets?.targetIds).toEqual(['id3'])
+        expect(document2.warnings?.missingRelationTargets?.relationNames).toEqual(['isAbove']);
+        expect(document2.warnings?.missingRelationTargets?.targetIds).toEqual(['id3']);
 
         document3 = await app.datastore.create(document3);
 

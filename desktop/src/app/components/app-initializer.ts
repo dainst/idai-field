@@ -16,6 +16,8 @@ import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
 import { createDisplayVariant } from '../services/imagestore/create-display-variant';
 
+const ipcRenderer = window.require('electron')?.ipcRenderer;
+
 
 interface Services {
 
@@ -99,6 +101,9 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
                                       progress: InitializationProgress,
                                       configReader: ConfigReader,
                                       configLoader: ConfigLoader) => async (): Promise<void> => {
+    
+    const onRequestClose = () => ipcRenderer.send('close');
+    ipcRenderer.on('requestClose', onRequestClose);
 
     progress.setLocale(Settings.getLocale());
     await setupServer(expressServer, progress);
@@ -119,6 +124,8 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     serviceLocator.init(services);
 
     await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
+
+    ipcRenderer.off('requestClose', onRequestClose);
 
     return await AngularUtility.refresh(700);
 };

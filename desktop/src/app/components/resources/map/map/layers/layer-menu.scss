@@ -5,7 +5,6 @@
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
-$layer-menu-save-button-color: #28a745;
 $layer-menu-remove-button-color: #c82333;
 
 #layer-button,
@@ -93,7 +92,7 @@ $layer-menu-remove-button-color: #c82333;
         }
 
         .layer-group-save-button:hover {
-          color: color.adjust($layer-menu-save-button-color, $lightness: 10%) !important;
+          color: color.adjust($green-button-color, $lightness: 10%) !important;
         }
 
         .layer-menu-add-button {

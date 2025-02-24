@@ -3,6 +3,10 @@ import { NewDocument, Document } from 'idai-field-core';
 import { Validator } from '../../model/validator';
 
 
+export const MIN_NUMBER_OF_DUPLICATES: number = 1;
+export const MAX_NUMBER_OF_DUPLICATES: number = 10000;
+
+
 /**
  * @author Thomas Kleinke
  */

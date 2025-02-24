@@ -439,7 +439,7 @@ export module Validations {
                 let fieldFound: boolean = false;
                 for (let definedField of definedFields) {
                     if (definedField.name === resourceField
-                            && !Field.InputType.RELATION_INPUT_TYPES.includes(definedField.inputType)) {
+                            && !Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(definedField.inputType)) {
                         fieldFound = true;
                         break;
                     }

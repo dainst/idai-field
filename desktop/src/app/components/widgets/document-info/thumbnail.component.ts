@@ -55,15 +55,16 @@ export class ThumbnailComponent implements OnChanges {
 
     private async updateThumbnailUrl() {
 
-        this.thumbnailUrl = undefined;
-
         const relationTargets: string[] = this.resource.relations.isDepictedIn;
-        if (!relationTargets || relationTargets.length === 0) return undefined;
+        if (!relationTargets || relationTargets.length === 0) {
+            this.thumbnailUrl = undefined;
+        }
 
         try {
             this.thumbnailUrl = await this.imageUrlMaker.getUrl(relationTargets[0], ImageVariant.THUMBNAIL);
             this.thumbnailPlaceholderCategory = undefined;
         } catch (err) {
+            this.thumbnailUrl = undefined;
             this.updateThumbnailPlaceholder(relationTargets);
         }
 

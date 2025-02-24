@@ -2,6 +2,7 @@
 
 #conflict-resolver {
   height: calc(100vh - 161px);
+  width: calc(100% - 15px);
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -34,7 +35,7 @@
   }
 
   .losing-side {
-    color: #e00000;
+    color: $red-button-color;
   }
 
   #solve-conflict-button {

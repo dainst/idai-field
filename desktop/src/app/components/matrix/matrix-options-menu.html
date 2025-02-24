@@ -4,87 +4,87 @@
 </div>
 <div *ngIf="opened" id="matrix-options-menu" class="card">
     <div class="card-body">
-        <form>
-            <fieldset>
-                <label class="pre-label" i18n="@@matrix.optionsMenu.relations.label">Relationen:</label>
+        <div class="radio-buttons-container">
+            <label class="pre-label" i18n="@@matrix.optionsMenu.relations.label">Relationen:</label>
+            <div>
                 <div id="form-check-relations-spatial" class="form-check form-check-inline form-radiobuttons">
                     <input id="relations-radio-spatial"
-                           class="form-check-input"
-                           name="relations-mode-radios"
-                           type="radio"
-                           [checked]="getRelationsMode() === 'spatial'"
-                           (change)="setRelationsMode('spatial')">
+                            class="form-check-input"
+                            name="relations-mode-radios"
+                            type="radio"
+                            [checked]="getRelationsMode() === 'spatial'"
+                            (change)="setRelationsMode('spatial')">
                     <label id="relations-radio-spatial-label"
-                           class="form-check-label"
-                           for="relations-radio-spatial"
-                           i18n="@@matrix.optionsMenu.relations.spatial">
+                            class="form-check-label"
+                            for="relations-radio-spatial"
+                            i18n="@@matrix.optionsMenu.relations.spatial">
                         Räumlich
                     </label>
                 </div>
                 <div id="form-check-relations-temporal" class="form-check form-check-inline form-radiobuttons">
                     <input id="relations-radio-temporal"
-                           class="form-check-input"
-                           name="relations-mode-radios"
-                           type="radio"
-                           [checked]="getRelationsMode() === 'temporal'"
-                           (change)="setRelationsMode('temporal')">
+                            class="form-check-input"
+                            name="relations-mode-radios"
+                            type="radio"
+                            [checked]="getRelationsMode() === 'temporal'"
+                            (change)="setRelationsMode('temporal')">
                     <label id="relations-radio-temporal-label"
-                           class="form-check-label"
-                           for="relations-radio-temporal"
-                           i18n="@@matrix.optionsMenu.relations.temporal">
+                            class="form-check-label"
+                            for="relations-radio-temporal"
+                            i18n="@@matrix.optionsMenu.relations.temporal">
                         Zeitlich
                     </label>
                 </div>
-            </fieldset>
+            </div>
+        </div>
 
-            <fieldset>
-                <label class="pre-label" i18n="@@matrix.optionsMenu.edges.label">Kanten:</label>
+        <div class="radio-buttons-container">
+            <label class="pre-label" i18n="@@matrix.optionsMenu.edges.label">Kanten:</label>
+            <div>
                 <div id="form-check-edges-ortho" class="form-check form-check-inline form-radiobuttons">
                     <input id="line-radio-ortho"
-                           class="form-check-input"
-                           name="line-mode-radios"
-                           type="radio"
-                           [checked]="getLineMode() === 'ortho'"
-                           (change)="setLineMode('ortho')">
+                            class="form-check-input"
+                            name="line-mode-radios"
+                            type="radio"
+                            [checked]="getLineMode() === 'ortho'"
+                            (change)="setLineMode('ortho')">
                     <label id="line-radio-ortho-label"
-                           class="form-check-label"
-                           for="line-radio-ortho"
-                           i18n="@@matrix.optionsMenu.edges.straight">
+                            class="form-check-label"
+                            for="line-radio-ortho"
+                            i18n="@@matrix.optionsMenu.edges.straight">
                         Gerade
                     </label>
                 </div>
                 <div id="form-check-edges-curved" class="form-check form-check-inline form-radiobuttons">
                     <input id="line-radio-curved"
-                           class="form-check-input"
-                           name="line-mode-radios"
-                           type="radio"
-                           [checked]="getLineMode() === 'curved'"
-                           (change)="setLineMode('curved')">
+                            class="form-check-input"
+                            name="line-mode-radios"
+                            type="radio"
+                            [checked]="getLineMode() === 'curved'"
+                            (change)="setLineMode('curved')">
                     <label id="line-radio-curved-label"
-                           class="form-check-label"
-                           for="line-radio-curved"
-                           i18n="@@matrix.optionsMenu.edges.curved">
+                            class="form-check-label"
+                            for="line-radio-curved"
+                            i18n="@@matrix.optionsMenu.edges.curved">
                         Gebogen
                     </label>
                 </div>
-            </fieldset>
+            </div>
+        </div>
 
-            <fieldset>
-                <div class="form-check form-check-inline">
-                    <input id="period-check"
-                           class="form-check-input"
-                           name="period-check"
-                           type="checkbox"
-                           [checked]="getClusterMode() === 'periods'"
-                           (change)="toggleClusterMode()">
-                    <label id="period-check-label"
-                           class="form-check-label"
-                           for="period-check"
-                           i18n="@@matrix.optionsMenu.clusterOption">
-                        Gruppierung nach Grobdatierung
-                    </label>
-                </div>
-            </fieldset>
-        </form>
+        <div id="period-check-container" class="form-check form-check-inline">
+            <input id="period-check"
+                    class="form-check-input"
+                    name="period-check"
+                    type="checkbox"
+                    [checked]="getClusterMode() === 'periods'"
+                    (change)="toggleClusterMode()">
+            <label id="period-check-label"
+                    class="form-check-label"
+                    for="period-check"
+                    i18n="@@matrix.optionsMenu.clusterOption">
+                Gruppierung nach Grobdatierung
+            </label>
+        </div>
     </div>
 </div>

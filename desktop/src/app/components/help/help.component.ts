@@ -36,6 +36,7 @@ export class HelpComponent implements OnInit {
 
     private htmlString: string;
     private searchResultIndex: number;
+    private searchTimeout: any;
 
     @ViewChild('help', { static: false }) rootElement: ElementRef;
 
@@ -97,15 +98,20 @@ export class HelpComponent implements OnInit {
     }
 
 
-    public async onSearchInputKeyUp(event: KeyboardEvent, searchTerm: string) {
+    public triggerSearch(searchTerm) {
 
-        if (event.key === 'Enter') {
-            this.scrollToNextSearchResult();
-        } else if (!['Alt', 'Shift', 'Control', 'Tab', 'Meta', 'ArrowTop', 'ArrowRight', 'ArrowDown', 'ArrowLeft']
-                .includes(event.key)) {
-            await this.search(searchTerm);
-            this.hasSearchResults = this.searchResults?.length > 0;
-        }
+        if (this.searchTimeout) clearTimeout(this.searchTimeout);
+
+        this.searchTimeout = setTimeout(() => {
+            this.search(searchTerm);
+            this.searchTimeout = undefined;
+        }, 300);
+    }
+
+
+    public async onSearchInputKeyUp(event: KeyboardEvent) {
+        
+        if (event.key === 'Enter') this.scrollToNextSearchResult();
     }
 
 
@@ -133,7 +139,7 @@ export class HelpComponent implements OnInit {
 
         searchTerm = searchTerm?.trim();
 
-        const updatedHtmlString: string = searchTerm.length
+        const updatedHtmlString: string = searchTerm.length > 2
             ? this.replaceSearchString(searchTerm)
             : this.htmlString;
 
@@ -142,6 +148,7 @@ export class HelpComponent implements OnInit {
         await AngularUtility.refresh();
 
         this.searchResults = document.getElementsByClassName('search-result');
+        this.hasSearchResults = this.searchResults?.length > 0;
         this.searchResultIndex = 0;
 
         if (this.searchResults.length > 0) this.scrollToSearchResult(0);

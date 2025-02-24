@@ -161,6 +161,22 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html =~ "Thumbnail images: 2, size: 18.84 KB (19295 bytes)"
     end
 
+    test "old `staff as list of strings` still renders properly", %{conn: conn} do
+      [ok: project_doc] = Project.get_documents(@project, ["project"])
+
+      TestHelper.update_document(
+        @project,
+        project_doc
+        |> Map.update!("resource", fn resource ->
+          Map.put(resource, "staff", ["Person 1", "Person 2"])
+        end)
+      )
+
+      {:ok, _view, html} = live(conn, "/ui/projects/show/#{@project}")
+
+      assert html =~ "Person 1, Person 2"
+    end
+
     test "user can trigger issue evaluation", %{conn: conn} do
       {:ok, %{pid: pid} = view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
@@ -181,7 +197,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         view
         |> render()
 
-      assert html =~ "Issues (4)"
+      assert html =~ "Issues (2)"
     end
 
     test "user without project authorization can not trigger issue evaluation" do

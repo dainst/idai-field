@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { set } from 'tsfun';
-import { FieldDocument, Named, CategoryForm, Tree, ProjectConfiguration, FieldResource, Valuelist, 
-    Labels } from 'idai-field-core';
+import { FieldDocument, CategoryForm, ProjectConfiguration, FieldResource, Valuelist, Labels } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
@@ -26,12 +25,11 @@ export class ListComponent extends BaseList implements OnChanges {
     @Input() documents: Array<FieldDocument>;
     @Input() selectedDocument: FieldDocument;
 
-    public categoriesMap: { [category: string]: CategoryForm };
     public shortDescriptionValuelists: { [category: string]: { valuelist: Valuelist, values: string[] } };
     public availableLanguages: Array<Language>;
     public selectedLanguage: Language|undefined;
 
-    public readonly itemSize: number = 41;
+    public readonly itemSize: number = 42;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -44,8 +42,9 @@ export class ListComponent extends BaseList implements OnChanges {
 
         super(resourcesComponent, viewFacade, loading, menuService);
 
-        // TODO review if we couln't just make use of getCategory()
-        this.categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategories()));
+        this.viewFacade.navigationPathNotifications().subscribe(() => {
+            if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();
+        });
     }
 
 
@@ -57,7 +56,7 @@ export class ListComponent extends BaseList implements OnChanges {
 
     public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
 
-    public getCategory = (document: FieldDocument) => this.categoriesMap[document.resource.category];
+    public getCategory = (document: FieldDocument) => this.projectConfiguration.getCategory(document.resource.category);
 
 
     public ngOnChanges(changes: SimpleChanges) {

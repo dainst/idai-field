@@ -19,7 +19,8 @@ export default function MarkdownViewer(
     { markdown, chapters, setActiveChapter, manualElementRef }: MarkdownViewerProps): ReactElement {
 
     return (
-        <div ref={ manualElementRef }
+        <div id="markdown-viewer"
+                ref={ manualElementRef }
                 style={ markdownContainerStyle }
                 onScroll={ () => updateActiveChapter(chapters, setActiveChapter) }>
             <ReactMarkdown rehypePlugins={ [rehypeRaw] }>{ markdown }</ReactMarkdown>

@@ -10,7 +10,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   app:
-    image: ghcr.io/dainst/field_hub:3.2.8
+    image: ghcr.io/dainst/field_hub:3.3.2
     container_name: "fieldhub_integration_test_app"
     environment: 
       - HOST=localhost

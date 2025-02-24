@@ -1,9 +1,5 @@
 @use 'sass:color';
 
-$greenbgr: #198754;
-$redbgr: #e00000;
-$lightgraybgr: #eeeeee;
-
 .btn {
   cursor: default !important;
   box-shadow: none !important;
@@ -52,28 +48,24 @@ $lightgraybgr: #eeeeee;
   transition: background-color .3s ease;
 }
 
-.lightgray-button:hover {
-  background-color: $lightgraybgr;
-}
-
 .green-button {
-  background-color: $greenbgr;
+  background-color: $green-button-color;
   color: #fff;
   font-weight: normal;
 }
 
 .green-button:hover {
-  background-color: color.adjust($greenbgr, $lightness: 5%);
+  background-color: color.adjust($green-button-color, $lightness: 5%);
 }
 
 .red-button {
-  background-color: $redbgr;
+  background-color: $red-button-color;
   color: #fff;
   font-weight: normal;
 }
 
 .red-button:hover {
-  background-color: color.adjust($redbgr, $lightness: 35%);
+  background-color: color.adjust($red-button-color, $lightness: 35%);
 }
 
 .nav-link {
@@ -124,7 +116,7 @@ category-switcher-button {
   }
 
   .plus-sign-circle {
-    background-color: $greenbgr;
+    background-color: $green-button-color;
 
     .mdi {
       top: -1px;
@@ -203,11 +195,15 @@ category-switcher-button {
 
 .btn-info {
   color: white !important;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
+  background-color: $info-button-color;
+  border-color: $info-button-color;
 
   &:hover, &:active {
     background-color: #138496 !important;
     border-color: #138496 !important;
   }
+}
+
+.bg-info {
+  background-color: $info-button-color !important;
 }

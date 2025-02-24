@@ -51,15 +51,14 @@ export class ChangesHistoryModalComponent {
     public formatDateTime( time: string | Date) {
         
         return moment(time).format('YYYY-MM-DD HH:mm:ss');
-        // return time;
     }
 
 
     public sortBy(documentKey: string, ascending: boolean = true) {
 
         this.documentModificationList.sort((a, b) => {
-            const documentValueA = this.lowerCase(a[documentKey]);
-            const documentValueB = this.lowerCase(b[documentKey]);
+            const documentValueA = this.lowerCaseIfString(a[documentKey]);
+            const documentValueB = this.lowerCaseIfString(b[documentKey]);
             if (documentValueA < documentValueB) {
                 return ascending ? -1 : 1; 
             } else if (documentValueA > documentValueB) {
@@ -89,7 +88,9 @@ export class ChangesHistoryModalComponent {
         this.sortBy(columnName, ascending);
     }
 
-    private lowerCase(value: any) {
+
+    private lowerCaseIfString(value: any) {
+
         return typeof value === 'string' ? value.toLowerCase() : value;  
     }
 }

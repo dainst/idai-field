@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { Datastore } from 'idai-field-core';
+import { Datastore, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -52,7 +52,8 @@ export class AppComponent {
                 private menuModalLauncher: MenuModalLauncher,
                 private datastore: Datastore,
                 private autoBackupService: AutoBackupService,
-                private modals: Modals) {
+                private modals: Modals,
+                private syncService: SyncService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -103,6 +104,7 @@ export class AppComponent {
             if (this.closing || this.datastore.updating) return;
             if (this.autoBackupService.running) {
                 this.closing = true;
+                this.syncService.stopSync();
                 this.modals.make<QuittingModalComponent>(
                     QuittingModalComponent, MenuContext.MODAL, undefined, undefined, false
                 );

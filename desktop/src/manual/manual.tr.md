@@ -26,7 +26,7 @@ Bir proje oluşturduktan veya mevcut bir projeyi açtıktan sonra, **Genel Bakı
 
 Yeni bir işlem oluşturmak için girdiler listesinin altındaki yeşil artı butonu kullanın.
 
-<p align="center"><img src="images/en/resources/create_operation.png" alt="İşlem girdisi oluştur"/></p>
+<p align="center"><img src="images/tr/resources/create_operation.png" alt="İşlem girdisi oluştur"/></p>
 
 Yeni girdi için, öncelikle işlemin kategorisini seçersiniz, ardından isteğe bağlı olarak bir geometri oluşturabilirsiniz. 
 Daha sonra işlemin tüm verilerinin doldurulabildiği editör açılacaktır.
@@ -36,12 +36,12 @@ Sol taraftaki butonlara tıklayarak alan grupları arasında geçiş yapabilirsi
 Girdiyi yeşil kaydet butonuyla kaydetmeden önce, en azından **tanımlayıcı** alanının
 temel bilgiler bölümünün doldurulması gerekmektedir.
 
-<p align="center"><img src="images/en/resources/save_operation.png" alt="İşlem girdisini kaydet"/></p>
+<p align="center"><img src="images/tr/resources/save_operation.png" alt="İşlem girdisini kaydet"/></p>
 
 Yeni işlem artık girdi listesinde görüntüleniyor. Yeni bir sekmede açmak için "İşleme geç" butonunu kullanın 
 (Yukarı sağa ok işareti).
 
-<p align="center"><img src="images/en/resources/goto_operation.png" alt="İşlem girdisini aç"/></p>
+<p align="center"><img src="images/tr/resources/goto_operation.png" alt="İşlem girdisini aç"/></p>
 
 İşlemin kategorisine bağlı olarak, bir girdi sekmesi içinde artı butonu ile farklı kategorilerde (örneğin bir açmadaki stratigrafik birimler veya bir yapının odaları)
 gibi alt girdiler oluşturulabilir.
@@ -55,7 +55,7 @@ Alt hiyerarşi seviyesine geçmek için "Alt girdileri göster" (aşağı sağa 
 Girdiler listesinin üstündeki gezinme yolu, şu anda seçili olan hiyerarşi düzeyini gösterir. Her zaman
 Gezinme yolundaki butonlardan birine tıklayarak bir sonraki seviyeye geçebilirsiniz.
 
-<p align="center"><img src="images/en/resources/navpath.png" alt="Gezinme yolu"/></p>
+<p align="center"><img src="images/tr/resources/navpath.png" alt="Gezinme yolu"/></p>
 
 
 ## Girdilerin yönetilmesi
@@ -77,7 +77,7 @@ tüm görselleri de silebilirsiniz)
 Ayrıca, içerik menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
 birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kullanılabilir. QR kodlarını ekleme veya yönetme seçenekleri yalnızca konfigürasyon düzenleyicisinde karşılık gelen kategori için QR kodlarının kullanımı ayarlanmışsa kullanılabilir (bkz. *Konfigürasyon* bölümündeki *Kategorileri düzenle* bölümü).
 
-<p align="center"><img src="images/en/resources/context_menu.png" alt="İçerik menüsü"/></p>
+<p align="center"><img src="images/tr/resources/context_menu.png" alt="İçerik menüsü"/></p>
 
 
 <hr>
@@ -94,7 +94,7 @@ Görüntü dosyaları isteğe bağlı olarak bir senkronizasyon bağlantısı ar
 
 Görüntüler uygulamaya iki farklı şekilde aktarılabilir: "Araçlar" ➝ "Görüntü yönetimi" menüsü ve bir girdinin içerik menüsündeki "Görüntüleri bağla" seçeneği (istenen girdiye sağ tıklanarak erişilebilir). İkinci durumda, görüntü içe aktarma işleminden sonra otomatik olarak ilgili girdiye bağlanacaktır (bkz. *Görüntüleri girdilere bağla* bölümü).
 
-<p align="center"><img src="images/en/images/droparea.png" alt="İçe aktar butonu"/></p>
+<p align="center"><img src="images/tr/images/droparea.png" alt="İçe aktar butonu"/></p>
 
 İçe aktarmayı başlatmak için artı düğmesine tıklayın ve projeye eklemek istediğiniz dosyaları seçin. Alternatif olarak, dosyaları doğrudan bir dosya yöneticisi uygulamasından artı düğmesini çevreleyen alana sürükleyip bırakabilirsiniz. Proje için birden fazla görsel kategorisi (yani "Görüntü" kategorisinin alt kategorileri) tanımlanmışsa, açılır menüden istediğiniz kategoriyi seçebilirsiniz. Ayrıca, "Oluşturucu" alanının içeriğinin resim dosyası meta verilerinden otomatik olarak okunmasını veya manuel olarak ayarlanmasını seçebilirsiniz. Proje özelliklerinde bulunan, "Ekip" alanına girilen kişi isimleri seçim için kullanılabilir. Her iki durumda da, resmin oluşturulma tarihi, yüksekliği ve genişliği dosya meta verilerinden otomatik olarak okunur.
 Desteklenen görsel formatları *jpg/jpeg*, *png* ve *tif/tiff*'tir.
@@ -126,7 +126,7 @@ Görüntüleri yönetmek için "Araçlar" ➝ "Görüntü yönetimi" menüsünü
 
 Projeden içe aktarılan görüntüleri kaldırmak için, görüntü yönetiminde karşılık gelen görüntüleri seçin. Daha sonra "Sil" düğmesiyle kaldırılabilirler:
 
-<p align="center"><img src="images/en/images/delete_button.png" alt="'Sil' Butonu"/></p>
+<p align="center"><img src="images/tr/images/delete_button.png" alt="'Sil' Butonu"/></p>
 
 Lütfen unutmayın; bu aynı zamanda projenin görüntüler dizinindeki (ve bir senkronizasyon bağlantısı kurulmuşsa diğer bilgisayarlardaki) ilgili dosyaları da **silebilir**. Bir görüntü silindiğinde girdilerle bağlantıları kaybolacaktır.
 
@@ -142,14 +142,14 @@ Listedeki görüntüleri seçin ve görüntüleri girdiden ayırmak için "Bağl
 
 Bağlantılar ayrıca görüntü yönetimi aracılığıyla eklenebilir veya kaldırılabilir. Bunu yapmak için, istediğiniz görüntüleri seçin ve üst çubuktaki "Bağla" (mavi düğme) veya "Bağlantıları kaldır" (kırmızı düğme) düğmesine tıklayın:
 
-<p align="center"><img src="images/en/images/link_buttons.png" alt="'Bağla' ve 'Bağlantı Kaldır' Butonları"/></p>
+<p align="center"><img src="images/tr/images/link_buttons.png" alt="'Bağla' ve 'Bağlantı Kaldır' Butonları"/></p>
 
 
 ### Ana görüntü ayarla
 
 Bir girdi birden fazla görüntüye bağlıysa, görüntülerden biri **ana görüntü** olarak bir yıldız simgesiyle işaretlenir. Bu ana görüntü, girdi için bir önizleme görseli olarak görüntülenir. Girdinin içerik menüsünde "Görüntüleri bağla" seçeneğini belirleyerek ve bağlı görüntüler listesinde istediğiniz görüntüyü seçerek ana görüntüyü değiştirebilirsiniz. Ardından "Ana görüntü olarak ayarla" düğmesine tıklayın:
 
-<p align="center"><img src="images/en/images/main_image.png" alt="'Ana görüntü olarak ayarla' Butonu"/></p>
+<p align="center"><img src="images/tr/images/main_image.png" alt="'Ana görüntü olarak ayarla' Butonu"/></p>
 
 
 ## Harita katmanları
@@ -162,14 +162,14 @@ Görüntü dosyası GeoTIFF biçimindeyse başka bir işlem yapılmasına gerek 
 
 World dosyaları iki farklı şekilde içe aktarılabilir: Uzantıdan önceki dosya adı, karşılık gelen görüntü dosyasının adıyla aynıysa, dosya görüntü içe aktarma (artı düğmesi) yoluyla eklenebilir. Görüntüye atama otomatik olarak gerçekleşir. Alternatif olarak, bir world dosyası görüntü yönetiminde karşılık gelen görüntüye çift tıklayarak ulaşabileceğiniz ön izleme menüsü ile içe aktarılabilir. "Coğrafi referans verileri" bölümünü açın ve istediğiniz dosyayı seçmek için "World dosyasını yükle" düğmesine tıklayın.
 
-<p align="center"><img src="images/en/images/worldfile_import.png" alt="Coğrafi referans ekle"/></p>
+<p align="center"><img src="images/tr/images/worldfile_import.png" alt="Coğrafi referans ekle"/></p>
 
 
 ### Harita katmanlarını düzenle
 
 Bir harita katmanı belirli bir işlem veya tüm proje için ayarlanabilir. Harita katmanının tüm projede kullanılabilir olmasını istiyorsanız genel bakış sekmesine (ev simgesi) veya istediğiniz işlemin sekmesine geçin. Orada, haritanın sağ üst köşesindeki düğme aracılığıyla harita katmanı menüsünü açın ve düzenle düğmesine tıklayın. Artık artı düğmesi aracılığıyla yeni harita katmanları ekleyebilirsiniz. Coğrafi referans verisi eklenmiş tüm görüntüler kullanılabilir.
 
-<p align="center"><img src="images/en/images/layer_menu.png" alt="Harita katmanlarını düzenle"/></p>
+<p align="center"><img src="images/tr/images/layer_menu.png" alt="Harita katmanlarını düzenle"/></p>
 
 Harita katmanlarının sırasını, sürükle ve bırak yoluyla listede yukarı veya aşağı taşıyarak değiştirin. Bu sıralama, haritada birden fazla (coğrafi olarak) üst üste gelen görüntünün hangisinin üstte görüntüleneceğini belirler: Listede daha yukarıda olan bir katman, haritada daha aşağıda olan bir katmanın üstünde görüntülenir ve onu tamamen veya kısmen gizleyebilir.
 
@@ -203,7 +203,7 @@ ve ek alan özel arama ölçütleri tanımlamanıza olanak tanır.
 Arama filtresi, belirli ölçütlere göre girdileri göstermenin veya gizlemenin hızlı bir yoludur. Şunlardan oluşur:
 *metin filtresi* (bir arama kutucuğu) ve bir *kategori filtresi* (mavi buton).
 
-<p align="center"><img src="images/en/search/search_filter.png" alt="Arama filtresi"/></p>
+<p align="center"><img src="images/tr/search/search_filter.png" alt="Arama filtresi"/></p>
 
 Bir arama terimi girdikten ve/veya bir kategori seçtikten sonra, yalnızca bu filtre kriterlerine uyan kayıtlar gösterilir. 
 **Genel bakış** ve **işlem sekmelerinde**, bu durum sol kenar çubuğundaki tüm girdiler 
@@ -213,7 +213,7 @@ ile sırasıyla haritadaki (harita görünümünde) tüm girdileri ve listenin �
 
 ### Kategori filtresi
 
-<p align="center"><img src="images/en/search/filter_menu.png" alt="Kategori filtre seçimi"/></p>
+<p align="center"><img src="images/tr/search/filter_menu.png" alt="Kategori filtre seçimi"/></p>
 
 Kategori filtre düğmesi bir girdi kategorisi seçmenize olanak tanır. Üst ve alt kategoriler bulunmaktadır: Bir alt kategori seçerseniz (örneğin "Tabaka"),
 yalnızca ilgili kategorinin girdileri gösterilir. 
@@ -282,7 +282,7 @@ izin verilen karakterler olarak tanımlanmıştır. Başlangıç terimi araması
 Mevcut içerikte hiçbir arama sonucu bulunamazsa, metin giriş alanının altında diğer içeriklerden 
 gelen arama sonuçları gösterilir.
 
-<p align="center"><img src="images/en/search/other_contexts.png" alt="Diğer içeriklerden arama sonuçları"/></p>
+<p align="center"><img src="images/tr/search/other_contexts.png" alt="Diğer içeriklerden arama sonuçları"/></p>
 
 Girdilerden birine tıklayarak hemen ilgili bağlama geçebilir 
 ve girdiyi seçebilirsiniz.
@@ -293,7 +293,7 @@ ve girdiyi seçebilirsiniz.
 **Genel bakış** ve **İşlem sekmelerinde** genişletilmiş arama moduna geçmek için
 büyüteç butonuna tıklayın.
  
-<p align="center"><img src="images/en/search/extended_search_button.png" alt="Detaylı arama modu butonu"/></p>
+<p align="center"><img src="images/tr/search/extended_search_button.png" alt="Detaylı arama modu butonu"/></p>
 
 Detaylı arama modu, daha büyük miktardaki veriler üzerinde arama yapmanıza olanak tanır:
 
@@ -305,7 +305,7 @@ Her iki durumda da bulunan tüm girdiler sol taraftaki listede gösterilir. "iç
 bir kaydın hiyerarşik içeriğine geçmenizi sağlar; bunu yaparken genişletilmiş arama modu sonlandırılır ve 
 gerekirse yeni bir sekme açılır.
 
-<p align="center"><img src="images/en/search/show_in_context.png" alt="İçerikte göster"/></p>
+<p align="center"><img src="images/tr/search/show_in_context.png" alt="İçerikte göster"/></p>
 
 Detaylı arama modundayken, devre dışı bırakılmış oluştur düğmesiyle girdi oluşturmak mümkün değildir. 
 Yeni girdiler oluşturmak için lütfen detaylı arama modundan çıkın.
@@ -324,7 +324,7 @@ Arama için kullanılabilir alanlar, seçili kategoriye karşılık gelen alanla
 Birden fazla arama kriterini birleştirmek için istediğiniz kadar alan seçebilirsiniz. 
 Elbette, alan belirli arama kriterini metin filtresiyle birlikte de kullanabilirsiniz. 
 
-<p align="center"><img src="images/en/search/criteria_search.png" alt="Alana özgü arama kriterleri"/></p>
+<p align="center"><img src="images/tr/search/criteria_search.png" alt="Alana özgü arama kriterleri"/></p>
 
 Metin alanı olması durumunda, doğrudan arama terimini girmeniz yeterlidir.
 Değer listeleri olan alanlar için, açılır menüdeki tüm izin verilen değerlerin listesinden terimi seçin.
@@ -384,7 +384,7 @@ Son olarak **Ayarları uygula** butonuna tıklayarak ayarlarınızı onaylayın.
 
 Gezinme çubuğunun sağ üst köşesindeki bulut simgesi, yapılandırılmış senkronizasyon bağlantınızın geçerli durumunu gösterir.
 
-<p align="center"><img src="images/en/synchronization/synchronization_icon.png" alt="Senkronizasyon simgesi"/></p>
+<p align="center"><img src="images/tr/synchronization/synchronization_icon.png" alt="Senkronizasyon simgesi"/></p>
 
 Bağlantı başarıyla kurulmuşsa, simge bir onay işareti gösterir. Veriler yüklenirken veya indirilirken bu bir okla gösterilir. Hatalar durumunda bir ünlem işareti gösterilir. Eşitleme durumuyla ilgili ek bilgiler, fare işaretçisini simgenin üzerine getirerek görülebilir.
 
@@ -432,7 +432,7 @@ Ek olarak, yapılandırılmış proje dillerinin her biri için **etiketler** ek
 
 Editörün sol kenar çubuğu, proje için mevcut yapılandırılmış kategorileri listeler. Sol üstteki filtre menüsünü kullanarak, görüntülenen kategorilerin seçimini uygulamanın belirli bir kısmıyla (örneğin, bir açma sekmesi içinde oluşturulabilecek kategorilerle filtrelemek için "Açma") sınırlayabilirsiniz. "Tümü" seçeneğini seçerseniz, projenin tüm kategorileri listelenir.
 
-<p align="center"><img src="images/en/configuration/categories_filter.png" alt="Kategori filtre menüsü"/></p>
+<p align="center"><img src="images/tr/configuration/categories_filter.png" alt="Kategori filtre menüsü"/></p>
 
 Listede bir kategoriyi seçtiğinizde, o kategori için yapılandırılmış form, ilgili alan grupları ve alanlarıyla birlikte sağ tarafta görüntülenir.
 
@@ -494,7 +494,7 @@ QR kodlarını konfigüre etmek için kategori düzenleyicide aşağıdaki seçe
 
 Kategori, bir girdinin, hiyerarşik olarak nerede oluşturulabileceğini belirler: Örneğin, buluntular stratigrafik birimler içinde oluşturulabilir, ancak tersi mümkün değildir. Form görüntüsünün hemen üstündeki sağ üstteki iki düğmeyle, seçili kategorinin hangi kategorilerdeki girdilerinin oluşturulabileceğini ve hangi kategorilerdeki girdileri içerebileceğini aşağıda görebilirsiniz.
 
-<p align="center"><img src="images/en/configuration/hierarchy.png" alt="Hiyerarşi bilgi butonları"/></p>
+<p align="center"><img src="images/tr/configuration/hierarchy.png" alt="Hiyerarşi bilgi butonları"/></p>
 
 Kategori hiyerarşisi mevcut konfigürasyon düzenleyicisinde değiştirilemez. Yeni oluşturulan alt kategoriler için, üst kategorinin hiyerarşik kısıtlamaları geçerlidir.
 
@@ -557,79 +557,79 @@ Zaten girilmiş olan alan verileri, giriş türü değiştirilse bile görüntü
 
 #### Tek satırlık metin
 Tek satırlık bir metnin girişi (isteğe bağlı olarak tek dilli veya çok dilli olabilir)
-<p align="center"><img src="images/en/configuration/input_type_input.png" alt="Input type 'Tek satırlık metin'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_input.png" alt="Input type 'Tek satırlık metin'"/></p>
 
 #### Çoklu seçimli tek satırlık metin
 Birden fazla tek satırlık metnin girişi (isteğe bağlı olarak tek dilli veya çok dilli olabilir)
-<p align="center"><img src="images/en/configuration/input_type_multi_input.png" alt="Giriş türü 'Çoklu seçimli tek satırlık metin'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_multi_input.png" alt="Giriş türü 'Çoklu seçimli tek satırlık metin'"/></p>
   
 #### Çok satırlı metin
 Çok satırlı, çok dilli bir metnin girişi
-<p align="center"><img src="images/en/configuration/input_type_text.png" alt="Giriş türü 'Çok satırlı metin'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_text.png" alt="Giriş türü 'Çok satırlı metin'"/></p>
 
 #### Tam sayı
 Pozitif veya negatif tam sayı girişi
-<p align="center"><img src="images/en/configuration/input_type_int.png" alt="Giriş türü 'Tam sayı'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_int.png" alt="Giriş türü 'Tam sayı'"/></p>
 
 #### Pozitif tam sayı
 Pozitif tam sayı girişi
-<p align="center"><img src="images/en/configuration/input_type_unsigned_int.png" alt="Giriş türü 'Pozitif tam sayı'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_unsigned_int.png" alt="Giriş türü 'Pozitif tam sayı'"/></p>
 
 #### Ondalık sayı
 Pozitif veya negatif ondalık sayı girişi
-<p align="center"><img src="images/en/configuration/input_type_float.png" alt="Giriş türü 'Ondalık sayı'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_float.png" alt="Giriş türü 'Ondalık sayı'"/></p>
 
 #### Pozitif ondalık sayı
 Pozitif ondalık sayı girişi
-<p align="center"><img src="images/en/configuration/input_type_unsigned_float.png" alt="Giriş türü 'Pozitif ondalık sayı'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_unsigned_float.png" alt="Giriş türü 'Pozitif ondalık sayı'"/></p>
 
 #### URL
 Bir URL girişi
-<p align="center"><img src="images/en/configuration/input_type_url.png" alt="Giriş türü 'URL'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_url.png" alt="Giriş türü 'URL'"/></p>
 
 #### Açılır liste
 Değer listesinden bir değerin seçilmesi
-<p align="center"><img src="images/en/configuration/input_type_dropdown.png" alt="Giriş türü 'Açılır liste'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_dropdown.png" alt="Giriş türü 'Açılır liste'"/></p>
 
 #### Açılır liste (aralık)
 Değer listesinden bir değerin veya değer aralığının (iki değer arasından) seçilmesi
-<p align="center"><img src="images/en/configuration/input_type_dropdown_range.png" alt="Giriş türü 'Açılır liste (aralık)'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_dropdown_range.png" alt="Giriş türü 'Açılır liste (aralık)'"/></p>
 
 #### Radyo düğmesi
 Değer listesinden bir değerin seçilmesi
-<p align="center"><img src="images/en/configuration/input_type_radio.png" alt="Giriş türü 'Radyo düğmesi'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_radio.png" alt="Giriş türü 'Radyo düğmesi'"/></p>
 
 #### Evet / Hayır
 Evet veya Hayır Seçimi
-<p align="center"><img src="images/en/configuration/input_type_boolean.png" alt="Giriş türü 'Evet / Hayır'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_boolean.png" alt="Giriş türü 'Evet / Hayır'"/></p>
 
 #### Onay Kutuları
 Bir değer listesinden bir veya daha fazla değerin seçimi
-<p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Giriş türü 'Onay Kutuları'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_checkboxes.png" alt="Giriş türü 'Onay Kutuları'"/></p>
 
 #### Tarih
 Takvimden bir tarih seçimi. Giriş alanı yalnızca ay veya yıl bilgilerini girmek için de kullanılabilir.
-<p align="center"><img src="images/en/configuration/input_type_date.png" alt="Giriş türü 'Tarih'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_date.png" alt="Giriş türü 'Tarih'"/></p>
 
 #### Tarihleme
 Bir veya daha fazla tarihlemenin belirtilmesi. Olası tarihleme türleri şunlardır: Dönem, Tek yıl, Önce, Sonra, Bilimsel.
-<p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Giriş türü 'Tarihleme'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_dating.png" alt="Giriş türü 'Tarihleme'"/></p>
 
 #### Boyut
 Bir veya daha fazla boyutun belirtilmesi. Tek bir değer veya bir aralık belirtilebilir. "Ölçüldüğü şekilde" seçeneği açılır alt alanının seçenekleri arasından değerler seçilebilir.
-<p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Giriş türü 'Boyut'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_dimension.png" alt="Giriş türü 'Boyut'"/></p>
 
 #### Bibliyografik referans
 Bir veya daha fazla bibliyografik referansın belirtilmesi. İsteğe bağlı olarak Zenon ID, DOI, sayfa numarası ve şekil numarası belirtilebilir.
-<p align="center"><img src="images/en/configuration/input_type_literature.png" alt="Giriş türü 'Bibliografik referans'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_literature.png" alt="Giriş türü 'Bibliografik referans'"/></p>
 
 #### Bileşik alan
 Bileşik alanlar, her biri herhangi sayıda alt alandan oluşan birden fazla giriş içerebilir. Her alt alanın kendi adı ve giriş türü vardır (bkz. *Alt Alanlar* bölümü).
-<p align="center"><img src="images/en/configuration/input_type_composite_field.png" alt="Giriş türü 'Bileşik alan'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_composite_field.png" alt="Giriş türü 'Bileşik alan'"/></p>
 
 #### İlişki
 Konfigüre edilmiş hedef kategorilerinden birine ait bir veya daha fazla başka girdiye bağlantı (bkz. *İzin verilen hedef kategorileri* bölümü). İsteğe bağlı olarak, hedef girdilerde otomatik olarak ayarlanan bir ters ilişki konfigüre edilebilir (bkz. *Ters ilişki* bölümü).
-<p align="center"><img src="images/en/configuration/input_type_relation.png" alt="Giriş türü 'İlişki'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_relation.png" alt="Giriş türü 'İlişki'"/></p>
 
 
 
@@ -698,7 +698,7 @@ Lütfen unutmayın; daha önce kaydedilmiş girdi verileri, başka bir ters ili�
 
 Üst kategorilerin, alt kategorilerin, grupların ve alanların sırası sürükle bırak işlemiyle değiştirilebilir. Bunu yapmak için, liste girişinin solundaki tutamak simgesine tıklayın, fare düğmesini basılı tutun ve öğeyi istediğiniz konuma taşıyın.
 
-<p align="center"><img src="images/en/configuration/drag_and_drop_handle.png" alt="Sürükle ve bırak tutamağı"/></p>
+<p align="center"><img src="images/tr/configuration/drag_and_drop_handle.png" alt="Sürükle ve bırak tutamağı"/></p>
 
 Alanlar aynı şekilde başka bir gruba da atanabilir: Alanı grup listesindeki ilgili grubun girişine sürüklemeniz yeterlidir. Lütfen unutmayın; alan/grup sırasındaki veya grup atamasındaki değişiklikler otomatik olarak bir üst kategorinin formundan ilgili alt (veya tam tersi) kategorilerin formlarına aktarılmaz.
 
@@ -709,7 +709,7 @@ Alanlar aynı şekilde başka bir gruba da atanabilir: Alanı grup listesindeki 
 
 Listenin üstündeki metin alanını kullanarak değer listelerini herhangi bir arama terimine göre filtreleyin. Aramada değer listesi tanımlayıcılarının yanı sıra tanımlayıcıları ve bireysel değerlerin görüntüleme etiketlerini de bulunacaktır. Arama alanının sağındaki düğmeyi kullanarak, yalnızca projeye özgü (yani yeni oluşturulmuş) değer listelerini ve/veya projede şu anda kullanılan değer listelerini seçilebilir halde görüntülemenize olanak tanıyan filtre menüsünü açabilirsiniz.
 
-<p align="center"><img src="images/en/configuration/valuelists_filter.png" alt="Değer listesi filtre menüsü"/></p>
+<p align="center"><img src="images/tr/configuration/valuelists_filter.png" alt="Değer listesi filtre menüsü"/></p>
 
 Lütfen unutmayın; değer listesi yönetim penceresinde yapılan tüm değişiklikler projeye uygulanması için konfigürasyon düzenleyicisinin "Kaydet" butonuna tıklanarak onaylanması gerekmektedir.
 
@@ -796,7 +796,7 @@ Lütfen unutmayın; API erişim noktasının JSON çıktısı "Konfigürasyonu i
 ilgili açmanın stratigrafik birimlerinden otomatik olarak oluşturulan bir matris görüntüler. 
 Matrisin kenarları, birimler arası ilişkiler esas alınarak oluşturulur.
 
-<p align="center"><img src="images/en/matrix/trench_selection.png" alt="Açma seçimi"/></p>
+<p align="center"><img src="images/tr/matrix/trench_selection.png" alt="Açma seçimi"/></p>
 
 Araç çubuğunun sol tarafındaki açılır menü butonunu kullanarak 
 matrisin oluşturulacağı açmayı seçin.
@@ -808,7 +808,7 @@ Matris görünümünün sağ üst köşesindeki **Seçenekler** düğmesi aracı
 görselleştirmesini özelleştirebilirsiniz. Seçilen ayarlar, projenin tüm
 açmalarındaki tüm matrislere uygulanır ve uygulama yeniden başlatıldığında korunur.
 
-<p align="center"><img src="images/en/matrix/matrix_tools.png" alt="Seçenekler menüsü"/></p>
+<p align="center"><img src="images/tr/matrix/matrix_tools.png" alt="Seçenekler menüsü"/></p>
 
 
 ### İlişkiler
@@ -831,7 +831,7 @@ Matrisin stratigrafik birimlerini "Dönem" alanının değerine göre gruplamak 
 Alan için iki değer (başlangıç/bitiş) ayarlanırsa, her durumda "Dönem (başlangıç)" değeri kullanılır.
 Eşit dönem değerlerine sahip stratigrafik birimler birbirine yakın yerleştirilir ve bir dikdörtgenle çerçevelenir.
 
-<p align="center"><img src="images/en/matrix/matrix_phases.png" alt="Döneme göre gruplandır"/></p>
+<p align="center"><img src="images/tr/matrix/matrix_phases.png" alt="Döneme göre gruplandır"/></p>
 
 
 ## Gezinme
@@ -860,13 +860,13 @@ Büyük matrislerde genel bakışı kolaylaştırmak için, alt matrisler matris
 Birimleri seçmek ve geçerli seçimden yeni bir alt matris oluşturmak
 için araç çubuğunun sağ tarafındaki düğmeleri kullanın: 
 
-<p align="center"><img src="images/en/matrix/interaction_mode_buttons.png" alt="Etkileşim modu düğmeleri"/></p>
+<p align="center"><img src="images/tr/matrix/interaction_mode_buttons.png" alt="Etkileşim modu düğmeleri"/></p>
 
 * *Düzenleme modu*: Birimler sol tıklamayla düzenlenebilir.
 * *Tek seçim modu*: Birimler sol tıklamayla ayrı ayrı seçilebilir ve seçimleri kaldırılabilir.
 * *Grup seçim modu*: Birimler fare kullanılarak bir dikdörtgen çizilerek gruplar halinde seçilebilir.
 
-<p align="center"><img src="images/en/matrix/subgraph_buttons.png" alt="Alt matris oluşturma butonu"/></p>
+<p align="center"><img src="images/tr/matrix/subgraph_buttons.png" alt="Alt matris oluşturma butonu"/></p>
 
 * *Seçimi kaldır*: Tüm birimlerin seçimini kaldırır.
 * *Seçimden matris oluştur*: Yalnızca seçili birimlerden oluşan yeni bir matris oluşturulur.
@@ -879,7 +879,7 @@ için araç çubuğunun sağ tarafındaki düğmeleri kullanın:
 
 Şu anda görüntülenen matrisi bir dosya olarak dışa aktarmak için araç çubuğunun en sağındaki dışa aktarma düğmesini kullanın.
 
-<p align="center"><img src="images/en/matrix/export_matrix.png" alt="Dışa aktarma butonu"/></p>
+<p align="center"><img src="images/tr/matrix/export_matrix.png" alt="Dışa aktarma butonu"/></p>
 
 İki farklı dosya biçimi arasından seçim yapabilirsiniz:
 
@@ -1766,7 +1766,7 @@ Katalog dosyalarını dışa aktarırken aşağıdaki seçenek kullanılabilir:
 
 Proje yapılandırmasında değişiklik gibi çeşitli nedenlerle, projede tutarsız veya başka şekilde yanlış veriler oluşabilir. Bu durumlarda, uygulama bir uyarı görüntüler ve sorunu çözmek için seçenekler sunar. Hatalı girdiler, ilgili girdinin liste girişinin yanında kırmızı bir çubukla işaretlenir. Ayrıca, sağ üstteki gezinme çubuğunda, veri sorunları nedeniyle uyarı verilen girdi sayısını belirten bir simge görüntülenir:
 
-<p align="center"><img src="images/en/warnings/warnings_icon.png" alt="Uyarı ikonu"/></p>
+<p align="center"><img src="images/tr/warnings/warnings_icon.png" alt="Uyarı ikonu"/></p>
 
 Etkilenen bir girdinin simgesine tıklamak veya içerik menüsünü kullanmak sizi "Uyarılar" menüsüne götürür; burada hatalı girdilerin listesini görüntüleyebilir ve uyarı türüne göre filtreleyebilirsiniz. Ayrıca tanımlayıcıya, kısa açıklamaya (metin girişi yoluyla) ve kategoriye göre filtreleme seçenekleri kullanılabilir.
 

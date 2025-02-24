@@ -1762,59 +1762,59 @@ Katalog dosyalarını dışa aktarırken aşağıdaki seçenek kullanılabilir:
 <hr>
 
 
-# Warnings
+# Uyarılar
 
-For various reasons, such as changes to the project configuration, inconsistent or otherwise incorrect data may occur in a project. In these cases, the application displays a warning and provides options for solving the problem. Faulty resources are marked with a red bar next to the list entry of the corresponding resource. Furthermore, an icon is displayed in the navigation bar at the top right, indicating the number of resources for which there are warnings due to data problems:
+Proje yapılandırmasında değişiklik gibi çeşitli nedenlerle, projede tutarsız veya başka şekilde yanlış veriler oluşabilir. Bu durumlarda, uygulama bir uyarı görüntüler ve sorunu çözmek için seçenekler sunar. Hatalı girdiler, ilgili girdinin liste girişinin yanında kırmızı bir çubukla işaretlenir. Ayrıca, sağ üstteki gezinme çubuğunda, veri sorunları nedeniyle uyarı verilen girdi sayısını belirten bir simge görüntülenir:
 
-<p align="center"><img src="images/en/warnings/warnings_icon.png" alt="Warnings icon"/></p>
+<p align="center"><img src="images/en/warnings/warnings_icon.png" alt="Uyarı ikonu"/></p>
 
-Clicking the icon or using the context menu of an affected resource takes you to the menu "Warnings", where you can view the list of faulty resources and filter by warning type. There are also options for filtering by identifier and short description (via text input) as well as by category.
+Etkilenen bir girdinin simgesine tıklamak veya içerik menüsünü kullanmak sizi "Uyarılar" menüsüne götürür; burada hatalı girdilerin listesini görüntüleyebilir ve uyarı türüne göre filtreleyebilirsiniz. Ayrıca tanımlayıcıya, kısa açıklamaya (metin girişi yoluyla) ve kategoriye göre filtreleme seçenekleri kullanılabilir.
 
-Select one of the displayed resources to view the list of existing warnings for that resource. For most warnings, tools are provided that can be used to resolve the errors; many warnings can also be resolved by adjusting the project configuration. In any case, please create a **backup** of the project in advance via the menu "Project" ➝ "Create backup...". Further information on the causes and possible solutions for the individual warning types can be found below.
+Görüntülenen girdilerden birini seçerek söz konusu girdi için mevcut uyarıların listesini görüntüleyin. Çoğu uyarıda hataları çözmek için kullanılabilecek araçlar sağlanır; birçok uyarı, proje yapılandırmasını ayarlayarak da çözülebilir. Her durumda, öncelikle lütfen "Proje" ➝ "Yedek oluştur..." menüsü aracılığıyla projenin bir **yedeğini** oluşturun. Bireysel uyarı türleri için nedenler ve olası çözümler hakkında daha fazla bilgi aşağıda bulunabilir.
 
 ## Warning types
-### Conflict
-There are multiple versions of the resource that are in conflict with each other.
+### Çakışma
+Birbirleriyle çakışan birden fazla girdi sürümü var.
 
-#### Possible causes
-* The resource was edited on different computers at the same time with an existing synchronization connection.
-* The resource was edited on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+#### Olası nedenler
+* Girdi, mevcut bir senkronizasyon bağlantısıyla aynı anda farklı bilgisayarlarda düzenlendi.
+* Girdi, mevcut bir senkronizasyon bağlantısı olmadan farklı bilgisayarlarda düzenlendi; veriler daha sonra bir sonraki zamanda senkronize edildi.
 
-#### Possible solutions
-* Button *Resolve conflict*: Resolve the conflicts in the resource editor (see section *Conflicts* of chapter *Synchronization*).
+#### Olası çözümler
+* *Çakışmayı çöz* Butonu: Girdi düzenleyicisindeki çakışmaları çözün (bkz. *Senkronizasyon* bölümünün *Çakışmalar* kısmı).
 
-### Unconfigured category
-A category is set for the resource that cannot be found in the project configuration. The resource is therefore not displayed.
+### Konfigüre edilmemiş kategori
+Proje konfigürasyonunda bulunamayan girdi için bir kategori ayarlandı. Bu nedenle girdi görüntülenmiyor.
 
-#### Possible causes
-* The category has been deleted in the configuration editor.
+#### Olası nedenler
+* Kategori, konfigürasyon düzenleyicisinde silindi.
 
-#### Possible solutions
-* Button *Select new category*: Select one of the categories configured for the project. The selected category is then set for the affected resource. Optionally, you can set the new category for all resources for which the same unconfigured category is specified.
-* Button *Delete resource*: The affected resource is deleted completely.
-* Add a category with the same name in the configuration editor.
+#### Olası çözümler
+* *Yeni kategori seç* Butonu: Proje için konfigüre edilmiş kategorilerden birini seçin. Seçilen kategori daha sonra etkilenen girdi için ayarlanacaktır. İsteğe bağlı olarak, söz konusu kategorinin belirtildiği tüm girdiler için yeni kategori ayarlayabilirsiniz.
+* *Girdiyi sil* Butonu: Etkilenen girdi tamamen silinir.
+* Konfigürasyon düzenleyicisinde aynı adı taşıyan bir kategori ekleyin.
 
-### Unconfigured field
-Data has been entered in a field that cannot be found in the project configuration. The entered data is therefore not displayed.
+### Konfigüre edilmemiş alan
+Veriler, proje konfigürasyonunda bulunamayan bir alana girildi. Bu nedenle girilen veriler görüntülenmiyor.
 
-#### Possible causes
-* The field has been deleted in the configuration editor.
+#### Olası nedenler
+* Alan, konfigürasyon düzenleyicisinde silindi.
 
-#### Possible solutions
-* Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which data has been entered in the same unconfigured field.
-* Button *Delete field data*: The data entered in the field is deleted completely. Optionally, you can delete the field data for all resources for which data has been entered in the same unconfigured field.
-* Add a field with the same name for the category of the affected resource in the configuration editor.
+#### Olası çözümler
+* *Yeni alan seç* Butonu: Girdinin kategorisi için konfigüre edilmiş alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın, veriler hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı konfigüre edilmemiş alana veri girilen tüm kayıtlardaki yeni alanı ayarlayabilirsiniz.
+* *Alan verilerini sil* Butonu: Alana girilen veriler tamamen silinir. İsteğe bağlı olarak, aynı konfigüre edilmemiş alana veri girilen tüm kayıtlardaki alan verilerini silebilirsiniz.
+* Konfigürasyon düzenleyicisinde etkilenen girdinin kategorisinde aynı adı taşıyan bir alan ekleyin.
 
-### Invalid field data
-The data entered in a field does not correspond to the input type selected for the field.
+### Geçersiz alan verileri
+Bir alana girilen veriler, alan için seçilen giriş türüne uymuyor.
 
-#### Possible causes
-* The input type of the field has been changed in the configuration editor.
+#### Olası nedenler
+* Alanın giriş türü konfigürasyon düzenleyicisinde değiştirildi.
 
-#### Possible solutions
-* Button *Edit*: Open the resource in the resource editor to remove the invalid field data and re-enter it if necessary.
-* Button *Convert field data*: The data is automatically converted to the correct format for the respective input type. Optionally, you can have the data converted for all resources where invalid data has been entered in the same field. Please note that automatic conversion is not possible in all cases and this button is therefore not always available.
-* Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which invalid data has been entered in the same field (valid data remains in the original field).
+#### Olası çözümler
+* *Düzenle* Butonu: Geçersiz alan verilerini kaldırmak ve gerekirse yeniden girmek için girdiyi düzenleyicide açın.
+* *Alan verilerini dönüştür* Butonu: Veriler, ilgili giriş türü için otomatik olarak doğru biçime dönüştürülür. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde verilerin dönüştürülmesini sağlayabilirsiniz. Lütfen unutmayın; otomatik dönüştürme her durumda mümkün değildir ve bu nedenle bu düğme her zaman kullanılamaz.
+* *Yeni alan seç* Butonu: Girdi kategorisi için konfigüre edilmiş alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın; veriler, hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde yeni alanı ayarlayabilirsiniz (geçerli veriler orijinal alanda kalır).
 
 ### Value not included in valuelist
 One or more values are entered in a field that are not contained in the valuelist configured for the field.

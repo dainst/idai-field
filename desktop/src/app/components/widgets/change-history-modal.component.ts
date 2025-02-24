@@ -33,6 +33,7 @@ export class ChangesHistoryModalComponent {
         this.documentCreation = this.document.created;
         this.documentModificationList = this.document.modified.slice();
         this.sortBy('date', false);
+        console.log(this.documentModificationList)
     }
 
 
@@ -50,14 +51,15 @@ export class ChangesHistoryModalComponent {
     public formatDateTime( time: string | Date) {
         
         return moment(time).format('YYYY-MM-DD HH:mm:ss');
+        // return time;
     }
 
 
     public sortBy(documentKey: string, ascending: boolean = true) {
 
         this.documentModificationList.sort((a, b) => {
-            const documentValueA = a[documentKey].toLowerCase();
-            const documentValueB = b[documentKey].toLowerCase();
+            const documentValueA = this.lowerCase(a[documentKey]);
+            const documentValueB = this.lowerCase(b[documentKey]);
             if (documentValueA < documentValueB) {
                 return ascending ? -1 : 1; 
             } else if (documentValueA > documentValueB) {
@@ -71,12 +73,23 @@ export class ChangesHistoryModalComponent {
 
     public toggleColumnSort(columnName: string) {
 
-        if (columnName === 'user') {            
-            this.toggledUser ? this.sortBy(columnName, false) : this.sortBy(columnName, true);
-            this.toggledUser = !this.toggledUser;
-        } else {
-            this.toggledDate ? this.sortBy(columnName, false) : this.sortBy(columnName, true);
-            this.toggledDate = !this.toggledDate;
+        let ascending: boolean;
+        switch (columnName) {
+            case 'user':
+                this.toggledUser = !this.toggledUser;
+                ascending = this.toggledUser;
+                break;
+            case 'date':
+                this.toggledDate = !this.toggledDate;
+                ascending = this.toggledDate;
+                break;
+            default:
+                throw new Error(`Unknown column name: ${columnName}`);
         }
+        this.sortBy(columnName, ascending);
+    }
+
+    private lowerCase(value: any) {
+        return typeof value === 'string' ? value.toLowerCase() : value;  
     }
 }

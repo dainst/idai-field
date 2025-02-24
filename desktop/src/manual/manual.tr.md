@@ -946,7 +946,7 @@ CSV dosyaları **coğrafi veri içermez**. Coğrafi verileri dışa aktarmak vey
 
 Bir CSV dosyası yalnızca tek bir kategorinin girdilerini içerir. Her sütun, bu kategori için projede kullanılan form için yapılandırılmış alanlardan birine karşılık gelir. Lütfen unutmayın; sütun başlığı, "Proje konfigürasyonu" menüsünde ilgili alan için fuşya renginde görüntülenen benzersiz alan tanımlayıcısına sahip olması zorunludur. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları CSV dosyalarında **kullanılamaz**.
 
-*Tanımlayıcı* sütununda tanımlayıcıyı belirtmek zorunludur. Diğer tüm alanlar isteğe bağlıdır.
+*identifier* sütununda tanımlayıcıyı belirtmek zorunludur. Diğer tüm alanlar isteğe bağlıdır.
 
 Veriye hızlı bir genel bakış veya CSV içe aktarma için bir şablon olarak, bir kategorinin tüm alanlarının önceden doldurulmuş sütun başlıklarına sahip boş bir CSV dosyası oluşturmak için "Araçlar" ➝ "Dışa aktar" menüsündeki *Yalnızca şema* seçeneğini kullanabilirsiniz (bkz. *Dışa aktarma seçenekleri* bölümü).
 
@@ -1727,36 +1727,36 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 "Bileşik alan" giriş türündeki alanlar, her biri birkaç giriş içerebilen liste alanlarıdır. Her giriş, alan adları bileşik alan için konfigüre edilmiş alt alanların tanımlayıcılarına karşılık gelen bir nesnedir.
 
 
-#### Import options
+#### İçe aktarma seçenekleri
 
-Using JSON Lines import, you can either create new resources or edit existing resources. You can choose between the following two options:
+JSON Lines içe aktarmayı kullanarak yeni girdiler oluşturabilir veya mevcut girdileri düzenleyebilirsiniz. Aşağıdaki iki seçenek arasından seçim yapabilirsiniz:
 
-* *Import new resources*: If this option is activated, a new resource is created for each line of the JSON Lines file. Resources whose identifiers (column *identifier*) have already been assigned are ignored.
-* *Update existing resources*: If this option is activated, existing resources will be merged with the data from the JSON Lines file. Fields in the import record overwrite fields with the same identifier in the existing data record. Fields in the existing record that are not present in the import record remain unchanged. The category cannot be changed. The assignment of records is performed based on the field *identifier*. Records in the JSON Lines file that cannot be assigned are ignored.
+* *Yeni girdileri içe aktar*: Bu seçenek etkinleştirildiğinde JSON Lines dosyasının her satırı için yeni bir girdi oluşturulur. Tanımlayıcıları (*identifier* sütununda) daha önce atanmış olan girdiler yok sayılır.
+* *Mevcut girdileri güncelle*: Bu seçenek etkinleştirildiğinde mevcut girdiler JSON Lines dosyasındaki verilerle birleştirilir. İçe aktarma kaydındaki alanlar, mevcut veri kaydındaki aynı tanımlayıcıya sahip alanların üzerine yazar. İçe aktarma kaydında bulunmayan mevcut kayıttaki alanlar değişmeden kalır. Kategori değiştirilemez. Kayıtların atanması, *identifier* alanına göre gerçekleştirilir. Atanamayan JSON Lines dosyasındaki kayıtlar yok sayılır.
 
-The following options are also available:
+Aşağıdaki seçenekler de mevcuttur:
 
-* *Permit deletions*: If this option is activated, fields can not only be changed but also deleted. All fields (including relations) to which the value *null* is assigned in the import file are deleted. Fields that are not listed remain unchanged. This option is only available if the option *Update existing resources* is selected.
-* *Ignore unconfigured fields*: If this option is activated, fields in the import file that are not part of the project configuration are ignored during the import. Otherwise, the import is aborted as soon as unconfigured fields are found in the file.
-* *Assign data to an operation*: Select one of the operations created in the project to which all newly created resources are to be assigned. It is not necessary to specify an operation if a parent resource has already been specified via the relation *isChildOf* for all records in the JSON Lines file, or if resources of the category do not need to be created within an operation (which is true e.g. for the categories "Place", "Operation" and "Image"). This option is only available if the option *Import new resources* is selected.
+* *Silmelere izin ver*: Bu seçenek etkinleştirilirse, alanlar yalnızca değiştirilemez, aynı zamanda silinebilir. İçe aktarma dosyasında *null* değerinin atandığı tüm alanlar (ilişkiler dahil) silinir. Listelenmeyen alanlar değişmeden kalır. Bu seçenek yalnızca *Mevcut girdileri güncelle* seçeneği seçiliyse kullanılabilir.
+* *Konfigüre edilmemiş alanları yoksay*: Bu seçenek etkinleştirilirse, içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada yapılandırılmamış alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
+* *Bir işleme veri ata*: Projede oluşturulan tüm girdilerin atanacağı işlemlerden birini seçin. JSON Lines dosyasındaki tüm kayıtlar için *isChildOf* ilişkisi aracılığıyla bir üst girdi zaten belirtilmişse veya kategori girdilerinin bir işlem içinde oluşturulması gerekmiyorsa (örneğin "Yer", "İşlem" ve "Görüntü" kategorileri için geçerlidir) bir işlem belirtmek gerekli değildir. Bu seçenek yalnızca *Yeni girdileri içe aktar* tercihi seçiliyse kullanılabilir.
 
 
 ### Catalog
 
-The Catalog format (file extension *catalog*) used exclusively by Field Desktop can be used to share type catalogs created via the menu "Tools" ➝ "Type management" between different projects.
+Yalnızca Field Desktop tarafından kullanılan Katalog formatı (dosya uzantısı *catalog*), "Araçlar" ➝ "Tip yönetimi" menüsü aracılığıyla oluşturulan tip kataloglarını farklı projeler arasında paylaşmak için kullanılabilir.
 
-A type catalog is exported together with all its types as well as linked images. Linked finds are **not** exported.
+Bir tip kataloğu, tüm türleriyle ve bağlantılı görselleriyle birlikte dışa aktarılır. Bağlantılı buluntular **dışa aktarılmaz**.
 
-After importing the catalog file into another project, the type catalog can be viewed as usual in the type management and used for find identification. It is **not** possible to edit a catalog imported from another project: Imported type catalogs and their linked images can be deleted from the project as a whole, but not edited, extended or partly deleted (i.e. just some specific types or linked images). However, it is possible to replace the type catalog with an updated version by importing a new catalog file. Any already created links to finds are retained. This restriction also does not apply to type catalogs that are imported back into the same project at a later date after export. In these cases, the catalog can be fully edited and expanded.
+Katalog dosyası başka bir projeye içe aktarıldıktan sonra, tip kataloğu, tip yönetiminde her zamanki gibi görüntülenebilir ve buluntu tanımlaması için kullanılabilir. Başka bir projeden içe aktarılan bir kataloğu düzenlemek **mümkün değildir**: İçe aktarılan tip katalogları ve bunların bağlantılı görselleri projeden bir bütün olarak silinebilir, ancak düzenlenemez, genişletilemez veya (yalnızca belirli bazı türler veya bağlantılı görseller) kısmen silinemez. Ancak, yeni bir katalog dosyası içe aktarılarak tip kataloğunun güncellenmiş bir sürümle değiştirilmesi mümkündür. Buluntulara yönelik önceden oluşturulmuş tüm bağlantılar korunur. Bu kısıtlama, dışa aktarmadan sonra daha sonraki bir tarihte aynı projeye geri aktarılan tip katalogları için de geçerli değildir. Bu durumlarda, katalog tamamen düzenlenebilir ve genişletilebilir.
 
-Please note that when importing type catalogs into another project, there should be an identical configuration for the categories of the exported resources ("Type catalog", "Type", "Image" or any subcategories used) in both projects. Fields not configured in the target project are **not** displayed. If the catalog file contains resources that belong to a subcategory which does not exist in the target project, the import process will fail. 
+Lütfen unutmayın; tip kataloglarını başka bir projeye aktarırken, her iki projede de dışa aktarılan girdilerin kategorileri ("Tip kataloğu", "Tip", "Görüntü" veya kullanılan herhangi bir alt kategori) aynı konfigürasyona sahip olmalıdır. Hedef projede konfigüre edilmeyen alanlar **görüntülenmez**. Katalog dosyası hedef projede bulunmayan bir alt kategoriye ait girdiler içeriyorsa, içe aktarma işlemi başarısız olur.
 
 
-#### Export options
+#### Dışa aktarma seçenekleri
 
-The following option is available when exporting catalog files:
+Katalog dosyalarını dışa aktarırken aşağıdaki seçenek kullanılabilir:
 
-* *Catalog*: Select the type catalog to be exported here. This option is only displayed if there are type catalogs in the currently open project. Catalogs imported from other projects are not available for selection.
+* *Katalog*: Buradan dışa aktarılacak katalog türünü seçin. Bu seçenek yalnızca şu anda açık olan projede katalog türleri varsa görüntülenir. Diğer projelerden içe aktarılan kataloglar seçilemez.
 
 
 <hr>

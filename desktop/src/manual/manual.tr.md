@@ -310,8 +310,8 @@ gerekirse yeni bir sekme açılır.
 Detaylı arama modundayken, devre dışı bırakılmış oluştur düğmesiyle girdi oluşturmak mümkün değildir. 
 Yeni girdiler oluşturmak için lütfen detaylı arama modundan çıkın.
 
-Performans nedenleriyle aynı anda gösterilen arama sonuçlarının sayısı maksimum **200** ile sınırlandırılmıştır. 
-Diğer girdiler uygulama tarafından görüntülenmez ve bunun yerine maksimumun aşıldığına dair bir bildirim gösterilir. 
+Performans nedenleriyle aynı anda gösterilen arama sonuçlarının sayısı en fazla **200** ile sınırlandırılmıştır. 
+Diğer girdiler uygulama tarafından görüntülenmez ve bunun yerine limitin aşıldığına dair bir bildirim gösterilir. 
 Bu girdilere erişmek için daha fazla arama kriteri ekleyin 
 veya genişletilmiş arama modundan çıkın.
 
@@ -470,7 +470,7 @@ Bir kategoriye sağ tıklandığında aşağıdaki seçenekleri sunan bir içeri
 * *Renk*: Kategori simgesinin ve haritada bu kategorideki girdiler için gösterilen geometrilerin rengi.
 * *QR kodları*: Bu kategorideki girdilerde QR kodlarının kullanılmasını sağlar (bkz. *QR kodları* bölümü).
 * *Tanımlayıcı ön eki*: İsteğe bağlı olarak bu kategorinin girdi tanımlayıcısının her zaman başlaması gereken bir metni buraya girin. Lütfen unutmayın; halihazırda var olan tanımlayıcılar otomatik olarak güncellenmeyecektir.
-* *Girdi sınırı*: İsteğe bağlı olarak bu kategori için oluşturulabilecek maksimum girdi sayısını belirtmek için buraya bir sayı girin. Giriş alanı boş bırakılırsa, herhangi bir sayıda girdi oluşturulabilir. Bu seçenek yalnızca işlem kategorileri ve "Yer" kategorisi için kullanılabilir.
+* *Girdi sınırı*: İsteğe bağlı olarak bu kategori için oluşturulabilecek en fazla girdi sayısını belirtmek için buraya bir sayı girin. Giriş alanı boş bırakılırsa, herhangi bir sayıda girdi oluşturulabilir. Bu seçenek yalnızca işlem kategorileri ve "Yer" kategorisi için kullanılabilir.
 
 Projeye özel kategoriler için aşağıdaki özellikleri de belirtebilirsiniz:
 * *Açıklama*: Kategorinin hangi bağlamlarda kullanılması gerektiğini belirten bir açıklama metni.
@@ -1268,7 +1268,7 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
         <td>50</td>
         <td></td>
         <td>cm</td>
-        <td>Minimum genişleme</td>
+        <td>En kısa tarafından</td>
         <td>Beispieltext</td>
         <td>Örnek metin</td>
         <td>false</td>
@@ -1278,7 +1278,7 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
         <td>10</td>
         <td>15</td>
         <td>m</td>
-        <td>Maksimum genişleme</td>
+        <td>En uzun tarafından</td>
         <td></td>
         <td></td>
         <td>true</td>
@@ -1673,39 +1673,39 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
     }
 
 
-##### Dimensions
+##### Boyutlar
 
-Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry is an object that consists of the following subfields:
+"Boyut" giriş türündeki alanlar, her biri birkaç boyut ölçüsü içerebilen liste alanlarıdır. Bir boyut girişi, aşağıdaki alt alanlardan oluşan bir nesnedir:
 
-* *inputValue*: The measured numerical value
-* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*
-* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
-* *measurementComment*: Comment, multilingual text field
-* *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no)
+* *inputValue*: Ölçülen sayısal değer
+* *inputRangeEndValue*: Bir aralık boyutuysa ölçülen ikinci sayısal değer
+* *inputUnit*: Ölçüm birimi. Olası değerler: *mm*, *cm*, *m*
+* *measurementPosition*: Alan "Ölçüldüğü gibi". Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *measurementComment*: Yorum, çok dilli metin alanı
+* *isImprecise*: "Hassas olmayan". Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
-*Example (the value identifiers in the field "measurementPosition" are identical with the German labels in this case):*
+*Örnek:*
 
     {
       "identifier": "A",
       "category": "Feature", 
       "dimensionLength": [
-        { "inputValue": 50, "inputUnit": "cm", "measurementPosition": "Minimale Ausdehnung", "measurementComment": { "de": "Beispieltext", "en": "Example text" }, "isImprecise": false },
-        { "inputValue": 10, "inputRangeEndValue": 15, "inputUnit": "m", "measurementPosition": "Maximale Ausdehnung", "isImprecise": true }
+        { "inputValue": 50, "inputUnit": "cm", "measurementPosition": "En kısa tarafından", "measurementComment": { "de": "Beispieltext", "tr": "Örnek metin" }, "isImprecise": false },
+        { "inputValue": 10, "inputRangeEndValue": 15, "inputUnit": "m", "measurementPosition": "En uzun tarafından", "isImprecise": true }
       ]
     }
 
-##### Bibliographic eferences
+##### Bibliyografik referanslar
 
-Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields:
+"Bibliyografik referans" giriş türündeki alanlar, her biri birkaç referans girişi içerebilen liste alanlarıdır. Bir giriş aşağıdaki alt alanlardan oluşur:
 
-* *quotation*: Literature quotation
+* *quotation*: Literatür alıntısı
 * *zenonId*: Zenon ID
 * *doi*: DOI
-* *page*: Page
-* *figure*: Figure
+* *page*: Sayfa
+* *figure*: Şekil
 
-*Example:*
+*Örnek:*
 
     {
       "identifier": ‘A’,
@@ -1722,9 +1722,9 @@ Fields of the input type "Bibliographic reference" are list fields, each of whic
     }
 
 
-##### Composite fields
+##### Bileşik alanlar
 
-Fields of the input type "Composite field" are list fields that can each contain several entries. Each entry is an object whose field names correspond to the identifiers of the subfields that have been configured for the composite field.
+"Bileşik alan" giriş türündeki alanlar, her biri birkaç giriş içerebilen liste alanlarıdır. Her giriş, alan adları bileşik alan için konfigüre edilmiş alt alanların tanımlayıcılarına karşılık gelen bir nesnedir.
 
 
 #### Import options

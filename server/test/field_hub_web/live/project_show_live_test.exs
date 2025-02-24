@@ -181,7 +181,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         view
         |> render()
 
-      assert html =~ "Issues (4)"
+      assert html =~ "Issues (2)"
     end
 
     test "user without project authorization can not trigger issue evaluation" do

@@ -1513,35 +1513,35 @@ Bir nesne ayrıca aşağıdaki isteğe bağlı alanları da içerebilir:
 * *relations*: *İlişki* giriş türünün tüm alanlarını içerir (bkz. *İlişkiler* bölümü)
 * *geometry*: Girdinin geometrisi (bkz. *Geometri* bölümü)
 
-Ek olarak, nesne bu kategori için projede kullanılan form için yapılandırılmış herhangi bir sayıda alan içerebilir. Lütfen unutmayın; benzersiz alan tanımlayıcısının ilgili alanı, "Proje konfigürasyonu" menüsünde fuşya renginde görüntülendiği şekilde belirtilmelidir. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları JSON Lines dosyalarında alan adı olarak **kullanılamaz**.
+Ek olarak, nesne bu kategoride, projede kullanılan form için yapılandırılmış herhangi bir sayıda alan içerebilir. Lütfen unutmayın; benzersiz alan tanımlayıcısının ilgili alanı, "Proje konfigürasyonu" menüsünde fuşya renginde görüntülendiği şekilde belirtilmelidir. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları JSON Lines dosyalarında alan adı olarak **kullanılamaz**.
 
-Netlik sağlamak için, aşağıdaki örneklerin her biri birkaç satırda gösterilmektedir. Gerçek içe aktarma dosyalarında, içe aktarma işleminin başarılı olması için her JSON nesnesinin **tam olarak bir satır** kaplaması gerekir.
+Açıklama: aşağıdaki örneklerin her biri birkaç satırda gösterilmektedir. Gerçek içe aktarma dosyalarında, içe aktarma işleminin başarılı olması için her JSON nesnesinin **tam olarak bir satır** olması gerekir.
 
 
-##### Relations
+##### İlişkiler
 
-Fields of the input type *Relation* are bundled in the object *relations*. The field names of the object correspond to the identifiers of the relations; in each case an array with the identifiers of the target resources is entered as the field value.
+*İlişki* giriş türündeki alanlar *relations* nesnesinde bir araya getirilir. Nesnenin alan adları ilişkilerin tanımlayıcılarına karşılık gelir; her durumda hedef girdilerin tanımlayıcılarını içeren bir dizi alan değeri olarak girilir.
 
-In addition to the relations listed in the project configuration in the form of the respective category, the following relations can be used:
+Proje konfigürasyonunda, ilgili kategori biçiminde listelenen ilişkilere ek olarak aşağıdaki ilişkiler kullanılabilir:
 
-* *isChildOf*: Specifies the direct parent resource in the hierarchy; remains empty for top-level resources
-* *depicts* (only for image resources): Links the image to one or more resources
-* *isDepictedIn* (not for image resources): Links the resource to one or more images
-* *isMapLayerOf* (only for image resources): Adds the image as a map layer in the context of the resource specified as the target
-* *hasMapLayer* (not for image resources): Adds one or more images as a map layer in the context of this resource
+* *isChildOf*: Hiyerarşideki doğrudan üst girdiyi belirtir; en üst düzey girdiler boş kalır
+* *depicts* (yalnızca görüntü girdileri için): Görüntüyü bir veya daha fazla girdiye bağlar
+* *isDepictedIn* (görüntü girdileri için değil): Girdiyi bir veya daha fazla görüntüye bağlar
+* *isMapLayerOf* (yalnızca görüntü girdileri için): Görüntüyü, hedef olarak belirtilen girdi bağlamında bir harita katmanı olarak ekler
+* *hasMapLayer* (görüntü girdileri için değil): Bu girdi bağlamında bir veya daha fazla görüntüyü harita katmanı olarak ekler
 
-To link images to the project or set them up as map layers at project level, add the project identifier to the array for the relation *depicts* or *isMapLayerOf*.
+Görüntüleri projeye bağlamak veya proje düzeyinde harita katmanları olarak ayarlamak için, *depicts* veya *isMapLayerOf* ilişkisinin dizisine proje tanımlayıcısını ekleyin.
 
-*Example:*
+*Örnek:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Goruntu1.png", "Goruntu2.png"] }
     }
 
 
-##### Geometry
+##### Geometri
 
 Geometries can be specified in accordance with the GeoJSON specification. In the field *geometry*, an object is entered whose structure corresponds to that of the *geometry* object within a GeoJSON feature (see section *GeoJSON*).
 

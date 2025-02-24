@@ -953,7 +953,7 @@ Veriye hızlı bir genel bakış veya CSV içe aktarma için bir şablon olarak,
 
 ##### Değer listesi alanları
 
-Bir değer listesinden seçim yapılmasına izin veren alanlar için, karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, ilgili değer listesinin görüntülendiği tüm yerlerde "Proje konfigürasyonu" menüsünde her değer için fuşya renginde görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
+Bir değer listesinden seçim yapılmasına izin veren alanlar için, karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, "Proje konfigürasyonu" menüsündeki ilgili değer listesinin görüntülendiği tüm yerlerde, her değer için fuşya renginde görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
 
 
 ##### Evet/Hayır alanları
@@ -1371,7 +1371,7 @@ GeoJSON dosyalarını içe aktarırken, **yeni girdi** oluşturulmaz. Bunun yeri
 
 #### Yapısı
 
-Bir GeoJSON dosyasının yapısı <a href="https://geojson.org" target="_blank">GeoJSON Specification</a> dokümanına dayanır. Field Desktop bağlamında içe veya dışa aktarım için aşağıdaki ek kurallar geçerlidir:
+Bir GeoJSON dosyasının yapısı <a href="https://geojson.org" target="_blank">GeoJSON Specification</a> şartnamesine dayanır. Field Desktop bağlamında içe veya dışa aktarım için aşağıdaki ek kurallar geçerlidir:
 
 Bir GeoJSON dosyası her zaman en üst düzeyde "FeatureCollection" türünde bir nesne içermelidir. Bu nesne de sırayla "Feature" türünde bireysel nesneler içerir.
 
@@ -1503,7 +1503,7 @@ JSON Lines formatı, doğrudan dışa aktarmada **kullanılamaz**. Lütfen unutm
 
 #### Yapısı
 
-JSON Lines dosyasının temel biçimi <a href="https://jsonlines.org" target="_blank">JSON Lines Documentation</a> sayfasına dayanır. Her JSON nesnesi Field'daki bir girdiye karşılık gelir ve aşağıdaki zorunlu alanları içerir:
+JSON Lines dosyasının temel biçimi <a href="https://jsonlines.org" target="_blank">JSON Lines Documentation</a> şartnamesine dayanır. Her JSON nesnesi Field'daki bir girdiye karşılık gelir ve aşağıdaki zorunlu alanları içerir:
 
 * *identifier*: Girdinin tanımlayıcısı
 * *category*: Girdi için seçilen kategorinin tanımlayıcısı
@@ -1543,9 +1543,9 @@ Görüntüleri projeye bağlamak veya proje düzeyinde harita katmanları olarak
 
 ##### Geometri
 
-Geometries can be specified in accordance with the GeoJSON specification. In the field *geometry*, an object is entered whose structure corresponds to that of the *geometry* object within a GeoJSON feature (see section *GeoJSON*).
+Geometriler GeoJSON şartnamesine uygun olarak belirtilebilir. *Geometri* alanına, bir GeoJSON özelliği içindeki *geometry* nesnesinin yapısına karşılık gelen bir nesne girilir (bkz. *GeoJSON* bölümü).
 
-*Example:*
+*Örnek:*
 
     {
       "identifier": "A",
@@ -1560,26 +1560,47 @@ Geometries can be specified in accordance with the GeoJSON specification. In the
     }
 
 
-##### Valuelist fields
+##### Değer listesi alanları
 
-For fields that allow a selection from a valuelist, the identifier of the corresponding value must be entered. The value identifier is displayed in magenta for each value in the menu "Project configuration" at all places where the respective valuelist is displayed. The multilingual display texts **cannot** be used (except in cases where the value identifier is identical to the display text in one of the languages).
-
-
-##### Yes/No fields
-
-The values *true* (yes) and *false* (no) can be entered for fields of the input type "Yes / No".
+Bir değer listesinden seçim yapılmasına izin veren alanlarda, bu alana karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, "Proje konfigürasyonu" menüsündeki ilgili değer listesinin görüntülendiği tüm yerlerde, her değer için fuşya rengi olarak görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
 
 
-##### Multilingual fields
+##### Numerik alanlar
 
-For fields in which values can be entered in different languages, an object must be created whose field names correspond to the codes of the languages used. The language codes are displayed in magenta in the menu "Settings" for each language.
+"Tam sayı", "Pozitif tam sayı", "Ondalık sayı" ve "Pozitif ondalık sayı" giriş türlerinin alanlarına sayısal bir değer (tırnak işaretleri olmadan) girilebilir.
 
-*Example:*
+*Örnek:*
+
+    {
+      "identifier": "A",
+      "category": "FindCollection",
+      "amount": 12
+    }
+
+
+##### Evet/Hayır alanları
+
+"Evet / Hayır" giriş türündeki alanlara *true* (evet) ve *false* (hayır) değerleri girilebilir.
+
+
+*Örnek:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "description": { "de": "Beispieltext", "en": "Example text" }
+      "hasDisturbance": true
+    }
+
+##### Çok dilli alanlar
+
+Farklı dillerde değer girilebilen alanlarda, kullanılan dillerin kodlarına karşılık gelen alan adlarına sahip bir nesne oluşturulmalıdır. Dil kodları her dil için "Ayarlar" menüsünde fuşya renginde görüntülenir.
+
+*Örnek:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "description": { "de": "Beispieltext", "tr": "Örnek metin" }
     }
 
 

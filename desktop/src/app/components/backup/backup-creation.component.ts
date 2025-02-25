@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BackupCreationModalComponent } from './backup-creation-modal.component';
 import { DialogProvider } from './dialog-provider';
-import { BackupProvider } from './backup-provider';
 import { M } from '../messages/m';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
@@ -11,6 +10,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
+import { BackupService } from '../../services/backup/backup-service';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class BackupCreationComponent {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private settingsProvider: SettingsProvider,
-                private backupProvider: BackupProvider,
+                private backupService: BackupService,
                 private tabManager: TabManager,
                 private menuService: Menus,
                 private appState: AppState) {}
@@ -51,7 +51,7 @@ export class BackupCreationComponent {
     }
 
 
-    public async createBackup() {
+    public async startBackupCreation() {
 
         if (this.running) return;
 
@@ -75,12 +75,12 @@ export class BackupCreationComponent {
 
     private async writeBackupFile(filePath: string, projectName: string) {
 
-        try {
-            await this.backupProvider.dump(filePath, projectName);
+        const success: boolean = await this.backupService.create(filePath, projectName);
+
+        if (success) {
             this.messages.add([M.BACKUP_WRITE_SUCCESS]);
-        } catch (err) {
+        } else {
             this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);
-            console.error('Error while writing backup file', err);
         }
     }
 

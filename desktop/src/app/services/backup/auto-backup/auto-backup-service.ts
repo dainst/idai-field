@@ -3,9 +3,11 @@ import { Observable, Observer } from 'rxjs';
 import { ObserverUtil } from 'idai-field-core';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { AutoBackupSettings } from '../model/auto-backup-settings';
+import { AUTO_BACKUP, createWorker } from '../../create-worker';
 
 const remote = window.require('@electron/remote');
 const os = window.require('os');
+
 
 const AUTO_BACKUP_INTERVAL: number = 5000;
 
@@ -30,7 +32,7 @@ export class AutoBackupService {
 
     public start() {
 
-        this.worker = new Worker(new URL('./auto-backup.worker', import.meta.url));
+        this.worker = createWorker(AUTO_BACKUP);
 
         this.worker.onmessage = ({ data }) => {
             this.running = data.running;

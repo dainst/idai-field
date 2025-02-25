@@ -533,9 +533,8 @@ export class WarningsModalComponent {
     }
 
 
-    private async createSection(type: WarningType, document: FieldDocument, fieldName?: string): Promise<WarningSection> {
-
-        console.log('pcc:', this.projectConfiguration.getCategory('Configuration'));
+    private async createSection(type: WarningType, document: FieldDocument,
+                                fieldName?: string): Promise<WarningSection> {
 
         const category: CategoryForm|undefined = this.projectConfiguration.getCategory(document.resource.category);
         const section: WarningSection = { type, category };
@@ -587,7 +586,8 @@ export class WarningsModalComponent {
     }
 
 
-    private fetchRelationTargets(document: FieldDocument, fieldName: string, type: WarningType): Promise<Array<Document>> {
+    private fetchRelationTargets(document: FieldDocument, fieldName: string,
+                                 type: WarningType): Promise<Array<Document>> {
 
         const targetIds: string[] = type === 'invalidRelationTargets'
             ? intersect(

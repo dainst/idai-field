@@ -85,12 +85,6 @@ export class AutoBackupService {
 
         console.log('CPU Cores:', cores);
 
-        if (cores.length < 4) {
-            return 1;
-        } else if (cores.length < 8) {
-            return 2;
-        } else {
-            return 3;
-        }
+        return 1 + Math.floor(cores.length / 4);
     }
 }

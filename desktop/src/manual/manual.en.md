@@ -776,7 +776,9 @@ The file can then be imported again via the menu option "Project configuration" 
 
 ## JSON export API
 
-The project configuration can be retrieved in JSON format via an API endpoint. The endpoint is available via the following URL when the application is open:
+The project configuration can be retrieved in JSON format via an API endpoint. While the configuration files that can be created via the menu option "Export configuration..." only contain the project-specific part of the configuration, the API endpoint outputs the complete configuration, including all configuration elements from the Field libraries (standard forms, valuelists, etc.) used in the project.
+
+The endpoint is available via the following URL when the application is open:
 
 http://localhost:3000/configuration/PROJECT
 

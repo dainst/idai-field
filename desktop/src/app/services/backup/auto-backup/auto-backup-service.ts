@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
-import { ObserverUtil } from 'idai-field-core';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 import { AUTO_BACKUP, createWorker } from '../../create-worker';
@@ -18,16 +16,12 @@ const AUTO_BACKUP_INTERVAL: number = 5000;
  */
 export class AutoBackupService {
 
-    public running: boolean = false;
-
+    private running: boolean = false;
     private worker: Worker;
-    private stopObservers: Array<Observer<void>> = [];
+    private resolveRequest: () => void;
 
 
     constructor(private settingsProvider: SettingsProvider) {}
-
-
-    public stopNotifications = (): Observable<void> => ObserverUtil.register(this.stopObservers);
 
 
     public start() {
@@ -36,7 +30,10 @@ export class AutoBackupService {
 
         this.worker.onmessage = ({ data }) => {
             this.running = data.running;
-            if (!this.running) ObserverUtil.notify(this.stopObservers, null);
+            if (!this.running && this.resolveRequest) {
+                this.resolveRequest();
+                this.resolveRequest = undefined;
+            }
         };
 
         this.worker.postMessage({
@@ -45,6 +42,16 @@ export class AutoBackupService {
         });
 
         this.settingsProvider.settingsChangesNotifications().subscribe(() => this.updateSettings());
+    }
+
+
+    public requestBackupCreation(): Promise<void> {
+
+        if (!this.running) this.worker.postMessage({ command: 'createBackups' });
+
+        return new Promise(resolve => {
+            this.resolveRequest = resolve;
+        });
     }
 
 

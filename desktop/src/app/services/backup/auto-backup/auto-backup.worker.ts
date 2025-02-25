@@ -12,6 +12,7 @@ const PouchDb = require('pouchdb-browser').default;
 
 let settings: AutoBackupSettings;
 let backupsInfoSerializer: BackupsInfoSerializer;
+let runTimeout: any;
 
 const projectQueue: string[] = [];
 const idleWorkers: Array<Worker> = [];
@@ -28,6 +29,9 @@ addEventListener('message', async ({ data }) => {
         case 'updateSettings':
             settings = data.settings;
             break;
+        case 'createBackups':
+            if (runTimeout) clearTimeout(runTimeout);
+            run();
     }
 });
 
@@ -97,7 +101,10 @@ async function run() {
         }
     }
 
-    setTimeout(run, settings.interval);
+    runTimeout = setTimeout(() => {
+        runTimeout = undefined;
+        run();
+    }, settings.interval);
 }
 
 

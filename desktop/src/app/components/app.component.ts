@@ -100,19 +100,26 @@ export class AppComponent {
 
     private handleCloseRequests() {
 
-        ipcRenderer.on('requestClose', () => {
+        ipcRenderer.on('requestClose', async () => {
             if (this.closing || this.datastore.updating) return;
-            if (this.autoBackupService.running) {
-                this.closing = true;
-                this.syncService.stopSync();
-                this.modals.make<QuittingModalComponent>(
-                    QuittingModalComponent, MenuContext.MODAL, undefined, undefined, false
-                );
-                this.autoBackupService.stopNotifications().subscribe(() => ipcRenderer.send('close'));
-            } else {
-                ipcRenderer.send('close');
-            }
+
+            this.closing = true;
+            this.syncService.stopSync();
+            this.openQuittingModal();
+            await this.autoBackupService.requestBackupCreation();
+
+            ipcRenderer.send('close');
         });
+    }
+
+
+    private openQuittingModal() {
+
+        setTimeout(() => {
+            this.modals.make<QuittingModalComponent>(
+                QuittingModalComponent, MenuContext.MODAL, undefined, undefined, false
+            )
+        }, 200);
     }
 
 

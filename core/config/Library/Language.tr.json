@@ -885,7 +885,7 @@
       }
     },
     "Pottery": {
-      "label": "Çanak Çömlek",
+      "label": "Pişmiş Toprak",
       "fields": {
         "amountSherdsWall": {
           "label": "Gövde parçası sayısı"
@@ -1011,7 +1011,7 @@
           "label": "Obje tipi"
         },
         "specificType": {
-          "label": "Çanak çömlek tipi"
+          "label": "Pişmiş toprak tipi"
         },
         "temper": {
           "label": "Katkı",
@@ -1038,7 +1038,7 @@
           "label": "Kap parçası"
         },
         "Firing": {
-          "label": "Çanak çömlek fırınlama"
+          "label": "Pişmiş toprak fırınlama"
         },
         "FormComparisonCompendia": {
           "label": "Form karşılaştırma özeti"

@@ -8,8 +8,8 @@
   },
   "position-values-expansion-default": {
     "values": {
-      "Maximale Ausdehnung": "Maksimum genişleme",
-      "Minimale Ausdehnung": "Minimum genişleme"
+      "Maximale Ausdehnung": "En uzun tarafından",
+      "Minimale Ausdehnung": "En kısa tarafından"
     }
   },
   "position-values-edge-default": {

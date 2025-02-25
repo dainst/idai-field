@@ -38,7 +38,7 @@
   "menu.tools.export": "Dışa aktar",
   "menu.configuration.projectLanguages": "Proje dillerini seç...",
   "menu.configuration.valuelistManagement": "Değer listesi yönetimi",
-  "menu.configuration.importConfiguration": "Proje konfigürasyonu içe aktar...",
+  "menu.configuration.importConfiguration": "Konfigürasyonu içe aktar...",
   "menu.configuration.showHiddenFields": "Gizlenmiş alanları göster",
   "menu.configuration.highlightProjectSpecificElements": "Özel kategorileri/alanları öne çıkar",
   "menu.view": "Göster",

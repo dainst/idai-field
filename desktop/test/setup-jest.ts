@@ -2,8 +2,6 @@ import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
       
 setupZoneTestEnv();
 
-process.env.TZ = 'Europe/Berlin';
-
 
 const customRequire = (moduleName) => {
 

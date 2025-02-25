@@ -789,7 +789,9 @@ Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren.
 
 ## JSON-Export-API
 
-Über einen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Der Endpunkt ist bei geöffneter Anwendung über die folgende URL verfügbar:
+Über einen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Während die Konfigurationsdateien, die über die Menüoption "Konfiguration exportieren..." erstellt werden können, ausschließlich den projektspezifischen Teil der Konfiguration enthalten, wird über den API-Endpunkt die komplette Konfiguration inklusive aller im Projekt verwendeten Konfigurationselemente aus den Field-Bibliotheken (Standardformulare, Wertelisten usw.) ausgegeben.
+
+Der Endpunkt ist bei geöffneter Anwendung über die folgende URL verfügbar:
 
 http://localhost:3000/configuration/PROJECT
 

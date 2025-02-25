@@ -59,7 +59,12 @@ describe('ImageSyncService', () => {
         selectedProject: 'not_relevant_for_the_tests',
         imagestorePath: imagestorePath,
         backupDirectoryPath,
-        isAutoUpdateActive: true
+        isAutoUpdateActive: true,
+        keepBackups: {
+            daily: 1,
+            weekly: 0,
+            monthly: 0
+        }
     };
 
     const settingsProviderMock = new SettingsProvider();

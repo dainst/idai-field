@@ -776,7 +776,9 @@ Daha sonra konfigürasyonu başka bir projeye aktarmak veya aynı projede kayded
 
 ## JSON dışa aktarma API'si
 
-Proje konfigürasyonu bir API erişim noktası aracılığıyla JSON biçiminde alınabilir. Erişim noktası, uygulama açıkken aşağıdaki URL aracılığıyla kullanılabilir:
+Proje konfigürasyonu bir API erişim noktası aracılığıyla JSON formatında alınabilir. "Konfigürasyonu dışa aktar..." menü seçeneği aracılığıyla oluşturulabilen konfigürasyon dosyaları yalnızca yapılandırmanın projeye özgü kısmını içerir. Öte yandan API erişim noktası, projede kullanılan Field kitaplıklarından (standart formlar, değer listeleri vb.) gelen tüm konfigürasyon öğeleri dahil, tam konfigürasyonu çıktı olarak verir.
+
+Uygulama açıkken erişim noktasına aşağıdaki URL üzerinden ulaşılabilir:
 
 http://localhost:3000/configuration/PROJE
 

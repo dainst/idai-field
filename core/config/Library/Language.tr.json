@@ -1064,7 +1064,7 @@
       }
     },
     "Grave": {
-      "label": "Gömüt",
+      "label": "Mezar",
       "fields": {
         "bibliography": {
           "label": "Kaynakça"
@@ -1105,10 +1105,10 @@
           "description": "Stratigrafik birimi sınırlamak için hangi kriter(ler) seçildi?"
         },
         "graveType": {
-          "label": "Gömüt tipi"
+          "label": "Mezar tipi"
         },
         "specificType": {
-          "label": "Özel gömüt tipi"
+          "label": "Özel mezar tipi"
         },
         "soilType": {
           "label": "Toprak tipi",

@@ -30,6 +30,8 @@ export class AutoBackupService {
 
     public start() {
 
+        if (remote.getGlobal('mode') === 'test') return;
+
         this.worker = createWorker(AUTO_BACKUP);
 
         this.worker.onmessage = ({ data }) => {
@@ -51,6 +53,8 @@ export class AutoBackupService {
 
 
     public requestBackupCreation(): Promise<void> {
+
+        if (remote.getGlobal('mode') === 'test') return;
 
         if (!this.running) this.worker.postMessage({ command: 'createBackups' });
 

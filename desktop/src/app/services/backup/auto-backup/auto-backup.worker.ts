@@ -3,6 +3,7 @@
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 import { Backup } from '../model/backup';
 import { BackupsInfo } from '../model/backups-info';
+import { INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
 import { BackupsInfoSerializer } from './backups-info-serializer';
 import { getBackupsToDelete } from './get-backups-to-delete';
 
@@ -13,13 +14,14 @@ const PouchDb = require('pouchdb-browser').default;
 let settings: AutoBackupSettings;
 let backupsInfoSerializer: BackupsInfoSerializer;
 let runTimeout: any;
+let error: boolean;
 
 const projectQueue: string[] = [];
 const idleWorkers: Array<Worker> = [];
 const activeWorkers: Array<Worker> = [];
 
 
-addEventListener('message', async ({ data }) => {
+addEventListener('message', ({ data }) => {
 
     switch (data.command) {
         case 'start':
@@ -28,6 +30,7 @@ addEventListener('message', async ({ data }) => {
             break;
         case 'updateSettings':
             settings = data.settings;
+            error = false;
             break;
         case 'createBackups':
             if (runTimeout) clearTimeout(runTimeout);
@@ -86,25 +89,44 @@ function onWorkerFinished(worker: Worker) {
 
 async function run() {
 
-    if (!activeWorkers.length && !projectQueue.length) {
-        postMessage({ running: true });
-
-        const backupsInfo: BackupsInfo = backupsInfoSerializer.load();
-        deleteOldBackups(backupsInfo);
-        cleanUpBackupsInfo(backupsInfo);
-        backupsInfoSerializer.store(backupsInfo);
-        await fillQueue(backupsInfo);
-        startWorkers();
-
-        if (!activeWorkers.length && !projectQueue.length) {
-            postMessage({ running: false });
-        }
-    }
+    await updateBackups();
 
     runTimeout = setTimeout(() => {
         runTimeout = undefined;
         run();
     }, settings.interval);
+}
+
+
+async function updateBackups() {
+
+    if (activeWorkers.length || projectQueue.length || error || !initializeBackupDirectory()) return;
+
+    postMessage({ running: true });
+
+    const backupsInfo: BackupsInfo = backupsInfoSerializer.load();
+    deleteOldBackups(backupsInfo);
+    cleanUpBackupsInfo(backupsInfo);
+    backupsInfoSerializer.store(backupsInfo);
+    await fillQueue(backupsInfo);
+    startWorkers();
+
+    if (!activeWorkers.length && !projectQueue.length) {
+        postMessage({ running: false });
+    }
+}
+
+
+function initializeBackupDirectory(): boolean {
+
+    if (fs.existsSync(settings.backupDirectoryPath)) return;
+    
+    try {
+        fs.mkdirSync(settings.backupDirectoryPath);
+    } catch (_) {
+        error = true;
+        postMessage({ error: INVALID_BACKUP_DIRECTORY_PATH });
+    }
 }
 
 
@@ -134,8 +156,6 @@ function startNextWorker(): boolean {
     const project: string = projectQueue.shift();
     const worker: Worker = idleWorkers.pop();
     activeWorkers.push(worker);
-
-    if (!fs.existsSync(settings.backupDirectoryPath)) fs.mkdirSync(settings.backupDirectoryPath);
 
     const creationDate: Date = new Date();
 

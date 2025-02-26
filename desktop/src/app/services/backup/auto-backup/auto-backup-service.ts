@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 import { AUTO_BACKUP, createWorker } from '../../create-worker';
+import { INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
+import { Messages } from '../../../components/messages/messages';
+import { M } from '../../../components/messages/m';
 
 const remote = window.require('@electron/remote');
 const os = window.require('os');
@@ -21,7 +24,8 @@ export class AutoBackupService {
     private resolveRequest: () => void;
 
 
-    constructor(private settingsProvider: SettingsProvider) {}
+    constructor(private settingsProvider: SettingsProvider,
+                private messages: Messages) {}
 
 
     public start() {
@@ -29,7 +33,8 @@ export class AutoBackupService {
         this.worker = createWorker(AUTO_BACKUP);
 
         this.worker.onmessage = ({ data }) => {
-            this.running = data.running;
+            if (data.running !== undefined) this.running = data.running;
+            if (data.error) this.handleError(data.error);
             if (!this.running && this.resolveRequest) {
                 this.resolveRequest();
                 this.resolveRequest = undefined;
@@ -88,5 +93,13 @@ export class AutoBackupService {
         return cores.length <= 4
             ? 1
             : 1 + Math.floor(cores.length / 4);
+    }
+
+
+    private handleError(error: string) {
+
+        if (error === INVALID_BACKUP_DIRECTORY_PATH) {
+            this.messages.add([M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY]);
+        }
     }
 }

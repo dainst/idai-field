@@ -19,7 +19,7 @@ Projenizin verilerini düzenli olarak güncelleyin.
 <hr>
 
 
-# Girdiler (Ç.N. Yabancı dildeki 'Resource' ifadesi 'Girdi' olarak verilmiştir)
+# Girdiler (ç.n. Esas uygulamadaki 'Resource' ifadesi 'Girdi' olarak verilmiştir)
 
 Bir proje oluşturduktan veya mevcut bir projeyi açtıktan sonra, **Genel Bakış** sekmesinden başlayabilirsiniz 
 (Projenin tüm operasyonlarının ve yerlerinin yönetildiği yer (ev sembolü).
@@ -885,7 +885,7 @@ için araç çubuğunun sağ tarafındaki düğmeleri kullanın:
 
 İki farklı dosya biçimi arasından seçim yapabilirsiniz:
 
-* *Dot (Graphviz)*: Açık kaynaklı Graphviz yazılımı (ve benzerleri) tarafından okunabilen grafikleri tanımlamak için kullanılan bir format. (Dosya uzantısı *gv*)
+* *Dot (Graphviz)*: Açık kaynak Graphviz yazılımı (ve benzerleri) tarafından okunabilen grafikleri tanımlamak için kullanılan bir format. (Dosya uzantısı *gv*)
 * *SVG*: Vektör grafiklerini görüntülemek için bir format. (Dosya uzantısı *svg*)
 
 
@@ -1458,7 +1458,7 @@ Bu örnek, nokta geometrisi olan bir girdiden bir GeoJSON dışa aktarma dosyas�
 
 Shapefile, vektör coğrafi verilerini değiştirmek için yaygın olarak kullanılan bir formattır ve Field Desktop bağlamında GeoJSON formatına alternatif olarak kullanılabilir.
 
-GeoJSON içe aktarımında olduğu gibi, Shapefile verileri içe aktarılırken **yeni girdi** oluşturulmaz. Bunun yerine, mevcut kaynaklara **geometriler** eklenir. Yeni girdileri içe aktarmak için, *CSV* veya *JSON Lines* biçiminden birini kullanın ve ardından Shapefile içe aktarımını kullanarak yeni oluşturulan girdilere geometriler ekleyin.
+GeoJSON içe aktarımında olduğu gibi, Shapefile verileri içe aktarılırken **yeni girdi** oluşturulmaz. Bunun yerine, mevcut girdilere **geometriler** eklenir. Yeni girdileri içe aktarmak için, *CSV* veya *JSON Lines* biçiminden birini kullanın ve ardından Shapefile içe aktarımını kullanarak yeni oluşturulan girdilere geometriler ekleyin.
 
 
 #### Yapısı

@@ -105,8 +105,8 @@ Desteklenen görsel formatları *jpg/jpeg*, *png* ve *tif/tiff*'tir.
 Her içe aktarılan görüntü için uygulama bir kopya ve önizleme görüntüsü olarak daha küçük bir varyasyonunu oluşturur ve bunu **Görüntüler dizinine** kaydeder; bu dosya yolunu "Gelişmiş ayarlar"daki ayarlarda görebilirsiniz. Bu klasördeki dosyalar uygulama tarafından yönetildiği için manuel olarak düzenlenmemeli, yeniden adlandırılmamalı veya silinmemelidir. Aksi takdirde görüntüleri ön izlemede veya senkronize ederken hatalar oluşabilir.
 
 Uygulama her görüntü için toplamda üç farklı varyasyonu yönetir:
-* *Esas görüntü*: Projeye aktarıldığı haliyle değiştirilmemiş görüntü dosyası
-* *Küçük resim görüntüsü*: Uygulamada (örneğin, görüntü yönetiminde veya bağlantılı görüntülere sahip girdiler için) ön izleme görüntüsü olarak görüntülenen görselin otomatik olarak oluşturulmuş düşük çözünürlüklü bir çeşidi 
+* *Orijinal görüntü*: Projeye aktarıldığı haliyle değiştirilmemiş görüntü dosyası
+* *Küçük resim*: Uygulamada (örneğin, görüntü yönetiminde veya bağlantılı görüntülere sahip girdiler için) ön izleme görüntüsü olarak görüntülenen görselin otomatik olarak oluşturulmuş düşük çözünürlüklü bir çeşidi 
 * *Görüntüleme için optimize edilmiş görüntü*: Belirli görüntüler için uygulamada görüntülenmek üzere başka bir varyasyon oluşturulur. TIFF formatındaki dosyalar JPEG'e dönüştürülür ve çok yüksek çözünürlüklü görüntülerin boyutu küçültülür. Bu adım, proje yüklenirken gerçekleşir ve mevcut görüntü dosyalarının miktarına bağlı olarak yükleme süresinin birkaç dakika uzamasına yol açabilir.
 
 Görüntü dizininde bulunan verilerin genel görünümünü "Proje" ➝ "Verilere genel bakış" menüsünden açabilirsiniz.
@@ -402,7 +402,7 @@ Başkalarının projenizle senkronizasyon bağlantısı kurmasına izin vermek i
 
 * *Adresiniz*: Başkalarının kendi Field Desktop kurulumlarından veri tabanınıza bağlanmak için kullanabileceği ağ adresinizdir. Bu adresi, başkalarının proje verilerini sizinle senkronize etmelerine izin vermek için şifrenizle birlikte paylaşabilirsiniz.
 * *Şifreniz*: Veri tabanı yetkisiz erişime karşı rastgele oluşturulmuş varsayılan bir şifreyle korunur. Dilerseniz şifreyi değiştirebilirsiniz.
-* *Esas görüntüleri al*: Bu seçenek etkinleştirilirse, başkaları tarafından gönderilen görüntü dosyaları orijinal görüntü çözünürlüklerinde kabul edilir ve görüntü dizininde saklanır. Görüntü dosyaları birkaç gigabayt veri içerebileceğinden, görüntü dizininde yeterli depolama alanı olduğundan emin olmalısınız. Varsayılan olarak bu seçenek devre dışıdır, bu nedenle orijinal görüntüler kabul edilmez. Seçenek yalnızca diğer bilgisayarlarda ayarlanmış olan senkronizasyon bağlantılarını etkiler; kendi kendine yapılandırılmış bir senkronizasyon bağlantısı bu ayardan etkilenmez.
+* *Orijinal görüntüleri al*: Bu seçenek etkinleştirilirse, başkaları tarafından gönderilen görüntü dosyaları orijinal görüntü çözünürlüklerinde kabul edilir ve görüntü dizininde saklanır. Görüntü dosyaları birkaç gigabayt veri içerebileceğinden, görüntü dizininde yeterli depolama alanı olduğundan emin olmalısınız. Varsayılan olarak bu seçenek devre dışıdır, bu nedenle orijinal görüntüler kabul edilmez. Seçenek yalnızca diğer bilgisayarlarda ayarlanmış olan senkronizasyon bağlantılarını etkiler; kendi kendine yapılandırılmış bir senkronizasyon bağlantısı bu ayardan etkilenmez.
 
 
 <hr>
@@ -707,7 +707,7 @@ Alanlar aynı şekilde başka bir gruba da atanabilir: Alanı grup listesindeki 
 
 "Proje konfigürasyonu" ➝ "Değer listesi yönetimi" menüsü, Field ile birlikte gelen tüm değer listelerinin genel görünümünü açar. Burada listelenen değer listeleri, standart formların alanları tarafından kullanılır veya Field'da daha önce kullanmış projeler bağlamında oluşturulmuştur.
 
-Listenin üstündeki metin alanını kullanarak değer listelerini herhangi bir arama terimine göre filtreleyin. Aramada değer listesi tanımlayıcılarının yanı sıra tanımlayıcıları ve bireysel değerlerin görüntüleme etiketlerini de bulunacaktır. Arama alanının sağındaki düğmeyi kullanarak, yalnızca projeye özgü (yani yeni oluşturulmuş) değer listelerini ve/veya projede şu anda kullanılan değer listelerini seçilebilir halde görüntülemenize olanak tanıyan filtre menüsünü açabilirsiniz.
+Listenin üstündeki metin alanını kullanarak değer listelerini herhangi bir arama terimine göre filtreleyin. Aramada değer listesi tanımlayıcılarının yanı sıra tanımlayıcıları ve tekil değerlerin görüntüleme etiketlerini de bulunacaktır. Arama alanının sağındaki düğmeyi kullanarak, yalnızca projeye özgü (yani yeni oluşturulmuş) değer listelerini ve/veya projede şu anda kullanılan değer listelerini seçilebilir halde görüntülemenize olanak tanıyan filtre menüsünü açabilirsiniz.
 
 <p align="center"><img src="images/tr/configuration/valuelists_filter.png" alt="Değer listesi filtre menüsü"/></p>
 
@@ -1340,7 +1340,7 @@ CSV içe aktarmayı kullanarak yeni girdiler oluşturabilir veya mevcut girdiler
 * *Yeni girdileri içe aktar*: Bu seçenek etkinleştirilirse, CSV tablosunun her satırından yeni bir girdi oluşturulur. Tanımlayıcıları (*identifier* sütunu) daha önce atanmış olan girdiler yok sayılır.
 * *Mevcut girdileri güncelle*: Bu seçenek etkinleştirilirse, mevcut girdiler CSV tablosundaki verilerle birleştirilir. İçe aktarma kaydındaki alanlar, mevcut veri kaydındaki aynı tanımlayıcıya sahip alanların üzerine yazar. İçe aktarma kaydında bulunmayan mevcut kayıtlardaki alanlar değişmeden kalır. Kategori değiştirilemez. Kayıtların atanması, tanımlayıcı alanına (*identifier* sütununa) göre gerçekleştirilir. Atanamayan CSV tablosundaki kayıtlar yok sayılır.
 
-Aşağıdaki seçenekler de mevcuttur:
+Aşağıdaki ek seçenekler kullanılabilir:
 
 * *Silmelere izin ver*: Bu seçenek etkinleştirilirse, alanlar yalnızca değiştirilemez, aynı zamanda silinebilir. İçe aktarma dosyasındaki alanın boş olduğu tüm alanlar (ilişkiler dahil) silinir. CSV tablosunda sütun olarak listelenmeyen alanlar değişmeden kalır. Bu seçenek yalnızca *Mevcut girdileri güncelle* tercihi seçildiğinde kullanılabilir.
 * *Konfigüre edilmemiş alanları yoksay*: Bu seçenek etkinleştirilirse içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada konfigüre edilmemiş alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
@@ -1356,7 +1356,7 @@ Aşağıdaki seçenekler de mevcuttur:
 * *Tümü*: Tüm girdiler, kontekst ve kategori için seçilen ayarlara göre dışa aktarılır (aşağıya bakın).
 * *Yalnızca şema*: Yalnızca seçili kategori için konfigüre edilmiş tüm alanların sütun başlıklarını içeren başlık satırı dışa aktarılacaktır. Dışa aktarılan dosya, bir içe aktarma dosyası oluşturmak için şablon olarak kullanılabilir.
 
-Aşağıdaki seçenekler de mevcuttur:
+Aşağıdaki ek seçenekler kullanılabilir::
 
 * *Kontekst*: İsteğe bağlı olarak girdileri dışa aktarılacak bir işlemi burada seçin. Varsayılan seçenek "Kısıtlama yok" olarak seçilirse, seçilen kategorinin tüm girdileri dışa aktarılır. Bu seçenek yalnızca *Tümü* seçeneği seçildiğinde kullanılabilir.
 * *Kategori*: Burada istediğiniz kategoriyi seçin. Yalnızca seçilen kategorinin girdileri dışa aktarılır. Bu açılır menüde, yalnızca seçilen kontekstte girdileri bulunan kategoriler seçilebilir. Seçilen kontekstte bulunan girdi sayısı parantez içinde gösterilir.
@@ -1375,7 +1375,7 @@ GeoJSON dosyalarını içe aktarırken, **yeni girdi** oluşturulmaz. Bunun yeri
 
 Bir GeoJSON dosyasının yapısı <a href="https://geojson.org" target="_blank">GeoJSON Specification</a> şartnamesine dayanır. Field Desktop bağlamında içe veya dışa aktarım için aşağıdaki ek kurallar geçerlidir:
 
-Bir GeoJSON dosyası her zaman en üst düzeyde "FeatureCollection" türünde bir nesne içermelidir. Bu nesne de sırayla "Feature" türünde bireysel nesneler içerir.
+Bir GeoJSON dosyası her zaman en üst düzeyde "FeatureCollection" türünde bir nesne içermelidir. Bu nesne de sırayla "Feature" türünde tekil nesneler içerir.
 
 *Örnek:*
 
@@ -1736,7 +1736,7 @@ JSON Lines içe aktarmayı kullanarak yeni girdiler oluşturabilir veya mevcut g
 * *Yeni girdileri içe aktar*: Bu seçenek etkinleştirildiğinde JSON Lines dosyasının her satırı için yeni bir girdi oluşturulur. Tanımlayıcıları (*identifier* sütununda) daha önce atanmış olan girdiler yok sayılır.
 * *Mevcut girdileri güncelle*: Bu seçenek etkinleştirildiğinde mevcut girdiler JSON Lines dosyasındaki verilerle birleştirilir. İçe aktarma kaydındaki alanlar, mevcut veri kaydındaki aynı tanımlayıcıya sahip alanların üzerine yazar. İçe aktarma kaydında bulunmayan mevcut kayıttaki alanlar değişmeden kalır. Kategori değiştirilemez. Kayıtların atanması, *identifier* alanına göre gerçekleştirilir. Atanamayan JSON Lines dosyasındaki kayıtlar yok sayılır.
 
-Aşağıdaki seçenekler de mevcuttur:
+Aşağıdaki ek seçenekler kullanılabilir:
 
 * *Silmelere izin ver*: Bu seçenek etkinleştirilirse, alanlar yalnızca değiştirilemez, aynı zamanda silinebilir. İçe aktarma dosyasında *null* değerinin atandığı tüm alanlar (ilişkiler dahil) silinir. Listelenmeyen alanlar değişmeden kalır. Bu seçenek yalnızca *Mevcut girdileri güncelle* seçeneği seçiliyse kullanılabilir.
 * *Konfigüre edilmemiş alanları yoksay*: Bu seçenek etkinleştirilirse, içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada yapılandırılmamış alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
@@ -1766,33 +1766,33 @@ Katalog dosyalarını dışa aktarırken aşağıdaki seçenek kullanılabilir:
 
 # Uyarılar
 
-Proje yapılandırmasında değişiklik gibi çeşitli nedenlerle, projede tutarsız veya başka şekilde yanlış veriler oluşabilir. Bu durumlarda, uygulama bir uyarı görüntüler ve sorunu çözmek için seçenekler sunar. Hatalı girdiler, ilgili girdinin liste girişinin yanında kırmızı bir çubukla işaretlenir. Ayrıca, sağ üstteki gezinme çubuğunda, veri sorunları nedeniyle uyarı verilen girdi sayısını belirten bir simge görüntülenir:
+Proje konfigürasyonunun değiştirilmesi gibi çeşitli nedenlerle, projede tutarsız veya farklı şekillerde yanlış veriler oluşabilir. Bu durumlarda, uygulama bir uyarı görüntüler ve sorunu çözmek için seçenekler sunar. Hatalı girdiler, ilgili girdi kutucuğunun yanında ince kırmızı dik bir çubukla işaretlenir. Ayrıca, sağ üstteki gezinme çubuğunda, veri sorunları nedeniyle uyarı verilen girdi sayısını belirten bir simge görüntülenir:
 
 <p align="center"><img src="images/tr/warnings/warnings_icon.png" alt="Uyarı ikonu"/></p>
 
-Etkilenen bir girdinin simgesine tıklamak veya içerik menüsünü kullanmak sizi "Uyarılar" menüsüne götürür; burada hatalı girdilerin listesini görüntüleyebilir ve uyarı türüne göre filtreleyebilirsiniz. Ayrıca tanımlayıcıya, kısa açıklamaya (metin girişi yoluyla) ve kategoriye göre filtreleme seçenekleri kullanılabilir.
+Etkilenen bir girdinin simgesine tıklamak veya içerik menüsünü kullanmak sizi "Uyarılar" menüsüne götürür. Burada hatalı girdilerin listesini görüntüleyebilir ve uyarı türüne göre filtreleyebilirsiniz. Ayrıca tanımlayıcıya,  (metin girişi yoluyla) kısa açıklamaya ve kategoriye göre filtreleme seçenekleri kullanılabilir.
 
-Görüntülenen girdilerden birini seçerek söz konusu girdi için mevcut uyarıların listesini görüntüleyin. Çoğu uyarıda hataları çözmek için kullanılabilecek araçlar sağlanır; birçok uyarı, proje yapılandırmasını ayarlayarak da çözülebilir. Her durumda, öncelikle lütfen "Proje" ➝ "Yedek oluştur..." menüsü aracılığıyla projenin bir **yedeğini** oluşturun. Bireysel uyarı türleri için nedenler ve olası çözümler hakkında daha fazla bilgi aşağıda bulunabilir.
+Görüntülenen girdilerden birini seçerek söz konusu girdi için mevcut uyarıların listesini görüntüleyin. Çoğu uyarıda hataları çözmek için kullanılabilecek araçlar uygulama tarafından önerilir. Birçok uyarı, proje konfigürasyonunu ayarlayarak da çözülebilir. Her ihtimale karşın, öncelikle lütfen "Proje" ➝ "Yedek oluştur..." menüsü aracılığıyla projenin bir **yedeğini** oluşturun. Aşağıda tekil uyarı türlerine göre nedenleri ve olası çözümleri hakkında daha fazla bilgiye göz atabilirsiniz.
 
-## Warning types
+## Uyarı türleri
 ### Çakışma
 Birbirleriyle çakışan birden fazla girdi sürümü var.
 
 #### Olası nedenler
-* Girdi, mevcut bir senkronizasyon bağlantısıyla aynı anda farklı bilgisayarlarda düzenlendi.
-* Girdi, mevcut bir senkronizasyon bağlantısı olmadan farklı bilgisayarlarda düzenlendi; veriler daha sonra bir sonraki zamanda senkronize edildi.
+* Girdi, mevcut bir senkronizasyon bağlantısıyla aynı anda farklı bilgisayarlarda düzenlenmiş olabilir.
+* Girdi, mevcut bir senkronizasyon bağlantısı olmadan farklı bilgisayarlarda düzenlendi. Aynı veriler farklı bilgisayarlarda düzenlendikten çok sonra senkronizasyon başlatıldı.
 
 #### Olası çözümler
 * *Çakışmayı çöz* Butonu: Girdi düzenleyicisindeki çakışmaları çözün (bkz. *Senkronizasyon* bölümünün *Çakışmalar* kısmı).
 
 ### Konfigüre edilmemiş kategori
-Proje konfigürasyonunda bulunamayan girdi için bir kategori ayarlandı. Bu nedenle girdi görüntülenmiyor.
+Bir girdiye proje konfigürasyonunda bulunamayan bir kategori ayarlandı. Bu nedenle girdi görüntülenmiyor.
 
 #### Olası nedenler
-* Kategori, konfigürasyon düzenleyicisinde silindi.
+* Kategori, konfigürasyon düzenleyicisinde silinmiş olabilir.
 
 #### Olası çözümler
-* *Yeni kategori seç* Butonu: Proje için konfigüre edilmiş kategorilerden birini seçin. Seçilen kategori daha sonra etkilenen girdi için ayarlanacaktır. İsteğe bağlı olarak, söz konusu kategorinin belirtildiği tüm girdiler için yeni kategori ayarlayabilirsiniz.
+* *Yeni kategori seç* Butonu: Proje için konfigüre edilmiş kategorilerden birini seçin. Seçilen kategori daha sonra etkilenen girdi için ayarlanacaktır. İsteğe bağlı olarak, söz konusu kategorinin belirtildiği tüm girdiler için yeni kategoriyi ayarlayabilirsiniz.
 * *Girdiyi sil* Butonu: Etkilenen girdi tamamen silinir.
 * Konfigürasyon düzenleyicisinde aynı adı taşıyan bir kategori ekleyin.
 
@@ -1800,7 +1800,7 @@ Proje konfigürasyonunda bulunamayan girdi için bir kategori ayarlandı. Bu ned
 Veriler, proje konfigürasyonunda bulunamayan bir alana girildi. Bu nedenle girilen veriler görüntülenmiyor.
 
 #### Olası nedenler
-* Alan, konfigürasyon düzenleyicisinde silindi.
+* Alan, konfigürasyon düzenleyicisinde silinmiş olabilir.
 
 #### Olası çözümler
 * *Yeni alan seç* Butonu: Girdinin kategorisi için konfigüre edilmiş alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın, veriler hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı konfigüre edilmemiş alana veri girilen tüm kayıtlardaki yeni alanı ayarlayabilirsiniz.
@@ -1811,7 +1811,7 @@ Veriler, proje konfigürasyonunda bulunamayan bir alana girildi. Bu nedenle giri
 Bir alana girilen veriler, alan için seçilen giriş türüne uymuyor.
 
 #### Olası nedenler
-* Alanın giriş türü konfigürasyon düzenleyicisinde değiştirildi.
+* Alanın giriş türü konfigürasyon düzenleyicisinde değiştirilmiş olabilir.
 
 #### Olası çözümler
 * *Düzenle* Butonu: Geçersiz alan verilerini kaldırmak ve gerekirse yeniden girmek için girdiyi düzenleyicide açın.
@@ -1822,11 +1822,11 @@ Bir alana girilen veriler, alan için seçilen giriş türüne uymuyor.
 Alana girilen, bir veya daha fazla (alan için konfigüre edilmiş) değer listesinde bulunmayan veri. 
 
 #### Olası nedenler
-* Alanın değer listesi, konfigürasyon düzenleyicisinde farklı bir değer listesiyle değiştirildi.
-* Değerler, değer listesi düzenleyicisinde, projeye özel bir değer listesinden kaldırıldı.
-* Alanın giriş türü, konfigürasyon düzenleyicisinde metnin serbestçe girilmesine izin veren bir giriş türünden değer listesi olan bir giriş türüne değiştirildi.
-* Proje özelliklerinin *Ekip* ve *Sezonlar* alanlarına girilen değerleri kullanan alanlar için: Proje özelliklerindeki ekip veya sezon alanından girişler kaldırıldı.
-* *Sezon* alanı için*: Üst girdide aynı adlı alandan değerler kaldırıldı (yalnızca üst girdide ayarlanan değerler *Sezon* alanı için seçilebilir).
+* Alanın değer listesi, konfigürasyon düzenleyicisinde farklı bir değer listesiyle değiştirilmiş olabilir.
+* Değerler, değer listesi düzenleyicisinde, projeye özel bir değer listesinden kaldırılmış olabilir.
+* Alanın giriş türü, konfigürasyon düzenleyicisinde metnin serbestçe girilmesine izin veren bir giriş türünden değer listesi olan bir giriş türüne değiştirilmiş olabilir.
+* Proje özelliklerinin *Ekip* ve *Sezonlar* alanlarına girilen değerleri kullanan alanlar için: Proje özelliklerindeki ekip veya sezon alanından girişler kaldırılmış olabilir
+* *Sezon* alanı için: Üst girdide aynı adlı alandan değerler kaldırılmış olabilir (yalnızca üst girdide ayarlanan değerler *Sezon* alanı için seçilebilir).
 
 #### Olası çözümler
 * *Düzenle* Butonu: Değer listesinde yer almayan değerleri kaldırmak ve gerekirse bunları başka değerlerle değiştirmek için, girdiyi, düzenleyicide açın.
@@ -1841,7 +1841,7 @@ Alana girilen, bir veya daha fazla (alan için konfigüre edilmiş) değer liste
 Bir ilişkinin hedefi olarak belirtilen bir girdi bulunamadı.
 
 #### Olası nedenler
-* Bir senkronizasyon işlemi tam olarak tamamlanmadı.
+* Bir senkronizasyon işlemi tam olarak tamamlanmamış olabilir.
 
 #### Olası çözümler
 * Field projesiyle çalışan tüm ekip üyelerinin verilerinin senkronize olduğundan emin olun.
@@ -1851,8 +1851,8 @@ Bir ilişkinin hedefi olarak belirtilen bir girdi bulunamadı.
 Bir ilişkinin hedefi olarak belirtilen bir girdinin kategorisi, bu ilişkinin geçerli bir hedef kategorisi değildir.
 
 #### Olası nedenler
-* İlişkinin izin verilen hedef kategori listesi, konfigürasyon düzenleyicisinde düzenlenmiştir.
-* Girdinin kategorisi değiştirilmiştir.
+* İlişkinin izin verilen hedef kategori listesi, konfigürasyon düzenleyicisinde düzenlenmiş olabilir.
+* Girdinin kategorisi değiştirilmiş olabilir.
 
 #### Olası çözümler
 * *Düzenle* Butonu: İlişkide geçersiz hedef girdiye olan bağlantıyı kaldırmak için girdiyi, düzenleyicisinde açın.
@@ -1863,8 +1863,8 @@ Bir ilişkinin hedefi olarak belirtilen bir girdinin kategorisi, bu ilişkinin g
 Girdinin geçerli bir üst girdisi yok. Bu, girdi için hiçbir üst girdinin ayarlanmadığı, belirtilen üst girdinin bulunamadığı veya kategorisi nedeniyle geçerli bir üst girdi olmadığı anlamına gelebilir. Bu nedenle girdi görüntülenmiyor.
 
 #### Olası nedenler
-* Bir senkronizasyon işlemi tam olarak tamamlanmadı.
-* Girdi, Field Desktop'ın eski bir sürümüyle oluşturuldu.
+* Bir senkronizasyon işlemi tam olarak tamamlanmamış olabilir.
+* Girdi, Field Desktop'ın eski bir sürümüyle oluşturulmuş olabilir.
 
 #### Olası çözümler
 * Field projesiyle çalışan tüm ekip üyelerinin verilerinin senkronize edildiğinden emin olun.
@@ -1875,7 +1875,7 @@ Girdinin geçerli bir üst girdisi yok. Bu, girdi için hiçbir üst girdinin ay
 Girdinin tanımlayıcısı, ilgili kategori için konfigüre edilmiş bir ön ek içermiyor.
 
 #### Olası nedenler
-* Girdi, tanımlayıcı ön eki konfigüre edilmeden önce oluşturuldu.
+* Girdi, tanımlayıcı ön eki konfigüre edilmeden önce oluşturulmuş olabilir.
 
 #### Olası çözümler
 * *Düzenle* Butonu: Tanımlayıcıyı yeniden girmek için girdi düzenleyicisini açın.
@@ -1893,7 +1893,7 @@ Girdinin tanımlayıcısı bir veya daha fazla başka girdi tarafından kullanı
 Bu kategori için konfigüre edilmiş girdi sınırının izin verdiğinden daha fazla girdi var.
 
 #### Olası nedenler
-* Girdiler, girdi sınırı yapılandırılmadan önce oluşturuldu.
+* Girdiler, girdi sınırı yapılandırılmadan önce oluşturulmuş olabilir.
 * Girdiler, mevcut bir senkronizasyon bağlantısı olmadan farklı bilgisayarlarda oluşturuldu; veriler başka bir zamanda senkronize edildi.
 
 #### Olası çözümler

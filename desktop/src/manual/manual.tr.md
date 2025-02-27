@@ -19,7 +19,9 @@ Projenizin verilerini düzenli olarak güncelleyin.
 <hr>
 
 
-# Girdiler (ç.n. Esas uygulamadaki 'Resource' ifadesi 'Girdi' olarak verilmiştir)
+# Girdiler
+
+**(ç.n. Esas uygulamadaki 'Resource' ifadesi 'Girdi' olarak verilmiştir)**
 
 Bir proje oluşturduktan veya mevcut bir projeyi açtıktan sonra, **Genel Bakış** sekmesinden başlayabilirsiniz 
 (Projenin tüm operasyonlarının ve yerlerinin yönetildiği yer (ev sembolü).

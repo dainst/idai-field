@@ -19,7 +19,7 @@ Projenizin verilerini düzenli olarak güncelleyin.
 <hr>
 
 
-# Girdiler (Ç.N. Yabancı dildeki 'Resource' ifadesi 'Girdi' olarak verilmiştir)
+# Girdiler (ç.n. Esas uygulamadaki 'Resource' ifadesi 'Girdi' olarak verilmiştir)
 
 Bir proje oluşturduktan veya mevcut bir projeyi açtıktan sonra, **Genel Bakış** sekmesinden başlayabilirsiniz 
 (Projenin tüm operasyonlarının ve yerlerinin yönetildiği yer (ev sembolü).
@@ -218,7 +218,7 @@ ile sırasıyla haritadaki (harita görünümünde) tüm girdileri ve listenin �
 Kategori filtre düğmesi bir girdi kategorisi seçmenize olanak tanır. Üst ve alt kategoriler bulunmaktadır: Bir alt kategori seçerseniz (örneğin "Tabaka"),
 yalnızca ilgili kategorinin girdileri gösterilir. 
 Buna karşılık, bir üst kategori seçerseniz (örneğin "Stratigrafik birim"), 
-seçili kategorinin girdileri ve tüm alt kategorileri (örneğin "Katman", "Mezar", "Mimarlık", "Zemin" vb.) dahil edilir.
+seçili kategorinin girdileri ve tüm alt kategorileri (örneğin "Tabaka", "Mezar", "Mimari", "Zemin" vb.) dahil edilir.
 Yalnızca üst kategoriyi seçmek için tekrar tıklayın.
 
 Mevcut içerik hangi kategorilerin kullanılabileceğini belirler: Genel bakışta işlem kategorilerini, 
@@ -316,7 +316,7 @@ Bu girdilere erişmek için daha fazla arama kriteri ekleyin
 veya genişletilmiş arama modundan çıkın.
 
 
-### Alana özgü arama kriterleri
+### Alana özel arama kriterleri
  
 Detaylı arama modu etkinleştirilirse, kategori filtresi düğmesinin solundaki artı düğmesine tıklayarak
 bir girdinin belirli alanlarında arama başlatabilirsiniz. 
@@ -324,7 +324,7 @@ Arama için kullanılabilir alanlar, seçili kategoriye karşılık gelen alanla
 Birden fazla arama kriterini birleştirmek için istediğiniz kadar alan seçebilirsiniz. 
 Elbette, alan belirli arama kriterini metin filtresiyle birlikte de kullanabilirsiniz. 
 
-<p align="center"><img src="images/tr/search/criteria_search.png" alt="Alana özgü arama kriterleri"/></p>
+<p align="center"><img src="images/tr/search/criteria_search.png" alt="Alana özel arama kriterleri"/></p>
 
 Metin alanı olması durumunda, doğrudan arama terimini girmeniz yeterlidir.
 Değer listeleri olan alanlar için, açılır menüdeki tüm izin verilen değerlerin listesinden terimi seçin.
@@ -356,8 +356,8 @@ Başka bir Field Desktop kurulumunda veya bir Field sunucusunda bulunan mevcut b
 * *Adres*: Projeyi indirmek istediğiniz bilgisayarın adresini girin. Bu, Field Desktop'ın şu anda açık olduğu başka bir bilgisayarın ağ adresi olabilir (bu adres ayarlar bölümünde *Adresiniz* kısmında görülebilir). İnternet veya yerel ağ üzerinden erişilebilen bir Field sunucusunun adresi olabilir (örneğin DAI sunucusu için *https://server.field.idai.world*).
 * *Proje adı*: İndirmek istediğiniz projenin adı.
 * *Şifre*: Projeyi indirmek istediğiniz projenin veya Field Desktop kurulumunun şifresi.
-* *Ön izleme görüntülerini indir*: Bu seçenek varsayılan olarak etkindir. Zayıf bir internet bağlantınız varsa ve mümkün olduğunca az veri indirmek istiyorsanız, bunu devre dışı bırakmak isteyebilirsiniz.
-* *Esas görüntüleri indir*: Görüntüleri orijinal görüntü çözünürlüklerinde indirmek istiyorsanız bu seçeneği etkinleştirin. Projede yönetilen görüntü sayısına ve boyutuna bağlı olarak, birkaç gigabayt verinin indirilmesi gerekebilir. Bu seçeneği etkinleştirmeden önce yeterli bir internet bağlantınız ve sabit disk alanınız olduğundan emin olun.
+* *Küçük resimleri indir*: Bu seçenek varsayılan olarak etkindir. Zayıf bir internet bağlantınız varsa ve mümkün olduğunca az veri indirmek istiyorsanız, bunu devre dışı bırakmak isteyebilirsiniz.
+* *Orijinal görselleri indir*: Görüntüleri orijinal görüntü çözünürlüklerinde indirmek istiyorsanız bu seçeneği etkinleştirin. Projede yönetilen görüntü sayısına ve boyutuna bağlı olarak, birkaç gigabayt verinin indirilmesi gerekebilir. Bu seçeneği etkinleştirmeden önce yeterli bir internet bağlantınız ve sabit disk alanınız olduğundan emin olun.
 * *Aynı tanımlayıcıda mevcut projenin üzerine yaz*: Bu seçenek etkinleştirilirse, bilgisayarda aynı adlı bir proje zaten mevcut olsa bile proje indirilir. Mevcut proje bu işlem sırasında silinir.
 
 Geçerli bir adres, proje adı ve şifre girdiğinizde, kısa bir hesaplama süresinin ardından ilgili seçeneklerin yanında indirilecek görüntü verisinin miktarı gösterilecektir.
@@ -372,9 +372,9 @@ Hem indirilen hem de yeni oluşturulan projeler her zaman diğer veritabanlarıy
 * *Adres*: Eşitleme bağlantısı kurmak istediğiniz veritabanının adresi. Bu, Field Desktop'ın şu anda açık olduğu başka bir bilgisayarın ağ adresi olabilir (bu adres ayarlar bölümünde *Adresiniz* olarak görüntülenebilir) veya internet veya yerel ağ üzerinden erişilebilen bir Field Hub sunucusunun adresi olabilir (örneğin DAI'nin Field Hub sunucusu için *https://server.field.idai.world*).
 * *Şifre*: Senkronizasyon bağlantısını kurmak istediğiniz projenin veya Field Desktop kurulumunun şifresi.
 * *Senkronizasyonu etkinleştir*: Bağlantıyı başlatmak veya kesmek için bu anahtarı kullanın.
-* *Ön izleme görüntülerini senkronize et*: Bu seçenek varsayılan olarak etkindir. Zayıf bir internet bağlantınız varsa ve mümkün olduğunca az veri yüklemek/indirmek istiyorsanız, bunu devre dışı bırakmak isteyebilirsiniz.
-* *Esas görüntüleri yükle*: Görüntüleri orijinal çözünürlüklerinde yüklemek istiyorsanız bu seçeneği etkinleştirin.
-* *Esas görüntüleri indir*: Görüntüleri orijinal çözünürlüklerinde indirmek istiyorsanız bu seçeneği etkinleştirin. Projede yönetilen görüntü sayısına ve boyutuna bağlı olarak, birkaç gigabayt verinin indirilmesi gerekebilir. Bu seçeneği etkinleştirmeden önce yeterli bir internet bağlantınız ve sabit disk alanınız olduğundan emin olun.
+* *Küçük resimleri senkronize et*: Bu seçenek varsayılan olarak etkindir. Zayıf bir internet bağlantınız varsa ve mümkün olduğunca az veri yüklemek/indirmek istiyorsanız, bunu devre dışı bırakmak isteyebilirsiniz.
+* *Orijinal görselleri yükleyin*: Görüntüleri orijinal çözünürlüklerinde yüklemek istiyorsanız bu seçeneği etkinleştirin.
+* *Orijinal görselleri indir*: Görüntüleri orijinal çözünürlüklerinde indirmek istiyorsanız bu seçeneği etkinleştirin. Projede yönetilen görüntü sayısına ve boyutuna bağlı olarak, birkaç gigabayt verinin indirilmesi gerekebilir. Bu seçeneği etkinleştirmeden önce yeterli bir internet bağlantınız ve sabit disk alanınız olduğundan emin olun.
 
 Geçerli bir adres ve doğru şifreyi girer girmez, kısa bir hesaplama süresinden sonra ilgili seçeneklerin yanında yüklenecek/indirilecek görüntü verisi miktarı gösterilecektir. Lütfen unutmayın; daha sonra projeye ek görüntüler aktarılırsa veri miktarının artabilecektir.
 
@@ -721,7 +721,7 @@ Yeni bir değer listesi oluşturmak için, metin alanına istediğiniz tanımlay
 Tamamen yeni bir değer listesi oluşturmak yerine, alternatif olarak halihazırda var olan bir listeyi düzenleyebilirsiniz. Bunu yapmak için, ilgili liste girişine sağ tıklayarak içerik menüsünü açın, *Değer listesini genişlet* seçeneğini seçin ve genişletme listeniz için bir tanımlayıcı girin. Seçilen değer listesinin tüm değerleri devralınır ve artık düzenleyicide ek değerlerle desteklenebilir. Ayrıca, var olan değerleri gizleyebilir ve sıralarını ayarlayabilirsiniz. Lütfen unutmayın; genişletme listeleri ve projeye özgü listeler genişletilemeyecektir.
 
 
-### Proje özel değer listelerini yönetin
+### Projeye özgü değer listelerini yönetin
 
 Projeye özgü bir değer listesine sağ tıklandığında aşağıdaki seçenekleri sağlayan bir içerik menüsü açılır:
 
@@ -776,7 +776,9 @@ Daha sonra konfigürasyonu başka bir projeye aktarmak veya aynı projede kayded
 
 ## JSON dışa aktarma API'si
 
-Proje konfigürasyonu bir API erişim noktası aracılığıyla JSON biçiminde alınabilir. Erişim noktası, uygulama açıkken aşağıdaki URL aracılığıyla kullanılabilir:
+Proje konfigürasyonu bir API erişim noktası aracılığıyla JSON formatında alınabilir. "Konfigürasyonu dışa aktar..." menü seçeneği aracılığıyla oluşturulabilen konfigürasyon dosyaları yalnızca yapılandırmanın projeye özgü kısmını içerir. Öte yandan API erişim noktası, projede kullanılan Field kitaplıklarından (standart formlar, değer listeleri vb.) gelen tüm konfigürasyon öğeleri dahil, tam konfigürasyonu çıktı olarak verir.
+
+Uygulama açıkken erişim noktasına aşağıdaki URL üzerinden ulaşılabilir:
 
 http://localhost:3000/configuration/PROJE
 
@@ -883,7 +885,7 @@ için araç çubuğunun sağ tarafındaki düğmeleri kullanın:
 
 İki farklı dosya biçimi arasından seçim yapabilirsiniz:
 
-* *Dot (Graphviz)*: Açık kaynaklı Graphviz yazılımı (ve benzerleri) tarafından okunabilen grafikleri tanımlamak için kullanılan bir format. (Dosya uzantısı *gv*)
+* *Dot (Graphviz)*: Açık kaynak Graphviz yazılımı (ve benzerleri) tarafından okunabilen grafikleri tanımlamak için kullanılan bir format. (Dosya uzantısı *gv*)
 * *SVG*: Vektör grafiklerini görüntülemek için bir format. (Dosya uzantısı *svg*)
 
 
@@ -1456,7 +1458,7 @@ Bu örnek, nokta geometrisi olan bir girdiden bir GeoJSON dışa aktarma dosyas�
 
 Shapefile, vektör coğrafi verilerini değiştirmek için yaygın olarak kullanılan bir formattır ve Field Desktop bağlamında GeoJSON formatına alternatif olarak kullanılabilir.
 
-GeoJSON içe aktarımında olduğu gibi, Shapefile verileri içe aktarılırken **yeni girdi** oluşturulmaz. Bunun yerine, mevcut kaynaklara **geometriler** eklenir. Yeni girdileri içe aktarmak için, *CSV* veya *JSON Lines* biçiminden birini kullanın ve ardından Shapefile içe aktarımını kullanarak yeni oluşturulan girdilere geometriler ekleyin.
+GeoJSON içe aktarımında olduğu gibi, Shapefile verileri içe aktarılırken **yeni girdi** oluşturulmaz. Bunun yerine, mevcut girdilere **geometriler** eklenir. Yeni girdileri içe aktarmak için, *CSV* veya *JSON Lines* biçiminden birini kullanın ve ardından Shapefile içe aktarımını kullanarak yeni oluşturulan girdilere geometriler ekleyin.
 
 
 #### Yapısı
@@ -1816,84 +1818,84 @@ Bir alana girilen veriler, alan için seçilen giriş türüne uymuyor.
 * *Alan verilerini dönüştür* Butonu: Veriler, ilgili giriş türü için otomatik olarak doğru biçime dönüştürülür. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde verilerin dönüştürülmesini sağlayabilirsiniz. Lütfen unutmayın; otomatik dönüştürme her durumda mümkün değildir ve bu nedenle bu düğme her zaman kullanılamaz.
 * *Yeni alan seç* Butonu: Girdi kategorisi için konfigüre edilmiş alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın; veriler, hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde yeni alanı ayarlayabilirsiniz (geçerli veriler orijinal alanda kalır).
 
-### Value not included in valuelist
-One or more values are entered in a field that are not contained in the valuelist configured for the field.
+### Değer listesinde yer almayan değer
+Alana girilen, bir veya daha fazla (alan için konfigüre edilmiş) değer listesinde bulunmayan veri. 
 
-#### Possible causes
-* The valuelist of the field has been replaced with a different one in the configuration editor.
-* Values have been removed from a project-specific valuelist in the valuelist editor.
-* The input type of the field has been changed in the configuration editor from an input type that allows the free entry of text to an input type with a valuelist.
-* For fields that use the values entered in the fields *Staff* and *Campaigns* of the project properties: Entries have been removed from the corresponding field in the project properties.
-* For the field *Campaign*: Values have been removed from the field of the same name in the parent resource (only values that have been set in the parent resource may be selected for the field *Campaign*).
+#### Olası nedenler
+* Alanın değer listesi, konfigürasyon düzenleyicisinde farklı bir değer listesiyle değiştirildi.
+* Değerler, değer listesi düzenleyicisinde, projeye özel bir değer listesinden kaldırıldı.
+* Alanın giriş türü, konfigürasyon düzenleyicisinde metnin serbestçe girilmesine izin veren bir giriş türünden değer listesi olan bir giriş türüne değiştirildi.
+* Proje özelliklerinin *Ekip* ve *Sezonlar* alanlarına girilen değerleri kullanan alanlar için: Proje özelliklerindeki ekip veya sezon alanından girişler kaldırıldı.
+* *Sezon* alanı için*: Üst girdide aynı adlı alandan değerler kaldırıldı (yalnızca üst girdide ayarlanan değerler *Sezon* alanı için seçilebilir).
 
-#### Possible solutions
-* Button *Edit*: Open the resource in the resource editor to remove the values not included in the valuelist and replace them with other values if necessary.
-* Button *Fix value*: Select a new value from the valuelist configured for the field. The previous value is replaced by the selected value. Optionally, you can set the new value for all fields of all resources in which the same value is entered and which use the same valuelist.
-* Button *Delete value*: The value entered in the field is deleted completely. Optionally, you can delete the value from all fields of all resources in which the same value is entered.
-* Replace the valuelist in the configuration editor with a valuelist that contains the corresponding value.
-* Add the missing value to the valuelist configured for the field. For non-project-specific valuelists, you must first create an extension list for the valuelist using the option *Extend valuelist* (see section *Create and extend valuelists* in chapter *Project configuration*).
-* For fields that are based on the values entered in the *Staff* and *Campaigns* fields of the project properties: Add the missing value to the corresponding field in the project properties.
-* For the field *Campaign*: Set the value in the parent resource if it does not already exist there.
+#### Olası çözümler
+* *Düzenle* Butonu: Değer listesinde yer almayan değerleri kaldırmak ve gerekirse bunları başka değerlerle değiştirmek için, girdiyi, düzenleyicide açın.
+* *Değeri düzelt* Butonu: Alan için konfigüre edilen değer listesinden yeni bir değer seçin. Önceki değer, seçilen değerle değiştirilir. İsteğe bağlı olarak, aynı değerin girildiği ve aynı değer listesini kullanan tüm girdilerin tüm alanları için (toplu olarak) yeni değeri ayarlayabilirsiniz.
+* *Değeri sil* Butonu: Alana girilen değer tamamen silinir. İsteğe bağlı olarak, aynı değerin eklendiği tüm girdilerin tüm alanlarından silebilirsiniz.
+* Konfigürasyon düzenleyicisindeki değer listesini, karşılık gelen değeri içeren uygun bir değer listesiyle değiştirin.
+* Değer listesindeki ilgili alana, (konfigürasyon düzenleyicisinde) eksik değeri ekleyin. Projeye özel olmayan değer listelerinde, önce *Değer listesini genişlet* seçeneğini kullanarak bir uzantı listesi oluşturmanız gerekir (bkz. *Proje konfigürasyonu* bölümündeki *Değer listeleri oluşturma ve genişletme*). 
+* Proje özelliklerinde *Ekip* ve *Sezonlar* alanlarına girilen değerlere bağlı alanlarda: Eksik değeri proje özelliklerindeki ilgili alana ekleyin.
+* *Sezon* alanı için: Değer zaten orada yoksa, ana girdide ayarlayın.
 
-### Missing target resource of a relation
-A resource specified as the target of a relation cannot be found.
+### Bir ilişkinin eksik hedef girdisi
+Bir ilişkinin hedefi olarak belirtilen bir girdi bulunamadı.
 
-#### Possible causes
-* A synchronization process has not been fully completed.
+#### Olası nedenler
+* Bir senkronizasyon işlemi tam olarak tamamlanmadı.
 
-#### Possible solutions
-* Make sure that the data of all team members working with the Field project is synchronized.
-* Button *Clean up relation*: All references to non-existent resources are deleted from the relation.
+#### Olası çözümler
+* Field projesiyle çalışan tüm ekip üyelerinin verilerinin senkronize olduğundan emin olun.
+* *İlişkiyi temizle* Butonu: İlişkide var olmayan girdilere yapılan tüm bağlantılar silinir.
 
-### Invalid target resource of a relation
-The category of a resource specified as the target of a relation is not a valid target category of this relation.
+### Bir ilişkinin geçersiz hedef girdisi
+Bir ilişkinin hedefi olarak belirtilen bir girdinin kategorisi, bu ilişkinin geçerli bir hedef kategorisi değildir.
 
-#### Possible causes
-* The list of allowed target categories of the relation has been edited in the configuration editor.
-* The category of the resource has been changed.
+#### Olası nedenler
+* İlişkinin izin verilen hedef kategori listesi, konfigürasyon düzenleyicisinde düzenlenmiştir.
+* Girdinin kategorisi değiştirilmiştir.
 
-#### Possible solutions
-* Button *Edit*: Open the resource in the resource editor to remove the reference to the invalid target resource from the relation.
-* Button *Clean up relation*: All references to invalid target resources are deleted from the relation.
-* Add the category of the target resource as a valid target category of the corresponding relation in the configuration editor.
+#### Olası çözümler
+* *Düzenle* Butonu: İlişkide geçersiz hedef girdiye olan bağlantıyı kaldırmak için girdiyi, düzenleyicisinde açın.
+* *İlişkiyi temizle* Butonu: Geçersiz hedef girdilere olan tüm bağlantılar ilişkiden silinir.
+* Hedef girdinin kategorisini, konfigürasyon düzenleyicisinde, söz konusu ilişkinin geçerli bir hedef kategorisi olarak tanımlatın.
 
-### Missing or invalid parent resource
-The resource does not have a valid parent resource. This can either mean that no parent resource has been set for the resource, that the specified parent resource cannot be found or that it is not a valid parent resource due to its category. The resource is therefore not displayed.
+### Eksik veya geçersiz üst girdi
+Girdinin geçerli bir üst girdisi yok. Bu, girdi için hiçbir üst girdinin ayarlanmadığı, belirtilen üst girdinin bulunamadığı veya kategorisi nedeniyle geçerli bir üst girdi olmadığı anlamına gelebilir. Bu nedenle girdi görüntülenmiyor.
 
-#### Possible causes
-* A synchronization process has not been fully completed.
-* The resource was created with an outdated version of Field Desktop.
+#### Olası nedenler
+* Bir senkronizasyon işlemi tam olarak tamamlanmadı.
+* Girdi, Field Desktop'ın eski bir sürümüyle oluşturuldu.
 
-#### Possible solutions
-* Make sure that the data of all team members working with the Field project is synchronized.
-* Button *Set new parent resource*: Select a new resource as the parent resource. The resource is moved to the context of the selected resource.
-* Button *Delete resource*: The affected resource is deleted completely.
+#### Olası çözümler
+* Field projesiyle çalışan tüm ekip üyelerinin verilerinin senkronize edildiğinden emin olun.
+* *Yeni üst girdi ayarla* Butonu: Üst girdi olarak yeni bir girdi seçin. Girdi, seçilen girdinin kontekstine taşınır.
+* Düğme *Girdiyi sil*: Etkilenen girdi tamamen silinir.
 
-### Missing identifier prefix
-The identifier of the resource does not contain the prefix configured for the corresponding category.
+### Eksik tanımlayıcı öneki
+Girdinin tanımlayıcısı, ilgili kategori için konfigüre edilmiş bir ön ek içermiyor.
 
-#### Possible causes
-* The resource was created before the identifier prefix was configured.
+#### Olası nedenler
+* Girdi, tanımlayıcı ön eki konfigüre edilmeden önce oluşturuldu.
 
-#### Possible solutions
-* Button *Edit*: Open the resource editor to re-enter the identifier.
+#### Olası çözümler
+* *Düzenle* Butonu: Tanımlayıcıyı yeniden girmek için girdi düzenleyicisini açın.
 
-### Ambiguous identifier
-The identifier of the resource is also used by one or more other resources. Therefore, errors can occur when importing and exporting data.
+### Belirsiz tanımlayıcı
+Girdinin tanımlayıcısı bir veya daha fazla başka girdi tarafından kullanılıyor. Bu nedenle, veri içe ve dışa aktarılırken hatalar oluşabilir.
 
-#### Possible causes
-* The identifiers were entered on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+#### Olası nedenler
+* Tanımlayıcılar, mevcut bir senkronizasyon bağlantısı olmadan farklı bilgisayarlara girildi; veriler başka bir zamanda senkronize edildi.
 
-#### Possible solutions
-* Button *Edit*: Open the resource editor to enter a new identifier.
+#### Olası çözümler
+* *Düzenle* Butonu: Yeni bir tanımlayıcı girmek için girdi düzenleyicisini açın.
 
-### Resource limit exceeded
-There are more resources of a particular category than the resource limit configured for this category allows.
+### Girdi sınırı aşıldı
+Bu kategori için konfigüre edilmiş girdi sınırının izin verdiğinden daha fazla girdi var.
 
-#### Possible causes
-* The resources were created before the resource limit was configured.
-* The resources were created on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+#### Olası nedenler
+* Girdiler, girdi sınırı yapılandırılmadan önce oluşturuldu.
+* Girdiler, mevcut bir senkronizasyon bağlantısı olmadan farklı bilgisayarlarda oluşturuldu; veriler başka bir zamanda senkronize edildi.
 
-#### Possible solutions
-* Delete resources of the corresponding category until the resource limit is met.
-* Increase the resource limit in the configuration editor.
+#### Olası çözümler
+* Girdi sınırı karşılanana kadar ilgili kategorinin girdilerini silin.
+* Konfigürasyon düzenleyicisinde girdi sınırını artırın.

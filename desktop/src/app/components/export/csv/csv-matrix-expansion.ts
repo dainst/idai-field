@@ -72,7 +72,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    export function expandOptionalRangeVal(fieldDefinitions: Array<Field>) {
+    export function expandOptionalRangeValue(fieldDefinitions: Array<Field>) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 

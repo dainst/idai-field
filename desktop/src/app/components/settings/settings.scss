@@ -3,8 +3,8 @@
  * @author: Thomas Kleinke
  */
 
-@import 'language-settings';
-@import 'update-username-modal';
+@use 'language-settings';
+@use 'update-username-modal';
 
 .settings {
   #save-settings-button:active,

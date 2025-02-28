@@ -1,10 +1,11 @@
 @use 'sass:color';
 
-@import 'depicts-relations-view';
-@import 'georeference-view';
-@import 'thumbnail';
-@import 'fields-view/fields-view';
-@import 'fields-view/field-view';
+@use 'depicts-relations-view';
+@use 'georeference-view';
+@use 'thumbnail';
+@use 'fields-view/fields-view';
+@use 'fields-view/field-view';
+@use '../../variables' as *;
 
 /**
  * @author Thomas Kleinke

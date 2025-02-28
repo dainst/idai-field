@@ -1,5 +1,6 @@
-@import 'deletion/delete-modal';
-@import 'searchbar/image-overview-search-bar';
+@use 'deletion/delete-modal';
+@use 'searchbar/image-overview-search-bar';
+@use '../../variables' as *;
 
 .image-overview {
   .image-grid {
@@ -13,7 +14,7 @@
   .image-overview-nav {
     position: relative;
     z-index: 1001;
-    border-bottom: 1px solid $gray-200;
+    border-bottom: 1px solid #e9ecef;
     height: $toolbar-height;
     display: flex;
 

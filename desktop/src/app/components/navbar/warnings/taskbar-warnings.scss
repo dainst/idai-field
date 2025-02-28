@@ -1,4 +1,6 @@
 @use 'sass:color';
+@use '../navbar-variables' as *;
+@use '../../variables' as *;
 
 #warnings {
   position: relative;

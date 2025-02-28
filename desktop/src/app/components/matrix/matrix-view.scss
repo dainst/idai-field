@@ -3,14 +3,14 @@
  * @author Daniel de Oliveira
  */
 
-@import 'graph';
-@import 'matrix-options-menu';
+@use 'graph';
+@use 'matrix-options-menu';
 
 #matrix-view {
   position: relative;
   height: 50px;
   padding: 6px;
-  border-bottom: 1px solid $gray-200;
+  border-bottom: 1px solid #e9ecef;
   z-index: 1001;
   user-select: none;
   cursor: default;

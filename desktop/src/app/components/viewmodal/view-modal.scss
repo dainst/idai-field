@@ -1,7 +1,8 @@
-@import 'image/image-view-modal';
-@import 'image/image-view-edit';
-@import 'image/view-modal-drop-area';
-@import 'resource/resource-view-modal';
+@use 'image/image-view-modal';
+@use 'image/image-view-edit';
+@use 'image/view-modal-drop-area';
+@use 'resource/resource-view-modal';
+@use '../variables' as *;
 
 ngb-modal-window {
   overflow-y: hidden !important;

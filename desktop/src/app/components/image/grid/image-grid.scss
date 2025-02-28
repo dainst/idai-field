@@ -1,5 +1,6 @@
-@import 'image-grid-cell';
-@import 'drop-area';
+@use 'image-grid-cell';
+@use 'drop-area';
+@use '../../variables' as *;
 
 .image-grid {
   margin-top: 15px;

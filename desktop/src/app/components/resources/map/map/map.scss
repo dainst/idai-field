@@ -2,7 +2,8 @@
  * @author: Thomas Kleinke
  */
 
-@import './layers/layer-menu';
+@use './layers/layer-menu';
+@use '../../../variables' as *;
 
 #map-container {
   z-index: 1008;

@@ -2,6 +2,8 @@
  * @author Thomas Kleinke
  */
 @use 'sass:color';
+@use 'bootstrap';
+@use '../../variables' as *;
 
 $active-navigation-button-background-color: #d5dfef;
 

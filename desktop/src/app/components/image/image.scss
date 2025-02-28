@@ -1,5 +1,5 @@
-@import 'row/image-row';
-@import 'grid/image-grid';
-@import 'overview/image-overview';
-@import 'upload/image-upload';
-@import 'viewer/image-viewer';
+@use 'row/image-row';
+@use 'grid/image-grid';
+@use 'overview/image-overview';
+@use 'upload/image-upload';
+@use 'viewer/image-viewer';

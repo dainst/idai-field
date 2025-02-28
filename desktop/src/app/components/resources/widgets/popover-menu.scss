@@ -1,11 +1,12 @@
 @use 'sass:color';
+@use '../../variables' as *;
 
 #popover-menu {
   background-color: $popover-bg-color;
   position: absolute;
   left: $resources-listing-item-wide-width;
   height: 100%;
-  width: $teaser-width;
+  width: $resources-listing-item-slim-width;
   z-index: 1009;
   overflow: hidden;
 

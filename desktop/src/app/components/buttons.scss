@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use './variables' as *;
 
 .btn {
   cursor: default !important;

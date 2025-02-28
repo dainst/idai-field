@@ -1,33 +1,33 @@
 @use 'sass:color';
 
 $mdi-font-path: 'fonts' !default;
-@import '../node_modules/@mdi/font/css/materialdesignicons';
+@use '../node_modules/@mdi/font/css/materialdesignicons';
 
-@import '@fontsource/open-sans/variable-full.css';
-@import "@fontsource/open-sans/variable-full-italic.css";
+@use '@fontsource/open-sans/variable-full.css';
+@use "@fontsource/open-sans/variable-full-italic.css";
 
-@import 'app/components/variables';
-@import 'app/components/messages/messages';
-@import 'bootstrap';
-@import 'app/components/initialization';
-@import 'app/components/spinner';
-@import 'app/components/buttons';
-@import 'app/components/slider';
-@import 'app/components/navbar/navbar';
-@import 'app/components/default-page';
-@import 'app/components/resources/resources';
-@import 'app/components/import/import';
-@import 'app/components/export/export';
-@import 'app/components/settings/settings';
-@import 'app/components/viewmodal/view-modal';
-@import 'app/components/widgets/widgets';
-@import 'app/components/docedit/docedit';
-@import 'app/components/image/image';
-@import 'app/components/matrix/matrix-view';
-@import 'app/components/help/help';
-@import 'app/components/configuration/configuration';
-@import 'app/components/project/project';
-@import 'app/components/backup/backup';
+@use 'bootstrap' as *;
+
+@use 'app/components/messages/messages';
+@use 'app/components/spinner';
+@use 'app/components/buttons';
+@use 'app/components/slider';
+@use 'app/components/navbar/navbar';
+@use 'app/components/default-page';
+@use 'app/components/resources/resources';
+@use 'app/components/import/import';
+@use 'app/components/export/export';
+@use 'app/components/settings/settings';
+@use 'app/components/viewmodal/view-modal';
+@use 'app/components/widgets/widgets';
+@use 'app/components/docedit/docedit';
+@use 'app/components/image/image';
+@use 'app/components/matrix/matrix-view';
+@use 'app/components/help/help';
+@use 'app/components/configuration/configuration';
+@use 'app/components/project/project';
+@use 'app/components/backup/backup';
+@use 'app/components/variables' as *;
 
 .search-help-tooltip {
   .tooltip-inner {

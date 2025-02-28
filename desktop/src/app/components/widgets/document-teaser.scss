@@ -1,3 +1,6 @@
+@use 'bootstrap' as *;
+@use '../variables' as *;
+
 .document-teaser {
   @extend .d-flex;
   @extend .align-items-center;

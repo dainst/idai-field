@@ -1,4 +1,4 @@
-$teaser-width: $resources-listing-item-slim-width;
+@use '../../../variables' as *;
 
 sidebar-list {
   #sidebar-viewport {

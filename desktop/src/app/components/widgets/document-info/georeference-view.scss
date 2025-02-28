@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use '../../variables' as *;
 
 $add-georeference-color: #5572a1;
 $delete-georeference-color: #d9534f;

@@ -1,14 +1,8 @@
 @use 'sass:color';
-
-$tab-bg-color: $gray-100;
-$tab-bg-color-hover: $navbar-default-bg;
-$tab-separator-color: color.adjust($navbar-default-bg, $lightness: -4%);
-$navbar-link-color: $gray-800;
-$link-hover-color: color.adjust($navbar-link-color, $lightness: 30%);
-$border-radius: 4px;
-
-@import 'taskbar';
-@import 'projects';
+@use '../variables' as *;
+@use 'navbar-variables' as *;
+@use 'taskbar';
+@use 'projects';
 
 .navbar {
   -webkit-app-region: drag;

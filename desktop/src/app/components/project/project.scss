@@ -1,10 +1,10 @@
-@import 'create-project-modal';
-@import 'delete-project-modal';
-@import 'synchronization-modal';
-@import 'project-information-modal';
-@import 'download-project';
-@import 'download-project-progress-modal';
-@import 'cancel-modal';
+@use 'create-project-modal';
+@use 'delete-project-modal';
+@use 'synchronization-modal';
+@use 'project-information-modal';
+@use 'download-project';
+@use 'download-project-progress-modal';
+@use 'cancel-modal';
 
 
 .image-size-spinner {

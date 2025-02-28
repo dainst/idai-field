@@ -1,0 +1,9 @@
+@use 'sass:color';
+@use '../variables' as *;
+
+$tab-bg-color: #f8f9fa;
+$tab-bg-color-hover: $navbar-default-bg;
+$tab-separator-color: color.adjust($navbar-default-bg, $lightness: -4%);
+$navbar-link-color: #343a40;
+$link-hover-color: color.adjust($navbar-link-color, $lightness: 30%);
+$border-radius: 4px;

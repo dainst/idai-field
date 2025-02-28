@@ -2,6 +2,7 @@
  * @author: Thomas Kleinke
  */
 @use 'sass:color';
+@use '../../../../variables' as *;
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;

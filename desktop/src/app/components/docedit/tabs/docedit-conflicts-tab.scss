@@ -1,4 +1,5 @@
-@import './revision-selector';
+@use './revision-selector';
+@use '../../variables' as *;
 
 #conflict-resolver {
   height: calc(100vh - 161px);

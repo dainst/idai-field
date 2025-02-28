@@ -1,3 +1,5 @@
+@use '../../variables' as *;
+
 .field-drag-element {
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2),
               0 9px 11px 2px rgba(0, 0, 0, 0.14),

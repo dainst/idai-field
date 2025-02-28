@@ -1,3 +1,6 @@
+@use 'bootstrap' as *;
+@use '../../variables' as *;
+
 .configuration-editor-modal-header {
   height: 54px;
   padding: 7px;

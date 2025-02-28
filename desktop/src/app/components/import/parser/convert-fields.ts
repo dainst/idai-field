@@ -58,7 +58,8 @@ function convertTypeDependent(container: any, fieldName: string, inputType: Inpu
     if (inputType === InputType.INT || inputType === InputType.UNSIGNEDINT) convertInt(container, fieldName);
     if (inputType === InputType.FLOAT || inputType === InputType.UNSIGNEDFLOAT) convertFloat(container, fieldName);
     if (inputType === InputType.COMPOSITE) convertComposite(container, fieldName, field);
-    if (inputType === InputType.CHECKBOXES || inputType === InputType.SIMPLE_MULTIINPUT) {
+    if (inputType === InputType.CHECKBOXES || inputType === InputType.SIMPLE_MULTIINPUT
+            || inputType === InputType.VALUELIST_MULTIINPUT) {
         convertStringArray(container, fieldName)
     };
 }

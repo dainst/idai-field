@@ -1,6 +1,6 @@
 import { Associative, cond, detach, dropRightWhile, filter, flow, forEach, includedIn, is, isArray,
     isAssociative, isEmpty, isNot, isnt, isObject, Map, update, values, clone } from 'tsfun';
-import { Relation, typeOf, NewResource, Resource } from 'idai-field-core';
+import { Relation, typeOf, NewResource, Resource, EditableValue } from 'idai-field-core';
 import { hasEmptyAssociatives } from '../../util';
 import { ImportErrors } from '../import-errors';
 
@@ -117,11 +117,11 @@ function assertNoEmptyAssociatives(resource: Resource|NewResource) {
 }
 
 
-function isObjectArray(as: Array<any>|any) {
+function isObjectArray(fieldContent: any[]|any): boolean {
 
-    if (!isArray(as)) return false;
+    if (!isArray(fieldContent)) return false;
 
-    const arrayType = as
+    const arrayType = fieldContent
         .map(typeOf)
         // typeof null -> 'object', typeof undefined -> 'undefined'
         .map(cond(is('undefined'), 'object'))
@@ -129,6 +129,12 @@ function isObjectArray(as: Array<any>|any) {
         [0];
 
     return arrayType === 'object';
+}
+
+
+function isEditableValueArray(target: Resource, fieldName: string): boolean {
+
+    return target.category === 'Project' && (fieldName === 'staff' || fieldName == 'campaigns');
 }
 
 
@@ -149,8 +155,11 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined, source: Map<any
     return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: any, property: string|number) => {
-            if (source[property] === null) delete target[property];
-            else if (isObjectArray(source[property])) {
+            if (source[property] === null) {
+                delete target[property];
+            } else if (isEditableValueArray(target, property as string)) {
+                target[property] = mergeEditableValues(source[property], target[property]);
+            } else if (isObjectArray(source[property])) {
                 if (!target[property]) target[property] = [];
                 target[property] = expandObjectArray(target[property], source[property]);
                 if (target[property].length === 0) delete target[property];
@@ -198,4 +207,18 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
     const result = dropRightWhile(is(null))(target);
     if (result.includes(null)) throw [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN];
     return result;
+}
+
+
+function mergeEditableValues(source: string[], target: Array<EditableValue>): Array<EditableValue> {
+
+    if (!target) target = [];
+
+    return source.map(value => {
+        const existingElement: EditableValue = target.find(element => element.value === value);
+        return {
+            value,
+            selectable: !existingElement || existingElement.selectable
+        };
+    });
 }

@@ -33,11 +33,11 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
         assertArraysHomogeneouslyTyped(additional);
         assertNoAttemptToChangeCategory(into, additional);
 
-        const target =
-            overwriteOrDeleteProperties(
-                clone(into),
-                additional,
-                Resource.CONSTANT_FIELDS.concat([GEOMETRY]));
+        const target = overwriteOrDeleteProperties(
+            clone(into),
+            additional,
+            Resource.CONSTANT_FIELDS.concat([GEOMETRY])
+        );
 
         if (additional[GEOMETRY]) target[GEOMETRY] = additional[GEOMETRY];
 
@@ -50,7 +50,6 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
                     additional.relations,
                     [Relation.Hierarchy.RECORDEDIN]))
             (target) as Resource;
-
     } catch (err) {
         throw appendIdentifier(err, into.identifier);
     }
@@ -87,7 +86,8 @@ function assertArraysHomogeneouslyTyped(o: Associative<any>) {
     flow(o,
         values,
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
-        forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
+        forEach(cond(isAssociative, assertArraysHomogeneouslyTyped))
+    );
 }
 
 
@@ -112,7 +112,8 @@ function assertNoEmptyAssociatives(resource: Resource|NewResource) {
         detach(RELATIONS),
         cond(hasEmptyAssociatives, () => {
             throw 'Precondition violated in mergeResource. Identifier: ' + resource.identifier;
-        }));
+        })
+    );
 }
 
 
@@ -132,7 +133,7 @@ function isObjectArray(as: Array<any>|any) {
 
 
 /**
- * Iterates over all fields of source, except those specified by exlusions
+ * Iterates over all fields of source, except those specified by exclusions
  * and either copies them from source to target
  * or deletes them if the field is set to null.
  *
@@ -143,34 +144,26 @@ function isObjectArray(as: Array<any>|any) {
  * @param source
  * @param exclusions
  */
-function overwriteOrDeleteProperties(target: Map<any>|undefined,
-                                     source: Map<any>,
-                                     exclusions: string[]) {
+function overwriteOrDeleteProperties(target: Map<any>|undefined, source: Map<any>, exclusions: string[]) {
 
     return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: any, property: string|number) => {
-
             if (source[property] === null) delete target[property];
             else if (isObjectArray(source[property])) {
-
                 if (!target[property]) target[property] = [];
                 target[property] = expandObjectArray(target[property], source[property]);
-
                 if (target[property].length === 0) delete target[property];
-
             } else if (isObject(source[property]) && isObject(target[property])) {
-
                 overwriteOrDeleteProperties(target[property], source[property], []);
                 if (isEmpty(target[property])) delete target[property];
-
             } else if (isObject(source[property]) && target[property] === undefined) {
-
                 if (Object.values(source[property]).filter(isnt(null)).length > 0) {
                     target[property] = filter(source[property], isnt(null));
                 }
-
-            } else target[property] = source[property];
+            } else {
+                target[property] = source[property];
+            }
 
             return target;
         }, target ? target : {});
@@ -180,7 +173,6 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined,
 function expandObjectArray(target: Array<any>, source: Array<any>) {
 
     Object.keys(source).forEach(index => {
-
         // This can happen if deletions are not permitted and
         // null values got collapsed via preprocessFields
         if (source[index] === undefined) {

@@ -166,7 +166,8 @@ category-picker .category-item,
     }
 
     .category-label {
-        display: inline-block;
+        display: flex;
+        align-items:center ;
         margin-left: 40px;
         width: calc(100% - 50px);
         font-size: 15px;

@@ -9,6 +9,7 @@
     width: 100%;
     height: calc(100vh - #{$navbar-height + $toolbar-height});
     user-select: none;
+    background-color: #eeeadb;
 
     .leaflet-control-zoom {
         z-index: 1008;

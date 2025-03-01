@@ -52,6 +52,7 @@ $deactivated-button-color: lightgray;
   height: $toolbar-height;
   padding-top: 3px;
   padding-bottom: 50px;
+  border-bottom:1px solid;
 
   #search-bar-container {
     width: fit-content;

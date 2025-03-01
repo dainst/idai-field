@@ -74,6 +74,11 @@ $deactivated-button-color: lightgray;
       .btn {
         width: 38px !important;
         height: 38px !important;
+        color: #A67A3C;
+
+        &.active {
+           background-color: #eeeadb;
+          }
       }
     }
   }

@@ -49,7 +49,7 @@
 }
 
 .dropdown-item.active, .dropdown-item:active {
-    color: #000;
+    color: #200c0c;
     background-color: #f8f9fa;
 }
 

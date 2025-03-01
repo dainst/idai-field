@@ -30,7 +30,7 @@ $border-radius: 4px;
   .dropdown-toggle:hover,
   .dropdown-toggle:active,
   .show .dropdown-toggle {
-    color: $link-hover-color !important;  
+    color: $link-hover-color !important;
   }
 
   &.mac-margin {
@@ -45,7 +45,7 @@ $border-radius: 4px;
 }
 
 .navbar.bg-primary {
-  background: linear-gradient(to top, #ccc, #efefef);
+  background: #334019 !important;
 }
 
 .navbar-tabbed .nav-link {
@@ -104,7 +104,7 @@ $border-radius: 4px;
     &:before {
       left: 1 - $border-radius;
     }
-    
+
     &:after {
       right: 1 - $border-radius;
     }

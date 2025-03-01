@@ -36,10 +36,14 @@ document-info {
 
   .document-info-header button {
     margin-left: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    color:#A67A3C;
+    border-radius: 2rem;
     padding: 4px 8px;
     cursor: pointer;
+    &.active {
+      background-color:#eeeadb !important;
+      border: none !important;
+    }
   }
 
 

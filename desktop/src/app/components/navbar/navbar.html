@@ -5,9 +5,9 @@
         <ul #tabSpace id="resources-tabs" *ngIf="isInDefaultResourcesView()"
             class="nav navbar-nav navbar-tabbed me-auto">
             <li id="navbar-project" class="nav-item tab" [class.active]="isActiveRoute('/resources/project')">
-                <a class="nav-link" 
+                <a class="nav-link"
                    href="#" routerLink="/resources/project">
-                   <span class="mdi mdi-home"></span>
+                   <span class="mdi mdi-home"  style="color: #A67A3C"></span>
                </a>
             </li>
             <li *ngFor="let tab of getShownTabs()" id="{{getTabId(tab)}}"

@@ -20,6 +20,10 @@ $layer-menu-remove-button-color: #c82333;
   top: 10px;
   padding-top: 6px;
 
+  .mdi{
+    color: white;
+  }
+
   &.disabled {
     opacity: 1;
   }
@@ -131,7 +135,7 @@ $layer-menu-remove-button-color: #c82333;
               }
             }
           }
-          
+
           .layer-menu-default-layer-button,
           .layer-menu-remove-button {
             margin-left: 5px;

@@ -32,7 +32,7 @@ export module ViewState {
         return {
             operation: undefined,
             bypassHierarchy: bypassHierarchy,
-            expandAllGroups: false,
+            expandAllGroups: true,
             navigationPath: NavigationPath.empty(),
             mode: mode,
             limitSearchResults: true,

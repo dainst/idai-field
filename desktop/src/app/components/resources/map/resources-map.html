@@ -6,7 +6,7 @@
     <div *ngIf="isEditing()" class="layover1"></div>
     <div *ngIf="isEditing()" class="layover2"></div>
 
-    <div class="col px-0"
+    <div class="col px-0 mb-4"
          [class.no-zoom-buttons]="isPopoverMenuOpened() && viewFacade.getSelectedDocument()">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"

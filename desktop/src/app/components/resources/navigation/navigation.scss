@@ -1,119 +1,125 @@
 /**
  * @author Thomas Kleinke
  */
-@use 'sass:color';
+@use "sass:color";
 
-$active-navigation-button-background-color: #d5dfef;
+$active-navigation-button-background-color: #efefd5;
 
 navigation {
-  width: 100%;
+    width: 100%;
 
-  #navigation {
-    position: relative;
-    top: 3px;
-    padding-left: 8px;
-    color: rgba(85, 114, 161, 1);
-
-    .dropdown-menu {
-      max-height: calc(100vh - 350px);
-      overflow-y: scroll;
-      padding-left: 7px;
-    }
-
-    .root-document {
-      @extend .btn-outline-primary, :active;
-      background-color: $active-navigation-button-background-color !important;
-      color: $primary !important;
-      z-index: auto !important;
-    }
-
-    .navigation-button {
-      padding-top: 6px;
-      white-space: nowrap;
-
-      &:active {
-        color: $primary !important;
-        background-color: $active-navigation-button-background-color !important;
-      }
-    }
-
-    #selected-operation {
-      white-space: nowrap;
-    }
-
-    .root-document ~ .navigation-button,
-    .root-document ~ .navigation-button:active {
-      color: color.adjust($primary-button-color, $lightness: 30%);
-      border-color: color.adjust($primary-button-color, $lightness: 30%);
-    }
-
-    .root-document ~ .navigation-button:hover {
-      color: color.adjust($primary-button-color, $lightness: 35%);
-      border-color: color.adjust($primary-button-color, $lightness: 35%);
-    }
-
-    .root-document + .navigation-button,
-    .root-document + .navigation-button:hover {
-      border-left-color: $primary-button-color;
-    }
-
-    #navigation-button-group {
-      width: fit-content;
-      max-width: calc(100% - 50px);
-      padding: 0;
-    }
-
-    .navigation-button {
-      height: 38px;
-      box-shadow: none !important;
-    }
-
-    .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
-      position: absolute;
-      top: 50%;
-      left: 100%;
-      width: 0;
-      height: 0;
-      border: solid transparent;
-      content: '';
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .navigation-button:not(:last-child):before {
-      border-left-color: color.adjust($primary-button-color, $lightness: -5%);
-      border-width: 6px;
-      margin-top: -6px;
-      transition: border-left-color 0.15s ease-in-out;
-    }
-
-    .navigation-button:not(:last-child):after {
-      border-left-color: #fff;
-      border-width: 5px;
-      margin-top: -5px;
-      transition: border-left-color 0.15s ease-in-out;
-    }
-
-    .navigation-button.root-document:not(:last-child):after,
-    .navigation-button:active:not(:last-child):after {
-      border-left-color: $active-navigation-button-background-color;
-    }
-
-    .root-document ~ .navigation-button:not(:last-child):before {
-      border-left-color: color.adjust($primary-button-color, $lightness: 30%);
-    }
-
-    #hierarchy-mode-switch {
-      padding: 0;
-      width: 38px !important;
-      height: 38px !important;
-
-      .mdi {
+    #navigation {
         position: relative;
-        top: 6px;
-        left: 1px;
-        color:white
-      }
+        top: 3px;
+        padding-left: 8px;
+        color: rgba(85, 114, 161, 1);
+
+        .dropdown-menu {
+            max-height: calc(100vh - 350px);
+            overflow-y: scroll;
+            padding-left: 7px;
+        }
+
+        .root-document {
+            @extend .btn-outline-primary, :active;
+            background-color: $active-navigation-button-background-color !important;
+            color: $primary !important;
+            z-index: auto !important;
+        }
+
+        .navigation-button {
+            padding-top: 6px;
+            white-space: nowrap;
+
+            &:active {
+                color: $primary !important;
+                background-color: $active-navigation-button-background-color !important;
+            }
+        }
+
+        #selected-operation {
+            white-space: nowrap;
+        }
+
+        .root-document ~ .navigation-button,
+        .root-document ~ .navigation-button:active {
+            color: color.adjust($primary-button-color, $lightness: 30%);
+            border-color: color.adjust($primary-button-color, $lightness: 30%);
+        }
+
+        .root-document ~ .navigation-button:hover {
+            color: color.adjust($primary-button-color, $lightness: 35%);
+            border-color: color.adjust($primary-button-color, $lightness: 35%);
+        }
+
+        .root-document + .navigation-button,
+        .root-document + .navigation-button:hover {
+            border-left-color: $primary-button-color;
+        }
+
+        #navigation-button-group {
+            width: fit-content;
+            max-width: calc(100% - 50px);
+            padding: 0;
+        }
+
+        .navigation-button {
+            height: 38px;
+            box-shadow: none !important;
+        }
+
+        .navigation-button:not(:last-child):before,
+        .navigation-button:not(:last-child):after {
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 0;
+            height: 0;
+            border: solid transparent;
+            content: "";
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .navigation-button:not(:last-child):before {
+            border-left-color: color.adjust(
+                $primary-button-color,
+                $lightness: -5%
+            );
+            border-width: 6px;
+            margin-top: -6px;
+            transition: border-left-color 0.15s ease-in-out;
+        }
+
+        .navigation-button:not(:last-child):after {
+            border-left-color: #fff;
+            border-width: 5px;
+            margin-top: -5px;
+            transition: border-left-color 0.15s ease-in-out;
+        }
+
+        .navigation-button.root-document:not(:last-child):after,
+        .navigation-button:active:not(:last-child):after {
+            border-left-color: $active-navigation-button-background-color;
+        }
+
+        .root-document ~ .navigation-button:not(:last-child):before {
+            border-left-color: color.adjust(
+                $primary-button-color,
+                $lightness: 30%
+            );
+        }
+
+        #hierarchy-mode-switch {
+            padding: 0;
+            width: 38px !important;
+            height: 38px !important;
+
+            .mdi {
+                position: relative;
+                top: 6px;
+                left: 1px;
+            }
+        }
     }
-  }
 }

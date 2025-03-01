@@ -1,12 +1,12 @@
 //
 // Variables
 // --------------------------------------------------
-@use 'sass:color';
+@use "sass:color";
 
 $list-item-hover-color: #ededed;
 
-$primary: #A67A3C !default;
-$primary-button-color:  #A67A3C;
+$primary: #334019 !default;
+$primary-button-color: #a67a3c;
 
 $item-height: 58px;
 $item-padding-top: 8px;
@@ -16,41 +16,48 @@ $font-size-medium: 13px;
 $font-size-smaller: 12px;
 $font-size-even-smaller: 10px;
 
-$modal-header-background-color: #e7e7e7;
-$modal-header-font-color: #424242;
+$modal-header-background-color: color.adjust(#bec1a3, $lightness: -10%);
+$modal-header-font-color: #333333;
 
-$custom-highlight-color: #e5effd;
+$custom-highlight-color: color.adjust(
+    #a67a3c,
+    $lightness: 30%,
+    $saturation: -20%
+);
 
 //== Media queries breakpoints
 $grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 1200px,
-  xl: 1600px
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 1200px,
+    xl: 1600px,
 ) !default;
 
 //== Navbar
-$navbar-default-color:       #333 !default;
-$navbar-default-bg:          #ccc !default;
-$navbar-default-border:      transparent !default;
-$navbar-dark-color:          #333 !default;
+$navbar-default-color: #333333 !default;
+$navbar-default-bg: #bec1a3 !default;
+$navbar-default-border: transparent !default;
+$navbar-dark-color: #eee !default;
 
-$brand-primary:           #37588e !default;
+$brand-primary: #334019 !default;
 
 $border-radius: 2rem !default;
-$dropdown-border-radius: .25rem !default;
+$dropdown-border-radius: 0.25rem !default;
 
 // Windows Ctrl Buttons
-$ctrl-button-close:               #d9534f;
-$ctrl-button-text-color:          #f2f2f2;
-$ctrl-button-bg:                  rgba(85, 114, 161, 0);
+$ctrl-button-close: #a67a3c;
+$ctrl-button-text-color: #ffffff;
+$ctrl-button-bg: rgba(85, 114, 161, 0);
 
 // Sidebar & Popover
 $sidebar-bg-color: #f8f9fa;
 $popover-bg-color: transparentize($sidebar-bg-color, 0.08);
 $popover-header-bg-color: color.adjust($popover-bg-color, $lightness: -5%);
-$popover-header-hover-bg-color: color.adjust($popover-header-bg-color, $lightness: -3%);
+$popover-header-hover-bg-color: color.adjust(
+    $popover-header-bg-color,
+    $lightness: -3%
+);
 $resources-listing-item-wide-width: 300px;
 $resources-listing-item-slim-width: 258px;
 

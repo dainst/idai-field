@@ -1,7 +1,7 @@
 /**
  * @author: Thomas Kleinke
  */
-@use 'sass:color';
+@use "sass:color";
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
@@ -10,205 +10,207 @@ $layer-menu-remove-button-color: #c82333;
 
 #layer-button,
 #layer-menu {
-  position: absolute;
-  z-index: 1008;
-  right: 8px;
-  border: none;
+    position: absolute;
+    z-index: 1008;
+    right: 8px;
+    border: none;
 }
 
 #layer-button {
-  top: 10px;
-  padding-top: 6px;
+    top: 10px;
+    padding-top: 6px;
 
-  .mdi{
-    color: white;
-  }
-
-  &.disabled {
-    opacity: 1;
-  }
+    &.disabled {
+        opacity: 1;
+    }
 }
 
 #layer-menu {
-  top: 51px;
-  min-width: 223px;
-  max-width: 500px;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  border-radius: 0.25rem !important;
-  background-color: #f8f9fa !important;
-  cursor: default !important;
-  user-select: none;
+    top: 51px;
+    min-width: 223px;
+    max-width: 500px;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 0.25rem !important;
+    background-color: #f8f9fa !important;
+    cursor: default !important;
+    user-select: none;
 
-  .card-body {
-    padding: 7px;
+    .card-body {
+        padding: 7px;
 
-    loading-icon {
-      position: relative;
-      top: 50px;
-      display: flex;
-      z-index: 1;
-    }
-
-    .layer-menu-container {
-      max-height: calc(100vh - 250px);
-      overflow-y: auto;
-      overflow-x: hidden;
-
-      &.loading {
-        opacity: 0.3;
-        pointer-events: none;
-      }
-
-      .layer-group {
-        margin-bottom: 5px;
-        padding-left: 7px;
-        border-radius: 0.25rem;
-        background-color: #e8e8e8;
-        overflow: hidden;
-
-        &:first-child {
-          background-color: transparent;
-        }
-
-        .layer-group-heading {
-          font-size: 15px;
-        }
-
-        .no-layers-info {
-          display: table-caption;
-          min-width: 200px;
-          font-style: italic;
-          font-size: 12px;
-        }
-
-        .layer-group-edit-button,
-        .layer-group-save-button,
-        .layer-group-cancel-button {
-          position: relative;
-          bottom: 2px;
-          left: 2px;
-          float: right;
-        }
-
-        .layer-group-edit-button,
-        .layer-group-cancel-button {
-          color: $layer-menu-button-color;
-        }
-
-        .layer-group-save-button:hover {
-          color: color.adjust($layer-menu-save-button-color, $lightness: 10%) !important;
-        }
-
-        .layer-menu-add-button {
-          height: 20px;
-          margin-bottom: 2px;
-          border: none;
-
-          .mdi {
+        loading-icon {
             position: relative;
-            bottom: 8px;
-          }
+            top: 50px;
+            display: flex;
+            z-index: 1;
         }
 
-        fieldset {
-          margin-bottom: 0;
-          clear: right;
+        .layer-menu-container {
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+            overflow-x: hidden;
 
-          .layer-entry {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            height: 27px;
-
-            .layer-menu-drag-handle {
-              display: inline-block;
-              line-height: 1.9;
-              height: 100%;
-              width: calc(100% - 102px);
-              margin-right: 28px;
-
-              &.draggable {
-                cursor: grab;
-                margin-right: 0;
-              }
+            &.loading {
+                opacity: 0.3;
+                pointer-events: none;
             }
-          }
 
-          .layer-menu-default-layer-button,
-          .layer-menu-remove-button {
-            margin-left: 5px;
-          }
+            .layer-group {
+                margin-bottom: 5px;
+                padding-left: 7px;
+                border-radius: 0.25rem;
+                background-color: #e8e8e8;
+                overflow: hidden;
 
-          .layer-menu-remove-button {
-            color: $layer-menu-remove-button-color;
+                &:first-child {
+                    background-color: transparent;
+                }
 
-            &:hover {
-              color: color.adjust($layer-menu-remove-button-color, $lightness: 20%) !important;
+                .layer-group-heading {
+                    font-size: 15px;
+                }
+
+                .no-layers-info {
+                    display: table-caption;
+                    min-width: 200px;
+                    font-style: italic;
+                    font-size: 12px;
+                }
+
+                .layer-group-edit-button,
+                .layer-group-save-button,
+                .layer-group-cancel-button {
+                    position: relative;
+                    bottom: 2px;
+                    left: 2px;
+                    float: right;
+                }
+
+                .layer-group-edit-button,
+                .layer-group-cancel-button {
+                    color: $layer-menu-button-color;
+                }
+
+                .layer-group-save-button:hover {
+                    color: color.adjust(
+                        $layer-menu-save-button-color,
+                        $lightness: 10%
+                    ) !important;
+                }
+
+                .layer-menu-add-button {
+                    height: 20px;
+                    margin-bottom: 2px;
+                    border: none;
+
+                    .mdi {
+                        position: relative;
+                        bottom: 8px;
+                    }
+                }
+
+                fieldset {
+                    margin-bottom: 0;
+                    clear: right;
+
+                    .layer-entry {
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                        height: 27px;
+
+                        .layer-menu-drag-handle {
+                            display: inline-block;
+                            line-height: 1.9;
+                            height: 100%;
+                            width: calc(100% - 102px);
+                            margin-right: 28px;
+
+                            &.draggable {
+                                cursor: grab;
+                                margin-right: 0;
+                            }
+                        }
+                    }
+
+                    .layer-menu-default-layer-button,
+                    .layer-menu-remove-button {
+                        margin-left: 5px;
+                    }
+
+                    .layer-menu-remove-button {
+                        color: $layer-menu-remove-button-color;
+
+                        &:hover {
+                            color: color.adjust(
+                                $layer-menu-remove-button-color,
+                                $lightness: 20%
+                            ) !important;
+                        }
+                    }
+
+                    .drag-placeholder {
+                        min-height: 27px;
+                        padding-left: 102px;
+                        border: none !important;
+                        cursor: grabbing;
+                        opacity: 0;
+                    }
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
             }
-          }
-
-          .drag-placeholder {
-            min-height: 27px;
-            padding-left: 102px;
-            border: none !important;
-            cursor: grabbing;
-            opacity: 0;
-          }
         }
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
     }
-  }
 }
 
 .layer-menu-button,
 .layer-group-edit-button,
 .layer-group-save-button {
-  padding: 0;
-  margin-right: 5px;
-  font-size: 18px;
-  cursor: default;
+    padding: 0;
+    margin-right: 5px;
+    font-size: 18px;
+    cursor: default;
 }
 
 .layer-menu-button.layer-active,
 .layer-menu-default-layer-button {
-  color: $layer-menu-button-color !important;
+    color: $layer-menu-button-color !important;
 }
 
 .layer-menu-button.layer-inactive {
-  color: $layer-menu-button-inactive-color !important;
+    color: $layer-menu-button-inactive-color !important;
 }
 
 .layer-menu-button:hover,
 .layer-group-edit-button:hover,
 .layer-menu-default-layer-button:hover {
-  color: color.adjust($layer-menu-button-color, $lightness: 10%) !important;
+    color: color.adjust($layer-menu-button-color, $lightness: 10%) !important;
 }
 
 .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 div.cdk-drag-preview {
-  z-index: 2000 !important;
+    z-index: 2000 !important;
 
-  .mdi {
-    display: none;
-  }
+    .mdi {
+        display: none;
+    }
 
-  .layer-menu-label {
-    left: 46px;
-  }
+    .layer-menu-label {
+        left: 46px;
+    }
 }
 
 .layer-menu-label {
-  position: relative;
-  bottom: 2px;
-  font-size: 14px;
-  white-space: nowrap;
+    position: relative;
+    bottom: 2px;
+    font-size: 14px;
+    white-space: nowrap;
 }

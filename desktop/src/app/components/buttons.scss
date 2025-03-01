@@ -1,213 +1,220 @@
-@use 'sass:color';
+@use "sass:color";
 
+$cal-poly-green: #334019ff;
+$sage: #bec1a3ff;
+$dark-red: #881600ff;
 $greenbgr: #334019;
-$redbgr: #e00000;
-$lightgraybgr: #eeeeee;
 
 .btn {
-  cursor: default !important;
-  box-shadow: none !important;
+    cursor: default !important;
+    box-shadow: none !important;
 }
 
 .btn-square {
-  height: 39px !important;
-  width: 39px !important;
-  padding: 0;
+    height: 39px !important;
+    width: 39px !important;
+    padding: 0;
 }
 
 .circular-button {
-  cursor: default !important;
-  text-align: center;
-  padding: 3px 0 0 1px;
-  border-radius: 50%;
-  min-width: 35px;
-  height: 39px;
-  width: 39px;
-  z-index: 1;
-  font-size: 23px;
-  position: absolute;
-  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-  -webkit-appearance: inherit !important;
+    cursor: default !important;
+    text-align: center;
+    padding: 3px 0 0 1px;
+    border-radius: 50%;
+    min-width: 35px;
+    height: 39px;
+    width: 39px;
+    z-index: 1;
+    font-size: 23px;
+    position: absolute;
+    box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.24),
+        0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    -webkit-appearance: inherit !important;
 }
 
 .circular-button:hover {
-  transition: background-color .3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .small-circular-button {
-  font-size: 17px;
-  text-align: center;
-  padding: 8px 0 0 0;
-  border-radius: 50%;
-  min-width: 33px;
-  height: 33px;
-  width: 33px;
-  z-index: 1;
-  position: absolute;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-  -webkit-appearance: inherit !important;
+    font-size: 17px;
+    text-align: center;
+    padding: 8px 0 0 0;
+    border-radius: 50%;
+    min-width: 33px;
+    height: 33px;
+    width: 33px;
+    z-index: 1;
+    position: absolute;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.24), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    -webkit-appearance: inherit !important;
 }
 
 .small-circular-button:hover {
-  transition: background-color .3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .lightgray-button:hover {
-  background-color: $lightgraybgr;
+    background-color: $sage;
 }
 
 .green-button {
-  background-color: $greenbgr;
-  color: #fff;
-  font-weight: normal;
+    background-color: $cal-poly-green;
+    color: #fff;
+    font-weight: normal;
 }
 
 .green-button:hover {
-  background-color: color.adjust($greenbgr, $lightness: 5%);
+    background-color: color.adjust($cal-poly-green, $lightness: 5%);
 }
 
 .red-button {
-  background-color: $redbgr;
-  color: #fff;
-  font-weight: normal;
+    background-color: $dark-red;
+    color: #fff;
+    font-weight: normal;
 }
 
 .red-button:hover {
-  background-color: color.adjust($redbgr, $lightness: 35%);
+    background-color: color.adjust($dark-red, $lightness: 35%);
 }
 
 .nav-link {
-  padding-right: 1rem !important;
-  padding-left: 1rem !important;
-  cursor: default !important;
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    cursor: default !important;
 }
 
 plus-button,
 category-switcher-button {
-  .abstract-category {
-    cursor: not-allowed;
-    font-style: italic;
-  }
-
-  .abstract-category ul {
-    font-style: normal;
-  }
-
-  .circular-button {
-    width: 41px;
-    height: 41px;
-
-    &.category-button {
-      padding: 0;
+    .abstract-category {
+        cursor: not-allowed;
+        font-style: italic;
     }
-  }
+
+    .abstract-category ul {
+        font-style: normal;
+    }
+
+    .circular-button {
+        width: 41px;
+        height: 41px;
+
+        &.category-button {
+            padding: 0;
+        }
+    }
 }
 
 .category-button {
-  background-color: rgb(240, 240, 240);
+    background-color: $dark-red;
 
-  .plus-sign-circle,
-  .menu-down-sign-circle {
-    position: absolute;
-    top: 26px;
-    left: 26px;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
+    .plus-sign-circle,
+    .menu-down-sign-circle {
+        position: absolute;
+        top: 26px;
+        left: 26px;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
 
-    .mdi {
-      position: absolute;
-      left: 0;
-      color: white;
-      line-height: 17px;
+        .mdi {
+            position: absolute;
+            left: 0;
+            color: white;
+            line-height: 17px;
+        }
     }
-  }
 
-  .plus-sign-circle {
-    background-color: $greenbgr;
+    .plus-sign-circle {
+        background-color: $cal-poly-green;
 
-    .mdi {
-      top: -1px;
+        .mdi {
+            top: -1px;
+        }
     }
-  }
 
-  .menu-down-sign-circle {
-    background-color: $primary;
-  }
+    .menu-down-sign-circle {
+        background-color: $primary;
+    }
 }
 
 .category-button:hover {
-  category-icon {
-    filter: brightness(1.15);
-    transition: filter .3s ease;
-  }
+    category-icon {
+        filter: brightness(1.15);
+        transition: filter 0.3s ease;
+    }
 
-  .plus-sign-circle {
-    filter: brightness(1.18);
-    transition: filter .3s ease;
-  }
+    .plus-sign-circle {
+        filter: brightness(1.18);
+        transition: filter 0.3s ease;
+    }
 
-  .menu-down-sign-circle {
-    filter: brightness(1.25);
-    transition: filter .3s ease;
-  }
+    .menu-down-sign-circle {
+        filter: brightness(1.25);
+        transition: filter 0.3s ease;
+    }
 }
 
 .btn-outline-primary:active,
 .btn-outline-primary:focus {
-  color: #5572A1 !important;
-  background-color: #fff !important;
-  border-color: #5572A1 !important;
+    color: var(
+        --cal-poly-green
+    ) !important; /* Set text color to Cal Poly Green */
+    background-color: var(--sage) !important; /* Set background to Sage */
+    border-color: var(
+        --cal-poly-green
+    ) !important; /* Set border to Cal Poly Green */
 }
 
 .btn-outline-primary:active {
-  box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7) !important;
+    box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7) !important;
 }
 
 .show > .btn-outline-primary.dropdown-toggle {
-  @extend :active;
-  border-color: $primary-button-color;
+    @extend :active;
+    border-color: $primary-button-color;
 }
 
 .dropdown {
-  height: 39px;
+    height: 39px;
 
-  hr {
-    margin: 7px 0 9px 0;
-  }
+    hr {
+        margin: 7px 0 9px 0;
+    }
 }
 
 .dropdown-item {
-  cursor: default;
-  user-select: none;
-  color: #000 !important;
+    cursor: default;
+    user-select: none;
+    color: #000 !important;
 
-  &:focus {
-    background-color: #fff;
-  }
+    &:focus {
+        background-color: #fff;
+    }
 
-  &:hover {
-    background-color: $list-item-hover-color;
-  }
+    &:hover {
+        background-color: $list-item-hover-color;
+    }
 
-  &:active {
-    background-color: color.adjust($list-item-hover-color, $lightness: -5%);
-    outline: 0;
-  }
+    &:active {
+        background-color: color.adjust($list-item-hover-color, $lightness: -5%);
+        outline: 0;
+    }
 }
 
 .button-label {
-  display: inline-block;
-  margin-left: 5px;
+    display: inline-block;
+    margin-left: 5px;
 }
 
 .btn-info {
-  color: white !important;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
+    color: white !important;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
 
-  &:hover, &:active {
-    background-color: #138496 !important;
-    border-color: #138496 !important;
-  }
+    &:hover,
+    &:active {
+        background-color: #138496 !important;
+        border-color: #138496 !important;
+    }
 }

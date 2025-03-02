@@ -1,5 +1,5 @@
 $default-border-color: #dee2e6;
-$focused-border-color: #9bacc7;
+$focused-border-color:#334019 ;
 
 multi-language-text-field {
   position: relative;
@@ -46,7 +46,7 @@ multi-language-text-field {
       }
 
       &.filled-in {
-        color: #37588e !important;
+        color: #334019 !important;
       }
 
       &:hover {

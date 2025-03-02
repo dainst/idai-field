@@ -26,7 +26,7 @@
                     <button class="btn btn-success disabled pull-right"
                             id="document-edit-button-save-document"
                             [class.disabled]="!isChanged() || isLoading()"
-                            (click)="!isChanged() || isLoading() || save()">
+                            (click)="!isChanged() || isLoading() || save()" style="background-color: #334019 !important;">
                         <span class="mdi mdi-content-save"></span>
                         <span class="button-label" i18n="@@buttons.save">Speichern</span>
                     </button>
@@ -34,6 +34,7 @@
                          ngbDropdown placement="bottom-right"
                          class="btn-group">
                         <button id="document-edit-button-dropdown"
+                        style="background-color: #334019 !important;"
                                 class="btn btn-success dropdown-toggle-split"
                                 [class.disabled]="isLoading()"
                                 [disabled]="isLoading()"

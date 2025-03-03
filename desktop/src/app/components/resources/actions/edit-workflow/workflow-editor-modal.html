@@ -9,10 +9,10 @@
 </div>
 <div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
     <div id="workflow-steps-container">
-        <div *ngFor="let workflowStep of workflowSteps" class="workflow-step row">
-            <div class="col-md-3">{{workflowStep.resource.executionDate}}</div>
-            <div class="col-md-3">{{getCategoryLabel(workflowStep)}}</div>
-            <div class="col-md-6">{{getShortDescriptionLabel(workflowStep)}}</div>
+        <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
+            <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
+            <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
+            <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
         </div>
     </div>
     <div id="workflow-step-plus-button-container">

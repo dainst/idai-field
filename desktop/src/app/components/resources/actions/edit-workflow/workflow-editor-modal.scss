@@ -13,8 +13,29 @@
     user-select: none;
 
     .workflow-step {
-      padding: 10px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.125);;
+      display: flex;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+      .workflow-step-execution-date,
+      .workflow-step-category,
+      .workflow-step-short-description {
+        padding: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .workflow-step-execution-date {
+        width: 120px;
+      }
+
+      .workflow-step-category {
+        width: 200px;
+      }
+
+      .workflow-step-short-description {
+        width: calc(100% - 400px);
+      }
     }
   }
 

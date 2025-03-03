@@ -27,7 +27,8 @@ export module WarningsUpdater {
         Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE,
         ImageResource.GEOREFERENCE, ImageResource.ORIGINAL_FILENAME
     ].concat(Relation.Hierarchy.ALL)
-    .concat(Relation.Image.ALL);
+    .concat(Relation.Image.ALL)
+    .concat([Relation.HAS_WORKFLOW_STEP]);
 
 
     /**

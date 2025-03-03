@@ -54,6 +54,8 @@ import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-
 import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
+import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
+import { WorkflowStepPlusButtonComponent } from './actions/edit-workflow/workflow-step-plus-button.component';
 
 const remote = window.require('@electron/remote');
 
@@ -99,6 +101,8 @@ const remote = window.require('@electron/remote');
         CreatePrintSettingsProfileModalComponent,
         DeleteQrCodeModalComponent,
         ScanStoragePlaceModalComponent,
+        WorkflowEditorModalComponent,
+        WorkflowStepPlusButtonComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

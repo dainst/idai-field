@@ -313,7 +313,7 @@ export class ProjectConfiguration {
     private filterRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Image', 'Operation'),
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'WorkflowStep', 'Image', 'Operation'),
             Tree.flatten
         );
     }
@@ -322,7 +322,7 @@ export class ProjectConfiguration {
     private filterFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace'),
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'WorkflowStep'),
             Tree.flatten
         );
     }

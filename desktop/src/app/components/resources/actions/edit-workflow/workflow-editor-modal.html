@@ -1,0 +1,20 @@
+<div id="view-modal-header" class="modal-header">
+    <div class="text-truncate heading"
+         i18n="@@resources.workflowEditorModal.header">
+        Arbeitssschritte für Ressource <b>{{document.resource.identifier}}</b> dokumentieren
+    </div>
+    <button id="workflow-editor-cancel-button" class="btn btn-primary btn-square" (click)="cancel()">
+        <span class="mdi mdi-close"></span>
+    </button>
+</div>
+<div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
+    <div id="workflow-steps-container">
+        <div *ngFor="let workflowStep of workflowSteps">
+            <document-teaser [document]="workflowStep"></document-teaser>
+        </div>
+    </div>
+    <div id="workflow-step-plus-button-container">
+        <workflow-step-plus-button [baseDocument]="document"
+                                   (onCategorySelected)="createWorkflowStep($event)"></workflow-step-plus-button>
+    </div>
+</div>

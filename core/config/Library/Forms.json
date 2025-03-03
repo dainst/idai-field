@@ -1692,7 +1692,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription"]
+          "fields": ["identifier", "category", "shortDescription", "executionDate"]
         }
       ]
     }

@@ -821,12 +821,17 @@ export class BuiltInConfiguration {
         WorkflowStep: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
-            fields: {},
+            fields: {
+                executionDate: {
+                    inputType: 'date',
+                    mandatory: true
+                }
+            },
             minimalForm: {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription']
+                        fields: ['identifier', 'category', 'shortDescription', 'executionDate']
                     }
                 ]
             }

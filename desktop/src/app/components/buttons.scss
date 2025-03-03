@@ -198,7 +198,7 @@ category-switcher-button {
   background-color: $info-button-color;
   border-color: $info-button-color;
 
-  &:hover, &:active {
+  &:hover, &:active, &:focus {
     background-color: #138496 !important;
     border-color: #138496 !important;
   }

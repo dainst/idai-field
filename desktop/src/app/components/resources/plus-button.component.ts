@@ -123,8 +123,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.topLevelCategoriesArray.length === 0) return 'none';
 
-        if (this.topLevelCategoriesArray.length === 1
-                && (!this.topLevelCategoriesArray[0].children || this.topLevelCategoriesArray[0].children.length === 0)) {
+        if (this.topLevelCategoriesArray.length === 1 && !this.topLevelCategoriesArray[0].children?.length) {
             return 'singleCategory';
         }
 

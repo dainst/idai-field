@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource, Datastore, Labels,
-    ProjectConfiguration } from 'idai-field-core';
+    ProjectConfiguration, parseDate } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -146,6 +146,16 @@ export class WorkflowEditorModalComponent {
 
         const targetIds: string[] = this.document.resource.relations?.[Relation.HAS_WORKFLOW_STEP] ?? [];
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
+        this.sortWorkflowSteps();
+    }
+
+
+    private sortWorkflowSteps() {
+
+        this.workflowSteps.sort((workflowStep1: Document, workflowStep2: Document) => {
+            return parseDate(workflowStep1.resource.executionDate).getTime()
+                - parseDate(workflowStep2.resource.executionDate).getTime();
+        });
     }
 
 

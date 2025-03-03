@@ -13,11 +13,13 @@
       {{ category.name }} ({{ category.documents.length }})
     </div>
     <ul *ngIf="category.isExpanded" class="category-items">
-      <li *ngFor="let document of category.documents  trackBy: trackDocument"
-        class="category-item resources-listing-item resources-listing-item-wide" (click)="select(document, $event)"
-        (contextmenu)="contextMenu.open($event, [document])"
+      <li *ngFor="let document of category.documents trackBy: trackDocument"
+        class="category-item resources-listing-item resources-listing-item-wide" 
+        (click)="select(document, $event)"
+        (contextmenu)="select(document, $event, false); contextMenu.open($event, getSelection())"
         [class.has-warnings]="document.warnings"
-        [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)" [class.has-warnings]="document.warnings"
+        [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)" 
+        [class.has-warnings]="document.warnings"
         [class.selected]="selectedDocument?.resource.id === document.resource.id"
         [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
         [id]="'resource-' + document.resource.identifier">

@@ -4,6 +4,7 @@ import { AutoBackupSettings } from '../model/auto-backup-settings';
 import { Backup } from '../model/backup';
 import { BackupsInfo } from '../model/backups-info';
 import { INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
+import { buildBackupFileName } from './backup-file-name-utils';
 import { BackupsInfoSerializer } from './backups-info-serializer';
 import { getBackupsToDelete } from './get-backups-to-delete';
 
@@ -185,8 +186,7 @@ async function needsBackup(project: string, backupsInfo: BackupsInfo): Promise<b
 
 function buildBackupFilePath(project: string, creationDate: Date): string {
 
-    const backupFileName: string = project + '_' + creationDate.toISOString().replace(/:/g, '-') + '.jsonl';
-    return settings.backupDirectoryPath + '/' + backupFileName;
+    return settings.backupDirectoryPath + '/' + buildBackupFileName(project, creationDate);
 }
 
 

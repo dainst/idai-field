@@ -46,25 +46,16 @@ defmodule FieldPublication.Publications.Search do
     ]
   end
 
-  def search_document_map_to_struct(%{
-        "id" => id,
-        "identifier" => identifier,
-        "category" => category,
-        "project_name" => project_name,
-        "publication_draft_date" => publication_draft_date,
-        "configuration_based_field_mappings" => configuration_based_field_mappings,
-        "full_doc" => full_doc,
-        "full_doc_as_text" => full_doc_as_text
-      }) do
+  def search_document_map_to_struct(map) do
     %SearchDocument{
-      id: id,
-      identifier: identifier,
-      category: category,
-      project_name: project_name,
-      publication_draft_date: publication_draft_date,
-      configuration_based_field_mappings: configuration_based_field_mappings,
-      full_doc: Data.document_map_to_struct(full_doc),
-      full_doc_as_text: full_doc_as_text
+      id: map["id"],
+      identifier: map["identifier"],
+      category: map["category"],
+      project_name: map["project_name"],
+      publication_draft_date: map["publication_draft_date"],
+      configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
+      full_doc: Data.document_map_to_struct(map["full_doc"]),
+      full_doc_as_text: map["full_doc_as_text"]
     }
   end
 

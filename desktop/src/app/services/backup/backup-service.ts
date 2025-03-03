@@ -5,7 +5,7 @@ import { CREATE_BACKUP, createWorker } from '../create-worker';
 
 const fs = window.require('fs');
 const PouchDB = window.require('pouchdb-browser');
-const pouchDBLoad = window.require('pouchdb-load');
+const pouchDBLoad = require('pouchdb-load');
 
 
 export type RestoreBackupResult = {

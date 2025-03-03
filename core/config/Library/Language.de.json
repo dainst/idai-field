@@ -1619,7 +1619,11 @@
     },
     "WorkflowStep": {
       "label": "Arbeitsschritt",
-      "fields": {}
+      "fields": {
+        "executionDate": {
+          "label": "Datum der Durchführung"
+        }
+      }
     }
   },
   "forms": {

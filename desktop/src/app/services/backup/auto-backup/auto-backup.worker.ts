@@ -3,10 +3,12 @@
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 import { Backup } from '../model/backup';
 import { BackupsInfo } from '../model/backups-info';
+import { BackupsMap } from '../model/backups-map';
 import { INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
 import { buildBackupFileName } from './backup-file-name-utils';
 import { BackupsInfoSerializer } from './backups-info-serializer';
 import { getBackupsToDelete } from './get-backups-to-delete';
+import { getExistingBackups } from './get-existing-backups';
 
 const fs = require('fs');
 const PouchDb = require('pouchdb-browser').default;
@@ -63,7 +65,7 @@ function createWorker() {
     const worker = new Worker((new URL('../create-backup.worker', import.meta.url)));
     worker.onmessage = ({ data }) => {
         if (data.success) {
-            addToBackupsInfo(data.project, data.targetFilePath, data.updateSequence, data.creationDate);
+            updateBackupsInfo(data.project, data.updateSequence);
             onWorkerFinished(worker);
         } else {
             console.error('Error while creating backup file:', data.error);
@@ -106,10 +108,10 @@ async function updateBackups() {
     postMessage({ running: true });
 
     const backupsInfo: BackupsInfo = backupsInfoSerializer.load();
-    deleteOldBackups(backupsInfo);
-    cleanUpBackupsInfo(backupsInfo);
+    const existingBackups: BackupsMap = getExistingBackups(settings.backupDirectoryPath);
+    deleteOldBackups(existingBackups);
     backupsInfoSerializer.store(backupsInfo);
-    await fillQueue(backupsInfo);
+    await fillQueue(backupsInfo, existingBackups);
     startWorkers();
 
     if (!activeWorkers.length && !projectQueue.length) {
@@ -133,10 +135,10 @@ function initializeBackupDirectory(): boolean {
 }
 
 
-async function fillQueue(backupsInfo: BackupsInfo) {
+async function fillQueue(backupsInfo: BackupsInfo, existingBackups: BackupsMap) {
 
     for (let project of settings.projects) {
-        if (await needsBackup(project, backupsInfo)) {
+        if (await needsBackup(project, backupsInfo, existingBackups)) {
             projectQueue.push(project);
         }
     }
@@ -172,17 +174,14 @@ function startNextWorker(): boolean {
 }
 
 
-async function needsBackup(project: string, backupsInfo: BackupsInfo): Promise<boolean> {
+async function needsBackup(project: string, backupsInfo: BackupsInfo, existingBackups: BackupsMap): Promise<boolean> {
 
     if (project === 'test') return false;
 
     const updateSequence = await getUpdateSequence(project);
     if (!updateSequence) return false;
-
-    const backups: Array<Backup> = backupsInfo.backups[project] ?? [];
-    return backups.find(backup => {
-        return updateSequence === backup.updateSequence;
-    }) === undefined;
+    
+    return !existingBackups[project]?.length || backupsInfo.lastUpdateSequence[project] !== updateSequence;
 }
 
 
@@ -192,35 +191,18 @@ function buildBackupFilePath(project: string, creationDate: Date): string {
 }
 
 
-function addToBackupsInfo(project: string, targetFilePath: string, updateSequence: number, creationDate: Date) {
+function updateBackupsInfo(project: string, updateSequence: number) {
 
     const backupsInfo: BackupsInfo = backupsInfoSerializer.load();
-
-    if (!backupsInfo.backups[project]) backupsInfo.backups[project] = [];
-    backupsInfo.backups[project].push({
-        fileName: targetFilePath.split('/').pop(),
-        updateSequence,
-        creationDate
-    });
-
+    backupsInfo.lastUpdateSequence[project] = updateSequence;
     backupsInfoSerializer.store(backupsInfo);
 }
 
 
-function deleteOldBackups(backupsInfo: BackupsInfo) {
+function deleteOldBackups(existingBackups: BackupsMap) {
 
-    const backupsToDelete: Array<Backup> = getBackupsToDelete(backupsInfo, settings.keepBackups, new Date());
+    const backupsToDelete: Array<Backup> = getBackupsToDelete(existingBackups, settings.keepBackups, new Date());
     backupsToDelete.forEach(backup => fs.rmSync(Backup.getFilePath(backup, settings.backupDirectoryPath)));
-}
-
-
-function cleanUpBackupsInfo(backupsInfo: BackupsInfo) {
-
-    Object.entries(backupsInfo.backups).forEach(([project, backups]) => {
-        backupsInfo.backups[project] = backups.filter(backup => {
-            return fs.existsSync(Backup.getFilePath(backup, settings.backupDirectoryPath));
-        });
-    });
 }
 
 

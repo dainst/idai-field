@@ -15,10 +15,9 @@ import { ConfigurationIndex } from '../services/configuration/index/configuratio
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
 import { createDisplayVariant } from '../services/imagestore/create-display-variant';
-import { BackupsInfo } from '../services/backup/model/backups-info';
-import { BackupsInfoSerializer } from '../services/backup/auto-backup/backups-info-serializer';
 import { Backup } from '../services/backup/model/backup';
 import { BackupService, RestoreBackupResult } from '../services/backup/backup-service';
+import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 const remote = window.require('@electron/remote');
@@ -341,11 +340,9 @@ const restoreLatestBackup = async (settingsService: SettingsService, settings: S
 
 const getPathToLatestBackupFile = (settings: Settings): string|undefined => {
 
-    const backupsInfoFilePath: string = remote.getGlobal('appDataPath') + '/backups.json';
-    const backupsInfo: BackupsInfo = new BackupsInfoSerializer(backupsInfoFilePath, fs).load();
-    const backups: Array<Backup> = backupsInfo.backups[settings.selectedProject] ?? [];
+    const backups: Array<Backup> = getExistingBackups(settings.backupDirectoryPath)[settings.selectedProject] ?? [];
 
-    return backups.map(backup => {
+    return backups.reverse().map(backup => {
         return Backup.getFilePath(backup, settings.backupDirectoryPath);
     }).find(filePath => fs.existsSync(filePath));
 }

@@ -12,7 +12,7 @@ export class BackupsInfoSerializer {
 
     public load(): BackupsInfo {
 
-        if (!this.fs.existsSync(this.filePath)) return { backups: {} };
+        if (!this.fs.existsSync(this.filePath)) return { lastUpdateSequence: {} };
     
         return JSON.parse(this.fs.readFileSync(this.filePath, 'utf-8'));
     }

@@ -2,13 +2,13 @@ import { isSameDay, isSameWeek, isSameMonth, differenceInDays, differenceInWeeks
     differenceInCalendarMonths } from 'date-fns';
 import { KeepBackupsSettings } from '../../settings/keep-backups-settings';
 import { Backup } from '../model/backup';
-import { BackupsInfo } from '../model/backups-info';
+import { BackupsMap } from '../model/backups-map';
 
 
-export function getBackupsToDelete(backupsInfo: BackupsInfo, settings: KeepBackupsSettings,
+export function getBackupsToDelete(backups: BackupsMap, settings: KeepBackupsSettings,
                                    currentDate: Date): Array<Backup> {
 
-    return Object.values(backupsInfo.backups).reduce((result, backups) => {
+    return Object.values(backups).reduce((result, backups) => {
         return result.concat(getBackupsToDeleteForProject(backups, settings, currentDate));
     }, []);
 }

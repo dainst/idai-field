@@ -120,13 +120,15 @@ async function updateBackups() {
 
 function initializeBackupDirectory(): boolean {
 
-    if (fs.existsSync(settings.backupDirectoryPath)) return;
+    if (fs.existsSync(settings.backupDirectoryPath)) return true;
     
     try {
         fs.mkdirSync(settings.backupDirectoryPath);
+        return true;
     } catch (_) {
         error = true;
         postMessage({ error: INVALID_BACKUP_DIRECTORY_PATH });
+        return false;
     }
 }
 

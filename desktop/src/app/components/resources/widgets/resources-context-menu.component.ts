@@ -8,7 +8,7 @@ import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-storage-place'|'edit-workflow'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
@@ -57,7 +57,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isWarningsOptionAvailable()
             || this.isAddQRCodeOptionAvailable()
             || this.isEditQRCodeOptionAvailable()
-            || this.isScanStoragePlaceOptionIsAvailable();
+            || this.isScanStoragePlaceOptionIsAvailable()
+            || this.isEditWorkflowOptionAvailable();
     }
 
 
@@ -136,6 +137,17 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         return this.isQrCodeOptionAvailable()
             && this.contextMenu.documents[0].resource.scanCode;
+    }
+
+
+    public isEditWorkflowOptionAvailable(): boolean {
+
+        return this.contextMenu.documents.length === 1
+            && this.projectConfiguration.getWorkflowCategories().length > 0
+            && this.projectConfiguration.isAllowedRelationDomainCategory(
+                this.contextMenu.documents[0].resource.category,
+                'WorkflowStep', Relation.HAS_WORKFLOW_STEP
+            );
     }
 
 

@@ -1336,6 +1336,14 @@ export class BuiltInConfiguration {
             editable: true,
             visible: true,
             inputType: 'relation'
+        },
+        {
+            name: 'hasWorkflowStep',
+            domain: ['Find', 'Sample'],
+            range: ['WorkflowStep'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
         }
     ];
 

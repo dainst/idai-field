@@ -110,6 +110,7 @@ export namespace Relation {
      */ 
     export const SAME_AS = 'isSameAs';
 
+    export const HAS_WORKFLOW_STEP = 'hasWorkflowStep';
 
     export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
 

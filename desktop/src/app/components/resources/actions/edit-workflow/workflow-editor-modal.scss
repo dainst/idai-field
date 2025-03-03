@@ -26,19 +26,19 @@
       }
 
       .workflow-step-execution-date {
-        width: 120px;
+        flex: 0 0 120px;
       }
 
       .workflow-step-category {
-        width: 200px;
+        flex: 0 0 200px;
       }
 
       .workflow-step-short-description {
-        width: calc(100% - 397px);
+        flex-grow: 1;
       }
 
       .workflow-step-buttons {
-        width: 84px;
+        flex: 0 0 83px;
 
         button {
           border-radius: 0;

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource,
-    Datastore } from 'idai-field-core';
+import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource, Datastore, Labels,
+    ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -30,9 +30,17 @@ export class WorkflowEditorModalComponent {
                 private modalService: NgbModal,
                 private relationsManager: RelationsManager,
                 private datastore: Datastore,
-                private messages: Messages) {}
+                private messages: Messages,
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
+    public getCategoryLabel = (workflowStep: Document) =>
+        this.labels.get(this.projectConfiguration.getCategory(workflowStep));
+    
+    public getShortDescriptionLabel = (workflowStep: Document) =>
+        Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
+    
     public cancel = () => this.activeModal.close();
 
 

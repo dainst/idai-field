@@ -7,6 +7,7 @@ import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
+import { AngularUtility } from '../../../../angular/angular-utility';
 
 
 @Component({
@@ -60,7 +61,7 @@ export class WorkflowEditorModalComponent {
 
     public async createWorkflowStep(category: CategoryForm) {
 
-        const newWorkflowStep: Document = await this.openEditorModal(
+        const newWorkflowStep: Document = await this.editWorkflowStep(
             WorkflowEditorModalComponent.buildWorkflowStepDocument(category)
         );
         if (!newWorkflowStep) return;
@@ -70,10 +71,19 @@ export class WorkflowEditorModalComponent {
     }
 
 
+    public async removeWorkflowStep(workflowStep: Document) {
+
+        // TODO Confirm deletion
+        await this.removeRelation(workflowStep);
+        await this.relationsManager.remove(workflowStep);
+        await this.updateWorkflowSteps();
+    }
+
+
     /**
      * @returns edited document if changes have been saved, undefined if the modal has been canceled
      */
-    private async openEditorModal(document: Document): Promise<Document|undefined> {
+    public async editWorkflowStep(document: Document): Promise<Document|undefined> {
     
         this.menus.setContext(MenuContext.DOCEDIT);
 
@@ -87,6 +97,7 @@ export class WorkflowEditorModalComponent {
             // Modal has been canceled
             return undefined;
         } finally {
+            AngularUtility.blurActiveElement();
             this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
         }
     }
@@ -100,6 +111,27 @@ export class WorkflowEditorModalComponent {
         if (!resource.relations) resource.relations = {};
         if (!resource.relations[Relation.HAS_WORKFLOW_STEP]) resource.relations[Relation.HAS_WORKFLOW_STEP] = [];
         resource.relations[Relation.HAS_WORKFLOW_STEP].push(workflowStep.resource.id);
+
+        await this.applyRelationChanges(oldVersion);
+    }
+
+
+    private async removeRelation(workflowStep: Document) {
+
+        const oldVersion: Document = Document.clone(workflowStep);
+
+        const resource: Resource = this.document.resource;
+        resource.relations[Relation.HAS_WORKFLOW_STEP]
+            = resource.relations[Relation.HAS_WORKFLOW_STEP].filter(targetId => targetId !== workflowStep.resource.id);
+        if (!resource.relations[Relation.HAS_WORKFLOW_STEP].length) {
+            delete resource.relations[Relation.HAS_WORKFLOW_STEP];
+        }
+
+        await this.applyRelationChanges(oldVersion);
+    }
+
+
+    private async applyRelationChanges(oldVersion: Document) {
 
         try {
             await this.relationsManager.update(this.document, oldVersion);

@@ -13,6 +13,14 @@
             <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
             <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
             <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
+            <div class="workflow-step-buttons input-group">
+                <button class="btn btn-danger" (click)="removeWorkflowStep(workflowStep)">
+                    <span class="mdi mdi-delete"></span>
+                </button>
+                <button class="btn btn-info" (click)="editWorkflowStep(workflowStep)">
+                    <span class="mdi mdi-pencil"></span>
+                </button>
+            </div>
         </div>
     </div>
     <div id="workflow-step-plus-button-container">

@@ -34,7 +34,15 @@
       }
 
       .workflow-step-short-description {
-        width: calc(100% - 400px);
+        width: calc(100% - 397px);
+      }
+
+      .workflow-step-buttons {
+        width: 84px;
+
+        button {
+          border-radius: 0;
+        }
       }
     }
   }

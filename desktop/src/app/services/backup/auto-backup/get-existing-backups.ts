@@ -1,4 +1,3 @@
-import { Backup } from '../model/backup';
 import { BackupsMap } from '../model/backups-map';
 import { parseBackupFileName } from './backup-file-name-utils';
 

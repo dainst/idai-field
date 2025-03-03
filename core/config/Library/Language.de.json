@@ -1616,6 +1616,10 @@
     "StorageBag": {
       "label": "Tüte",
       "fields": {}
+    },
+    "WorkflowStep": {
+      "label": "Arbeitsschritt",
+      "fields": {}
     }
   },
   "forms": {

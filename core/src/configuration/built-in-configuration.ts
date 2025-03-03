@@ -818,6 +818,19 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        WorkflowStep: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    }
+                ]
+            }
+        },
         Image: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,

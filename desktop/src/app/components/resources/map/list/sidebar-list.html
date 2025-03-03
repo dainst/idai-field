@@ -7,22 +7,25 @@
               (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
 <cdk-virtual-scroll-viewport [itemSize]="itemSize" id="sidebar-viewport">
-    <div *ngFor="let category of viewFacade.getGroupedDocuments()" class="category-group">
-        <div class="category-header"
-             (click)="viewFacade.toggleCategoryExpansion(category.name)">
-             <span [class]="'mdi mdi-24px ' + (category.isExpanded ? 'mdi-chevron-down' : 'mdi-chevron-right')"></span>
-            {{ category.name }} ({{ category.documents.length }})
-        </div>
-        <div *ngIf="category.isExpanded" class="category-items">
-            <div *ngFor="let document of category.documents"
-                 class="category-item"
-                 (click)="select(document, $event)"
-                 [class.selected]="selectedDocument?.resource.id === document.resource.id">
-                <span>{{ document.resource.identifier }}</span>
-            <span class="mdi mdi-information-outline mdi-24px"></span>
-            </div>
-        </div>
+  <div *ngFor="let category of viewFacade.getGroupedDocuments()" class="category-group">
+    <div class="category-header" (click)="viewFacade.toggleCategoryExpansion(category.name)">
+      <span [class]="'mdi mdi-24px ' + (category.isExpanded ? 'mdi-chevron-down' : 'mdi-chevron-right')"></span>
+      {{ category.name }} ({{ category.documents.length }})
     </div>
+    <ul *ngIf="category.isExpanded" class="category-items">
+      <li *ngFor="let document of category.documents  trackBy: trackDocument"
+        class="category-item resources-listing-item resources-listing-item-wide" (click)="select(document, $event)"
+        (contextmenu)="contextMenu.open($event, [document])"
+        [class.has-warnings]="document.warnings"
+        [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)" [class.has-warnings]="document.warnings"
+        [class.selected]="selectedDocument?.resource.id === document.resource.id"
+        [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
+        [id]="'resource-' + document.resource.identifier">
+        <span>{{ document.resource.identifier }}</span>
+        <span class="mdi mdi-information-outline mdi-24px"></span>
+      </li>
+    </ul>
+  </div>
 </cdk-virtual-scroll-viewport>
 
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"

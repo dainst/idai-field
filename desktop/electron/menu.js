@@ -383,7 +383,8 @@ const getProjectName = (projectIdentifier, config) => {
     if (typeof labels === 'string') {
         return labels;
     } else {
-        const language = config.languages.find(language => labels[language]);
+        const languages = config.languages.concat(['unspecifiedLanguage']);
+        const language = languages.find(language => labels[language]);
         return language
             ? labels[language]
             : undefined;

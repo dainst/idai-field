@@ -201,7 +201,7 @@ function updateBackupsInfo(project: string, updateSequence: number) {
 
 function deleteOldBackups(existingBackups: BackupsMap) {
 
-    const backupsToDelete: Array<Backup> = getBackupsToDelete(existingBackups, settings.keepBackups, new Date());
+    const backupsToDelete: Array<Backup> = getBackupsToDelete(existingBackups, settings.keepBackups);
     backupsToDelete.forEach(backup => fs.rmSync(Backup.getFilePath(backup, settings.backupDirectoryPath)));
 }
 

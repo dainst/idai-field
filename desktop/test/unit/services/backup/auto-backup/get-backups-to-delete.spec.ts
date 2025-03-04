@@ -40,9 +40,7 @@ describe('get backups to delete', () => {
             monthly: 0
         };
 
-        const currentDate: Date = new Date('2025-01-02T12:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
+        const result: Array<Backup> = getBackupsToDelete(backups, settings);
         expect(result.length).toBe(2);
         expect(result[0].fileName).toBe('file1.jsonl');
         expect(result[1].fileName).toBe('file2.jsonl');
@@ -86,9 +84,7 @@ describe('get backups to delete', () => {
             monthly: 0
         };
 
-        const currentDate: Date = new Date('2025-01-04T12:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
+        const result: Array<Backup> = getBackupsToDelete(backups, settings);
         expect(result.length).toBe(3);
         expect(result[0].fileName).toBe('file1.jsonl');
         expect(result[1].fileName).toBe('file2.jsonl');
@@ -129,9 +125,7 @@ describe('get backups to delete', () => {
             monthly: 0
         };
 
-        const currentDate: Date = new Date('2025-01-19T10:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
+        const result: Array<Backup> = getBackupsToDelete(backups, settings);
         expect(result.length).toBe(3);
         expect(result[0].fileName).toBe('file1.jsonl');
         expect(result[1].fileName).toBe('file2.jsonl');
@@ -176,9 +170,7 @@ describe('get backups to delete', () => {
             monthly: 1
         };
 
-        const currentDate: Date = new Date('2025-01-19T10:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
+        const result: Array<Backup> = getBackupsToDelete(backups, settings);
         expect(result.length).toBe(3);
         expect(result[0].fileName).toBe('file1.jsonl');
         expect(result[1].fileName).toBe('file3.jsonl');
@@ -251,158 +243,11 @@ describe('get backups to delete', () => {
             monthly: 3
         };
 
-        const currentDate: Date = new Date('2025-01-31T10:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
+        const result: Array<Backup> = getBackupsToDelete(backups, settings);
         expect(result.length).toBe(4);
         expect(result[0].fileName).toBe('file1.jsonl');
         expect(result[1].fileName).toBe('file3.jsonl');
         expect(result[2].fileName).toBe('file6.jsonl');
         expect(result[3].fileName).toBe('file10.jsonl');
-    });
-
-
-    test('do not keep daily backups if too old', () => {
-
-        const backups: BackupsMap = {
-            'project': [
-                {
-                    fileName: 'file1.jsonl',
-                    creationDate: new Date('2025-01-01T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file2.jsonl',
-                    creationDate: new Date('2025-01-02T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file3.jsonl',
-                    creationDate: new Date('2025-01-03T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file4.jsonl',
-                    creationDate: new Date('2025-01-04T10:00:00+01:00')
-                }
-            ]
-        };
-
-        const settings: KeepBackupsSettings = {
-            daily: 3,
-            weekly: 0,
-            monthly: 0
-        };
-
-        const currentDate: Date = new Date('2025-01-05T10:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
-        expect(result.length).toBe(2);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file2.jsonl');
-    });
-
-
-    test('always keep latest backup even if it is too old', () => {
-
-        const backups: BackupsMap = {
-            'project': [
-                {
-                    fileName: 'file1.jsonl',
-                    creationDate: new Date('2025-01-01T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file2.jsonl',
-                    creationDate: new Date('2025-01-02T10:00:00+01:00')
-                }
-            ]
-        };
-
-        const settings: KeepBackupsSettings = {
-            daily: 1,
-            weekly: 0,
-            monthly: 0
-        };
-
-        const currentDate: Date = new Date('2025-02-01T10:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
-        expect(result.length).toBe(1);
-        expect(result[0].fileName).toBe('file1.jsonl');
-    });
-
-
-    test('do not keep weekly backups if too old', () => {
-
-        const backups: BackupsMap = {
-            'project': [
-                {
-                    fileName: 'file1.jsonl',
-                    creationDate: new Date('2025-01-01T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file2.jsonl',
-                    creationDate: new Date('2025-01-08T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file3.jsonl',
-                    creationDate: new Date('2025-01-15T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file4.jsonl',
-                    creationDate: new Date('2025-01-22T10:00:00+01:00')
-                }
-            ]
-        };
-
-        const settings: KeepBackupsSettings = {
-            daily: 1,
-            weekly: 3,
-            monthly: 0
-        };
-
-        const currentDate: Date = new Date('2025-02-05T10:00:00+01:00');
-
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
-        expect(result.length).toBe(3);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file2.jsonl');
-        expect(result[2].fileName).toBe('file3.jsonl');
-    });
-
-
-    test('do not keep monthly backups if too old', () => {
-
-        const backups: BackupsMap = {
-            'project': [
-                {
-                    fileName: 'file1.jsonl',
-                    creationDate: new Date('2025-01-01T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file2.jsonl',
-                    creationDate: new Date('2025-02-01T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file3.jsonl',
-                    creationDate: new Date('2025-03-01T10:00:00+01:00')
-                },
-                {
-                    fileName: 'file4.jsonl',
-                    creationDate: new Date('2025-04-01T10:00:00+01:00')
-                }
-            ]
-        };
-
-        const settings: KeepBackupsSettings = {
-            daily: 1,
-            weekly: 0,
-            monthly: 3
-        };
-
-        const currentDate: Date = new Date('2025-06-01T10:00:00+01:00');
-        
-        const result: Array<Backup> = getBackupsToDelete(backups, settings, currentDate);
-        expect(result.length).toBe(3);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file2.jsonl');
-        expect(result[2].fileName).toBe('file3.jsonl');
     });
 });

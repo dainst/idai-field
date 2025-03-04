@@ -267,10 +267,10 @@
       }
     },
     "Mollusk": {
-      "label": "Deniz kabuğu",
+      "label": "Yumuşakçalar",
       "fields": {
         "classification": {
-          "label": "Deniz kabuğu sınıflandırması"
+          "label": "Yumuşakça sınıflandırması"
         }
       }
     },
@@ -1173,7 +1173,7 @@
       }
     },
     "Terracotta": {
-      "label": "Pişmiş Toprak",
+      "label": "Terrakotta",
       "fields": {
         "clayColorBreak": {
           "label": "Parça: Hamur rengi ve tonu"
@@ -1186,7 +1186,7 @@
         },
         "clayStructure": {
           "label": "Yapısı",
-          "description": "Pişmiş toprak yapısal türü nedir?"
+          "description": "Terrakotta yapısal türü nedir?"
         },
         "coatColorInside": {
           "label": "Astar (iç): Rengi ve tonu"

@@ -20,16 +20,69 @@ describe('get backups to delete', () => {
         const backups: BackupsMap = {
             'project': [
                 {
-                    fileName: 'file1.jsonl',
+                    filePath: 'file1.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-01T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file2.jsonl',
+                    filePath: 'file2.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-02T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file3.jsonl',
+                    filePath: 'file3.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-02T11:00:00+01:00')
+                }
+            ]
+        };
+
+        const settings: KeepBackupsSettings = {
+            daily: 0,
+            weekly: 0,
+            monthly: 0
+        };
+
+        const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {
+            project: [
+                {
+                    filePath: 'file3.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T11:00:00+01:00')
+                }
+            ]
+        };
+
+        const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
+        expect(result.length).toBe(2);
+        expect(result[0].filePath).toBe('file1.jsonl');
+        expect(result[1].filePath).toBe('file2.jsonl');
+    });
+
+
+    test('keep one daily backup', () => {
+
+        const backups: BackupsMap = {
+            'project': [
+                {
+                    filePath: 'file1.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-01T10:00:00+01:00')
+                },
+                {
+                    filePath: 'file2.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T10:00:00+01:00')
+                },
+                {
+                    filePath: 'file3.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T11:00:00+01:00')
+                },
+                {
+                    filePath: 'file4.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T12:00:00+01:00')
                 }
             ]
         };
@@ -40,39 +93,55 @@ describe('get backups to delete', () => {
             monthly: 0
         };
 
-        const result: Array<Backup> = getBackupsToDelete(backups, settings);
+        const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {
+            project: [
+                {
+                    filePath: 'file4.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T12:00:00+01:00')
+                }
+            ]
+        };
+
+        const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
         expect(result.length).toBe(2);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file2.jsonl');
+        expect(result[0].filePath).toBe('file1.jsonl');
+        expect(result[1].filePath).toBe('file3.jsonl');
     });
 
 
-    test('keep only latest backup per day for the last three days', () => {
+    test('keep three daily backups', () => {
 
         const backups: BackupsMap = {
             'project': [
                 {
-                    fileName: 'file1.jsonl',
+                    filePath: 'file1.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-01T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file2.jsonl',
+                    filePath: 'file2.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-02T11:00:00+01:00')
                 },
                 {
-                    fileName: 'file3.jsonl',
+                    filePath: 'file3.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-02T23:00:00+01:00')
                 },
                 {
-                    fileName: 'file4.jsonl',
+                    filePath: 'file4.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-03T00:00:00+01:00')
                 },
                 {
-                    fileName: 'file5.jsonl',
+                    filePath: 'file5.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-03T01:00:00+01:00')
                 },
                 {
-                    fileName: 'file6.jsonl',
+                    filePath: 'file6.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-04T11:00:00+01:00')
                 }
             ]
@@ -84,11 +153,21 @@ describe('get backups to delete', () => {
             monthly: 0
         };
 
-        const result: Array<Backup> = getBackupsToDelete(backups, settings);
+        const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {
+            project: [
+                {
+                    filePath: 'file6.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-04T11:00:00+01:00')
+                }
+            ]
+        };
+
+        const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
         expect(result.length).toBe(3);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file2.jsonl');
-        expect(result[2].fileName).toBe('file4.jsonl');
+        expect(result[0].filePath).toBe('file1.jsonl');
+        expect(result[1].filePath).toBe('file3.jsonl');
+        expect(result[2].filePath).toBe('file5.jsonl');
     });
 
 
@@ -97,23 +176,28 @@ describe('get backups to delete', () => {
         const backups: BackupsMap = {
             'project': [
                 {
-                    fileName: 'file1.jsonl',
+                    filePath: 'file1.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-01T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file2.jsonl',
+                    filePath: 'file2.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-09T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file3.jsonl',
+                    filePath: 'file3.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-17T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file4.jsonl',
+                    filePath: 'file4.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-18T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file5.jsonl',
+                    filePath: 'file5.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-19T10:00:00+01:00')
                 }
             ]
@@ -125,11 +209,21 @@ describe('get backups to delete', () => {
             monthly: 0
         };
 
-        const result: Array<Backup> = getBackupsToDelete(backups, settings);
+        const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {
+            project: [
+                {
+                    filePath: 'file5.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-19T10:00:00+01:00')
+                }
+            ]
+        };
+
+        const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
         expect(result.length).toBe(3);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file2.jsonl');
-        expect(result[2].fileName).toBe('file4.jsonl');
+        expect(result[0].filePath).toBe('file1.jsonl');
+        expect(result[1].filePath).toBe('file2.jsonl');
+        expect(result[2].filePath).toBe('file4.jsonl');
     });
 
 
@@ -138,27 +232,33 @@ describe('get backups to delete', () => {
         const backups: BackupsMap = {
             'project': [
                 {
-                    fileName: 'file1.jsonl',
+                    filePath: 'file1.jsonl',
+                    project: 'project',
                     creationDate: new Date('2024-12-15T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file2.jsonl',
+                    filePath: 'file2.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-01T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file3.jsonl',
+                    filePath: 'file3.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-09T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file4.jsonl',
+                    filePath: 'file4.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-17T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file5.jsonl',
+                    filePath: 'file5.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-18T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file6.jsonl',
+                    filePath: 'file6.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-19T10:00:00+01:00')
                 }
             ]
@@ -170,11 +270,21 @@ describe('get backups to delete', () => {
             monthly: 1
         };
 
-        const result: Array<Backup> = getBackupsToDelete(backups, settings);
+        const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {
+            project: [
+                {
+                    filePath: 'file6.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-19T10:00:00+01:00')
+                }
+            ]
+        };
+
+        const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
         expect(result.length).toBe(3);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file3.jsonl');
-        expect(result[2].fileName).toBe('file5.jsonl');
+        expect(result[0].filePath).toBe('file1.jsonl');
+        expect(result[1].filePath).toBe('file3.jsonl');
+        expect(result[2].filePath).toBe('file5.jsonl');
     });
 
 
@@ -183,55 +293,68 @@ describe('get backups to delete', () => {
         const backups: BackupsMap = {
             'project': [
                 {
-                    fileName: 'file1.jsonl',
+                    filePath: 'file1.jsonl',
+                    project: 'project',
                     creationDate: new Date('2024-10-15T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file2.jsonl',
+                    filePath: 'file2.jsonl',
+                    project: 'project',
                     creationDate: new Date('2024-11-15T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file3.jsonl',
+                    filePath: 'file3.jsonl',
+                    project: 'project',
                     creationDate: new Date('2024-11-16T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file4.jsonl',
+                    filePath: 'file4.jsonl',
+                    project: 'project',
                     creationDate: new Date('2024-12-15T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file5.jsonl',
+                    filePath: 'file5.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-01T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file6.jsonl',
+                    filePath: 'file6.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-08T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file7.jsonl',
+                    filePath: 'file7.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-17T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file8.jsonl',
+                    filePath: 'file8.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-21T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file9.jsonl',
+                    filePath: 'file9.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-28T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file10.jsonl',
+                    filePath: 'file10.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-28T11:00:00+01:00')
                 },
                 {
-                    fileName: 'file11.jsonl',
+                    filePath: 'file11.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-29T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file12.jsonl',
+                    filePath: 'file12.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-30T10:00:00+01:00')
                 },
                 {
-                    fileName: 'file13.jsonl',
+                    filePath: 'file13.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-31T10:00:00+01:00')
                 }
             ]
@@ -243,11 +366,65 @@ describe('get backups to delete', () => {
             monthly: 3
         };
 
-        const result: Array<Backup> = getBackupsToDelete(backups, settings);
+        const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {
+            project: [
+                {
+                    filePath: 'file13.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-31T10:00:00+01:00')
+                }
+            ]
+        };
+
+        const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
         expect(result.length).toBe(4);
-        expect(result[0].fileName).toBe('file1.jsonl');
-        expect(result[1].fileName).toBe('file3.jsonl');
-        expect(result[2].fileName).toBe('file6.jsonl');
-        expect(result[3].fileName).toBe('file10.jsonl');
+        expect(result[0].filePath).toBe('file1.jsonl');
+        expect(result[1].filePath).toBe('file3.jsonl');
+        expect(result[2].filePath).toBe('file6.jsonl');
+        expect(result[3].filePath).toBe('file10.jsonl');
+    });
+
+
+    test('delete recently updated backup', () => {
+
+        const backups: BackupsMap = {
+            'project': [
+                {
+                    filePath: 'file1.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T11:00:00+01:00')
+                },
+                {
+                    filePath: 'file2.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T11:00:10+01:00')
+                }
+            ]
+        };
+
+        const settings: KeepBackupsSettings = {
+            daily: 0,
+            weekly: 0,
+            monthly: 0
+        };
+
+        const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {
+            project: [
+                {
+                    filePath: 'file1.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T11:00:00+01:00'),
+                },
+                {
+                    filePath: 'file2.jsonl',
+                    project: 'project',
+                    creationDate: new Date('2025-01-02T11:00:10+01:00')
+                }
+            ]
+        };
+
+        const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
+        expect(result.length).toBe(1);
+        expect(result[0].filePath).toBe('file1.jsonl');
     });
 });

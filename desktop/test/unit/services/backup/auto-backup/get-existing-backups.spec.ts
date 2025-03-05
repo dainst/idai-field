@@ -9,22 +9,26 @@ describe('get existing backups', () => {
 
     test('build backups map', () => {
 
-        const backups: BackupsMap = getExistingBackups(process.cwd() + '/test/test-data/backups');
+        const backupDirectoryPath: string = process.cwd() + '/test/test-data/backups';
+        const backups: BackupsMap = getExistingBackups(backupDirectoryPath);
 
         expect(backups).toEqual({
             'project': [
                 {
-                    fileName: 'project.2025-01-02.10-30-20.jsonl',
+                    filePath: backupDirectoryPath + '/project.2025-01-02.10-30-20.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-01-02T10:30:20+01:00')
                 },
                 {
-                    fileName: 'project.2025-02-03.01-02-03.jsonl',
+                    filePath: backupDirectoryPath + '/project.2025-02-03.01-02-03.jsonl',
+                    project: 'project',
                     creationDate: new Date('2025-02-03T01:02:03+01:00')
                 }
             ],
             'project-with-special_characters': [
                 {
-                    fileName: 'project-with-special_characters.2025-01-02.10-30-20.jsonl',
+                    filePath: backupDirectoryPath + '/project-with-special_characters.2025-01-02.10-30-20.jsonl',
+                    project: 'project-with-special_characters',
                     creationDate: new Date('2025-01-02T10:30:20+01:00')
                 }
             ]

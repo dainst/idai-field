@@ -1,53 +1,67 @@
-import { isSameDay, isSameWeek, isSameMonth } from 'date-fns';
+import { isSameDay, isSameWeek as sameWeek, isSameMonth } from 'date-fns';
 import { KeepBackupsSettings } from '../../settings/keep-backups-settings';
 import { Backup } from '../model/backup';
 import { BackupsMap } from '../model/backups-map';
 
 
-export function getBackupsToDelete(backups: BackupsMap, settings: KeepBackupsSettings): Array<Backup> {
+export function getBackupsToDelete(backups: BackupsMap, recentlyCreatedBackups: { [project: string]: Array<Backup> },
+                                   settings: KeepBackupsSettings): Array<Backup> {
 
-    return Object.values(backups).reduce((result, backups) => {
-        return result.concat(getBackupsToDeleteForProject(backups, settings));
+    return Object.entries(backups).reduce((result, [project, backups]) => {
+        return result.concat(getBackupsToDeleteForProject(backups, recentlyCreatedBackups[project], settings));
     }, []);
 }
 
 
-function getBackupsToDeleteForProject(backups: Array<Backup>, settings: KeepBackupsSettings): Array<Backup> {
+function getBackupsToDeleteForProject(backups: Array<Backup>, recentlyCreatedBackups: Array<Backup>,
+                                      settings: KeepBackupsSettings): Array<Backup> {
 
     if (!backups.length) return [];
 
-    const daily: Array<Backup> = getDailyBackupsToKeep(backups, settings);
-    const weekly: Array<Backup> = getWeeklyBackupsToKeep(backups, settings);
-    const monthly: Array<Backup> = getMonthlyBackupsToKeep(backups, settings);
+    const recentlyUpdatedBackups: Array<Backup> = getRecentlyUpdatedBackups(backups, recentlyCreatedBackups);
 
-    return backups.filter(backup => !daily.includes(backup) && !weekly.includes(backup) && !monthly.includes(backup));
+    const outdatedBackups: Array<Backup> = getOutdatedBackups(
+        backups.filter(backup => !recentlyUpdatedBackups.includes(backup)),
+        settings
+    );
+    
+    return recentlyUpdatedBackups.concat(outdatedBackups);
 }
 
 
-function getDailyBackupsToKeep(backups: Array<Backup>, settings: KeepBackupsSettings): Array<Backup> {
+function getRecentlyUpdatedBackups(backups: Array<Backup>, recentlyCreatedBackups: Array<Backup>): Array<Backup> {
 
-    const sortedBackups: Array<Array<Backup>> = getSortedBackups(backups, isSameDay);
-    return sortedBackups.map(backups => backups[0]).slice(0, settings.daily);
+    if (!recentlyCreatedBackups || recentlyCreatedBackups.length < 2) {
+        return [];
+    } else {
+        const filePaths: string[] = recentlyCreatedBackups.slice(0, -1).map(backup => backup.filePath);
+        return backups.filter(backup => filePaths.includes(backup.filePath));
+    }
 }
 
 
-function getWeeklyBackupsToKeep(backups: Array<Backup>, settings: KeepBackupsSettings): Array<Backup> {
+function getOutdatedBackups(backups: Array<Backup>, settings: KeepBackupsSettings): Array<Backup> {
 
-    if (settings.weekly === 0) return [];
+    const daily: Array<Backup> = getBackupsToKeep(backups, settings.daily, isSameDay);
+    const weekly: Array<Backup> = getBackupsToKeep(backups, settings.weekly, isSameWeek);
+    const monthly: Array<Backup> = getBackupsToKeep(backups, settings.monthly, isSameMonth);
 
-    const sameWeek = (date1: Date, date2: Date) => isSameWeek(date1, date2, { weekStartsOn: 1 });
-
-    const sortedBackups: Array<Array<Backup>> = getSortedBackups(backups, sameWeek);
-    return sortedBackups.map(backups => backups[backups.length - 1]).slice(0, settings.weekly);
+    return backups.filter(backup => {
+        return !daily.includes(backup)
+            && !weekly.includes(backup)
+            && !monthly.includes(backup)
+            && backup !== backups[backups.length - 1];
+    });
 }
 
 
-function getMonthlyBackupsToKeep(backups: Array<Backup>, settings: KeepBackupsSettings): Array<Backup> {
+function getBackupsToKeep(backups: Array<Backup>, amountToKeep: number,
+                          isInSameTimespan: (date1: Date, date2: Date) => boolean) {
+        
+    if (amountToKeep === 0) return [];
 
-    if (settings.monthly === 0) return [];
-
-    const sortedBackups: Array<Array<Backup>> = getSortedBackups(backups, isSameMonth);
-    return sortedBackups.map(backups => backups[backups.length - 1]).slice(0, settings.monthly);
+    const sortedBackups: Array<Array<Backup>> = getSortedBackups(backups, isInSameTimespan);
+    return sortedBackups.map(backups => backups[backups.length - 1]).slice(0, amountToKeep);  
 }
 
 
@@ -65,4 +79,10 @@ function getSortedBackups(backups: Array<Backup>,
         lastAddedBackup = backup;
         return result;
     }, []);
+}
+
+
+function isSameWeek(date1: Date, date2: Date) {
+    
+    return sameWeek(date1, date2, { weekStartsOn: 1 });
 }

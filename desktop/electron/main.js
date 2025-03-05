@@ -49,7 +49,7 @@ global.setConfigDefaults = config => {
     if (config.highlightCustomElements === undefined) config.highlightCustomElements = true;
     setLanguages(config);
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
-    if (!config.keepBackups) config.keepBackups = { daily: 1, weekly: 0, monthly: 0 };
+    if (!config.keepBackups) config.keepBackups = { daily: 0, weekly: 0, monthly: 0 };
 
     return config;
 };

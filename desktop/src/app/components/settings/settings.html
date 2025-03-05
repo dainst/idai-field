@@ -172,7 +172,7 @@
                                i18n="@@settings.backups.keep">Backup-Dateien aufbewahren</label>
                         <div class="row">
                             <div class="col-md-4 form-floating">
-                                <input id="daily-backups-input" type="number" min="1" [ngModel]="settings.keepBackups.daily"
+                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.daily"
                                        (ngModelChange)="settings.keepBackups.daily = $event"
                                         class="form-control">
                                 <label for="daily-backups-input"

@@ -342,7 +342,7 @@ const getPathToLatestBackupFile = (settings: Settings): string|undefined => {
 
     const backups: Array<Backup> = getExistingBackups(settings.backupDirectoryPath)[settings.selectedProject] ?? [];
 
-    return backups.reverse().map(backup => {
-        return Backup.getFilePath(backup, settings.backupDirectoryPath);
-    }).find(filePath => fs.existsSync(filePath));
+    return backups.reverse()
+        .map(backup => backup.filePath)
+        .find(filePath => fs.existsSync(filePath));
 }

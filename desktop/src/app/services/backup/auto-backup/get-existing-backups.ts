@@ -12,7 +12,11 @@ export function getExistingBackups(backupDirectoryPath: string): BackupsMap {
         const { project, creationDate } = parseBackupFileName(fileName) ?? {};
         if (project && creationDate) {
             if (!result[project]) result[project] = [];
-            result[project].push({ fileName, creationDate });
+            result[project].push({ 
+                filePath: backupDirectoryPath + '/' + fileName,
+                project,
+                creationDate
+            });
         }
         return result;
     }, {});

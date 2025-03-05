@@ -20,6 +20,8 @@ let runTimeout: any;
 let error: boolean;
 
 const projectQueue: string[] = [];
+const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {};
+
 const idleWorkers: Array<Worker> = [];
 const activeWorkers: Array<Worker> = [];
 
@@ -66,6 +68,12 @@ function createWorker() {
     worker.onmessage = ({ data }) => {
         if (data.success) {
             updateBackupsInfo(data.project, data.updateSequence);
+            if (!recentlyCreatedBackups[data.project]) recentlyCreatedBackups[data.project] = [];
+            recentlyCreatedBackups[data.project].push({
+                filePath: data.targetFilePath,
+                project: data.project,
+                creationDate: data.creationDate
+            });
             onWorkerFinished(worker);
         } else {
             console.error('Error while creating backup file:', data.error);
@@ -109,9 +117,10 @@ async function updateBackups() {
 
     const backupsInfo: BackupsInfo = backupsInfoSerializer.load();
     const existingBackups: BackupsMap = getExistingBackups(settings.backupDirectoryPath);
-    deleteOldBackups(existingBackups);
-    backupsInfoSerializer.store(backupsInfo);
+    deleteUnneededBackups(existingBackups);
     await fillQueue(backupsInfo, existingBackups);
+    updateListOfRecentlyUpdatedBackups();
+    backupsInfoSerializer.store(backupsInfo);
     startWorkers();
 
     if (!activeWorkers.length && !projectQueue.length) {
@@ -199,10 +208,25 @@ function updateBackupsInfo(project: string, updateSequence: number) {
 }
 
 
-function deleteOldBackups(existingBackups: BackupsMap) {
+function deleteUnneededBackups(existingBackups: BackupsMap) {
 
-    const backupsToDelete: Array<Backup> = getBackupsToDelete(existingBackups, settings.keepBackups);
-    backupsToDelete.forEach(backup => fs.rmSync(Backup.getFilePath(backup, settings.backupDirectoryPath)));
+    getBackupsToDelete(existingBackups, recentlyCreatedBackups, settings.keepBackups).forEach(backupToDelete => {
+        fs.rmSync(backupToDelete.filePath);
+        const project: string = backupToDelete.project;
+        if (recentlyCreatedBackups[project]) {
+            recentlyCreatedBackups[project] = recentlyCreatedBackups[project].filter(backup => {
+                return backup.filePath !== backupToDelete.filePath;
+            });
+        }
+    });
+}
+
+
+function updateListOfRecentlyUpdatedBackups() {
+
+    Object.keys(recentlyCreatedBackups).forEach(project => {
+        if (!projectQueue.includes(project)) delete recentlyCreatedBackups[project];
+    });
 }
 
 

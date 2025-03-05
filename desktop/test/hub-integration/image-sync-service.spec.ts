@@ -61,6 +61,8 @@ describe('ImageSyncService', () => {
         backupDirectoryPath,
         isAutoUpdateActive: true,
         keepBackups: {
+            custom: 0,
+            customInterval: 0,
             daily: 0,
             weekly: 0,
             monthly: 0

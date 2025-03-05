@@ -172,6 +172,20 @@
                                i18n="@@settings.backups.keep">Backup-Dateien aufbewahren</label>
                         <div class="row">
                             <div class="col-md-4 form-floating">
+                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.custom"
+                                       (ngModelChange)="settings.keepBackups.custom = $event"
+                                        class="form-control">
+                                <label for="daily-backups-input"
+                                        i18n="@@settings.backups.keep.custom">Stunden-Backups</label>
+                            </div>
+                            <div class="col-md-4 form-floating">
+                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.customInterval"
+                                       (ngModelChange)="settings.keepBackups.customInterval = $event"
+                                        class="form-control">
+                                <label for="daily-backups-input"
+                                        i18n="@@settings.backups.keep.customInterval">Alle ... Stunden</label>
+                            </div>
+                            <div class="col-md-4 form-floating">
                                 <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.daily"
                                        (ngModelChange)="settings.keepBackups.daily = $event"
                                         class="form-control">

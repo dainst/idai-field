@@ -1340,7 +1340,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="translated">A versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi descarregada e irá ser instalada quando reiniciar</target>
+        <target state="translated">A versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi descarregada e será instalada quando reiniciar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">28</context>

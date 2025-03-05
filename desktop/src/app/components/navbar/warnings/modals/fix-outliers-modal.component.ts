@@ -167,7 +167,11 @@ export class FixOutliersModalComponent {
     private getReplacement(document: Document, entry: any, field: Field): any {
 
         if (isString(entry) && entry === this.outlierValue) {
-            return this.selectedValues;
+            if (field.inputType === Field.InputType.CHECKBOXES) {
+                return this.selectedValues
+            } else {
+                return this.selectedValues[0]
+            }
         } else if (isObject(entry)) {
             if (field.inputType === Field.InputType.DIMENSION
                     && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {

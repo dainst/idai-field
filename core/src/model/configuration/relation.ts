@@ -156,8 +156,9 @@ export namespace Relation {
         const relationDefinitions = getRelations(relations, rangeCategory, true);
 
         for (let relationDefinition of relationDefinitions) {
-        if (relation === relationDefinition.name
-            && relationDefinition.domain.indexOf(domainCategory) > -1) return true;
+            if (relation === relationDefinition.name && relationDefinition.domain.indexOf(domainCategory) > -1) {
+                return true;
+            }
         }
 
         return false;

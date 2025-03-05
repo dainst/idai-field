@@ -23,11 +23,19 @@ $button-width: 24px;
       transition: color .25s ease;
     }
 
+    &:hover,
+    &:focus,
+    &:active {
+      span {
+        color: $activated-color !important;
+      }
+    }
+
     &:hover {
       background-color: color.adjust($list-item-hover-color, $lightness: -5%) !important;
 
       .arrow-deactivated {
-        color: color.adjust($activated-color, $lightness: -1%) !important;
+        color: color.adjust(lightgray, $lightness: -20%) !important;
       }
     }
 
@@ -35,7 +43,7 @@ $button-width: 24px;
       background-color: color.adjust($list-item-hover-color, $lightness: -10%) !important;
 
       .arrow-deactivated {
-        color: color.adjust($activated-color, $lightness: -3%) !important;
+        color: color.adjust(lightgray, $lightness: -25%) !important;
       }
     }
   }

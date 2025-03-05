@@ -10,6 +10,7 @@ const detectPort = window.require('detect-port');
 
 if (environment.production) enableProdMode();
 
+suppressWarnings();
 start();
 
 
@@ -36,4 +37,20 @@ function showAlreadyOpenError() {
     const progress = new InitializationProgress(null);
     progress.setLocale(Settings.getLocale());
     progress.setError('alreadyOpenError');
+}
+
+
+function suppressWarnings() {
+
+    const warningTexts: string[] = [
+        'The vm module of Node.js is deprecated in the renderer process and will be removed.'
+    ];
+
+    const warnFunction = console.warn;
+
+    console.warn = function() {
+        if (!warningTexts.find(text => arguments[0].includes(text))) {
+            return warnFunction.apply(console, arguments);
+        }
+    };
 }

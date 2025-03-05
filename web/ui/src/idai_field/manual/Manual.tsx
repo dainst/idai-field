@@ -4,9 +4,6 @@ import { loadManual } from './loadManual';
 import MarkdownViewer from './MarkdownViewer';
 
 
-const URL: string = 'https://raw.githubusercontent.com/dainst/idai-field/master/desktop/src/manual';
-
-
 export type Chapter = {
     id: string,
     label: string
@@ -22,7 +19,7 @@ export default function Manual(): ReactElement {
     const manualElementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        loadManual(URL).then(result => {
+        loadManual().then(result => {
             setMarkdown(result.markdown);
             setChapters(result.chapters);
             if (result.chapters.length > 0) setActiveChapter(result.chapters[0]);

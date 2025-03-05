@@ -14,8 +14,8 @@
   },
   "position-values-edge-default": {
     "values": {
-      "Oberkante": "Margem superior",
-      "Unterkante": "Margem inferior"
+      "Oberkante": "margem superior",
+      "Unterkante": "margem inferior"
     }
   },
   "orientation-default-1": {
@@ -424,7 +424,7 @@
   "Burial-burialDocumentation-default": {
     "values": {
       "Endoskopie": "Endoscopia",
-      "Foto": "Foto",
+      "Foto": "Fotografia",
       "Histologie": "",
       "LM": "",
       "REM": "",
@@ -676,7 +676,7 @@
   },
   "Wood-objectType-default": {
     "values": {
-      "Architektur": "",
+      "Architektur": "Arquitetura",
       "Altar": "Altar",
       "Anhänger": "Pendente",
       "Gefäß": "Contentor",
@@ -1079,7 +1079,7 @@
       "gepresst": "prensado",
       "handgeformt": "fabricado à mão",
       "in Form gedreht": "fabricado a torno",
-      "nachgedreht (überdreht)": ""
+      "nachgedreht (überdreht)": "reprocessado a torno"
     }
   },
   "Pottery-materialType-default": {
@@ -2020,7 +2020,7 @@
       "Kleinbild s/w": "",
       "Messbild": "",
       "Mittelformat": "",
-      "Scan": ""
+      "Scan": "escaneamento"
     }
   },
   "Metal-decorationTechnique-default": {
@@ -2153,7 +2153,7 @@
   },
   "damages-default": {
     "values": {
-      "totalCollapse": "Perda total / colapso",
+      "totalCollapse": "Perda total/colapso",
       "partialCollapse": "Colapso parcial",
       "missingconst": "",
       "looseconst": "",
@@ -2201,7 +2201,7 @@
       "NE": "NE",
       "E": "E",
       "SE": "SE",
-      "S": "S",
+      "S": "Q",
       "SW": "SO",
       "W": "O",
       "NW": "NO"

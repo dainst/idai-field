@@ -46,7 +46,8 @@ describe('Import/Subsystem', () => {
             () => { id++; return id.toString(); },
             options,
             documents,
-            ['Type']
+            ['Type'],
+            ['Image']
         );
     }
 

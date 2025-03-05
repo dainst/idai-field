@@ -331,7 +331,7 @@ defmodule FieldHubWeb.ProjectShowLive do
             "staff" => staff
           }
         } ->
-          staff
+          join(staff)
 
         _ ->
           :no_data
@@ -341,5 +341,34 @@ defmodule FieldHubWeb.ProjectShowLive do
     |> assign(:supervisor, supervisor)
     |> assign(:contact, contact)
     |> assign(:staff, staff)
+  end
+
+  defp join(staff) do
+    cond do
+      Enum.all?(staff, &is_binary/1) ->
+        Enum.join(staff, ", ")
+
+      Enum.all?(staff, &is_map/1) ->
+        staff
+        |> Stream.map(fn map ->
+          Map.get(map, "value")
+        end)
+        |> Enum.filter(fn
+          nil -> false
+          _ -> true
+        end)
+        |> Enum.join(", ")
+
+      true ->
+        ""
+    end
+    |> case do
+      "" ->
+        # Handles the `true` fallback above or casess where extracting values from the maps did not return any values.
+        :no_data
+
+      combined_names ->
+        combined_names
+    end
   end
 end

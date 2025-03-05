@@ -1,7 +1,36 @@
-.image-grid-cell-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #d9dee4;
-  overflow: hidden;
+image-grid-cell {
+  .icons {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    overflow: hidden;
+
+    .badge {
+      margin-right: 4px;
+    }
+  }
+
+  img {
+    border: 3px solid white;
+  }
+
+  .identifier {
+    width: calc(100% - 1px);
+  }
+
+  .title {
+    background-color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
+  }
+
+  .image-grid-cell-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d9dee4;
+    overflow: hidden;
+  }
 }
+

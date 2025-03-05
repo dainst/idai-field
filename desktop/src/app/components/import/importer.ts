@@ -92,11 +92,12 @@ export module Importer {
      */
     export async function doImport(services: ImporterServices, context: ImporterContext,
                                    generateId: () => string, options: ImporterOptions,
-                                   documents: Array<Document>, typeCategoryNames: string[]): Promise<ImporterReport> {
+                                   documents: Array<Document>, typeCategoryNames: string[],
+                                   imageCategoryNames: string[]): Promise<ImporterReport> {
 
         if (options.format === 'catalog') {
             const { errors, successfulImports } =
-                await (buildImportCatalog(services, context.settings, typeCategoryNames))(documents);
+                await (buildImportCatalog(services, context.settings, typeCategoryNames, imageCategoryNames))(documents);
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 

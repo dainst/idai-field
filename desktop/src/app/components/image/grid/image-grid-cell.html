@@ -28,10 +28,10 @@
 
 <div *ngIf="showIdentifier" class="identifier px-1 bg-white text-truncate" [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
 <div class="title" [class.small]="nrOfColumns > 5">
-    <div *ngIf="showLinkBadges && cell['document'].resource.relations.depicts?.length" class="p-2" align="right">
-        <span *ngFor="let resourceId of cell['document'].resource.relations.depicts"
-              id="related-resource-{{resourceId}}" class="badge bg-info me-1 related-resource-{{resourceId}}">
-            <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
+    <div *ngIf="showLinkBadges && linkedResources.length" class="p-2" align="right">
+        <span *ngFor="let resource of linkedResources"
+              id="related-resource-{{resource.id}}" class="badge bg-info me-1 related-resource-{{resource.id}}">
+            <span class="mdi mdi-link"></span> {{resource.identifier}}
         </span>
     </div>
     <div *ngIf="showShortDescription && cell['document'].resource.shortDescription" class="p-1">

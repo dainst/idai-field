@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MIN_NUMBER_OF_DUPLICATES } from '../duplication-util';
 
 
 @Component({
@@ -10,7 +11,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     },
     standalone: false
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -20,8 +20,6 @@ export class DuplicateModalComponent {
 
     public numberOfDuplicates: number|undefined;
     public newDocument: boolean;
-
-    private readonly minNumberOfDuplicates: number = 1;
 
 
     constructor(public activeModal: NgbActiveModal) {}
@@ -43,8 +41,8 @@ export class DuplicateModalComponent {
     public getMinNumberOfDuplicates(): number {
 
         return this.newDocument
-            ? this.minNumberOfDuplicates + 1
-            : this.minNumberOfDuplicates;
+            ? MIN_NUMBER_OF_DUPLICATES + 1
+            : MIN_NUMBER_OF_DUPLICATES;
     }
 
 

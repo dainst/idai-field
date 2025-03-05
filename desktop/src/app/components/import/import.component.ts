@@ -286,7 +286,8 @@ export class ImportComponent implements OnInit {
             () => this.idGenerator.generateId(),
             options,
             documents,
-            this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
+            this.projectConfiguration.getTypeCategories().map(to(Named.NAME)),
+            this.projectConfiguration.getImageCategories().map(to(Named.NAME))
         );
     }
 

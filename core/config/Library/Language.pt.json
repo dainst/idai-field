@@ -1,9 +1,9 @@
 {
   "groups": {
-    "stem": "Dados de base",
+    "stem": "Dados-mestre",
     "properties": "Propriedades",
     "time": "Cronologia",
-    "position": "Posição / Contexto",
+    "position": "Posição/Contexto",
     "dimension": "Dimensões",
     "identification": "Determinação",
     "other": "Outros",
@@ -25,7 +25,7 @@
       "description": "Indicação da altura na extensão máxima/mínima"
     },
     "dimensionDepth": {
-      "label": "Profundiade",
+      "label": "Profundidade",
       "description": "Indicação da profundidade na extensão máxima/mínima"
     },
     "dimensionThickness": {
@@ -34,7 +34,7 @@
     },
     "dimensionVerticalExtent": {
       "label": "Nível",
-      "description": "Nível margem superior / margem inferior"
+      "description": "Nível margem superior/margem inferior"
     },
     "dimensionPerimeter": {
       "label": "Perímetro",
@@ -54,7 +54,7 @@
     },
     "processor": {
       "label": "Editor/editora",
-      "description": "Nomes dos responsáveis pelo recurso ou objeto durante a campanha. NOTA: Os nomes das pessoas que editam a base de dados são registados automaticamente e, portanto, não são necessários aqui."
+      "description": "Nomes dos responsáveis pelo recurso ou objeto durante a campanha. Importante: Os nomes das pessoas que editam a base de dados são registados automaticamente e, portanto, não são necessárias indicar aqui."
     },
     "campaign": {
       "label": "Campanha"
@@ -83,7 +83,7 @@
     },
     "date": {
       "label": "Data",
-      "description": "Data do registo / da execução"
+      "description": "Data do registo/da execução"
     },
     "orientation": {
       "label": "Orientação",
@@ -174,16 +174,16 @@
     "Project": {
       "fields": {
         "contactMail": {
-          "label": "Endereço de correio de contacto",
-          "description": "Endereço de correio do projeto ou da pessoa de contacto"
+          "label": "Endereço de correio eletrónico de contacto",
+          "description": "Endereço de correio eletrónico do projeto ou da pessoa de contacto"
         },
         "contactPerson": {
           "label": "Pessoa de contacto",
-          "description": "Pessoa de contato do projeto"
+          "description": "Pessoa de contacto do projeto"
         },
         "epsgId": {
           "label": "Código EPSG",
-          "description": "Identificação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
+          "description": "Indicação do código EPSG (ver http://spatialreference.org/, e. g. 3004)"
         },
         "externalReference": {
           "label": "Página do projeto",
@@ -206,7 +206,7 @@
           "description": "Entrada como número decimal, valores negativos são possíveis"
         },
         "license": {
-          "label": "License information"
+          "label": "informações de licença"
         },
         "projectURI": {
           "label": "URL do projeto",
@@ -219,7 +219,7 @@
           "label": "Campanhas"
         },
         "projectSupervisor": {
-          "label": "Supervisor",
+          "label": "Supervisor/a",
           "description": "Pessoa responsável pelo projeto"
         },
         "bibliographicReferences": {
@@ -244,7 +244,8 @@
           "label": "Comentário sobre o estado de preservação"
         },
         "constructionDetailsDescription": {
-          "label": "Descrição dos detalhes de construção"
+          "label": "Descrição dos detalhes de construção",
+          "description": "Descrição em detalhe da construção do fundamento/cantos/camadas ou semelhante."
         },
         "findingPlace": {
           "label": "Sítio de descoberta",
@@ -283,7 +284,7 @@
         },
         "publicationDatingFinds": {
           "label": "Datação (achados)",
-          "description": "por exemplo: vestígios de sepultamento disturbados (2./3. séc. d. C.)"
+          "description": "por exemplo: vestígios de sepultamento disturbados (2º/3º séc. d. C.)"
         },
         "conditionAmount": {
           "label": "Parte preservada",
@@ -321,6 +322,18 @@
         "mortarBinder": {
           "label": "Adição de argamassa",
           "description": "Quão alto é a adição de material externo?"
+        },
+        "layerAmount": {
+          "label": "Número de camadas",
+          "description": "Número de camadas do muro"
+        },
+        "layerHeight": {
+          "label": "Altura das camadas",
+          "description": "Número de camadas do muro"
+        },
+        "muralCrown": {
+          "label": "Topo do muro",
+          "description": "Breve definição do estado do topo do muro"
         }
       }
     },
@@ -328,13 +341,15 @@
       "label": "Sítio",
       "fields": {
         "placeName": {
-          "label": "Nome do sítio"
+          "label": "Nome do sítio",
+          "description": "Nome da localidade ou área cadastral"
         },
         "buildingHistory": {
-          "label": "História do sítio"
+          "label": "História do edifício",
+          "description": "Tratado sobre projetos de arqueologia da arquitetura no sítio de descoberta"
         },
         "buildingResearchHistory": {
-          "label": "Histórico da investigação",
+          "label": "História da investigação",
           "description": "História precedente de todas as investigações feitas ao edifício, incluindo escavações"
         },
         "description": {
@@ -342,14 +357,14 @@
           "description": "Campo de descrição livre"
         },
         "excavationHistory": {
-          "label": "Histórico da escavação",
+          "label": "História das escavações",
           "description": "Sumário sobre os projetos executados no sítio de descoberta"
         },
         "siteClassification": {
           "label": "Classificação do sítio"
         },
         "gazId": {
-          "label": "Gazetteer-ID",
+          "label": "Gazetteer ID",
           "description": "Número ID do léxico local"
         },
         "findSituation": {
@@ -357,7 +372,8 @@
           "label": "Contexto do achado"
         },
         "modernIntervention": {
-          "label": "Intervenções modernas"
+          "label": "Intervenções modernas",
+          "description": "Descrição se o sítio de descoberta foi exposto a danos recentes (por exemplo: pedreira/cova/mina, construção posterior, enterração, escavações clandestinas, agricultura, reflorestamento, acumulação de dejetos)"
         },
         "findspotClassification": {
           "label": "Classificação do sítio de descoberta"
@@ -365,14 +381,14 @@
       }
     },
     "Feature": {
-      "label": "Unidade etratigráfica",
+      "label": "Unidade estratigráfica",
       "fields": {
         "featureBorders": {
           "description": "determinação dos limites da unidade estratigráfica",
           "label": "Limites da unidade estratigráfica"
         },
         "comparison": {
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência",
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência",
           "label": "Comparação/Comparações"
         },
         "hasDisturbance": {
@@ -399,7 +415,7 @@
         },
         "comparison": {
           "label": "Comparação/Comparações",
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência"
         },
         "condition": {
           "label": "Estado de preservação",
@@ -440,7 +456,19 @@
           "label": "Consistência"
         },
         "isNatural": {
-          "label": "Natural"
+          "label": "Natural",
+          "description": "O depósito é natural? (por exemplo: 'sim' em caso de erosão)"
+        },
+        "otherClassification": {
+          "label": "Outra classificação"
+        },
+        "distinguishingCriteria": {
+          "label": "Critério de distinção",
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?"
+        },
+        "soilType": {
+          "label": "Tipo de sedimento",
+          "description": "Designação do sedimento de acordo com a carta pedológica"
         }
       }
     },
@@ -458,6 +486,9 @@
         "sampleType": {
           "label": "Tipo de amostra",
           "description": "Qual a amostra retirada? Quais as análises são para ser efetuadas?"
+        },
+        "storagePlace": {
+          "label": "Depósito"
         }
       }
     },
@@ -469,7 +500,8 @@
           "description": "Material/programa utilizado na criação do desenho"
         },
         "drawingTool": {
-          "label": "Ferramenta de desenho"
+          "label": "Ferramenta de desenho",
+          "description": "Com qual tipo de ferramenta foi desenhado?"
         },
         "drawingType": {
           "label": "Tipo de desenho"
@@ -494,15 +526,40 @@
           "description": "Descrição reverso da moeda"
         },
         "stampPositioning": {
-          "description": "Rotação do carimbo no reverso em comparação com a parte da frente; Indicação em 1-12h, análogo ao relógio (exemplo: '12' sem rotação)"
+          "description": "Rotação do carimbo no reverso em comparação com a parte da frente; Indicação em 1-12h, análogo ao relógio (exemplo: '12' sem rotação)",
+          "label": "Posição do carimbo"
         },
         "manufacturingMethod": {
           "label": "Técnica de produção"
+        },
+        "denomination": {
+          "description": "Nome da unidade da moeda",
+          "label": "Valor facial"
+        },
+        "mintingRuler": {
+          "description": "Indivíduo ou entidade responsável pela cunhagem da moeda",
+          "label": "Titular da cunhagem"
+        },
+        "frontSideDescription": {
+          "label": "Descrição frente",
+          "description": "Descrição da frente da moeda"
+        },
+        "mint": {
+          "label": "Casa da moeda",
+          "description": "Local onde a moeda foi cunhada"
         }
       }
     },
     "Photo": {
-      "label": "Fotografia"
+      "label": "Fotografia",
+      "fields": {
+        "originalFormat": {
+          "label": "Formato original"
+        },
+        "viewingDirection": {
+          "label": "Direção de vista"
+        }
+      }
     },
     "Type": {
       "label": "Tipo"
@@ -578,13 +635,13 @@
     "Burial": {
       "fields": {
         "ageDetermination": {
-          "label": "determinação da idade"
+          "label": "Determinação da idade"
         },
         "ageDeterminationBasis": {
           "label": "Base para a determinação da idade"
         },
         "sexDetermination": {
-          "label": "determinação do sexo"
+          "label": "Determinação do sexo"
         },
         "sexDeterminationBasis": {
           "label": "Base para a determinação do sexo"
@@ -618,7 +675,7 @@
         },
         "publicationDatingFinds": {
           "label": "Datação (achados)",
-          "description": "por exemplo: vestígios de sepultamento disturbados (2./3. séc. d. C.)"
+          "description": "por exemplo: vestígios de sepultamento disturbados (2º/3º séc. d. C.)"
         },
         "positionLegs": {
           "label": "Posição das pernas"
@@ -644,7 +701,7 @@
     "Wood": {
       "fields": {
         "typeOfWood": {
-          "description": "determinação do tipo de madeiro no objeto",
+          "description": "Determinação do tipo de madeiro no objeto",
           "label": "Tipo de madeira"
         },
         "paintCondition": {
@@ -699,7 +756,7 @@
           "label": "Comentário sobre o estado de preservação"
         },
         "distinguishingCriteria": {
-          "description": "Qual o critério escolhida para determinar a borda da unidade estratigráfica?",
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?",
           "label": "Critério de distinção"
         },
         "floorClassification": {
@@ -741,7 +798,7 @@
         },
         "sample": {
           "label": "Amostra",
-          "description": "Detalhes sobre a amostra retirada"
+          "description": "Indicações sobre a amostra retirada"
         },
         "purpose": {
           "label": "Utilização",
@@ -819,7 +876,7 @@
           "label": "Exterior: cor e intensidade da argila"
         },
         "clayColorBreak": {
-          "label": "Fratura: cor da argila e intensidade"
+          "label": "Fratura: cor e intensidade da argila"
         },
         "clayHardness": {
           "label": "Dureza da argila (escala de Mohs)"
@@ -898,6 +955,9 @@
         },
         "vesselForm": {
           "label": "Forma de base do contentor"
+        },
+        "amountSherdsLip": {
+          "label": "número de bocas"
         }
       },
       "label": "Cerâmica"
@@ -905,13 +965,23 @@
     "FeatureSegment": {
       "fields": {
         "hasDisturbance": {
-          "label": "Distúrbio"
+          "label": "Distúrbio",
+          "description": "Existe um distúrbio do segmento de depósito?"
         },
         "comparison": {
           "label": "Comparação/Comparações",
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência"
+        },
+        "featureSegmentBorders": {
+          "description": "Determinação dos limites do segmento de depósito",
+          "label": "Limites do segmento de depósito"
+        },
+        "featureSegmentForm": {
+          "description": "Forma de segmento de depósito em plano ou perfil: qual a forma identificável?",
+          "label": "Forma do segmento de depósito"
         }
-      }
+      },
+      "label": "Segmento de depósito"
     },
     "Level": {
       "label": "Andar",
@@ -963,7 +1033,7 @@
           "label": "Forma e utilização da telha"
         },
         "brickUsage": {
-          "label": "Utilização da telha na arquitectura"
+          "label": "Utilização da telha na arquitetura"
         },
         "clayColorOutside": {
           "label": "Exterior: cor e intensidade da argila"
@@ -1007,6 +1077,10 @@
         "supervisor": {
           "description": "Pessoa responsável da intervenção",
           "label": "Supervisor/a"
+        },
+        "diaryAbstract": {
+          "label": "Progressão do projeto",
+          "description": "Presentação da progressão do projeto ou escavação, eventualmente uma síntese do diário"
         }
       }
     },
@@ -1014,20 +1088,21 @@
       "fields": {
         "isNatural": {
           "label": "Natural",
-          "description": "O estrato é natural? (Por exemplo \"Sim\" para uma erosão)"
+          "description": "O depósito é natural? (por exemplo: 'sim' em caso de erosão)"
         },
         "consistency": {
           "label": "Consistência"
         },
         "distinguishingCriteria": {
           "label": "Critério de distinção",
-          "description": "Qual o critério escolhida para determinar a borda da unidade estratigráfica?"
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?"
         },
         "layerClassification": {
           "label": "Definição ou classificação do depósito"
         },
         "soilType": {
-          "label": "Tipo de sedimento"
+          "label": "Tipo de sedimento",
+          "description": "Designação do sedimento de acordo com a carta pedológica"
         },
         "appearance": {
           "label": "Formação",
@@ -1040,9 +1115,10 @@
       "fields": {
         "comparison": {
           "label": "Comparação/Comparações",
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência"
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência"
         }
-      }
+      },
+      "label": "Grupo de depósitos"
     },
     "Find": {
       "fields": {
@@ -1069,11 +1145,12 @@
           "description": "Parte preservada em comparação com o original"
         },
         "comparison": {
-          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com referência",
+          "description": "Comparação com unidades estratigráficas, objetos, inscrições etc. semelhantes, com indicação de uma referência",
           "label": "Comparação/Comparações"
         },
         "publicationMaterialSummary": {
-          "label": "Material"
+          "label": "Material",
+          "description": "Descrição detalhada da publicação"
         },
         "instanceOf": {
           "label": "Classificação tipológica"
@@ -1093,8 +1170,17 @@
         "weight": {
           "label": "Peso (g)",
           "description": "Peso em gramas"
+        },
+        "storagePlace": {
+          "label": "Depósito",
+          "description": "depósito do achado"
+        },
+        "conditionPercent": {
+          "label": "Estado de preservação em porcento",
+          "description": "Quantia preservada em porcento"
         }
-      }
+      },
+      "label": "Achado"
     },
     "Opening": {
       "fields": {
@@ -1141,7 +1227,7 @@
       "label": "Elemento de estilo"
     },
     "Roof": {
-      "label": "telhado",
+      "label": "Telhado",
       "fields": {
         "material": {
           "label": "Material"
@@ -1160,13 +1246,18 @@
       "label": "Área de investigação"
     },
     "SurveyUnit": {
-      "label": "Unidade de prospecção"
+      "label": "Unidade de prospeção"
     },
     "Area": {
       "label": "Área"
     },
     "Excavation": {
-      "label": "Escavação"
+      "label": "Escavação",
+      "fields": {
+        "isIllegal": {
+          "label": "Escavação clandestina"
+        }
+      }
     },
     "StoragePlace": {
       "label": "Depósito"
@@ -1175,7 +1266,7 @@
       "label": "Edifício"
     },
     "StorageRoom": {
-      "label": "Sala"
+      "label": "Espaço de armazenamento"
     },
     "StorageShelf": {
       "label": "Prateleira"
@@ -1218,8 +1309,17 @@
         },
         "architectureElement": {
           "label": "Elemento arquitetónico"
+        },
+        "workmanship": {
+          "label": "Fabricação",
+          "description": "Descrição da qualidade da pedra tratada para, por exemplo, uma inscrição"
+        },
+        "color": {
+          "description": "Cor, se reconhecível",
+          "label": "Cor e intensidade"
         }
-      }
+      },
+      "label": "Pedra"
     },
     "Room": {
       "fields": {
@@ -1234,19 +1334,22 @@
           "description": "Parte preservada em comparação com o original",
           "label": "Parte preservada"
         }
-      }
+      },
+      "label": "Espaço"
     },
     "Grave": {
       "fields": {
         "publicationDatingFinds": {
-          "label": "Datação (achados)"
+          "label": "Datação (achados)",
+          "description": "por exemplo: vestígios de sepultura disturbados: peças de enterro (2º/3º séc. d. C.)"
         },
         "findingPlace": {
           "description": "Para a entrada de vários recursos como sítio de descoberta, por exemplo: (PE07 So 04,002)",
           "label": "Sítio de descoberta"
         },
         "publicationDatingScientific": {
-          "description": "Descrição da publicação, referência de datações existentes"
+          "description": "Descrição da publicação, referência de datações existentes",
+          "label": "Datação (científica)"
         },
         "publicationDatingStratigraphy": {
           "label": "Datação (estratigrafia)",
@@ -1272,8 +1375,23 @@
         },
         "tombBuilding": {
           "label": "Tomba"
+        },
+        "distinguishingCriteria": {
+          "description": "Qual o critério utilizado para discernir a unidade estratigráfica?",
+          "label": "Critério de distinção"
+        },
+        "soilType": {
+          "label": "Tipo de sedimento",
+          "description": "Designação do sedimento de acordo com a carta pedológica"
+        },
+        "graveType": {
+          "label": "Tipo de sepultura"
+        },
+        "specificType": {
+          "label": "Tipo de sepultura especial"
         }
-      }
+      },
+      "label": "Sepultura"
     },
     "Terracotta": {
       "fields": {
@@ -1343,8 +1461,13 @@
         "weight": {
           "label": "Peso (g)",
           "description": "Peso em gramas"
+        },
+        "storagePlace": {
+          "description": "Depósito da coleção de achados",
+          "label": "Depósito"
         }
-      }
+      },
+      "label": "Coleção de achados"
     },
     "Metal": {
       "fields": {
@@ -1363,13 +1486,17 @@
           "label": "Descrição da forma"
         },
         "materialDescription": {
-          "label": "Descrição do material"
+          "label": "Descrição do material",
+          "description": "Descrição do material utilizado; se possível descrição exata do metal ou ligação"
         },
         "manufacturingMethod": {
           "label": "Técnica de produção"
         },
         "decorationTechnique": {
           "label": "Particularidades da superfície ou da técnica de decoração"
+        },
+        "objectType": {
+          "label": "Denominação ou tipo de objeto"
         }
       },
       "label": "Metal"
@@ -1378,20 +1505,110 @@
       "fields": {
         "hasDecoration": {
           "label": "Pintura"
+        },
+        "composition": {
+          "description": "Descrição da composição do estuque",
+          "label": "Composição do estuque"
+        },
+        "color": {
+          "label": "Cor e intensidade",
+          "description": "Cor, se reconhecível"
+        },
+        "plasterComponents": {
+          "label": "Componentes do estuque"
         }
-      }
+      },
+      "label": "Fragmento de estuque"
     },
     "BuildingPart": {
       "fields": {
         "material": {
           "label": "Material"
         }
+      },
+      "label": "Parte da construção"
+    },
+    "Bone": {
+      "fields": {
+        "biologicalAge": {
+          "description": "Idade à morte do indivíduo ou animal (por exemplo Infans I)",
+          "label": "Grupo etário"
+        },
+        "objectType": {
+          "label": "Denominação ou tipo de objeto"
+        },
+        "boneClassification": {
+          "label": "Classificação dos ossos"
+        },
+        "boneType": {
+          "label": "Classificação geral dos ossos"
+        },
+        "burningGrade": {
+          "label": "Grão de cremação dos ossos (de acordo com Wahl 1982)"
+        },
+        "sex": {
+          "label": "Sexo",
+          "description": "Sexo do indivíduo ou animal"
+        },
+        "species": {
+          "label": "Espécie animal",
+          "description": "Espécie animal presente"
+        }
+      },
+      "label": "Ossos"
+    },
+    "Survey": {
+      "fields": {
+        "researchMethod": {
+          "label": "Método de análise",
+          "description": "Qual o método de prospeção utilizado?"
+        }
+      },
+      "label": "Área da prospeção"
+    },
+    "Profile": {
+      "label": "Perfil"
+    },
+    "FindDrawing": {
+      "label": "Desenho do achado",
+      "fields": {
+        "scale": {
+          "label": "Escala"
+        },
+        "sheetNumberFrom": {
+          "label": "Número de página (de)"
+        },
+        "sheetNumberTo": {
+          "label": "Número de página (até)"
+        }
       }
+    },
+    "ProcessUnit": {
+      "label": "Processo de trabalho",
+      "fields": {
+        "operationClassification": {
+          "label": "Classificação do processo de trabalho"
+        }
+      }
+    },
+    "PlanDrawing": {
+      "fields": {
+        "scale": {
+          "label": "Escala"
+        },
+        "sheetNumberFrom": {
+          "label": "Número de página (de)"
+        },
+        "sheetNumberTo": {
+          "label": "Número de página (até)"
+        }
+      },
+      "label": "Desenho em plano"
     }
   },
   "forms": {
     "Feature:archaeoDox": {
-      "label": "unidade estratigráfica",
+      "label": "Unidade estratigráfica",
       "fields": {
         "shortDescription": {
           "label": "Descrição breve (classificação)"
@@ -1420,7 +1637,12 @@
       "label": "Sítio de descoberta"
     },
     "Profile:archaeoDox": {
-      "label": "Desenho de perfil"
+      "label": "Desenho do perfil",
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "label": "Direção de vista"
+        }
+      }
     },
     "Find:archaeoDox": {
       "fields": {
@@ -1429,6 +1651,9 @@
         },
         "archaeoDox:material": {
           "label": "Material"
+        },
+        "archaeoDox:typeOfWare": {
+          "label": "Tipo de cerâmica"
         }
       }
     },
@@ -1450,8 +1675,14 @@
       "fields": {
         "shortDescription": {
           "label": "Descrição breve (classificação)"
+        },
+        "archaeoDox:soilProperties": {
+          "label": "Características do sedimento"
         }
       }
+    },
+    "Planum:archaeoDox": {
+      "label": "Desenho em plano"
     }
   }
 }

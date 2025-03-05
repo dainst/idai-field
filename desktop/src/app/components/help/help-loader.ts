@@ -43,7 +43,7 @@ export module HelpLoader {
         const chapters: Array<Chapter> = [];
 
         const document = new DOMParser().parseFromString(htmlString, 'text/html');
-        const elements = document.getElementsByTagName('h2');
+        const elements = document.getElementsByTagName('h1');
 
         for (let i = 0; i < elements.length; i++) {
             chapters.push({

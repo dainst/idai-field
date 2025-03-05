@@ -28,7 +28,8 @@ describe('subsystem/import/importCatalog', () => {
                 username: app.settingsProvider.getSettings().username,
                 selectedProject: app.settingsProvider.getSettings().selectedProject
             },
-            ['Type']
+            ['Type'],
+            ['Image']
         );
     });
 
@@ -194,6 +195,19 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS);
+    });
+
+
+    test('invalid category', async () => {
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog'],
+            ['i1', 'InvalidCategory']
+        ]);
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_CATEGORY);
+        expect(result.errors[0][1]).toBe('InvalidCategory');
     });
 
 

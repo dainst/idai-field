@@ -133,7 +133,9 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT && !this.hasSelectedImages()) {
+        if (event.key === 'Escape'
+                && this.menuService.getContext() === MenuContext.DEFAULT
+                && !this.hasSelectedImages()) {
             await this.tabManager.openActiveTab();
         }
     }

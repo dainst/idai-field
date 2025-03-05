@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map, flatten, intersect, isArray, nop } from 'tsfun';
+import { Map, flatten, intersect, isArray, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
     RelationTargetWarnings } from 'idai-field-core';
@@ -30,6 +30,7 @@ import { WarningsService } from '../../../services/warnings/warnings-service';
 
 type WarningSection = {
     type: WarningType;
+    isRelationField?: boolean;
     category?: CategoryForm;
     unconfiguredCategoryName?: string;
     fieldName?: string;
@@ -303,6 +304,7 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+        componentInstance.isRelationField = section.isRelationField;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -371,6 +373,7 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+        componentInstance.isRelationField = section.isRelationField;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -530,9 +533,13 @@ export class WarningsModalComponent {
     }
 
 
-    private async createSection(type: WarningType, document: FieldDocument, fieldName?: string): Promise<WarningSection> {
+    private async createSection(type: WarningType, document: FieldDocument,
+                                fieldName?: string): Promise<WarningSection> {
 
-        const section: WarningSection = { type };
+        const category: CategoryForm|undefined = this.projectConfiguration.getCategory(document.resource.category);
+        const section: WarningSection = { type, category };
+
+        if (fieldName) section.isRelationField = this.isRelationField(document, fieldName, category);
 
         if (type === 'missingIdentifierPrefix' || type === 'nonUniqueIdentifier') {
             section.fieldName = Resource.IDENTIFIER;
@@ -542,12 +549,10 @@ export class WarningsModalComponent {
         
         if (document.warnings.unconfiguredCategory) {
             section.unconfiguredCategoryName = document.resource.category;
-        } else if (document.resource.category !== 'Configuration') {
-            section.category = this.projectConfiguration.getCategory(document.resource.category);
-            if (fieldName
-                    && !['unconfiguredFields', 'missingRelationTargets', 'invalidRelationTargets'].includes(type)) {
-                section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
-            }
+        } else if (document.resource.category !== 'Configuration'
+                && fieldName
+                && !['unconfiguredFields', 'missingRelationTargets', 'invalidRelationTargets'].includes(type)) {
+            section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
         };
 
         if (type === 'invalidFields' || type === 'unconfiguredFields') {
@@ -560,23 +565,35 @@ export class WarningsModalComponent {
             const outlierValues: Map<string[]>|string[] = document.warnings.outliers.fields[fieldName];
             section.outlierValues = isArray(outlierValues)
                 ? outlierValues
-                : flatten(Object.values(outlierValues));
+                : set(flatten(Object.values(outlierValues)));
         }
 
-        if (type === 'invalidRelationTargets') {
-           section.relationTargets = await this.fetchRelationTargets(document, fieldName);
+        if (section.isRelationField) {
+           section.relationTargets = await this.fetchRelationTargets(document, fieldName, type);
         }
 
         return section;
     }
 
 
-    private fetchRelationTargets(document: FieldDocument, fieldName: string): Promise<Array<Document>> {
+    private isRelationField(document: FieldDocument, fieldName: string, category?: CategoryForm): boolean {
 
-        const targetIds: string[] = intersect(
-            document.resource.relations[fieldName],
-            document.warnings.invalidRelationTargets.targetIds
-        );
+        const field: Field = category ? CategoryForm.getField(category, fieldName) : undefined;
+
+        return field
+            ? Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType)
+            : document.resource.relations[fieldName] !== undefined;
+    }
+
+
+    private fetchRelationTargets(document: FieldDocument, fieldName: string,
+                                 type: WarningType): Promise<Array<Document>> {
+
+        const targetIds: string[] = type === 'invalidRelationTargets'
+            ? intersect(
+                document.resource.relations[fieldName],
+                document.warnings.invalidRelationTargets.targetIds
+            ) : document.resource.relations[fieldName];
 
         return this.datastore.getMultiple(targetIds);
     }

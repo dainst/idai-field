@@ -22,6 +22,7 @@ export class DeleteFieldDataModalComponent {
     public fieldLabel: string|undefined;
     public category: CategoryForm;
     public warningType: WarningType;
+    public isRelationField: boolean;
 
     public deleteAll: boolean;
     public confirmFieldName: string;
@@ -108,17 +109,24 @@ export class DeleteFieldDataModalComponent {
 
     private async deleteSingle() {
 
-        delete this.document.resource[this.fieldName];
+        this.deleteInDocument(this.document);
         await this.datastore.update(this.document);
     }
 
 
     private async deleteMultiple() {
 
-        this.affectedDocuments.forEach(document => {
-            delete document.resource[this.fieldName];
-        });
-
+        this.affectedDocuments.forEach(document => this.deleteInDocument(document));
         await this.datastore.bulkUpdate(this.affectedDocuments);
+    }
+
+
+    private deleteInDocument(document: Document) {
+
+        if (this.isRelationField) {
+            delete document.resource.relations[this.fieldName];
+        } else {
+            delete document.resource[this.fieldName];
+        }
     }
 }

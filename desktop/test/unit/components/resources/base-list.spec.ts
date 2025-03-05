@@ -19,6 +19,7 @@ describe('BaseList', () => {
         viewFacade = {
             isInExtendedSearchMode: jest.fn(),
             navigationPathNotifications: jest.fn().mockReturnValue({ subscribe: () => {} }),
+            populateDocumentsNotifications: jest.fn().mockReturnValue({ subscribe: () => {} }),
             getNavigationPath: jest.fn().mockReturnValue({}),
             isInOverview: jest.fn().mockReturnValue(true),
             getSelectedOperations: jest.fn().mockReturnValue([]),

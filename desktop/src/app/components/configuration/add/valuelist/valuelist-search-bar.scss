@@ -3,6 +3,7 @@ valuelist-search-bar {
     width: calc(100% - 50px);
     height: 38px;
     border-right: none;
+    z-index: 3;
   }
 
   #valuelist-filter-button .btn {
@@ -32,9 +33,10 @@ valuelist-search-bar {
     fieldset {
       .form-check-inline {
         padding-left: 33px;
-        padding-bottom: 10px;
 
         .form-check-label {
+          position: relative;
+          bottom: 1px;
           padding-left: 0;
         }
 

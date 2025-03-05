@@ -1,6 +1,6 @@
 import { aMap, isArray, clone, isUndefinedOrEmpty, set, subtract, to } from 'tsfun';
-import { Document, Datastore, Relation, Lookup, ON_RESOURCE_ID, RelationsManager, Resource,
-    childrenOf, ImageStore } from 'idai-field-core';
+import { Document, Datastore, Relation, Lookup, ON_RESOURCE_ID, RelationsManager, Resource, childrenOf,
+    ImageStore } from 'idai-field-core';
 import { makeDocumentsLookup } from './utils';
 import { ImageRelationsManager } from '../../../services/image-relations-manager';
 
@@ -10,7 +10,7 @@ export interface ImportCatalogServices {
     datastore: Datastore;
     relationsManager: RelationsManager;
     imageRelationsManager: ImageRelationsManager;
-    imagestore: ImageStore
+    imagestore: ImageStore;
 }
 
 
@@ -30,15 +30,15 @@ export module ImportCatalogErrors {
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
     export const NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
     export const INVALID_RELATIONS = 'ImportCatalogErrors.invalidRelations';
+    export const INVALID_CATEGORY = 'ImportCatalogErrors.invalidCategory';
 }
 
 
 /**
  * @author Daniel de Oliveira
  */
-export function buildImportCatalog(services: ImportCatalogServices,
-                                   context: ImportCatalogContext,
-                                   typeCategoryNames: string[]) {
+export function buildImportCatalog(services: ImportCatalogServices, context: ImportCatalogContext,
+                                   typeCategoryNames: string[], imageCategoryNames: string[]) {
 
     return async function importCatalog(importDocuments: Array<Document>)
         : Promise<{ errors: string[][], successfulImports: number }> {
@@ -62,6 +62,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
                 existingCatalogAndImageDocuments
             ] = await getExistingDocuments(services, importCatalog.resource.id);
 
+            assertCategoriesValid(importDocuments, typeCategoryNames, imageCategoryNames);
             assertRelationsValid(importDocuments, typeCategoryNames);
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
@@ -83,8 +84,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
 }
 
 
-async function assertNoIdentifierClashes(services: ImportCatalogServices,
-                                         importDocuments: Array<Document>) {
+async function assertNoIdentifierClashes(services: ImportCatalogServices, importDocuments: Array<Document>) {
 
     const clashes = [];
     for (const document of importDocuments) {
@@ -108,8 +108,7 @@ async function assertNoIdentifierClashes(services: ImportCatalogServices,
 }
 
 
-async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices,
-                                               importDocuments: Array<Document>,
+async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices, importDocuments: Array<Document>,
                                                typeCategoryNames: string[]) {
 
     for (const document of importDocuments) {
@@ -128,8 +127,7 @@ async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices,
 }
 
 
-async function assertNoImagesOverwritten(services: ImportCatalogServices,
-                                         importDocuments: Array<Document>,
+async function assertNoImagesOverwritten(services: ImportCatalogServices, importDocuments: Array<Document>,
                                          typeCategoryNames: string[]) {
 
     for (const document of importDocuments) {
@@ -149,8 +147,7 @@ async function assertNoImagesOverwritten(services: ImportCatalogServices,
 // images related to not only catalog but also other resources. For now, we oblige
 // the owner of the catalog to remove the catalog consciously so that he then can
 // re-import it afterwards.
-async function assertCatalogNotOwned(services: ImportCatalogServices,
-                                     importCatalog: Document) {
+async function assertCatalogNotOwned(services: ImportCatalogServices, importCatalog: Document) {
 
 
     let existingCatalogIdentifier = undefined;
@@ -173,8 +170,7 @@ function assertProjectAlwaysTheSame(documents: Array<Document>) {
 }
 
 
-async function removeObsoleteCatalogDocuments(services: ImportCatalogServices,
-                                              existingDocuments: Array<Document>,
+async function removeObsoleteCatalogDocuments(services: ImportCatalogServices, existingDocuments: Array<Document>,
                                               updateDocuments: Array<Document>) {
 
     const diff = subtract(ON_RESOURCE_ID, updateDocuments)(existingDocuments);
@@ -196,8 +192,7 @@ async function removeRelatedImages(services: ImportCatalogServices,
 }
 
 
-function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
-                                        importDocuments: Array<Document>) {
+function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>, importDocuments: Array<Document>) {
 
     const removedDocuments = subtract(ON_RESOURCE_ID, importDocuments)(existingDocuments);
     const problems = [];
@@ -224,8 +219,7 @@ function getImportTypeCatalog(importDocuments: Array<Document>): Document {
 }
 
 
-async function getExistingDocuments(services: ImportCatalogServices,
-                                    typeCatalog: Resource.Id)
+async function getExistingDocuments(services: ImportCatalogServices, typeCatalog: Resource.Id)
         : Promise<[Array<Document>, Array<Document>, Lookup<Document>]> {
 
     const catalogAndTypes = await fetchExistingCatalogWithTypes(services, typeCatalog);
@@ -239,8 +233,7 @@ async function getExistingDocuments(services: ImportCatalogServices,
 }
 
 
-async function fetchExistingCatalogWithTypes(services: ImportCatalogServices,
-                                             typeCatalog: Resource.Id)
+async function fetchExistingCatalogWithTypes(services: ImportCatalogServices, typeCatalog: Resource.Id)
         : Promise<Array<Document>> {
 
     try {
@@ -251,8 +244,7 @@ async function fetchExistingCatalogWithTypes(services: ImportCatalogServices,
 }
 
 
-function importOneDocument(services: ImportCatalogServices,
-                           existingDocuments: Lookup<Document>,
+function importOneDocument(services: ImportCatalogServices, existingDocuments: Lookup<Document>,
                            typeCategoryNames: string[]) {
 
     return async (document: Document) => {
@@ -292,6 +284,19 @@ function isOwned(context: ImportCatalogContext, document: Document) {
 function isTypeOrCatalog(document: Document, typeCategoryNames: string[]) {
 
     return typeCategoryNames.includes(document.resource.category) || document.resource.category === 'TypeCatalog';
+}
+
+
+function assertCategoriesValid(documents: Array<Document>, typeCategoryNames: string[], imageCategoryNames: string[]) {
+
+    const allowedCategoryNames: string[] = ['TypeCatalog'].concat(typeCategoryNames).concat(imageCategoryNames);
+    const categoryNames: string[] = set(documents.map(document => document.resource.category));
+
+    for (let categoryName of categoryNames) {
+        if (!allowedCategoryNames.includes(categoryName)) {
+            throw [ImportCatalogErrors.INVALID_CATEGORY, categoryName];
+        }
+    }
 }
 
 

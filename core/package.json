@@ -3,7 +3,7 @@
     "description": "Field Core",
     "version": "1.4.0",
     "license": "Apache-2.0",
-    "author": "German Archaeological Institute",
+    "author": "German Archaeological Institute / Head Office of the GBV Common Library Network",
     "main": "dist/index",
     "types": "dist/index",
     "files": [

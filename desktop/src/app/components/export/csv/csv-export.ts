@@ -1,4 +1,4 @@
-import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove, on, is } from 'tsfun';
+import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove, on, is, isObject } from 'tsfun';
 import { Resource, FieldResource, StringUtils, Relation, Field, ImageResource } from 'idai-field-core';
 import { CSVMatrixExpansion } from './csv-matrix-expansion';
 import { CsvExportUtils } from './csv-export-utils';
@@ -29,7 +29,6 @@ export type InvalidField = {
  * @author Thomas Kleinke
  */
 export module CSVExport {
-
 
     /**
      * Creates a header line and lines for each record.
@@ -67,7 +66,7 @@ export module CSVExport {
             CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.INPUT),
             CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.TEXT),
             CSVMatrixExpansion.expandI18nStringArray(fieldDefinitions, projectLanguages),
-            CSVMatrixExpansion.expandOptionalRangeVal(fieldDefinitions),
+            CSVMatrixExpansion.expandOptionalRangeValue(fieldDefinitions),
             CSVMatrixExpansion.expandDating(fieldDefinitions, projectLanguages),
             CSVMatrixExpansion.expandDimension(fieldDefinitions, projectLanguages),
             CSVMatrixExpansion.expandLiterature(fieldDefinitions),
@@ -186,12 +185,22 @@ export module CSVExport {
     }
 
 
-    function getFieldValue(field: any): string {
+    function getFieldValue(fieldContent: any): string {
 
-        const value: string = Array.isArray(field)
-            ? field.join(ARRAY_SEPARATOR)
-            : field + '';   // Convert numbers to strings
+        const value: string = Array.isArray(fieldContent)
+            ? getStringArray(fieldContent).join(ARRAY_SEPARATOR)
+            : fieldContent + '';   // Convert numbers to strings
 
         return value.replace(new RegExp('"', 'g'), '""');
+    }
+
+
+    function getStringArray(fieldContent: any[]): string[] {
+
+        return fieldContent.map(element => {
+            return isObject(element) && element.value
+                ? element.value
+                : element;
+        })
     }
 }

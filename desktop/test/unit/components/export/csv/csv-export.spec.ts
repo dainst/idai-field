@@ -132,6 +132,24 @@ describe('CSVExport', () => {
     });
 
 
+    test('export editable value array fields', () => {
+
+        const fields = makeFieldDefinitions(['identifier', 'shortDescription', 'staff']);
+        fields.find(field => field.name === 'staff').inputType = 'valuelistMultiInput';
+
+        const resource = ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category');
+        resource.staff = [
+            { value: 'Person A', selectable: true },
+            { value: 'Person B', selectable: true }, 
+            { value: 'Person C', selectable: false }
+        ];
+
+        const result = CSVExport.createExportable([resource], fields, [], ['en'], ',').csvData;
+        expect(result[0]).toEqual('"identifier","shortDescription.en","staff"');
+        expect(result[1]).toEqual('"identifier1","shortDescription1","Person A;Person B;Person C"');
+    });
+
+
     test('is nested in another resource', () => {
 
         const { t, resource } = makeSimpleCategoryAndResource();

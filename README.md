@@ -19,6 +19,9 @@ Using Field, archaeologists can:
 * manage types and inventories
 * sync & publish their excavation data
 
+## Information for users and interested projects
+We are always happy to hear about your Field projects! If you are using Field in your research, consider [signing up for the Field users mailing list](https://lists.fu-berlin.de/listinfo/idaifield2-user) ([idaifield2-user@dainst.de](mailto:idaifield2-user@dainst.de)), where you can exchange tips and tricks with other users and get updates about new releases. Feel free to also join in the [Discussions](https://github.com/dainst/idai-field/discussions) in this repository.
+
 ## Information for developers and collaborators
 
 This is a monorepo containing five packages:

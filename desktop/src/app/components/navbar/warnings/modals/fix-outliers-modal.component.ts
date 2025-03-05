@@ -115,11 +115,6 @@ export class FixOutliersModalComponent {
         }
     }
 
-    public isPreselectedValue(value: string) {
-        
-        return this.document.resource[this.field.name].includes(value);
-    }
-
     private openFixingDataInProgressModal(): NgbModalRef {
 
         const fixingDataInProgressModalRef: NgbModalRef = this.modalService.open(

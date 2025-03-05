@@ -267,10 +267,10 @@
       }
     },
     "Mollusk": {
-      "label": "Deniz kabuğu",
+      "label": "Yumuşakçalar",
       "fields": {
         "classification": {
-          "label": "Deniz kabuğu sınıflandırması"
+          "label": "Yumuşakça sınıflandırması"
         }
       }
     },
@@ -885,7 +885,7 @@
       }
     },
     "Pottery": {
-      "label": "Çanak Çömlek",
+      "label": "Pişmiş Toprak",
       "fields": {
         "amountSherdsWall": {
           "label": "Gövde parçası sayısı"
@@ -1011,7 +1011,7 @@
           "label": "Obje tipi"
         },
         "specificType": {
-          "label": "Çanak çömlek tipi"
+          "label": "Pişmiş toprak tipi"
         },
         "temper": {
           "label": "Katkı",
@@ -1038,7 +1038,7 @@
           "label": "Kap parçası"
         },
         "Firing": {
-          "label": "Çanak çömlek fırınlama"
+          "label": "Pişmiş toprak fırınlama"
         },
         "FormComparisonCompendia": {
           "label": "Form karşılaştırma özeti"
@@ -1064,7 +1064,7 @@
       }
     },
     "Grave": {
-      "label": "Gömüt",
+      "label": "Mezar",
       "fields": {
         "bibliography": {
           "label": "Kaynakça"
@@ -1105,10 +1105,10 @@
           "description": "Stratigrafik birimi sınırlamak için hangi kriter(ler) seçildi?"
         },
         "graveType": {
-          "label": "Gömüt tipi"
+          "label": "Mezar tipi"
         },
         "specificType": {
-          "label": "Özel gömüt tipi"
+          "label": "Özel mezar tipi"
         },
         "soilType": {
           "label": "Toprak tipi",
@@ -1173,7 +1173,7 @@
       }
     },
     "Terracotta": {
-      "label": "Pişmiş Toprak",
+      "label": "Terrakotta",
       "fields": {
         "clayColorBreak": {
           "label": "Parça: Hamur rengi ve tonu"
@@ -1186,7 +1186,7 @@
         },
         "clayStructure": {
           "label": "Yapısı",
-          "description": "Pişmiş toprak yapısal türü nedir?"
+          "description": "Terrakotta yapısal türü nedir?"
         },
         "coatColorInside": {
           "label": "Astar (iç): Rengi ve tonu"

@@ -43,11 +43,11 @@
 }
 
 input:checked + .slider {
-  background-color: $greenbgr;
+  background-color: $green-button-color;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px $greenbgr;
+  box-shadow: 0 0 1px $green-button-color;
 }
 
 input:checked + .slider:before {

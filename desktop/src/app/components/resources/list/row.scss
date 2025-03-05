@@ -37,9 +37,26 @@
     color: #868e96;
     background-color: #fff;
 
+    span {
+      transition: color 0.25s ease;
+    }
+
     &:hover {
       color: color.adjust(#868e96, $lightness: -5%);
       background-color: color.adjust($list-item-hover-color, $lightness: -5%);
+
+      span {
+        color: color.adjust(#868e96, $lightness: -5%);
+
+        &.arrow-deactivated {
+          color: color.adjust(lightgray, $lightness: -20%);
+        }
+      }
+    }
+
+    &:focus {
+      border: none;
+      color: #868e96;
     }
 
     &.move-into-button {

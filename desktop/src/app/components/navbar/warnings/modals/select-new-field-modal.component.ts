@@ -22,6 +22,7 @@ export class SelectNewFieldModalComponent {
     public fieldLabel: string;
     public category: CategoryForm;
     public warningType: WarningType;
+    public isRelationField: boolean;
 
     public availableFields: Array<Field>;
     public selectedFieldName: string;
@@ -113,19 +114,29 @@ export class SelectNewFieldModalComponent {
 
     private moveDataToNewField(document: Document) {
 
-        document.resource[this.selectedFieldName] = document.resource[this.fieldName];
-        delete document.resource[this.fieldName];
+        if (this.isRelationField) {
+            document.resource.relations[this.selectedFieldName] = document.resource.relations[this.fieldName];
+            delete document.resource.relations[this.fieldName];
+        } else {
+            document.resource[this.selectedFieldName] = document.resource[this.fieldName];
+            delete document.resource[this.fieldName];
+        }
     }
 
 
     private getAvailableFields(): Array<Field> {
 
-        const forbiddenInputTypes: Array<Field.InputType> = Field.InputType.RELATION_INPUT_TYPES.concat([
-            Field.InputType.CATEGORY, Field.InputType.IDENTIFIER, Field.InputType.NONE
-        ] as Array<Field.InputType>);
+        const fields: Array<Field> = CategoryForm.getFields(this.category);
 
-        return CategoryForm.getFields(this.category)
-            .filter(field => !forbiddenInputTypes.includes(field.inputType));
+        if (this.isRelationField) {
+            return fields.filter(field => Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType));
+        } else {
+            const forbiddenInputTypes: Array<Field.InputType> = Field.InputType.RELATION_INPUT_TYPES.concat([
+                Field.InputType.CATEGORY, Field.InputType.IDENTIFIER, Field.InputType.NONE
+            ] as Array<Field.InputType>);
+
+            return fields.filter(field => !forbiddenInputTypes.includes(field.inputType));
+        }
     }
 
 

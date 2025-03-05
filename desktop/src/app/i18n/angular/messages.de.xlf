@@ -5936,7 +5936,7 @@
         <target state="final">Relationen:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.temporal" datatype="html">
@@ -5960,7 +5960,7 @@
         <target state="final">Kanten:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.straight" datatype="html">
@@ -5968,7 +5968,7 @@
         <target state="final"> Gerade </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.curved" datatype="html">
@@ -5976,7 +5976,7 @@
         <target state="final"> Gebogen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.clusterOption" datatype="html">
@@ -5984,7 +5984,7 @@
         <target state="final"> Gruppierung nach Grobdatierung </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-options-menu.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.dating.bce" datatype="html">

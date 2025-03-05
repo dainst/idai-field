@@ -14,6 +14,7 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
+import { MAX_NUMBER_OF_DUPLICATES } from './duplication-util';
 import { ChangesHistoryModalComponent } from '../widgets/change-history-modal.component';
 
 
@@ -401,9 +402,9 @@ export class DoceditComponent {
 
         if (category.resourceLimit) {
             const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
-            return Math.max(0, category.resourceLimit - resourcesCount);
+            return Math.min(MAX_NUMBER_OF_DUPLICATES, Math.max(0, category.resourceLimit - resourcesCount));
         } else {
-            return 100;
+            return MAX_NUMBER_OF_DUPLICATES;
         }
     }
 

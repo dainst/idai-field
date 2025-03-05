@@ -1,6 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { I18N, ImageDocument, Labels } from 'idai-field-core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { Datastore, I18N, ImageDocument, Labels } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+
+
+type LinkedResourceInfo = { id: string, identifier: string };
 
 
 @Component({
@@ -13,7 +16,7 @@ import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageGridCellComponent {
+export class ImageGridCellComponent implements OnChanges {
 
     @Input() cell: any;
     @Input() main: ImageDocument;
@@ -24,16 +27,25 @@ export class ImageGridCellComponent {
     @Input() resourceIdentifiers: { [id: string]: string } = {};
     @Input() nrOfColumns: number = 0;
 
+    public linkedResources: Array<LinkedResourceInfo> = [];
 
-    constructor(private labels: Labels) {}
+
+    constructor(private labels: Labels,
+                private datastore: Datastore) {}
+
+
+    ngOnChanges() {
+
+        this.initializeLinkedResources();
+    }
 
 
     public getIdentifier(id: string): string|undefined {
 
-        if (!this.resourceIdentifiers ||
-            (Object.keys(this.resourceIdentifiers).length < 1)) {
+        if (!this.resourceIdentifiers || !Object.keys(this.resourceIdentifiers).length) {
             return undefined;
         }
+
         return this.resourceIdentifiers[id];
     }
 
@@ -47,5 +59,31 @@ export class ImageGridCellComponent {
     public isEmpty(): boolean {
 
         return this.cell.imgSrc === ImageUrlMaker.blackImg;
+    }
+
+
+    private async initializeLinkedResources() {
+
+        const targetIds: string[] = this.cell['document'].resource.relations.depicts ?? [];
+        const result: Array<LinkedResourceInfo> = [];
+
+        for (let id of targetIds) {
+            const identifier: string = await this.fetchIdentifier(id);
+            result.push({ id, identifier });
+        }
+
+        this.linkedResources = result.filter(linkedResourceInfo => linkedResourceInfo.identifier !== undefined);
+    }
+
+
+    private async fetchIdentifier(id: string): Promise<string|undefined> {
+
+        try {
+            const target = await this.datastore.get(id);
+            return target.resource.identifier;
+        } catch (err) {
+            console.warn('Missing relation target: ' + id, err);
+            return undefined;
+        }
     }
 }

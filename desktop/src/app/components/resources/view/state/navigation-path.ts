@@ -39,10 +39,10 @@ export module NavigationPath {
     }
 
 
-    export function getSelectedSegment(navPath: NavigationPath): NavigationPathSegment {
+    export function getSelectedSegment(path: NavigationPath): NavigationPathSegment {
 
-        return navPath.segments
-            .find(on(['document', 'resource', 'id'], is(navPath.selectedSegmentId))) as NavigationPathSegment;
+        return path.segments
+            .find(on(['document', 'resource', 'id'], is(path.selectedSegmentId))) as NavigationPathSegment;
     }
 
 
@@ -55,113 +55,112 @@ export module NavigationPath {
      *               V
      * SEGMENT1, SEGMENT2, SEGMENT3
      *
-     * setNewSelectedSegmentDoc(navpath, document4) changes the situation to
+     * setNewSelectedSegmentDoc(path, document4) changes the situation to
      *
      *                             V
      * NP: SEGMENT1, SEGMENT2, SEGMENT4
      *
-     * from there, setNewSelectedSegmentDoc(navpath, document5) changes the situation to
+     * from there, setNewSelectedSegmentDoc(path, document5) changes the situation to
      *
      *                                   V
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * from there, setNewSelectedSegmentDoc(navpath, document1) changes the situation to
+     * from there, setNewSelectedSegmentDoc(path, document1) changes the situation to
      *
      *     V
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * from there, setNewSelectedSegmentDoc(navpath, undefined) changes the situation to
+     * from there, setNewSelectedSegmentDoc(path, undefined) changes the situation to
      *
      * (NO SELECTED SEGMENT)
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
      * @return a new path object with updated state
      */
-    export function setNewSelectedSegmentDoc(navigationPath: NavigationPath,
+    export function setNewSelectedSegmentDoc(path: NavigationPath,
                                              newSelectedSegmentDoc: FieldDocument|undefined): NavigationPath {
 
         if (newSelectedSegmentDoc) {
-            navigationPath.segments = rebuildElements(
-                navigationPath.segments,
-                navigationPath.selectedSegmentId,
-                newSelectedSegmentDoc);
+            path.segments = rebuildElements(
+                path.segments,
+                path.selectedSegmentId,
+                newSelectedSegmentDoc
+            );
         }
 
-        navigationPath.selectedSegmentId = newSelectedSegmentDoc
+        path.selectedSegmentId = newSelectedSegmentDoc
             ? newSelectedSegmentDoc.resource.id
             : undefined;
 
-        return navigationPath;
+        return path;
     }
 
 
-    export function setSelectedDocument(navPath: NavigationPath, document: FieldDocument|undefined) {
+    export function setSelectedDocument(path: NavigationPath, document: FieldDocument|undefined) {
 
-        getViewContext(navPath).selected = document;
+        getViewContext(path).selected = document;
     }
 
 
-    export function getSelectedDocument(navPath: NavigationPath): FieldDocument|undefined {
+    export function getSelectedDocument(path: NavigationPath): FieldDocument|undefined {
 
-        return getViewContext(navPath).selected;
+        return getViewContext(path).selected;
     }
 
 
-    export function setQueryString(navPath: NavigationPath, q: string) {
+    export function setQueryString(path: NavigationPath, q: string) {
 
-        getViewContext(navPath).q = q;
+        getViewContext(path).q = q;
     }
 
 
-    export function getQueryString(navPath: NavigationPath): string {
+    export function getQueryString(path: NavigationPath): string {
 
-        return getViewContext(navPath).q;
+        return getViewContext(path).q;
     }
 
 
-    export function setCategoryFilters(navPath: NavigationPath, categories: string[]) {
+    export function setCategoryFilters(path: NavigationPath, categories: string[]) {
 
-        getViewContext(navPath).categories = categories;
+        getViewContext(path).categories = categories;
     }
 
 
-    export function getCategoryFilters(navPath: NavigationPath): string[] {
+    export function getCategoryFilters(path: NavigationPath): string[] {
 
-        return getViewContext(navPath).categories;
+        return getViewContext(path).categories;
     }
 
 
-    export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
+    export function shorten(path: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const oldNavPath = NavigationPath.clone(navPath);
-        navPath.segments
-            = takeWhile(differentFrom(firstToBeExcluded), oldNavPath.segments);
+        const oldPath: NavigationPath = NavigationPath.clone(path);
+        path.segments = takeWhile(differentFrom(firstToBeExcluded), oldPath.segments);
 
-        if (navPath.selectedSegmentId) {
-
-            const stillSelectedSegment = navPath.segments
-                .find(_ => _.document.resource.id === navPath.selectedSegmentId);
-
-            if (!stillSelectedSegment) navPath.selectedSegmentId = undefined;
+        if (path.selectedSegmentId) {
+            const stillSelectedSegment: NavigationPathSegment = path.segments.find(segment => {
+                return segment.document.resource.id === path.selectedSegmentId;
+            });
+            if (!stillSelectedSegment) path.selectedSegmentId = undefined;
         }
 
-        return navPath;
+        return path;
     }
 
 
-    export function segmentNotPresent(navPath: NavigationPath, segmentId: string) {
+    export function segmentNotPresent(path: NavigationPath, segmentId: string) {
 
-        return !segmentId || navPath.segments.map(toResourceId).includes(segmentId);
+        return !segmentId || path.segments.map(toResourceId).includes(segmentId);
     }
 
 
-    export function findInvalidSegment(operationId: string|undefined, navPath: NavigationPath,
+    export function findInvalidSegment(operationId: string|undefined, path: NavigationPath,
                                        validNonRecordedInCategories: string[],
                                        exists: (_: string) => boolean): NavigationPathSegment|undefined {
 
-        for (let segment of navPath.segments) {
+        for (let segment of path.segments) {
             if (!NavigationPathSegment.isValid(
-                operationId, segment, navPath.segments, validNonRecordedInCategories, exists
+                operationId, segment, path.segments, validNonRecordedInCategories, exists
             )) {
                 return segment;
             }
@@ -171,17 +170,15 @@ export module NavigationPath {
     }
 
 
-    export function isPartOfNavigationPath(document: FieldDocument, navPath: NavigationPath,
+    export function isPartOfNavigationPath(document: FieldDocument, path: NavigationPath,
                                            operationId: string|undefined): boolean {
 
-        if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
-                navPath.selectedSegmentId)) {
+        if (path.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin', path.selectedSegmentId)) {
             return true;
         }
 
-        return (!navPath.selectedSegmentId && operationId !== undefined
-            && Document.hasRelationTarget(document, 'isRecordedIn',
-                operationId)
+        return (!path.selectedSegmentId && operationId !== undefined
+            && Document.hasRelationTarget(document, 'isRecordedIn',operationId)
             && !Document.hasRelations(document, 'liesWithin'));
     }
 
@@ -194,6 +191,7 @@ export module NavigationPath {
         let currentResourceId: string|undefined = documentAsContext
             ? document.resource.id
             : ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
+
         while (currentResourceId) {
             const currentSegmentDoc = await get(currentResourceId);
             currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
@@ -204,29 +202,27 @@ export module NavigationPath {
     }
 
 
-    export function replaceSegmentsIfNecessary(navPath: NavigationPath,
-                                               newSegments: Array<NavigationPathSegment>,
+    export function replaceSegmentsIfNecessary(path: NavigationPath, newSegments: Array<NavigationPathSegment>,
                                                newSelectedSegmentId: string): NavigationPath {
 
-        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) {
-            navPath.segments = newSegments;
+        if (!NavigationPath.segmentNotPresent(path, newSelectedSegmentId)) {
+            path.segments = newSegments;
         }
 
-        navPath.selectedSegmentId = newSelectedSegmentId;
-        return navPath;
+        path.selectedSegmentId = newSelectedSegmentId;
+        return path;
     }
 
 
-    function getViewContext(navPath: NavigationPath): ViewContext {
+    function getViewContext(path: NavigationPath): ViewContext {
 
-        return navPath.selectedSegmentId
-                ? getSelectedSegment(navPath)
-                : navPath.basicContext;
+        return path.selectedSegmentId
+                ? getSelectedSegment(path)
+                : path.basicContext;
     }
 
 
-    function rebuildElements(oldSegments: Array<NavigationPathSegment>,
-                             oldSelectedSegmentId: string|undefined,
+    function rebuildElements(oldSegments: Array<NavigationPathSegment>, oldSelectedSegmentId: string|undefined,
                              newSelectedSegmentDoc: FieldDocument): Array<NavigationPathSegment> {
 
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)

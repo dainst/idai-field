@@ -10,7 +10,7 @@ export class DoceditTypeRelationsPage {
 
     public static clickAddTypeRelationButton(fieldName: string) {
 
-        return click('#edit-form-element-' + fieldName + ' .add-type-relation');
+        return click('#edit-form-element-' + fieldName + ' .add-relation');
     }
 
 

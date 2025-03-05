@@ -131,7 +131,7 @@
         <div class="configuration-editor-section-title"
              i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</div>
         <div id="target-category-picker-container">
-            <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
+            <category-picker [topLevelCategoriesArray]="selectableTargetCategories"
                              [selectedCategories]="selectedTargetCategoryNames"
                              [customProjectConfiguration]="clonedProjectConfiguration"
                              [allowPickingAbstractCategories]="true"

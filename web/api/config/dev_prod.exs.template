@@ -6,7 +6,7 @@ config :api,
   elasticsearch_url: "elasticsearch:9200",
   elasticsearch_index_prefix: "idai-field",
   cantaloupe_url: "http://cantaloupe:8182/iiif/2/", # must end with slash
-  couchdb_url: "field.dainst.org/sync",
+  couchdb_url: "",
   couchdb_user: "",
   couchdb_password: "",
   gazetteer_url: "https://gazetteer.dainst.org",

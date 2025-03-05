@@ -190,9 +190,11 @@ export class ResourcesStateManager {
 
     public async moveInto(document: FieldDocument|undefined) {
 
+        const navigationPath: NavigationPath = ResourcesState.getNavigationPath(this.resourcesState);
+
         const invalidSegment = await NavigationPath.findInvalidSegment(
             this.resourcesState.view,
-            ResourcesState.getNavigationPath(this.resourcesState),
+            navigationPath,
             this.getValidNonRecordedInCategories(),
             (resourceId: string) => {
                 return this.indexFacade.getCount('id:match', resourceId) > 0;
@@ -200,8 +202,8 @@ export class ResourcesStateManager {
         );
 
         const validatedNavigationPath = invalidSegment
-            ? NavigationPath.shorten(ResourcesState.getNavigationPath(this.resourcesState), invalidSegment)
-            : ResourcesState.getNavigationPath(this.resourcesState);
+            ? NavigationPath.shorten(navigationPath, invalidSegment)
+            : navigationPath;
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
 

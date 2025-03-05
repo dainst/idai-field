@@ -14,8 +14,8 @@
   },
   "position-values-edge-default": {
     "values": {
-      "Oberkante": "Margem superior",
-      "Unterkante": "Margem inferior"
+      "Oberkante": "margem superior",
+      "Unterkante": "margem inferior"
     }
   },
   "orientation-default-1": {

@@ -188,6 +188,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public async addValue(valueId: string) {
 
         this.newValueId = '';
+        valueId = valueId.trim();
         await this.editValue(valueId, true);
     }
 
@@ -207,7 +208,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public isValidValue(valueId: string): boolean {
 
-        return valueId && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId);
+        return valueId && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId.trim());
     }
 
 

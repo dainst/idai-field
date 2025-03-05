@@ -247,9 +247,11 @@ const createWindow = () => {
             enableRemoteModule: true,
             contextIsolation: false,
             preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),
-            webSecurity: global.mode === 'production'
+            webSecurity: global.mode === 'production',
+            backgroundThrottling: false
         },
-        titleBarStyle: 'hiddenInset'
+        titleBarStyle: 'hiddenInset',
+        title: 'Field Desktop'
     });
 
     remoteMain.enable(mainWindow.webContents);
@@ -284,8 +286,6 @@ const createWindow = () => {
         electron.shell.openExternal(url);
         return { action: 'deny' };
     });
-
-    return mainWindow;
 };
 
 

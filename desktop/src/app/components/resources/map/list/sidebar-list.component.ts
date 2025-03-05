@@ -61,6 +61,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             this.contextMenu.close();
             this.sidebarElement.nativeElement.focus();
+            if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();
         });
     }
 

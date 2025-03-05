@@ -73,7 +73,7 @@ defmodule Api.Worker.Images.ImageMagickImageConverter do
   Returns true if everything went fine
   """
   def rescale(project, image_id, rescale) do
-    source_img_path = Path.absname(Path.join([@imageroot, project, "sources", image_id]))
+    source_img_path = Path.absname(Path.join([@imageroot, project, "sources", image_id])) <> "[0]"
     target_dir = Path.join([@imageroot, project, image_id])
     File.mkdir_p target_dir # todo do in caller
 
@@ -106,7 +106,7 @@ defmodule Api.Worker.Images.ImageMagickImageConverter do
          rescale,
          z_index,
          %{x_index: x_index, y_index: y_index, x_pos: x_pos, y_pos: y_pos}) do
-  
+
     x_folder = Path.join(
       [
         @imageroot,

@@ -102,6 +102,13 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     }
 
 
+    public setKeepBackupsValue(type: 'custom'|'customInterval'|'daily'|'weekly'|'monthly', value: number) {
+
+        this.settings.keepBackups[type] = value;
+        this.scrollToBottom = true;
+    }
+
+
     public async save() {
 
         AngularUtility.blurActiveElement();

@@ -173,14 +173,14 @@
                         <div class="row">
                             <div class="col-md-4 form-floating">
                                 <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.customInterval"
-                                        (ngModelChange)="settings.keepBackups.customInterval = $event"
+                                        (ngModelChange)="setKeepBackupsValue('customInterval', $event)"
                                         class="form-control">
                                 <label for="daily-backups-input"
                                         i18n="@@settings.backups.keep.customInterval">Abstand in Stunden</label>
                             </div>
                             <div class="col-md-4 form-floating">
                                 <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.custom"
-                                        (ngModelChange)="settings.keepBackups.custom = $event"
+                                        (ngModelChange)="setKeepBackupsValue('custom', $event)"
                                         class="form-control">
                                 <label for="daily-backups-input"
                                         i18n="@@settings.backups.keep.custom">Anzahl</label>
@@ -191,21 +191,21 @@
                         <div class="row">
                             <div class="col-md-4 form-floating">
                                 <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.daily"
-                                       (ngModelChange)="settings.keepBackups.daily = $event"
+                                       (ngModelChange)="setKeepBackupsValue('daily', $event)"
                                        class="form-control">
                                 <label for="daily-backups-input"
                                        i18n="@@settings.backups.keep.daily">Tag</label>
                             </div>
                             <div class="col-md-4 form-floating">
                                 <input id="weekly-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.weekly"
-                                       (ngModelChange)="settings.keepBackups.weekly = $event"
+                                       (ngModelChange)="setKeepBackupsValue('weekly', $event)"
                                        class="form-control">
                                 <label for="weekly-backups-input"
                                        i18n="@@settings.backups.keep.weekly">Woche</label>
                             </div>
                             <div class="col-md-4 form-floating">
                                 <input id="monthly-backups-input" type="number" min="0"[ngModel]="settings.keepBackups.monthly"
-                                       (ngModelChange)="settings.keepBackups.monthly = $event"
+                                       (ngModelChange)="setKeepBackupsValue('monthly', $event)"
                                        class="form-control">
                                 <label for="monthly-backups-input"
                                        i18n="@@settings.backups.keep.monthly">Monat</label>

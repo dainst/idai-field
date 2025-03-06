@@ -50,6 +50,15 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     }
 
 
+    public hasCustomBackups = () => this.settings.keepBackups.custom > 0 && this.settings.keepBackups.customInterval > 0;
+
+    public hasDailyBackups = () => this.settings.keepBackups.daily > 0;
+
+    public hasWeeklyBackups = () => this.settings.keepBackups.weekly > 0;
+
+    public hasMonthlyBackups = () => this.settings.keepBackups.monthly > 0;
+
+
     ngOnInit() {
 
         this.isLinux = remote.getGlobal('os') === 'Linux';

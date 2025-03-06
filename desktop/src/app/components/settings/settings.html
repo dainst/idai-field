@@ -169,43 +169,84 @@
                             die erstellten Backup-Dateien abgelegt werden.
                         </div>
                         <label class="control-label col-form-label"
-                               i18n="@@settings.backups.keep">Backup-Dateien aufbewahren</label>
+                               i18n="@@settings.backups.keep.time">Backups nach Uhrzeit aufbewahren</label>
                         <div class="row">
                             <div class="col-md-4 form-floating">
-                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.custom"
-                                       (ngModelChange)="settings.keepBackups.custom = $event"
+                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.customInterval"
+                                        (ngModelChange)="settings.keepBackups.customInterval = $event"
                                         class="form-control">
                                 <label for="daily-backups-input"
-                                        i18n="@@settings.backups.keep.custom">Stunden-Backups</label>
+                                        i18n="@@settings.backups.keep.customInterval">Abstand in Stunden</label>
                             </div>
                             <div class="col-md-4 form-floating">
-                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.customInterval"
-                                       (ngModelChange)="settings.keepBackups.customInterval = $event"
+                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.custom"
+                                        (ngModelChange)="settings.keepBackups.custom = $event"
                                         class="form-control">
                                 <label for="daily-backups-input"
-                                        i18n="@@settings.backups.keep.customInterval">Alle ... Stunden</label>
+                                        i18n="@@settings.backups.keep.custom">Anzahl</label>
                             </div>
+                        </div>
+                        <label class="control-label col-form-label"
+                               i18n="@@settings.backups.keep.date">Backups nach Datum aufbewahren</label>
+                        <div class="row">
                             <div class="col-md-4 form-floating">
                                 <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.daily"
                                        (ngModelChange)="settings.keepBackups.daily = $event"
-                                        class="form-control">
+                                       class="form-control">
                                 <label for="daily-backups-input"
-                                        i18n="@@settings.backups.keep.daily">Täglich</label>
+                                       i18n="@@settings.backups.keep.daily">Tag</label>
                             </div>
                             <div class="col-md-4 form-floating">
                                 <input id="weekly-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.weekly"
                                        (ngModelChange)="settings.keepBackups.weekly = $event"
                                        class="form-control">
                                 <label for="weekly-backups-input"
-                                       i18n="@@settings.backups.keep.weekly">Wöchentlich</label>
+                                       i18n="@@settings.backups.keep.weekly">Woche</label>
                             </div>
                             <div class="col-md-4 form-floating">
                                 <input id="monthly-backups-input" type="number" min="0"[ngModel]="settings.keepBackups.monthly"
                                        (ngModelChange)="settings.keepBackups.monthly = $event"
-                                        class="form-control">
+                                       class="form-control">
                                 <label for="monthly-backups-input"
-                                        i18n="@@settings.backups.keep.monthly">Monatlich</label>
+                                       i18n="@@settings.backups.keep.monthly">Monat</label>
                             </div>
+                        </div>
+                        <div class="small-info-text">
+                            <span i18n="@@settings.backups.keep.info">
+                                Im Backup-Verzeichnis werden gemäß der aktuell konfigurierten Regeln die folgenden Dateien aufbewahrt:
+                            </span>
+                            <ul>
+                                <li i18n="@@settings.backups.keep.info.current">
+                                    Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank
+                                </li>
+                                <li *ngIf="hasCustomBackups()">
+                                    <span *ngIf="settings.keepBackups.customInterval === 1"
+                                          i18n="@@settings.backups.keep.info.custom.single">
+                                        Eine Backup-Datei <b>jede</b> Stunde
+                                    </span>
+                                    <span *ngIf="settings.keepBackups.customInterval > 1"
+                                          i18n="@@settings.backups.keep.info.custom.multiple">
+                                        Eine Backup-Datei alle <b>{{settings.keepBackups.customInterval}}</b> Stunden
+                                    </span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.custom }"></ng-container>
+                                </li>
+                                <li *ngIf="hasDailyBackups()">
+                                    <span i18n="@@settings.backups.keep.info.daily">Eine Backup-Datei pro Tag</span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.daily }"></ng-container>
+                                </li>
+                                <li *ngIf="hasWeeklyBackups()">
+                                    <span i18n="@@settings.backups.keep.info.weekly">Eine Backup-Datei pro Woche</span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.weekly }"></ng-container>
+                                </li>
+                                <li *ngIf="hasMonthlyBackups()">
+                                    <span i18n="@@settings.backups.keep.info.monthly">Eine Backup-Datei pro Monat</span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.monthly }"></ng-container>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -214,3 +255,14 @@
 
     </div>
 </div>
+
+<ng-template #keepBackupFilesInfo let-amount="amount">
+    <span *ngIf="amount === 1"
+            i18n="@@settings.backups.keep.info.file.single">
+            (die <b>aktuellste</b> Datei)
+    </span>
+    <span *ngIf="amount > 1"
+            i18n="@@settings.backups.keep.info.file.multiple">
+        (die <b>{{amount}}</b> aktuellsten Dateien)
+    </span>
+</ng-template>

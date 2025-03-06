@@ -104,7 +104,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     public setKeepBackupsValue(type: 'custom'|'customInterval'|'daily'|'weekly'|'monthly', value: number) {
 
-        this.settings.keepBackups[type] = value;
+        this.settings.keepBackups[type] = Math.min(1000000, Math.max(0, value));
         this.scrollToBottom = true;
     }
 

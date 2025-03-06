@@ -172,16 +172,18 @@
                                i18n="@@settings.backups.keep.time">Backups nach Uhrzeit aufbewahren</label>
                         <div class="row">
                             <div class="col-md-4 form-floating">
-                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.customInterval"
-                                        (ngModelChange)="setKeepBackupsValue('customInterval', $event)"
-                                        class="form-control">
+                                <input id="daily-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.customInterval"
+                                       (ngModelChange)="setKeepBackupsValue('customInterval', $event)"
+                                       class="form-control">
                                 <label for="daily-backups-input"
                                         i18n="@@settings.backups.keep.customInterval">Abstand in Stunden</label>
                             </div>
                             <div class="col-md-4 form-floating">
-                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.custom"
-                                        (ngModelChange)="setKeepBackupsValue('custom', $event)"
-                                        class="form-control">
+                                <input id="daily-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.custom"
+                                       (ngModelChange)="setKeepBackupsValue('custom', $event)"
+                                       class="form-control">
                                 <label for="daily-backups-input"
                                         i18n="@@settings.backups.keep.custom">Anzahl</label>
                             </div>
@@ -190,21 +192,24 @@
                                i18n="@@settings.backups.keep.date">Backups nach Datum aufbewahren</label>
                         <div class="row">
                             <div class="col-md-4 form-floating">
-                                <input id="daily-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.daily"
+                                <input id="daily-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.daily"
                                        (ngModelChange)="setKeepBackupsValue('daily', $event)"
                                        class="form-control">
                                 <label for="daily-backups-input"
                                        i18n="@@settings.backups.keep.daily">Tag</label>
                             </div>
                             <div class="col-md-4 form-floating">
-                                <input id="weekly-backups-input" type="number" min="0" [ngModel]="settings.keepBackups.weekly"
+                                <input id="weekly-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.weekly"
                                        (ngModelChange)="setKeepBackupsValue('weekly', $event)"
                                        class="form-control">
                                 <label for="weekly-backups-input"
                                        i18n="@@settings.backups.keep.weekly">Woche</label>
                             </div>
                             <div class="col-md-4 form-floating">
-                                <input id="monthly-backups-input" type="number" min="0"[ngModel]="settings.keepBackups.monthly"
+                                <input id="monthly-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.monthly"
                                        (ngModelChange)="setKeepBackupsValue('monthly', $event)"
                                        class="form-control">
                                 <label for="monthly-backups-input"

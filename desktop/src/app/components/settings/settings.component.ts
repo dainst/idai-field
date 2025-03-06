@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { equal } from 'tsfun';
+import { clone, equal } from 'tsfun';
 import { M } from '../messages/m';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
@@ -11,6 +11,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { SettingsErrors } from '../../services/settings/settings-errors';
 import { AngularUtility } from '../../angular/angular-utility';
+import { KeepBackupsSettings } from '../../services/settings/keep-backups-settings';
 
 const address = window.require('address');
 const remote = window.require('@electron/remote');
@@ -33,6 +34,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     @ViewChild('settingsContainer') settingsContainer: ElementRef;
 
     public settings: Settings;
+    public originalKeepBackupSettings: KeepBackupsSettings;
     public ipAddress: string = address.ip();
     public saving: boolean = false;
     public advancedSettingsCollapsed: boolean = true;
@@ -63,6 +65,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
         this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
+        this.originalKeepBackupSettings = clone(this.settings.keepBackups);
     }
 
 
@@ -149,7 +152,23 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     }
 
 
+    public isKeepBackupsWarningVisible(): boolean {
+
+        if (this.originalKeepBackupSettings.customInterval !== 0
+            && this.originalKeepBackupSettings.customInterval !== this.settings.keepBackups.customInterval) {
+            return true;
+        } else {
+            return this.originalKeepBackupSettings.custom > this.settings.keepBackups.custom
+                || this.originalKeepBackupSettings.daily > this.settings.keepBackups.daily
+                || this.originalKeepBackupSettings.weekly > this.settings.keepBackups.weekly
+                || this.originalKeepBackupSettings.monthly > this.settings.keepBackups.monthly;
+        }
+    }
+
+
     private async handleSaveSuccess(languagesChanged: boolean) {
+
+        this.originalKeepBackupSettings = clone(this.settings.keepBackups);
 
         if (languagesChanged) {
             reload();

@@ -252,6 +252,12 @@
                                                   [ngTemplateOutletContext]="{ amount: settings.keepBackups.monthly }"></ng-container>
                                 </li>
                             </ul>
+
+                            <div *ngIf="isKeepBackupsWarningVisible()" class="alert alert-warning"
+                                  i18n="@@settings.backups.keep.warning">
+                                Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen
+                                automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.
+                            </div>
                         </div>
                     </div>
                 </div>

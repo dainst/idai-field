@@ -1160,7 +1160,7 @@ test.describe('warnings --', () => {
     test('disable multiple switch if single resource is affected by outlier values warning', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
+        await createOutlierValuesWarnings(['1'], 'field', 'dropdown');
 
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
@@ -1191,13 +1191,13 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickFixOutliersButton(0);
 
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
-        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickCheckboxesValue(0);
         await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
         expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
-        await FixOutliersModalPage.clickSelectValue('Löffel');
+        await FixOutliersModalPage.clickCheckboxesValue(1);
         await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
@@ -1257,7 +1257,7 @@ test.describe('warnings --', () => {
 
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
-        await FixOutliersModalPage.clickSelectValue('Person 1');
+        await FixOutliersModalPage.clickCheckboxesValue(0);
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
@@ -1378,7 +1378,7 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('F1');
         await WarningsModalPage.clickFixOutliersButton(0);
-        await FixOutliersModalPage.clickSelectValue('Testkampagne 2');
+        await FixOutliersModalPage.clickCheckboxesValue(0);
         await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
@@ -1630,17 +1630,25 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickFixOutliersButton(0);
 
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
-        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickCheckboxesValue(0);
         await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
         expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
-        await FixOutliersModalPage.clickSelectValue('Löffel');
+        await FixOutliersModalPage.clickCheckboxesValue(1);
         await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
-
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        await WarningsModalPage.clickFixOutliersButton(0);
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickMultipleSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
     });

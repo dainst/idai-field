@@ -25,7 +25,8 @@ export class FixOutliersModalComponent {
     public outlierValue: string;
     
     public valuelist: Valuelist;
-    public selectedValue: string;
+    public selectedValues: string[];
+    public inputType: string;
     public replaceAll: boolean;
     public countAffected: number;
 
@@ -46,6 +47,7 @@ export class FixOutliersModalComponent {
     
     public cancel = () => this.activeModal.dismiss('cancel');
 
+    public isValid = () => this.selectedValues.length > 0;
 
     public async onKeyDown(event: KeyboardEvent) {
 
@@ -57,7 +59,9 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
+        this.inputType = await this.field.inputType;
         this.affectedDocuments = [];
+        this.selectedValues = [];
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
@@ -70,6 +74,7 @@ export class FixOutliersModalComponent {
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
+                if (this.inputType == 'checkboxes' && field.inputType != 'checkboxes') continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
                     affectedDocument.fields.push(field);
@@ -85,7 +90,7 @@ export class FixOutliersModalComponent {
 
     public async performReplacement() {
 
-        if (!this.selectedValue) return;
+        if (!this.isValid()) return;
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
 
@@ -101,6 +106,14 @@ export class FixOutliersModalComponent {
         this.activeModal.close();
     }
 
+    public toggleCheckboxValue(value: string) {
+        
+        if (this.selectedValues.includes(value)) {
+            this.selectedValues.splice(this.selectedValues.indexOf(value), 1);
+        } else {
+            this.selectedValues.push(value);
+        }
+    }
 
     private openFixingDataInProgressModal(): NgbModalRef {
 
@@ -142,6 +155,9 @@ export class FixOutliersModalComponent {
 
         if (isArray(fieldContent)) {
             fieldContainer[field.name] = set(fieldContent.map(entry => this.getReplacement(document, entry, field)));
+            if (field.inputType == Field.InputType.CHECKBOXES) {
+                fieldContainer[field.name] = set(fieldContainer[field.name].flat());
+            }
         } else {
             fieldContainer[field.name] = this.getReplacement(document, fieldContent, field);
         }
@@ -151,22 +167,26 @@ export class FixOutliersModalComponent {
     private getReplacement(document: Document, entry: any, field: Field): any {
 
         if (isString(entry) && entry === this.outlierValue) {
-            return this.selectedValue;
+            if (field.inputType === Field.InputType.CHECKBOXES) {
+                return this.selectedValues
+            } else {
+                return this.selectedValues[0]
+            }
         } else if (isObject(entry)) {
             if (field.inputType === Field.InputType.DIMENSION
                     && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {
-                entry.measurementPosition = this.selectedValue;
+                entry.measurementPosition = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.VALUE] === this.outlierValue) {
-                entry.value = this.selectedValue;
+                entry.value = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.ENDVALUE] === this.outlierValue) {
-                entry.endValue = this.selectedValue;
+                entry.endValue = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.COMPOSITE) {
                 this.replaceValueInCompositeEntry(document, entry, field);
-            }
+            } 
         }
-        
+
         return entry;
     }
 

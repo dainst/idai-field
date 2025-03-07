@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, ImageStore } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
@@ -14,6 +14,11 @@ import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../ser
 import { AngularUtility } from '../../../angular/angular-utility';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
+import { AppState } from '../../../services/app-state';
+import { exportImages } from '../../../services/imagestore/export-images';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
+
+const remote = window.require('@electron/remote');
 
 
 @Component({
@@ -33,16 +38,21 @@ export class ImageOverviewTaskbarComponent {
 
     @Input() imageGrid: any;
 
-    public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
-    public clearSelection = () => this.imageOverviewFacade.clearSelection();
-
 
     constructor(public viewFacade: ViewFacade,
                 private modalService: NgbModal,
                 private messages: Messages,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageRelationsManager: ImageRelationsManager,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private appState: AppState,
+                private imageStore: ImageStore,
+                private settingsProvider: SettingsProvider) {}
+
+
+    public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
+
+    public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -109,6 +119,40 @@ export class ImageOverviewTaskbarComponent {
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
+        }
+    }
+
+
+    public async exportSelected() {
+
+        const exportDirectoryPath = await this.chooseExportDirectory();
+        if (!exportDirectoryPath) return;
+
+        exportImages(
+            this.imageStore,
+            this.imageOverviewFacade.getSelected(),
+            exportDirectoryPath,
+            this.settingsProvider.getSettings().selectedProject,
+            false
+        );
+    }
+
+
+    private async chooseExportDirectory() {
+
+        const result: any = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openDirectory', 'createDirectory'],
+                defaultPath: this.appState.getFolderPath('imagesExport'),
+                buttonLabel: $localize `:@@imageOverview.taskbar.export.selectFolder:Verzeichnis auswählen`
+            }
+        );
+
+        if (result && result.filePaths.length > 0) {
+            const exportDirectoryPath: string = result.filePaths[0];
+            this.appState.setFolderPath(exportDirectoryPath, 'imagesExport');
+            return exportDirectoryPath;
         }
     }
 

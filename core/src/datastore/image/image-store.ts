@@ -193,6 +193,20 @@ export class ImageStore {
     }
 
 
+    public getDirectoryPath(project: string, type?: ImageVariant): string {
+
+        switch (type) {
+            case ImageVariant.ORIGINAL:
+            case undefined:
+                return this.absolutePath + project + '/';
+            case ImageVariant.THUMBNAIL:
+                return this.absolutePath + project + '/' + thumbnailDirectory;
+            case ImageVariant.DISPLAY:
+                return this.absolutePath + project + '/' + displayDirectory;
+        }
+    }
+
+
     private aggregateFileMap(aggregated: { [uuid: string]: FileInfo; }, fileStatList: FileStat[],
                              variant: ImageVariant): { [uuid: string]: FileInfo; } {
 
@@ -279,20 +293,6 @@ export class ImageStore {
         }
 
         return this.filesystem.readFile(path);
-    }
-
-
-    private getDirectoryPath(project: string, type?: ImageVariant): string {
-
-        switch (type) {
-            case ImageVariant.ORIGINAL:
-            case undefined:
-                return this.absolutePath + project + '/';
-            case ImageVariant.THUMBNAIL:
-                return this.absolutePath + project + '/' + thumbnailDirectory;
-            case ImageVariant.DISPLAY:
-                return this.absolutePath + project + '/' + displayDirectory;
-        }
     }
 
 

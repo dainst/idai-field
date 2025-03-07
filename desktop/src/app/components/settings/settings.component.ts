@@ -169,6 +169,8 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     public isKeepBackupsWarningVisible(): boolean {
 
+        if (!this.backedUpProjects.length) return false;
+
         if (this.originalKeepBackupSettings.customInterval !== 0
             && this.originalKeepBackupSettings.customInterval !== this.settings.keepBackups.customInterval) {
             return true;

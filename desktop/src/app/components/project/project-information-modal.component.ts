@@ -10,6 +10,7 @@ import { RevisionLabels } from '../../services/revision-labels';
 import { Loading } from '../widgets/loading';
 import { AngularUtility } from '../../angular/angular-utility';
 import { Routing } from '../../services/routing';
+import { getFileSizeLabel } from '../../util/get-file-size-label';
 
 
 @Component({
@@ -188,7 +189,7 @@ export class ProjectInformationModalComponent implements OnInit {
 
         const sizes = ImageStore.getFileSizeSums(fileList);
 
-        return `${ImageStore.byteCountToDescription(
+        return `${getFileSizeLabel(
             sizes[variant], (value) => this.decimalPipe.transform(value)
         )}`;
     }

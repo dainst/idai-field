@@ -10,6 +10,7 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { Messages } from '../messages/messages';
 import { M } from '../messages/m';
 import { SettingsErrors } from '../../services/settings/settings-errors';
+import { getFileSizeLabel } from '../../util/get-file-size-label';
 
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
@@ -275,10 +276,10 @@ export class SynchronizationModalComponent implements OnInit {
 
         if (this.getFileSizesStart !== startDate) return;
 
-        const thumbnailDownloadSizeMsg = ImageStore.byteCountToDescription(
+        const thumbnailDownloadSizeMsg = getFileSizeLabel(
             downloadSize, (value) => this.decimalPipe.transform(value)
         );
-        const thumbnailUploadSizeMsg = ImageStore.byteCountToDescription(
+        const thumbnailUploadSizeMsg = getFileSizeLabel(
             uploadSize, (value) => this.decimalPipe.transform(value)
         );
         this.thumbnailImageSizesMsg = `(⬇ ${thumbnailDownloadSizeMsg} / ⬆ ${thumbnailUploadSizeMsg})`;
@@ -291,10 +292,10 @@ export class SynchronizationModalComponent implements OnInit {
 
         if (this.getFileSizesStart !== startDate) return;
 
-        this.originalImageDownloadSizeMsg = `(⬇ ${ImageStore.byteCountToDescription(
+        this.originalImageDownloadSizeMsg = `(⬇ ${getFileSizeLabel(
             downloadSize, (value) => this.decimalPipe.transform(value)
         )})`;
-        this.originalImageUploadSizeMsg = `(⬆ ${ImageStore.byteCountToDescription(
+        this.originalImageUploadSizeMsg = `(⬆ ${getFileSizeLabel(
             uploadSize, (value) => this.decimalPipe.transform(value)
         )})`;
     }

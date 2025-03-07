@@ -149,10 +149,10 @@ test.describe('warnings --', () => {
     }
 
 
-    async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
+    async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, inputType: Field.InputType) {
 
         await navigateTo('configuration');
-        await createField(fieldName, 'checkboxes', 'Wood-color-default');
+        await createField(fieldName, inputType, 'Wood-color-default');
 
         const completeFieldName: string = 'test:' + fieldName;
 
@@ -160,8 +160,12 @@ test.describe('warnings --', () => {
         for (let identifier of resourceIdentifiers) {
             await ResourcesPage.performCreateResource(identifier, 'place');
             await ResourcesPage.openEditByDoubleClickResource(identifier);
-            await DoceditPage.clickCheckbox(completeFieldName, 0);
-            await DoceditPage.clickCheckbox(completeFieldName, 1);
+            if (inputType == 'dropdown') {
+                await DoceditPage.clickSelectOption(completeFieldName, "braun", 1);
+            } else if (inputType == 'checkboxes') {
+                await DoceditPage.clickCheckbox(completeFieldName, 0);
+                await DoceditPage.clickCheckbox(completeFieldName, 1);
+            }
             await DoceditPage.clickSaveDocument();
         }
 
@@ -1052,7 +1056,7 @@ test.describe('warnings --', () => {
     test('solve warning for outlier values via resources view', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field');
+        await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await ResourcesPage.openEditByDoubleClickResource('1');
@@ -1071,7 +1075,7 @@ test.describe('warnings --', () => {
     test('solve warning for outlier values by editing via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field');
+        await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
@@ -1091,7 +1095,7 @@ test.describe('warnings --', () => {
     test('solve warning for outlier values by replacing values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field');
+        await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
@@ -1115,7 +1119,7 @@ test.describe('warnings --', () => {
     test('solve warning for outlier values by deleting values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field');
+        await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
         await NavbarPage.clickWarningsButton();
@@ -1136,7 +1140,7 @@ test.describe('warnings --', () => {
     test('disable multiple switch if single resource is affected by outlier values warning', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1'], 'field');
+        await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
 
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
@@ -1160,7 +1164,7 @@ test.describe('warnings --', () => {
     test('solve multiple warnings for outlier values by replacing values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1', '2'], 'field');
+        await createOutlierValuesWarnings(['1', '2'], 'field', 'checkboxes');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
@@ -1186,7 +1190,7 @@ test.describe('warnings --', () => {
     test('solve multiple warnings for outlier values by deleting values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1', '2'], 'field');
+        await createOutlierValuesWarnings(['1', '2'], 'field', 'checkboxes');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('2');
 
         await NavbarPage.clickWarningsButton();
@@ -1598,7 +1602,7 @@ test.describe('warnings --', () => {
             async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1', '2'], 'field1');
+        await createOutlierValuesWarnings(['1', '2'], 'field1', 'checkboxes');
         await createCompositeOutlierValuesWarnings(['3', '4'], 'field2');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('4');
 
@@ -1626,7 +1630,7 @@ test.describe('warnings --', () => {
             async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
-        await createOutlierValuesWarnings(['1', '2'], 'field1');
+        await createOutlierValuesWarnings(['1', '2'], 'field1', 'checkboxes');
         await createCompositeOutlierValuesWarnings(['3', '4'], 'field2');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('4');
 
@@ -1893,7 +1897,7 @@ test.describe('warnings --', () => {
         await waitForNotExist(await NavbarPage.getWarnings());
         await createInvalidFieldDataWarnings(['1'], 'invalidField', 'Text', Field.InputType.INT);
         await createUnconfiguredFieldWarnings(['2', '3'], 'unconfiguredField');
-        await createOutlierValuesWarnings(['4', '5', '6'], 'outliersField');
+        await createOutlierValuesWarnings(['4', '5', '6'], 'outliersField', 'checkboxes');
         await createMissingIdentifierPrefixWarning('7');
         expect(await NavbarPage.getNumberOfWarnings()).toBe('7');
 

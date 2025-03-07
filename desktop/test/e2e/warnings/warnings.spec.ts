@@ -161,7 +161,7 @@ test.describe('warnings --', () => {
             await ResourcesPage.performCreateResource(identifier, 'place');
             await ResourcesPage.openEditByDoubleClickResource(identifier);
             if (inputType == 'dropdown') {
-                await DoceditPage.clickSelectOption(completeFieldName, "braun", 1);
+                await DoceditPage.clickSelectOption(completeFieldName, 'braun', 0);
             } else if (inputType == 'checkboxes') {
                 await DoceditPage.clickCheckbox(completeFieldName, 0);
                 await DoceditPage.clickCheckbox(completeFieldName, 1);
@@ -1102,13 +1102,13 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickFixOutliersButton(0);
 
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
-        await FixOutliersModalPage.clickCheckboxesValue("0");
+        await FixOutliersModalPage.clickCheckboxesValue(0);
         await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
         expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
-        await FixOutliersModalPage.clickCheckboxesValue("1");
-        await FixOutliersModalPage.clickCheckboxesValue("2");
+        await FixOutliersModalPage.clickCheckboxesValue(1);
+        await FixOutliersModalPage.clickCheckboxesValue(2);
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());

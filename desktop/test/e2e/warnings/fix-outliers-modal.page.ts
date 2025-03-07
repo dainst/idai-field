@@ -14,7 +14,8 @@ export class FixOutliersModalPage {
     }
 
 
-    public static async clickCheckboxesValue(checkboxIndex: string) {
+    public static async clickCheckboxesValue(checkboxIndex: number) {
+
         const element = await (await getLocator('.checkbox')).nth(checkboxIndex)
         
         return click(element);

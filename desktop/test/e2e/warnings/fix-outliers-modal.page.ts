@@ -14,6 +14,13 @@ export class FixOutliersModalPage {
     }
 
 
+    public static async clickCheckboxesValue(checkboxIndex: string) {
+        const element = await (await getLocator('.checkbox')).nth(checkboxIndex)
+        console.log(element)
+        return click(element);
+    }
+
+
     public static clickMultipleSwitch() {
 
         return click('#multiple-switch .switch');

@@ -1092,7 +1092,7 @@ test.describe('warnings --', () => {
     });
 
 
-    test('solve warning for outlier values by replacing values via warnings modal', async () => {
+    test('solve warning for outlier values with checkboxes by replacing values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
         await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
@@ -1102,12 +1102,13 @@ test.describe('warnings --', () => {
         await WarningsModalPage.clickFixOutliersButton(0);
 
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
-        await FixOutliersModalPage.clickSelectValue('Gerät');
+        await FixOutliersModalPage.clickCheckboxesValue("0");
         await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
 
         expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
-        await FixOutliersModalPage.clickSelectValue('Löffel');
+        await FixOutliersModalPage.clickCheckboxesValue("1");
+        await FixOutliersModalPage.clickCheckboxesValue("2");
         await FixOutliersModalPage.clickConfirmReplacementButton();
 
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());

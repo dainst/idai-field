@@ -1,10 +1,13 @@
+import { Backup } from '../model/backup';
 import { BackupsMap } from '../model/backups-map';
 import { parseBackupFileName } from './backup-file-name-utils';
 
 const fs = require('fs');
 
 
-export function getExistingBackups(backupDirectoryPath: string): BackupsMap {
+export function getExistingBackups(backupDirectoryPath: string, includeSize: boolean = false): BackupsMap {
+
+    if (!fs.existsSync(backupDirectoryPath)) return {};
 
     const fileNames: string[] = fs.readdirSync(backupDirectoryPath);
 
@@ -12,11 +15,13 @@ export function getExistingBackups(backupDirectoryPath: string): BackupsMap {
         const { project, creationDate } = parseBackupFileName(fileName) ?? {};
         if (project && creationDate) {
             if (!result[project]) result[project] = [];
-            result[project].push({ 
+            const backup: Backup = { 
                 filePath: backupDirectoryPath + '/' + fileName,
                 project,
                 creationDate
-            });
+            }
+            if (includeSize) backup.size = fs.statSync(backupDirectoryPath + '/' + fileName).size;
+            result[project].push(backup);
         }
         return result;
     }, {});

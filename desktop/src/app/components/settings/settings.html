@@ -220,6 +220,7 @@
                             <span i18n="@@settings.backups.keep.info">
                                 Im Backup-Verzeichnis werden gemäß der aktuell konfigurierten Regeln die folgenden Dateien aufbewahrt:
                             </span>
+
                             <ul>
                                 <li i18n="@@settings.backups.keep.info.current">
                                     Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank
@@ -252,6 +253,14 @@
                                                   [ngTemplateOutletContext]="{ amount: settings.keepBackups.monthly }"></ng-container>
                                 </li>
                             </ul>
+
+                            <div i18n="@@settings.backups.size.info">
+                                Aktuell beanspruchter Festplattenspeicher: <b>{{ existingBackupsSizeLabel }}</b>
+                            </div>
+
+                            <div i18n="@@settings.backups.estimatedSize.info">
+                                Zukünftig beanspruchter Festplattenspeicher (geschätzt): <b>{{ estimatedBackupsSizeLabel }}</b>
+                            </div>
 
                             <div *ngIf="isKeepBackupsWarningVisible()" class="alert alert-warning"
                                   i18n="@@settings.backups.keep.warning">

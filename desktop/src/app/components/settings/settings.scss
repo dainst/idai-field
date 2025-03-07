@@ -36,8 +36,16 @@
       padding-top: 32px;
     }
 
-    li {
-      margin-top: 5px;
+    ul {
+      margin-bottom: 10px;
+
+      li {
+        margin-top: 5px;
+      }
+    }
+
+    .alert {
+      margin-top: 13px;
     }
   }
 }

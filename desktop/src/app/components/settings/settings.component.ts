@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { clone, equal } from 'tsfun';
+import { DecimalPipe } from '@angular/common';
+import { clone, equal, flatten } from 'tsfun';
 import { M } from '../messages/m';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
@@ -12,6 +13,10 @@ import { MenuContext } from '../../services/menu-context';
 import { SettingsErrors } from '../../services/settings/settings-errors';
 import { AngularUtility } from '../../angular/angular-utility';
 import { KeepBackupsSettings } from '../../services/settings/keep-backups-settings';
+import { Backup } from '../../services/backup/model/backup';
+import { getExistingBackups } from '../../services/backup/auto-backup/get-existing-backups';
+import { BackupsMap } from '../../services/backup/model/backups-map';
+import { getFileSizeLabel } from '../../util/get-file-size-label';
 
 const address = window.require('address');
 const remote = window.require('@electron/remote');
@@ -40,13 +45,20 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public advancedSettingsCollapsed: boolean = true;
     public scrollToBottom: boolean = false;
     public isLinux: boolean;
+    public existingBackupsSizeLabel: string;
+    public estimatedBackupsSizeLabel: string;
+
+    private existingBackups: Array<Backup> = [];
+    private existingBackupsSize: number;
+    private backedUpProjects: string[] = [];
 
 
     constructor(private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService,
                 private messages: Messages,
                 private tabManager: TabManager,
-                private menuService: Menus) {
+                private menuService: Menus,
+                private decimalPipe: DecimalPipe) {
 
         this.settingsProvider.settingsChangesNotifications().subscribe(settings => this.settings = settings);
     }
@@ -66,6 +78,8 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
         this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
         this.originalKeepBackupSettings = clone(this.settings.keepBackups);
+
+        this.initializeBackupValues();
     }
 
 
@@ -109,6 +123,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
         this.settings.keepBackups[type] = Math.min(1000000, Math.max(0, value));
         this.scrollToBottom = true;
+        this.estimatedBackupsSizeLabel = this.getEstimatedSizeLabel();
     }
 
 
@@ -166,6 +181,18 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     }
 
 
+    private getEstimatedSizeLabel(): string {
+
+        const futureBackupsCount: number = SettingsComponent.getFileCount(this.settings.keepBackups);
+        const averageBackupSize: number = this.existingBackups.length
+            ? this.existingBackupsSize / this.existingBackups.length
+            : 0;
+        const estimatedSize: number = averageBackupSize * futureBackupsCount * this.backedUpProjects.length;
+
+        return getFileSizeLabel(estimatedSize, (value) => this.decimalPipe.transform(value));
+    }
+
+
     private async handleSaveSuccess(languagesChanged: boolean) {
 
         this.originalKeepBackupSettings = clone(this.settings.keepBackups);
@@ -182,5 +209,39 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
                 this.saving = false;
             }
         }
+    }
+
+
+    private initializeBackupValues() {
+
+        const backupsMap: BackupsMap = getExistingBackups(this.settings.backupDirectoryPath, true);
+
+        this.existingBackups = flatten(Object.values(backupsMap));
+        this.backedUpProjects = Object.keys(backupsMap);
+        this.existingBackupsSize = this.getExistingBackupsSize();
+        this.existingBackupsSizeLabel = this.getExistingBackupsSizeLabel();
+        this.estimatedBackupsSizeLabel = this.getEstimatedSizeLabel();
+    }
+
+
+    private getExistingBackupsSize(): number {
+        
+        return this.existingBackups.reduce((result, backup) => result + backup.size, 0);
+    }
+
+
+    private getExistingBackupsSizeLabel(): string {
+
+        return getFileSizeLabel(this.existingBackupsSize, (value) => this.decimalPipe.transform(value));
+    }
+
+
+    private static getFileCount(keepBackupsSettings: KeepBackupsSettings): number {
+        
+        return keepBackupsSettings.custom
+            + keepBackupsSettings.daily
+            + keepBackupsSettings.weekly
+            + keepBackupsSettings.monthly
+            + 1;
     }
 }

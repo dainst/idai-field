@@ -37,13 +37,13 @@ const remote = window.require('@electron/remote');
 export class SettingsComponent implements OnInit, AfterViewChecked {
 
     @ViewChild('settingsContainer') settingsContainer: ElementRef;
+    @ViewChild('advancedSettingsButton') advancedSettingsButton: ElementRef;
 
     public settings: Settings;
     public originalKeepBackupSettings: KeepBackupsSettings;
     public ipAddress: string = address.ip();
     public saving: boolean = false;
     public advancedSettingsCollapsed: boolean = true;
-    public scrollToBottom: boolean = false;
     public isLinux: boolean;
     public existingBackupsSizeLabel: string;
     public estimatedBackupsSizeLabel: string;
@@ -51,6 +51,8 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     private existingBackups: Array<Backup> = [];
     private existingBackupsSize: number;
     private backedUpProjects: string[] = [];
+    private scrollToAdvancedSettings: boolean = false;
+    private scrollToBottom: boolean = false;
 
 
     constructor(private settingsProvider: SettingsProvider,
@@ -89,6 +91,11 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
             this.settingsContainer.nativeElement.scrollTo(0, this.settingsContainer.nativeElement.scrollHeight);
             this.scrollToBottom = false;
         }
+
+        if (this.scrollToAdvancedSettings) {
+            this.advancedSettingsButton.nativeElement.scrollIntoView();
+            this.scrollToAdvancedSettings = false;
+        }
     }
 
 
@@ -115,7 +122,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public toggleAdvancedSettings() {
 
         this.advancedSettingsCollapsed = !this.advancedSettingsCollapsed;
-        if (!this.advancedSettingsCollapsed) this.scrollToBottom = true;
+        if (!this.advancedSettingsCollapsed) this.scrollToAdvancedSettings = true;
     }
 
 

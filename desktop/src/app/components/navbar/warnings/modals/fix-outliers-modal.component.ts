@@ -26,7 +26,6 @@ export class FixOutliersModalComponent {
     
     public valuelist: Valuelist;
     public selectedValues: string[];
-    public inputType: string;
     public replaceAll: boolean;
     public countAffected: number;
 
@@ -59,7 +58,6 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
-        this.inputType = await this.field.inputType;
         this.affectedDocuments = [];
         this.selectedValues = [];
 
@@ -74,7 +72,7 @@ export class FixOutliersModalComponent {
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
-                if (this.inputType == 'checkboxes' && field.inputType != 'checkboxes') continue;
+                if (this.field.inputType == 'checkboxes' && field.inputType != 'checkboxes') continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
                     affectedDocument.fields.push(field);

@@ -9,14 +9,14 @@
         Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
     </div>
 
-    <div *ngIf="inputType != 'checkboxes'">
+    <div *ngIf="field.inputType != 'checkboxes'">
         <searchable-select [selectedValue]="selectedValues[0]"
                            [values]="getValues()"
                            [getLabel]="getValueLabel"
                            (onValueSelected)="selectedValues = [$event]">
         </searchable-select>
     </div>
-    <div *ngIf="inputType == 'checkboxes'">
+    <div *ngIf="field.inputType == 'checkboxes'">
         <div *ngFor="let value of getValues()" class="checkbox form-check form-check-inline">
             <label class="form-check-label">
                 <input class="form-check-input" [value]="value" type="checkbox" (click)="toggleCheckboxValue(value)">

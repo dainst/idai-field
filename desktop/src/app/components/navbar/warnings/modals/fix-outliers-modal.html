@@ -13,7 +13,7 @@
         <searchable-select [selectedValue]="selectedValues[0]"
                            [values]="getValues()"
                            [getLabel]="getValueLabel"
-                           (onValueSelected)="selectedValues.push($event)">
+                           (onValueSelected)="selectedValues = [$event]">
         </searchable-select>
     </div>
     <div *ngIf="inputType == 'checkboxes'">

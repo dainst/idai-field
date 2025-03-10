@@ -72,7 +72,7 @@ export class FixOutliersModalComponent {
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
-                if (this.field.inputType == 'checkboxes' && field.inputType != 'checkboxes') continue;
+                if (this.field.inputType === 'checkboxes' && field.inputType !== 'checkboxes') continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
                     affectedDocument.fields.push(field);
@@ -104,6 +104,7 @@ export class FixOutliersModalComponent {
         this.activeModal.close();
     }
 
+
     public toggleCheckboxValue(value: string) {
         
         if (this.selectedValues.includes(value)) {
@@ -112,6 +113,7 @@ export class FixOutliersModalComponent {
             this.selectedValues.push(value);
         }
     }
+
 
     private openFixingDataInProgressModal(): NgbModalRef {
 
@@ -153,7 +155,7 @@ export class FixOutliersModalComponent {
 
         if (isArray(fieldContent)) {
             fieldContainer[field.name] = set(fieldContent.map(entry => this.getReplacement(document, entry, field)));
-            if (field.inputType == Field.InputType.CHECKBOXES) {
+            if (field.inputType === Field.InputType.CHECKBOXES) {
                 fieldContainer[field.name] = set(fieldContainer[field.name].flat());
             }
         } else {
@@ -166,9 +168,9 @@ export class FixOutliersModalComponent {
 
         if (isString(entry) && entry === this.outlierValue) {
             if (field.inputType === Field.InputType.CHECKBOXES) {
-                return this.selectedValues
+                return this.selectedValues;
             } else {
-                return this.selectedValues[0]
+                return this.selectedValues[0];
             }
         } else if (isObject(entry)) {
             if (field.inputType === Field.InputType.DIMENSION

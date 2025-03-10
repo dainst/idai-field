@@ -247,10 +247,10 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     private static getFileCount(keepBackupsSettings: KeepBackupsSettings): number {
         
-        return keepBackupsSettings.custom
-            + keepBackupsSettings.daily
+        return keepBackupsSettings.daily
             + keepBackupsSettings.weekly
             + keepBackupsSettings.monthly
+            + (keepBackupsSettings.customInterval ? keepBackupsSettings.custom : 0)
             + 1;
     }
 }

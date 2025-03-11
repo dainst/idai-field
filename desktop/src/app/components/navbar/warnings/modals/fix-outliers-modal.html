@@ -9,16 +9,28 @@
         Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
     </div>
 
-    <searchable-select [selectedValue]="selectedValue"
-                       [values]="getValues()"
-                       [getLabel]="getValueLabel"
-                       (onValueSelected)="selectedValue = $event"></searchable-select>
+    <div *ngIf="field.inputType !== 'checkboxes'">
+        <searchable-select [selectedValue]="selectedValues[0]"
+                           [values]="getValues()"
+                           [getLabel]="getValueLabel"
+                           (onValueSelected)="selectedValues = [$event]">
+        </searchable-select>
+    </div>
+    <div *ngIf="field.inputType === 'checkboxes'">
+        <div *ngFor="let value of getValues()" class="checkbox form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" [value]="value" type="checkbox" (click)="toggleCheckboxValue(value)">
+                {{getValueLabel(value)}}
+            </label>
+        </div>
+    </div>
+    
 
-    <div *ngIf="selectedValue" 
+    <div *ngIf="isValid()" 
          id="multiple-switch" 
          class="row" 
-         [disableTooltip]="countAffected !== 1" 
-         [class.disabled]="countAffected === 1"
+         [disableTooltip]="countAffected.display !== 1" 
+         [class.disabled]="countAffected.display === 1"
          ngbTooltip="Nur diese Ressource ist betroffen." 
          i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
          container="body">
@@ -26,29 +38,33 @@
             <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse dieses Werts ersetzen</span>
         </div>
         <div class="col-auto"> 
-            <label class="switch" [class.disabled]="countAffected === 1">
+            <label class="switch" [class.disabled]="countAffected.display === 1">
                 <input type="checkbox" 
                        [checked]="replaceAll" 
                        (change)="replaceAll = !replaceAll" 
-                       [disabled]="countAffected === 1">
+                       [disabled]="countAffected.display === 1">
                 <span class="slider round"></span>
             </label>
         </div>
     </div>
     
-    <div *ngIf="selectedValue && replaceAll">
+    <div *ngIf="isValid() && replaceAll">
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.fixOutliers.all.info">
             Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected}}</b> Ressourcen durch den
-            ausgewählten Wert <b>{{getValueLabel(selectedValue)}}</b> ersetzt.
+            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected.display}}</b> Ressourcen
+            @if (selectedValues.length > 1) {, die in diesem Feld eine Mehrfachauswahl erlauben, } 
+            durch 
+            @if (selectedValues.length === 1) { den ausgewählten Wert } @else { die ausgewählten Werte }
+            @for (value of selectedValues; track value; let isLast = $last) {<b>{{value}}@if(!isLast){, }</b>} 
+            ersetzt.
         </div>
     </div>
 </div>
 
 <div class="modal-footer">
     <div id="confirm-replacement-button" class="btn btn-primary"
-         [ngClass]="{ 'disabled': !selectedValue }"
+         [ngClass]="{ 'disabled': !isValid() }"
          (click)="performReplacement()">
         <span i18n="@@buttons.ok">OK</span>
     </div>

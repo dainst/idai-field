@@ -8,7 +8,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ClipboardCopy do
   def render(assigns) do
     ~H"""
     <a class="cursor-pointer" id={@id} phx-hook="CopyToClipboard" valueToCopy={@copy_value}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <%= if @copied do %>
         <.icon class="text-green-500" name="hero-clipboard-document-check" />
       <% else %>

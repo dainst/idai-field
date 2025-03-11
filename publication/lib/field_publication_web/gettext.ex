@@ -5,7 +5,7 @@ defmodule FieldPublicationWeb.Gettext do
   By using [Gettext](https://hexdocs.pm/gettext),
   your module gains a set of macros for translations, for example:
 
-      import FieldPublicationWeb.Gettext
+      use Gettext, backend: FieldPublicationWeb.Gettext
 
       # Simple translation
       gettext("Here is the string to translate")
@@ -20,7 +20,7 @@ defmodule FieldPublicationWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext,
+  use Gettext.Backend,
     otp_app: :field_publication,
     default_locale: "en"
 

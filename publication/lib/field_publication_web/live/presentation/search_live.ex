@@ -118,7 +118,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   def aggregation_selection(assigns) do
     ~H"""
     <strong>
-      <%= render_label(get_filter_label(@field_name)) %>
+      {render_label(get_filter_label(@field_name))}
     </strong>
     <%= for %{count: count, key: key} <- @buckets do %>
       <div
@@ -128,8 +128,8 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
         phx-value-value={key}
       >
         <div class="flex pl-2 pr-2 font-thin rounded">
-          <span class="grow mr-2"><%= render_label(get_filter_value_label(@field_name, key)) %></span>
-          (<%= count %>)
+          <span class="grow mr-2">{render_label(get_filter_value_label(@field_name, key))}</span>
+          ({count})
         </div>
       </div>
     <% end %>
@@ -145,12 +145,12 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       phx-value-value={@value}
     >
       <div class="h-full pl-2 pr-2 font-thin rounded">
-        <strong><%= render_label(get_filter_label(@field_name)) %>:</strong> <%= render_label(
+        <strong>{render_label(get_filter_label(@field_name))}:</strong> {render_label(
           get_filter_value_label(
             @field_name,
             @value
           )
-        ) %>
+        )}
       </div>
     </div>
     """
@@ -160,12 +160,12 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     ~H"""
     <div class="relative group">
       <span class="thin hero-information-circle mb-1"></span>
-      <%= @primary %>
+      {@primary}
       <div class="p-2 mt-1 w-full z-10 bg-yellow-100 hidden group-hover:block absolute">
         <span class="font-semibold">Varying usage:</span>
         <%= for {text, _count, projects} <- @secondary do %>
           <div>
-            <%= text %> <span class="italic">(<%= Enum.join(projects, ", ") %>)</span>
+            {text} <span class="italic">({Enum.join(projects, ", ")})</span>
           </div>
         <% end %>
       </div>
@@ -175,7 +175,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
 
   def render_label(assigns) do
     ~H"""
-    <%= @primary %>
+    {@primary}
     """
   end
 

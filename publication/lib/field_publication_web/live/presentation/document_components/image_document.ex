@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
         <div class="basis-1/3 m-5">
           <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
-              <I18n.text values={relation_group.labels} /> (<%= Enum.count(relation_group.docs) %>)
+              <I18n.text values={relation_group.labels} /> ({Enum.count(relation_group.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>

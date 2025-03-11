@@ -27,10 +27,10 @@ export class FixOutliersModalComponent {
     public valuelist: Valuelist;
     public selectedValues: string[];
     public replaceAll: boolean;
-    public countAffected: number;
+    public countAffected: { display: number, complete: number, onlyCheckboxFields: number };
 
     private projectDocument: Document;
-    private affectedDocuments: Array<AffectedDocument>;
+    private affectedDocuments: { complete: Array<AffectedDocument>, onlyCheckboxFields: Array<AffectedDocument> };
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -58,7 +58,7 @@ export class FixOutliersModalComponent {
 
         this.projectDocument = await this.datastore.get('project');
         this.valuelist = await this.getValuelist(this.document, this.field);
-        this.affectedDocuments = [];
+        this.affectedDocuments = { complete: [], onlyCheckboxFields: [] };
         this.selectedValues = [];
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
@@ -67,22 +67,32 @@ export class FixOutliersModalComponent {
 
         for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
-            const affectedDocument: AffectedDocument = { document: document, fields: [] };
-
+            const affectedDocumentComplete: AffectedDocument = { document: document, fields: [] };
+            const affectedDocumentCheckboxes: AffectedDocument = { document: document, fields: [] };
+            
             for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
-                if (this.field.inputType === 'checkboxes' && field.inputType !== 'checkboxes') continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
-                    affectedDocument.fields.push(field);
+                    if (this.field.inputType === 'checkboxes' && field.inputType === 'checkboxes') {
+                        affectedDocumentCheckboxes.fields.push(field)
+                        affectedDocumentComplete.fields.push(field)
+                    } else {
+                        affectedDocumentComplete.fields.push(field)
+                    };
                 }
             }
 
-            if (affectedDocument.fields.length) this.affectedDocuments.push(affectedDocument);
+            if (affectedDocumentComplete.fields.length) this.affectedDocuments.complete.push(affectedDocumentComplete);
+            if (affectedDocumentCheckboxes.fields.length) this.affectedDocuments.onlyCheckboxFields.push(affectedDocumentCheckboxes);
         }
 
-        this.countAffected = this.affectedDocuments.length;
+        this.countAffected = {
+            display: this.affectedDocuments.complete.length,
+            complete: this.affectedDocuments.complete.length,
+            onlyCheckboxFields: this.affectedDocuments.onlyCheckboxFields.length
+        };
     }
 
 
@@ -112,6 +122,18 @@ export class FixOutliersModalComponent {
         } else {
             this.selectedValues.push(value);
         }
+
+        this.setCountAffectedDisplay();
+    }
+
+
+    private setCountAffectedDisplay() {
+
+        if (this.selectedValues.length > 1) {
+            this.countAffected.display = this.countAffected.onlyCheckboxFields;
+        } else {
+            this.countAffected.display = this.countAffected.complete;
+        }
     }
 
 
@@ -136,15 +158,19 @@ export class FixOutliersModalComponent {
 
 
     private async replaceMultiple() {
+
+        const documentsToUpdate = this.selectedValues.length > 1 
+            ? this.affectedDocuments.onlyCheckboxFields 
+            : this.affectedDocuments.complete;
         
-        for (let affectedDocument of this.affectedDocuments) {
+        for (let affectedDocument of documentsToUpdate) {
             for (let field of affectedDocument.fields) {
                 this.replaceValue(affectedDocument.document, affectedDocument.document.resource, field);
             }
         }
 
         await this.datastore.bulkUpdate(
-            this.affectedDocuments.map(affectedDocument => affectedDocument.document)
+            documentsToUpdate.map(affectedDocument => affectedDocument.document)
         );
     }
 

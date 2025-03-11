@@ -29,8 +29,8 @@
     <div *ngIf="isValid()" 
          id="multiple-switch" 
          class="row" 
-         [disableTooltip]="countAffected !== 1" 
-         [class.disabled]="countAffected === 1"
+         [disableTooltip]="countAffected.display !== 1" 
+         [class.disabled]="countAffected.display === 1"
          ngbTooltip="Nur diese Ressource ist betroffen." 
          i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
          container="body">
@@ -38,11 +38,11 @@
             <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse dieses Werts ersetzen</span>
         </div>
         <div class="col-auto"> 
-            <label class="switch" [class.disabled]="countAffected === 1">
+            <label class="switch" [class.disabled]="countAffected.display === 1">
                 <input type="checkbox" 
                        [checked]="replaceAll" 
                        (change)="replaceAll = !replaceAll" 
-                       [disabled]="countAffected === 1">
+                       [disabled]="countAffected.display === 1">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -52,7 +52,9 @@
         <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.fixOutliers.all.info">
             Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected}}</b> Ressourcen durch 
+            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected.display}}</b> Ressourcen
+            @if (selectedValues.length > 1) {, die in diesem Feld eine Mehrfachauswahl erlauben, } 
+            durch 
             @if (selectedValues.length === 1) { den ausgewählten Wert } @else { die ausgewählten Werte }
             @for (value of selectedValues; track value; let isLast = $last) {<b>{{value}}@if(!isLast){, }</b>} 
             ersetzt.

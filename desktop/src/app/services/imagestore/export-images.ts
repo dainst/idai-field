@@ -2,6 +2,8 @@ import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 
 const fs = window.require('fs');
 
+const ERROR_ORIGINAL_IMAGE_FILE_NOT_FOUND: string = 'exportImage.error.originalImageFileNotFound';
+
 
 /**
  * 
@@ -29,7 +31,9 @@ function copyImageFile(imageDocument: ImageDocument, imagesDirectoryPath: string
                        targetDirectoryPath: string, useOriginalFilename: boolean) {
 
     const sourceFilePath: string = imagesDirectoryPath + imageDocument.resource.id;
-    if (!fs.existsSync(sourceFilePath)) return;
+    if (!fs.existsSync(sourceFilePath)) {
+        throw [ERROR_ORIGINAL_IMAGE_FILE_NOT_FOUND, imageDocument.resource.identifier];
+    }
 
     fs.copyFileSync(
         sourceFilePath,

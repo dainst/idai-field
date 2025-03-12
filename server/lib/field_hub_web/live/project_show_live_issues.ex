@@ -2,7 +2,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
   use Phoenix.Component
 
   @moduledoc """
-  Bundles `render/1` functions for lists for different types of issues.
+  Bundles `display/1` functions for lists for different types of issues.
 
   The type of issue is determined by the `id` value used in the parent
   `live_component/1` call.
@@ -10,13 +10,13 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
 
   alias Phoenix.LiveView.JS
 
-  def render(%{id: :no_project_document} = assigns) do
+  def display(%{id: :no_project_document} = assigns) do
     ~H"""
     <span class="issue-content">Could not find a project document in the database!</span>
     """
   end
 
-  def render(%{id: :no_default_project_map_layer} = assigns) do
+  def display(%{id: :no_default_project_map_layer} = assigns) do
     ~H"""
     <span class="issue-content">
       <em>There is no default map layer defined for the project.</em>
@@ -30,7 +30,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def render(%{id: :missing_original_image} = assigns) do
+  def display(%{id: :missing_original_image} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>Some original files are missing and should be uploaded by their creator.</em>
@@ -46,7 +46,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def render(%{id: :image_variants_size} = assigns) do
+  def display(%{id: :image_variants_size} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>In general the original images are expected to be larger than their thumbnails.
@@ -71,7 +71,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def render(%{id: :missing_image_copyright} = assigns) do
+  def display(%{id: :missing_image_copyright} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>
@@ -89,7 +89,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def render(%{id: :unresolved_relation} = assigns) do
+  def display(%{id: :unresolved_relation} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>
@@ -136,7 +136,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def render(%{id: :non_unique_identifiers} = assigns) do
+  def display(%{id: :non_unique_identifiers} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>There are documents sharing the same identifier.</em>
@@ -166,8 +166,8 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def render(assigns) do
-    # Fallback function, renders issues data as list with key/value as columns.
+  def display(assigns) do
+    # Fallback function, displays issues data as list with key/value as columns.
     ~H"""
     <div class="issue-content">
       <%= for {%{data: data}, issue_index} <- Enum.with_index(@issues) do %>

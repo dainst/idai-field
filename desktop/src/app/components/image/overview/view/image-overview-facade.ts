@@ -1,7 +1,8 @@
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 import { clone, equal, Map }  from 'tsfun';
-import { ImageDocument, Named, Query, ProjectConfiguration, FileInfo, ImageStore, ImageVariant } from 'idai-field-core';
+import { ImageDocument, Named, Query, ProjectConfiguration, FileInfo, ImageStore,
+    ImageVariant } from 'idai-field-core';
 import { ImagesState } from './images-state';
 import { ImageDocumentsManager } from './image-documents-manager';
 import { RemoteImageStore } from '../../../../services/imagestore/remote-image-store';
@@ -72,6 +73,10 @@ export class ImageOverviewFacade {
         if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
         this.setQueryConstraints();
         await this.fetchDocuments();
+
+        this.settingsProvider.settingsChangesNotifications().subscribe(async () => {
+            await this.updateImageFileInfos();
+        });
     }
 
 

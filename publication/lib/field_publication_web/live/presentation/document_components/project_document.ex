@@ -21,7 +21,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
       <div class="flex flex-row">
         <div class="basis-2/3 m-5">
           <.header>
-            <%= gettext("project_doc_about_project") %>
+            {gettext("project_doc_about_project")}
           </.header>
           <div class="bg-slate-50 p-2 rounded">
             <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
@@ -44,7 +44,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <I18n.markdown values={Data.get_field_value(@doc, "description")} lang={@lang} />
           </div>
           <.header class="mt-3">
-            <%= gettext("project_doc_about_publication") %>
+            {gettext("project_doc_about_publication")}
           </.header>
           <div class="bg-slate-50 p-2 rounded">
             <I18n.markdown
@@ -87,9 +87,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
                 <a href={"mailto:#{contact_mail.value}"}>
                   <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
                   <%= if contact_person do %>
-                    <%= contact_person.value %>
+                    {contact_person.value}
                   <% else %>
-                    <%= gettext("contact_email") %>
+                    {gettext("contact_email")}
                   <% end %>
                 </a>
               </dd>
@@ -105,7 +105,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <%= if staff do %>
               <dt class="font-bold"><I18n.text values={staff.labels} lang={@lang} /></dt>
               <dd class="ml-4">
-                <%= Enum.join(staff.value, ", ") %>
+                {Enum.join(staff.value, ", ")}
               </dd>
             <% end %>
 
@@ -116,17 +116,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Project do
             <% end %>
             <% url = Data.get_field_value(@doc, "projectURI") %>
             <%= if url do %>
-              <dt class="font-bold"><%= gettext("further_links") %></dt>
+              <dt class="font-bold">{gettext("further_links")}</dt>
               <dd class="ml-4">
                 <a href={url}>
-                  <.icon name="hero-link" class="h-6 w-6 mr-1" /><%= gettext("project_home_page") %>
+                  <.icon name="hero-link" class="h-6 w-6 mr-1" />{gettext("project_home_page")}
                 </a>
               </dd>
             <% end %>
           </dl>
 
           <.group_heading>
-            <%= gettext("Main documents") %>
+            {gettext("Main documents")}
           </.group_heading>
           <%= for doc <- @top_level_docs do %>
             <DocumentLink.show lang={@lang} doc={doc} />

@@ -33,7 +33,7 @@
     </div>
     <div *ngIf="isExportButtonVisible()" class="btn-group me-2">
         <button id="export-images" type="button" class="btn btn-primary btn-square"
-                (click)="openExportModal()"
+                (click)="exportImages()"
                 placement="bottom" container="body" ngbTooltip="Exportieren"
                 i18n-ngbTooltip="@@imageOverview.taskbar.tooltips.export">
             <span class="mdi mdi-file-export"></span>

@@ -8,6 +8,7 @@ import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
 import { Loading } from '../../widgets/loading';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
 
 const panzoom = require('panzoom');
 
@@ -56,7 +57,8 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
                 private messages: Messages,
                 private loading: Loading,
                 private zone: NgZone,
-                private changeDetectorRef: ChangeDetectorRef) {}
+                private changeDetectorRef: ChangeDetectorRef,
+                private imageToolLauncher: ImageToolLauncher) {}
 
 
     public getScale = () => this.panzoomInstance?.getTransform().scale ?? 0;
@@ -65,16 +67,14 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
 
     public zoomOut = () => this.zoom(0.5);
 
+    public isDownloadButtonVisible = () => this.imageToolLauncher.isDownloadPossible([this.imageDocument]);
+
+    public isExportButtonVisible = () => this.imageToolLauncher.isExportPossible([this.imageDocument]);
+
 
     async ngOnChanges() {
 
-        this.resetPanZoom();
-
-        if (!this.imagestore.getAbsoluteRootPath()) {
-            this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
-        }
-        
-        if (this.imageDocument) await this.update();
+        await this.update();
     }
 
 
@@ -115,12 +115,33 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     }
 
 
+    public async downloadImage() {
+
+        await this.imageToolLauncher.downloadImages([this.imageDocument]);
+        this.loadedImageId = undefined;
+        this.imageUrl = undefined;
+        await this.update();
+    }
+
+
+    public async exportImage() {
+        
+        await this.imageToolLauncher.exportImages([this.imageDocument]);
+        this.loadedImageId = undefined;
+        this.imageUrl = undefined;
+        await this.update();
+    }
+
+
     private async update() {
 
+        if (!this.imagestore.getAbsoluteRootPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
+
+        this.resetPanZoom();
         this.stopLoading();
         await AngularUtility.refresh();
 
-        if (this.imageDocument.resource.id === this.loadedImageId) return;
+        if (!this.imageDocument || this.imageDocument.resource.id === this.loadedImageId) return;
         
         this.zone.run(async () => {
             const imageId: string = this.imageDocument.resource.id;

@@ -12,6 +12,7 @@ import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
+import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -38,6 +39,7 @@ export class AppComponent {
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
                 appState: AppState,
+                imageToolLauncher: ImageToolLauncher,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
@@ -63,6 +65,7 @@ export class AppComponent {
         appController.initialize();
         menuNavigator.initialize();
         configurationChangeNotifications.initialize();
+        imageToolLauncher.update();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();

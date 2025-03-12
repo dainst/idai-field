@@ -14,7 +14,7 @@ import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../ser
 import { AngularUtility } from '../../../angular/angular-utility';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
-import { ImageExportModalComponent } from '../export/image-export-modal.component';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
 
 
 @Component({
@@ -40,12 +40,21 @@ export class ImageOverviewTaskbarComponent {
                 private messages: Messages,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageRelationsManager: ImageRelationsManager,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private imageToolLauncher: ImageToolLauncher) {}
 
 
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
 
-    public downloadImages = () => this.imageOverviewFacade.downloadImages();
+    public isDownloadButtonVisible = () =>
+        this.imageToolLauncher.isDownloadPossible(this.imageOverviewFacade.getSelected());
+
+    public isExportButtonVisible = () =>
+        this.imageToolLauncher.isExportPossible(this.imageOverviewFacade.getSelected());
+
+    public downloadImages = () => this.imageToolLauncher.downloadImages(this.imageOverviewFacade.getSelected());
+
+    public exportImages = () => this.imageToolLauncher.exportImages(this.imageOverviewFacade.getSelected());
 
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
     
@@ -55,18 +64,6 @@ export class ImageOverviewTaskbarComponent {
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             this.clearSelection();
         }
-    }
-
-
-    public isDownloadButtonVisible(): boolean {
-        
-        return this.imageOverviewFacade.getDownloadableImages().length > 0;
-    }
-
-
-    public isExportButtonVisible(): boolean {
-        
-        return this.imageOverviewFacade.getExportableImages().length > 0;
     }
 
 
@@ -123,26 +120,6 @@ export class ImageOverviewTaskbarComponent {
             await this.removeLinks();
         } catch(err) {
             // RemoveLinkModal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-        }
-    }
-
-
-    public async openExportModal() {
-
-        this.menuService.setContext(MenuContext.MODAL);
-
-        const modalRef: NgbModalRef = this.modalService.open(
-            ImageExportModalComponent, { keyboard: false, animation: false }
-        );
-        modalRef.componentInstance.images = this.imageOverviewFacade.getExportableImages();
-
-        try {
-            await modalRef.result;
-        } catch(err) {
-            // ExportImageModal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();

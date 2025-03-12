@@ -1,42 +1,29 @@
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
-import { clone, equal, Map }  from 'tsfun';
-import { ImageDocument, Named, Query, ProjectConfiguration, FileInfo, ImageStore,
-    ImageVariant } from 'idai-field-core';
+import { clone, equal }  from 'tsfun';
+import { ImageDocument, Named, Query, ProjectConfiguration, ImageStore } from 'idai-field-core';
 import { ImagesState } from './images-state';
 import { ImageDocumentsManager } from './image-documents-manager';
-import { RemoteImageStore } from '../../../../services/imagestore/remote-image-store';
-import { SettingsProvider } from '../../../../services/settings/settings-provider';
-import { ImageDownloadModalComponent } from '../../download/image-download-modal.component';
-import { MenuContext } from '../../../../services/menu-context';
-import { AngularUtility } from '../../../../angular/angular-utility';
-import { Menus } from '../../../../services/menus';
+import { ImageToolLauncher } from '../../../../services/imagestore/image-tool-launcher';
 
 
+@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-@Injectable()
 export class ImageOverviewFacade {
 
     private currentOffset: number = 0;
     private maxRows: number = 5;
     private maxNrImagesPerRow: number = 12;
     private minNrImagesPerRow: number = 2;
-    private imageFileInfos: Map<FileInfo>;
-    private remoteImageFileInfos: Map<FileInfo>;
 
 
     constructor(private imageDocumentsManager: ImageDocumentsManager,
                 private imagesState: ImagesState,
                 private projectConfiguration: ProjectConfiguration,
-                private imageStore: ImageStore,
-                private remoteImageStore: RemoteImageStore,
-                private settingsProvider: SettingsProvider,
-                private menuService: Menus,
-                private modalService: NgbModal) {}
+                private imageToolLauncher: ImageToolLauncher) {}
 
 
     public getMaxNrImagesPerRow = () => this.maxNrImagesPerRow;
@@ -73,10 +60,6 @@ export class ImageOverviewFacade {
         if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
         this.setQueryConstraints();
         await this.fetchDocuments();
-
-        this.settingsProvider.settingsChangesNotifications().subscribe(async () => {
-            await this.updateImageFileInfos();
-        });
     }
 
 
@@ -199,7 +182,8 @@ export class ImageOverviewFacade {
             this.getLimit(),
             this.currentOffset
         );
-        await this.updateImageFileInfos();
+
+        await this.imageToolLauncher.update();
     }
 
 
@@ -209,46 +193,6 @@ export class ImageOverviewFacade {
             q: '',
             categories: this.projectConfiguration.getImageCategories().map(Named.toName)
         };
-    }
-
-
-    public getDownloadableImages(): Array<ImageDocument> {
-
-        if (!this.imageFileInfos) return [];
-
-        return this.getSelected().filter(document => {
-            return !this.imageFileInfos[document.resource.id]
-                && this.remoteImageFileInfos[document.resource.id];
-        });
-    }
-
-
-    public getExportableImages(): Array<ImageDocument> {
-
-        if (!this.imageFileInfos) return [];
-
-        return this.getSelected().filter(document => this.imageFileInfos[document.resource.id]);
-    }
-
-
-    public async downloadImages() {
-    
-        this.menuService.setContext(MenuContext.MODAL);
-
-        const modalRef: NgbModalRef = this.modalService.open(
-            ImageDownloadModalComponent, { keyboard: false, animation: false }
-        );
-        modalRef.componentInstance.images = this.getDownloadableImages();
-
-        try {
-            await modalRef.result;
-        } catch(err) {
-            // DownloadImageModal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
-            AngularUtility.blurActiveElement();
-            await this.updateImageFileInfos();
-        }
     }
 
 
@@ -267,19 +211,5 @@ export class ImageOverviewFacade {
     private setQueryConstraints() {
 
         this.imagesState.getQuery().constraints = clone(this.getCustomConstraints());
-    }
-
-
-    private async updateImageFileInfos() {
-
-        this.imageFileInfos = await this.imageStore.getFileInfos(
-            this.settingsProvider.getSettings().selectedProject,
-            [ImageVariant.ORIGINAL]
-        );
-
-        this.remoteImageFileInfos = await this.remoteImageStore.getFileInfos(
-            this.settingsProvider.getSettings().selectedProject,
-            [ImageVariant.ORIGINAL]
-        );
     }
 }

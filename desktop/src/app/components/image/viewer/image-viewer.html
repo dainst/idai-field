@@ -20,5 +20,18 @@
                   [zoomOutEnabled]="isOriginal && getScale() > 1"
                   (onZoomInClicked)="zoomIn()"
                   (onZoomOutClicked)="zoomOut()"></zoom-buttons>
+     <button *ngIf="isDownloadButtonVisible()" id="download-image-button" type="button" class="btn btn-primary btn-square"
+               (click)="downloadImage()"
+               placement="bottom" ngbTooltip="Originalbild herunterladen"
+               i18n-ngbTooltip="@@image.download">
+          <span class="mdi mdi-cloud-download"></span>
+     </button>
+     <button *ngIf="isExportButtonVisible()" id="export-image-button" type="button" class="btn btn-primary btn-square"
+               (click)="exportImage()"
+               placement="bottom" ngbTooltip="Bild exportieren"
+               i18n-ngbTooltip="@@image.export">
+          <span class="mdi mdi-file-export"></span>
+     </button>
+          
     <loading-icon *ngIf="loadingIconVisible" [context]="'image-viewer'"></loading-icon>
 </div>

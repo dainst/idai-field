@@ -64,12 +64,18 @@ defmodule FieldHub.MixProject do
     [
       setup: [
         "deps.get",
-        "run --eval FieldHub.CLI.setup() --no-start"
+        "assets.setup",
+        "assets.build"
       ],
       seed: [
         "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\", \"pw\"')"
       ],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.setup": ["esbuild.install --if-missing"],
+      "assets.build": ["esbuild demo"],
+      "assets.deploy": [
+        "esbuild default --minify",
+        "phx.digest"
+      ]
     ]
   end
 end

@@ -16,6 +16,7 @@ import { ImageOverviewSearchConstraintsComponent } from './searchbar/image-overv
 import { DeleteModalComponent } from './deletion/delete-modal.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
 import { ImageDocumentsManager } from '../../../components/image/overview/view/image-documents-manager';
+import { ImageExportModule } from '../export/image-export.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ImageDocumentsManager } from '../../../components/image/overview/view/i
         NgbModule,
         imagesRouting,
         WidgetsModule,
-        ImageGridModule
+        ImageGridModule,
+        ImageExportModule
     ],
     declarations: [
         ImageOverviewComponent,

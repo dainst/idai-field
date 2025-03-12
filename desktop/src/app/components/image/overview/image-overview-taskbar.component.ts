@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDocument, ImageStore } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { FieldDocument, FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
@@ -14,8 +15,7 @@ import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../ser
 import { AngularUtility } from '../../../angular/angular-utility';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
-import { AppState } from '../../../services/app-state';
-import { exportImages } from '../../../services/imagestore/export-images';
+import { ImageExportModalComponent } from '../export/image-export-modal.component';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 const remote = window.require('@electron/remote');
@@ -34,9 +34,11 @@ const remote = window.require('@electron/remote');
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageOverviewTaskbarComponent {
+export class ImageOverviewTaskbarComponent implements OnChanges {
 
     @Input() imageGrid: any;
+
+    private imageFileInfos: Map<FileInfo>;
 
 
     constructor(public viewFacade: ViewFacade,
@@ -45,7 +47,6 @@ export class ImageOverviewTaskbarComponent {
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageRelationsManager: ImageRelationsManager,
                 private menuService: Menus,
-                private appState: AppState,
                 private imageStore: ImageStore,
                 private settingsProvider: SettingsProvider) {}
 
@@ -55,11 +56,26 @@ export class ImageOverviewTaskbarComponent {
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
 
+    async ngOnChanges() {
+        
+        this.imageFileInfos = await this.imageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject,
+            [ImageVariant.ORIGINAL]
+        );
+    }
+    
+    
     public onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             this.clearSelection();
         }
+    }
+
+
+    public isExportButtonVisible(): boolean {
+        
+        return this.getExportableImages(this.imageOverviewFacade.getSelected()).length > 0;
     }
 
 
@@ -123,36 +139,22 @@ export class ImageOverviewTaskbarComponent {
     }
 
 
-    public async exportSelected() {
+    public async openExportModal() {
 
-        const exportDirectoryPath = await this.chooseExportDirectory();
-        if (!exportDirectoryPath) return;
+        this.menuService.setContext(MenuContext.MODAL);
 
-        exportImages(
-            this.imageStore,
-            this.imageOverviewFacade.getSelected(),
-            exportDirectoryPath,
-            this.settingsProvider.getSettings().selectedProject,
-            false
+        const modalRef: NgbModalRef = this.modalService.open(
+            ImageExportModalComponent, { keyboard: false, animation: false }
         );
-    }
+        modalRef.componentInstance.images = this.getExportableImages(this.imageOverviewFacade.getSelected());
 
-
-    private async chooseExportDirectory() {
-
-        const result: any = await remote.dialog.showOpenDialog(
-            remote.getCurrentWindow(),
-            {
-                properties: ['openDirectory', 'createDirectory'],
-                defaultPath: this.appState.getFolderPath('imagesExport'),
-                buttonLabel: $localize `:@@imageOverview.taskbar.export.selectFolder:Verzeichnis auswählen`
-            }
-        );
-
-        if (result && result.filePaths.length > 0) {
-            const exportDirectoryPath: string = result.filePaths[0];
-            this.appState.setFolderPath(exportDirectoryPath, 'imagesExport');
-            return exportDirectoryPath;
+        try {
+            await modalRef.result;
+        } catch(err) {
+            // ExportImageModal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
         }
     }
 
@@ -248,5 +250,13 @@ export class ImageOverviewTaskbarComponent {
 
         await this.imageRelationsManager
             .unlink(...this.imageOverviewFacade.getSelected());
+    }
+
+
+    private getExportableImages(images: Array<ImageDocument>): Array<ImageDocument> {
+
+        if (!this.imageFileInfos) return [];
+
+        return images.filter(document => this.imageFileInfos[document.resource.id]);
     }
 }

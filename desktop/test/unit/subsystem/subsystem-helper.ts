@@ -120,7 +120,8 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         settingsService,
         projectConfiguration,
         settingsProvider,
-        imageStore
+        imageStore,
+        remoteImageStore
     } = await setupSettingsService(pouchdbDatastore, projectIdentifier);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
@@ -216,7 +217,17 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
 
     const imagesState = new ImagesState(projectConfiguration, stateSerializer);
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, datastore);
-    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
+
+    const imageOverviewFacade = new ImageOverviewFacade(
+        imageDocumentsManager,
+        imagesState,
+        projectConfiguration,
+        imageStore,
+        remoteImageStore,
+        settingsProvider,
+        undefined,
+        undefined
+    );
 
     return {
         remoteChangesStream,

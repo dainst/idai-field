@@ -25,6 +25,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
         {
           :ok,
           socket
+          |> assign(:page_title, "Create project")
           |> assign(:current_user, user_name)
           |> evaluate_inputs("", "")
         }

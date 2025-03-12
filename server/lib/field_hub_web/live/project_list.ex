@@ -53,9 +53,6 @@ defmodule FieldHubWeb.UI.ProjectList do
           assign(socket, :projects, projects)
       end
 
-    {
-      :ok,
-      socket
-    }
+    {:ok, assign(socket, :page_title, "Overview")}
   end
 end

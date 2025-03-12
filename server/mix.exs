@@ -74,7 +74,8 @@ defmodule FieldHub.MixProject do
       setup: [
         "deps.get",
         "assets.setup",
-        "assets.build"
+        "assets.build",
+        "run --eval FieldHub.CLI.setup() --no-start"
       ],
       seed: [
         "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\", \"pw\"')"

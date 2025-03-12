@@ -21,9 +21,10 @@ import { Reader } from './reader/reader';
 import { ShapefileFilesystemReader } from './reader/shapefile-filesystem-reader';
 import { Settings } from '../../services/settings/settings';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
+import { GeopackageFilesystemReader } from './reader/geopackage-filesystem-reader';
 
 
-export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
+export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'geopackage' | 'csv' | 'catalog';
 
 export type ImporterReport = { errors: any[], successfulImports: number, ignoredIdentifiers: string[] };
 
@@ -124,6 +125,7 @@ export module Importer {
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
+            case 'geopackage':
             case 'geojson':
                 importFunction = buildImportDocuments(
                     { validator },
@@ -201,6 +203,7 @@ export module Importer {
 
         if (options.sourceType !== 'file') return new HttpReader(options.url, http);
         if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.filePath);
+        if (options.format === 'geopackage') return new GeopackageFilesystemReader(options.filePath);
         if (options.format === 'catalog') return new CatalogFilesystemReader(options.filePath, settings, imagestore);
         return new FilesystemReader(options.filePath);
     }
@@ -221,6 +224,7 @@ export module Importer {
                 );
             case 'geojson':
             case 'shapefile':
+            case 'geopackage':
                 return GeojsonParser.getParse();
             case 'native':
                 return NativeJsonlParser.parse;

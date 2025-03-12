@@ -49,8 +49,8 @@ export class ImportComponent implements OnInit {
     public running: boolean = false;
     public ignoredIdentifiers: string[] = [];
 
-    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog';
-    public readonly allowedHttpFileExtensions: string = '.csv, .jsonl, .geojson, .json';
+    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .gpkg, .catalog';
+    public readonly allowedHttpFileExtensions: string = '.csv, .jsonl, .geojson, .gpkg, .json';
 
 
     constructor(public importState: ImportState,
@@ -316,7 +316,7 @@ export class ImportComponent implements OnInit {
     private showIgnoredIdentifiersWarning(ignoredIdentifiers: string[]) {
 
         this.messages.add([
-            (this.importState.mergeMode || ['geojson', 'shapefile'].includes(this.importState.format))
+            (this.importState.mergeMode || ['geojson', 'shapefile', 'geopackage'].includes(this.importState.format))
                 ? ignoredIdentifiers.length === 1
                     ? M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER
                     : M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS
@@ -402,7 +402,7 @@ export class ImportComponent implements OnInit {
         return [
             {
                 name: $localize `:@@import.selectFile.filters.all:Alle unterstützten Formate`,
-                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog']
+                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'gpkg', 'catalog']
             },
             {
                 name: 'CSV',
@@ -419,6 +419,10 @@ export class ImportComponent implements OnInit {
             {
                 name: 'Shapefile',
                 extensions: ['shp']
+            },
+            {
+                name: 'Geopackage',
+                extensions: ['gpkg']
             },
             {
                 name: $localize `:@@import.selectFile.filters.catalog:Field-Typenkatalog`,
@@ -440,6 +444,8 @@ export class ImportComponent implements OnInit {
                 return 'geojson';
             case 'shp':
                 return 'shapefile';
+            case 'gpkg':
+                return 'geopackage';
             case 'csv':
                 return 'csv';
             default:

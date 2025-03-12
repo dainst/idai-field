@@ -19,6 +19,9 @@ initGdalJs(options).then(async gdal => {
         try {
             const result = await gdal.open(sourceFilePath);
             const file = result.datasets[0];
+
+            // TODO Move to its own function
+            log.info(await gdal.getInfo(file));
             await gdal.ogr2ogr(file, options, outputFileBaseName);
             await gdal.close(file);
             return { success: true };

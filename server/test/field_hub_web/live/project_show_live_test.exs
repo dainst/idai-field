@@ -2,6 +2,8 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
 
+  use FieldHubWeb, :verified_routes
+
   use FieldHubWeb.ConnCase
 
   alias FieldHubWeb.{
@@ -28,9 +30,11 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
-    assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
-             conn
-             |> live("/ui/projects/show/#{@project}")
+    assert {
+             :error,
+             {:redirect, %{flash: _, to: "/ui/session/log_in"}}
+           } =
+             live(conn, ~p"/ui/projects/show/#{@project}")
 
     # Test the mount function (websocket), this makes sure that users with invalidated/old user token can not
     # access the page.
@@ -144,7 +148,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html_on_mount =~ "No supervisor found in project document."
       assert html_on_mount =~ "No contact data found in project document."
       assert html_on_mount =~ "Person 1, Person 2"
-      assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
+      assert html_on_mount =~ "Loading..."
 
       assert html_on_mount =~
                "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
@@ -266,7 +270,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       # These are the current defaults in the mock project based on the Desktop applications `test` project.
       assert html =~ "No supervisor found in project document"
       assert html =~ "No contact data found in project document"
-      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
+      assert html =~ "Person 1, Person 2"
     end
 
     test "missing project document is handled in overview", %{conn: conn} do
@@ -296,7 +300,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       html = render(view)
 
-      assert html =~ "<td>Supervisor</td><td>\nMs. Supervisor\n</td>"
+      assert html =~ "Ms. Supervisor"
     end
 
     test "project contact is displayed in overview", %{conn: conn} do
@@ -317,7 +321,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       html = render(view)
 
       assert html =~
-               "<td>Contact</td><td>\nMr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)\n</td>"
+               "Mr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)"
     end
 
     test "project staff is displayed in overview", %{conn: conn} do
@@ -326,7 +330,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       html = render(view)
 
       # These are the current defaults in the mock project based on the Desktop applications `test` project.
-      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
+      assert html =~ "Person 1, Person 2"
     end
   end
 

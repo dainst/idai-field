@@ -42,10 +42,11 @@ defmodule FieldHub.MixProject do
       {:swoosh, "~> 1.18"},
       {:telemetry_metrics, "~> 1.1"},
       {:telemetry_poller, "~> 1.1"},
+      {:gettext, "~> 0.26"},
       {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.7"},
       {:httpoison, "~> 2.2"},
-      {:reverse_proxy_plug, "~> 3.0"},
+      {:reverse_proxy_plug, "~> 2.4"},
       {:zarex, "~> 1.0"},
       {:ex_json_schema, "~> 0.10"},
       {:cachex, "~> 4.0"}

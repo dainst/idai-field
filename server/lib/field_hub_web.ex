@@ -87,6 +87,9 @@ defmodule FieldHubWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      # Core UI components
+      import FieldHubWeb.CoreComponents
+
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end

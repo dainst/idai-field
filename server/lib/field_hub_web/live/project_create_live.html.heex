@@ -1,44 +1,47 @@
 <div class="container">
-    <.link navigate={~p"/"}>Back to overview</.link>
-    <h1>Create a new project</h1>
+  <.link navigate={~p"/"}>Back to overview</.link>
+  <h1>Create a new project</h1>
 
-    <p class="alert alert-danger"><%= Phoenix.Flash.get(@flash, :error) %></p>
+  <p class="alert alert-danger">{Phoenix.Flash.get(@flash, :error)}</p>
 
-    <form phx-change="update" phx-submit="create">
-        <button
-            style="width: 100%"
-            disabled={Enum.count(@issues) > 0}>
-            Create project
-        </button>
+  <form phx-change="update" phx-submit="create">
+    <button style="width: 100%" disabled={Enum.count(@issues) > 0}>
+      Create project
+    </button>
 
+    <input
+      type="text"
+      placeholder="Project identifier"
+      id="identifier"
+      name="identifier"
+      value={@project_identifier}
+    />
+    <div class="row">
+      <div class="column">
         <input
-            type="text"
-            placeholder="Project identifier"
-            id="identifier"
-            name="identifier"
-            value={@project_identifier}
+          type="text"
+          placeholder="Password"
+          id="password"
+          name="password"
+          value={@project_password}
         />
-        <div class="row">
-            <div class="column">
-                <input
-                    type="text"
-                    placeholder="Password"
-                    id="password"
-                    name="password"
-                    value={@project_password}
-                />
-            </div>
-            <div class="column">
-                <button type="button" class="button button-outline" phx-click="generate_password" style="width: 100%">
-                    Generate password
-                </button>
-            </div>
-        </div>
-    </form>
+      </div>
+      <div class="column">
+        <button
+          type="button"
+          class="button button-outline"
+          phx-click="generate_password"
+          style="width: 100%"
+        >
+          Generate password
+        </button>
+      </div>
+    </div>
+  </form>
 
-    <ul>
-        <%= for issue <- @issues do %>
-            <li><%= format_issue(issue) %></li>
-        <% end %>
-    </ul>
+  <ul>
+    <%= for issue <- @issues do %>
+      <li>{format_issue(issue)}</li>
+    <% end %>
+  </ul>
 </div>

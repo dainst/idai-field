@@ -62,7 +62,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
                 :info,
                 "Project created project `#{identifier}` with password `#{password}` successfully."
               )
-              |> push_patch(to: "/ui/projects/show/#{identifier}")
+              |> push_navigate(to: "/ui/projects/show/#{identifier}")
 
             {:error, msg} ->
               Logger.error(

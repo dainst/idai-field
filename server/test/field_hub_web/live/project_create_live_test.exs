@@ -22,7 +22,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
   @project "test_project"
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
-    assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
+    assert {:error, {:redirect, %{flash: _, to: "/ui/session/log_in"}}} =
              conn
              |> live("/ui/projects/create")
 

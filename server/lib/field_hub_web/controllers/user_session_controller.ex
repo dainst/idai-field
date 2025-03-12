@@ -4,24 +4,28 @@ defmodule FieldHubWeb.UserSessionController do
   alias FieldHub.CouchService
   alias FieldHubWeb.UserAuth
 
-  def new(conn, _params) do
-    render(conn, "new.html", error_message: nil)
+  def create(conn, params) do
+    create(conn, params, "Welcome back!")
   end
 
-  def create(conn, %{"user" => %{"name" => name, "password" => password}}) do
-    case CouchService.authenticate(%CouchService.Credentials{name: name, password: password}) do
-      :ok ->
-        UserAuth.log_in_user(conn, name)
+  defp create(conn, %{"user" => user_params}, info) do
+    %{"name" => name, "password" => password} = user_params
 
-      _ ->
-        # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
-        render(conn, "new.html", error_message: "Invalid name or password")
+    if :ok == CouchService.authenticate(%CouchService.Credentials{name: name, password: password}) do
+      conn
+      |> put_flash(:info, info)
+      |> UserAuth.log_in_user(name, user_params)
+    else
+      # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
+      conn
+      |> put_flash(:error, "Invalid name or password")
+      |> redirect(to: ~p"/ui/session/log_in")
     end
   end
 
   def delete(conn, _params) do
     conn
-    |> UserAuth.log_out_user()
     |> put_flash(:info, "Logged out successfully.")
+    |> UserAuth.log_out_user()
   end
 end

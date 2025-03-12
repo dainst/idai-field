@@ -62,7 +62,7 @@ export class ImageToolLauncher {
     public async downloadImages(images: Array<ImageDocument>) {
         
         const currentContent: MenuContext = this.menuService.getContext();
-        this.menuService.setContext(MenuContext.MODAL);
+        this.menuService.setContext(MenuContext.IMAGE_TOOL_MODAL);
 
         const modalRef: NgbModalRef = this.modalService.open(
             ImageDownloadModalComponent, { keyboard: false, animation: false }
@@ -84,7 +84,7 @@ export class ImageToolLauncher {
     public async exportImages(images: Array<ImageDocument>) {
     
         const currentContent: MenuContext = this.menuService.getContext();
-        this.menuService.setContext(MenuContext.MODAL);
+        this.menuService.setContext(MenuContext.IMAGE_TOOL_MODAL);
 
         const modalRef: NgbModalRef = this.modalService.open(
             ImageExportModalComponent, { keyboard: false, animation: false }

@@ -218,15 +218,15 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
     const imagesState = new ImagesState(projectConfiguration, stateSerializer);
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, datastore);
 
+    const imageToolLauncher: any = {
+        update: jest.fn()
+    };
+
     const imageOverviewFacade = new ImageOverviewFacade(
         imageDocumentsManager,
         imagesState,
         projectConfiguration,
-        imageStore,
-        remoteImageStore,
-        settingsProvider,
-        undefined,
-        undefined
+        imageToolLauncher
     );
 
     return {

@@ -5,7 +5,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ImageDocument, Document, CategoryForm, Datastore, ProjectConfiguration } from 'idai-field-core';
 import { ImageGridComponent } from '../grid/image-grid.component';
-import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from './view/image-overview-facade';
 import { ImageUploadResult } from '../upload/image-uploader';
 import { ImageViewModalComponent } from '../../viewmodal/image/image-view-modal.component';
 import { MenuContext } from '../../../services/menu-context';

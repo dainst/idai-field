@@ -13,7 +13,7 @@ import { ImageOverviewTaskbarComponent } from './image-overview-taskbar.componen
 import { ImageOverviewSearchBarComponent } from './searchbar/image-overview-search-bar.component';
 import { ImageOverviewSearchConstraintsComponent } from './searchbar/image-overview-search-constraints.component';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
-import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from './view/image-overview-facade';
 import { ImageDocumentsManager } from '../../../components/image/overview/view/image-documents-manager';
 import { ImageExportModule } from '../export/image-export.module';
 import { ImageDownloadModule } from '../download/image-download.module';

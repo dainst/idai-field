@@ -4,7 +4,7 @@ import { Map } from 'tsfun';
 import { FieldDocument, FileInfo } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
-import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from './view/image-overview-facade';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { M } from '../../messages/m';

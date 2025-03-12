@@ -2,7 +2,7 @@ import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 
 const fs = window.require('fs');
 
-const ERROR_ORIGINAL_IMAGE_FILE_NOT_FOUND: string = 'exportImage.error.originalImageFileNotFound';
+const ERROR_ORIGINAL_IMAGE_FILE_NOT_FOUND: string = 'exportImages.error.originalImageFileNotFound';
 
 
 /**

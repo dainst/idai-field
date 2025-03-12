@@ -66,6 +66,7 @@ export class ImageExportModalComponent implements OnInit {
                 this.settingsProvider.getSettings().selectedProject,
                 this.selectedNamingOption === 'originalFilename'
             );
+            this.showSuccessMessage();
             this.activeModal.close();
         } catch (err) {
             console.error(err);
@@ -88,6 +89,19 @@ export class ImageExportModalComponent implements OnInit {
         if (result && result.filePaths.length > 0) {
             this.targetDirectoryPath = result.filePaths[0];
             this.appState.setFolderPath(this.targetDirectoryPath, 'imageExport', true);
+        }
+    }
+
+
+    private showSuccessMessage() {
+
+        if (this.images.length === 1) {
+            this.messages.add([M.IMAGES_SUCCESS_IMAGES_EXPORTED_SINGLE]);
+        } else {
+            this.messages.add([
+                M.IMAGES_SUCCESS_IMAGES_EXPORTED_MULTIPLE,
+                this.images.length.toString()
+            ]);
         }
     }
 }

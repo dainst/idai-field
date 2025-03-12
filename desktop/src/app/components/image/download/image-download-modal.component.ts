@@ -67,6 +67,7 @@ export class ImageDownloadModalComponent implements OnInit {
         }
         
         if (this.images.length > 1) await AngularUtility.refresh(1000);
+        this.showSuccessMessage();
         this.activeModal.close();
     }
 
@@ -87,5 +88,18 @@ export class ImageDownloadModalComponent implements OnInit {
             project,
             ImageVariant.ORIGINAL
         );
+    }
+
+
+    private showSuccessMessage() {
+
+        if (this.images.length === 1) {
+            this.messages.add([M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_SINGLE]);
+        } else {
+            this.messages.add([
+                M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_MULTIPLE,
+                this.images.length.toString()
+            ]);
+        }
     }
 }

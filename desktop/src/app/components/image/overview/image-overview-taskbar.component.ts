@@ -1,7 +1,7 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Map } from 'tsfun';
-import { FieldDocument, FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
+import { FieldDocument, FileInfo } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
@@ -16,9 +16,6 @@ import { AngularUtility } from '../../../angular/angular-utility';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
 import { ImageExportModalComponent } from '../export/image-export-modal.component';
-import { SettingsProvider } from '../../../services/settings/settings-provider';
-
-const remote = window.require('@electron/remote');
 
 
 @Component({
@@ -34,11 +31,9 @@ const remote = window.require('@electron/remote');
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageOverviewTaskbarComponent implements OnChanges {
+export class ImageOverviewTaskbarComponent {
 
     @Input() imageGrid: any;
-
-    private imageFileInfos: Map<FileInfo>;
 
 
     constructor(public viewFacade: ViewFacade,
@@ -46,23 +41,14 @@ export class ImageOverviewTaskbarComponent implements OnChanges {
                 private messages: Messages,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageRelationsManager: ImageRelationsManager,
-                private menuService: Menus,
-                private imageStore: ImageStore,
-                private settingsProvider: SettingsProvider) {}
+                private menuService: Menus) {}
 
 
     public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
 
+    public downloadImages = () => this.imageOverviewFacade.downloadImages();
+
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
-
-
-    async ngOnChanges() {
-        
-        this.imageFileInfos = await this.imageStore.getFileInfos(
-            this.settingsProvider.getSettings().selectedProject,
-            [ImageVariant.ORIGINAL]
-        );
-    }
     
     
     public onKeyDown(event: KeyboardEvent) {
@@ -73,9 +59,15 @@ export class ImageOverviewTaskbarComponent implements OnChanges {
     }
 
 
+    public isDownloadButtonVisible(): boolean {
+        
+        return this.imageOverviewFacade.getDownloadableImages().length > 0;
+    }
+
+
     public isExportButtonVisible(): boolean {
         
-        return this.getExportableImages(this.imageOverviewFacade.getSelected()).length > 0;
+        return this.imageOverviewFacade.getExportableImages().length > 0;
     }
 
 
@@ -146,7 +138,7 @@ export class ImageOverviewTaskbarComponent implements OnChanges {
         const modalRef: NgbModalRef = this.modalService.open(
             ImageExportModalComponent, { keyboard: false, animation: false }
         );
-        modalRef.componentInstance.images = this.getExportableImages(this.imageOverviewFacade.getSelected());
+        modalRef.componentInstance.images = this.imageOverviewFacade.getExportableImages();
 
         try {
             await modalRef.result;
@@ -250,13 +242,5 @@ export class ImageOverviewTaskbarComponent implements OnChanges {
 
         await this.imageRelationsManager
             .unlink(...this.imageOverviewFacade.getSelected());
-    }
-
-
-    private getExportableImages(images: Array<ImageDocument>): Array<ImageDocument> {
-
-        if (!this.imageFileInfos) return [];
-
-        return images.filter(document => this.imageFileInfos[document.resource.id]);
     }
 }

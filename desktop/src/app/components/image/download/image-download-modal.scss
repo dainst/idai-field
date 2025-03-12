@@ -1,0 +1,30 @@
+#image-download-modal-body {
+  padding-top: 14px;
+
+  .spinner {
+    position: relative;
+    left: 6px;
+  }
+
+  #cancel-image-download-button {
+    margin-top: 10px;
+
+    &.disabled:active,
+    &.disabled:focus {
+      background-color: #5a6268
+    }
+  }
+
+  #download-progress {
+    margin-top: 10px;
+
+    #download-progress-bar,
+    #download-progress-info {
+      width: 300px;
+    }
+
+    #download-progress-bar {
+      margin-bottom: 10px;
+    }
+  }
+}

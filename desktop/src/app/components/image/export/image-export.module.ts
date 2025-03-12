@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ImageExportModalComponent } from './image-export-modal.component';
 import { FormsModule } from '@angular/forms';
+import { ImageExportModalComponent } from './image-export-modal.component';
 
 
 @NgModule({

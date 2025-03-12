@@ -202,6 +202,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
     public static IMAGES_ERROR_UNMATCHED_WLD_FILES = 'images.error.unmatchedWldFiles';
     public static IMAGES_ERROR_EXPORT_FAILED = 'images.error.exportFailed';
+    public static IMAGES_ERROR_DOWNLOAD_FAILED = 'images.error.downloadFailed';
 
     // Imagestore Package
     public static IMAGESTORE_ERROR_INVALID_PATH = 'imagestore.error.invalidPath';
@@ -896,6 +897,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_EXPORT_FAILED] = {
             content: $localize `:@@messages.images.error.exportFailed:Beim Export der Bilder ist ein Fehler aufgetreten.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_DOWNLOAD_FAILED] = {
+            content: $localize `:@@messages.images.error.downloadFailed:Beim Versuch, das Bild \'[0]\' herunterzuladen, ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH] = {

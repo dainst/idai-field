@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectConfiguration, Datastore } from 'idai-field-core';
 import { imagesRouting } from './image-overview.routing';
 import { ImageOverviewComponent } from './image-overview.component';
 import { WidgetsModule } from '../../widgets/widgets.module';
@@ -17,6 +16,7 @@ import { DeleteModalComponent } from './deletion/delete-modal.component';
 import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
 import { ImageDocumentsManager } from '../../../components/image/overview/view/image-documents-manager';
 import { ImageExportModule } from '../export/image-export.module';
+import { ImageDownloadModule } from '../download/image-download.module';
 
 
 @NgModule({
@@ -27,6 +27,7 @@ import { ImageExportModule } from '../export/image-export.module';
         imagesRouting,
         WidgetsModule,
         ImageGridModule,
+        ImageDownloadModule,
         ImageExportModule
     ],
     declarations: [
@@ -40,16 +41,8 @@ import { ImageExportModule } from '../export/image-export.module';
     ],
     providers: [
         ImagesState,
-        {
-            provide: ImageDocumentsManager,
-            useClass: ImageDocumentsManager,
-            deps: [ImagesState, Datastore]
-        },
-        {
-            provide: ImageOverviewFacade,
-            useClass: ImageOverviewFacade,
-            deps: [ImageDocumentsManager, ImagesState, ProjectConfiguration]
-        }
+        ImageDocumentsManager,
+        ImageOverviewFacade
     ]
 })
 

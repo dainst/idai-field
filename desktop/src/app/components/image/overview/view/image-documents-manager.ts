@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { clone } from 'tsfun';
 import { Datastore, ImageDocument } from 'idai-field-core';
 import { ImagesState } from './images-state';
@@ -7,6 +8,7 @@ import { ImagesState } from './images-state';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
+@Injectable()
 export class ImageDocumentsManager {
 
     public selected: Array<ImageDocument> = [];

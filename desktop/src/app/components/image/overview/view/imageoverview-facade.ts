@@ -1,7 +1,15 @@
-import { clone, equal }  from 'tsfun';
-import { ImageDocument, Named, Query, ProjectConfiguration } from 'idai-field-core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Injectable } from '@angular/core';
+import { clone, equal, Map }  from 'tsfun';
+import { ImageDocument, Named, Query, ProjectConfiguration, FileInfo, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImagesState } from './images-state';
 import { ImageDocumentsManager } from './image-documents-manager';
+import { RemoteImageStore } from '../../../../services/imagestore/remote-image-store';
+import { SettingsProvider } from '../../../../services/settings/settings-provider';
+import { ImageDownloadModalComponent } from '../../download/image-download-modal.component';
+import { MenuContext } from '../../../../services/menu-context';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
 
 
 /**
@@ -9,17 +17,25 @@ import { ImageDocumentsManager } from './image-documents-manager';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
+@Injectable()
 export class ImageOverviewFacade {
 
     private currentOffset: number = 0;
     private maxRows: number = 5;
     private maxNrImagesPerRow: number = 12;
     private minNrImagesPerRow: number = 2;
+    private imageFileInfos: Map<FileInfo>;
+    private remoteImageFileInfos: Map<FileInfo>;
 
 
     constructor(private imageDocumentsManager: ImageDocumentsManager,
                 private imagesState: ImagesState,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private imageStore: ImageStore,
+                private remoteImageStore: RemoteImageStore,
+                private settingsProvider: SettingsProvider,
+                private menuService: Menus,
+                private modalService: NgbModal) {}
 
 
     public getMaxNrImagesPerRow = () => this.maxNrImagesPerRow;
@@ -103,22 +119,22 @@ export class ImageOverviewFacade {
 
     public async turnPage() {
 
-        if (this.canTurnPage()) {
+        if (!this.canTurnPage()) return;
 
-            this.imageDocumentsManager.clearSelection();
-            this.currentOffset = this.currentOffset + this.getNrImagesPerPage();
-            await this.fetchDocuments();
-        }
+        this.imageDocumentsManager.clearSelection();
+        this.currentOffset = this.currentOffset + this.getNrImagesPerPage();
+        await this.fetchDocuments();
     }
 
 
     public async turnPageBack() {
 
-        if (this.canTurnPageBack()) {
-            this.currentOffset = this.currentOffset - this.getNrImagesPerPage();
-            if (this.currentOffset < 0) this.currentOffset = 0;
-        }
+        if (!this.canTurnPageBack()) return;
+
+        this.currentOffset = this.currentOffset - this.getNrImagesPerPage();
+        if (this.currentOffset < 0) this.currentOffset = 0;
         await this.fetchDocuments();
+    
     }
 
 
@@ -172,11 +188,13 @@ export class ImageOverviewFacade {
     }
 
 
-    public fetchDocuments() {
+    public async fetchDocuments() {
 
-        return this.imageDocumentsManager.fetchDocuments(
+        await this.imageDocumentsManager.fetchDocuments(
             this.getLimit(),
-            this.currentOffset);
+            this.currentOffset
+        );
+        await this.updateImageFileInfos();
     }
 
 
@@ -186,6 +204,46 @@ export class ImageOverviewFacade {
             q: '',
             categories: this.projectConfiguration.getImageCategories().map(Named.toName)
         };
+    }
+
+
+    public getDownloadableImages(): Array<ImageDocument> {
+
+        if (!this.imageFileInfos) return [];
+
+        return this.getSelected().filter(document => {
+            return !this.imageFileInfos[document.resource.id]
+                && this.remoteImageFileInfos[document.resource.id];
+        });
+    }
+
+
+    public getExportableImages(): Array<ImageDocument> {
+
+        if (!this.imageFileInfos) return [];
+
+        return this.getSelected().filter(document => this.imageFileInfos[document.resource.id]);
+    }
+
+
+    public async downloadImages() {
+    
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            ImageDownloadModalComponent, { keyboard: false, animation: false }
+        );
+        modalRef.componentInstance.images = this.getDownloadableImages();
+
+        try {
+            await modalRef.result;
+        } catch(err) {
+            // DownloadImageModal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+            AngularUtility.blurActiveElement();
+            await this.updateImageFileInfos();
+        }
     }
 
 
@@ -204,5 +262,19 @@ export class ImageOverviewFacade {
     private setQueryConstraints() {
 
         this.imagesState.getQuery().constraints = clone(this.getCustomConstraints());
+    }
+
+
+    private async updateImageFileInfos() {
+
+        this.imageFileInfos = await this.imageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject,
+            [ImageVariant.ORIGINAL]
+        );
+
+        this.remoteImageFileInfos = await this.remoteImageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject,
+            [ImageVariant.ORIGINAL]
+        );
     }
 }

@@ -92,7 +92,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings: Settings = this.settingsProvider.getSettings();
 
         const syncTarget: SyncTarget = settings.syncTargets[project];
-        if (!syncTarget?.address || !syncTarget?.password) return {};
+        if (!syncTarget?.address || !syncTarget?.password || !syncTarget.isSyncActive) return {};
 
         const url: string = SyncTarget.getAddress(syncTarget);
         const password: string = syncTarget.password;

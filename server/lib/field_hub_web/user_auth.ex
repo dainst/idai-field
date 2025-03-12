@@ -9,7 +9,7 @@ defmodule FieldHubWeb.UserAuth do
     User
   }
 
-  alias FieldHubWeb.Router.Helpers, as: Routes
+  use FieldHubWeb, :verified_routes
 
   defmodule Token do
     @enforce_keys [:name, :token, :context]
@@ -192,7 +192,7 @@ defmodule FieldHubWeb.UserAuth do
 
     conn
     |> renew_session()
-    |> redirect(to: "/")
+    |> redirect(to: ~p"/")
   end
 
   @doc """
@@ -223,7 +223,7 @@ defmodule FieldHubWeb.UserAuth do
       conn
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
-      |> redirect(to: Routes.user_session_path(conn, :new))
+      |> redirect(to: ~p"/ui/session/new")
       |> halt()
     end
   end
@@ -249,13 +249,13 @@ defmodule FieldHubWeb.UserAuth do
       :denied ->
         conn
         |> put_flash(:error, "You are not authorized for project '#{project_identifier}'.")
-        |> redirect(to: "/")
+        |> redirect(to: ~p"/")
         |> halt()
 
       :unknown_project ->
         conn
         |> put_flash(:error, "Unknown project '#{project_identifier}'.")
-        |> redirect(to: "/")
+        |> redirect(to: ~p"/")
         |> halt()
     end
   end
@@ -268,7 +268,7 @@ defmodule FieldHubWeb.UserAuth do
       _ ->
         conn
         |> put_flash(:error, "You are not authorized to view this page.")
-        |> redirect(to: "/")
+        |> redirect(to: ~p"/")
         |> halt()
     end
   end
@@ -279,5 +279,5 @@ defmodule FieldHubWeb.UserAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(_conn), do: "/"
+  defp signed_in_path(_conn), do: ~p"/"
 end

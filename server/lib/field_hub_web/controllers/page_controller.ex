@@ -16,6 +16,6 @@ defmodule FieldHubWeb.PageController do
           |> assign(:projects, projects)
       end
 
-    render(conn, "index.html")
+    render(conn, :index)
   end
 end

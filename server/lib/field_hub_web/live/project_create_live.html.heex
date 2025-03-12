@@ -1,9 +1,8 @@
 <div class="container">
-    <%= live_redirect "Back to overview", to: Helpers.page_path(@socket, :index) %>
-
+    <.link navigate={~p"/"}>Back to overview</.link>
     <h1>Create a new project</h1>
 
-    <p class="alert alert-danger"><%= live_flash(@flash, :error) %></p>
+    <p class="alert alert-danger"><%= Phoenix.Flash.get(@flash, :error) %></p>
 
     <form phx-change="update" phx-submit="create">
         <button

@@ -1,6 +1,5 @@
 defmodule FieldHubWeb.ProjectCreateLive do
   alias FieldHubWeb.{
-    Router.Helpers,
     UserAuth
   }
 
@@ -10,7 +9,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
     Project
   }
 
-  use Phoenix.LiveView
+  use FieldHubWeb, :live_view
 
   require Logger
 
@@ -63,7 +62,7 @@ defmodule FieldHubWeb.ProjectCreateLive do
                 :info,
                 "Project created project `#{identifier}` with password `#{password}` successfully."
               )
-              |> push_redirect(to: "/ui/projects/show/#{identifier}")
+              |> push_patch(to: "/ui/projects/show/#{identifier}")
 
             {:error, msg} ->
               Logger.error(

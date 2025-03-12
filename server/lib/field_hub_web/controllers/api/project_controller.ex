@@ -8,8 +8,6 @@ defmodule FieldHubWeb.Api.ProjectController do
     User
   }
 
-  alias FieldHubWeb.Api.StatusView
-
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
   @moduledoc """
@@ -17,13 +15,19 @@ defmodule FieldHubWeb.Api.ProjectController do
   """
 
   def index(%{assigns: %{current_user: user_name}} = conn, _params) do
-    render(conn, "list.json", %{projects: Project.get_all_for_user(user_name)})
+    send_resp(
+      conn,
+      200,
+      user_name |> Project.get_all_for_user() |> Jason.encode!()
+    )
   end
 
   def show(conn, %{"project" => id}) do
-    project_info = Project.evaluate_project(id)
-
-    render(conn, "show.json", %{project: project_info})
+    send_resp(
+      conn,
+      200,
+      id |> Project.evaluate_project() |> Jason.encode!()
+    )
   end
 
   def create(conn, %{"project" => id}) do
@@ -46,29 +50,28 @@ defmodule FieldHubWeb.Api.ProjectController do
 
     cond do
       Project.exists?(id) ->
-        conn
-        |> put_status(:precondition_failed)
-        |> put_view(StatusView)
-        |> render(%{error: "Project #{id} already exists."})
+        send_resp(conn, 412, Jason.encode!(%{reason: "Project #{id} already exists."}))
 
       User.exists?(id) ->
-        conn
-        |> put_status(:precondition_failed)
-        |> put_view(StatusView)
-        |> render(%{error: "Default project user #{id} already exists."})
+        send_resp(
+          conn,
+          412,
+          Jason.encode!(%{reason: "Default project user #{id} already exists."})
+        )
 
       true ->
         project_creation = Project.create(id)
 
         case project_creation do
           :invalid_name ->
-            conn
-            |> put_status(:bad_request)
-            |> put_view(StatusView)
-            |> render(%{
-              error:
-                "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
-            })
+            send_resp(
+              conn,
+              400,
+              Jason.encode!(%{
+                reason:
+                  "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
+              })
+            )
 
           _ ->
             user_creation = User.create(id, password)
@@ -81,10 +84,11 @@ defmodule FieldHubWeb.Api.ProjectController do
               password: password
             }
 
-            conn
-            |> put_status(:created)
-            |> put_view(StatusView)
-            |> render(%{info: response_payload})
+            send_resp(
+              conn,
+              201,
+              Jason.encode!(%{info: response_payload})
+            )
         end
     end
   end
@@ -98,8 +102,10 @@ defmodule FieldHubWeb.Api.ProjectController do
       status_user: user_deletion_result
     }
 
-    conn
-    |> put_view(StatusView)
-    |> render(%{info: response_payload})
+    send_resp(
+      conn,
+      200,
+      Jason.encode!(%{info: response_payload})
+    )
   end
 end

@@ -1,9 +1,9 @@
 defmodule FieldHubWeb.Router do
   use FieldHubWeb, :router
 
-  alias FieldHub.CouchService
   import FieldHubWeb.UserAuth
-  import Phoenix.LiveView.Router
+
+  alias FieldHub.CouchService
 
   pipeline :browser do
     plug Plug.Parsers,
@@ -14,18 +14,13 @@ defmodule FieldHubWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {FieldHubWeb.LayoutView, :root}
+    plug :put_root_layout, {FieldHubWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
   end
 
   pipeline :api do
-    plug Plug.Parsers,
-      parsers: [:urlencoded, :multipart, :json],
-      pass: ["*/*"],
-      json_decoder: Phoenix.json_library()
-
     plug :accepts, ["json"]
   end
 

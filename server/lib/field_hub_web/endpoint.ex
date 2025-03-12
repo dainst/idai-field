@@ -11,7 +11,9 @@ defmodule FieldHubWeb.Endpoint do
     encryption_salt: "G3TWMOqyrJACDHfH"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]],
+    longpoll: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -21,7 +23,7 @@ defmodule FieldHubWeb.Endpoint do
     at: "/",
     from: :field_hub,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: FieldHubWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -37,6 +39,11 @@ defmodule FieldHubWeb.Endpoint do
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
+
+  plug Plug.Parsers,
+    parsers: [:urlencoded, :multipart, :json],
+    pass: ["*/*"],
+    json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
   plug Plug.Head

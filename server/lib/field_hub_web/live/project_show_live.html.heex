@@ -1,10 +1,10 @@
 <div class="container">
-    <%= live_redirect "Back to overview", to: Helpers.page_path(@socket, :index) %>
+    <.link navigate={~p"/"}>Back to overview</.link>
 
     <h1>Project <i><%= @project %></i></h1>
 
-    <p class="alert alert-info"><%= live_flash(@flash, :info) %></p>
-    <p class="alert alert-danger"><%= live_flash(@flash, :error) %></p>
+    <p class="alert alert-info"><%= Phoenix.Flash.get(@flash, :info) %></p>
+    <p class="alert alert-danger"><%=  Phoenix.Flash.get(@flash, :error) %></p>
 
     <section>
 

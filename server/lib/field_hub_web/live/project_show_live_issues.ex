@@ -1,5 +1,5 @@
 defmodule FieldHubWeb.ProjectShowLiveIssues do
-  use FieldHubWeb, :live_component
+  use Phoenix.Component
 
   @moduledoc """
   Bundles `render/1` functions for lists for different types of issues.
@@ -121,7 +121,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
                   <div>Changed by <%= modification.user %>, <%= modification.date %>.</div>
                 <% end %>
               </td>
-            <tr>
+            </tr>
           <% end %>
           </tbody>
           </table>

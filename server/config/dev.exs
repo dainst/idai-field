@@ -56,7 +56,6 @@ config :field_hub, FieldHubWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
       ~r"lib/field_hub_web/(live|views)/.*(ex)$",
       ~r"lib/field_hub_web/templates/.*(eex)$"
     ]

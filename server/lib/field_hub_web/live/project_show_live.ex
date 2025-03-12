@@ -1,8 +1,9 @@
 defmodule FieldHubWeb.ProjectShowLive do
+  use FieldHubWeb, :live_view
+
   alias FieldHub.Project
 
   alias FieldHubWeb.{
-    Router.Helpers,
     UserAuth,
     ProjectShowLiveIssues
   }
@@ -13,10 +14,6 @@ defmodule FieldHubWeb.ProjectShowLive do
     Project,
     User
   }
-
-  alias Phoenix.LiveView.JS
-
-  use Phoenix.LiveView
 
   require Logger
 

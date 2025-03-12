@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Map } from 'tsfun';
-import { FieldDocument, FileInfo } from 'idai-field-core';
+import { FieldDocument } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from './view/image-overview-facade';

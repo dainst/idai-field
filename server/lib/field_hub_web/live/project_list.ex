@@ -16,7 +16,8 @@ defmodule FieldHubWeb.UI.ProjectList do
     <%= if @current_user do %>
       <%= if User.is_admin?(@current_user) do %>
         <hr />
-        <.link navigate={~p"/ui/projects/create"}>
+
+        <.link class="button" navigate={~p"/ui/projects/create"}>
           Create a new project
         </.link>
       <% end %>

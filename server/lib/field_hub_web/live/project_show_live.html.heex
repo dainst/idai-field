@@ -55,15 +55,15 @@
           <td>
             <%= case @stats do %>
               <% :loading -> %>
-                {"Loading..."}
-              <% %{
-                            database: %{
-                                doc_count: db_doc_count,
-                                file_size: db_file_size,
-                                last_n_changes: last_n_changes
-                            },
-                            files: files
-                        } -> %>
+                Loading...
+              <% %{                         
+                database: %{
+                  doc_count: db_doc_count,
+                  file_size: db_file_size,
+                  last_n_changes: last_n_changes
+                  },
+                  files: files
+                } -> %>
                 <section>Database documents: {db_doc_count}</section>
 
                 <section>

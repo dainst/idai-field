@@ -1,13 +1,12 @@
 #image-download-modal-body {
-  padding-top: 14px;
-
   .spinner {
     position: relative;
     left: 6px;
   }
 
   #cancel-image-download-button {
-    margin-top: 10px;
+    margin-top: 14px;
+    margin-bottom: 5px;
 
     &.disabled:active,
     &.disabled:focus {
@@ -16,7 +15,7 @@
   }
 
   #download-progress {
-    margin-top: 10px;
+    margin-top: 13px;
 
     #download-progress-bar,
     #download-progress-info {

@@ -1,12 +1,13 @@
 import { Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output,
     SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { to, aReduce } from 'tsfun';
-import { Datastore, ImageDocument, ImageVariant } from 'idai-field-core';
+import { to, aReduce, Map } from 'tsfun';
+import { Datastore, FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 const MAX_IMAGE_WIDTH = 600;
@@ -47,7 +48,9 @@ export class ImageRowComponent implements OnChanges {
 
 
     constructor(private imageUrlMaker: ImageUrlMaker,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private imageStore: ImageStore,
+                private settingsProvider: SettingsProvider) {}
 
 
     public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();
@@ -72,7 +75,9 @@ export class ImageRowComponent implements OnChanges {
             this.containerElement.nativeElement.offsetWidth,
             this.containerElement.nativeElement.offsetHeight,
             MAX_IMAGE_WIDTH,
-            await this.fetchImageDocuments(this.images)
+            PLACEHOLDER_WIDTH,
+            await this.fetchImageDocuments(this.images),
+            await this.fetchThumbnailIds()
         );
 
         if (this.allowSelection && this.images.length > 0) {
@@ -198,5 +203,16 @@ export class ImageRowComponent implements OnChanges {
             imageDocuments.find(imageDocument => imageDocument.resource.id === image.imageId)
             ?? { resource: { id: PLACEHOLDER, width: PLACEHOLDER_WIDTH }} as ImageDocument
         );
+    }
+
+
+    private async fetchThumbnailIds(): Promise<string[]> {
+
+        const fileInfos: Map<FileInfo> = await this.imageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject,
+            [ImageVariant.THUMBNAIL]
+        );
+
+        return this.images.filter(image => fileInfos[image.document.resource.id]).map(image => image.document.resource.id);
     }
 }

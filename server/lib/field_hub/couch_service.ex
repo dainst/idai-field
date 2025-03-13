@@ -385,7 +385,6 @@ defmodule FieldHub.CouchService do
       |> headers()
     )
     |> Map.get(:body)
-    |> IO.inspect(printable_limit: :infinity)
     |> Jason.decode!()
     |> Map.get("results")
     |> Enum.reject(fn change ->

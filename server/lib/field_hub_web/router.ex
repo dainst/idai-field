@@ -33,10 +33,10 @@ defmodule FieldHubWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{FieldHubWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/log_in", FieldHubWeb.UI.UserLoginLive, :new
+      live "/log_in", FieldHubWeb.Live.UserLogin, :new
     end
 
-    post "/log_in", FieldHubWeb.UserSessionController, :create
+    post "/log_in", FieldHubWeb.Rest.UserSession, :create
   end
 
   scope "/" do
@@ -44,10 +44,8 @@ defmodule FieldHubWeb.Router do
 
     live_session :current_user,
       on_mount: [{FieldHubWeb.UserAuth, :mount_current_user}] do
-      live "/", FieldHubWeb.UI.ProjectList
+      live "/", FieldHubWeb.Live.ProjectList
     end
-
-    # get "/", PageController, :index
   end
 
   scope "/ui", FieldHubWeb do
@@ -59,13 +57,13 @@ defmodule FieldHubWeb.Router do
       scope "/show/:project" do
         pipe_through :ui_require_project_authorization
 
-        live "/", ProjectShowLive
+        live "/", Live.ProjectShow
       end
 
       scope "/create" do
         pipe_through :ui_require_admin
 
-        live "/", ProjectCreateLive
+        live "/", Live.ProjectCreate
       end
     end
   end
@@ -73,27 +71,27 @@ defmodule FieldHubWeb.Router do
   scope "/ui/session" do
     pipe_through [:browser]
 
-    get "/log_out", FieldHubWeb.UserSessionController, :delete
+    get "/log_out", FieldHubWeb.Rest.UserSession, :delete
   end
 
   # API Routes
-  scope "/", FieldHubWeb.Api do
+  scope "/", FieldHubWeb.Rest.Api do
     pipe_through :api
     pipe_through :api_require_user_authentication
 
-    get "/projects", ProjectController, :index
+    get "/projects", Rest.Project, :index
 
     scope "/" do
       pipe_through :api_require_project_authorization
 
-      get "/projects/:project", ProjectController, :show
-      resources "/files/:project", FileController, only: [:index, :update, :show, :delete]
+      get "/projects/:project", Rest.Project, :show
+      resources "/files/:project", Rest.File, only: [:index, :update, :show, :delete]
     end
 
     scope "/" do
       pipe_through :api_require_admin
-      post "/projects/:project", ProjectController, :create
-      delete "/projects/:project", ProjectController, :delete
+      post "/projects/:project", Rest.Project, :create
+      delete "/projects/:project", Rest.Project, :delete
     end
   end
 

@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.ProjectShowLiveTest do
+defmodule FieldHubWeb.Live.ProjectShowTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
 
@@ -8,7 +8,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   alias FieldHubWeb.{
     UserAuth,
-    ProjectShowLive
+    Live.ProjectShow
   }
 
   alias FieldHub.{
@@ -39,7 +39,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     # Test the mount function (websocket), this makes sure that users with invalidated/old user token can not
     # access the page.
     socket =
-      ProjectShowLive.mount(
+      ProjectShow.mount(
         %{"project" => @project},
         %{"user_token" => "invalid"},
         %Phoenix.LiveView.Socket{}
@@ -60,7 +60,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     # Test the mount function (websocket), this makes sure that users that navigated here from another
     # live view with an existing socket are authorized.
     socket =
-      ProjectShowLive.mount(
+      ProjectShow.mount(
         %{"project" => @project},
         %{"user_token" => UserAuth.generate_user_session_token(unknown_user)},
         %Phoenix.LiveView.Socket{}
@@ -90,7 +90,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         ]
 
     html =
-      render_component(ProjectShowLive, %{
+      render_component(ProjectShow, %{
         current_user: "test_user",
         flash: %{},
         issues_evaluating?: false,
@@ -197,7 +197,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
     test "user without project authorization can not trigger issue evaluation" do
       {:noreply, socket} =
-        ProjectShowLive.handle_event(
+        ProjectShow.handle_event(
           "evaluate_issues",
           nil,
           %Phoenix.LiveView.Socket{
@@ -215,7 +215,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       new_password = "the_password"
 
       {:noreply, socket} =
-        ProjectShowLive.handle_event(
+        ProjectShow.handle_event(
           "set_password",
           nil,
           %Phoenix.LiveView.Socket{

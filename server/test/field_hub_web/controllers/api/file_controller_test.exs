@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.Api.FileControllerTest do
+defmodule FieldHubWeb.Api.Rest.FileTest do
   use FieldHubWeb.ConnCase
 
   alias FieldHub.{

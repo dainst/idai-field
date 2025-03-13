@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.Api.ProjectController do
+defmodule FieldHubWeb.Rest.Api.Rest.Project do
   use FieldHubWeb, :controller
 
   alias FieldHub.CouchService

@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.ProjectCreateLive do
+defmodule FieldHubWeb.Live.ProjectCreate do
   alias FieldHubWeb.{
     UserAuth
   }

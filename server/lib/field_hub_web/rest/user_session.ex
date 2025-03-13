@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.UserSessionController do
+defmodule FieldHubWeb.Rest.UserSession do
   use FieldHubWeb, :controller
 
   alias FieldHub.CouchService

@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.Api.FileController do
+defmodule FieldHubWeb.Rest.Api.Rest.File do
   use FieldHubWeb, :controller
 
   alias FieldHub.FileStore

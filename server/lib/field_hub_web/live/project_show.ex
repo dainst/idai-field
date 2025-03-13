@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.ProjectShowLive do
+defmodule FieldHubWeb.Live.ProjectShow do
   use FieldHubWeb, :live_view
 
   alias FieldHub.Project

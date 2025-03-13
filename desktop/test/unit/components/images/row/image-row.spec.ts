@@ -28,7 +28,7 @@ describe('ImageRow', () => {
 
     test('switch pages', () => {
 
-        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(300, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         let result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i1', 'i2']);
@@ -64,7 +64,7 @@ describe('ImageRow', () => {
 
     test('switch pages to show selected image', () => {
 
-        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(300, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         let result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i1', 'i2']);
@@ -80,7 +80,7 @@ describe('ImageRow', () => {
 
     test('change width', () => {
 
-        const imageRow = new ImageRow(150, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(150, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         let result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i1']);
@@ -96,7 +96,7 @@ describe('ImageRow', () => {
 
     test('return correct values for hasNextPage and hasPreviousPage', () => {
 
-        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(300, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         imageRow.nextPage();
         expect(imageRow.hasPreviousPage()).toBe(false);

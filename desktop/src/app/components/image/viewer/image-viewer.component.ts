@@ -150,6 +150,7 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
                 this.loadedImageId = imageId;
                 this.imageUrl = result.imageUrl;
                 this.isOriginal = result.isOriginal;
+                if (this.imageUrl === ImageUrlMaker.blackImg) this.stopLoading();
                 if (!this.isOriginal) this.showMissingImageMessageOnConsole();
             }
         });

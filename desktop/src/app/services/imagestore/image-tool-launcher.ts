@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Observer } from 'rxjs';
 import { Map } from 'tsfun';
-import { FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
+import { FileInfo, ImageDocument, ImageStore, ImageVariant, ObserverUtil } from 'idai-field-core';
 import { MenuContext } from '../menu-context';
 import { Menus } from '../menus';
 import { SettingsProvider } from '../settings/settings-provider';
 import { RemoteImageStore } from './remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
-import { ImageDownloadModalComponent } from '../../components/image/download/image-download-modal.component';
+import { ImageDownloadRequest,
+    ImageDownloadModalComponent } from '../../components/image/download/image-download-modal.component';
 import { ImageExportModalComponent } from '../../components/image/export/image-export-modal.component';
 
 
@@ -17,8 +19,12 @@ import { ImageExportModalComponent } from '../../components/image/export/image-e
  */
 export class ImageToolLauncher {
 
-    private imageFileInfos: Map<FileInfo>;
-    private remoteImageFileInfos: Map<FileInfo>;
+    private originalFileInfos: Map<FileInfo>;
+    private remoteOriginalFileInfos: Map<FileInfo>;
+    private thumbnailFileInfos: Map<FileInfo>;
+    private remoteThumbnailFileInfos: Map<FileInfo>;
+
+    private downloadObservers: Array<Observer<void>> = [];
 
 
     constructor(private modalService: NgbModal,
@@ -33,17 +39,17 @@ export class ImageToolLauncher {
     }
 
 
+    public downloadNotifications = (): Observable<void> => ObserverUtil.register(this.downloadObservers);
+
+
     public async update() {
 
-        this.imageFileInfos = await this.imageStore.getFileInfos(
-            this.settingsProvider.getSettings().selectedProject,
-            [ImageVariant.ORIGINAL]
-        );
+        const project: string = this.settingsProvider.getSettings().selectedProject;
 
-        this.remoteImageFileInfos = await this.remoteImageStore.getFileInfos(
-            this.settingsProvider.getSettings().selectedProject,
-            [ImageVariant.ORIGINAL]
-        );
+        this.originalFileInfos = await this.imageStore.getFileInfos(project, [ImageVariant.ORIGINAL]);
+        this.remoteOriginalFileInfos = await this.remoteImageStore.getFileInfos(project, [ImageVariant.ORIGINAL]);
+        this.thumbnailFileInfos = await this.imageStore.getFileInfos(project, [ImageVariant.THUMBNAIL]);
+        this.remoteThumbnailFileInfos = await this.remoteImageStore.getFileInfos(project, [ImageVariant.THUMBNAIL]);
     }
 
 
@@ -67,7 +73,7 @@ export class ImageToolLauncher {
         const modalRef: NgbModalRef = this.modalService.open(
             ImageDownloadModalComponent, { keyboard: false, animation: false }
         );
-        modalRef.componentInstance.images = this.getDownloadableImages(images);
+        modalRef.componentInstance.downloadRequests = this.getDownloadableImages(images);
 
         try {
             await modalRef.result;
@@ -77,6 +83,7 @@ export class ImageToolLauncher {
             this.menuService.setContext(currentContent);
             AngularUtility.blurActiveElement();
             await this.update();
+            ObserverUtil.notify(this.downloadObservers, undefined);
         }
     }
 
@@ -102,21 +109,30 @@ export class ImageToolLauncher {
     }
 
 
-    private getDownloadableImages(images: Array<ImageDocument>): Array<ImageDocument> {
+    private getDownloadableImages(images: Array<ImageDocument>): Array<ImageDownloadRequest> {
 
-        if (!this.imageFileInfos) return [];
+        if (!this.originalFileInfos || !this.remoteOriginalFileInfos
+                || !this.thumbnailFileInfos || !this.remoteThumbnailFileInfos) {
+            return [];
+        }
 
-        return images.filter(document => {
-            return !this.imageFileInfos[document.resource.id]
-                && this.remoteImageFileInfos[document.resource.id];
+        return images.filter(image => {
+            return !this.originalFileInfos[image.resource.id]
+                && this.remoteOriginalFileInfos[image.resource.id];
+        }).map(image => {
+            return {
+                image,
+                downloadThumbnail: !this.thumbnailFileInfos[image.resource.id] !== undefined
+                    && this.remoteThumbnailFileInfos[image.resource.id] !== undefined
+            };
         });
     }
 
 
     private getExportableImages(images: Array<ImageDocument>): Array<ImageDocument> {
 
-        if (!this.imageFileInfos) return [];
+        if (!this.originalFileInfos) return [];
 
-        return images.filter(document => this.imageFileInfos[document.resource.id]);
+        return images.filter(document => this.originalFileInfos[document.resource.id]);
     }
 }

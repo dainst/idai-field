@@ -8,6 +8,12 @@ import { M } from '../../messages/m';
 import { RemoteImageStore } from '../../../services/imagestore/remote-image-store';
 
 
+export type ImageDownloadRequest = {
+    image: ImageDocument;
+    downloadThumbnail: boolean;
+};
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -18,7 +24,7 @@ import { RemoteImageStore } from '../../../services/imagestore/remote-image-stor
 })
 export class ImageDownloadModalComponent implements OnInit {
 
-    public images: Array<ImageDocument>;
+    public downloadRequests: Array<ImageDownloadRequest>;
     public processedImagesCount: number = 0;
     public cancelling: boolean = false;
 
@@ -42,7 +48,7 @@ export class ImageDownloadModalComponent implements OnInit {
 
     public getProgress(): number {
 
-        return (this.processedImagesCount / this.images.length) * 100;
+        return (this.processedImagesCount / this.downloadRequests.length) * 100;
     }
 
 
@@ -50,35 +56,45 @@ export class ImageDownloadModalComponent implements OnInit {
 
         this.processedImagesCount = 0;
 
-        for (let image of this.images) {
+        for (let request of this.downloadRequests) {
             if (this.cancelling) {
                 this.activeModal.dismiss('canceled');
                 return;
             }
             try {
-                await this.downloadImage(image);
+                await this.downloadImage(request);
                 this.processedImagesCount++;
             } catch (err) {
                 console.error(err);
-                this.messages.add([M.IMAGES_ERROR_DOWNLOAD_FAILED, image.resource.identifier]);
+                this.messages.add([M.IMAGES_ERROR_DOWNLOAD_FAILED, request.image.resource.identifier]);
                 this.activeModal.dismiss('error');
                 return;
             }
         }
         
-        if (this.images.length > 1) await AngularUtility.refresh(1000);
+        if (this.downloadRequests.length > 1) await AngularUtility.refresh(1000);
         this.showSuccessMessage();
         this.activeModal.close();
     }
 
 
-    private async downloadImage(image: ImageDocument) {
+    private async downloadImage(request: ImageDownloadRequest) {
 
         const project: string = this.settingsProvider.getSettings().selectedProject;
 
+        await this.downloadImageVariant(request.image, project, ImageVariant.ORIGINAL);
+
+        if (request.downloadThumbnail) {
+            await this.downloadImageVariant(request.image, project, ImageVariant.THUMBNAIL);
+        }
+    }
+
+
+    private async downloadImageVariant(image: ImageDocument, project: string, variant: ImageVariant) {
+
         const data: Buffer = await this.remoteImageStore.getData(
             image.resource.id,
-            ImageVariant.ORIGINAL,
+            variant,
             project
         );
 
@@ -86,19 +102,19 @@ export class ImageDownloadModalComponent implements OnInit {
             image.resource.id,
             data,
             project,
-            ImageVariant.ORIGINAL
+            variant
         );
     }
 
 
     private showSuccessMessage() {
 
-        if (this.images.length === 1) {
+        if (this.downloadRequests.length === 1) {
             this.messages.add([M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_SINGLE]);
         } else {
             this.messages.add([
                 M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_MULTIPLE,
-                this.images.length.toString()
+                this.downloadRequests.length.toString()
             ]);
         }
     }

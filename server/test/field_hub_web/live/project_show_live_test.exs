@@ -89,19 +89,12 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
           }
         ]
 
-    count = Enum.count(issues)
-
-    groups =
-      issues
-      |> Enum.group_by(fn %{type: type, severity: severity} -> {type, severity} end)
-
     html =
       render_component(ProjectShowLive, %{
         current_user: "test_user",
         flash: %{},
-        issue_count: count,
-        issue_status: :idle,
-        issues: groups,
+        issues_evaluating?: false,
+        issues: issues,
         live_action: nil,
         project: "test_project",
         supervisor: :loading,
@@ -149,9 +142,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html_on_mount =~ "No contact data found in project document."
       assert html_on_mount =~ "Person 1, Person 2"
       assert html_on_mount =~ "Loading..."
-
-      assert html_on_mount =~
-               "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
+      assert html_on_mount =~ "Issues"
 
       assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
 

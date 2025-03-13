@@ -1,19 +1,101 @@
-defmodule FieldHubWeb.ProjectShowLiveIssues do
-  use Phoenix.Component
-
-  @moduledoc """
-  Bundles `display/1` functions for lists for different types of issues.
-  """
+defmodule FieldHubWeb.Components.IssuesPanel do
+  use FieldHubWeb, :live_component
 
   alias Phoenix.LiveView.JS
 
-  def display(%{id: :no_project_document} = assigns) do
+  def render(assigns) do
+    ~H"""
+    <section>
+      <h2>
+        <div class="row">
+          <div class="column column-80">
+            Issues{if @overall_issue_count != 0, do: " (#{@overall_issue_count})"}
+          </div>
+          <button class="button column" phx-click="evaluate_issues">
+            <%= case @issues do %>
+              <% nil -> %>
+                Evaluate
+              <% _data -> %>
+                Re-evaluate
+            <% end %>
+          </button>
+        </div>
+      </h2>
+      <%= if @evaluating? do %>
+        <div class="row">
+          <span class="issue-loading-spinner"></span>
+          <span style="margin-top:6px;margin-left:10px">
+            Evaluating issues, for big projects this may take several minutes...
+          </span>
+        </div>
+      <% end %>
+
+      <%= case @issues do %>
+        <% nil -> %>
+          No data.
+        <% issues when issues == %{} -> %>
+          None.
+        <% grouped_issues when is_map(grouped_issues) -> %>
+          <%= for {{type, severity}, issues} <- grouped_issues do %>
+            <section id={"#{type}-issue-group"} class="issue-group hide">
+              <h3 class={issue_classes(severity)}>
+                <div
+                  class="show-toggle"
+                  phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}
+                >
+                  <img src="/images/hero-icons/folder.svg" />{get_issue_type_label(type)} ({Enum.count(
+                    issues
+                  )})
+                </div>
+                <div class="hide-toggle" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
+                  <img src="/images/hero-icons/folder-open.svg" />{get_issue_type_label(type)} ({Enum.count(
+                    issues
+                  )})
+                </div>
+              </h3>
+
+              <.render_issue_group project={@project} type={type} issues={issues} />
+            </section>
+          <% end %>
+      <% end %>
+    </section>
+    """
+  end
+
+  def update(%{issues: issues, project: project, evaluating?: evaluating?}, socket) do
+    overall_issue_count =
+      if is_list(issues) do
+        Enum.count(issues)
+      else
+        0
+      end
+
+    issues =
+      case issues do
+        nil ->
+          nil
+
+        issues ->
+          Enum.group_by(issues, fn %{type: type, severity: severity} -> {type, severity} end)
+      end
+
+    {
+      :ok,
+      socket
+      |> assign(:project, project)
+      |> assign(:evaluating?, evaluating?)
+      |> assign(:issues, issues)
+      |> assign(:overall_issue_count, overall_issue_count)
+    }
+  end
+
+  defp render_issue_group(%{type: :no_project_document} = assigns) do
     ~H"""
     <span class="issue-content">Could not find a project document in the database!</span>
     """
   end
 
-  def display(%{id: :no_default_project_map_layer} = assigns) do
+  defp render_issue_group(%{type: :no_default_project_map_layer} = assigns) do
     ~H"""
     <span class="issue-content">
       <em>There is no default map layer defined for the project.</em>
@@ -27,7 +109,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def display(%{id: :missing_original_image} = assigns) do
+  defp render_issue_group(%{type: :missing_original_image} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>Some original files are missing and should be uploaded by their creator.</em>
@@ -43,7 +125,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def display(%{id: :image_variants_size} = assigns) do
+  defp render_issue_group(%{type: :image_variants_size} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>In general the original images are expected to be larger than their thumbnails.
@@ -68,7 +150,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def display(%{id: :missing_image_copyright} = assigns) do
+  defp render_issue_group(%{type: :missing_image_copyright} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>
@@ -86,7 +168,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def display(%{id: :unresolved_relation} = assigns) do
+  defp render_issue_group(%{type: :unresolved_relation} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>
@@ -133,7 +215,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def display(%{id: :non_unique_identifiers} = assigns) do
+  defp render_issue_group(%{type: :non_unique_identifiers} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>There are documents sharing the same identifier.</em>
@@ -163,7 +245,7 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
     """
   end
 
-  def display(assigns) do
+  defp render_issue_group(assigns) do
     # Fallback function, displays issues data as list with key/value as columns.
     ~H"""
     <div class="issue-content">
@@ -214,4 +296,22 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
         "No thumbnail available"
     end
   end
+
+  defp get_issue_type_label(:no_project_document), do: "No project document"
+  defp get_issue_type_label(:no_default_project_map_layer), do: "No default map layer"
+  defp get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
+  defp get_issue_type_label(:image_variants_size), do: "Original images file size"
+  defp get_issue_type_label(:missing_image_copyright), do: "Images missing copyright information"
+  defp get_issue_type_label(:missing_original_image), do: "Missing original images"
+  defp get_issue_type_label(:unexpected_error), do: "Unexpected issue"
+  defp get_issue_type_label(:unresolved_relation), do: "Unresolved relation"
+
+  defp get_issue_type_label(:non_unique_identifiers),
+    do: "Same identifier used for different documents"
+
+  defp get_issue_type_label(type), do: type
+
+  defp issue_classes(:info), do: "monitoring-issue info"
+  defp issue_classes(:warning), do: "monitoring-issue warning"
+  defp issue_classes(:error), do: "monitoring-issue error"
 end

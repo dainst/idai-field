@@ -132,63 +132,13 @@
     </table>
   </section>
 
-  <hr />
-
-  <section>
-    <h2>
-      <div class="row">
-        <div class="column column-80">Issues{if @issue_count != 0, do: " (#{@issue_count})"}</div>
-        <button class="button column" phx-click="evaluate_issues">
-          <%= case @issues do %>
-            <% :no_data -> %>
-              Evaluate
-            <% _data -> %>
-              Re-evaluate
-          <% end %>
-        </button>
-      </div>
-    </h2>
-    <%= if @issue_status == :evaluating do %>
-      <div class="row">
-        <span class="issue-loading-spinner"></span>
-        <span style="margin-top:6px;margin-left:10px">
-          Evaluating issues, for big projects this may take several minutes...
-        </span>
-      </div>
-    <% end %>
-
-    <%= case @issues do %>
-      <% :no_data -> %>
-        {""}
-      <% issue_groups when issue_groups == %{} -> %>
-        {"None."}
-      <% issue_groups -> %>
-        <%= for {{type, severity}, issues} <- issue_groups do %>
-          <section id={"#{type}-issue-group"} class="issue-group hide">
-            <h3 class={issue_classes(severity)}>
-              <div
-                class="show-toggle"
-                phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}
-              >
-                <img src="/images/hero-icons/folder.svg" />{get_issue_type_label(type)} ({Enum.count(
-                  issues
-                )})
-              </div>
-              <div
-                class="hide-toggle"
-                phx-click={JS.add_class("hide", to: "##{type}-issue-group")}
-              >
-                <img src="/images/hero-icons/folder-open.svg" />{get_issue_type_label(type)} ({Enum.count(
-                  issues
-                )})
-              </div>
-            </h3>
-
-            <ProjectShowLiveIssues.display id={type} issues={issues} project={@project} />
-          </section>
-        <% end %>
-    <% end %>
-  </section>
+  <.live_component
+    id="issue_display"
+    module={FieldHubWeb.Components.IssuesPanel}
+    issues={@issues}
+    project={@project}
+    evaluating?={@issues_evaluating?}
+  />
 
   <%= if User.is_admin?(@current_user) do %>
     <hr />

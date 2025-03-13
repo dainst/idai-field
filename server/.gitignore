@@ -28,6 +28,9 @@ field_hub-*.tar
 # Ignore digested assets cache.
 /priv/static/cache_manifest.json
 
+# Ignore elixir_ls directory
+.elixir_ls/
+
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/

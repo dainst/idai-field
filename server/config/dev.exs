@@ -15,7 +15,10 @@ config :field_hub, FieldHubWeb.Endpoint,
     ip: {0, 0, 0, 0},
     port: 4000,
     protocol_options: [
-      idle_timeout: :infinity
+      idle_timeout: :infinity,
+      inactivity_timeout: :infinity,
+      linger_timeout: :infinity,
+      request_timeout: :infinity
     ]
   ],
   check_origin: false,
@@ -56,7 +59,6 @@ config :field_hub, FieldHubWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
       ~r"lib/field_hub_web/(live|views)/.*(ex)$",
       ~r"lib/field_hub_web/templates/.*(eex)$"
     ]

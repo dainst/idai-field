@@ -1,11 +1,9 @@
-defmodule FieldHubWeb.ProjectShowLive do
+defmodule FieldHubWeb.Live.ProjectShow do
+  use FieldHubWeb, :live_view
+
   alias FieldHub.Project
 
-  alias FieldHubWeb.{
-    Router.Helpers,
-    UserAuth,
-    ProjectShowLiveIssues
-  }
+  alias FieldHubWeb.UserAuth
 
   alias FieldHub.{
     CouchService,
@@ -13,10 +11,6 @@ defmodule FieldHubWeb.ProjectShowLive do
     Project,
     User
   }
-
-  alias Phoenix.LiveView.JS
-
-  use Phoenix.LiveView
 
   require Logger
 
@@ -42,9 +36,8 @@ defmodule FieldHubWeb.ProjectShowLive do
           :ok,
           socket
           |> assign(:stats, :loading)
-          |> assign(:issue_status, :idle)
-          |> assign(:issues, :no_data)
-          |> assign(:issue_count, 0)
+          |> assign(:issues_evaluating?, false)
+          |> assign(:issues, nil)
           |> assign(:project, project)
           |> assign(:current_user, user_name)
           |> assign(:new_password, "")
@@ -52,6 +45,7 @@ defmodule FieldHubWeb.ProjectShowLive do
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
           |> assign(:n_changes_to_display, 5)
+          |> assign(:page_title, project)
           |> read_project_doc()
         }
 
@@ -92,17 +86,13 @@ defmodule FieldHubWeb.ProjectShowLive do
     # The asynchronous task is finished, we are not interested in its process anymore and demonitor it.
     Process.demonitor(ref, [:flush])
 
-    grouped =
-      issues
-      |> Enum.group_by(fn %{type: type, severity: severity} -> {type, severity} end)
-
     issue_count = Enum.count(issues)
 
     {
       :noreply,
       socket
-      |> assign(:issues, grouped)
-      |> assign(:issue_status, :idle)
+      |> assign(:issues, issues)
+      |> assign(:issues_evaluating?, false)
       |> assign(:issue_count, issue_count)
     }
   end
@@ -121,8 +111,7 @@ defmodule FieldHubWeb.ProjectShowLive do
             {:issues_task, Issues.evaluate_all(project)}
           end)
 
-          socket
-          |> assign(:issue_status, :evaluating)
+          assign(socket, :issues_evaluating?, true)
 
         _ ->
           redirect(socket, to: "/")
@@ -261,24 +250,6 @@ defmodule FieldHubWeb.ProjectShowLive do
         "thumbnail images"
     end
   end
-
-  def get_issue_type_label(:no_project_document), do: "No project document"
-  def get_issue_type_label(:no_default_project_map_layer), do: "No default map layer"
-  def get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
-  def get_issue_type_label(:image_variants_size), do: "Original images file size"
-  def get_issue_type_label(:missing_image_copyright), do: "Images missing copyright information"
-  def get_issue_type_label(:missing_original_image), do: "Missing original images"
-  def get_issue_type_label(:unexpected_error), do: "Unexpected issue"
-  def get_issue_type_label(:unresolved_relation), do: "Unresolved relation"
-
-  def get_issue_type_label(:non_unique_identifiers),
-    do: "Same identifier used for different documents"
-
-  def get_issue_type_label(type), do: type
-
-  def issue_classes(:info), do: "monitoring-issue info"
-  def issue_classes(:warning), do: "monitoring-issue warning"
-  def issue_classes(:error), do: "monitoring-issue error"
 
   defp read_project_doc(%{assigns: %{project: project}} = socket) do
     project_doc =

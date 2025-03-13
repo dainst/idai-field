@@ -1,8 +1,7 @@
-defmodule FieldHubWeb.Api.FileController do
+defmodule FieldHubWeb.Rest.Api.Rest.File do
   use FieldHubWeb, :controller
 
   alias FieldHub.FileStore
-  alias FieldHubWeb.Api.StatusView
 
   @max_size Application.compile_env(:field_hub, :file_max_size)
 
@@ -37,10 +36,7 @@ defmodule FieldHubWeb.Api.FileController do
 
     case parsed_types do
       {:error, msg} ->
-        conn
-        |> put_status(:bad_request)
-        |> put_view(StatusView)
-        |> render(%{error: msg})
+        send_resp(conn, 400, Jason.encode!(%{reason: msg}))
 
       valid ->
         file_store_data =
@@ -48,15 +44,12 @@ defmodule FieldHubWeb.Api.FileController do
           |> Zarex.sanitize()
           |> FileStore.file_index(valid)
 
-        render(conn, "list.json", %{files: file_store_data})
+        send_resp(conn, 200, Jason.encode!(file_store_data))
     end
   end
 
   def index(conn, %{"project" => _project, "types" => types}) do
-    conn
-    |> put_status(:bad_request)
-    |> put_view(StatusView)
-    |> render(%{error: "Invalid 'types' parameter: '#{types}'."})
+    send_resp(conn, 400, Jason.encode!(%{reason: "Invalid 'types' parameter: '#{types}'."}))
   end
 
   def index(conn, %{"project" => project}) do
@@ -65,7 +58,7 @@ defmodule FieldHubWeb.Api.FileController do
       |> Zarex.sanitize()
       |> FileStore.file_index()
 
-    render(conn, "list.json", %{files: file_store_data})
+    send_resp(conn, 200, Jason.encode!(file_store_data))
   end
 
   def show(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
@@ -73,10 +66,7 @@ defmodule FieldHubWeb.Api.FileController do
 
     case parsed_type do
       {:error, type} ->
-        conn
-        |> put_status(:bad_request)
-        |> put_view(StatusView)
-        |> render(%{error: "Unknown file type: #{type}"})
+        send_resp(conn, 400, Jason.encode!(%{reason: "Unknown file type: #{type}"}))
 
       valid ->
         FileStore.get_file_path(
@@ -86,22 +76,16 @@ defmodule FieldHubWeb.Api.FileController do
         )
         |> case do
           {:error, :enoent} ->
-            conn
-            |> put_status(:not_found)
-            |> put_view(StatusView)
-            |> render(%{error: "Requested file not found"})
+            send_resp(conn, 404, Jason.encode!(%{reason: "Requested file not found"}))
 
           {:ok, file_path} ->
-            Plug.Conn.send_file(conn, 200, file_path)
+            send_file(conn, 200, file_path)
         end
     end
   end
 
   def show(conn, _) do
-    conn
-    |> put_status(:bad_request)
-    |> put_view(StatusView)
-    |> render(%{error: "Bad request"})
+    send_resp(conn, 400, Jason.encode!(%{reason: "Bad request"}))
   end
 
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
@@ -113,36 +97,28 @@ defmodule FieldHubWeb.Api.FileController do
       {:ok, data, conn} ->
         case parsed_type do
           {:error, type} ->
-            conn
-            |> put_status(:bad_request)
-            |> put_view(StatusView)
-            |> render(%{error: "Unknown file type: #{type}"})
+            send_resp(conn, 400, Jason.encode!(%{reason: "Unknown file type: #{type}"}))
 
           valid ->
             FileStore.store(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
-
-            conn
-            |> put_status(:created)
-            |> put_view(StatusView)
-            |> render(%{info: "File created."})
+            send_resp(conn, 201, Jason.encode!(%{info: "File created."}))
         end
 
       {:more, _partial_body, conn} ->
-        conn
-        |> put_status(:request_entity_too_large)
-        |> put_view(StatusView)
-        |> render(%{
-          error: "Payload too large, maximum of #{Sizeable.filesize(@max_size)} bytes allowed."
-        })
+        send_resp(
+          conn,
+          413,
+          Jason.encode!(%{
+            reason: "Payload too large, maximum of #{Sizeable.filesize(@max_size)} bytes allowed."
+          })
+        )
     end
   end
 
   def delete(conn, %{"project" => project, "id" => uuid}) do
     file_store_data = FileStore.discard(Zarex.sanitize(uuid), Zarex.sanitize(project))
 
-    conn
-    |> put_view(StatusView)
-    |> render(%{info: file_store_data})
+    send_resp(conn, 200, Jason.encode!(%{info: file_store_data}))
   end
 
   defp parse_type("thumbnail_image") do

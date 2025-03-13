@@ -80,13 +80,13 @@ export class ImageRowComponent implements OnChanges {
             await this.fetchThumbnailIds()
         );
 
+        this.initializing = false;
+
         if (this.allowSelection && this.images.length > 0) {
             await this.select(this.selectedImage ? this.selectedImage : this.images[0]);
         } else {
             await this.nextPage();
         }
-
-        this.initializing = false;
     }
 
 

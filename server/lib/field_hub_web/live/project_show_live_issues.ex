@@ -3,9 +3,6 @@ defmodule FieldHubWeb.ProjectShowLiveIssues do
 
   @moduledoc """
   Bundles `display/1` functions for lists for different types of issues.
-
-  The type of issue is determined by the `id` value used in the parent
-  `live_component/1` call.
   """
 
   alias Phoenix.LiveView.JS

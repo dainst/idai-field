@@ -63,7 +63,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public async updateLayers(reloadLayerGroups: boolean = true): Promise<void> {
+    public async updateLayers(reloadLayerGroups: boolean = true) {
 
         this.layerImageProvider.reset();
 
@@ -74,6 +74,17 @@ export class LayerMapComponent extends MapComponent {
         this.handleActiveLayersChange(activeLayersChange);
 
         this.changeDetectorRef.detectChanges();
+    }
+
+    
+    public async updateLayerImages() {
+
+        this.layerImageProvider.reset();
+
+        for (let [resourceId, imageOverlay] of Object.entries(this.imageOverlays)) {
+            const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
+            imageOverlay.setUrl(imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any);
+        }
     }
 
 

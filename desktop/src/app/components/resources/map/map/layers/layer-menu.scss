@@ -68,6 +68,17 @@ $layer-menu-remove-button-color: #c82333;
 
         .layer-group-heading {
           font-size: 15px;
+
+          &.with-download-button {
+            position: relative;
+            bottom: 2px;
+          }
+        }
+
+        .download-layer-images-button {
+          position: relative;
+          left: 3px;
+          bottom: 1px;
         }
 
         .no-layers-info {

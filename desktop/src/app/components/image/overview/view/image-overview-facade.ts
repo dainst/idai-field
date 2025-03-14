@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { clone, equal }  from 'tsfun';
-import { ImageDocument, Named, Query, ProjectConfiguration, ImageStore } from 'idai-field-core';
+import { ImageDocument, Named, Query, ProjectConfiguration } from 'idai-field-core';
 import { ImagesState } from './images-state';
 import { ImageDocumentsManager } from './image-documents-manager';
 import { ImageToolLauncher } from '../../../../services/imagestore/image-tool-launcher';

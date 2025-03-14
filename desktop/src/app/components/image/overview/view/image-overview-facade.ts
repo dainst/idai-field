@@ -183,7 +183,7 @@ export class ImageOverviewFacade {
             this.currentOffset
         );
 
-        await this.imageToolLauncher.update();
+        this.imageToolLauncher.update();
     }
 
 

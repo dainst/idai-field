@@ -127,8 +127,6 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     public async exportImage() {
         
         await this.imageToolLauncher.exportImages([this.imageDocument]);
-        this.loadedImageId = undefined;
-        this.imageUrl = undefined;
     }
 
 

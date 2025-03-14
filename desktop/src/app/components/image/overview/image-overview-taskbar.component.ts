@@ -5,7 +5,6 @@ import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from './view/image-overview-facade';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
-import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { MenuContext } from '../../../services/menu-context';
@@ -35,8 +34,7 @@ export class ImageOverviewTaskbarComponent {
     @Input() imageGrid: any;
 
 
-    constructor(public viewFacade: ViewFacade,
-                private modalService: NgbModal,
+    constructor(private modalService: NgbModal,
                 private messages: Messages,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageRelationsManager: ImageRelationsManager,

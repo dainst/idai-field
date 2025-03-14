@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { AutoBackupSettings } from '../model/auto-backup-settings';
 import { AUTO_BACKUP, createWorker } from '../../create-worker';
-import { INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
+import { BACKUP_FILE_CREATION_FAILED, INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
 import { Messages } from '../../../components/messages/messages';
 import { M } from '../../../components/messages/m';
 
@@ -102,8 +102,13 @@ export class AutoBackupService {
 
     private handleError(error: string) {
 
-        if (error === INVALID_BACKUP_DIRECTORY_PATH) {
-            this.messages.add([M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY]);
+        switch (error) {
+            case INVALID_BACKUP_DIRECTORY_PATH:
+                this.messages.add([M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY]);
+                break;
+            case BACKUP_FILE_CREATION_FAILED:
+                this.messages.add([M.BACKUP_AUTOMATIC_FILE_CREATION_FAILED]);
+                break;
         }
     }
 }

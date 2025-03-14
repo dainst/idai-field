@@ -4,7 +4,7 @@ import { AutoBackupSettings } from '../model/auto-backup-settings';
 import { Backup } from '../model/backup';
 import { BackupsInfo } from '../model/backups-info';
 import { BackupsMap } from '../model/backups-map';
-import { INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
+import { BACKUP_FILE_CREATION_FAILED, INVALID_BACKUP_DIRECTORY_PATH } from './auto-backup-errors';
 import { buildBackupFileName } from './backup-file-name-utils';
 import { BackupsInfoSerializer } from './backups-info-serializer';
 import { getBackupsToDelete } from './get-backups-to-delete';
@@ -77,6 +77,7 @@ function createWorker() {
             onWorkerFinished(worker);
         } else {
             console.error('Error while creating backup file:', data.error);
+            postMessage({ error: BACKUP_FILE_CREATION_FAILED });
             onWorkerFinished(worker);
         }
     }

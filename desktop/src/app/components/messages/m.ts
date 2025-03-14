@@ -49,6 +49,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER = 'backup.read.error.sameProjectIdentifier';
     public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER = 'backup.read.warning.unsimilarProjectIdentifier';
     public static BACKUP_INVALID_AUTO_BACKUP_DIRECTORY = 'backup.error.invalidAutoBackupDirectory';
+    public static BACKUP_AUTOMATIC_FILE_CREATION_FAILED = 'backup.error.automaticFileCreationFailed';
 
     // Download Project Package
     public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbNotEmpty';
@@ -347,6 +348,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY] = {
             content: $localize `:@@messages.backup.error.invalidAutoBackupDirectory:Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.`,
+            level: 'danger'
+        };
+        this.msgs[M.BACKUP_AUTOMATIC_FILE_CREATION_FAILED] = {
+            content: $localize `:@@messages.backup.error.automaticFileCreationFaile:Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.`,
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS] = {

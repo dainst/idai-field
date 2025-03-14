@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Observer } from 'rxjs';
 import { Map } from 'tsfun';
@@ -31,7 +32,8 @@ export class ImageToolLauncher {
                 private menuService: Menus,
                 private settingsProvider: SettingsProvider,
                 private imageStore: ImageStore,
-                private remoteImageStore: RemoteImageStore) {
+                private remoteImageStore: RemoteImageStore,
+                private decimalPipe: DecimalPipe) {
 
         this.settingsProvider.settingsChangesNotifications().subscribe(async () => {
             await this.update();
@@ -106,6 +108,47 @@ export class ImageToolLauncher {
             this.menuService.setContext(currentContent);
             AngularUtility.blurActiveElement();
         }
+    }
+
+
+    public getDownloadSizeLabel(images: Array<ImageDocument>): string {
+
+        const downloadSize: number = this.getDownloadSize(images);
+        return this.getFileSizeLabel(downloadSize);
+    }
+
+
+    private getDownloadSize(images: Array<ImageDocument>): number {
+
+        return images.reduce((result, image) => {
+            const id: string = image.resource.id;
+            if (!this.originalFileInfos[id] && this.remoteOriginalFileInfos[id]) {
+                result += this.remoteOriginalFileInfos[id].variants.find(variant => {
+                    return variant.name === ImageVariant.ORIGINAL;
+                })?.size;
+            }
+            if (!this.thumbnailFileInfos[id] && this.remoteThumbnailFileInfos[id]) {
+                result += this.remoteThumbnailFileInfos[id].variants.find(variant => {
+                    return variant.name === ImageVariant.THUMBNAIL;
+                })?.size;
+            }
+            return result;
+        }, 0);
+    }
+
+
+    // TODO Use utility function
+    private getFileSizeLabel(byteCount: number) {
+
+        byteCount = byteCount * 0.00000095367;
+        let unitTypeOriginal = 'MB';
+
+        if (byteCount > 1000) {
+            byteCount = byteCount * 0.00097656;
+            unitTypeOriginal = 'GB';
+        }
+
+        return `${this.decimalPipe.transform(byteCount.toFixed(2))} ${unitTypeOriginal}`;
     }
 
 

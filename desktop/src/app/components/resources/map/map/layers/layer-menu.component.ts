@@ -178,6 +178,18 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
     }
 
 
+    public getDownloadTooltip(group: LayerGroup) {
+
+        const sizeLabel: string = this.imageToolLauncher.getDownloadSizeLabel(group.layers);
+        
+        const baseTooltip: string = group.layers.length === 1
+            ? $localize `:@@images.download.tooltip.single:Originalbild herunterladen`
+            : $localize `:@@images.download.tooltip.multiple:Originalbilder herunterladen`;
+
+        return baseTooltip + ' (' + sizeLabel + ')';
+    }
+
+
     private async selectNewLayers(group: LayerGroup): Promise<Array<ImageDocument>> {
 
         this.modalOpened = true;

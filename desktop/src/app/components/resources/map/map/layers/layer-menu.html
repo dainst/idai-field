@@ -20,8 +20,7 @@
                     <span *ngIf="isDownloadImagesButtonVisible(layerGroup)"
                           class="mdi mdi-cloud-download layer-menu-button layer-menu-default-layer-button
                                  download-layer-images-button"
-                          ngbTooltip="Originalbilder herunterladen"
-                          i18n-ngbTooltip="@@resources.map.layerMenu.download"
+                          ngbTooltip="{{getDownloadTooltip(layerGroup)}}"
                           placement="top" container="body"
                           (click)="downloadImages(layerGroup)"></span>
                     <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"

@@ -26,8 +26,7 @@
     <div *ngIf="isDownloadButtonVisible()" class="btn-group me-2">
         <button id="download-images" type="button" class="btn btn-primary btn-square"
                 (click)="downloadImages()"
-                placement="bottom" container="body" ngbTooltip="Original herunterladen"
-                i18n-ngbTooltip="@@imageOverview.taskbar.tooltips.download">
+                placement="bottom" container="body" ngbTooltip="{{getDownloadTooltip()}}">
             <span class="mdi mdi-cloud-download"></span>
         </button>
     </div>

@@ -115,6 +115,13 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     }
 
 
+    public getDownloadTooltip() {
+
+        const sizeLabel: string = this.imageToolLauncher.getDownloadSizeLabel([this.imageDocument]);
+        return $localize `:@@images.download.tooltip.single:Originalbild herunterladen` + ' (' + sizeLabel + ')';
+    }
+
+
     public async downloadImage() {
 
         await this.imageToolLauncher.downloadImages([this.imageDocument]);

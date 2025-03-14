@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, ImageDocument } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
 import { ImageOverviewFacade } from './view/image-overview-facade';
@@ -124,6 +124,19 @@ export class ImageOverviewTaskbarComponent {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
+    }
+
+
+    public getDownloadTooltip() {
+
+        const selectedImages: Array<ImageDocument> = this.imageOverviewFacade.getSelected();
+        const sizeLabel: string = this.imageToolLauncher.getDownloadSizeLabel(selectedImages);
+        
+        const baseTooltip: string = selectedImages.length === 1
+            ? $localize `:@@images.download.tooltip.single:Originalbild herunterladen`
+            : $localize `:@@images.download.tooltip.multiple:Originalbilder herunterladen`;
+
+        return baseTooltip + ' (' + sizeLabel + ')';
     }
 
 

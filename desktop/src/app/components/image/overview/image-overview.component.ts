@@ -108,10 +108,11 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
 
+        this.filterOptions = [this.projectConfiguration.getCategory('Image')];
+
         await this.intitialization;
         
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getNrImagesPerRow();
-        this.filterOptions = [this.projectConfiguration.getCategory('Image')];
     }
 
 

@@ -47,8 +47,8 @@ export class ImageToolLauncher {
         const project: string = this.settingsProvider.getSettings().selectedProject;
 
         this.originalFileInfos = await this.imageStore.getFileInfos(project, [ImageVariant.ORIGINAL]);
-        this.remoteOriginalFileInfos = await this.remoteImageStore.getFileInfos(project, [ImageVariant.ORIGINAL]);
         this.thumbnailFileInfos = await this.imageStore.getFileInfos(project, [ImageVariant.THUMBNAIL]);
+        this.remoteOriginalFileInfos = await this.remoteImageStore.getFileInfos(project, [ImageVariant.ORIGINAL]);
         this.remoteThumbnailFileInfos = await this.remoteImageStore.getFileInfos(project, [ImageVariant.THUMBNAIL]);
     }
 
@@ -82,8 +82,8 @@ export class ImageToolLauncher {
         } finally {
             this.menuService.setContext(currentContent);
             AngularUtility.blurActiveElement();
-            await this.update();
             ObserverUtil.notify(this.downloadObservers, undefined);
+            this.update();
         }
     }
 

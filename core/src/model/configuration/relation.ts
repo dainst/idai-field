@@ -157,10 +157,8 @@ export namespace Relation {
      * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
      * which has the given range category & name
      */
-     export function isAllowedRelationDomainCategory(relations: Array<Relation>,
-                                                     domainCategory: Name, 
-                                                     rangeCategory: Name,
-                                                     relation: Name): boolean {
+     export function isAllowedRelationDomainCategory(relations: Array<Relation>, domainCategory: Name, 
+                                                     rangeCategory: Name, relation: Name): boolean {
 
         const relationDefinitions = getRelations(relations, rangeCategory, true);
 
@@ -174,9 +172,7 @@ export namespace Relation {
     }
 
 
-    export function getRelations(relations: Array<Relation>,
-                                 categoryName: string,
-                                 isRangeCategory: boolean = false) {
+    export function getRelations(relations: Array<Relation>, categoryName: string, isRangeCategory: boolean = false) {
 
         const availableRelationFields: Array<Relation> = [];
 

@@ -43,7 +43,7 @@ export class WorkflowStepPlusButtonComponent implements OnChanges {
             return this.projectConfiguration.isAllowedRelationDomainCategory(
                 this.baseDocument.resource.category,
                 category.name,
-                Relation.Workflow.HAS_WORKFLOW_STEP
+                Relation.Workflow.IS_EXECUTION_TARGET_OF
             );
         });
     }

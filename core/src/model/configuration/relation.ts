@@ -134,11 +134,11 @@ export namespace Relation {
 
     export module Workflow {
 
-        export const IS_WORKFLOW_STEP_OF = 'isWorkflowStepOf';
-        export const HAS_WORKFLOW_STEP = 'hasWorkflowStep';
+        export const IS_EXECUTED_ON = 'isExecutedOn';
+        export const IS_EXECUTION_TARGET_OF = 'isExecutionTargetOf';
         export const PRODUCES = 'produces';
         export const IS_PRODUCED_IN = 'isProducedIn'
-        export const ALL = [IS_WORKFLOW_STEP_OF, HAS_WORKFLOW_STEP, PRODUCES, IS_PRODUCED_IN];
+        export const ALL = [IS_EXECUTED_ON, IS_EXECUTION_TARGET_OF, PRODUCES, IS_PRODUCED_IN];
     }
 
 

@@ -20,7 +20,7 @@ describe('buildWorkflowRelations', () => {
                 fields: {},
                 groups: [],
                 range: {
-                    isWorkflowStepOf: ['FindA', 'FindB'],
+                    isExecutedOn: ['FindA', 'FindB'],
                     produces: ['FindC']
                 }
             },
@@ -33,7 +33,7 @@ describe('buildWorkflowRelations', () => {
                 fields: {},
                 groups: [],
                 range: {
-                    isWorkflowStepOf: ['FindA', 'FindD']
+                    isExecutedOn: ['FindA', 'FindD']
                 }
             }
         }
@@ -43,40 +43,40 @@ describe('buildWorkflowRelations', () => {
         expect(relations.length).toBe(7);
 
         expect(relations[0]).toEqual({
-            name: 'isWorkflowStepOf',
-            inverse: 'hasWorkflowStep',
+            name: 'isExecutedOn',
+            inverse: 'isExecutionTargetOf',
             domain: ['WorkflowStepA'],
             range: ['FindA', 'FindB'],
             inputType: 'relation'
         });
 
         expect(relations[1]).toEqual({
-            name: 'isWorkflowStepOf',
-            inverse: 'hasWorkflowStep',
+            name: 'isExecutedOn',
+            inverse: 'isExecutionTargetOf',
             domain: ['WorkflowStepB'],
             range: ['FindA', 'FindD'],
             inputType: 'relation'
         });
 
         expect(relations[2]).toEqual({
-            name: 'hasWorkflowStep',
-            inverse: 'isWorkflowStepOf',
+            name: 'isExecutionTargetOf',
+            inverse: 'isExecutedOn',
             domain: ['FindA'],
             range: ['WorkflowStepA', 'WorkflowStepB'],
             inputType: 'relation'
         });
 
         expect(relations[3]).toEqual({
-            name: 'hasWorkflowStep',
-            inverse: 'isWorkflowStepOf',
+            name: 'isExecutionTargetOf',
+            inverse: 'isExecutedOn',
             domain: ['FindB'],
             range: ['WorkflowStepA'],
             inputType: 'relation'
         });
 
         expect(relations[4]).toEqual({
-            name: 'hasWorkflowStep',
-            inverse: 'isWorkflowStepOf',
+            name: 'isExecutionTargetOf',
+            inverse: 'isExecutedOn',
             domain: ['FindD'],
             range: ['WorkflowStepB'],
             inputType: 'relation'

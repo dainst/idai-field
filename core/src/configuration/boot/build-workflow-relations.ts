@@ -9,7 +9,7 @@ import { Field } from '../../model/configuration/field';
  */
 export function buildWorkflowRelations(forms: Map<TransientFormDefinition>): Array<Relation> {
 
-    return buildRelations(forms, Relation.Workflow.IS_WORKFLOW_STEP_OF, Relation.Workflow.HAS_WORKFLOW_STEP)
+    return buildRelations(forms, Relation.Workflow.IS_EXECUTED_ON, Relation.Workflow.IS_EXECUTION_TARGET_OF)
         .concat(buildRelations(forms, Relation.Workflow.PRODUCES, Relation.Workflow.IS_PRODUCED_IN));
 }
 

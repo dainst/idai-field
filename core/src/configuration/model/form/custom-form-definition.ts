@@ -21,7 +21,7 @@ export interface CustomFormDefinition extends BaseFormDefinition {
     resourceLimit?: number;
     scanCodes?: ScanCodeConfiguration;
     range?: {
-        isWorkflowStepOf?: string[];
+        isExecutedOn?: string[];
         produces?: string[];
     }
 }

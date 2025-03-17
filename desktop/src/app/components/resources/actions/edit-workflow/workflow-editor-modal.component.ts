@@ -10,7 +10,7 @@ import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 
 
-const HAS_WORKFLOW_STEP: string = Relation.Workflow.HAS_WORKFLOW_STEP;
+const IS_EXECUTION_TARGET_OF: string = Relation.Workflow.IS_EXECUTION_TARGET_OF;
 
 
 @Component({
@@ -112,8 +112,8 @@ export class WorkflowEditorModalComponent {
 
         const resource: Resource = this.document.resource;
         if (!resource.relations) resource.relations = {};
-        if (!resource.relations[HAS_WORKFLOW_STEP]) resource.relations[HAS_WORKFLOW_STEP] = [];
-        resource.relations[HAS_WORKFLOW_STEP].push(workflowStep.resource.id);
+        if (!resource.relations[IS_EXECUTION_TARGET_OF]) resource.relations[IS_EXECUTION_TARGET_OF] = [];
+        resource.relations[IS_EXECUTION_TARGET_OF].push(workflowStep.resource.id);
 
         await this.applyRelationChanges(oldVersion);
     }
@@ -124,9 +124,9 @@ export class WorkflowEditorModalComponent {
         const oldVersion: Document = Document.clone(workflowStep);
 
         const resource: Resource = this.document.resource;
-        resource.relations[HAS_WORKFLOW_STEP] = resource.relations[HAS_WORKFLOW_STEP]
+        resource.relations[IS_EXECUTION_TARGET_OF] = resource.relations[IS_EXECUTION_TARGET_OF]
             .filter(targetId => targetId !== workflowStep.resource.id);
-        if (!resource.relations[HAS_WORKFLOW_STEP].length) delete resource.relations[HAS_WORKFLOW_STEP];
+        if (!resource.relations[IS_EXECUTION_TARGET_OF].length) delete resource.relations[IS_EXECUTION_TARGET_OF];
 
         await this.applyRelationChanges(oldVersion);
     }
@@ -145,7 +145,7 @@ export class WorkflowEditorModalComponent {
 
     private async updateWorkflowSteps() {
 
-        const targetIds: string[] = this.document.resource.relations?.[HAS_WORKFLOW_STEP] ?? [];
+        const targetIds: string[] = this.document.resource.relations?.[IS_EXECUTION_TARGET_OF] ?? [];
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
         this.sortWorkflowSteps();
     }

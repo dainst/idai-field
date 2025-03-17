@@ -14,6 +14,8 @@ defmodule FieldHub.MixProject do
       test_coverage: [
         ignore_modules: [
           FieldHubWeb.ChannelCase,
+          FieldHubWeb.ErrorHTML,
+          FieldHubWeb.ErrorJSON,
           FieldHubWeb.Gettext,
           FieldHubWeb.Layouts,
           FieldHubWeb.CoreComponents

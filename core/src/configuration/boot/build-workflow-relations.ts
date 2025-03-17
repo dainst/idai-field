@@ -27,7 +27,9 @@ function buildRelations(forms: Map<TransientFormDefinition>, name: string, inver
             inverse,
             domain: [form.categoryName],
             range: form.range?.[name],
-            inputType: Field.InputType.RELATION
+            inputType: Field.InputType.RELATION,
+            editable: false,
+            visible: false
         });
 
         form.range?.[name].forEach(categoryName => {
@@ -42,7 +44,9 @@ function buildRelations(forms: Map<TransientFormDefinition>, name: string, inver
             name: inverse,
             domain: [categoryName],
             range,
-            inputType: Field.InputType.RELATION
+            inputType: Field.InputType.RELATION,
+            editable: false,
+            visible: false
         };
     });
 

@@ -47,7 +47,9 @@ describe('buildWorkflowRelations', () => {
             inverse: 'isExecutionTargetOf',
             domain: ['WorkflowStepA'],
             range: ['FindA', 'FindB'],
-            inputType: 'relation'
+            inputType: 'relation',
+            editable: false,
+            visible: false
         });
 
         expect(relations[1]).toEqual({
@@ -55,7 +57,9 @@ describe('buildWorkflowRelations', () => {
             inverse: 'isExecutionTargetOf',
             domain: ['WorkflowStepB'],
             range: ['FindA', 'FindD'],
-            inputType: 'relation'
+            inputType: 'relation',
+            editable: false,
+            visible: false
         });
 
         expect(relations[2]).toEqual({
@@ -63,7 +67,9 @@ describe('buildWorkflowRelations', () => {
             inverse: 'isExecutedOn',
             domain: ['FindA'],
             range: ['WorkflowStepA', 'WorkflowStepB'],
-            inputType: 'relation'
+            inputType: 'relation',
+            editable: false,
+            visible: false
         });
 
         expect(relations[3]).toEqual({
@@ -71,7 +77,9 @@ describe('buildWorkflowRelations', () => {
             inverse: 'isExecutedOn',
             domain: ['FindB'],
             range: ['WorkflowStepA'],
-            inputType: 'relation'
+            inputType: 'relation',
+            editable: false,
+            visible: false
         });
 
         expect(relations[4]).toEqual({
@@ -79,7 +87,9 @@ describe('buildWorkflowRelations', () => {
             inverse: 'isExecutedOn',
             domain: ['FindD'],
             range: ['WorkflowStepB'],
-            inputType: 'relation'
+            inputType: 'relation',
+            editable: false,
+            visible: false
         });
 
         expect(relations[5]).toEqual({
@@ -87,7 +97,9 @@ describe('buildWorkflowRelations', () => {
             inverse: 'isProducedIn',
             domain: ['WorkflowStepA'],
             range: ['FindC'],
-            inputType: 'relation'
+            inputType: 'relation',
+            editable: false,
+            visible: false
         });
 
         expect(relations[6]).toEqual({
@@ -95,7 +107,9 @@ describe('buildWorkflowRelations', () => {
             inverse: 'produces',
             domain: ['FindC'],
             range: ['WorkflowStepA'],
-            inputType: 'relation'
+            inputType: 'relation',
+            editable: false,
+            visible: false
         });
     });
 });

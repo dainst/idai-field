@@ -15,6 +15,8 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
 
   @endpoint FieldHubWeb.Endpoint
 
+  import ExUnit.CaptureLog
+
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
@@ -225,6 +227,15 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         |> render_change(%{identifier: @project})
 
       assert html =~ "This project identifier is already taken."
+
+      assert capture_log(fn ->
+               html =
+                 view
+                 |> element("form")
+                 |> render_submit(%{identifier: @project})
+
+               assert html =~ "Project creation with the provided input failed."
+             end) =~ "Project creation failed with: already_exists"
     end
 
     test "can create a project", %{conn: conn} do

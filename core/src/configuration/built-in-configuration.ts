@@ -1359,7 +1359,25 @@ export class BuiltInConfiguration {
             editable: false,
             visible: false,
             inputType: 'relation'
-        }
+        },
+        {
+            name: 'produces',
+            inverse: 'producedBy',
+            domain: ['WorkflowStep'],
+            range: ['Find', 'Sample'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'producedBy',
+            inverse: 'produces',
+            domain: ['Find', 'Sample'],
+            range: ['WorkflowStep'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
     ];
 
 

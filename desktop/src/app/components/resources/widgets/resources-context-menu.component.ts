@@ -146,7 +146,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
             && this.projectConfiguration.getWorkflowCategories().length > 0
             && this.projectConfiguration.isAllowedRelationDomainCategory(
                 this.contextMenu.documents[0].resource.category,
-                'WorkflowStep', Relation.HAS_WORKFLOW_STEP
+                'WorkflowStep', Relation.Workflow.HAS_WORKFLOW_STEP
             );
     }
 

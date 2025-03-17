@@ -1343,7 +1343,17 @@ export class BuiltInConfiguration {
             inputType: 'relation'
         },
         {
+            name: 'isWorkflowStepOf',
+            inverse: 'hasWorkflowStep',
+            domain: ['WorkflowStep'],
+            range: ['Find', 'Sample'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
             name: 'hasWorkflowStep',
+            inverse: 'isWorkflowStepOf',
             domain: ['Find', 'Sample'],
             range: ['WorkflowStep'],
             editable: false,

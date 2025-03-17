@@ -110,8 +110,6 @@ export namespace Relation {
      */ 
     export const SAME_AS = 'isSameAs';
 
-    export const HAS_WORKFLOW_STEP = 'hasWorkflowStep';
-
     export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
 
 
@@ -131,6 +129,14 @@ export namespace Relation {
         export const ISSTORAGEPLACEOF = 'isStoragePlaceOf';
         export const ISSTOREDIN = 'isStoredIn';
         export const ALL = [ISSTORAGEPLACEOF, ISSTOREDIN];
+    }
+
+
+    export module Workflow {
+
+        export const IS_WORKFLOW_STEP_OF = 'isWorkflowStepOf';
+        export const HAS_WORKFLOW_STEP = 'hasWorkflowStep';
+        export const ALL = [IS_WORKFLOW_STEP_OF, HAS_WORKFLOW_STEP];
     }
 
 

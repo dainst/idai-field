@@ -10,6 +10,9 @@ import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 
 
+const HAS_WORKFLOW_STEP: string = Relation.Workflow.HAS_WORKFLOW_STEP;
+
+
 @Component({
     templateUrl: './workflow-editor-modal.html',
     host: {
@@ -109,8 +112,8 @@ export class WorkflowEditorModalComponent {
 
         const resource: Resource = this.document.resource;
         if (!resource.relations) resource.relations = {};
-        if (!resource.relations[Relation.HAS_WORKFLOW_STEP]) resource.relations[Relation.HAS_WORKFLOW_STEP] = [];
-        resource.relations[Relation.HAS_WORKFLOW_STEP].push(workflowStep.resource.id);
+        if (!resource.relations[HAS_WORKFLOW_STEP]) resource.relations[HAS_WORKFLOW_STEP] = [];
+        resource.relations[HAS_WORKFLOW_STEP].push(workflowStep.resource.id);
 
         await this.applyRelationChanges(oldVersion);
     }
@@ -121,11 +124,9 @@ export class WorkflowEditorModalComponent {
         const oldVersion: Document = Document.clone(workflowStep);
 
         const resource: Resource = this.document.resource;
-        resource.relations[Relation.HAS_WORKFLOW_STEP]
-            = resource.relations[Relation.HAS_WORKFLOW_STEP].filter(targetId => targetId !== workflowStep.resource.id);
-        if (!resource.relations[Relation.HAS_WORKFLOW_STEP].length) {
-            delete resource.relations[Relation.HAS_WORKFLOW_STEP];
-        }
+        resource.relations[HAS_WORKFLOW_STEP] = resource.relations[HAS_WORKFLOW_STEP]
+            .filter(targetId => targetId !== workflowStep.resource.id);
+        if (!resource.relations[HAS_WORKFLOW_STEP].length) delete resource.relations[HAS_WORKFLOW_STEP];
 
         await this.applyRelationChanges(oldVersion);
     }
@@ -144,7 +145,7 @@ export class WorkflowEditorModalComponent {
 
     private async updateWorkflowSteps() {
 
-        const targetIds: string[] = this.document.resource.relations?.[Relation.HAS_WORKFLOW_STEP] ?? [];
+        const targetIds: string[] = this.document.resource.relations?.[HAS_WORKFLOW_STEP] ?? [];
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
         this.sortWorkflowSteps();
     }

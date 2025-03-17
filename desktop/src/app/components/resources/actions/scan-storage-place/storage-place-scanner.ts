@@ -155,8 +155,6 @@ export class StoragePlaceScanner {
 
 
     private isValidStoragePlace(storagePlaceDocument: FieldDocument): boolean {
-
-        console.log('storagePlaceDocument:', storagePlaceDocument);
         
         return this.projectConfiguration.getInventoryCategories().map(to(Named.NAME))
             .includes(storagePlaceDocument.resource.category);

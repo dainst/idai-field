@@ -130,7 +130,7 @@
     <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title"
              i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</div>
-        <div id="target-category-picker-container">
+        <div id="target-category-picker-container" class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableTargetCategories"
                              [selectedCategories]="selectedTargetCategoryNames"
                              [customProjectConfiguration]="clonedProjectConfiguration"

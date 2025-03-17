@@ -33,13 +33,13 @@ export class WorkflowStepPlusButtonComponent implements OnChanges {
 
     public hasMultipleCategoryOptions(): boolean {
 
-        return this.topLevelCategoriesArray.length > 1 || this.topLevelCategoriesArray[0].children?.length > 0;
+        return this.topLevelCategoriesArray?.length > 1 || this.topLevelCategoriesArray?.[0].children?.length > 0;
     }
 
 
     private initializeTopLevelCategoriesArray(): Array<CategoryForm> {
 
-        return this.projectConfiguration.getTopLevelCategories().filter(category => {
+        return this.projectConfiguration.getCategory('WorkflowStep').children.filter(category => {
             return this.projectConfiguration.isAllowedRelationDomainCategory(
                 this.baseDocument.resource.category,
                 category.name,

@@ -28,6 +28,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public numberOfCategoryResources: number;
     public printedFields: Array<PrintedField> = [];
     public printableFields: string[] = [];
+    public selectableWorkflowRelationTargetCategories: Array<CategoryForm>;
 
     private currentColor: string;
 
@@ -45,6 +46,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
 
     public isCustomCategory = () => this.category.source === 'custom';
+
+    public isWorkflowSectionVisible = () => this.category.parentCategory?.name === 'WorkflowStep';
 
 
     public initialize() {
@@ -75,6 +78,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         this.printableFields = this.getPrintableFields();
 
         if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
+
+        this.selectableWorkflowRelationTargetCategories = this.getSelectableWorkflowRelationTargetCategories();
     }
 
 
@@ -341,6 +346,29 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     }
 
 
+    public toggleWorkflowRelationTargetCategory(category: CategoryForm, relationName: string) {
+
+        const categoryNames: string[] = [category.name].concat(
+            category.children ? category.children.map(childCategory => childCategory.name) : []
+        );
+        const clonedFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
+
+        if (clonedFormDefinition?.range?.[relationName]?.includes(category.name)) {
+            clonedFormDefinition.range[relationName] = clonedFormDefinition.range[relationName]
+                .filter(categoryName => {
+                    return !categoryNames.includes(categoryName)
+                        && category.parentCategory?.name !== categoryName;
+                });
+            if (!clonedFormDefinition.range[relationName].length) delete clonedFormDefinition.range[relationName];
+            if (!Object.keys(clonedFormDefinition.range).length) delete clonedFormDefinition.range;
+        } else {
+            if (!clonedFormDefinition.range) clonedFormDefinition.range = {};
+            if (!clonedFormDefinition.range[relationName]) clonedFormDefinition.range[relationName] = [];
+            clonedFormDefinition.range[relationName] = clonedFormDefinition.range[relationName].concat(categoryNames);
+        }
+    }
+
+
     private getPrintedFields(): Array<PrintedField> {
 
         return (this.category.parentCategory?.scanCodes?.printedFields ?? [])
@@ -399,6 +427,15 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             };
         }
     }
+
+
+    private getSelectableWorkflowRelationTargetCategories(): Array<CategoryForm> {
+
+        return this.clonedProjectConfiguration.getTopLevelCategories().filter(category => {
+            return !['Project', 'Operation', 'Place', 'TypeCatalog', 'Type', 'StoragePlace', 'WorkflowStep', 'Image']
+                .includes(category.name);
+        });
+    } 
 
 
     protected getLabel(): I18N.String {

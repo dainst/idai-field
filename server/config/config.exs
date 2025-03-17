@@ -14,7 +14,10 @@ import Config
 # Configures the endpoint
 config :field_hub, FieldHubWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: FieldHubWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    formats: [html: FieldHubWeb.ErrorHTML, json: FieldHubWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: FieldHub.PubSub,
   live_view: [signing_salt: "upiryQ4e"]
 

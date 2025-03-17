@@ -301,7 +301,8 @@ defmodule FieldHubWeb.Live.ProjectShow do
           "resource" => %{
             "staff" => staff
           }
-        } ->
+        }
+        when is_list(staff) ->
           join(staff)
 
         _ ->
@@ -324,10 +325,6 @@ defmodule FieldHubWeb.Live.ProjectShow do
         |> Stream.map(fn map ->
           Map.get(map, "value")
         end)
-        |> Enum.filter(fn
-          nil -> false
-          _ -> true
-        end)
         |> Enum.join(", ")
 
       true ->
@@ -335,7 +332,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
     end
     |> case do
       "" ->
-        # Handles the `true` fallback above or casess where extracting values from the maps did not return any values.
+        # Handles the `true` fallback above or cases where extracting values from the maps did not return any values.
         :no_data
 
       combined_names ->

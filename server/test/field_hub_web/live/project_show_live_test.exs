@@ -172,6 +172,22 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
       assert html =~ "Person 1, Person 2"
     end
 
+    test "Invalid `staff` value type does not crash the render", %{conn: conn} do
+      [ok: project_doc] = Project.get_documents(@project, ["project"])
+
+      TestHelper.update_document(
+        @project,
+        project_doc
+        |> Map.update!("resource", fn resource ->
+          Map.put(resource, "staff", resource["staff"] ++ ["Person 3", "Person 4"])
+        end)
+      )
+
+      {:ok, _view, html} = live(conn, "/ui/projects/show/#{@project}")
+
+      assert html =~ "No staff names found in project document."
+    end
+
     test "user can trigger issue evaluation", %{conn: conn} do
       {:ok, %{pid: pid} = view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
@@ -245,6 +261,30 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
                  name: @project,
                  password: @user_password
                })
+    end
+
+    test "non admin user can not delete the project" do
+      assert Project.exists?(@project)
+
+      {:noreply, socket} =
+        ProjectShow.handle_event(
+          "delete",
+          nil,
+          %Phoenix.LiveView.Socket{
+            assigns: %{
+              project: @project,
+              current_user: "unauthorized",
+              delete_files: false,
+              __changed__: %{},
+              flash: %{}
+            }
+          }
+        )
+
+      assert %{assigns: %{flash: %{"error" => "You are not authorized to delete the project."}}} =
+               socket
+
+      assert Project.exists?(@project)
     end
 
     test "non admin user has no passwort setting interface", %{conn: conn} do

@@ -53,29 +53,22 @@ defmodule FieldHubWeb.Live.ProjectCreate do
         %{assigns: %{current_user: user_name}} = socket
       ) do
     socket =
-      case User.is_admin?(user_name) do
-        true ->
-          create_project(identifier, password)
-          |> case do
-            :ok ->
-              socket
-              |> put_flash(
-                :info,
-                "Project created project `#{identifier}` with password `#{password}` successfully."
-              )
-              |> push_navigate(to: "/ui/projects/show/#{identifier}")
+      if User.is_admin?(user_name) do
+        create_project(identifier, password)
+        |> case do
+          :ok ->
+            socket
+            |> put_flash(
+              :info,
+              "Project created project `#{identifier}` with password `#{password}` successfully."
+            )
+            |> push_navigate(to: "/ui/projects/show/#{identifier}")
 
-            {:error, msg} ->
-              Logger.error(
-                "While creating a project got error `#{msg}`, attempt by user `#{user_name}`."
-              )
-
-              socket
-              |> put_flash(:error, msg)
-          end
-
-        false ->
-          redirect(socket, to: "/")
+          _error ->
+            put_flash(socket, :error, "Project creation with the provided input failed.")
+        end
+      else
+        redirect(socket, to: "/")
       end
 
     {:noreply, socket}
@@ -143,31 +136,15 @@ defmodule FieldHubWeb.Live.ProjectCreate do
     """
 
   defp create_project(identifier, password) do
-    case User.create(identifier, password) do
-      :created ->
-        Project.create(identifier)
-
-      :already_exists ->
-        {:error, "Error creating default user `#{identifier}`, the user already exists."}
-    end
-    |> case do
-      {:error, _} = error ->
-        # if user creation failed, just pass on the error
-        error
-
-      %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} ->
-        Project.update_user(identifier, identifier, :member)
-
-      :already_exists ->
-        {:error, "Error creating `#{identifier}`, a database with the identifier already exists."}
-    end
-    |> case do
-      {:error, _} = error ->
-        # if user or project creation failed, just pass on the error
-        error
-
-      :set ->
-        :ok
+    with :created <- User.create(identifier, password),
+         %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} <-
+           Project.create(identifier),
+         :set <- Project.update_user(identifier, identifier, :member) do
+      :ok
+    else
+      error ->
+        Logger.error("Project creation failed with: #{error}")
+        {:error, error}
     end
   end
 end

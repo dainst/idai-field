@@ -821,6 +821,7 @@ export class BuiltInConfiguration {
         WorkflowStep: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
+            abstract: true,
             fields: {
                 executionDate: {
                     inputType: 'date',

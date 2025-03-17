@@ -248,9 +248,7 @@ export class ProjectConfiguration {
     }
 
 
-    public isAllowedRelationDomainCategory(domainCategory: Name, 
-                                           rangeCategory: Name,
-                                           relation: Name): boolean {
+    public isAllowedRelationDomainCategory(domainCategory: Name, rangeCategory: Name, relation: Name): boolean {
 
         return Relation.isAllowedRelationDomainCategory(
             this.relations, domainCategory, rangeCategory, relation

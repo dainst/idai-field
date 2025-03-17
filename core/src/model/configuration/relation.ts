@@ -137,8 +137,8 @@ export namespace Relation {
         export const IS_WORKFLOW_STEP_OF = 'isWorkflowStepOf';
         export const HAS_WORKFLOW_STEP = 'hasWorkflowStep';
         export const PRODUCES = 'produces';
-        export const PRODUCED_BY = 'producedBy'
-        export const ALL = [IS_WORKFLOW_STEP_OF, HAS_WORKFLOW_STEP, PRODUCES, PRODUCED_BY];
+        export const IS_PRODUCED_IN = 'isProducedIn'
+        export const ALL = [IS_WORKFLOW_STEP_OF, HAS_WORKFLOW_STEP, PRODUCES, IS_PRODUCED_IN];
     }
 
 

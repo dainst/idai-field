@@ -164,7 +164,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 await this.resourcesComponent.scanStoragePlace(this.contextMenu.documents as Array<FieldDocument>);
                 break;
             case 'edit-workflow':
-                await this.resourcesComponent.editWorkflow(this.selectedDocument);
+                await this.resourcesComponent.editWorkflow(this.contextMenu.documents);
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);

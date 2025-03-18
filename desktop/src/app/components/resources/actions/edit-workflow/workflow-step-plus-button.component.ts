@@ -12,7 +12,7 @@ import { CategoryForm, FieldDocument, ProjectConfiguration, Relation } from 'ida
  */
 export class WorkflowStepPlusButtonComponent implements OnChanges {
 
-    @Input() baseDocument: FieldDocument;
+    @Input() baseDocuments: Array<FieldDocument>;
 
     @Output() onCategorySelected: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
 
@@ -46,11 +46,13 @@ export class WorkflowStepPlusButtonComponent implements OnChanges {
     private initializeTopLevelCategoriesArray(): Array<CategoryForm> {
 
         return this.projectConfiguration.getCategory('WorkflowStep').children.filter(category => {
-            return this.projectConfiguration.isAllowedRelationDomainCategory(
-                this.baseDocument.resource.category,
-                category.name,
-                Relation.Workflow.IS_EXECUTION_TARGET_OF
-            );
+            return this.baseDocuments.every(document => {
+                return this.projectConfiguration.isAllowedRelationDomainCategory(
+                    document.resource.category,
+                    category.name,
+                    Relation.Workflow.IS_EXECUTION_TARGET_OF
+                );
+            }) 
         });
     }
 }

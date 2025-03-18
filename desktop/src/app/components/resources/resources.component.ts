@@ -213,7 +213,7 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public async editWorkflow(document: Document) {
+    public async editWorkflow(documents: Array<Document>) {
 
         try {
             this.menuService.setContext(MenuContext.WORKFLOW_EDITOR);
@@ -222,7 +222,7 @@ export class ResourcesComponent implements OnDestroy {
                 WorkflowEditorModalComponent,
                 { size: 'lg', animation: false, backdrop: 'static', keyboard: false }
             );
-            modalRef.componentInstance.document = document;
+            modalRef.componentInstance.documents = documents;
             await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
             await modalRef.result;

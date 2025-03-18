@@ -1,8 +1,6 @@
 <div id="view-modal-header" class="modal-header">
     <div class="text-truncate heading"
-         i18n="@@resources.workflowEditorModal.header">
-        Arbeitssschritte für Ressource <b>{{document.resource.identifier}}</b> dokumentieren
-    </div>
+         i18n="@@resources.workflowEditorModal.header">Arbeitssschritte dokumentieren</div>
     <button id="workflow-editor-cancel-button" class="btn btn-primary btn-square" (click)="cancel()">
         <span class="mdi mdi-close"></span>
     </button>
@@ -24,7 +22,7 @@
         </div>
     </div>
     <div id="workflow-step-plus-button-container">
-        <workflow-step-plus-button [baseDocument]="document"
+        <workflow-step-plus-button [baseDocuments]="documents"
                                    (onCategorySelected)="createWorkflowStep($event)"></workflow-step-plus-button>
     </div>
 </div>

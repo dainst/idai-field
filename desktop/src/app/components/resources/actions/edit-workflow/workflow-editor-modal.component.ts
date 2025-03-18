@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { intersection } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource, Datastore, Labels,
     ProjectConfiguration, parseDate } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
@@ -10,6 +11,7 @@ import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 
 
+const IS_EXECUTED_ON: string = Relation.Workflow.IS_EXECUTED_ON;
 const IS_EXECUTION_TARGET_OF: string = Relation.Workflow.IS_EXECUTION_TARGET_OF;
 
 
@@ -25,7 +27,7 @@ const IS_EXECUTION_TARGET_OF: string = Relation.Workflow.IS_EXECUTION_TARGET_OF;
  */
 export class WorkflowEditorModalComponent {
 
-    public document: FieldDocument;
+    public documents: Array<FieldDocument>;
     public workflowSteps: Array<Document>;
 
 
@@ -69,7 +71,7 @@ export class WorkflowEditorModalComponent {
         );
         if (!newWorkflowStep) return;
 
-        await this.addRelation(newWorkflowStep);
+        await this.setRelation(newWorkflowStep);
         await this.updateWorkflowSteps();
     }
 
@@ -77,7 +79,6 @@ export class WorkflowEditorModalComponent {
     public async removeWorkflowStep(workflowStep: Document) {
 
         // TODO Confirm deletion
-        await this.removeRelation(workflowStep);
         await this.relationsManager.remove(workflowStep);
         await this.updateWorkflowSteps();
     }
@@ -106,36 +107,18 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    private async addRelation(workflowStep: Document) {
+    private async setRelation(workflowStep: Document) {
 
         const oldVersion: Document = Document.clone(workflowStep);
-
-        const resource: Resource = this.document.resource;
-        if (!resource.relations) resource.relations = {};
-        if (!resource.relations[IS_EXECUTION_TARGET_OF]) resource.relations[IS_EXECUTION_TARGET_OF] = [];
-        resource.relations[IS_EXECUTION_TARGET_OF].push(workflowStep.resource.id);
-
-        await this.applyRelationChanges(oldVersion);
+        workflowStep.resource.relations[IS_EXECUTED_ON] = this.documents.map(document => document.resource.id);
+        await this.applyRelationChanges(workflowStep, oldVersion);
     }
 
 
-    private async removeRelation(workflowStep: Document) {
-
-        const oldVersion: Document = Document.clone(workflowStep);
-
-        const resource: Resource = this.document.resource;
-        resource.relations[IS_EXECUTION_TARGET_OF] = resource.relations[IS_EXECUTION_TARGET_OF]
-            .filter(targetId => targetId !== workflowStep.resource.id);
-        if (!resource.relations[IS_EXECUTION_TARGET_OF].length) delete resource.relations[IS_EXECUTION_TARGET_OF];
-
-        await this.applyRelationChanges(oldVersion);
-    }
-
-
-    private async applyRelationChanges(oldVersion: Document) {
+    private async applyRelationChanges(workflowStep: Document, oldVersion: Document) {
 
         try {
-            await this.relationsManager.update(this.document, oldVersion);
+            await this.relationsManager.update(workflowStep, oldVersion);
         } catch (err) {
             console.error(err);
             this.messages.add([M.DOCEDIT_ERROR_SAVE]);
@@ -145,7 +128,9 @@ export class WorkflowEditorModalComponent {
 
     private async updateWorkflowSteps() {
 
-        const targetIds: string[] = this.document.resource.relations?.[IS_EXECUTION_TARGET_OF] ?? [];
+        const targetIds: string[] = intersection(
+            this.documents.map(document => document.resource.relations?.[IS_EXECUTION_TARGET_OF] ?? [])
+        );
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
         this.sortWorkflowSteps();
     }

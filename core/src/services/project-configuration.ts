@@ -199,12 +199,6 @@ export class ProjectConfiguration {
     }
 
 
-    public getWorkflowCategories(): Array<CategoryForm> {
-
-        return this.getCategoryWithSubcategories('WorkflowStep');
-    }
-
-
     public getImageCategories(): Array<CategoryForm> {
 
         return this.getCategoryWithSubcategories('Image');

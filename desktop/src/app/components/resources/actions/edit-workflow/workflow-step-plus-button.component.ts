@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { CategoryForm, FieldDocument, ProjectConfiguration, Relation } from 'idai-field-core';
 
 
@@ -16,13 +16,12 @@ export class WorkflowStepPlusButtonComponent implements OnChanges {
 
     @Output() onCategorySelected: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
 
+    @ViewChild('popover') popover: any;
+
     public topLevelCategoriesArray: Array<CategoryForm>;
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
-    
-    
-    public selectCategory = (category: CategoryForm) => this.onCategorySelected.emit(category);
 
 
     ngOnChanges() {
@@ -34,6 +33,13 @@ export class WorkflowStepPlusButtonComponent implements OnChanges {
     public hasMultipleCategoryOptions(): boolean {
 
         return this.topLevelCategoriesArray?.length > 1 || this.topLevelCategoriesArray?.[0].children?.length > 0;
+    }
+
+
+    public selectCategory(category: CategoryForm) {
+
+        this.popover.close();
+        this.onCategorySelected.emit(category);
     }
 
 

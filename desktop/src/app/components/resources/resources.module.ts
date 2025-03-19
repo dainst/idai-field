@@ -56,6 +56,7 @@ import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settin
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
 import { WorkflowStepPlusButtonComponent } from './actions/edit-workflow/workflow-step-plus-button.component';
+import { WorkflowRelations } from './actions/edit-workflow/workflow-relations.component';
 
 const remote = window.require('@electron/remote');
 
@@ -102,7 +103,8 @@ const remote = window.require('@electron/remote');
         DeleteQrCodeModalComponent,
         ScanStoragePlaceModalComponent,
         WorkflowEditorModalComponent,
-        WorkflowStepPlusButtonComponent
+        WorkflowStepPlusButtonComponent,
+        WorkflowRelations
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

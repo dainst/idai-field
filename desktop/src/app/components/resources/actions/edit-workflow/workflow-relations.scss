@@ -1,0 +1,29 @@
+workflow-relations {
+  .category-info {
+    width: 35px;
+    float: left;
+
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+
+    .category-count {
+      position: relative;
+      top: 3px;
+      right: 11px;
+      padding: 0 6px;
+      display: inline-block;
+      color: white;
+      background-color: #636060;
+      border-radius: 31px;
+      font-size: 12px;
+      text-align: center;
+      z-index: 1;
+
+      &.additional-categories {
+        top: 4px;
+        margin-left: 18px;
+      }
+    }
+  }
+}

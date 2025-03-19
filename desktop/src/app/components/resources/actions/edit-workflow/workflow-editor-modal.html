@@ -8,9 +8,10 @@
 <div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
     <div id="workflow-steps-container">
         <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
-            <div class="workflow-step-resources">
-                <document-teaser *ngIf="getExecutedOn(workflowStep).length === 1"
-                                 [document]="getExecutedOn(workflowStep)[0]"></document-teaser>
+            <div class="workflow-step-executed-on">
+                <workflow-relations [workflowStep]="workflowStep"
+                                    [relationName]="'executedOn'"
+                                    [relationTargets]="getExecutedOn(workflowStep)"></workflow-relations>
             </div>
             <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
             <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>

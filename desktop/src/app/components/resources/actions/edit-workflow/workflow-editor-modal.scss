@@ -16,7 +16,7 @@
       display: flex;
       border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
-      .workflow-step-resources,
+      .workflow-step-executed-on,
       .workflow-step-execution-date,
       .workflow-step-category,
       .workflow-step-short-description {
@@ -29,11 +29,11 @@
       .workflow-step-execution-date,
       .workflow-step-category,
       .workflow-step-short-description {
-        line-height: 37px;
+        line-height: 35px;
       }
 
-      .workflow-step-resources {
-        flex: 0 0 200px;
+      .workflow-step-executed-on {
+        flex: 0 0 203px;
 
         .teasercontent {
           width: 100%;
@@ -46,7 +46,7 @@
       }
 
       .workflow-step-execution-date {
-        flex: 0 0 120px;
+        flex: 0 0 102px;
       }
 
       .workflow-step-category {

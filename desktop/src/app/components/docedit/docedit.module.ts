@@ -40,8 +40,6 @@ import { RevisionSelectorComponent } from './tabs/revision-selector.component';
 import { DoceditConflictsTabComponent } from './tabs/docedit-conflicts-tab.component';
 import { CategorySwitcherButtonComponent } from './widgets/category-switcher-button.component';
 import { ImagePickerComponent } from './widgets/image-picker.component';
-import { RelationPickerGroupComponent } from './widgets/relationpicker/relation-picker-group.component';
-import { RelationPickerComponent } from './widgets/relationpicker/relation-picker.component';
 import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-data.component';
 import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-language-text-field.component';
 import { SimpleInputComponent } from './core/forms/simple-input.component';
@@ -85,9 +83,7 @@ import { LiteratureEntryModalComponent } from './core/forms/array-field/literatu
         ImagePickerComponent,
         EditFormComponent,
         EditFormFieldComponent,
-        RelationPickerComponent,
         EditFormGroup,
-        RelationPickerGroupComponent,
         CheckboxesComponent,
         BooleanComponent,
         DropdownComponent,

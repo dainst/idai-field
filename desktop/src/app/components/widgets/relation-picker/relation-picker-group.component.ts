@@ -1,7 +1,7 @@
 import { AfterViewChecked, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { isEmpty } from 'tsfun';
 import { Relation, Resource, Document } from 'idai-field-core';
-import { AngularUtility } from '../../../../angular/angular-utility';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 /**

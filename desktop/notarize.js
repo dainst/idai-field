@@ -1,7 +1,7 @@
 import { notarize } from '@electron/notarize';
 
 
-export async function performNotarization(context) {
+export default async function performNotarization(context) {
 
     if (process.env.MAC_NOTARIZE !== 'true') return;
 

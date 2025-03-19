@@ -1,7 +1,7 @@
-import { notarize } from '@electron/notarize';
+const { notarize } = require('@electron/notarize');
 
 
-export default async function performNotarization(context) {
+exports.default = async function performNotarization(context) {
 
     if (process.env.MAC_NOTARIZE !== 'true') return;
 

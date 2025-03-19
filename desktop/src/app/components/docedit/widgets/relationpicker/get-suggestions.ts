@@ -1,5 +1,4 @@
-import { Constraint, Query, Datastore, Relation, Constraints, CHILDOF_CONTAIN, Document,
-    Resource } from 'idai-field-core';
+import { Constraint, Query, Datastore, Relation, Document, Resource } from 'idai-field-core';
 
 
 /**

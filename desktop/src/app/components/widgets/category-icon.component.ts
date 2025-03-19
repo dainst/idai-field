@@ -2,8 +2,10 @@ import { Component, OnChanges, Input } from '@angular/core';
 import { isString } from 'tsfun';
 import { CategoryForm, Labels, ProjectConfiguration, StringUtils } from 'idai-field-core';
 
+
 type Color = string;
 type Character = string;
+
 
 @Component({
     selector: 'category-icon',
@@ -12,7 +14,6 @@ type Character = string;
         '</div>',
     standalone: false
 })
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira

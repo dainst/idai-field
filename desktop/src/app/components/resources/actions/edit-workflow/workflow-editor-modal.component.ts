@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { intersection, Map } from 'tsfun';
+import { Map, set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource, Datastore, Labels,
     ProjectConfiguration, parseDate } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
@@ -138,8 +138,8 @@ export class WorkflowEditorModalComponent {
 
     private async updateWorkflowSteps() {
 
-        const targetIds: string[] = intersection(
-            this.documents.map(document => document.resource.relations?.[IS_EXECUTION_TARGET_OF] ?? [])
+        const targetIds: string[] = set(
+            this.documents.map(document => document.resource.relations?.[IS_EXECUTION_TARGET_OF] ?? []).flat()
         );
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
         this.sortWorkflowSteps();

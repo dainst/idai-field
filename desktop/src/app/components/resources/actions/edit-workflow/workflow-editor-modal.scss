@@ -16,6 +16,7 @@
       display: flex;
       border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
+      .workflow-step-resources,
       .workflow-step-execution-date,
       .workflow-step-category,
       .workflow-step-short-description {
@@ -23,6 +24,25 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+      }
+
+      .workflow-step-execution-date,
+      .workflow-step-category,
+      .workflow-step-short-description {
+        line-height: 37px;
+      }
+
+      .workflow-step-resources {
+        flex: 0 0 200px;
+
+        .teasercontent {
+          width: 100%;
+
+          .title {
+            display: block;
+            width: calc(100% - 35px);
+          }
+        }
       }
 
       .workflow-step-execution-date {

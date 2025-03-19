@@ -38,7 +38,7 @@ export class WorkflowStepPlusButtonComponent implements OnChanges {
 
     public selectCategory(category: CategoryForm) {
 
-        this.popover.close();
+        if (this.popover) this.popover.close();
         this.onCategorySelected.emit(category);
     }
 

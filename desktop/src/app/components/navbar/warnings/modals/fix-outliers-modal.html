@@ -49,16 +49,20 @@
     </div>
     
     <div *ngIf="isValid() && replaceAll">
-        <div class="text-center alert alert-warning"
-             i18n="@@navbar.taskbar.fixOutliers.all.info">
-            Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected.display}}</b> Ressourcen
-            @if (selectedValues.length > 1) {, die in diesem Feld eine Mehrfachauswahl erlauben, } 
-            durch 
-            @if (selectedValues.length === 1) { den ausgewählten Wert } @else { die ausgewählten Werte }
-            @for (value of selectedValues; track value; let isLast = $last) {<b>{{value}}@if(!isLast){, }</b>} 
-            ersetzt.
-        </div>
+        @if (selectedValues.length === 1) {
+            <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.fixOutliers.allSingleValue.info">
+                Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected.display}}</b> Ressourcen durch den ausgewählten Wert <b>{{selectedValues[0]}}</b> ersetzt.
+            </div>
+        } @else {
+            <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.fixOutliers.allMultipleValues.info">
+                itte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected.display}}</b> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte
+                @for (value of selectedValues; track value; let isLast = $last) {<b>{{value}}@if(!isLast){, }</b>} 
+                ersetzt.
+            </div>
+        }
+        
     </div>
 </div>
 

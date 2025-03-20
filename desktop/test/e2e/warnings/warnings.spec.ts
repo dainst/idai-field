@@ -1629,6 +1629,7 @@ test.describe('warnings --', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
 
+        /* will solve both the checkbox and dropdowns containing 'braun'*/
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
         await FixOutliersModalPage.clickCheckboxesValue(0);
         await FixOutliersModalPage.clickMultipleSwitch();
@@ -1637,14 +1638,6 @@ test.describe('warnings --', () => {
 
         expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
         await FixOutliersModalPage.clickCheckboxesValue(1);
-        await FixOutliersModalPage.clickMultipleSwitch();
-        await FixOutliersModalPage.clickConfirmReplacementButton();
-        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
-
-        await WarningsModalPage.clickFixOutliersButton(0);
-
-        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
-        await FixOutliersModalPage.clickSelectValue('Gerät');
         await FixOutliersModalPage.clickMultipleSwitch();
         await FixOutliersModalPage.clickConfirmReplacementButton();
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());

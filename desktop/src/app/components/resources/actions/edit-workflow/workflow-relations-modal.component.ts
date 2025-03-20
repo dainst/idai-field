@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, RelationsManager, Relation, Resource } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
-import { Messages } from '../../../messages/messages';
 
 
 @Component({

@@ -16,6 +16,11 @@
             <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
             <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
             <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
+            <div *ngIf="isProducesRelationAvailable(workflowStep)" class="workflow-step-produces">
+                <workflow-relations [workflowStep]="workflowStep"
+                                    [relationName]="'produces'"
+                                    [mandatory]="false"></workflow-relations>
+            </div>
             <div class="workflow-step-buttons input-group">
                 <button class="btn btn-danger" (click)="removeWorkflowStep(workflowStep)">
                     <span class="mdi mdi-delete"></span>

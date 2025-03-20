@@ -1,0 +1,13 @@
+#workflow-relations-modal-body {
+  .add-relation {
+    background-color: $primary-button-color !important;
+
+    &:hover {
+      background-color: $primary-highlight-color !important;
+    }
+
+    .mdi {
+      color: white !important;
+    }
+  }
+}

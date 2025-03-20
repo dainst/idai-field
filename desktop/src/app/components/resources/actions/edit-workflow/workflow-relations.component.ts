@@ -79,9 +79,13 @@ export class WorkflowRelationsComponent implements OnChanges {
     }
 
 
-    private fetchRelationTargets(): Promise<Array<Document>> {
+    private async fetchRelationTargets(): Promise<Array<Document>> {
 
-        return this.datastore.getMultiple(this.workflowStep.resource.relations[this.relationName]);
+        const targetIds: string[] = this.workflowStep.resource.relations[this.relationName];
+
+        return targetIds
+            ? this.datastore.getMultiple(targetIds)
+            : [];
     }
 
 

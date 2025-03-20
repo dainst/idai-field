@@ -11,10 +11,6 @@ import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 
 
-const IS_EXECUTED_ON: string = Relation.Workflow.IS_EXECUTED_ON;
-const IS_EXECUTION_TARGET_OF: string = Relation.Workflow.IS_EXECUTION_TARGET_OF;
-
-
 @Component({
     templateUrl: './workflow-editor-modal.html',
     host: {
@@ -88,13 +84,13 @@ export class WorkflowEditorModalComponent {
     /**
      * @returns edited document if changes have been saved, undefined if the modal has been canceled
      */
-    public async editWorkflowStep(document: Document): Promise<Document|undefined> {
+    public async editWorkflowStep(workflowStep: Document): Promise<Document|undefined> {
     
         this.menus.setContext(MenuContext.DOCEDIT);
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
-        doceditRef.componentInstance.setDocument(document);
+        doceditRef.componentInstance.setDocument(workflowStep);
 
         try {
             return (await doceditRef.result).document;
@@ -108,10 +104,21 @@ export class WorkflowEditorModalComponent {
     }
 
 
+    public isProducesRelationAvailable(workflowStep: Document): boolean {
+
+        return this.projectConfiguration.getAllowedRelationRangeCategories(
+            Relation.Workflow.PRODUCES,
+            workflowStep.resource.category
+        ).length > 0;
+    }
+
+
     private async setRelation(workflowStep: Document) {
 
         const oldVersion: Document = Document.clone(workflowStep);
-        workflowStep.resource.relations[IS_EXECUTED_ON] = this.documents.map(document => document.resource.id);
+        workflowStep.resource.relations[Relation.Workflow.IS_EXECUTED_ON] = this.documents.map(document => {
+            return document.resource.id;
+        });
         await this.applyRelationChanges(workflowStep, oldVersion);
     }
 
@@ -130,7 +137,9 @@ export class WorkflowEditorModalComponent {
     private async updateWorkflowSteps() {
 
         const targetIds: string[] = set(
-            this.documents.map(document => document.resource.relations?.[IS_EXECUTION_TARGET_OF] ?? []).flat()
+            this.documents.map(document => {
+                return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF] ?? [];
+            }).flat()
         );
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
         this.sortWorkflowSteps();

@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@resources.workflowRelationsModal.header">
+        Ressourcen auswählen
+    </h5>
+</div>
+
+<div id="workflow-relations-modal" class="modal-body">
+   <relation-picker-group [resource]="clonedWorkflowStep.resource"
+                          [relationDefinition]="relationDefinition"></relation-picker-group>
+</div>
+
+<div  class="modal-footer">
+    <button id="confirm-button" class="btn btn-primary" (click)="save()">
+        <span i18n="@@buttons.ok">OK</span>
+    </button>
+    <div id="cancel-button" class="btn btn-secondary" (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

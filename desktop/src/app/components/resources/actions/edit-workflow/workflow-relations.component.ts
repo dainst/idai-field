@@ -1,5 +1,10 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Document } from 'idai-field-core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Datastore, Document, ProjectConfiguration, Relation } from 'idai-field-core';
+import { MenuContext } from '../../../../services/menu-context';
+import { Menus } from '../../../../services/menus';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { WorkflowRelationsModalComponent } from './workflow-relations-modal.component';
 
 
 type RelationTargetCategoryInfo = { categoryName: string, count: number };
@@ -13,21 +18,24 @@ type RelationTargetCategoryInfo = { categoryName: string, count: number };
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowRelations implements OnChanges {
+export class WorkflowRelationsComponent implements OnChanges {
 
     @Input() workflowStep: Document;
     @Input() relationName: 'isExecutedOn'|'produces';
-    @Input() relationTargets: Array<Document>;
 
+    public relationTargets: Array<Document>;
     public categoryInfos: Array<RelationTargetCategoryInfo>;
 
 
-    constructor() {}
+    constructor(private modalService: NgbModal,
+                private menuService: Menus,
+                private datastore: Datastore,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
-    ngOnChanges() {
+    async ngOnChanges() {
 
-        this.categoryInfos = this.buildCategoryInfos();
+        await this.update();
     }
 
 
@@ -36,6 +44,42 @@ export class WorkflowRelations implements OnChanges {
         return this.categoryInfos.slice(3).reduce((result, info) => {
             return result + info.count;
         }, 0);
+    }
+
+
+    public async edit() {
+
+        try {
+            this.menuService.setContext(MenuContext.MODAL);
+
+            const modalRef: NgbModalRef = this.modalService.open(
+                WorkflowRelationsModalComponent,
+                { animation: false, backdrop: 'static', keyboard: false }
+            );
+            modalRef.componentInstance.workflowStep = this.workflowStep;
+            modalRef.componentInstance.relationDefinition = this.getRelationDefinition();
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+            await this.update();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    private async update() {
+
+        this.relationTargets = await this.fetchRelationTargets();
+        this.categoryInfos = this.buildCategoryInfos();
+    }
+
+
+    private fetchRelationTargets(): Promise<Array<Document>> {
+
+        return this.datastore.getMultiple(this.workflowStep.resource.relations[this.relationName]);
     }
 
 
@@ -51,5 +95,12 @@ export class WorkflowRelations implements OnChanges {
             }
             return result;
         }, []);
+    }
+
+
+    private getRelationDefinition(): Relation {
+
+        return this.projectConfiguration.getRelationsForDomainCategory(this.workflowStep.resource.category)
+            .find(relation => relation.name === this.relationName);
     }
 }

@@ -13,10 +13,6 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 
 const IS_EXECUTED_ON: string = Relation.Workflow.IS_EXECUTED_ON;
 const IS_EXECUTION_TARGET_OF: string = Relation.Workflow.IS_EXECUTION_TARGET_OF;
-const PRODUCES: string = Relation.Workflow.PRODUCES;
-
-
-type RelationTargets = { isExecutedOn: Array<Document>, produces: Array<Document> };
 
 
 @Component({
@@ -34,7 +30,6 @@ export class WorkflowEditorModalComponent {
     public documents: Array<FieldDocument>;
 
     public workflowSteps: Array<Document>;
-    public relationTargets: Map<RelationTargets>;
 
 
     constructor(private activeModal: NgbActiveModal,
@@ -52,10 +47,6 @@ export class WorkflowEditorModalComponent {
     
     public getShortDescriptionLabel = (workflowStep: Document) =>
         Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
-
-    public getExecutedOn = (workflowStep: Document) => this.relationTargets[workflowStep.resource.id].isExecutedOn;
-
-    public getProduces = (workflowStep: Document) => this.relationTargets[workflowStep.resource.id].produces;
     
     public cancel = () => this.activeModal.close();
 
@@ -143,7 +134,6 @@ export class WorkflowEditorModalComponent {
         );
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
         this.sortWorkflowSteps();
-        this.relationTargets = await this.fetchRelationTargets();
     }
 
 
@@ -153,21 +143,6 @@ export class WorkflowEditorModalComponent {
             return parseDate(workflowStep1.resource.executionDate).getTime()
                 - parseDate(workflowStep2.resource.executionDate).getTime();
         });
-    }
-
-
-    private async fetchRelationTargets(): Promise<Map<RelationTargets>> {
-
-        const result: Map<RelationTargets> = {};
-
-        for (let workflowStep of this.workflowSteps) {
-            result[workflowStep.resource.id] = {
-                isExecutedOn: await this.datastore.getMultiple(workflowStep.resource.relations[IS_EXECUTED_ON] ?? []),
-                produces: await this.datastore.getMultiple(workflowStep.resource.relations[PRODUCES] ?? [])
-            };
-        }
-
-        return result;
     }
 
 

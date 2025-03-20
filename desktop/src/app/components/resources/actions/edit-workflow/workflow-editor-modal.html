@@ -10,7 +10,8 @@
         <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
             <div class="workflow-step-executed-on">
                 <workflow-relations [workflowStep]="workflowStep"
-                                    [relationName]="'isExecutedOn'"></workflow-relations>
+                                    [relationName]="'isExecutedOn'"
+                                    [mandatory]="true"></workflow-relations>
             </div>
             <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
             <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>

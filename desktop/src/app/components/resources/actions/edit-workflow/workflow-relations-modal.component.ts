@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, RelationsManager, Relation } from 'idai-field-core';
+import { Document, RelationsManager, Relation, Resource } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
+import { Messages } from '../../../messages/messages';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class WorkflowRelationsModalComponent {
 
     public workflowStep: Document;
     public relationDefinition: Relation;
+    public mandatory: boolean;
 
     public clonedWorkflowStep: Document;
 
@@ -45,7 +47,16 @@ export class WorkflowRelationsModalComponent {
     }
 
 
+    public validate(): boolean {
+
+        return !this.mandatory
+            || Resource.hasRelations(this.clonedWorkflowStep.resource, this.relationDefinition.name);
+    }
+
+
     public async save() {
+
+        if (!this.validate()) return;
 
         await this.relationsManager.update(this.clonedWorkflowStep, Document.clone(this.workflowStep));
         this.activeModal.close();

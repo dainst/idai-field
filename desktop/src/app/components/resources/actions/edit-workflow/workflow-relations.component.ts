@@ -22,6 +22,7 @@ export class WorkflowRelationsComponent implements OnChanges {
 
     @Input() workflowStep: Document;
     @Input() relationName: 'isExecutedOn'|'produces';
+    @Input() mandatory: boolean;
 
     public relationTargets: Array<Document>;
     public categoryInfos: Array<RelationTargetCategoryInfo>;
@@ -58,6 +59,7 @@ export class WorkflowRelationsComponent implements OnChanges {
             );
             modalRef.componentInstance.workflowStep = this.workflowStep;
             modalRef.componentInstance.relationDefinition = this.getRelationDefinition();
+            modalRef.componentInstance.mandatory = this.mandatory;
             await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
             await modalRef.result;

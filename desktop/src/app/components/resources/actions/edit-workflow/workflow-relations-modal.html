@@ -10,10 +10,15 @@
 </div>
 
 <div  class="modal-footer">
-    <button id="confirm-button" class="btn btn-primary" (click)="save()">
+    <button id="confirm-button"
+            class="btn btn-primary"
+            [class.disabled]="!validate()"
+            (click)="save()">
         <span i18n="@@buttons.ok">OK</span>
     </button>
-    <div id="cancel-button" class="btn btn-secondary" (click)="cancel()">
+    <div id="cancel-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>
 </div>

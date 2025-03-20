@@ -1,6 +1,18 @@
 workflow-relations {
   .workflow-relations-container {
     position: relative;
+    display: block;
+    width: 100%;
+
+    &:hover {
+      .category-icon {
+        filter: saturate(50%) brightness(117%);
+      }
+
+      .category-count {
+        filter: brightness(120%);
+      }
+    }
 
     .add-relation {
       position: absolute !important;

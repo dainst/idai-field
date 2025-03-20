@@ -10,7 +10,7 @@
             Bitte wählen Sie die korrekten Werte aus der Werteliste aus.
         </div>
 
-        <div>
+        <div class="replacement-values-container">
             <span *ngFor="let value of getValues()" class="checkbox form-check form-check-inline">
                 <label class="form-check-label">
                     <input class="form-check-input" [value]="value" type="checkbox" (click)="toggleCheckboxValue(value)">
@@ -22,7 +22,7 @@
         <div i18n="@@navbar.taskbar.fixOutliers.singleValue.info" class="warnings-tool-info">
             Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
         </div>
-        <div>
+        <div class="replacement-values-container">
             <searchable-select [selectedValue]="selectedValues[0]" 
                                [values]="getValues()" 
                                [getLabel]="getValueLabel"

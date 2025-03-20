@@ -1,8 +1,10 @@
-<div *ngFor="let relation of relations[relationDefinition.name]; let i = index">
-    <relation-picker [resource]="resource"
-                     [relationDefinition]="relationDefinition"
-                     [relationIndex]="i"
-                     (onTargetSelected)="onTargetSelected($event)"></relation-picker>
+<div class="relations-container">
+     <div *ngFor="let relation of relations[relationDefinition.name]; let i = index">
+          <relation-picker [resource]="resource"
+                           [relationDefinition]="relationDefinition"
+                           [relationIndex]="i"
+                           (onTargetSelected)="onTargetSelected($event)"></relation-picker>
+     </div>
 </div>
 
 <div *ngIf="isPlusButtonAvailable()"

@@ -10,4 +10,12 @@
       color: white !important;
     }
   }
+
+  relation-picker-group {
+    .relations-container {
+      max-height: 343px;
+      padding-right: 5px;
+      overflow-y: auto;
+    }
+  }
 }

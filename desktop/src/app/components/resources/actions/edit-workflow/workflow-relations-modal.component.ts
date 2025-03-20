@@ -47,7 +47,7 @@ export class WorkflowRelationsModalComponent {
 
     public async save() {
 
-        await this.relationsManager.update(this.clonedWorkflowStep, this.workflowStep);
+        await this.relationsManager.update(this.clonedWorkflowStep, Document.clone(this.workflowStep));
         this.activeModal.close();
     }
 }

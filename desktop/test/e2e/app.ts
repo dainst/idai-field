@@ -61,7 +61,9 @@ export async function getUrl(): Promise<string> {
 }
 
 
-export function navigateTo(menu) {
+export async function navigateTo(menu) {
+
+    await pause(100);
 
     return window.evaluate((menuOption) => {
         require('@electron/remote').getCurrentWindow().webContents

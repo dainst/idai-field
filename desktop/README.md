@@ -46,11 +46,6 @@ To execute the **unit tests**, run
 $ npm test   
 ```
 
-The project is set up to manage the compilation of the sources (test as well as regular sources) independently from Angular. This is due to the fact that we perform Node based tests, since our code runs in an Electron context. This is done on the 
-basis of `test/tsconfig.json` and `jasmine`. To rebuild the sources for tests continually, you can run `npm run build:test+watch` in one terminal window, and `npm test` in another.
-
-For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
-
 To execute **e2e tests**, run 
 
 ```

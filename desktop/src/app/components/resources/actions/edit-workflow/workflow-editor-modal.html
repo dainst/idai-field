@@ -25,7 +25,8 @@
                 <div class="workflow-step-executed-on">
                     <workflow-relations [workflowStep]="workflowStep"
                                         [relationName]="'isExecutedOn'"
-                                        [mandatory]="true"></workflow-relations>
+                                        [mandatory]="true"
+                                        (onChanges)="updateWorkflowSteps()"></workflow-relations>
                 </div>
                 <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
                 <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>

@@ -120,6 +120,18 @@ export class WorkflowEditorModalComponent {
     }
 
 
+    public async updateWorkflowSteps() {
+
+        const targetIds: string[] = set(
+            this.documents.map(document => {
+                return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF] ?? [];
+            }).flat()
+        );
+        this.workflowSteps = await this.datastore.getMultiple(targetIds);
+        sortWorkflowSteps(this.workflowSteps);
+    }
+
+
     private async setRelation(workflowStep: Document) {
 
         const oldVersion: Document = Document.clone(workflowStep);
@@ -142,18 +154,6 @@ export class WorkflowEditorModalComponent {
             console.error(err);
             this.messages.add([M.DOCEDIT_ERROR_SAVE]);
         }
-    }
-
-
-    private async updateWorkflowSteps() {
-
-        const targetIds: string[] = set(
-            this.documents.map(document => {
-                return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF] ?? [];
-            }).flat()
-        );
-        this.workflowSteps = await this.datastore.getMultiple(targetIds);
-        sortWorkflowSteps(this.workflowSteps);
     }
 
 

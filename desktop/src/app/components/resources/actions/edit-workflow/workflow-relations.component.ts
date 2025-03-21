@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, Document, ProjectConfiguration, Relation } from 'idai-field-core';
 import { MenuContext } from '../../../../services/menu-context';
@@ -23,6 +23,8 @@ export class WorkflowRelationsComponent implements OnChanges {
     @Input() workflowStep: Document;
     @Input() relationName: 'isExecutedOn'|'resultsIn';
     @Input() mandatory: boolean;
+
+    @Output() onChanges: EventEmitter<void> = new EventEmitter<void>();
 
     public relationTargets: Array<Document>;
     public categoryInfos: Array<RelationTargetCategoryInfo>;
@@ -64,6 +66,7 @@ export class WorkflowRelationsComponent implements OnChanges {
             AngularUtility.blurActiveElement();
             await modalRef.result;
             await this.update();
+            this.onChanges.emit();
         } catch (err) {
             console.error(err);
         } finally {

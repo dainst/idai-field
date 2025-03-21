@@ -129,6 +129,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.hasResourceLimitChanged()
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || this.hasScanCodesConfigurationChanged()
+            || this.hasWorkflowConfigurationChanged()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }
@@ -479,6 +480,15 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return !equal(clonedScanCodes)(customScanCodes)
             || !equal(this.printedFields)(this.getPrintedFields());
+    }
+
+
+    private hasWorkflowConfigurationChanged(): boolean {
+
+        const clonedRange = this.getClonedFormDefinition().range ?? {};
+        const customRange = this.getCustomFormDefinition().range ?? {};
+
+        return !equal(clonedRange)(customRange);
     }
 
 

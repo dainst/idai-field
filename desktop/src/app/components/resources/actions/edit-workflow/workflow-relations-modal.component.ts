@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, RelationsManager, Relation, Resource, Labels, ProjectConfiguration } from 'idai-field-core';
-import { Menus } from '../../../../services/menus';
-import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -25,7 +23,6 @@ export class WorkflowRelationsModalComponent {
 
 
     constructor(private activeModal: NgbActiveModal,
-                private menus: Menus,
                 private relationsManager: RelationsManager,
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration) {}
@@ -38,9 +35,7 @@ export class WorkflowRelationsModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
-            this.cancel();
-        }
+        if (event.key === 'Escape') this.cancel();
     }
 
 

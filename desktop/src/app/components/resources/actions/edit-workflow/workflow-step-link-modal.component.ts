@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
 import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named } from 'idai-field-core';
-import { Menus } from '../../../../services/menus';
-import { MenuContext } from '../../../../services/menu-context';
 import { sortWorkflowSteps } from './sort-workflow-steps';
 
 
@@ -32,8 +30,7 @@ export class WorkflowStepLinkModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                private labels: Labels,
-                private menus: Menus) {}
+                private labels: Labels) {}
 
 
     public getCategoryLabel = (workflowStep: Document) =>
@@ -44,9 +41,7 @@ export class WorkflowStepLinkModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
     
-        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
-            this.cancel();
-        }
+        if (event.key === 'Escape') this.cancel();
     }
 
 

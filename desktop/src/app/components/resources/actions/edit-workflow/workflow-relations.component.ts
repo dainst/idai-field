@@ -67,7 +67,7 @@ export class WorkflowRelationsComponent implements OnChanges {
         } catch (err) {
             console.error(err);
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.menuService.setContext(MenuContext.WORKFLOW_EDITOR);
         }
     }
 

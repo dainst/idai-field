@@ -1,11 +1,15 @@
-<div class="modal-header">
-    <h5 class="modal-title">{{getHeading()}}</h5>
-</div>
-
 <div id="workflow-relations-modal-body" class="modal-body">
-   <relation-picker-group [resource]="clonedWorkflowStep.resource"
-                          [relationDefinition]="relationDefinition"
-                          [createIfEmpty]="true"></relation-picker-group>
+    <p *ngIf="relationDefinition.name === 'isExecutedOn'"
+        i18n="@@resources.workflowRelationsModal.heading.isExecutedOn">
+        Der Arbeitsschritt <b>{{getCategoryLabel()}}</b> wurde durchgeführt an:
+    </p>
+    <p *ngIf="relationDefinition.name === 'resultsIn'"
+        i18n="@@resources.workflowRelationsModal.heading.resultsIn">
+        Der Arbeitsschritt <b>{{getCategoryLabel()}}</b> ergibt:
+    </p>
+    <relation-picker-group [resource]="clonedWorkflowStep.resource"
+                           [relationDefinition]="relationDefinition"
+                           [createIfEmpty]="true"></relation-picker-group>
 </div>
 
 <div  class="modal-footer">

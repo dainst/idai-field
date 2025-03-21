@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, RelationsManager, Relation, Resource } from 'idai-field-core';
+import { Document, RelationsManager, Relation, Resource, Labels, ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 
@@ -26,8 +26,12 @@ export class WorkflowRelationsModalComponent {
 
     constructor(private activeModal: NgbActiveModal,
                 private menus: Menus,
-                private relationsManager: RelationsManager) {}
+                private relationsManager: RelationsManager,
+                private labels: Labels,
+                private projectConfiguration: ProjectConfiguration) {}
 
+
+    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.workflowStep));
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
@@ -59,13 +63,5 @@ export class WorkflowRelationsModalComponent {
 
         await this.relationsManager.update(this.clonedWorkflowStep, Document.clone(this.workflowStep));
         this.activeModal.close();
-    }
-
-
-    public getHeading(): string {
-
-        return this.relationDefinition.name === Relation.Workflow.IS_EXECUTED_ON
-            ? $localize `:@@resources.workflowRelationsModal.heading.isExecutedOn:Der Arbeitsschritt wurde durchgeführt an:`
-            : $localize `:@@resources.workflowRelationsModal.heading.resultsIn:Der Arbeitsschritt ergibt:`
     }
 }

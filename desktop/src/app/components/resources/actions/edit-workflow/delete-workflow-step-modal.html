@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@resources.deleteWorkflowStepModal.header">Arbeitsschritt löschen?</h5>
+</div>
+
+<div id="delete-workflow-step-modal-body" class="modal-body">
+    <p i18n="@@resources.deleteWorkflowStepModal.question">
+        Möchten Sie den Arbeitsschritt <b>{{getCategoryLabel()}}</b> wirklich löschen?
+    </p>
+
+    <div *ngIf="getNumberOfLinkedResources() > 1"
+         class="alert alert-warning"
+         i18n="@@resources.deleteWorkflowStepModal.warning">
+        Der Arbeitsschritt wird für alle {{getNumberOfLinkedResources()}} verknüpften Ressourcen entfernt.
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" id="delete-workflow-step-confirm" class="btn btn-danger"
+            (click)="activeModal.close()" i18n="@@buttons.delete">Löschen</button>
+    <button type="button" id="delete-workflow-step-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

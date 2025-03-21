@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map, set } from 'tsfun';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource, Datastore, Labels,
-    ProjectConfiguration, parseDate } from 'idai-field-core';
+    ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -10,6 +10,7 @@ import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { sortWorkflowSteps } from './sort-workflow-steps';
+import { DeleteWorkflowStepModalComponent } from './delete-workflow-step-modal.component';
 
 
 @Component({
@@ -80,11 +81,26 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    public async removeWorkflowStep(workflowStep: Document) {
+    public async deleteWorkflowStep(workflowStep: Document) {
 
-        // TODO Confirm deletion
-        await this.relationsManager.remove(workflowStep);
-        await this.updateWorkflowSteps();
+        this.menus.setContext(MenuContext.DOCEDIT);
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            DeleteWorkflowStepModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
+        modalRef.componentInstance.workflowStep = workflowStep;
+
+        try {
+            await modalRef.result;
+            await this.relationsManager.remove(workflowStep);
+            await this.updateWorkflowSteps();
+        } catch(_) {
+            // Modal has been canceled
+        } finally {
+            AngularUtility.blurActiveElement();
+            this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
+        }
     }
 
 
@@ -95,15 +111,16 @@ export class WorkflowEditorModalComponent {
     
         this.menus.setContext(MenuContext.DOCEDIT);
 
-        const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false, animation: false });
-        doceditRef.componentInstance.setDocument(workflowStep);
+        const modalRef: NgbModalRef = this.modalService.open(
+            DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
+        );
+        modalRef.componentInstance.setDocument(workflowStep);
 
         try {
-            return (await doceditRef.result).document;
+            return (await modalRef.result).document;
         } catch(_) {
             // Modal has been canceled
-            return undefined;
         } finally {
             AngularUtility.blurActiveElement();
             this.menus.setContext(MenuContext.WORKFLOW_EDITOR);

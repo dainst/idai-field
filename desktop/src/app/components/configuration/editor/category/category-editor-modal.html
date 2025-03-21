@@ -185,7 +185,7 @@
     </div>
     <div *ngIf="isWorkflowSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title"
-             i18n="@@configuration.workflow.range.executable">Durchführbar an</div>
+             i18n="@@configuration.workflow.range.isExecutedOn">Durchführbar an</div>
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableWorkflowRelationTargetCategories"
                              [selectedCategories]="getClonedFormDefinition().range?.isExecutedOn"
@@ -197,7 +197,7 @@
     </div>
     <div *ngIf="isWorkflowSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title"
-             i18n="@@configuration.workflow.range.producable">Produziert</div>
+             i18n="@@configuration.workflow.range.resultsIn">Ergibt</div>
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableWorkflowRelationTargetCategories"
                              [selectedCategories]="getClonedFormDefinition().range?.resultsIn"

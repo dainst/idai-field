@@ -22,6 +22,17 @@ export class LinkModalComponent {
                 private projectConfiguration: ProjectConfiguration) {}
 
 
+    public getConstraints = () => {
+
+        return {
+            'id:match': {
+                value: this.getIdsToIgnore(),
+                subtract: true
+            }
+        };
+    }
+
+
     public onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
@@ -33,17 +44,6 @@ export class LinkModalComponent {
         this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
             'isDepictedIn', 'Image'
         );
-    }
-
-
-    public getConstraints(): Constraints {
-
-        return {
-            'id:match': {
-                value: this.getIdsToIgnore(),
-                subtract: true
-            }
-        };
     }
 
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
-import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Constraints, Named } from 'idai-field-core';
+import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { sortWorkflowSteps } from './sort-workflow-steps';

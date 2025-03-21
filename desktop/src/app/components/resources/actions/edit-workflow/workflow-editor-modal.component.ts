@@ -104,10 +104,10 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    public isProducesRelationAvailable(workflowStep: Document): boolean {
+    public isResultsInRelationAvailable(workflowStep: Document): boolean {
 
         return this.projectConfiguration.getAllowedRelationRangeCategories(
-            Relation.Workflow.PRODUCES,
+            Relation.Workflow.RESULTS_IN,
             workflowStep.resource.category
         ).length > 0;
     }

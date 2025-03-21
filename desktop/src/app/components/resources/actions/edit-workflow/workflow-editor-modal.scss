@@ -22,7 +22,7 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
       .workflow-step-executed-on,
-      .workflow-step-produces,
+      .workflow-step-results-in,
       .workflow-step-execution-date,
       .workflow-step-category,
       .workflow-step-short-description {
@@ -39,7 +39,7 @@
       }
 
       .workflow-step-executed-on,
-      .workflow-step-produces {
+      .workflow-step-results-in {
         flex: 0 0 203px;
 
         .teasercontent {

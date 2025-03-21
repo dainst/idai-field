@@ -21,7 +21,7 @@ type RelationTargetCategoryInfo = { categoryName: string, count: number };
 export class WorkflowRelationsComponent implements OnChanges {
 
     @Input() workflowStep: Document;
-    @Input() relationName: 'isExecutedOn'|'produces';
+    @Input() relationName: 'isExecutedOn'|'resultsIn';
     @Input() mandatory: boolean;
 
     public relationTargets: Array<Document>;

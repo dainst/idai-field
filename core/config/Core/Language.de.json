@@ -126,10 +126,10 @@
     "executionTargetOf": {
       "label": "Durchführungsziel von"
     },
-    "produces": {
-      "label": "Hat Ergebnis hervorgebracht"
+    "resultsIn": {
+      "label": "Ergibt"
     },
-    "isProducedIn": {
+    "isResultOf": {
       "label": "Ergebnis von"
     }
   }

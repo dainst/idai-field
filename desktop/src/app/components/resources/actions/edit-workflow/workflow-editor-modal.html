@@ -16,8 +16,8 @@
                  i18n="@@resources.workflowEditorModal.category">Kategorie</div>
             <div class="workflow-step-short-description"
                  i18n="@@resources.workflowEditorModal.shortDescription">Kurzbeschreibung</div>
-            <div class="workflow-step-produces"
-                 i18n="@@resources.workflowEditorModal.produces">Ergebnis</div>
+            <div class="workflow-step-results-in"
+                 i18n="@@resources.workflowEditorModal.resultsIn">Ergibt</div>
             <div class="workflow-step-buttons"></div>
         </div>
         <div class="workflow-steps-body">
@@ -30,9 +30,9 @@
                 <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
                 <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
                 <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
-                <div *ngIf="isProducesRelationAvailable(workflowStep)" class="workflow-step-produces">
+                <div *ngIf="isResultsInRelationAvailable(workflowStep)" class="workflow-step-results-in">
                     <workflow-relations [workflowStep]="workflowStep"
-                                        [relationName]="'produces'"
+                                        [relationName]="'resultsIn'"
                                         [mandatory]="false"></workflow-relations>
                 </div>
                 <div class="workflow-step-buttons input-group">

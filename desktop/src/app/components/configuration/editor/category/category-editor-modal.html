@@ -200,10 +200,10 @@
              i18n="@@configuration.workflow.range.producable">Produziert</div>
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableWorkflowRelationTargetCategories"
-                             [selectedCategories]="getClonedFormDefinition().range?.produces"
+                             [selectedCategories]="getClonedFormDefinition().range?.resultsIn"
                              [customProjectConfiguration]="clonedProjectConfiguration"
                              [allowPickingAbstractCategories]="true"
-                             (onCategoryPicked)="toggleWorkflowRelationTargetCategory($event, 'produces')">
+                             (onCategoryPicked)="toggleWorkflowRelationTargetCategory($event, 'resultsIn')">
             </category-picker>
         </div>
     </div>

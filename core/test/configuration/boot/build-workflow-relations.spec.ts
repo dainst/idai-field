@@ -21,7 +21,7 @@ describe('buildWorkflowRelations', () => {
                 groups: [],
                 range: {
                     isExecutedOn: ['FindA', 'FindB'],
-                    produces: ['FindC']
+                    resultsIn: ['FindC']
                 }
             },
             'WorkflowStepB:default': {
@@ -93,8 +93,8 @@ describe('buildWorkflowRelations', () => {
         });
 
         expect(relations[5]).toEqual({
-            name: 'produces',
-            inverse: 'isProducedIn',
+            name: 'resultsIn',
+            inverse: 'isResultOf',
             domain: ['WorkflowStepA'],
             range: ['FindC'],
             inputType: 'relation',
@@ -103,8 +103,8 @@ describe('buildWorkflowRelations', () => {
         });
 
         expect(relations[6]).toEqual({
-            name: 'isProducedIn',
-            inverse: 'produces',
+            name: 'isResultOf',
+            inverse: 'resultsIn',
             domain: ['FindC'],
             range: ['WorkflowStepA'],
             inputType: 'relation',

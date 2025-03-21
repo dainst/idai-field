@@ -22,7 +22,7 @@ export interface CustomFormDefinition extends BaseFormDefinition {
     scanCodes?: ScanCodeConfiguration;
     range?: {
         isExecutedOn?: string[];
-        produces?: string[];
+        resultsIn?: string[];
     }
 }
 

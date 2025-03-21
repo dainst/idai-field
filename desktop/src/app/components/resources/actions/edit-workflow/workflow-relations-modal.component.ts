@@ -60,4 +60,12 @@ export class WorkflowRelationsModalComponent {
         await this.relationsManager.update(this.clonedWorkflowStep, Document.clone(this.workflowStep));
         this.activeModal.close();
     }
+
+
+    public getHeading(): string {
+
+        return this.relationDefinition.name === Relation.Workflow.IS_EXECUTED_ON
+            ? $localize `:@@resources.workflowRelationsModal.heading.isExecutedOn:Der Arbeitsschritt wurde durchgeführt an:`
+            : $localize `:@@resources.workflowRelationsModal.heading.resultsIn:Als Ergebnis des Arbeitsschritts ergibt sich:`
+    }
 }

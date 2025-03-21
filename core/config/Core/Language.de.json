@@ -127,7 +127,7 @@
       "label": "Durchführungsziel von"
     },
     "produces": {
-      "label": "Hat hervorgebracht"
+      "label": "Hat Ergebnis hervorgebracht"
     },
     "isProducedIn": {
       "label": "Ergebnis von"

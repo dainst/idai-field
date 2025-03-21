@@ -1,0 +1,116 @@
+#change-history-modal-header {
+  background-color: #e7e7e7;
+}
+
+#heading-label {
+  padding-left: 1ex;
+  font-size: larger;
+  width: 90%;
+ 
+}
+
+#resource-name-title {
+  font-weight: bold; 
+}
+
+.history-modal-content .modal-content {
+  user-select: none;
+  width: fit-content;
+}
+
+#no-change-div {
+  padding: 1em;
+}
+
+#changes-table {
+  padding-top : 1em;
+  padding-bottom : 1em;
+}
+
+.list {
+  background: white;
+  margin-bottom: -20px;
+  width: 100%;
+  
+  #list-header {
+    min-width: 100%;
+    user-select: none;
+    display: grid;
+    grid-template-columns: 20ex 33ex;
+    font-size: 16px;
+    padding-top: 1em;
+    
+    .list-header-field {      
+      padding: 5px 5px 5px 10px;
+      color: rgb(73, 80, 87);
+      border: solid 1px rgb(221, 221, 221);
+    }
+  }
+
+  .list-body {    
+    max-height: calc(80vh - 230px);
+    overflow: auto;
+    padding-bottom: 1ex;
+  }
+
+  .list-row {
+    min-width: 100%;
+    user-select: none;
+    display: grid;
+    grid-template-columns: 20ex 33ex;
+    font-size: 16px;
+    font-weight: 500;
+    overflow-x: hidden;
+  
+    .list-body-field {
+      padding: 5px 5px 5px 10px;
+      color: rgb(73, 80, 87);
+      border: solid 1px rgb(221, 221, 221);
+      border-top: none; 
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.list-header-field:hover {
+  background-color: rgb(200, 200, 200, 0.2);
+}
+
+.box-left {
+  float: left;
+  margin-right: 4pt;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.resource-creation-info {
+  margin: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+.resource-creation-info-label {
+  font-weight: bold;
+  color: #484948;
+  font-style: italic;
+}
+
+#no-change-div {
+  font-style: italic;
+  color: #8f9190;
+  font-size: small;
+}
+
+.modal-header-resource-name {
+  font-size: large;
+  color: rgb(29, 63, 128);
+  float: left;
+  padding-left: 2%;
+}
+
+#changes-history-close-button {
+  position: absolute;
+  right: 2%;
+}

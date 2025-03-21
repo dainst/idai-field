@@ -22,6 +22,14 @@
             </div>
 
             <div>
+                <div class="btn-group" id="show-change-history">
+                    <button class="btn btn-secondary"
+                            id="document-edit-button-show-change-history"                            
+                            (click)="showChangeHistory()">
+                        <span class="mdi mdi-history"></span>                
+                        <span class="button-label" i18n="@@buttons.history">Änderungshistorie</span>
+                    </button>
+                </div>
                 <div class="btn-group" id="save-button-group">
                     <button class="btn btn-success disabled pull-right"
                             id="document-edit-button-save-document"

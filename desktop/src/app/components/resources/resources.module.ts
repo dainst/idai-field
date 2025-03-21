@@ -58,6 +58,8 @@ import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-e
 import { WorkflowStepPlusButtonComponent } from './actions/edit-workflow/workflow-step-plus-button.component';
 import { WorkflowRelationsComponent } from './actions/edit-workflow/workflow-relations.component';
 import { WorkflowRelationsModalComponent } from './actions/edit-workflow/workflow-relations-modal.component';
+import { WorkflowStepLinkButtonComponent } from './actions/edit-workflow/workflow-step-link-button.component';
+import { WorkflowStepLinkModalComponent } from './actions/edit-workflow/workflow-step-link-modal.component';
 
 const remote = window.require('@electron/remote');
 
@@ -106,7 +108,9 @@ const remote = window.require('@electron/remote');
         WorkflowEditorModalComponent,
         WorkflowStepPlusButtonComponent,
         WorkflowRelationsComponent,
-        WorkflowRelationsModalComponent
+        WorkflowRelationsModalComponent,
+        WorkflowStepLinkButtonComponent,
+        WorkflowStepLinkModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

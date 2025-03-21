@@ -9,6 +9,7 @@ import { DoceditComponent } from '../../../docedit/docedit.component';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { sortWorkflowSteps } from './sort-workflow-steps';
 
 
 @Component({
@@ -68,7 +69,13 @@ export class WorkflowEditorModalComponent {
         );
         if (!newWorkflowStep) return;
 
-        await this.setRelation(newWorkflowStep);
+        await this.linkWorkflowStep(newWorkflowStep);
+    }
+
+
+    public async linkWorkflowStep(workflowStep: Document) {
+
+        await this.setRelation(workflowStep);
         await this.updateWorkflowSteps();
     }
 
@@ -116,9 +123,13 @@ export class WorkflowEditorModalComponent {
     private async setRelation(workflowStep: Document) {
 
         const oldVersion: Document = Document.clone(workflowStep);
-        workflowStep.resource.relations[Relation.Workflow.IS_EXECUTED_ON] = this.documents.map(document => {
+
+        const currentTargetIds: string[] = workflowStep.resource.relations?.[Relation.Workflow.IS_EXECUTED_ON] ?? [];
+        const newTargetIds: string[] = this.documents.map(document => {
             return document.resource.id;
         });
+        workflowStep.resource.relations[Relation.Workflow.IS_EXECUTED_ON] = set(currentTargetIds.concat(newTargetIds));
+
         await this.applyRelationChanges(workflowStep, oldVersion);
     }
 
@@ -142,16 +153,7 @@ export class WorkflowEditorModalComponent {
             }).flat()
         );
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
-        this.sortWorkflowSteps();
-    }
-
-
-    private sortWorkflowSteps() {
-
-        this.workflowSteps.sort((workflowStep1: Document, workflowStep2: Document) => {
-            return parseDate(workflowStep1.resource.executionDate).getTime()
-                - parseDate(workflowStep2.resource.executionDate).getTime();
-        });
+        sortWorkflowSteps(this.workflowSteps);
     }
 
 

@@ -16,7 +16,7 @@ workflow-relations {
 
     .add-relation {
       position: absolute !important;
-      right: 10px;
+      left: 0;
       background-color: $primary-button-color !important;
 
       &:hover {

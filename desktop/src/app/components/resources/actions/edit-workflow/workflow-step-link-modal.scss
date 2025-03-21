@@ -32,8 +32,8 @@
       display: block;
       padding: 10px;
       border-top-width: 1px;
+      font-size: 14px;
       user-select: none;
-      cursor: default;
 
       &:not(:last-child) {
         border-bottom: none;

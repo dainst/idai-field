@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection } from 'tsfun';
-import { CategoryForm, ProjectConfiguration, Document, Relation } from 'idai-field-core';
+import { CategoryForm, ProjectConfiguration, Document, Relation, Constraints } from 'idai-field-core';
 
 
 @Component({
@@ -16,17 +16,6 @@ export class LinkModalComponent {
 
     public imageDocuments: Array<Document>;
     public filterOptions: Array<CategoryForm> = [];
-
-
-    public getConstraints = () => {
-
-        return {
-            'id:match': {
-                value: this.getIdsToIgnore(),
-                subtract: true
-            }
-        };
-    }
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -44,6 +33,17 @@ export class LinkModalComponent {
         this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
             'isDepictedIn', 'Image'
         );
+    }
+
+
+    public getConstraints(): Constraints {
+
+        return {
+            'id:match': {
+                value: this.getIdsToIgnore(),
+                subtract: true
+            }
+        };
     }
 
 

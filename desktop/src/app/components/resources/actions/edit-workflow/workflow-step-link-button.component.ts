@@ -43,7 +43,7 @@ export class WorkflowStepLinkButtonComponent {
         } catch (err) {
             console.error(err);
         } finally {
-            this.menus.setContext(MenuContext.DEFAULT);
+            this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
         }
     }
 }

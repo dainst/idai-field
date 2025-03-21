@@ -41,7 +41,7 @@ export class WorkflowStepLinkButtonComponent {
             const selectedWorkflowStep: Document = await modalRef.result;
             this.onWorkflowStepSelected.emit(selectedWorkflowStep);
         } catch (err) {
-            console.error(err);
+            if (err !== 'cancel') console.error(err);
         } finally {
             this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
         }

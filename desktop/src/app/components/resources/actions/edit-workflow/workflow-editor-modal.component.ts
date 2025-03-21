@@ -95,8 +95,8 @@ export class WorkflowEditorModalComponent {
             await modalRef.result;
             await this.relationsManager.remove(workflowStep);
             await this.updateWorkflowSteps();
-        } catch(_) {
-            // Modal has been canceled
+        } catch(err) {
+            if (err !== 'cancel') console.error(err);
         } finally {
             AngularUtility.blurActiveElement();
             this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
@@ -119,8 +119,8 @@ export class WorkflowEditorModalComponent {
 
         try {
             return (await modalRef.result).document;
-        } catch(_) {
-            // Modal has been canceled
+        } catch(err) {
+            if (err !== 'cancel') console.error(err);
         } finally {
             AngularUtility.blurActiveElement();
             this.menus.setContext(MenuContext.WORKFLOW_EDITOR);

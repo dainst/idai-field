@@ -17,6 +17,7 @@ export class LinkModalComponent {
     public imageDocuments: Array<Document>;
     public filterOptions: Array<CategoryForm> = [];
 
+
     public getConstraints = () => {
 
         return {

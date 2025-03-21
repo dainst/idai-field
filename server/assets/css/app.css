@@ -156,7 +156,7 @@
 
 header {
   height: var(--header-height);
-  background-image: url(/images/header_background.png);
+  background-image: url(/images/header_background.webp);
   background-position-y: bottom;
   background-position-x: center;
 }
@@ -268,17 +268,17 @@ nav {
 }
 
 .row-compact {
-  color:#3f4246;  
+  color: #3f4246;
   line-height: 0%;
   font-size: small;
 }
 
 
 .column-date-time {
-  width: 11em;  
+  width: 11em;
 }
 
-.row-head{
+.row-head {
   color: #3f4246;
   font-size: small;
 }

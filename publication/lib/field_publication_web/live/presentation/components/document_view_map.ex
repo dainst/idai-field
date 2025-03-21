@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   def render(assigns) do
     ~H"""
     <div>
-      <.group_heading>Geometry <span class="text-xs">(<%= @geometry_type %>)</span></.group_heading>
+      <.group_heading>Geometry <span class="text-xs">({@geometry_type})</span></.group_heading>
       <div
         class="relative"
         id={@id}
@@ -362,7 +362,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     ~H"""
     <%= if @layer_states != [] do %>
       <div class="font-semibold pb-2">
-        <%= if @group == :project, do: gettext("Project layers"), else: gettext("Document layers") %>
+        {if @group == :project, do: gettext("Project layers"), else: gettext("Document layers")}
       </div>
       <%= for layer  <- @layer_states do %>
         <div class="text-xs">
@@ -378,7 +378,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           <.link patch={
             ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{layer.uuid}"
           }>
-            <%= layer.identifier %>
+            {layer.identifier}
           </.link>
         </div>
       <% end %>

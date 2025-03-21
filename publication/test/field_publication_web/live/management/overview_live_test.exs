@@ -75,13 +75,13 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     test "can access their project's draft form", %{conn: conn} do
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      assert live_process
-             |> element("#project-panel-#{@new_project_name} a", "Draft new publication")
-             |> render_click()
+      {:ok, _live_process, html} =
+        live_process
+        |> element("#project-panel-#{@new_project_name} a", "Draft new publication")
+        |> render_click()
+        |> follow_redirect(conn)
 
-      assert_patch(live_process, ~p"/management/projects/#{@new_project_name}/publication/new")
-
-      assert render(live_process) =~ "Create new publication draft"
+      assert html =~ "Create new publication draft"
     end
 
     test "can neither edit nor delete their project settings", %{conn: conn} do
@@ -126,9 +126,11 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     test "can not create project with the duplicate name", %{conn: conn} do
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      assert live_process
-             |> element("a", "Create new project")
-             |> render_click()
+      {:ok, live_process, _html} =
+        live_process
+        |> element("a", "Create new project")
+        |> render_click()
+        |> follow_redirect(conn)
 
       assert live_process
              |> form("#project-form", project: %{"name" => @test_project_name})
@@ -139,20 +141,24 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     test "can create and delete projects", %{conn: conn} do
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      assert live_process |> element("a", "Create new project") |> render_click() =~
-               "Publishing | New Project"
+      {:ok, live_process, html} =
+        live_process
+        |> element("a", "Create new project")
+        |> render_click()
+        |> follow_redirect(conn)
+
+      html =~ "Publishing | New Project"
 
       assert live_process
              |> form("#project-form", project: %{})
              |> render_change() =~ "can&#39;t be blank"
 
-      assert live_process
-             |> form("#project-form", project: %{"name" => @new_project_name})
-             |> render_submit()
+      {:ok, live_process, html} =
+        live_process
+        |> form("#project-form", project: %{"name" => @new_project_name})
+        |> render_submit()
+        |> follow_redirect(conn)
 
-      assert_patch(live_process, ~p"/management")
-
-      html = render(live_process)
       assert html =~ "Project created successfully"
       assert html =~ @new_project_name
 
@@ -188,11 +194,13 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
                @test_user.label
              )
 
-      assert live_process
-             |> element("#project-panel-#{@test_project_name} a", "Edit")
-             |> render_click() =~ "Publishing | Edit Project"
+      {:ok, live_process, html} =
+        live_process
+        |> element("#project-panel-#{@test_project_name} a", "Edit")
+        |> render_click()
+        |> follow_redirect(conn)
 
-      assert_patch(live_process, ~p"/management/projects/#{@test_project_name}/edit")
+      html =~ "Publishing | Edit Project"
 
       assert not (live_process
                   |> element(~s{[for="project[editors][]-test_user"] input})
@@ -206,9 +214,11 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
              |> element(~s{[for="project[editors][]-test_user"] input})
              |> render() =~ "checked"
 
-      assert live_process |> form("#project-form") |> render_submit()
-
-      assert_patch(live_process, ~p"/management")
+      {:ok, live_process, _html} =
+        live_process
+        |> form("#project-form")
+        |> render_submit()
+        |> follow_redirect(conn)
 
       assert has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user.label)
     end
@@ -216,11 +226,11 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     test "can access every projects' draft form", %{conn: conn} do
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      assert live_process
-             |> element("#project-panel-#{@test_project_name} a", "Draft new publication")
-             |> render_click()
-
-      assert_patch(live_process, ~p"/management/projects/#{@test_project_name}/publication/new")
+      {:ok, live_process, _html} =
+        live_process
+        |> element("#project-panel-#{@test_project_name} a", "Draft new publication")
+        |> render_click()
+        |> follow_redirect(conn)
 
       assert render(live_process) =~ "Create new publication draft"
     end

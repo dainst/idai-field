@@ -9,11 +9,11 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
         <.icon name="hero-globe-europe-africa-solid" />
       </.link>
       <div>/</div>
-      <div><%= @current_publication.project_name %></div>
+      <div>{@current_publication.project_name}</div>
       <div>/</div>
-      <%= render_publication_dropdown(assigns) %>
+      {render_publication_dropdown(assigns)}
       <div>/</div>
-      <%= render_language_dropdown(assigns) %>
+      {render_language_dropdown(assigns)}
       <div>/</div>
       <.link patch={
         ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}/#{@selected_lang}"
@@ -23,7 +23,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
       <%= if @identifier do %>
         <div>/</div>
         <div class="text-nowrap">
-          <%= @identifier %>
+          {@identifier}
         </div>
       <% end %>
     </div>
@@ -33,7 +33,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
   defp render_publication_dropdown(assigns) do
     ~H"""
     <div class="group relative text-nowrap">
-      <%= @current_publication.draft_date %>
+      {@current_publication.draft_date}
       <%= if Enum.count(@publications) > 1 do %>
         <.icon name="hero-chevron-down-mini" />
 
@@ -51,9 +51,9 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
               end %>
             <div class={"#{if publication.draft_date == @current_publication.draft_date, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
               <.link patch={url}>
-                Project state <%= publication.draft_date %>
+                Project state {publication.draft_date}
                 <%= if publication.publication_date do %>
-                  <span>, published <%= publication.publication_date %></span>
+                  <span>, published {publication.publication_date}</span>
                 <% else %>
                   <span>, not yet published.</span>
                 <% end %>
@@ -69,7 +69,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
   defp render_language_dropdown(assigns) do
     ~H"""
     <div class="group relative text-nowrap">
-      <%= @selected_lang %>
+      {@selected_lang}
 
       <%= if Enum.count(@current_publication.languages) > 1 do %>
         <.icon name="hero-chevron-down-mini" />
@@ -88,7 +88,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
 
             <div class={"#{if language == @selected_lang, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
               <.link patch={url}>
-                <%= language %>
+                {language}
               </.link>
             </div>
           <% end %>

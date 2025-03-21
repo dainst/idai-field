@@ -202,7 +202,9 @@ export class FixOutliersModalComponent {
             valuelistField,
             this.projectDocument,
             this.projectConfiguration,
-            await Hierarchy.getParentResource(this.datastore.get, document.resource)
+            await Hierarchy.getParentResource(this.datastore.get, document.resource),
+            undefined,
+            true
         );
     }
 }

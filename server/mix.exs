@@ -5,12 +5,22 @@ defmodule FieldHub.MixProject do
     [
       app: :field_hub,
       version: "3.3.2",
-      elixir: "~> 1.13",
+      elixir: "~> 1.18",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [
+        ignore_modules: [
+          FieldHubWeb.ChannelCase,
+          FieldHubWeb.ErrorHTML,
+          FieldHubWeb.ErrorJSON,
+          FieldHubWeb.Gettext,
+          FieldHubWeb.Layouts,
+          FieldHubWeb.CoreComponents
+        ]
+      ]
     ]
   end
 
@@ -33,25 +43,23 @@ defmodule FieldHub.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.6"},
-      {:phoenix_html, "~> 3.0"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.17.5"},
+      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_dashboard, "~> 0.8"},
+      {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.6"},
-      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
       {:sizeable, "~> 1.0"},
-      {:swoosh, "~> 1.3"},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.18"},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
+      {:swoosh, "~> 1.18"},
+      {:telemetry_metrics, "~> 1.1"},
+      {:telemetry_poller, "~> 1.1"},
+      {:gettext, "~> 0.26"},
+      {:jason, "~> 1.4"},
+      {:plug_cowboy, "~> 2.7"},
       {:httpoison, "~> 2.2"},
-      {:reverse_proxy_plug, "~> 2.2"},
-      {:zarex, "~> 1.0.2"},
-      {:ex_json_schema, "~> 0.9.1"},
-      {:cachex, "~> 3.4"}
+      {:reverse_proxy_plug, "~> 2.4"},
+      {:zarex, "~> 1.0"},
+      {:ex_json_schema, "~> 0.10"},
+      {:cachex, "~> 4.0"}
     ]
   end
 
@@ -67,12 +75,19 @@ defmodule FieldHub.MixProject do
     [
       setup: [
         "deps.get",
+        "assets.setup",
+        "assets.build",
         "run --eval FieldHub.CLI.setup() --no-start"
       ],
       seed: [
         "run --eval 'FieldHub.CLI.create_project(\"#{dev_db_name}\", \"pw\"')"
       ],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.setup": ["esbuild.install --if-missing"],
+      "assets.build": ["esbuild default"],
+      "assets.deploy": [
+        "esbuild default --minify",
+        "phx.digest"
+      ]
     ]
   end
 end

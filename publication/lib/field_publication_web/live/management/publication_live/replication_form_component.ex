@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponen
     ~H"""
     <div>
       <.header>
-        <%= @page_title %>
+        {@page_title}
       </.header>
 
       <.simple_form
@@ -26,7 +26,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponen
       >
         <h2 class="text-2xl">Connection data</h2>
         <div :if={@initialization_error} class="border-red-800 bg-red-200 p-2 border-2 rounded">
-          <%= @initialization_error %>
+          {@initialization_error}
         </div>
         <.input field={@form[:source_url]} type="url" label="Source URL" />
         <.input field={@form[:source_project_name]} type="text" label="Source project name" />

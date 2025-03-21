@@ -10,7 +10,7 @@
     }
   />
   <% category = Data.get_field_value(@doc, "category") %>
-  <%= cond do
+  {cond do
     @doc == :not_found ->
       "Document not found in selected publication."
 
@@ -38,5 +38,5 @@
         lang: @selected_lang,
         uuid: @uuid
       })
-  end %>
+  end}
 </div>

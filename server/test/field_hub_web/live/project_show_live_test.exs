@@ -1,12 +1,14 @@
-defmodule FieldHubWeb.ProjectShowLiveTest do
+defmodule FieldHubWeb.Live.ProjectShowTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
+
+  use FieldHubWeb, :verified_routes
 
   use FieldHubWeb.ConnCase
 
   alias FieldHubWeb.{
     UserAuth,
-    ProjectShowLive
+    Live.ProjectShow
   }
 
   alias FieldHub.{
@@ -28,14 +30,16 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
-    assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
-             conn
-             |> live("/ui/projects/show/#{@project}")
+    assert {
+             :error,
+             {:redirect, %{flash: _, to: "/ui/session/log_in"}}
+           } =
+             live(conn, ~p"/ui/projects/show/#{@project}")
 
     # Test the mount function (websocket), this makes sure that users with invalidated/old user token can not
     # access the page.
     socket =
-      ProjectShowLive.mount(
+      ProjectShow.mount(
         %{"project" => @project},
         %{"user_token" => "invalid"},
         %Phoenix.LiveView.Socket{}
@@ -56,7 +60,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     # Test the mount function (websocket), this makes sure that users that navigated here from another
     # live view with an existing socket are authorized.
     socket =
-      ProjectShowLive.mount(
+      ProjectShow.mount(
         %{"project" => @project},
         %{"user_token" => UserAuth.generate_user_session_token(unknown_user)},
         %Phoenix.LiveView.Socket{}
@@ -85,19 +89,12 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
           }
         ]
 
-    count = Enum.count(issues)
-
-    groups =
-      issues
-      |> Enum.group_by(fn %{type: type, severity: severity} -> {type, severity} end)
-
     html =
-      render_component(ProjectShowLive, %{
+      render_component(ProjectShow, %{
         current_user: "test_user",
         flash: %{},
-        issue_count: count,
-        issue_status: :idle,
-        issues: groups,
+        issues_evaluating?: false,
+        issues: issues,
         live_action: nil,
         project: "test_project",
         supervisor: :loading,
@@ -144,10 +141,8 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html_on_mount =~ "No supervisor found in project document."
       assert html_on_mount =~ "No contact data found in project document."
       assert html_on_mount =~ "Person 1, Person 2"
-      assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
-
-      assert html_on_mount =~
-               "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
+      assert html_on_mount =~ "Loading..."
+      assert html_on_mount =~ "Issues"
 
       assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
 
@@ -177,6 +172,22 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html =~ "Person 1, Person 2"
     end
 
+    test "Invalid `staff` value type does not crash the render", %{conn: conn} do
+      [ok: project_doc] = Project.get_documents(@project, ["project"])
+
+      TestHelper.update_document(
+        @project,
+        project_doc
+        |> Map.update!("resource", fn resource ->
+          Map.put(resource, "staff", resource["staff"] ++ ["Person 3", "Person 4"])
+        end)
+      )
+
+      {:ok, _view, html} = live(conn, "/ui/projects/show/#{@project}")
+
+      assert html =~ "No staff names found in project document."
+    end
+
     test "user can trigger issue evaluation", %{conn: conn} do
       {:ok, %{pid: pid} = view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
@@ -202,7 +213,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
     test "user without project authorization can not trigger issue evaluation" do
       {:noreply, socket} =
-        ProjectShowLive.handle_event(
+        ProjectShow.handle_event(
           "evaluate_issues",
           nil,
           %Phoenix.LiveView.Socket{
@@ -220,7 +231,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       new_password = "the_password"
 
       {:noreply, socket} =
-        ProjectShowLive.handle_event(
+        ProjectShow.handle_event(
           "set_password",
           nil,
           %Phoenix.LiveView.Socket{
@@ -252,6 +263,30 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
                })
     end
 
+    test "non admin user can not delete the project" do
+      assert Project.exists?(@project)
+
+      {:noreply, socket} =
+        ProjectShow.handle_event(
+          "delete",
+          nil,
+          %Phoenix.LiveView.Socket{
+            assigns: %{
+              project: @project,
+              current_user: "unauthorized",
+              delete_files: false,
+              __changed__: %{},
+              flash: %{}
+            }
+          }
+        )
+
+      assert %{assigns: %{flash: %{"error" => "You are not authorized to delete the project."}}} =
+               socket
+
+      assert Project.exists?(@project)
+    end
+
     test "non admin user has no passwort setting interface", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
       html = render(view)
@@ -266,7 +301,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       # These are the current defaults in the mock project based on the Desktop applications `test` project.
       assert html =~ "No supervisor found in project document"
       assert html =~ "No contact data found in project document"
-      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
+      assert html =~ "Person 1, Person 2"
     end
 
     test "missing project document is handled in overview", %{conn: conn} do
@@ -296,7 +331,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       html = render(view)
 
-      assert html =~ "<td>Supervisor</td><td>\nMs. Supervisor\n</td>"
+      assert html =~ "Ms. Supervisor"
     end
 
     test "project contact is displayed in overview", %{conn: conn} do
@@ -317,7 +352,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       html = render(view)
 
       assert html =~
-               "<td>Contact</td><td>\nMr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)\n</td>"
+               "Mr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)"
     end
 
     test "project staff is displayed in overview", %{conn: conn} do
@@ -326,7 +361,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       html = render(view)
 
       # These are the current defaults in the mock project based on the Desktop applications `test` project.
-      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
+      assert html =~ "Person 1, Person 2"
     end
   end
 

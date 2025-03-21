@@ -7,27 +7,42 @@
 </div>
 <div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
     <div id="workflow-steps-container">
-        <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
-            <div class="workflow-step-executed-on">
-                <workflow-relations [workflowStep]="workflowStep"
-                                    [relationName]="'isExecutedOn'"
-                                    [mandatory]="true"></workflow-relations>
-            </div>
-            <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
-            <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
-            <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
-            <div *ngIf="isProducesRelationAvailable(workflowStep)" class="workflow-step-produces">
-                <workflow-relations [workflowStep]="workflowStep"
-                                    [relationName]="'produces'"
-                                    [mandatory]="false"></workflow-relations>
-            </div>
-            <div class="workflow-step-buttons input-group">
-                <button class="btn btn-danger" (click)="removeWorkflowStep(workflowStep)">
-                    <span class="mdi mdi-delete"></span>
-                </button>
-                <button class="btn btn-info" (click)="editWorkflowStep(workflowStep)">
-                    <span class="mdi mdi-pencil"></span>
-                </button>
+        <div class="workflow-step-headings workflow-step">
+            <div class="workflow-step-executed-on"
+                 i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
+            <div class="workflow-step-execution-date"
+                 i18n="@@resources.workflowEditorModal.date">Datum</div>
+            <div class="workflow-step-category"
+                 i18n="@@resources.workflowEditorModal.category">Kategorie</div>
+            <div class="workflow-step-short-description"
+                 i18n="@@resources.workflowEditorModal.shortDescription">Kurzbeschreibung</div>
+            <div class="workflow-step-produces"
+                 i18n="@@resources.workflowEditorModal.produces">Ergebnis</div>
+            <div class="workflow-step-buttons"></div>
+        </div>
+        <div class="workflow-steps-body">
+            <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
+                <div class="workflow-step-executed-on">
+                    <workflow-relations [workflowStep]="workflowStep"
+                                        [relationName]="'isExecutedOn'"
+                                        [mandatory]="true"></workflow-relations>
+                </div>
+                <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
+                <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
+                <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
+                <div *ngIf="isProducesRelationAvailable(workflowStep)" class="workflow-step-produces">
+                    <workflow-relations [workflowStep]="workflowStep"
+                                        [relationName]="'produces'"
+                                        [mandatory]="false"></workflow-relations>
+                </div>
+                <div class="workflow-step-buttons input-group">
+                    <button class="btn btn-danger" (click)="removeWorkflowStep(workflowStep)">
+                        <span class="mdi mdi-delete"></span>
+                    </button>
+                    <button class="btn btn-info" (click)="editWorkflowStep(workflowStep)">
+                        <span class="mdi mdi-pencil"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

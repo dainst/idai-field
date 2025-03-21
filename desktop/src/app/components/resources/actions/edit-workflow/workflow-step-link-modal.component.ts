@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { intersection } from 'tsfun';
-import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Constraints } from 'idai-field-core';
+import { intersection, to } from 'tsfun';
+import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Constraints, Named } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { sortWorkflowSteps } from './sort-workflow-steps';
@@ -25,6 +25,8 @@ export class WorkflowStepLinkModalComponent {
     public filterOptions: Array<CategoryForm> = [];
     public selectedDocument: Document;
     public availableWorkflowSteps: Array<Document>;
+
+    private allowedWorkflowStepCategories: Array<CategoryForm>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -50,8 +52,8 @@ export class WorkflowStepLinkModalComponent {
 
     public initialize() {
 
-        const allowedWorkflowStepCategories: Array<CategoryForm> = this.getAllowedWorkflowStepCategories();
-        this.filterOptions = this.getFilterOptions(allowedWorkflowStepCategories);
+        this.allowedWorkflowStepCategories = this.getAllowedWorkflowStepCategories();
+        this.filterOptions = this.getFilterOptions();
     }
 
 
@@ -100,9 +102,9 @@ export class WorkflowStepLinkModalComponent {
     }
 
 
-    private getFilterOptions(allowedWorkflowStepCategories: Array<CategoryForm>): Array<CategoryForm> {
+    private getFilterOptions(): Array<CategoryForm> {
 
-        return allowedWorkflowStepCategories.reduce((result, subcategory) => {
+        return this.allowedWorkflowStepCategories.reduce((result, subcategory) => {
             return result.concat(
                 this.projectConfiguration.getAllowedRelationRangeCategories(
                     Relation.Workflow.IS_EXECUTED_ON, subcategory.name
@@ -120,7 +122,13 @@ export class WorkflowStepLinkModalComponent {
                 return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF].includes(targetId);
             }));
 
-        return targetIds?.length ? this.datastore.getMultiple(targetIds) : [];
+        const workflowSteps: Array<Document> = targetIds?.length
+            ? await this.datastore.getMultiple(targetIds)
+            : [];
+
+        return workflowSteps.filter(workflowStep => {
+            return this.allowedWorkflowStepCategories.map(to(Named.NAME)).includes(workflowStep.resource.category);
+        });
     }
 
 

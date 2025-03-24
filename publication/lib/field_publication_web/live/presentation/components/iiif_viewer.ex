@@ -23,5 +23,5 @@ defmodule FieldPublicationWeb.Presentation.Components.IIIFViewer do
     }
   end
 
-  def construct_url(project, uuid), do: "/api/image/iiif/3/#{project}%2F#{uuid}.jp2/info.json"
+  def construct_url(project, uuid), do: "/api/image/iiif/3/#{project}%2F#{uuid}/info.json"
 end

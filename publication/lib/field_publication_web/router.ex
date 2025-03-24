@@ -29,15 +29,13 @@ defmodule FieldPublicationWeb.Router do
     pipe_through :ensure_image_published
 
     scope "/iiif" do
-      pipe_through :set_forward_headers_for_cantaloupe
-
-      forward("/", ReverseProxyPlug,
-        status_callbacks: %{
-          404 => &Cantaloupe.handle_404/2
-        },
-        upstream: &Cantaloupe.url/0,
-        preserve_host_header: true
-      )
+      forward("/3", IIIFImagePlug.V3, %{
+        scheme: :http,
+        host: "localhost",
+        port: 4001,
+        prefix: "/api/image/iiif/3",
+        identifier_to_path_callback: &Cantaloupe.identifier_to_path/1
+      })
     end
 
     get "/raw/:project_name/:uuid", FieldPublicationWeb.Api.Image, :raw

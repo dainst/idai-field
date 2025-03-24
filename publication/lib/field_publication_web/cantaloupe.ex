@@ -48,4 +48,12 @@ defmodule FieldPublicationWeb.Cantaloupe do
     end
     |> Plug.Conn.put_req_header("x-forwarded-path", "/api/image/")
   end
+
+  def identifier_to_path(identifier) do
+    [project, uuid] =
+      URI.decode(identifier)
+      |> String.split("/")
+
+    "#{FieldPublication.FileService.get_raw_image_data_path(project)}/#{uuid}"
+  end
 end

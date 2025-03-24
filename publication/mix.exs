@@ -53,7 +53,8 @@ defmodule FieldPublication.MixProject do
       {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.7"},
       {:iso639_elixir, "~> 0.2.1"},
-      {:cachex, "~> 4.0"}
+      {:cachex, "~> 4.0"},
+      {:iiif_image_plug, path: "../../iiif_plug"}
     ]
   end
 

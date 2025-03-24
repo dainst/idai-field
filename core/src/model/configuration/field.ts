@@ -1,6 +1,7 @@
 import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
-import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt, validateUrl } from '../../tools/validation-util';
+import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt,
+    validateUrl } from '../../tools/validation-util';
 import { parseDate } from '../../tools/parse-date';
 import { Dating } from '../input-types/dating';
 import { Dimension } from '../input-types/dimension';
@@ -8,6 +9,7 @@ import { Literature } from '../input-types/literature';
 import { OptionalRange } from '../input-types/optional-range';
 import { Valuelist } from './valuelist';
 import { Composite } from '../input-types/composite';
+import { DateConfiguration } from './date-configuration';
 
 
 /**
@@ -29,8 +31,9 @@ export interface Field extends BaseField {
     allowOnlyValuesOfParent?: true;
     maxCharacters?: number;
     source?: Field.SourceType;
-    subfields?: Array<Subfield>;
-    constraintName?: string;            // For input type derivedRelation
+    dateConfiguration?: DateConfiguration;  // For input type "date"
+    subfields?: Array<Subfield>;            // For input type "composite"
+    constraintName?: string;                // For input type "derivedRelation
 }
 
 

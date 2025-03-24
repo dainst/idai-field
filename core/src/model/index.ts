@@ -38,3 +38,5 @@ export { RelationsManager } from '../services/relations-manager';
 export { Category } from './configuration/category';
 export { Template } from './configuration/template';
 export { ScanCodeConfiguration, PrintedField } from './configuration/scan-code-configuration';
+export { Date } from './input-types/date';
+export { DateConfiguration } from './configuration/date-configuration';

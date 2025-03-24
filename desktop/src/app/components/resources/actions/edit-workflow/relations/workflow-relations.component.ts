@@ -1,9 +1,9 @@
 import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, Document, ProjectConfiguration, Relation } from 'idai-field-core';
-import { MenuContext } from '../../../../services/menu-context';
-import { Menus } from '../../../../services/menus';
-import { AngularUtility } from '../../../../angular/angular-utility';
+import { MenuContext } from '../../../../../services/menu-context';
+import { Menus } from '../../../../../services/menus';
+import { AngularUtility } from '../../../../../angular/angular-utility';
 import { WorkflowRelationsModalComponent } from './workflow-relations-modal.component';
 
 

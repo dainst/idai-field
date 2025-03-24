@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
 import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named } from 'idai-field-core';
-import { sortWorkflowSteps } from './sort-workflow-steps';
+import { sortWorkflowSteps } from '../sort-workflow-steps';
 
 
 @Component({

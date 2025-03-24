@@ -10,7 +10,7 @@ import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { sortWorkflowSteps } from './sort-workflow-steps';
-import { DeleteWorkflowStepModalComponent } from './delete-workflow-step-modal.component';
+import { DeleteWorkflowStepModalComponent } from './delete/delete-workflow-step-modal.component';
 
 
 @Component({

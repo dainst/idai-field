@@ -142,10 +142,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             delete this.getClonedFieldDefinition().dateConfiguration;
         }
 
-        if (isEmpty(this.getClonedFieldDefinition())) {
-            delete this.getClonedFormDefinition().fields[this.field.name];
-        }
-
         if (!this.isSubfieldsSectionVisible()) {
             delete this.getClonedFieldDefinition().subfields;
             Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {
@@ -161,6 +157,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         } else {
             delete this.getClonedFieldDefinition().range;
             delete this.getClonedFieldDefinition().inverse;
+        }
+
+        if (isEmpty(this.getClonedFieldDefinition())) {
+            delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
         await super.confirm(true);

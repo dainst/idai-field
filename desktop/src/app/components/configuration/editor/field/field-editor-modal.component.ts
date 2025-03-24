@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, equal, intersection, isEmpty, Map, set, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
-    CustomFieldDefinition } from 'idai-field-core';
+    CustomFieldDefinition, DateConfiguration } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -58,9 +58,13 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
+    public getClonedDateConfiguration = () => this.getClonedFieldDefinition().dateConfiguration;
+
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType as Field.InputType ?? this.field.inputType
     ) && !this.field.valuelistFromProjectField;
+
+    public isDateSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.DATE;
 
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
@@ -103,6 +107,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return result;
         }, {}) ?? {};
 
+        this.initializeDateConfiguration();
         this.initializeSelectedTargetCategories();
         this.updateAvailableInverseRelations();
     }
@@ -127,6 +132,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
+        }
+
+        if (!this.isDateSectionVisible()) {
+            delete this.getClonedFieldDefinition().dateConfiguration;
         }
 
         if (isEmpty(this.getClonedFieldDefinition())) {
@@ -173,6 +182,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (!this.availableInputTypes.find(inputType => inputType.name === newInputType).searchable) {
             delete this.getClonedFieldDefinition().constraintIndexed;
         }
+
         if (newInputType === this.field.inputType && !this.getCustomFieldDefinition()?.inputType) {
             delete this.getClonedFieldDefinition().inputType;
             this.clonedField.inputType = this.field.inputType;
@@ -183,6 +193,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.getClonedFieldDefinition().inputType = newInputType;
             this.clonedField.inputType = newInputType;
         }
+
+        this.initializeDateConfiguration();
     }
 
 
@@ -280,6 +292,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public setDateDataType(value: DateConfiguration.DataType) {
+
+        this.getClonedFieldDefinition().dateConfiguration.dataType = value;
+    }
+
+
+    public setDateInputMode(value: DateConfiguration.InputMode) {
+
+        this.getClonedFieldDefinition().dateConfiguration.inputMode = value;
+    }
+
+
     public isChanged(): boolean {
 
         return this.new
@@ -287,6 +311,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
+            || this.isDateConfigurationChanged()
             || this.isSubfieldsChanged()
             || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
             || this.getCustomFieldDefinition()?.inverse !== this.getClonedFieldDefinition().inverse
@@ -314,6 +339,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    private isDateConfigurationChanged(): boolean {
+
+        const configuration: DateConfiguration = this.getCustomFieldDefinition().dateConfiguration
+            ?? DateConfiguration.getDefault();
+        const clonedConfiguration: DateConfiguration = this.getClonedFieldDefinition().dateConfiguration
+            ?? DateConfiguration.getDefault();
+
+        return !equal(configuration, clonedConfiguration);
+    }
+
+
     private isSubfieldsChanged(): boolean {
 
         return !equal(this.getCustomFieldDefinition()?.subfields ?? [],
@@ -329,6 +365,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 || !equal(subfield.description ?? {})(I18N.removeEmpty(this.subfieldI18nStrings[subfield.name]
                     ?.description ?? {}));
         }).length > 0;
+    }
+
+
+    private initializeDateConfiguration() {
+
+        if (this.getInputType() === Field.InputType.DATE && !this.getClonedFieldDefinition().dateConfiguration) {
+            this.getClonedFieldDefinition().dateConfiguration = DateConfiguration.getDefault();
+        }
     }
 
 

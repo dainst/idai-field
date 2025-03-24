@@ -31,12 +31,16 @@ export interface BaseSubfieldConditionDefinition {
 
 export interface DateConfiguration {
 
-    dataType: 'date'|'dateTime'|'optional';
-    inputMode: 'single'|'range'|'optional';
+    dataType: DateConfiguration.DataType;
+    inputMode: DateConfiguration.InputMode;
 }
 
 
 export module DateConfiguration {
+
+    export type DataType = 'date'|'dateTime'|'optional';
+    export type InputMode = 'single'|'range'|'optional';
+
 
     export module DataType {
         
@@ -51,6 +55,15 @@ export module DateConfiguration {
         export const SINGLE = 'single';
         export const RANGE = 'range';
         export const OPTIONAL = 'optional';
+    }
+
+
+    export function getDefault(): DateConfiguration {
+
+        return {
+            dataType: DataType.OPTIONAL,
+            inputMode: InputMode.SINGLE
+        };
     }
 }
 

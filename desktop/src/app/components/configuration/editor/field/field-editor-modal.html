@@ -27,6 +27,7 @@
                          [disabled]="hidden"
                          (onChanged)="setInputType($event)">
     </input-type-selector>
+
     <div class="configuration-editor-section configuration-editor-switch-section mb-3">
         <div class="configuration-editor-section-title"
              i18n="@@configuration.basicSettings">
@@ -68,6 +69,7 @@
             </div>
         </div>
     </div>
+
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.label">
             Anzeigename
@@ -77,6 +79,7 @@
             [projectLanguages]="getClonedProjectLanguages()"
             [disabled]="hidden"></multi-language-input>
     </div>
+
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
@@ -86,12 +89,14 @@
             [projectLanguages]="getClonedProjectLanguages()"
             [disabled]="hidden"></multi-language-input>
     </div>
+
     <div *ngIf="isCustomField()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.references">
             Verweise
         </div>
         <references-input [references]="getClonedFieldDefinition().references"></references-input>
     </div>
+
     <div *ngIf="isValuelistSectionVisible()"
          id="field-editor-valuelist-section"
          class="configuration-editor-section">
@@ -112,6 +117,49 @@
                             [disabled]="hidden"
         ></valuelist-selector>
     </div>
+
+    <div *ngIf="isDateSectionVisible()">
+        <div class="configuration-editor-section">
+            <div class="configuration-editor-section-title" i18n="@@configuration.date.dataType">
+                Angabe der Uhrzeit
+            </div>
+            <select (change)="setDateDataType($event.target.value)" class="form-control">
+                <option i18n="@@configuration.date.time.optional" value="optional"
+                        [selected]="getClonedDateConfiguration().dataType === 'optional'">
+                        Optional
+                </option>
+                <option i18n="@@configuration.date.time.mandatory" value="dateTime"
+                        [selected]="getClonedDateConfiguration().dataType === 'dateTime'">
+                        Verpflichtend
+                </option>
+                <option i18n="@@configuration.date.time.no" value="date"
+                        [selected]="getClonedDateConfiguration().dataType === 'date'">
+                        Nein
+                </option>
+
+            </select>
+        </div>
+        <div class="configuration-editor-section">
+            <div class="configuration-editor-section-title" i18n="@@configuration.date.inputMode">
+                Eingabemodus
+            </div>
+            <select (change)="setDateInputMode($event.target.value)" class="form-control">
+                <option i18n="@@configuration.date.inputMode.single" value="single"
+                        [selected]="getClonedDateConfiguration().inputMode === 'single'">
+                        Einzeldatum
+                </option>
+                <option i18n="@@configuration.date.inputMode.range" value="range"
+                        [selected]="getClonedDateConfiguration().inputMode === 'range'">
+                        Zeitraum
+                </option>
+                <option i18n="@@configuration.date.inputMode.optional" value="optional"
+                        [selected]="getClonedDateConfiguration().inputMode === 'optional'">
+                        Wählbar
+                </option>
+            </select>
+        </div>
+    </div>
+
     <subfields-section *ngIf="isSubfieldsSectionVisible()"
                        [clonedFormDefinition]="getClonedFormDefinition()"
                        [clonedFieldDefinition]="getClonedFieldDefinition()"
@@ -124,8 +172,6 @@
                        [subfieldI18nStrings]="subfieldI18nStrings"
                        [applyChanges]="applyChanges"
                        (onDrag)="dragging = $event"></subfields-section>
-
-
 
     <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title"

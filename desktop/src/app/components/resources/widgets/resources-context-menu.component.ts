@@ -8,7 +8,7 @@ import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry'|'show-history';
 
 
 @Component({
@@ -49,6 +49,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public areAnyOptionsAvailable(): boolean {
 
         return this.isDeleteOptionAvailable()
+            || this.isShowHistoryOptionAvailable()
             || this.isEditOptionAvailable()
             || this.isCreateGeometryOptionAvailable()
             || this.isEditGeometryOptionAvailable()
@@ -80,6 +81,12 @@ export class ResourcesContextMenuComponent implements OnChanges {
     }
 
 
+    public isShowHistoryOptionAvailable(): boolean {
+
+        return this.contextMenu.documents.length === 1 && !this.isReadonly();
+    }
+
+    
     public isWarningsOptionAvailable(): boolean {
 
         return this.contextMenu.documents.length === 1

@@ -345,9 +345,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isDateConfigurationChanged(): boolean {
 
-        const configuration: DateConfiguration = this.getCustomFieldDefinition().dateConfiguration
+        const configuration: DateConfiguration = this.getCustomFieldDefinition()?.dateConfiguration
             ?? DateConfiguration.getDefault();
-        const clonedConfiguration: DateConfiguration = this.getClonedFieldDefinition().dateConfiguration
+        const clonedConfiguration: DateConfiguration = this.getClonedFieldDefinition()?.dateConfiguration
             ?? DateConfiguration.getDefault();
 
         return !equal(configuration, clonedConfiguration);

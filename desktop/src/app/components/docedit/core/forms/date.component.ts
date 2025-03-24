@@ -11,6 +11,9 @@ import { ComponentHelpers } from '../../../component-helpers';
     templateUrl: './date.html',
     standalone: false
 })
+/**
+ * @author Thomas Kleinke
+ */
 export class DateComponent implements OnChanges {
 
     @Input() fieldContainer: any;
@@ -109,9 +112,7 @@ export class DateComponent implements OnChanges {
             return;
         }
 
-        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'ngb-datapicker')) { 
-            datePicker.close();
-            this.changeDetectorRef.detectChanges();
-        }
+        datePicker.close();
+        this.changeDetectorRef.detectChanges();
     }
 }

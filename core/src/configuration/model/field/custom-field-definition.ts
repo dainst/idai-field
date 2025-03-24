@@ -18,5 +18,5 @@ export module CustomFieldDefinition {
 
 
 export const VALID_CUSTOM_FIELD_PROPERTIES = [
-    'inputType', 'constraintIndexed', 'references', 'subfields', 'range', 'inverse'
+    'inputType', 'constraintIndexed', 'references', 'subfields', 'range', 'inverse', 'dateConfiguration'
 ];

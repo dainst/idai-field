@@ -10,6 +10,7 @@ export interface BaseFieldDefinition {
     source?: Field.SourceType;
     references?: string[];
     subfields?: Array<BaseSubfieldDefinition>;
+    dateConfiguration?: DateConfiguration;
 }
 
 
@@ -25,6 +26,32 @@ export interface BaseSubfieldConditionDefinition {
 
     subfieldName: string;
     values: string[]|boolean;
+}
+
+
+export interface DateConfiguration {
+
+    dataType: 'date'|'dateTime'|'optional';
+    inputMode: 'single'|'range'|'optional';
+}
+
+
+export module DateConfiguration {
+
+    export module DataType {
+        
+        export const DATE = 'date';
+        export const DATE_TIME = 'dateTime';
+        export const OPTIONAL = 'optional';
+    }
+
+
+    export module InputMode {
+        
+        export const SINGLE = 'single';
+        export const RANGE = 'range';
+        export const OPTIONAL = 'optional';
+    }
 }
 
 

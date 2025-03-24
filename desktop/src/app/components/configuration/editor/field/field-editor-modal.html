@@ -123,37 +123,40 @@
             <div class="configuration-editor-section-title" i18n="@@configuration.date.dataType">
                 Angabe der Uhrzeit
             </div>
-            <select (change)="setDateDataType($event.target.value)" class="form-control">
+            <select class="form-control"
+                    [disabled]="!isDateSectionEditable()"
+                    (change)="setDateDataType($event.target.value)">
                 <option i18n="@@configuration.date.time.optional" value="optional"
-                        [selected]="getClonedDateConfiguration().dataType === 'optional'">
+                        [selected]="getDateConfiguration()?.dataType === 'optional'">
                         Optional
                 </option>
                 <option i18n="@@configuration.date.time.mandatory" value="dateTime"
-                        [selected]="getClonedDateConfiguration().dataType === 'dateTime'">
+                        [selected]="getDateConfiguration()?.dataType === 'dateTime'">
                         Verpflichtend
                 </option>
                 <option i18n="@@configuration.date.time.no" value="date"
-                        [selected]="getClonedDateConfiguration().dataType === 'date'">
+                        [selected]="getDateConfiguration()?.dataType === 'date'">
                         Nein
                 </option>
-
             </select>
         </div>
         <div class="configuration-editor-section">
             <div class="configuration-editor-section-title" i18n="@@configuration.date.inputMode">
                 Eingabemodus
             </div>
-            <select (change)="setDateInputMode($event.target.value)" class="form-control">
+            <select class="form-control"
+                    [disabled]="!isDateSectionEditable()"
+                    (change)="setDateInputMode($event.target.value)">
                 <option i18n="@@configuration.date.inputMode.single" value="single"
-                        [selected]="getClonedDateConfiguration().inputMode === 'single'">
+                        [selected]="getDateConfiguration()?.inputMode === 'single'">
                         Einzeldatum
                 </option>
                 <option i18n="@@configuration.date.inputMode.range" value="range"
-                        [selected]="getClonedDateConfiguration().inputMode === 'range'">
+                        [selected]="getDateConfiguration()?.inputMode === 'range'">
                         Zeitraum
                 </option>
                 <option i18n="@@configuration.date.inputMode.optional" value="optional"
-                        [selected]="getClonedDateConfiguration().inputMode === 'optional'">
+                        [selected]="getDateConfiguration()?.inputMode === 'optional'">
                         Wählbar
                 </option>
             </select>

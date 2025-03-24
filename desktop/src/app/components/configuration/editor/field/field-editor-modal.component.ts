@@ -58,13 +58,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
-    public getClonedDateConfiguration = () => this.getClonedFieldDefinition().dateConfiguration;
+    public getDateConfiguration = () => this.isCustomField()
+        ? this.getClonedFieldDefinition().dateConfiguration
+        : this.field.dateConfiguration;
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType as Field.InputType ?? this.field.inputType
     ) && !this.field.valuelistFromProjectField;
 
-    public isDateSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.DATE;
+    public isDateSectionVisible = () => this.getInputType() === Field.InputType.DATE;
+
+    public isDateSectionEditable = () => this.isCustomField() && this.isDateSectionVisible();
 
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
@@ -134,7 +138,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (!this.isDateSectionVisible()) {
+        if (!this.isDateSectionEditable()) {
             delete this.getClonedFieldDefinition().dateConfiguration;
         }
 
@@ -370,7 +374,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private initializeDateConfiguration() {
 
-        if (this.getInputType() === Field.InputType.DATE && !this.getClonedFieldDefinition().dateConfiguration) {
+        if (this.isDateSectionEditable() && !this.getClonedFieldDefinition().dateConfiguration) {
             this.getClonedFieldDefinition().dateConfiguration = DateConfiguration.getDefault();
         }
     }

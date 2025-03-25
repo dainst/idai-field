@@ -308,7 +308,7 @@ export class ImageUploader {
         const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
 
         if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
-            document.resource.date = formatDate(extendedMetadata.date);
+            document.resource.date = formatDate(extendedMetadata.date, Intl.DateTimeFormat().resolvedOptions().timeZone, false);
         }
         if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;

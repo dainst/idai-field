@@ -20,6 +20,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     @Input() getLabel: (value: string) => string;
     @Input() placeholder: string;
     @Input() customPanelClass: string;
+    @Input() clearable: boolean = true;
     @Input() initiallyOpened: boolean = false;
     @Input() disabled: boolean = false;
     @Input() closeOnClear: boolean = false;

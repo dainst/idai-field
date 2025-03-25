@@ -1,19 +1,33 @@
 <div *ngIf="!isDatePickerVisible()" class="btn btn-light remove-date-button" (click)="removeFieldData()">
-    <span>{{getFieldData()}}</span>
+    <span>{{getFormattedDate()}}</span>
     <span class="mdi mdi-close"></span>
 </div>
 
 <input *ngIf="isDatePickerVisible()"
-    #dateInput
-    class="form-control"
-    [firstDayOfWeek]="1"
-    placeholder="dd.mm.yyyy"
-    container="body"
-    (click)="d.toggle(); focusInputField(); listenToScrollEvents(d)"
-    (blur)="update()"
-    (dateSelect)="update()"
-    (closed)="stopListeningToScrollEvents()"
-    (keydown)="onKeyDown($event)"
-    [(ngModel)]="dateStruct"
-    ngbDatepicker
-    #d="ngbDatepicker">
+        #dateInput
+        class="form-control date-picker-input"
+        [firstDayOfWeek]="1"
+        placeholder="dd.mm.yyyy"
+        container="body"
+        (click)="d.toggle(); focusInputField(); listenToScrollEvents(d)"
+        (blur)="update()"
+        (dateSelect)="update()"
+        (closed)="stopListeningToScrollEvents()"
+        (keydown)="onKeyDown($event)"
+        [(ngModel)]="dateStruct"
+        ngbDatepicker
+        #d="ngbDatepicker">
+
+<ngb-timepicker *ngIf="isTimePickerVisible()"
+                [(ngModel)]="timeStruct"
+                (ngModelChange)="update()"
+                [spinners]="false"></ngb-timepicker>
+
+<div class="timezone-selector">
+    <searchable-select *ngIf="isTimePickerVisible()"
+                    [selectedValue]="selectedTimezone"
+                    [values]="getAvailableTimezones()"
+                    [getLabel]="getTimezoneLabel"
+                    [clearable]="false"
+                    (onValueSelected)="selectTimezone($event)"></searchable-select>
+</div>

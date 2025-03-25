@@ -184,6 +184,11 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
 
     assert_receive {:trace, ^pid, :receive, {:processing_stopped, :tile_images}}, 1000 * 20
 
+    tiles_count =
+      @test_project_name
+      |> FileService.list_tile_image_directories()
+      |> Enum.count()
+
     assert tiles_count == 2
 
     html = render(live_process)

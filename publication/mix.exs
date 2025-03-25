@@ -55,7 +55,7 @@ defmodule FieldPublication.MixProject do
       {:iso639_elixir, "~> 0.2.1"},
       {:cachex, "~> 4.0"},
       {:vix, "~> 0.33.0"},
-      {:iiif_image_plug, path: "../../iiif_plug"}
+      {:iiif_image_plug, "~> 0.1.1"}
     ]
   end
 

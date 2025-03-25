@@ -49,6 +49,7 @@ export class DefaultFieldViewComponent {
         return FieldsViewUtil.getObjectLabel(
             value,
             this.field,
+            Intl.DateTimeFormat().resolvedOptions().timeZone,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value),
             this.labels

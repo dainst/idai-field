@@ -18,6 +18,7 @@ import { I18N } from './i18n';
 import { Composite } from '../model';
 import { StringUtils } from './string-utils';
 import { ValuelistUtil } from './valuelist-util';
+import { DateSpecification } from '../model/input-types/date-specification';
 
 
 export interface FieldsViewGroup extends BaseGroup {
@@ -73,7 +74,7 @@ export module FieldsViewUtil {
     }
 
 
-    export function getLabel(field: FieldsViewSubfield, fieldContent: any, labels: Labels,
+    export function getLabel(field: FieldsViewSubfield, fieldContent: any, labels: Labels, timezone: string,
                              getTranslation: (key: string) => string, formatDecimal: (value: number) => string) {
 
         const entries: any = isArray(fieldContent) ? fieldContent : [fieldContent];
@@ -83,6 +84,7 @@ export module FieldsViewUtil {
                 return FieldsViewUtil.getObjectLabel(
                     entry,
                     field,
+                    timezone,
                     getTranslation,
                     formatDecimal,
                     labels
@@ -94,10 +96,14 @@ export module FieldsViewUtil {
     }
 
 
-    export function getObjectLabel(object: any,  field: FieldsViewSubfield, getTranslation: (key: string) => string,
-                                   formatDecimal: (value: number) => string, labels: Labels): string|null {
+    export function getObjectLabel(object: any,  field: FieldsViewSubfield, timezone: string,
+                                   getTranslation: (key: string) => string, formatDecimal: (value: number) => string,
+                                   labels: Labels): string|null {
 
-        if (field?.definition?.inputType === Field.InputType.DATING) {
+        
+        if (field?.definition.inputType === Field.InputType.DATE) {
+            return DateSpecification.generateLabel(object, timezone);
+        } else if (field?.definition?.inputType === Field.InputType.DATING) {
             return object.label ?? Dating.generateLabel(
                 object,
                 getTranslation,

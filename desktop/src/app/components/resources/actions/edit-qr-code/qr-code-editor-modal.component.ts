@@ -240,6 +240,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             fieldsViewField,
             fieldContent,
             this.labels,
+            Intl.DateTimeFormat().resolvedOptions().timeZone,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value)
         );

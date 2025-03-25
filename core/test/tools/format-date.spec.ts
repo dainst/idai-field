@@ -13,9 +13,12 @@ describe('formatDate', () => {
     });
 
 
-    it('format date with time', () => {
+    it('format date with time considering daylight savings', () => {
 
-        expect(formatDate(new Date(2010, 5, 2, 12, 30))).toEqual('02.06.2010 11:30');
+        expect(formatDate(new Date(2010, 5, 2, 12, 30))).toEqual('02.06.2010 10:30');
         expect(formatDate(new Date(2010, 5, 2, 12, 30), 'Europe/Berlin')).toEqual('02.06.2010 12:30');
+
+        expect(formatDate(new Date(2010, 2, 2, 12, 30))).toEqual('02.03.2010 11:30');
+        expect(formatDate(new Date(2010, 2, 2, 12, 30), 'Europe/Berlin')).toEqual('02.03.2010 12:30');
     });
 });

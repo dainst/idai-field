@@ -10,7 +10,7 @@ const ALLOWED_DATE_FORMATS: string[] = [
 ];
 
 
-export function parseDate(dateString: string, timezone: string = 'Europe/London',
+export function parseDate(dateString: string, timezone: string = 'UTC',
                           latestPossibleDate: boolean = false): Date|undefined {
 
     if (typeof dateString !== 'string') return undefined;

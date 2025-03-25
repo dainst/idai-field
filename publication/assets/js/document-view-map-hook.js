@@ -24,7 +24,7 @@ function createTileLayer(info, projectName) {
         geoReference.topRightCoordinates[0]
     ];
 
-    const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
+    const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{y}/{x}`;
 
     const resolutions = getResolutions(extent, tileSize, info.width, info.height)
 

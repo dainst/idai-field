@@ -30,7 +30,7 @@ import { RadioComponent } from './core/forms/radio.component';
 import { TypeRelationPickerComponent } from './core/forms/type-relation/type-relation-picker.component';
 import { TypeRelationComponent } from './core/forms/type-relation/type-relation.component';
 import { TypeRowComponent } from './core/forms/type-relation/type-row.component';
-import { NgbDateDEParserFormatter } from './core/forms/widgets/date-formatter.component';
+import { NgbDateDEParserFormatter } from './core/forms/widgets/date-formatter';
 import { EmptyValuelistInfoComponent } from './core/forms/widgets/empty-valuelist-info.component';
 import { OutliersComponent } from './core/forms/widgets/outliers.component';
 import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.component';

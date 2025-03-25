@@ -1,5 +1,7 @@
 import { parseDate } from '../../src/tools/parse-date';
 
+process.env.TZ = 'Europe/Berlin';
+
 
 /**
  * @author Thomas Kleinke

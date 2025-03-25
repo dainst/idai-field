@@ -1,0 +1,55 @@
+date-value {
+  display: flex;
+  position: relative;
+
+  .date-picker-input {
+    flex: 0 0 100px;
+  }
+
+  .remove-date-button {
+    height: 33px;
+    padding-top: 4px;
+    font-size: 15px;
+    color: #212529;
+
+    .mdi-close {
+      position: relative;
+      left: 4px;
+    }
+  }
+}
+  
+ngb-datepicker {
+  user-select: none;
+
+  select {
+    box-shadow: none !important;
+  }
+
+  .ngb-dp-day {
+    cursor: default !important;
+  
+    .btn-light.active {
+      background-color: initial !important;
+      border-color: initial !important;
+      color: #37588e !important;
+      box-shadow: initial !important;
+    }
+  }
+
+  .ngb-dp-arrow-btn:focus {
+    outline-width: 0 !important; 
+  }
+}
+
+ngb-timepicker {
+  position: relative;
+  flex: 0 0 144px;
+  margin-left: 16px;
+  user-select: none;
+}
+
+.timezone-selector {
+  margin-left: 16px;
+  flex: 0 0 280px;
+}

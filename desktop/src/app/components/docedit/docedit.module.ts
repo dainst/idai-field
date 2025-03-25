@@ -49,6 +49,7 @@ import { CompositeComponent } from './core/forms/array-field/composite/composite
 import { CompositeEntryModalComponent } from './core/forms/array-field/composite/composite-entry-modal.component';
 import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input.component';
 import { LiteratureEntryModalComponent } from './core/forms/array-field/literature-entry-modal.component';
+import { DateValueComponent } from './core/forms/date-value.component';
 
 
 @NgModule({
@@ -95,6 +96,7 @@ import { LiteratureEntryModalComponent } from './core/forms/array-field/literatu
         RadioComponent,
         DatingEntryModalComponent,
         DateComponent,
+        DateValueComponent,
         TypeRelationComponent,
         TypeRowComponent,
         TypeRelationPickerComponent,

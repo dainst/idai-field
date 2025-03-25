@@ -4,6 +4,7 @@ import { Groups } from '../model/configuration/group';
 import { Relation } from '../model/configuration/relation';
 import { BuiltInCategoryDefinition } from './model/category/built-in-category-definition';
 import { BuiltInFieldDefinition } from './model/field/built-in-field-definition';
+import { DateConfiguration } from '../model/configuration/date-configuration';
 
 
 /**
@@ -89,7 +90,11 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.TEXT
         },
         date: {
-            inputType: Field.InputType.DATE
+            inputType: Field.InputType.DATE,
+            dateConfiguration: {
+                dataType: DateConfiguration.DataType.DATE,
+                inputMode: DateConfiguration.InputMode.SINGLE
+            }
         },
         spatialLocation: {
             inputType: Field.InputType.INPUT

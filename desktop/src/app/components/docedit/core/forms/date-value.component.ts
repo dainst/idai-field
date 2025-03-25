@@ -89,6 +89,8 @@ export class DateValueComponent implements OnInit {
     public removeValue() {
 
         this.value = undefined;
+        this.dateStruct = {} as NgbDateStruct;
+        this.timeStruct = {} as NgbTimeStruct;
         this.onChanged.emit(undefined);
     }
 

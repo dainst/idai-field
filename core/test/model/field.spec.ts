@@ -32,9 +32,9 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.isValidFieldData(-7.5, makeField(Field.InputType.FLOAT))).toBe(true);
         expect(Field.isValidFieldData(true, makeField(Field.InputType.BOOLEAN))).toBe(true);
         expect(Field.isValidFieldData(false, makeField(Field.InputType.BOOLEAN))).toBe(true);
-        expect(Field.isValidFieldData('31.01.2010', makeField(Field.InputType.DATE))).toBe(true);
-        expect(Field.isValidFieldData('01.2010', makeField(Field.InputType.DATE))).toBe(true);
-        expect(Field.isValidFieldData('2010', makeField(Field.InputType.DATE))).toBe(true);
+        expect(Field.isValidFieldData({ value: '31.01.2010' }, makeField(Field.InputType.DATE))).toBe(true);
+        expect(Field.isValidFieldData({ value: '01.2010' }, makeField(Field.InputType.DATE))).toBe(true);
+        expect(Field.isValidFieldData({ value: '2010' }, makeField(Field.InputType.DATE))).toBe(true);
 
         expect(Field.isValidFieldData(
             { value: 'A', endValue: 'B' },
@@ -91,8 +91,9 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.isValidFieldData({ quotation: 'text' }, makeField(Field.InputType.FLOAT))).toBe(false);
         expect(Field.isValidFieldData({ quotation: 'text' }, makeField(Field.InputType.BOOLEAN))).toBe(false);
         expect(Field.isValidFieldData({ quotation: 'text' }, makeField(Field.InputType.DATE))).toBe(false);
-        expect(Field.isValidFieldData('31-01-2010', makeField(Field.InputType.DATE))).toBe(false);
-        expect(Field.isValidFieldData('31.01.2010.01', makeField(Field.InputType.DATE))).toBe(false);
+        expect(Field.isValidFieldData('31.01.2010', makeField(Field.InputType.DATE))).toBe(false);
+        expect(Field.isValidFieldData({ value: '31-01-2010' }, makeField(Field.InputType.DATE))).toBe(false);
+        expect(Field.isValidFieldData({ value: '31.01.2010.01' }, makeField(Field.InputType.DATE))).toBe(false);
         expect(Field.isValidFieldData('ABC', makeField(Field.InputType.DATE))).toBe(false);
         expect(Field.isValidFieldData('text', makeField(Field.InputType.DROPDOWNRANGE))).toBe(false);
         expect(Field.isValidFieldData('text', makeField(Field.InputType.DATING))).toBe(false);

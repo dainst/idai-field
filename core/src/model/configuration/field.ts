@@ -121,7 +121,9 @@ export module Field {
             case InputType.BOOLEAN:
                 return fieldData === true || fieldData === false;
             case InputType.DATE:
-                return !isNaN(parseDate(fieldData)?.getTime());
+                return isObject(fieldData)
+                    && fieldData.value !== undefined
+                    && !isNaN(parseDate(fieldData.value)?.getTime());
             case InputType.DROPDOWNRANGE:
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             case InputType.DATING:

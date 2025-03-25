@@ -6,6 +6,8 @@
 import type { Config } from 'jest';
 
 
+process.env.TZ = 'Europe/Berlin';
+
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,

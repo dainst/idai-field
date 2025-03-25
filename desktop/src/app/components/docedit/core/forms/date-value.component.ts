@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, Output, ViewChild, OnChanges, EventEmitter } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, Output, ViewChild, EventEmitter,
+    OnInit } from '@angular/core';
 import { NgbDateStruct, NgbInputDatepicker, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { toZonedTime } from 'date-fns-tz';
 import { isString } from 'tsfun';
@@ -14,7 +15,7 @@ import { AngularUtility } from '../../../../angular/angular-utility';
 /**
  * @author Thomas Kleinke
  */
-export class DateValueComponent implements OnChanges {
+export class DateValueComponent implements OnInit {
 
     @Input() value: string;
     @Input() field: Field;
@@ -43,8 +44,8 @@ export class DateValueComponent implements OnChanges {
     public getTimezoneLabel = (timezone: string) => timezone;
 
 
-    async ngOnChanges() {
-        
+    ngOnInit() {
+
         this.setSystemTimezone();
         this.updateTimeStruct();
         this.updateDateStruct();

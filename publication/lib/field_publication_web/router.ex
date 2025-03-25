@@ -1,12 +1,10 @@
 defmodule FieldPublicationWeb.Router do
   use FieldPublicationWeb, :router
 
-  alias FieldPublicationWeb.Cantaloupe
+  alias FieldPublicationWeb.IIIFHelper
 
   import FieldPublicationWeb.UserAuth
   import FieldPublicationWeb.Gettext.Plug
-
-  import FieldPublicationWeb.Cantaloupe, only: [set_forward_headers_for_cantaloupe: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -34,7 +32,7 @@ defmodule FieldPublicationWeb.Router do
         host: "localhost",
         port: 4001,
         prefix: "/api/image/iiif/3",
-        identifier_to_path_callback: &Cantaloupe.identifier_to_path/1
+        identifier_to_path_callback: &IIIFHelper.identifier_to_path/1
       })
     end
 

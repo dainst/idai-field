@@ -426,6 +426,27 @@ defmodule FieldPublication.Replication do
     CouchService.put_document(publication.hierarchy_doc, document_content)
   end
 
+  def check_raw_files(%Publication{project_name: project_name} = publication) do
+    %{image: current_raw_files} = FieldPublication.FileService.list_raw_data_files(project_name)
+
+    image_categories =
+      Publications.Data.get_all_subcategories(publication, "Image")
+
+    {existing, missing} =
+      Publications.Data.get_doc_stream_for_categories(publication, image_categories)
+      |> Stream.map(fn %{"_id" => uuid} ->
+        uuid
+      end)
+      |> Enum.split_with(fn uuid ->
+        uuid in current_raw_files
+      end)
+
+    %{
+      existing: existing,
+      missing: missing
+    }
+  end
+
   defp cleanup(ref, running_replications) do
     Map.reject(running_replications, fn {_publication_id, {task, _replication_state} = _value} ->
       task.ref == ref

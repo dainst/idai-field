@@ -16,10 +16,6 @@ defmodule FieldPublication.FileService do
     "#{get_raw_data_path(project_name)}/image"
   end
 
-  def get_web_images_path(project_name) do
-    "#{@file_store_path}/web_images/#{project_name}"
-  end
-
   def get_map_tiles_path(project_name) do
     "#{@file_store_path}/map_tiles/#{project_name}"
   end
@@ -27,7 +23,6 @@ defmodule FieldPublication.FileService do
   def initialize!(project_name) do
     [
       get_raw_image_data_path(project_name),
-      get_web_images_path(project_name),
       get_map_tiles_path(project_name)
     ]
     |> Enum.map(&File.mkdir_p!/1)
@@ -41,7 +36,6 @@ defmodule FieldPublication.FileService do
   def delete(project_name) do
     [
       get_raw_data_path(project_name),
-      get_web_images_path(project_name),
       get_map_tiles_path(project_name)
     ]
     |> Enum.map(&File.rm_rf/1)
@@ -84,11 +78,10 @@ defmodule FieldPublication.FileService do
     |> Enum.into(%{})
   end
 
-  def list_web_image_files(project_name) do
-    File.ls!(get_web_images_path(project_name))
-  end
-
   def list_tile_image_directories(project_name) do
     File.ls!(get_map_tiles_path(project_name))
+    |> Enum.filter(fn val ->
+      val != "vips-properties.xml"
+    end)
   end
 end

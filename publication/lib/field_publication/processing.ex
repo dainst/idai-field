@@ -1,11 +1,6 @@
 defmodule FieldPublication.Processing do
   use GenServer
 
-  alias FieldPublication.Processing.{
-    Image,
-    MapTiles
-  }
-
   alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications
 
@@ -26,7 +21,7 @@ defmodule FieldPublication.Processing do
 
   Each item in the internal state is a tuple of the pattern `{task, processing_type, processing_context}`,
   where `task` is a reference to the Elixir Task that got initiated, processing_type is an atom that identifies the
-  type of processing (for example `:web_images`) and `processing_context` identifies the context within FieldPublication
+  type of processing (for example `:tile_images`) and `processing_context` identifies the context within FieldPublication
   that is being processed (for example the document id of a certain `FieldPublication.DatabaseSchema.Publication`). The
   `processing_context` value is also used to broadcast PubSub messages throughout the application.
 
@@ -50,7 +45,6 @@ defmodule FieldPublication.Processing do
   Start all processing tasks for the given publication.
   """
   def start(%Publication{} = publication) do
-    GenServer.call(__MODULE__, {:start, publication, :web_images})
     GenServer.call(__MODULE__, {:start, publication, :tile_images})
     GenServer.call(__MODULE__, {:start, publication, :search_index})
   end
@@ -59,7 +53,7 @@ defmodule FieldPublication.Processing do
   Start a processing task as defined by `type` for the given publication.
   """
   def start(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index] do
+      when type in [:tile_images, :search_index] do
     # Extend the list of atoms in the guard above to support additional processing steps. You
     # still need to implement the  appropriate `handle_call/3` below.
     GenServer.call(__MODULE__, {:start, publication, type})
@@ -83,7 +77,7 @@ defmodule FieldPublication.Processing do
   Get information about the currently running processing task as defined by `type` for the given publication.
   """
   def show(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index] do
+      when type in [:tile_images, :search_index] do
     GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
   end
 
@@ -105,7 +99,7 @@ defmodule FieldPublication.Processing do
   Stop the currently running processing task as defined by `type` for the given publication.
   """
   def stop(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index] do
+      when type in [:tile_images, :search_index] do
     GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
   end
 
@@ -117,36 +111,6 @@ defmodule FieldPublication.Processing do
   the GenServer. These calls will in general originate from the API functions defined above or from the
   asynchronous tasks started by the GenServer itself (reporting that the processing task has finished/crashed...).
   """
-  def handle_call({:start, %Publication{} = publication, :web_images}, _from, running_tasks) do
-    publication_id = Publications.get_doc_id(publication)
-
-    Enum.any?(running_tasks, fn {_task, type, context} ->
-      publication_id == context and type == :web_images
-    end)
-    |> if do
-      # The `:web_images` task is already running for the given publication, keep the state as-is and return a
-      # `:already_running` atom to the caller.
-      {:reply, :already_running, running_tasks}
-    else
-      # Start the `:web_images` task for the given publication, broadcast the event to the publication's PubSub channel,
-      # update the state and return an `:ok` atom to the caller.
-      task =
-        Task.Supervisor.async_nolink(
-          FieldPublication.ProcessingSupervisor,
-          # Module that implements the actual processing.
-          Image,
-          # Function within that module to start the task.
-          :start_web_image_processing,
-          # Parameters for that function.
-          [publication]
-        )
-
-      broadcast(publication_id, :web_images, :processing_started)
-
-      {:reply, :ok, running_tasks ++ [{task, :web_images, publication_id}]}
-    end
-  end
-
   def handle_call({:start, %Publication{} = publication, :tile_images}, _from, running_tasks) do
     publication_id = Publications.get_doc_id(publication)
 
@@ -164,7 +128,7 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          MapTiles,
+          FieldPublication.Processing.MapTiles,
           # Function within that module to start the processing.
           :start_tile_creation,
           # Parameters for that function.

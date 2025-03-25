@@ -72,12 +72,6 @@ defmodule FieldPublication.Processing.MapTiles do
 
         max = if width < height, do: height, else: width
 
-        real_width = Image.width(image)
-        real_height = Image.height(image)
-        real_max = if real_width < real_height, do: real_height, else: real_width
-
-        factor = max / real_max
-
         max =
           (@tile_size * Float.ceil(max / @tile_size)) |> trunc()
 
@@ -86,7 +80,6 @@ defmodule FieldPublication.Processing.MapTiles do
         else
           Operation.bandjoin_const!(image, [255.0])
         end
-        |> Operation.resize!(factor)
         |> Operation.embed!(0, 0, max, max,
           background: [+0.0],
           extent: :VIPS_EXTEND_BACKGROUND

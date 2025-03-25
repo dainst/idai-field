@@ -32,7 +32,10 @@ defmodule FieldPublicationWeb.Router do
         host: "localhost",
         port: 4001,
         prefix: "/api/image/iiif/3",
-        identifier_to_path_callback: &IIIFHelper.identifier_to_path/1
+        identifier_to_path_callback: &IIIFHelper.identifier_to_path/1,
+        status_callbacks: %{
+          404 => &IIIFHelper.handle_404/2
+        }
       })
     end
 

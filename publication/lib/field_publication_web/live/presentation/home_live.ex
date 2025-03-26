@@ -73,4 +73,10 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
     {:noreply, socket}
   end
+
+  def handle_event("project_selected", %{"id" => project_name}, socket) do
+    socket = push_navigate(socket, to: ~p"/projects/#{project_name}")
+
+    {:noreply, socket}
+  end
 end

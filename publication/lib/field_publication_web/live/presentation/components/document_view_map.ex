@@ -362,9 +362,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         "visibility-set",
         %{"group" => group, "uuid" => uuid, "value" => value},
         socket
-      ) do
-    visible? = if value == "true", do: true, else: false
-
+      )
+      when is_boolean(value) do
     set_group =
       if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
 
@@ -372,7 +371,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       socket.assigns[set_group]
       |> Enum.map(fn state ->
         if state.uuid == uuid do
-          Map.put(state, :visible, visible?)
+          Map.put(state, :visible, value)
         else
           state
         end

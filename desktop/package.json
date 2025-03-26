@@ -146,7 +146,6 @@
     "geotiff": "2.0.7",
     "idai-field-core": "^1.4.0",
     "leaflet": "1.7.1",
-    "moment": "2.29.4",
     "panzoom": "9.4.3",
     "pouchdb-browser": "9.0.0",
     "pouchdb-load": "1.4.6",

@@ -161,6 +161,7 @@ const styleFunction = function (feature) {
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
+        projectName: null,
         docId: null,
         projectTileLayers: [],
         projectTileLayerExtent: null,
@@ -188,7 +189,8 @@ export default getDocumentViewMapHook = () => {
             )
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
-                ({ document_feature, children_features, parent_features }) => {
+                ({ project, document_feature, children_features, parent_features }) => {
+                    this.projectName = project
                     this.setMapFeatures(parent_features, document_feature, children_features)
                 }
             )
@@ -289,6 +291,10 @@ export default getDocumentViewMapHook = () => {
                 const layer = createTileLayer(info, projectName)
                 this.projectTileLayers.push(layer);
 
+                const visible = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+
+                layer.setVisible(visible)
+
                 this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
             }
@@ -302,6 +308,10 @@ export default getDocumentViewMapHook = () => {
                 const layer = createTileLayer(info, projectName)
 
                 this.documentTileLayers.push(layer);
+
+                const visible = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+
+                layer.setVisible(visible)
 
                 this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
@@ -423,7 +433,13 @@ export default getDocumentViewMapHook = () => {
         },
         toggleLayerVisibility(uuid, visibility) {
             const layer = this.map.getLayers().getArray().find(layer => layer.get('name') == uuid)
-            if (layer) layer.setVisible(visibility)
+            if (layer) {
+                layer.setVisible(visibility);
+                localStorage.setItem(this.getVisibilityKey(this.projectName, layer.get('name')), visibility)
+            }
+        },
+        getVisibilityKey(project, layerName) {
+            `layer-visibility-${project}/${layerName}`
         }
     }
 }

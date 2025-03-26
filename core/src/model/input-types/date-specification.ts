@@ -30,7 +30,7 @@ export module DateSpecification {
         const formattedDate: string = formatDate(date, timezone, hasTimeValue);
 
         return hasTimeValue && timeSuffix !== '.'
-            ? formattedDate + ' ' + timeSuffix
-            : formattedDate;
+            ? formattedDate + ' ' + timeSuffix + ' (' + timezone + ')'
+            : formattedDate + ' (' + timezone + ')';
     }
 }

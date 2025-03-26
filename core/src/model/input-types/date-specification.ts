@@ -14,18 +14,23 @@ export interface DateSpecification {
 
 export module DateSpecification {
 
-    export function generateLabel(date: DateSpecification, timezone: string): string {
+    export function generateLabel(date: DateSpecification, timezone: string, timeSuffix: string): string {
 
-        let result: string = getValueLabel(date.value, timezone)
-        if (date.endValue) result += ' - ' + getValueLabel(date.endValue, timezone);
+        let result: string = getValueLabel(date.value, timezone, timeSuffix);
+        if (date.endValue) result += ' - ' + getValueLabel(date.endValue, timezone, timeSuffix);
 
         return result;
     }
 
 
-    function getValueLabel(value: string, timezone: string): string {
-
+    function getValueLabel(value: string, timezone: string, timeSuffix: string): string {
+        
+        const hasTimeValue: boolean = value.includes(':');
         const date: Date = parseDate(value);
-        return formatDate(date, timezone, value.includes(':'));
+        const formattedDate: string = formatDate(date, timezone, hasTimeValue);
+
+        return hasTimeValue && timeSuffix !== '.'
+            ? formattedDate + ' ' + timeSuffix
+            : formattedDate;
     }
 }

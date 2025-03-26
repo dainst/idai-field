@@ -241,6 +241,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
             fieldContent,
             this.labels,
             Intl.DateTimeFormat().resolvedOptions().timeZone,
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value)
         );

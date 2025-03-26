@@ -50,6 +50,7 @@ export class DefaultFieldViewComponent {
             value,
             this.field,
             Intl.DateTimeFormat().resolvedOptions().timeZone,
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value),
             this.labels

@@ -358,6 +358,32 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
+  def handle_event(
+        "visibility-set",
+        %{"group" => group, "uuid" => uuid, "value" => value},
+        socket
+      ) do
+    visible? = if value == "true", do: true, else: false
+
+    set_group =
+      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
+
+    layer_states =
+      socket.assigns[set_group]
+      |> Enum.map(fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, visible?)
+        else
+          state
+        end
+      end)
+
+    {
+      :noreply,
+      assign(socket, set_group, layer_states)
+    }
+  end
+
   defp render_tile_layer_selection_group(assigns) do
     ~H"""
     <%= if @layer_states != [] do %>

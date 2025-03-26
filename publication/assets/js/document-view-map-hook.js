@@ -291,9 +291,13 @@ export default getDocumentViewMapHook = () => {
                 const layer = createTileLayer(info, projectName)
                 this.projectTileLayers.push(layer);
 
-                const visible = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+                const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+
+                let visible = false;
+                if (preference == "true") visible = true
 
                 layer.setVisible(visible)
+                this.pushEventTo(this.el, "visibility-set", { uuid: layer.get('name'), group: "project", value: visible })
 
                 this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
@@ -309,9 +313,12 @@ export default getDocumentViewMapHook = () => {
 
                 this.documentTileLayers.push(layer);
 
-                const visible = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+                const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+                let visible = false;
+                if (preference == "true") visible = true
 
                 layer.setVisible(visible)
+                this.pushEventTo(this.el, "visibility-set", { uuid: layer.get('name'), group: "project", value: visible })
 
                 this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);

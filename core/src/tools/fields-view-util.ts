@@ -75,7 +75,7 @@ export module FieldsViewUtil {
 
 
     export function getLabel(field: FieldsViewSubfield, fieldContent: any, labels: Labels, timezone: string,
-                             timeSuffix: string, getTranslation: (key: string) => string,
+                             locale: string, timeSuffix: string, getTranslation: (key: string) => string,
                              formatDecimal: (value: number) => string) {
 
         const entries: any = isArray(fieldContent) ? fieldContent : [fieldContent];
@@ -87,6 +87,7 @@ export module FieldsViewUtil {
                     field,
                     timezone,
                     timeSuffix,
+                    locale,
                     getTranslation,
                     formatDecimal,
                     labels
@@ -98,13 +99,13 @@ export module FieldsViewUtil {
     }
 
 
-    export function getObjectLabel(object: any,  field: FieldsViewSubfield, timezone: string, timeSuffix: string,
-                                   getTranslation: (key: string) => string, formatDecimal: (value: number) => string,
-                                   labels: Labels): string|null {
+    export function getObjectLabel(object: any,  field: FieldsViewSubfield, timezone: string, locale: string,
+                                   timeSuffix: string, getTranslation: (key: string) => string,
+                                   formatDecimal: (value: number) => string, labels: Labels): string|null {
 
         
         if (field?.definition.inputType === Field.InputType.DATE) {
-            return DateSpecification.generateLabel(object, timezone, timeSuffix);
+            return DateSpecification.generateLabel(object, timezone, timeSuffix, locale);
         } else if (field?.definition?.inputType === Field.InputType.DATING) {
             return object.label ?? Dating.generateLabel(
                 object,

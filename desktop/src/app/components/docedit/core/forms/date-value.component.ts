@@ -211,7 +211,7 @@ export class DateValueComponent implements OnInit {
     private applySelectedTimezone(formattedDate: string): string {
 
         const date: Date = parseDate(formattedDate, this.selectedTimezone);
-        return formatDate(date);
+        return formatDate(date, undefined, 'UTC', 'short');
     }
 
 

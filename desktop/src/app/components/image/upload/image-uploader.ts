@@ -17,6 +17,7 @@ import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
 import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
 import { ImagesState } from '../overview/view/images-state';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
+import { getSystemTimezone } from '../../../util/timezones';
 
 const path = window.require('path');
 
@@ -308,7 +309,9 @@ export class ImageUploader {
         const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
 
         if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
-            document.resource.date = formatDate(extendedMetadata.date, Intl.DateTimeFormat().resolvedOptions().timeZone, false);
+            document.resource.date = formatDate(
+                extendedMetadata.date, undefined, getSystemTimezone(), 'none'
+            );
         }
         if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;

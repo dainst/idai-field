@@ -38,8 +38,9 @@ export class DateValueComponent implements OnInit {
 
     public isDatePickerVisible = () => this.value === undefined;
 
-    public isTimePickerVisible = () => this.value?.split('.').length > 2
-        && this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
+    public isTimePickerVisible = () => this.value?.split('.').length > 2 && this.supportsTimeInput();
+
+    public supportsTimeInput = () => this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
 
     public getTimezoneLabel = (timezone: string) => timezone;
 
@@ -47,8 +48,8 @@ export class DateValueComponent implements OnInit {
     ngOnInit() {
 
         this.setSystemTimezone();
-        this.updateTimeStruct();
         this.updateDateStruct();
+        this.updateTimeStruct();
     }
 
 
@@ -92,6 +93,21 @@ export class DateValueComponent implements OnInit {
         this.dateStruct = {} as NgbDateStruct;
         this.timeStruct = {} as NgbTimeStruct;
         this.onChanged.emit(undefined);
+    }
+
+
+    public setCurrentDate() {
+
+        this.value = formatDate(
+            new Date(),
+            undefined,
+            'UTC',
+            this.supportsTimeInput() ? 'short' : 'none'
+        );
+
+        this.updateDateStruct();
+        this.updateTimeStruct();
+        this.onChanged.emit(this.value);
     }
 
 

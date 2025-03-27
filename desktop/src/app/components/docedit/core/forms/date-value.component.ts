@@ -5,6 +5,7 @@ import { toZonedTime } from 'date-fns-tz';
 import { isString } from 'tsfun';
 import { DateConfiguration, Field, formatDate, parseDate } from 'idai-field-core';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { TimeSpecification } from './time-input.component';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class DateValueComponent implements OnInit {
     @ViewChild('dateInput', { static: false }) dateInputElement: ElementRef;
 
     public dateStruct: NgbDateStruct;
-    public timeStruct: NgbTimeStruct;
+    public time: TimeSpecification;
 
     public selectedTimezone: string;
 
@@ -49,13 +50,20 @@ export class DateValueComponent implements OnInit {
 
         this.setSystemTimezone();
         this.updateDateStruct();
-        this.updateTimeStruct();
+        this.updateTime();
     }
 
 
     public onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Enter') this.update();
+    }
+
+
+    public onTimeChanged(time: TimeSpecification) {
+
+        this.time = time;
+        this.update();
     }
 
 
@@ -91,7 +99,7 @@ export class DateValueComponent implements OnInit {
 
         this.value = undefined;
         this.dateStruct = {} as NgbDateStruct;
-        this.timeStruct = {} as NgbTimeStruct;
+        this.time = {};
         this.onChanged.emit(undefined);
     }
 
@@ -106,7 +114,7 @@ export class DateValueComponent implements OnInit {
         );
 
         this.updateDateStruct();
-        this.updateTimeStruct();
+        this.updateTime();
         this.onChanged.emit(this.value);
     }
 
@@ -182,16 +190,22 @@ export class DateValueComponent implements OnInit {
     }
 
 
-    private updateTimeStruct() {
+    private updateTime() {
 
-        if (!this.value || !this.value.includes(':')) return;
+        if (!this.value || !this.value.includes(':')) {
+            this.time = {};
+            return;
+        }
 
         const parsedDate: Date = toZonedTime(
             parseDate(this.value),
             this.selectedTimezone
         );
 
-        this.timeStruct = { hour: parsedDate.getHours(), minute: parsedDate.getMinutes(), second: 0 };
+        this.time = {
+            hours: parsedDate.getHours(),
+            minutes: parsedDate.getMinutes()
+        };
     }
 
 
@@ -212,15 +226,15 @@ export class DateValueComponent implements OnInit {
 
     private getFormattedTime(): string|undefined {
 
-        return DateValueComponent.padNumber(this.timeStruct.hour) + ':'
-            + DateValueComponent.padNumber(this.timeStruct.minute);
+        return DateValueComponent.padNumber(this.time.hours) + ':'
+            + DateValueComponent.padNumber(this.time.minutes);
     }
 
 
     private isTimeSelected(): boolean {
 
-        return DateValueComponent.isNumber(this.timeStruct?.hour)
-            && DateValueComponent.isNumber(this.timeStruct?.minute);
+        return DateValueComponent.isNumber(this.time?.hours)
+            && DateValueComponent.isNumber(this.time?.minutes);
     }
 
 

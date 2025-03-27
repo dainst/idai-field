@@ -23,10 +23,9 @@
      i18n="@@dcoedit.forms.date.now"
      (click)="setCurrentDate()">Jetzt</div>
 
-<ngb-timepicker *ngIf="isTimePickerVisible()"
-                [(ngModel)]="timeStruct"
-                (ngModelChange)="update()"
-                [spinners]="false"></ngb-timepicker>
+<time-input *ngIf="isTimePickerVisible()"
+            [time]="time"
+            (onChanged)="onTimeChanged($event)"></time-input>
 
 <div class="timezone-selector">
     <searchable-select *ngIf="isTimePickerVisible()"

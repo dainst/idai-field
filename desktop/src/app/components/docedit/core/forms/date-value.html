@@ -3,11 +3,6 @@
     <span class="mdi mdi-close"></span>
 </div>
 
-<div *ngIf="isDatePickerVisible()"
-     class="btn btn-default"
-     i18n="@@dcoedit.forms.date.now"
-     (click)="setCurrentDate()">Jetzt</div>
-
 <input *ngIf="isDatePickerVisible()"
         #dateInput
         class="form-control date-picker-input"
@@ -22,6 +17,11 @@
         [(ngModel)]="dateStruct"
         ngbDatepicker
         #d="ngbDatepicker">
+
+<div *ngIf="isDatePickerVisible()"
+     class="btn btn-outline-primary now-button"
+     i18n="@@dcoedit.forms.date.now"
+     (click)="setCurrentDate()">Jetzt</div>
 
 <ngb-timepicker *ngIf="isTimePickerVisible()"
                 [(ngModel)]="timeStruct"

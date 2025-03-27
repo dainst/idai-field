@@ -42,6 +42,14 @@ ngb-datepicker {
   }
 }
 
+.now-button {
+  flex: 0 0 50px;
+  height: 33px;
+  margin-left: 10px;
+  line-height: 18px;
+  font-size: 14px;
+}
+
 ngb-timepicker {
   position: relative;
   flex: 0 0 144px;

@@ -28,11 +28,13 @@ export module DateSpecification {
         
         const hasTimeValue: boolean = value.includes(':');
         const date: Date = parseDate(value);
-        const formattedDate: string = formatDate(date, locale, timezone, hasTimeValue ? 'short' : 'none');
+        let formattedDate: string = formatDate(date, locale, timezone, hasTimeValue ? 'short' : 'none');
 
         // If the time suffix is set to '.', this indicates that no time suffix should be used
-        return hasTimeValue && timeSuffix !== '.'
-            ? formattedDate + ' ' + timeSuffix + ' (' + timezone + ')'
-            : formattedDate + ' (' + timezone + ')';
+        if (hasTimeValue && timeSuffix !== '.') formattedDate = formattedDate + ' ' + timeSuffix;
+        
+        if (hasTimeValue) formattedDate += ' (' + timezone + ')';
+
+        return formattedDate;
     }
 }

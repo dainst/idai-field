@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Settings } from '../../../../services/settings/settings';
+import { Settings } from '../../../../../services/settings/settings';
 
 
 export type TimeSpecification = {

@@ -4,7 +4,7 @@ import { NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { toZonedTime } from 'date-fns-tz';
 import { isString } from 'tsfun';
 import { DateConfiguration, Field, formatDate, parseDate } from 'idai-field-core';
-import { AngularUtility } from '../../../../angular/angular-utility';
+import { AngularUtility } from '../../../../../angular/angular-utility';
 import { TimeSpecification } from './time-input.component';
 
 

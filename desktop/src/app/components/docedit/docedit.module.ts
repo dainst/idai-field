@@ -17,7 +17,7 @@ import { EditFormGroup } from './core/edit-form-group.component';
 import { EditFormComponent } from './core/edit-form.component';
 import { BooleanComponent } from './core/forms/boolean.component';
 import { CheckboxesComponent } from './core/forms/checkboxes.component';
-import { DateComponent } from './core/forms/date.component';
+import { DateComponent } from './core/forms/date/date.component';
 import { DatingEntryModalComponent } from './core/forms/array-field/dating-entry-modal.component';
 import { DimensionEntryModalComponent } from './core/forms/array-field/dimension-entry-modal.component';
 import { DropdownRangeComponent } from './core/forms/dropdown-range.component';
@@ -48,8 +48,8 @@ import { CompositeComponent } from './core/forms/array-field/composite/composite
 import { CompositeEntryModalComponent } from './core/forms/array-field/composite/composite-entry-modal.component';
 import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input.component';
 import { LiteratureEntryModalComponent } from './core/forms/array-field/literature-entry-modal.component';
-import { DateValueComponent } from './core/forms/date-value.component';
-import { TimeInputComponent } from './core/forms/time-input.component';
+import { DateValueComponent } from './core/forms/date/date-value.component';
+import { TimeInputComponent } from './core/forms/date/time-input.component';
 
 
 @NgModule({

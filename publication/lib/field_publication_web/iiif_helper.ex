@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.IIIFHelper do
       URI.decode(identifier)
       |> String.split("/")
 
-    "#{FieldPublication.FileService.get_raw_image_data_path(project)}/ptif/#{uuid}"
+    "#{FieldPublication.FileService.get_web_images_path(project)}/#{uuid}.tif"
   end
 
   def handle_404(conn, plug_info) do

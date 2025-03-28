@@ -400,7 +400,7 @@ defmodule FieldPublicationWeb.UserAuth do
     # cantaloupe image server. We can not extract project_name and uuid beforehand.
     [project_name, uuid] =
       image_name
-      |> String.replace_suffix(".jp2", "")
+      |> String.replace_suffix(".tif", "")
       |> String.split("%2F")
 
     check_image_access(conn, project_name, uuid)

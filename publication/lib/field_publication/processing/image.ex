@@ -1,6 +1,11 @@
 defmodule FieldPublication.Processing.Image do
   alias Phoenix.PubSub
 
+  alias Vix.Vips.{
+    Image,
+    Operation
+  }
+
   alias FieldPublication.FileService
   alias FieldPublication.Publications
 
@@ -29,7 +34,7 @@ defmodule FieldPublication.Processing.Image do
         uuid
       end)
       |> Enum.split_with(fn uuid ->
-        "#{uuid}.jp2" in current_web_files
+        "#{uuid}.tif" in current_web_files
       end)
 
     missing_raw_files = missing -- current_raw_files
@@ -67,13 +72,20 @@ defmodule FieldPublication.Processing.Image do
     existing_raw_files
     |> Enum.map(fn uuid ->
       Logger.debug(
-        "Creating web image (JPEG 2000) for '#{uuid}' in project '#{publication.project_name}'..."
+        "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{publication.project_name}'..."
       )
 
-      FieldPublication.Processing.Imagemagick.create_jp2(
-        "#{raw_root}/image/#{uuid}",
-        "#{web_root}/#{uuid}.jp2"
-      )
+      {:ok, file} = Image.new_from_file("#{raw_root}/image/#{uuid}")
+
+      :ok =
+        Operation.tiffsave(file, "#{web_root}/#{uuid}.tif",
+          pyramid: true,
+          "tile-height": 256,
+          "tile-width": 256,
+          tile: true,
+          # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
+          compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
+        )
 
       updated_state =
         Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->

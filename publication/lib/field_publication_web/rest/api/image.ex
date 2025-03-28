@@ -14,6 +14,6 @@ defmodule FieldPublicationWeb.Api.Image do
       ) do
     base_path = FileService.get_map_tiles_path(name)
 
-    Plug.Conn.send_file(conn, 200, "#{base_path}/#{uuid}/#{z}/#{x}/#{y}.png")
+    Plug.Conn.send_file(conn, 200, "#{base_path}/#{uuid}/#{z}/#{x}/#{y}.webp")
   end
 end

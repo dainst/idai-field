@@ -87,7 +87,7 @@ defmodule FieldPublication.Processing.MapTiles do
           )
           |> Operation.dzsave!("#{tiles_root}/#{uuid}",
             "tile-size": @tile_size,
-            suffix: ".png",
+            suffix: ".webp",
             layout: :VIPS_FOREIGN_DZ_LAYOUT_GOOGLE,
             overlap: 0,
             depths: :VIPS_FOREIGN_DZ_DEPTH_ONETILE,

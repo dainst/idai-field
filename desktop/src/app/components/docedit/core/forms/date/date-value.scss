@@ -58,3 +58,12 @@ ngb-datepicker {
   width: 280px;
   margin-left: 12px;
 }
+
+.remove-date-value-button {
+  right: 0;
+
+  .mdi {
+    position: relative;
+    bottom: 4px;
+  }
+}

@@ -36,3 +36,9 @@
                     [clearable]="false"
                     (onValueSelected)="selectTimezone($event)"></searchable-select>
 </div>
+
+<div *ngIf="!isDatePickerVisible()"
+     class="small-circular-button red-button remove-date-value-button"
+     (click)="remove()">
+     <span class="mdi mdi-delete"></span>
+ </div>

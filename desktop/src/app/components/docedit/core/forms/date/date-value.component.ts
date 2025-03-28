@@ -173,9 +173,16 @@ export class DateValueComponent implements OnInit {
     }
 
 
+    public remove() {
+
+        this.dateStruct = {} as NgbDateStruct;
+        this.time = {};
+        this.value = undefined;
+        this.onChanged.emit(undefined);
+    }
+
+
     private async focusInputField() {
-        
-        console.log('FOCUS!');
 
         await AngularUtility.refresh();
 
@@ -186,8 +193,6 @@ export class DateValueComponent implements OnInit {
 
 
     private async blurInputField() {
-        
-        console.log('BLUR!');
 
         await AngularUtility.refresh();
 

@@ -2,7 +2,6 @@ import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt,
     validateUrl } from '../../tools/validation-util';
-import { parseDate } from '../../tools/parse-date';
 import { Dating } from '../input-types/dating';
 import { Dimension } from '../input-types/dimension';
 import { Literature } from '../input-types/literature';
@@ -10,6 +9,7 @@ import { OptionalRange } from '../input-types/optional-range';
 import { Valuelist } from './valuelist';
 import { Composite } from '../input-types/composite';
 import { DateConfiguration } from './date-configuration';
+import { DateSpecification } from '../input-types/date-specification';
 
 
 /**
@@ -84,7 +84,7 @@ export module Field {
         export const COMMON = 'common';
     }
 
-    export function isValidFieldData(fieldData: any, field: BaseField): boolean {
+    export function isValidFieldData(fieldData: any, field: BaseField, permissive: boolean = false): boolean {
 
         if (fieldData === null || fieldData === undefined) return false;
 
@@ -121,9 +121,7 @@ export module Field {
             case InputType.BOOLEAN:
                 return fieldData === true || fieldData === false;
             case InputType.DATE:
-                return isObject(fieldData)
-                    && fieldData.value !== undefined
-                    && !isNaN(parseDate(fieldData.value)?.getTime());
+                return permissive ? isObject(fieldData) : DateSpecification.validate(fieldData, field);
             case InputType.DROPDOWNRANGE:
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             case InputType.DATING:

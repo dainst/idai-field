@@ -1,5 +1,8 @@
 defmodule FieldPublicationWeb.Management.PublicationLive.Show do
-  alias FieldPublication.Processing.MapTiles
+  alias FieldPublication.Processing.{
+    MapTiles,
+    Image
+  }
 
   alias FieldPublication.{
     Publications,
@@ -33,6 +36,11 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
 
     processing_tasks_running = Processing.show(publication)
 
+    web_images_processing? =
+      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
+        type == :web_images
+      end)
+
     tile_images_processing? =
       Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
         type == :tile_images
@@ -60,6 +68,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
       |> assign(:replication_logs, publication.replication_logs)
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
+      |> assign(:web_images_processing?, web_images_processing?)
       |> assign(:tile_images_processing?, tile_images_processing?)
       |> assign(:search_indexing?, search_indexing?)
       |> assign(:publication_form, publication_form)
@@ -79,6 +88,26 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     # The Replication module will broadcast a message to all connected users that will get picked up by
     # a handle_info/2 function defined below.
     Replication.stop(publication)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "start_web_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.start(publication, :web_images)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "stop_web_images_processing",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.stop(publication, :web_images)
 
     {:noreply, socket}
   end
@@ -249,6 +278,13 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     }
   end
 
+  def handle_info({:processing_started, :web_images}, socket) do
+    {
+      :noreply,
+      assign(socket, :web_images_processing?, true)
+    }
+  end
+
   def handle_info(
         {processing_feedback, _summary},
         %{assigns: %{data_state: nil}} = socket
@@ -273,6 +309,13 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
       end)
 
     {:noreply, assign(socket, :data_state, updated_data_state)}
+  end
+
+  def handle_info({:processing_stopped, :web_images}, socket) do
+    {
+      :noreply,
+      assign(socket, :web_images_processing?, false)
+    }
   end
 
   def handle_info({:processing_started, :tile_images}, socket) do
@@ -331,7 +374,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
       {
         :data_state_evaluation,
         %{
-          images: Replication.check_raw_files(publication),
+          images: Image.evaluate_web_images_state(publication),
           tiles: MapTiles.evaluate_state(publication),
           search_index: Publications.Search.evaluate_active_index_state(publication)
         }

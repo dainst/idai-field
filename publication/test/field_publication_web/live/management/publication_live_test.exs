@@ -180,15 +180,30 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
 
     assert_receive {:trace, ^pid, :receive, {:processing_started, :tile_images}}
 
+    assert_receive {:trace, ^pid, :receive, {:processing_started, :web_images}}
+
     assert_receive {:trace, ^pid, :receive, {:processing_stopped, :search_index}}, 1000 * 20
 
     assert_receive {:trace, ^pid, :receive, {:processing_stopped, :tile_images}}, 1000 * 20
+
+    assert_receive {:trace, ^pid, :receive, {:processing_stopped, :web_images}}, 1000 * 20
+
+    %{image: image_uuids} =
+      FileService.list_raw_data_files(@test_project_name)
+
+    raw_images_count = Enum.count(image_uuids)
+
+    web_files_count =
+      @test_project_name
+      |> FileService.list_web_image_files()
+      |> Enum.count()
 
     tiles_count =
       @test_project_name
       |> FileService.list_tile_image_directories()
       |> Enum.count()
 
+    assert raw_images_count == web_files_count
     assert tiles_count == 2
 
     html = render(live_process)

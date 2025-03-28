@@ -42,7 +42,7 @@
               <tbody>
                 <tr class="border-2 text-center">
                   <td>Missing raw files</td>
-                  <td>{Enum.count(@data_state.images.missing)}</td>
+                  <td>{Enum.count(@data_state.images.missing_raw_files)}</td>
                   <td>
                     <.link
                       class="font-semibold font-mono"
@@ -52,6 +52,31 @@
                     >
                       Redraft publication
                     </.link>
+                  </td>
+                </tr>
+                <tr class="border-2">
+                  <td class="text-center">Web images</td>
+                  <td>
+                    <.progress_bar state={@data_state.images.summary}></.progress_bar>
+                  </td>
+                  <td class="text-center">
+                    <%= if @web_images_processing? do %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="stop_web_images_processing"
+                      >
+                        Stop
+                      </.link>
+                    <% else %>
+                      <.link
+                        class="font-semibold font-mono"
+                        type="button"
+                        phx-click="start_web_images_processing"
+                      >
+                        Start
+                      </.link>
+                    <% end %>
                   </td>
                 </tr>
                 <tr class="border-2">

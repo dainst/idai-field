@@ -119,6 +119,10 @@ defmodule FieldPublication.Test.ProjectSeed do
       [] =
         Processing.MapTiles.start_tile_creation(publication)
         |> Enum.reject(fn val -> val == :ok end)
+
+      [] =
+        Processing.Image.start_web_image_processing(publication)
+        |> Enum.reject(fn val -> val == :ok end)
     end
 
     {project, publication}

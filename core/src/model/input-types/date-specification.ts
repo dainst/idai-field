@@ -17,14 +17,14 @@ export module DateSpecification {
     export function generateLabel(date: DateSpecification, timezone: string, timeSuffix: string,
                                   locale: string): string {
 
-        let result: string = getValueLabel(date.value, timezone, timeSuffix, locale);
-        if (date.endValue) result += ' - ' + getValueLabel(date.endValue, timezone, timeSuffix, locale);
+        let result: string = getValueLabel(date.value, timezone, timeSuffix, locale, !date.endValue);
+        if (date.endValue) result += ' - ' + getValueLabel(date.endValue, timezone, timeSuffix, locale, true);
 
         return result;
     }
 
 
-    function getValueLabel(value: string, timezone: string, timeSuffix: string, locale: string): string {
+    function getValueLabel(value: string, timezone: string, timeSuffix: string, locale: string, addTimezoneInfo: boolean): string {
         
         const hasTimeValue: boolean = value.includes(':');
         const date: Date = parseDate(value);
@@ -33,7 +33,7 @@ export module DateSpecification {
         // If the time suffix is set to '.', this indicates that no time suffix should be used
         if (hasTimeValue && timeSuffix !== '.') formattedDate = formattedDate + ' ' + timeSuffix;
         
-        if (hasTimeValue) formattedDate += ' (' + timezone + ')';
+        if (addTimezoneInfo && hasTimeValue) formattedDate += ' (' + timezone + ')';
 
         return formattedDate;
     }

@@ -2,9 +2,12 @@ date-value {
   display: flex;
   position: relative;
 
+  .input-group {
+    width: 133px;
+  }
+
   .date-picker-input {
     width: 100px;
-    margin-right: 12px !important;
   }
 
   .date-label {
@@ -52,6 +55,7 @@ ngb-datepicker {
   height: 33px;
   line-height: 18px;
   font-size: 14px;
+  z-index: 5 !important;
 }
 
 .timezone-selector {

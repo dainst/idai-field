@@ -4,25 +4,33 @@
     {{getFormattedDate()}}
 </div>
 
-<input *ngIf="isDatePickerVisible()"
-        #dateInput
-        #datePicker="ngbDatepicker"
-        class="form-control date-picker-input"
-        [firstDayOfWeek]="1"
-        placeholder="dd.mm.yyyy"
-        container="body"
-        (click)="toggleDatePicker()"
-        (blur)="onDateInputBlurred()"
-        (dateSelect)="update()"
-        (closed)="onDatePickerClosed()"
-        (keydown)="onKeyDown($event)"
-        [(ngModel)]="dateStruct"
-        ngbDatepicker>
+<div *ngIf="isDatePickerVisible()" class="input-group">
+     <input *ngIf="isDatePickerVisible()"
+          #dateInput
+          #datePicker="ngbDatepicker"
+          class="form-control date-picker-input"
+          [firstDayOfWeek]="1"
+          placeholder="dd.mm.yyyy"
+          container="body"
+          (click)="toggleDatePicker()"
+          (blur)="onDateInputBlurred()"
+          (dateSelect)="update()"
+          (closed)="onDatePickerClosed()"
+          (keydown)="onKeyDown($event)"
+          [(ngModel)]="dateStruct"
+          ngbDatepicker>
 
-<div *ngIf="isNowButtonVisible()"
-     class="btn btn-outline-primary now-button"
-     i18n="@@dcoedit.forms.date.now"
-     (click)="setCurrentDate()">Jetzt</div>
+     <button *ngIf="isNowButtonVisible()"
+          class="btn btn-outline-primary now-button"
+          i18n="@@dcoedit.forms.date.now"
+          ngbTooltip="Aktuelles Datum verwenden"
+          i18n-ngbTooltip="@@docedit.forms.date.now.tooltip"
+          placement="top"
+          container="body"
+          (click)="setCurrentDate()">
+          <span class="mdi mdi-calendar-clock"></span>
+     </button>
+</div>
 
 <time-input *ngIf="isTimePickerVisible()"
             [time]="time"

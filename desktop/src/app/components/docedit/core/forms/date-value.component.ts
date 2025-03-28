@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, Output, ViewChild, EventEmitter,
     OnInit } from '@angular/core';
-import { NgbDateStruct, NgbInputDatepicker, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { toZonedTime } from 'date-fns-tz';
 import { isString } from 'tsfun';
 import { DateConfiguration, Field, formatDate, parseDate } from 'idai-field-core';
@@ -24,6 +24,7 @@ export class DateValueComponent implements OnInit {
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('dateInput', { static: false }) dateInputElement: ElementRef;
+    @ViewChild('datePicker', { static: false }) datePicker: any;
 
     public dateStruct: NgbDateStruct;
     public time: TimeSpecification;
@@ -31,7 +32,9 @@ export class DateValueComponent implements OnInit {
     public selectedTimezone: string;
 
     public onScrollListener: any;
-    public scrollListenerInitialized: boolean = false;    
+    public scrollListenerInitialized: boolean = false;
+
+    private editing: boolean = false;
 
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
@@ -39,7 +42,10 @@ export class DateValueComponent implements OnInit {
 
     public isDatePickerVisible = () => this.value === undefined;
 
-    public isTimePickerVisible = () => this.value?.split('.').length > 2 && this.supportsTimeInput();
+    public isTimePickerVisible = () => this.supportsTimeInput()
+        && (this.value?.split('.').length > 2 || (this.editing && this.isTimeSelected()));
+
+    public isNowButtonVisible = () => this.isDatePickerVisible() && !this.isTimePickerVisible();
 
     public supportsTimeInput = () => this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
 
@@ -67,14 +73,25 @@ export class DateValueComponent implements OnInit {
     }
 
 
+    public async onDatePickerClosed() {
+
+        this.stopListeningToScrollEvents();
+        this.blurInputField();
+        this.update();
+    }
+
+
+    public onDateInputBlurred() {
+
+        if (!this.datePicker) this.update();
+    }
+
+
     public async update() {
 
+        this.editing = false;
         this.value = this.buildValue();
         this.onChanged.emit(this.value);
-
-        if (!this.value) {
-            await this.focusInputField();
-        }
     }
 
 
@@ -85,22 +102,15 @@ export class DateValueComponent implements OnInit {
     }
 
 
-    public async focusInputField() {
+    public async editDate() {
+
+        this.editing = true;
+        this.value = undefined;
+        this.dateStruct = {} as NgbDateStruct;
 
         await AngularUtility.refresh();
 
-        if (this.dateInputElement) {
-            this.dateInputElement.nativeElement.focus();
-        };
-    }
-
-
-    public removeValue() {
-
-        this.value = undefined;
-        this.dateStruct = {} as NgbDateStruct;
-        this.time = {};
-        this.onChanged.emit(undefined);
+        this.toggleDatePicker();
     }
 
 
@@ -119,22 +129,23 @@ export class DateValueComponent implements OnInit {
     }
 
 
-    public listenToScrollEvents(datePicker: NgbInputDatepicker) {
+    public toggleDatePicker() {
 
-        this.scrollListenerInitialized = false;
+        console.log('TOGGLE!');
 
-        this.onScrollListener = this.onScroll(datePicker).bind(this);
-        window.addEventListener('scroll', this.onScrollListener, true);
+        this.datePicker.toggle();
+        this.focusInputField();
+        this.listenToScrollEvents();
     }
 
-    
+
     public stopListeningToScrollEvents() {
 
         if (!this.onScrollListener) return;
 
         window.removeEventListener('scroll', this.onScrollListener, true);
         this.onScrollListener = undefined;
-    }
+    }  
 
 
     public getFormattedDate(): string|undefined {
@@ -162,10 +173,43 @@ export class DateValueComponent implements OnInit {
     }
 
 
+    private async focusInputField() {
+        
+        console.log('FOCUS!');
+
+        await AngularUtility.refresh();
+
+        if (this.dateInputElement) {
+            this.dateInputElement.nativeElement.focus();
+        };
+    }
+
+
+    private async blurInputField() {
+        
+        console.log('BLUR!');
+
+        await AngularUtility.refresh();
+
+        if (this.dateInputElement) {
+            this.dateInputElement.nativeElement.blur();
+        };
+    }
+
+
     private setSystemTimezone() {
 
         this.selectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
+
+
+    private listenToScrollEvents() {
+
+        this.scrollListenerInitialized = false;
+
+        this.onScrollListener = this.onScroll(this.datePicker).bind(this);
+        window.addEventListener('scroll', this.onScrollListener, true);
+    }  
 
 
     private updateDateStruct() {

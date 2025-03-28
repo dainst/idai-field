@@ -1,24 +1,25 @@
-<div *ngIf="!isDatePickerVisible()" class="btn btn-light remove-date-button" (click)="removeValue()">
-    <span>{{getFormattedDate()}}</span>
-    <span class="mdi mdi-close"></span>
+<div *ngIf="!isDatePickerVisible()"
+     class="date-label"
+     (click)="editDate()">
+    {{getFormattedDate()}}
 </div>
 
 <input *ngIf="isDatePickerVisible()"
         #dateInput
+        #datePicker="ngbDatepicker"
         class="form-control date-picker-input"
         [firstDayOfWeek]="1"
         placeholder="dd.mm.yyyy"
         container="body"
-        (click)="d.toggle(); focusInputField(); listenToScrollEvents(d)"
-        (blur)="update()"
+        (click)="toggleDatePicker()"
+        (blur)="onDateInputBlurred()"
         (dateSelect)="update()"
-        (closed)="stopListeningToScrollEvents()"
+        (closed)="onDatePickerClosed()"
         (keydown)="onKeyDown($event)"
         [(ngModel)]="dateStruct"
-        ngbDatepicker
-        #d="ngbDatepicker">
+        ngbDatepicker>
 
-<div *ngIf="isDatePickerVisible()"
+<div *ngIf="isNowButtonVisible()"
      class="btn btn-outline-primary now-button"
      i18n="@@dcoedit.forms.date.now"
      (click)="setCurrentDate()">Jetzt</div>

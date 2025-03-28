@@ -1,7 +1,9 @@
 time-input {
   display: flex;
+  width: 88px;
 
   input {
+    height: 33px;
     text-align: center;
 
     &.with-time-suffix,
@@ -27,6 +29,7 @@ time-input {
 
   .time-suffix,
   .am-pm-switch {
+    height: 33px;
     position: relative;
     right: 9px;
     padding-top: 6px;

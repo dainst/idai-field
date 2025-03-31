@@ -50,7 +50,7 @@ defmodule FieldPublication.Processing.MapTiles do
     }
   end
 
-  def start_tile_creation(%Publication{} = publication) do
+  def start(%Publication{} = publication) do
     # TODO: Construct all paths in FileService module.
     raw_root = FileService.get_raw_data_path(publication.project_name)
     tiles_root = FileService.get_map_tiles_path(publication.project_name)

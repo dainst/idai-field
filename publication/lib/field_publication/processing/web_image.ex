@@ -55,7 +55,7 @@ defmodule FieldPublication.Processing.WebImage do
     }
   end
 
-  def start_web_image_processing(%Publication{project_name: project_name} = publication) do
+  def start(%Publication{project_name: project_name} = publication) do
     %{existing_raw_files: existing_raw_files, summary: summary} =
       evaluate_web_images_state(publication)
 

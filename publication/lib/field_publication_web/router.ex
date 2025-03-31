@@ -28,10 +28,6 @@ defmodule FieldPublicationWeb.Router do
 
     scope "/iiif" do
       forward("/3", IIIFImagePlug.V3, %{
-        scheme: :http,
-        host: "localhost",
-        port: 4001,
-        prefix: "/api/image/iiif/3",
         identifier_to_path_callback: &IIIFHelper.identifier_to_path/1,
         status_callbacks: %{
           404 => &IIIFHelper.handle_404/2

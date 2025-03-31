@@ -1536,7 +1536,7 @@ Aus Gründen der Übersichtlichkeit werden die Beispiele im Folgenden jeweils in
 
 ##### Relationen
 
-Felder vom Eingabetyp *Relation* werden im Objekt *relations* gebündelt. Die Feldnamen des Objekts entsprechen den Bezeichnern der Relationen, als Feldwert wird jeweils ein Array mit den Bezeichnern der Zielressourcen eingetragen.
+Felder vom Eingabetyp *Relation* werden im Objekt *relations* gebündelt. Die Feldnamen des Objekts entsprechen den Bezeichnern der Relationen, als Feldwert wird jeweils ein Array mit den Bezeichnern der Zielressourcen eingetragen. Einzige Ausnahme ist die Relation *isChildOf*: In diesem Fall wird kein Array, sondern unmittelbar der Bezeichner gesetzt (siehe Beispiel unten).
 
 Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Relationen verwendet werden:
 
@@ -1553,7 +1553,7 @@ Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhinterg
     {
       "identifier": "A",
       "category": "Feature",
-      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": "E", "isDepictedIn": ["Image1.png", "Image2.png"] }
     }
 
 

@@ -1522,7 +1522,7 @@ For reasons of clarity, the examples below are each displayed in several lines. 
 
 ##### Relations
 
-Fields of the input type *Relation* are bundled in the object *relations*. The field names of the object correspond to the identifiers of the relations; in each case an array with the identifiers of the target resources is entered as the field value.
+Fields of the input type *Relation* are bundled in the object *relations*. The field names of the object correspond to the identifiers of the relations; in each case an array with the identifiers of the target resources is entered as the field value. The only exception is the relation *isChildOf*: In this case, the identifier is set directly, not in an array (see example below).
 
 In addition to the relations listed in the project configuration in the form of the respective category, the following relations can be used:
 
@@ -1539,7 +1539,7 @@ To link images to the project or set them up as map layers at project level, add
     {
       "identifier": "A",
       "category": "Feature",
-      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": "E", "isDepictedIn": ["Image1.png", "Image2.png"] }
     }
 
 

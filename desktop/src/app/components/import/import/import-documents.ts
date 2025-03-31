@@ -155,7 +155,6 @@ async function makeExistingDocumentsMap(find: Find, options: ImportOptions,
         if (!identifier) continue;
         const existingDocument: Document = await find(identifier);
         if (!existingDocument) continue;
-        if (existingDocument.warnings) throw [E.WARNINGS_EXIST, existingDocument.resource.identifier];
         result[identifier] = existingDocument;
     }
 

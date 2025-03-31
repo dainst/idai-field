@@ -2,7 +2,7 @@ defmodule FieldPublication.Processing do
   use GenServer
 
   alias FieldPublication.Processing.{
-    Image,
+    WebImage,
     MapTiles
   }
 
@@ -134,7 +134,7 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          Image,
+          WebImage,
           # Function within that module to start the task.
           :start_web_image_processing,
           # Parameters for that function.

@@ -1,4 +1,4 @@
-defmodule FieldPublication.Processing.Image do
+defmodule FieldPublication.Processing.WebImage do
   alias Phoenix.PubSub
 
   alias Vix.Vips.{

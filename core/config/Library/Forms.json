@@ -1686,7 +1686,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "executionDate"]
+          "fields": ["identifier", "category", "shortDescription", "state", "executionDate"]
         }
       ]
     }

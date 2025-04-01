@@ -822,6 +822,11 @@ export class BuiltInConfiguration {
             userDefinedSubcategoriesAllowed: true,
             abstract: true,
             fields: {
+                state: {
+                    inputType: 'dropdown',
+                    mandatory: true,
+                    valuelistId: 'workflow-step-state-default',
+                },
                 executionDate: {
                     inputType: 'date',
                     mandatory: true,
@@ -835,7 +840,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'executionDate']
+                        fields: ['identifier', 'category', 'shortDescription', 'state', 'executionDate']
                     }
                 ]
             }

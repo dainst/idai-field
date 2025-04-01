@@ -824,7 +824,11 @@ export class BuiltInConfiguration {
             fields: {
                 executionDate: {
                     inputType: 'date',
-                    mandatory: true
+                    mandatory: true,
+                    dateConfiguration: {
+                        dataType: 'optional',
+                        inputMode: 'optional'
+                    }
                 }
             },
             minimalForm: {

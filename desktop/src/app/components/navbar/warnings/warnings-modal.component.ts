@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map, flatten, intersect, isArray, nop, set } from 'tsfun';
+import { Map, flatten, intersect, isArray, isString, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
     RelationTargetWarnings } from 'idai-field-core';
@@ -594,6 +594,8 @@ export class WarningsModalComponent {
                 document.resource.relations[fieldName],
                 document.warnings.invalidRelationTargets.targetIds
             ) : document.resource.relations[fieldName];
+        
+        if (!isArray(targetIds) || !targetIds.every(targetId => isString(targetId))) return undefined;
 
         return this.datastore.getMultiple(targetIds);
     }

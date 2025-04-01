@@ -67,12 +67,6 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.DIMENSION,
             valuelistId: 'position-values-expansion-default'
         },
-        beginningDate: {
-            inputType: Field.InputType.DATE,
-        },
-        endDate: {
-            inputType: Field.InputType.DATE,
-        },
         processor: {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
@@ -92,8 +86,8 @@ export class BuiltInConfiguration {
         date: {
             inputType: Field.InputType.DATE,
             dateConfiguration: {
-                dataType: DateConfiguration.DataType.DATE,
-                inputMode: DateConfiguration.InputMode.SINGLE
+                dataType: DateConfiguration.DataType.OPTIONAL,
+                inputMode: DateConfiguration.InputMode.OPTIONAL
             }
         },
         spatialLocation: {

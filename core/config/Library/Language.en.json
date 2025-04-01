@@ -73,14 +73,6 @@
       "label": "Diary",
       "description": "Reference to excavation diary"
     },
-    "beginningDate": {
-      "label": "Beginning date",
-      "description": "Date on which the recording of the resource was started"
-    },
-    "endDate": {
-      "label": "End date",
-      "description": "Date on which the recording of the resource was finished"
-    },
     "date": {
       "label": "Date",
       "description": "Date of recording/conducting"

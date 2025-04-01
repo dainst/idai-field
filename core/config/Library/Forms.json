@@ -489,8 +489,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "beginningDate",
-            "endDate"]
+          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "date"]
         },
         {
           "name": "hierarchy",
@@ -612,8 +611,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
         },
         {
           "name": "hierarchy",
@@ -721,8 +719,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
         },
         {
           "name": "hierarchy",
@@ -797,8 +794,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
         },
         {
           "name": "properties",
@@ -1587,8 +1583,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
-            "beginningDate", "endDate"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date"]
         },
         {
           "name": "properties",
@@ -1643,8 +1638,7 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
-            "beginningDate", "endDate"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date"]
         },
         {
           "name": "properties",

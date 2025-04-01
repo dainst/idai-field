@@ -31,12 +31,6 @@
         "period": {
             "label": "Época"
         },
-        "beginningDate": {
-            "label": "Fecha inicial"
-        },
-        "endDate": {
-            "label": "Fecha final"
-        },
         "date": {
             "label": "Fecha"
         },

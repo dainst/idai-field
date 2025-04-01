@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
-import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource, Datastore, Labels,
+import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Resource, Datastore, Labels,
     ProjectConfiguration, DateSpecification } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
@@ -68,7 +68,7 @@ export class WorkflowEditorModalComponent {
     public async createWorkflowStep(category: CategoryForm) {
 
         const newWorkflowStep: Document = await this.editWorkflowStep(
-            WorkflowEditorModalComponent.buildWorkflowStepDocument(category)
+            WorkflowEditorModalComponent.buildWorkflowStepDocument(category) as Document
         );
         if (!newWorkflowStep) return;
 
@@ -191,12 +191,14 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    private static buildWorkflowStepDocument(category: CategoryForm): Document {
+    private static buildWorkflowStepDocument(category: CategoryForm): NewDocument {
 
-        return <Document> {
+        return {
             resource: {
-                relations: {},
-                category: category.name
+                identifier: '',
+                category: category.name,
+                state: 'in progress',
+                relations: {}
             }
         };
     }

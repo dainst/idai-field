@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, RelationsManager, Relation, Resource, Datastore, Labels,
-    ProjectConfiguration } from 'idai-field-core';
+    ProjectConfiguration, DateSpecification } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -11,6 +11,8 @@ import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { sortWorkflowSteps } from './sort-workflow-steps';
 import { DeleteWorkflowStepModalComponent } from './delete/delete-workflow-step-modal.component';
+import { getSystemTimezone } from '../../../../util/timezones';
+import { Settings } from '../../../../services/settings/settings';
 
 
 @Component({
@@ -45,7 +47,7 @@ export class WorkflowEditorModalComponent {
     
     public getShortDescriptionLabel = (workflowStep: Document) =>
         Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
-    
+        
     public cancel = () => this.activeModal.close();
 
 
@@ -146,6 +148,21 @@ export class WorkflowEditorModalComponent {
         );
         this.workflowSteps = await this.datastore.getMultiple(targetIds);
         sortWorkflowSteps(this.workflowSteps);
+    }
+
+
+    public getExecutionDateLabel(workflowStep: Document): string {
+
+        if (!workflowStep.resource.executionDate) return '';
+
+        const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
+
+        return DateSpecification.generateLabel(
+            workflowStep.resource.executionDate,
+            getSystemTimezone(),
+            timeSuffix,
+            Settings.getLocale()
+        );
     }
 
 

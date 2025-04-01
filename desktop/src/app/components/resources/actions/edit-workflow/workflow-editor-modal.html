@@ -28,7 +28,7 @@
                                         [mandatory]="true"
                                         (onChanges)="updateWorkflowSteps()"></workflow-relations>
                 </div>
-                <div class="workflow-step-execution-date">{{workflowStep.resource.executionDate}}</div>
+                <div class="workflow-step-execution-date">{{getExecutionDateLabel(workflowStep)}}</div>
                 <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
                 <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
                 <div *ngIf="isResultsInRelationAvailable(workflowStep)" class="workflow-step-results-in">

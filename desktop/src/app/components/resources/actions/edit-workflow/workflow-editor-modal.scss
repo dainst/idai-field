@@ -23,6 +23,7 @@
 
       .workflow-step-executed-on,
       .workflow-step-results-in,
+      .workflow-step-state-header,
       .workflow-step-execution-date,
       .workflow-step-category,
       .workflow-step-short-description {
@@ -52,10 +53,22 @@
         }
       }
 
+      .workflow-step-state-header,
+      .workflow-step-state,
       .workflow-step-execution-date {
-        flex: 0 0 230px;
         display: flex;
         align-items: center;
+      }
+
+
+      .workflow-step-state-header,
+      .workflow-step-state {
+        flex: 0 0 70px;
+        justify-content: center;
+      }
+
+      .workflow-step-execution-date {
+        flex: 0 0 230px;
         line-height: 17px;
         white-space: break-spaces;
       }

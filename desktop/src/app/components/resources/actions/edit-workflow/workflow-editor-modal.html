@@ -8,6 +8,8 @@
 <div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
     <div id="workflow-steps-container">
         <div class="workflow-step-headings workflow-step">
+            <div class="workflow-step-state-header"
+                 i18n="@@resources.workflowEditorModal.state">Status</div>
             <div class="workflow-step-executed-on"
                  i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
             <div class="workflow-step-execution-date"
@@ -22,6 +24,9 @@
         </div>
         <div class="workflow-steps-body">
             <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
+                <div class="workflow-step-state">
+                    <workflow-step-state [workflowStep]="workflowStep"></workflow-step-state>
+                </div>
                 <div class="workflow-step-executed-on">
                     <workflow-relations [workflowStep]="workflowStep"
                                         [relationName]="'isExecutedOn'"

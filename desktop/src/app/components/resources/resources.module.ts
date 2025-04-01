@@ -61,6 +61,7 @@ import { WorkflowRelationsModalComponent } from './actions/edit-workflow/relatio
 import { WorkflowStepLinkButtonComponent } from './actions/edit-workflow/link-button/workflow-step-link-button.component';
 import { WorkflowStepLinkModalComponent } from './actions/edit-workflow/link-button/workflow-step-link-modal.component';
 import { DeleteWorkflowStepModalComponent } from './actions/edit-workflow/delete/delete-workflow-step-modal.component';
+import { WorkflowStepStateComponent } from './actions/edit-workflow/state/workflow-step-state.component';
 
 const remote = window.require('@electron/remote');
 
@@ -112,6 +113,7 @@ const remote = window.require('@electron/remote');
         WorkflowRelationsModalComponent,
         WorkflowStepLinkButtonComponent,
         WorkflowStepLinkModalComponent,
+        WorkflowStepStateComponent,
         DeleteWorkflowStepModalComponent
     ],
     providers: [

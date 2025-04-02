@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
-import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named } from 'idai-field-core';
+import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named,
+    DateSpecification } from 'idai-field-core';
 import { sortWorkflowSteps } from '../sort-workflow-steps';
+import { getSystemTimezone } from '../../../../../util/timezones';
+import { Settings } from '../../../../../services/settings/settings';
 
 
 @Component({
@@ -81,6 +84,21 @@ export class WorkflowStepLinkModalComponent {
                 subtract: true
             }
         };
+    }
+
+
+    public getExecutionDateLabel(workflowStep: Document): string {
+    
+        if (!workflowStep.resource.executionDate) return '';
+
+        const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
+
+        return DateSpecification.generateLabel(
+            workflowStep.resource.executionDate,
+            getSystemTimezone(),
+            timeSuffix,
+            Settings.getLocale()
+        );
     }
 
 

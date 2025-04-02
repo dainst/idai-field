@@ -9,7 +9,6 @@ export module ConfigurationMigrator {
     export function migrate(configurationResource: ConfigurationResource) {
 
         migrateDates(configurationResource);
-        console.log(configurationResource);
     }
 
 

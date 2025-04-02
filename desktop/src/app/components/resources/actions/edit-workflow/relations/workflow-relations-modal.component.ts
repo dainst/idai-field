@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, RelationsManager, Relation, Resource, Labels, ProjectConfiguration } from 'idai-field-core';
+import { Document, RelationsManager, Relation, Resource } from 'idai-field-core';
 
 
 @Component({
@@ -23,12 +23,7 @@ export class WorkflowRelationsModalComponent {
 
 
     constructor(private activeModal: NgbActiveModal,
-                private relationsManager: RelationsManager,
-                private labels: Labels,
-                private projectConfiguration: ProjectConfiguration) {}
-
-
-    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.workflowStep));
+                private relationsManager: RelationsManager) {}
 
     public cancel = () => this.activeModal.dismiss('cancel');
 

@@ -1,11 +1,11 @@
 <div id="workflow-relations-modal-body" class="modal-body">
     <p *ngIf="relationDefinition.name === 'isExecutedOn'"
         i18n="@@resources.workflowRelationsModal.heading.isExecutedOn">
-        Der Arbeitsschritt <b>{{getCategoryLabel()}}</b> wurde durchgeführt an:
+        Der Arbeitsschritt <b>{{workflowStep.resource.identifier}}</b> wurde durchgeführt an:
     </p>
     <p *ngIf="relationDefinition.name === 'resultsIn'"
         i18n="@@resources.workflowRelationsModal.heading.resultsIn">
-        Der Arbeitsschritt <b>{{getCategoryLabel()}}</b> ergibt:
+        Der Arbeitsschritt <b>{{workflowStep.resource.identifier}}</b> ergibt:
     </p>
     <relation-picker-group [resource]="clonedWorkflowStep.resource"
                            [relationDefinition]="relationDefinition"

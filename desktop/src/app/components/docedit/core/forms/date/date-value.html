@@ -4,7 +4,9 @@
     {{getFormattedDate()}}
 </div>
 
-<div *ngIf="isDatePickerVisible()" class="input-group">
+<div *ngIf="isDatePickerVisible()"
+     class="input-group"
+     [class.editing]="editing">
      <input *ngIf="isDatePickerVisible()"
           #dateInput
           #datePicker="ngbDatepicker"

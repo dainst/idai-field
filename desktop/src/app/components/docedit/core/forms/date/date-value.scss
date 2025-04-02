@@ -4,6 +4,11 @@ date-value {
 
   .input-group {
     width: 133px;
+
+    &.editing {
+      width: 100px;
+      margin-right: 12px;
+    }
   }
 
   .date-picker-input {

@@ -29,12 +29,14 @@ export class DateValueComponent implements OnInit {
     public dateStruct: NgbDateStruct;
     public time: TimeSpecification;
 
+    public editing: boolean = false;
     public selectedTimezone: string;
 
     public onScrollListener: any;
     public scrollListenerInitialized: boolean = false;
 
-    private editing: boolean = false;
+    private originalValue: string;
+    private originalDateStruct: NgbDateStruct;
 
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
@@ -89,8 +91,17 @@ export class DateValueComponent implements OnInit {
 
     public async update() {
 
-        this.editing = false;
         this.value = this.buildValue();
+
+        if (this.editing && !this.value) {
+            this.value = this.originalValue;
+            this.dateStruct = this.originalDateStruct;
+        }
+
+        this.originalValue = undefined;
+        this.originalDateStruct = undefined;
+        this.editing = false;
+
         this.onChanged.emit(this.value);
     }
 
@@ -105,6 +116,8 @@ export class DateValueComponent implements OnInit {
     public async editDate() {
 
         this.editing = true;
+        this.originalValue = this.value;
+        this.originalDateStruct = this.dateStruct;
         this.value = undefined;
         this.dateStruct = {} as NgbDateStruct;
 

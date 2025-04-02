@@ -25,6 +25,7 @@
       .workflow-step-results-in,
       .workflow-step-state-header,
       .workflow-step-execution-date,
+      .workflow-step-identifier,
       .workflow-step-category,
       .workflow-step-short-description {
         padding: 10px;
@@ -34,6 +35,7 @@
       }
 
       .workflow-step-execution-date,
+      .workflow-step-identifier,
       .workflow-step-category,
       .workflow-step-short-description {
         line-height: 35px;
@@ -71,6 +73,10 @@
         flex: 0 0 230px;
         line-height: 17px;
         white-space: break-spaces;
+      }
+
+      .workflow-step-identifier {
+        flex: 0 0 200px;
       }
 
       .workflow-step-category {

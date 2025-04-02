@@ -14,6 +14,8 @@
                  i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
             <div class="workflow-step-execution-date"
                  i18n="@@resources.workflowEditorModal.date">Datum</div>
+            <div class="workflow-step-identifier"
+                 i18n="@@resources.workflowEditorModal.identifier">Bezeichner</div>
             <div class="workflow-step-category"
                  i18n="@@resources.workflowEditorModal.category">Kategorie</div>
             <div class="workflow-step-short-description"
@@ -34,6 +36,7 @@
                                         (onChanges)="updateWorkflowSteps()"></workflow-relations>
                 </div>
                 <div class="workflow-step-execution-date">{{getExecutionDateLabel(workflowStep)}}</div>
+                <div class="workflow-step-identifier">{{workflowStep.resource.identifier}}</div>
                 <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
                 <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
                 <div class="workflow-step-results-in">

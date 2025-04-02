@@ -2,4 +2,25 @@ workflow-step-state {
   .mdi {
     font-size: 25px;
   }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown-menu {
+    .dropdown-item {
+      font-size: 14px;
+      cursor: default;
+
+      .mdi {
+        font-size: 19px;
+      }
+
+      .state-label {
+        position: relative;
+        bottom: 2px;
+        left: 5px;
+      }
+    }
+  }
 }

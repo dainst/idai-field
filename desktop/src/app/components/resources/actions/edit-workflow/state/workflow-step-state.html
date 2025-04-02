@@ -1,4 +1,13 @@
-<span *ngIf="getState() === 'planned'" class="mdi mdi-calendar-month"></span>
-<span *ngIf="getState() === 'in progress'" class="mdi mdi-dots-horizontal-circle"></span>
-<span *ngIf="getState() === 'completed'" class="mdi mdi-check-circle"></span>
-<span *ngIf="getState() === 'canceled'" class="mdi mdi-close-circle"></span>
+<div class="dropdown" ngbDropdown placement="bottom-left">
+    <div ngbDropdownToggle>
+        <span class="mdi {{getValueIcon(getState())}}"></span>
+    </div>
+    <div class="dropdown-menu" ngbDropdownMenu>
+        <button *ngFor="let value of getValues()"
+                class="dropdown-item operation-selection-button"
+                (click)="setState(value)">
+            <span class="mdi {{getValueIcon(value)}}"></span>
+            <span class="state-label">{{getValueLabel(value)}}</span>
+        </button>
+    </div>
+</div>

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Document } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { Component, Input, OnInit } from '@angular/core';
+import { CategoryForm, Datastore, Document, Field, Labels, ProjectConfiguration, Valuelist } from 'idai-field-core';
 
 
 @Component({
@@ -10,13 +11,54 @@ import { Document } from 'idai-field-core';
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepStateComponent {
+export class WorkflowStepStateComponent implements OnInit {
 
     @Input() workflowStep: Document;
 
+    public valuelist: Valuelist;
 
-    constructor() {}
+    private readonly icons: Map<string> = {
+        'planned': 'mdi-calendar-month',
+        'in progress': 'mdi-dots-horizontal-circle',
+        'completed': 'mdi-check-circle',
+        'canceled': 'mdi-close-circle'
+    };
+
+
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private labels: Labels,
+                private datastore: Datastore) {}
 
 
     public getState = () => this.workflowStep.resource.state;
+
+    public getValues = () => this.valuelist.order;
+
+    public getValueLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
+
+    public getValueIcon = (valueId: string) => this.icons[valueId];
+
+
+    ngOnInit() {
+        
+        this.valuelist = this.getValuelist();
+    }
+
+
+    public async setState(valueId: string) {
+
+        this.workflowStep.resource.state = valueId;
+        await this.datastore.update(this.workflowStep);
+    }
+
+
+    private getValuelist(): Valuelist {
+
+        const stateField: Field = CategoryForm.getField(
+            this.projectConfiguration.getCategory('WorkflowStep'),
+            'state'
+        );
+
+        return stateField.valuelist;
+    }
 }

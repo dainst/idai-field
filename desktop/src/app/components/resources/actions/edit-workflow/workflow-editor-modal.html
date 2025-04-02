@@ -36,8 +36,9 @@
                 <div class="workflow-step-execution-date">{{getExecutionDateLabel(workflowStep)}}</div>
                 <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
                 <div class="workflow-step-short-description">{{getShortDescriptionLabel(workflowStep)}}</div>
-                <div *ngIf="isResultsInRelationAvailable(workflowStep)" class="workflow-step-results-in">
-                    <workflow-relations [workflowStep]="workflowStep"
+                <div class="workflow-step-results-in">
+                    <workflow-relations *ngIf="isResultsInRelationAvailable(workflowStep)"
+                                        [workflowStep]="workflowStep"
                                         [relationName]="'resultsIn'"
                                         [mandatory]="false"></workflow-relations>
                 </div>

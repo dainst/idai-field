@@ -306,7 +306,10 @@ select.form-control:not([size]):not([multiple]) {
   transition: none;
 }
 
-/* wider modals */
+.modal-md {
+  min-width: 1135px;
+}
+
 .modal-lg {
   min-width: 86%;
 }

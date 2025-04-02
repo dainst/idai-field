@@ -1,6 +1,6 @@
 .workflow-editor-modal-body {
   padding: 16px 16px 22px 16px !important;
-  font-size: 15px;
+  font-size: 14px;
 
   #workflow-steps-container {
     display: block;
@@ -26,8 +26,7 @@
       .workflow-step-state-header,
       .workflow-step-execution-date,
       .workflow-step-identifier,
-      .workflow-step-category,
-      .workflow-step-short-description {
+      .workflow-step-category {
         padding: 10px;
         overflow: hidden;
         white-space: nowrap;
@@ -36,14 +35,13 @@
 
       .workflow-step-execution-date,
       .workflow-step-identifier,
-      .workflow-step-category,
-      .workflow-step-short-description {
+      .workflow-step-category {
         line-height: 35px;
       }
 
       .workflow-step-executed-on,
       .workflow-step-results-in {
-        flex: 0 0 203px;
+        flex: 0 0 149px;
 
         .teasercontent {
           width: 100%;
@@ -81,10 +79,6 @@
 
       .workflow-step-category {
         flex: 0 0 200px;
-      }
-
-      .workflow-step-short-description {
-        flex-grow: 1;
       }
 
       .workflow-step-buttons {

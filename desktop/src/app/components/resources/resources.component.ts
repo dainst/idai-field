@@ -220,7 +220,7 @@ export class ResourcesComponent implements OnDestroy {
 
             const modalRef: NgbModalRef = this.modalService.open(
                 WorkflowEditorModalComponent,
-                { size: 'lg', animation: false, backdrop: 'static', keyboard: false }
+                { size: 'md', animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.documents = documents;
             await modalRef.componentInstance.initialize();

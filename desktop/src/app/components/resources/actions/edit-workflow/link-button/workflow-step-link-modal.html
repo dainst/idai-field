@@ -21,8 +21,9 @@
                 <li *ngFor="let workflowStep of availableWorkflowSteps"
                     (click)="selectWorkflowStep(workflowStep)"
                     class="list-group-item">
-                    <div>{{workflowStep.resource.executionDate}}</div>
+                    <div>{{workflowStep.resource.identifier}}</div>
                     <div>{{getCategoryLabel(workflowStep)}}</div>
+                    <div>{{workflowStep.resource.executionDate}}</div>
                 </li>
             </ul>
         </div>

@@ -4,18 +4,34 @@ workflow-step-state {
 
     &.mdi-calendar-month {
       color: #454545;
+
+      &.selected-state:hover {
+        color: #818181;
+      }
     }
 
     &.mdi-dots-horizontal-circle {
       color: $primary-button-color;
+
+      &.selected-state:hover {
+        color: $primary-highlight-color;
+      }
     }
 
     &.mdi-check-circle {
       color: $green-button-color;
+
+      &.selected-state:hover {
+        color: color.adjust($green-button-color, $lightness: 5%);
+      }
     }
 
     &.mdi-close-circle {
-      color: #dc3545;
+      color: $red-button-color;
+
+      &.selected-state:hover {
+        color: color.adjust($red-button-color, $lightness: 20%);
+      }
     }
   }
 

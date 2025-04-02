@@ -45,9 +45,9 @@ export class DateValueComponent implements OnInit {
     public isDatePickerVisible = () => this.value === undefined;
 
     public isTimePickerVisible = () => this.supportsTimeInput()
-        && (this.value?.split('.').length > 2 || (this.editing && this.isTimeSelected()));
+        && (this.value?.split('.').length > 2 || this.editing);
 
-    public isNowButtonVisible = () => this.isDatePickerVisible() && !this.isTimePickerVisible();
+    public isNowButtonVisible = () => this.isDatePickerVisible() && !this.isTimePickerVisible() && !this.editing;
 
     public supportsTimeInput = () => this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
 

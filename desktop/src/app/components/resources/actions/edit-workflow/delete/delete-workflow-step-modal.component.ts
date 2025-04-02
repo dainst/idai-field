@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Labels, ProjectConfiguration, Document, Relation } from 'idai-field-core';
+import { Document, Relation } from 'idai-field-core';
 
 
 @Component({
@@ -18,12 +18,8 @@ export class DeleteWorkflowStepModalComponent {
     public workflowStep: Document;
 
 
-    constructor(public activeModal: NgbActiveModal,
-                private labels: Labels,
-                private projectConfiguration: ProjectConfiguration) {}
+    constructor(public activeModal: NgbActiveModal) {}
 
-
-    public getCategoryLabel = () => this.labels.get(this.projectConfiguration.getCategory(this.workflowStep));
 
     public getNumberOfLinkedResources = () => this.workflowStep.resource.relations
         ?.[Relation.Workflow.IS_EXECUTED_ON]?.length;

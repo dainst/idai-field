@@ -4,7 +4,7 @@
 
 <div id="delete-workflow-step-modal-body" class="modal-body">
     <p i18n="@@resources.deleteWorkflowStepModal.question">
-        Möchten Sie den Arbeitsschritt <b>{{getCategoryLabel()}}</b> wirklich löschen?
+        Möchten Sie den Arbeitsschritt <b>{{workflowStep.resource.identifier}}</b> wirklich löschen?
     </p>
 
     <div *ngIf="getNumberOfLinkedResources() > 1"

@@ -6,6 +6,7 @@ import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labe
 import { sortWorkflowSteps } from '../sort-workflow-steps';
 import { getSystemTimezone } from '../../../../../util/timezones';
 import { Settings } from '../../../../../services/settings/settings';
+import { UtilTranslations } from '../../../../../util/util-translations';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class WorkflowStepLinkModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private utilTranslations: UtilTranslations) {}
 
 
     public getCategoryLabel = (workflowStep: Document) =>
@@ -98,6 +100,7 @@ export class WorkflowStepLinkModalComponent {
             getSystemTimezone(),
             timeSuffix,
             Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term),
             false
         );
     }

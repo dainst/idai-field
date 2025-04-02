@@ -84,7 +84,7 @@ export module Field {
         export const COMMON = 'common';
     }
 
-    export function isValidFieldData(fieldData: any, field: BaseField, permissive: boolean = false): boolean {
+    export function isValidFieldData(fieldData: any, field: BaseField): boolean {
 
         if (fieldData === null || fieldData === undefined) return false;
 
@@ -121,7 +121,7 @@ export module Field {
             case InputType.BOOLEAN:
                 return fieldData === true || fieldData === false;
             case InputType.DATE:
-                return permissive ? isObject(fieldData) : DateSpecification.validate(fieldData, field);
+                return DateSpecification.validate(fieldData, field);
             case InputType.DROPDOWNRANGE:
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             case InputType.DATING:

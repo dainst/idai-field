@@ -1,10 +1,10 @@
-<div *ngIf="endValueVisible" class="date-value-label" i18n="@@docedit.forms.date.from">Von:</div>
+<div *ngIf="rangeMode" class="date-value-label" i18n="@@docedit.forms.date.from">Von:</div>
 <date-value [value]="getValue()"
             [field]="field"
             (onChanged)="updateValue($event)"></date-value>
 
-<div *ngIf="endValueVisible" class="date-value-label" i18n="@@docedit.forms.date.to">Bis:</div>
-<date-value *ngIf="endValueVisible"
+<div *ngIf="rangeMode" class="date-value-label" i18n="@@docedit.forms.date.to">Bis:</div>
+<date-value *ngIf="rangeMode"
             [value]="getEndValue()"
             [field]="field"
             (onChanged)="updateEndValue($event)"></date-value>
@@ -15,7 +15,6 @@
         placement="top"
         container="body"
         class="btn btn-outline-primary circular-button switch-to-range-button"
-        [class.disabled]="!isSwitchToRangeButtonEnabled()"
         type="button"
         (click)="switchToRange()">
         <span class="mdi mdi-plus"></span>

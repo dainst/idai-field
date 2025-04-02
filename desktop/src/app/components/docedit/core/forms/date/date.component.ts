@@ -15,7 +15,7 @@ export class DateComponent implements OnChanges {
     @Input() fieldContainer: any;
     @Input() field: Field;
 
-    public endValueVisible: boolean = false;
+    public rangeMode: boolean;
 
 
     constructor() {}
@@ -31,34 +31,31 @@ export class DateComponent implements OnChanges {
 
     public isOptionalRange = () => this.field.dateConfiguration?.inputMode === DateConfiguration.InputMode.OPTIONAL;
 
-    public isSwitchToRangeButtonVisible = () => this.isOptionalRange() && !this.endValueVisible;
+    public isSwitchToRangeButtonVisible = () => this.isOptionalRange() && !this.rangeMode;
 
 
     ngOnChanges() {
 
-        this.endValueVisible = this.field.dateConfiguration?.inputMode === DateConfiguration.InputMode.RANGE
-            || this.fieldContainer[this.field.name]?.endValue !== undefined;
-    }
-
-
-    public isSwitchToRangeButtonEnabled(): boolean {
-
-        const value: string = this.getValue();
-        if (!value) return false;
-        
-        return this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE_TIME || value.includes(':');
+        this.rangeMode = this.field.dateConfiguration?.inputMode === DateConfiguration.InputMode.RANGE
+            || this.fieldContainer[this.field.name]?.isRange;
     }
 
 
     public switchToRange() {
 
-        this.endValueVisible = true;
+        this.rangeMode = true;
+
+        const fieldData: DateSpecification = this.getFieldData();
+        if (fieldData) fieldData.isRange = true;
     }
 
 
     public switchToSingle() {
 
-        this.endValueVisible = false;
+        this.rangeMode = false;
+        
+        const fieldData: DateSpecification = this.getFieldData();
+        if (fieldData) fieldData.isRange = false;
     }
 
 
@@ -67,7 +64,7 @@ export class DateComponent implements OnChanges {
         this.update(value, 'endValue');
 
         if (this.isOptionalRange() && !value) {
-            this.endValueVisible = false;
+            this.switchToSingle();
         }
     }
 
@@ -75,7 +72,7 @@ export class DateComponent implements OnChanges {
     private update(value: string, propertyName: 'value'|'endValue') {
 
         if (value) {
-            if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = {};
+            if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = { isRange: this.rangeMode };
             this.fieldContainer[this.field.name][propertyName] = value;
         } else if (this.fieldContainer[this.field.name]) {
             delete this.fieldContainer[this.field.name][propertyName];

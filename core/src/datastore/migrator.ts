@@ -4,6 +4,7 @@ import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
+import { DateSpecification } from '../model/input-types/date-specification';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -118,13 +119,16 @@ export module Migrator {
 
         const beginningDate: string = document.resource.beginningDate;
         const endDate: string = document.resource.endDate;
-        if ((beginningDate && isString(beginningDate)) || (endDate && isString(endDate))) {
-            document.resource.date = endDate
-                ? { value: beginningDate, endValue: endDate }
-                : { value: beginningDate };
-            delete document.resource.beginningDate;
-            delete document.resource.endDate;
-        }
+
+        if ((!beginningDate || !isString(beginningDate)) && (!endDate || !isString(endDate))) return;
+
+        const date: DateSpecification = { isRange: true };
+        if (beginningDate && isString(beginningDate)) date['value'] = beginningDate;
+        if (endDate && isString(endDate)) date['endValue'] = endDate;
+        document.resource.date = date;
+
+        delete document.resource.beginningDate;
+        delete document.resource.endDate;
     }
 
 
@@ -137,7 +141,7 @@ export module Migrator {
             .filter(field => field.inputType === Field.InputType.DATE)
             .forEach(field => {
                 const date: any = document.resource[field.name];
-                if (date && isString(date)) document.resource[field.name] = { value: date };
+                if (date && isString(date)) document.resource[field.name] = { value: date, isRange: false };
             });
     }
 }

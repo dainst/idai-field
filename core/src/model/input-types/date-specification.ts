@@ -10,8 +10,9 @@ import { DateConfiguration } from '../configuration/date-configuration';
  */
 export interface DateSpecification {
 
-    value: string;
+    value?: string;
     endValue?: string;
+    isRange: boolean;
 }
 
 
@@ -19,14 +20,17 @@ export module DateSpecification {
 
     export function validate(date: DateSpecification, field: Field): boolean {
 
-        if (!isObject(date) || !validateDateValue(date.value, field)) return false;
-
-        if (field.dateConfiguration?.inputMode === DateConfiguration.InputMode.SINGLE && date.endValue !== undefined) {
+        if (!isObject(date)
+                || (!date.value && !date.endValue)
+                || !validateDateValue(date.value, field)
+                || !validateDateValue(date.endValue, field)) {
             return false;
         }
 
-        if (field.dateConfiguration?.inputMode === DateConfiguration.InputMode.RANGE
-               && !validateDateValue(date.endValue, field)) {
+        if (!date.isRange && date.endValue) return false;
+
+        if (field.dateConfiguration?.inputMode === DateConfiguration.InputMode.SINGLE
+                && (date.isRange || date.endValue !== undefined)) {
             return false;
         }
 
@@ -35,21 +39,44 @@ export module DateSpecification {
 
 
     export function generateLabel(date: DateSpecification, timezone: string, timeSuffix: string,
-                                  locale: string, addTimezoneInfo: boolean = true): string {
+                                  locale: string, translate: (term: string) => string,
+                                  addTimezoneInfo: boolean = true): string {
 
         try {
-            let result: string = getValueLabel(date.value, timezone, timeSuffix, locale, !date.endValue);
-            if (date.endValue) {
-                result += ' - \n' + getValueLabel(date.endValue, timezone, timeSuffix, locale, addTimezoneInfo);
+            let result: string = date.isRange
+                ? generateRangeLabel(date, timezone, timeSuffix, locale, translate)
+                : generateValueLabel(date.value, timezone, timeSuffix, locale);
+
+            if (addTimezoneInfo && (date.value?.includes(':') || date.endValue?.includes(':'))) {
+                result += date.isRange ? '\n' : ' ';
+                result += '(' + timezone + ')';
             }
+
             return result;
-        } catch (_) {
+        } catch (err) {
+            console.error(err);
             return null;
         }
     }
 
 
-    function getValueLabel(value: string, timezone: string, timeSuffix: string, locale: string, addTimezoneInfo: boolean): string {
+    function generateRangeLabel(date: DateSpecification, timezone: string, timeSuffix: string,
+                                locale: string, translate: (term: string) => string): string {
+
+        let result: string = date.value
+            ? generateValueLabel(date.value, timezone, timeSuffix, locale)
+            : translate('unspecifiedDate');
+        
+        result += ' ' + translate('toDate') + '\n';
+        result += date.endValue
+            ? generateValueLabel(date.endValue, timezone, timeSuffix, locale)
+            : translate('unspecifiedDate');
+        
+        return result;
+    }
+
+
+    function generateValueLabel(value: string, timezone: string, timeSuffix: string, locale: string): string {
         
         const hasTimeValue: boolean = value.includes(':');
         const date: Date = parseDate(value);
@@ -57,8 +84,6 @@ export module DateSpecification {
 
         // If the time suffix is set to '.', this indicates that no time suffix should be used
         if (hasTimeValue && timeSuffix !== '.') formattedDate = formattedDate + ' ' + timeSuffix;
-        
-        if (addTimezoneInfo && hasTimeValue) formattedDate += ' (' + timezone + ')';
 
         return formattedDate;
     }
@@ -66,7 +91,9 @@ export module DateSpecification {
 
     function validateDateValue(dateValue: string, field: Field) {
 
-        if (!dateValue || isNaN(parseDate(dateValue)?.getTime())) return false;
+        if (!dateValue) return true;
+            
+        if (isNaN(parseDate(dateValue)?.getTime())) return false;
 
         if (field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME && !dateValue.includes(':')) {
             return false;

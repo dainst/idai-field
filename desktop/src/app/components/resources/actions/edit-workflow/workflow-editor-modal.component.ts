@@ -13,6 +13,7 @@ import { sortWorkflowSteps } from './sort-workflow-steps';
 import { DeleteWorkflowStepModalComponent } from './delete/delete-workflow-step-modal.component';
 import { getSystemTimezone } from '../../../../util/timezones';
 import { Settings } from '../../../../services/settings/settings';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({
@@ -39,7 +40,8 @@ export class WorkflowEditorModalComponent {
                 private datastore: Datastore,
                 private messages: Messages,
                 private labels: Labels,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private utilTranslations: UtilTranslations) {}
 
 
     public getCategoryLabel = (workflowStep: Document) =>
@@ -162,6 +164,7 @@ export class WorkflowEditorModalComponent {
             getSystemTimezone(),
             timeSuffix,
             Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term),
             false
         );
     }

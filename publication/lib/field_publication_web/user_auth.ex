@@ -398,12 +398,18 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     # This is the variant of ensure_image_published/2 that is used for the reverse proxy routes of the
     # cantaloupe image server. We can not extract project_name and uuid beforehand.
-    [project_name, uuid] =
-      image_name
-      |> String.replace_suffix(".tif", "")
-      |> String.split("%2F")
+    image_name
+    |> String.replace_suffix(".tif", "")
+    |> String.split("%2F")
+    |> case do
+      [project_name, uuid] ->
+        check_image_access(conn, project_name, uuid)
 
-    check_image_access(conn, project_name, uuid)
+      _ ->
+        conn
+        |> resp(404, "")
+        |> halt()
+    end
   end
 
   defp check_image_access(conn, project_name, uuid) do

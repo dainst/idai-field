@@ -97,7 +97,8 @@ export class WorkflowStepLinkModalComponent {
             workflowStep.resource.executionDate,
             getSystemTimezone(),
             timeSuffix,
-            Settings.getLocale()
+            Settings.getLocale(),
+            false
         );
     }
 

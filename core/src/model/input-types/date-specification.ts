@@ -35,11 +35,13 @@ export module DateSpecification {
 
 
     export function generateLabel(date: DateSpecification, timezone: string, timeSuffix: string,
-                                  locale: string): string {
+                                  locale: string, addTimezoneInfo: boolean = true): string {
 
         try {
             let result: string = getValueLabel(date.value, timezone, timeSuffix, locale, !date.endValue);
-            if (date.endValue) result += ' - ' + getValueLabel(date.endValue, timezone, timeSuffix, locale, true);
+            if (date.endValue) {
+                result += ' - ' + getValueLabel(date.endValue, timezone, timeSuffix, locale, addTimezoneInfo);
+            }
             return result;
         } catch (_) {
             return null;

@@ -161,7 +161,8 @@ export class WorkflowEditorModalComponent {
             workflowStep.resource.executionDate,
             getSystemTimezone(),
             timeSuffix,
-            Settings.getLocale()
+            Settings.getLocale(),
+            false
         );
     }
 

@@ -40,7 +40,7 @@ export module DateSpecification {
         try {
             let result: string = getValueLabel(date.value, timezone, timeSuffix, locale, !date.endValue);
             if (date.endValue) {
-                result += ' - ' + getValueLabel(date.endValue, timezone, timeSuffix, locale, addTimezoneInfo);
+                result += ' - \n' + getValueLabel(date.endValue, timezone, timeSuffix, locale, addTimezoneInfo);
             }
             return result;
         } catch (_) {

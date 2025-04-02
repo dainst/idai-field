@@ -105,7 +105,8 @@ export module FieldsViewUtil {
 
         
         if (field?.definition.inputType === Field.InputType.DATE) {
-            return DateSpecification.generateLabel(object, timezone, timeSuffix, locale);
+            const label: string = DateSpecification.generateLabel(object, timezone, timeSuffix, locale)
+            return label ? StringUtils.prepareStringForHTML(label) : null;
         } else if (field?.definition?.inputType === Field.InputType.DATING) {
             return object.label ?? Dating.generateLabel(
                 object,

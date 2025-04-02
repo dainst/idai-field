@@ -1,6 +1,22 @@
 workflow-step-state {
   .mdi {
     font-size: 25px;
+
+    &.mdi-calendar-month {
+      color: #454545;
+    }
+
+    &.mdi-dots-horizontal-circle {
+      color: $primary-button-color;
+    }
+
+    &.mdi-check-circle {
+      color: $green-button-color;
+    }
+
+    &.mdi-close-circle {
+      color: #dc3545;
+    }
   }
 
   .dropdown-toggle::after {

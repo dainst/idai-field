@@ -11,10 +11,14 @@
     border-radius: 10px;
     user-select: none;
 
+    .workflow-steps-headings,
+    .workflow-steps-body {
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+
     .workflow-steps-body {
       height: calc(100% - 48px);
-      overflow-x: hidden;
-      overflow-y: auto;
     }
 
     .workflow-step {
@@ -74,7 +78,7 @@
       }
 
       .workflow-step-identifier {
-        flex: 0 0 200px;
+        flex-grow: 1;
       }
 
       .workflow-step-category {
@@ -89,7 +93,7 @@
         }
       }
 
-      &.workflow-step-headings div {
+      &.workflow-steps-headings div {
         height: 48px;
         line-height: 28px;
         font-weight: 600;

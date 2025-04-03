@@ -18,6 +18,11 @@ export interface DateSpecification {
 
 export module DateSpecification {
 
+    export const VALUE: string = 'value';
+    export const END_VALUE: string = 'endValue';
+    export const IS_RANGE: string = 'isRange';
+
+
     export function validate(date: DateSpecification, field: Field, permissive: boolean = false): boolean {
 
         if (!isObject(date)

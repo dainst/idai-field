@@ -53,8 +53,8 @@ export class DateComponent implements OnChanges {
     public getRangeButtonTooltip(): string {
 
         return this.rangeMode
-            ? $localize `:@@dcoedit.forms.date.switchToSingle:Auf Einzeldatum umstellen`
-            : $localize `:@@dcoedit.forms.date.switchToRange:Auf Datumsbereich umstellen`;
+            ? $localize `:@@docedit.forms.date.switchToSingle:Auf Einzeldatum umstellen`
+            : $localize `:@@docedit.forms.date.switchToRange:Auf Datumsbereich umstellen`;
     }
 
 

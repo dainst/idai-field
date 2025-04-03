@@ -44,14 +44,10 @@ export class DateValueComponent implements OnInit {
 
     public isDatePickerVisible = () => this.value === undefined;
 
-    public isTimePickerVisible = () => this.supportsTimeInput()
-        && (this.value?.split('.').length > 2 || this.editing);
+    public isTimePickerVisible = () => this.isTimeSupported()
+        && (DateValueComponent.isFullDate(this.value) || this.editing);
 
     public isNowButtonVisible = () => this.isDatePickerVisible() && !this.isTimePickerVisible() && !this.editing;
-
-    public supportsTimeInput = () => this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
-
-    public enforcesTimeInput = () => this.field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME;
 
     public getTimezoneLabel = (timezone: string) => timezone;
 
@@ -135,7 +131,7 @@ export class DateValueComponent implements OnInit {
             new Date(),
             undefined,
             'UTC',
-            this.supportsTimeInput() ? 'short' : 'none'
+            this.isTimeSupported() ? 'short' : 'none'
         );
 
         this.updateDateStruct();
@@ -276,7 +272,7 @@ export class DateValueComponent implements OnInit {
     private buildValue(): string|undefined {
 
         let formattedDate: string = this.getFormattedDate();
-        if (!formattedDate || (this.enforcesTimeInput() && !DateValueComponent.isFullDate(formattedDate))) {
+        if (!formattedDate || (this.isTimeMandatory() && !DateValueComponent.isFullDate(formattedDate))) {
             return undefined;
         }
 
@@ -301,6 +297,18 @@ export class DateValueComponent implements OnInit {
 
         return DateValueComponent.isNumber(this.time?.hours)
             && DateValueComponent.isNumber(this.time?.minutes);
+    }
+
+
+    private isTimeSupported() {
+        
+        return this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
+    }
+
+
+    private isTimeMandatory() {
+        
+        return this.field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME;
     }
 
 
@@ -343,6 +351,6 @@ export class DateValueComponent implements OnInit {
 
     private static isFullDate(formattedDate: string): boolean {
 
-        return formattedDate.split('.').length === 3;
+        return formattedDate && formattedDate.split('.').length === 3;
     }
 }

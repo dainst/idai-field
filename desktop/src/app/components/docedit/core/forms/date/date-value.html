@@ -29,6 +29,11 @@
             i18n-ngbTooltip="@@docedit.forms.date.now.tooltip"
             placement="top"
             container="body"
+            triggers="manual"
+            #nowButtonTooltip="ngbTooltip"
+            (mouseover)="nowButtonTooltip.open()"
+            (mouseleave)="nowButtonTooltip.close()"
+            (mousedown)="nowButtonTooltip.close()"
             (click)="setCurrentDate()">
           <span class="mdi mdi-calendar-clock"></span>
      </button>

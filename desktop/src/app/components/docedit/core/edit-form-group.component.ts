@@ -109,7 +109,7 @@ export class EditFormGroup implements OnChanges {
 
         return fieldData === undefined
             ? true
-            : Field.isValidFieldData(fieldData, field);
+            : Field.isValidFieldData(fieldData, field, true);
     }
 
 

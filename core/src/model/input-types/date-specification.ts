@@ -18,14 +18,16 @@ export interface DateSpecification {
 
 export module DateSpecification {
 
-    export function validate(date: DateSpecification, field: Field): boolean {
+    export function validate(date: DateSpecification, field: Field, permissive: boolean = false): boolean {
 
         if (!isObject(date)
                 || (!date.value && !date.endValue)
-                || !validateDateValue(date.value, field)
-                || !validateDateValue(date.endValue, field)) {
+                || !validateDateValue(date.value, field, permissive)
+                || !validateDateValue(date.endValue, field, permissive)) {
             return false;
         }
+
+        if (permissive) return true;
 
         if (!date.isRange && date.endValue) return false;
 
@@ -89,17 +91,20 @@ export module DateSpecification {
     }
 
 
-    function validateDateValue(dateValue: string, field: Field) {
+    function validateDateValue(dateValue: string, field: Field, permissive: boolean) {
 
         if (!dateValue) return true;
             
         if (isNaN(parseDate(dateValue)?.getTime())) return false;
 
-        if (field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME && !dateValue.includes(':')) {
+        if (permissive) return true;
+
+        if (field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE && dateValue.includes(':')) {
             return false;
         }
-        
-        if (field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE && dateValue.includes(':')) {
+
+        if (field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME
+                && !dateValue.includes(':')) {
             return false;
         }
 

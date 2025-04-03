@@ -36,6 +36,11 @@ export module DateSpecification {
             return false;
         }
 
+        if (field.dateConfiguration.inputMode === DateConfiguration.InputMode.RANGE
+                && (!date.isRange || date.endValue == undefined)) {
+            return false;
+        }
+
         return true;
     }
 

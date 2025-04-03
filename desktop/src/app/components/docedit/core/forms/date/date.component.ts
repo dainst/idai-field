@@ -31,6 +31,8 @@ export class DateComponent implements OnChanges {
 
     public updateEndValue = (value: string) => this.update(value, 'endValue');
 
+    public isRangeSupported = () => this.field.dateConfiguration.inputMode !== DateConfiguration.InputMode.SINGLE;
+
     public isOptionalRange = () => this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.OPTIONAL;
 
 
@@ -51,6 +53,8 @@ export class DateComponent implements OnChanges {
 
 
     public getRangeButtonTooltip(): string {
+
+        if (!this.isOptionalRange()) return undefined;
 
         return this.rangeMode
             ? $localize `:@@docedit.forms.date.switchToSingle:Auf Einzeldatum umstellen`

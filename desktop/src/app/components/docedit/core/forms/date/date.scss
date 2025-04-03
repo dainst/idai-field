@@ -20,6 +20,10 @@ form-field-date {
           margin-top: 19px;
         }
       }
+
+      &.as-label {
+        pointer-events: none;
+      }
     }
 
     &.with-range-button {

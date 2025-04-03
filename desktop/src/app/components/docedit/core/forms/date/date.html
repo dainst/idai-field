@@ -1,8 +1,8 @@
 <div class="button-container"
-     [class.with-range-button]="isOptionalRange()"
+     [class.with-range-button]="isRangeSupported()"
      [class.range-mode]="rangeMode">
-    <button *ngIf="isOptionalRange()"
-            class="btn btn-link range-button"
+    <button class="btn btn-link range-button"
+            [class.as-label]="!isOptionalRange()"
             ngbTooltip="{{getRangeButtonTooltip()}}"
             placement="top"
             container="body"
@@ -11,7 +11,7 @@
             (mouseover)="rangeButtonTooltip.open()"
             (mouseleave)="rangeButtonTooltip.close()"
             (mousedown)="rangeButtonTooltip.close()"
-            (click)="toggleRange()">
+            (click)="isOptionalRange() && toggleRange()">
         <div *ngIf="!rangeMode"
              class="range-button-label"
              i18n="@@docedit.forms.date.singleDate">Einzeldatum:</div>

@@ -7,7 +7,7 @@
 <div *ngIf="isDatePickerVisible()"
      class="input-group"
      [class.editing]="editing">
-     <input *ngIf="isDatePickerVisible()"
+    <input *ngIf="isDatePickerVisible()"
           #dateInput
           #datePicker="ngbDatepicker"
           class="form-control date-picker-input"
@@ -22,7 +22,7 @@
           [(ngModel)]="dateStruct"
           ngbDatepicker>
 
-     <button *ngIf="isNowButtonVisible()"
+    <button *ngIf="isNowButtonVisible()"
           class="btn btn-outline-primary now-button"
           i18n="@@dcoedit.forms.date.now"
           ngbTooltip="Aktuelles Datum verwenden"
@@ -40,15 +40,15 @@
 
 <div class="timezone-selector">
     <searchable-select *ngIf="isTimePickerVisible()"
-                    [selectedValue]="selectedTimezone"
-                    [values]="getAvailableTimezones()"
-                    [getLabel]="getTimezoneLabel"
-                    [clearable]="false"
-                    (onValueSelected)="selectTimezone($event)"></searchable-select>
+                        [selectedValue]="selectedTimezone"
+                        [values]="getAvailableTimezones()"
+                        [getLabel]="getTimezoneLabel"
+                        [clearable]="false"
+                        (onValueSelected)="selectTimezone($event)"></searchable-select>
 </div>
 
 <div *ngIf="!isDatePickerVisible()"
      class="small-circular-button red-button remove-date-value-button"
      (click)="remove()">
-     <span class="mdi mdi-delete"></span>
+    <span class="mdi mdi-delete"></span>
  </div>

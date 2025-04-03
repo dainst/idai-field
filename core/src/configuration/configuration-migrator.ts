@@ -1,3 +1,5 @@
+import { DateConfiguration } from '../model/configuration/date-configuration';
+import { Field } from '../model/configuration/field';
 import { ConfigurationResource } from '../model/document/configuration-resource';
 
 
@@ -24,6 +26,17 @@ export module ConfigurationMigrator {
                     group.fields.splice(index, 0, 'date');
                 }
             });
+
+            Object.values(form.fields)
+                .filter(field => field.inputType === Field.InputType.DATE)
+                .forEach(field => {
+                    if (!field.dateConfiguration) {
+                        field.dateConfiguration = {
+                            dataType: DateConfiguration.DataType.OPTIONAL,
+                            inputMode: DateConfiguration.InputMode.OPTIONAL
+                        };
+                    }
+                });
         });
     }
 }

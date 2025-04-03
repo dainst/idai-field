@@ -134,6 +134,26 @@ import { Field } from '../../src/model/configuration/field';
             { value: '30.01.2010', endValue: '31.01.2010', isRange: true },
             makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010', endValue: '31.01.2010', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.RANGE)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', isRange: false },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.SINGLE)
+        )).toBe(true);
     });
 
 
@@ -172,6 +192,21 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.isValidFieldData(
             'ABC',
             makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.SINGLE)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', isRange: false },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.RANGE)
         )).toBe(false);
     });
 });

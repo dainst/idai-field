@@ -29,9 +29,9 @@ export class DateComponent implements OnChanges {
 
     public updateValue = (value: string) => this.update(value, 'value');
 
-    public isOptionalRange = () => this.field.dateConfiguration?.inputMode === DateConfiguration.InputMode.OPTIONAL;
+    public updateEndValue = (value: string) => this.update(value, 'endValue');
 
-    public isSwitchToRangeButtonVisible = () => this.isOptionalRange() && !this.rangeMode;
+    public isOptionalRange = () => this.field.dateConfiguration?.inputMode === DateConfiguration.InputMode.OPTIONAL;
 
 
     ngOnChanges() {
@@ -41,31 +41,20 @@ export class DateComponent implements OnChanges {
     }
 
 
-    public switchToRange() {
+    public toggleRange() {
 
-        this.rangeMode = true;
+        this.rangeMode = !this.rangeMode;
 
         const fieldData: DateSpecification = this.getFieldData();
-        if (fieldData) fieldData.isRange = true;
+        if (fieldData) fieldData.isRange = this.rangeMode;
     }
 
 
-    public switchToSingle() {
+    public getRangeButtonTooltip(): string {
 
-        this.rangeMode = false;
-        
-        const fieldData: DateSpecification = this.getFieldData();
-        if (fieldData) fieldData.isRange = false;
-    }
-
-
-    public updateEndValue(value: string) {
-        
-        this.update(value, 'endValue');
-
-        if (this.isOptionalRange() && !value) {
-            this.switchToSingle();
-        }
+        return this.rangeMode
+            ? $localize `:@@dcoedit.forms.date.switchToSingle:Auf Einzeldatum umstellen`
+            : $localize `:@@dcoedit.forms.date.switchToRange:Auf Datumsbereich umstellen`;
     }
 
 

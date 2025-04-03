@@ -1,3 +1,4 @@
+import { DateConfiguration } from '../../src/model';
 import { Field } from '../../src/model/configuration/field';
 
 
@@ -6,11 +7,21 @@ import { Field } from '../../src/model/configuration/field';
  */
  describe('Field', () => {
 
-    function makeField(inputType): Field {
+    function makeField(inputType: Field.InputType): Field {
 
         return {
             name: 'field',
             inputType: inputType
+        };
+    }
+
+
+    function makeDateField(dataType: DateConfiguration.DataType, inputMode: DateConfiguration.InputMode): Field {
+
+        return {
+            name: 'field',
+            inputType: Field.InputType.DATE,
+            dateConfiguration: { dataType, inputMode }
         };
     }
 
@@ -35,27 +46,27 @@ import { Field } from '../../src/model/configuration/field';
 
         expect(Field.isValidFieldData(
             { value: '31.01.2010', isRange: false },
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(true);
 
         expect(Field.isValidFieldData(
-            { value: '01.2010', isRange: false }
-            , makeField(Field.InputType.DATE)
+            { value: '01.2010', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(true);
 
         expect(Field.isValidFieldData(
             { value: '2010', isRange: false },
-             makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(true);
 
         expect(Field.isValidFieldData(
             { endValue: '31.01.2010', isRange: true },
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(true);
         
         expect(Field.isValidFieldData(
             { value: '30.01.2010', endValue: '31.01.2010', isRange: true },
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(true);
 
         expect(Field.isValidFieldData(
@@ -122,37 +133,37 @@ import { Field } from '../../src/model/configuration/field';
 
         expect(Field.isValidFieldData(
             { quotation: 'text' },
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(false);
 
         expect(Field.isValidFieldData(
             '31.01.2010',
-             makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(false);
 
         expect(Field.isValidFieldData(
             { value: '31-01-2010', isRange: false },
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(false);
 
         expect(Field.isValidFieldData(
             { value: '31.01.2010.01', isRange: false },
-             makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(false);
 
         expect(Field.isValidFieldData(
             { endValue: '31.01.2010', isRange: false },
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(false);
 
         expect(Field.isValidFieldData(
             { value: '30.01.2010', endValue: '31.01.2010', isRange: false },
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(false);
 
         expect(Field.isValidFieldData(
             'ABC',
-            makeField(Field.InputType.DATE)
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
         )).toBe(false);
     });
 });

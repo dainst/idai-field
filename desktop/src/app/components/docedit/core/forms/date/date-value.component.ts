@@ -51,6 +51,8 @@ export class DateValueComponent implements OnInit {
 
     public supportsTimeInput = () => this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
 
+    public enforcesTimeInput = () => this.field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME;
+
     public getTimezoneLabel = (timezone: string) => timezone;
 
 
@@ -274,7 +276,9 @@ export class DateValueComponent implements OnInit {
     private buildValue(): string|undefined {
 
         let formattedDate: string = this.getFormattedDate();
-        if (!formattedDate) return undefined;
+        if (!formattedDate || (this.enforcesTimeInput() && !DateValueComponent.isFullDate(formattedDate))) {
+            return undefined;
+        }
 
         if (this.isTimeSelected()) formattedDate += ' ' + this.getFormattedTime();
 
@@ -335,4 +339,10 @@ export class DateValueComponent implements OnInit {
 
 	    return parseInt(`${value}`, 10);
 	}
+
+
+    private static isFullDate(formattedDate: string): boolean {
+
+        return formattedDate.split('.').length === 3;
+    }
 }

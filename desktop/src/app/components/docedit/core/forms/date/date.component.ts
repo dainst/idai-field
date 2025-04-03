@@ -31,12 +31,12 @@ export class DateComponent implements OnChanges {
 
     public updateEndValue = (value: string) => this.update(value, 'endValue');
 
-    public isOptionalRange = () => this.field.dateConfiguration?.inputMode === DateConfiguration.InputMode.OPTIONAL;
+    public isOptionalRange = () => this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.OPTIONAL;
 
 
     ngOnChanges() {
 
-        this.rangeMode = this.field.dateConfiguration?.inputMode === DateConfiguration.InputMode.RANGE
+        this.rangeMode = this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.RANGE
             || this.fieldContainer[this.field.name]?.isRange;
     }
 

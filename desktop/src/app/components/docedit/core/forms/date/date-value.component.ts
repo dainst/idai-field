@@ -302,13 +302,13 @@ export class DateValueComponent implements OnInit {
 
     private isTimeSupported() {
         
-        return this.field.dateConfiguration?.dataType !== DateConfiguration.DataType.DATE;
+        return this.field.dateConfiguration.dataType !== DateConfiguration.DataType.DATE;
     }
 
 
     private isTimeMandatory() {
         
-        return this.field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME;
+        return this.field.dateConfiguration.dataType === DateConfiguration.DataType.DATE_TIME;
     }
 
 

@@ -31,7 +31,7 @@ export module DateSpecification {
 
         if (!date.isRange && date.endValue) return false;
 
-        if (field.dateConfiguration?.inputMode === DateConfiguration.InputMode.SINGLE
+        if (field.dateConfiguration.inputMode === DateConfiguration.InputMode.SINGLE
                 && (date.isRange || date.endValue !== undefined)) {
             return false;
         }
@@ -99,11 +99,11 @@ export module DateSpecification {
 
         if (permissive) return true;
 
-        if (field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE && dateValue.includes(':')) {
+        if (field.dateConfiguration.dataType === DateConfiguration.DataType.DATE && dateValue.includes(':')) {
             return false;
         }
 
-        if (field.dateConfiguration?.dataType === DateConfiguration.DataType.DATE_TIME
+        if (field.dateConfiguration.dataType === DateConfiguration.DataType.DATE_TIME
                 && !dateValue.includes(':')) {
             return false;
         }

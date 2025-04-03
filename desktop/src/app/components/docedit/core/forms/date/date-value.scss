@@ -60,7 +60,18 @@ ngb-datepicker {
   height: 33px;
   line-height: 18px;
   font-size: 14px;
+  border-color: #7998cb !important;
   z-index: 5 !important;
+
+  &:hover,
+  &:active {
+    background-color: rgba(200, 200, 200, 0.2) !important;
+  }
+
+  .mdi {
+    position: relative;
+    right: 1px;
+  }
 }
 
 .timezone-selector {

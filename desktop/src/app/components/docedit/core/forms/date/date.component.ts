@@ -64,7 +64,7 @@ export class DateComponent implements OnChanges {
         if (this.rangeMode && this.hiddenEndValue) {
             if (!fieldData) this.fieldContainer[this.field.name] = { isRange: true };
             this.fieldContainer[this.field.name].endValue = this.hiddenEndValue;
-            this.hiddenEndValue = undefined
+            this.hiddenEndValue = undefined;
         }
     }
 

@@ -120,9 +120,8 @@
 
     <div *ngIf="isDateSectionVisible()">
         <div class="configuration-editor-section">
-            <div class="configuration-editor-section-title" i18n="@@configuration.date.dataType">
-                Angabe der Uhrzeit
-            </div>
+            <div class="configuration-editor-section-title"
+                 i18n="@@configuration.date.dataType">Angabe der Uhrzeit</div>
             <select class="form-control"
                     (change)="setDateDataType($event.target.value)">
                 <option i18n="@@configuration.date.time.optional" value="optional"
@@ -140,11 +139,14 @@
             </select>
         </div>
         <div class="configuration-editor-section">
-            <div class="configuration-editor-section-title" i18n="@@configuration.date.inputMode">
-                Eingabemodus
-            </div>
+            <div class="configuration-editor-section-title"
+                 i18n="@@configuration.date.inputMode">Eingabemodus</div>
             <select class="form-control"
                     (change)="setDateInputMode($event.target.value)">
+                <option i18n="@@configuration.date.inputMode.optional" value="optional"
+                        [selected]="getDateConfiguration()?.inputMode === 'optional'">
+                        Wählbar
+                </option>
                 <option i18n="@@configuration.date.inputMode.single" value="single"
                         [selected]="getDateConfiguration()?.inputMode === 'single'">
                         Einzeldatum
@@ -152,10 +154,6 @@
                 <option i18n="@@configuration.date.inputMode.range" value="range"
                         [selected]="getDateConfiguration()?.inputMode === 'range'">
                         Zeitraum
-                </option>
-                <option i18n="@@configuration.date.inputMode.optional" value="optional"
-                        [selected]="getDateConfiguration()?.inputMode === 'optional'">
-                        Wählbar
                 </option>
             </select>
         </div>

@@ -20,6 +20,9 @@
     <div *ngIf="opened" class="card-body">
         <p *ngIf="description" class="card-text">{{description}}</p>
         <ul class="list-group list-group-flush">
+            <li *ngIf="field.mandatory" class="list-group-item">
+                <b i18n="@@configuration.mandatoryField">Pflichtfeld</b>
+            </li>
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="oneliner-colon">:</span>
                 <span>{{getInputTypeLabel()}}</span>

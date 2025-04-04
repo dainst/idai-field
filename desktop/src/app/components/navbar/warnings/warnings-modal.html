@@ -115,10 +115,35 @@
                                 Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
                             </span>
                         </span>
-                        <span *ngIf="section.type === 'invalidFields'"
+                        <span *ngIf="section.type === 'invalidFields' && !section.dateValidationError"
                               i18n="@@navbar.taskbar.warnings.info.invalidField">
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'invalidFields' && section.dateValidationError">
+                            <span i18n="@@navbar.taskbar.warnings.info.invalidField.date">
+                                Die in diesem Feld eingetragene Datumsangabe ist ungültig.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'rangeNotAllowed'"
+                                  i18n="@@navbar.taskbar.warnings.info.invalidField.date.rangeNotAllowed">
+                                Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'singleNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.singleNotAllowed">
+                                Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotAllowed">
+                                Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotSet'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotSet">
+                                Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'endDateBeforeBeginningDate'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.endDateBeforeBeginningDate">
+                                Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.
+                            </span>
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">

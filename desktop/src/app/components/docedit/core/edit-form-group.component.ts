@@ -147,7 +147,7 @@ export class EditFormGroup implements OnChanges {
         if (!element) return;
 
         await this.scrollToElement(element);
-        await this.focusField(element);
+        if (field.inputType !== Field.InputType.DATE) await this.focusField(element);
 
         this.scrollTargetField = undefined;
     }

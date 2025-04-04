@@ -46,6 +46,24 @@
                 <b i18n="@@configuration.relation.inverse">Gegenrelation</b><span class="oneliner-colon">:</span>
                 <span class="inverse-relation-label">{{getRelationLabel(getInverseRelation())}}</span>
             </li>
+            <li *ngIf="getDateDataType()" class="list-group-item">
+                <b i18n="@@configuration.date.dataType">Angabe der Uhrzeit</b><span class="oneliner-colon">:</span>
+                <span *ngIf="getDateDataType() === 'optional'"
+                      i18n="@@configuration.date.time.optional">Optional</span>
+                <span *ngIf="getDateDataType() === 'dateTime'"
+                      i18n="@@configuration.date.time.optional">Verpflichtend</span>
+                <span *ngIf="getDateDataType() === 'date'"
+                      i18n="@@configuration.date.time.no">Nein</span>
+            </li>
+            <li *ngIf="getDateInputMode()" class="list-group-item">
+                <b i18n="@@configuration.date.inputMode">Eingabemodus</b><span class="oneliner-colon">:</span>
+                <span *ngIf="getDateInputMode() === 'optional'"
+                      i18n="@@configuration.date.inputMode.optional">Wählbar</span>
+                <span *ngIf="getDateInputMode() === 'single'"
+                      i18n="@@configuration.date.inputMode.single">Einzeldatum</span>
+                <span *ngIf="getDateInputMode() === 'range'"
+                      i18n="@@configuration.date.inputMode.range">Zeitraum</span>
+            </li> 
         </ul>
     </div>
 </div>

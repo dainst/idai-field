@@ -60,6 +60,10 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getInverseRelation = () => (this.field as Relation).inverse;
 
+    public getDateDataType = () => this.field.dateConfiguration?.dataType;
+
+    public getDateInputMode = () => this.field.dateConfiguration?.inputMode;
+
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
     public highlightAsCustomField = () => this.settingsProvider.getSettings().highlightCustomElements

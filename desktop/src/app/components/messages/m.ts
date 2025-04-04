@@ -602,11 +602,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE] = {
-            content: $localize `:@@messages.import.validation.error.invalidDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010`,
+            content: $localize `:@@messages.import.validation.error.invalidDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATES] = {
-            content: $localize `:@@messages.import.validation.error.invalidDates:Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010`,
+            content: $localize `:@@messages.import.validation.error.invalidDates:Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {

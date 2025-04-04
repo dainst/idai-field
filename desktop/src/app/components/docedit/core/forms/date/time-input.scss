@@ -5,6 +5,7 @@ time-input {
   input {
     height: 33px;
     text-align: center;
+    cursor: text;
 
     &.with-time-suffix,
     &.with-am-pm-switch {

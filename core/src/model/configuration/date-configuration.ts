@@ -34,7 +34,7 @@ export module DateConfiguration {
 
         return {
             dataType: DataType.OPTIONAL,
-            inputMode: InputMode.SINGLE
+            inputMode: InputMode.OPTIONAL
         };
     }
 }

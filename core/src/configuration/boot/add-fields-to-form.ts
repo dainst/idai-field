@@ -93,6 +93,7 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
     }
 
     if (field && !field.name) field.name = fieldName;
+    if (field?.required) field.mandatory = true;
 
     return clone(field);
 }
@@ -127,6 +128,10 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
 
     if (changedField.inputType) {
         field.inputType = changedField.inputType as Field.InputType;
+    }
+
+    if (changedField.mandatory !== undefined && !field.required) {
+        field.mandatory = changedField.mandatory;
     }
 
     if (changedField.constraintIndexed !== undefined) {

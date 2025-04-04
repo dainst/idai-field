@@ -58,6 +58,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
+    public isMandatory = () => this.getClonedFieldDefinition()?.mandatory ?? this.field.mandatory;
+
+    public isMandatoryOptionVisible = () => this.field.editable;
+
+    public isMandatoryOptionEnabled = () => !this.field.required;
+
     public getDateConfiguration = () => this.getClonedFieldDefinition().dateConfiguration
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
@@ -78,6 +84,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public initialize() {
 
         super.initialize();
+
+        console.log('field:', this.field);
 
         this.selectableTargetCategories = this.getSelectableTargetCategories();
 
@@ -198,6 +206,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public toggleMandatory() {
+
+        const clonedFieldDefinition: CustomFieldDefinition = this.getClonedFieldDefinition();
+        if (this.isMandatory()) {
+            delete clonedFieldDefinition.mandatory;
+        } else {
+            clonedFieldDefinition.mandatory = true;
+        }
+    }
+
+
     public toggleHidden() {
 
         const customFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
@@ -308,6 +327,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
+            || this.getCustomFieldDefinition()?.mandatory !== this.getClonedFieldDefinition()?.mandatory
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()

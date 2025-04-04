@@ -47,6 +47,25 @@
                 </label>
             </div>
         </div>
+        <div *ngIf="isMandatoryOptionVisible()"
+             class="configuration-editor-switch">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.mandatoryField"
+                      [class.disabled]="!isMandatoryOptionEnabled()">Pflichtfeld</span>
+            </div>
+            <div>
+                <label id="mandatory-slider"
+                       class="switch"
+                       [class.disabled]="!isMandatoryOptionEnabled()">
+                    <input
+                        type="checkbox"
+                        [checked]="isMandatory()"
+                        [disabled]="!isMandatoryOptionEnabled()"
+                        (change)="toggleMandatory()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
         <i18n-switch *ngIf="isI18nCompatible()"
                      [inputType]="getInputType()"
                      (onChanged)="setInputType($event)"></i18n-switch>

@@ -824,11 +824,11 @@ export class BuiltInConfiguration {
             fields: {
                 state: {
                     inputType: 'dropdown',
-                    mandatory: true,
+                    required: true,
                     valuelistId: 'workflow-step-state-default',
                 },
                 date: {
-                    mandatory: true
+                    required: true
                 }
             },
             minimalForm: {
@@ -895,7 +895,7 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.IDENTIFIER,
             visible: false,
             editable: true,
-            mandatory: true,
+            required: true,
             fulltextIndexed: true,
             fixedInputType: true
         },

@@ -26,7 +26,8 @@ export interface Field extends BaseField {
     fulltextIndexed?: boolean;
     constraintIndexed?: boolean;
     defaultConstraintIndexed?: boolean;
-    mandatory?: true;
+    mandatory?: boolean;
+    required?: boolean;
     fixedInputType?: true;
     allowOnlyValuesOfParent?: true;
     maxCharacters?: number;

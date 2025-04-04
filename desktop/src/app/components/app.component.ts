@@ -164,6 +164,10 @@ export class AppComponent {
             $localize `:@@util.warnings.invalidFieldData:Ungültige Felddaten`
         );
         this.utilTranslations.addTranslation(
+            'warnings.missingMandatoryFields',
+            $localize `:@@util.warnings.missingMandatoryFields:Nicht ausgefüllte Pflichtfelder`
+        );
+        this.utilTranslations.addTranslation(
             'warnings.outlierValues',
             $localize `:@@util.warnings.outlierValues:Nicht in Werteliste enthaltene Werte`
         );

@@ -489,6 +489,7 @@ export module WarningsUpdater {
         }
 
         const fieldDefinitions: Array<Field> = CategoryForm.getFields(category);
+        updateMandatoryFieldWarnings(warnings, document, fieldDefinitions);
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
@@ -512,6 +513,16 @@ export module WarningsUpdater {
         if (!document.resource.identifier) return false;
 
         return category.identifierPrefix && !document.resource.identifier.startsWith(category.identifierPrefix);
+    }
+
+
+    function updateMandatoryFieldWarnings(warnings: Warnings, document: Document, fieldDefinitions: Array<Field>) {
+
+        fieldDefinitions.filter(field => field.mandatory).forEach(field => {
+            if (document.resource[field.name] == undefined) {
+                warnings.missingMandatoryFields.push(field.name);
+            }
+        });
     }
 
 

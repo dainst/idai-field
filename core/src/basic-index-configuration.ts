@@ -30,6 +30,7 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'warnings:exist': { path: 'warnings', pathArray: ['warnings'], type: 'exist' },
     'invalidFields:exist': { path: 'warnings.invalidFields', pathArray: ['warnings', 'invalidFields'], type: 'exist' },
     'invalidFields:contain': { path: 'warnings.invalidFields', pathArray: ['warnings', 'invalidFields'], type: 'contain' },
+    'missingMandatoryFields:exist': { path: 'warnings.missingMandatoryFields', pathArray: ['warnings', 'missingMandatoryFields'], type: 'exist' },
     'unconfiguredCategory:exist': { path: 'warnings.unconfiguredCategory', pathArray: ['warnings', 'unconfiguredCategory'], type: 'exist' },
     'unconfiguredFields:exist': { path: 'warnings.unconfiguredFields', pathArray: ['warnings', 'unconfiguredFields'], type: 'exist' },
     'unconfiguredFields:contain': { path: 'warnings.unconfiguredFields', pathArray: ['warnings', 'unconfiguredFields'], type: 'contain' },

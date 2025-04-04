@@ -54,6 +54,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.invalidField">
                             Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingMandatoryField">
+                            Nicht ausgefülltes Pflichtfeld <b>{{getFieldLabel(section)}}</b>
+                        </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
@@ -144,6 +148,10 @@
                                 i18n="@@navbar.taskbar.warnings.info.invalidField.date.endDateBeforeBeginningDate">
                                 Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.
                             </span>
+                        </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.info.missingMandatoryField">
+                            In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
@@ -254,9 +262,9 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalidFields' || section.type === 'invalidRelationTargets'
-                            || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
-                            || section.type === 'nonUniqueIdentifier'">
+                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingMandatoryFields'
+                            || section.type === 'invalidRelationTargets' || section.type === 'missingIdentifierPrefix'
+                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>

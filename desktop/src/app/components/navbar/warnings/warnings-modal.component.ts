@@ -493,6 +493,7 @@ export class WarningsModalComponent {
                 switch (type) {
                     case 'unconfiguredFields':
                     case 'invalidFields':
+                    case 'missingMandatoryFields':
                         this.sections = this.sections.concat(
                             await this.createSections(
                                 type as WarningType, document, document.warnings[type] as string[]

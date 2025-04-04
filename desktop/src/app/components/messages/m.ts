@@ -185,6 +185,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_URL = 'docedit.validation.error.invalidUrl';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_URLS = 'docedit.validation.error.invalidUrls';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE = 'docedit.validation.error.invalidDate';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATES = 'docedit.validation.error.invalidDates';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED = 'docedit.validation.error.invalidDate.rangeNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED = 'docedit.validation.error.invalidDate.singleNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED = 'docedit.validation.error.invalidDate.timeNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET = 'docedit.validation.error.invalidDate.timeNotSet';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.invalidDate.endDateBeforeBeginningDate';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'docedit.validation.error.invalidDatingValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'docedit.validation.error.invalidDatingValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'docedit.validation.error.invalidDimensionValue';
@@ -838,6 +845,34 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_URLS] = {
             content: $localize `:@@messages.docedit.validation.error.invalidUrls:Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate:Bitte tragen Sie im Feld \'[1]\' eine gültige Datumsangabe ein.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATES] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDates:Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.rangeNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.singleNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.timeNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.timeNotSet:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: $localize `:@@messages.docedit.validation.error.endDateBeforeBeginningDate:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {

@@ -101,6 +101,41 @@ export module MessagesConversion {
             }
         }
 
+        if (msg === ValidationErrors.INVALID_DATES) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATES;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE;
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+            }
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_SET) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
         return msgWithParams;
     }
 

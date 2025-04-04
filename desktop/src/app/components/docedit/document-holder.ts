@@ -137,6 +137,7 @@ export class DocumentHolder {
             this.oldVersion);
         Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfDates(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);

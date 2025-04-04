@@ -153,14 +153,14 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    public getExecutionDateLabel(workflowStep: Document): string {
+    public getDateLabel(workflowStep: Document): string {
 
-        if (!workflowStep.resource.executionDate) return '';
+        if (!workflowStep.resource.date) return '';
 
         const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
 
         return DateSpecification.generateLabel(
-            workflowStep.resource.executionDate,
+            workflowStep.resource.date,
             getSystemTimezone(),
             timeSuffix,
             Settings.getLocale(),

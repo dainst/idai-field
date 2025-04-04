@@ -827,20 +827,15 @@ export class BuiltInConfiguration {
                     mandatory: true,
                     valuelistId: 'workflow-step-state-default',
                 },
-                executionDate: {
-                    inputType: 'date',
-                    mandatory: true,
-                    dateConfiguration: {
-                        dataType: 'optional',
-                        inputMode: 'optional'
-                    }
+                date: {
+                    mandatory: true
                 }
             },
             minimalForm: {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'state', 'executionDate']
+                        fields: ['identifier', 'category', 'shortDescription', 'state', 'date']
                     }
                 ]
             }

@@ -28,7 +28,7 @@
       .workflow-step-executed-on,
       .workflow-step-results-in,
       .workflow-step-state-header,
-      .workflow-step-execution-date,
+      .workflow-step-date,
       .workflow-step-identifier,
       .workflow-step-category {
         padding: 10px;
@@ -37,7 +37,7 @@
         text-overflow: ellipsis;
       }
 
-      .workflow-step-execution-date,
+      .workflow-step-date,
       .workflow-step-identifier,
       .workflow-step-category {
         line-height: 35px;
@@ -59,7 +59,7 @@
 
       .workflow-step-state-header,
       .workflow-step-state,
-      .workflow-step-execution-date {
+      .workflow-step-date {
         display: flex;
         align-items: center;
       }
@@ -71,7 +71,7 @@
         justify-content: center;
       }
 
-      .workflow-step-execution-date {
+      .workflow-step-date {
         flex: 0 0 250px;
         line-height: 17px;
         white-space: break-spaces;

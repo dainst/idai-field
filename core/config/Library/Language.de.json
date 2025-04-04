@@ -1614,9 +1614,6 @@
       "fields": {
         "state": {
           "label": "Status"
-        },
-        "executionDate": {
-          "label": "Datum der Durchführung"
         }
       }
     }

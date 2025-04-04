@@ -4,8 +4,8 @@ import { parseDate, Document, DateSpecification } from 'idai-field-core';
 export function sortWorkflowSteps(workflowSteps: Array<Document>) {
 
     workflowSteps.sort((workflowStep1: Document, workflowStep2: Document) => {
-        return getDateTime(workflowStep1.resource.executionDate)
-            - getDateTime(workflowStep2.resource.executionDate);
+        return getDateTime(workflowStep1.resource.date)
+            - getDateTime(workflowStep2.resource.date);
     });
 }
 

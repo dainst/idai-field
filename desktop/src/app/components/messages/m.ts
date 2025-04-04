@@ -681,7 +681,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
-            content: $localize `:@@messages.import.validation.error.missingProperty:Eigenschaft(en) einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.`,
+            content: $localize `:@@messages.import.validation.error.missingProperty:Folgende Felder einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {

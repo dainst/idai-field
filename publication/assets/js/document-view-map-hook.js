@@ -293,15 +293,24 @@ export default getDocumentViewMapHook = () => {
 
                 const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
 
-                let visible = false;
-                if (preference == "true") visible = true
+                let visible = null;
 
-                layer.setVisible(visible)
-                this.pushEventTo(this.el, "visibility-set", { uuid: layer.get('name'), group: "project", value: visible })
+                if (preference == "true") {
+                    visible = true
+                } else if (preference == "false") {
+                    visible = false;
+                }
+
+                if (visible != null) {
+                    layer.setVisible(visible)
+                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
+                }
 
                 this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
             }
+
+            this.updateZIndices();
         },
         setDocumentLayers(projectName, tileLayersInfo) {
 
@@ -314,16 +323,35 @@ export default getDocumentViewMapHook = () => {
                 this.documentTileLayers.push(layer);
 
                 const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
-                let visible = false;
-                if (preference == "true") visible = true
+                let visible = null;
 
-                layer.setVisible(visible)
-                this.pushEventTo(this.el, "visibility-set", { uuid: layer.get('name'), group: "project", value: visible })
+                if (preference == "true") {
+                    visible = true
+                } else if (preference == "false") {
+                    visible = false;
+                }
+
+                if (visible != null) {
+                    layer.setVisible(visible)
+                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
+                }
 
                 this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
+
+            }
+            this.updateZIndices();
+        },
+
+        updateZIndices() {
+            const layerCount = 0 + this.documentTileLayers.length + this.projectTileLayers.length
+            const combined = this.documentTileLayers.concat(this.projectTileLayers);
+
+            for (let i = 0; i < layerCount; i++) {
+                combined[i].setZIndex(layerCount - i - 200);
             }
         },
+
         async setMapFeatures(parentFeatures, documentFeature, childrenFeatures) {
             this.docId = documentFeature.properties.uuid;
 

@@ -293,11 +293,18 @@ export default getDocumentViewMapHook = () => {
 
                 const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
 
-                let visible = false;
-                if (preference == "true") visible = true
+                let visible = null;
 
-                layer.setVisible(visible)
-                this.pushEventTo(this.el, "visibility-set", { uuid: layer.get('name'), group: "project", value: visible })
+                if (preference == "true") {
+                    visible = true
+                } else if (preference == "false") {
+                    visible = false;
+                }
+
+                if (visible != null) {
+                    layer.setVisible(visible)
+                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
+                }
 
                 this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
@@ -314,11 +321,18 @@ export default getDocumentViewMapHook = () => {
                 this.documentTileLayers.push(layer);
 
                 const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
-                let visible = false;
-                if (preference == "true") visible = true
+                let visible = null;
 
-                layer.setVisible(visible)
-                this.pushEventTo(this.el, "visibility-set", { uuid: layer.get('name'), group: "project", value: visible })
+                if (preference == "true") {
+                    visible = true
+                } else if (preference == "false") {
+                    visible = false;
+                }
+
+                if (visible != null) {
+                    layer.setVisible(visible)
+                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
+                }
 
                 this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);

@@ -359,11 +359,17 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   def handle_event(
-        "visibility-set",
+        "visibility-preference",
         %{"group" => group, "uuid" => uuid, "value" => value},
         socket
       )
       when is_boolean(value) do
+    # When a map background layer is loaded on the client side, the client side hook will
+    # send this event if the client's localStorage contained a visibility preference for
+    # the added layer.
+    #
+    # The client will have set the layer visibility at this point and uses this event to make
+    # sure the server state is the same as in the client's browser.
     set_group =
       if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
 

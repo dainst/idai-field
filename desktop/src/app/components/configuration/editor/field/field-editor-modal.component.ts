@@ -68,8 +68,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isDateSectionVisible = () => this.getInputType() === Field.InputType.DATE;
 
-    public isDateSectionEditable = () => this.isCustomField() && this.isDateSectionVisible();
-
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
     public isRelationSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.RELATION;
@@ -138,7 +136,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (!this.isDateSectionEditable()) {
+        if (!this.isDateSectionVisible()) {
             delete this.getClonedFieldDefinition().dateConfiguration;
         }
 
@@ -374,7 +372,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private initializeDateConfiguration() {
 
-        if (this.isDateSectionEditable() && !this.getClonedFieldDefinition().dateConfiguration) {
+        if (this.isDateSectionVisible() && !this.getClonedFieldDefinition().dateConfiguration) {
             this.getClonedFieldDefinition().dateConfiguration = DateConfiguration.getDefault();
         }
     }

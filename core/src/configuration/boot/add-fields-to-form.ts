@@ -132,4 +132,8 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
     if (changedField.constraintIndexed !== undefined) {
         field.constraintIndexed = changedField.constraintIndexed;
     }
+
+    if (changedField.dateConfiguration) {
+        field.dateConfiguration = changedField.dateConfiguration;
+    }
 }

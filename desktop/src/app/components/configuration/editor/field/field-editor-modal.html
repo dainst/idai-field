@@ -124,7 +124,6 @@
                 Angabe der Uhrzeit
             </div>
             <select class="form-control"
-                    [disabled]="!isDateSectionEditable()"
                     (change)="setDateDataType($event.target.value)">
                 <option i18n="@@configuration.date.time.optional" value="optional"
                         [selected]="getDateConfiguration()?.dataType === 'optional'">
@@ -145,7 +144,6 @@
                 Eingabemodus
             </div>
             <select class="form-control"
-                    [disabled]="!isDateSectionEditable()"
                     (change)="setDateInputMode($event.target.value)">
                 <option i18n="@@configuration.date.inputMode.single" value="single"
                         [selected]="getDateConfiguration()?.inputMode === 'single'">

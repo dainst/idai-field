@@ -395,7 +395,7 @@ describe('ImportValidator', () => {
                 category: 'T',
                 mandatory: 'm',
                 date1: 'ABC',
-                date2: '19/3/1977',
+                date2: { value: '19/3/1977', isRange: false },
                 relations: { isRecordedIn: ['0'] }
             }
         };

@@ -97,6 +97,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_URLS = 'M.Import.ValidationErrors.invalidUrls';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE = 'M.Import.ValidationErrors.invalidDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATES = 'M.Import.ValidationErrors.invalidDates';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.rangeNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.singleNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.timeNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET = 'M.Import.ValidationErrors.invalidDate.timeNotSet';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
@@ -607,6 +611,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATES] = {
             content: $localize `:@@messages.import.validation.error.invalidDates:Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.rangeNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.singleNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.timeNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.timeNotSet:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {

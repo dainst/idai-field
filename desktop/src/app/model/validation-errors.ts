@@ -10,6 +10,10 @@ export module ValidationErrors {
     export const INVALID_NUMERICAL_VALUES = 'validationerror/invalidnumericalvalues';
     export const INVALID_URLS = 'validationerror/invalidurls';
     export const INVALID_DATES = 'validationerror/invaliddates';
+    export const INVALID_DATE_RANGE_NOT_ALLOWED = 'validationerror/invaliddate/rangenotallowed';
+    export const INVALID_DATE_SINGLE_NOT_ALLOWED = 'validationerror/invaliddate/singlenotallowed';
+    export const INVALID_DATE_TIME_NOT_ALLOWED = 'validationerror/invaliddate/timenotallowed';
+    export const INVALID_DATE_TIME_NOT_SET = 'validationerror/invaliddate/timenotset';
     export const INVALID_DECIMAL_SEPARATORS = 'validationerror/invaliddecimalseparators';
     export const INVALID_DATING_VALUES = 'validationerror/invaliddatingvalues';
     export const INVALID_DIMENSION_VALUES = 'validationerror/invaliddimensionvalues';

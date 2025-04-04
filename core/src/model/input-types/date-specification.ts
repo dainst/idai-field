@@ -5,6 +5,25 @@ import { Field } from '../configuration/field';
 import { DateConfiguration } from '../configuration/date-configuration';
 
 
+export type DateValidationResult = 'valid'
+    |'invalid'
+    |'rangeNotAllowed'
+    |'singleNotAllowed'
+    |'timeNotAllowed'
+    |'timeNotSet';
+
+
+export module DateValidationResult {
+
+    export const VALID = 'valid';
+    export const INVALID = 'invalid';
+    export const RANGE_NOT_ALLOWED = 'rangeNotAllowed';
+    export const SINGLE_NOT_ALLOWED = 'singleNotAllowed';
+    export const TIME_NOT_ALLOWED = 'timeNotAllowed';
+    export const TIME_NOT_SET = 'timeNotSet';
+}
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -23,30 +42,32 @@ export module DateSpecification {
     export const IS_RANGE: string = 'isRange';
 
 
-    export function validate(date: DateSpecification, field: Field, permissive: boolean = false): boolean {
+    export function validate(date: DateSpecification, field: Field,
+                             permissive: boolean = false): DateValidationResult {
 
-        if (!isObject(date)
-                || (!date.value && !date.endValue)
-                || !validateDateValue(date.value, field, permissive)
-                || !validateDateValue(date.endValue, field, permissive)) {
-            return false;
-        }
+        if (!isObject(date) || (!date.value && !date.endValue)) return DateValidationResult.INVALID;
+                
+        let validationResult: DateValidationResult = validateDateValue(date.value, field, permissive);
+        if (validationResult !== DateValidationResult.VALID) return validationResult;
+    
+        validationResult = validateDateValue(date.endValue, field, permissive);
+        if (validationResult !== DateValidationResult.VALID) return validationResult;
 
-        if (permissive) return true;
+        if (permissive) return DateValidationResult.VALID;
 
-        if (!date.isRange && date.endValue) return false;
+        if (!date.isRange && date.endValue) return DateValidationResult.INVALID;
 
         if (field.dateConfiguration.inputMode === DateConfiguration.InputMode.SINGLE
                 && (date.isRange || date.endValue !== undefined)) {
-            return false;
+            return DateValidationResult.RANGE_NOT_ALLOWED;
         }
 
         if (field.dateConfiguration.inputMode === DateConfiguration.InputMode.RANGE
                 && (!date.isRange || date.endValue == undefined)) {
-            return false;
+            return DateValidationResult.SINGLE_NOT_ALLOWED;
         }
 
-        return true;
+        return DateValidationResult.VALID;
     }
 
 
@@ -101,23 +122,22 @@ export module DateSpecification {
     }
 
 
-    function validateDateValue(dateValue: string, field: Field, permissive: boolean) {
+    function validateDateValue(dateValue: string, field: Field, permissive: boolean): DateValidationResult {
 
-        if (!dateValue) return true;
+        if (!dateValue) return DateValidationResult.VALID;
             
-        if (isNaN(parseDate(dateValue)?.getTime())) return false;
+        if (isNaN(parseDate(dateValue)?.getTime())) return DateValidationResult.INVALID;
 
-        if (permissive) return true;
+        if (permissive) return DateValidationResult.VALID;
 
         if (field.dateConfiguration.dataType === DateConfiguration.DataType.DATE && dateValue.includes(':')) {
-            return false;
+            return DateValidationResult.TIME_NOT_ALLOWED;
         }
 
-        if (field.dateConfiguration.dataType === DateConfiguration.DataType.DATE_TIME
-                && !dateValue.includes(':')) {
-            return false;
+        if (field.dateConfiguration.dataType === DateConfiguration.DataType.DATE_TIME && !dateValue.includes(':')) {
+            return DateValidationResult.TIME_NOT_SET;
         }
 
-        return true;
+        return DateValidationResult.VALID;
     }
 }

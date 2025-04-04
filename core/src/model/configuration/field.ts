@@ -9,7 +9,7 @@ import { OptionalRange } from '../input-types/optional-range';
 import { Valuelist } from './valuelist';
 import { Composite } from '../input-types/composite';
 import { DateConfiguration } from './date-configuration';
-import { DateSpecification } from '../input-types/date-specification';
+import { DateSpecification, DateValidationResult } from '../input-types/date-specification';
 
 
 /**
@@ -121,7 +121,7 @@ export module Field {
             case InputType.BOOLEAN:
                 return fieldData === true || fieldData === false;
             case InputType.DATE:
-                return DateSpecification.validate(fieldData, field, permissive);
+                return DateSpecification.validate(fieldData, field, permissive) === DateValidationResult.VALID;
             case InputType.DROPDOWNRANGE:
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             case InputType.DATING:

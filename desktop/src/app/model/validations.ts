@@ -2,8 +2,14 @@ import { is, isArray, isString, and, isObject, to } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite, 
-    DateSpecification } from 'idai-field-core';
+    DateSpecification, DateValidationResult } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
+
+
+type InvalidDateInfo = {
+    fieldName: string;
+    dateValidationResult: DateValidationResult;
+}
 
 
 export module Validations {
@@ -80,27 +86,38 @@ export module Validations {
                                              projectConfiguration: ProjectConfiguration,
                                              previousDocumentVersion?: Document) {
 
-        const previousInvalidFields: string[] = previousDocumentVersion
+        const previousInvalidFields: Array<InvalidDateInfo> = previousDocumentVersion
             ?  Validations.validateDates(
                 previousDocumentVersion.resource,
                 projectConfiguration
             )
             : [];
 
-        const invalidFields: string[] = Validations.validateDates(
+        const invalidFields: Array<InvalidDateInfo> = Validations.validateDates(
             document.resource,
             projectConfiguration
         );
 
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: Array<InvalidDateInfo> = getNewInvalidDateFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 
-        if (newInvalidFields.length > 0) {
+        if (!newInvalidFields.length) return;
+
+        const genericInvalidFields: Array<InvalidDateInfo> = newInvalidFields
+            .filter(field => field.dateValidationResult === DateValidationResult.INVALID);
+
+        if (genericInvalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DATES,
                 document.resource.category,
-                newInvalidFields.join(', ')
+                genericInvalidFields.map(info => info.fieldName).join(', ')
+            ];
+        } else {
+            throw [
+                getDateError(newInvalidFields[0].dateValidationResult),
+                document.resource.category,
+                newInvalidFields[0].fieldName
             ];
         }
     }
@@ -520,18 +537,24 @@ export module Validations {
 
 
     export function validateDates(resource: Resource|NewResource,
-                                  projectConfiguration: ProjectConfiguration): string[] {
+                                  projectConfiguration: ProjectConfiguration): Array<InvalidDateInfo> {
 
         const category: CategoryForm = projectConfiguration.getCategory(resource.category);
         const projectFields: Array<Field> = CategoryForm.getFields(category);
-        const invalidFields: string[] = [];
+        const invalidFields: Array<InvalidDateInfo> = [];
 
         projectFields.filter(fieldDefinition => {
             return fieldDefinition.inputType === Field.InputType.DATE;
         }).forEach(fieldDefinition => {
             const value = resource[fieldDefinition.name];
-            if (value && !DateSpecification.validate(value, fieldDefinition)) {
-                invalidFields.push(fieldDefinition.name);
+            if (!value) return;
+
+            const dateValidationResult: DateValidationResult = DateSpecification.validate(value, fieldDefinition);
+            if (dateValidationResult !== DateValidationResult.VALID) {
+                invalidFields.push({
+                    fieldName: fieldDefinition.name,
+                    dateValidationResult
+                });
             }
         });
 
@@ -678,5 +701,31 @@ export module Validations {
             return !previousInvalidFields.includes(field)
                 || document.resource[field] !== previousDocumentVersion?.resource[field];
         });
+    }
+
+
+    function getNewInvalidDateFields(invalidFields: Array<InvalidDateInfo>,
+                                     previousInvalidFields: Array<InvalidDateInfo>, document: Document|NewDocument,
+                                     previousDocumentVersion?: Document): Array<InvalidDateInfo> {
+
+        return invalidFields.filter(info => {
+            return !previousInvalidFields.find(previousInfo => info.fieldName === previousInfo.fieldName)
+                || document.resource[info.fieldName] !== previousDocumentVersion?.resource[info.fieldName];
+        });
+    }
+
+
+    function getDateError(dateValidationResult: DateValidationResult): string {
+
+        switch (dateValidationResult) {
+            case DateValidationResult.RANGE_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED;
+            case DateValidationResult.SINGLE_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED;
+            case DateValidationResult.TIME_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED;
+            case DateValidationResult.TIME_NOT_SET:
+                return ValidationErrors.INVALID_DATE_TIME_NOT_SET;
+        }
     }
 }

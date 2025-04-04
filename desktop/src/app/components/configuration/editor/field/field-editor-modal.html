@@ -125,17 +125,11 @@
             <select class="form-control"
                     (change)="setDateDataType($event.target.value)">
                 <option i18n="@@configuration.date.time.optional" value="optional"
-                        [selected]="getDateConfiguration()?.dataType === 'optional'">
-                        Optional
-                </option>
+                        [selected]="getDateConfiguration()?.dataType === 'optional'">Optional</option>
                 <option i18n="@@configuration.date.time.mandatory" value="dateTime"
-                        [selected]="getDateConfiguration()?.dataType === 'dateTime'">
-                        Verpflichtend
-                </option>
+                        [selected]="getDateConfiguration()?.dataType === 'dateTime'">Verpflichtend</option>
                 <option i18n="@@configuration.date.time.no" value="date"
-                        [selected]="getDateConfiguration()?.dataType === 'date'">
-                        Nein
-                </option>
+                        [selected]="getDateConfiguration()?.dataType === 'date'">Nein</option>
             </select>
         </div>
         <div class="configuration-editor-section">
@@ -144,17 +138,11 @@
             <select class="form-control"
                     (change)="setDateInputMode($event.target.value)">
                 <option i18n="@@configuration.date.inputMode.optional" value="optional"
-                        [selected]="getDateConfiguration()?.inputMode === 'optional'">
-                        Wählbar
-                </option>
+                        [selected]="getDateConfiguration()?.inputMode === 'optional'">Wählbar</option>
                 <option i18n="@@configuration.date.inputMode.single" value="single"
-                        [selected]="getDateConfiguration()?.inputMode === 'single'">
-                        Einzeldatum
-                </option>
+                        [selected]="getDateConfiguration()?.inputMode === 'single'">Einzeldatum</option>
                 <option i18n="@@configuration.date.inputMode.range" value="range"
-                        [selected]="getDateConfiguration()?.inputMode === 'range'">
-                        Zeitraum
-                </option>
+                        [selected]="getDateConfiguration()?.inputMode === 'range'">Zeitraum</option>
             </select>
         </div>
     </div>

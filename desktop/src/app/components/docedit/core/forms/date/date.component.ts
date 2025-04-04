@@ -33,9 +33,12 @@ export class DateComponent implements OnChanges {
 
     public updateEndValue = (value: string) => this.update(value, 'endValue');
 
-    public isRangeSupported = () => this.field.dateConfiguration.inputMode !== DateConfiguration.InputMode.SINGLE;
+    public isRangeSupported = () => this.field.dateConfiguration.inputMode !== DateConfiguration.InputMode.SINGLE
+        || this.getEndValue() !== undefined;    // Allow deleting unallowed end values
 
-    public isOptionalRange = () => this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.OPTIONAL;
+    public isOptionalRange = () => this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.OPTIONAL
+        || (this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.SINGLE
+            && this.getEndValue() !== undefined);   // Allow deleting unallowed end values
 
 
     ngOnChanges() {
@@ -89,6 +92,23 @@ export class DateComponent implements OnChanges {
             if (!this.fieldContainer[this.field.name].value && !this.fieldContainer[this.field.name].endValue) {
                 delete this.fieldContainer[this.field.name];
             }
+        }
+        
+        if (propertyName === 'endValue') this.cleanUpAfterUpdate(value);
+    }
+
+
+    /** 
+     * Clean up after adding or removing an end value in order to fix a date that didn't correspond to the
+     * configured input mode
+     */
+    private cleanUpAfterUpdate(endValue: string) {
+
+        if (!endValue && this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.SINGLE) {
+            this.fieldContainer[this.field.name].isRange = false;
+            this.rangeMode = false;
+        } else if (endValue && this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.RANGE) {
+            this.fieldContainer[this.field.name].isRange = true;
         }
     }
 }

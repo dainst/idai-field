@@ -1,4 +1,4 @@
-import { is, isArray, isString, and, isObject, to } from 'tsfun';
+import { is, isArray, isString, and, isObject, to, equal } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite, 
@@ -694,7 +694,7 @@ export module Validations {
 
         return invalidFields.filter(info => {
             return !previousInvalidFields.find(previousInfo => info.fieldName === previousInfo.fieldName)
-                || document.resource[info.fieldName] !== previousDocumentVersion?.resource[info.fieldName];
+                || !equal(document.resource[info.fieldName])(previousDocumentVersion?.resource[info.fieldName]);
         });
     }
 

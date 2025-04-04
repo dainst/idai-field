@@ -17,6 +17,8 @@ export class DateComponent implements OnChanges {
 
     public rangeMode: boolean;
 
+    private hiddenEndValue: string;
+
 
     constructor() {}
 
@@ -48,7 +50,22 @@ export class DateComponent implements OnChanges {
         this.rangeMode = !this.rangeMode;
 
         const fieldData: DateSpecification = this.getFieldData();
-        if (fieldData) fieldData.isRange = this.rangeMode;
+        
+        if (fieldData) {
+            fieldData.isRange = this.rangeMode;
+
+            if (!this.rangeMode) {
+                this.hiddenEndValue = fieldData.endValue
+                delete fieldData.endValue;
+                if (!fieldData.value) delete this.fieldContainer[this.field.name];
+            }
+        }
+
+        if (this.rangeMode && this.hiddenEndValue) {
+            if (!fieldData) this.fieldContainer[this.field.name] = { isRange: true };
+            this.fieldContainer[this.field.name].endValue = this.hiddenEndValue;
+            this.hiddenEndValue = undefined
+        }
     }
 
 

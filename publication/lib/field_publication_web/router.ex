@@ -29,9 +29,9 @@ defmodule FieldPublicationWeb.Router do
     scope "/iiif" do
       forward("/3", IIIFImagePlug.V3, %{
         identifier_to_path_callback: &IIIFHelper.identifier_to_path/1,
-        scheme: IIIFHelper.get_endpoint_scheme(),
-        host: IIIFHelper.get_endpoint_host(),
-        port: IIIFHelper.get_endpoint_port(),
+        scheme: &IIIFHelper.get_endpoint_scheme/0,
+        host: &IIIFHelper.get_endpoint_host/0,
+        port: &IIIFHelper.get_endpoint_port/0,
         status_callbacks: %{
           404 => &IIIFHelper.handle_404/2
         }

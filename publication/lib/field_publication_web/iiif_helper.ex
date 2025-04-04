@@ -27,27 +27,46 @@ defmodule FieldPublicationWeb.IIIFHelper do
   end
 
   def get_endpoint_scheme() do
-    get_endpoint_config(:scheme)
+    Endpoint.config(:url)
+    |> Enum.find(fn {key, _val} -> key == :scheme end)
+    |> case do
+      {:scheme, scheme} ->
+        scheme
+
+      _ ->
+        "http"
+    end
   end
 
   def get_endpoint_host() do
-    get_endpoint_config(:host)
+    Endpoint.config(:url)
+    |> Enum.find(fn {key, _val} -> key == :host end)
+    |> case do
+      {:host, host} ->
+        host
+
+      _ ->
+        Endpoint.host()
+    end
   end
 
   def get_endpoint_port() do
-    get_endpoint_config(:port)
-  end
-
-  defp get_endpoint_config(key) do
-    Application.get_env(:field_publication, Endpoint)
-    |> Enum.into(%{})
-    |> get_in([:url, key])
+    Endpoint.config(:url)
+    |> Enum.find(fn {key, _val} -> key == :port end)
     |> case do
-      nil ->
-        nil
+      {:port, port} ->
+        port
 
-      value ->
-        value
+      _ ->
+        Endpoint.config(:http)
+        |> Enum.find(fn {key, _val} -> key == :port end)
+        |> case do
+          {:port, port} ->
+            port
+
+          _ ->
+            nil
+        end
     end
   end
 end

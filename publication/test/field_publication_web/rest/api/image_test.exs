@@ -52,7 +52,7 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
     # Try a query for image meta data.
     %{
       "@context" => "http://iiif.io/api/image/3/context.json",
-      "id" => "http://localhost:80" <> path,
+      "id" => "http://localhost:4003/" <> path,
       "protocol" => "http://iiif.io/api/image"
     } =
       get(

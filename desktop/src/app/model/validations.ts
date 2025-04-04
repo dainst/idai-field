@@ -1,7 +1,8 @@
 import { is, isArray, isString, and, isObject, to } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
-    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite } from 'idai-field-core';
+    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite, 
+    DateSpecification } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -49,18 +50,16 @@ export module Validations {
                                             previousDocumentVersion?: Document) {
 
         const previousInvalidFields: string[] = previousDocumentVersion
-            ?  Validations.validateDatesOrUrls(
+            ?  Validations.validateUrls(
                 previousDocumentVersion.resource,
                 projectConfiguration,
-                validateUrl,
-                Field.InputType.URL
+                validateUrl
             ) : [];
 
-        const invalidFields: string[] = Validations.validateDatesOrUrls(
+        const invalidFields: string[] = Validations.validateUrls(
             document.resource,
             projectConfiguration,
-            validateUrl,
-            Field.InputType.URL
+            validateUrl
         );
 
         const newInvalidFields: string[] = getNewInvalidFields(
@@ -82,19 +81,15 @@ export module Validations {
                                              previousDocumentVersion?: Document) {
 
         const previousInvalidFields: string[] = previousDocumentVersion
-            ?  Validations.validateDatesOrUrls(
+            ?  Validations.validateDates(
                 previousDocumentVersion.resource,
-                projectConfiguration,
-                (value: string) => !isNaN(parseDate(value)?.getTime()),
-                Field.InputType.DATE
+                projectConfiguration
             )
             : [];
 
-        const invalidFields: string[] = Validations.validateDatesOrUrls(
+        const invalidFields: string[] = Validations.validateDates(
             document.resource,
-            projectConfiguration,
-            (value: string) => !isNaN(parseDate(value)?.getTime()),
-            Field.InputType.DATE
+            projectConfiguration
         );
 
         const newInvalidFields: string[] = getNewInvalidFields(
@@ -505,20 +500,39 @@ export module Validations {
     }
 
 
-    export function validateDatesOrUrls(resource: Resource|NewResource,
-                                        projectConfiguration: ProjectConfiguration,
-                                        validationFunction: (value: string) => boolean,
-                                        inputType: string): string[] {
+    export function validateUrls(resource: Resource|NewResource,
+                                 projectConfiguration: ProjectConfiguration,
+                                 validationFunction: (value: string) => boolean): string[] {
 
         const projectFields: Array<Field> =
             CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
-            return fieldDefinition.inputType === inputType;
+            return fieldDefinition.inputType === Field.InputType.URL;
         }).forEach(fieldDefinition => {
             const value = resource[fieldDefinition.name];
             if (value && !validationFunction(value)) invalidFields.push(fieldDefinition.name);
+        });
+
+        return invalidFields;
+    }
+
+
+    export function validateDates(resource: Resource|NewResource,
+                                  projectConfiguration: ProjectConfiguration): string[] {
+
+        const category: CategoryForm = projectConfiguration.getCategory(resource.category);
+        const projectFields: Array<Field> = CategoryForm.getFields(category);
+        const invalidFields: string[] = [];
+
+        projectFields.filter(fieldDefinition => {
+            return fieldDefinition.inputType === Field.InputType.DATE;
+        }).forEach(fieldDefinition => {
+            const value = resource[fieldDefinition.name];
+            if (value && !DateSpecification.validate(value, fieldDefinition)) {
+                invalidFields.push(fieldDefinition.name);
+            }
         });
 
         return invalidFields;

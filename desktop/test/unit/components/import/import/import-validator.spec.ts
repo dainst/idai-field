@@ -1,4 +1,4 @@
-import { Forest, Field, ProjectConfiguration, Document } from 'idai-field-core';
+import { Forest, Field, ProjectConfiguration, Document, DateConfiguration } from 'idai-field-core';
 import { ImportValidator } from '../../../../../src/app/components/import/import/process/import-validator';
 import { ValidationErrors } from '../../../../../src/app/model/validation-errors';
 import { ImportErrors } from '../../../../../src/app/components/import/import/import-errors';
@@ -24,8 +24,41 @@ describe('ImportValidator', () => {
                     { name: 'number2', label: 'number2', inputType: 'float' },
                     { name: 'url1', label: 'url1', inputType: 'url' },
                     { name: 'url2', label: 'url2', inputType: 'url' },
-                    { name: 'date1', label: 'date1', inputType: 'date' },
-                    { name: 'date2', label: 'date2', inputType: 'date' },
+                    {
+                        name: 'date1', label: 'date1', inputType: 'date',
+                        dateConfiguration: {
+                            dataType: DateConfiguration.DataType.OPTIONAL,
+                            inputMode: DateConfiguration.InputMode.OPTIONAL
+                        }
+                    },
+                    {
+                        name: 'date2', label: 'date2', inputType: 'date',
+                        dateConfiguration: {
+                            dataType: DateConfiguration.DataType.OPTIONAL,
+                            inputMode: DateConfiguration.InputMode.SINGLE
+                        }
+                    },
+                    {
+                        name: 'date3', label: 'date3', inputType: 'date',
+                        dateConfiguration: {
+                            dataType: DateConfiguration.DataType.OPTIONAL,
+                            inputMode: DateConfiguration.InputMode.RANGE
+                        }
+                    },
+                    {
+                        name: 'date4', label: 'date4', inputType: 'date',
+                        dateConfiguration: {
+                            dataType: DateConfiguration.DataType.DATE,
+                            inputMode: DateConfiguration.InputMode.OPTIONAL
+                        }
+                    },
+                    {
+                        name: 'date5', label: 'date5', inputType: 'date',
+                        dateConfiguration: {
+                            dataType: DateConfiguration.DataType.DATE_TIME,
+                            inputMode: DateConfiguration.InputMode.OPTIONAL
+                        }
+                    },
                     { name: 'ddr', label: 'DropdownRange', inputType: Field.InputType.DROPDOWNRANGE },
                     { name: 'ddr2', label: 'DropdownRange2', inputType: Field.InputType.DROPDOWNRANGE }
                 ]}]
@@ -405,6 +438,90 @@ describe('ImportValidator', () => {
             throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_DATES, 'T', 'date1, date2']);
+        }
+    });
+
+
+    test('invalid date field: range not allowed', async () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                date2: { value: '10.04.2020', endValue: '11.04.2020', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED, 'T', 'date2']);
+        }
+    });
+
+
+    test('invalid date field: single not allowed', async () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                date3: { value: '10.04.2020', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED, 'T', 'date3']);
+        }
+    });
+
+
+    test('invalid date field: time not allowed', async () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                date4: { value: '10.04.2020 10:11', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED, 'T', 'date4']);
+        }
+    });
+
+
+    test('invalid date field: time not set', async () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                date5: { value: '10.04.2020', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_DATE_TIME_NOT_SET, 'T', 'date5']);
         }
     });
 

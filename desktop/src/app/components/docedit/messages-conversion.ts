@@ -30,9 +30,15 @@ export module MessagesConversion {
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
 
         if (msg === ValidationErrors.MISSING_PROPERTY) {
-            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
-            msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
-            msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTIES;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            }
         }
 
         if (msg === ValidationErrors.MAX_CHARACTERS_EXCEEDED) {

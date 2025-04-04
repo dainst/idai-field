@@ -309,6 +309,8 @@ export default getDocumentViewMapHook = () => {
                 this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
             }
+
+            this.updateZIndices();
         },
         setDocumentLayers(projectName, tileLayersInfo) {
 
@@ -336,8 +338,20 @@ export default getDocumentViewMapHook = () => {
 
                 this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
                 this.map.addLayer(layer);
+
+            }
+            this.updateZIndices();
+        },
+
+        updateZIndices() {
+            const layerCount = 0 + this.documentTileLayers.length + this.projectTileLayers.length
+            const combined = this.documentTileLayers.concat(this.projectTileLayers);
+
+            for (let i = 0; i < layerCount; i++) {
+                combined[i].setZIndex(layerCount - i - 200);
             }
         },
+
         async setMapFeatures(parentFeatures, documentFeature, childrenFeatures) {
             this.docId = documentFeature.properties.uuid;
 

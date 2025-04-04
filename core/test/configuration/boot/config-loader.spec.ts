@@ -553,6 +553,60 @@ describe('ConfigLoader', () => {
     });
 
 
+    it('preprocess - apply mandatory setting', async done => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'input', required: true },
+                    field2: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            }
+        }
+        
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'text', mandatory: false },    // Not allowed, expected to be ignored
+                    field2: { inputType: 'text', mandatory: true },
+                    customField: { inputType: 'text', mandatory: true }
+                },
+                groups: [{ name: Groups.STEM, fields: ['field1', 'field2', 'customField'] }]
+            }
+        };
+
+        applyConfig({});
+
+        let pconf;
+        try {
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
+                [],
+                {},
+                getConfigurationDocument(customForms)
+            );
+
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'field1')
+                .mandatory).toBe(true);
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'field2')
+                .mandatory).toBe(true);
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'customField')
+                .mandatory).toBe(true);
+
+        } catch(err) {
+            fail(err);
+        }
+
+        done();
+    });
+
+
     it('apply groups configuration', async done => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

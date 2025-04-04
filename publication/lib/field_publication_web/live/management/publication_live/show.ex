@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.Management.PublicationLive.Show do
   alias FieldPublication.Processing.{
     MapTiles,
-    Image
+    WebImage
   }
 
   alias FieldPublication.{
@@ -374,7 +374,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
       {
         :data_state_evaluation,
         %{
-          images: Image.evaluate_web_images_state(publication),
+          images: WebImage.evaluate_web_images_state(publication),
           tiles: MapTiles.evaluate_state(publication),
           search_index: Publications.Search.evaluate_active_index_state(publication)
         }

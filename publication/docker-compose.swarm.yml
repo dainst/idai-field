@@ -22,16 +22,6 @@ services:
     networks:
       - default
 
-  cantaloupe:
-    image: "ghcr.io/dainst/field_publication_cantaloupe:1.1.0"
-    environment:
-      LOG_APPLICATION_LEVEL: warn
-      LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
-    volumes:
-      - "file-data:/files"
-    networks:
-      - default
-
   couchdb:
     image: couchdb:3.3.2
     environment:

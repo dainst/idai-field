@@ -526,6 +526,29 @@ describe('ImportValidator', () => {
     });
 
 
+    test('invalid date field: end date before beginning date', async () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                date1: { value: '10.04.2020', endValue: '09.04.2020', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE, 'T', 'date1']
+            );
+        }
+    });
+
+
     test('invalid map layer relations', async () => {
 
         const doc = {

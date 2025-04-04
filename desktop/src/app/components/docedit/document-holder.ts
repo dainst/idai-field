@@ -142,7 +142,6 @@ export class DocumentHolder {
             this.oldVersion);
         Validations.assertCorrectnessOfLiteratureValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);
-        Validations.assertCorrectnessOfBeginningAndEndDates(this.clonedDocument);
         await this.validator.assertGeometryIsValid(this.clonedDocument);
     }
 

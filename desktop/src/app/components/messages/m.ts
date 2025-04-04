@@ -101,6 +101,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.singleNotAllowed';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.timeNotAllowed';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET = 'M.Import.ValidationErrors.invalidDate.timeNotSet';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.invalidDate.endDateBeforeBeginningDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
@@ -112,7 +113,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidMapLayerRelationTargets';
     public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
-    public static IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.endDateBeforeBeginningDate';
     public static IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED = 'M.Import.ValidationErrors.resourceLimitExceeded';
 
     // Import Package - ImportErrors
@@ -194,7 +194,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
-    public static DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.endDateBeforeBeginningDate';
     public static DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'docedit.validation.error.maxCharactersExceeded';
 
     // Images Package
@@ -629,6 +628,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.validation.error.invalidDate.timeNotSet:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.`,
             level: 'danger'
         };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: $localize `:@@messages.import.validation.error.endDateBeforeBeginningDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.`,
+            level: 'danger'
+        };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
             content: $localize `:@@messages.import.validation.error.invalidDatingValue:Ungültige Datierung im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
@@ -667,10 +670,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS] = {
             content: $localize `:@@messages.import.validation.error.invalidMapLayerRelationTargets:Die Relation \'hasDefaultMapLayer\' einer Ressource der Kategorie \'[0]\' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation \'hasMapLayer\' verwiesen wird.`,
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
-            content: $localize `:@@messages.import.validation.error.endDateBeforeBeginningDate:Das Enddatum einer Ressource der Kategorie \'[0]\' liegt vor dem Startdatum.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
@@ -879,10 +878,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {
             content: $localize `:@@messages.docedit.validation.error.noRecordedInTarget:Die Zielressource [0] der Relation \'Aufgenommen in Maßnahme\' konnte nicht gefunden werden.`,
-            level: 'danger'
-        };
-        this.msgs[M.DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
-            content: $localize `:@@messages.docedit.validation.error.endDateBeforeBeginningDate:Das angegebene Enddatum liegt vor dem Startdatum. Bitte prüfen Sie die eingetragenen Daten.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_SUCCESS_IMAGES_UPLOADED] = {

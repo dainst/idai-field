@@ -256,22 +256,6 @@ export module Validations {
     }
 
 
-    export function assertCorrectnessOfBeginningAndEndDates(document: Document|NewDocument) {
-
-        if (!document.resource.beginningDate || !document.resource.endDate) return;
-
-        const beginningDate: Date = parseDate(document.resource.beginningDate);
-        const endDate: Date = parseDate(document.resource.endDate, undefined, true);
-
-        if (beginningDate && endDate && beginningDate > endDate) {
-            throw [
-                ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE,
-                document.resource.category
-            ];
-        }
-    }
-
-
     /**
      * @throws [MISSING_PROPERTY]
      */
@@ -726,6 +710,8 @@ export module Validations {
                 return ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED;
             case DateValidationResult.TIME_NOT_SET:
                 return ValidationErrors.INVALID_DATE_TIME_NOT_SET;
+            case DateValidationResult.END_DATE_BEFORE_BEGINNING_DATE:
+                return ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE
         }
     }
 }

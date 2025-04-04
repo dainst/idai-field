@@ -50,7 +50,6 @@ export module MessagesConversion {
         if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
         if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_MISSING_PROPERTY;
         if (msg === ValidationErrors.MAX_CHARACTERS_EXCEEDED) replacement = M.IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED;
-        if (msg === ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE) replacement = M.IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE;
         if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
         if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
@@ -61,6 +60,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED;
         if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED;
         if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_SET) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET;
+        if (msg === ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE;
 
         if (msg === ImportErrors.INVALID_CATEGORY) replacement = M.IMPORT_VALIDATION_INVALID_CATEGORY;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;

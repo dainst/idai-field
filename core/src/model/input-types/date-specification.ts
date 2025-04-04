@@ -10,7 +10,8 @@ export type DateValidationResult = 'valid'
     |'rangeNotAllowed'
     |'singleNotAllowed'
     |'timeNotAllowed'
-    |'timeNotSet';
+    |'timeNotSet'
+    |'endDateBeforeBeginningDate';
 
 
 export module DateValidationResult {
@@ -21,6 +22,7 @@ export module DateValidationResult {
     export const SINGLE_NOT_ALLOWED = 'singleNotAllowed';
     export const TIME_NOT_ALLOWED = 'timeNotAllowed';
     export const TIME_NOT_SET = 'timeNotSet';
+    export const END_DATE_BEFORE_BEGINNING_DATE = 'endDateBeforeBeginningDate';
 }
 
 
@@ -65,6 +67,10 @@ export module DateSpecification {
         if (field.dateConfiguration.inputMode === DateConfiguration.InputMode.RANGE
                 && (!date.isRange || date.endValue == undefined)) {
             return DateValidationResult.SINGLE_NOT_ALLOWED;
+        }
+
+        if (!validateRange(date.value, date.endValue)) {
+            return DateValidationResult.END_DATE_BEFORE_BEGINNING_DATE;
         }
 
         return DateValidationResult.VALID;
@@ -139,5 +145,16 @@ export module DateSpecification {
         }
 
         return DateValidationResult.VALID;
+    }
+
+
+    function validateRange(value: string, endValue: string): boolean {
+
+        if (!value || !endValue) return true;
+
+        const beginningDate: Date = parseDate(value, 'UTC');
+        const endDate: Date = parseDate(endValue, 'UTC', true);
+
+        return beginningDate <= endDate;
     }
 }

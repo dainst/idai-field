@@ -319,7 +319,7 @@ export class DateValueComponent implements OnInit {
     }
 
 
-    private onScroll = (datePicker: NgbInputDatepicker) => (event: MouseEvent) => {
+    private onScroll = (datePicker: NgbInputDatepicker) => _ => {
 
         if (!this.scrollListenerInitialized) {
             this.scrollListenerInitialized = true;

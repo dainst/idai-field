@@ -1,4 +1,4 @@
-import { Field, ProjectConfiguration, Forest } from 'idai-field-core';
+import { Field, ProjectConfiguration, Forest, DateConfiguration } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validations } from '../../../../src/app/model/validations';
 
@@ -58,6 +58,55 @@ describe('Validations', () => {
                         { name: 'period2', label: 'period2', inputType: Field.InputType.DROPDOWNRANGE },
                         { name: 'period3', label: 'period3', inputType: Field.InputType.DROPDOWNRANGE },
                         { name: 'period4', label: 'period4', inputType: Field.InputType.DROPDOWNRANGE },
+                        {
+                            name: 'date1', label: 'date1', inputType: 'date',
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.OPTIONAL,
+                                inputMode: DateConfiguration.InputMode.OPTIONAL
+                            }
+                        },
+                        {
+                            name: 'date2', label: 'date2', inputType: 'date',
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.OPTIONAL,
+                                inputMode: DateConfiguration.InputMode.SINGLE
+                            }
+                        },
+                        {
+                            name: 'date3', label: 'date3', inputType: 'date',
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.OPTIONAL,
+                                inputMode: DateConfiguration.InputMode.RANGE
+                            }
+                        },
+                        {
+                            name: 'date4', label: 'date4', inputType: 'date',
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.DATE,
+                                inputMode: DateConfiguration.InputMode.OPTIONAL
+                            }
+                        },
+                        {
+                            name: 'date5', label: 'date5', inputType: 'date',
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.DATE_TIME,
+                                inputMode: DateConfiguration.InputMode.OPTIONAL
+                            }
+                        },
+                        {
+                            name: 'date6', label: 'date6', inputType: 'date',
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.OPTIONAL,
+                                inputMode: DateConfiguration.InputMode.OPTIONAL
+                            }
+                        },
+                        {
+                            name: 'date7', label: 'date7', inputType: 'date',
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.OPTIONAL,
+                                inputMode: DateConfiguration.InputMode.OPTIONAL
+                            }
+                        },
                         {
                             name: 'composite1', label: 'composite1', inputType: 'composite',
                             subfields: [
@@ -653,6 +702,175 @@ describe('Validations', () => {
                     ValidationErrors.INVALID_OPTIONALRANGE_VALUES,
                     'T',
                     'period3, period4'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                // Correct range date
+                date1: { value: '01.10.2022', endValue: '02.10.2022', isRange: true },
+                // Correct single date
+                date2: { value: '01.10.2022 10:11', isRange: false },
+                // No object
+                date3: 'abc',
+                // End value for non-range date
+                date4: { endValue: '01.10.2022', isRange: false },
+                // Empty object
+                date5: {},
+                // NaN value
+                date6: { value: 'abc', isRange: false },
+                // NaN end value
+                date7: { value: '01.10.2022', endValue: 'abc', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATES,
+                    'T',
+                    'date3, date4, date5, date6, date7'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: range not allowed', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date2: { value: '10.04.2020', endValue: '11.04.2020', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED,
+                    'T',
+                    'date2'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: single not allowed', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date3: { value: '10.04.2020', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED,
+                    'T',
+                    'date3'
+                ]
+            );
+        }
+    });
+
+    
+    test('should report invalid date fields: time not allowed', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date4: { value: '10.04.2020 10:11', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED,
+                    'T',
+                    'date4'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: time not set', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date5: { value: '10.04.2020', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_TIME_NOT_SET,
+                    'T',
+                    'date5'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: end date before beginning date', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date1: { value: '10.04.2020', endValue: '09.04.2020', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE,
+                    'T',
+                    'date1'
                 ]
             );
         }

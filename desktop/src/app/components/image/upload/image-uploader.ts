@@ -310,7 +310,7 @@ export class ImageUploader {
 
         if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
             document.resource.date = formatDate(
-                extendedMetadata.date, undefined, getSystemTimezone(), 'none'
+                extendedMetadata.date, undefined, getSystemTimezone(), 'date'
             );
         }
         if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {

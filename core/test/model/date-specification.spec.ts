@@ -158,4 +158,20 @@ const translateGerman = (term: string): string => germanTranslations[term];
         );
         expect(label).toBe('May 1st, 2020 10:20 AM to\nMay 2nd, 2020 4:30 PM\n(Europe/Berlin)');
     });
+
+
+    it('generate label for incomplete date', () => {
+
+        let label: string = DateSpecification.generateLabel(
+            { value: '05.2020', isRange: false },
+            'UTC', '.', 'en', translateEnglish
+        );
+        expect(label).toBe('May 2020');
+
+        label = DateSpecification.generateLabel(
+            { value: '2020', isRange: false },
+            'UTC', '.', 'en', translateEnglish
+        );
+        expect(label).toBe('2020');
+    });
 });

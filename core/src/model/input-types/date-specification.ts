@@ -1,6 +1,6 @@
 import { isObject } from 'tsfun';
 import { parseDate } from '../../tools/parse-date';
-import { formatDate } from '../../tools/format-date';
+import { DateFormat, formatDate } from '../../tools/format-date';
 import { Field } from '../configuration/field';
 import { DateConfiguration } from '../configuration/date-configuration';
 
@@ -119,12 +119,26 @@ export module DateSpecification {
         
         const hasTimeValue: boolean = value.includes(':');
         const date: Date = parseDate(value);
-        let formattedDate: string = formatDate(date, locale, timezone, hasTimeValue ? 'short' : 'none');
+        let formattedDate: string = formatDate(date, locale, timezone, getFormat(value, hasTimeValue));
 
         // If the time suffix is set to '.', this indicates that no time suffix should be used
         if (hasTimeValue && timeSuffix !== '.') formattedDate = formattedDate + ' ' + timeSuffix;
 
         return formattedDate;
+    }
+
+
+    function getFormat(value: string, hasTimeValue: boolean): DateFormat {
+
+        if (hasTimeValue) {
+            return 'shortTime';
+        } else if (value.split('.').length === 3) {
+            return 'date';
+        } else if (value.split('.').length === 2) {
+            return 'month';
+        } else {
+            return 'year';
+        }
     }
 
 

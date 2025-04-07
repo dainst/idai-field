@@ -178,13 +178,13 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,
                 ({ project, project_tile_layers }) => {
-                    this.setProjectLayers(project, project_tile_layers)
+                    this.setTileLayers(project, project_tile_layers, "project")
                 }
             )
             this.handleEvent(
                 `document-map-set-document-layers-${this.el.id}`,
                 ({ project, document_tile_layers }) => {
-                    this.setDocumentLayers(project, document_tile_layers)
+                    this.setTileLayers(project, document_tile_layers, "document")
                 }
             )
             this.handleEvent(
@@ -281,46 +281,14 @@ export default getDocumentViewMapHook = () => {
                 })
             })
         },
-        setProjectLayers(projectName, tileLayersInfo) {
-
-            this.projectTileLayerExtent = createEmpty();
-            this.projectTileLayers = [];
-
-            for (let info of tileLayersInfo) {
-
-                const layer = createTileLayer(info, projectName)
-                this.projectTileLayers.push(layer);
-
-                const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
-
-                let visible = null;
-
-                if (preference == "true") {
-                    visible = true
-                } else if (preference == "false") {
-                    visible = false;
-                }
-
-                if (visible != null) {
-                    layer.setVisible(visible)
-                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
-                }
-
-                this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
-                this.map.addLayer(layer);
-            }
-
-            this.updateZIndices();
-        },
-        setDocumentLayers(projectName, tileLayersInfo) {
-
-            this.documentTileLayerExtent = createEmpty();
-            this.documentTileLayers = [];
+        setTileLayers(projectName, tileLayersInfo, groupName) {
+            let layerGroup = [];
+            let layerGroupExtent = createEmpty();
 
             for (let info of tileLayersInfo) {
                 const layer = createTileLayer(info, projectName)
 
-                this.documentTileLayers.push(layer);
+                layerGroup.push(layer);
 
                 const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
                 let visible = null;
@@ -333,13 +301,21 @@ export default getDocumentViewMapHook = () => {
 
                 if (visible != null) {
                     layer.setVisible(visible)
-                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
+                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: groupName, value: visible })
                 }
 
-                this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
+                layerGroupExtent = extend(layerGroupExtent, layer.getExtent());
                 this.map.addLayer(layer);
-
             }
+
+            if (groupName == "project") {
+                this.projectTileLayers = layerGroup;
+                this.projectTileLayerExtent = layerGroupExtent;
+            } else if (groupName == "document") {
+                this.documentTileLayers = layerGroup;
+                this.projectTileLayerExtent = layerGroupExtent;
+            }
+
             this.updateZIndices();
         },
 

@@ -136,7 +136,7 @@ export class AppComponent {
             'toDate', $localize `:@@util.date.to:bis `
         );
         this.utilTranslations.addTranslation(
-            'unspecifiedDate', $localize `:@@util.date.unspecified:Unbekanntes Datum`
+            'unspecifiedDate', $localize `:@@util.date.unspecified:Unbestimmtes Datum`
         );
         this.utilTranslations.addTranslation(
             'true', $localize `:@@boolean.yes:Ja`

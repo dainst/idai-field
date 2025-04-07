@@ -20,7 +20,7 @@ export function parseDate(dateString: string, timezone: string = 'UTC',
         if (isNaN(date.getTime())) continue;
         if (latestPossibleDate) setToLatestPossibleDate(date, format);
 
-        return convertToUTC(date, format, timezone);
+        return fromZonedTime(date, timezone);
     }
 
     return undefined;
@@ -32,12 +32,4 @@ function setToLatestPossibleDate(date: Date, format: string) {
     const segmentsCount: number = format.split('.').length;
     if (segmentsCount === 1) date.setMonth(11);
     if (segmentsCount < 3) date.setDate(31);
-}
-
-
-function convertToUTC(date: Date, format: string, timezone: string): Date {
-
-    if (!format.includes('HH:mm')) return date;
-    
-    return fromZonedTime(date, timezone);
 }

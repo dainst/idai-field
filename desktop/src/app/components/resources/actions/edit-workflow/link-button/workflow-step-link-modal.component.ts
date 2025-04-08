@@ -136,7 +136,7 @@ export class WorkflowStepLinkModalComponent {
         const targetIds: string[] = this.selectedDocument.resource.relations
             ?.[Relation.Workflow.IS_EXECUTION_TARGET_OF]
             ?.filter(targetId => !this.baseDocuments.find(document => {
-                return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF].includes(targetId);
+                return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF]?.includes(targetId);
             }));
 
         const workflowSteps: Array<Document> = targetIds?.length

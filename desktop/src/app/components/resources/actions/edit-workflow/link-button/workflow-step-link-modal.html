@@ -13,7 +13,7 @@
             <document-teaser [document]="selectedDocument"></document-teaser>
             <span class="mdi mdi-close-circle"></span>
         </div>
-        <div *ngIf="availableWorkflowSteps.length">
+        <div *ngIf="availableWorkflowSteps?.length">
             <p i18n="@@resources.workflowStepLinkModal.chooseWorkflowStepToLink">
                 Zu verknüpfenden Arbeitsgang wählen:
             </p>
@@ -27,7 +27,7 @@
                 </li>
             </ul>
         </div>
-        <div *ngIf="!availableWorkflowSteps.length"
+        <div *ngIf="!availableWorkflowSteps?.length"
              id="no-available-workflow-steps-info"
              i18n="@@resources.workflowStepLinkModal.noAvailableWorkflowSteps">
             Keine verknüpfbaren Arbeitsschritte gefunden.

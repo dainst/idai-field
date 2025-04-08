@@ -69,12 +69,19 @@ export class WorkflowEditorModalComponent {
 
     public async createWorkflowStep(category: CategoryForm) {
 
-        const newWorkflowStep: Document = await this.editWorkflowStep(
+        const newWorkflowStep: Document = await this.openWorkflowStepEditorModal(
             WorkflowEditorModalComponent.buildWorkflowStepDocument(category) as Document
         );
         if (!newWorkflowStep) return;
 
         await this.linkWorkflowStep(newWorkflowStep);
+    }
+
+
+    public async editWorkflowStep(workflowStep: Document) {
+
+        const editedWorkflowStep: Document = await this.openWorkflowStepEditorModal(workflowStep);
+        if (editedWorkflowStep) await this.updateWorkflowSteps();
     }
 
 
@@ -99,30 +106,6 @@ export class WorkflowEditorModalComponent {
             await modalRef.result;
             await this.relationsManager.remove(workflowStep);
             await this.updateWorkflowSteps();
-        } catch(err) {
-            if (err !== 'cancel') console.error(err);
-        } finally {
-            AngularUtility.blurActiveElement();
-            this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
-        }
-    }
-
-
-    /**
-     * @returns edited document if changes have been saved, undefined if the modal has been canceled
-     */
-    public async editWorkflowStep(workflowStep: Document): Promise<Document|undefined> {
-    
-        this.menus.setContext(MenuContext.DOCEDIT);
-
-        const modalRef: NgbModalRef = this.modalService.open(
-            DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
-        );
-        modalRef.componentInstance.setDocument(workflowStep);
-
-        try {
-            return (await modalRef.result).document;
         } catch(err) {
             if (err !== 'cancel') console.error(err);
         } finally {
@@ -167,6 +150,30 @@ export class WorkflowEditorModalComponent {
             (term: string) => this.utilTranslations.getTranslation(term),
             false
         );
+    }
+
+
+    /**
+     * @returns edited document if changes have been saved, undefined if the modal has been canceled
+     */
+    private async openWorkflowStepEditorModal(workflowStep: Document): Promise<Document|undefined> {
+    
+        this.menus.setContext(MenuContext.DOCEDIT);
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
+        );
+        modalRef.componentInstance.setDocument(workflowStep);
+
+        try {
+            return (await modalRef.result).document;
+        } catch(err) {
+            if (err !== 'cancel') console.error(err);
+        } finally {
+            AngularUtility.blurActiveElement();
+            this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
+        }
     }
 
 

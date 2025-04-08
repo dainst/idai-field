@@ -6,8 +6,8 @@ form-field-date {
       width: 100%;
       height: 100%;
       border-radius: 7px;
-      text-decoration: none;
-      color: black !important;
+      border-color: #7998cb !important;
+      font-size: 13px !important;
   
       .range-button-label {
         position: relative;
@@ -23,6 +23,11 @@ form-field-date {
 
       &.as-label {
         pointer-events: none;
+      }
+
+      &:hover,
+      &:active {
+        background-color: initial !important;
       }
     }
 

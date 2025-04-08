@@ -2,7 +2,7 @@
      [class.with-range-button]="isRangeSupported()"
      [class.range-mode]="rangeMode">
     <button *ngIf="isRangeSupported()"
-            class="btn btn-link range-button"
+            class="btn btn-outline-primary range-button"
             [class.as-label]="!isOptionalRange()"
             ngbTooltip="{{getRangeButtonTooltip()}}"
             placement="top"

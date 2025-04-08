@@ -26,8 +26,8 @@ describe('parseDate', () => {
 
     it('parse time', () => {
         
-        expect(parseDate('01.02.2025 14:30').toLocaleTimeString('de')).toEqual('15:30:00'); // "Europe/London" (default)
-        expect(parseDate('01.02.2025 00:00').toLocaleTimeString('de')).toEqual('01:00:00'); // "Europe/London" (default)
+        expect(parseDate('01.02.2025 14:30').toLocaleTimeString('de')).toEqual('15:30:00'); // "UTC" (default)
+        expect(parseDate('01.02.2025 00:00').toLocaleTimeString('de')).toEqual('01:00:00'); // "UTC" (default)
         expect(parseDate('01.02.2025 14:30', 'Europe/Berlin').toLocaleTimeString('de')).toEqual('14:30:00');
         expect(parseDate('01.02.2025 00:00', 'Europe/Berlin').toLocaleTimeString('de')).toEqual('00:00:00');
         expect(parseDate('01.02.2025 14:30', 'Africa/Cairo').toLocaleTimeString('de')).toEqual('13:30:00');
@@ -51,8 +51,17 @@ describe('parseDate', () => {
 
     it('parse dates as latest possible date', () => {
 
+        expect(parseDate('01.10.2021 14:50', undefined, true)?.toLocaleDateString('de')).toEqual('1.10.2021');
+        expect(parseDate('01.10.2021 14:50', undefined, true)?.toLocaleTimeString('de')).toEqual('16:50:00');
+
         expect(parseDate('10.2021', undefined, true)?.toLocaleDateString('de')).toEqual('31.10.2021');
+        expect(parseDate('10.2021', undefined, true)?.toLocaleTimeString('de')).toEqual('23:59:00');
+
+        expect(parseDate('11.2021', undefined, true)?.toLocaleDateString('de')).toEqual('30.11.2021');
+        expect(parseDate('11.2021', undefined, true)?.toLocaleTimeString('de')).toEqual('23:59:00');
+
         expect(parseDate('2021', undefined, true)?.toLocaleDateString('de')).toEqual('31.12.2021');
+        expect(parseDate('2021', undefined, true)?.toLocaleTimeString('de')).toEqual('23:59:00');
     });
 
 

@@ -44,7 +44,7 @@ export class WorkflowRelationsComponent implements OnChanges {
 
     public getAdditionalCategoriesCount(): number {
 
-        return this.categoryInfos.slice(3).reduce((result, info) => {
+        return this.categoryInfos.slice(2).reduce((result, info) => {
             return result + info.count;
         }, 0);
     }

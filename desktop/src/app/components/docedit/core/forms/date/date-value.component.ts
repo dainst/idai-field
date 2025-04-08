@@ -2,10 +2,10 @@ import { ChangeDetectorRef, Component, ElementRef, Input, Output, ViewChild, Eve
     OnInit } from '@angular/core';
 import { NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { toZonedTime } from 'date-fns-tz';
-import { isString } from 'tsfun';
 import { DateConfiguration, Field, formatDate, parseDate } from 'idai-field-core';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { TimeSpecification } from './time-input.component';
+import { DateParserFormatter } from './date-parser-formatter';
 
 
 @Component({
@@ -39,7 +39,8 @@ export class DateValueComponent implements OnInit {
     private originalDateStruct: NgbDateStruct;
 
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private changeDetectorRef: ChangeDetectorRef,
+                private dateParserFormatter: DateParserFormatter) {}
 
 
     public isDatePickerVisible = () => this.value === undefined;
@@ -107,6 +108,7 @@ export class DateValueComponent implements OnInit {
     public selectTimezone(timezone: string) {
 
         this.selectedTimezone = timezone;
+        this.dateParserFormatter.setSelectedTimezone(timezone);
         this.update();
     }
 
@@ -117,7 +119,6 @@ export class DateValueComponent implements OnInit {
         this.originalValue = this.value;
         this.originalDateStruct = this.dateStruct;
         this.value = undefined;
-        this.dateStruct = {} as NgbDateStruct;
 
         await AngularUtility.refresh();
 
@@ -140,9 +141,15 @@ export class DateValueComponent implements OnInit {
     }
 
 
-    public toggleDatePicker() {
+    public openDatePicker() {
 
-        console.log('TOGGLE!');
+        this.datePicker.open();
+        this.focusInputField();
+        this.listenToScrollEvents();
+    }
+
+
+    public toggleDatePicker() {
 
         this.datePicker.toggle();
         this.focusInputField();
@@ -161,20 +168,7 @@ export class DateValueComponent implements OnInit {
 
     public getFormattedDate(): string|undefined {
 
-        if (!this.dateStruct) return undefined;
-
-        if (isString(this.dateStruct)) {
-            return this.dateStruct;
-        } else {
-            let stringDate = '';
-            stringDate += DateValueComponent.isNumber(this.dateStruct.day)
-                ? DateValueComponent.padNumber(this.dateStruct.day) + '.'
-                : '';
-            stringDate += DateValueComponent.isNumber(this.dateStruct.month)
-                ? DateValueComponent.padNumber(this.dateStruct.month) + '.'
-                : '';
-            return stringDate + this.dateStruct.year;
-        }
+        return this.dateParserFormatter.format(this.dateStruct);
     }
 
 
@@ -216,6 +210,7 @@ export class DateValueComponent implements OnInit {
     private setSystemTimezone() {
 
         this.selectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        this.dateParserFormatter.setSelectedTimezone(this.selectedTimezone);
     }
 
 
@@ -230,23 +225,7 @@ export class DateValueComponent implements OnInit {
 
     private updateDateStruct() {
 
-        if (!this.value) {
-            this.dateStruct = {} as NgbDateStruct;
-            return;
-        }
-
-        const parsedDate: Date = toZonedTime(
-            parseDate(this.value),
-            this.selectedTimezone
-        );
-
-        const dateSegmentsCount: number = this.value.split('.').length;
-
-        this.dateStruct = {
-            year: parsedDate.getFullYear(),
-            month: dateSegmentsCount > 1 ? parsedDate.getMonth() + 1 : undefined,
-            day: dateSegmentsCount > 2 ? parsedDate.getDate() : undefined
-        };
+        this.dateStruct = this.dateParserFormatter.parse(this.value);
     }
 
 

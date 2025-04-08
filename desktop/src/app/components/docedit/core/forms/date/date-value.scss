@@ -13,6 +13,11 @@ date-value {
 
   .date-picker-input {
     width: 100px;
+    padding-left: 16px;
+
+    &::placeholder {
+      font-size: 12px;
+    }
   }
 
   .date-label {

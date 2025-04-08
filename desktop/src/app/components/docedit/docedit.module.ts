@@ -50,6 +50,7 @@ import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input
 import { LiteratureEntryModalComponent } from './core/forms/array-field/literature-entry-modal.component';
 import { DateValueComponent } from './core/forms/date/date-value.component';
 import { TimeInputComponent } from './core/forms/date/time-input.component';
+import { DateParserFormatter } from './core/forms/date/date-parser-formatter';
 
 
 @NgModule({
@@ -60,7 +61,9 @@ import { TimeInputComponent } from './core/forms/date/time-input.component';
                 return new DocumentHolder(projectConfiguration, relationsManager, validator, datastore, idGenerator);
             },
             deps: [ProjectConfiguration, RelationsManager, Validator, Datastore, IdGenerator]
-        }
+        },
+        { provide: NgbDateParserFormatter, useClass: DateParserFormatter },
+        DateParserFormatter
     ],
     imports: [
         BrowserModule,

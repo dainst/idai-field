@@ -1,57 +1,63 @@
 form-field-date {
-  display: flex;
+  select {
+    margin-bottom: 10px !important;
+  }
 
-  .button-container {
-    .range-button {
-      width: 100%;
-      height: 100%;
-      border-radius: 7px;
-      border-color: #7998cb !important;
-      font-size: 13px !important;
-  
-      .range-button-label {
-        position: relative;
-        bottom: 1px;
+  .date-container {
+    display: flex;
+
+    .button-container {
+      .range-button {
         width: 100%;
-        font-size: 14px;
-        user-select: none;
-  
-        &:not(:first-child) {
-          margin-top: 19px;
+        height: 100%;
+        border-radius: 7px;
+        border-color: #7998cb !important;
+        font-size: 13px !important;
+    
+        .range-button-label {
+          position: relative;
+          bottom: 1px;
+          width: 100%;
+          font-size: 14px;
+          user-select: none;
+    
+          &:not(:first-child) {
+            margin-top: 19px;
+          }
+        }
+
+        &.as-label {
+          border: none;
+          color: black;
+          background-color: transparent;
+          pointer-events: none;
+        }
+
+        &:hover,
+        &:active {
+          background-color: initial !important;
         }
       }
 
-      &.as-label {
-        border: none;
-        color: black;
-        background-color: transparent;
-        pointer-events: none;
-      }
+      &.with-range-button {
+        height: 33px;
 
-      &:hover,
-      &:active {
-        background-color: initial !important;
+        &.range-mode {
+          height: 73px;
+        }
       }
     }
 
-    &.with-range-button {
-      height: 33px;
+    .date-values-container {
+      flex-grow: 1;
 
-      &.range-mode {
-        height: 73px;
+      date-value:not(:first-child) {
+        margin-top: 7px;
       }
-    }
-  }
 
-  .date-values-container {
-    flex-grow: 1;
-
-    date-value:not(:first-child) {
-      margin-top: 7px;
-    }
-
-    &.with-range-button {
-      margin-left: 10px;
+      &.with-range-button {
+        margin-left: 10px;
+      }
     }
   }
 }

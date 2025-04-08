@@ -1,38 +1,48 @@
-<div class="button-container"
-     [class.with-range-button]="isRangeSupported()"
-     [class.range-mode]="rangeMode">
-    <button *ngIf="isRangeSupported()"
-            class="btn btn-outline-primary range-button"
-            [class.as-label]="!isOptionalRange()"
-            ngbTooltip="{{getRangeButtonTooltip()}}"
-            placement="top"
-            container="body"
-            triggers="manual"
-            #rangeButtonTooltip="ngbTooltip"
-            (mouseover)="rangeButtonTooltip.open()"
-            (mouseleave)="rangeButtonTooltip.close()"
-            (mousedown)="rangeButtonTooltip.close()"
-            (click)="isOptionalRange() && toggleRange()">
-        <div *ngIf="!rangeMode"
-             class="range-button-label"
-             i18n="@@docedit.forms.date.singleDate">Einzeldatum:</div>
-        <div *ngIf="rangeMode"
-             class="range-button-label"
-             i18n="@@docedit.forms.date.from">Von:</div>
-        <div *ngIf="rangeMode"
-             class="range-button-label"
-             i18n="@@docedit.forms.date.to">Bis:</div>
-    </button>
-</div>
+<select *ngIf="isOptionalRange() && !showRangeButton" class="form-control"
+     (change)="setRangeViaSelect($event.target.value)">
+     <option i18n="@@docedit.forms.date.select.single" value="single"
+             [selected]="!rangeMode">Einzeldatum</option>
+     <option i18n="@@docedit.forms.date.select.range" value="range"
+             [selected]="rangeMode">Datumsbereich</option>
+</select>
 
-<div class="date-values-container"
-     [class.with-range-button]="isOptionalRange()">
-    <date-value [value]="getValue()"
-                [field]="field"
-                (onChanged)="updateValue($event)"></date-value>
-    
-    <date-value *ngIf="rangeMode"
-                [value]="getEndValue()"
-                [field]="field"
-                (onChanged)="updateEndValue($event)"></date-value>
+<div class="date-container">
+     <div class="button-container"
+          [class.with-range-button]="isRangeSupported() && showRangeButton"
+          [class.range-mode]="rangeMode">
+          <button *ngIf="isRangeSupported() && (showRangeButton || rangeMode)"
+                  class="btn btn-outline-primary range-button"
+                  [class.as-label]="!isOptionalRange() || !showRangeButton"
+                  ngbTooltip="{{getRangeButtonTooltip()}}"
+                  placement="top"
+                  container="body"
+                  triggers="manual"
+                  #rangeButtonTooltip="ngbTooltip"
+                  (mouseover)="rangeButtonTooltip.open()"
+                  (mouseleave)="rangeButtonTooltip.close()"
+                  (mousedown)="rangeButtonTooltip.close()"
+                  (click)="isOptionalRange() && toggleRange()">
+               <div *ngIf="!rangeMode"
+                    class="range-button-label"
+                    i18n="@@docedit.forms.date.singleDate">Einzeldatum:</div>
+               <div *ngIf="rangeMode"
+                    class="range-button-label"
+                    i18n="@@docedit.forms.date.from">Von:</div>
+               <div *ngIf="rangeMode"
+                    class="range-button-label"
+                    i18n="@@docedit.forms.date.to">Bis:</div>
+          </button>
+     </div>
+
+     <div class="date-values-container"
+          [class.with-range-button]="isOptionalRange() && showRangeButton">
+          <date-value [value]="getValue()"
+                      [field]="field"
+                      (onChanged)="updateValue($event)"></date-value>
+          
+          <date-value *ngIf="rangeMode"
+                      [value]="getEndValue()"
+                      [field]="field"
+                      (onChanged)="updateEndValue($event)"></date-value>
+     </div>
 </div>

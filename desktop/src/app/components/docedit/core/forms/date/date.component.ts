@@ -1,11 +1,15 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { DateConfiguration, DateSpecification, Field } from 'idai-field-core';
+import { AngularUtility } from '../../../../../angular/angular-utility';
 
 
 @Component({
     selector: 'form-field-date',
     templateUrl: './date.html',
-    standalone: false
+    standalone: false,
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    },
 })
 /**
  * @author Thomas Kleinke
@@ -16,6 +20,8 @@ export class DateComponent implements OnChanges {
     @Input() field: Field;
 
     public rangeMode: boolean;
+
+    public showRangeButton: boolean = false;
 
     private hiddenEndValue: string;
 
@@ -48,27 +54,24 @@ export class DateComponent implements OnChanges {
     }
 
 
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'y') {
+            this.showRangeButton = !this.showRangeButton;
+            AngularUtility.blurActiveElement();
+        }
+    }
+
+
+    public setRangeViaSelect(value: 'single'|'range') {
+
+        this.setRange(value === 'range');
+    }
+
+
     public toggleRange() {
 
-        this.rangeMode = !this.rangeMode;
-
-        const fieldData: DateSpecification = this.getFieldData();
-        
-        if (fieldData) {
-            fieldData.isRange = this.rangeMode;
-
-            if (!this.rangeMode) {
-                this.hiddenEndValue = fieldData.endValue
-                delete fieldData.endValue;
-                if (!fieldData.value) delete this.fieldContainer[this.field.name];
-            }
-        }
-
-        if (this.rangeMode && this.hiddenEndValue) {
-            if (!fieldData) this.fieldContainer[this.field.name] = { isRange: true };
-            this.fieldContainer[this.field.name].endValue = this.hiddenEndValue;
-            this.hiddenEndValue = undefined;
-        }
+        this.setRange(!this.rangeMode);
     }
 
 
@@ -95,6 +98,30 @@ export class DateComponent implements OnChanges {
         }
         
         if (propertyName === 'endValue') this.cleanUpAfterUpdate(value);
+    }
+
+
+    private setRange(value: boolean) {
+
+        this.rangeMode = value;
+
+        const fieldData: DateSpecification = this.getFieldData();
+        
+        if (fieldData) {
+            fieldData.isRange = this.rangeMode;
+
+            if (!this.rangeMode) {
+                this.hiddenEndValue = fieldData.endValue
+                delete fieldData.endValue;
+                if (!fieldData.value) delete this.fieldContainer[this.field.name];
+            }
+        }
+
+        if (this.rangeMode && this.hiddenEndValue) {
+            if (!fieldData) this.fieldContainer[this.field.name] = { isRange: true };
+            this.fieldContainer[this.field.name].endValue = this.hiddenEndValue;
+            this.hiddenEndValue = undefined;
+        }
     }
 
 

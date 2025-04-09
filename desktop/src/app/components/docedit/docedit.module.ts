@@ -72,7 +72,7 @@ import { LiteratureEntryModalComponent } from './core/forms/array-field/literatu
         MessagesModule,
         WidgetsModule,
         ImageGridModule,
-        ImageRowModule
+        ImageRowModule    
     ],
     declarations: [
         ConflictDeletedModalComponent,

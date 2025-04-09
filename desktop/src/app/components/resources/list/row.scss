@@ -36,6 +36,7 @@
     height: 33px;
     color: #868e96;
     background-color: #fff;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 
     span {
       transition: color 0.25s ease;

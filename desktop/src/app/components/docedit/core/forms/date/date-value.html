@@ -39,12 +39,12 @@
      </button>
 </div>
 
-<time-input *ngIf="isTimePickerVisible()"
+<time-input *ngIf="isTimeInputVisible()"
             [time]="time"
             (onChanged)="onTimeChanged($event)"></time-input>
 
 <div class="timezone-selector">
-    <searchable-select *ngIf="isTimePickerVisible()"
+    <searchable-select *ngIf="isTimeInputVisible()"
                         [selectedValue]="selectedTimezone"
                         [values]="getAvailableTimezones()"
                         [getLabel]="getTimezoneLabel"

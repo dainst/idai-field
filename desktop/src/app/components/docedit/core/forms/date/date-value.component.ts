@@ -45,10 +45,7 @@ export class DateValueComponent implements OnInit {
 
     public isDatePickerVisible = () => this.value === undefined;
 
-    public isTimePickerVisible = () => (this.isTimeSupported() || this.isTimeSelected())
-        && (DateValueComponent.isFullDate(this.value) || this.editing);
-
-    public isNowButtonVisible = () => this.isDatePickerVisible() && !this.isTimePickerVisible() && !this.editing;
+    public isNowButtonVisible = () => this.isDatePickerVisible() && !this.isTimeInputVisible() && !this.editing;
 
     public getTimezoneLabel = (timezone: string) => timezone;
 
@@ -102,6 +99,14 @@ export class DateValueComponent implements OnInit {
         this.editing = false;
 
         this.onChanged.emit(this.value);
+    }
+
+
+    public isTimeInputVisible(): boolean {
+
+        return (this.isTimeSupported() || this.isTimeSelected())
+            && (DateValueComponent.isFullDate(this.value)
+                || (this.editing && DateValueComponent.isFullDate(this.originalValue)));
     }
 
 

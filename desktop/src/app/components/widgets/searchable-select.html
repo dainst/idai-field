@@ -8,7 +8,7 @@
            [clearable]="clearable && selectedValue !== ''"
            [placeholder]="placeholder"
            (open)="onOpen()"
-           (close)="stopListeningToScrollEvents()"
+           (close)="stopListeningToScrollAndResizeEvents()"
            (change)="emitChanges()"
            (blur)="onBlur.emit()"
            (scrollToEnd)="onScrollToEnd.emit()"

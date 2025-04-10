@@ -76,12 +76,8 @@ FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y
 
-RUN apt-get install -y imagemagick libopenjp2-tools ffmpeg curl
-
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
 RUN apt-get install -y nodejs
-
-COPY ./cantaloupe/imagemagick-policy.xml /usr/share/ImageMagick-6/policy.xml
 
 RUN apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*

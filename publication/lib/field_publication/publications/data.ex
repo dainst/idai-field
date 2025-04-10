@@ -468,7 +468,10 @@ defmodule FieldPublication.Publications.Data do
               FieldPublicationWeb.Gettext,
               locale,
               fn ->
-                FieldPublicationWeb.Gettext.gettext("Contains")
+                Gettext.gettext(
+                  FieldPublicationWeb.Gettext,
+                  "Contains"
+                )
               end
             )
           }

@@ -35,18 +35,18 @@ defmodule FieldHub.CLI do
 
     case users do
       %{status_code: 412} ->
-        Logger.info(" System database '_users' already exists.")
+        Logger.info("  System database '_users' already exists.")
 
       %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info(" Created system database `_users`.")
+        Logger.info("  Created system database `_users`.")
     end
 
     case replicator do
       %{status_code: 412} ->
-        Logger.info(" System database '_replicator' already exists.")
+        Logger.info("  System database '_replicator' already exists.")
 
       %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info(" Created system database `_replicator`.")
+        Logger.info("  Created system database `_replicator`.")
     end
 
     app_user = Application.get_env(:field_hub, :couchdb_user_name)
@@ -66,7 +66,7 @@ defmodule FieldHub.CLI do
     tmp_file = "#{@file_directory_root}/.field_hub_test_file"
 
     with :ok <- File.mkdir_p(@file_directory_root),
-         :ok <- File.write("#{@file_directory_root}/.field_hub_test_file", []) do
+         :ok <- File.write(tmp_file, []) do
       File.rm(tmp_file)
       Logger.info(" Application is allowed write in file directory '#{@file_directory_root}'.")
     else
@@ -82,12 +82,9 @@ defmodule FieldHub.CLI do
   defp wait_for_couchdb(retries \\ 5)
 
   defp wait_for_couchdb(retries) when retries > 0 do
-    Logger.info("Checking for CouchDB...")
-
     CouchService.ping_couch()
     |> case do
       {:ok, _} ->
-        Logger.info("CouchDB found.")
         :ok
 
       _ ->
@@ -97,7 +94,7 @@ defmodule FieldHub.CLI do
   end
 
   defp wait_for_couchdb(_retries) do
-    Logger.error("Unable to connect to CouchDB.")
+    Logger.error("x Unable to connect to CouchDB.")
     :error
   end
 

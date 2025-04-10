@@ -10,7 +10,7 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
     ~H"""
     <div>
       <.header>
-        <%= @title %>
+        {@title}
       </.header>
 
       <.simple_form
@@ -24,7 +24,7 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
 
         <%= case @action do %>
           <% :edit_project -> %>
-            <h1><%= @project.name %></h1>
+            <h1>{@project.name}</h1>
           <% :new_project -> %>
             <.input field={@form[:name]} type="text" label="Project key" />
           <% _ -> %>
@@ -80,7 +80,7 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
       :noreply,
       socket
       |> put_flash(:info, "Project updated successfully")
-      |> push_patch(to: ~p"/management")
+      |> push_navigate(to: ~p"/management")
     }
   end
 
@@ -93,7 +93,7 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
           :noreply,
           socket
           |> put_flash(:info, "Project created successfully")
-          |> push_patch(to: ~p"/management")
+          |> push_navigate(to: ~p"/management")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->

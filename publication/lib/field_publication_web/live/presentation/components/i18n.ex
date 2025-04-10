@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
   def text(assigns) do
     ~H"""
     <% {status, text} = select_translation(assigns) %>
-    <%= text %>
+    {text}
     <%= if status == :fallback do %>
       <span class="group">
         <sup>
@@ -27,9 +27,9 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
       </span>
     <% end %>
     <span class="markdown">
-      <%= text
+      {text
       |> Earmark.as_html!()
-      |> Phoenix.HTML.raw() %>
+      |> Phoenix.HTML.raw()}
     </span>
     """
   end

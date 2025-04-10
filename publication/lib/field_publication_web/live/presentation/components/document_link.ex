@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         }
       >
         <div>
-          <span><%= @doc.identifier %></span>
+          <span>{@doc.identifier}</span>
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <%= if shortdescription do %>
             <small class="ml-2 text-slate-600">
@@ -89,7 +89,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         }
       >
         <div>
-          <%= @doc.identifier %>
+          {@doc.identifier}
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <%= if shortdescription do %>
             <small class="ml-2 text-slate-600">

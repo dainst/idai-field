@@ -33,6 +33,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('selectElement', { static: false }) private selectElement: NgSelectComponent;
 
     public onScrollListener: any;
+    public onResizeListener: any;
     public scrollListenerInitialized: boolean = false;
 
 
@@ -59,13 +60,13 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnDestroy() {
         
-        this.stopListeningToScrollEvents();
+        this.stopListeningToScrollAndResizeEvents();
     }
 
 
     public async onOpen() {
 
-        this.listenToScrollEvents();
+        this.listenToScrollAndResizeEvents();
         if (this.customPanelClass) this.addCustomPanelClass();
     }
 
@@ -77,22 +78,18 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
         this.onValueSelected.emit(this.selectedValue);
     }
 
-
-    public listenToScrollEvents() {
-
-        this.scrollListenerInitialized = false;
-
-        this.onScrollListener = this.onScroll.bind(this);
-        window.addEventListener('scroll', this.onScrollListener, true);
-    }
-
     
-    public stopListeningToScrollEvents() {
+    public stopListeningToScrollAndResizeEvents() {
 
-        if (!this.onScrollListener) return;
+        if (this.onScrollListener) {
+            window.removeEventListener('scroll', this.onScrollListener, true);
+            this.onScrollListener = undefined;
+        }
 
-        window.removeEventListener('scroll', this.onScrollListener, true);
-        this.onScrollListener = undefined;
+        if (this.onResizeListener) {
+            window.removeEventListener('resize', this.onResizeListener, true);
+            this.onResizeListener = undefined;
+        }
     }
 
 
@@ -100,6 +97,18 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
         await AngularUtility.refresh();
         this.renderer.addClass(document.querySelector('.ng-dropdown-panel'), this.customPanelClass);
+    }
+
+
+    private listenToScrollAndResizeEvents() {
+
+        this.scrollListenerInitialized = false;
+
+        this.onScrollListener = this.onScroll.bind(this);
+        window.addEventListener('scroll', this.onScrollListener, true);
+
+        this.onResizeListener = this.onResize.bind(this);
+        window.addEventListener('resize', this.onResizeListener, true);
     }
 
 
@@ -114,5 +123,12 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
             this.selectElement.close();
             this.changeDetectorRef.detectChanges();
         }
+    }
+
+
+    private onResize() {
+
+        this.selectElement.close();
+        this.changeDetectorRef.detectChanges();
     }
 }

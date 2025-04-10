@@ -488,7 +488,7 @@
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">Os dados exportados incluem geometrias e os campos identificador <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (identifier) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, descrição breve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (shortDescription) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e categoria <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (category) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
+        <target state="translated">Os dados exportados incluem geometrias e os campos identificador <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (identifier)<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, descrição breve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (shortDescription) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e categoria <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (category) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">360</context>
@@ -504,7 +504,7 @@
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">Os dados exportados incluem geometrias e campos identificador <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (identifier) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, descrição breve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (shortdesc) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e categoria <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (category) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
+        <target state="translated">Os dados exportados incluem geometrias e campos identificador <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (identifier)<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, descrição breve <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (shortdesc) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> e categoria <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> (category) <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> dos recursos correspondentes. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">140</context>
@@ -1340,7 +1340,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
-        <target state="translated">A versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi descarregada e irá ser instalada quando reiniciar</target>
+        <target state="translated">A versão <x id="INTERPOLATION" equiv-text="{{version}}"/> foi descarregada e será instalada quando reiniciar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">28</context>
@@ -7170,8 +7170,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.outlierValues.multiple" datatype="html">
-        <source>Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht enthalten sind. </source>
-        <target state="translated">Foram selecionados valores não contidos na lista de valores <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, configurada para este campo. </target>
+        <source>Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="on)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht enthalt"/> nicht enthalten sind. </source>
+        <target state="translated">Foram selecionados valores não contidos na lista de valores<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, configurada para este campo. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,105</context>
@@ -7290,8 +7290,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.outlierValues.single" datatype="html">
-        <source>Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> nicht enthalten ist. </source>
-        <target state="translated">Foi selecionado um valor não contido na lista de valores <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, configurada para este campo. </target>
+        <source>Es wurde ein Wert ausgewählt, der in der für dieses Feld konfigurierten Werteliste <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="on)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht enthalt"/> nicht enthalten ist. </source>
+        <target state="translated">Foi selecionado um valor não contido na lista de valores<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getValuelistId(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, configurada para este campo. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">107,100</context>

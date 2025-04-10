@@ -43,7 +43,7 @@ function showAlreadyOpenError() {
 function suppressWarnings() {
 
     const warningTexts: string[] = [
-        'The vm module of Node.js is deprecated in the renderer process and will be removed.'
+        'The vm module of Node.js is unsupported in Electron\'s renderer process'
     ];
 
     const warnFunction = console.warn;

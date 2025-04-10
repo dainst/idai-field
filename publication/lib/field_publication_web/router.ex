@@ -1,12 +1,10 @@
 defmodule FieldPublicationWeb.Router do
   use FieldPublicationWeb, :router
 
-  alias FieldPublicationWeb.Cantaloupe
+  alias FieldPublicationWeb.IIIFHelper
 
   import FieldPublicationWeb.UserAuth
   import FieldPublicationWeb.Gettext.Plug
-
-  import FieldPublicationWeb.Cantaloupe, only: [set_forward_headers_for_cantaloupe: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -29,15 +27,15 @@ defmodule FieldPublicationWeb.Router do
     pipe_through :ensure_image_published
 
     scope "/iiif" do
-      pipe_through :set_forward_headers_for_cantaloupe
-
-      forward("/", ReverseProxyPlug,
+      forward("/3", IIIFImagePlug.V3, %{
+        identifier_to_path_callback: &IIIFHelper.identifier_to_path/1,
+        scheme: &IIIFHelper.get_endpoint_scheme/0,
+        host: &IIIFHelper.get_endpoint_host/0,
+        port: &IIIFHelper.get_endpoint_port/0,
         status_callbacks: %{
-          404 => &Cantaloupe.handle_404/2
-        },
-        upstream: &Cantaloupe.url/0,
-        preserve_host_header: true
-      )
+          404 => &IIIFHelper.handle_404/2
+        }
+      })
     end
 
     get "/raw/:project_name/:uuid", FieldPublicationWeb.Api.Image, :raw

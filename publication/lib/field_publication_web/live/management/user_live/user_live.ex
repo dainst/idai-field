@@ -10,12 +10,12 @@ defmodule FieldPublicationWeb.Management.UserLive do
     ~H"""
     <h1>Manage users</h1>
 
-    <p class="font-semibold"><%= gettext("Actions") %></p>
+    <p class="font-semibold">{gettext("Actions")}</p>
 
     <ul>
       <li>
         <.link patch={~p"/management/users/new"}>
-          <%= gettext("Add user") %>
+          {gettext("Add user")}
         </.link>
       </li>
     </ul>
@@ -24,21 +24,21 @@ defmodule FieldPublicationWeb.Management.UserLive do
       <table class="w-full mt-8">
         <thead>
           <tr>
-            <th class="text-left"><%= gettext("Name") %></th>
-            <th class="text-left"><%= gettext("Label") %></th>
-            <th class="text-right"><%= gettext("Actions") %></th>
+            <th class="text-left">{gettext("Name")}</th>
+            <th class="text-left">{gettext("Label")}</th>
+            <th class="text-right">{gettext("Actions")}</th>
           </tr>
         </thead>
         <tbody class="divide-y border-t">
           <%= for user <- @users do %>
             <tr class="group hover:bg-slate-50">
-              <td class="text-left"><%= user.name %></td>
-              <td class="text-left"><%= user.label %></td>
+              <td class="text-left">{user.name}</td>
+              <td class="text-left">{user.label}</td>
               <td class="text-right">
                 <div class="space-x-4">
                   <span>
                     <.link patch={~p"/management/users/#{user.name}/edit"}>
-                      <%= gettext("Edit") %>
+                      {gettext("Edit")}
                     </.link>
                   </span>
                   <span>
@@ -49,7 +49,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
                       }
                       data-confirm="Are you sure?"
                     >
-                      <%= gettext("Delete") %>
+                      {gettext("Delete")}
                     </.link>
                   </span>
                 </div>
@@ -60,7 +60,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
       </table>
     <% end %>
 
-    <.back navigate={~p"/management"}><%= gettext("Back to management") %></.back>
+    <.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
 
     <.modal
       :if={@live_action in [:new, :edit]}

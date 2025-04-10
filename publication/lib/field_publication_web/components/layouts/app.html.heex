@@ -5,7 +5,7 @@
         <img src={~p"/images/logo.svg"} class="h-12" />
       </.link>
       <p class="text-cyan-800 rounded-full px-2 font-medium leading-6">
-        Field Publication v<%= Application.spec(:field_publication, :vsn) %>
+        Field Publication v{Application.spec(:field_publication, :vsn)}
       </p>
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6">
@@ -26,7 +26,7 @@
         </.link>
       <% end %>
       <span class="text-[0.8125rem] leading-6">
-        <%= @current_user %>
+        {@current_user}
       </span>
       <div>
         <form action={~p"/select_locale"} id="locale_form">
@@ -41,7 +41,7 @@
                 value={lang}
                 selected={Gettext.get_locale(FieldPublicationWeb.Gettext) == lang}
               >
-                <%= Map.get(FieldPublicationWeb.Gettext.get_locale_labels(), lang, lang) %>
+                {Map.get(FieldPublicationWeb.Gettext.get_locale_labels(), lang, lang)}
               </option>
             <% end %>
           </select>
@@ -55,6 +55,6 @@
 <main class="px-4 pt-4 pb-20 sm:px-6 lg:px-8">
   <div class="mx-auto w-full">
     <.flash_group flash={@flash} />
-    <%= @inner_content %>
+    {@inner_content}
   </div>
 </main>

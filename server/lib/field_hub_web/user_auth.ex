@@ -9,7 +9,7 @@ defmodule FieldHubWeb.UserAuth do
     User
   }
 
-  alias FieldHubWeb.Router.Helpers, as: Routes
+  use FieldHubWeb, :verified_routes
 
   defmodule Token do
     @enforce_keys [:name, :token, :context]
@@ -22,7 +22,7 @@ defmodule FieldHubWeb.UserAuth do
   @doc """
   Generates a session token.
   """
-  def generate_user_session_token(user) do
+  def generate_user_session_token(user) when is_binary(user) do
     token = :crypto.strong_rand_bytes(32)
     cached_data = %Token{token: token, context: "session", name: user}
 
@@ -192,7 +192,7 @@ defmodule FieldHubWeb.UserAuth do
 
     conn
     |> renew_session()
-    |> redirect(to: "/")
+    |> redirect(to: ~p"/")
   end
 
   @doc """
@@ -214,6 +214,76 @@ defmodule FieldHubWeb.UserAuth do
   end
 
   @doc """
+  Handles mounting and authenticating the current_user in LiveViews.
+
+  ## `on_mount` arguments
+
+    * `:mount_current_user` - Assigns current_user
+      to socket assigns based on user_token, or nil if
+      there's no user_token or no matching user.
+
+    * `:ensure_authenticated` - Authenticates the user from the session,
+      and assigns the current_user to socket assigns based
+      on user_token.
+      Redirects to login page if there's no logged user.
+
+    * `:redirect_if_user_is_authenticated` - Authenticates the user from the session.
+      Redirects to signed_in_path if there's a logged user.
+
+  ## Examples
+
+  Use the `on_mount` lifecycle macro in LiveViews to mount or authenticate
+  the current_user:
+
+      defmodule FieldHubWeb.PageLive do
+        use FieldHubWeb, :live_view
+
+        on_mount {FieldHubWeb.UserAuth, :mount_current_user}
+        ...
+      end
+
+  Or use the `live_session` of your router to invoke the on_mount callback:
+
+      live_session :authenticated, on_mount: [{FieldHubWeb.UserAuth, :ensure_authenticated}] do
+        live "/profile", ProfileLive, :index
+      end
+  """
+  def on_mount(:mount_current_user, _params, session, socket) do
+    {:cont, mount_current_user(socket, session)}
+  end
+
+  def on_mount(:redirect_if_user_is_authenticated, _params, session, socket) do
+    socket = mount_current_user(socket, session)
+
+    if socket.assigns.current_user do
+      {:halt, Phoenix.LiveView.redirect(socket, to: signed_in_path(socket))}
+    else
+      {:cont, socket}
+    end
+  end
+
+  defp mount_current_user(socket, session) do
+    Phoenix.Component.assign_new(socket, :current_user, fn ->
+      if user_token = session["user_token"] do
+        get_user_by_session_token(user_token)
+      end
+    end)
+  end
+
+  @doc """
+  Used for routes that require the user to not be authenticated.
+  """
+  def redirect_if_user_is_authenticated(conn, _opts) do
+    if conn.assigns[:current_user] do
+      conn
+      |> redirect(to: signed_in_path(conn))
+      |> halt()
+    else
+      conn
+    end
+  end
+
+  @doc """
   Used for routes that require the user to be authenticated.
   """
   def ui_require_user_authentication(conn, _opts) do
@@ -223,7 +293,7 @@ defmodule FieldHubWeb.UserAuth do
       conn
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
-      |> redirect(to: Routes.user_session_path(conn, :new))
+      |> redirect(to: ~p"/ui/session/log_in")
       |> halt()
     end
   end
@@ -249,13 +319,13 @@ defmodule FieldHubWeb.UserAuth do
       :denied ->
         conn
         |> put_flash(:error, "You are not authorized for project '#{project_identifier}'.")
-        |> redirect(to: "/")
+        |> redirect(to: ~p"/")
         |> halt()
 
       :unknown_project ->
         conn
         |> put_flash(:error, "Unknown project '#{project_identifier}'.")
-        |> redirect(to: "/")
+        |> redirect(to: ~p"/")
         |> halt()
     end
   end
@@ -268,7 +338,7 @@ defmodule FieldHubWeb.UserAuth do
       _ ->
         conn
         |> put_flash(:error, "You are not authorized to view this page.")
-        |> redirect(to: "/")
+        |> redirect(to: ~p"/")
         |> halt()
     end
   end
@@ -279,5 +349,5 @@ defmodule FieldHubWeb.UserAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(_conn), do: "/"
+  defp signed_in_path(_conn), do: ~p"/"
 end

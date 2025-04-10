@@ -76,7 +76,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
           <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
           <%= if depicted_in do %>
             <.group_heading>
-              <I18n.text values={depicted_in.labels} /> (<%= Enum.count(depicted_in.docs) %>)
+              <I18n.text values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
@@ -103,7 +103,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
             )  do %>
             <.group_heading>
-              <I18n.text values={other_relation.labels} /> (<%= Enum.count(other_relation.docs) %>)
+              <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- other_relation.docs do %>

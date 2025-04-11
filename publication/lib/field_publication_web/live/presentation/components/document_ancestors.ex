@@ -18,26 +18,29 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
     ~H"""
     <%= case @nodes do %>
       <% [current] -> %>
+        <!--
         <% above = Data.get_relation(current, "isBelow") || %{docs: []} %>
         <%= for doc <- above.docs do %>
           <.render_link doc={doc} hover_target={@map_id} lang={@lang} />
         <% end %>
-
+    -->
         <div class="bg-slate-200">
           <.render_link doc={current} hover_target={@map_id} lang={@lang} />
-          <% contains = Data.get_relation(current, "contains") %>
-          <%= if contains do %>
-            <div class="pl-4">
-              <%= for doc <- contains.docs do %>
-                <.render_link doc={doc} hover_target={@map_id} lang={@lang} />
-              <% end %>
-            </div>
-          <% end %>
         </div>
+        <% contains = Data.get_relation(current, "contains") %>
+        <%= if contains do %>
+          <div class="pl-4">
+            <%= for doc <- contains.docs do %>
+              <.render_link doc={doc} hover_target={@map_id} lang={@lang} />
+            <% end %>
+          </div>
+        <% end %>
+        <!--
         <% above = Data.get_relation(current, "isAbove") || %{docs: []} %>
         <%= for doc <- above.docs do %>
           <.render_link doc={doc} hover_target={@map_id} lang={@lang} />
         <% end %>
+    -->
       <% [current | rest] -> %>
         <.render_link doc={current} hover_target={@map_id} lang={@lang} />
         <div class="pl-4">

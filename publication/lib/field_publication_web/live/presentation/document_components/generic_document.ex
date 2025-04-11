@@ -42,6 +42,44 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 lang={@lang}
                 map_id="generic_doc_map_detail"
               />
+              <%= for other_relation <- Enum.reject(
+                @doc.relations,
+                fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer", "isRecordedIn", "liesWithin", "contains"] end
+                )  do %>
+                <.group_heading>
+                  <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+                </.group_heading>
+                <div class="overflow-auto overscroll-contain">
+                  <%= for %Document{} = doc <- other_relation.docs do %>
+                    <% geometry = Data.get_field(doc, "geometry") %>
+
+                    <%= if geometry do %>
+                      <div
+                        id={"ancester_link_#{doc.id}"}
+                        phx-hook="HoverHighlightMapFeature"
+                        target_dom_element="generic_doc_map_detail"
+                        target_id={doc.id}
+                      >
+                        <DocumentLink.show
+                          lang={@lang}
+                          doc={doc}
+                          image_count={10}
+                          geometry_indicator={true}
+                        />
+                      </div>
+                    <% else %>
+                      <div>
+                        <DocumentLink.show
+                          lang={@lang}
+                          doc={doc}
+                          image_count={10}
+                          geometry_indicator={true}
+                        />
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
           </div>
           <div class="basis-2/3">

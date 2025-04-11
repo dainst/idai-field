@@ -1,5 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
-  use Phoenix.Component
+  use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data
@@ -13,6 +13,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   attr :doc, Document, required: true
   attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
+  attr :geometry_indicator, :boolean, default: false
 
   def show(assigns) do
     ~H"""
@@ -40,11 +41,16 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         <div>
           <span>{@doc.identifier}</span>
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
-          <%= if shortdescription do %>
-            <small class="ml-2 text-slate-600">
+          <small class="ml-2 text-slate-600">
+            <%= if shortdescription do %>
               <I18n.text values={shortdescription.value} />
-            </small>
-          <% end %>
+            <% end %>
+            <.icon
+              :if={@geometry_indicator and Data.get_field(@doc, "geometry") != nil}
+              name="hero-map"
+              class="mb-1"
+            />
+          </small>
           <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
           <div class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>

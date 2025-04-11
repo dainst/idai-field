@@ -16,7 +16,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   def render(assigns) do
     ~H"""
     <div>
-      <.group_heading>Geometry <span class="text-xs">({@geometry_type})</span></.group_heading>
+      <.group_heading>
+        Geometry <span class="text-xs">({@geometry_type})</span>
+        <.link phx-click="toggle-map">
+          <.icon name={if @detail?, do: "hero-arrows-pointing-in", else: "hero-arrows-pointing-out"} />
+        </.link>
+      </.group_heading>
       <div
         class="relative"
         id={@id}
@@ -96,45 +101,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     socket = process_document_tile_layers(socket, publication, doc, id)
 
     children_features =
-      doc
-      |> Data.get_relation("contains")
-      |> case do
-        nil ->
-          []
-
-        %RelationGroup{} = relation ->
-          relation.docs
-      end
-      |> Enum.map(&create_feature_info(&1, lang))
-      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+      accumulate_geometries_for_relations(doc, ["contains", "isAbove", "cuts", "isCutBy"], lang)
 
     parent_features =
-      doc
-      |> Data.get_relation("liesWithin")
-      |> case do
-        nil ->
-          []
-
-        %RelationGroup{} = relation ->
-          Enum.map(relation.docs, &create_feature_info(&1, lang))
-      end
-      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
-      |> case do
-        [] ->
-          doc
-          |> Data.get_relation("isRecordedIn")
-          |> case do
-            nil ->
-              []
-
-            %RelationGroup{} = relation ->
-              Enum.map(relation.docs, &create_feature_info(&1, lang))
-          end
-          |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
-
-        geometries_present ->
-          geometries_present
-      end
+      accumulate_geometries_for_relations(doc, ["isRecordedIn", "liesWithin", "isBelow"], lang)
 
     document_feature = create_feature_info(doc, lang)
 
@@ -181,6 +151,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:zoom, 2)
     |> Map.put(:no_data, true)
     |> Map.put(:show_layer_select, false)
+    |> Map.put_new(:detail?, false)
   end
 
   defp create_feature_info(
@@ -415,5 +386,46 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       <% end %>
     <% end %>
     """
+  end
+
+  defp accumulate_geometries_for_relations(%Document{} = doc, relation_names, lang) do
+    relation_names
+    |> Enum.map(fn relation_name ->
+      doc
+      |> Data.get_relation(relation_name)
+      |> case do
+        nil ->
+          []
+
+        %RelationGroup{} = relation_group ->
+          Enum.map(relation_group.docs, &create_feature_info(&1, lang))
+      end
+      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+    end)
+    |> List.flatten()
+
+    # lies_within =
+    #   doc
+    #   |> Data.get_relation("liesWithin")
+    #   |> case do
+    #     nil ->
+    #       []
+
+    #     %RelationGroup{} = relation ->
+    #       Enum.map(relation.docs, &create_feature_info(&1, lang))
+    #   end
+    #   |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+
+    # is_recorded_in =
+    #   doc
+    #   |> Data.get_relation("isRecordedIn")
+    #   |> case do
+    #     nil ->
+    #       []
+
+    #     %RelationGroup{} = relation ->
+    #       Enum.map(relation.docs, &create_feature_info(&1, lang))
+    #   end
+    #   |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
   end
 end

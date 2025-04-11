@@ -200,6 +200,25 @@ export default getDocumentViewMapHook = () => {
                     this.toggleLayerVisibility(uuid, visibility)
                 }
             )
+
+            this.handleEvent(`map-highlight-feature-${this.el.id}`, ({ feature_id }) => {
+                this.clearAllHighlights();
+                const vectorLayerFeatures = this.map.getAllLayers().filter(layer => layer instanceof VectorLayer).map(layer => layer.getSource().getFeatures()).flat()
+
+                const feature = vectorLayerFeatures.find(function (f) {
+                    return f.getProperties().uuid == feature_id
+                })
+
+                if (feature) this.highlightFeature(feature, null)
+            })
+
+            this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
+                this.clearAllHighlights();
+
+                this.setFillForParents(false);
+                this.setFillForSelectedDocument(true);
+                this.setFillForChildren(false);
+            })
         },
 
         initialize() {
@@ -313,7 +332,7 @@ export default getDocumentViewMapHook = () => {
                 this.projectTileLayerExtent = layerGroupExtent;
             } else if (groupName == "document") {
                 this.documentTileLayers = layerGroup;
-                this.projectTileLayerExtent = layerGroupExtent;
+                this.documentTileLayerExtent = layerGroupExtent;
             }
 
             this.updateZIndices();
@@ -372,28 +391,24 @@ export default getDocumentViewMapHook = () => {
 
             this.map.addLayer(this.childrenLayer);
 
-            aggregatedExtent = extend(this.projectTileLayerExtent, parentVectorSource.getExtent())
+            aggregatedExtent = createEmpty()
+            aggregatedExtent = extend(aggregatedExtent, parentVectorSource.getExtent())
             aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
             aggregatedExtent = extend(aggregatedExtent, childrenVectorSource.getExtent())
 
-            let extent;
+            let fullExtent = createEmpty();
 
-            if (parentFeatures.features.length !== 0) {
-                extent = parentVectorSource.getExtent();
-            } else if ('geometry' in documentFeature) {
-                extent = vectorSource.getExtent();
-            } else if (childrenFeatures.features.length !== 0) {
-                extent = childrenVectorSource.getExtent();
-            } else {
-                extent = aggregatedExtent;
-            }
+            fullExtent = extend(fullExtent, aggregatedExtent);
 
-            this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
+            if (this.projectTileLayerExtent) fullExtent = extend(fullExtent, this.projectTileLayerExtent)
+            if (this.documentTileLayerExtent) fullExtent = extend(fullExtent, this.documentTileLayerExtent)
+
+            this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
             this.map.setView(new View({
                 extent: this.map.getView().calculateExtent(this.map.getSize()),
                 maxZoom: 40
             }));
-            this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
+            this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
 
             this.clearAllHighlights()
         },
@@ -403,13 +418,15 @@ export default getDocumentViewMapHook = () => {
             properties.fill = true;
             feature.setProperties(properties);
 
-            this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
+            if (coordinate) {
+                this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
 
-            const [r, g, b, a] = asArray(properties.color)
-            document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
-            document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
+                const [r, g, b, a] = asArray(properties.color)
+                document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
+                document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
 
-            this.identifierOverlay.setPosition(coordinate);
+                this.identifierOverlay.setPosition(coordinate);
+            }
         },
         setFillForParents(val) {
             if (!this.parentLayer) return;

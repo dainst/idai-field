@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
 import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named,
-    DateSpecification } from 'idai-field-core';
+    DateSpecification, WorkflowStepDocument } from 'idai-field-core';
 import { sortWorkflowSteps } from '../sort-workflow-steps';
 import { getSystemTimezone } from '../../../../../util/timezones';
 import { Settings } from '../../../../../services/settings/settings';
@@ -26,7 +26,7 @@ export class WorkflowStepLinkModalComponent {
 
     public filterOptions: Array<CategoryForm> = [];
     public selectedDocument: Document;
-    public availableWorkflowSteps: Array<Document>;
+    public availableWorkflowSteps: Array<WorkflowStepDocument>;
 
     private allowedWorkflowStepCategories: Array<CategoryForm>;
 
@@ -65,7 +65,7 @@ export class WorkflowStepLinkModalComponent {
     }
 
 
-    public selectWorkflowStep(workflowStep: Document) {
+    public selectWorkflowStep(workflowStep: WorkflowStepDocument) {
 
         this.activeModal.close(workflowStep);
     }
@@ -89,7 +89,7 @@ export class WorkflowStepLinkModalComponent {
     }
 
 
-    public getDateLabel(workflowStep: Document): string {
+    public getDateLabel(workflowStep: WorkflowStepDocument): string {
     
         if (!workflowStep.resource.date) return '';
 
@@ -131,7 +131,7 @@ export class WorkflowStepLinkModalComponent {
     }
 
 
-    private async getAvailableWorkflowSteps(): Promise<Array<Document>> {
+    private async getAvailableWorkflowSteps(): Promise<Array<WorkflowStepDocument>> {
 
         const targetIds: string[] = this.selectedDocument.resource.relations
             ?.[Relation.Workflow.IS_EXECUTION_TARGET_OF]
@@ -139,8 +139,8 @@ export class WorkflowStepLinkModalComponent {
                 return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF]?.includes(targetId);
             }));
 
-        const workflowSteps: Array<Document> = targetIds?.length
-            ? await this.datastore.getMultiple(targetIds)
+        const workflowSteps: Array<WorkflowStepDocument> = targetIds?.length
+            ? await this.datastore.getMultiple(targetIds) as Array<WorkflowStepDocument>
             : [];
 
         return workflowSteps.filter(workflowStep => {

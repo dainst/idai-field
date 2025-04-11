@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, Relation } from 'idai-field-core';
+import { Relation, WorkflowStepDocument } from 'idai-field-core';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { Document, Relation } from 'idai-field-core';
  */
 export class DeleteWorkflowStepModalComponent {
 
-    public workflowStep: Document;
+    public workflowStep: WorkflowStepDocument;
 
 
     constructor(public activeModal: NgbActiveModal) {}

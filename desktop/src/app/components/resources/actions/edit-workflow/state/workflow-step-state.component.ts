@@ -1,6 +1,7 @@
 import { Map } from 'tsfun';
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryForm, Datastore, Document, Field, Labels, ProjectConfiguration, Valuelist } from 'idai-field-core';
+import { CategoryForm, Datastore, Field, Labels, ProjectConfiguration, Valuelist,
+    WorkflowStepDocument } from 'idai-field-core';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { CategoryForm, Datastore, Document, Field, Labels, ProjectConfiguration,
  */
 export class WorkflowStepStateComponent implements OnInit {
 
-    @Input() workflowStep: Document;
+    @Input() workflowStep: WorkflowStepDocument;
 
     public valuelist: Valuelist;
 

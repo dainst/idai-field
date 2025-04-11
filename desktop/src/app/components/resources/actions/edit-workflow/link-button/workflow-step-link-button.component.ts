@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../../../../services/menus';
-import { FieldDocument, Document } from 'idai-field-core';
+import { FieldDocument, WorkflowStepDocument } from 'idai-field-core';
 import { MenuContext } from '../../../../../services/menu-context';
 import { WorkflowStepLinkModalComponent } from './workflow-step-link-modal.component';
 import { AngularUtility } from '../../../../../angular/angular-utility';
@@ -19,7 +19,7 @@ export class WorkflowStepLinkButtonComponent {
 
     @Input() baseDocuments: Array<FieldDocument>;
 
-    @Output() onWorkflowStepSelected: EventEmitter<Document> = new EventEmitter<Document>();
+    @Output() onWorkflowStepSelected: EventEmitter<WorkflowStepDocument> = new EventEmitter<WorkflowStepDocument>();
 
 
     constructor(private menus: Menus,
@@ -38,7 +38,7 @@ export class WorkflowStepLinkButtonComponent {
             modalRef.componentInstance.baseDocuments = this.baseDocuments;
             await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
-            const selectedWorkflowStep: Document = await modalRef.result;
+            const selectedWorkflowStep: WorkflowStepDocument = await modalRef.result;
             this.onWorkflowStepSelected.emit(selectedWorkflowStep);
         } catch (err) {
             if (err !== 'cancel') console.error(err);

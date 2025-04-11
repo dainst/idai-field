@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, RelationsManager, Relation, Resource } from 'idai-field-core';
+import { Document, RelationsManager, Relation, Resource, WorkflowStepDocument } from 'idai-field-core';
 
 
 @Component({
@@ -15,11 +15,11 @@ import { Document, RelationsManager, Relation, Resource } from 'idai-field-core'
  */
 export class WorkflowRelationsModalComponent {
 
-    public workflowStep: Document;
+    public workflowStep: WorkflowStepDocument;
     public relationDefinition: Relation;
     public mandatory: boolean;
 
-    public clonedWorkflowStep: Document;
+    public clonedWorkflowStep: WorkflowStepDocument;
 
 
     constructor(private activeModal: NgbActiveModal,

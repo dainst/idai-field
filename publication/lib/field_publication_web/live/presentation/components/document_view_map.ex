@@ -62,7 +62,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           >
             <.icon name="hero-square-3-stack-3d" />
           </div>
-          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto" hidden>
+          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
             <.render_tile_layer_selection_group
               target={@myself}
               lang={@lang}

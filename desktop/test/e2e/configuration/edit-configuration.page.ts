@@ -131,16 +131,17 @@ export class EditConfigurationPage {
     }
 
 
-    public static async clickSelectConditionSubfield(subfieldName: string) {
+    public static async clickSelectConditionField(fieldName: string, modalContext: ModalContext) {
 
-        const element = (await getLocator('#condition-subfield-select'));
-        return selectOption(element, subfieldName);
+        const element = (await getLocator(this.getModalClass(modalContext) + ' .condition-field-select'));
+        return selectOption(element, fieldName);
     }
 
 
-    public static async clickSelectConditionValue(type: 'boolean'|'valuelist', valueIndex: number) {
+    public static async clickSelectConditionValue(type: 'boolean'|'valuelist', valueIndex: number,
+                                                  modalContext: ModalContext) {
 
-        const elementId = '#' + (
+        const elementId = this.getModalClass(modalContext) + ' .' + (
             type === 'boolean' ? 'boolean-condition-radio-buttons' : 'valuelist-condition-checkboxes'
         );
         await waitForExist(elementId);

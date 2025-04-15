@@ -10,15 +10,16 @@
         Bedingung für Anzeige des Unterfeldes
     </div>
 
-    <select id="condition-field-select" [(ngModel)]="condition[type + 'Name']"
-            (change)="resetConditionValues()" class="form-control">
+    <select class="form-control condition-field-select"
+            [(ngModel)]="condition[type + 'Name']"
+            (change)="resetConditionValues()">
         <option value="" i18n="@@configuration.condition.none">- Keine -</option>
         <option *ngFor="let field of getConditionFields()" [value]="field.name">
             {{getFieldLabel(field)}}
         </option>
     </select>
     <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'valuelist'"
-         id="valuelist-condition-checkboxes">
+         class="valuelist-condition-checkboxes">
         <div *ngFor="let value of getConditionValues()" class="checkbox form-check form-check-inline">
             <label class="form-check-label">
                 <input class="form-check-input" [value]="value" type="checkbox"
@@ -29,7 +30,7 @@
         </div>
     </div>
     <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'boolean'"
-         id="boolean-condition-radio-buttons">
+         class="boolean-condition-radio-buttons">
         <div class="radio form-check form-check-inline">
             <label class="form-check-label">
                 <input class="form-check-input" type="radio"    

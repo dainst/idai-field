@@ -827,8 +827,8 @@ test.describe('configuration --', () => {
         await EditConfigurationPage.typeInNewSubfield('subfield2');
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
-        await EditConfigurationPage.clickSelectConditionSubfield('subfield1');
-        await EditConfigurationPage.clickSelectConditionValue('boolean', 0);
+        await EditConfigurationPage.clickSelectConditionField('subfield1', 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'subfield');
         await EditConfigurationPage.clickAddValuelist();
         await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
         await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
@@ -838,9 +838,9 @@ test.describe('configuration --', () => {
         await EditConfigurationPage.typeInNewSubfield('subfield3');
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('input', 'subfield');
-        await EditConfigurationPage.clickSelectConditionSubfield('subfield2');
-        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3);
-        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4);
+        await EditConfigurationPage.clickSelectConditionField('subfield2', 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3, 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4, 'subfield');
         await EditConfigurationPage.clickConfirmSubfield();
 
         await EditConfigurationPage.clickConfirm();

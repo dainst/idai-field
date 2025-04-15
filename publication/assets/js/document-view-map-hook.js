@@ -178,13 +178,13 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,
                 ({ project, project_tile_layers }) => {
-                    this.setProjectLayers(project, project_tile_layers)
+                    this.setTileLayers(project, project_tile_layers, "project")
                 }
             )
             this.handleEvent(
                 `document-map-set-document-layers-${this.el.id}`,
                 ({ project, document_tile_layers }) => {
-                    this.setDocumentLayers(project, document_tile_layers)
+                    this.setTileLayers(project, document_tile_layers, "document")
                 }
             )
             this.handleEvent(
@@ -200,6 +200,25 @@ export default getDocumentViewMapHook = () => {
                     this.toggleLayerVisibility(uuid, visibility)
                 }
             )
+
+            this.handleEvent(`map-highlight-feature-${this.el.id}`, ({ feature_id }) => {
+                this.clearAllHighlights();
+                const vectorLayerFeatures = this.map.getAllLayers().filter(layer => layer instanceof VectorLayer).map(layer => layer.getSource().getFeatures()).flat()
+
+                const feature = vectorLayerFeatures.find(function (f) {
+                    return f.getProperties().uuid == feature_id
+                })
+
+                if (feature) this.highlightFeature(feature, null)
+            })
+
+            this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
+                this.clearAllHighlights();
+
+                this.setFillForParents(false);
+                this.setFillForSelectedDocument(true);
+                this.setFillForChildren(false);
+            })
         },
 
         initialize() {
@@ -281,46 +300,14 @@ export default getDocumentViewMapHook = () => {
                 })
             })
         },
-        setProjectLayers(projectName, tileLayersInfo) {
-
-            this.projectTileLayerExtent = createEmpty();
-            this.projectTileLayers = [];
-
-            for (let info of tileLayersInfo) {
-
-                const layer = createTileLayer(info, projectName)
-                this.projectTileLayers.push(layer);
-
-                const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
-
-                let visible = null;
-
-                if (preference == "true") {
-                    visible = true
-                } else if (preference == "false") {
-                    visible = false;
-                }
-
-                if (visible != null) {
-                    layer.setVisible(visible)
-                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
-                }
-
-                this.projectTileLayerExtent = extend(this.projectTileLayerExtent, layer.getExtent());
-                this.map.addLayer(layer);
-            }
-
-            this.updateZIndices();
-        },
-        setDocumentLayers(projectName, tileLayersInfo) {
-
-            this.documentTileLayerExtent = createEmpty();
-            this.documentTileLayers = [];
+        setTileLayers(projectName, tileLayersInfo, groupName) {
+            let layerGroup = [];
+            let layerGroupExtent = createEmpty();
 
             for (let info of tileLayersInfo) {
                 const layer = createTileLayer(info, projectName)
 
-                this.documentTileLayers.push(layer);
+                layerGroup.push(layer);
 
                 const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
                 let visible = null;
@@ -333,13 +320,21 @@ export default getDocumentViewMapHook = () => {
 
                 if (visible != null) {
                     layer.setVisible(visible)
-                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: "project", value: visible })
+                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: groupName, value: visible })
                 }
 
-                this.documentTileLayerExtent = extend(this.documentTileLayerExtent, layer.getExtent());
+                layerGroupExtent = extend(layerGroupExtent, layer.getExtent());
                 this.map.addLayer(layer);
-
             }
+
+            if (groupName == "project") {
+                this.projectTileLayers = layerGroup;
+                this.projectTileLayerExtent = layerGroupExtent;
+            } else if (groupName == "document") {
+                this.documentTileLayers = layerGroup;
+                this.documentTileLayerExtent = layerGroupExtent;
+            }
+
             this.updateZIndices();
         },
 
@@ -396,28 +391,24 @@ export default getDocumentViewMapHook = () => {
 
             this.map.addLayer(this.childrenLayer);
 
-            aggregatedExtent = extend(this.projectTileLayerExtent, parentVectorSource.getExtent())
+            aggregatedExtent = createEmpty()
+            aggregatedExtent = extend(aggregatedExtent, parentVectorSource.getExtent())
             aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
             aggregatedExtent = extend(aggregatedExtent, childrenVectorSource.getExtent())
 
-            let extent;
+            let fullExtent = createEmpty();
 
-            if (parentFeatures.features.length !== 0) {
-                extent = parentVectorSource.getExtent();
-            } else if ('geometry' in documentFeature) {
-                extent = vectorSource.getExtent();
-            } else if (childrenFeatures.features.length !== 0) {
-                extent = childrenVectorSource.getExtent();
-            } else {
-                extent = aggregatedExtent;
-            }
+            fullExtent = extend(fullExtent, aggregatedExtent);
 
-            this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
+            if (this.projectTileLayerExtent) fullExtent = extend(fullExtent, this.projectTileLayerExtent)
+            if (this.documentTileLayerExtent) fullExtent = extend(fullExtent, this.documentTileLayerExtent)
+
+            this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
             this.map.setView(new View({
                 extent: this.map.getView().calculateExtent(this.map.getSize()),
                 maxZoom: 40
             }));
-            this.map.getView().fit(extent, { padding: [10, 10, 10, 10] });
+            this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
 
             this.clearAllHighlights()
         },
@@ -427,13 +418,15 @@ export default getDocumentViewMapHook = () => {
             properties.fill = true;
             feature.setProperties(properties);
 
-            this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
+            if (coordinate) {
+                this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
 
-            const [r, g, b, a] = asArray(properties.color)
-            document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
-            document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
+                const [r, g, b, a] = asArray(properties.color)
+                document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
+                document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
 
-            this.identifierOverlay.setPosition(coordinate);
+                this.identifierOverlay.setPosition(coordinate);
+            }
         },
         setFillForParents(val) {
             if (!this.parentLayer) return;

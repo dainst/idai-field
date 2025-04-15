@@ -1,5 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
-  use Phoenix.Component
+  use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data
@@ -13,16 +13,17 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   attr :doc, Document, required: true
   attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
+  attr :geometry_indicator, :boolean, default: false
 
   def show(assigns) do
     ~H"""
-    <div class="flex mb-[2px]">
+    <div class="flex mb-[2px] ">
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
-        class="rounded-tl pl-2 rounded-bl text-black"
+        class="rounded-tl pl-2 rounded-bl"
         style={"background-color: #{@doc.category.color}; filter: saturate(50%); border-color: #{@doc.category.color}; border-width: 1px 1px 1px 0px;"}
       >
-        <div class="h-full bg-white/60 pl-2 pr-2 pt-3 pb-3 font-thin">
+        <div class="h-full bg-white/60 pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
           <I18n.text values={@doc.category.labels} />
         </div>
       </.link>
@@ -40,11 +41,16 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         <div>
           <span>{@doc.identifier}</span>
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
-          <%= if shortdescription do %>
-            <small class="ml-2 text-slate-600">
+          <small class="ml-2 text-slate-600">
+            <%= if shortdescription do %>
               <I18n.text values={shortdescription.value} />
-            </small>
-          <% end %>
+            <% end %>
+            <.icon
+              :if={@geometry_indicator and Data.get_field(@doc, "geometry") != nil}
+              name="hero-map"
+              class="mb-1"
+            />
+          </small>
           <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
           <div class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>

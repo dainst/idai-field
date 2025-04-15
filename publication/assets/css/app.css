@@ -1,8 +1,7 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
 @import "./open-sans.css";
 
+@plugin "../js/heroicons.tailwind.plugin.js";
 
 @font-face {
     font-family: 'Cargan';
@@ -12,9 +11,6 @@
 }
 
 :root {
-    --main-bg-color: #101213;
-    --main-bg-color-hover: #efefef;
-    --secondary-bg-color: white;
     --main-link-color: #5882c2;
     --main-link-color-hover: #375d97;
     --font-body: 'Open Sans', sans-serif;

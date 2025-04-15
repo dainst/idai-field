@@ -1,6 +1,4 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
-  alias FieldPublicationWeb.Presentation.Opengraph
-  alias FieldPublicationWeb.Presentation.Components.I18n
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -10,6 +8,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
+
+  alias FieldPublicationWeb.Presentation.Opengraph
+  alias FieldPublicationWeb.Presentation.Components.I18n
 
   alias FieldPublicationWeb.Presentation.DocumentComponents
   alias FieldPublicationWeb.Presentation.Components.PublicationSelection
@@ -36,6 +37,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:project_name, project_name)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)
+      |> assign(:map_detail?, false)
     }
   end
 
@@ -93,6 +95,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       push_patch(socket,
         to: ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
       )
+    }
+  end
+
+  def handle_event("toggle-map", _, %{assigns: %{map_detail?: map_detail?}} = socket) do
+    {
+      :noreply,
+      assign(socket, :map_detail?, !map_detail?)
     }
   end
 

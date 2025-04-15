@@ -1,14 +1,14 @@
 condition-section {
+  #valuelist-condition-checkboxes,
+  #boolean-condition-radio-buttons {
+    margin-top: 10px;
+  }
+
   .checkbox,
   .radio {
     label {
       padding-left: 3px;
       user-select: none;
-    }
-
-    input {
-      position: relative;
-      top: 11px;
     }
   }
 }

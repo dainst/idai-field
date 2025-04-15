@@ -53,6 +53,7 @@ import { InputTypeSelectorComponent } from './editor/field//widgets/input-type-s
 import { I18nSwitchComponent } from './editor/field/widgets/i18n-switch.component';
 import { ValuelistSelectorComponent } from './editor/field/widgets/valuelist-selector.component';
 import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-section.component';
+import { ConditionSectionComponent } from './editor/field/widgets/condition-section.component';
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-sect
         InputTypeSelectorComponent,
         I18nSwitchComponent,
         ValuelistSelectorComponent,
-        SubfieldsSectionComponent
+        SubfieldsSectionComponent,
+        ConditionSectionComponent
     ],
     providers: [
         ConfigurationChangeNotifications,

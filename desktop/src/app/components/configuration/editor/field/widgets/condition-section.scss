@@ -1,0 +1,14 @@
+condition-section {
+  .checkbox,
+  .radio {
+    label {
+      padding-left: 3px;
+      user-select: none;
+    }
+
+    input {
+      position: relative;
+      top: 11px;
+    }
+  }
+}

@@ -16,19 +16,6 @@
 
 .subfield-editor-modal-body {
   height: calc(100vh - 291px);
-
-  .checkbox,
-  .radio {
-    label {
-      padding-left: 3px;
-      user-select: none;
-    }
-
-    input {
-      position: relative;
-      top: 11px;
-    }
-  }
 }
 
 .subfield-editor-modal-footer {

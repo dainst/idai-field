@@ -1,0 +1,52 @@
+<div *ngIf="isVisible()" class="configuration-editor-section mb-3">
+    <div *ngIf="type === 'field'"
+         class="configuration-editor-section-title"
+         i18n="@@configuration.conditionalField">
+        Bedingung für Anzeige des Feldes
+    </div>
+    <div *ngIf="type === 'subfield'"
+         class="configuration-editor-section-title"
+         i18n="@@configuration.conditionalSubfield">
+        Bedingung für Anzeige des Unterfeldes
+    </div>
+
+    <select id="condition-field-select" [(ngModel)]="condition[type + 'Name']"
+            (change)="resetConditionValues()" class="form-control">
+        <option value="" i18n="@@configuration.condition.none">- Keine -</option>
+        <option *ngFor="let field of getConditionFields()" [value]="field.name">
+            {{getFieldLabel(field)}}
+        </option>
+    </select>
+    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'valuelist'"
+         id="valuelist-condition-checkboxes">
+        <div *ngFor="let value of getConditionValues()" class="checkbox form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" [value]="value" type="checkbox"
+                    (click)="toggleConditionValue(value)"
+                    [checked]="isSelectedConditionValue(value)">
+                {{getValueLabel(value)}}
+            </label>
+        </div>
+    </div>
+    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'boolean'"
+         id="boolean-condition-radio-buttons">
+        <div class="radio form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio"    
+                        [value]="true"
+                        (click)="setConditionValue(true)"
+                        [checked]="condition.values === true">
+                <span i18n="@@boolean.yes">Ja</span>
+            </label>
+        </div>
+        <div class="radio form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio"    
+                        [value]="false"
+                        (click)="setConditionValue(false)"
+                        [checked]="condition.values === false">
+                <span i18n="@@boolean.no">Nein</span>
+            </label>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { is, isArray, on } from 'tsfun';
-import { Field, Labels, Named, Subfield, Condition, Valuelist, BaseField } from 'idai-field-core';
+import { Field, Labels, Named, Condition, Valuelist, BaseField } from 'idai-field-core';
 
 
 
@@ -30,7 +30,7 @@ export class ConditionSectionComponent {
     public getValueLabel = (valueId: string) => this.labels.getValueLabel(this.getConditionValuelist(), valueId);
 
 
-    public getConditionFields(): Array<Subfield> {
+    public getConditionFields(): Array<BaseField> {
 
         if (!this.availableFields) return [];
 

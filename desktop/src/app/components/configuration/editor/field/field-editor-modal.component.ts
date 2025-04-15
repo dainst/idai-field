@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, equal, intersection, isEmpty, Map, set, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
-    CustomFieldDefinition, DateConfiguration } from 'idai-field-core';
+    CustomFieldDefinition, DateConfiguration, Condition } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -34,6 +34,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public clonedField: Field|undefined;
     public hideable: boolean;
     public hidden: boolean;
+    public condition: Condition;
     public i18nCompatible: boolean;
     public subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     public dragging: boolean;
@@ -80,12 +81,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isCustomField = () => this.field.source === 'custom';
 
+    public getAvailableConditionFields = () => CategoryForm.getFields(this.category);
+
 
     public initialize() {
 
         super.initialize();
-
-        console.log('field:', this.field);
 
         this.selectableTargetCategories = this.getSelectableTargetCategories();
 
@@ -104,6 +105,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (!this.getClonedFieldDefinition().references) this.getClonedFieldDefinition().references = [];
         if (!this.getClonedFieldDefinition().subfields) this.getClonedFieldDefinition().subfields = [];
+        if (!this.getClonedFieldDefinition().condition) {
+            this.getClonedFieldDefinition().condition = Condition.getEmpty('field');
+        }
 
         this.clonedField = clone(this.field);
 
@@ -140,6 +144,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
+        }
+
+        if (!Condition.isValid(this.getClonedFieldDefinition().condition, 'field')) {
+            delete this.getClonedFieldDefinition().condition;
         }
 
         if (!this.isDateSectionVisible()) {
@@ -331,6 +339,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
+            || this.isConditionChanged()
             || this.isDateConfigurationChanged()
             || this.isSubfieldsChanged()
             || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
@@ -356,6 +365,20 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 && this.getClonedFieldDefinition()?.constraintIndexed === false)
             || (this.getCustomFieldDefinition()?.constraintIndexed === false
                 && this.getClonedFieldDefinition()?.constraintIndexed === undefined);
+    }
+
+
+    private isConditionChanged(): boolean {
+
+        const condition: Condition = Condition.isValid(this.getCustomFieldDefinition()?.condition, 'field')
+            ? this.getCustomFieldDefinition().condition
+            : Condition.getEmpty('field');
+
+        const clonedCondition: Condition = Condition.isValid(this.getClonedFieldDefinition()?.condition, 'field')
+            ? this.getClonedFieldDefinition().condition
+            : Condition.getEmpty('field');
+
+        return !equal(condition)(clonedCondition);
     }
 
 

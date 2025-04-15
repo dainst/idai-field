@@ -20,4 +20,20 @@ export module Condition {
                 || isArray(condition.values) && condition.values.length > 0
             );
     }
+
+
+    export function getEmpty(type: 'field'|'subfield'): Condition {
+        
+        const condition: Condition = {
+            values: undefined
+        };
+        
+        if (type === 'field') {
+            condition.fieldName = '';
+        } else {
+            condition.subfieldName = '';
+        }
+
+        return condition;
+    }
 }

@@ -83,7 +83,7 @@ export class SubfieldEditorModalComponent {
             inputType: this.subfield.inputType,
             references: clone(this.references) ?? [],
             valuelist: clone(this.subfield.valuelist),
-            condition: clone(this.subfield.condition) ?? { subfieldName: '', values: undefined }
+            condition: clone(this.subfield.condition) ?? Condition.getEmpty('subfield')
         };
     }
 

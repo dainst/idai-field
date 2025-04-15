@@ -20,5 +20,6 @@ export module CustomFieldDefinition {
 
 
 export const VALID_CUSTOM_FIELD_PROPERTIES = [
-    'inputType', 'mandatory', 'constraintIndexed', 'references', 'subfields', 'range', 'inverse', 'dateConfiguration'
+    'inputType', 'mandatory', 'constraintIndexed', 'references', 'condition', 'subfields', 'range', 'inverse',
+    'dateConfiguration'
 ];

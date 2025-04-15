@@ -10,6 +10,7 @@ export interface BaseFieldDefinition {
     fulltextIndexed?: boolean;
     source?: Field.SourceType;
     references?: string[];
+    condition?: ConditionDefinition;
     subfields?: Array<BaseSubfieldDefinition>;
     dateConfiguration?: DateConfiguration;
 }
@@ -19,13 +20,14 @@ export interface BaseSubfieldDefinition extends Named {
 
     inputType?: string;
     references?: string[];
-    condition?: BaseSubfieldConditionDefinition;
+    condition?: ConditionDefinition;
 }
 
 
-export interface BaseSubfieldConditionDefinition {
+export interface ConditionDefinition {
 
-    subfieldName: string;
+    fieldName?: string;
+    subfieldName?: string;
     values: string[]|boolean;
 }
 

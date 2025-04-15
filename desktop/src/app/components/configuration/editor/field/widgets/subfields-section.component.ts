@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { on, is, isArray, isString, isEmpty, Map } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, CustomFormDefinition,
-    CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, SubfieldCondition,
+    CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, Condition,
     Valuelists } from 'idai-field-core';
 import { InputType } from '../../../configuration-util';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from '../subfield-editor-modal.component';
@@ -61,7 +61,7 @@ export class SubfieldsSectionComponent {
     }
 
 
-    public getConditionSubfieldLabel(condition: SubfieldCondition): string {
+    public getConditionSubfieldLabel(condition: Condition): string {
 
         const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
 
@@ -69,7 +69,7 @@ export class SubfieldsSectionComponent {
     }
 
 
-    public getConditionValueLabels(condition: SubfieldCondition): string {
+    public getConditionValueLabels(condition: Condition): string {
 
         const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
 
@@ -268,7 +268,7 @@ export class SubfieldsSectionComponent {
     }
 
 
-    private static isValidSubfieldCondition(condition: SubfieldCondition): boolean {
+    private static isValidSubfieldCondition(condition: Condition): boolean {
 
         return condition
             && condition.subfieldName

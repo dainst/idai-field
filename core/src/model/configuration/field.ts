@@ -38,10 +38,7 @@ export interface Field extends BaseField {
 }
 
 
-export interface Subfield extends BaseField {
-
-    condition?: SubfieldCondition;
-}
+export interface Subfield extends BaseField {}
 
 
 export interface BaseField extends I18N.LabeledValue, I18N.Described {
@@ -50,12 +47,14 @@ export interface BaseField extends I18N.LabeledValue, I18N.Described {
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
     valuelist?: Valuelist;
+    condition?: Condition;
 }
 
 
-export interface SubfieldCondition {
+export interface Condition {
 
-    subfieldName: string;
+    fieldName?: string;
+    subfieldName?: string;
     values: string[]|boolean;
 }
 

@@ -6,7 +6,7 @@ export { Dimension } from './input-types/dimension';
 export { Document, toResourceId } from './document/document';
 export { FeatureDocument } from './document/feature-document';
 export { FeatureResource } from './document/feature-resource';
-export { Field, BaseField, Subfield, SubfieldCondition } from './configuration/field';
+export { Field, BaseField, Subfield, Condition } from './configuration/field';
 export { FieldDocument } from './document/field-document';
 export { FieldGeometry, FieldGeometryType } from './document/field-geometry';
 export { FieldResource, FieldRelations } from './document/field-resource';

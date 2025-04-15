@@ -210,7 +210,7 @@ export class SubfieldsSectionComponent {
             delete subfieldDefinition.references;
         }
 
-        if (SubfieldsSectionComponent.isValidSubfieldCondition(editedSubfieldData.condition)) {
+        if (Condition.isValid(editedSubfieldData.condition, 'subfield')) {
             subfieldDefinition.condition = editedSubfieldData.condition;
             clonedSubfield.condition = editedSubfieldData.condition;
         } else {
@@ -265,16 +265,5 @@ export class SubfieldsSectionComponent {
         return this.clonedField.subfields.find(clonedSubfield => {
             return clonedSubfield.name === subfieldDefinition.name;
         });
-    }
-
-
-    private static isValidSubfieldCondition(condition: Condition): boolean {
-
-        return condition
-            && condition.subfieldName
-            && (condition.values === true
-                || condition.values === false
-                || isArray(condition.values) && condition.values.length > 0
-            );
     }
 }

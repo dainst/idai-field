@@ -1,0 +1,23 @@
+import { isArray } from 'tsfun';
+
+
+export interface Condition {
+
+    fieldName?: string;
+    subfieldName?: string;
+    values: string[]|boolean;
+}
+
+
+export module Condition {
+
+    export function isValid(condition: Condition, type: 'field'|'subfield'): boolean {
+
+        return condition
+            && condition[type + 'Name']
+            && (condition.values === true
+                || condition.values === false
+                || isArray(condition.values) && condition.values.length > 0
+            );
+    }
+}

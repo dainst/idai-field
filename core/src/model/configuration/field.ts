@@ -10,6 +10,7 @@ import { Valuelist } from './valuelist';
 import { Composite } from '../input-types/composite';
 import { DateConfiguration } from './date-configuration';
 import { DateSpecification, DateValidationResult } from '../input-types/date-specification';
+import { Condition } from './condition';
 
 
 /**
@@ -48,14 +49,6 @@ export interface BaseField extends I18N.LabeledValue, I18N.Described {
     defaultDescription?: I18N.String;
     valuelist?: Valuelist;
     condition?: Condition;
-}
-
-
-export interface Condition {
-
-    fieldName?: string;
-    subfieldName?: string;
-    values: string[]|boolean;
 }
 
 

@@ -1,4 +1,4 @@
-import { aFlow, is, isArray, isObject, isString, Map, Mapping, on } from 'tsfun';
+import { is, isArray, isObject, isString, Map, on } from 'tsfun';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/input-types/dating';
@@ -15,7 +15,7 @@ import { Constraints } from '../model/datastore/query';
 import { Named } from './named';
 import { Hierarchy, Labels } from '../services';
 import { I18N } from './i18n';
-import { Composite } from '../model';
+import { Composite, Condition } from '../model';
 import { StringUtils } from './string-utils';
 import { ValuelistUtil } from './valuelist-util';
 import { DateSpecification } from '../model/input-types/date-specification';
@@ -315,12 +315,14 @@ async function createFieldsViewGroups(groups: Array<Group>, resource: Resource,
 
 
 async function createFieldsViewGroup(group: Group, resource: Resource, projectConfiguration: ProjectConfiguration,
-                                     relationTargets: Map<Array<Document>>, labels: Labels, datastore: Datastore) {
+                                     relationTargets: Map<Array<Document>>, labels: Labels,
+                                     datastore: Datastore): Promise<FieldsViewGroup> {
 
     const fields: Array<FieldsViewField> = [];
+    const categoryFields: Array<Field> = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
     
     for (let field of group.fields) {
-        if (!field.visible) continue;
+        if (!field.visible || !Condition.isFulfilled(field.condition, resource, categoryFields, 'field')) continue;
         const fieldContent: any = getFieldContent(resource, field.name);
         if ((fieldContent !== undefined && fieldContent !== '')
                 || field.inputType === Field.InputType.DERIVED_RELATION) {

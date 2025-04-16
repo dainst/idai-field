@@ -1,7 +1,8 @@
-import { intersect, isArray, isObject } from 'tsfun';
-import { Valuelist } from '..';
+import { isObject } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { Field, Subfield } from '../configuration/field';
+import { Valuelist } from '../configuration/valuelist';
+import { Condition } from '../configuration/condition';
 
 
 /**
@@ -17,33 +18,8 @@ export module Composite {
             const subfieldDefinition: Subfield = subfields.find(subfield => subfield.name === subfieldName);
             return !subfieldDefinition
                 || !Field.isValidFieldData(entry[subfieldName], subfieldDefinition)
-                || !isConditionFulfilled(entry, subfieldDefinition, subfields);
+                || !Condition.isFulfilled(subfieldDefinition.condition, entry, subfields, 'subfield');
         }) === undefined;
-    }
-
-
-    export function isConditionFulfilled(entry: any, subfieldToCheck: Subfield, subfields: Array<Subfield>): boolean {
-
-        if (!subfieldToCheck.condition) return true;
-
-        const conditionSubfield: Subfield = subfields.find(subfield => {
-            return subfield.name === subfieldToCheck.condition.subfieldName;
-        });
-
-        const data: any = entry[conditionSubfield.name];
-        const fulfilled: boolean = data !== undefined
-            ? isArray(subfieldToCheck.condition.values)
-                ? isArray(data)
-                    ? intersect(data)(subfieldToCheck.condition.values).length > 0
-                    : subfieldToCheck.condition.values.includes(data)
-                : data === subfieldToCheck.condition.values
-            : false;
-
-        return fulfilled
-            ? conditionSubfield.condition
-                ? isConditionFulfilled(entry, conditionSubfield, subfields)
-                : true
-            : false
     }
 
     

@@ -1,4 +1,5 @@
-import { isArray } from 'tsfun';
+import { intersect, isArray } from 'tsfun';
+import { BaseField } from './field';
 
 
 export interface Condition {
@@ -19,6 +20,32 @@ export module Condition {
                 || condition.values === false
                 || isArray(condition.values) && condition.values.length > 0
             );
+    }
+
+
+    export function isFulfilled(condition: Condition, fieldContainer: any, fields: Array<BaseField>,
+                                type: 'field'|'subfield'): boolean {
+        
+        if (!condition) return true;
+
+        const conditionField: BaseField = fields.find(field => {
+            return field.name === condition[type + 'Name'];
+        });
+
+        const data: any = fieldContainer[conditionField.name];
+        const fulfilled: boolean = data !== undefined
+            ? isArray(condition.values)
+                ? isArray(data)
+                    ? intersect(data)(condition.values).length > 0
+                    : condition.values.includes(data)
+                : data === condition.values
+            : false;
+
+        return fulfilled
+            ? conditionField.condition
+                ? isFulfilled(conditionField.condition, fieldContainer, fields, type)
+                : true
+            : false
     }
 
 

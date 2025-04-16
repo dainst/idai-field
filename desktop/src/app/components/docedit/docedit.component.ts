@@ -146,9 +146,8 @@ export class DoceditComponent {
 
     public changeCategory(newCategory: string) {
 
-        const { invalidFields, invalidRelations } = this.documentHolder.changeCategories(newCategory);
-        this.showCategoryChangeFieldsWarning(invalidFields);
-        this.showCategoryChangeRelationsWarning(newCategory, invalidRelations);
+        const invalidFieldNames: string[] = this.documentHolder.changeCategories(newCategory);
+        this.showCategoryChangeFieldsWarning(invalidFieldNames);
         this.updateFields();
     }
 
@@ -326,21 +325,6 @@ export class DoceditComponent {
                 invalidFields
                     .map(this.getFieldLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
-            ]);
-        }
-    }
-
-
-    private showCategoryChangeRelationsWarning(newCategory: Name, invalidRelations: string[]) {
-
-        const category = this.projectConfiguration.getCategory(newCategory);
-
-        if (invalidRelations.length > 0) {
-            this.messages.add([
-                M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS,
-                invalidRelations
-                    .map((relationName: string) => this.labels.getFieldLabel(category, relationName))
-                    .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
             ]);
         }
     }

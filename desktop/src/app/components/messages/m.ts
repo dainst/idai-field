@@ -177,7 +177,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Docedit Package
     public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
     public static DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS = 'docedit.warning.categoryChange.fields';
-    public static DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS = 'docedit.warning.categoryChange.relations';
     public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
     public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
@@ -816,11 +815,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'warning'
         };
         this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS] = {
-            content: $localize `:@@messages.docedit.warning.categoryChange.fields:Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]`,
-            level: 'warning'
-        };
-        this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS] = {
-            content: $localize `:@@messages.docedit.warning.categoryChange.relations:Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]`,
+            content: $localize `:@@messages.docedit.warning.dataLoss.fields:Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]`,
             level: 'warning'
         };
         this.msgs[M.DOCEDIT_ERROR_SAVE] = {

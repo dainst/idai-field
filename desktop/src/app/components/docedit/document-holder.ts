@@ -45,14 +45,14 @@ export class DocumentHolder {
     }
 
 
-    public changeCategories(newCategory: string) {
+    /**
+     * @returns names of invalid fields that would be deleted when saving 
+     */
+    public changeCategories(newCategory: string): string[] {
 
         this.clonedDocument.resource.category = newCategory;
 
-        return {
-            invalidFields: this.validateFields(),
-            invalidRelations: this.validateRelationFields()
-        }
+        return this.validateFields().concat(this.validateRelationFields());
     }
 
 

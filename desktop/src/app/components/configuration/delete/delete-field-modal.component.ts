@@ -22,7 +22,7 @@ export class DeleteFieldModalComponent {
     constructor(public activeModal: NgbActiveModal) {}
 
 
-    public isInverseRelation = () => this.field['inverse'] !== undefined;
+    public isInverseRelation = () => this.field['inverse'] !== undefined && this.field['inverse'] !== this.field.name;
 
     public isDeletionAllowed = () => !this.isInverseRelation() && !this.getConditionalFieldName();
 

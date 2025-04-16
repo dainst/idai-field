@@ -42,6 +42,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public selectedTargetCategoryNames: string[];
     public availableInverseRelations: string[];
 
+    private inverseRelation: string|undefined;
+
     protected changeMessage = $localize `:@@configuration.fieldChanged:Das Feld wurde geändert.`;
 
 
@@ -113,6 +115,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
+        this.inverseRelation = this.getClonedFieldDefinition().inverse;
 
         this.subfieldI18nStrings = this.field.subfields?.reduce((result, subfield) => {
             result[subfield.name] = { label: subfield.label, description: subfield.description };
@@ -165,7 +168,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (this.isRelationSectionVisible()) {
             this.getClonedFieldDefinition().range = this.getRange();
-            if (this.getClonedFieldDefinition().inverse) this.updateInverseRelations();
+            if (this.inverseRelation) {
+                this.getClonedFieldDefinition().inverse = this.inverseRelation;
+                this.updateInverseRelations();
+            } else {
+                delete this.getClonedFieldDefinition().inverse
+            }
         } else {
             delete this.getClonedFieldDefinition().range;
             delete this.getClonedFieldDefinition().inverse;
@@ -307,19 +315,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public setInverseRelation(relationName) {
+    public setInverseRelation(relationName: string) {
 
-        if (relationName) {
-            this.getClonedFieldDefinition().inverse = relationName;
-        } else {
-            delete this.getClonedFieldDefinition().inverse;
-        }
+        this.inverseRelation = relationName?.length ? relationName : undefined;
     }
 
 
-    public isSelectedInverseRelation(relationName) {
+    public isSelectedInverseRelation(relationName: string) {
 
-        return this.getClonedFieldDefinition().inverse === relationName;
+        return this.inverseRelation === relationName;
     }
 
 
@@ -347,7 +351,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isDateConfigurationChanged()
             || this.isSubfieldsChanged()
             || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
-            || this.getCustomFieldDefinition()?.inverse !== this.getClonedFieldDefinition().inverse
+            || this.getCustomFieldDefinition()?.inverse !== this.inverseRelation
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
             || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),

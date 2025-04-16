@@ -145,7 +145,12 @@ describe('Validations', () => {
                             ]
                         },
                         { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
-                        { name: 'isBelow', label: 'isBelow', inputType: 'relation' }
+                        { name: 'isBelow', label: 'isBelow', inputType: 'relation' },
+                        { name: 'boolean', label: 'boolean', inputType: 'boolean' },
+                        { 
+                            name: 'conditional', label: 'conditional', inputType: 'input',
+                            condition: { fieldName: 'boolean', values: true }
+                        }
                     ]
 
             }]}, []],
@@ -1035,5 +1040,23 @@ describe('Validations', () => {
                 [ValidationErrors.MAX_CHARACTERS_EXCEEDED, 'T', 'shortInput', 10]
             );
         }
+    });
+
+
+    test('should report fields with unfulfilled condition', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                boolean: false,
+                conditional: 'ABC',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateConditionalFields(document.resource as any, projectConfiguration))
+            .toEqual(['conditional']);
     });
 });

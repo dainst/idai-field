@@ -1,8 +1,8 @@
 import { is, isArray, isString, and, isObject, to, equal } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
-    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite, 
-    DateSpecification, DateValidationResult } from 'idai-field-core';
+    validateUnsignedFloat, validateUnsignedInt, validateUrl, validateInt, Composite,  DateSpecification,
+    DateValidationResult, Condition } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -441,6 +441,27 @@ export module Validations {
                     }
                 }
                 if (!fieldFound) invalidFields.push(resourceField);
+            }
+        }
+
+        return invalidFields;
+    }
+
+
+    export function validateConditionalFields(resource: Resource|NewResource,
+                                              projectConfiguration: ProjectConfiguration): string[] {
+
+        const invalidFields: string[] = [];
+        const category: CategoryForm = projectConfiguration.getCategory(resource.category);
+        if (!category) return [];
+        
+        for (let fieldName in resource) {
+            if (resource.hasOwnProperty(fieldName)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!field?.condition) continue;
+                if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+                    invalidFields.push(fieldName);
+                }
             }
         }
 

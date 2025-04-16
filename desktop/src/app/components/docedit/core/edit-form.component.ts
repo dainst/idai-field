@@ -75,11 +75,11 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public shouldShow(groupName: string) {
 
         return (groupName === 'conflicts' && this.document._conflicts)
-            || this.getFields(groupName).filter(field => field.editable).length > 0;
+            || this.getGroupFields(groupName).filter(field => field.editable).length > 0;
     }
 
 
-    public getFields(groupName: string): Array<Field> {
+    public getGroupFields(groupName: string): Array<Field> {
 
         return this.groups.find((group: Group) => group.name === groupName).fields;
     }

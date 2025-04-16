@@ -193,7 +193,13 @@ export class DocumentHolder {
 
     private validateFields(): string[] {
 
-        return this.validateButKeepInvalidOldVersionFields(Validations.validateDefinedFields);
+        const validate = (resource: Resource, projectConfiguration: ProjectConfiguration) => {
+            return Validations.validateDefinedFields(resource, projectConfiguration).concat(
+                Validations.validateConditionalFields(resource, projectConfiguration)
+            );
+        };
+
+        return this.validateButKeepInvalidOldVersionFields(validate);
     }
 
 

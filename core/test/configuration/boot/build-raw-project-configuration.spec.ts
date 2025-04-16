@@ -1286,6 +1286,41 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('allow overwriting "required" setting in built-in configuration for common fields', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aCommon: { required: true }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aCommon'] }]
+                }
+            }
+        };
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'text' }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: { fields: {} }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            commonFields
+        );
+
+        expect(result['A'].groups[0].fields[0].name).toBe('aCommon');
+        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[0].required).toBe(true);
+    });
+
+
     it('throw error if field not found', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

@@ -573,7 +573,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     private isHideable(): boolean {
 
         return !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
-            && this.field.source !== 'custom';
+            && this.field.source !== 'custom'
+            && !this.field.required
     }
 
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource, Field,
     ProjectConfiguration } from 'idai-field-core';
 
@@ -18,6 +18,8 @@ export class CheckboxesComponent implements OnChanges {
     @Input() resource: Resource
     @Input() fieldContainer: any;
     @Input() field: Field;
+
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public valuelist: Valuelist;
 
@@ -49,6 +51,8 @@ export class CheckboxesComponent implements OnChanges {
         if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = [];
         if (!this.removeItem(item)) this.fieldContainer[this.field.name].push(item);
         if (this.fieldContainer[this.field.name].length === 0) delete this.fieldContainer[this.field.name];
+
+        this.onChanged.emit();
     }
 
 

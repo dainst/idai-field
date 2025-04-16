@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
-import { Condition, Document, Field, Group, Labels } from 'idai-field-core';
+import { Condition, Document, Field, Group, Labels, Resource } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { Messages } from '../../messages/messages';
+import { M } from '../../messages/m';
 
 
 @Component({
@@ -31,9 +33,12 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public groups: Array<Group> = [];
     public languages: Map<Language>;
 
+    private conditionsFulfilled: Map<boolean> = {};
+
 
     constructor(private elementRef: ElementRef,
-                private labels: Labels) {
+                private labels: Labels,
+                private messages: Messages) {
 
         this.languages = Languages.getAvailableLanguages();
     }
@@ -62,7 +67,18 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         }
         this.groups = this.groups.concat(this.extraGroups);
 
-        if (!this.shouldShow(this.activeGroup)) this.selectFirstNonEmptyGroup();              
+        if (!this.shouldShow(this.activeGroup)) this.selectFirstNonEmptyGroup();    
+        this.updateConditionsFulfilled();                  
+    }
+
+
+    /*
+     * Called for changes in fields of input types "dropdown", "radio", "checkboxes" and "boolean"
+     */
+    public onChanged() {
+
+        this.showDataDeletionWarningForUnfulfilledConditions();
+        this.updateConditionsFulfilled();
     }
 
 
@@ -87,6 +103,34 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public getGroupFields(groupName: string): Array<Field> {
 
         return this.groups.find((group: Group) => group.name === groupName).fields;
+    }
+
+
+    private updateConditionsFulfilled() {
+
+        this.conditionsFulfilled = this.fieldDefinitions.reduce((result, field) => {
+            result[field.name] = Condition.isFulfilled(
+                field.condition, this.document.resource, this.fieldDefinitions, 'field'
+            );
+            return result;
+        }, {});
+    }
+
+
+    private showDataDeletionWarningForUnfulfilledConditions() {
+
+        const removedFields: string[] = this.fieldDefinitions.filter(field => {
+            return this.conditionsFulfilled[field.name] && ! Condition.isFulfilled(
+                field.condition, this.document.resource, this.fieldDefinitions, 'field'
+            );
+        }).filter(field => {
+            return this.document.resource[field.name] !== undefined
+                || this.document.resource.relations[field.name];
+        }).map(field => this.labels.get(field));
+
+        if (removedFields.length) {
+            this.messages.add([M.DOCEDIT_WARNING_FIELD_DATA_DELETION, removedFields.join(', ')]);
+        }
     }
 
 

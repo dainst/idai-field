@@ -22,7 +22,8 @@
                              [fieldContainer]="document.resource"
                              [field]="field"
                              [languages]="languages"
-                             [identifierPrefix]="identifierPrefix"></edit-form-field>
+                             [identifierPrefix]="identifierPrefix"
+                             (onChanged)="onChanged.emit()"></edit-form-field>
         </div>
         <div *ngIf="!isValidFieldData(field)" class="card-block">
             <invalid-field-data [resource]="document['resource']"

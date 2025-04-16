@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy,
     ProjectConfiguration } from 'idai-field-core';
 
@@ -19,6 +19,8 @@ export class RadioComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() fieldContainer: any;
     @Input() field: any;
+    
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public valuelist: Valuelist;
 
@@ -48,12 +50,14 @@ export class RadioComponent implements OnChanges {
     public setValue(value: any) {
 
         this.fieldContainer[this.field.name] = value;
+        this.onChanged.emit();
     }
 
 
     public resetValue() {
 
         delete this.fieldContainer[this.field.name];
+        this.onChanged.emit();
     }
 
 

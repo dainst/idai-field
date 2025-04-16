@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { Map } from 'tsfun';
 import { Condition, Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
@@ -29,6 +29,9 @@ export class EditFormGroup implements OnChanges {
     @Input() originalDocument: Document;
     @Input() languages: Map<Language>;
     @Input() scrollTargetField: string;
+
+    // Detects changes in fields of input types "dropdown", "radio", "checkboxes" and "boolean"
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Datastore, Labels, Field, Valuelist, ValuelistUtil, Hierarchy, Resource,
     ProjectConfiguration } from 'idai-field-core';
 
@@ -18,6 +18,8 @@ export class DropdownComponent implements OnChanges {
     @Input() resource: Resource
     @Input() fieldContainer: any;
     @Input() field: Field;
+
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public valuelist: Valuelist;
 
@@ -51,6 +53,8 @@ export class DropdownComponent implements OnChanges {
         } else {
             this.fieldContainer[this.field.name] = newValue;
         }
+        
+        this.onChanged.emit();
     }
 
 

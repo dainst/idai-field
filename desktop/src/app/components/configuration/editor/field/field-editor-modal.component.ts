@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, equal, intersection, isEmpty, Map, set, to } from 'tsfun';
+import { clone, equal, intersection, isArray, isEmpty, Map, set, subsetOf, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
     CustomFieldDefinition, DateConfiguration, Condition } from 'idai-field-core';
@@ -129,6 +129,12 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
 
     public async confirm() {
+
+        try {
+            this.assertChangesDoNotViolateConditionalFields();
+        } catch (errWithParams) {
+            return this.messages.add(errWithParams);
+        }
 
         if (!this.field.valuelist && this.isValuelistSectionVisible()
                 && !this.getClonedFormDefinition().valuelists?.[this.field.name]) {
@@ -575,6 +581,29 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 this.clonedField.subfields.find(subfield => subfield.name === subfieldName)
             );
         });
+    }
+
+
+    private assertChangesDoNotViolateConditionalFields() {
+
+        const conditionalFields: Array<Field> = CategoryForm.getFields(this.category).filter(field => {
+            return field.condition?.fieldName === this.field.name;
+        });
+
+        const values: string[] = this.clonedField.valuelist
+            ? Object.keys(this.clonedField.valuelist.values)
+            : [];
+
+        for (let field of conditionalFields) {
+            if ((field.condition.values === true || field.condition.values === false)
+                    && this.getInputType() !== Field.InputType.BOOLEAN) {
+                throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE, this.labels.get(field)];
+            } else if (isArray(field.condition.values)
+                && (!Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType())
+                        || !subsetOf(values, field.condition.values))) {
+                throw [M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS, this.labels.get(field)];
+            }
+        }
     }
 
 

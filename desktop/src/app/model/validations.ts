@@ -51,8 +51,7 @@ export module Validations {
     }
 
 
-    export function assertCorrectnessOfUrls(document: Document|NewDocument,
-                                            projectConfiguration: ProjectConfiguration,
+    export function assertCorrectnessOfUrls(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
                                             previousDocumentVersion?: Document) {
 
         const previousInvalidFields: string[] = previousDocumentVersion
@@ -224,10 +223,8 @@ export module Validations {
     }
 
 
-    function assertValidityOfObjectArrays(document: Document|NewDocument,
-                                          projectConfiguration: ProjectConfiguration,
-                                          inputType: 'dating'|'dimension'|'literature'|'composite',
-                                          error: string,
+    function assertValidityOfObjectArrays(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
+                                          inputType: 'dating'|'dimension'|'literature'|'composite', error: string,
                                           isValid: (object: any, field: Field, option?: any) => boolean,
                                           previousDocumentVersion?: Document) {
 
@@ -349,8 +346,7 @@ export module Validations {
     }
 
 
-    export function getMissingProperties(resource: Resource|NewResource,
-                                         projectConfiguration: ProjectConfiguration) {
+    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration) {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<Field>
@@ -475,8 +471,7 @@ export module Validations {
     export function validateDefinedRelations(resource: Resource|NewResource,
                                              projectConfiguration: ProjectConfiguration): string[] {
 
-        const fields: Array<Relation> = projectConfiguration
-            .getRelationsForDomainCategory(resource.category);
+        const fields: Array<Relation> = projectConfiguration.getRelationsForDomainCategory(resource.category);
         const invalidFields: Array<any> = [];
 
         for (let relationField in resource.relations) {
@@ -522,8 +517,7 @@ export module Validations {
     }
 
 
-    export function validateUrls(resource: Resource|NewResource,
-                                 projectConfiguration: ProjectConfiguration,
+    export function validateUrls(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
                                  validationFunction: (value: string) => boolean): string[] {
 
         const projectFields: Array<Field> =
@@ -686,8 +680,7 @@ export module Validations {
     }
 
 
-    export function validateFields(resource: Resource|NewResource,
-                                   projectConfiguration: ProjectConfiguration,
+    export function validateFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
                                    inputType: string,
                                    isValid: (object: any, field: Field, options?: any) => boolean): string[] {
 

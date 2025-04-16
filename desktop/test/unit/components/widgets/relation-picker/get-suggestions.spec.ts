@@ -1,5 +1,5 @@
 import { doc, Relation, Document } from 'idai-field-core';
-import { getSuggestions } from '../../../../../../src/app/components/docedit/widgets/relationpicker/get-suggestions';
+import { getSuggestions } from '../../../../../src/app/components/widgets/relation-picker/get-suggestions';
 
 
 /**

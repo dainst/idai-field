@@ -49,6 +49,12 @@ export module WarningFilters {
                 type: 'invalidFields'
             },
             {
+                label: translations.getTranslation('warnings.missingMandatoryFields'),
+                constraintName: 'missingMandatoryFields:exist',
+                count: 0,
+                type: 'missingMandatoryFields'
+            },
+            {
                 label: translations.getTranslation('warnings.outlierValues'),
                 constraintName: 'outliers:exist',
                 count: 0,

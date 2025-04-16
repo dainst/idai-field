@@ -1,5 +1,5 @@
 import { flow, left, reverse, isString, isArray } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Field, I18N, Subfield } from 'idai-field-core';
+import { Dating, Dimension, Literature, OptionalRange, Field, I18N, Subfield, DateSpecification } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
 import { CsvExportConsts, HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
@@ -30,6 +30,8 @@ export module CSVMatrixExpansion {
         );
     const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
 
+    const expandDateItems = CSVExpansion.expandHomogeneousItems(rowsWithDateElementsExpanded, 3);
+
 
     export function expandI18nString(fieldDefinitions: Array<Field>, projectLanguages: string[], inputType: Field.InputType) {
 
@@ -47,7 +49,7 @@ export module CSVMatrixExpansion {
                     expandI18nStrings
                 )
             );
-        }
+        };
     }
 
 
@@ -68,7 +70,7 @@ export module CSVMatrixExpansion {
                     expandI18nStrings
                 )
             );
-        }
+        };
     }
 
 
@@ -79,7 +81,7 @@ export module CSVMatrixExpansion {
             return flow(
                 headingsAndMatrix,
                 left,
-                CsvExportUtils.getIndices(fieldDefinitions, 'dropdownRange'),
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.DROPDOWNRANGE),
                 reverse,
                 CSVExpansion.objectExpand(
                     headingsAndMatrix,
@@ -87,7 +89,26 @@ export module CSVMatrixExpansion {
                     expandOptionalRangeItems
                 )
             );
-        }
+        };
+    }
+
+
+    export function expandDate(fieldDefinitions: Array<Field>) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.DATE),
+                reverse,
+                CSVExpansion.objectExpand(
+                    headingsAndMatrix,
+                    CSVHeadingsExpansion.expandDateHeadings,
+                    expandDateItems
+                )
+            );
+        };
     }
 
 
@@ -108,7 +129,7 @@ export module CSVMatrixExpansion {
                     expandDatingItems
                 )
             );
-        }
+        };
     }
 
 
@@ -129,7 +150,7 @@ export module CSVMatrixExpansion {
                     expandDimensionItems
                 )
             );
-        }
+        };
     }
 
 
@@ -150,7 +171,7 @@ export module CSVMatrixExpansion {
                     expandLiteratureItems
                 )
             );
-        }
+        };
     }
 
 
@@ -171,7 +192,7 @@ export module CSVMatrixExpansion {
                     expandCompositeItems
                 )
             );
-        }
+        };
     }
 
 
@@ -188,6 +209,20 @@ export module CSVMatrixExpansion {
     }
 
 
+    function rowsWithOptionalRangeElementsExpanded(optionalRange: OptionalRange<string>): string[] {
+
+        const { value, endValue } = optionalRange;
+        return [value, endValue ?? ''];
+    }
+
+
+    function rowsWithDateElementsExpanded(date: DateSpecification): string[] {
+
+        const { value, endValue, isRange } = date;
+        return [value ?? '', endValue ?? '', isRange ? 'true' : 'false'];
+    }
+
+
     function rowsWithDatingElementsExpanded(languages: string[]) {
         
         return (dating: Dating): string[] => {
@@ -197,7 +232,7 @@ export module CSVMatrixExpansion {
             if (type === 'scientific') begin = undefined;
 
             const expandedDating = [
-                type ? type : '',
+                type ?? '',
                 begin?.inputType ?? '',
                 begin?.inputYear ? begin.inputYear.toString() : '',
                 end?.inputType ?? '',
@@ -212,14 +247,7 @@ export module CSVMatrixExpansion {
             if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
 
             return expandedDating;
-        }
-    }
-
-
-    function rowsWithOptionalRangeElementsExpanded(optionalRange: OptionalRange<string>): string[] {
-
-        const { value, endValue } = optionalRange;
-        return [value, endValue ? endValue : ''];
+        };
     }
 
 
@@ -243,7 +271,7 @@ export module CSVMatrixExpansion {
             if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
 
             return expandedDimension as string[];
-        }
+        };
     }
 
 
@@ -279,7 +307,7 @@ export module CSVMatrixExpansion {
                 }
                 return result;
             }, []);
-        }
+        };
     }
 
 

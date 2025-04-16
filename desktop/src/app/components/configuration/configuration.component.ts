@@ -506,6 +506,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         );
 
         componentInstance.field = field;
+        componentInstance.category = category;
 
         this.modals.awaitResult(result,
             () => this.deleteField(category, field),

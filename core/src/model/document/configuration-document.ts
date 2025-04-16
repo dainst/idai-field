@@ -14,6 +14,7 @@ import { ConfigReader } from '../../configuration/boot/config-reader';
 import { getConfigurationName } from '../../configuration/project-configuration-names';
 import { sampleDataLabels } from '../../datastore/sampledata/sample-data-labels';
 import { ScanCodeConfiguration } from '../configuration/scan-code-configuration';
+import { ConfigurationMigrator } from '../../configuration/configuration-migrator';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -32,13 +33,19 @@ export namespace ConfigurationDocument {
                                                    projectIdentifier: string,
                                                    username: string): Promise<ConfigurationDocument> {
 
+        let configurationDocument: ConfigurationDocument;
+
         try {
-            return await getFunction('configuration') as ConfigurationDocument;
+            configurationDocument = await getFunction('configuration') as ConfigurationDocument;
         } catch (_) {
-            return await createConfigurationDocumentFromFile(
+            configurationDocument = await createConfigurationDocumentFromFile(
                 configReader, projectIdentifier, username
             );
         }
+
+        if (configurationDocument) ConfigurationMigrator.migrate(configurationDocument.resource);
+
+        return configurationDocument;
     }
 
 

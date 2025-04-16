@@ -30,6 +30,8 @@ import { DefaultFieldViewComponent } from './document-info/fields-view/default-f
 import { UrlFieldViewComponent } from './document-info/fields-view/url-field-view.component';
 import { SearchableSelectComponent } from './searchable-select.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
+import { RelationPickerGroupComponent } from './relation-picker/relation-picker-group.component';
+import { RelationPickerComponent } from './relation-picker/relation-picker.component';
 
 
 @NgModule({
@@ -65,6 +67,8 @@ import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.c
         QrCodeScannerModalComponent,
         DeletionInProgressModalComponent,
         SearchableSelectComponent,
+        RelationPickerGroupComponent,
+        RelationPickerComponent,
         SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],
     providers: [
@@ -86,7 +90,9 @@ import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.c
         EditSaveDialogComponent,
         QrCodeScannerModalComponent,
         LanguagesListComponent,
-        SearchableSelectComponent
+        SearchableSelectComponent,
+        RelationPickerGroupComponent,
+        RelationPickerComponent
     ]
 })
 

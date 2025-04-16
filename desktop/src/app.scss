@@ -12,6 +12,7 @@ $mdi-font-path: 'fonts' !default;
 @import 'app/components/spinner';
 @import 'app/components/buttons';
 @import 'app/components/slider';
+@import 'app/components/relations';
 @import 'app/components/navbar/navbar';
 @import 'app/components/default-page';
 @import 'app/components/resources/resources';
@@ -305,7 +306,10 @@ select.form-control:not([size]):not([multiple]) {
   transition: none;
 }
 
-/* wider modals */
+.modal-md {
+  min-width: 1135px;
+}
+
 .modal-lg {
   min-width: 86%;
 }

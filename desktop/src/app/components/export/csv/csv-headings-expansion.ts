@@ -1,5 +1,5 @@
 import { flatMap, range } from 'tsfun';
-import { Field, I18N, OptionalRange, Subfield } from 'idai-field-core';
+import { DateSpecification, Field, I18N, OptionalRange, Subfield } from 'idai-field-core';
 import { CsvExportConsts } from './csv-export-consts';
 
 
@@ -42,6 +42,16 @@ export module CSVHeadingsExpansion {
         return [
             fieldName + OBJECT_SEPARATOR + OptionalRange.VALUE,
             fieldName + OBJECT_SEPARATOR + OptionalRange.ENDVALUE
+        ];
+    }
+
+
+    export function expandDateHeadings(fieldName: string) {
+
+        return [
+            fieldName + OBJECT_SEPARATOR + DateSpecification.VALUE,
+            fieldName + OBJECT_SEPARATOR + DateSpecification.END_VALUE,
+            fieldName + OBJECT_SEPARATOR + DateSpecification.IS_RANGE
         ];
     }
 

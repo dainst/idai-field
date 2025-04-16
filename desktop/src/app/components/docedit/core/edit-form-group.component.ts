@@ -1,6 +1,6 @@
-import { Component, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { Map } from 'tsfun';
-import { Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
+import { Condition, Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 
@@ -22,12 +22,16 @@ type StratigraphicalRelationInfo = {
  */
 export class EditFormGroup implements OnChanges {
 
-    @Input() fieldDefinitions: Array<Field>;
+    @Input() groupFields: Array<Field>;
+    @Input() categoryFields: Array<Field>;
     @Input() identifierPrefix: string|undefined;
     @Input() document: Document;
     @Input() originalDocument: Document;
     @Input() languages: Map<Language>;
     @Input() scrollTargetField: string;
+
+    // Detects changes in fields of input types "dropdown", "radio", "checkboxes" and "boolean"
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };
@@ -50,7 +54,9 @@ export class EditFormGroup implements OnChanges {
 
     public shouldShow(field: Field): boolean {
 
-        return field !== undefined && field.editable === true;
+        return field !== undefined
+            && field.editable === true
+            && Condition.isFulfilled(field.condition, this.document.resource, this.categoryFields, 'field');
     }
 
 
@@ -109,7 +115,7 @@ export class EditFormGroup implements OnChanges {
 
         return fieldData === undefined
             ? true
-            : Field.isValidFieldData(fieldData, field);
+            : Field.isValidFieldData(fieldData, field, true);
     }
 
 
@@ -118,7 +124,7 @@ export class EditFormGroup implements OnChanges {
         this.labels = {};
         this.descriptions = {};
 
-        this.fieldDefinitions.forEach(field => {
+        this.groupFields.forEach(field => {
             const { label, description } = this.labelsService.getLabelAndDescription(field);
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;
@@ -140,14 +146,14 @@ export class EditFormGroup implements OnChanges {
 
         await AngularUtility.refresh();
 
-        const field: Field = this.fieldDefinitions.find(fieldDefinition => {
+        const field: Field = this.groupFields.find(fieldDefinition => {
             return fieldDefinition.name === this.scrollTargetField;
         });
         const element: HTMLElement|null = document.getElementById(this.getFieldId(field));
         if (!element) return;
 
         await this.scrollToElement(element);
-        await this.focusField(element);
+        if (field.inputType !== Field.InputType.DATE) await this.focusField(element);
 
         this.scrollTargetField = undefined;
     }

@@ -1,0 +1,14 @@
+workflow-step-link-button {
+    .circular-button {
+      left: calc(50% - 12px);
+      width: 41px;
+      height: 41px;
+      color: white;
+      background-color: $primary-button-color;
+
+      &:hover {
+        background-color: $primary-highlight-color;
+      }
+    }
+  }
+  

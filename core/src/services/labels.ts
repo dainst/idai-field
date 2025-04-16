@@ -64,11 +64,11 @@ export class Labels {
     }
 
 
-    public getRelationLabel(relationName: string, relations: Array<Relation>): string {
+    public getRelationLabel(relation: Relation|string, relations?: Array<Relation>): string {
 
-        const relation: Relation = relations.find(relation => {
-            return relation.name === relationName;
-        });
+        if (typeof(relation) === 'string') {
+            relation = relations.find(entry => entry.name === relation);
+        }
         if (!relation) return undefined;
 
         return I18N.getLabel(relation, this.getLanguages());

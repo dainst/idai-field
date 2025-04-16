@@ -1818,6 +1818,15 @@ The data entered in a field does not correspond to the input type selected for t
 * Button *Convert field data*: The data is automatically converted to the correct format for the respective input type. Optionally, you can have the data converted for all resources where invalid data has been entered in the same field. Please note that automatic conversion is not possible in all cases and this button is therefore not always available.
 * Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which invalid data has been entered in the same field (valid data remains in the original field).
 
+### Missing mandatory fields
+No data has been entered in a field configured as mandatory.
+
+#### Possible causes
+* The field was configured as mandatory in the configuration editor after resource creation.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to fill in the mandatory field.
+
 ### Value not included in valuelist
 One or more values are entered in a field that are not contained in the valuelist configured for the field.
 

@@ -1,0 +1,58 @@
+workflow-step-state {
+  .mdi {
+    font-size: 25px;
+
+    &.mdi-calendar-month {
+      color: #454545;
+
+      &.selected-state:hover {
+        color: #818181;
+      }
+    }
+
+    &.mdi-dots-horizontal-circle {
+      color: $primary-button-color;
+
+      &.selected-state:hover {
+        color: $primary-highlight-color;
+      }
+    }
+
+    &.mdi-check-circle {
+      color: $green-button-color;
+
+      &.selected-state:hover {
+        color: color.adjust($green-button-color, $lightness: 5%);
+      }
+    }
+
+    &.mdi-close-circle {
+      color: $red-button-color;
+
+      &.selected-state:hover {
+        color: color.adjust($red-button-color, $lightness: 20%);
+      }
+    }
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown-menu {
+    .dropdown-item {
+      font-size: 14px;
+      cursor: default;
+
+      .mdi {
+        font-size: 19px;
+      }
+
+      .state-label {
+        position: relative;
+        bottom: 2px;
+        left: 10px;
+      }
+    }
+  }
+}

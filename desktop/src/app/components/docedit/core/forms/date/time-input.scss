@@ -1,0 +1,58 @@
+time-input {
+  display: flex;
+  width: 88px;
+
+  input {
+    height: 33px;
+    text-align: center;
+    cursor: text;
+
+    &.with-time-suffix,
+    &.with-am-pm-switch {
+      width: 61px;
+      border-right: none;
+    }
+
+    &:focus {
+      border-color: #7998cb !important;
+    }
+  }
+
+  input::-webkit-calendar-picker-indicator {
+    display: none !important;
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+  }
+
+  .time-suffix,
+  .am-pm-switch {
+    height: 33px;
+    position: relative;
+    right: 9px;
+    padding-top: 6px;
+    padding-right: 13px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-left: none;
+    border-radius: 0;
+    transition: border-color 0.15s ease-in-out;
+    font-size: 13px;
+    user-select: none;
+
+    &.focused {
+      border-color: #7998cb;
+    }
+  }
+
+  .am-pm-switch {
+    width: 34px;
+
+    &:hover {
+      color: $primary-button-color;
+    }
+  }
+}

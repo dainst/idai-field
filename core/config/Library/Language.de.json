@@ -56,14 +56,6 @@
       "label": "Beschreibung",
       "description": "Freies Beschreibungsfeld"
     },
-    "beginningDate": {
-      "label": "Startdatum",
-      "description": "Datum, an dem die Aufnahme der Ressource begonnen wurde"
-    },
-    "endDate": {
-      "label": "Enddatum",
-      "description": "Datum, an dem die Aufnahme der Ressource abgeschlossen wurde"
-    },
     "processor": {
       "label": "Bearbeiterin/Bearbeiter",
       "description": "Die Person(en), die für die Ressource oder das Objekt während der Kampagne hauptverantwortlich ist/sind. Wichtig: Die Namen der Personen, die den Eintrag in der Datenbank eintragen bzw. bearbeiten, werden automatisch gespeichert und müssen daher hier nicht angegeben werden."
@@ -1616,6 +1608,14 @@
     "StorageBag": {
       "label": "Tüte",
       "fields": {}
+    },
+    "WorkflowStep": {
+      "label": "Arbeitsschritt",
+      "fields": {
+        "state": {
+          "label": "Status"
+        }
+      }
     }
   },
   "forms": {

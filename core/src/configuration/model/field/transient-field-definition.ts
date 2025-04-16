@@ -7,6 +7,7 @@ import { LibrarySubfieldDefinition } from './library-field-definition';
 export interface TransientFieldDefinition extends BuiltInFieldDefinition, I18N.LabeledValue, I18N.Described {
 
     valuelist?: Valuelist;
+    mandatory?: boolean;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
     defaultConstraintIndexed?: boolean;

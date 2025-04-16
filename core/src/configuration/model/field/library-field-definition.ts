@@ -21,5 +21,6 @@ export const VALID_LIBRARY_FIELD_PROPERTIES = [
     'fulltextIndexed',
     'references',
     'selectable',
-    'subfields'
+    'subfields',
+    'dateConfiguration'
 ];

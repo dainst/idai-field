@@ -1,7 +1,7 @@
 import { AfterViewChecked, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { isEmpty } from 'tsfun';
 import { Relation, Resource, Document } from 'idai-field-core';
-import { AngularUtility } from '../../../../angular/angular-utility';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 /**
@@ -16,6 +16,7 @@ export class RelationPickerGroupComponent implements OnChanges, AfterViewChecked
 
     @Input() resource: Resource;
     @Input() relationDefinition: Relation;
+    @Input() createIfEmpty: boolean = false;
 
     @ViewChild('plusButton') plusButtonElement: ElementRef;
 
@@ -25,9 +26,13 @@ export class RelationPickerGroupComponent implements OnChanges, AfterViewChecked
     private autoScroll: boolean = false;
 
 
-    public ngOnChanges() {
+    public async ngOnChanges() {
 
         if (this.resource) this.relations = this.resource.relations;
+
+        if (this.createIfEmpty && !this.relations[this.relationDefinition.name]?.length) {
+            await this.createRelation();
+        }
     }
 
 

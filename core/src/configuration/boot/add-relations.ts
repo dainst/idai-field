@@ -1,9 +1,9 @@
 import { isEmpty, not, Map } from 'tsfun';
 import { Relation } from '../../model/configuration/relation';
-import { Named } from '../../tools/named';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { Field } from '../../model/configuration/field';
 import { getParentForm } from './get-parent-form';
+import { buildWorkflowRelations } from './build-workflow-relations';
 
 
 /**
@@ -17,7 +17,8 @@ export function addRelations(builtInRelations: Array<Relation>) {
         let [forms, relations] = configuration;
         if (!relations) return;
 
-        const relationsToAdd = builtInRelations.concat(getCustomRelations(forms));
+        const relationsToAdd = builtInRelations.concat(getCustomRelations(forms))
+            .concat(buildWorkflowRelations(forms));
 
         for (let relationToAdd of relationsToAdd) {
             relations.splice(0, 0, relationToAdd);
@@ -34,8 +35,7 @@ export function addRelations(builtInRelations: Array<Relation>) {
 
 function getCustomRelations(forms: Map<TransientFormDefinition>): Array<Relation> {
 
-    return Object.keys(forms).reduce((result, formName) => {
-        const form = forms[formName];
+    return Object.values(forms).reduce((result, form) => {
         const relations = Object.values(form.fields).filter(field => {
             if (field.inputType !== Field.InputType.RELATION) return false;
             return !getParentForm(form, Object.values(forms))?.fields[field.name];

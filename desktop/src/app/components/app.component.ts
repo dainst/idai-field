@@ -133,6 +133,12 @@ export class AppComponent {
             'to', $localize `:@@util.optionalRange.to:, bis: `
         );
         this.utilTranslations.addTranslation(
+            'toDate', $localize `:@@util.date.to:bis`
+        );
+        this.utilTranslations.addTranslation(
+            'unspecifiedDate', $localize `:@@util.date.unspecified:Unbestimmtes Datum`
+        );
+        this.utilTranslations.addTranslation(
             'true', $localize `:@@boolean.yes:Ja`
         );
         this.utilTranslations.addTranslation(
@@ -156,6 +162,10 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'warnings.invalidFieldData',
             $localize `:@@util.warnings.invalidFieldData:Ungültige Felddaten`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.missingMandatoryFields',
+            $localize `:@@util.warnings.missingMandatoryFields:Nicht ausgefüllte Pflichtfelder`
         );
         this.utilTranslations.addTranslation(
             'warnings.outlierValues',

@@ -54,6 +54,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.invalidField">
                             Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingMandatoryField">
+                            Nicht ausgefülltes Pflichtfeld <b>{{getFieldLabel(section)}}</b>
+                        </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
@@ -115,10 +119,39 @@
                                 Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
                             </span>
                         </span>
-                        <span *ngIf="section.type === 'invalidFields'"
+                        <span *ngIf="section.type === 'invalidFields' && !section.dateValidationError"
                               i18n="@@navbar.taskbar.warnings.info.invalidField">
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'invalidFields' && section.dateValidationError">
+                            <span i18n="@@navbar.taskbar.warnings.info.invalidField.date">
+                                Die in diesem Feld eingetragene Datumsangabe ist ungültig.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'rangeNotAllowed'"
+                                  i18n="@@navbar.taskbar.warnings.info.invalidField.date.rangeNotAllowed">
+                                Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'singleNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.singleNotAllowed">
+                                Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotAllowed">
+                                Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotSet'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotSet">
+                                Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'endDateBeforeBeginningDate'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.endDateBeforeBeginningDate">
+                                Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.
+                            </span>
+                        </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.info.missingMandatoryField">
+                            In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
@@ -229,9 +262,9 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalidFields' || section.type === 'invalidRelationTargets'
-                            || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
-                            || section.type === 'nonUniqueIdentifier'">
+                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingMandatoryFields'
+                            || section.type === 'invalidRelationTargets' || section.type === 'missingIdentifierPrefix'
+                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>

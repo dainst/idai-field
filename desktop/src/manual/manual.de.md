@@ -1829,6 +1829,15 @@ Die in ein Feld eingetragenen Daten entsprechen nicht dem Eingabetyp, der für d
 * Button *Felddaten konvertieren*: Die Daten werden automatisch in das korrekte Format des jeweiligen Eingabetyps konvertiert. Optional können Sie die Daten bei allen Ressourcen konvertieren lassen, bei denen im gleichen Feld ungültige Daten eingetragen sind. Bitte beachten Sie, dass eine automatische Konvertierung nicht in allen Fällen möglich ist und dieser Button daher nicht immer zur Verfügung steht.
 * Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld verschoben. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen im gleichen Feld ungültige Daten eingetragen sind (gültige Daten verbleiben im ursprünglichen Feld).
 
+### Nicht ausgefüllte Pflichtfelder
+In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
+
+#### Mögliche Ursachen
+* Das Feld wurde im Konfigurationseditor als Pflichtfeld konfiguriert, nachdem die Ressource angelegt wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um das Pflichtfeld auszufüllen.
+
 ### Nicht in Werteliste enthaltener Wert
 In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
 

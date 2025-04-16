@@ -1,0 +1,33 @@
+<div *ngIf="topLevelCategoriesArray">
+    <div *ngIf="hasMultipleCategoryOptions()"
+         class="circular-button green-button"
+         [ngbPopover]="categoryPickerMenu"
+         #popover="ngbPopover"
+         triggers="manual"
+         autoClose="outside"
+         (click)="popover.toggle();"
+         placement="top">
+        <span class="mdi mdi-plus"></span>
+    </div>
+
+    <div *ngIf="!hasMultipleCategoryOptions()"
+         class="circular-button category-button"
+         (click)="selectCategory(topLevelCategoriesArray[0])">
+        <category-icon [category]="topLevelCategoriesArray[0].name" size="41"></category-icon>
+        <div class="plus-sign-circle">
+            <span class="mdi mdi-plus mdi-18px"></span>
+        </div>
+    </div>
+</div>
+
+<ng-template #categoryPickerMenu>
+    <div>
+        <div id="category-picker-menu">
+            <div class="popover-custom-title">
+                <span i18n="@@resources.plusButton.selectCategory">Bitte wählen Sie eine Kategorie aus.</span>
+            </div>
+            <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
+                             (onCategoryPicked)="selectCategory($event)"></category-picker>
+        </div>
+    </div>
+</ng-template>

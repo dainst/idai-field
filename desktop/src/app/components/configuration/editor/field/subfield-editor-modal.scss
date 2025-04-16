@@ -16,19 +16,6 @@
 
 .subfield-editor-modal-body {
   height: calc(100vh - 291px);
-
-  #valuelist-condition-checkboxes,
-  #boolean-condition-radio-buttons {
-    margin-top: 10px;
-  }
-
-  .checkbox,
-  .radio {
-    label {
-      padding-left: 3px;
-      user-select: none;
-    }
-  }
 }
 
 .subfield-editor-modal-footer {

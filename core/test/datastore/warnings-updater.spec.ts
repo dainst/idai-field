@@ -75,6 +75,11 @@ describe('WarningsUpdater', () => {
                         {
                             name: 'number',
                             inputType: Field.InputType.FLOAT
+                        },
+                        {
+                            name: 'mandatoryField',
+                            inputType: Field.InputType.INPUT,
+                            mandatory: true
                         }
                     ]
                 }
@@ -97,6 +102,7 @@ describe('WarningsUpdater', () => {
 
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
+        documents[2].resource.mandatoryField = 'text';
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
 
@@ -107,12 +113,14 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings).toEqual({
             unconfiguredFields: ['unconfiguredField', 'unconfiguredRelation'],
             invalidFields: ['number'],
+            missingMandatoryFields: ['mandatoryField'],
             conflicts: true,
             missingIdentifierPrefix: true
         });
         expect(documents[1].warnings).toEqual({
             unconfiguredFields: [],
             invalidFields: [],
+            missingMandatoryFields: [],
             unconfiguredCategory: true
         });
         expect(documents[2].warnings).toBeUndefined();

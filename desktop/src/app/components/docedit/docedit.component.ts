@@ -321,7 +321,7 @@ export class DoceditComponent {
 
         if (invalidFields.length > 0) {
             this.messages.add([
-                M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS,
+                M.DOCEDIT_WARNING_FIELD_DATA_DELETION,
                 invalidFields
                     .map(this.getFieldLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)

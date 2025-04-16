@@ -131,25 +131,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public async confirm() {
 
         try {
-            this.assertChangesDoNotViolateConditionalFields();
-        } catch (errWithParams) {
-            return this.messages.add(errWithParams);
-        }
-
-        if (!this.field.valuelist && this.isValuelistSectionVisible()
-                && !this.getClonedFormDefinition().valuelists?.[this.field.name]) {
-            return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
-        }
-
-        if (this.getClonedFieldDefinition().subfields?.length < 2 && this.isSubfieldsSectionVisible()) {
-            return this.messages.add([M.CONFIGURATION_ERROR_NO_SUBFIELDS]);
-        }
-
-        if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
-            return this.messages.add([M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES]);
-        }
-
-        try {
+            this.assertChangesAreValid();
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
@@ -581,6 +563,25 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 this.clonedField.subfields.find(subfield => subfield.name === subfieldName)
             );
         });
+    }
+
+
+    private assertChangesAreValid() {
+
+        this.assertChangesDoNotViolateConditionalFields();
+
+        if (!this.field.valuelist && this.isValuelistSectionVisible()
+                && !this.getClonedFormDefinition().valuelists?.[this.field.name]) {
+            throw [M.CONFIGURATION_ERROR_NO_VALUELIST];
+        }
+
+        if (this.getClonedFieldDefinition().subfields?.length < 2 && this.isSubfieldsSectionVisible()) {
+            throw [M.CONFIGURATION_ERROR_NO_SUBFIELDS];
+        }
+
+        if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
+            throw [M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES];
+        }
     }
 
 

@@ -309,7 +309,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public setInverseRelation(relationName) {
 
-        this.getClonedFieldDefinition().inverse = relationName;
+        if (relationName) {
+            this.getClonedFieldDefinition().inverse = relationName;
+        } else {
+            delete this.getClonedFieldDefinition().inverse;
+        }
     }
 
 

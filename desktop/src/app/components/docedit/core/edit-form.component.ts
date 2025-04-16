@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
-import { Document, Field, Group, Labels } from 'idai-field-core';
+import { Condition, Document, Field, Group, Labels } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 
@@ -61,6 +61,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             this.groups.push(group);
         }
         this.groups = this.groups.concat(this.extraGroups);
+
+        if (!this.shouldShow(this.activeGroup)) this.selectFirstNonEmptyGroup();              
     }
 
 
@@ -75,13 +77,22 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public shouldShow(groupName: string) {
 
         return (groupName === 'conflicts' && this.document._conflicts)
-            || this.getGroupFields(groupName).filter(field => field.editable).length > 0;
+            || this.getGroupFields(groupName).filter(field => {
+                return field.editable
+                    && Condition.isFulfilled(field.condition, this.document.resource, this.fieldDefinitions, 'field');
+            }).length > 0;
     }
 
 
     public getGroupFields(groupName: string): Array<Field> {
 
         return this.groups.find((group: Group) => group.name === groupName).fields;
+    }
+
+
+    private selectFirstNonEmptyGroup() {
+
+        this.activateGroup(this.groups.find((group: Group) => this.shouldShow(group.name))?.name ?? this.groups[0].name);
     }
 
 

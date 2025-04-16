@@ -146,6 +146,7 @@
             <div class="configuration-editor-section-title"
                  i18n="@@configuration.date.dataType">Angabe der Uhrzeit</div>
             <select class="form-control"
+                    [disabled]="hidden"
                     (change)="setDateDataType($event.target.value)">
                 <option i18n="@@configuration.date.time.optional" value="optional"
                         [selected]="getDateConfiguration()?.dataType === 'optional'">Optional</option>
@@ -159,6 +160,7 @@
             <div class="configuration-editor-section-title"
                  i18n="@@configuration.date.inputMode">Eingabemodus</div>
             <select class="form-control"
+                    [disabled]="hidden"
                     (change)="setDateInputMode($event.target.value)">
                 <option i18n="@@configuration.date.inputMode.optional" value="optional"
                         [selected]="getDateConfiguration()?.inputMode === 'optional'">Wählbar</option>

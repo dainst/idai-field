@@ -20,10 +20,6 @@
 
 <div class="modal-body configuration-editor-modal-body field-editor-modal-body"
      [class.dragging]="dragging">
-    <condition-section [type]="'field'"
-                       [condition]="getClonedFieldDefinition().condition"
-                       [field]="clonedField"
-                       [availableFields]="getAvailableConditionFields()"></condition-section>
     <input-type-selector [selectedInputType]="getInputType()"
                          [availableInputTypes]="availableInputTypes"
                          [isCustomField]="isCustomField()"
@@ -92,6 +88,12 @@
             </div>
         </div>
     </div>
+
+    <condition-section [type]="'field'"
+                       [condition]="getClonedFieldDefinition().condition"
+                       [field]="clonedField"
+                       [availableFields]="getAvailableConditionFields()"
+                       [disabled]="hidden"></condition-section>
 
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.label">

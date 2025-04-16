@@ -18,6 +18,7 @@ export class ConditionSectionComponent {
     @Input() condition: Condition;
     @Input() field: BaseField;
     @Input() availableFields: Array<BaseField>;
+    @Input() disabled: boolean = false;
 
 
     constructor(private labels: Labels) {}

@@ -264,6 +264,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.subfieldConditionViolation.valuelists';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.subfieldConditionViolation.inputType';
+    public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION = 'configuration.error.subfieldConditionViolation.deletion';
     public static CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION = 'configuration.error.valueUsedInSubfieldCondition';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
     public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER = 'configuration.error.invalidResourceLimit.notANumber';
@@ -1119,6 +1120,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE] = {
             content: $localize `:@@messages.configuration.error.subfieldConditionViolation.inputType:Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION] = {
+            content: $localize `:@@messages.configuration.error.subfieldConditionViolation.deletion:Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION] = {

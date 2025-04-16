@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { on, is, isArray, isString, isEmpty, Map } from 'tsfun';
+import { on, is, isString, isEmpty, Map } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, CustomFormDefinition,
     CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, Condition,
     Valuelists } from 'idai-field-core';
@@ -12,6 +12,8 @@ import { Modals } from '../../../../../services/modals';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../../../util/get-input-type-label';
 import { UtilTranslations } from '../../../../../util/util-translations';
+import { Messages } from '../../../../messages/messages';
+import { M } from '../../../../messages/m';
 
 
 @Component({
@@ -45,7 +47,8 @@ export class SubfieldsSectionComponent {
   
     constructor(private labels: Labels,
                 private modals: Modals,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private messages: Messages) {}
 
 
     public getClonedSubfieldDefinitions = () => this.clonedFieldDefinition.subfields;
@@ -175,6 +178,8 @@ export class SubfieldsSectionComponent {
 
     public deleteSubfield(subfieldToDelete: CustomSubfieldDefinition) {
 
+        if (this.showErrorIfConditionSubfield(subfieldToDelete)) return;
+
         this.clonedFieldDefinition.subfields = this.clonedFieldDefinition.subfields.filter(
             subfield => subfield.name !== subfieldToDelete.name
         );
@@ -187,6 +192,24 @@ export class SubfieldsSectionComponent {
     public onDropSubfield(event: CdkDragDrop<any>) {
 
         InPlace.moveInArray(this.clonedFieldDefinition.subfields, event.previousIndex, event.currentIndex);
+    }
+
+
+    private showErrorIfConditionSubfield(subfieldDefinition: CustomSubfieldDefinition): boolean {
+
+        const conditionSubfield: Subfield = this.clonedField.subfields.find(subfield => {
+            return subfield.condition?.subfieldName === subfieldDefinition.name;
+        });
+
+        if (conditionSubfield) {
+            this.messages.add([
+                M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION,
+                this.labels.get(conditionSubfield)
+            ]);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

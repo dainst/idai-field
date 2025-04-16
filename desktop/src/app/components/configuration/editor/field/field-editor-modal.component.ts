@@ -61,7 +61,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
-    public isMandatory = () => this.getClonedFieldDefinition()?.mandatory ?? this.field.mandatory;
+    public isMandatory = () => this.getClonedFieldDefinition()?.mandatory ?? this.field.required;
 
     public isMandatoryOptionVisible = () => this.field.editable;
 

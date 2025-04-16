@@ -89,7 +89,8 @@
         </div>
     </div>
 
-    <condition-section [type]="'field'"
+    <condition-section *ngIf="!isMandatory()"
+                       [type]="'field'"
                        [condition]="getClonedFieldDefinition().condition"
                        [field]="clonedField"
                        [availableFields]="getAvailableConditionFields()"

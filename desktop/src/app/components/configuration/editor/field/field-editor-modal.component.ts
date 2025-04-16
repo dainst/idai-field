@@ -137,7 +137,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (!Condition.isValid(this.getClonedFieldDefinition().condition, 'field')) {
+        if (this.isMandatory() || !Condition.isValid(this.getClonedFieldDefinition().condition, 'field')) {
             delete this.getClonedFieldDefinition().condition;
         }
 

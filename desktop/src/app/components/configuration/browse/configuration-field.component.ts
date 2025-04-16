@@ -54,6 +54,10 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.clonedProjectConfiguration.getCategory(categoryName)
     );
 
+    public getFieldLabel = (fieldName: string) => this.labels.get(
+        CategoryForm.getField(this.category, fieldName)
+    )
+
     public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
         relationName, this.clonedProjectConfiguration.getRelations()
     );
@@ -101,6 +105,20 @@ export class ConfigurationFieldComponent implements OnChanges {
             const parentCategory = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
             return !parentCategory || !range.includes(parentCategory.name);
         });
+    }
+
+
+    public getConditionValuesLabel(): string {
+
+        if (!this.field.condition) return '';
+
+        if (this.field.condition.values === true) {
+            return this.utilTranslations.getTranslation('true');
+        } else if (this.field.condition.values === false) {
+            return this.utilTranslations.getTranslation('false');
+        } else {
+            return this.field.condition.values.join(', ');
+        }
     }
 
 

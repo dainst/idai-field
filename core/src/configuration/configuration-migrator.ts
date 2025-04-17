@@ -23,7 +23,15 @@ export module ConfigurationMigrator {
                 if (group.fields.includes('beginningDate') || group.fields.includes('endDate')) {
                     const index: number = group.fields.indexOf('beginningDate');
                     group.fields = group.fields.filter(field => !['beginningDate', 'endDate'].includes(field));
-                    group.fields.splice(index, 0, 'date');
+                    if (!group.fields.includes('date')) group.fields.splice(index, 0, 'date');
+                }
+
+                if (form.hidden) {
+                    if (form.hidden.includes('beginningDate') && form.hidden.includes('endDate')
+                            && !form.hidden.includes('date')) {
+                        form.hidden.push('date');
+                    }
+                    form.hidden = form.hidden.filter(field => !['beginningDate', 'endDate'].includes(field));
                 }
             });
 

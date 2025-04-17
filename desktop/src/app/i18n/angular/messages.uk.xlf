@@ -9149,14 +9149,6 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.date.now" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;      &lt;/button&gt; &lt;/div&gt;  &lt;time-input *ngIf=&quot;isT"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/butt"/></source>
-        <target state="needs-translation"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;      &lt;/button&gt; &lt;/div&gt;  &lt;time-input *ngIf=&quot;isT"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/butt"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
-          <context context-type="linenumber">38,40</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.date.switchToRange" datatype="html">
         <source>Auf Datumsbereich umstellen</source>
         <target state="needs-translation">Auf Datumsbereich umstellen</target>
@@ -9179,14 +9171,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.date.singleDate" datatype="html">
-        <source>Einzeldatum:</source>
-        <target state="needs-translation">Einzeldatum:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
-          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.from" datatype="html">

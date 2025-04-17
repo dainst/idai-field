@@ -9253,14 +9253,6 @@
           <context context-type="linenumber">7,9</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.workflowEditorModal.header" datatype="html">
-        <source>Arbeitssschritte dokumentieren</source>
-        <target state="needs-translation">Arbeitssschritte dokumentieren</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.workflowEditorModal.state" datatype="html">
         <source>Status</source>
         <target state="needs-translation">Status</target>
@@ -9323,14 +9315,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
           <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.date.switchToSingle" datatype="html">
-        <source>Auf Einzeldatum umstellen</source>
-        <target state="needs-translation">Auf Einzeldatum umstellen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.component.ts</context>
-          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.switchToRange" datatype="html">

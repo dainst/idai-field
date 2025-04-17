@@ -4632,14 +4632,6 @@
           <context context-type="linenumber">7,9</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.workflowEditorModal.header" datatype="html">
-        <source>Arbeitssschritte dokumentieren</source>
-        <target state="final">Arbeitssschritte dokumentieren</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.workflowEditorModal.state" datatype="html">
         <source>Status</source>
         <target state="final">Status</target>
@@ -4807,6 +4799,10 @@
       <trans-unit id="resources.contextMenu.editWorkflow" datatype="html">
         <source>Arbeitsschritte dokumentieren</source>
         <target state="final">Arbeitsschritte dokumentieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">53</context>
@@ -5539,22 +5535,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
           <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.date.switchToSingle" datatype="html">
-        <source>Auf Einzeldatum umstellen</source>
-        <target state="final">Auf Einzeldatum umstellen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.component.ts</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.date.switchToRange" datatype="html">
-        <source>Auf Datumsbereich umstellen</source>
-        <target state="final">Auf Datumsbereich umstellen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.component.ts</context>
-          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.select.single" datatype="html">

@@ -5538,23 +5538,7 @@
         <target state="final">Aktuelles Datum verwenden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.date.now" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>
-     &lt;/button>
-&lt;/div>
-
-&lt;time-input *ngIf=&quot;isT"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/butt"/></source>
-        <target state="final"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>
-     &lt;/button>
-&lt;/div>
-
-&lt;time-input *ngIf=&quot;isT"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/butt"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.switchToSingle" datatype="html">
@@ -5562,7 +5546,7 @@
         <target state="final">Auf Einzeldatum umstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.component.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.switchToRange" datatype="html">
@@ -5570,7 +5554,7 @@
         <target state="final">Auf Datumsbereich umstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.component.ts</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.select.single" datatype="html">
@@ -5589,20 +5573,12 @@
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.date.singleDate" datatype="html">
-        <source>Einzeldatum:</source>
-        <target state="final">Einzeldatum:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.date.from" datatype="html">
         <source>Von:</source>
         <target state="final">Von:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.to" datatype="html">
@@ -5610,7 +5586,7 @@
         <target state="final">Bis:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">

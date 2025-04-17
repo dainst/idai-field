@@ -4,10 +4,6 @@
 </div>
 
 <div class="modal-body configuration-editor-modal-body subfield-editor-modal-body">
-    <condition-section [type]="'subfield'"
-                       [condition]="data.condition"
-                       [field]="subfield"
-                       [availableFields]="subfields"></condition-section>
     <input-type-selector [selectedInputType]="getInputType()"
                          [availableInputTypes]="availableInputTypes"
                          [isSubfield]="true"
@@ -23,21 +19,25 @@
         <i18n-switch [inputType]="getInputType()"
                      (onChanged)="setInputType($event)"></i18n-switch>
     </div>
+    <condition-section [type]="'subfield'"
+                       [condition]="data.condition"
+                       [field]="subfield"
+                       [availableFields]="subfields"></condition-section>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.label">
             Anzeigename
         </div>
         <multi-language-input [translations]="data.label"
-            [defaultTranslations]="subfield.defaultLabel ?? {}"
-            [projectLanguages]="projectLanguages"></multi-language-input>
+                              [defaultTranslations]="subfield.defaultLabel ?? {}"
+                              [projectLanguages]="projectLanguages"></multi-language-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
         </div>
         <multi-language-input [translations]="data.description"
-            [defaultTranslations]="subfield.defaultDescription ?? {}"
-            [projectLanguages]="projectLanguages"></multi-language-input>
+                              [defaultTranslations]="subfield.defaultDescription ?? {}"
+                              [projectLanguages]="projectLanguages"></multi-language-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.references">

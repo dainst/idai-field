@@ -9126,7 +9126,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editWorkflow" datatype="html">
         <source>Arbeitsschritte dokumentieren</source>
-        <target state="needs-translation">Arbeitsschritte dokumentieren</target>
+        <target state="translated">Document workflow</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">53</context>
@@ -9138,14 +9138,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
           <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.date.switchToRange" datatype="html">
-        <source>Auf Datumsbereich umstellen</source>
-        <target state="needs-translation">Auf Datumsbereich umstellen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.component.ts</context>
-          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.date.select.single" datatype="html">

@@ -48,25 +48,9 @@ export class DateComponent implements OnChanges {
     }
 
 
-    public setRangeViaSelect(value: 'single'|'range') {
+    public selectRange(value: 'single'|'range') {
 
         this.setRange(value === 'range');
-    }
-
-
-    public toggleRange() {
-
-        this.setRange(!this.rangeMode);
-    }
-
-
-    public getRangeButtonTooltip(): string {
-
-        if (!this.isOptionalRange()) return undefined;
-
-        return this.rangeMode
-            ? $localize `:@@docedit.forms.date.switchToSingle:Auf Einzeldatum umstellen`
-            : $localize `:@@docedit.forms.date.switchToRange:Auf Datumsbereich umstellen`;
     }
 
 

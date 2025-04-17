@@ -1495,6 +1495,14 @@
     },
     "StorageBag": {
       "label": "Bag"
+    },
+    "WorkflowStep": {
+      "label": "Workflow step",
+      "fields": {
+        "state": {
+          "label": "State"
+        }
+      }
     }
   },
   "forms": {

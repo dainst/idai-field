@@ -5544,14 +5544,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.docedit.warning.categoryChange.fields" datatype="html">
-        <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
-        <target state="translated">Si prega di notare che i dati dei seguenti campi andranno persi durante il salvataggio: [0]</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.docedit.warning.categoryChange.relations" datatype="html">
         <source>Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</source>
         <target state="translated">Si prega di notare che le relazioni dei seguenti tipi di relazione andranno perse durante il salvataggio: [0]</target>
@@ -6875,14 +6867,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
           <context context-type="linenumber">13,20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.subfieldCondition.none" datatype="html">
-        <source>- Keine -</source>
-        <target state="translated">- Nessuna -</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
-          <context context-type="linenumber">32,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.editEntry" datatype="html">
@@ -8771,14 +8755,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">151,154</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.deleteField.body.notAllowed" datatype="html">
-        <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
-        <target state="translated">Il campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> non può essere eliminato finché viene utilizzato come relazione inversa. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
-          <context context-type="linenumber">10,12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.warningsExist" datatype="html">

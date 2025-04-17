@@ -4257,14 +4257,6 @@
           <context context-type="linenumber">14,3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.subfieldCondition.none" datatype="html">
-        <source>- Keine -</source>
-        <target state="translated">- Nenhum-</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="config.inputType.int" datatype="html">
         <source>Ganzzahl</source>
         <target state="translated">Número inteiro</target>
@@ -6849,14 +6841,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.docedit.warning.categoryChange.fields" datatype="html">
-        <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
-        <target state="translated">Por favor note que os dados do campo seguinte vão se perder ao gravar : [0]</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.docedit.warning.categoryChange.relations" datatype="html">
         <source>Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</source>
         <target state="translated">Por favor note que as relações dos seguintes tipos vão se perder ao gravar: [0]</target>
@@ -8711,14 +8695,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">78,80</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.deleteField.body.notAllowed" datatype="html">
-        <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
-        <target state="translated">O campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> não pode ser apagado enquanto for definido como relação contrária. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
-          <context context-type="linenumber">10,12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedTargetCategories" datatype="html">

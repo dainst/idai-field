@@ -1,4 +1,4 @@
-<select *ngIf="isOptionalRange() && !showRangeButton" class="form-control"
+<select *ngIf="isOptionalRange()" class="form-control"
      (change)="setRangeViaSelect($event.target.value)">
      <option i18n="@@docedit.forms.date.select.single" value="single"
              [selected]="!rangeMode">Einzeldatum</option>
@@ -7,35 +7,14 @@
 </select>
 
 <div class="date-container">
-     <div class="button-container"
-          [class.with-range-button]="isRangeSupported() && showRangeButton"
-          [class.range-mode]="rangeMode">
-          <button *ngIf="isRangeSupported() && (showRangeButton || rangeMode)"
-                  class="btn btn-outline-primary range-button"
-                  [class.as-label]="!isOptionalRange() || !showRangeButton"
-                  ngbTooltip="{{getRangeButtonTooltip()}}"
-                  placement="top"
-                  container="body"
-                  triggers="manual"
-                  #rangeButtonTooltip="ngbTooltip"
-                  (mouseover)="rangeButtonTooltip.open()"
-                  (mouseleave)="rangeButtonTooltip.close()"
-                  (mousedown)="rangeButtonTooltip.close()"
-                  (click)="isOptionalRange() && toggleRange()">
-               <div *ngIf="!rangeMode"
-                    class="range-button-label"
-                    i18n="@@docedit.forms.date.singleDate">Einzeldatum:</div>
-               <div *ngIf="rangeMode"
-                    class="range-button-label"
-                    i18n="@@docedit.forms.date.from">Von:</div>
-               <div *ngIf="rangeMode"
-                    class="range-button-label"
-                    i18n="@@docedit.forms.date.to">Bis:</div>
-          </button>
-     </div>
+     <span *ngIf="rangeMode" class="range-labels">
+          <div class="range-label"
+               i18n="@@docedit.forms.date.from">Von:</div>
+          <div class="range-label"
+               i18n="@@docedit.forms.date.to">Bis:</div>
+     </span>
 
-     <div class="date-values-container"
-          [class.with-range-button]="isOptionalRange() && showRangeButton">
+     <div class="date-values-container">
           <date-value [value]="getValue()"
                       [field]="field"
                       (onChanged)="updateValue($event)"></date-value>

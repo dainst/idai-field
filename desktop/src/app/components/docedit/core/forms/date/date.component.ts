@@ -1,15 +1,11 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { DateConfiguration, DateSpecification, Field } from 'idai-field-core';
-import { AngularUtility } from '../../../../../angular/angular-utility';
 
 
 @Component({
     selector: 'form-field-date',
     templateUrl: './date.html',
-    standalone: false,
-    host: {
-        '(window:keydown)': 'onKeyDown($event)'
-    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -20,8 +16,6 @@ export class DateComponent implements OnChanges {
     @Input() field: Field;
 
     public rangeMode: boolean;
-
-    public showRangeButton: boolean = false;
 
     private hiddenEndValue: string;
 
@@ -51,15 +45,6 @@ export class DateComponent implements OnChanges {
 
         this.rangeMode = this.field.dateConfiguration.inputMode === DateConfiguration.InputMode.RANGE
             || this.fieldContainer[this.field.name]?.isRange;
-    }
-
-
-    public onKeyDown(event: KeyboardEvent) {
-
-        if (event.key === 'y') {
-            this.showRangeButton = !this.showRangeButton;
-            AngularUtility.blurActiveElement();
-        }
     }
 
 

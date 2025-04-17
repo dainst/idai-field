@@ -86,7 +86,7 @@ export class TimeInputComponent implements OnChanges {
 
         const minutes: number = this.time.minutes;
 
-        this.timeString = TimeInputComponent.padNumber(hours) + ':' + TimeInputComponent.padNumber(minutes);
+        this.timeString = TimeInputComponent.getTimeString(hours, minutes);
     }
 
 
@@ -107,6 +107,14 @@ export class TimeInputComponent implements OnChanges {
     private getMinutes() {
 
         return parseInt(this.timeString.split(':')[1]);
+    }
+
+
+    private static getTimeString(hours: number, minutes: number): string {
+
+        const result: string = TimeInputComponent.padNumber(hours) + ':' + TimeInputComponent.padNumber(minutes);
+
+        return result.length > 1 ? result : undefined;
     }
 
 

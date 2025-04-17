@@ -6,6 +6,7 @@ import { DateConfiguration, Field, formatDate, parseDate } from 'idai-field-core
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { TimeSpecification } from './time-input.component';
 import { DateParserFormatter } from './date-parser-formatter';
+import { NumberUtil } from '../../../../../util/number-util';
 
 
 @Component({
@@ -272,15 +273,15 @@ export class DateValueComponent implements OnInit {
 
     private getFormattedTime(): string|undefined {
 
-        return DateValueComponent.padNumber(this.time.hours) + ':'
-            + DateValueComponent.padNumber(this.time.minutes);
+        return NumberUtil.padNumber(this.time.hours) + ':'
+            + NumberUtil.padNumber(this.time.minutes);
     }
 
 
     private isTimeSelected(): boolean {
 
-        return DateValueComponent.isNumber(this.time?.hours)
-            && DateValueComponent.isNumber(this.time?.minutes);
+        return NumberUtil.isNumber(this.time?.hours)
+            && NumberUtil.isNumber(this.time?.minutes);
     }
 
 
@@ -313,24 +314,6 @@ export class DateValueComponent implements OnInit {
         datePicker.close();
         this.changeDetectorRef.detectChanges();
     }
-
-
-    private static padNumber(value: number) {
-
-	    return (this.isNumber(value)) ? `0${value}`.slice(-2) : '';
-	}
-
-
-	private static isNumber(value: any): boolean {
-
-	    return !isNaN(this.toInteger(value));
-	}
-
-
-    private static toInteger(value: any): number {
-
-	    return parseInt(`${value}`, 10);
-	}
 
 
     private static isFullDate(formattedDate: string): boolean {

@@ -3,6 +3,7 @@ import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstra
 import { toZonedTime } from 'date-fns-tz';
 import { isString } from 'tsfun';
 import { parseDate } from 'idai-field-core';
+import { NumberUtil } from '../../../../../util/number-util';
 
 
 @Injectable()
@@ -47,31 +48,13 @@ export class DateParserFormatter extends NgbDateParserFormatter {
             return date;
         } else {
             let stringDate = '';
-            stringDate += DateParserFormatter.isNumber(date.day)
-                ? DateParserFormatter.padNumber(date.day) + '.'
+            stringDate += NumberUtil.isNumber(date.day)
+                ? NumberUtil.padNumber(date.day) + '.'
                 : '';
-            stringDate += DateParserFormatter.isNumber(date.month)
-                ? DateParserFormatter.padNumber(date.month) + '.'
+            stringDate += NumberUtil.isNumber(date.month)
+                ? NumberUtil.padNumber(date.month) + '.'
                 : '';
             return stringDate + date.year;
         }
     }
-
-
-	private static padNumber(value: number) {
-
-	    return (this.isNumber(value)) ? `0${value}`.slice(-2) : '';
-	}
-
-
-	private static isNumber(value: any): boolean {
-
-	    return !isNaN(this.toInteger(value));
-	}
-
-
-	private static toInteger(value: any): number {
-
-	    return parseInt(`${value}`, 10);
-	}
 }

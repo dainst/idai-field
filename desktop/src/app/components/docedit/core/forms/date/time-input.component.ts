@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Settings } from '../../../../../services/settings/settings';
+import { NumberUtil } from '../../../../../util/number-util';
 
 
 export type TimeSpecification = {
@@ -112,27 +113,8 @@ export class TimeInputComponent implements OnChanges {
 
     private static getTimeString(hours: number, minutes: number): string {
 
-        const result: string = TimeInputComponent.padNumber(hours) + ':' + TimeInputComponent.padNumber(minutes);
+        const result: string = NumberUtil.padNumber(hours) + ':' + NumberUtil.padNumber(minutes);
 
         return result.length > 1 ? result : undefined;
     }
-
-
-    // TODO Remove duplication, move to utility
-    private static padNumber(value: number) {
-
-	    return (this.isNumber(value)) ? `0${value}`.slice(-2) : '';
-	}
-
-
-    private static isNumber(value: any): boolean {
-
-	    return !isNaN(this.toInteger(value));
-	}
-
-
-    private static toInteger(value: any): number {
-
-	    return parseInt(`${value}`, 10);
-	}
 }

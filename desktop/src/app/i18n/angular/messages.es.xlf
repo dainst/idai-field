@@ -9165,14 +9165,6 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.date.switchToRange" datatype="html">
-        <source>Auf Datumsbereich umstellen</source>
-        <target state="needs-translation">Auf Datumsbereich umstellen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.component.ts</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.date.select.single" datatype="html">
         <source>Einzeldatum</source>
         <target state="needs-translation">Einzeldatum</target>

@@ -1129,5 +1129,13 @@
       "Vergoldung": "gilding",
       "Ritzungen": "scratched"
     }
+  },
+  "workflow-step-state-default": {
+    "values": {
+      "planned": "Planned",
+      "in progress": "In progress",
+      "completed": "Completed",
+      "canceled": "Canceled"
+    }
   }
 }

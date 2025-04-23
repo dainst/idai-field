@@ -113,6 +113,12 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
           "Got `#{term}` error while trying to stream request body for `#{uuid}` (#{type}) for project `#{project}`."
         )
 
+        FileStore.get_file_path(uuid, project, parse_type(type))
+        |> case do
+          {:ok, path} -> File.rm(path)
+          _ -> :ok
+        end
+
         send_resp(conn, 500, Jason.encode!(%{reason: "Unable to write file."}))
     end
   end

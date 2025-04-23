@@ -3,7 +3,7 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
 
   alias FieldHub.FileStore
 
-  @max_size Application.compile_env(:field_hub, :file_max_size)
+  require Logger
 
   def index(conn, %{"project" => project, "types" => types}) when is_list(types) do
     parsed_types =
@@ -89,29 +89,47 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
   end
 
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
-    parsed_type = parse_type(type)
+    with {:parsed_type, parsed_type} when is_atom(parsed_type) <-
+           {:parsed_type, parse_type(type)},
+         {:io_opened, {:ok, io_device}} <-
+           {:io_opened, FileStore.create_write_io_device(uuid, project, parsed_type)},
+         {:stream, {:ok, %Plug.Conn{} = conn}} <- {:stream, stream_body(conn, io_device)} do
+      FileStore.clear_cache(project)
 
-    conn
-    |> read_body(length: @max_size)
+      send_resp(conn, 201, Jason.encode!(%{info: "File created."}))
+    else
+      {:parsed_type, {:error, type}} ->
+        send_resp(conn, 400, Jason.encode!(%{reason: "Unknown file type: #{type}"}))
+
+      {:io_opened, posix} ->
+        Logger.error(
+          "Got `#{posix}` while trying to open file `#{uuid}` (#{type}) for project `#{project}`."
+        )
+
+        send_resp(conn, 500, Jason.encode!(%{reason: "Unable to write file."}))
+
+      {:stream, {:error, term}} ->
+        Logger.error(
+          "Got `#{term}` error while trying to stream request body for `#{uuid}` (#{type}) for project `#{project}`."
+        )
+
+        send_resp(conn, 500, Jason.encode!(%{reason: "Unable to write file."}))
+    end
+  end
+
+  defp stream_body(conn, io_device) do
+    read_body(conn)
     |> case do
       {:ok, data, conn} ->
-        case parsed_type do
-          {:error, type} ->
-            send_resp(conn, 400, Jason.encode!(%{reason: "Unknown file type: #{type}"}))
+        IO.binwrite(io_device, data)
+        {:ok, conn}
 
-          valid ->
-            FileStore.store(Zarex.sanitize(uuid), Zarex.sanitize(project), valid, data)
-            send_resp(conn, 201, Jason.encode!(%{info: "File created."}))
-        end
+      {:more, data, conn} ->
+        IO.binwrite(io_device, data)
+        stream_body(conn, io_device)
 
-      {:more, _partial_body, conn} ->
-        send_resp(
-          conn,
-          413,
-          Jason.encode!(%{
-            reason: "Payload too large, maximum of #{Sizeable.filesize(@max_size)} bytes allowed."
-          })
-        )
+      error ->
+        error
     end
   end
 

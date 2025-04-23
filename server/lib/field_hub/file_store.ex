@@ -180,6 +180,26 @@ defmodule FieldHub.FileStore do
   end
 
   @doc """
+  Open a io_device for a new file.
+
+  The io_device can then be used to write chunked/streamed data without having to
+  load the whole file into memory at once.
+
+  __Parameters__
+
+  - `uuid` the uuid for the file (will be used as its file_name).
+  - `project_identifier` the project's name.
+  - `file_variant` a valid file variant, one of `#{inspect(@valid_file_variants)}`.
+
+  Returns `{:ok, io_device}` on success or `{:error, posix}` on failure.
+  """
+  def create_write_io_device(uuid, project_identifier, file_variant) do
+    directory = get_variant_directory(project_identifier, file_variant)
+    file_path = "#{directory}/#{uuid}"
+    File.open(file_path, [:write])
+  end
+
+  @doc """
   Mark all file variants for a UUID/file as deleted.
 
   The function will add an empty tombstone file for the given UUID in all its existing variants. The FileStore

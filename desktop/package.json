@@ -183,7 +183,7 @@
     "@types/showdown": "1.7.5",
     "ajv": "^8.16.0",
     "cross-var": "^1.1.0",
-    "electron": "35.0.2",
+    "electron": "36.0.0",
     "electron-builder": "26.0.4",
     "file-api": "0.10.4",
     "file-url": "2.0.2",

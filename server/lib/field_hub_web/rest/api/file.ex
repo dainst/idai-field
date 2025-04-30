@@ -91,9 +91,21 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
     with {:parsed_type, parsed_type} when is_atom(parsed_type) <-
            {:parsed_type, parse_type(type)},
-         {:io_opened, {:ok, io_device}} <-
+         {:io_opened,
+          {
+            {:ok, io_device},
+            tmp_file_path
+          }} <-
            {:io_opened, FileStore.create_write_io_device(uuid, project, parsed_type)},
-         {:stream, {:ok, %Plug.Conn{} = conn}} <- {:stream, stream_body(conn, io_device)} do
+         {:stream, {:ok, %Plug.Conn{} = conn}} <-
+           {:stream,
+            start_body_streaming(
+              conn,
+              io_device,
+              tmp_file_path
+            )} do
+      FileStore.store_by_moving(uuid, project, parsed_type, tmp_file_path)
+
       FileStore.clear_cache(project)
 
       send_resp(conn, 201, Jason.encode!(%{info: "File created."}))
@@ -108,16 +120,37 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
 
         send_resp(conn, 500, Jason.encode!(%{reason: "Unable to write file."}))
 
-      {:stream, {:error, term}} ->
+      {:stream, {{:error, term}, target_path}} ->
         Logger.error(
           "Got `#{term}` error while trying to stream request body for `#{uuid}` (#{type}) for project `#{project}`."
         )
+
+        File.rm(target_path)
 
         send_resp(conn, 500, Jason.encode!(%{reason: "Unable to write file."}))
     end
   end
 
-  defp stream_body(conn, io_device) do
+  defp start_body_streaming(conn, io_device, target_path) do
+    parent = self()
+
+    spawn(fn ->
+      Process.monitor(parent)
+
+      receive do
+        {:DOWN, _ref, :process, _pid, {:shutdown, :local_closed}} ->
+          Logger.warning(
+            "File upload got interrupted for `#{target_path}`, deleting data received so far."
+          )
+
+          File.rm(target_path)
+      end
+    end)
+
+    stream_body(conn, io_device, target_path)
+  end
+
+  defp stream_body(conn, io_device, path) do
     read_body(conn)
     |> case do
       {:ok, data, conn} ->
@@ -126,10 +159,10 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
 
       {:more, data, conn} ->
         IO.binwrite(io_device, data)
-        stream_body(conn, io_device)
+        stream_body(conn, io_device, path)
 
       error ->
-        error
+        {error, path}
     end
   end
 

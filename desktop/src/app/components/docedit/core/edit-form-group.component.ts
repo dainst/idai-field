@@ -1,8 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { Map } from 'tsfun';
+import { isArray, Map } from 'tsfun';
 import { Condition, Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { UtilTranslations } from '../../../util/util-translations';
 
 
 type StratigraphicalRelationInfo = {
@@ -39,7 +40,8 @@ export class EditFormGroup implements OnChanges {
 
     constructor(private labelsService: Labels,
                 private projectConfiguration: ProjectConfiguration,
-                private elementRef: ElementRef) {}
+                private elementRef: ElementRef,
+                private utilTranslations: UtilTranslations) {}
 
 
     ngOnChanges() {
@@ -57,6 +59,32 @@ export class EditFormGroup implements OnChanges {
         return field !== undefined
             && field.editable === true
             && Condition.isFulfilled(field.condition, this.document.resource, this.categoryFields, 'field');
+    }
+
+
+    public isConditionField(field: Field): 'single'|'multiple'|'none' {
+
+        const conditionalFields: Array<Field> = this.categoryFields.filter(categoryField => {
+            return categoryField.condition?.fieldName === field.name;
+        });
+
+        switch (conditionalFields.length) {
+            case 0:
+                return 'none';
+            case 1:
+                return 'single';
+            default:
+                return 'multiple';
+        }
+    }
+
+
+    public getConditionFieldIconClass(field: Field): string {
+
+        return this.categoryFields.find(categoryField => {
+            return categoryField.condition?.fieldName === field.name
+                && Condition.isFulfilled(categoryField.condition, this.document.resource, this.categoryFields, 'field');
+        }) !== undefined ? 'mdi-eye-lock-open-outline' : 'mdi-eye-lock-outline';
     }
 
 
@@ -96,6 +124,28 @@ export class EditFormGroup implements OnChanges {
                 return undefined;
         }
     }
+
+
+    public getConditionalFieldTooltip(field: Field): string {
+
+        if (!field.condition) return '';
+
+        const fieldLabel: string = this.labelsService.getFieldLabel(
+            this.projectConfiguration.getCategory(this.document.resource.category),
+            field.condition.fieldName
+        );
+
+        const conditionLabel: string =Condition.generateLabel(
+            field.condition,
+            key => this.utilTranslations.getTranslation(key)
+        );
+
+        if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
+            return $localize `:@@docedit.conditionalFieldInfo.tooltip.multiple:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" einer der folgenden Werte eingetragen ist: ${conditionLabel}`;
+        } else {
+            return $localize `:@@docedit.conditionalFieldInfo.tooltip.single:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" der Wert "${conditionLabel}" eingetragen ist.`;
+        }
+    } 
 
     
     public isValidFieldData(field: Field): boolean {

@@ -4,13 +4,30 @@
          [class.conditional]="field.condition">
         <div class="card-header h4">
             <span class="card-title">{{labels[field.name]}}</span>
-
-            <span *ngIf="descriptions[field.name]"
-                    placement="left"
-                    container="body"
-                    ngbTooltip="{{descriptions[field.name]}}"
-                    class="mdi mdi-information-outline float-end"></span>
-
+            <span class="float-end">
+                <span *ngIf="field.condition"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="{{getConditionalFieldTooltip(field)}}"
+                      class="mdi mdi-eye"></span>
+                <span *ngIf="isConditionField(field) === 'single'"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab."
+                      i18n-ngbTooltip="@@docedit.conditionInfo.tooltip.single"
+                      class="mdi {{getConditionFieldIconClass(field)}}"></span>
+                <span *ngIf="isConditionField(field) === 'multiple'"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab."
+                      i18n-ngbTooltip="@@docedit.conditionInfo.tooltip.multiple"
+                      class="mdi {{getConditionFieldIconClass(field)}}"></span>
+                <span *ngIf="descriptions[field.name]"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="{{descriptions[field.name]}}"
+                      class="mdi mdi-information-outline"></span>
+            </span>
             <img *ngIf="getStratigraphicalRelationInfo(field)"
                  class="relation-image"
                  [src]="'img/matrix-' + getStratigraphicalRelationInfo(field).imageName + '.png'"

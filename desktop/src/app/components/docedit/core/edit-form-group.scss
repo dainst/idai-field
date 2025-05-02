@@ -14,9 +14,20 @@ edit-form-group {
         font-size: 15px !important;
       }
   
-      .mdi-information-outline {
+      .mdi-information-outline,
+      .mdi-eye-lock-outline,
+      .mdi-eye-lock-open-outline,
+      .mdi-eye {
         position: relative;
         top: 3px;
+
+        &:not(:last-child) {
+          margin-right: 5px;
+        }
+      }
+
+      .mdi-eye {
+        color: rgb(40 46 57 / 73%)
       }
   
       .relation-image {

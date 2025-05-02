@@ -39,6 +39,7 @@ $mdi-font-path: 'fonts' !default;
 }
 
 .tooltip > div {
+  border-radius: 10px;
   animation-name: delayedFadeIn;
   animation-duration: 1s; /* Adjust this duration */
 }

@@ -63,4 +63,18 @@ export module Condition {
 
         return condition;
     }
+
+
+    export function generateLabel(condition: Condition, translate: (term: string) => string) {
+
+        if (!condition) return '';
+
+        if (condition.values === true) {
+            return translate('true');
+        } else if (condition.values === false) {
+            return translate('false');
+        } else {
+            return condition.values.join(', ');
+        }
+    }
 }

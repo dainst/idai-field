@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
-import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels, ProjectConfiguration,
+import { CategoryForm, Condition, ConfigurationDocument, CustomFieldDefinition, Field, Labels, ProjectConfiguration,
     Relation } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
@@ -62,6 +62,10 @@ export class ConfigurationFieldComponent implements OnChanges {
         relationName, this.clonedProjectConfiguration.getRelations()
     );
 
+    public getConditionValuesLabel = () => Condition.generateLabel(
+        this.field.condition, key => this.utilTranslations.getTranslation(key)
+    );
+
     public getInverseRelation = () => (this.field as Relation).inverse;
 
     public getDateDataType = () => this.field.dateConfiguration?.dataType;
@@ -105,20 +109,6 @@ export class ConfigurationFieldComponent implements OnChanges {
             const parentCategory = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
             return !parentCategory || !range.includes(parentCategory.name);
         });
-    }
-
-
-    public getConditionValuesLabel(): string {
-
-        if (!this.field.condition) return '';
-
-        if (this.field.condition.values === true) {
-            return this.utilTranslations.getTranslation('true');
-        } else if (this.field.condition.values === false) {
-            return this.utilTranslations.getTranslation('false');
-        } else {
-            return this.field.condition.values.join(', ');
-        }
     }
 
 

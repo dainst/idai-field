@@ -26,5 +26,16 @@ edit-form-group {
         user-select: none;
       }
     }
+
+    &.conditional {
+      .card-header {
+        background-color: rgb(55 88 142 / 17%);
+      }
+
+      .card-block {
+        background-color: rgb(55 88 142 / 7%);
+        margin-bottom: 10px;
+      }
+    }
   }
 }

@@ -179,6 +179,22 @@ defmodule FieldHub.FileStore do
     result
   end
 
+  def store_by_moving(uuid, project_identifier, file_variant, input_path) do
+    directory = get_variant_directory(project_identifier, file_variant)
+
+    target_path = "#{directory}/#{uuid}"
+
+    result =
+      if File.exists?(target_path) do
+        :ok
+      else
+        File.rename(input_path, target_path)
+      end
+
+    clear_cache(project_identifier)
+    result
+  end
+
   @doc """
   Open a io_device for a new file.
 
@@ -195,8 +211,8 @@ defmodule FieldHub.FileStore do
   """
   def create_write_io_device(uuid, project_identifier, file_variant) do
     directory = get_variant_directory(project_identifier, file_variant)
-    file_path = "#{directory}/#{uuid}"
-    File.open(file_path, [:write])
+    file_path = "#{directory}/#{uuid}.writing"
+    {File.open(file_path, [:write]), file_path}
   end
 
   @doc """
@@ -279,7 +295,8 @@ defmodule FieldHub.FileStore do
     end)
     |> Stream.reject(fn %{stat_type: type} -> type == :directory end)
     |> Stream.reject(fn %{name: file_name} ->
-      # Reject all files containing dots, added to ignore hidden OS files
+      # Reject all files containing dots, added to ignore hidden OS files and files that are currently
+      # being streamed and have a .writing suffix.
       file_name
       |> String.trim_trailing(@tombstone_suffix)
       |> String.contains?(".")

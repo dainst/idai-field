@@ -13,13 +13,7 @@ config :field_hub, FieldHubWeb.Endpoint,
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [
     ip: {0, 0, 0, 0},
-    port: 4000,
-    protocol_options: [
-      idle_timeout: :infinity,
-      inactivity_timeout: :infinity,
-      linger_timeout: :infinity,
-      request_timeout: :infinity
-    ]
+    port: 4000
   ],
   check_origin: false,
   code_reloader: true,

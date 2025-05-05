@@ -110,7 +110,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
 
                   <dl class="grid grid-cols-2 gap-1 mt-2">
                     <%= for %Field{} = field <- fields do %>
-                      <div class="border-2 p-0.5">
+                      <div class="border p-0.5 border-black/20">
                         <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                         <dd class="pl-4">
                           <GenericField.render field={field} lang={@lang} />
@@ -121,6 +121,64 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 </section>
               <% end %>
             <% end %>
+            <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+            <%= if depicted_in do %>
+              <section>
+                <.group_heading>
+                  <I18n.text values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
+                </.group_heading>
+                <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
+                  <%= for %Document{} = doc <- depicted_in.docs do %>
+                    <.link
+                      patch={
+                        ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
+                      }
+                      class="p-1"
+                    >
+                      <div class="max-w-[250px]">
+                        <Image.show
+                          size="^250,"
+                          project={@publication.project_name}
+                          uuid={doc.id}
+                          alt_text={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
+                        />
+                      </div>
+                    </.link>
+                  <% end %>
+                </div>
+              </section>
+            <% end %>
+            <section>
+              <.group_heading>
+                Data formats
+              </.group_heading>
+              <ul class="ml-0 list-none">
+                <li>
+                  <a
+                    class="mb-1"
+                    target="_blank"
+                    href={
+                      ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                    }
+                  >
+                    <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                    View JSON (raw)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="mb-1"
+                    target="_blank"
+                    href={
+                      ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
+                    }
+                  >
+                    <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                    View JSON (extended)
+                  </a>
+                </li>
+              </ul>
+            </section>
           </div>
           <div class="basis-1/3 ml-2">
             <div class="mb-4">
@@ -133,31 +191,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 lang={@lang}
               />
             </div>
-            <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
-            <%= if depicted_in do %>
-              <.group_heading>
-                <I18n.text values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
-              </.group_heading>
-              <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
-                <%= for %Document{} = doc <- depicted_in.docs do %>
-                  <.link
-                    patch={
-                      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
-                    }
-                    class="p-1"
-                  >
-                    <div class="max-w-[250px]">
-                      <Image.show
-                        size="^250,"
-                        project={@publication.project_name}
-                        uuid={doc.id}
-                        alt_text={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
-                      />
-                    </div>
-                  </.link>
-                <% end %>
-              </div>
-            <% end %>
+
             <%= for other_relation <- Enum.reject(
             @doc.relations,
             fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
@@ -171,35 +205,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                 <% end %>
               </div>
             <% end %>
-            <.group_heading>
-              Data formats
-            </.group_heading>
-            <ul class="ml-0 list-none">
-              <li>
-                <a
-                  class="mb-1"
-                  target="_blank"
-                  href={
-                    ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
-                  }
-                >
-                  <span class="text-center inline-block w-[20px]" style="block">{}</span>
-                  View JSON (raw)
-                </a>
-              </li>
-              <li>
-                <a
-                  class="mb-1"
-                  target="_blank"
-                  href={
-                    ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
-                  }
-                >
-                  <span class="text-center inline-block w-[20px]" style="block">{}</span>
-                  View JSON (extended)
-                </a>
-              </li>
-            </ul>
           </div>
         <% end %>
       </div>

@@ -161,7 +161,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                       ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
                     }
                   >
-                    <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                    <span class="text-center inline-block w-[20px]" style="block">{"{}"}</span>
                     View JSON (raw)
                   </a>
                 </li>
@@ -173,7 +173,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
                       ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}"
                     }
                   >
-                    <span class="text-center inline-block w-[20px]" style="block">{}</span>
+                    <span class="text-center inline-block w-[20px]" style="block">{"{}"}</span>
                     View JSON (extended)
                   </a>
                 </li>

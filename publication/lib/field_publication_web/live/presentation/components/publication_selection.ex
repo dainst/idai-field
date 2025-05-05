@@ -37,7 +37,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
       <%= if Enum.count(@publications) > 1 do %>
         <.icon name="hero-chevron-down-mini" />
 
-        <div class="z-10 bg-white p-2 outline outline-1 absolute hidden group-hover:block w-max">
+        <div class="z-10 bg-white p-2 outline-1 absolute hidden group-hover:block w-max">
           <div class="font-semibold mb-2">Available publications</div>
           <%= for publication <- @publications do %>
             <% url =
@@ -49,7 +49,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
               else
                 url
               end %>
-            <div class={"#{if publication.draft_date == @current_publication.draft_date, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
+            <div class={"#{if publication.draft_date == @current_publication.draft_date, do: "bg-slate-100 outline-1 outline-slate-500", else: ""} p-1"}>
               <.link patch={url}>
                 Project state {publication.draft_date}
                 <%= if publication.publication_date do %>
@@ -73,7 +73,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
 
       <%= if Enum.count(@current_publication.languages) > 1 do %>
         <.icon name="hero-chevron-down-mini" />
-        <div class="z-10 bg-white p-2 outline outline-1 absolute hidden group-hover:block w-max">
+        <div class="z-10 bg-white p-2 outline-1 absolute hidden group-hover:block w-max">
           <div class="font-semibold mb-2">Available languages</div>
           <%= for language <- @current_publication.languages do %>
             <% url =
@@ -86,7 +86,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
                 url
               end %>
 
-            <div class={"#{if language == @selected_lang, do: "bg-slate-100 outline outline-1 outline-slate-500", else: ""} p-1"}>
+            <div class={"#{if language == @selected_lang, do: "bg-slate-100 outline-1 outline-slate-500", else: ""} p-1"}>
               <.link patch={url}>
                 {language}
               </.link>

@@ -12,6 +12,7 @@
 
 :root {
     --main-navbar-height: 50px;
+    --full-size-doc-height: calc(100vh - var(--main-navbar-height) - 220px);
     --main-link-color: #5882c2;
     --main-link-color-hover: #375d97;
     --font-body: 'Open Sans', sans-serif;

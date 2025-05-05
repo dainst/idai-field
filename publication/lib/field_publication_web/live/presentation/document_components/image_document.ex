@@ -116,7 +116,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Image do
         </div>
         <div class="basis-2/3 m-5">
           <.live_component
-            class="h-full"
+            class="h-(--full-size-doc-height)"
             id="iiif_viewer"
             project={@publication.project_name}
             uuid={@uuid}

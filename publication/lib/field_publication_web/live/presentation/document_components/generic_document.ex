@@ -23,7 +23,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
 
   def render(assigns) do
     ~H"""
-    <div>
+    <div class="mb-4">
       <.document_heading>
         <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
@@ -33,7 +33,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents.Generic do
             <.group_heading>
               Hierarchy
             </.group_heading>
-            <div class="overflow-auto overscroll-contain" style="height: calc(-236px + 100vh);">
+            <div class="overflow-auto overscroll-contain h-(--full-size-doc-height)">
               <.live_component
                 module={DocumentAncestors}
                 id={"ancestors-#{@doc.id}"}

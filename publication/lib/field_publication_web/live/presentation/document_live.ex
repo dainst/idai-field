@@ -105,6 +105,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     }
   end
 
+  def handle_event(
+        "search",
+        %{"search_input" => q},
+        %{assigns: %{publication: %Publication{project_name: project_name}}} = socket
+      ) do
+    {
+      :noreply,
+      redirect(socket, to: ~p"/search?#{%{q: q, filter: %{project_name: project_name}}}")
+    }
+  end
+
   defp get_page_title(%Document{id: "project"} = doc) do
     {_, short_description} =
       I18n.select_translation(%{values: Data.get_field_value(doc, "shortName")})

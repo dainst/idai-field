@@ -12,7 +12,8 @@ export type WarningType = 'unconfiguredCategory'
     |'missingIdentifierPrefix'
     |'nonUniqueIdentifier'
     |'resourceLimitExceeded'
-    |'missingOrInvalidParent';
+    |'missingOrInvalidParent'
+    |'invalidWorkflowStepState'
 
 
 export interface Warnings {
@@ -29,6 +30,7 @@ export interface Warnings {
     nonUniqueIdentifier?: boolean;
     resourceLimitExceeded?: boolean;
     missingOrInvalidParent?: boolean;
+    invalidWorkflowStepState?: boolean;
 }
 
 
@@ -64,7 +66,8 @@ export module Warnings {
             || warnings.missingIdentifierPrefix
             || warnings.nonUniqueIdentifier
             || warnings.resourceLimitExceeded
-            || warnings.missingOrInvalidParent;
+            || warnings.missingOrInvalidParent
+            || warnings.invalidWorkflowStepState;
     }
 
 

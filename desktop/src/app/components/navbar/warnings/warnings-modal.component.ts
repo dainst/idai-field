@@ -125,6 +125,28 @@ export class WarningsModalComponent {
     }
 
 
+    public getValueLabel(section: WarningSection): string {
+
+        return this.labels.getValueLabel(
+            CategoryForm.getField(section.category, section.fieldName)?.valuelist,
+            this.selectedDocument.resource[section.fieldName]
+        );
+    }
+
+
+    public getDateLabel(date: DateSpecification): string {
+
+        return DateSpecification.generateLabel(
+            date,
+            getSystemTimezone(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
+            Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term),
+            true
+        );
+    }
+
+
     public getIdentifierPrefix(section: WarningSection): string {
 
         return section.category.identifierPrefix;
@@ -546,6 +568,8 @@ export class WarningsModalComponent {
 
         if (type === 'missingIdentifierPrefix' || type === 'nonUniqueIdentifier') {
             section.fieldName = Resource.IDENTIFIER;
+        } else if (type === 'invalidWorkflowStepState') {
+            section.fieldName = 'state';
         } else if (fieldName) {
             section.fieldName = fieldName;
         }

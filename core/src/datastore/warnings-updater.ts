@@ -11,11 +11,12 @@ import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
 import { Query } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
-import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/document/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { Relation } from '../model/configuration/relation';
+import { WorkflowStepResource } from '../model/document/workflow-step-resource';
+import { ProjectConfiguration } from '../services/project-configuration';
 
 
 /**
@@ -493,6 +494,10 @@ export module WarningsUpdater {
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
+        if (category.parentCategory?.name === 'WorkflowStep'
+                && !WorkflowStepResource.validateState(document.resource as WorkflowStepResource)) {
+            warnings.invalidWorkflowStepState = true;
+        }
 
         return Object.keys(document.resource)
             .concat(Object.keys(document.resource.relations))
@@ -543,7 +548,7 @@ export module WarningsUpdater {
     }
 
 
-    function getAncestorDocuments(document: Document, documentCache): Array<Document> {
+    function getAncestorDocuments(document: Document, documentCache: DocumentCache): Array<Document> {
 
         const result: Array<Document> = [];
         let parent: Document;

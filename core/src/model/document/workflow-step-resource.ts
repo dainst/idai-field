@@ -1,6 +1,6 @@
 import { Resource } from './resource';
 import { DateSpecification } from '../input-types/date-specification';
-import { parseDate } from '../../tools';
+import { parseDate } from '../../tools/parse-date';
 
 
 export interface WorkflowStepResource extends Resource {

@@ -43,5 +43,6 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'missingIdentifierPrefix:exist': { path: 'warnings.missingIdentifierPrefix', pathArray: ['warnings', 'missingIdentifierPrefix'], type: 'exist' },
     'nonUniqueIdentifier:exist': { path: 'warnings.nonUniqueIdentifier', pathArray: ['warnings', 'nonUniqueIdentifier'], type: 'exist' },
     'resourceLimitExceeded:exist': { path: 'warnings.resourceLimitExceeded', pathArray: ['warnings', 'resourceLimitExceeded'], type: 'exist' },
-    'missingOrInvalidParent:exist': { path: 'warnings.missingOrInvalidParent', pathArray: ['warnings', 'missingOrInvalidParent'], type: 'exist' }
+    'missingOrInvalidParent:exist': { path: 'warnings.missingOrInvalidParent', pathArray: ['warnings', 'missingOrInvalidParent'], type: 'exist' },
+    'invalidWorkflowStepState:exist': { path: 'warnings.invalidWorkflowStepState', pathArray: ['warnings', 'invalidWorkflowStepState'], type: 'exist' }
 };

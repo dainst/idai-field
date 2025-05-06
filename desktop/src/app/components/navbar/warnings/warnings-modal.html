@@ -102,6 +102,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.resourceLimitExceeded">
                             Ressourcenlimit für Kategorie <b>{{getCategoryLabel(section)}}</b> überschritten
                         </span>
+                        <span *ngIf="section.type === 'invalidWorkflowStepState'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.resourceLimitExceeded">
+                            Ungültiger Status <b>{{getValueLabel(section)}}</b>
+                        </span>
                     </span>
                 </div>
                 <div class="card-block">
@@ -214,6 +218,11 @@
                             Es dürfen nur <b>{{section.category.resourceLimit}}</b> Ressourcen der Kategorie
                             <i>{{getCategoryLabel(section)}}</i> angelegt werden.
                         </span>
+                        <span *ngIf="section.type === 'invalidWorkflowStepState'"
+                            i18n="@@navbar.taskbar.warnings.info.invalidWorkflowStepState">
+                            Der für diesen Arbeitsschritt angegebene Status <i>{{getValueLabel(section)}}</i> widerspricht
+                            dem eingetragenen Datum <i>{{getDateLabel(selectedDocument.resource.date)}}</i>.
+                      </span>
                     </div>
                     <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'"
                          class="data-info">
@@ -264,7 +273,8 @@
                     </span>
                     <span *ngIf="section.type === 'invalidFields' || section.type === 'missingMandatoryFields'
                             || section.type === 'invalidRelationTargets' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
+                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'
+                            || section.type === 'invalidWorkflowStepState'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>

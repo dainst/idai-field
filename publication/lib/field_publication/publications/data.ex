@@ -412,6 +412,24 @@ defmodule FieldPublication.Publications.Data do
           |> Map.get("valuelist", %{})
           |> Map.get("values", %{})
           |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+          |> Enum.filter(fn {key, _val} ->
+            cond do
+              is_list(resource[field["name"]]) ->
+                if field["inputType"] == "dimension" do
+                  key in Enum.map(resource[field["name"]], fn %{"measurementPosition" => position} ->
+                    position
+                  end)
+                else
+                  key in resource[field["name"]]
+                end
+
+              is_map(resource[field["name"]]) ->
+                key == resource[field["name"]]["value"]
+
+              true ->
+                key == resource[field["name"]]
+            end
+          end)
           |> Enum.into(%{})
 
         %Field{base_fields | value_labels: value_labels}

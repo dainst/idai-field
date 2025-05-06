@@ -13,6 +13,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   attr :doc, Document, required: true
   attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
+  attr :image_height, :integer, default: 64
   attr :geometry_indicator, :boolean, default: false
 
   def show(assigns) do
@@ -55,7 +56,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
           <div class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>
               <Image.show
-                size="^,128"
+                size={"^,#{@image_height}"}
                 class="p-1 inline"
                 project={@doc.project}
                 uuid={uuid}

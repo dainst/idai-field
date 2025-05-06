@@ -1,4 +1,4 @@
-<h1>Search</h1>
+<.document_heading>Search</.document_heading>
 <div class="flex flex-row">
   <div class="w-64 m-4 basis-1/4">
     <div class="sticky top-4">
@@ -12,12 +12,12 @@
           phx-debounce="100"
         />
       </form>
-      <h2>Active filters</h2>
+      <.group_heading>Active filters</.group_heading>
       <%= for {field, value} <- @url_parameters.filters do %>
         <.aggregation_deselection field_name={field} value={value} />
       <% end %>
 
-      <h2>Available filters</h2>
+      <.group_heading>Available filters</.group_heading>
 
       <div class="h-[70vh] overflow-auto">
         <%= for {field, buckets} <- @aggregations do %>
@@ -34,6 +34,7 @@
         doc={doc}
         lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
         image_count={10}
+        image_height={256}
       />
     </div>
   </div>

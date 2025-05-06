@@ -1,6 +1,8 @@
 defmodule FieldPublicationWeb.Presentation.SearchLive do
   use FieldPublicationWeb, :live_view
 
+  import FieldPublicationWeb.Presentation.Components.Typography
+
   alias FieldPublication.Publications.Search
   alias FieldPublicationWeb.Presentation.Components.DocumentLink
   alias FieldPublication.Publications.Search.SearchDocument

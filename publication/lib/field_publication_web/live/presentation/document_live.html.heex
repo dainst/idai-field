@@ -26,28 +26,25 @@
       "Document not found in selected publication."
 
     category == "Project" ->
-      DocumentComponents.Project.render(%{
+      DocumentComponents.project(%{
         doc: @doc,
         publication: @publication,
         lang: @selected_lang,
-        top_level_docs: @top_level_docs,
-        project_map_layers: @project_map_layers
+        top_level_docs: @top_level_docs
       })
 
     category in @image_categories ->
-      DocumentComponents.Image.render(%{
+      DocumentComponents.image(%{
         doc: @doc,
         publication: @publication,
-        lang: @selected_lang,
-        uuid: @uuid
+        lang: @selected_lang
       })
 
     true ->
-      DocumentComponents.Generic.render(%{
+      DocumentComponents.generic(%{
         doc: @doc,
         publication: @publication,
         lang: @selected_lang,
-        uuid: @uuid,
         map_detail?: @map_detail?
       })
   end}

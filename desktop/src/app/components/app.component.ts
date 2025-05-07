@@ -168,6 +168,10 @@ export class AppComponent {
             $localize `:@@util.warnings.missingMandatoryFields:Nicht ausgefüllte Pflichtfelder`
         );
         this.utilTranslations.addTranslation(
+            'warnings.unfulfilledConditionFields',
+            $localize `:@@util.warnings.unfulfilledConditionFields:Nicht erfüllte Anzeigebedingungen`
+        );
+        this.utilTranslations.addTranslation(
             'warnings.outlierValues',
             $localize `:@@util.warnings.outlierValues:Nicht in Werteliste enthaltene Werte`
         );

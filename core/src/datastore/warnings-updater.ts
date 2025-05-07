@@ -17,6 +17,7 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { Relation } from '../model/configuration/relation';
 import { WorkflowStepResource } from '../model/document/workflow-step-resource';
 import { ProjectConfiguration } from '../services/project-configuration';
+import { Condition } from '../model/configuration/condition';
 
 
 /**
@@ -507,7 +508,7 @@ export module WarningsUpdater {
                 const fieldContent: any = field && Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field?.inputType)
                     ? document.resource.relations[fieldName]
                     : document.resource[fieldName];
-                updateWarningsForField(warnings, fieldName, field, fieldContent);
+                updateWarningsForField(warnings, fieldName, field, fieldContent, document.resource, category);
                 return result;
             }, warnings);
     }
@@ -531,12 +532,15 @@ export module WarningsUpdater {
     }
 
 
-    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any) {
+    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any,
+                                    resource: Resource, category: CategoryForm) {
 
         if (!field) {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
+        } else if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+            warnings.unfulfilledConditionFields.push(fieldName);
         }
     }
 

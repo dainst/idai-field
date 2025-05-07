@@ -79,6 +79,12 @@ export module WarningFilters {
                 type: 'missingOrInvalidParent'
             },
             {
+                label: translations.getTranslation('warnings.unfulfilledConditionFields'),
+                constraintName: 'unfulfilledConditionFields:exist',
+                count: 0,
+                type: 'unfulfilledConditionFields'
+            },
+            {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
                 constraintName: 'missingIdentifierPrefix:exist',
                 count: 0,

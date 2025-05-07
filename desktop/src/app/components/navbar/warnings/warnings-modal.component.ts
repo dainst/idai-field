@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, flatten, intersect, isArray, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
-    RelationTargetWarnings, DateValidationResult, DateSpecification } from 'idai-field-core';
+    RelationTargetWarnings, DateValidationResult, DateSpecification, Condition } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -40,6 +40,7 @@ type WarningSection = {
     outlierValues?: string[];
     relationTargets?: Array<Document>;
     dateValidationError?: DateValidationResult;
+    condition?: Condition;
 }
 
 
@@ -143,6 +144,21 @@ export class WarningsModalComponent {
             Settings.getLocale(),
             (term: string) => this.utilTranslations.getTranslation(term),
             true
+        );
+    }
+
+
+    public getConditionFieldLabel(section: WarningSection): string {
+
+        return this.labels.getFieldLabel(section.category, section.condition.fieldName);
+    }
+
+    
+    public getConditionValuesLabel(section: WarningSection): string {
+
+        return Condition.generateLabel(
+            section.condition, 
+            (term: string) => this.utilTranslations.getTranslation(term)
         );
     }
 
@@ -516,6 +532,7 @@ export class WarningsModalComponent {
                     case 'unconfiguredFields':
                     case 'invalidFields':
                     case 'missingMandatoryFields':
+                    case 'unfulfilledConditionFields':
                         this.sections = this.sections.concat(
                             await this.createSections(
                                 type as WarningType, document, document.warnings[type] as string[]
@@ -588,7 +605,7 @@ export class WarningsModalComponent {
 
         if (section.dateValidationError && section.dateValidationError !== DateValidationResult.INVALID) {
             section.dataLabel = this.generateDateLabel(document.resource[fieldName]);
-        } else if (type === 'invalidFields' || type === 'unconfiguredFields') {
+        } else if (type === 'invalidFields' || type === 'unconfiguredFields' || type === 'unfulfilledConditionFields') {
             section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
         } else if (type === 'missingIdentifierPrefix') {
             section.dataLabel = document.resource.identifier;
@@ -599,6 +616,10 @@ export class WarningsModalComponent {
             section.outlierValues = isArray(outlierValues)
                 ? outlierValues
                 : set(flatten(Object.values(outlierValues)));
+        }
+
+        if (type === 'unfulfilledConditionFields') {
+            section.condition = CategoryForm.getField(section.category, fieldName).condition;
         }
 
         if (section.isRelationField) {

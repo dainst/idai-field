@@ -99,6 +99,14 @@ describe('WarningsUpdater', () => {
                                 dataType: DateConfiguration.DataType.OPTIONAL,
                                 inputMode: DateConfiguration.InputMode.OPTIONAL
                             }
+                        },
+                        {
+                            name: 'conditionalField',
+                            inputType: Field.InputType.INPUT,
+                            condition: {
+                                fieldName: 'state',
+                                values: ['completed']
+                            }
                         }
                     ]
                 }
@@ -116,6 +124,7 @@ describe('WarningsUpdater', () => {
         documents[0].resource.unconfiguredField = 'text';
         documents[0].resource.state = 'planned';
         documents[0].resource.date = { value: '01.01.1990', isRange: false };
+        documents[0].resource.conditionalField = 'text';
         documents[0].resource.relations.unconfiguredRelation = ['target'];
 
         documents[1].resource.identifier = 'C2';
@@ -137,6 +146,7 @@ describe('WarningsUpdater', () => {
             unconfiguredFields: ['unconfiguredField', 'unconfiguredRelation'],
             invalidFields: ['number'],
             missingMandatoryFields: ['mandatoryField'],
+            unfulfilledConditionFields: ['conditionalField'],
             conflicts: true,
             missingIdentifierPrefix: true,
             invalidWorkflowStepState: true
@@ -145,6 +155,7 @@ describe('WarningsUpdater', () => {
             unconfiguredFields: [],
             invalidFields: [],
             missingMandatoryFields: [],
+            unfulfilledConditionFields: [],
             unconfiguredCategory: true
         });
         expect(documents[2].warnings).toBeUndefined();

@@ -15,7 +15,7 @@
 ARG BUILDER_IMAGE="hexpm/elixir:1.18.3-erlang-25.3.2.20-debian-bookworm-20250407-slim"
 ARG RUNNER_IMAGE="debian:bookworm-20250407-slim"
 
-FROM ${BUILDER_IMAGE} as builder
+FROM ${BUILDER_IMAGE} AS builder
 
 # install build dependencies
 RUN apt-get update -y && apt-get install -y build-essential git \

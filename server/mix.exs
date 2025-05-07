@@ -43,6 +43,9 @@ defmodule FieldHub.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # Hackney dependency was explicitely set because of issue in 1.23.0
+      # https://github.com/benoitc/hackney/issues/764
+      {:hackney, "~> 1.20.1", override: true},
       {:phoenix_live_view, "~> 1.0"},
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},

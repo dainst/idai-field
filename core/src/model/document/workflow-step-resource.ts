@@ -48,7 +48,11 @@ export module WorkflowStepResource {
             ? parseDate(workflowStepResource.date.value)
             : undefined;
 
-        return !startDate || startDate < currentDate;
+        const endDate: Date = workflowStepResource.date?.endValue
+            ? parseDate(workflowStepResource.date.endValue, 'UTC', true)
+            : undefined;
+
+        return (!startDate || startDate < currentDate) && (!endDate || endDate > currentDate);
     }
 
 

@@ -117,7 +117,7 @@ describe('WorkflowStepResource', () => {
                 state: 'in progress',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
             } as WorkflowStepResource,
-            new Date('2025-04-01')
+            new Date('2025-03-01')
         )).toBe(true);
 
         expect(
@@ -162,6 +162,14 @@ describe('WorkflowStepResource', () => {
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
             } as WorkflowStepResource,
             new Date('2025-01-01')
+        )).toBe(false);
+
+        expect(
+            WorkflowStepResource.validateState({
+                state: 'in progress',
+                date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
+            } as WorkflowStepResource,
+            new Date('2025-04-01')
         )).toBe(false);
     });
 

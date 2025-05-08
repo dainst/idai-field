@@ -1919,3 +1919,14 @@ Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konf
 #### Mögliche Lösungen
 * Löschen Sie Ressourcen der entsprechenden Kategorie, bis das Ressourcenlimit eingehalten wird.
 * Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.
+
+### Ungültiger Status
+Der Status eines Arbeitsschritts widerspricht dem angegebenen Datum. Dies ist beispielsweise der Fall, wenn das Datum eines Arbeitsschritts mit dem Status "Geplant" in der Vergangenheit liegt oder das Datum eines Arbeitsschritts mit dem Status "Abgeschlossen" in der Zukunft.
+
+#### Mögliche Ursachen
+* Der Status wurde nicht angepasst, nachdem der Arbeitsgang begonnen, abgeschlossen oder abgebrochen wurde.
+* Ein geplanter Arbeitsschritt wurde zum angegebenen Datum noch nicht durchgeführt.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Status oder das Datum des Arbeitsschritts anzupassen.
+

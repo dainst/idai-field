@@ -1908,3 +1908,13 @@ There are more resources of a particular category than the resource limit config
 #### Possible solutions
 * Delete resources of the corresponding category until the resource limit is met.
 * Increase the resource limit in the configuration editor.
+
+### Invalid state
+The state of a workflow step contradicts the specified date. This is the case, for example, if the date of a workflow step with the state "Planned" is in the past or the date of a workflow step with the state "Completed" is in the future.
+
+#### Possible causes
+* The state has not been updated after the workflow step has been started, completed or canceled.
+* A planned workflow step has not yet been executed on the specified date.
+
+#### Possible solutions
+* Button *Edit*: Open the resource editor to adjust the state or date of the workflow step.

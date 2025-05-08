@@ -1838,6 +1838,17 @@ In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
 #### Mögliche Lösungen
 * Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um das Pflichtfeld auszufüllen.
 
+### Nicht erfüllte Anzeigebedingung eines Feldes
+Es sind Daten in ein Feld eingetragen, obwohl die Bedingung zur Anzeige dieses Feldes nicht erfüllt ist.
+
+#### Mögliche Ursachen
+* Die Anzeigebedingung wurde im Konfigurationseditor eingerichtet oder geändert, nachdem bereits Daten in das Feld eingetragen wurden.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die Daten im Bedingungsfeld so anzupassen, dass die Bedingung erfüllt ist.
+* Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht.
+* Entfernen Sie die Anzeigebedingung des Feldes im Konfigurationseditor oder passen Sie sie so an, dass die Bedingung für die betroffene Ressource erfüllt ist.
+
 ### Nicht in Werteliste enthaltener Wert
 In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
 

@@ -1827,6 +1827,17 @@ No data has been entered in a field configured as mandatory.
 #### Possible solutions
 * Button *Edit*: Open the resource in the resource editor to fill in the mandatory field.
 
+### Unfulfilled display condition of a field
+Data has been entered in a field although the condition for displaying this field has not been fulfilled.
+
+#### Possible causes
+* The display condition was set up or changed in the configuration editor after data had already been entered in the field.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to adjust the data in the condition field so that the condition is fulfilled.
+* Button *Delete field data*: The data entered in the field is deleted completely.
+* Remove the display condition for the field in the configuration editor or adjust it so that the condition is fulfilled for the affected resource.
+
 ### Value not included in valuelist
 One or more values are entered in a field that are not contained in the valuelist configured for the field.
 

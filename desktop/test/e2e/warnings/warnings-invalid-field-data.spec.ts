@@ -93,32 +93,6 @@ test.describe('warnings/invalid field data', () => {
     });
 
 
-    test('disable multiple switch if single resource is affected by invalid field data warning', async () => {
-
-        await waitForNotExist(await NavbarPage.getWarnings());
-        await createInvalidFieldDataWarnings(['1'], 'field2', 'true', Field.InputType.BOOLEAN);
-
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
-
-        await NavbarPage.clickWarningsButton();
-        await WarningsModalPage.clickDeleteFieldDataButton(0);
-        await expect(DeleteModalPage.getMultipleSwitch()).toBeDisabled();
-        await DeleteModalPage.clickCancelButton();
-
-        await WarningsModalPage.clickSelectNewFieldButton(0);
-        await SelectModalPage.clickSelectField('Kurzbeschreibung');
-        await expect(SelectModalPage.getMultipleSwitch()).toBeDisabled();
-        await SelectModalPage.clickCancelButton();
-
-        await WarningsModalPage.clickConvertFieldDataButton(0);
-        await expect(ConvertFieldDataModalPage.getMultipleSwitch()).toBeDisabled();
-        await ConvertFieldDataModalPage.clickCancelButton();
-
-        await WarningsModalPage.clickCloseButton();
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
-    });
-
-
     test('solve multiple warnings for invalid field data via conversion in warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
@@ -283,5 +257,31 @@ test.describe('warnings/invalid field data', () => {
         expect(await fields.count()).toBe(2);
         expect(await FieldsViewPage.getFieldName(0, 1)).toEqual('test:field');
         expect(await FieldsViewPage.getFieldValue(0, 1)).toEqual('10');
+    });
+
+
+    test('disable multiple switch if single resource is affected by invalid field data warning', async () => {
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createInvalidFieldDataWarnings(['1'], 'field2', 'true', Field.InputType.BOOLEAN);
+
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickDeleteFieldDataButton(0);
+        await expect(DeleteModalPage.getMultipleSwitch()).toBeDisabled();
+        await DeleteModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickSelectNewFieldButton(0);
+        await SelectModalPage.clickSelectField('Kurzbeschreibung');
+        await expect(SelectModalPage.getMultipleSwitch()).toBeDisabled();
+        await SelectModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickConvertFieldDataButton(0);
+        await expect(ConvertFieldDataModalPage.getMultipleSwitch()).toBeDisabled();
+        await ConvertFieldDataModalPage.clickCancelButton();
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
     });
 });

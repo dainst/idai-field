@@ -6,7 +6,7 @@ import { WarningsModalPage } from './warnings-modal.page';
 import { DeleteModalPage } from './delete-modal.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { SelectModalPage } from './select-modal.page';
-import { expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
+import { expectFieldValuesInGroup, expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
 import { createUnconfiguredCategoryWarnings } from './create-warnings';
 
 const { test, expect } = require('@playwright/test');
@@ -14,6 +14,7 @@ const { test, expect } = require('@playwright/test');
 
 /**
  * @author Thomas Kleinke
+ * @author Lisa Steinmann
  */
 test.describe('warnings/unconfigured category', () => {
 
@@ -93,9 +94,8 @@ test.describe('warnings/unconfigured category', () => {
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Erdbefund']);
         await ResourcesPage.clickSelectResource('1');
-        expect(await FieldsViewPage.getFieldName(0, 0)).toBe('Kategorie');
-        expect(await FieldsViewPage.getFieldValue(0, 0)).toBe('Erdbefund');
     });
 
 

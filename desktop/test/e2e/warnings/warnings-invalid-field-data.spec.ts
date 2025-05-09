@@ -8,7 +8,7 @@ import { DeleteModalPage } from './delete-modal.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { ConvertFieldDataModalPage } from './convert-field-data-modal.page';
 import { SelectModalPage } from './select-modal.page';
-import { createField, expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
+import { createField, expectFieldValuesInGroup, expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
 import { createInvalidFieldDataWarnings } from './create-warnings';
 
 const { test, expect } = require('@playwright/test');
@@ -90,6 +90,8 @@ test.describe('warnings/invalid field data', () => {
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', 'Ja']);
     });
 
 
@@ -107,6 +109,9 @@ test.describe('warnings/invalid field data', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', 'Ja']);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie', 'test:field'], ['Ort', 'Ja']);
     });
 
 
@@ -148,9 +153,10 @@ test.describe('warnings/invalid field data', () => {
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
 
-        await ResourcesPage.clickSelectResource('1');
-        expect(await FieldsViewPage.getFieldName(0, 1)).toBe('test:newField');
-        expect(await FieldsViewPage.getFieldValue(0, 1)).toBe('Text');
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:newField'], ['Ort', 'Text']);
+        
+        const fields = await FieldsViewPage.getFields(0);
+        expect(await fields.count()).toBe(2);
     });
 
 
@@ -176,13 +182,8 @@ test.describe('warnings/invalid field data', () => {
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
 
-        await ResourcesPage.clickSelectResource('1');
-        expect(await FieldsViewPage.getFieldName(0, 1)).toBe('test:newField');
-        expect(await FieldsViewPage.getFieldValue(0, 1)).toBe('Text');
-
-        await ResourcesPage.clickSelectResource('2');
-        expect(await FieldsViewPage.getFieldName(0, 1)).toBe('test:newField');
-        expect(await FieldsViewPage.getFieldValue(0, 1)).toBe('Text');
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:newField'], ['Ort', 'Text']);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie', 'test:newField'], ['Ort', 'Text']);
     });
 
 
@@ -202,6 +203,8 @@ test.describe('warnings/invalid field data', () => {
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Ort']);
     });
 
 
@@ -220,6 +223,9 @@ test.describe('warnings/invalid field data', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Ort']);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie'], ['Ort']);
     });
 
 
@@ -240,23 +246,12 @@ test.describe('warnings/invalid field data', () => {
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
 
-        // Check that invalid field data has been deleted in first resource
-        await ResourcesPage.clickSelectResource('1');
-        let fields = await FieldsViewPage.getFields(0);
-        expect(await fields.count()).toBe(1);
-        expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
-        // Check that invalid field data has been deleted in second resource
-        await ResourcesPage.clickSelectResource('2');
-        fields = await FieldsViewPage.getFields(0);
-        expect(await fields.count()).toBe(1);
-        expect(await FieldsViewPage.getFieldName(0, 0)).toEqual('Kategorie');
+        // Check that invalid field data has been deleted
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Ort']);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie'], ['Ort']);
 
         // Check that valid field data has not been deleted
-        await ResourcesPage.clickSelectResource('3');
-        fields = await FieldsViewPage.getFields(0);
-        expect(await fields.count()).toBe(2);
-        expect(await FieldsViewPage.getFieldName(0, 1)).toEqual('test:field');
-        expect(await FieldsViewPage.getFieldValue(0, 1)).toEqual('10');
+        await expectFieldValuesInGroup('3', 0, ['Kategorie', 'test:field'], ['Ort', '10']);
     });
 
 

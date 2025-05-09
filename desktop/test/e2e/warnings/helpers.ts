@@ -8,6 +8,8 @@ import { CategoryPickerPage } from '../widgets/category-picker.page';
 import { WarningsModalPage } from './warnings-modal.page';
 import { AddFieldModalPage } from '../configuration/add-field-modal.page';
 import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
+import { ResourcesPage } from '../resources/resources.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
 
 const { expect } = require('@playwright/test');
 
@@ -74,5 +76,20 @@ export async function expectSectionTitles(sectionTitles: string[]) {
 
     for (let i = 0; i < sectionTitles.length; i++) {
         expect(await WarningsModalPage.getSectionTitle(i)).toEqual(sectionTitles[i]);
+    }
+}
+
+
+export async function expectFieldValuesInGroup(identifier: string, groupIndex: number, fieldNames: string[],
+                                               fieldValues: string[]) {
+
+    await ResourcesPage.clickSelectResource(identifier);
+
+    const fields = await FieldsViewPage.getFields(groupIndex);
+    expect(await fields.count()).toBe(fieldNames.length);
+
+    for (let i = 0; i < fieldNames.length; i++) {
+        expect(await FieldsViewPage.getFieldName(groupIndex, i)).toBe(fieldNames[i]);
+        expect(await FieldsViewPage.getFieldValue(groupIndex, i)).toBe(fieldValues[i]);
     }
 }

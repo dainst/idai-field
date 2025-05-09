@@ -9,7 +9,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('warnings/missing relation target --', () => {
+test.describe('warnings/missing relation target', () => {
 
     test.beforeAll(async () => {
 

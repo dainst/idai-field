@@ -15,7 +15,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('warnings/missing or invalid parent --', () => {
+test.describe('warnings/missing or invalid parent', () => {
 
     test.beforeAll(async () => {
 

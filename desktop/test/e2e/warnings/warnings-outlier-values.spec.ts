@@ -19,7 +19,7 @@ const { test, expect } = require('@playwright/test');
  * @author Thomas Kleinke
  * @author Lisa Steinmann
  */
-test.describe('warnings/outlier values --', () => {
+test.describe('warnings/outlier values', () => {
 
     test.beforeAll(async () => {
 

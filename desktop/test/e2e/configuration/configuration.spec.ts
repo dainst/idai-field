@@ -20,7 +20,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('configuration --', () => {
+test.describe('configuration', () => {
 
     async function createSubfieldAndValuelist(subfieldName: string, valuelistName: string, valueName: string) {
 

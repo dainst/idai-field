@@ -8,7 +8,7 @@ import { MoveModalPage } from '../widgets/move-modal.page';
 const { test, expect } = require('@playwright/test');
 
 
-test.describe('resources/multi-select --', () => {
+test.describe('resources/multi select', () => {
 
     test.beforeAll(async () => {
 

@@ -18,7 +18,7 @@ const { test, expect } = require('@playwright/test');
  * @author Thomas Kleinke
  * @author Lisa Steinmann
  */
-test.describe('warnings/invalid field data --', () => {
+test.describe('warnings/invalid field data', () => {
 
     test.beforeAll(async () => {
 

@@ -12,7 +12,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('warnings/missing identifier prefix --', () => {
+test.describe('warnings/missing identifier prefix', () => {
 
     test.beforeAll(async () => {
 

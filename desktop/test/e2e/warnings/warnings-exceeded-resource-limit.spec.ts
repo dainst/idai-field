@@ -11,7 +11,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('warnings/exceeded resource limit --', () => {
+test.describe('warnings/exceeded resource limit', () => {
 
     test.beforeAll(async () => {
 

@@ -12,7 +12,7 @@ import { MoveModalPage } from '../widgets/move-modal.page';
 const { test, expect } = require('@playwright/test');
 
 
-test.describe('resources/list --', () => {
+test.describe('resources/list', () => {
 
     test.beforeAll(async () => {
 

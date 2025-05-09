@@ -16,7 +16,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('warnings/invalid relation target --', () => {
+test.describe('warnings/invalid relation target', () => {
 
     test.beforeAll(async () => {
 

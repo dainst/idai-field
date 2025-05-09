@@ -11,7 +11,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('warnings/non-unique identifier --', () => {
+test.describe('warnings/non-unique identifier', () => {
 
     test.beforeAll(async () => {
 

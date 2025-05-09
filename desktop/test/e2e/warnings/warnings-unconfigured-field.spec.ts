@@ -3,14 +3,17 @@ import { navigateTo, resetApp, start, stop, waitForNotExist } from '../app';
 import { WarningsModalPage } from './warnings-modal.page';
 import { DeleteModalPage } from './delete-modal.page';
 import { SelectModalPage } from './select-modal.page';
-import { expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
+import { expectFieldValuesInGroup, expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
 import { createUnconfiguredFieldWarnings, createUnconfiguredRelationFieldWarnings } from './create-warnings';
+import { FieldsViewPage } from '../widgets/fields-view.page';
+import { ResourcesPage } from '../resources/resources.page';
 
 const { test, expect } = require('@playwright/test');
 
 
 /**
  * @author Thomas Kleinke
+ * @author Lisa Steinmann
  */
 test.describe('warnings/unconfigured field', () => {
 
@@ -53,6 +56,8 @@ test.describe('warnings/unconfigured field', () => {
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'Kurzbeschreibung'], ['Ort', 'Text']);
     });
 
 
@@ -71,6 +76,9 @@ test.describe('warnings/unconfigured field', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'Kurzbeschreibung'], ['Ort', 'Text']);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie', 'Kurzbeschreibung'], ['Ort', 'Text']);
     });
 
 
@@ -153,6 +161,11 @@ test.describe('warnings/unconfigured field', () => {
 
         await WarningsModalPage.clickCloseButton();
         expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await ResourcesPage.clickSelectResource('1');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Liegt über');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
     });
 
 
@@ -172,6 +185,15 @@ test.describe('warnings/unconfigured field', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await ResourcesPage.clickSelectResource('1');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Liegt über');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
+
+        await ResourcesPage.clickSelectResource('2');
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Liegt über');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
     });
 
 

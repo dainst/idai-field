@@ -62,7 +62,8 @@ defmodule FieldHub.MixProject do
       {:reverse_proxy_plug, "~> 2.4"},
       {:zarex, "~> 1.0"},
       {:ex_json_schema, "~> 0.10"},
-      {:cachex, "~> 4.0"}
+      {:cachex, "~> 4.0"},
+      {:cors_plug, "~> 3.0"}
     ]
   end
 

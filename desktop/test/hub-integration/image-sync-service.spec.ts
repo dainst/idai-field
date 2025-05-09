@@ -9,7 +9,7 @@ import { SyncTarget } from '../../src/app/services/settings/sync-target';
 import * as schema from '../../../core/api-schemas/files-list.json';
 
 const fs = require('fs');
-const execSync = require('child_process').execSync;
+const axios = require('axios');
 
 
 /**
@@ -23,13 +23,15 @@ describe('ImageSyncService', () => {
     const mockImage: Buffer = fs.readFileSync(process.cwd() + '/test/test-data/logo.png');
     const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
     const testProjectIdentifier = 'test_tmp_project';
-    const hubContainer = 'field-hub-client-integration-test';
 
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
 
     // see desktop/test/hub-integration/docker-compose.yml
-    const fieldHubTestBasicAuth = 'Basic ' + Buffer.from("client_integration_test:pw").toString('base64');
+    const fieldHubAdminCredentials = {
+        username: "client_integration_test",
+        password: "pw"
+    }
 
     const syncTarget: SyncTarget = {
         // see desktop/test/hub-integration/docker-compose.yml
@@ -82,14 +84,12 @@ describe('ImageSyncService', () => {
 
         await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
 
-        let headers = new Headers();
-        headers.set('Authorization', fieldHubTestBasicAuth);
-        const request = new Request(`${syncTarget.address}/projects/${testProjectIdentifier}`, {
-            method: "POST",
-            body: JSON.stringify({ password: syncTarget.password }),
-            headers: headers
+        await axios({
+            method: 'post',
+            baseURL: `${syncTarget.address}/projects/${testProjectIdentifier}`,
+            auth: fieldHubAdminCredentials,
+            data: { password: syncTarget.password }
         })
-        fetch(request);
     });
 
 
@@ -97,13 +97,11 @@ describe('ImageSyncService', () => {
 
         await imageStore.deleteData(testProjectIdentifier);
 
-        let headers = new Headers();
-        headers.set('Authorization', fieldHubTestBasicAuth);
-        const request = new Request(`${syncTarget.address}/projects/${testProjectIdentifier}`, {
-            method: "DELETE",
-            headers: headers
+        await axios({
+            method: 'delete',
+            baseURL: `${syncTarget.address}/projects/${testProjectIdentifier}`,
+            auth: fieldHubAdminCredentials
         })
-        fetch(request);
     });
 
 

@@ -166,7 +166,7 @@ test.describe('resources', () => {
         expect(fieldName).toBe('Tagebuch');
         const fieldValue = await FieldsViewPage.getFieldValue(0, 1);
         expect(fieldValue).toBe('100');
-        const items = await FieldsViewPage.getFields(1);
+        const items = await FieldsViewPage.getFields(0);
         expect(await items.count()).toBe(2);
     });
 

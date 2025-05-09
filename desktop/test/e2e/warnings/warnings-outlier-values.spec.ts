@@ -560,10 +560,10 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await NavbarPage.getWarnings());
 
         await ResourcesPage.clickSelectResource('1');
-        expect(await FieldsViewPage.getCompositeSubfieldName(0, 0, 0, 0)).toBe('subfield1');
-        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 0)).toBe('Gerät');
-        expect(await FieldsViewPage.getCompositeSubfieldName(0, 0, 0, 1)).toBe('subfield2');
-        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 1)).toBe('braun');
+        expect(await FieldsViewPage.getCompositeSubfieldName(0, 1, 0, 0)).toBe('subfield1');
+        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 1, 0, 0)).toBe('Gerät');
+        expect(await FieldsViewPage.getCompositeSubfieldName(0, 1, 0, 1)).toBe('subfield2');
+        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 1, 0, 1)).toBe('braun');
     });
 
 
@@ -582,8 +582,8 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await NavbarPage.getWarnings());
 
         await ResourcesPage.clickSelectResource('1');
-        expect(await FieldsViewPage.getCompositeSubfieldName(0, 0, 0, 0)).toBe('subfield2');
-        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 0, 0, 0)).toBe('braun');
+        expect(await FieldsViewPage.getCompositeSubfieldName(0, 1, 0, 0)).toBe('subfield2');
+        expect(await FieldsViewPage.getCompositeSubfieldValue(0, 1, 0, 0)).toBe('braun');
     });
 
 

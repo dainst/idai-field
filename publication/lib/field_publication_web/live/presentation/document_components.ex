@@ -177,6 +177,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             publication={@publication}
             lang={@lang}
+            focus={:map}
             map_id="generic_doc_map_detail"
           />
           <%= for other_relation <- Enum.reject(

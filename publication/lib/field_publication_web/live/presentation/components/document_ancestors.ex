@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
   def render(assigns) do
     ~H"""
     <div>
-      <.render_step nodes={@ancestors} lang={@lang} map_id={@map_id} />
+      <.render_step nodes={@ancestors} lang={@lang} map_id={@map_id} focus={@focus} />
     </div>
     """
   end
@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
     <%= case @nodes do %>
       <% [current] -> %>
         <div class="bg-slate-200">
-          <.render_link doc={current} hover_target={@map_id} lang={@lang} />
+          <.render_link doc={current} hover_target={@map_id} lang={@lang} focus={@focus} />
         </div>
         <% contains = Data.get_relation(current, "contains") %>
         <%= if contains do %>
@@ -27,18 +27,18 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
             <.icon name="hero-arrow-turn-down-right" class="min-w-8" />
             <div>
               <%= for doc <- contains.docs do %>
-                <.render_link doc={doc} hover_target={@map_id} lang={@lang} />
+                <.render_link doc={doc} hover_target={@map_id} lang={@lang} focus={@focus} />
               <% end %>
             </div>
           </div>
         <% end %>
       <% [current | rest] -> %>
-        <.render_link doc={current} hover_target={@map_id} lang={@lang} />
+        <.render_link doc={current} hover_target={@map_id} lang={@lang} focus={@focus} />
 
         <div class="flex flex-row">
           <.icon name="hero-arrow-turn-down-right min-w-8" />
           <div>
-            <.render_step nodes={rest} lang={@lang} map_id={@map_id} />
+            <.render_step nodes={rest} lang={@lang} map_id={@map_id} focus={@focus} />
           </div>
         </div>
       <% [] -> %>
@@ -50,6 +50,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
   attr :doc, Document, required: true
   attr :hover_target, :string, required: true
   attr :lang, :string, required: true
+  attr :focus, :atom, required: true
 
   def render_link(assigns) do
     ~H"""
@@ -62,11 +63,23 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
         target_dom_element={@hover_target}
         target_id={@doc.id}
       >
-        <DocumentLink.show lang={@lang} doc={@doc} image_count={10} geometry_indicator={true} />
+        <DocumentLink.show
+          lang={@lang}
+          doc={@doc}
+          image_count={10}
+          geometry_indicator={true}
+          focus={@focus}
+        />
       </div>
     <% else %>
       <div>
-        <DocumentLink.show lang={@lang} doc={@doc} image_count={10} geometry_indicator={true} />
+        <DocumentLink.show
+          lang={@lang}
+          doc={@doc}
+          image_count={10}
+          geometry_indicator={true}
+          focus={@focus}
+        />
       </div>
     <% end %>
     """
@@ -78,7 +91,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
           publication: %Publication{} = publication,
           lang: lang,
           map_id: map_id
-        },
+        } = params,
         socket
       ) do
     tree =
@@ -94,6 +107,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
       |> assign(:ancestors, ancestors)
       |> assign(:lang, lang)
       |> assign(:map_id, map_id)
+      |> assign(:focus, Map.get(params, :focus, :default))
     }
   end
 

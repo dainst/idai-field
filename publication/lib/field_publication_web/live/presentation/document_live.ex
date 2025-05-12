@@ -89,20 +89,23 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_event(
         "geometry-clicked",
         %{"uuid" => uuid},
-        %{assigns: %{publication: publication, selected_lang: lang}} = socket
+        %{assigns: %{publication: publication, selected_lang: lang, focus: focus}} = socket
       ) do
+    query_params =
+      case focus do
+        :map ->
+          %{focus: "map"}
+
+        _ ->
+          %{}
+      end
+
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
+        to:
+          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}?#{query_params}"
       )
-    }
-  end
-
-  def handle_event("toggle-map", _, %{assigns: %{map_detail?: map_detail?}} = socket) do
-    {
-      :noreply,
-      assign(socket, :map_detail?, !map_detail?)
     }
   end
 

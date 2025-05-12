@@ -15,6 +15,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   attr :image_count, :integer, default: 0
   attr :image_height, :integer, default: 64
   attr :geometry_indicator, :boolean, default: false
+  attr :focus, :atom, default: :default
 
   def show(assigns) do
     ~H"""
@@ -31,13 +32,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         class="grow p-3 rounded-tr rounded-br"
         style="border-width: 1px 1px 1px 0px;"
-        patch={
-          ~p"/projects/#{@doc.project}/#{@doc.publication}/#{@lang}/#{if @doc.id != "project" do
-            @doc.id
-          else
-            ""
-          end}"
-        }
+        patch={construct_doc_link(@doc.project, @doc.publication, @lang, @doc.id, @focus)}
       >
         <div>
           <span>{@doc.identifier}</span>
@@ -71,5 +66,20 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       </.link>
     </div>
     """
+  end
+
+  defp construct_doc_link(project_name, draft_date, lang, uuid, focus_parameter) do
+    uuid = if uuid == "project", do: "", else: uuid
+
+    query =
+      case focus_parameter do
+        :map ->
+          %{focus: "map"}
+
+        _ ->
+          %{}
+      end
+
+    ~p"/projects/#{project_name}/#{draft_date}/#{lang}/#{uuid}?#{query}"
   end
 end

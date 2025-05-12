@@ -1,9 +1,7 @@
-version: '3.5'
-
 services:
 
-  opensearch: 
-    image: opensearchproject/opensearch:2.14.0
+  opensearch:
+    image: opensearchproject/opensearch:2.19.2
     environment:
       - discovery.type=single-node
       - plugins.security.ssl.http.enabled=false

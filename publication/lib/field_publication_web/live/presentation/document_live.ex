@@ -37,7 +37,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:project_name, project_name)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)
-      |> assign(:map_detail?, false)
+      |> assign(:focus, :default)
     }
   end
 
@@ -58,6 +58,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:publication, current_publication)
       |> evaluate_requested_language(current_publication, params)
       |> evaluate_requested_doc(current_publication, params)
+      |> assign(:focus, parse_focus(Map.get(params, "focus")))
     }
   end
 
@@ -241,4 +242,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       List.first(publication.languages)
     end
   end
+
+  defp parse_focus("map"), do: :map
+  defp parse_focus(_), do: :default
 end

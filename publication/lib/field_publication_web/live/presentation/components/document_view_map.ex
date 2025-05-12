@@ -18,8 +18,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     <div>
       <.group_heading>
         Geometry <span class="text-xs">({@geometry_type})</span>
-        <.link phx-click="toggle-map">
-          <.icon name={if @detail?, do: "hero-arrows-pointing-in", else: "hero-arrows-pointing-out"} />
+        <.link patch={
+          ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{@uuid}?#{if @focus != :map, do: %{focus: "map"}, else: %{}}"
+        }>
+          <.icon name={
+            if @focus != :map, do: "hero-arrows-pointing-out", else: "hero-arrows-pointing-in"
+          } />
         </.link>
       </.group_heading>
       <div
@@ -151,7 +155,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:zoom, 2)
     |> Map.put(:no_data, true)
     |> Map.put(:show_layer_select, false)
-    |> Map.put_new(:detail?, false)
+    |> Map.put_new(:focus, :default)
+    |> Map.put(:uuid, assigns.doc.id)
   end
 
   defp create_feature_info(

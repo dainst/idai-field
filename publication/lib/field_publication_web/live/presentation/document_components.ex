@@ -27,7 +27,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
   attr :lang, :string, required: true
-  attr :map_detail, :boolean, default: false
+  attr :focus, :atom, default: :default
 
   def generic(assigns) do
     ~H"""
@@ -35,10 +35,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
       <.document_heading>
         <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
-      <%= if @map_detail? do %>
-        <.generic_map {assigns} />
-      <% else %>
-        <.generic_data_sheet {assigns} />
+      <%= case @focus do %>
+        <% :map -> %>
+          <.generic_map {assigns} />
+        <% _ -> %>
+          <.generic_data_sheet {assigns} />
       <% end %>
     </div>
     """
@@ -226,7 +227,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             publication={@publication}
             lang={@lang}
-            detail?={@map_detail?}
+            focus={@focus}
           />
         </div>
       </div>

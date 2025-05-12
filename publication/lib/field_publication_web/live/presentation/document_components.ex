@@ -246,8 +246,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <DocumentLink.show lang={@lang} doc={@doc} />
       </.document_heading>
 
-      <div class="flex flex-row">
-        <div class="basis-1/3 m-5">
+      <div class="flex flex-col-reverse lg:flex-row">
+        <div class="basis-full lg:basis-1/3 m-5">
           <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
               <I18n.text values={relation_group.labels} /> ({Enum.count(relation_group.docs)})
@@ -334,9 +334,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             </li>
           </ul>
         </div>
-        <div class="basis-2/3 m-5">
+        <div class="basis-full lg:basis-2/3 m-5">
           <.live_component
-            class="h-(--full-size-doc-height)"
+            class="h-(--fifty-percent-vh) lg:h-(--full-size-doc-height)"
             id="iiif_viewer"
             project={@publication.project_name}
             uuid={@doc.id}

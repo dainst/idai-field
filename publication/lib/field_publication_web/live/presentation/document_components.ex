@@ -132,7 +132,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           </ul>
         </section>
       </div>
-      <div class="lg:basis-1/3 flex flex-col lg:flex-col-reverse lg:ml-2">
+      <div class="lg:basis-1/3 flex flex-col lg:flex-col-reverse lg:ml-2 lg:justify-end">
         <%= for other_relation <- Enum.reject(
       @doc.relations,
       fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end

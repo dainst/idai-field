@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
 
   def show(assigns) do
     ~H"""
-    <div class="flex mb-[2px] ">
+    <div class="flex mb-[2px]">
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
         class="rounded-tl pl-2 rounded-bl"

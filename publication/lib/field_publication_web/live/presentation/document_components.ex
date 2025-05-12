@@ -47,8 +47,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   defp generic_data_sheet(assigns) do
     ~H"""
-    <div class="flex flex-row">
-      <div class="basis-2/3">
+    <div class="flex flex-col lg:flex-row">
+      <div class="lg:basis-2/3">
         <%= for %FieldGroup{} = group <- @doc.groups do %>
           <% fields =
             Enum.reject(group.fields, fn %Field{name: name} ->
@@ -62,7 +62,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
               <dl class="grid grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
-                  <div class="border p-0.5 border-black/20">
+                  <div class="border p-0.5 border-black/20 overflow-auto">
                     <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                     <dd class="pl-4">
                       <GenericField.render field={field} lang={@lang} />
@@ -132,8 +132,23 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           </ul>
         </section>
       </div>
-      <div class="basis-1/3 ml-2">
-        <div class="mb-4">
+      <div class="lg:basis-1/3 flex flex-col lg:flex-col-reverse lg:ml-2">
+        <%= for other_relation <- Enum.reject(
+      @doc.relations,
+      fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
+      )  do %>
+          <section>
+            <.group_heading>
+              <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+            </.group_heading>
+            <div class="overflow-auto overscroll-contain max-h-[200px]">
+              <%= for %Document{} = doc <- other_relation.docs do %>
+                <DocumentLink.show lang={@lang} doc={doc} image_count={2} geometry_indicator={true} />
+              <% end %>
+            </div>
+          </section>
+        <% end %>
+        <div class="lg:mb-4">
           <.live_component
             module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
             id="generic_doc_map"
@@ -143,20 +158,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             lang={@lang}
           />
         </div>
-
-        <%= for other_relation <- Enum.reject(
-      @doc.relations,
-      fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
-      )  do %>
-          <.group_heading>
-            <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
-          </.group_heading>
-          <div class="overflow-auto overscroll-contain max-h-[200px]">
-            <%= for %Document{} = doc <- other_relation.docs do %>
-              <DocumentLink.show lang={@lang} doc={doc} image_count={2} geometry_indicator={true} />
-            <% end %>
-          </div>
-        <% end %>
       </div>
     </div>
     """
@@ -164,12 +165,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   defp generic_map(assigns) do
     ~H"""
-    <div class="flex flex-row">
+    <div class="flex flex-col lg:flex-row">
       <div class="basis-1/3 pr-2">
         <.group_heading>
           Hierarchy
         </.group_heading>
-        <div class="overflow-auto overscroll-contain h-(--full-size-doc-height)">
+        <div class="overflow-auto overscroll-contain h-(--ol-full-height)">
           <.live_component
             module={DocumentAncestors}
             id={"ancestors-#{@doc.id}"}
@@ -223,7 +224,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.live_component
             module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
             id="generic_doc_map_detail"
-            style="width:100%; height: calc(-300px + 100vh);"
+            style="width:100%; height: var(--ol-full-height);"
             doc={@doc}
             publication={@publication}
             lang={@lang}
@@ -336,7 +337,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         </div>
         <div class="basis-full lg:basis-2/3 m-5">
           <.live_component
-            class="h-(--fifty-percent-vh) lg:h-(--full-size-doc-height)"
+            class="h-(--ol-full-height)"
             id="iiif_viewer"
             project={@publication.project_name}
             uuid={@doc.id}

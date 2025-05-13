@@ -12,7 +12,7 @@ const path = require('path');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-test.describe('settings --', function() {
+test.describe('settings ', () => {
 
     test.beforeAll(async () => {
 

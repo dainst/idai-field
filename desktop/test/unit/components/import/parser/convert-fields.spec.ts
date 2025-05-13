@@ -1,4 +1,4 @@
-import { Dating, Dimension, Resource, CategoryForm } from 'idai-field-core';
+import { Dating, Dimension, Resource, CategoryForm, DateConfiguration } from 'idai-field-core';
 import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 import { convertFields } from '../../../../../src/app/components/import/parser/convert-fields';
@@ -246,17 +246,39 @@ describe('convertFields', () => {
         const category = {
             name: 'Category',
             groups: [{ fields: [{
-                name: 'd',
-                inputType: 'date'
-            }] }],
+                name: 'date1',
+                inputType: 'date',
+                dateConfiguration: {
+                    dataType: DateConfiguration.DataType.OPTIONAL,
+                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                }
+            }, {
+                name: 'date2',
+                inputType: 'date',
+                dateConfiguration: {
+                    dataType: DateConfiguration.DataType.OPTIONAL,
+                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                }
+            }]}],
         } as CategoryForm;
 
-        const resource = convertFields(category)({
-            d: '10.07.2019',
+        const resource = {
+            date1: {
+                value: '10.12.2022',
+                endValue: '11.12.2022',
+                isRange: 'true'
+            },
+            date2: {
+                value: '12.12.2022',
+                isRange: 'false'
+            },
             relations: {}
-        } as unknown as Resource);
+        } as unknown as Resource;
 
-        expect(resource['d']).toBe('10.07.2019');
+        const result = convertFields(category)(resource);
+
+        expect(result.date1.isRange).toBe(true);
+        expect(result.date2.isRange).toBe(false);
     });
 
 

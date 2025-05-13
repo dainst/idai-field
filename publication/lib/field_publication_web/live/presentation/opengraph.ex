@@ -36,8 +36,12 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
   end
 
   defp create_image(%Document{} = doc, project_name) do
-    first_image_uuid = List.first(doc.image_uuids)
+    case List.first(doc.image_uuids) do
+      nil ->
+        nil
 
-    "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(%{uuid: first_image_uuid, project: project_name})}"
+      first_image_uuid ->
+        "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(%{uuid: first_image_uuid, project: project_name})}"
+    end
   end
 end

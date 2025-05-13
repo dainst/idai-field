@@ -9,7 +9,7 @@ import { NavbarPage } from '../navbar.page';
 const { test, expect } = require('@playwright/test');
 
 
-test.describe('images --', function() {
+test.describe('image overview', () => {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'si0';

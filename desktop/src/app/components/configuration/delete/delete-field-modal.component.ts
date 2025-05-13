@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Field } from 'idai-field-core';
+import { CategoryForm, Field } from 'idai-field-core';
 
 
 @Component({
@@ -16,12 +16,15 @@ import { Field } from 'idai-field-core';
 export class DeleteFieldModalComponent {
 
     public field: Field;
+    public category: CategoryForm;
 
 
     constructor(public activeModal: NgbActiveModal) {}
 
 
-    public isDeletionAllowed = () => !this.field['inverse'];
+    public isInverseRelation = () => this.field['inverse'] !== undefined && this.field['inverse'] !== this.field.name;
+
+    public isDeletionAllowed = () => !this.isInverseRelation() && !this.getConditionalFieldName();
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -33,6 +36,16 @@ export class DeleteFieldModalComponent {
     public confirmDeletion() {
 
         if (this.isDeletionAllowed()) this.activeModal.close();
+    }
+
+
+    public getConditionalFieldName(): string|undefined {
+
+        const conditionalField: Field = CategoryForm.getFields(this.category).find(field => {
+            return field.condition?.fieldName === this.field.name;
+        });
+
+        return conditionalField?.name;
     }
 
 

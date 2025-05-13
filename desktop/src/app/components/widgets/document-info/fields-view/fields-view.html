@@ -4,7 +4,7 @@
 	</div>
 	<div *ngIf="showGroupSection(group.name)" class="collapse show">
 		<div class="card-body">
-			<div *ngFor="let field of group.fields">
+			<div *ngFor="let field of group.fields" class="field-view-container">
 				<field-view [field]="field"
 							(onJumpToResource)="jumpToResource($event)"></field-view>
 			</div>

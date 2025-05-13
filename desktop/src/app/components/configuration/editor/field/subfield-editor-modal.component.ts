@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, is, isArray, on, subsetOf } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Named, Subfield, SubfieldCondition,
+import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Named, Subfield, Condition,
     Valuelist } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
 import { Messages } from '../../../messages/messages';
@@ -16,7 +16,7 @@ export type SubfieldEditorData = {
     inputType: Field.InputType;
     references: string[];
     valuelist: Valuelist;
-    condition?: SubfieldCondition;
+    condition?: Condition;
 }
 
 
@@ -62,13 +62,9 @@ export class SubfieldEditorModalComponent {
 
     public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
 
-    public isConditionSectionVisible = () => this.getConditionSubfields().length > 0;
-
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType());
 
     public getSubfieldLabel = (subfield: Subfield) => this.labels.get(subfield);
-
-    public getValueLabel = (valueId: string) => this.labels.getValueLabel(this.getConditionValuelist(), valueId);
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -87,7 +83,7 @@ export class SubfieldEditorModalComponent {
             inputType: this.subfield.inputType,
             references: clone(this.references) ?? [],
             valuelist: clone(this.subfield.valuelist),
-            condition: clone(this.subfield.condition) ?? { subfieldName: '', values: undefined }
+            condition: clone(this.subfield.condition) ?? Condition.getEmpty('subfield')
         };
     }
 
@@ -107,88 +103,7 @@ export class SubfieldEditorModalComponent {
         this.activeModal.close(this.data);
     }
 
-
-    public getConditionSubfields(): Array<Subfield> {
-
-        if (!this.subfields) return [];
-
-        return this.subfields.filter(subfield => {
-            return subfield.name !== this.subfield.name
-                && (subfield.inputType === Field.InputType.BOOLEAN || subfield.valuelist)
-                && this.isValidConditionSubfield(this.subfield, subfield);
-        });
-    }
-
-
-    private isValidConditionSubfield(subfield: Subfield, conditionSubfieldToCheck: Subfield): boolean {
-
-        do {
-            conditionSubfieldToCheck = conditionSubfieldToCheck.condition
-                ? this.subfields.find(s => s.name === conditionSubfieldToCheck.condition.subfieldName)
-                : undefined;
-            if (conditionSubfieldToCheck === subfield) return false;
-        } while (conditionSubfieldToCheck);
-
-        return true;
-    }
-
-
-    public resetConditionValues() {
-
-        if (this.getConditionType() === 'valuelist') {
-            this.data.condition.values = [];
-        } else {
-            this.data.condition.values = true;
-        }
-    }
-
-
-    public getConditionType(): 'valuelist'|'boolean' {
-
-        return this.getConditionSubfield()?.inputType === 'boolean'
-            ? 'boolean'
-            : 'valuelist';
-    }
-
-
-    public getConditionValues(): string[] {
-
-        return this.labels.orderKeysByLabels(this.getConditionValuelist());
-    }
-
-
-    public setConditionValue(value: boolean) {
-
-        this.data.condition.values = value;
-    }
-
-
-    public toggleConditionValue(value: string) {
-
-        const values: string[] = this.data.condition.values as string[];
-        if ((values).includes(value)) {
-            this.data.condition.values = values.filter(v => v !== value);
-        } else {
-            values.push(value);
-        }
-    }
-
-
-    public isSelectedConditionValue(value: string): boolean {
-
-        return isArray(this.data.condition.values) && this.data.condition.values.includes(value);
-    }
-
-
-    private getConditionSubfield(): Subfield {
-
-        const subfieldName: string = this.data.condition?.subfieldName;
-        return subfieldName
-            ? this.getSubfield(subfieldName)
-            : undefined;
-    }
-
-
+    
     private assertChangesDoNotViolateConditionalSubfields() {
 
         if (!this.subfields?.length) return;
@@ -205,17 +120,5 @@ export class SubfieldEditorModalComponent {
                     throw [M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS, this.labels.get(subfield)];
             }
         }
-    }
-
-
-    private getSubfield(name: string): Subfield {
-
-        return this.subfields.find(on(Named.NAME, is(name)));
-    }
-
-
-    private getConditionValuelist(): Valuelist {
-
-        return this.getConditionSubfield()?.valuelist;
     }
 }

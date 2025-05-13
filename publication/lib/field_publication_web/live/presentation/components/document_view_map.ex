@@ -16,7 +16,16 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   def render(assigns) do
     ~H"""
     <div>
-      <.group_heading>Geometry <span class="text-xs">({@geometry_type})</span></.group_heading>
+      <.group_heading>
+        Geometry <span class="text-xs">({@geometry_type})</span>
+        <.link patch={
+          ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{@uuid}?#{if @focus != :map, do: %{focus: "map"}, else: %{}}"
+        }>
+          <.icon name={
+            if @focus != :map, do: "hero-arrows-pointing-out", else: "hero-arrows-pointing-in"
+          } />
+        </.link>
+      </.group_heading>
       <div
         class="relative"
         id={@id}
@@ -57,7 +66,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           >
             <.icon name="hero-square-3-stack-3d" />
           </div>
-          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto" hidden>
+          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
             <.render_tile_layer_selection_group
               target={@myself}
               lang={@lang}
@@ -96,45 +105,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     socket = process_document_tile_layers(socket, publication, doc, id)
 
     children_features =
-      doc
-      |> Data.get_relation("contains")
-      |> case do
-        nil ->
-          []
-
-        %RelationGroup{} = relation ->
-          relation.docs
-      end
-      |> Enum.map(&create_feature_info(&1, lang))
-      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+      accumulate_geometries_for_relations(doc, ["contains", "isAbove", "cuts", "isCutBy"], lang)
 
     parent_features =
-      doc
-      |> Data.get_relation("liesWithin")
-      |> case do
-        nil ->
-          []
-
-        %RelationGroup{} = relation ->
-          Enum.map(relation.docs, &create_feature_info(&1, lang))
-      end
-      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
-      |> case do
-        [] ->
-          doc
-          |> Data.get_relation("isRecordedIn")
-          |> case do
-            nil ->
-              []
-
-            %RelationGroup{} = relation ->
-              Enum.map(relation.docs, &create_feature_info(&1, lang))
-          end
-          |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
-
-        geometries_present ->
-          geometries_present
-      end
+      accumulate_geometries_for_relations(doc, ["isRecordedIn", "liesWithin", "isBelow"], lang)
 
     document_feature = create_feature_info(doc, lang)
 
@@ -181,6 +155,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:zoom, 2)
     |> Map.put(:no_data, true)
     |> Map.put(:show_layer_select, false)
+    |> Map.put_new(:focus, :default)
+    |> Map.put(:uuid, assigns.doc.id)
   end
 
   defp create_feature_info(
@@ -358,6 +334,37 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
+  def handle_event(
+        "visibility-preference",
+        %{"group" => group, "uuid" => uuid, "value" => value},
+        socket
+      )
+      when is_boolean(value) do
+    # When a map background layer is loaded on the client side, the client side hook will
+    # send this event if the client's localStorage contained a visibility preference for
+    # the added layer.
+    #
+    # The client will have set the layer visibility at this point and uses this event to make
+    # sure the server state is the same as in the client's browser.
+    set_group =
+      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
+
+    layer_states =
+      socket.assigns[set_group]
+      |> Enum.map(fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, value)
+        else
+          state
+        end
+      end)
+
+    {
+      :noreply,
+      assign(socket, set_group, layer_states)
+    }
+  end
+
   defp render_tile_layer_selection_group(assigns) do
     ~H"""
     <%= if @layer_states != [] do %>
@@ -384,5 +391,46 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       <% end %>
     <% end %>
     """
+  end
+
+  defp accumulate_geometries_for_relations(%Document{} = doc, relation_names, lang) do
+    relation_names
+    |> Enum.map(fn relation_name ->
+      doc
+      |> Data.get_relation(relation_name)
+      |> case do
+        nil ->
+          []
+
+        %RelationGroup{} = relation_group ->
+          Enum.map(relation_group.docs, &create_feature_info(&1, lang))
+      end
+      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+    end)
+    |> List.flatten()
+
+    # lies_within =
+    #   doc
+    #   |> Data.get_relation("liesWithin")
+    #   |> case do
+    #     nil ->
+    #       []
+
+    #     %RelationGroup{} = relation ->
+    #       Enum.map(relation.docs, &create_feature_info(&1, lang))
+    #   end
+    #   |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+
+    # is_recorded_in =
+    #   doc
+    #   |> Data.get_relation("isRecordedIn")
+    #   |> case do
+    #     nil ->
+    #       []
+
+    #     %RelationGroup{} = relation ->
+    #       Enum.map(relation.docs, &create_feature_info(&1, lang))
+    #   end
+    #   |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
   end
 end

@@ -56,14 +56,6 @@
       "label": "Descrizione",
       "description": "Campo di descrizione libero"
     },
-    "beginningDate": {
-      "label": "Data di inizio",
-      "description": "Data di inizo della documentazione/scavo"
-    },
-    "endDate": {
-      "label": "Data di fine",
-      "description": "Data in cui è stata completata la documentazione/scavo"
-    },
     "processor": {
       "label": "Responsabile",
       "description": "La persona o le persone responsabili della risorsa o dell'oggetto durante la campagna. Importante: i nomi delle persone che inseriscono o modificano la voce nella banca dati vengono salvati automaticamente e quindi non devono essere inseriti qui."

@@ -21,7 +21,11 @@ import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
+<<<<<<< HEAD
 import { ChangesHistoryModalComponent } from '../widgets/change-history-modal.component';
+=======
+import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
+>>>>>>> master
 
 
 @Component({
@@ -200,6 +204,27 @@ export class ResourcesComponent implements OnDestroy {
     public async showHistory(document: Document) {
         
         await this.openModal(document, ChangesHistoryModalComponent, MenuContext.HISTORY_MODAL);
+    }
+
+
+    public async editWorkflow(documents: Array<Document>) {
+
+        try {
+            this.menuService.setContext(MenuContext.WORKFLOW_EDITOR);
+
+            const modalRef: NgbModalRef = this.modalService.open(
+                WorkflowEditorModalComponent,
+                { size: 'md', animation: false, backdrop: 'static', keyboard: false }
+            );
+            modalRef.componentInstance.documents = documents;
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
     }
 
 

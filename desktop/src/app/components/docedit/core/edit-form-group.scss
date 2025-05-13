@@ -14,9 +14,20 @@ edit-form-group {
         font-size: 15px !important;
       }
   
-      .mdi-information-outline {
+      .mdi-information-outline,
+      .mdi-eye-lock-outline,
+      .mdi-eye-lock-open-outline,
+      .mdi-eye {
         position: relative;
         top: 3px;
+
+        &:not(:last-child) {
+          margin-right: 5px;
+        }
+      }
+
+      .mdi-eye {
+        color: rgb(40 46 57 / 73%)
       }
   
       .relation-image {
@@ -24,6 +35,17 @@ edit-form-group {
         top: 6px;
         margin-left: 14px;
         user-select: none;
+      }
+    }
+
+    &.conditional {
+      .card-header {
+        background-color: rgb(55 88 142 / 17%);
+      }
+
+      .card-block {
+        background-color: rgb(55 88 142 / 7%);
+        margin-bottom: 10px;
       }
     }
   }

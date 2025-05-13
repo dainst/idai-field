@@ -104,6 +104,11 @@ defmodule FieldHub.FileStoreTest do
         @content
       )
 
+      File.write!(
+        "#{@project_directory}/original_images/new_file_being_written.writing",
+        @content
+      )
+
       File.write!("#{@project_directory}/original_images/.hiddenfile", @content)
 
       list = FileStore.file_index(@project)

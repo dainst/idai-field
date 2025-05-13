@@ -11,11 +11,13 @@ import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
 import { Query } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
-import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/document/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { Relation } from '../model/configuration/relation';
+import { WorkflowStepResource } from '../model/document/workflow-step-resource';
+import { ProjectConfiguration } from '../services/project-configuration';
+import { Condition } from '../model/configuration/condition';
 
 
 /**
@@ -27,7 +29,8 @@ export module WarningsUpdater {
         Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE,
         ImageResource.GEOREFERENCE, ImageResource.ORIGINAL_FILENAME
     ].concat(Relation.Hierarchy.ALL)
-    .concat(Relation.Image.ALL);
+    .concat(Relation.Image.ALL)
+    .concat(Relation.Workflow.ALL);
 
 
     /**
@@ -488,9 +491,14 @@ export module WarningsUpdater {
         }
 
         const fieldDefinitions: Array<Field> = CategoryForm.getFields(category);
+        updateMandatoryFieldWarnings(warnings, document, fieldDefinitions);
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
+        if (category.parentCategory?.name === 'WorkflowStep'
+                && !WorkflowStepResource.validateState(document.resource as WorkflowStepResource)) {
+            warnings.invalidWorkflowStepState = true;
+        }
 
         return Object.keys(document.resource)
             .concat(Object.keys(document.resource.relations))
@@ -500,7 +508,7 @@ export module WarningsUpdater {
                 const fieldContent: any = field && Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field?.inputType)
                     ? document.resource.relations[fieldName]
                     : document.resource[fieldName];
-                updateWarningsForField(warnings, fieldName, field, fieldContent);
+                updateWarningsForField(warnings, fieldName, field, fieldContent, document.resource, category);
                 return result;
             }, warnings);
     }
@@ -514,12 +522,25 @@ export module WarningsUpdater {
     }
 
 
-    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any) {
+    function updateMandatoryFieldWarnings(warnings: Warnings, document: Document, fieldDefinitions: Array<Field>) {
+
+        fieldDefinitions.filter(field => field.mandatory).forEach(field => {
+            if (document.resource[field.name] == undefined) {
+                warnings.missingMandatoryFields.push(field.name);
+            }
+        });
+    }
+
+
+    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any,
+                                    resource: Resource, category: CategoryForm) {
 
         if (!field) {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
+        } else if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+            warnings.unfulfilledConditionFields.push(fieldName);
         }
     }
 
@@ -531,7 +552,7 @@ export module WarningsUpdater {
     }
 
 
-    function getAncestorDocuments(document: Document, documentCache): Array<Document> {
+    function getAncestorDocuments(document: Document, documentCache: DocumentCache): Array<Document> {
 
         const result: Array<Document> = [];
         let parent: Document;

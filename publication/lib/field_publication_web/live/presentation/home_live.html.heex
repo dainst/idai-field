@@ -10,9 +10,9 @@
         <%= for %{doc: doc} = project <- @published_projects do %>
           <div
             id={"project_list_#{project[:name]}"}
-            referenced_project={project[:name]}
             phx-hook="HoverHighlightMapFeature"
-            target="project_overview_map"
+            target_dom_element="project_overview_map"
+            target_id={project[:name]}
           >
             <!-- The custom hook above triggers the marker highlight on the map component below when hovering this element. -->
             <!-- In parallel to the hook above, phx-click and phx-value-* below implement the click behaviour

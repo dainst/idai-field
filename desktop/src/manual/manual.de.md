@@ -1829,6 +1829,26 @@ Die in ein Feld eingetragenen Daten entsprechen nicht dem Eingabetyp, der für d
 * Button *Felddaten konvertieren*: Die Daten werden automatisch in das korrekte Format des jeweiligen Eingabetyps konvertiert. Optional können Sie die Daten bei allen Ressourcen konvertieren lassen, bei denen im gleichen Feld ungültige Daten eingetragen sind. Bitte beachten Sie, dass eine automatische Konvertierung nicht in allen Fällen möglich ist und dieser Button daher nicht immer zur Verfügung steht.
 * Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld verschoben. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen im gleichen Feld ungültige Daten eingetragen sind (gültige Daten verbleiben im ursprünglichen Feld).
 
+### Nicht ausgefülltes Pflichtfeld
+In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
+
+#### Mögliche Ursachen
+* Das Feld wurde im Konfigurationseditor als Pflichtfeld konfiguriert, nachdem die Ressource angelegt wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um das Pflichtfeld auszufüllen.
+
+### Nicht erfüllte Anzeigebedingung eines Feldes
+Es sind Daten in ein Feld eingetragen, obwohl die Bedingung zur Anzeige dieses Feldes nicht erfüllt ist.
+
+#### Mögliche Ursachen
+* Die Anzeigebedingung wurde im Konfigurationseditor eingerichtet oder geändert, nachdem bereits Daten in das Feld eingetragen wurden.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die Daten im Bedingungsfeld so anzupassen, dass die Bedingung erfüllt ist.
+* Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht.
+* Entfernen Sie die Anzeigebedingung des Feldes im Konfigurationseditor oder passen Sie sie so an, dass die Bedingung für die betroffene Ressource erfüllt ist.
+
 ### Nicht in Werteliste enthaltener Wert
 In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
 
@@ -1910,3 +1930,14 @@ Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konf
 #### Mögliche Lösungen
 * Löschen Sie Ressourcen der entsprechenden Kategorie, bis das Ressourcenlimit eingehalten wird.
 * Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.
+
+### Ungültiger Status
+Der Status eines Arbeitsschritts widerspricht dem angegebenen Datum. Dies ist beispielsweise der Fall, wenn das Datum eines Arbeitsschritts mit dem Status "Geplant" in der Vergangenheit liegt oder das Datum eines Arbeitsschritts mit dem Status "Abgeschlossen" in der Zukunft.
+
+#### Mögliche Ursachen
+* Der Status wurde nicht angepasst, nachdem der Arbeitsgang begonnen, abgeschlossen oder abgebrochen wurde.
+* Ein geplanter Arbeitsschritt wurde zum angegebenen Datum noch nicht durchgeführt.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Status oder das Datum des Arbeitsschritts anzupassen.
+

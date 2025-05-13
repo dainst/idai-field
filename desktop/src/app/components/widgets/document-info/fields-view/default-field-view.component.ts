@@ -3,6 +3,7 @@ import { isBoolean, isObject, isArray } from 'tsfun';
 import { FieldsViewSubfield, FieldsViewUtil, Labels } from 'idai-field-core';
 import { DecimalPipe } from '@angular/common';
 import { UtilTranslations } from '../../../../util/util-translations';
+import { Settings } from '../../../../services/settings/settings';
 
 
 @Component({
@@ -49,6 +50,9 @@ export class DefaultFieldViewComponent {
         return FieldsViewUtil.getObjectLabel(
             value,
             this.field,
+            Intl.DateTimeFormat().resolvedOptions().timeZone,
+            Settings.getLocale(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value),
             this.labels

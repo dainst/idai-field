@@ -21,7 +21,7 @@ const { test, expect } = require('@playwright/test');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-test.describe('resources --', () => {
+test.describe('resources', () => {
 
     test.beforeAll(async () => {
 
@@ -166,7 +166,7 @@ test.describe('resources --', () => {
         expect(fieldName).toBe('Tagebuch');
         const fieldValue = await FieldsViewPage.getFieldValue(0, 1);
         expect(fieldValue).toBe('100');
-        const items = await FieldsViewPage.getFields(1);
+        const items = await FieldsViewPage.getFields(0);
         expect(await items.count()).toBe(2);
     });
 

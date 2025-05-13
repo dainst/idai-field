@@ -19,14 +19,6 @@ const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it', 'pt', 'tr', 'uk'];
 
 
 /**
- * Lets clients subscribe for the app
- * configuration. In order for this to work, they
- * have to call <code>validateFieldDefinitions_</code> and <code>getProjectConfiguration</code>
- *  (the call order does not matter).
- *
- * It is recommended to handle a promise rejection of
- * <code>getProjectConfiguration</code> at a single place in your app.
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Fabian Z.

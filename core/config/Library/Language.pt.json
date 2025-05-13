@@ -73,14 +73,6 @@
       "label": "Diário",
       "description": "Referência ao diário de escavação"
     },
-    "beginningDate": {
-      "label": "Data de início",
-      "description": "Data em que iniciou o registo do recurso"
-    },
-    "endDate": {
-      "label": "Data de fim",
-      "description": "Data em que terminou o registo do recurso"
-    },
     "date": {
       "label": "Data",
       "description": "Data do registo/da execução"

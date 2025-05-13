@@ -45,14 +45,14 @@ export class DocumentHolder {
     }
 
 
-    public changeCategories(newCategory: string) {
+    /**
+     * @returns names of invalid fields that would be deleted when saving 
+     */
+    public changeCategories(newCategory: string): string[] {
 
         this.clonedDocument.resource.category = newCategory;
 
-        return {
-            invalidFields: this.validateFields(),
-            invalidRelations: this.validateRelationFields()
-        }
+        return this.validateFields().concat(this.validateRelationFields());
     }
 
 
@@ -137,12 +137,12 @@ export class DocumentHolder {
             this.oldVersion);
         Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfDates(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);
         Validations.assertCorrectnessOfLiteratureValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);
-        Validations.assertCorrectnessOfBeginningAndEndDates(this.clonedDocument);
         await this.validator.assertGeometryIsValid(this.clonedDocument);
     }
 
@@ -193,7 +193,13 @@ export class DocumentHolder {
 
     private validateFields(): string[] {
 
-        return this.validateButKeepInvalidOldVersionFields(Validations.validateDefinedFields);
+        const validate = (resource: Resource, projectConfiguration: ProjectConfiguration) => {
+            return Validations.validateDefinedFields(resource, projectConfiguration).concat(
+                Validations.validateConditionalFields(resource, projectConfiguration)
+            );
+        };
+
+        return this.validateButKeepInvalidOldVersionFields(validate);
     }
 
 

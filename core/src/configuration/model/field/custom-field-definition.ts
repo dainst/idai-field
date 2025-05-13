@@ -3,6 +3,8 @@ import { BaseFieldDefinition, BaseSubfieldDefinition } from './base-field-defini
 
 export interface CustomFieldDefinition extends BaseFieldDefinition {
 
+    mandatory?: boolean;
+
     // For relation fields
     range?: string[];
     inverse?: string;
@@ -18,5 +20,6 @@ export module CustomFieldDefinition {
 
 
 export const VALID_CUSTOM_FIELD_PROPERTIES = [
-    'inputType', 'constraintIndexed', 'references', 'subfields', 'range', 'inverse'
+    'inputType', 'mandatory', 'constraintIndexed', 'references', 'condition', 'subfields', 'range', 'inverse',
+    'dateConfiguration'
 ];

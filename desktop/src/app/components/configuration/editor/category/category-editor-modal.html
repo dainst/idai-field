@@ -183,4 +183,28 @@
             bereits angelegte Ressourcen <b>nicht</b> automatisch entfernt werden.
         </div>
     </div>
+    <div *ngIf="isWorkflowSectionVisible()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title"
+             i18n="@@configuration.workflow.range.isExecutedOn">Durchführbar an</div>
+        <div class="target-category-picker-container">
+            <category-picker [topLevelCategoriesArray]="selectableWorkflowRelationTargetCategories"
+                             [selectedCategories]="getClonedFormDefinition().range?.isExecutedOn"
+                             [customProjectConfiguration]="clonedProjectConfiguration"
+                             [allowPickingAbstractCategories]="true"
+                             (onCategoryPicked)="toggleWorkflowRelationTargetCategory($event, 'isExecutedOn')">
+            </category-picker>
+        </div>
+    </div>
+    <div *ngIf="isWorkflowSectionVisible()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title"
+             i18n="@@configuration.workflow.range.resultsIn">Ergibt</div>
+        <div class="target-category-picker-container">
+            <category-picker [topLevelCategoriesArray]="selectableWorkflowRelationTargetCategories"
+                             [selectedCategories]="getClonedFormDefinition().range?.resultsIn"
+                             [customProjectConfiguration]="clonedProjectConfiguration"
+                             [allowPickingAbstractCategories]="true"
+                             (onCategoryPicked)="toggleWorkflowRelationTargetCategory($event, 'resultsIn')">
+            </category-picker>
+        </div>
+    </div>
 </div>

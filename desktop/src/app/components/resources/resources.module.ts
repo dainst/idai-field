@@ -54,6 +54,14 @@ import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-
 import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
+import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
+import { WorkflowStepPlusButtonComponent } from './actions/edit-workflow/plus-button/workflow-step-plus-button.component';
+import { WorkflowRelationsComponent } from './actions/edit-workflow/relations/workflow-relations.component';
+import { WorkflowRelationsModalComponent } from './actions/edit-workflow/relations/workflow-relations-modal.component';
+import { WorkflowStepLinkButtonComponent } from './actions/edit-workflow/link-button/workflow-step-link-button.component';
+import { WorkflowStepLinkModalComponent } from './actions/edit-workflow/link-button/workflow-step-link-modal.component';
+import { DeleteWorkflowStepModalComponent } from './actions/edit-workflow/delete/delete-workflow-step-modal.component';
+import { WorkflowStepStateComponent } from './actions/edit-workflow/state/workflow-step-state.component';
 
 const remote = window.require('@electron/remote');
 
@@ -99,6 +107,14 @@ const remote = window.require('@electron/remote');
         CreatePrintSettingsProfileModalComponent,
         DeleteQrCodeModalComponent,
         ScanStoragePlaceModalComponent,
+        WorkflowEditorModalComponent,
+        WorkflowStepPlusButtonComponent,
+        WorkflowRelationsComponent,
+        WorkflowRelationsModalComponent,
+        WorkflowStepLinkButtonComponent,
+        WorkflowStepLinkModalComponent,
+        WorkflowStepStateComponent,
+        DeleteWorkflowStepModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

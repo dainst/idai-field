@@ -1,42 +1,51 @@
 <div>
-  <PublicationSelection.render
-    publications={@publications}
-    current_publication={@publication}
-    selected_lang={@selected_lang}
-    uuid={@uuid}
-    identifier={
-      if Data.get_field_value(@doc, "category") != "Project",
-        do: Data.get_field_value(@doc, "identifier")
-    }
-  />
+  <div class="flex gap-2 justify-between">
+    <PublicationSelection.render
+      publications={@publications}
+      current_publication={@publication}
+      selected_lang={@selected_lang}
+      uuid={@uuid}
+      identifier={
+        if Data.get_field_value(@doc, "category") != "Project",
+          do: Data.get_field_value(@doc, "identifier")
+      }
+    />
+
+    <form phx-submit="search">
+      <div class="flex border border-black/20">
+        <button class="bg-(--primary-color) hover:bg-(--primary-color-hover) inline-block text-white p-1">
+          <.icon name="hero-magnifying-glass" />
+        </button>
+        <input class="grow pl-2" type="text" name="search_input" placeholder="Search in project" />
+      </div>
+    </form>
+  </div>
   <% category = Data.get_field_value(@doc, "category") %>
   {cond do
     @doc == :not_found ->
       "Document not found in selected publication."
 
     category == "Project" ->
-      DocumentComponents.Project.render(%{
+      DocumentComponents.project(%{
         doc: @doc,
         publication: @publication,
         lang: @selected_lang,
-        top_level_docs: @top_level_docs,
-        project_map_layers: @project_map_layers
+        top_level_docs: @top_level_docs
       })
 
     category in @image_categories ->
-      DocumentComponents.Image.render(%{
+      DocumentComponents.image(%{
         doc: @doc,
         publication: @publication,
-        lang: @selected_lang,
-        uuid: @uuid
+        lang: @selected_lang
       })
 
     true ->
-      DocumentComponents.Generic.render(%{
+      DocumentComponents.generic(%{
         doc: @doc,
         publication: @publication,
         lang: @selected_lang,
-        uuid: @uuid
+        focus: @focus
       })
   end}
 </div>

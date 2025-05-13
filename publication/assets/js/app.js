@@ -38,13 +38,13 @@ Hooks.HoverHighlightMapFeature = {
     mounted() {
         this.el.addEventListener("mousemove", (_) => {
             window.dispatchEvent(
-                new CustomEvent(`phx:map-highlight-feature-${this.el.getAttribute("target")}`, {
-                    detail: { feature_id: this.el.getAttribute("referenced_project") }
+                new CustomEvent(`phx:map-highlight-feature-${this.el.getAttribute("target_dom_element")}`, {
+                    detail: { feature_id: this.el.getAttribute("target_id") }
                 })
             );
         });
         this.el.addEventListener("mouseleave", (_) => {
-            window.dispatchEvent(new CustomEvent(`phx:map-clear-highlights-${this.el.getAttribute("target")}`));
+            window.dispatchEvent(new CustomEvent(`phx:map-clear-highlights-${this.el.getAttribute("target_dom_element")}`));
         })
     }
 }

@@ -28,12 +28,17 @@ export module MessagesConversion {
         if (msg === ValidationErrors.MISSING_COORDINATES) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
-        if (msg === ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE;
 
         if (msg === ValidationErrors.MISSING_PROPERTY) {
-            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
-            msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
-            msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTIES;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            }
         }
 
         if (msg === ValidationErrors.MAX_CHARACTERS_EXCEEDED) {
@@ -100,6 +105,41 @@ export module MessagesConversion {
                 msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
                 msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
             }
+        }
+
+        if (msg === ValidationErrors.INVALID_DATES) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATES;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE;
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+            }
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_SET) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE;
+            msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
         }
 
         return msgWithParams;

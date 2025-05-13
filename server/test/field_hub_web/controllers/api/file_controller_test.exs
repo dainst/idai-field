@@ -42,33 +42,59 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
     conn =
       conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
   end
 
   test "PUT /files/:project/:uuid with unsupported type throws 400", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
     conn =
       conn
-      |> put_req_header("authorization", @basic_auth)
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/1234?type=unsupported", @example_file)
 
     assert conn.status == 400
   end
 
-  test "PUT /files/:project/:uuid with file exceeding maximum size throws 413", %{conn: conn} do
-    roughly_20_mb = String.duplicate("0123456789", 2_000_000)
+  test "PUT /files/:project/:uuid without Content-Length throws 411", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =
       conn
-      |> put_req_header("authorization", @basic_auth)
+      |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
-      |> put("/files/#{@project}/1234?type=original_image", roughly_20_mb)
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
-    assert conn.status == 413
+    assert conn.status == 411
+  end
+
+  test "PUT /files/:project/:uuid with invalid Content-Length throws 400", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> put_req_header("content-type", "image/png")
+      |> put_req_header("content-length", "not_a_number")
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
+
+    assert conn.status == 400
+  end
+
+  test "PUT /files/:project/:uuid without matching Content-Length throws 417", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> put_req_header("content-type", "image/png")
+      |> put_req_header("content-length", "10")
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
+
+    assert conn.status == 417
   end
 
   test "GET /files/:project/:uuid returns 404 for non-existent file", %{conn: conn} do
@@ -110,8 +136,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
     conn =
       conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
@@ -160,8 +185,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
     conn =
       conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
@@ -194,8 +218,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
     conn =
       conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
@@ -215,8 +238,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
     conn =
       conn
       |> recycle()
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/1234?type=thumbnail_image", @example_file)
 
     assert conn.status == 201
@@ -250,10 +272,10 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
   end
 
   test "GET /files/:project only specified file variant gets added to the response", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
     conn =
-      conn
-      |> put_req_header("authorization", @basic_auth)
-      |> put_req_header("content-type", "image/png")
+      set_valid_put_headers(conn, credentials)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
@@ -261,8 +283,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
     conn =
       conn
       |> recycle()
-      |> put_req_header("authorization", @basic_auth)
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/1234?type=thumbnail_image", @example_file)
 
     assert conn.status == 201
@@ -308,9 +329,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =
-      conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      set_valid_put_headers(conn, credentials)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
@@ -318,8 +337,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
     conn =
       conn
       |> recycle()
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      |> set_valid_put_headers(credentials)
       |> put("/files/#{@project}/5678?type=original_image", @example_file)
 
     assert conn.status == 201
@@ -371,9 +389,7 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
     credentials = Base.encode64("#{@user_name}:#{@user_password}")
 
     conn =
-      conn
-      |> put_req_header("authorization", "Basic #{credentials}")
-      |> put_req_header("content-type", "image/png")
+      set_valid_put_headers(conn, credentials)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
@@ -411,5 +427,12 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
     assert %{"1234" => %{"deleted" => true}} = json_response
     assert ExJsonSchema.Validator.valid?(@schema, json_response)
+  end
+
+  defp set_valid_put_headers(conn, credentials) do
+    conn
+    |> put_req_header("authorization", "Basic #{credentials}")
+    |> put_req_header("content-type", "image/png")
+    |> put_req_header("content-length", "#{@example_file_stats.size}")
   end
 end

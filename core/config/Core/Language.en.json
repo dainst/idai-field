@@ -119,6 +119,18 @@
     },
     "isStoragePlaceOf": {
       "label": "Is storage place of"
+    },
+    "isExecutedOn": {
+      "label": "Is executed on"
+    },
+    "executionTargetOf": {
+      "label": "Is execution target of"
+    },
+    "resultsIn": {
+      "label": "Results in"
+    },
+    "isResultOf": {
+      "label": "Is result of"
     }
   }
 }

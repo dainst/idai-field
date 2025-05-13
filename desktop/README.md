@@ -29,6 +29,8 @@ If the application does not start in an arm64 environment (e. g. Apple Silicon),
 $ npm config set cpu=arm64
 ```
 
+If `npm run bootstrap` fails to build sharp, that might be because of an already installed libvips. You can force the build process to ignore your preinstalled libvips by running `export  SHARP_IGNORE_GLOBAL_LIBVIPS=true` before running the bootstrap comand. See also https://sharp.pixelplumbing.com/install/#building-from-source.
+
 There seems to be an issue with `lerna bootstrap` that prevents running install scripts in dependencies. Use the following commands to run necessary scripts manually as a workaround:
 
 ```
@@ -55,7 +57,7 @@ $ npm run e2e
 To execute **integration test with Field Hub**, run
 
 ```
-$ npm run test:hub-integration --prefix desktop
+$ npm run test:hub-integration
 ```
 
 The Field Hub integration tests require installed Docker.
@@ -75,4 +77,3 @@ Only packages for the selected target platform are created. When the command has
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
-

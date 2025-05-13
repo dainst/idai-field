@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
-import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels, ProjectConfiguration,
+import { CategoryForm, Condition, ConfigurationDocument, CustomFieldDefinition, Field, Labels, ProjectConfiguration,
     Relation } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
@@ -54,11 +54,23 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.clonedProjectConfiguration.getCategory(categoryName)
     );
 
+    public getFieldLabel = (fieldName: string) => this.labels.get(
+        CategoryForm.getField(this.category, fieldName)
+    )
+
     public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
         relationName, this.clonedProjectConfiguration.getRelations()
     );
 
+    public getConditionValuesLabel = () => Condition.generateLabel(
+        this.field.condition, key => this.utilTranslations.getTranslation(key)
+    );
+
     public getInverseRelation = () => (this.field as Relation).inverse;
+
+    public getDateDataType = () => this.field.dateConfiguration?.dataType;
+
+    public getDateInputMode = () => this.field.dateConfiguration?.inputMode;
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 

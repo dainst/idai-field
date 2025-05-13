@@ -14,6 +14,7 @@ import Config
 # Configures the endpoint
 config :field_hub, FieldHubWeb.Endpoint,
   url: [host: "localhost"],
+  adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: FieldHubWeb.ErrorHTML, json: FieldHubWeb.ErrorJSON],
     layout: false
@@ -31,7 +32,6 @@ config :field_hub,
   couchdb_user_password: "app_user_password",
   valid_file_variants: [:thumbnail_image, :original_image],
   file_index_cache_name: :file_info,
-  file_max_size: 1_000_000_000,
   user_tokens_cache_name: :user_tokens,
   max_project_identifier_length: 30
 

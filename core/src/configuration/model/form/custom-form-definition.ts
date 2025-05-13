@@ -20,12 +20,16 @@ export interface CustomFormDefinition extends BaseFormDefinition {
     identifierPrefix?: string;
     resourceLimit?: number;
     scanCodes?: ScanCodeConfiguration;
+    range?: {
+        isExecutedOn?: string[];
+        resultsIn?: string[];
+    }
 }
 
 
 const VALID_CUSTOM_FORM_PROPERTIES = [
     'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix', 'resourceLimit',
-    'scanCodes'
+    'scanCodes', 'range'
 ];
 
 

@@ -1,10 +1,16 @@
 defmodule FieldPublication.Processing.MapTiles do
+  alias Phoenix.PubSub
+  require Logger
+
+  alias Vix.Vips.{
+    Image,
+    Operation
+  }
+
   alias FieldPublication.FileService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
   alias FieldPublication.DatabaseSchema.Publication
-  alias Phoenix.PubSub
-  require Logger
 
   @tile_size 256
 
@@ -44,7 +50,7 @@ defmodule FieldPublication.Processing.MapTiles do
     }
   end
 
-  def start_tile_creation(%Publication{} = publication) do
+  def start(%Publication{} = publication) do
     # TODO: Construct all paths in FileService module.
     raw_root = FileService.get_raw_data_path(publication.project_name)
     tiles_root = FileService.get_map_tiles_path(publication.project_name)
@@ -59,98 +65,64 @@ defmodule FieldPublication.Processing.MapTiles do
 
     doc_id = Publications.get_doc_id(publication)
 
-    missing
-    |> Enum.map(fn %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
-      if FileService.raw_data_file_exists?(publication.project_name, uuid, :image) do
-        scalings_for_z_indices = get_scalings_for_z_indices(width, height, @tile_size)
-        raw_image_path = "#{raw_root}/image/#{uuid}"
+    result =
+      missing
+      |> Enum.map(fn %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
+        if FileService.raw_data_file_exists?(publication.project_name, uuid, :image) do
+          {:ok, image} = Image.new_from_file("#{raw_root}/image/#{uuid}")
 
-        scalings_for_z_indices
-        |> Enum.map(fn %{scaled_size: scaled_size, z_index: z_index} ->
-          original_z_index_path = "#{tiles_root}/#{uuid}/#{z_index}"
+          max = if width < height, do: height, else: width
 
-          next_multiple =
-            @tile_size * Float.ceil(scaled_size / @tile_size)
+          max =
+            (@tile_size * Float.ceil(max / @tile_size)) |> trunc()
 
-          Logger.debug(
-            "Creating tiles for image `#{uuid}` in project `#{publication.project_name}` with z index of #{z_index} (#{next_multiple} x #{next_multiple} base image)..."
+          if Image.has_alpha?(image) do
+            image
+          else
+            Operation.bandjoin_const!(image, [255.0])
+          end
+          |> Operation.embed!(0, 0, max, max,
+            background: [+0.0],
+            extent: :VIPS_EXTEND_BACKGROUND
+          )
+          |> Operation.dzsave!("#{tiles_root}/#{uuid}",
+            "tile-size": @tile_size,
+            suffix: ".webp",
+            layout: :VIPS_FOREIGN_DZ_LAYOUT_GOOGLE,
+            overlap: 0,
+            depths: :VIPS_FOREIGN_DZ_DEPTH_ONETILE,
+            "skip-blanks": -1,
+            background: [0.0]
           )
 
-          FieldPublication.Processing.Imagemagick.create_tiling_temp_file(
-            raw_image_path,
-            original_z_index_path,
-            scaled_size,
-            next_multiple
+          updated_state =
+            Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+              state =
+                state
+                |> Map.put(:counter, counter + 1)
+                |> Map.put(:percentage, (counter + 1) / overall * 100)
+
+              {state, state}
+            end)
+
+          PubSub.broadcast(
+            FieldPublication.PubSub,
+            doc_id,
+            {
+              :tile_image_processing_count,
+              updated_state
+            }
           )
+        else
+          Logger.error(
+            "No raw image file `#{uuid}` for project `#{publication.project_name}`. Unable to create tiles..."
+          )
+        end
+      end)
 
-          FieldPublication.Processing.Imagemagick.create_tiles(original_z_index_path, @tile_size)
+    # See https://github.com/akash-akya/vix/issues/197
+    File.rm("#{tiles_root}/vips-properties.xml")
 
-          File.rm!("#{original_z_index_path}/temp.png")
-
-          File.ls!(original_z_index_path)
-          |> Enum.map(fn file_name ->
-            [_tile, x_maybe_float, y_dot_png] = String.split(file_name, "_")
-
-            {x, _remainder} = Integer.parse(x_maybe_float)
-            {y, _remainder} = String.replace_suffix(y_dot_png, ".png", "") |> Integer.parse()
-
-            final_tile_dir = "#{original_z_index_path}/#{x}"
-            final_tile_file = "#{final_tile_dir}/#{y}.png"
-
-            File.mkdir_p!(final_tile_dir)
-            File.cp_r!("#{original_z_index_path}/#{file_name}", final_tile_file)
-            File.rm!("#{original_z_index_path}/#{file_name}")
-          end)
-        end)
-
-        updated_state =
-          Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
-            state =
-              state
-              |> Map.put(:counter, counter + 1)
-              |> Map.put(:percentage, (counter + 1) / overall * 100)
-
-            {state, state}
-          end)
-
-        PubSub.broadcast(
-          FieldPublication.PubSub,
-          doc_id,
-          {
-            :tile_image_processing_count,
-            updated_state
-          }
-        )
-      else
-        Logger.error(
-          "No raw image file `#{uuid}` for project `#{publication.project_name}`. Unable to create tiles..."
-        )
-      end
-    end)
-  end
-
-  defp get_scalings_for_z_indices(width, height, tile_size) do
-    max = Enum.max([width, height])
-
-    Stream.unfold(max, fn current_size ->
-      if current_size * 2 < tile_size do
-        # The previous size was already smaller than the tile size,
-        # so stop generating new values.
-        nil
-      else
-        {
-          current_size,
-          current_size / 2
-        }
-      end
-    end)
-    |> Enum.reverse()
-    |> Stream.with_index()
-    |> Enum.map(fn {scaled_size, index} ->
-      %{
-        z_index: index,
-        scaled_size: scaled_size
-      }
-    end)
+    result
   end
 end

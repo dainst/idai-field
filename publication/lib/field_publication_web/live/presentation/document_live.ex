@@ -1,6 +1,4 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
-  alias FieldPublicationWeb.Presentation.Opengraph
-  alias FieldPublicationWeb.Presentation.Components.I18n
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -10,6 +8,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
+
+  alias FieldPublicationWeb.Presentation.Opengraph
+  alias FieldPublicationWeb.Presentation.Components.I18n
 
   alias FieldPublicationWeb.Presentation.DocumentComponents
   alias FieldPublicationWeb.Presentation.Components.PublicationSelection
@@ -36,6 +37,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:project_name, project_name)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)
+      |> assign(:focus, :default)
     }
   end
 
@@ -56,6 +58,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:publication, current_publication)
       |> evaluate_requested_language(current_publication, params)
       |> evaluate_requested_doc(current_publication, params)
+      |> assign(:focus, parse_focus(Map.get(params, "focus")))
     }
   end
 
@@ -86,13 +89,34 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_event(
         "geometry-clicked",
         %{"uuid" => uuid},
-        %{assigns: %{publication: publication, selected_lang: lang}} = socket
+        %{assigns: %{publication: publication, selected_lang: lang, focus: focus}} = socket
       ) do
+    query_params =
+      case focus do
+        :map ->
+          %{focus: "map"}
+
+        _ ->
+          %{}
+      end
+
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
+        to:
+          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}?#{query_params}"
       )
+    }
+  end
+
+  def handle_event(
+        "search",
+        %{"search_input" => q},
+        %{assigns: %{publication: %Publication{project_name: project_name}}} = socket
+      ) do
+    {
+      :noreply,
+      redirect(socket, to: ~p"/search?#{%{q: q, filter: %{project_name: project_name}}}")
     }
   end
 
@@ -221,4 +245,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       List.first(publication.languages)
     end
   end
+
+  defp parse_focus("map"), do: :map
+  defp parse_focus(_), do: :default
 end

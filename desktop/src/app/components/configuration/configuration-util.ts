@@ -63,10 +63,11 @@ export module ConfigurationUtil {
                             category.name,
                             filter.isRecordedInCategory,
                             Relation.Hierarchy.RECORDEDIN
-                        )
+                        ) || category.name === 'WorkflowStep'
                         : !projectConfiguration.getRelationsForDomainCategory(category.name)
                                 .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace'].includes(category.name);
+                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace', 'WorkflowStep']
+                                .includes(category.name);
             }
         });
     }

@@ -1,7 +1,7 @@
 services:
 
   opensearch:
-    image: opensearchproject/opensearch:2.14.0 
+    image: opensearchproject/opensearch:2.19.2 
     container_name: "field_publication_opensearch"
     environment:
       - discovery.type=single-node
@@ -19,17 +19,6 @@ services:
     ports:
       - 9200:9200 # REST API
       - 9600:9600 # Performance Analyzer
-
-  cantaloupe:
-    image: "ghcr.io/dainst/field_publication_cantaloupe:1.1.0"
-    container_name: "field_publication_cantaloupe"
-    environment:
-      LOG_APPLICATION_LEVEL: warn
-      LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
-    ports:
-      - "8182:8182"
-    volumes:
-      - "./data/file_store:/files"
 
   couchdb:
     image: couchdb:3.3.2

@@ -119,6 +119,18 @@
     },
     "isStoragePlaceOf": {
       "label": "Ist Aufbewahrungsort von"
+    },
+    "isExecutedOn": {
+      "label": "Wurde durchgeführt an"
+    },
+    "executionTargetOf": {
+      "label": "Durchführungsziel von"
+    },
+    "resultsIn": {
+      "label": "Ergibt"
+    },
+    "isResultOf": {
+      "label": "Ergebnis von"
     }
   }
 }

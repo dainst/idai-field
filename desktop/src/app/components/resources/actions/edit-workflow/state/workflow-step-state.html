@@ -1,0 +1,15 @@
+<div class="dropdown"
+     ngbDropdown
+     placement="bottom-left top-left">
+    <div ngbDropdownToggle>
+        <span class="mdi {{getValueIcon(getState())}} selected-state"></span>
+    </div>
+    <div class="dropdown-menu" ngbDropdownMenu>
+        <button *ngFor="let value of getValues()"
+                class="dropdown-item operation-selection-button"
+                (click)="setState(value)">
+            <span class="mdi {{getValueIcon(value)}}"></span>
+            <span class="state-label">{{getValueLabel(value)}}</span>
+        </button>
+    </div>
+</div>

@@ -4,6 +4,7 @@ import { Groups } from '../model/configuration/group';
 import { Relation } from '../model/configuration/relation';
 import { BuiltInCategoryDefinition } from './model/category/built-in-category-definition';
 import { BuiltInFieldDefinition } from './model/field/built-in-field-definition';
+import { DateConfiguration } from '../model/configuration/date-configuration';
 
 
 /**
@@ -66,12 +67,6 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.DIMENSION,
             valuelistId: 'position-values-expansion-default'
         },
-        beginningDate: {
-            inputType: Field.InputType.DATE,
-        },
-        endDate: {
-            inputType: Field.InputType.DATE,
-        },
         processor: {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
@@ -89,7 +84,11 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.TEXT
         },
         date: {
-            inputType: Field.InputType.DATE
+            inputType: Field.InputType.DATE,
+            dateConfiguration: {
+                dataType: DateConfiguration.DataType.OPTIONAL,
+                inputMode: DateConfiguration.InputMode.OPTIONAL
+            }
         },
         spatialLocation: {
             inputType: Field.InputType.INPUT
@@ -818,6 +817,29 @@ export class BuiltInConfiguration {
                 ]
             }
         },
+        WorkflowStep: {
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
+            abstract: true,
+            fields: {
+                state: {
+                    inputType: 'dropdown',
+                    required: true,
+                    valuelistId: 'workflow-step-state-default',
+                },
+                date: {
+                    required: true
+                }
+            },
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription', 'state', 'date']
+                    }
+                ]
+            }
+        },
         Image: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
@@ -873,7 +895,7 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.IDENTIFIER,
             visible: false,
             editable: true,
-            mandatory: true,
+            required: true,
             fulltextIndexed: true,
             fixedInputType: true
         },

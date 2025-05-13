@@ -3,6 +3,7 @@ import { Warnings } from '../../src/model/document/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 import { CategoryForm } from '../../src/model/configuration/category-form';
+import { DateConfiguration } from '../../src/model';
 
 
 const createDocument = (id: string, category: string = 'Category') => doc('sd', 'identifier' + id, category, id);
@@ -62,9 +63,15 @@ describe('WarningsUpdater', () => {
 
     it('update index independent warnings', () => {
 
+        const parentCategoryDefinition = {
+            name: 'WorkflowStep',
+            groups: []
+        } as any;
+
         const categoryDefinition = {
             name: 'Category',
             identifierPrefix: 'C',
+            parentCategory: parentCategoryDefinition,
             groups: [
                 {
                     fields: [
@@ -75,6 +82,31 @@ describe('WarningsUpdater', () => {
                         {
                             name: 'number',
                             inputType: Field.InputType.FLOAT
+                        },
+                        {
+                            name: 'mandatoryField',
+                            inputType: Field.InputType.INPUT,
+                            mandatory: true
+                        },
+                        {
+                            name: 'state',
+                            inputType: Field.InputType.DROPDOWN
+                        },
+                        {
+                            name: 'date',
+                            inputType: Field.InputType.DATE,
+                            dateConfiguration: {
+                                dataType: DateConfiguration.DataType.OPTIONAL,
+                                inputMode: DateConfiguration.InputMode.OPTIONAL
+                            }
+                        },
+                        {
+                            name: 'conditionalField',
+                            inputType: Field.InputType.INPUT,
+                            condition: {
+                                fieldName: 'state',
+                                values: ['completed']
+                            }
                         }
                     ]
                 }
@@ -90,6 +122,9 @@ describe('WarningsUpdater', () => {
         documents[0].resource.identifier = '1';
         documents[0].resource.number = 'text';
         documents[0].resource.unconfiguredField = 'text';
+        documents[0].resource.state = 'planned';
+        documents[0].resource.date = { value: '01.01.1990', isRange: false };
+        documents[0].resource.conditionalField = 'text';
         documents[0].resource.relations.unconfiguredRelation = ['target'];
 
         documents[1].resource.identifier = 'C2';
@@ -97,8 +132,11 @@ describe('WarningsUpdater', () => {
 
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
+        documents[2].resource.mandatoryField = 'text';
+        documents[2].resource.state = 'completed';
+        documents[2].resource.date = { value: '01.01.1990', isRange: false };
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
         WarningsUpdater.updateIndexIndependentWarnings(documents[0], mockProjectConfiguration);
         WarningsUpdater.updateIndexIndependentWarnings(documents[1], mockProjectConfiguration);
@@ -107,12 +145,17 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings).toEqual({
             unconfiguredFields: ['unconfiguredField', 'unconfiguredRelation'],
             invalidFields: ['number'],
+            missingMandatoryFields: ['mandatoryField'],
+            unfulfilledConditionFields: ['conditionalField'],
             conflicts: true,
-            missingIdentifierPrefix: true
+            missingIdentifierPrefix: true,
+            invalidWorkflowStepState: true
         });
         expect(documents[1].warnings).toEqual({
             unconfiguredFields: [],
             invalidFields: [],
+            missingMandatoryFields: [],
+            unfulfilledConditionFields: [],
             unconfiguredCategory: true
         });
         expect(documents[2].warnings).toBeUndefined();

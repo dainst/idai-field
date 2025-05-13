@@ -77,6 +77,10 @@ defmodule FieldPublication.Processing.WebImage do
 
       {:ok, file} = Image.new_from_file("#{raw_root}/image/#{uuid}")
 
+      # Apply exif rotation metadata directly to the image data (if present), because we do not
+      # want end user's web browser to rotate image tiles because of the metadata.
+      {:ok, {file, _}} = Operation.autorot(file)
+
       :ok =
         Operation.tiffsave(file, "#{web_root}/#{uuid}.tif",
           pyramid: true,

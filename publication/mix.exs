@@ -56,7 +56,7 @@ defmodule FieldPublication.MixProject do
       {:cachex, "~> 4.0"},
       {:vix, "~> 0.33.0"},
       {:cors_plug, "~> 3.0"},
-      {:iiif_image_plug, git: "https://github.com/dainst/iiif_image_plug"}
+      {:iiif_image_plug, "~> 0.5.0"}
     ]
   end
 

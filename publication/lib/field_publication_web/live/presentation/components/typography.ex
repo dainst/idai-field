@@ -3,7 +3,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Typography do
 
   def document_heading(assigns) do
     ~H"""
-    <h1 class="text-3xl mt-5">
+    <h1 class="text-3xl mt-4 mb-4">
       {render_slot(@inner_block)}
     </h1>
     """

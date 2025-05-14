@@ -1,8 +1,7 @@
 import { Component} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document } from 'idai-field-core';
+import { Document, formatDate } from 'idai-field-core';
 
-const moment = window.require('moment');
 
 @Component({
     templateUrl: './change-history-modal.html',
@@ -48,9 +47,9 @@ export class ChangesHistoryModalComponent {
     }
 
 
-    public formatDateTime( time: string | Date) {
+    public formatDateTime( time: Date) {
         
-        return moment(time).format('YYYY-MM-DD HH:mm:ss');
+        return(formatDate(time))
     }
 
 

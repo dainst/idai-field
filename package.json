@@ -7,8 +7,5 @@
   "scripts": {
     "bootstrap": "npm i && lerna bootstrap -- --force",
     "build": "lerna run build"
-  },
-  "dependencies": {
-    "ngx-dropzone": "^3.1.0"
   }
 }

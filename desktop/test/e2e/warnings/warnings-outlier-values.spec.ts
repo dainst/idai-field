@@ -1,13 +1,13 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { WarningsModalPage } from './warnings-modal.page';
 import { DeleteModalPage } from './delete-modal.page';
 import { FieldsViewPage } from '../widgets/fields-view.page';
 import { FixOutliersModalPage } from './fix-outliers-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
-import { expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
+import { expectFieldValuesInGroup, expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
 import { createCompositeOutlierValuesWarnings, createDimensionOutlierValuesWarnings,
     createDropdownRangeOutlierValuesWarnings, createOutlierValuesWarnings, createParentOutlierValuesWarning,
     createProjectOutlierValuesWarning } from './create-warnings';
@@ -102,6 +102,8 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', ['Gerät', 'Löffel']]);
     });
 
 
@@ -123,6 +125,8 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Ort']);
     });    
     
     
@@ -173,6 +177,9 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', ['Gerät', 'Löffel']]);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie', 'test:field'], ['Ort', ['Gerät', 'Löffel']]);
     });
 
 
@@ -196,6 +203,9 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Ort']);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie'], ['Ort']);
     });
 
 
@@ -231,6 +241,9 @@ test.describe('warnings/outlier values', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'Bearbeiterin/Bearbeiter'], ['Schnitt', 'Person 1']);
+        
     });
 
 
@@ -246,6 +259,8 @@ test.describe('warnings/outlier values', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Schnitt']);
     });
 
 
@@ -409,6 +424,10 @@ test.describe('warnings/outlier values', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup(
+            '1', 0, ['Kategorie', 'test:field'], ['Ort', '1 cm, gemessen an Maximale Ausdehnung']
+        );
     });
 
 
@@ -424,6 +443,8 @@ test.describe('warnings/outlier values', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', '1 cm']);
     });
 
 
@@ -483,6 +504,8 @@ test.describe('warnings/outlier values', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', 'Von: Phase III, bis: Phase IV']);
     });
 
 
@@ -499,6 +522,8 @@ test.describe('warnings/outlier values', () => {
 
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Ort']);
     });
 
 
@@ -612,6 +637,17 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field1'], ['Ort', ['Gerät', 'Löffel']]);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie', 'test:field1'], ['Ort', ['Gerät', 'Löffel']]);
+
+        for (let identifier of ['3', '4']) {
+            await ResourcesPage.clickSelectResource(identifier);
+            expect(await FieldsViewPage.getCompositeSubfieldName(0, 1, 0, 0)).toBe('subfield1');
+            expect(await FieldsViewPage.getCompositeSubfieldValue(0, 1, 0, 0)).toBe('Gerät');
+            expect(await FieldsViewPage.getCompositeSubfieldName(0, 1, 0, 1)).toBe('subfield2');
+            expect(await FieldsViewPage.getCompositeSubfieldValue(0, 1, 0, 1)).toBe('braun');
+        }
     });
 
   
@@ -637,5 +673,14 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await WarningsModalPage.getDeletionInProgressModal());
         await waitForNotExist(await WarningsModalPage.getModalBody());
         await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie'], ['Ort']);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie'], ['Ort']);
+
+        for (let identifier of ['3', '4']) {
+            await ResourcesPage.clickSelectResource(identifier);
+            expect(await FieldsViewPage.getCompositeSubfieldName(0, 1, 0, 0)).toBe('subfield2');
+            expect(await FieldsViewPage.getCompositeSubfieldValue(0, 1, 0, 0)).toBe('braun');
+        }
     });
 });

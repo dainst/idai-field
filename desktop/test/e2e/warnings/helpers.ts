@@ -1,3 +1,4 @@
+import { isArray } from 'tsfun';
 import { Field } from 'idai-field-core';
 import { navigateTo, pause, sendMessageToAppController, waitForExist } from '../app';
 import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
@@ -81,7 +82,7 @@ export async function expectSectionTitles(sectionTitles: string[]) {
 
 
 export async function expectFieldValuesInGroup(identifier: string, groupIndex: number, fieldNames: string[],
-                                               fieldValues: string[]) {
+                                               fieldValues: Array<string|string[]>) {
 
     await ResourcesPage.clickSelectResource(identifier);
 
@@ -90,6 +91,13 @@ export async function expectFieldValuesInGroup(identifier: string, groupIndex: n
 
     for (let i = 0; i < fieldNames.length; i++) {
         expect(await FieldsViewPage.getFieldName(groupIndex, i)).toBe(fieldNames[i]);
-        expect(await FieldsViewPage.getFieldValue(groupIndex, i)).toBe(fieldValues[i]);
+
+        if (isArray(fieldValues[i])) {
+            for (let j = 0; j < fieldValues[i].length; j++) {
+                expect(await FieldsViewPage.getFieldValue(groupIndex, i, j)).toBe(fieldValues[i][j]);
+            }
+        } else {
+            expect(await FieldsViewPage.getFieldValue(groupIndex, i)).toBe(fieldValues[i]);
+        }
     }
 }

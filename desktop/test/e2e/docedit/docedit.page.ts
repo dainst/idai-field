@@ -311,6 +311,12 @@ export class DoceditPage {
     }
 
 
+    public static async getCheckedCheckboxes(fieldName: string) {
+
+        return (await this.getField(fieldName)).locator('.checkbox input:checked');
+    }
+
+
     public static getGeometryEditWidget() {
 
         return getLocator('form-field-geometry');

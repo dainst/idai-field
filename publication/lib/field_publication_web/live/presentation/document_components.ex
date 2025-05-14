@@ -203,6 +203,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
+                      focus={:map}
                     />
                   </div>
                 <% else %>
@@ -212,6 +213,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
+                      focus={:map}
                     />
                   </div>
                 <% end %>

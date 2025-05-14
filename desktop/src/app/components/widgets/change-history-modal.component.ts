@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, formatDate } from 'idai-field-core';
-
+import { Document } from 'idai-field-core';
+import { formatDate } from '@angular/common';
 
 @Component({
     templateUrl: './change-history-modal.html',

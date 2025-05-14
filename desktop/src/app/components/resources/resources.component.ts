@@ -21,11 +21,8 @@ import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
-<<<<<<< HEAD
 import { ChangesHistoryModalComponent } from '../widgets/change-history-modal.component';
-=======
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
->>>>>>> master
 
 
 @Component({

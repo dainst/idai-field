@@ -9,7 +9,7 @@ const moment = window.require('moment');
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     },
-    standalone: false
+    standalone: false   
 })
 /**  
  * @author Nicolas Antunes  
@@ -23,8 +23,8 @@ export class ChangesHistoryModalComponent {
     public documentModificationList: any;
     public toggledDate: boolean;
     public toggledUser: boolean;
-
     
+
     constructor(public activeModal: NgbActiveModal) {}
 
 

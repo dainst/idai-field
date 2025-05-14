@@ -1,11 +1,7 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'projects'|'configuration'|'geometryEdit'|'mapLayersEdit'
     |'georeferenceEdit'|'configurationEdit'|'configurationValuelistEdit'|'configurationSubfieldEdit'
-<<<<<<< HEAD
-    |'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'|'qrCodeScanner'|'historyModal'|'printSettingsModal';
-=======
-    |'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'|'qrCodeScanner'|'printSettingsModal'
-    |'workflowEditor'
->>>>>>> master
+    |'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'|'qrCodeScanner'|'historyModal'|
+    'printSettingsModal'|'workflowEditor';
 
     
 /**

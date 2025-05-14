@@ -8,7 +8,7 @@ import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry'|'show-history'|'edit-workflow';
 
 
 @Component({

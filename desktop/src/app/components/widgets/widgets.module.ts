@@ -30,14 +30,10 @@ import { DefaultFieldViewComponent } from './document-info/fields-view/default-f
 import { UrlFieldViewComponent } from './document-info/fields-view/url-field-view.component';
 import { SearchableSelectComponent } from './searchable-select.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
-<<<<<<< HEAD
-import { CommonModule } from '@angular/common';
-import { ChangesHistoryModalComponent } from './change-history-modal.component';
-=======
 import { RelationPickerGroupComponent } from './relation-picker/relation-picker-group.component';
 import { RelationPickerComponent } from './relation-picker/relation-picker.component';
-
->>>>>>> master
+import { CommonModule } from '@angular/common';
+import { ChangesHistoryModalComponent } from './change-history-modal.component';
 
 @NgModule({
     imports: [

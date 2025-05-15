@@ -8,7 +8,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <h1>Manage users</h1>
+    <.document_heading>Manage users</.document_heading>
 
     <p class="font-semibold">{gettext("Actions")}</p>
 

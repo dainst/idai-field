@@ -23,19 +23,19 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
         class="rounded-tl pl-2 rounded-bl"
-        style={"background-color: #{@doc.category.color}; filter: saturate(50%); border-color: #{@doc.category.color}; border-width: 1px 1px 1px 0px;"}
+        style={"background-color: #{desaturate(@doc.category.color)}; border-color: #{desaturate(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
       >
-        <div class="h-full bg-white/60 pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
+        <div class="h-full bg-white/70 hover:bg-white/40  pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
           <I18n.text values={@doc.category.labels} />
         </div>
       </.link>
       <.link
-        class="grow p-3 rounded-tr rounded-br"
-        style="border-width: 1px 1px 1px 0px;"
+        class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 "
+        style={"border-color: #{desaturate(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
         patch={construct_doc_link(@doc.project, @doc.publication, @lang, @doc.id, @focus)}
       >
         <div>
-          <span>{@doc.identifier}</span>
+          <span class="text-slate-600">{@doc.identifier}</span>
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <small class="ml-2 text-slate-600">
             <%= if shortdescription do %>
@@ -81,5 +81,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       end
 
     ~p"/projects/#{project_name}/#{draft_date}/#{lang}/#{uuid}?#{query}"
+  end
+
+  defp desaturate(color) do
+    "hsl(from  #{color} h calc(s * 0.5) l)"
   end
 end

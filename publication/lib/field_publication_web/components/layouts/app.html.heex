@@ -8,24 +8,20 @@
         Field Publication v{Application.spec(:field_publication, :vsn)}
       </p>
     </div>
-    <div class="flex items-center gap-4 font-semibold leading-6">
+    <div class="flex items-center gap-4">
       <%= if @current_user do %>
-        <.link navigate="/management" class="text-[0.8125rem] leading-6 font-semibold ">
+        <.link navigate="/management" class="text-[0.8125rem]">
           Management
         </.link>
-        <.link
-          href={~p"/log_out"}
-          method="delete"
-          class="text-[0.8125rem] leading-6 font-semibold"
-        >
+        <.link href={~p"/log_out"} method="delete" class="text-[0.8125rem]">
           Log out
         </.link>
       <% else %>
-        <.link href={~p"/log_in"} class="text-[0.8125rem] leading-6 font-semibold">
+        <.link href={~p"/log_in"} class="text-[0.8125rem]">
           Log in
         </.link>
       <% end %>
-      <span class="text-[0.8125rem] leading-6">
+      <span class="text-[0.8125rem]">
         {@current_user}
       </span>
       <div>

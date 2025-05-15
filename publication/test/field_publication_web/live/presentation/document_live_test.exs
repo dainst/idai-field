@@ -91,6 +91,75 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert html =~ "5184"
   end
 
+  test "generic document gets rendered", %{
+    conn: conn,
+    publication: publication
+  } do
+    assert {:ok, _live_view_pid, html} =
+             live(
+               conn,
+               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+             )
+
+    assert html =~ "TTP-A-112043"
+    assert html =~ "Core"
+    assert html =~ "Inventory"
+    # map focus only
+    refute html =~ "Hierarchy"
+    # map focus only, see below
+    refute html =~ "Testopolis Settlement"
+  end
+
+  test "generic document map focus gets rendered", %{
+    conn: conn,
+    publication: publication
+  } do
+    assert {:ok, _live_view_pid, html} =
+             live(
+               conn,
+               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/1b5885eb-2082-477c-936a-e1ecb6d051f3?focus=map"
+             )
+
+    assert html =~ "TTP-A-112043"
+    # default view only
+    refute html =~ "Core"
+    # default view only, see above
+    refute html =~ "Inventory"
+    assert html =~ "Hierarchy"
+    assert html =~ "Testopolis Settlement"
+  end
+
+  test "changing the UI language changes labels on document page", %{
+    conn: conn,
+    publication: publication
+  } do
+    path =
+      ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+
+    assert {:ok, live_view, html} =
+             live(
+               conn,
+               path
+             )
+
+    assert html =~ "Core"
+    refute html =~ "Stammdaten"
+
+    conn =
+      live_view
+      |> form("#locale_form", %{locale: "de", return_to: path})
+      |> submit_form(conn)
+
+    assert {:ok, _live_view, html} =
+             live(
+               conn,
+               path
+             )
+
+    refute html =~ "Core"
+    assert html =~ "Stammdaten"
+  end
+
   test "trying to access unknown publication returns 404", %{conn: conn, publication: publication} do
     # Unknown project
     assert get(

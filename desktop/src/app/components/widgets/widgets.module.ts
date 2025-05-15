@@ -32,7 +32,8 @@ import { SearchableSelectComponent } from './searchable-select.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { RelationPickerGroupComponent } from './relation-picker/relation-picker-group.component';
 import { RelationPickerComponent } from './relation-picker/relation-picker.component';
-
+import { CommonModule } from '@angular/common';
+import { ChangesHistoryModalComponent } from './change-history-modal.component';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import { RelationPickerComponent } from './relation-picker/relation-picker.compo
         DragDropModule,
         NgSelectModule,
         ScrollingModule,
+        CommonModule
     ],
     declarations: [
         DocumentPickerComponent,
@@ -63,6 +65,7 @@ import { RelationPickerComponent } from './relation-picker/relation-picker.compo
         CategoryIconComponent,
         PagingButtonsComponent,
         EditSaveDialogComponent,
+        ChangesHistoryModalComponent,
         LanguagesListComponent,
         QrCodeScannerModalComponent,
         DeletionInProgressModalComponent,

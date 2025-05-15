@@ -16,8 +16,7 @@
                     </a>
                 </li>
             </ul>
-        </div>
-
+        </div>        
         <div class="col-md-9 forms-container">
             <div id="{{activeGroup}}-group" class="scrollable-group"
                  *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
@@ -31,7 +30,6 @@
                                  (onChanged)="onChanged()">
                 </edit-form-group>
             </div>
-
             <div *ngIf="activeGroup === 'conflicts'" id="docedit-conflicts-tab">
                 <docedit-conflicts-tab [document]="document"
                                        [inspectedRevisions]="inspectedRevisions">

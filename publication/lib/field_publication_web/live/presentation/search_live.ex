@@ -15,62 +15,48 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     q = Map.get(params, "q", "*")
     filters = Map.get(params, "filters", %{})
 
-    from = 0
+    from =
+      Map.get(params, "from", "0")
+      |> Integer.parse()
+      |> case do
+        {val, ""} ->
+          val
 
-    %{
-      total: total,
-      docs: docs,
-      aggregations: aggregations
-    } = Search.search(q, filters, from, @search_batch_limit)
+        _ ->
+          0
+      end
 
-    {project_specific_aggregations, shared_aggregations} =
-      aggregations
-      |> Enum.split_with(fn {field_name, _buckets} ->
-        String.contains?(field_name, ":")
+    {
+      :noreply,
+      socket
+      |> assign(:url_parameters, %{q: q, filters: filters, from: from})
+      |> assign(:limit, @search_batch_limit)
+      |> assign_async(:search_result, fn ->
+        %{
+          total: total,
+          docs: docs,
+          aggregations: aggregations
+        } = Search.search(q, filters, from, @search_batch_limit)
+
+        {project_specific_aggregations, shared_aggregations} =
+          aggregations
+          |> Enum.split_with(fn {field_name, _buckets} ->
+            String.contains?(field_name, ":")
+          end)
+
+        aggregations = shared_aggregations ++ project_specific_aggregations
+
+        {
+          :ok,
+          %{
+            search_result: %{
+              total: total,
+              docs: docs,
+              aggregations: aggregations
+            }
+          }
+        }
       end)
-
-    aggregations = shared_aggregations ++ project_specific_aggregations
-
-    {
-      :noreply,
-      socket
-      |> assign(:url_parameters, %{q: q, filters: filters})
-      |> assign(:from, from)
-      |> assign(:search_end_reached, false)
-      |> assign(:aggregations, aggregations)
-      |> assign(:total, total)
-      |> stream(:search_results, docs, reset: true)
-    }
-  end
-
-  def handle_event("search_next_batch", _, %{assigns: %{search_end_reached: true}} = socket) do
-    {
-      :noreply,
-      socket
-    }
-  end
-
-  def handle_event(
-        "search_next_batch",
-        _,
-        %{assigns: %{url_parameters: parameters, from: from}} = socket
-      ) do
-    %{
-      docs: docs
-    } =
-      Search.search(
-        parameters.q,
-        parameters.filters,
-        from,
-        @search_batch_limit
-      )
-
-    {
-      :noreply,
-      socket
-      |> assign(:from, from + @search_batch_limit)
-      |> assign(:search_end_reached, docs == [])
-      |> stream(:search_results, docs)
     }
   end
 
@@ -79,7 +65,10 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
         %{"search_input" => input_value},
         %{assigns: %{url_parameters: parameters}} = socket
       ) do
-    url_parameters = Map.put(parameters, :q, input_value)
+    url_parameters =
+      parameters
+      |> Map.put(:q, input_value)
+      |> Map.put(:from, 0)
 
     {
       :noreply,
@@ -105,7 +94,10 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
         Map.put(filters, key, value)
       end
 
-    url_parameters = Map.put(url_parameters, :filters, updated_filters)
+    url_parameters =
+      url_parameters
+      |> Map.put(:filters, updated_filters)
+      |> Map.put(:from, 0)
 
     {
       :noreply,
@@ -139,7 +131,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   def aggregation_deselection(assigns) do
     ~H"""
     <div
-      class="pl-2 mt-1 cursor-pointer bg-[#5882c2] hover:bg-slate-200 hover:line-through rounded"
+      class="pl-2 mt-1 cursor-pointer bg-(--primary-color) hover:bg-slate-200 hover:line-through rounded"
       phx-click="toggle_filter"
       phx-value-key={@field_name}
       phx-value-value={@value}

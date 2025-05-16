@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
 
   def show(assigns) do
     ~H"""
-    <div class="flex mb-[2px]">
+    <div class="flex mb-[2px]" id={@doc.id}>
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
         class="rounded-tl pl-2 rounded-bl"
@@ -48,7 +48,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
             />
           </small>
           <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
-          <div class="flex items-center overflow-x-auto">
+          <div id={"#{@doc.id}-images"} class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>
               <Image.show
                 size={"^,#{@image_height}"}

@@ -213,25 +213,37 @@ defmodule FieldPublication.Publications.Search do
   def search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
-        "*" ->
-          q
-
         "" ->
           "*"
 
         q ->
-          "#{q}~"
+          q
       end
 
     payload =
       %{
         query: %{
           bool: %{
-            must: %{
-              query_string: %{
-                query: q
+            must: [
+              %{
+                bool: %{
+                  should: [
+                    %{
+                      match_phrase: %{
+                        full_doc: %{
+                          query: q
+                        }
+                      }
+                    },
+                    %{
+                      wildcard: %{
+                        full_doc_as_text: %{value: "*#{q}*", case_insensitive: true, boost: 0.5}
+                      }
+                    }
+                  ]
+                }
               }
-            }
+            ]
           }
         },
         aggs: generate_aggregations_queries(),
@@ -380,7 +392,7 @@ defmodule FieldPublication.Publications.Search do
         type: "flat_object"
       },
       full_doc_as_text: %{
-        type: "text"
+        type: "wildcard"
       }
     }
 

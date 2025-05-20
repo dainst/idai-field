@@ -93,10 +93,12 @@ export class DocumentHolder {
     /**
      * @throws [DoceditErrors.NOT_FOUND]
      */
-    public async duplicate(numberOfDuplicates: number): Promise<Document> {
+    public async duplicate(numberOfDuplicates: number): Promise<Array<Document>> {
 
-        const documentAfterSave: Document = await this.save();
-        const template: NewDocument = DuplicationUtil.createTemplate(documentAfterSave);
+        const result: Array<Document> = [];
+        result.push(await this.save());
+
+        const template: NewDocument = DuplicationUtil.createTemplate(result[0]);
 
         let { baseIdentifier, identifierNumber, minDigits } =
             DuplicationUtil.splitIdentifier(template.resource.identifier);
@@ -107,14 +109,16 @@ export class DocumentHolder {
             );
             this.addScanCodeIfConfigured(template);
 
-            await this.relationsManager.update(
+            const duplicatedDocument: Document = await this.relationsManager.update(
                 template,
                 this.oldVersion,
                 []
             );
+
+            result.push(duplicatedDocument);
         }
 
-        return documentAfterSave;
+        return result;
     }
 
 

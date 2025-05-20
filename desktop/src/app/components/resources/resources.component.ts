@@ -222,7 +222,7 @@ export class ResourcesComponent implements OnDestroy {
                 WorkflowEditorModalComponent,
                 { size: 'md', animation: false, backdrop: 'static', keyboard: false }
             );
-            modalRef.componentInstance.documents = documents;
+            modalRef.componentInstance.documents = documents.slice();
             await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
             await modalRef.result;

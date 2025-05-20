@@ -65,7 +65,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isMandatoryOptionVisible = () => this.field.editable;
 
-    public isMandatoryOptionEnabled = () => !this.field.required;
+    public isMandatoryOptionEnabled = () => !this.field.required
+        && !Field.InputType.RELATION_INPUT_TYPES.includes(this.getInputType());
 
     public getDateConfiguration = () => this.getClonedFieldDefinition().dateConfiguration
 
@@ -207,6 +208,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         } else {
             this.getClonedFieldDefinition().inputType = newInputType;
             this.clonedField.inputType = newInputType;
+        }
+
+        if (Field.InputType.RELATION_INPUT_TYPES.includes(newInputType)) {
+            delete this.getClonedFieldDefinition().mandatory;
         }
 
         this.initializeDateConfiguration();

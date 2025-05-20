@@ -95,7 +95,7 @@ export class DoceditComponent {
     }
 
 
-    public showDuplicateButton(): boolean {
+    public isDuplicateButtonVisible(): boolean {
 
         return this.documentHolder.clonedDocument !== undefined
             && this.documentHolder.clonedDocument.resource.category !== 'Project'

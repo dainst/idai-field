@@ -110,12 +110,28 @@ defmodule FieldPublication.OpenSearchService do
   end
 
   def get_mapping(index_name) when is_binary(index_name) do
+    get_mapping(index_name, 5)
+  end
+
+  defp get_mapping(index_name, retries) do
     Finch.build(
       :get,
       "#{base_url()}/#{index_name}/_mapping",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
+    |> case do
+      {:error, %Mint.TransportError{reason: :closed}} = result ->
+        if retries > 0 do
+          Process.sleep(100)
+          get_mapping(index_name, retries - 1)
+        else
+          result
+        end
+
+      response ->
+        response
+    end
   end
 
   def get_doc_count(index_name) when is_binary(index_name) do

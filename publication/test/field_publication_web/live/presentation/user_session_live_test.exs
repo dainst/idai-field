@@ -71,7 +71,7 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
     # The new conn object created after submitting has a valid session and thus allows access.
     assert {:ok, live_view_pid, html} = live(logged_in_conn, ~p"/management")
 
-    assert html =~ "<h1>Projects</h1>"
+    assert html =~ "Administration"
 
     token =
       logged_in_conn

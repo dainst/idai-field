@@ -67,8 +67,9 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     } do
       {:ok, _live_process, html} = live(conn, ~p"/management")
 
-      assert html =~ "<h1>Projects</h1>"
-      assert not (html =~ @test_project_name)
+      refute html =~ "Administration"
+      assert html =~ "Projects"
+      refute html =~ @test_project_name
       assert html =~ @new_project_name
     end
 
@@ -118,7 +119,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     test "has access to management overview", %{conn: conn, test_project: project} do
       {:ok, _live_process, html} = live(conn, ~p"/management")
 
-      assert html =~ "<h1>Projects</h1>"
+      assert html =~ "Administration"
       assert html =~ project.name
       assert html =~ "Publications (0)"
     end

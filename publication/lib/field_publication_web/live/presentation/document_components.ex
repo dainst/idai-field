@@ -22,8 +22,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     RelationGroup
   }
 
-  import FieldPublicationWeb.Presentation.Components.Typography
-
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
   attr :lang, :string, required: true
@@ -203,6 +201,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
+                      focus={:map}
                     />
                   </div>
                 <% else %>
@@ -212,6 +211,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
+                      focus={:map}
                     />
                   </div>
                 <% end %>
@@ -363,9 +363,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
       </.document_heading>
       <div class="flex flex-row">
         <div class="basis-2/3 m-5">
-          <.header>
+          <.group_heading>
             {gettext("project_doc_about_project")}
-          </.header>
+          </.group_heading>
           <div class="bg-slate-50 p-2 rounded">
             <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
             <%= if depicted_in != nil do %>
@@ -386,9 +386,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% end %>
             <I18n.markdown values={Data.get_field_value(@doc, "description")} lang={@lang} />
           </div>
-          <.header class="mt-3">
+          <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
-          </.header>
+          </.group_heading>
           <div class="bg-slate-50 p-2 rounded">
             <I18n.markdown
               values={

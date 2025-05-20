@@ -179,6 +179,18 @@ defmodule FieldHub.FileStore do
     result
   end
 
+  @doc """
+  Copy a file into the specified project's directory.
+
+  __Parameters__
+
+  - `uuid` the uuid for the file (will be used as its file_name).
+  - `project_identifier` the project's name.
+  - `file_variant` a valid file variant, one of `#{inspect(@valid_file_variants)}`.
+  - `input_path` path to the source file to be copied.
+
+  Returns `:ok` on success or `{:error, posix}` on failure.
+  """
   def store_by_moving(uuid, project_identifier, file_variant, input_path) do
     directory = get_variant_directory(project_identifier, file_variant)
 

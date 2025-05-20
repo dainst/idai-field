@@ -271,6 +271,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public getMandatoryTooltip(): string {
+
+        if (this.field.required) {
+             return $localize `:@@configuration.mandatoryField.notAllowedForRequiredField:Dieses Feld ist grundsätzlich ein Pflichtfeld.`;
+         } else if (Field.InputType.RELATION_INPUT_TYPES.includes(this.getInputType())) {
+             return $localize `:@@configuration.mandatoryField.notAllowedForInputType:Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.`;
+         } else {
+             return '';
+         }
+     }
+
+
     public getConstraintIndexedTooltip(): string {
 
        if (this.category.name === 'Project') {

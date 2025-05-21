@@ -126,6 +126,27 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
+  def get_parent_categories(publication, category_name) do
+    publication
+    |> Publications.get_configuration()
+    |> search_category_and_accumulate_parents(category_name)
+  end
+
+  defp search_category_and_accumulate_parents(branch, category_name, parents \\ []) do
+    branch
+    |> Enum.find(fn %{"item" => %{"name" => name}} -> name == category_name end)
+    |> case do
+      nil ->
+        Enum.map(branch, fn %{"item" => %{"name" => name}, "trees" => deeper_branch} ->
+          search_category_and_accumulate_parents(deeper_branch, category_name, parents ++ [name])
+        end)
+        |> List.flatten()
+
+      _category_config ->
+        parents
+    end
+  end
+
   def get_doc_count(%Publication{database: db}) do
     CouchService.get_database(db)
     |> then(fn {:ok, %{status: 200, body: body}} ->

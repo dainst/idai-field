@@ -442,7 +442,10 @@ defmodule FieldPublication.Publications.Search do
       %SearchDocument{
         id: res["id"],
         identifier: res["identifier"],
-        category: res["category"],
+        # Based on the project configuration, we add a category's parent categories' keys to the search
+        # document. As an example, this allows us to return not only "Image" documents when filtering by category key "Image",
+        # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
+        category: [res["category"]] ++ Data.get_parent_categories(publication, res["category"]),
         publication_draft_date: publication.draft_date,
         project_name: publication.project_name,
         configuration_based_field_mappings: %{},

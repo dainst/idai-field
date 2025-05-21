@@ -104,17 +104,6 @@ defmodule FieldPublication.Publications.Data do
     }
   end
 
-  def get_all_subcategories(publication, category_name) do
-    publication
-    |> Publications.get_configuration()
-    |> Enum.find(fn %{"item" => item} ->
-      category_name == item["name"]
-    end)
-    |> then(fn entry ->
-      flatten_category_tree(entry)
-    end)
-  end
-
   def document_exists?(uuid, %Publication{database: db}) do
     CouchService.head_document(uuid, db)
     |> case do
@@ -124,6 +113,37 @@ defmodule FieldPublication.Publications.Data do
       _ ->
         false
     end
+  end
+
+  def get_image_categories(publication) do
+    ["Image"] ++ get_child_categories(publication, "Image")
+  end
+
+  def get_child_categories(publication, category_name) do
+    publication
+    |> Publications.get_configuration()
+    |> search_category_and_accumulate_children(category_name)
+  end
+
+  defp search_category_and_accumulate_children(branch, category_name) do
+    branch
+    |> Enum.find(fn %{"item" => %{"name" => name}} -> category_name == name end)
+    |> case do
+      nil ->
+        Enum.map(branch, fn %{"tree" => deeper_branch} ->
+          search_category_and_accumulate_children(deeper_branch, category_name)
+        end)
+        |> List.flatten()
+
+      %{"trees" => child_categories} ->
+        Enum.map(child_categories, &flatten_category_tree/1)
+        |> List.flatten()
+    end
+  end
+
+  defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_categories}) do
+    ([name] ++ Enum.map(child_categories, &flatten_category_tree/1))
+    |> List.flatten()
   end
 
   def get_parent_categories(publication, category_name) do
@@ -330,7 +350,7 @@ defmodule FieldPublication.Publications.Data do
       ) do
     category_configuration = search_category_tree(configuration, resource["category"])
 
-    image_categories = get_all_subcategories(publication, "Image")
+    image_categories = get_image_categories(publication)
 
     image_uuids =
       if resource["category"] in image_categories do
@@ -527,15 +547,6 @@ defmodule FieldPublication.Publications.Data do
 
   defp run_query(query, database) do
     CouchService.get_document_stream(query, database)
-  end
-
-  defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_categories}) do
-    ([name] ++ Enum.map(child_categories, &flatten_category_tree/1))
-    |> List.flatten()
-  end
-
-  defp flatten_category_tree(nil) do
-    []
   end
 
   defp search_category_tree(configuration, category_name) do

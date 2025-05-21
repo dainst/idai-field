@@ -181,8 +181,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
       %Document{} = extended_doc ->
         project_map_layers = Publications.Data.get_project_map_layers(publication)
-
-        image_categories = Publications.Data.get_all_subcategories(publication, "Image")
+        image_categories = Publications.Data.get_image_categories(publication)
 
         socket
         |> assign(:uuid, uuid)

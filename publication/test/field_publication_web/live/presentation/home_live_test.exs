@@ -87,7 +87,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
 
     conn = recycle(conn)
 
-    assert {:ok, live_view_pid, search_doc_html} =
+    assert {:ok, _live_view, search_doc_html} =
              live(conn, path)
 
     assert search_doc_html =~ "Searching..."

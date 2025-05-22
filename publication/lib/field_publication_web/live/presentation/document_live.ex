@@ -168,7 +168,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
          %{assigns: %{selected_lang: language}} = socket,
          %Publication{} = publication,
          %{"uuid" => uuid}
-       ) do
+       )
+       when uuid != "project" do
     # If a UUID was provided, load its extended document.
     uuid
     |> Publications.Data.get_extended_document(publication, true)

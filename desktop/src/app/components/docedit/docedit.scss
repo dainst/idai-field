@@ -107,7 +107,6 @@
     outline: none;
   }
 
-  #document-edit-button-show-change-history,
   #document-edit-button-save-document,
   #document-edit-button-goto-view,
   #document-edit-button-dropdown {
@@ -118,8 +117,10 @@
     color: #fff;
   }
 
-  #document-edit-button-show-change-history {
-    margin-right: 7px;
+  #document-edit-div-button-show-change-history {
+    position: absolute;
+    bottom: -3em;
+    left: 0.5em; 
   }
 
   #document-edit-button-goto-view {

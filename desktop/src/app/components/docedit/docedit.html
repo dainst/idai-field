@@ -6,7 +6,6 @@
                                           (onCategoryChanged)="changeCategory($event)">
                 </category-switcher-button>
             </div>
-
             <div *ngIf="documentHolder.clonedDocument"
                   class="docedit-header-label text-truncate">
                 <small *ngIf="!documentHolder.clonedDocument.resource.id" i18n="@@docedit.header.create">
@@ -20,16 +19,7 @@
                 <strong>{{getResourceLabel()}}</strong>
                 <span class="sub-label">{{getResourceSubLabel()}}</span>
             </div>
-
             <div>
-                <div class="btn-group" id="show-change-history">
-                    <button class="btn btn-secondary"
-                            id="document-edit-button-show-change-history"                            
-                            (click)="showChangeHistory()">
-                        <span class="mdi mdi-history"></span>                
-                        <span class="button-label" i18n="@@buttons.history">Änderungshistorie</span>
-                    </button>
-                </div>
                 <div class="btn-group" id="save-button-group">
                     <button class="btn btn-success disabled pull-right"
                             id="document-edit-button-save-document"
@@ -69,19 +59,28 @@
                     <span class="mdi mdi-close"></span>
                 </button>
             </div>
-        </header>
+        </header>        
         <main>
-            <edit-form *ngIf="projectConfiguration && documentHolder.clonedDocument && !isLoading()"
-                       [originalDocument]="documentHolder.oldVersion"
-                       [document]="documentHolder.clonedDocument"
-                       [inspectedRevisions]="documentHolder.inspectedRevisions"
-                       [fieldDefinitions]="fieldDefinitions"
-                       [originalGroups]="groups"
-                       [activeGroup]="activeGroup"
-                       [identifierPrefix]="identifierPrefix"
-                       [scrollTargetField]="scrollTargetField">
-            </edit-form>
-
+            <div id="div-edit-form" >
+                <edit-form *ngIf="projectConfiguration && documentHolder.clonedDocument && !isLoading()"
+                        [originalDocument]="documentHolder.oldVersion"
+                        [document]="documentHolder.clonedDocument"
+                        [inspectedRevisions]="documentHolder.inspectedRevisions"
+                        [fieldDefinitions]="fieldDefinitions"
+                        [originalGroups]="groups"
+                        [activeGroup]="activeGroup"
+                        [identifierPrefix]="identifierPrefix"
+                        [scrollTargetField]="scrollTargetField"
+                        >
+                </edit-form>
+                <div id="document-edit-div-button-show-change-history" >
+                    <button class="btn btn-group btn-secondary"                                        
+                        (click)="showChangeHistory()">
+                        <span class="mdi mdi-history"></span>                
+                        <span class="button-label" i18n="@@buttons.history">Änderungshistorie</span>
+                    </button>
+                </div>
+            </div>
             <div *ngIf="isLoading()" id="loading-icon-container">
                 <loading-icon [context]="'docedit'"></loading-icon>
                 <div id="operation-in-progress-info" class="alert alert-primary">
@@ -89,14 +88,14 @@
                         Ressource wird gespeichert...
                     </span>
                     <span *ngIf="operationInProgress === 'duplicate' && !documentHolder.clonedDocument.resource.id"
-                          i18n="@@docedit.loadingInfo.createMultipleInstances">
+                           i18n="@@docedit.loadingInfo.createMultipleInstances">
                         Ressourcen werden erstellt...
                     </span>
                     <span *ngIf="operationInProgress === 'duplicate' && documentHolder.clonedDocument.resource.id"
                           i18n="@@docedit.loadingInfo.duplicate">
                         Ressource wird vervielfältigt...
                     </span>
-                </div>
+                </div>               
             </div>
         </main>
     </section>

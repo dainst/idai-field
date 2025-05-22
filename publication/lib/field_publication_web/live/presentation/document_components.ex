@@ -22,6 +22,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     RelationGroup
   }
 
+  import FieldPublicationWeb.Presentation.Components.DocumentLink,
+    only: [desaturate_category_color: 1]
+
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
   attr :lang, :string, required: true
@@ -399,22 +402,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               lang={@lang}
             />
           </div>
-        </div>
-
-        <div class="basis-1/3 m-5">
-          <% map_layers = Data.get_relation(@doc, "hasDefaultMapLayer") %>
-          <%= if map_layers do %>
-            <div class="mb-4">
-              <.live_component
-                module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
-                id="project_doc_map"
-                style="width:100%; height:500px;"
-                doc={@doc}
-                publication={@publication}
-                lang={@lang}
-              />
-            </div>
-          <% end %>
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
@@ -467,13 +454,54 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               </dd>
             <% end %>
           </dl>
+        </div>
 
-          <.group_heading>
-            {gettext("Main documents")}
-          </.group_heading>
-          <%= for %Document{} = doc <- @top_level_docs do %>
-            <DocumentLink.show lang={@lang} doc={doc} />
+        <div class="basis-1/3 m-5">
+          <div>
+            <.group_heading>
+              {gettext("Browse by document hierarchy")}
+            </.group_heading>
+            <%= for %Document{} = doc <- @top_level_docs do %>
+              <DocumentLink.show lang={@lang} doc={doc} />
+            <% end %>
+          </div>
+
+          <div>
+            <.group_heading>
+              {gettext("Documents in this publication")}
+            </.group_heading>
+            <div class="flex flex-wrap gap-1">
+              <%= for {category, %{count: count, color: color} = category_info} <- @category_breakdown do %>
+                <.link
+                  class="pl-2 pr-2 rounded-tl rounded"
+                  style={"background-color: #{desaturate_category_color(color)}; border-color: #{desaturate_category_color(color)}; border-width: 1px 0px 1px 0px;"}
+                  navigate={
+                    ~p"/search?#{%{filters: %{category: category, project_name: @publication.project_name}}}"
+                  }
+                >
+                  <div class="h-full bg-white/70 hover:bg-white/40 pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
+                    <I18n.text values={category_info.labels} /> ({count})
+                  </div>
+                </.link>
+              <% end %>
+            </div>
+          </div>
+          Todo: Map.
+        <!--
+          <% map_layers = Data.get_relation(@doc, "hasDefaultMapLayer") %>
+          <%= if map_layers do %>
+            <div class="mb-4">
+              <.live_component
+                module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
+                id="project_doc_map"
+                style="width:100%; height:500px;"
+                doc={@doc}
+                publication={@publication}
+                lang={@lang}
+              />
+            </div>
           <% end %>
+          -->
         </div>
       </div>
     </div>

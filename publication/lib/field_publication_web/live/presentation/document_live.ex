@@ -219,10 +219,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     top_level_docs = Data.get_extended_documents(top_level_uuids, publication)
 
+    category_breakdown = Data.get_doc_breakdown_by_category(publication)
+
     socket
     |> assign(:doc, project_doc)
     |> assign(:publication, publication)
     |> assign(:top_level_docs, top_level_docs)
+    |> assign(:category_breakdown, category_breakdown)
     |> assign(:project_map_layers, project_map_layers)
     |> assign(
       :page_title,

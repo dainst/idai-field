@@ -251,6 +251,73 @@ defmodule FieldPublication.Publications.Data do
     run_query(query, database)
   end
 
+  def get_doc_breakdown_by_category(%Publication{database: database} = publication) do
+    configuration =
+      Publications.get_configuration(publication)
+
+    %{
+      selector: %{},
+      fields: [
+        "resource.category",
+        "resource.geometry"
+      ]
+    }
+    |> run_query(database)
+    |> Stream.reject(fn %{
+                          "resource" => %{
+                            "category" => category_key
+                          }
+                        } ->
+      category_key in ["Project", "Configuration"]
+    end)
+    |> Enum.reduce(
+      %{},
+      fn %{
+           "resource" =>
+             %{
+               "category" => category_key
+             } = resource
+         },
+         acc ->
+        accumulated_category_data =
+          Map.get(
+            acc,
+            category_key,
+            Map.merge(
+              %{count: 0, geometries: []},
+              configuration
+              |> search_category_tree(category_key)
+              |> Map.get("item")
+              |> extend_category(resource)
+            )
+          )
+
+        accumulated_category_data =
+          Map.put(
+            accumulated_category_data,
+            :count,
+            accumulated_category_data.count + 1
+          )
+
+        accumulated_category_data =
+          Map.get(resource, "geometry")
+          |> case do
+            nil ->
+              accumulated_category_data
+
+            geometry ->
+              Map.put(
+                accumulated_category_data,
+                :geometries,
+                accumulated_category_data.geometries ++ [geometry]
+              )
+          end
+
+        Map.put(acc, category_key, accumulated_category_data)
+      end
+    )
+  end
+
   def get_doc_stream_for_georeferenced(%Publication{database: database}) do
     query = %{
       selector: %{

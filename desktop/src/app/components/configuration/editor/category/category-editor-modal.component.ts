@@ -433,7 +433,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     private getSelectableWorkflowRelationTargetCategories(): Array<CategoryForm> {
 
         return this.clonedProjectConfiguration.getTopLevelCategories().filter(category => {
-            return !['Project', 'Operation', 'Place', 'TypeCatalog', 'Type', 'StoragePlace', 'WorkflowStep', 'Image']
+            return !['Project', 'TypeCatalog', 'Type', 'StoragePlace', 'WorkflowStep', 'Image']
                 .includes(category.name);
         });
     } 

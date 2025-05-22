@@ -168,6 +168,7 @@ export default getDocumentViewMapHook = () => {
         documentTileLayers: [],
         documentTileLayerExtent: null,
         parentLayer: null,
+        ancestorLayer: null,
         docLayer: null,
         childrenLayer: null,
         identifierOverlay: null,
@@ -189,9 +190,9 @@ export default getDocumentViewMapHook = () => {
             )
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
-                ({ project, document_feature, children_features, parent_features }) => {
+                ({ project, document_feature, children_features, parent_features, ancestor_features }) => {
                     this.projectName = project
-                    this.setMapFeatures(parent_features, document_feature, children_features)
+                    this.setMapFeatures(parent_features, document_feature, children_features, ancestor_features)
                 }
             )
             this.handleEvent(
@@ -251,15 +252,18 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.el.addEventListener('pointerleave', function (e) {
+                _this.setFillForAncestors(false);
                 _this.setFillForParents(false);
                 _this.setFillForSelectedDocument(true);
                 _this.setFillForChildren(false);
+                _this.identifierOverlay.setPosition(undefined)
             });
 
             this.map.on('pointermove', function (e) {
 
                 _this.setFillForChildren(false);
                 _this.setFillForParents(false);
+                _this.setFillForAncestors(false);
                 _this.identifierOverlay.setPosition(undefined)
 
                 if (e.dragging) {
@@ -275,6 +279,13 @@ export default getDocumentViewMapHook = () => {
                             const parentFeature = features.length ? features[0] : undefined;
                             if (parentFeature) {
                                 _this.highlightFeature(parentFeature, e.coordinate)
+                            } else {
+                                _this.ancestorLayer.getFeatures(e.pixel).then(function (features) {
+                                    const ancestorFeature = features.length ? features[0] : undefined;
+                                    if (ancestorFeature) {
+                                        _this.highlightFeature(ancestorFeature, e.coordinate)
+                                    }
+                                })
                             };
                         })
                     }
@@ -294,7 +305,15 @@ export default getDocumentViewMapHook = () => {
                             if (feature) {
                                 let properties = feature.getProperties()
                                 _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
-                            }
+                            } else {
+                                _this.ancestorLayer.getFeatures(e.pixel).then(function (features) {
+                                    const feature = features.length ? features[0] : undefined;
+                                    if (feature) {
+                                        let properties = feature.getProperties()
+                                        _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
+                                    }
+                                })
+                            };
                         })
                     }
                 })
@@ -347,16 +366,29 @@ export default getDocumentViewMapHook = () => {
             }
         },
 
-        async setMapFeatures(parentFeatures, documentFeature, childrenFeatures) {
+        async setMapFeatures(parentFeatures, documentFeature, childrenFeatures, ancestorFeatures) {
             this.docId = documentFeature.properties.uuid;
 
             if (this.childrenLayer) this.map.removeLayer(this.childrenLayer);
             if (this.docLayer) this.map.removeLayer(this.docLayer);
             if (this.parentLayer) this.map.removeLayer(this.parentLayer);
+            if (this.ancestorLayer) this.map.removeLayer(this.ancestorLayer);
+
+            const ancestorVectorSoruce = new VectorSource({
+                features: new GeoJSON().readFeatures(ancestorFeatures)
+            });
+
+            this.ancestorLayer = new VectorLayer({
+                name: "ancestorLayer",
+                source: ancestorVectorSoruce,
+                style: styleFunction,
+            });
+
+            this.map.addLayer(this.ancestorLayer);
 
             const parentVectorSource = new VectorSource({
                 features: new GeoJSON().readFeatures(parentFeatures)
-            })
+            });
 
             this.parentLayer = new VectorLayer({
                 name: "parentLayer",
@@ -428,6 +460,15 @@ export default getDocumentViewMapHook = () => {
                 this.identifierOverlay.setPosition(coordinate);
             }
         },
+        setFillForAncestors(val) {
+            if (!this.ancestorLayer) return;
+            let features = this.ancestorLayer.getSource().getFeatures();
+            for (let feature of features) {
+                let properties = feature.getProperties();
+                properties.fill = val;
+                feature.setProperties(properties);
+            }
+        },
         setFillForParents(val) {
             if (!this.parentLayer) return;
             let parentFeatures = this.parentLayer.getSource().getFeatures();
@@ -457,6 +498,7 @@ export default getDocumentViewMapHook = () => {
             this.setFillForParents(false);
             this.setFillForSelectedDocument(false);
             this.setFillForChildren(false);
+            this.setFillForAncestors(false);
             this.identifierOverlay.setPosition(undefined)
         },
         toggleLayerVisibility(uuid, visibility) {

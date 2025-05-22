@@ -2,14 +2,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
   alias FieldPublicationWeb.Presentation.Components.DocumentLink
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications
+
   use FieldPublicationWeb, :live_component
 
   def render(assigns) do
     ~H"""
     <div>
-      <.render_step nodes={@ancestors} lang={@lang} map_id={@map_id} focus={@focus} />
+      <.render_step nodes={@nodes} lang={@lang} map_id={@map_id} focus={@focus} />
     </div>
     """
   end
@@ -17,17 +16,17 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
   defp render_step(assigns) do
     ~H"""
     <%= case @nodes do %>
-      <% [current] -> %>
+      <% [main_document] -> %>
         <div class="bg-slate-200">
-          <.render_link doc={current} hover_target={@map_id} lang={@lang} focus={@focus} />
+          <.render_link doc={main_document} hover_target={@map_id} lang={@lang} focus={@focus} />
         </div>
-        <% contains = Data.get_relation(current, "contains") %>
+        <% contains = Data.get_relation(main_document, "contains") %>
         <%= if contains do %>
           <div class="flex flex-row">
             <.icon name="hero-arrow-turn-down-right" class="min-w-8" />
             <div>
-              <%= for doc <- contains.docs do %>
-                <.render_link doc={doc} hover_target={@map_id} lang={@lang} focus={@focus} />
+              <%= for main_doc_child <- contains.docs do %>
+                <.render_link doc={main_doc_child} hover_target={@map_id} lang={@lang} focus={@focus} />
               <% end %>
             </div>
           </div>
@@ -64,6 +63,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
         target_id={@doc.id}
       >
         <DocumentLink.show
+          id={"#{@doc.id}_ancestor_view_link"}
           lang={@lang}
           doc={@doc}
           image_count={10}
@@ -74,6 +74,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
     <% else %>
       <div>
         <DocumentLink.show
+          id={"#{@doc.id}_ancestor_view_link"}
           lang={@lang}
           doc={@doc}
           image_count={10}
@@ -87,41 +88,20 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
 
   def update(
         %{
-          doc: %Document{id: id} = doc,
-          publication: %Publication{} = publication,
+          doc: %Document{} = doc,
           lang: lang,
-          map_id: map_id
+          map_id: map_id,
+          ancestors: ancestors
         } = params,
         socket
       ) do
-    tree =
-      publication
-      |> Publications.get_hierarchy()
-      |> construct_ancestor_tree(id, [])
-
-    ancestors = Data.get_extended_documents(tree, publication) ++ [doc]
-
     {
       :ok,
       socket
-      |> assign(:ancestors, ancestors)
+      |> assign(:nodes, ancestors ++ [doc])
       |> assign(:lang, lang)
       |> assign(:map_id, map_id)
       |> assign(:focus, Map.get(params, :focus, :default))
     }
-  end
-
-  defp construct_ancestor_tree(hierarchy, id, children) do
-    Map.get(hierarchy, id, %{})
-    |> case do
-      %{"parent" => nil} ->
-        children
-
-      %{"parent" => parent_id} ->
-        construct_ancestor_tree(hierarchy, parent_id, [parent_id] ++ children)
-
-      _ ->
-        children
-    end
   end
 end

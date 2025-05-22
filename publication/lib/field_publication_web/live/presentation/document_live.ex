@@ -184,10 +184,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         project_map_layers = Publications.Data.get_project_map_layers(publication)
         image_categories = Publications.Data.get_image_categories(publication)
 
+        ancestors =
+          publication
+          |> Publications.get_hierarchy()
+          |> construct_ancestor_tree(uuid, [])
+          |> Data.get_extended_documents(publication)
+
         socket
         |> assign(:uuid, uuid)
         |> assign(:doc, extended_doc)
         |> assign(:image_categories, image_categories)
+        |> assign(:ancestors, ancestors)
         |> assign(:project_map_layers, project_map_layers)
         |> assign(
           :page_title,
@@ -251,4 +258,18 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   defp parse_focus("map"), do: :map
   defp parse_focus(_), do: :default
+
+  defp construct_ancestor_tree(hierarchy, id, children) do
+    Map.get(hierarchy, id, %{})
+    |> case do
+      %{"parent" => nil} ->
+        children
+
+      %{"parent" => parent_id} ->
+        construct_ancestor_tree(hierarchy, parent_id, [parent_id] ++ children)
+
+      _ ->
+        children
+    end
+  end
 end

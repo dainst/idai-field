@@ -155,6 +155,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             id="generic_doc_map"
             style="width:100%; height:500px;"
             doc={@doc}
+            ancestors={@ancestors}
             publication={@publication}
             lang={@lang}
           />
@@ -176,6 +177,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             module={DocumentAncestors}
             id={"ancestors-#{@doc.id}"}
             doc={@doc}
+            ancestors={@ancestors}
             publication={@publication}
             lang={@lang}
             focus={:map}
@@ -230,6 +232,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             id="generic_doc_map_detail"
             style="width:100%; height: var(--ol-full-height);"
             doc={@doc}
+            ancestors={@ancestors}
             publication={@publication}
             lang={@lang}
             focus={@focus}
@@ -402,6 +405,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               lang={@lang}
             />
           </div>
+        </div>
+
+        <div class="basis-1/3 m-5">
+          <div class="p-32 text-center bg-amber-300">TODO: Map</div>
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>

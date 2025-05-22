@@ -4,7 +4,7 @@
     :let={%{total: total, docs: docs, aggregations: aggregations}}
     assign={@search_result}
   >
-    <:loading>Searching..</:loading>
+    <:loading>Searching...</:loading>
     <div class="w-64">
       <div class="sticky top-4">
         <form phx-change="search" phx-submit="search" class="pb-2">

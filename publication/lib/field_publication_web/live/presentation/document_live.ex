@@ -168,7 +168,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
          %{assigns: %{selected_lang: language}} = socket,
          %Publication{} = publication,
          %{"uuid" => uuid}
-       ) do
+       )
+       when uuid != "project" do
     # If a UUID was provided, load its extended document.
     uuid
     |> Publications.Data.get_extended_document(publication, true)
@@ -181,8 +182,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
       %Document{} = extended_doc ->
         project_map_layers = Publications.Data.get_project_map_layers(publication)
-
-        image_categories = Publications.Data.get_all_subcategories(publication, "Image")
+        image_categories = Publications.Data.get_image_categories(publication)
 
         socket
         |> assign(:uuid, uuid)
@@ -219,10 +219,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     top_level_docs = Data.get_extended_documents(top_level_uuids, publication)
 
+    category_breakdown = Data.get_doc_breakdown_by_category(publication)
+
     socket
     |> assign(:doc, project_doc)
     |> assign(:publication, publication)
     |> assign(:top_level_docs, top_level_docs)
+    |> assign(:category_breakdown, category_breakdown)
     |> assign(:project_map_layers, project_map_layers)
     |> assign(
       :page_title,

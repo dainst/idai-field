@@ -25,8 +25,7 @@ defmodule FieldPublication.Processing.WebImage do
 
     current_web_files = FileService.list_web_image_files(project_name)
 
-    image_categories =
-      Publications.Data.get_all_subcategories(publication, "Image")
+    image_categories = Publications.Data.get_image_categories(publication)
 
     {existing, missing} =
       Publications.Data.get_doc_stream_for_categories(publication, image_categories)

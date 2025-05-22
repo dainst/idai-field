@@ -1,6 +1,8 @@
 import { Component} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Settings } from '../../services/settings/settings';
 import { Document, formatDate } from 'idai-field-core';
+import { getSystemTimezone } from '../../util/timezones';
 
 
 @Component({
@@ -48,8 +50,7 @@ export class ChangesHistoryModalComponent {
 
 
     public formatDateTime( time: Date) {
-        
-        return(formatDate(time))
+         return(formatDate(time, Settings.getLocale() , getSystemTimezone(), 'longTime'))
     }
 
 

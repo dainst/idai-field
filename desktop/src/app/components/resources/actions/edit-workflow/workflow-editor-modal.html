@@ -55,8 +55,10 @@
     </div>
     <div id="workflow-step-plus-button-container">
         <workflow-step-plus-button [baseDocuments]="documents"
-                                   (onCategorySelected)="createWorkflowStep($event)"></workflow-step-plus-button>
+                                   (onSubmit)="createWorkflowStep($event.category, $event.createMultiple)">
+        </workflow-step-plus-button>
         <workflow-step-link-button [baseDocuments]="documents"
-                                   (onWorkflowStepSelected)="linkWorkflowStep($event)"></workflow-step-link-button>
+                                   (onWorkflowStepSelected)="linkWorkflowStep($event, documents)">
+        </workflow-step-link-button>
     </div>
 </div>

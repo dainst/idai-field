@@ -2,8 +2,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   require Logger
   use FieldPublicationWeb, :live_component
 
-  import FieldPublicationWeb.Presentation.Components.Typography
-
   alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications.Data
 

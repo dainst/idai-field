@@ -65,7 +65,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isMandatoryOptionVisible = () => this.field.editable;
 
-    public isMandatoryOptionEnabled = () => !this.field.required;
+    public isMandatoryOptionEnabled = () => !this.field.required
+        && !Field.InputType.RELATION_INPUT_TYPES.includes(this.getInputType());
 
     public getDateConfiguration = () => this.getClonedFieldDefinition().dateConfiguration
 
@@ -209,6 +210,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.clonedField.inputType = newInputType;
         }
 
+        if (Field.InputType.RELATION_INPUT_TYPES.includes(newInputType)) {
+            delete this.getClonedFieldDefinition().mandatory;
+        }
+
         this.initializeDateConfiguration();
     }
 
@@ -264,6 +269,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.category.name !== 'Project'
             && this.availableInputTypes.find(inputType => inputType.name === this.getInputType()).searchable;
     }
+
+
+    public getMandatoryTooltip(): string {
+
+        if (this.field.required) {
+             return $localize `:@@configuration.mandatoryField.notAllowedForRequiredField:Dieses Feld ist grundsätzlich ein Pflichtfeld.`;
+         } else if (Field.InputType.RELATION_INPUT_TYPES.includes(this.getInputType())) {
+             return $localize `:@@configuration.mandatoryField.notAllowedForInputType:Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.`;
+         } else {
+             return '';
+         }
+     }
 
 
     public getConstraintIndexedTooltip(): string {

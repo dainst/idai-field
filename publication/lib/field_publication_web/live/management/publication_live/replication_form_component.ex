@@ -13,9 +13,9 @@ defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponen
   def render(assigns) do
     ~H"""
     <div>
-      <.header>
+      <.document_heading>
         {@page_title}
-      </.header>
+      </.document_heading>
 
       <.simple_form
         for={@form}
@@ -24,7 +24,8 @@ defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponen
         phx-submit="start"
         phx-target={@myself}
       >
-        <h2 class="text-2xl">Connection data</h2>
+        <.group_heading>Connection data</.group_heading>
+
         <div :if={@initialization_error} class="border-red-800 bg-red-200 p-2 border-2 rounded">
           {@initialization_error}
         </div>
@@ -35,7 +36,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponen
         <.input field={@form[:project_name]} type="hidden" />
         <.input field={@form[:drafted_by]} type="hidden" />
 
-        <h2 class="text-2xl">Options</h2>
+        <.group_heading>Options</.group_heading>
 
         <.input
           field={@form[:delete_existing_publication]}

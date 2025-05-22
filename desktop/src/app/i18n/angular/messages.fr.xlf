@@ -481,7 +481,7 @@
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
         <source>Pfad</source>
-        <target state="needs-translation">Pfad</target>
+        <target state="translated">Chemin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">167</context>

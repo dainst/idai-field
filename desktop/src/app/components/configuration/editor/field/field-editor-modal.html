@@ -48,7 +48,9 @@
             </div>
         </div>
         <div *ngIf="isMandatoryOptionVisible()"
-             class="configuration-editor-switch">
+             class="configuration-editor-switch"
+             ngbTooltip="{{getMandatoryTooltip()}}"
+             container="body">
             <div class="basic-settings-label">
                 <span i18n="@@configuration.mandatoryField"
                       [class.disabled]="!isMandatoryOptionEnabled()">Pflichtfeld</span>

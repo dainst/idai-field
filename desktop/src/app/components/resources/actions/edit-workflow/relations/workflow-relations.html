@@ -7,7 +7,8 @@
     </div>
 
     <document-teaser *ngIf="relationTargets.length === 1"
-                     [document]="relationTargets[0]"></document-teaser>
+                     [document]="relationTargets[0]"
+                     [showShortDescription]="false"></document-teaser>
 
     <div *ngIf="relationTargets.length > 1 && categoryInfos.length < 4">
         <div *ngFor="let info of categoryInfos" class="category-info">

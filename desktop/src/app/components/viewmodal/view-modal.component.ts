@@ -61,7 +61,7 @@ export abstract class ViewModalComponent {
 
         try {
             const result = await doceditModalRef.result;
-            if (result.document) this.setDocument(result.document, isImageDocument);
+            if (result.documents) this.setDocument(result.documents[0], isImageDocument);
         } catch (closeReason) {
             // Cancelled
         }

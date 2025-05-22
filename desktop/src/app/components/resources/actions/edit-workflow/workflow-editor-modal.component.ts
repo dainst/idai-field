@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Resource, Datastore, Labels,
-    ProjectConfiguration, DateSpecification, WorkflowStepDocument } from 'idai-field-core';
+    ProjectConfiguration, DateSpecification, WorkflowStepDocument, SortUtil } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -63,31 +63,39 @@ export class WorkflowEditorModalComponent {
 
     public async initialize() {
 
+        this.sortDocuments();
         await this.updateWorkflowSteps();
     }
 
 
-    public async createWorkflowStep(category: CategoryForm) {
+    public async createWorkflowStep(category: CategoryForm, createMultiple: boolean) {
 
-        const newWorkflowStep: WorkflowStepDocument = await this.openWorkflowStepEditorModal(
-            WorkflowEditorModalComponent.buildWorkflowStepDocument(category) as WorkflowStepDocument
+        const newWorkflowSteps: Array<WorkflowStepDocument> = await this.openWorkflowStepEditorModal(
+            WorkflowEditorModalComponent.buildWorkflowStepDocument(category) as WorkflowStepDocument,
+            createMultiple ? this.documents.length - 1 : undefined
         );
-        if (!newWorkflowStep) return;
+        if (!newWorkflowSteps) return;
 
-        await this.linkWorkflowStep(newWorkflowStep);
+        if (createMultiple) {
+            for (let i = 0; i < newWorkflowSteps.length; i++) {
+                await this.linkWorkflowStep(newWorkflowSteps[i], [this.documents[i]]);
+            }
+        } else {
+            await this.linkWorkflowStep(newWorkflowSteps[0], this.documents);
+        }
     }
 
 
     public async editWorkflowStep(workflowStep: WorkflowStepDocument) {
 
-        const editedWorkflowStep: WorkflowStepDocument = await this.openWorkflowStepEditorModal(workflowStep);
+        const editedWorkflowStep: WorkflowStepDocument = (await this.openWorkflowStepEditorModal(workflowStep))?.[0];
         if (editedWorkflowStep) await this.updateWorkflowSteps();
     }
 
 
-    public async linkWorkflowStep(workflowStep: WorkflowStepDocument) {
+    public async linkWorkflowStep(workflowStep: WorkflowStepDocument, targets: Array<FieldDocument>) {
 
-        await this.setRelation(workflowStep);
+        await this.setRelation(workflowStep, targets);
         await this.updateWorkflowSteps();
     }
 
@@ -153,11 +161,19 @@ export class WorkflowEditorModalComponent {
     }
 
 
+    private sortDocuments() {
+
+        this.documents.sort((document1, document2) => {
+            return SortUtil.alnumCompare(document1.resource.identifier, document2.resource.identifier);
+        });
+    }
+
+
     /**
      * @returns edited document if changes have been saved, undefined if the modal has been canceled
      */
-    private async openWorkflowStepEditorModal(workflowStep: WorkflowStepDocument)
-            : Promise<WorkflowStepDocument|undefined> {
+    private async openWorkflowStepEditorModal(workflowStep: WorkflowStepDocument, numberOfDuplicates?: number)
+            : Promise<Array<WorkflowStepDocument>|undefined> {
     
         this.menus.setContext(MenuContext.DOCEDIT);
 
@@ -166,9 +182,10 @@ export class WorkflowEditorModalComponent {
             { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
         modalRef.componentInstance.setDocument(workflowStep);
+        if (numberOfDuplicates) modalRef.componentInstance.fixedNumberOfDuplicates = numberOfDuplicates;
 
         try {
-            return (await modalRef.result).document;
+            return (await modalRef.result).documents;
         } catch(err) {
             if (err !== 'cancel') console.error(err);
         } finally {
@@ -178,14 +195,12 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    private async setRelation(workflowStep: WorkflowStepDocument) {
+    private async setRelation(workflowStep: WorkflowStepDocument, targets: Array<FieldDocument>) {
 
         const oldVersion: WorkflowStepDocument = Document.clone(workflowStep);
 
         const currentTargetIds: string[] = workflowStep.resource.relations?.[Relation.Workflow.IS_EXECUTED_ON] ?? [];
-        const newTargetIds: string[] = this.documents.map(document => {
-            return document.resource.id;
-        });
+        const newTargetIds: string[] = targets.map(document => document.resource.id);
         workflowStep.resource.relations[Relation.Workflow.IS_EXECUTED_ON] = set(currentTargetIds.concat(newTargetIds));
 
         await this.applyRelationChanges(workflowStep, oldVersion);

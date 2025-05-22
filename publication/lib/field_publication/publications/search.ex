@@ -213,25 +213,37 @@ defmodule FieldPublication.Publications.Search do
   def search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
-        "*" ->
-          q
-
         "" ->
           "*"
 
         q ->
-          "#{q}~"
+          q
       end
 
     payload =
       %{
         query: %{
           bool: %{
-            must: %{
-              query_string: %{
-                query: q
+            must: [
+              %{
+                bool: %{
+                  should: [
+                    %{
+                      match_phrase: %{
+                        full_doc: %{
+                          query: q
+                        }
+                      }
+                    },
+                    %{
+                      wildcard: %{
+                        full_doc_as_text: %{value: "*#{q}*", case_insensitive: true, boost: 0.5}
+                      }
+                    }
+                  ]
+                }
               }
-            }
+            ]
           }
         },
         aggs: generate_aggregations_queries(),
@@ -380,7 +392,7 @@ defmodule FieldPublication.Publications.Search do
         type: "flat_object"
       },
       full_doc_as_text: %{
-        type: "text"
+        type: "wildcard"
       }
     }
 
@@ -430,7 +442,10 @@ defmodule FieldPublication.Publications.Search do
       %SearchDocument{
         id: res["id"],
         identifier: res["identifier"],
-        category: res["category"],
+        # Based on the project configuration, we add a category's parent categories' keys to the search
+        # document. As an example, this allows us to return not only "Image" documents when filtering by category key "Image",
+        # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
+        category: [res["category"]] ++ Data.get_parent_categories(publication, res["category"]),
         publication_draft_date: publication.draft_date,
         project_name: publication.project_name,
         configuration_based_field_mappings: %{},

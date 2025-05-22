@@ -1,5 +1,7 @@
+<!-- TODO: General heading? -->
+
 <%= if FieldPublication.Users.is_admin?(@current_user) do %>
-  <h1>Administration</h1>
+  <.group_heading>Administration</.group_heading>
   <div>
     <p class="font-semibold">Actions</p>
     <ul class="mb-8">
@@ -21,7 +23,7 @@
     </ul>
   </div>
 <% end %>
-<h1>Projects</h1>
+<.group_heading>Projects</.group_heading>
 <%= if @projects != [] do %>
   <div class="grid lg:grid-cols-2 2xl:grid-cols-3">
     <%= for %{project: project, publications: publications, search_aliased_publication: search_aliased_publication} <- @projects do %>

@@ -11,8 +11,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     I18n
   }
 
-  import FieldPublicationWeb.Presentation.Components.Typography
-
   require Logger
 
   def mount(_assigns, _session, socket) do

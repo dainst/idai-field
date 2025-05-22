@@ -6,28 +6,61 @@
          triggers="manual"
          autoClose="outside"
          (click)="popover.toggle();"
+         (hidden)="reset()"
          placement="top">
         <span class="mdi mdi-plus"></span>
     </div>
 
     <div *ngIf="!hasMultipleCategoryOptions()"
-         class="circular-button category-button"
-         (click)="selectCategory(topLevelCategoriesArray[0])">
+        class="circular-button category-button"
+        (click)="baseDocuments.length === 1 && selectCategory(topLevelCategoriesArray[0])"
+        [ngbPopover]="categoryPickerMenu"
+        #popover="ngbPopover"
+        triggers="manual"
+        autoClose="outside"
+        (click)="popover.toggle();"
+        (hidden)="reset()"
+        placement="top">
         <category-icon [category]="topLevelCategoriesArray[0].name" size="41"></category-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>
-    </div>
+   </div>
 </div>
 
 <ng-template #categoryPickerMenu>
     <div>
-        <div id="category-picker-menu">
-            <div class="popover-custom-title">
-                <span i18n="@@resources.plusButton.selectCategory">Bitte wählen Sie eine Kategorie aus.</span>
+        <div id="workflow-step-plus-button-menu">
+            <div *ngIf="baseDocuments.length > 1 && createMultiple === undefined">
+                <div class="popover-custom-title">
+                    <span i18n="@@resources.workflowEditorModal.plusButton.multiple.header">
+                        Bitte wählen Sie die Anzahl der zu erstellenden Arbeitsschritte.
+                    </span>
+                </div>
+                <ul id="multiple-select-buttons" class="list-group">
+                    <li class="list-group-item popover-item"
+                        (click)="selectCreateMultipleOption(false)">
+                        <span class="button-label"
+                              i18n="@@resources.workflowEditorModal.plusButton.multiple.false">
+                            Ein gemeinsamer Arbeitsschritt für alle ausgewählten Ressourcen
+                        </span>
+                    </li>
+                    <li class="list-group-item popover-item"
+                        (click)="selectCreateMultipleOption(true)">
+                        <span class="button-label"
+                              i18n="@@resources.workflowEditorModal.plusButton.multiple.true">
+                            Ein eigener Arbeitsschritt pro Ressource (insgesamt {{baseDocuments.length}})
+                        </span>
+                    </li>
+                </ul>
             </div>
-            <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
-                             (onCategoryPicked)="selectCategory($event)"></category-picker>
+            <div *ngIf="baseDocuments.length === 1 || createMultiple !== undefined">
+                <div class="popover-custom-title">
+                    <span i18n="@@resources.plusButton.selectCategory">Bitte wählen Sie eine Kategorie aus.</span>
+                </div>
+                <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
+                                 (onCategoryPicked)="selectCategory($event)"></category-picker>
+            </div>
         </div>
     </div>
 </ng-template>

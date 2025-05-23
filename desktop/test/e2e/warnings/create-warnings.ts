@@ -103,7 +103,8 @@ export async function createMissingIdentifierPrefixWarning(resourceIdentifier: s
 }
 
 
-export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, inputType: Field.InputType) {
+export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, 
+                                                  inputType: Field.InputType) {
 
     await navigateTo('configuration');
     await createField(fieldName, inputType, 'Wood-color-default');
@@ -114,9 +115,9 @@ export async function createOutlierValuesWarnings(resourceIdentifiers: string[],
     for (let identifier of resourceIdentifiers) {
         await ResourcesPage.performCreateResource(identifier, 'place');
         await ResourcesPage.openEditByDoubleClickResource(identifier);
-        if (inputType == 'dropdown') {
+        if (inputType === Field.InputType.DROPDOWN) {
             await DoceditPage.clickSelectOption(completeFieldName, 'braun', 0);
-        } else if (inputType == 'checkboxes') {
+        } else if (inputType === Field.InputType.CHECKBOXES) {
             await DoceditPage.clickCheckbox(completeFieldName, 0);
             await DoceditPage.clickCheckbox(completeFieldName, 1);
         }

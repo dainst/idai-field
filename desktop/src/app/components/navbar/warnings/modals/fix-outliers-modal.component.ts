@@ -75,7 +75,8 @@ export class FixOutliersModalComponent {
                 if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
-                    if (this.field.inputType === 'checkboxes' && field.inputType === 'checkboxes') {
+                    if (this.field.inputType === Field.InputType.CHECKBOXES && 
+                        field.inputType === Field.InputType.CHECKBOXES) {
                         affectedDocumentCheckboxes.fields.push(field);
                         affectedDocumentComplete.fields.push(field);
                     } else {
@@ -84,8 +85,10 @@ export class FixOutliersModalComponent {
                 }
             }
 
-            if (affectedDocumentComplete.fields.length) this.affectedDocuments.complete.push(affectedDocumentComplete);
-            if (affectedDocumentCheckboxes.fields.length) this.affectedDocuments.onlyCheckboxFields.push(affectedDocumentCheckboxes);
+            if (affectedDocumentComplete.fields.length) 
+                this.affectedDocuments.complete.push(affectedDocumentComplete);
+            if (affectedDocumentCheckboxes.fields.length) 
+                this.affectedDocuments.onlyCheckboxFields.push(affectedDocumentCheckboxes);
         }
 
         this.countAffected = {

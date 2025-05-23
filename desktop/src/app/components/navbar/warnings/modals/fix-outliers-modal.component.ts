@@ -74,13 +74,11 @@ export class FixOutliersModalComponent {
                 if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
                 if (valuelist && equal(valuelist, this.valuelist)) {
+                    affectedDocumentComplete.fields.push(field);
                     if (this.field.inputType === Field.InputType.CHECKBOXES && 
                         field.inputType === Field.InputType.CHECKBOXES) {
                         affectedDocumentCheckboxes.fields.push(field);
-                        affectedDocumentComplete.fields.push(field);
-                    } else {
-                        affectedDocumentComplete.fields.push(field);
-                    };
+                    } 
                 }
             }
 

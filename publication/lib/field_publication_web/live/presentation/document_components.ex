@@ -372,7 +372,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.group_heading>
             {gettext("project_doc_about_project")}
           </.group_heading>
-          <div class="bg-slate-50 p-2 rounded">
+          <div class="bg-gray-50 p-2 rounded">
             <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
             <%= if depicted_in != nil do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
@@ -395,7 +395,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
-          <div class="bg-slate-50 p-2 rounded">
+          <div class="bg-gray-50 p-2 rounded">
             <I18n.markdown
               values={
                 @publication.comments
@@ -472,12 +472,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         </div>
       </div>
 
-      <section class="flex m-5">
-        <div>
+      <section class="flex m-5 ">
+        <div class="p-4 border border-black mr-4">
           <.group_heading>
             {gettext("Documents")}
           </.group_heading>
-          <div class="p-4 max-h-[calc(100dvh-300px)] overflow-y-auto">
+          <div class="mt-8 max-h-[calc(100dvh-300px)] overflow-y-scroll">
             <.display_category_hierarchy
               publication={@publication}
               hierarchy={@category_hierarchy}
@@ -485,12 +485,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             />
           </div>
         </div>
-        <div class="w-full">
+        <div class="w-full p-8 bg-gray-50 border border-black">
           <.live_component
             module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
             id="project_doc_map"
-            class="h-auto"
-            style="width: 100%; height: calc(100dvh - 300px)"
+            style="width: 100%; height: calc(100dvh - 300px); background-color: white"
             publication={@publication}
             lang={@lang}
           />

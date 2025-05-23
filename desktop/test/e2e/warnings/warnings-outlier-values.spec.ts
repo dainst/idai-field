@@ -340,7 +340,7 @@ test.describe('warnings/outlier values', () => {
     });
 
 
-    test.only('solve multiple warnings for parent outlier values via warnings modal', async () => {
+    test('solve multiple warnings for parent outlier values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());
         

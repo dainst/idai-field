@@ -205,6 +205,82 @@ test.describe('warnings/outlier values', () => {
     });
 
 
+    test('solve multiple warnings for outlier values with checkboxes but not dropdown by replacing values via warnings modal', 
+        async () => {
+
+        /* 
+        Make sure that single values in dropdown fields are not replaced when attempting to replace all values 
+        by selecting multiple new values via checkboxes. 
+        */ 
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1', '2'], 'field', 'checkboxes');
+        await createOutlierValuesWarnings(['3'], 'field', 'dropdown', 'Trench', 'Operation');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickCheckboxesValue(4); // 4 = "Gerät"
+        await FixOutliersModalPage.clickCheckboxesValue(10); // 10 = "Löffel"
+        await FixOutliersModalPage.clickMultipleSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
+        await FixOutliersModalPage.clickCheckboxesValue(0); // 0 = "Altar"
+        await FixOutliersModalPage.clickMultipleSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        await WarningsModalPage.clickCloseButton();
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', ['Altar', 'Gerät', 'Löffel']]);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie', 'test:field'], ['Ort', ['Altar', 'Gerät', 'Löffel']]);
+        await expectFieldValuesInGroup('3', 0, ['Kategorie', 'test:field'], ['Schnitt', ['braun']]);
+    });
+
+
+    test('solve multiple warnings for outlier values with checkboxes and dropdown by replacing value via warnings modal', 
+        async () => {
+
+        /* 
+        Make sure that single values in dropdown fields are replaced when attempting to replace all values 
+        by selecting a single new value via checkboxes. 
+        */ 
+
+        await waitForNotExist(await NavbarPage.getWarnings());
+        await createOutlierValuesWarnings(['1'], 'field', 'checkboxes');
+        await createOutlierValuesWarnings(['2', '3'], 'field', 'dropdown', 'Trench', 'Operation');
+        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
+
+        await NavbarPage.clickWarningsButton();
+        await WarningsModalPage.clickFixOutliersButton(0);
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('braun');
+        await FixOutliersModalPage.clickCheckboxesValue(4); // 4 = "Gerät"
+        await FixOutliersModalPage.clickCheckboxesValue(10); // 10 = "Löffel"
+        await expect(FixOutliersModalPage.getMultipleSwitch()).toBeDisabled();
+        await FixOutliersModalPage.clickCheckboxesValue(10); // 10 = "Löffel"
+        await FixOutliersModalPage.clickMultipleSwitch();
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+
+        expect(await FixOutliersModalPage.getHeading()).toContain('haselnuss');
+        await FixOutliersModalPage.clickCheckboxesValue(0); // 0 = "Altar"
+        await FixOutliersModalPage.clickConfirmReplacementButton();
+        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
+        await waitForNotExist(await WarningsModalPage.getModalBody());
+        await waitForNotExist(await NavbarPage.getWarnings());
+
+        await expectFieldValuesInGroup('1', 0, ['Kategorie', 'test:field'], ['Ort', ['Altar', 'Gerät']]);
+        await expectFieldValuesInGroup('2', 0, ['Kategorie', 'test:field'], ['Schnitt', ['Gerät']]);
+        await expectFieldValuesInGroup('3', 0, ['Kategorie', 'test:field'], ['Schnitt', ['Gerät']]);
+    });
+    
+
     test('solve multiple warnings for outlier values by deleting values via warnings modal', async () => {
 
         await waitForNotExist(await NavbarPage.getWarnings());

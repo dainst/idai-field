@@ -104,16 +104,18 @@ export async function createMissingIdentifierPrefixWarning(resourceIdentifier: s
 
 
 export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, 
-                                                  inputType: Field.InputType = Field.InputType.CHECKBOXES) {
+                                                  inputType: Field.InputType = Field.InputType.CHECKBOXES,
+                                                  categoryName: string = 'Place', supercategoryName?: string) {
 
     await navigateTo('configuration');
-    await createField(fieldName, inputType, 'Wood-color-default');
+    await createField(fieldName, inputType, 'Wood-color-default', false, categoryName, supercategoryName);
 
     const completeFieldName: string = 'test:' + fieldName;
 
     await NavbarPage.clickCloseNonResourcesTab();
     for (let identifier of resourceIdentifiers) {
-        await ResourcesPage.performCreateResource(identifier, 'place');
+        await ResourcesPage.performCreateResource(identifier, 
+            (supercategoryName ? supercategoryName.toLowerCase() + '-' : '') + categoryName.toLowerCase());
         await ResourcesPage.openEditByDoubleClickResource(identifier);
         if (inputType === Field.InputType.DROPDOWN) {
             await DoceditPage.clickSelectOption(completeFieldName, 'braun', 0);
@@ -125,7 +127,7 @@ export async function createOutlierValuesWarnings(resourceIdentifiers: string[],
     }
 
     await navigateTo('configuration');
-    await CategoryPickerPage.clickSelectCategory('Place');
+    await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
     await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
     await ConfigurationPage.clickContextMenuEditOption();
     await EditConfigurationPage.clickSwapValuelist();

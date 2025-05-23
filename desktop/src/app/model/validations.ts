@@ -1,8 +1,15 @@
-import { is, isArray, isString, and, isObject, to } from 'tsfun';
+import { is, isArray, isString, and, isObject, to, equal } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
-    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite } from 'idai-field-core';
+    validateUnsignedFloat, validateUnsignedInt, validateUrl, validateInt, Composite,  DateSpecification,
+    DateValidationResult, Condition } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
+
+
+type InvalidDateInfo = {
+    fieldName: string;
+    dateValidationResult: DateValidationResult;
+}
 
 
 export module Validations {
@@ -44,23 +51,20 @@ export module Validations {
     }
 
 
-    export function assertCorrectnessOfUrls(document: Document|NewDocument,
-                                            projectConfiguration: ProjectConfiguration,
+    export function assertCorrectnessOfUrls(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
                                             previousDocumentVersion?: Document) {
 
         const previousInvalidFields: string[] = previousDocumentVersion
-            ?  Validations.validateDatesOrUrls(
+            ?  Validations.validateUrls(
                 previousDocumentVersion.resource,
                 projectConfiguration,
-                validateUrl,
-                Field.InputType.URL
+                validateUrl
             ) : [];
 
-        const invalidFields: string[] = Validations.validateDatesOrUrls(
+        const invalidFields: string[] = Validations.validateUrls(
             document.resource,
             projectConfiguration,
-            validateUrl,
-            Field.InputType.URL
+            validateUrl
         );
 
         const newInvalidFields: string[] = getNewInvalidFields(
@@ -81,31 +85,38 @@ export module Validations {
                                              projectConfiguration: ProjectConfiguration,
                                              previousDocumentVersion?: Document) {
 
-        const previousInvalidFields: string[] = previousDocumentVersion
-            ?  Validations.validateDatesOrUrls(
+        const previousInvalidFields: Array<InvalidDateInfo> = previousDocumentVersion
+            ?  Validations.validateDates(
                 previousDocumentVersion.resource,
-                projectConfiguration,
-                (value: string) => !isNaN(parseDate(value)?.getTime()),
-                Field.InputType.DATE
+                projectConfiguration
             )
             : [];
 
-        const invalidFields: string[] = Validations.validateDatesOrUrls(
+        const invalidFields: Array<InvalidDateInfo> = Validations.validateDates(
             document.resource,
-            projectConfiguration,
-            (value: string) => !isNaN(parseDate(value)?.getTime()),
-            Field.InputType.DATE
+            projectConfiguration
         );
 
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: Array<InvalidDateInfo> = getNewInvalidDateFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 
-        if (newInvalidFields.length > 0) {
+        if (!newInvalidFields.length) return;
+
+        const genericInvalidFields: Array<InvalidDateInfo> = newInvalidFields
+            .filter(field => field.dateValidationResult === DateValidationResult.INVALID);
+
+        if (genericInvalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DATES,
                 document.resource.category,
-                newInvalidFields.join(', ')
+                genericInvalidFields.map(info => info.fieldName).join(', ')
+            ];
+        } else {
+            throw [
+                getDateError(newInvalidFields[0].dateValidationResult),
+                document.resource.category,
+                newInvalidFields[0].fieldName
             ];
         }
     }
@@ -212,10 +223,8 @@ export module Validations {
     }
 
 
-    function assertValidityOfObjectArrays(document: Document|NewDocument,
-                                          projectConfiguration: ProjectConfiguration,
-                                          inputType: 'dating'|'dimension'|'literature'|'composite',
-                                          error: string,
+    function assertValidityOfObjectArrays(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
+                                          inputType: 'dating'|'dimension'|'literature'|'composite', error: string,
                                           isValid: (object: any, field: Field, option?: any) => boolean,
                                           previousDocumentVersion?: Document) {
 
@@ -239,22 +248,6 @@ export module Validations {
                 error,
                 document.resource.category,
                 newInvalidFields.join(', ')
-            ];
-        }
-    }
-
-
-    export function assertCorrectnessOfBeginningAndEndDates(document: Document|NewDocument) {
-
-        if (!document.resource.beginningDate || !document.resource.endDate) return;
-
-        const beginningDate: Date = parseDate(document.resource.beginningDate);
-        const endDate: Date = parseDate(document.resource.endDate, true);
-
-        if (beginningDate && endDate && beginningDate > endDate) {
-            throw [
-                ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE,
-                document.resource.category
             ];
         }
     }
@@ -353,8 +346,7 @@ export module Validations {
     }
 
 
-    export function getMissingProperties(resource: Resource|NewResource,
-                                         projectConfiguration: ProjectConfiguration) {
+    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration) {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<Field>
@@ -452,14 +444,34 @@ export module Validations {
     }
 
 
+    export function validateConditionalFields(resource: Resource|NewResource,
+                                              projectConfiguration: ProjectConfiguration): string[] {
+
+        const invalidFields: string[] = [];
+        const category: CategoryForm = projectConfiguration.getCategory(resource.category);
+        if (!category) return [];
+        
+        for (let fieldName in resource) {
+            if (resource.hasOwnProperty(fieldName)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!field?.condition) continue;
+                if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+                    invalidFields.push(fieldName);
+                }
+            }
+        }
+
+        return invalidFields;
+    }
+
+
     /**
      * @returns the names of invalid relation fields if one or more of the fields are invalid
      */
     export function validateDefinedRelations(resource: Resource|NewResource,
                                              projectConfiguration: ProjectConfiguration): string[] {
 
-        const fields: Array<Relation> = projectConfiguration
-            .getRelationsForDomainCategory(resource.category);
+        const fields: Array<Relation> = projectConfiguration.getRelationsForDomainCategory(resource.category);
         const invalidFields: Array<any> = [];
 
         for (let relationField in resource.relations) {
@@ -505,20 +517,44 @@ export module Validations {
     }
 
 
-    export function validateDatesOrUrls(resource: Resource|NewResource,
-                                        projectConfiguration: ProjectConfiguration,
-                                        validationFunction: (value: string) => boolean,
-                                        inputType: string): string[] {
+    export function validateUrls(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
+                                 validationFunction: (value: string) => boolean): string[] {
 
         const projectFields: Array<Field> =
             CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
-            return fieldDefinition.inputType === inputType;
+            return fieldDefinition.inputType === Field.InputType.URL;
         }).forEach(fieldDefinition => {
             const value = resource[fieldDefinition.name];
             if (value && !validationFunction(value)) invalidFields.push(fieldDefinition.name);
+        });
+
+        return invalidFields;
+    }
+
+
+    export function validateDates(resource: Resource|NewResource,
+                                  projectConfiguration: ProjectConfiguration): Array<InvalidDateInfo> {
+
+        const category: CategoryForm = projectConfiguration.getCategory(resource.category);
+        const projectFields: Array<Field> = CategoryForm.getFields(category);
+        const invalidFields: Array<InvalidDateInfo> = [];
+
+        projectFields.filter(fieldDefinition => {
+            return fieldDefinition.inputType === Field.InputType.DATE;
+        }).forEach(fieldDefinition => {
+            const value = resource[fieldDefinition.name];
+            if (!value) return;
+
+            const dateValidationResult: DateValidationResult = DateSpecification.validate(value, fieldDefinition);
+            if (dateValidationResult !== DateValidationResult.VALID) {
+                invalidFields.push({
+                    fieldName: fieldDefinition.name,
+                    dateValidationResult
+                });
+            }
         });
 
         return invalidFields;
@@ -644,8 +680,7 @@ export module Validations {
     }
 
 
-    export function validateFields(resource: Resource|NewResource,
-                                   projectConfiguration: ProjectConfiguration,
+    export function validateFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
                                    inputType: string,
                                    isValid: (object: any, field: Field, options?: any) => boolean): string[] {
 
@@ -664,5 +699,33 @@ export module Validations {
             return !previousInvalidFields.includes(field)
                 || document.resource[field] !== previousDocumentVersion?.resource[field];
         });
+    }
+
+
+    function getNewInvalidDateFields(invalidFields: Array<InvalidDateInfo>,
+                                     previousInvalidFields: Array<InvalidDateInfo>, document: Document|NewDocument,
+                                     previousDocumentVersion?: Document): Array<InvalidDateInfo> {
+
+        return invalidFields.filter(info => {
+            return !previousInvalidFields.find(previousInfo => info.fieldName === previousInfo.fieldName)
+                || !equal(document.resource[info.fieldName])(previousDocumentVersion?.resource[info.fieldName]);
+        });
+    }
+
+
+    function getDateError(dateValidationResult: DateValidationResult): string {
+
+        switch (dateValidationResult) {
+            case DateValidationResult.RANGE_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED;
+            case DateValidationResult.SINGLE_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED;
+            case DateValidationResult.TIME_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED;
+            case DateValidationResult.TIME_NOT_SET:
+                return ValidationErrors.INVALID_DATE_TIME_NOT_SET;
+            case DateValidationResult.END_DATE_BEFORE_BEGINNING_DATE:
+                return ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE
+        }
     }
 }

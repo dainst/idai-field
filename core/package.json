@@ -16,6 +16,8 @@
         "test:watch": "nodemon --ext js --exec 'jasmine JASMINE_CONFIG_PATH=test/jasmine.json'"
     },
     "dependencies": {
+        "date-fns": "4.1.0",
+        "date-fns-tz": "3.2.0",
         "rxjs": "~6.5.4",
         "tsfun": "5.5.38",
         "uuid": "^8.3.2"

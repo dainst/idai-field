@@ -1,5 +1,6 @@
 import { includedIn, is, isNot, isnt, on, Path, to, clone } from 'tsfun';
-import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource, Named } from 'idai-field-core';
+import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource, Named,
+    DateSpecification } from 'idai-field-core';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
@@ -53,6 +54,7 @@ const convertFloat = (container: any, path: string) => convertNumber(container, 
 function convertTypeDependent(container: any, fieldName: string, inputType: InputType, field: Field) {
 
     if (inputType === InputType.BOOLEAN) convertBoolean(container, fieldName);
+    if (inputType === InputType.DATE) convertBoolean(container[fieldName], DateSpecification.IS_RANGE);
     if (inputType === InputType.DATING) convertDating(container, fieldName);
     if (inputType === InputType.DIMENSION) convertDimension(container, fieldName);
     if (inputType === InputType.INT || inputType === InputType.UNSIGNEDINT) convertInt(container, fieldName);

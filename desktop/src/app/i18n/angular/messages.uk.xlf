@@ -5560,22 +5560,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.docedit.warning.categoryChange.fields" datatype="html">
-        <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
-        <target state="translated">Зверніть увагу, що під час збереження буде втрачено дані наступних полів: [0]</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.docedit.warning.categoryChange.relations" datatype="html">
-        <source>Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</source>
-        <target state="translated">Зверніть увагу, що під час збереження буде втрачено дані наступних полів: [0]</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.docedit.error.save" datatype="html">
         <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
         <target state="translated">Під час збереження ресурсу сталася помилка.</target>
@@ -6875,14 +6859,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
           <context context-type="linenumber">14,3</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.subfieldCondition.none" datatype="html">
-        <source>- Keine -</source>
-        <target state="translated">- жодне -</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/field/subfield-editor-modal.html</context>
-          <context context-type="linenumber">32,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.composite" datatype="html">
@@ -8789,14 +8765,6 @@
           <context context-type="linenumber">7,9</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.deleteField.body.notAllowed" datatype="html">
-        <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
-        <target state="translated">Поле <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> не можна видалити, доки воно використовується як зустрічне відношення. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
-          <context context-type="linenumber">10,12</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.info.missing" datatype="html">
         <source>Alle Verweise auf nicht existierende Ressourcen werden dabei entfernt.</source>
         <target state="translated">Всі посилання на неіснуючі ресурси видаляються.</target>
@@ -8963,6 +8931,546 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">733</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.conditionalField" datatype="html">
+        <source>Bedingung für Anzeige des Feldes</source>
+        <target state="needs-translation">Bedingung für Anzeige des Feldes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.workflow.range.isExecutedOn" datatype="html">
+        <source>Durchführbar an</source>
+        <target state="needs-translation">Durchführbar an</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.workflow.range.resultsIn" datatype="html">
+        <source>Ergibt</source>
+        <target state="needs-translation">Ergibt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
+          <context context-type="linenumber">200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingMandatoryField" datatype="html">
+        <source>Nicht ausgefülltes Pflichtfeld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="needs-translation">Nicht ausgefülltes Pflichtfeld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">58,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.rangeNotAllowed" datatype="html">
+        <source>Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">132,134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.timeNotAllowed" datatype="html">
+        <source>Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">140,142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.timeNotSet" datatype="html">
+        <source>Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</source>
+        <target state="needs-translation">Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">144,146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.endDateBeforeBeginningDate" datatype="html">
+        <source>Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.</source>
+        <target state="needs-translation">Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">148,150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.missingMandatoryField" datatype="html">
+        <source>In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.</source>
+        <target state="needs-translation">In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">153,155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteField.body.notAllowed.inverseRelation" datatype="html">
+        <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
+        <target state="needs-translation">Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteWorkflowStepModal.header" datatype="html">
+        <source>Arbeitsschritt löschen?</source>
+        <target state="needs-translation">Arbeitsschritt löschen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/delete/delete-workflow-step-modal.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowStepLinkModal.chooseResource" datatype="html">
+        <source>Ressource wählen:</source>
+        <target state="needs-translation">Ressource wählen:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowStepLinkModal.selectedResource" datatype="html">
+        <source>Ausgewählte Ressource:</source>
+        <target state="needs-translation">Ausgewählte Ressource:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowStepLinkModal.chooseWorkflowStepToLink" datatype="html">
+        <source>Zu verknüpfenden Arbeitsgang wählen:</source>
+        <target state="needs-translation">Zu verknüpfenden Arbeitsgang wählen:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowStepLinkModal.noAvailableWorkflowSteps" datatype="html">
+        <source>Keine verknüpfbaren Arbeitsschritte gefunden.</source>
+        <target state="needs-translation">Keine verknüpfbaren Arbeitsschritte gefunden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowRelationsModal.heading.isExecutedOn" datatype="html">
+        <source>Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wurde durchge"/> wurde durchgeführt an: </source>
+        <target state="needs-translation">Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wurde durchge"/> wurde durchgeführt an: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/relations/workflow-relations-modal.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowRelationsModal.heading.resultsIn" datatype="html">
+        <source>Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ergibt:     &lt;"/> ergibt: </source>
+        <target state="needs-translation">Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ergibt:     &lt;"/> ergibt: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/relations/workflow-relations-modal.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowEditorModal.state" datatype="html">
+        <source>Status</source>
+        <target state="needs-translation">Status</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowEditorModal.executedOn" datatype="html">
+        <source>Durchgeführt an</source>
+        <target state="needs-translation">Durchgeführt an</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowEditorModal.date" datatype="html">
+        <source>Datum</source>
+        <target state="needs-translation">Datum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowEditorModal.identifier" datatype="html">
+        <source>Bezeichner</source>
+        <target state="needs-translation">Bezeichner</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowEditorModal.category" datatype="html">
+        <source>Kategorie</source>
+        <target state="needs-translation">Kategorie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.workflowEditorModal.resultsIn" datatype="html">
+        <source>Ergibt</source>
+        <target state="needs-translation">Ergibt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.contextMenu.editWorkflow" datatype="html">
+        <source>Arbeitsschritte dokumentieren</source>
+        <target state="needs-translation">Arbeitsschritte dokumentieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.date.now.tooltip" datatype="html">
+        <source>Aktuelles Datum verwenden</source>
+        <target state="needs-translation">Aktuelles Datum verwenden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.date.select.single" datatype="html">
+        <source>Einzeldatum</source>
+        <target state="needs-translation">Einzeldatum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.date.select.range" datatype="html">
+        <source>Datumsbereich</source>
+        <target state="needs-translation">Datumsbereich</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.date.from" datatype="html">
+        <source>Von:</source>
+        <target state="needs-translation">Von:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.date.to" datatype="html">
+        <source>Bis:</source>
+        <target state="needs-translation">Bis:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.warnings.missingMandatoryFields" datatype="html">
+        <source>Nicht ausgefüllte Pflichtfelder</source>
+        <target state="needs-translation">Nicht ausgefüllte Pflichtfelder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">168</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.dataType" datatype="html">
+        <source>Angabe der Uhrzeit</source>
+        <target state="needs-translation">Angabe der Uhrzeit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.time.optional" datatype="html">
+        <source>Optional</source>
+        <target state="needs-translation">Optional</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.time.mandatory" datatype="html">
+        <source>Verpflichtend</source>
+        <target state="needs-translation">Verpflichtend</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">157</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.inputMode" datatype="html">
+        <source>Eingabemodus</source>
+        <target state="needs-translation">Eingabemodus</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.inputMode.optional" datatype="html">
+        <source>Wählbar</source>
+        <target state="needs-translation">Wählbar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">169</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.inputMode.single" datatype="html">
+        <source>Einzeldatum</source>
+        <target state="needs-translation">Einzeldatum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.inputMode.range" datatype="html">
+        <source>Datumsbereich</source>
+        <target state="needs-translation">Datumsbereich</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">173</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDate.rangeNotAllowed" datatype="html">
+        <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">626</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDate.singleNotAllowed" datatype="html">
+        <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">630</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDate.timeNotSet" datatype="html">
+        <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.</source>
+        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">638</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDates" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].</source>
+        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">854</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDate.rangeNotAllowed" datatype="html">
+        <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">858</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDate.singleNotAllowed" datatype="html">
+        <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">862</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotSet" datatype="html">
+        <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</source>
+        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">870</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.missingProperties" datatype="html">
+        <source>Bitte füllen Sie die folgenden Felder aus: [1]</source>
+        <target state="needs-translation">Bitte füllen Sie die folgenden Felder aus: [1]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">906</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.fieldConditionViolation.inputType" datatype="html">
+        <source>Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</source>
+        <target state="needs-translation">Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.subfieldConditionViolation.deletion" datatype="html">
+        <source>Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
+        <target state="needs-translation">Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.mandatoryField" datatype="html">
+        <source>Pflichtfeld</source>
+        <target state="needs-translation">Pflichtfeld</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.condition" datatype="html">
+        <source>Bedingung</source>
+        <target state="needs-translation">Bedingung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.condition.none" datatype="html">
+        <source>- Keine -</source>
+        <target state="needs-translation">- Keine -</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidField.date" datatype="html">
+        <source>Die in diesem Feld eingetragene Datumsangabe ist ungültig.</source>
+        <target state="needs-translation">Die in diesem Feld eingetragene Datumsangabe ist ungültig.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">128,130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.singleNotAllowed" datatype="html">
+        <source>Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">136,138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.deleteField.body.notAllowed.conditionalField" datatype="html">
+        <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> kann nicht gelöscht werden, solange es als Bedingungsfeld für das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="ldName()}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> konfiguriert ist. </source>
+        <target state="needs-translation">Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> kann nicht gelöscht werden, solange es als Bedingungsfeld für das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="ldName()}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> konfiguriert ist. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
+          <context context-type="linenumber">14,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteWorkflowStepModal.question" datatype="html">
+        <source>Möchten Sie den Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{workflowStep.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
+        <target state="needs-translation">Möchten Sie den Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{workflowStep.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/delete/delete-workflow-step-modal.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteWorkflowStepModal.warning" datatype="html">
+        <source>Der Arbeitsschritt wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </source>
+        <target state="needs-translation">Der Arbeitsschritt wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/delete/delete-workflow-step-modal.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.date.to" datatype="html">
+        <source>bis</source>
+        <target state="needs-translation">bis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.date.unspecified" datatype="html">
+        <source>Unbestimmtes Datum</source>
+        <target state="needs-translation">Unbestimmtes Datum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.date.time.no" datatype="html">
+        <source>Nicht erlaubt</source>
+        <target state="needs-translation">Nicht erlaubt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">159</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidDate.timeNotAllowed" datatype="html">
+        <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">634</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.warning.fieldDataDeletion" datatype="html">
+        <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
+        <target state="needs-translation">Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">818</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDate" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Datumsangabe ein.</source>
+        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Datumsangabe ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">850</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotAllowed" datatype="html">
+        <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
+        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">866</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.error.fieldConditionViolation.valuelists" datatype="html">
+        <source>Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</source>
+        <target state="needs-translation">Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1115</context>
         </context-group>
       </trans-unit>
     </body>

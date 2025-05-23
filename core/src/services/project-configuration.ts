@@ -242,9 +242,7 @@ export class ProjectConfiguration {
     }
 
 
-    public isAllowedRelationDomainCategory(domainCategory: Name, 
-                                           rangeCategory: Name,
-                                           relation: Name): boolean {
+    public isAllowedRelationDomainCategory(domainCategory: Name, rangeCategory: Name, relation: Name): boolean {
 
         return Relation.isAllowedRelationDomainCategory(
             this.relations, domainCategory, rangeCategory, relation
@@ -307,7 +305,7 @@ export class ProjectConfiguration {
     private filterRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Image', 'Operation'),
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'WorkflowStep', 'Image', 'Operation'),
             Tree.flatten
         );
     }
@@ -316,7 +314,7 @@ export class ProjectConfiguration {
     private filterFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace'),
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'WorkflowStep'),
             Tree.flatten
         );
     }

@@ -1,4 +1,4 @@
-import { Field, fieldDoc, I18N, Relation } from 'idai-field-core';
+import { Field, fieldDoc, I18N, Relation, DateConfiguration } from 'idai-field-core';
 import { CSVExport } from '../../../../../src/app/components/export/csv/csv-export';
 
 
@@ -6,18 +6,30 @@ export function makeFieldDefinitions(fieldNames: string[]) {
 
     return fieldNames.map(fieldName => {
 
-        let inputType = 'simpleInput';
-        if (fieldName.startsWith('shortDescription') || fieldName.startsWith('input')) inputType = 'input';
-        if (fieldName.startsWith('multiInput')) inputType = 'multiInput';
-        if (fieldName.startsWith('dimension')) inputType = 'dimension';
-        if (fieldName.startsWith('dating')) inputType = 'dating';
-        if (fieldName.startsWith('literature')) inputType = 'literature';
-        if (fieldName.startsWith('period')) inputType = 'dropdownRange';
-        if (fieldName.startsWith('relation')) inputType = 'relation';
-        if (fieldName.startsWith('composite')) inputType = 'composite';
-        if (fieldName.startsWith('isInstanceOf')) inputType = 'instanceOf';
+        let inputType: Field.InputType = Field.InputType.SIMPLE_INPUT;
+        if (fieldName.startsWith('shortDescription') || fieldName.startsWith('input')) {
+            inputType = Field.InputType.INPUT;
+        }
+        if (fieldName.startsWith('multiInput')) inputType = Field.InputType.MULTIINPUT;
+        if (fieldName.startsWith('date')) inputType = Field.InputType.DATE;
+        if (fieldName.startsWith('dimension')) inputType = Field.InputType.DIMENSION;
+        if (fieldName.startsWith('dating')) inputType = Field.InputType.DATING;
+        if (fieldName.startsWith('literature')) inputType = Field.InputType.LITERATURE;
+        if (fieldName.startsWith('period')) inputType = Field.InputType.DROPDOWNRANGE;
+        if (fieldName.startsWith('relation')) inputType = Field.InputType.RELATION;
+        if (fieldName.startsWith('composite')) inputType = Field.InputType.COMPOSITE;
+        if (fieldName.startsWith('isInstanceOf')) inputType = Field.InputType.INSTANCE_OF;
 
-        return { name: fieldName, inputType: inputType };
+        const fieldDefinition: Field = { name: fieldName, inputType };
+
+        if (fieldDefinition.inputType === Field.InputType.DATE) {
+            fieldDefinition.dateConfiguration = {
+                dataType: DateConfiguration.DataType.OPTIONAL,
+                inputMode: DateConfiguration.InputMode.OPTIONAL
+            };
+        }
+
+        return fieldDefinition;
     }) as Array<Field>;
 }
 
@@ -234,6 +246,104 @@ describe('CSVExport', () => {
         expect(result[1][3]).toBe('"C"');
         expect(result[1][4]).toBe('"D"');
         expect(result[1][5]).toBe('"custom"');
+    });
+
+
+    test('expand date', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'date', 'custom']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
+            ifResource('i4', 'identifier4', { en: 'shortDescription4' }, 'category')
+        ];
+
+        resources[0]['date'] = {
+            value: '10.12.2023 15:10',
+            endValue: '11.12.2023 14:35',
+            isRange: true
+        };
+        resources[1]['date'] = {
+            value: '02.04.2025',
+            isRange: false
+        };
+        resources[2]['date'] = {
+            value: '05.07.2015 10:24',
+            isRange: true
+        };
+        resources[3]['date'] = {
+            endValue: '07.07.2012 11:20',
+            isRange: true
+        };
+
+        const result = CSVExport.createExportable(resources, t, [], ['en'], ',').csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"date.value"');
+        expect(result[0][2]).toBe('"date.endValue"');
+        expect(result[0][3]).toBe('"date.isRange"');
+        expect(result[0][4]).toBe('"custom"');
+
+        expect(result[1][1]).toBe('"10.12.2023 15:10"');
+        expect(result[1][2]).toBe('"11.12.2023 14:35"');
+        expect(result[1][3]).toBe('"true"');
+        expect(result[1][4]).toBe('""');
+
+        expect(result[2][1]).toBe('"02.04.2025"');
+        expect(result[2][2]).toBe('""');
+        expect(result[2][3]).toBe('"false"');
+        expect(result[2][4]).toBe('""');
+
+        expect(result[3][1]).toBe('"05.07.2015 10:24"');
+        expect(result[3][2]).toBe('""');
+        expect(result[3][3]).toBe('"true"');
+        expect(result[3][4]).toBe('""');
+
+        expect(result[4][1]).toBe('""');
+        expect(result[4][2]).toBe('"07.07.2012 11:20"');
+        expect(result[4][3]).toBe('"true"');
+        expect(result[4][4]).toBe('""');
+    });
+
+
+    test('expand multiple dates', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'dateA', 'dateB', 'custom']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+        ];
+
+        resources[0].dateA = {
+            value: '10.12.2023',
+            endValue: '11.03.2025',
+            isRange: true
+        };
+        resources[0].dateB = {
+            value: '10.01.1999 17:30',
+            endValue: '20.05.2000 21:29',
+            isRange: true
+        };
+        resources[0].custom = 'custom';
+
+        const result = CSVExport.createExportable(resources, t, [], ['en'], ',').csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"dateA.value"');
+        expect(result[0][2]).toBe('"dateA.endValue"');
+        expect(result[0][3]).toBe('"dateA.isRange"');
+        expect(result[0][4]).toBe('"dateB.value"');
+        expect(result[0][5]).toBe('"dateB.endValue"');
+        expect(result[0][6]).toBe('"dateB.isRange"');
+        expect(result[0][7]).toBe('"custom"');
+
+        expect(result[1][1]).toBe('"10.12.2023"');
+        expect(result[1][2]).toBe('"11.03.2025"');
+        expect(result[1][3]).toBe('"true"');
+        expect(result[1][4]).toBe('"10.01.1999 17:30"');
+        expect(result[1][5]).toBe('"20.05.2000 21:29"');
+        expect(result[1][6]).toBe('"true"');
+        expect(result[1][7]).toBe('"custom"');
     });
 
 

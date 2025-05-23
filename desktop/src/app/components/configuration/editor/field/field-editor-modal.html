@@ -27,6 +27,7 @@
                          [disabled]="hidden"
                          (onChanged)="setInputType($event)">
     </input-type-selector>
+
     <div class="configuration-editor-section configuration-editor-switch-section mb-3">
         <div class="configuration-editor-section-title"
              i18n="@@configuration.basicSettings">
@@ -42,6 +43,27 @@
                         type="checkbox"
                         [checked]="!hidden"
                         (change)="toggleHidden()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div *ngIf="isMandatoryOptionVisible()"
+             class="configuration-editor-switch"
+             ngbTooltip="{{getMandatoryTooltip()}}"
+             container="body">
+            <div class="basic-settings-label">
+                <span i18n="@@configuration.mandatoryField"
+                      [class.disabled]="!isMandatoryOptionEnabled()">Pflichtfeld</span>
+            </div>
+            <div>
+                <label id="mandatory-slider"
+                       class="switch"
+                       [class.disabled]="!isMandatoryOptionEnabled()">
+                    <input
+                        type="checkbox"
+                        [checked]="isMandatory()"
+                        [disabled]="!isMandatoryOptionEnabled()"
+                        (change)="toggleMandatory()">
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -68,6 +90,14 @@
             </div>
         </div>
     </div>
+
+    <condition-section *ngIf="isConditionSectionVisible()"
+                       [type]="'field'"
+                       [condition]="getClonedFieldDefinition().condition"
+                       [field]="clonedField"
+                       [availableFields]="getAvailableConditionFields()"
+                       [disabled]="hidden"></condition-section>
+
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.label">
             Anzeigename
@@ -77,6 +107,7 @@
             [projectLanguages]="getClonedProjectLanguages()"
             [disabled]="hidden"></multi-language-input>
     </div>
+
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.description">
             Beschreibung
@@ -86,12 +117,14 @@
             [projectLanguages]="getClonedProjectLanguages()"
             [disabled]="hidden"></multi-language-input>
     </div>
+
     <div *ngIf="isCustomField()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.references">
             Verweise
         </div>
         <references-input [references]="getClonedFieldDefinition().references"></references-input>
     </div>
+
     <div *ngIf="isValuelistSectionVisible()"
          id="field-editor-valuelist-section"
          class="configuration-editor-section">
@@ -112,6 +145,38 @@
                             [disabled]="hidden"
         ></valuelist-selector>
     </div>
+
+    <div *ngIf="isDateSectionVisible()">
+        <div class="configuration-editor-section">
+            <div class="configuration-editor-section-title"
+                 i18n="@@configuration.date.dataType">Angabe der Uhrzeit</div>
+            <select class="form-control"
+                    [disabled]="hidden"
+                    (change)="setDateDataType($event.target.value)">
+                <option i18n="@@configuration.date.time.optional" value="optional"
+                        [selected]="getDateConfiguration()?.dataType === 'optional'">Optional</option>
+                <option i18n="@@configuration.date.time.mandatory" value="dateTime"
+                        [selected]="getDateConfiguration()?.dataType === 'dateTime'">Verpflichtend</option>
+                <option i18n="@@configuration.date.time.no" value="date"
+                        [selected]="getDateConfiguration()?.dataType === 'date'">Nicht erlaubt</option>
+            </select>
+        </div>
+        <div class="configuration-editor-section">
+            <div class="configuration-editor-section-title"
+                 i18n="@@configuration.date.inputMode">Eingabemodus</div>
+            <select class="form-control"
+                    [disabled]="hidden"
+                    (change)="setDateInputMode($event.target.value)">
+                <option i18n="@@configuration.date.inputMode.optional" value="optional"
+                        [selected]="getDateConfiguration()?.inputMode === 'optional'">Wählbar</option>
+                <option i18n="@@configuration.date.inputMode.single" value="single"
+                        [selected]="getDateConfiguration()?.inputMode === 'single'">Einzeldatum</option>
+                <option i18n="@@configuration.date.inputMode.range" value="range"
+                        [selected]="getDateConfiguration()?.inputMode === 'range'">Datumsbereich</option>
+            </select>
+        </div>
+    </div>
+
     <subfields-section *ngIf="isSubfieldsSectionVisible()"
                        [clonedFormDefinition]="getClonedFormDefinition()"
                        [clonedFieldDefinition]="getClonedFieldDefinition()"
@@ -125,12 +190,10 @@
                        [applyChanges]="applyChanges"
                        (onDrag)="dragging = $event"></subfields-section>
 
-
-
     <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title"
              i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</div>
-        <div id="target-category-picker-container">
+        <div id="target-category-picker-container" class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableTargetCategories"
                              [selectedCategories]="selectedTargetCategoryNames"
                              [customProjectConfiguration]="clonedProjectConfiguration"

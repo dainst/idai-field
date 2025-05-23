@@ -80,7 +80,7 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
         ? categories[parentName].fields as Map<Field>
         : {};
 
-    const field: Field = builtInFields[fieldName]
+    let field: Field = builtInFields[fieldName]
         ?? commonFields[fieldName]
         ?? parentCategoryFields[fieldName]
         ?? categories[form.categoryName]?.fields[fieldName] as Field
@@ -91,10 +91,17 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
     if ((!field || !field.inputType) && !relations.find(relation => relation.name === fieldName)) {
         throw [[ConfigurationErrors.FIELD_NOT_FOUND, form.categoryName, fieldName]];
     }
+    if (!field) return undefined;
 
-    if (field && !field.name) field.name = fieldName;
+    field = clone(field);
 
-    return clone(field);
+    if (!field.name) field.name = fieldName;
+    if (parentCategoryFields?.[fieldName]?.required || categories?.[form.categoryName]?.fields?.[fieldName]?.required) {
+        field.required = true;
+    }
+    if (field.required) field.mandatory = true;
+
+    return field;
 }
 
 
@@ -129,7 +136,19 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
         field.inputType = changedField.inputType as Field.InputType;
     }
 
+    if (changedField.mandatory !== undefined && !field.required) {
+        field.mandatory = changedField.mandatory;
+    }
+
     if (changedField.constraintIndexed !== undefined) {
         field.constraintIndexed = changedField.constraintIndexed;
+    }
+
+    if (changedField.condition) {
+        field.condition = changedField.condition;
+    }
+
+    if (changedField.dateConfiguration) {
+        field.dateConfiguration = changedField.dateConfiguration;
     }
 }

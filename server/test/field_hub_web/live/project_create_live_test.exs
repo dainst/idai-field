@@ -1,13 +1,12 @@
-defmodule FieldHubWeb.ProjectCreateLiveTest do
+defmodule FieldHubWeb.Live.ProjectCreateTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
 
   use FieldHubWeb.ConnCase
 
-  alias FieldHubWeb.{
-    UserAuth,
-    ProjectCreateLive
-  }
+  alias FieldHubWeb.UserAuth
+
+  alias FieldHubWeb.Live.ProjectCreate
 
   alias FieldHub.{
     Project,
@@ -16,20 +15,22 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
 
   @endpoint FieldHubWeb.Endpoint
 
+  import ExUnit.CaptureLog
+
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
   @project "test_project"
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
-    assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
+    assert {:error, {:redirect, %{flash: _, to: "/ui/session/log_in"}}} =
              conn
              |> live("/ui/projects/create")
 
     # Test the mount function (websocket), this makes sure that users with invalidated/old user token can not
     # access the page.
     socket =
-      ProjectCreateLive.mount(
+      ProjectCreate.mount(
         %{},
         %{"user_token" => "invalid"},
         %Phoenix.LiveView.Socket{}
@@ -50,7 +51,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
     # Test the mount function (websocket), this makes sure that users that navigated here from another
     # live view with an existing socket are admins.
     socket =
-      ProjectCreateLive.mount(
+      ProjectCreate.mount(
         %{},
         %{"user_token" => UserAuth.generate_user_session_token(non_admin)},
         %Phoenix.LiveView.Socket{}
@@ -226,6 +227,15 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
         |> render_change(%{identifier: @project})
 
       assert html =~ "This project identifier is already taken."
+
+      assert capture_log(fn ->
+               html =
+                 view
+                 |> element("form")
+                 |> render_submit(%{identifier: @project})
+
+               assert html =~ "Project creation with the provided input failed."
+             end) =~ "Project creation failed with: already_exists"
     end
 
     test "can create a project", %{conn: conn} do
@@ -253,7 +263,7 @@ defmodule FieldHubWeb.ProjectCreateLiveTest do
 
   test "non admin can not trigger project creation" do
     {:noreply, socket} =
-      ProjectCreateLive.handle_event(
+      ProjectCreate.handle_event(
         "create",
         %{"identifier" => @project, "password" => "some_password"},
         %Phoenix.LiveView.Socket{

@@ -52,7 +52,11 @@
     margin-bottom: 5px;
   }
 
-  input {
+  .configuration-editor-switch-section {
+    margin-bottom: 14px !important;
+  }
+
+  input[type="text"] {
     height: 33.5px;
     font-size: 13px;
   }
@@ -84,5 +88,11 @@
 
   label.disabled {
     color: grey;
+  }
+
+  .target-category-picker-container {
+    width: 100%;
+    height: 350px;
+    overflow-y: scroll;
   }
 }

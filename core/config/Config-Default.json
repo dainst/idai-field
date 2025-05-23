@@ -243,6 +243,10 @@
     "StorageBag:default": {
       "hidden": [],
       "fields": {}
+    },
+    "WorkflowStep:default": {
+      "hidden": [],
+      "fields": {}
     }
   },
   "order": [
@@ -295,6 +299,7 @@
     "FindCollection",
     "Inscription",
     "Sample",
+    "WorkflowStep",
     "Image",
     "Drawing",
     "Photo",

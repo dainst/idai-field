@@ -1,40 +1,84 @@
-<h1>Search</h1>
+<.document_heading>Search</.document_heading>
 <div class="flex flex-row">
-  <div class="w-64 m-4 basis-1/4">
-    <div class="sticky top-4">
-      <div class="h-[80vh] overflow-auto">
-        <%= @total %> hits
-        <form phx-change="search" phx-submit="search">
+  <.async_result
+    :let={%{total: total, docs: docs, aggregations: aggregations}}
+    assign={@search_result}
+  >
+    <:loading>Searching...</:loading>
+    <div class="w-64">
+      <div class="sticky top-4">
+        <form phx-change="search" phx-submit="search" class="pb-2">
           <input
-            class="w-full"
+            class="w-full border p-2"
             type="text"
             value={@url_parameters.q}
             name="search_input"
             phx-debounce="100"
           />
         </form>
-        <h2>Active filters</h2>
-        <%= for {field, value} <- @url_parameters.filters do %>
-          <.aggregation_deselection field_name={field} value={value} />
+        <%= if total < 10000 do %>
+          Found {total} matches.
+        <% else %>
+          Found more than 10000 matches.
         <% end %>
-
-        <h2>Available filters</h2>
-
-        <%= for {field, buckets} <- @aggregations do %>
-          <%= if !(Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
-            <.aggregation_selection field_name={field} buckets={buckets} />
+        <%= if @url_parameters.filters != %{} do %>
+          <.group_heading>Active filters</.group_heading>
+          <%= for {field, value} <- @url_parameters.filters do %>
+            <.aggregation_deselection field_name={field} value={value} />
           <% end %>
         <% end %>
+
+        <.group_heading>Available filters</.group_heading>
+        <div class="h-[70vh] overflow-auto">
+          <%= for {field, buckets} <- aggregations do %>
+            <%= if !(Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
+              <.aggregation_selection field_name={field} buckets={buckets} />
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="w-full" id="result_list" phx-update="stream" phx-viewport-bottom="search_next_batch">
-    <div :for={{dom_id, %SearchDocument{full_doc: doc}} <- @streams.search_results} id={dom_id}>
-      <DocumentLink.show
-        doc={doc}
-        lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
-        image_count={10}
-      />
+
+    <div class="ml-4 w-full" id="result_list">
+      <div class="flex flex-row mb-2 sticky top-4">
+        <% previous_from =
+          if @url_parameters.from - @limit > 0,
+            do: @url_parameters.from - @limit,
+            else: 0 %>
+        <.link
+          class={"p-2 #{if @url_parameters.from == 0, do: "bg-zinc-700 cursor-default border-(--primary-color)", else: "bg-(--primary-color) hover:bg-(--primary-color-hover)"}"}
+          patch={~p"/search?#{Map.put(@url_parameters, :from, previous_from)}"}
+        >
+          <span class="text-white">
+            Previous
+          </span>
+        </.link>
+        <div class="bg-white grow p-2 border-t border-b border-(--primary-color) text-center">
+          Showing {@url_parameters.from + 1} - {if @url_parameters.from + @limit > total,
+            do: total,
+            else: @url_parameters.from + @limit} of {total} results
+        </div>
+        <% next_from =
+          if @url_parameters.from + @limit >= total,
+            do: @url_parameters.from,
+            else: @url_parameters.from + @limit %>
+        <.link
+          class={"p-2 #{if next_from == @url_parameters.from, do: "bg-zinc-700 cursor-default", else: "bg-(--primary-color) hover:bg-(--primary-color-hover)"} text-white"}
+          patch={~p"/search?#{Map.put(@url_parameters, :from, next_from)}"}
+        >
+          <span class="text-white">
+            Next
+          </span>
+        </.link>
+      </div>
+      <div :for={%SearchDocument{full_doc: doc} <- docs}>
+        <DocumentLink.show
+          doc={doc}
+          lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
+          image_count={10}
+          image_height={128}
+        />
+      </div>
     </div>
-  </div>
+  </.async_result>
 </div>

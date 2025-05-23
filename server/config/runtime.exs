@@ -34,16 +34,10 @@ if config_env() == :prod do
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
-      # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
+      # See the documentation on https://hexdocs.pm/bandit/Bandit.html#t:options/0
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: 4000,
-      protocol_options: [
-        # Set high idle timeout, because CouchDB uses long polling for the sync-connection
-        # otherwise Plug/Phoenix will cancel the connection prematurely, which will in turn
-        # result in a (temporary) error displayed in the desktop client.
-        idle_timeout: 1000 * 60 * 60 * 24
-      ]
+      port: 4000
     ],
     secret_key_base: secret_key_base
 

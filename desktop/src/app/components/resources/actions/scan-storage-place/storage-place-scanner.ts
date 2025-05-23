@@ -42,6 +42,8 @@ export class StoragePlaceScanner {
     public async scanStoragePlace(documents: Array<FieldDocument>) {
 
         const storagePlaceDocument: FieldDocument = await this.scanCode();
+        if (!storagePlaceDocument) return;
+
         if (!this.isValidStoragePlace(storagePlaceDocument)) {
             return this.showInvalidStoragePlaceMessage(storagePlaceDocument);
         }
@@ -153,7 +155,7 @@ export class StoragePlaceScanner {
 
 
     private isValidStoragePlace(storagePlaceDocument: FieldDocument): boolean {
-
+        
         return this.projectConfiguration.getInventoryCategories().map(to(Named.NAME))
             .includes(storagePlaceDocument.resource.category);
     }

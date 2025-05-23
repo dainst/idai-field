@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.Api.ProjectControllerTest do
+defmodule FieldHubWeb.Api.Rest.ProjectTest do
   use FieldHubWeb.ConnCase
 
   alias FieldHub.{
@@ -108,7 +108,7 @@ defmodule FieldHubWeb.Api.ProjectControllerTest do
         conn
         |> put_req_header("authorization", TestHelper.get_admin_basic_auth())
         |> put_req_header("content-type", "application/json")
-        |> post("/projects/#{@project}", %{password: "password123"})
+        |> post("/projects/#{@project}", Jason.encode!(%{password: "password123"}))
 
       assert conn.status == 201
 

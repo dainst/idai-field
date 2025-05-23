@@ -79,6 +79,8 @@ export module InvalidDataUtil {
 
     function generateObjectLabel(value: any, labels: Labels): string {
 
+        if (value.value || value.endValue) return generateRangeLabel(value);
+
         const label: string|undefined = labels.getFromI18NString(value);
     
         return label && isString(label)
@@ -86,5 +88,15 @@ export module InvalidDataUtil {
             : Object.keys(value).map(key => {
                 return key + ': ' + generateValueLabel(value[key], labels);
             }).join(', ');
+    }
+
+
+    function generateRangeLabel(value: any): string {
+
+        if (value.value && value.endValue) {
+            return value.value + ' - ' + value.endValue;
+        } else {
+            return value.value ?? value.endValue;
+        }
     }
 }

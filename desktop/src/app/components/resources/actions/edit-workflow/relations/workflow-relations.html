@@ -1,0 +1,29 @@
+<div *ngIf="relationTargets"
+     class="workflow-relations-container"
+     (click)="edit()">
+    <div *ngIf="!relationTargets.length"
+         class="circular-button add-relation">
+        <span class="mdi mdi-plus"></span>
+    </div>
+
+    <document-teaser *ngIf="relationTargets.length === 1"
+                     [document]="relationTargets[0]"
+                     [showShortDescription]="false"></document-teaser>
+
+    <div *ngIf="relationTargets.length > 1 && categoryInfos.length < 4">
+        <div *ngFor="let info of categoryInfos" class="category-info">
+            <category-icon [category]="info.categoryName" [size]="35"></category-icon>
+            <span class="category-count">{{info.count}}</span>
+        </div>
+    </div>
+
+    <div *ngIf="relationTargets.length > 1 && categoryInfos.length >= 4">
+        <div *ngFor="let info of categoryInfos | slice:0:2" class="category-info">
+            <category-icon [category]="info.categoryName" [size]="35"></category-icon>
+            <span class="category-count">{{info.count}}</span>
+        </div>
+        <div class="category-info">
+            <span class="category-count additional-categories">+ {{getAdditionalCategoriesCount()}}</span>
+        </div>
+    </div>
+</div>

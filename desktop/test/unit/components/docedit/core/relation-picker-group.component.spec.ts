@@ -1,5 +1,5 @@
 import { Resource } from 'idai-field-core';
-import { RelationPickerGroupComponent } from '../../../../../src/app/components/docedit/widgets/relationpicker/relation-picker-group.component';
+import { RelationPickerGroupComponent } from '../../../../../src/app/components/widgets/relation-picker/relation-picker-group.component';
 
 
 /**

@@ -8,7 +8,7 @@ import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-storage-place'|'edit-workflow'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
@@ -57,7 +57,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isWarningsOptionAvailable()
             || this.isAddQRCodeOptionAvailable()
             || this.isEditQRCodeOptionAvailable()
-            || this.isScanStoragePlaceOptionIsAvailable();
+            || this.isScanStoragePlaceOptionIsAvailable()
+            || this.isEditWorkflowOptionAvailable();
     }
 
 
@@ -136,6 +137,22 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         return this.isQrCodeOptionAvailable()
             && this.contextMenu.documents[0].resource.scanCode;
+    }
+
+
+    public isEditWorkflowOptionAvailable(): boolean {
+
+        const workflowStepCategories: Array<CategoryForm> = this.projectConfiguration.getCategory('WorkflowStep')
+            ?.children ?? [];
+
+        return this.contextMenu.documents.length
+            && workflowStepCategories.find(category => {
+                return this.contextMenu.documents.every(document => {
+                    return this.projectConfiguration.isAllowedRelationDomainCategory(
+                        document.resource.category, category.name, Relation.Workflow.IS_EXECUTION_TARGET_OF
+                    );
+                });
+            }) !== undefined;
     }
 
 

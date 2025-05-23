@@ -1,11 +1,13 @@
 defmodule FieldHubWeb.Router do
   use FieldHubWeb, :router
 
-  alias FieldHub.CouchService
   import FieldHubWeb.UserAuth
-  import Phoenix.LiveView.Router
+
+  alias FieldHub.CouchService
 
   pipeline :browser do
+    # Moved Plug.Parsers from endpoint.ex (which is the Phoenix default) because of
+    # https://hexdocs.pm/reverse_proxy_plug/3.0.0/readme.html#usage-in-phoenix
     plug Plug.Parsers,
       parsers: [:urlencoded, :multipart, :json],
       pass: ["*/*"],
@@ -14,37 +16,41 @@ defmodule FieldHubWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {FieldHubWeb.LayoutView, :root}
+    plug :put_root_layout, {FieldHubWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
   end
 
   pipeline :api do
-    plug Plug.Parsers,
-      parsers: [:urlencoded, :multipart, :json],
-      pass: ["*/*"],
-      json_decoder: Phoenix.json_library()
-
+    plug CORSPlug, origin: "*"
     plug :accepts, ["json"]
   end
 
   forward "/db", ReverseProxyPlug, upstream: &CouchService.base_url/0
 
-  scope "/", FieldHubWeb do
+  scope "/ui/session" do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    live_session :redirect_if_user_is_authenticated,
+      on_mount: [{FieldHubWeb.UserAuth, :redirect_if_user_is_authenticated}] do
+      live "/log_in", FieldHubWeb.Live.UserLogin, :new
+    end
+
+    post "/log_in", FieldHubWeb.Rest.UserSession, :create
+  end
+
+  scope "/" do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live_session :current_user,
+      on_mount: [{FieldHubWeb.UserAuth, :mount_current_user}] do
+      live "/", FieldHubWeb.Live.ProjectList
+    end
   end
 
   scope "/ui", FieldHubWeb do
     pipe_through :browser
-
-    scope "/session" do
-      get "/new", UserSessionController, :new
-      post "/login", UserSessionController, :create
-      post "/logout", UserSessionController, :delete
-    end
 
     scope "/projects" do
       pipe_through :ui_require_user_authentication
@@ -52,35 +58,41 @@ defmodule FieldHubWeb.Router do
       scope "/show/:project" do
         pipe_through :ui_require_project_authorization
 
-        live "/", ProjectShowLive
+        live "/", Live.ProjectShow
       end
 
       scope "/create" do
         pipe_through :ui_require_admin
 
-        live "/", ProjectCreateLive
+        live "/", Live.ProjectCreate
       end
     end
   end
 
+  scope "/ui/session" do
+    pipe_through [:browser]
+
+    get "/log_out", FieldHubWeb.Rest.UserSession, :delete
+  end
+
   # API Routes
-  scope "/", FieldHubWeb.Api do
+  scope "/", FieldHubWeb.Rest.Api do
     pipe_through :api
     pipe_through :api_require_user_authentication
 
-    get "/projects", ProjectController, :index
+    get "/projects", Rest.Project, :index
 
     scope "/" do
       pipe_through :api_require_project_authorization
 
-      get "/projects/:project", ProjectController, :show
-      resources "/files/:project", FileController, only: [:index, :update, :show, :delete]
+      get "/projects/:project", Rest.Project, :show
+      resources "/files/:project", Rest.File, only: [:index, :update, :show, :delete]
     end
 
     scope "/" do
       pipe_through :api_require_admin
-      post "/projects/:project", ProjectController, :create
-      delete "/projects/:project", ProjectController, :delete
+      post "/projects/:project", Rest.Project, :create
+      delete "/projects/:project", Rest.Project, :delete
     end
   end
 

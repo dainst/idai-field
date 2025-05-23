@@ -1,3 +1,4 @@
+import { DateConfiguration } from '../../src/model';
 import { Field } from '../../src/model/configuration/field';
 
 
@@ -6,11 +7,21 @@ import { Field } from '../../src/model/configuration/field';
  */
  describe('Field', () => {
 
-    function makeField(inputType): Field {
+    function makeField(inputType: Field.InputType): Field {
 
         return {
             name: 'field',
             inputType: inputType
+        };
+    }
+
+
+    function makeDateField(dataType: DateConfiguration.DataType, inputMode: DateConfiguration.InputMode): Field {
+
+        return {
+            name: 'field',
+            inputType: Field.InputType.DATE,
+            dateConfiguration: { dataType, inputMode }
         };
     }
 
@@ -32,9 +43,6 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.isValidFieldData(-7.5, makeField(Field.InputType.FLOAT))).toBe(true);
         expect(Field.isValidFieldData(true, makeField(Field.InputType.BOOLEAN))).toBe(true);
         expect(Field.isValidFieldData(false, makeField(Field.InputType.BOOLEAN))).toBe(true);
-        expect(Field.isValidFieldData('31.01.2010', makeField(Field.InputType.DATE))).toBe(true);
-        expect(Field.isValidFieldData('01.2010', makeField(Field.InputType.DATE))).toBe(true);
-        expect(Field.isValidFieldData('2010', makeField(Field.InputType.DATE))).toBe(true);
 
         expect(Field.isValidFieldData(
             { value: 'A', endValue: 'B' },
@@ -90,10 +98,6 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.isValidFieldData(-7.5, makeField(Field.InputType.UNSIGNEDFLOAT))).toBe(false);
         expect(Field.isValidFieldData({ quotation: 'text' }, makeField(Field.InputType.FLOAT))).toBe(false);
         expect(Field.isValidFieldData({ quotation: 'text' }, makeField(Field.InputType.BOOLEAN))).toBe(false);
-        expect(Field.isValidFieldData({ quotation: 'text' }, makeField(Field.InputType.DATE))).toBe(false);
-        expect(Field.isValidFieldData('31-01-2010', makeField(Field.InputType.DATE))).toBe(false);
-        expect(Field.isValidFieldData('31.01.2010.01', makeField(Field.InputType.DATE))).toBe(false);
-        expect(Field.isValidFieldData('ABC', makeField(Field.InputType.DATE))).toBe(false);
         expect(Field.isValidFieldData('text', makeField(Field.InputType.DROPDOWNRANGE))).toBe(false);
         expect(Field.isValidFieldData('text', makeField(Field.InputType.DATING))).toBe(false);
         expect(Field.isValidFieldData('text', makeField(Field.InputType.DIMENSION))).toBe(false);
@@ -101,5 +105,108 @@ import { Field } from '../../src/model/configuration/field';
         expect(Field.isValidFieldData('text', makeField(Field.InputType.GEOMETRY))).toBe(false);
         expect(Field.isValidFieldData('text', makeField(Field.InputType.RELATION))).toBe(false);
         expect(Field.isValidFieldData('text', makeField(Field.InputType.INSTANCE_OF))).toBe(false);
+    });
+
+
+    it('validate correct dates', () => {
+
+        expect(Field.isValidFieldData(
+            { value: '31.01.2010', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '01.2010', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '2010', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { endValue: '31.01.2010', isRange: true },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+        
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010', endValue: '31.01.2010', isRange: true },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010', endValue: '31.01.2010', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.RANGE)
+        )).toBe(true);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', isRange: false },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.SINGLE)
+        )).toBe(true);
+    });
+
+
+    it('validate incorrect dates', () => {
+
+        expect(Field.isValidFieldData(
+            { quotation: 'text' },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            '31.01.2010',
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '31-01-2010', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '31.01.2010.01', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { endValue: '31.01.2010', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010', endValue: '31.01.2010', isRange: false },
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            'ABC',
+            makeDateField(DateConfiguration.DataType.OPTIONAL, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE, DateConfiguration.InputMode.OPTIONAL)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', endValue: '31.01.2010 14:30', isRange: true },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.SINGLE)
+        )).toBe(false);
+
+        expect(Field.isValidFieldData(
+            { value: '30.01.2010 12:10', isRange: false },
+            makeDateField(DateConfiguration.DataType.DATE_TIME, DateConfiguration.InputMode.RANGE)
+        )).toBe(false);
     });
 });

@@ -4,6 +4,7 @@ import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
+import { DateSpecification } from '../model/input-types/date-specification';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -29,6 +30,7 @@ export module Migrator {
         migratePeriodFields(document);
         migrateSingleToMultipleValues(document);
         migrateDatings(document, projectConfiguration);
+        migrateDates(document, projectConfiguration);
         migrateProjectValuelistFields(document);
     }
 
@@ -103,5 +105,43 @@ export module Migrator {
                 });
             }
         }
+    }
+
+
+    function migrateDates(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        migrateBeginningAndEndDates(document);
+        migrateDatesByInputType(document, projectConfiguration);
+    }
+
+
+    function migrateBeginningAndEndDates(document: Document) {
+
+        const beginningDate: string = document.resource.beginningDate;
+        const endDate: string = document.resource.endDate;
+
+        if ((!beginningDate || !isString(beginningDate)) && (!endDate || !isString(endDate))) return;
+
+        const date: DateSpecification = { isRange: true };
+        if (beginningDate && isString(beginningDate)) date['value'] = beginningDate;
+        if (endDate && isString(endDate)) date['endValue'] = endDate;
+        document.resource.date = date;
+
+        delete document.resource.beginningDate;
+        delete document.resource.endDate;
+    }
+
+
+    function migrateDatesByInputType(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        const category: CategoryForm = projectConfiguration.getCategory(document);
+        if (!category) return;
+
+        CategoryForm.getFields(category)
+            .filter(field => field.inputType === Field.InputType.DATE)
+            .forEach(field => {
+                const date: any = document.resource[field.name];
+                if (date && isString(date)) document.resource[field.name] = { value: date, isRange: false };
+            });
     }
 }

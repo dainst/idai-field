@@ -10,7 +10,7 @@ import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
 const { test, expect } = require('@playwright/test');
 
 
-test.describe('map --', () => {
+test.describe('map', () => {
 
     test.beforeAll(async () => {
 

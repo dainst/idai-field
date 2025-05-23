@@ -8,7 +8,7 @@ Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
    
 ## Development
 
-Development of Field Desktop works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) 20.18 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Development of Field Desktop works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) 22 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
 Then clone this repository locally and run the following commands (in the repository root):
 
@@ -29,6 +29,8 @@ If the application does not start in an arm64 environment (e. g. Apple Silicon),
 $ npm config set cpu=arm64
 ```
 
+If `npm run bootstrap` fails to build sharp, that might be because of an already installed libvips. You can force the build process to ignore your preinstalled libvips by running `export  SHARP_IGNORE_GLOBAL_LIBVIPS=true` before running the bootstrap comand. See also https://sharp.pixelplumbing.com/install/#building-from-source.
+
 There seems to be an issue with `lerna bootstrap` that prevents running install scripts in dependencies. Use the following commands to run necessary scripts manually as a workaround:
 
 ```
@@ -46,11 +48,6 @@ To execute the **unit tests**, run
 $ npm test   
 ```
 
-The project is set up to manage the compilation of the sources (test as well as regular sources) independently from Angular. This is due to the fact that we perform Node based tests, since our code runs in an Electron context. This is done on the 
-basis of `test/tsconfig.json` and `jasmine`. To rebuild the sources for tests continually, you can run `npm run build:test+watch` in one terminal window, and `npm test` in another.
-
-For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
-
 To execute **e2e tests**, run 
 
 ```
@@ -60,7 +57,7 @@ $ npm run e2e
 To execute **integration test with Field Hub**, run
 
 ```
-$ npm run test:hub-integration --prefix desktop
+$ npm run test:hub-integration
 ```
 
 The Field Hub integration tests require installed Docker.
@@ -80,4 +77,3 @@ Only packages for the selected target platform are created. When the command has
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
-

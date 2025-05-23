@@ -1,0 +1,17 @@
+workflow-step-plus-button {
+  .circular-button {
+    left: calc(50% - 62px);
+    width: 41px;
+    height: 41px;
+
+    .category-icon {
+      position: relative;
+      right: 1px;
+      bottom: 2px;
+    }
+  }
+
+  #multiple-select-buttons {
+    border-radius: 0;
+  }
+}

@@ -1818,6 +1818,26 @@ The data entered in a field does not correspond to the input type selected for t
 * Button *Convert field data*: The data is automatically converted to the correct format for the respective input type. Optionally, you can have the data converted for all resources where invalid data has been entered in the same field. Please note that automatic conversion is not possible in all cases and this button is therefore not always available.
 * Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which invalid data has been entered in the same field (valid data remains in the original field).
 
+### Missing mandatory field
+No data has been entered in a field configured as mandatory.
+
+#### Possible causes
+* The field was configured as mandatory in the configuration editor after resource creation.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to fill in the mandatory field.
+
+### Unfulfilled display condition of a field
+Data has been entered in a field although the condition for displaying this field has not been fulfilled.
+
+#### Possible causes
+* The display condition was set up or changed in the configuration editor after data had already been entered in the field.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to adjust the data in the condition field so that the condition is fulfilled.
+* Button *Delete field data*: The data entered in the field is deleted completely.
+* Remove the display condition for the field in the configuration editor or adjust it so that the condition is fulfilled for the affected resource.
+
 ### Value not included in valuelist
 One or more values are entered in a field that are not contained in the valuelist configured for the field.
 
@@ -1899,3 +1919,13 @@ There are more resources of a particular category than the resource limit config
 #### Possible solutions
 * Delete resources of the corresponding category until the resource limit is met.
 * Increase the resource limit in the configuration editor.
+
+### Invalid state
+The state of a workflow step contradicts the specified date. This is the case, for example, if the date of a workflow step with the state "Planned" is in the past or the date of a workflow step with the state "Completed" is in the future.
+
+#### Possible causes
+* The state has not been updated after the workflow step has been started, completed or canceled.
+* A planned workflow step has not yet been executed on the specified date.
+
+#### Possible solutions
+* Button *Edit*: Open the resource editor to adjust the state or date of the workflow step.

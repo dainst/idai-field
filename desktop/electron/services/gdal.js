@@ -7,7 +7,12 @@ const initGdalJs = require('gdal3.js/node');
 const tempDirectoryPath = global.appDataPath + '/gdal';
 
 if (fs.existsSync(tempDirectoryPath)) fs.rmSync(tempDirectoryPath, { recursive: true });
-fs.mkdirSync(tempDirectoryPath);
+
+try {
+    fs.mkdirSync(tempDirectoryPath);
+} catch (err) {
+    console.error('Error while trying to create temp directory for gdal', err);
+}
 
 const options = {
     path: 'lib/gdal',

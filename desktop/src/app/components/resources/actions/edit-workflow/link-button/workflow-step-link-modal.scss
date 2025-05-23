@@ -1,0 +1,58 @@
+#workflow-step-link-modal-body {
+  p {
+    margin-bottom: 5px;
+  }
+
+  #selected-document-button {
+    position: relative;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dee2e6;
+
+    .mdi-close-circle {
+      position: absolute;
+      top: 15px;
+      right: 10px;
+      color: #dc3545;
+    }
+
+    &:hover {
+      background-color: $list-item-hover-color;
+      transition: background-color .5s ease;
+    }
+  }
+
+  #available-workflow-steps {
+    max-height: calc(100vh - 350px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 0;
+
+    .list-group-item {
+      display: block;
+      padding: 10px;
+      border-top-width: 1px;
+      font-size: 14px;
+      user-select: none;
+
+      &:not(:last-child) {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: $list-item-hover-color;
+        transition: background-color .5s ease;
+      }
+    }
+  }
+
+  #no-available-workflow-steps-info {
+    width: 100%;
+    height: 32px;
+    margin-top: 23px;
+    text-align: center;
+    font-style: italic;
+    font-size: 15px;
+    user-select: none;
+  }
+}

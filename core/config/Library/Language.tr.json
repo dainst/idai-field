@@ -56,14 +56,6 @@
       "label": "Açıklama",
       "description": "Freeform açıklama alanı"
     },
-    "beginningDate": {
-      "label": "Başlangıç tarihi",
-      "description": "Çalışmanın kaydedilmeye başladığı tarihtir"
-    },
-    "endDate": {
-      "label": "Bitiş tarihi",
-      "description": "Çalışmanın kaydedilmesinin bittiği tarihtir"
-    },
     "processor": {
       "label": "Sorumlu",
       "description": "Sezon boyunca girdi veya nesneden sorumlu olan kişi/kişilerin adı. Lütfen dikkat: Veri tabanı girişini düzenleyen kişilerin isimleri otomatik olarak kaydedilir ve bu nedenle bu alanda gerekli değildir."

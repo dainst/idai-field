@@ -31,10 +31,10 @@ export class DoceditLauncher {
         await doceditRef.componentInstance.setDocument(document);
         if (activeGroup) doceditRef.componentInstance.activeGroup = activeGroup;
 
-        let result: FieldDocument|undefined;
+        let result: FieldDocument;
 
         try {
-            result = (await doceditRef.result)['document'];
+            result = (await doceditRef.result).documents[0];
             await this.handleSaveResult(result as FieldDocument);
         } catch (closeReason) {
             if (closeReason === 'cancel') this.viewFacade.removeNewDocument();

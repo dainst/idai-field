@@ -24,5 +24,4 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :field_hub,
   file_directory_root: "test/tmp",
-  # ~10mb instead of the 1gb default value
-  file_max_size: 10_000_000
+  file_read_chunk_size_bytes: 8000

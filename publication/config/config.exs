@@ -27,8 +27,7 @@ config :field_publication,
   couchdb_admin_name: "couch_admin",
   couchdb_admin_password: "couch_admin_password",
   opensearch_url: "http://localhost:9200",
-  opensearch_admin_password: "DevelopmentPassword!123",
-  cantaloupe_url: "http://localhost:8182"
+  opensearch_admin_password: "DevelopmentPassword!123"
 
 # Configures the mailer
 #
@@ -51,21 +50,20 @@ config :esbuild,
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.4.3",
+  version: "4.1.0",
   default: [
     args: ~w(
-      --config=tailwind.config.js
-      --input=css/app.css
-      --output=../priv/static/assets/app.css
+      --input=assets/css/app.css
+      --output=priv/static/assets/app.css
     ),
-    cd: Path.expand("../assets", __DIR__)
+    cd: Path.expand("..", __DIR__)
   ],
   open_layers: [
     args: ~w(
-      --input=node_modules/ol/ol.css
-      --output=../priv/static/assets/ol.css
+      --input=assets/css/open_layers.css
+      --output=priv/static/assets/ol.css
     ),
-    cd: Path.expand("../assets", __DIR__)
+    cd: Path.expand("..", __DIR__)
   ]
 
 # Configures Elixir's Logger

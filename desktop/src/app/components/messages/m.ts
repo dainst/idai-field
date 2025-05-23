@@ -97,6 +97,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_URLS = 'M.Import.ValidationErrors.invalidUrls';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE = 'M.Import.ValidationErrors.invalidDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATES = 'M.Import.ValidationErrors.invalidDates';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.rangeNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.singleNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.timeNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET = 'M.Import.ValidationErrors.invalidDate.timeNotSet';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.invalidDate.endDateBeforeBeginningDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
@@ -108,7 +113,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidMapLayerRelationTargets';
     public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
-    public static IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.endDateBeforeBeginningDate';
     public static IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED = 'M.Import.ValidationErrors.resourceLimitExceeded';
 
     // Import Package - ImportErrors
@@ -172,8 +176,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Docedit Package
     public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
-    public static DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS = 'docedit.warning.categoryChange.fields';
-    public static DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS = 'docedit.warning.categoryChange.relations';
+    public static DOCEDIT_WARNING_FIELD_DATA_DELETION = 'docedit.warning.fieldDataDeletion';
     public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
     public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
@@ -181,6 +184,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_URL = 'docedit.validation.error.invalidUrl';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_URLS = 'docedit.validation.error.invalidUrls';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE = 'docedit.validation.error.invalidDate';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATES = 'docedit.validation.error.invalidDates';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED = 'docedit.validation.error.invalidDate.rangeNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED = 'docedit.validation.error.invalidDate.singleNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED = 'docedit.validation.error.invalidDate.timeNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET = 'docedit.validation.error.invalidDate.timeNotSet';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.invalidDate.endDateBeforeBeginningDate';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'docedit.validation.error.invalidDatingValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'docedit.validation.error.invalidDatingValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'docedit.validation.error.invalidDimensionValue';
@@ -188,9 +198,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS = 'docedit.validation.error.invalidDecimalSeparators';
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
+    public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTIES = 'docedit.validation.error.missingProperties';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
-    public static DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.endDateBeforeBeginningDate';
     public static DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'docedit.validation.error.maxCharactersExceeded';
 
     // Images Package
@@ -251,8 +261,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
     public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.fieldConditionViolation.valuelists';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.fieldConditionViolation.inputType';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.subfieldConditionViolation.valuelists';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.subfieldConditionViolation.inputType';
+    public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION = 'configuration.error.subfieldConditionViolation.deletion';
     public static CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION = 'configuration.error.valueUsedInSubfieldCondition';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
     public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER = 'configuration.error.invalidResourceLimit.notANumber';
@@ -602,11 +615,31 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE] = {
-            content: $localize `:@@messages.import.validation.error.invalidDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010`,
+            content: $localize `:@@messages.import.validation.error.invalidDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATES] = {
-            content: $localize `:@@messages.import.validation.error.invalidDates:Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010`,
+            content: $localize `:@@messages.import.validation.error.invalidDates:Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.rangeNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.singleNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.timeNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.timeNotSet:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: $localize `:@@messages.import.validation.error.endDateBeforeBeginningDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
@@ -649,12 +682,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.validation.error.invalidMapLayerRelationTargets:Die Relation \'hasDefaultMapLayer\' einer Ressource der Kategorie \'[0]\' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation \'hasMapLayer\' verwiesen wird.`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
-            content: $localize `:@@messages.import.validation.error.endDateBeforeBeginningDate:Das Enddatum einer Ressource der Kategorie \'[0]\' liegt vor dem Startdatum.`,
-            level: 'danger'
-        };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
-            content: $localize `:@@messages.import.validation.error.missingProperty:Eigenschaft(en) einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.`,
+            content: $localize `:@@messages.import.validation.error.missingProperty:Folgende Felder einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {
@@ -785,12 +814,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.docedit.warning.saveConflict:Beim Speichern der Ressource ist ein Konflikt aufgetreten.`,
             level: 'warning'
         };
-        this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS] = {
-            content: $localize `:@@messages.docedit.warning.categoryChange.fields:Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]`,
-            level: 'warning'
-        };
-        this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS] = {
-            content: $localize `:@@messages.docedit.warning.categoryChange.relations:Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]`,
+        this.msgs[M.DOCEDIT_WARNING_FIELD_DATA_DELETION] = {
+            content: $localize `:@@messages.docedit.warning.fieldDataDeletion:Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]`,
             level: 'warning'
         };
         this.msgs[M.DOCEDIT_ERROR_SAVE] = {
@@ -821,6 +846,34 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.docedit.validation.error.invalidUrls:Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].`,
             level: 'danger'
         };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate:Bitte tragen Sie im Feld \'[1]\' eine gültige Datumsangabe ein.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATES] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDates:Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.rangeNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.singleNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.timeNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.timeNotSet:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: $localize `:@@messages.docedit.validation.error.endDateBeforeBeginningDate:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.`,
+            level: 'danger'
+        };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
             content: $localize `:@@messages.docedit.validation.error.invalidDatingValue:Bitte tragen Sie im Feld \'[1]\' eine gültige Datierung ein.`,
             level: 'danger'
@@ -849,6 +902,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.docedit.validation.error.missingProperty:Bitte füllen Sie das Feld \'[1]\' aus.`,
             level: 'danger'
         };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTIES] = {
+            content: $localize `:@@messages.docedit.validation.error.missingProperties:Bitte füllen Sie die folgenden Felder aus: [1]`,
+            level: 'danger'
+        };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {
             content: $localize `:@@messages.docedit.validation.error.maxCharactersExceeded:Im Feld \'[1]\' dürfen maximal [2] Zeichen eingetragen werden.`,
             level: 'danger'
@@ -859,10 +916,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {
             content: $localize `:@@messages.docedit.validation.error.noRecordedInTarget:Die Zielressource [0] der Relation \'Aufgenommen in Maßnahme\' konnte nicht gefunden werden.`,
-            level: 'danger'
-        };
-        this.msgs[M.DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
-            content: $localize `:@@messages.docedit.validation.error.endDateBeforeBeginningDate:Das angegebene Enddatum liegt vor dem Startdatum. Bitte prüfen Sie die eingetragenen Daten.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_SUCCESS_IMAGES_UPLOADED] = {
@@ -1058,12 +1111,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.configuration.error.noSubfields:Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.`,
             level: 'danger'
         };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.valuelists:Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.inputType:Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
         this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS] = {
             content: $localize `:@@messages.configuration.error.subfieldConditionViolation.valuelists:Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE] = {
             content: $localize `:@@messages.configuration.error.subfieldConditionViolation.inputType:Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION] = {
+            content: $localize `:@@messages.configuration.error.subfieldConditionViolation.deletion:Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION] = {

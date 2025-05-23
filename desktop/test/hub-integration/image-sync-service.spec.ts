@@ -9,7 +9,7 @@ import { SyncTarget } from '../../src/app/services/settings/sync-target';
 import * as schema from '../../../core/api-schemas/files-list.json';
 
 const fs = require('fs');
-const execSync = require('child_process').execSync;
+const axios = require('axios');
 
 
 /**
@@ -23,10 +23,15 @@ describe('ImageSyncService', () => {
     const mockImage: Buffer = fs.readFileSync(process.cwd() + '/test/test-data/logo.png');
     const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
     const testProjectIdentifier = 'test_tmp_project';
-    const hubContainer = 'field-hub-client-integration-test';
 
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
+
+    // see desktop/test/hub-integration/docker-compose.yml
+    const fieldHubAdminCredentials = {
+        username: "client_integration_test",
+        password: "pw"
+    }
 
     const syncTarget: SyncTarget = {
         // see desktop/test/hub-integration/docker-compose.yml
@@ -71,9 +76,6 @@ describe('ImageSyncService', () => {
         await imageStore.init(testFilePath, testProjectIdentifier);
 
         remoteImageStore = new RemoteImageStore(settingsProviderMock, null);
-
-        const command = `docker exec field-hub-client-integration-test /app/bin/field_hub eval 'FieldHub.CLI.setup()'`;
-        execSync(command);
     });
 
 
@@ -82,9 +84,12 @@ describe('ImageSyncService', () => {
 
         await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
 
-        const command = `docker exec ${hubContainer} /app/bin/field_hub eval `
-            + `'FieldHub.CLI.create_project("${testProjectIdentifier}", "${syncTarget.password}")'`;
-        execSync(command);
+        await axios({
+            method: 'post',
+            baseURL: `${syncTarget.address}/projects/${testProjectIdentifier}`,
+            auth: fieldHubAdminCredentials,
+            data: { password: syncTarget.password }
+        })
     });
 
 
@@ -92,9 +97,11 @@ describe('ImageSyncService', () => {
 
         await imageStore.deleteData(testProjectIdentifier);
 
-        const command = `docker exec ${hubContainer} /app/bin/field_hub eval `
-            + `'FieldHub.CLI.delete_project("${testProjectIdentifier}")'`;
-        execSync(command).toString();
+        await axios({
+            method: 'delete',
+            baseURL: `${syncTarget.address}/projects/${testProjectIdentifier}`,
+            auth: fieldHubAdminCredentials
+        })
     });
 
 

@@ -138,6 +138,8 @@ export class AddFieldModalComponent {
             defaultLabel: template?.defaultLabel ?? {},
             description: template?.description ?? {},
             defaultDescription: template?.defaultDescription ?? {},
+            editable: true,
+            visible: true,
             source: 'custom'
         };
         componentInstance.groupName = this.groupName;

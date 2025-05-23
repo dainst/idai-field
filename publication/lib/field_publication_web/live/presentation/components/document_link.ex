@@ -1,5 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
-  use Phoenix.Component
+  use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data
@@ -13,43 +13,45 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   attr :doc, Document, required: true
   attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
+  attr :image_height, :integer, default: 64
+  attr :geometry_indicator, :boolean, default: false
+  attr :focus, :atom, default: :default
 
   def show(assigns) do
     ~H"""
-    <div class="flex mb-[2px]">
+    <div class="flex mb-[2px]" id={@doc.id}>
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
-        class="rounded-tl pl-2 rounded-bl text-black"
-        style={"background-color: #{@doc.category.color}; filter: saturate(50%); border-color: #{@doc.category.color}; border-width: 1px 1px 1px 0px;"}
+        class="rounded-tl pl-2 rounded-bl"
+        style={"background-color: #{desaturate_category_color(@doc.category.color)}; border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
       >
-        <div class="h-full bg-white/60 pl-2 pr-2 pt-3 pb-3 font-thin">
+        <div class="h-full bg-white/70 hover:bg-white/40  pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
           <I18n.text values={@doc.category.labels} />
         </div>
       </.link>
       <.link
-        class="grow p-3 rounded-tr rounded-br"
-        style="border-width: 1px 1px 1px 0px;"
-        patch={
-          ~p"/projects/#{@doc.project}/#{@doc.publication}/#{@lang}/#{if @doc.id != "project" do
-            @doc.id
-          else
-            ""
-          end}"
-        }
+        class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 "
+        style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
+        patch={construct_doc_link(@doc.project, @doc.publication, @lang, @doc.id, @focus)}
       >
         <div>
-          <span><%= @doc.identifier %></span>
+          <span class="text-slate-600">{@doc.identifier}</span>
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
-          <%= if shortdescription do %>
-            <small class="ml-2 text-slate-600">
+          <small class="ml-2 text-slate-600">
+            <%= if shortdescription do %>
               <I18n.text values={shortdescription.value} />
-            </small>
-          <% end %>
+            <% end %>
+            <.icon
+              :if={@geometry_indicator and Data.get_field(@doc, "geometry") != nil}
+              name="hero-map"
+              class="mb-1"
+            />
+          </small>
           <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
-          <div class="flex items-center overflow-x-auto">
+          <div id={"#{@doc.id}-images"} class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>
               <Image.show
-                size="^,128"
+                size={"^,#{@image_height}"}
                 class="p-1 inline"
                 project={@doc.project}
                 uuid={uuid}
@@ -66,55 +68,22 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
     """
   end
 
-  def hierarchy(assigns) do
-    ~H"""
-    <div class="flex mb-[2px]">
-      <div
-        class="rounded-tl pl-2 rounded-bl"
-        style={"background-color: #{@doc.category.color}; filter: saturate(50%); border-color: #{@doc.category.color}; border-width: 1px 0px 1px 0px;"}
-      >
-        <div class="h-full bg-white/60 pl-2 pr-2 pt-3 font-thin">
-          <I18n.text values={@doc.category.labels} />
-        </div>
-      </div>
-      <.link
-        class={"grow p-3 rounded-tr rounded-br #{if Map.get(assigns, :is_highlighted), do: "bg-slate-200"}"}
-        style={"border-color: #{@doc.category.color}; filter:saturate(50%); border-width: 1px 1px 1px 0px;"}
-        patch={
-          ~p"/projects/#{@doc.project}/#{@doc.publication}/#{@lang}/hierarchy/#{if @doc.id != "project" do
-            @doc.id
-          else
-            ""
-          end}"
-        }
-      >
-        <div>
-          <%= @doc.identifier %>
-          <% shortdescription = Data.get_field(@doc, "shortDescription") %>
-          <%= if shortdescription do %>
-            <small class="ml-2 text-slate-600">
-              <I18n.text values={shortdescription.value} />
-            </small>
-          <% end %>
-          <% preview_image_uuid = @doc.image_uuids |> List.first() %>
-          <div :if={preview_image_uuid != nil}>
-            <Image.show
-              size="^,128"
-              class="pt-1 border-slate-100"
-              project={@doc.project}
-              uuid={preview_image_uuid}
-              alt_text={"An image depicting #{@doc.identifier}"}
-            />
-          </div>
-        </div>
-      </.link>
+  defp construct_doc_link(project_name, draft_date, lang, uuid, focus_parameter) do
+    uuid = if uuid == "project", do: "", else: uuid
 
-      <div class="w-8 pt-3">
-        <%= if Map.get(assigns, :is_highlighted) do %>
-          <div class="hero-chevron-right"></div>
-        <% end %>
-      </div>
-    </div>
-    """
+    query =
+      case focus_parameter do
+        :map ->
+          %{focus: "map"}
+
+        _ ->
+          %{}
+      end
+
+    ~p"/projects/#{project_name}/#{draft_date}/#{lang}/#{uuid}?#{query}"
+  end
+
+  def desaturate_category_color(color) do
+    "hsl(from  #{color} h calc(s * 0.5) l)"
   end
 end

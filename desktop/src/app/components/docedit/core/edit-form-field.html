@@ -20,19 +20,22 @@
     [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-valuelist-multi-input>
 
 <form-field-dropdown *ngIf="field.inputType === 'dropdown'"
-    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown>
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
+    (onChanged)="onChanged.emit()"></form-field-dropdown>
 
 <form-field-dropdown-range *ngIf="field.inputType === 'dropdownRange'"
     [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown-range>
 
 <form-field-radio *ngIf="field.inputType === 'radio'"
-    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-radio>
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
+    (onChanged)="onChanged.emit()"></form-field-radio>
 
 <form-field-boolean *ngIf="field.inputType === 'boolean'"
-    [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-boolean>
+    [fieldContainer]="fieldContainer" [fieldName]="field.name" (onChanged)="onChanged.emit()"></form-field-boolean>
 
 <form-field-checkboxes *ngIf="field.inputType === 'checkboxes'"
-    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-checkboxes>
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
+    (onChanged)="onChanged.emit()"></form-field-checkboxes>
 
 <form-field-date *ngIf="field.inputType === 'date'"
     [fieldContainer]="fieldContainer" [field]="field"></form-field-date>

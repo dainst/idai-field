@@ -73,7 +73,7 @@ import { DateParserFormatter } from './core/forms/date/date-parser-formatter';
         MessagesModule,
         WidgetsModule,
         ImageGridModule,
-        ImageRowModule
+        ImageRowModule    
     ],
     declarations: [
         ConflictDeletedModalComponent,

@@ -36,9 +36,10 @@ export async function createCategory(categoryName: string) {
 
 
 export async function createField(fieldName: string, inputType?: Field.InputType, valuelistName?: string,
-                                  disableMultiLanguageSupport: boolean = false) {
+                                  disableMultiLanguageSupport: boolean = false,
+                                  categoryName: string = 'Place', supercategoryName?: string) {
         
-    await CategoryPickerPage.clickSelectCategory('Place');
+    await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
     await ConfigurationPage.clickAddFieldButton();
     await AddFieldModalPage.typeInSearchFilterInput(fieldName);
     await AddFieldModalPage.clickCreateNewField();

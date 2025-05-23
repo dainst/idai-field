@@ -101,6 +101,12 @@ export default getProjectViewMapHook = () => {
 
             this.projectTileLayers = layerGroup;
             this.projectTileLayerExtent = layerGroupExtent;
+
+            const layerCount = this.projectTileLayers.length
+
+            for (let i = 0; i < layerCount; i++) {
+                projectTileLayers[i].setZIndex(layerCount - i - 200);
+            }
         },
 
         clearHighlights() {

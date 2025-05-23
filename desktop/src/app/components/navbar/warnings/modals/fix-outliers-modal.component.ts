@@ -27,7 +27,6 @@ export class FixOutliersModalComponent {
     public valuelist: Valuelist;
     public selectedValues: string[];
     public replaceAll: boolean;
-    public countAffected: { display: number, complete: number, onlyCheckboxFields: number };
 
     private projectDocument: Document;
     private affectedDocuments: { complete: Array<AffectedDocument>, onlyCheckboxFields: Array<AffectedDocument> };
@@ -90,12 +89,6 @@ export class FixOutliersModalComponent {
             if (affectedDocumentCheckboxes.fields.length) 
                 this.affectedDocuments.onlyCheckboxFields.push(affectedDocumentCheckboxes);
         }
-
-        this.countAffected = {
-            display: this.affectedDocuments.complete.length,
-            complete: this.affectedDocuments.complete.length,
-            onlyCheckboxFields: this.affectedDocuments.onlyCheckboxFields.length
-        };
     }
 
 
@@ -125,17 +118,15 @@ export class FixOutliersModalComponent {
         } else {
             this.selectedValues.push(value);
         }
-
-        this.setCountAffectedDisplay();
     }
 
 
-    private setCountAffectedDisplay() {
+    public getCountAffected(): number {
 
         if (this.selectedValues.length > 1) {
-            this.countAffected.display = this.countAffected.onlyCheckboxFields;
+            return this.affectedDocuments.onlyCheckboxFields.length;
         } else {
-            this.countAffected.display = this.countAffected.complete;
+            return this.affectedDocuments.complete.length;
         }
     }
 

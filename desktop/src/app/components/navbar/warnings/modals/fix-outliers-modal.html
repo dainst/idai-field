@@ -34,8 +34,8 @@
     <div *ngIf="isValid()" 
          id="multiple-switch" 
          class="row" 
-         [disableTooltip]="countAffected.display !== 1" 
-         [class.disabled]="countAffected.display === 1"
+         [disableTooltip]="getCountAffected() !== 1" 
+         [class.disabled]="getCountAffected() === 1"
          ngbTooltip="Nur diese Ressource ist betroffen." 
          i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
          container="body">
@@ -43,11 +43,11 @@
             <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse in kompatiblen Feldern ersetzen</span>
         </div>
         <div class="col-auto"> 
-            <label class="switch" [class.disabled]="countAffected.display === 1">
+            <label class="switch" [class.disabled]="getCountAffected() === 1">
                 <input type="checkbox" 
                        [checked]="replaceAll" 
                        (change)="replaceAll = !replaceAll" 
-                       [disabled]="countAffected.display === 1">
+                       [disabled]="getCountAffected() === 1">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -57,12 +57,12 @@
         @if (selectedValues.length === 1) {
             <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.fixOutliers.allSingleValue.info">
-                Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{getValueLabel(outlierValue)}}</b> in sämtlichen Feldern aller <b>{{countAffected.display}}</b> Ressourcen durch den ausgewählten Wert <b>{{selectedValues[0]}}</b> ersetzt.
+                Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{getValueLabel(outlierValue)}}</b> in sämtlichen Feldern aller <b>{{getCountAffected()}}</b> Ressourcen durch den ausgewählten Wert <b>{{selectedValues[0]}}</b> ersetzt.
             </div>
         } @else {
             <div class="text-center alert alert-warning"
              i18n="@@navbar.taskbar.fixOutliers.allMultipleValues.info">
-                Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{getValueLabel(outlierValue)}}</b> in sämtlichen Feldern aller <b>{{countAffected.display}}</b> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte
+                Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{getValueLabel(outlierValue)}}</b> in sämtlichen Feldern aller <b>{{getCountAffected()}}</b> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte
                 @for (value of selectedValues; track value; let isLast = $last) {<b>{{value}}@if(!isLast){, }</b>} 
                 ersetzt.
             </div>

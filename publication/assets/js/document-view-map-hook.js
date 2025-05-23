@@ -14,7 +14,7 @@ import Overlay from 'ol/Overlay.js';
 
 const tileSize = 256;
 
-function createTileLayer(info, projectName) {
+export function createTileLayer(info, projectName) {
     const geoReference = info.extent;
 
     const extent = [
@@ -96,6 +96,10 @@ function getPolygonStyle(featureProperties) {
     return style;
 }
 
+export function getVisibilityKey(project, layerName) {
+    `layer-visibility-${project}/${layerName}`
+}
+
 const pointRadius = 5;
 const lineWidth = pointRadius * 2;
 
@@ -144,7 +148,7 @@ function getPointStyle(featureProperties) {
     })
 }
 
-const styleFunction = function (feature) {
+export const styleFunction = function (feature) {
     const props = feature.getProperties();
     if (props.type === "Polygon" || props.type === "MultiPolygon") {
         return getPolygonStyle(props);
@@ -328,7 +332,7 @@ export default getDocumentViewMapHook = () => {
 
                 layerGroup.push(layer);
 
-                const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+                const preference = localStorage.getItem(getVisibilityKey(this.project, layer.get('name')))
                 let visible = null;
 
                 if (preference == "true") {
@@ -507,9 +511,6 @@ export default getDocumentViewMapHook = () => {
                 layer.setVisible(visibility);
                 localStorage.setItem(this.getVisibilityKey(this.projectName, layer.get('name')), visibility)
             }
-        },
-        getVisibilityKey(project, layerName) {
-            `layer-visibility-${project}/${layerName}`
         }
     }
 }

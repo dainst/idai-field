@@ -41,6 +41,7 @@ defmodule FieldPublication.Publications.Search do
       :project_name,
       :publication_draft_date,
       :configuration_based_field_mappings,
+      :geo,
       :full_doc,
       :full_doc_as_text
     ]
@@ -208,6 +209,36 @@ defmodule FieldPublication.Publications.Search do
       end
 
     OpenSearchService.insert_documents(docs, index)
+  end
+
+  def get_category_count(%Publication{} = pub) do
+    payload = %{
+      size: 0,
+      aggs: %{
+        category_aggregation: %{
+          terms: %{
+            field: "category",
+            size: 1000
+          }
+        }
+      }
+    }
+
+    index = get_search_alias(pub)
+
+    OpenSearchService.run_query(index, payload)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        body
+        |> Jason.decode!()
+        |> get_in(["aggregations", "category_aggregation", "buckets"])
+        |> Enum.reduce(%{}, fn %{"doc_count" => count, "key" => category}, acc ->
+          Map.put(acc, category, count)
+        end)
+
+      _ ->
+        %{}
+    end
   end
 
   def search(q, filter, from \\ 0, size \\ 100) do
@@ -388,6 +419,10 @@ defmodule FieldPublication.Publications.Search do
         type: "date",
         store: true
       },
+      geo: %{
+        type: "geo_shape",
+        store: true
+      },
       full_doc: %{
         type: "flat_object"
       },
@@ -438,6 +473,19 @@ defmodule FieldPublication.Publications.Search do
     full_doc =
       Data.apply_project_configuration(doc, publication_configuration, publication)
 
+    geo =
+      res["geometry"]
+      |> case do
+        nil ->
+          nil
+
+        val when val == %{} ->
+          nil
+
+        val ->
+          val
+      end
+
     base_document =
       %SearchDocument{
         id: res["id"],
@@ -449,6 +497,7 @@ defmodule FieldPublication.Publications.Search do
         publication_draft_date: publication.draft_date,
         project_name: publication.project_name,
         configuration_based_field_mappings: %{},
+        geo: geo,
         full_doc: full_doc,
         full_doc_as_text: Jason.encode!(full_doc)
       }

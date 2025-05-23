@@ -225,15 +225,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     end
   end
 
-  defp extract_tile_layer_info(%{
-         "resource" => %{
-           "georeference" => georeference,
-           "height" => height,
-           "width" => width,
-           "id" => uuid,
-           "identifier" => identifier
-         }
-       }) do
+  def extract_tile_layer_info(%{
+        "resource" => %{
+          "georeference" => georeference,
+          "height" => height,
+          "width" => width,
+          "id" => uuid,
+          "identifier" => identifier
+        }
+      }) do
     %{
       extent: georeference,
       height: height,
@@ -382,7 +382,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
-  defp render_tile_layer_selection_group(assigns) do
+  def render_tile_layer_selection_group(assigns) do
     ~H"""
     <%= if @layer_states != [] do %>
       <div class="font-semibold pb-2">

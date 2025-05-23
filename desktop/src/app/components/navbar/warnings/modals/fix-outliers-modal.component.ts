@@ -123,10 +123,18 @@ export class FixOutliersModalComponent {
 
     public getCountAffected(): number {
 
+        const affectedDocuments = this.getAffectedDocuments();
+
+        return affectedDocuments.length
+    }
+
+
+    private getAffectedDocuments(): Array<AffectedDocument> {
+
         if (this.selectedValues.length > 1) {
-            return this.affectedDocuments.onlyCheckboxFields.length;
+            return this.affectedDocuments.onlyCheckboxFields;
         } else {
-            return this.affectedDocuments.complete.length;
+            return this.affectedDocuments.complete;
         }
     }
 
@@ -153,9 +161,7 @@ export class FixOutliersModalComponent {
 
     private async replaceMultiple() {
 
-        const documentsToUpdate = this.selectedValues.length > 1 
-            ? this.affectedDocuments.onlyCheckboxFields 
-            : this.affectedDocuments.complete;
+        const documentsToUpdate = this.getAffectedDocuments();
         
         for (let affectedDocument of documentsToUpdate) {
             for (let field of affectedDocument.fields) {

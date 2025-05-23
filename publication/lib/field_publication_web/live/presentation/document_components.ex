@@ -472,12 +472,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         </div>
       </div>
 
-      <section class="flex h-dvh">
+      <section class="flex m-5">
         <div>
           <.group_heading>
             {gettext("Documents")}
           </.group_heading>
-          <div class="p-4">
+          <div class="p-4 max-h-[calc(100dvh-300px)] overflow-y-auto">
             <.display_category_hierarchy
               publication={@publication}
               hierarchy={@category_hierarchy}
@@ -490,7 +490,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
             id="project_doc_map"
             class="h-auto"
-            style="width: 100%; height: calc(100dvh - 50px)"
+            style="width: 100%; height: calc(100dvh - 300px)"
             publication={@publication}
             lang={@lang}
           />

@@ -104,7 +104,7 @@ export async function createMissingIdentifierPrefixWarning(resourceIdentifier: s
 
 
 export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, 
-                                                  inputType: Field.InputType) {
+                                                  inputType: Field.InputType = Field.InputType.CHECKBOXES) {
 
     await navigateTo('configuration');
     await createField(fieldName, inputType, 'Wood-color-default');

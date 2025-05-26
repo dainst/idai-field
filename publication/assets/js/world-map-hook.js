@@ -13,11 +13,15 @@ import { Style, Icon } from 'ol/style.js';
 
 import { fromLonLat } from 'ol/proj';
 
+const defaultDimension = 30;
+
 const styles = {
     homeMarker: new Style({
         image: new Icon({
             color: "#000",
-            anchor: [0.5, 30],
+            anchor: [0.5, defaultDimension],
+            width: defaultDimension,
+            height: defaultDimension,
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             src: 'images/map-pin.svg',
@@ -25,13 +29,15 @@ const styles = {
     }),
 }
 
+const heighlightedDimesion = 60
+
 const stylesHighlighted = {
     homeMarker: new Style({
         image: new Icon({
             color: "#000",
-            anchor: [0.5, 30],
-            width: 60,
-            height: 60,
+            anchor: [0.5, heighlightedDimesion],
+            width: heighlightedDimesion,
+            height: heighlightedDimesion,
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             src: 'images/map-pin.svg',

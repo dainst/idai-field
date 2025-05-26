@@ -28,8 +28,10 @@ const styles = {
 const stylesHighlighted = {
     homeMarker: new Style({
         image: new Icon({
-            color: "rgb(99 102 241)",
+            color: "#000",
             anchor: [0.5, 30],
+            width: 60,
+            height: 60,
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             src: 'images/map-pin.svg',

@@ -10,6 +10,18 @@ import Overlay from 'ol/Overlay.js';
 
 import { createTileLayer, getVisibilityKey, styleFunction } from './map-helper-functions.js';
 
+async function checkForHitInOrder(layers, coords) {
+    for (const layer of layers) {
+        const features = await layer.getFeatures(coords);
+
+        if (features.length) {
+            return features;
+        }
+    }
+
+    return [];
+}
+
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
@@ -111,64 +123,36 @@ export default getDocumentViewMapHook = () => {
                 _this.identifierOverlay.setPosition(undefined)
             });
 
-            this.map.on('pointermove', function (e) {
+            this.map.on('pointermove', async function (e) {
+
+                if (e.dragging) {
+                    return;
+                }
 
                 _this.setFillForChildren(false);
                 _this.setFillForParents(false);
                 _this.setFillForAncestors(false);
                 _this.identifierOverlay.setPosition(undefined)
 
-                if (e.dragging) {
-                    return;
+                const hitFeatures = await checkForHitInOrder(
+                    [_this.childrenLayer, _this.parentLayer, _this.ancestorLayer],
+                    e.pixel
+                )
+                if (hitFeatures.length > 0) {
+                    _this.highlightFeature(hitFeatures[0], e.coordinate)
                 }
-
-                _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
-                    const childFeature = features.length ? features[0] : undefined;
-                    if (childFeature) {
-                        _this.highlightFeature(childFeature, e.coordinate)
-                    } else {
-                        _this.parentLayer.getFeatures(e.pixel).then(function (features) {
-                            const parentFeature = features.length ? features[0] : undefined;
-                            if (parentFeature) {
-                                _this.highlightFeature(parentFeature, e.coordinate)
-                            } else {
-                                _this.ancestorLayer.getFeatures(e.pixel).then(function (features) {
-                                    const ancestorFeature = features.length ? features[0] : undefined;
-                                    if (ancestorFeature) {
-                                        _this.highlightFeature(ancestorFeature, e.coordinate)
-                                    }
-                                })
-                            };
-                        })
-                    }
-                })
             });
 
-            this.map.on('singleclick', function (e) {
+            this.map.on('singleclick', async function (e) {
+                const hitFeatures = await checkForHitInOrder(
+                    [_this.childrenLayer, _this.parentLayer, _this.ancestorLayer],
+                    e.pixel
+                )
 
-                _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
-                    const feature = features.length ? features[0] : undefined;
-                    if (feature) {
-                        let properties = feature.getProperties()
-                        _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
-                    } else {
-                        _this.parentLayer.getFeatures(e.pixel).then(function (features) {
-                            const feature = features.length ? features[0] : undefined;
-                            if (feature) {
-                                let properties = feature.getProperties()
-                                _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
-                            } else {
-                                _this.ancestorLayer.getFeatures(e.pixel).then(function (features) {
-                                    const feature = features.length ? features[0] : undefined;
-                                    if (feature) {
-                                        let properties = feature.getProperties()
-                                        _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
-                                    }
-                                })
-                            };
-                        })
-                    }
-                })
+                if (hitFeatures.length > 0) {
+                    let properties = hitFeatures[0].getProperties()
+                    _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
+                };
             })
         },
         setTileLayers(projectName, tileLayersInfo, groupName) {

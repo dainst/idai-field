@@ -81,7 +81,7 @@ export default getProjectViewMapHook = () => {
 
                 layerGroup.push(layer);
 
-                const preference = localStorage.getItem(getVisibilityKey(this.project, layer.get('name')))
+                const preference = localStorage.getItem(getVisibilityKey(this.projectName, layer.get('name')))
                 let visible = null;
 
                 if (preference == "true") {
@@ -105,7 +105,7 @@ export default getProjectViewMapHook = () => {
             const layerCount = this.projectTileLayers.length
 
             for (let i = 0; i < layerCount; i++) {
-                projectTileLayers[i].setZIndex(layerCount - i - 200);
+                this.projectTileLayers[i].setZIndex(layerCount - i - 200);
             }
         },
 

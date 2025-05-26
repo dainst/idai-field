@@ -97,7 +97,7 @@ function getPolygonStyle(featureProperties) {
 }
 
 export function getVisibilityKey(project, layerName) {
-    `layer-visibility-${project}/${layerName}`
+    return `layer-visibility-${project}/${layerName}`;
 }
 
 const pointRadius = 5;

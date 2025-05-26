@@ -22,6 +22,18 @@ async function checkForHitInOrder(layers, coords) {
     return [];
 }
 
+function setFillForLayer(layer, value) {
+    if (!layer) return;
+
+    let features = layer.getSource().getFeatures();
+    for (let feature of features) {
+        let properties = feature.getProperties();
+        properties.fill = value;
+        feature.setProperties(properties);
+    }
+}
+
+
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
@@ -80,9 +92,7 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 this.clearAllHighlights();
 
-                this.setFillForParents(false);
-                this.setFillForSelectedDocument(true);
-                this.setFillForChildren(false);
+                setFillForLayer(this.docLayer, true)
             })
         },
 
@@ -112,14 +122,19 @@ export default getDocumentViewMapHook = () => {
             _this.identifierOverlay.setPosition(undefined)
 
             this.el.addEventListener('pointerenter', function (e) {
-                _this.setFillForSelectedDocument(false);
+                setFillForLayer(_this.docLayer, false);
             });
 
             this.el.addEventListener('pointerleave', function (e) {
-                _this.setFillForAncestors(false);
-                _this.setFillForParents(false);
-                _this.setFillForSelectedDocument(true);
-                _this.setFillForChildren(false);
+                [
+                    _this.ancestorLayer,
+                    _this.parentLayer,
+                    _this.childrenLayer
+                ].map(layer => {
+                    setFillForLayer(layer, false);
+                })
+
+                setFillForLayer(_this.docLayer, true)
                 _this.identifierOverlay.setPosition(undefined)
             });
 
@@ -129,9 +144,14 @@ export default getDocumentViewMapHook = () => {
                     return;
                 }
 
-                _this.setFillForChildren(false);
-                _this.setFillForParents(false);
-                _this.setFillForAncestors(false);
+                [
+                    _this.ancestorLayer,
+                    _this.parentLayer,
+                    _this.childrenLayer
+                ].map(layer => {
+                    setFillForLayer(layer, false);
+                })
+
                 _this.identifierOverlay.setPosition(undefined)
 
                 const hitFeatures = await checkForHitInOrder(
@@ -296,45 +316,16 @@ export default getDocumentViewMapHook = () => {
                 this.identifierOverlay.setPosition(coordinate);
             }
         },
-        setFillForAncestors(val) {
-            if (!this.ancestorLayer) return;
-            let features = this.ancestorLayer.getSource().getFeatures();
-            for (let feature of features) {
-                let properties = feature.getProperties();
-                properties.fill = val;
-                feature.setProperties(properties);
-            }
-        },
-        setFillForParents(val) {
-            if (!this.parentLayer) return;
-            let parentFeatures = this.parentLayer.getSource().getFeatures();
-            for (let parent of parentFeatures) {
-                let properties = parent.getProperties();
-                properties.fill = val;
-                parent.setProperties(properties);
-            }
-        },
-        setFillForSelectedDocument(val) {
-            if (!this.docLayer) return;
-            let docFeature = this.docLayer.getSource().getFeatures()[0];
-            let properties = docFeature.getProperties();
-            properties.fill = val;
-            docFeature.setProperties(properties);
-        },
-        setFillForChildren(val) {
-            if (!this.childrenLayer) return;
-            let childFeatures = this.childrenLayer.getSource().getFeatures();
-            for (let child of childFeatures) {
-                let properties = child.getProperties();
-                properties.fill = val;
-                child.setProperties(properties);
-            }
-        },
         clearAllHighlights() {
-            this.setFillForParents(false);
-            this.setFillForSelectedDocument(false);
-            this.setFillForChildren(false);
-            this.setFillForAncestors(false);
+            [
+                this.ancestorLayer,
+                this.parentLayer,
+                this.docLayer,
+                this.childrenLayer
+            ].map(layer => {
+                setFillForLayer(layer, false)
+            })
+
             this.identifierOverlay.setPosition(undefined)
         },
         toggleLayerVisibility(uuid, visibility) {

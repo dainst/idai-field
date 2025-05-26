@@ -63,7 +63,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
               <dl class="grid grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
-                  <div class="border p-0.5 border-black/20 overflow-auto">
+                  <div class="border p-0.5 border-black/20">
                     <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                     <dd class="pl-4">
                       <GenericField.render field={field} lang={@lang} />

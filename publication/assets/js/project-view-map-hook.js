@@ -5,7 +5,7 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import GeoJSON from 'ol/format/GeoJSON.js';
 
-import { createTileLayer, getVisibilityKey, styleFunction } from './document-view-map-hook.js';
+import { createTileLayer, getVisibilityKey, styleFunction } from './map-helper-functions.js';
 
 export default getProjectViewMapHook = () => {
     return {

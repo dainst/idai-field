@@ -117,12 +117,6 @@
     color: #fff;
   }
 
-  #document-edit-div-button-show-change-history {
-    position: absolute;
-    bottom: -3em;
-    left: 0.5em; 
-  }
-
   #document-edit-button-goto-view {
     margin-left: 7px;
   }
@@ -199,4 +193,9 @@
   .mdi-expand-all {
     color: $green-button-color;
   }
+}
+
+#document-edit-div-button-show-change-history {
+  padding-bottom: 26px; 
+  padding-left: 10px;
 }

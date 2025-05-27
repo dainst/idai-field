@@ -73,13 +73,6 @@
                         [scrollTargetField]="scrollTargetField"
                         >
                 </edit-form>
-                <div id="document-edit-div-button-show-change-history" >
-                    <button class="btn btn-group btn-secondary"                                        
-                        (click)="showChangeHistory()">
-                        <span class="mdi mdi-history"></span>                
-                        <span class="button-label" i18n="@@buttons.history">Änderungshistorie</span>
-                    </button>
-                </div>
             </div>
             <div *ngIf="isLoading()" id="loading-icon-container">
                 <loading-icon [context]="'docedit'"></loading-icon>
@@ -99,4 +92,11 @@
             </div>
         </main>
     </section>
+    <div id="document-edit-div-button-show-change-history">
+        <button class="btn btn-group btn-secondary"                                        
+            (click)="showChangeHistory()">
+            <span class="mdi mdi-history"></span>                
+            <span class="button-label" i18n="@@buttons.history">Änderungshistorie</span>
+        </button>
+    </div>
 </div>

@@ -50,6 +50,7 @@ export class ChangesHistoryModalComponent {
 
 
     public formatDateTime( time: Date) {
+        
          return(formatDate(time, Settings.getLocale() , getSystemTimezone(), 'longTime'))
     }
 

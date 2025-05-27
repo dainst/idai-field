@@ -1,7 +1,7 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'projects'|'configuration'|'geometryEdit'|'mapLayersEdit'
     |'georeferenceEdit'|'configurationEdit'|'configurationValuelistEdit'|'configurationSubfieldEdit'
-    |'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'|'qrCodeScanner'|'printSettingsModal'
-    |'workflowEditor'
+    |'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'|'qrCodeScanner'|'historyModal'|
+    'printSettingsModal'|'workflowEditor';
 
     
 /**
@@ -23,6 +23,7 @@ export module MenuContext {
     export const CONFIGURATION_MANAGEMENT = 'configurationManagement';
     export const WARNINGS = 'warnings';
     export const QR_CODE_EDITOR = 'qrCodeEditor';
+    export const HISTORY_MODAL = 'historyModal';
     export const QR_CODE_SCANNER = 'qrCodeScanner';
     export const PRINT_SETTINGS_MODAL = 'printSettingsModal';
     export const WORKFLOW_EDITOR = 'workflowEditor';

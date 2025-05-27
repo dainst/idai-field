@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
+  alias FieldPublication.Publications.Search
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -184,10 +185,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         project_map_layers = Publications.Data.get_project_map_layers(publication)
         image_categories = Publications.Data.get_image_categories(publication)
 
+        ancestors =
+          publication
+          |> Publications.get_hierarchy()
+          |> construct_ancestor_tree(uuid, [])
+          |> Data.get_extended_documents(publication)
+
         socket
         |> assign(:uuid, uuid)
         |> assign(:doc, extended_doc)
         |> assign(:image_categories, image_categories)
+        |> assign(:ancestors, ancestors)
         |> assign(:project_map_layers, project_map_layers)
         |> assign(
           :page_title,
@@ -205,9 +213,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     # If no UUID was provided, load the publication's extended "project" document.
     project_doc = Publications.Data.get_extended_document("project", publication, true)
 
-    project_map_layers =
-      Publications.Data.get_project_map_layers(publication)
-
     top_level_uuids =
       Publications.get_hierarchy(publication)
       |> Enum.filter(fn {_key, values} ->
@@ -219,14 +224,15 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     top_level_docs = Data.get_extended_documents(top_level_uuids, publication)
 
-    category_breakdown = Data.get_doc_breakdown_by_category(publication)
+    category_hierarchy = Data.get_category_hierarchy(publication)
+    category_usage = Search.get_category_count(publication)
 
     socket
     |> assign(:doc, project_doc)
     |> assign(:publication, publication)
     |> assign(:top_level_docs, top_level_docs)
-    |> assign(:category_breakdown, category_breakdown)
-    |> assign(:project_map_layers, project_map_layers)
+    |> assign(:category_hierarchy, category_hierarchy)
+    |> assign(:category_usage, category_usage)
     |> assign(
       :page_title,
       get_page_title(project_doc)
@@ -251,4 +257,18 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   defp parse_focus("map"), do: :map
   defp parse_focus(_), do: :default
+
+  defp construct_ancestor_tree(hierarchy, id, children) do
+    Map.get(hierarchy, id, %{})
+    |> case do
+      %{"parent" => nil} ->
+        children
+
+      %{"parent" => parent_id} ->
+        construct_ancestor_tree(hierarchy, parent_id, [parent_id] ++ children)
+
+      _ ->
+        children
+    end
+  end
 end

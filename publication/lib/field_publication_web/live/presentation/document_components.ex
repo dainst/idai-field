@@ -63,7 +63,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
               <dl class="grid grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
-                  <div class="border p-0.5 border-black/20 overflow-auto">
+                  <div class="border p-0.5 border-black/20">
                     <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                     <dd class="pl-4">
                       <GenericField.render field={field} lang={@lang} />
@@ -155,6 +155,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             id="generic_doc_map"
             style="width:100%; height:500px;"
             doc={@doc}
+            ancestors={@ancestors}
             publication={@publication}
             lang={@lang}
           />
@@ -176,6 +177,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             module={DocumentAncestors}
             id={"ancestors-#{@doc.id}"}
             doc={@doc}
+            ancestors={@ancestors}
             publication={@publication}
             lang={@lang}
             focus={:map}
@@ -230,6 +232,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             id="generic_doc_map_detail"
             style="width:100%; height: var(--ol-full-height);"
             doc={@doc}
+            ancestors={@ancestors}
             publication={@publication}
             lang={@lang}
             focus={@focus}
@@ -369,7 +372,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.group_heading>
             {gettext("project_doc_about_project")}
           </.group_heading>
-          <div class="bg-slate-50 p-2 rounded">
+          <div class="bg-gray-50 p-2 rounded">
             <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
             <%= if depicted_in != nil do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
@@ -381,7 +384,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                     class="p-1"
                   >
                     <div class="w-[300px] pr-1">
-                      <Image.show size="^300," project={@publication.project_name} uuid={doc.id} />
+                      <Image.show
+                        size="^300,"
+                        project={@publication.project_name}
+                        uuid={doc.id}
+                        alt_text={doc.identifier}
+                      />
                     </div>
                   </.link>
                 <% end %>
@@ -392,7 +400,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
-          <div class="bg-slate-50 p-2 rounded">
+          <div class="bg-gray-50 p-2 rounded">
             <I18n.markdown
               values={
                 @publication.comments
@@ -402,6 +410,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               lang={@lang}
             />
           </div>
+        </div>
+
+        <div class="basis-1/3 m-5">
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
@@ -454,9 +465,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               </dd>
             <% end %>
           </dl>
-        </div>
 
-        <div class="basis-1/3 m-5">
           <div>
             <.group_heading>
               {gettext("Browse by document hierarchy")}
@@ -465,46 +474,96 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               <DocumentLink.show lang={@lang} doc={doc} />
             <% end %>
           </div>
-
-          <div>
-            <.group_heading>
-              {gettext("Documents in this publication")}
-            </.group_heading>
-            <div class="flex flex-wrap gap-1">
-              <%= for {category, %{count: count, color: color} = category_info} <- @category_breakdown do %>
-                <.link
-                  class="pl-2 pr-2 rounded-tl rounded"
-                  style={"background-color: #{desaturate_category_color(color)}; border-color: #{desaturate_category_color(color)}; border-width: 1px 0px 1px 0px;"}
-                  navigate={
-                    ~p"/search?#{%{filters: %{category: category, project_name: @publication.project_name}}}"
-                  }
-                >
-                  <div class="h-full bg-white/70 hover:bg-white/40 pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
-                    <I18n.text values={category_info.labels} /> ({count})
-                  </div>
-                </.link>
-              <% end %>
-            </div>
-          </div>
-          Todo: Map.
-        <!--
-          <% map_layers = Data.get_relation(@doc, "hasDefaultMapLayer") %>
-          <%= if map_layers do %>
-            <div class="mb-4">
-              <.live_component
-                module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
-                id="project_doc_map"
-                style="width:100%; height:500px;"
-                doc={@doc}
-                publication={@publication}
-                lang={@lang}
-              />
-            </div>
-          <% end %>
-          -->
         </div>
       </div>
+
+      <section class="flex m-5 ">
+        <div class="p-4 border border-black mr-4">
+          <.group_heading>
+            {gettext("Documents")}
+          </.group_heading>
+          <div class="mt-8 max-h-[calc(100dvh-300px)] overflow-y-scroll">
+            <.display_category_hierarchy
+              publication={@publication}
+              hierarchy={@category_hierarchy}
+              usage={@category_usage}
+            />
+          </div>
+        </div>
+        <div class="w-full p-8 bg-gray-50 border border-black">
+          <.live_component
+            module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
+            id="project_doc_map"
+            style="width: 100%; height: calc(100dvh - 300px); background-color: white"
+            publication={@publication}
+            lang={@lang}
+          />
+        </div>
+      </section>
     </div>
     """
   end
+
+  attr :publication, Publication, required: true
+  attr :hierarchy, :map, required: true
+  attr :usage, :map, required: true
+
+  defp display_category_hierarchy(assigns) do
+    ~H"""
+    <%= for {category_name, %{color: color, labels: labels, children: children}} <- @hierarchy do %>
+      <% count = @usage[category_name] %>
+
+      <%= if count do %>
+        <div
+          id={"category_link_#{category_name}"}
+          phx-hook="HoverHighlightMapFeature"
+          target_dom_element="project_doc_map"
+          target_id={"#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
+        >
+          <.link navigate={
+            ~p"/search?#{%{filters: %{category: category_name, project_name: @publication.project_name}}}"
+          }>
+            <div class="flex flex-row mb-[2px] p-1">
+              <span style={"color: #{desaturate_category_color(color)}"}>
+                <.icon name="hero-document-solid" />
+              </span>
+              <div class="font-thin pl-1 hover:text-black text-gray-800">
+                <I18n.text values={labels} /> ({count})
+              </div>
+            </div>
+          </.link>
+        </div>
+        <div :if={children != %{}} class="pl-4">
+          <.display_category_hierarchy publication={@publication} hierarchy={children} usage={@usage} />
+        </div>
+      <% end %>
+    <% end %>
+    """
+  end
+
+  defp get_child_category_names(branch) do
+    Enum.map(branch, fn {key, %{children: children}} ->
+      [key] ++ get_child_category_names(children)
+    end)
+    |> List.flatten()
+  end
 end
+
+# color-mix(in oklab, #{desaturate_category_color(color)} 40%, transparent);
+#  style={"background-color: color-mix(in oklab, #{desaturate_category_color(color)} 20%, transparent);"}
+
+# <div class="flex flex-wrap gap-1">
+# <%= for {category, %{count: count, labels: labels, color: color}} <- @category_breakdown |> IO.inspect() do %>
+# <.link
+# class="pl-2 pr-2 rounded-tl rounded"
+# style={"background-color: #{desaturate_category_color(color)}; border-color: #{desaturate_category_color(color)}; border-width: 1px 0px 1px 0px;"}
+# navigate={
+# ~p"/search?#{%{filters: %{category: category, project_name: @publication.project_name}}}"
+# }
+# >
+# <div class="h-full bg-white/70 hover:bg-white/40 pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
+# <I18n.text values={labels} /> ({count})
+# </div>
+# </.link>
+# <% end %>
+# </div>

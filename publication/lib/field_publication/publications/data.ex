@@ -119,6 +119,87 @@ defmodule FieldPublication.Publications.Data do
     ["Image"] ++ get_child_categories(publication, "Image")
   end
 
+  def get_flat_category_configs(publication) do
+    publication
+    |> Publications.get_configuration()
+    |> flatten_config()
+  end
+
+  defp flatten_config(config) do
+    config
+    |> Enum.map(&flatten_config_branch/1)
+    |> List.flatten()
+  end
+
+  defp flatten_config_branch(%{"item" => item, "trees" => trees}) do
+    ([item] ++ Enum.map(trees, &flatten_config_branch/1))
+    |> List.flatten()
+  end
+
+  def get_category_hierarchy(publication) do
+    publication
+    |> Publications.get_configuration()
+    |> Enum.map(&extract_category_info/1)
+    |> Enum.into(%{})
+  end
+
+  def extract_category_info(%{
+        "item" => %{"name" => name, "color" => color, "label" => labels},
+        "trees" => trees
+      }) do
+    {name,
+     %{
+       color: color,
+       labels: labels,
+       children:
+         trees
+         |> Enum.map(&extract_category_info/1)
+         |> Enum.into(%{})
+     }}
+  end
+
+  def get_geometries_by_category(%Publication{} = publication) do
+    color_mapping =
+      publication
+      |> get_flat_category_configs()
+      |> Enum.map(fn %{"name" => name, "color" => color} ->
+        {name, color}
+      end)
+      |> Enum.into(%{})
+
+    CouchService.get_document_stream(
+      %{
+        selector: %{},
+        fields: [
+          "resource.id",
+          "resource.category",
+          "resource.geometry"
+        ]
+      },
+      publication.database
+    )
+    |> Stream.filter(fn
+      %{"resource" => %{"geometry" => _}} -> true
+      _ -> false
+    end)
+    |> Enum.reduce(%{}, fn %{
+                             "resource" => %{
+                               "category" => category,
+                               "geometry" => geometry
+                             }
+                           },
+                           acc ->
+      Map.update(
+        acc,
+        category,
+        %{geometries: [geometry], color: color_mapping[category]},
+        fn existing ->
+          Map.put(existing, :geometries, existing.geometries ++ [geometry])
+        end
+      )
+    end)
+  end
+
   def get_child_categories(publication, category_name) do
     publication
     |> Publications.get_configuration()
@@ -130,7 +211,7 @@ defmodule FieldPublication.Publications.Data do
     |> Enum.find(fn %{"item" => %{"name" => name}} -> category_name == name end)
     |> case do
       nil ->
-        Enum.map(branch, fn %{"tree" => deeper_branch} ->
+        Enum.map(branch, fn %{"trees" => deeper_branch} ->
           search_category_and_accumulate_children(deeper_branch, category_name)
         end)
         |> List.flatten()
@@ -284,19 +365,12 @@ defmodule FieldPublication.Publications.Data do
             acc,
             category_key,
             Map.merge(
-              %{count: 0, geometries: []},
+              %{geometries: []},
               configuration
               |> search_category_tree(category_key)
               |> Map.get("item")
               |> extend_category(resource)
             )
-          )
-
-        accumulated_category_data =
-          Map.put(
-            accumulated_category_data,
-            :count,
-            accumulated_category_data.count + 1
           )
 
         accumulated_category_data =

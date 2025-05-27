@@ -10,6 +10,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
     I18n
   }
 
+  attr :id, :string, default: nil
   attr :doc, Document, required: true
   attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
@@ -19,7 +20,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
 
   def show(assigns) do
     ~H"""
-    <div class="flex mb-[2px]" id={@doc.id}>
+    <div class="flex mb-[2px]" id={if @id, do: @id, else: "#{@doc.id}_link"}>
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
         class="rounded-tl pl-2 rounded-bl"

@@ -93,7 +93,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   def update(
-        %{id: id, publication: %Publication{} = publication, doc: doc, lang: lang} =
+        %{
+          id: id,
+          publication: %Publication{} = publication,
+          doc: doc,
+          lang: lang,
+          ancestors: ancestors
+        } =
           assigns,
         socket
       ) do
@@ -107,6 +113,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     parent_features =
       accumulate_geometries_for_relations(doc, ["isRecordedIn", "liesWithin", "isBelow"], lang)
+
+    parent_uuids =
+      Enum.map(parent_features, fn %{properties: %{uuid: uuid}} -> uuid end)
+
+    ancestor_features =
+      ancestors
+      |> Enum.reject(fn %Document{id: id} -> id in parent_uuids end)
+      |> Enum.map(&create_feature_info(&1, lang))
+      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
     document_feature = create_feature_info(doc, lang)
 
@@ -135,6 +150,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           parent_features: %{
             type: "FeatureCollection",
             features: parent_features
+          },
+          ancestor_features: %{
+            type: "FeatureCollection",
+            features: ancestor_features
           }
         })
         |> assign(:no_data, false)
@@ -206,15 +225,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     end
   end
 
-  defp extract_tile_layer_info(%{
-         "resource" => %{
-           "georeference" => georeference,
-           "height" => height,
-           "width" => width,
-           "id" => uuid,
-           "identifier" => identifier
-         }
-       }) do
+  def extract_tile_layer_info(%{
+        "resource" => %{
+          "georeference" => georeference,
+          "height" => height,
+          "width" => width,
+          "id" => uuid,
+          "identifier" => identifier
+        }
+      }) do
     %{
       extent: georeference,
       height: height,
@@ -363,7 +382,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
-  defp render_tile_layer_selection_group(assigns) do
+  def render_tile_layer_selection_group(assigns) do
     ~H"""
     <%= if @layer_states != [] do %>
       <div class="font-semibold pb-2">

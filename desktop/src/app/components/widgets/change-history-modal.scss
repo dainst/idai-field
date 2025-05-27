@@ -13,13 +13,6 @@
   font-weight: bold; 
 }
 
-// .modal-content {
-//   user-select: none;
-//   //width: 800px;
-//   width: 100%;
-//   // width: fit-content;
-// }
-
 #no-change-div {
   padding: 1em;
 }
@@ -38,7 +31,7 @@
     min-width: 100%;
     user-select: none;
     display: grid;
-    grid-template-columns: 27ex 26ex;
+    grid-template-columns: 31ex 23ex;
     font-size: 16px;
     padding-top: 1em;
     
@@ -59,7 +52,7 @@
     min-width: 100%;
     user-select: none;
     display: grid;
-    grid-template-columns: 27ex 26ex;
+    grid-template-columns: 31ex 23ex;
     font-size: 16px;
     font-weight: 500;
     overflow-x: hidden;

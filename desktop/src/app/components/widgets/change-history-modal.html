@@ -33,7 +33,7 @@
         @if (document.modified.length > 0) {
         <div class="list">               
             <div id="list-header">  
-                <div class="list-header-field text-right"
+                <div class="list-header-field text-right text-truncate"
                     i18n="@@widgets.changeHistoryModal.changes.table.colnames.date" 
                     (click)="toggleColumnSort('date')" 
                     [ngClass]="toggledDate ? 'mdi mdi-arrow-down' : 'mdi mdi-arrow-up'">

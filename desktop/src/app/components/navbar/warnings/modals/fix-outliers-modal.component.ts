@@ -82,10 +82,12 @@ export class FixOutliersModalComponent {
                 }
             }
 
-            if (affectedDocumentComplete.fields.length) 
+            if (affectedDocumentComplete.fields.length) {
                 this.affectedDocuments.complete.push(affectedDocumentComplete);
-            if (affectedDocumentCheckboxes.fields.length) 
+            }
+            if (affectedDocumentCheckboxes.fields.length) {
                 this.affectedDocuments.onlyCheckboxFields.push(affectedDocumentCheckboxes);
+            }
         }
     }
 
@@ -121,9 +123,9 @@ export class FixOutliersModalComponent {
 
     public getCountAffected(): number {
 
-        const affectedDocuments = this.getAffectedDocuments();
+        const affectedDocuments: Array<AffectedDocument> = this.getAffectedDocuments();
 
-        return affectedDocuments.length
+        return affectedDocuments.length;
     }
 
 
@@ -159,7 +161,7 @@ export class FixOutliersModalComponent {
 
     private async replaceMultiple() {
 
-        const documentsToUpdate = this.getAffectedDocuments();
+        const documentsToUpdate: Array<AffectedDocument> = this.getAffectedDocuments();
         
         for (let affectedDocument of documentsToUpdate) {
             for (let field of affectedDocument.fields) {

@@ -721,7 +721,7 @@ test.describe('warnings/outlier values', () => {
         await NavbarPage.clickWarningsButton();
         await WarningsModalPage.clickFixOutliersButton(0);
 
-        /* will solve both the checkbox and dropdowns containing 'braun'*/
+        // will solve both the checkbox and dropdowns containing 'braun'
         expect(await FixOutliersModalPage.getHeading()).toContain('braun');
         await FixOutliersModalPage.clickCheckboxesValue(4); // 4 = "Gerät"
         await FixOutliersModalPage.clickMultipleSwitch();

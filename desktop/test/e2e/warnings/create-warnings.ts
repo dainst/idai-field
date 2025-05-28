@@ -103,24 +103,31 @@ export async function createMissingIdentifierPrefixWarning(resourceIdentifier: s
 }
 
 
-export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
+export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, 
+                                                  inputType: Field.InputType = Field.InputType.CHECKBOXES,
+                                                  categoryName: string = 'Place', supercategoryName?: string) {
 
     await navigateTo('configuration');
-    await createField(fieldName, 'checkboxes', 'Wood-color-default');
+    await createField(fieldName, inputType, 'Wood-color-default', false, categoryName, supercategoryName);
 
     const completeFieldName: string = 'test:' + fieldName;
 
     await NavbarPage.clickCloseNonResourcesTab();
     for (let identifier of resourceIdentifiers) {
-        await ResourcesPage.performCreateResource(identifier, 'place');
+        await ResourcesPage.performCreateResource(identifier, 
+            (supercategoryName ? supercategoryName.toLowerCase() + '-' : '') + categoryName.toLowerCase());
         await ResourcesPage.openEditByDoubleClickResource(identifier);
-        await DoceditPage.clickCheckbox(completeFieldName, 0);
-        await DoceditPage.clickCheckbox(completeFieldName, 1);
+        if (inputType === Field.InputType.DROPDOWN) {
+            await DoceditPage.clickSelectOption(completeFieldName, 'braun', 0);
+        } else if (inputType === Field.InputType.CHECKBOXES) {
+            await DoceditPage.clickCheckbox(completeFieldName, 0);
+            await DoceditPage.clickCheckbox(completeFieldName, 1);
+        }
         await DoceditPage.clickSaveDocument();
     }
 
     await navigateTo('configuration');
-    await CategoryPickerPage.clickSelectCategory('Place');
+    await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
     await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
     await ConfigurationPage.clickContextMenuEditOption();
     await EditConfigurationPage.clickSwapValuelist();

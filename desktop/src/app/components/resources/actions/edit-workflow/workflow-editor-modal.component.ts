@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { set } from 'tsfun';
-import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Resource, Datastore, Labels,
-    ProjectConfiguration, DateSpecification, WorkflowStepDocument, SortUtil } from 'idai-field-core';
+import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Datastore,
+    WorkflowStepDocument, SortUtil } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -10,10 +10,6 @@ import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { sortWorkflowSteps } from './sort-workflow-steps';
-import { DeleteWorkflowStepModalComponent } from './delete/delete-workflow-step-modal.component';
-import { getSystemTimezone } from '../../../../util/timezones';
-import { Settings } from '../../../../services/settings/settings';
-import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({
@@ -38,18 +34,9 @@ export class WorkflowEditorModalComponent {
                 private modalService: NgbModal,
                 private relationsManager: RelationsManager,
                 private datastore: Datastore,
-                private messages: Messages,
-                private labels: Labels,
-                private projectConfiguration: ProjectConfiguration,
-                private utilTranslations: UtilTranslations) {}
+                private messages: Messages) {}
 
 
-    public getCategoryLabel = (workflowStep: WorkflowStepDocument) =>
-        this.labels.get(this.projectConfiguration.getCategory(workflowStep));
-    
-    public getShortDescriptionLabel = (workflowStep: WorkflowStepDocument) =>
-        Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
-        
     public cancel = () => this.activeModal.close();
 
 
@@ -86,49 +73,10 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    public async editWorkflowStep(workflowStep: WorkflowStepDocument) {
-
-        const editedWorkflowStep: WorkflowStepDocument = (await this.openWorkflowStepEditorModal(workflowStep))?.[0];
-        if (editedWorkflowStep) await this.updateWorkflowSteps();
-    }
-
-
     public async linkWorkflowStep(workflowStep: WorkflowStepDocument, targets: Array<FieldDocument>) {
 
         await this.setRelation(workflowStep, targets);
         await this.updateWorkflowSteps();
-    }
-
-
-    public async deleteWorkflowStep(workflowStep: WorkflowStepDocument) {
-
-        this.menus.setContext(MenuContext.DOCEDIT);
-
-        const modalRef: NgbModalRef = this.modalService.open(
-            DeleteWorkflowStepModalComponent,
-            { backdrop: 'static', keyboard: false, animation: false }
-        );
-        modalRef.componentInstance.workflowStep = workflowStep;
-
-        try {
-            await modalRef.result;
-            await this.relationsManager.remove(workflowStep);
-            await this.updateWorkflowSteps();
-        } catch(err) {
-            if (err !== 'cancel') console.error(err);
-        } finally {
-            AngularUtility.blurActiveElement();
-            this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
-        }
-    }
-
-
-    public isResultsInRelationAvailable(workflowStep: WorkflowStepDocument): boolean {
-
-        return this.projectConfiguration.getAllowedRelationRangeCategories(
-            Relation.Workflow.RESULTS_IN,
-            workflowStep.resource.category
-        ).length > 0;
     }
 
 
@@ -144,23 +92,6 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    public getDateLabel(workflowStep: Document): string {
-
-        if (!workflowStep.resource.date) return '';
-
-        const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
-
-        return DateSpecification.generateLabel(
-            workflowStep.resource.date,
-            getSystemTimezone(),
-            timeSuffix,
-            Settings.getLocale(),
-            (term: string) => this.utilTranslations.getTranslation(term),
-            false
-        );
-    }
-
-
     private sortDocuments() {
 
         this.documents.sort((document1, document2) => {
@@ -168,13 +99,13 @@ export class WorkflowEditorModalComponent {
         });
     }
 
-
     /**
      * @returns edited document if changes have been saved, undefined if the modal has been canceled
      */
     private async openWorkflowStepEditorModal(workflowStep: WorkflowStepDocument, numberOfDuplicates?: number)
             : Promise<Array<WorkflowStepDocument>|undefined> {
     
+        const context: MenuContext = this.menus.getContext();
         this.menus.setContext(MenuContext.DOCEDIT);
 
         const modalRef: NgbModalRef = this.modalService.open(
@@ -190,7 +121,7 @@ export class WorkflowEditorModalComponent {
             if (err !== 'cancel') console.error(err);
         } finally {
             AngularUtility.blurActiveElement();
-            this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
+            this.menus.setContext(context);
         }
     }
 

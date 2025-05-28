@@ -6,53 +6,8 @@
     </button>
 </div>
 <div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
-    <div id="workflow-steps-container">
-        <div class="workflow-steps-headings workflow-step">
-            <div class="workflow-step-state-header"
-                 i18n="@@resources.workflowEditorModal.state">Status</div>
-            <div class="workflow-step-executed-on"
-                 i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
-            <div class="workflow-step-date"
-                 i18n="@@resources.workflowEditorModal.date">Datum</div>
-            <div class="workflow-step-identifier"
-                 i18n="@@resources.workflowEditorModal.identifier">Bezeichner</div>
-            <div class="workflow-step-category"
-                 i18n="@@resources.workflowEditorModal.category">Kategorie</div>
-            <div class="workflow-step-results-in"
-                 i18n="@@resources.workflowEditorModal.resultsIn">Ergibt</div>
-            <div class="workflow-step-buttons"></div>
-        </div>
-        <div class="workflow-steps-body">
-            <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
-                <div class="workflow-step-state">
-                    <workflow-step-state [workflowStep]="workflowStep"></workflow-step-state>
-                </div>
-                <div class="workflow-step-executed-on">
-                    <workflow-relations [workflowStep]="workflowStep"
-                                        [relationName]="'isExecutedOn'"
-                                        [mandatory]="true"
-                                        (onChanges)="updateWorkflowSteps()"></workflow-relations>
-                </div>
-                <div class="workflow-step-date">{{getDateLabel(workflowStep)}}</div>
-                <div class="workflow-step-identifier">{{workflowStep.resource.identifier}}</div>
-                <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
-                <div class="workflow-step-results-in">
-                    <workflow-relations *ngIf="isResultsInRelationAvailable(workflowStep)"
-                                        [workflowStep]="workflowStep"
-                                        [relationName]="'resultsIn'"
-                                        [mandatory]="false"></workflow-relations>
-                </div>
-                <div class="workflow-step-buttons input-group">
-                    <button class="btn btn-danger" (click)="deleteWorkflowStep(workflowStep)">
-                        <span class="mdi mdi-delete"></span>
-                    </button>
-                    <button class="btn btn-info" (click)="editWorkflowStep(workflowStep)">
-                        <span class="mdi mdi-pencil"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <workflow-step-list [workflowSteps]="workflowSteps"
+                        (onChanged)="updateWorkflowSteps()"></workflow-step-list>
     <div id="workflow-step-plus-button-container">
         <workflow-step-plus-button [baseDocuments]="documents"
                                    (onSubmit)="createWorkflowStep($event.category, $event.createMultiple)">

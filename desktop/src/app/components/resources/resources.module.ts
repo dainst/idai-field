@@ -56,12 +56,14 @@ import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settin
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
 import { WorkflowStepPlusButtonComponent } from './actions/edit-workflow/plus-button/workflow-step-plus-button.component';
-import { WorkflowRelationsComponent } from './actions/edit-workflow/relations/workflow-relations.component';
-import { WorkflowRelationsModalComponent } from './actions/edit-workflow/relations/workflow-relations-modal.component';
+import { WorkflowRelationsComponent } from './workflow/relations/workflow-relations.component';
+import { WorkflowRelationsModalComponent } from './workflow/relations/workflow-relations-modal.component';
 import { WorkflowStepLinkButtonComponent } from './actions/edit-workflow/link-button/workflow-step-link-button.component';
 import { WorkflowStepLinkModalComponent } from './actions/edit-workflow/link-button/workflow-step-link-modal.component';
-import { DeleteWorkflowStepModalComponent } from './actions/edit-workflow/delete/delete-workflow-step-modal.component';
-import { WorkflowStepStateComponent } from './actions/edit-workflow/state/workflow-step-state.component';
+import { DeleteWorkflowStepModalComponent } from './workflow/delete/delete-workflow-step-modal.component';
+import { WorkflowStepStateComponent } from './workflow/state/workflow-step-state.component';
+import { WorkflowStepListComponent } from './workflow/workflow-step-list.component';
+
 
 const remote = window.require('@electron/remote');
 
@@ -114,7 +116,8 @@ const remote = window.require('@electron/remote');
         WorkflowStepLinkButtonComponent,
         WorkflowStepLinkModalComponent,
         WorkflowStepStateComponent,
-        DeleteWorkflowStepModalComponent
+        DeleteWorkflowStepModalComponent,
+        WorkflowStepListComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

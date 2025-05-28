@@ -18,10 +18,6 @@
 @import 'actions/edit-workflow/plus-button/workflow-step-plus-button';
 @import 'actions/edit-workflow/link-button/workflow-step-link-button';
 @import 'actions/edit-workflow/link-button/workflow-step-link-modal';
-@import 'actions/edit-workflow/relations/workflow-relations';
-@import 'actions/edit-workflow/relations/workflow-relations-modal';
-@import 'actions/edit-workflow/delete/delete-workflow-step-modal';
-@import 'actions/edit-workflow/state/workflow-step-state';
 @import 'grid-list/grid-list';
 @import 'grid-list/grid';
 @import 'grid-list/grid-item';
@@ -30,6 +26,13 @@
 @import 'searchbar/search-suggestions';
 @import 'widgets/list-button-group';
 @import 'widgets/popover-menu';
+@import 'actions/edit-workflow/workflow-editor-modal';
+@import 'workflow/workflow-step-list';
+@import 'workflow/relations/workflow-relations';
+@import 'workflow/relations/workflow-relations-modal';
+@import 'workflow/delete/delete-workflow-step-modal';
+@import 'workflow/state/workflow-step-state';
+
 
 
 $deactivated-button-color: lightgray;

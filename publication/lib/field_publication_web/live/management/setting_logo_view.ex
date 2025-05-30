@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Management.SettingLogoView do
     <.document_heading>Visual customization</.document_heading>
     <div class="flex">
       <section class="basis-1/2">
-        <.group_heading>Logos</.group_heading>
+        <.group_heading>Set logo and favicon</.group_heading>
         <div :if={Enum.count(@existing) != 0}>
           <div class="grid grid-cols-3 gap-4">
             <%= for {file_name, info} <- @existing do %>

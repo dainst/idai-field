@@ -6,18 +6,18 @@ defmodule FieldPublication.Settings do
 
   @setting_doc_name "field_publication_settings"
 
-  @enforced_keys [:logo]
+  @enforced_keys [:logo, :favicon]
 
   @derive Jason.Encoder
   @enforce_keys @enforced_keys
-  defstruct [:logo, :_id, :_rev]
+  defstruct [:logo, :favicon, :_id, :_rev]
 
   def initial_setup() do
     doc =
       CouchService.get_document(@setting_doc_name)
       |> case do
         {:ok, %{status: 404}} ->
-          doc = %__MODULE__{logo: nil}
+          doc = %__MODULE__{logo: nil, favicon: nil}
 
           {:ok, %{status: 201}} =
             CouchService.put_document(@setting_doc_name, doc)
@@ -25,7 +25,19 @@ defmodule FieldPublication.Settings do
           doc
 
         {:ok, %{status: 200, body: body}} ->
-          Jason.decode!(body, keys: :atoms!)
+          doc = Jason.decode!(body)
+
+          updated = %{
+            logo: doc["logo"],
+            favicon: doc["favicon"]
+          }
+
+          # Write doc back immediately if the setting doc is missing
+          # keys required by this version of FieldPublication
+          {:ok, %{status: 201}} =
+            CouchService.put_document(@setting_doc_name, Map.merge(doc, updated))
+
+          updated
       end
 
     Cachex.put(:document_cache, @setting_doc_name, doc)
@@ -56,12 +68,15 @@ defmodule FieldPublication.Settings do
   end
 
   def delete_logo_file(file_name) do
-    current_setting =
+    %{logo: current_logo, favicon: current_favicon} =
       Cachex.get!(:document_cache, @setting_doc_name)
-      |> Map.get(:logo)
 
-    if current_setting == file_name do
+    if current_logo == file_name do
       update(:logo, nil)
+    end
+
+    if current_favicon == file_name do
+      update(:favicon, nil)
     end
 
     FileService.delete_logo(file_name)
@@ -86,7 +101,19 @@ defmodule FieldPublication.Settings do
         ~p"/images/logo.svg"
 
       %{logo: logo_name} ->
-        ~p"/logos/#{logo_name}"
+        ~p"/uploads/#{logo_name}"
+    end
+  end
+
+  def get_favicon_url() do
+    Cachex.get!(:document_cache, @setting_doc_name)
+    |> case do
+      %{favicon: nil} ->
+        # Not configured, use the default shipped with the application within priv/ directory.
+        ~p"/favicon.ico"
+
+      %{favicon: logo_name} ->
+        ~p"/uploads/#{logo_name}"
     end
   end
 end

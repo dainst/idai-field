@@ -26,7 +26,7 @@ defmodule FieldPublicationWeb.Endpoint do
 
   # Serve at "/logos" the static files from FileService directory.
   plug Plug.Static,
-    at: "/logos",
+    at: "/uploads",
     from: FileService.logo_path()
 
   # Code reloading can be explicitly enabled under the

@@ -16,6 +16,10 @@ defmodule FieldPublication.FileService do
     @logo_path
   end
 
+  def favicon_path() do
+    @logo_path
+  end
+
   def list_uploaded_logos() do
     @logo_path
     |> File.ls!()

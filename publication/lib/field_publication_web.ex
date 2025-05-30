@@ -103,7 +103,7 @@ defmodule FieldPublicationWeb do
       use Phoenix.VerifiedRoutes,
         endpoint: FieldPublicationWeb.Endpoint,
         router: FieldPublicationWeb.Router,
-        statics: FieldPublicationWeb.static_paths() ++ ["logos"]
+        statics: FieldPublicationWeb.static_paths() ++ ["uploads"]
     end
   end
 

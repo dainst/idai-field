@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Endpoint do
+  alias FieldPublication.FileService
   use Phoenix.Endpoint, otp_app: :field_publication
 
   # The session will be stored in the cookie and signed,
@@ -22,6 +23,11 @@ defmodule FieldPublicationWeb.Endpoint do
     from: :field_publication,
     gzip: false,
     only: FieldPublicationWeb.static_paths()
+
+  # Serve at "/logos" the static files from FileService directory.
+  plug Plug.Static,
+    at: "/logos",
+    from: FileService.logo_path()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

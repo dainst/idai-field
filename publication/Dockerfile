@@ -58,6 +58,10 @@ COPY lib lib
 COPY assets assets
 
 RUN npm install --prefix assets
+
+RUN npm install --prefix priv/publication_enricher
+RUN npm run build --prefix priv/publication_enricher
+
 # compile assets
 RUN mix assets.deploy
 

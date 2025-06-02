@@ -24,9 +24,8 @@ jobs:
         run: sleep 15s
       - name: Restore dependencies cache
         uses: actions/cache@v4
-        working-directory: publication
         with:
-          path: deps
+          path: publication/deps
           key: ${{ runner.os }}-mix-${{ hashFiles('mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
       - name: Install Field Publication dependencies and run setup

@@ -6,18 +6,14 @@ defmodule FieldPublication.Settings do
 
   @setting_doc_name "field_publication_settings"
 
-  @enforced_keys [:logo, :favicon]
-
-  @derive Jason.Encoder
-  @enforce_keys @enforced_keys
-  defstruct [:logo, :favicon, :_id, :_rev]
+  @setting_keys [:logo, :favicon]
 
   def initial_setup() do
     doc =
       CouchService.get_document(@setting_doc_name)
       |> case do
         {:ok, %{status: 404}} ->
-          doc = %__MODULE__{logo: nil, favicon: nil}
+          doc = %{logo: nil, favicon: nil}
 
           {:ok, %{status: 201}} =
             CouchService.put_document(@setting_doc_name, doc)
@@ -43,7 +39,7 @@ defmodule FieldPublication.Settings do
     Cachex.put(:document_cache, @setting_doc_name, doc)
   end
 
-  def update(setting_key, setting_value) when setting_key in @enforced_keys do
+  def update(setting_key, setting_value) when setting_key in @setting_keys do
     CouchService.get_document(@setting_doc_name)
     |> case do
       {:ok, %{status: 200, body: body}} ->
@@ -58,7 +54,7 @@ defmodule FieldPublication.Settings do
     end
   end
 
-  def get_setting(key) when key in @enforced_keys do
+  def get_setting(key) when key in @setting_keys do
     Cachex.get!(:document_cache, @setting_doc_name)
     |> Map.get(key)
   end

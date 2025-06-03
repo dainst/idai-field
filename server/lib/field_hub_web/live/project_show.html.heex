@@ -95,10 +95,16 @@
                           <%= for change <- last_n_changes do %>
                             <% {type, date_time, user_name} =
                               CouchService.extract_most_recent_change_info(change) %>
-                            <tr>
+                            <tr>  
                               <td>'{change["doc"]["resource"]["identifier"]}'</td>
-                              <td>{type}</td>
-                              <td><i>{user_name}</i></td>
+                              <td>{type}</td>                             
+                              <td>
+                                <i>{ user_name  |>  String.slice(0..24) }</i>
+                                <div class="tooltip" :if={ String.length(user_name) > 24 } >
+                                ... 
+                                <span class="tooltiptext">{ user_name } </span>
+                                </div>
+                              </td>
                               <td class="column-date-time">
                                 {Calendar.strftime(date_time, "%c")}
                               </td>

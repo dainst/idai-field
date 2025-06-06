@@ -442,12 +442,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               <GenericField.render field={supervisor} lang={@lang} />
             <% end %>
 
-            <% staff = Data.get_field(@doc, "staff") %>
-            <%= if staff do %>
-              <dt class="font-bold"><I18n.text values={staff.labels} lang={@lang} /></dt>
-              <dd class="ml-4">
-                {Enum.join(staff.value, ", ")}
-              </dd>
+            <%= if @staff do %>
+              <dt class="font-bold"><I18n.text values={@staff.labels} lang={@lang} /></dt>
+              <dd class="ml-4">{@staff.names}</dd>
             <% end %>
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>

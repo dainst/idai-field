@@ -82,6 +82,8 @@ defmodule FieldPublicationWeb.Router do
 
       live "/projects/new", Management.OverviewLive, :new_project
       live "/projects/:project_id/edit", Management.OverviewLive, :edit_project
+
+      live "/settings/logo", Management.SettingLogoView
     end
   end
 

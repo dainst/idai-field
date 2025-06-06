@@ -1,12 +1,46 @@
 defmodule FieldPublication.FileService do
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
-
+  @admin_upload_dir "admin_uploads"
+  @logo_path "#{@file_store_path}/#{@admin_upload_dir}/logos"
   require Logger
 
   @moduledoc """
   This module handles interaction with data served from the application's file system. This is
   currently means all image data variants.
   """
+  def initial_setup() do
+    File.mkdir_p!(@logo_path)
+  end
+
+  def logo_path() do
+    @logo_path
+  end
+
+  def favicon_path() do
+    @logo_path
+  end
+
+  def list_uploaded_logos() do
+    @logo_path
+    |> File.ls!()
+    |> Enum.map(fn file_name -> {file_name, "#{@logo_path}/#{file_name}"} end)
+  end
+
+  def store_logo(input_path, target_file_name) do
+    target_path = "#{@logo_path}/#{target_file_name}"
+
+    if File.exists?(target_path) do
+      {:error, :exists}
+    else
+      File.cp(input_path, target_path)
+    end
+  end
+
+  def delete_logo(file_name) do
+    "#{@logo_path}/#{file_name}"
+    |> IO.inspect()
+    |> File.rm()
+  end
 
   def get_raw_data_path(project_name) when is_binary(project_name) do
     "#{@file_store_path}/raw/#{project_name}"

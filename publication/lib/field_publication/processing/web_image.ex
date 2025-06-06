@@ -16,8 +16,8 @@ defmodule FieldPublication.Processing.WebImage do
   require Logger
 
   @moduledoc """
-  This module contains functions for creating JPEG2000 images from raw image data to be served
-  by the external [Canaloupe](https://cantaloupe-project.github.io) IIIF server application.
+  This module contains functions for creating TIFF images from raw image data to be served
+  by the IIIF image plug.
   """
 
   def evaluate_web_images_state(%Publication{project_name: project_name} = publication) do

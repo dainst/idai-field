@@ -2,6 +2,8 @@ defmodule FieldPublication.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  alias FieldPublication.Settings
+  alias FieldPublication.FileService
   alias FieldPublication.CouchService
 
   use Application
@@ -30,6 +32,10 @@ defmodule FieldPublication.Application do
         id: :document_cache
       ),
       Supervisor.child_spec(
+        {Cachex, name: :settings_cache},
+        id: :settings_cache
+      ),
+      Supervisor.child_spec(
         {Cachex, name: :published_images},
         id: :published_images
       )
@@ -43,6 +49,8 @@ defmodule FieldPublication.Application do
 
     # Once all child processes are started, run the CouchDB setup.
     CouchService.initial_setup()
+    FileService.initial_setup()
+    Settings.initial_setup()
 
     supervisor_startup
   end

@@ -380,8 +380,18 @@ defmodule FieldPublication.Replication do
                 key == "isRecordedIn"
               end)
 
-            val ->
+            {"liesWithin", [_single_relation_uuid]} = val ->
               val
+
+            _other_val ->
+              # Temporary (fingers crossed) hack for meninx
+              Logger.error(
+                "Encountered invalid 'liesWithin' relation for document '#{uuid}'. Falling back to 'isRecordedIn' in hierarchy document."
+              )
+
+              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
+                key == "isRecordedIn"
+              end)
           end
 
         # Update or initialize self

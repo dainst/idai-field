@@ -145,6 +145,8 @@ export class DownloadProjectComponent {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'canceled') {
                 console.log('Download cancelled.');
+            } else if (e === 'fileDownloadInterrupted') {
+                console.log('File download got interrupted, finishing download and falling back to sync.')
             } else {
                 await this.cancel(progressModalRef);
                 this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
@@ -256,49 +258,55 @@ export class DownloadProjectComponent {
         const fileCount: number = Object.keys(files).length;
         const batchSize: number = fileCount > 100 ? 20 : 1;
 
+        const uuids: string[] = Object.keys(files);
+
+        const batches: string[][] = [];
+        for (let i = 0; i < uuids.length; i += batchSize) {
+            const chunk: string[] = uuids.slice(i, i + batchSize);
+            batches.push(chunk);
+        }
+
+        for (const batch of batches) {
+            await this.loadImageBatch(files, batch, 5);
+
+            counter += batch.length;
+            const progressValue = ((counter / fileCount) * 100);
+            progressModalRef.componentInstance.filesProgressPercent = progressValue;
+        }
+    }
+
+
+    private async loadImageBatch(files: { [uuid: string]: FileInfo }, batch: string[], retries: number) {
+
         try {
-            const uuids: string[] = Object.keys(files);
+            if (this.cancelling) throw 'canceled';
 
-            const batches: string[][] = [];
-            for (let i = 0; i < uuids.length; i += batchSize) {
-                const chunk: string[] = uuids.slice(i, i + batchSize);
-                batches.push(chunk);
-            }
-
-            for (const batch of batches) {
-                if (this.cancelling) throw 'canceled';
-
-                this.fileDownloadPromises = [];
-
-                for (const uuid of batch) {
-                    if (files[uuid].deleted) {
-                        this.imageStore.remove(uuid, this.getProjectIdentifier());
-                        continue;
-                    }
-
-                    for (const variant of files[uuid].variants) {
-                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
-                            this.fileDownloadPromises.push(
-                                this.remoteImageStore.getDataUsingCredentials(
-                                    this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectIdentifier()
-                                ).then((data) => {
-                                    return this.imageStore.store(uuid, data, this.getProjectIdentifier(), variant.name);
-                                })
-                            );
-                        }
-                    }
+            for (const uuid of batch) {
+                if (files[uuid].deleted) {
+                    this.imageStore.remove(uuid, this.getProjectIdentifier());
+                    continue;
                 }
 
-                await Promise.all(this.fileDownloadPromises);
-
-                if (this.cancelling) throw 'canceled';
-
-                counter += batch.length;
-                const progressValue = ((counter / fileCount) * 100);
-                progressModalRef.componentInstance.filesProgressPercent = progressValue;
+                for (const variant of files[uuid].variants) {
+                    if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
+                        this.fileDownloadPromises.push(
+                            this.remoteImageStore.getDataUsingCredentials(
+                                this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectIdentifier()
+                            ).then((data) => {
+                                return this.imageStore.store(uuid, data, this.getProjectIdentifier(), variant.name);
+                            })
+                        );
+                    }
+                }
             }
+
+            await Promise.all(this.fileDownloadPromises);
         } catch (e) {
-            throw (e);
+            if (retries > 0) {
+                this.loadImageBatch(files, batch, retries - 1)
+            } else {
+                throw "fileDownloadInterrupted";
+            }
         }
     }
 

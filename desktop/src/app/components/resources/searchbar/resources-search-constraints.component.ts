@@ -67,6 +67,8 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         this.defaultFields = [];
 
+        if (this.viewFacade.isInWorkflowManagement()) return;
+
         this.defaultFields.push({
             name: 'isChildOf',
             inputType: 'default',

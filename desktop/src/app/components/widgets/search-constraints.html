@@ -1,4 +1,4 @@
-<div id="constraints-menu-button"
+<div *ngIf="fields?.length" id="constraints-menu-button"
      class="btn btn-outline-primary" [class.focused]="searchBarComponent.focused"
      ngbTooltip="{{getTooltip()}}"
      placement="left" container="body" triggers="manual" #tooltip="ngbTooltip"
@@ -22,7 +22,7 @@
         <span class="mdi mdi-close-circle"></span>
     </div>
 
-    <div *ngIf="fields && fields.length > 0" class="d-flex flex-row align-items-center flex-wrap">
+    <div *ngIf="fields?.length" class="d-flex flex-row align-items-center flex-wrap">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
             <option value="" [selected]="!selectedField" hidden
                     i18n="@@resources.searchBar.constraints.chooseField">Feld wählen</option>

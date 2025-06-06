@@ -15,6 +15,7 @@ export interface ResourcesState { // 'the' resources state
     overviewState: ViewState;
     typesManagementState: ViewState;
     inventoryState: ViewState;
+    workflowState: ViewState;
     operationViewStates: { [operationId: string]: ViewState };
     view: 'project' | string; // <- active view state
     activeDocumentViewTab: string|undefined;
@@ -203,6 +204,16 @@ export module ResourcesState {
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
             },
+            workflowState: {
+                operation: undefined,
+                mode: 'workflow',
+                bypassHierarchy: true,
+                expandAllGroups: false,
+                limitSearchResults: true,
+                navigationPath: NavigationPath.empty(),
+                searchContext: ViewContext.empty(),
+                customConstraints: {}
+            },
             operationViewStates: {
                 't1': {
                     operation: undefined,
@@ -227,6 +238,7 @@ export module ResourcesState {
             overviewState: ViewState.build(),
             typesManagementState: ViewState.build('grid'),
             inventoryState: ViewState.build('grid'),
+            workflowState: ViewState.build('workflow', true),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -279,6 +291,8 @@ export module ResourcesState {
                 return state.typesManagementState;
             case 'inventory':
                 return state.inventoryState;
+            case 'workflow':
+                return state.workflowState;
             default:
                 return state.operationViewStates[state.view];
         }

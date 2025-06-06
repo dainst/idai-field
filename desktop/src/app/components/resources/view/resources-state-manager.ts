@@ -50,7 +50,8 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement() || this.isInInventoryManagement();
+    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement() || this.isInInventoryManagement()
+        || this.isInWorkflowManagement();
 
     public isInOverview = () => this.resourcesState.view === 'project';
 
@@ -59,6 +60,8 @@ export class ResourcesStateManager {
     public isInTypesManagement = () => this.resourcesState.view === 'types';
 
     public isInInventoryManagement = () => this.resourcesState.view === 'inventory';
+
+    public isInWorkflowManagement = () => this.resourcesState.view === 'workflow';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
@@ -75,10 +78,13 @@ export class ResourcesStateManager {
     public getInventoryCategoryNames = (): string[] => this.projectConfiguration.getInventoryCategories()
         .map(Named.toName);
 
+    public getWorkflowCategoryNames = (): string[] => this.projectConfiguration.getWorkflowCategories()
+        .map(Named.toName);
+
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 
 
-    public async initialize(viewName: 'project'|'types'|'inventory'|string) {
+    public async initialize(viewName: 'project'|'types'|'inventory'|'workflow'|string) {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();

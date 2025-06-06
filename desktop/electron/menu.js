@@ -139,6 +139,12 @@ const getTemplate = (mainWindow, context, config) => {
             click: () => mainWindow.webContents.send('menuItemClicked', 'images'),
             enabled: isDefaultContext(context)
         }, {
+            label: messages.get('menu.tools.workflow'),
+            accelerator: 'CmdOrCtrl+U',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'resources/workflow'),
+            enabled: isDefaultContext(context)
+        },
+        {
             label: messages.get('menu.tools.types'),
             accelerator: 'CmdOrCtrl+T',
             click: () => mainWindow.webContents.send('menuItemClicked', 'resources/types'),

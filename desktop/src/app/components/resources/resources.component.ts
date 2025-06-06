@@ -98,6 +98,8 @@ export class ResourcesComponent implements OnDestroy {
 
     public isInGridListView = () => this.viewFacade.isInGridListView();
 
+    public isInWorkflowManagement = () => this.viewFacade.isInWorkflowManagement();
+
     public scanStoragePlace = (documents: Array<FieldDocument>) =>
         this.storagePlaceScanner.scanStoragePlace(documents);
 
@@ -145,6 +147,8 @@ export class ResourcesComponent implements OnDestroy {
             this.filterOptions = this.projectConfiguration.getTypeManagementSupercategories();
         } else if (this.viewFacade.isInInventoryManagement()) {
             this.filterOptions = this.projectConfiguration.getInventorySupercategories();
+        } else if (this.viewFacade.isInWorkflowManagement()) {
+            this.filterOptions = [this.projectConfiguration.getCategory('WorkflowStep')];
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',

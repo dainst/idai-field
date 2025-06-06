@@ -172,3 +172,10 @@ $deactivated-button-color: lightgray;
     flex-grow: 1;
   }
 }
+
+.resources-container {
+  workflow-step-list {
+    height: calc(100vh - #{$navbar-height + $toolbar-height + 7px});
+    margin-bottom: 7px;
+  }
+}

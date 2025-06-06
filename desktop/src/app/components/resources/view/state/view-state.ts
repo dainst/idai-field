@@ -28,11 +28,11 @@ export interface ViewState {
 
 export module ViewState {
 
-    export function build(mode: ResourcesViewMode = 'map'): ViewState {
+    export function build(mode: ResourcesViewMode = 'map', bypassHierarchy: boolean = false): ViewState {
 
         return {
             operation: undefined,
-            bypassHierarchy: false,
+            bypassHierarchy,
             expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
             mode: mode,

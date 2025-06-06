@@ -258,7 +258,9 @@ export class DocumentsManager {
                 ? this.resourcesStateManager.getTypeManagementCategoryNames()
                 : this.resourcesStateManager.isInInventoryManagement()
                     ? this.resourcesStateManager.getInventoryCategoryNames()
-                    : this.resourcesStateManager.getConcreteFieldCategoryNames();
+                    : this.resourcesStateManager.isInWorkflowManagement()
+                        ? this.resourcesStateManager.getWorkflowCategoryNames()
+                        : this.resourcesStateManager.getConcreteFieldCategoryNames()
     }
 
 

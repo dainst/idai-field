@@ -73,7 +73,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
             constraintIndexed: true
         });
 
-        if (!this.viewFacade.isInTypesManagement()) {
+        if (!this.viewFacade.isInTypesManagement() && !this.viewFacade.isInInventoryManagement()) {
             this.defaultFields.push({
                 name: 'geometry',
                 inputType: 'default',

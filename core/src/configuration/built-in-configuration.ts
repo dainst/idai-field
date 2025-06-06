@@ -826,6 +826,7 @@ export class BuiltInConfiguration {
                     inputType: 'dropdown',
                     required: true,
                     valuelistId: 'workflow-step-state-default',
+                    constraintIndexed: true
                 },
                 date: {
                     required: true

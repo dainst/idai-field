@@ -29,8 +29,7 @@ export interface ConfigurationDocument extends Document {
 export namespace ConfigurationDocument {
 
     export async function getConfigurationDocument(getFunction: (id: string) => Promise<Document>,
-                                                   configReader: ConfigReader,
-                                                   projectIdentifier: string,
+                                                   configReader: ConfigReader, projectIdentifier: string,
                                                    username: string): Promise<ConfigurationDocument> {
 
         let configurationDocument: ConfigurationDocument;
@@ -99,8 +98,7 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function deleteCategory(customConfigurationDocument: ConfigurationDocument,
-                                   category: CategoryForm,
+    export function deleteCategory(customConfigurationDocument: ConfigurationDocument, category: CategoryForm,
                                    removeFromCategoriesOrder: boolean = true): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
@@ -119,10 +117,8 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function deleteGroup(customConfigurationDocument: ConfigurationDocument,
-                                category: CategoryForm, 
-                                group: Group,
-                                otherCategories: Array<CategoryForm>): ConfigurationDocument {
+    export function deleteGroup(customConfigurationDocument: ConfigurationDocument, category: CategoryForm,
+                                group: Group, otherCategories: Array<CategoryForm>): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
@@ -141,8 +137,7 @@ export namespace ConfigurationDocument {
 
 
     export function deleteField(customConfigurationDocument: ConfigurationDocument,
-                                category: CategoryForm, 
-                                field: Field): ConfigurationDocument {
+                                category: CategoryForm, field: Field): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
@@ -212,7 +207,7 @@ export namespace ConfigurationDocument {
 
 
     export function addCategoryForm(configurationDocument: ConfigurationDocument, categoryForm: CategoryForm,
-                                    parentForm?: CategoryForm) {
+                                    parentForm?: CategoryForm): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(configurationDocument);
 
@@ -263,8 +258,7 @@ export namespace ConfigurationDocument {
     }
 
 
-    async function createConfigurationDocumentFromFile(configReader: ConfigReader,
-                                                       projectIdentifier: string,
+    async function createConfigurationDocumentFromFile(configReader: ConfigReader, projectIdentifier: string,
                                                        username: string): Promise<ConfigurationDocument> {
 
         const customConfigurationName: string = getConfigurationName(projectIdentifier);

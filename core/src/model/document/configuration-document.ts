@@ -214,7 +214,7 @@ export namespace ConfigurationDocument {
         clonedConfigurationDocument.resource.forms[categoryForm.libraryId] = {
             fields: {},
             hidden: []
-        }
+        };
         
         if (parentForm) addCustomParentFields(categoryForm, parentForm, clonedConfigurationDocument);
 

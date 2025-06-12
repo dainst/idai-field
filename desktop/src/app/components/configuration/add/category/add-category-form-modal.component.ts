@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, ConfigurationDocument, ProjectConfiguration, SortUtil } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Field, ProjectConfiguration, Relation, SortUtil } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -11,6 +12,7 @@ import { Menus } from '../../../../services/menus';
 import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Naming } from '../naming';
+import { CreateWorkflowStepModalComponent } from './create-workflow-step-modal.component';
 
 
 @Component({
@@ -138,6 +140,44 @@ export class AddCategoryFormModalComponent {
 
     private async createNewSubcategory() {
 
+        const newCategory: CategoryForm = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
+        if (this.parentCategory?.name === 'WorkflowStep') await this.addWorkflowRelations(newCategory);
+        await this.openCategoryEditorModal(newCategory);
+    }
+
+
+    private async addWorkflowRelations(category: CategoryForm) {
+
+        const result: Map<string[]> = await this.openCreateWorkflowStepModal(category);
+        for (let relationName of Object.keys(result)) {
+            if (!result[relationName].length) continue;
+                category.groups[0].fields.push({
+                name: relationName,
+                inputType: Field.InputType.RELATION,
+                range: result[relationName]
+            } as Relation);
+        }
+    }
+
+
+    private async openCreateWorkflowStepModal(category: CategoryForm): Promise<Map<string[]>> {
+
+        const [result, componentInstance] = this.modals.make<CreateWorkflowStepModalComponent>(
+            CreateWorkflowStepModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            'lg'
+        );
+
+        componentInstance.category = category;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
+        componentInstance.initialize();
+
+        return result;
+    }
+
+
+    private async openCategoryEditorModal(category: CategoryForm) {
+
         const [result, componentInstance] = this.modals.make<CategoryEditorModalComponent>(
             CategoryEditorModalComponent,
             MenuContext.CONFIGURATION_EDIT,
@@ -147,7 +187,7 @@ export class AddCategoryFormModalComponent {
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
-        componentInstance.category = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
+        componentInstance.category = category;
         componentInstance.new = true;
         componentInstance.numberOfCategoryResources = 0;
         componentInstance.initialize();

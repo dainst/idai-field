@@ -80,7 +80,9 @@ export abstract class ConfigurationEditorModalComponent {
 
     public initialize() {
 
-        this.clonedConfigurationDocument = Document.clone(this.configurationDocument);
+        if (!this.clonedConfigurationDocument) {
+            this.clonedConfigurationDocument = Document.clone(this.configurationDocument);
+        }
 
         this.label = this.getLabel();
         this.description = this.getDescription();

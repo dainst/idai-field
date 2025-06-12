@@ -1,0 +1,44 @@
+<div class="modal-header configuration-editor-modal-header">
+    <h5 class="modal-title" i18n="@@configuration.addSpecificCategory">
+        Kategorie <code>{{category.name}}</code> hinzufügen
+    </h5>
+</div>
+
+<div class="modal-body row add-category-modal-body bg-light">
+   <div *ngIf="!isExecutedOnSelected">
+        <div class="target-category-picker-container">
+            <category-picker [topLevelCategoriesArray]="selectableCategories"
+                            [selectedCategories]="selectedCategories.isExecutedOn"
+                            [customProjectConfiguration]="clonedProjectConfiguration"
+                            [allowPickingAbstractCategories]="true"
+                            (onCategoryPicked)="toggleCategory($event, 'isExecutedOn')">
+            </category-picker>
+        </div>
+    </div>
+
+    <div *ngIf="isExecutedOnSelected">
+        <div class="target-category-picker-container">
+            <category-picker [topLevelCategoriesArray]="selectableCategories"
+                            [selectedCategories]="selectedCategories.resultsIn"
+                            [customProjectConfiguration]="clonedProjectConfiguration"
+                            [allowPickingAbstractCategories]="true"
+                            (onCategoryPicked)="toggleCategory($event, 'resultsIn')">
+            </category-picker>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer bg-light">
+    <div class="btn btn-primary"
+         [class.disabled]="!validate()"
+         (click)="confirm()">
+        <span *ngIf="!isExecutedOnSelected" i18n="@@buttons.next">Weiter</span>
+        <span *ngIf="isExecutedOnSelected" i18n="@@buttons.ok">OK</span>
+    </div>
+    <div class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>
+
+

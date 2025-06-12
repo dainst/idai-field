@@ -823,13 +823,20 @@ export class BuiltInConfiguration {
             abstract: true,
             fields: {
                 state: {
-                    inputType: 'dropdown',
+                    inputType: Field.InputType.DROPDOWN,
                     required: true,
                     valuelistId: 'workflow-step-state-default',
                     constraintIndexed: true
                 },
                 date: {
                     required: true
+                },
+                isExecutedOn: {
+                    inputType: Field.InputType.RELATION,
+                    required: true
+                },
+                resultsIn: {
+                    inputType: Field.InputType.RELATION
                 }
             },
             minimalForm: {

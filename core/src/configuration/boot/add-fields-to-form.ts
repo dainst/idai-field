@@ -151,4 +151,8 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
     if (changedField.dateConfiguration) {
         field.dateConfiguration = changedField.dateConfiguration;
     }
+
+    if (changedField.range) {
+        field.range = changedField.range;
+    }
 }

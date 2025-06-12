@@ -1,4 +1,4 @@
-import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, any } from 'tsfun';
+import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, any, clone } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
 import { FieldResource } from '../document/field-resource';
@@ -92,7 +92,7 @@ export namespace CategoryForm {
 
         if (parentCategory) {
             newCategory.parentCategory = parentCategory;
-            newCategory.groups = parentCategory.groups;
+            newCategory.groups = clone(parentCategory.groups);
         }
 
         return newCategory;

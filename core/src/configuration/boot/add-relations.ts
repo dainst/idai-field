@@ -3,14 +3,14 @@ import { Relation } from '../../model/configuration/relation';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { Field } from '../../model/configuration/field';
 import { getParentForm } from './get-parent-form';
-import { buildWorkflowRelations } from './build-workflow-relations';
+import { CustomFormDefinition } from '../model/form/custom-form-definition';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function addRelations(builtInRelations: Array<Relation>) {
+export function addRelations(builtInRelations: Array<Relation>, customForms?:  Map<CustomFormDefinition>) {
 
     return (configuration: [Map<TransientFormDefinition>, Array<Relation>]) => {
 
@@ -18,7 +18,6 @@ export function addRelations(builtInRelations: Array<Relation>) {
         if (!relations) return;
 
         const relationsToAdd = builtInRelations.concat(getCustomRelations(forms))
-            .concat(buildWorkflowRelations(forms));
 
         for (let relationToAdd of relationsToAdd) {
             relations.splice(0, 0, relationToAdd);

@@ -89,6 +89,11 @@ describe('WarningsUpdater', () => {
                             mandatory: true
                         },
                         {
+                            name: 'mandatoryRelation',
+                            inputType: Field.InputType.RELATION,
+                            mandatory: true
+                        },
+                        {
                             name: 'state',
                             inputType: Field.InputType.DROPDOWN
                         },
@@ -133,6 +138,7 @@ describe('WarningsUpdater', () => {
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
         documents[2].resource.mandatoryField = 'text';
+        documents[2].resource.relations.mandatoryRelation = ['1'];
         documents[2].resource.state = 'completed';
         documents[2].resource.date = { value: '01.01.1990', isRange: false };
 
@@ -145,7 +151,7 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings).toEqual({
             unconfiguredFields: ['unconfiguredField', 'unconfiguredRelation'],
             invalidFields: ['number'],
-            missingMandatoryFields: ['mandatoryField'],
+            missingMandatoryFields: ['mandatoryField', 'mandatoryRelation'],
             unfulfilledConditionFields: ['conditionalField'],
             conflicts: true,
             missingIdentifierPrefix: true,

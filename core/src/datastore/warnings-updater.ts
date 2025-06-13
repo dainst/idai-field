@@ -525,7 +525,7 @@ export module WarningsUpdater {
     function updateMandatoryFieldWarnings(warnings: Warnings, document: Document, fieldDefinitions: Array<Field>) {
 
         fieldDefinitions.filter(field => field.mandatory).forEach(field => {
-            if (document.resource[field.name] == undefined) {
+            if (!Field.isFilled(field, document.resource)) {
                 warnings.missingMandatoryFields.push(field.name);
             }
         });

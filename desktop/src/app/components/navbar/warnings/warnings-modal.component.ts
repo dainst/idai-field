@@ -640,8 +640,8 @@ export class WarningsModalComponent {
     }
 
 
-    private fetchRelationTargets(document: FieldDocument, fieldName: string,
-                                 type: WarningType): Promise<Array<Document>> {
+    private async fetchRelationTargets(document: FieldDocument, fieldName: string,
+                                       type: WarningType): Promise<Array<Document>> {
 
         const targetIds: string[] = type === 'invalidRelationTargets'
             ? intersect(
@@ -649,7 +649,9 @@ export class WarningsModalComponent {
                 document.warnings.invalidRelationTargets.targetIds
             ) : document.resource.relations[fieldName];
 
-        return this.datastore.getMultiple(targetIds);
+        return targetIds
+            ? await this.datastore.getMultiple(targetIds)
+            : [];
     }
 
 

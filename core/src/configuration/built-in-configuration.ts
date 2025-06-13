@@ -776,7 +776,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS, 'isStoredIn']
+                        fields: ['identifier', 'category', 'shortDescription', Relation.SAME_AS]
                     },
                     {
                         name: Groups.HIERARCHY,
@@ -810,7 +810,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'isStoredIn']
+                        fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
                         name: Groups.HIERARCHY,
@@ -843,7 +843,7 @@ export class BuiltInConfiguration {
                 groups: [
                     {
                         name: Groups.STEM,
-                        fields: ['identifier', 'category', 'shortDescription', 'isStoredIn']
+                        fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
                         name: Groups.HIERARCHY,

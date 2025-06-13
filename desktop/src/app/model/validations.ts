@@ -353,10 +353,9 @@ export module Validations {
             = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
 
         for (let fieldDefinition of fieldDefinitions) {
-            if (CategoryForm.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)) {
-                if (resource[fieldDefinition.name] === undefined || resource[fieldDefinition.name] === '') {
-                    missingFields.push(fieldDefinition.name);
-                }
+            if (CategoryForm.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)
+                    && !Field.isFilled(fieldDefinition, resource as Resource)) {
+                missingFields.push(fieldDefinition.name);
             }
         }
 

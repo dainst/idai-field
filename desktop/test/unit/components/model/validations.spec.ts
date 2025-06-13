@@ -302,7 +302,7 @@ describe('Validations', () => {
     });
 
 
-    test('should report error when omitting mandatory property', () => {
+    test('should report error when omitting mandatory field', () => {
 
         const doc = {
             resource: {
@@ -321,7 +321,7 @@ describe('Validations', () => {
     });
 
 
-    test('should report error when leaving mandatory property empty', () => {
+    test('should report error when leaving mandatory field empty', () => {
 
         const doc = {
             resource: {
@@ -338,6 +338,57 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
+    });
+
+
+    test('should report error when omitting mandatory relation field', () => {
+
+        const projectConfiguration = new ProjectConfiguration({
+            forms: Forest.build(
+                [[{
+                    name: 'T',
+                    groups: [{
+                        name: 'stem', fields: [
+                            { name: 'id' },
+                            { name: 'identifier' },
+                            { name: 'category' },
+                            { name: 'mandatoryRelation', inputType: 'relation', mandatory: true }
+                        ]
+                }]}, []]
+            ] as any),
+            categories: {},
+            relations: [
+                {
+                    name: 'mandatoryRelation',
+                    domain: ['T'],
+                    range: ['T'],
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                }
+            ],
+            commonFields: {},
+            valuelists: {},
+            projectLanguages: []
+        });
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                relations: {}
+            }
+        };
+
+        try {
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatoryRelation']);
+        }
+
+        doc.resource.relations['mandatoryRelation'] = ['2'];
+        Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
     });
 
 

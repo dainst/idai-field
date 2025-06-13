@@ -11,6 +11,7 @@ import { Composite } from '../input-types/composite';
 import { DateConfiguration } from './date-configuration';
 import { DateSpecification, DateValidationResult } from '../input-types/date-specification';
 import { Condition } from './condition';
+import { Resource } from '../document/resource';
 
 
 /**
@@ -137,6 +138,16 @@ export module Field {
                 return fieldData.type !== undefined && fieldData.coordinates !== undefined;
             default:
                 return true;
+        }
+    }
+
+
+    export function isFilled(field: Field, resource: Resource): boolean {
+
+        if (Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType)) {
+            return resource.relations[field.name]?.length > 0;
+        } else {
+            return resource[field.name] !== undefined && resource[field.name] !== '';
         }
     }
 

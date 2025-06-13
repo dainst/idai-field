@@ -1,20 +1,15 @@
 workflow-relations {
-  .workflow-relations-container {
+  display: block;
+  height: 35px;
+
+  .dropdown {
     position: relative;
     display: block;
     width: 100%;
     height: 100%;
 
     .workflow-relations-toggle {
-      &:hover {
-        .category-icon {
-          filter: saturate(50%) brightness(117%);
-        }
-
-        .category-count {
-          filter: brightness(120%);
-        }
-      }
+      height: 100%;
 
       .category-info {
         width: 35px;
@@ -53,7 +48,6 @@ workflow-relations {
       padding: 0;
       
       .relation-targets-container {
-        background-color: white;
         max-width: 300px;
         max-height: 200px;
         overflow-x: hidden;
@@ -63,6 +57,19 @@ workflow-relations {
           cursor: default;
         }
       } 
+    }
+  }
+
+  .single-workflow-relation-target,
+  .workflow-relations-toggle {
+    &:hover {
+      .category-icon {
+        filter: saturate(50%) brightness(117%);
+      }
+
+      .category-count {
+        filter: brightness(120%);
+      }
     }
   }
 }

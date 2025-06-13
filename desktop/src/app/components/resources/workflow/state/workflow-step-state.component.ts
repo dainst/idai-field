@@ -1,7 +1,6 @@
 import { Map } from 'tsfun';
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryForm, Datastore, Field, Labels, ProjectConfiguration, Valuelist,
-    WorkflowStepDocument } from 'idai-field-core';
+import { CategoryForm, Field, Labels, ProjectConfiguration, Valuelist, WorkflowStepDocument } from 'idai-field-core';
 
 
 @Component({
@@ -27,8 +26,7 @@ export class WorkflowStepStateComponent implements OnInit {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private labels: Labels,
-                private datastore: Datastore) {}
+                private labels: Labels) {}
 
 
     public getState = () => this.workflowStep.resource.state;
@@ -43,13 +41,6 @@ export class WorkflowStepStateComponent implements OnInit {
     ngOnInit() {
         
         this.valuelist = this.getValuelist();
-    }
-
-
-    public async setState(valueId: string) {
-
-        this.workflowStep.resource.state = valueId;
-        await this.datastore.update(this.workflowStep);
     }
 
 

@@ -86,6 +86,7 @@
         <grid-list *ngIf="viewFacade.getMode() === 'grid'"
                    [documents]="viewFacade.getDocuments()"></grid-list>
         <workflow-step-list *ngIf="viewFacade.getMode() === 'workflow'"
-                            [workflowSteps]="viewFacade.getDocuments()"></workflow-step-list>
+                            [workflowSteps]="viewFacade.getDocuments()"
+                            (onRelationTargetSelected)="jumpToResource($event)"></workflow-step-list>
     </div>
 </div>

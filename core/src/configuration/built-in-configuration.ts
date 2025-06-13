@@ -941,7 +941,7 @@ export class BuiltInConfiguration {
                 },
                 isExecutedOn: {
                     inputType: Field.InputType.RELATION,
-                    // TODO Set required: true
+                    required: true
                 },
                 resultsIn: {
                     inputType: Field.InputType.RELATION

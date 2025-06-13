@@ -19,14 +19,16 @@
             <workflow-step-state [workflowStep]="workflowStep"></workflow-step-state>
         </div>
         <div class="workflow-step-executed-on">
-            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'isExecutedOn')">
+            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'isExecutedOn')"
+                                (onRelationTargetSelected)="onRelationTargetSelected.emit($event)">
             </workflow-relations>
         </div>
         <div class="workflow-step-date">{{getDateLabel(workflowStep)}}</div>
         <div class="workflow-step-identifier">{{workflowStep.resource.identifier}}</div>
         <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
         <div class="workflow-step-results-in">
-            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'resultsIn')">
+            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'resultsIn')"
+                                (onRelationTargetSelected)="onRelationTargetSelected.emit($event)">
             </workflow-relations>
         </div>
         <div class="workflow-step-buttons input-group">

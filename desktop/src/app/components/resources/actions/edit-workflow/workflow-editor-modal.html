@@ -7,7 +7,8 @@
 </div>
 <div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
     <workflow-step-list [workflowSteps]="workflowSteps"
-                        (onChanged)="updateWorkflowSteps()"></workflow-step-list>
+                        (onChanged)="updateWorkflowSteps()"
+                        (onRelationTargetSelected)="jumpToRelationTarget($event)"></workflow-step-list>
     <div id="workflow-step-plus-button-container">
         <workflow-step-plus-button [baseDocuments]="documents"
                                    (onSubmit)="createWorkflowStep($event.category, $event.createMultiple)">

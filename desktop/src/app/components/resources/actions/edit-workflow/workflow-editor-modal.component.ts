@@ -10,6 +10,7 @@ import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { sortWorkflowSteps } from './sort-workflow-steps';
+import { Routing } from '../../../../services/routing';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class WorkflowEditorModalComponent {
                 private modalService: NgbModal,
                 private relationsManager: RelationsManager,
                 private datastore: Datastore,
-                private messages: Messages) {}
+                private messages: Messages,
+                private routing: Routing) {}
 
 
     public cancel = () => this.activeModal.close();
@@ -90,6 +92,13 @@ export class WorkflowEditorModalComponent {
         })).documents as Array<WorkflowStepDocument>;
 
         sortWorkflowSteps(this.workflowSteps);
+    }
+
+
+    public jumpToRelationTarget(relationTarget: Document) {
+
+        this.activeModal.close();
+        this.routing.jumpToResource(relationTarget);
     }
 
 

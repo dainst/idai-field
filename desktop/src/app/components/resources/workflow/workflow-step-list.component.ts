@@ -26,6 +26,7 @@ export class WorkflowStepListComponent implements OnChanges {
     @Input() workflowSteps: Array<WorkflowStepDocument>;
 
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
 
     private relationTargets: Map<Map<Array<Document>>> = {};
 

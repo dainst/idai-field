@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { Document } from 'idai-field-core';
 
 
@@ -16,11 +16,15 @@ type RelationTargetCategoryInfo = { categoryName: string, count: number };
 export class WorkflowRelationsComponent implements OnChanges {
 
     @Input() relationTargets: Array<Document>;
+    @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
 
     public categoryInfos: Array<RelationTargetCategoryInfo>;
 
 
     constructor() {}
+
+
+    public selectRelationTarget = (relationTarget: Document) => this.onRelationTargetSelected.emit(relationTarget);
 
 
     async ngOnChanges() {

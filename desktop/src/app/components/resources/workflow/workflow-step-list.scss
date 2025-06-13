@@ -28,6 +28,11 @@ workflow-step-list {
     .workflow-step-identifier,
     .workflow-step-category {
       padding: 10px;
+    }
+
+    .workflow-step-date,
+    .workflow-step-identifier,
+    .workflow-step-category {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;

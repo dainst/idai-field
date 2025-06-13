@@ -56,7 +56,7 @@ export abstract class ViewModalComponent {
             { size: 'lg', backdrop: 'static', animation: false }
         );
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.getDocument(isImageDocument), isImageDocument);
+        doceditModalComponent.setDocument(this.getDocument(isImageDocument));
         if (activeGroup) doceditModalComponent.activeGroup = activeGroup;
 
         try {

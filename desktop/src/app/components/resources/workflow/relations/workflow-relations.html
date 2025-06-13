@@ -24,10 +24,12 @@
         </div>
     </div>
     <div class="dropdown-menu" ngbDropdownMenu>
-        <button *ngFor="let relationTarget of relationTargets"
-                class="dropdown-item"
-                (click)="selectRelationTarget(relationTarget)">
-            <document-teaser [document]="relationTarget"></document-teaser>
-        </button>
+        <div class="relation-targets-container">
+            <button *ngFor="let relationTarget of relationTargets"
+                    class="dropdown-item"
+                    (click)="selectRelationTarget(relationTarget)">
+                <document-teaser [document]="relationTarget" [showShortDescription]="false"></document-teaser>
+            </button>
+        </div>
     </div>
 </div>

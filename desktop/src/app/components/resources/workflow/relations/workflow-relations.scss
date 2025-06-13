@@ -49,8 +49,20 @@ workflow-relations {
       display: none;
     }
 
-    .dropdown-item {
-      cursor: default;
+    .dropdown-menu {
+      padding: 0;
+      
+      .relation-targets-container {
+        background-color: white;
+        max-width: 300px;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        .dropdown-item {
+          cursor: default;
+        }
+      } 
     }
   }
 }

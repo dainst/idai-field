@@ -146,12 +146,12 @@ export class ResourcesContextMenuComponent implements OnChanges {
             ?.children ?? [];
 
         return this.contextMenu.documents.length
-            && workflowStepCategories.find(category => {
-                return this.contextMenu.documents.every(document => {
+            && this.contextMenu.documents.find(document => {
+                return workflowStepCategories.find(category => {
                     return this.projectConfiguration.isAllowedRelationDomainCategory(
-                        document.resource.category, category.name, Relation.Workflow.IS_EXECUTION_TARGET_OF
+                        category.name, document.resource.category, Relation.Workflow.IS_EXECUTED_ON
                     );
-                });
+                }) !== undefined;
             }) !== undefined;
     }
 

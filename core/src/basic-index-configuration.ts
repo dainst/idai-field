@@ -27,6 +27,8 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'isChildOf:contained': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'contained' },
     'isChildOf:exist': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'exist' },
     'isPresentIn:contain': { path: 'resource.relations.isPresentIn', pathArray: ['resource', 'relations', 'isPresentIn'], type: 'contain' },
+    'isExecutedOn:contain': { path: 'resource.relations.isExecutedOn', pathArray: ['resource', 'relations', 'isExecutedOn'], type: 'contain' },
+    'resultsIn:contain': { path: 'resource.relations.resultsIn', pathArray: ['resource', 'relations', 'resultsIn'], type: 'contain' },
     'warnings:exist': { path: 'warnings', pathArray: ['warnings'], type: 'exist' },
     'invalidFields:exist': { path: 'warnings.invalidFields', pathArray: ['warnings', 'invalidFields'], type: 'exist' },
     'invalidFields:contain': { path: 'warnings.invalidFields', pathArray: ['warnings', 'invalidFields'], type: 'contain' },

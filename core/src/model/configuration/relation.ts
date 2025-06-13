@@ -135,10 +135,8 @@ export namespace Relation {
     export module Workflow {
 
         export const IS_EXECUTED_ON = 'isExecutedOn';
-        export const IS_EXECUTION_TARGET_OF = 'isExecutionTargetOf';
         export const RESULTS_IN = 'resultsIn';
-        export const IS_RESULT_OF = 'isResultOf'
-        export const ALL = [IS_EXECUTED_ON, IS_EXECUTION_TARGET_OF, RESULTS_IN, IS_RESULT_OF];
+        export const ALL = [IS_EXECUTED_ON, RESULTS_IN];
     }
 
 

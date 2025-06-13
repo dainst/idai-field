@@ -82,12 +82,10 @@ export class WorkflowEditorModalComponent {
 
     public async updateWorkflowSteps() {
 
-        const targetIds: string[] = set(
-            this.documents.map(document => {
-                return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF] ?? [];
-            }).flat()
-        );
-        this.workflowSteps = await this.datastore.getMultiple(targetIds) as Array<WorkflowStepDocument>;
+        this.workflowSteps = (await this.datastore.find({
+            constraints: { 'isExecutedOn:contain': this.documents.map(document => document.resource.id) }
+        })).documents as Array<WorkflowStepDocument>;
+
         sortWorkflowSteps(this.workflowSteps);
     }
 

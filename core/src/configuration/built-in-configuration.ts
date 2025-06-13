@@ -198,6 +198,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -216,6 +220,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -238,6 +246,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -256,6 +268,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -278,6 +294,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -293,6 +313,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry', 'includesStratigraphicalUnits']
                     }
@@ -306,6 +330,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -334,6 +362,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.PROPERTIES,
                         fields: ['gazId']
                     },
@@ -352,6 +384,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     }
                 ]
             }
@@ -369,6 +405,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -393,6 +433,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -412,6 +456,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -434,6 +482,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -451,6 +503,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -474,6 +530,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -495,6 +555,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -514,6 +578,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -531,6 +599,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -554,6 +626,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -569,6 +645,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -592,6 +672,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry']
                     }
@@ -611,6 +695,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.STRATIGRAPHY,
@@ -643,6 +731,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry', 'isPresentIn']
                     }
@@ -665,6 +757,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.POSITION,
                         fields: ['geometry', 'isPresentIn']
                     }
@@ -685,6 +781,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.IDENTIFICATION,
@@ -717,6 +817,10 @@ export class BuiltInConfiguration {
                         fields: ['hasChildren']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.IDENTIFICATION,
                         fields: ['isInstanceOf']
                     },
@@ -744,6 +848,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.HIERARCHY,
                         fields: ['hasChildren']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
                     },
                     {
                         name: Groups.INVENTORY,
@@ -833,7 +941,7 @@ export class BuiltInConfiguration {
                 },
                 isExecutedOn: {
                     inputType: Field.InputType.RELATION,
-                    required: true
+                    // TODO Set required: true
                 },
                 resultsIn: {
                     inputType: Field.InputType.RELATION
@@ -877,6 +985,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isExecutionTargetOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.PROPERTIES,
                         fields: ['height', 'width']
                     }
@@ -918,6 +1030,18 @@ export class BuiltInConfiguration {
             visible: true,
             editable: false,
             constraintName: 'isPresentIn:contain'
+        },
+        isExecutionTargetOf: {
+            inputType: Field.InputType.DERIVED_RELATION,
+            visible: true,
+            editable: false,
+            constraintName: 'isExecutedOn:contain'
+        },
+        isResultOf: {
+            inputType: Field.InputType.DERIVED_RELATION,
+            visible: true,
+            editable: false,
+            constraintName: 'resultsIn:contain'
         }
     };
 

@@ -14,6 +14,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -46,6 +50,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -76,6 +84,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -124,6 +136,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -156,6 +172,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -186,6 +206,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -234,6 +258,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -260,6 +288,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -496,6 +528,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "diaryAbstract"]
         },
@@ -524,6 +560,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description"]
         },
@@ -546,6 +586,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -576,6 +620,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -616,6 +664,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -692,6 +744,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "featureForm", "featureBorders", "archaeoDox:distinguishingCriterium", "archaeoDox:isNatural",
             "archaeoDox:soilType", "archaeoDox:consistency", "archaeoDox:isArchaeologicallyIrrelevant", "comparison"]
@@ -724,6 +780,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -773,6 +833,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "comparison"]
         },
@@ -795,6 +859,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -836,6 +904,10 @@
             "processor", "date", "diary", "isSameAs"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "featureSegmentForm", "featureSegmentBorders", "comparison"]
         },
@@ -873,6 +945,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "objectType", "condition", "conditionAmount", "conditionComment",
             "language", "content", "comparison"]
@@ -898,6 +974,10 @@
           "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "height", "width", "literature", "imageRights"]
         }
@@ -912,6 +992,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1005,6 +1089,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -1035,6 +1123,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1167,6 +1259,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "identification",
           "fields": ["isInstanceOf"]
         },
@@ -1231,6 +1327,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "identification",
           "fields": ["isInstanceOf"]
         },
@@ -1265,6 +1365,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "inventory",
@@ -1347,6 +1451,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -1369,6 +1477,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1418,6 +1530,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "inventory",
           "fields": ["isStoredIn", "storagePlace"]
         },
@@ -1462,6 +1578,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "inventory",
@@ -1586,6 +1706,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description"]
         },
@@ -1621,6 +1745,10 @@
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
         },
         {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "archaeoDox:viewingDirection"]
         },
@@ -1639,6 +1767,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1667,6 +1799,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isExecutionTargetOf", "isResultOf"]
         },
         {
           "name": "properties",

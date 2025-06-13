@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
-import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named,
-    DateSpecification, WorkflowStepDocument } from 'idai-field-core';
+import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named, DateSpecification,
+    WorkflowStepDocument } from 'idai-field-core';
 import { sortWorkflowSteps } from '../sort-workflow-steps';
 import { getSystemTimezone } from '../../../../../util/timezones';
 import { Settings } from '../../../../../services/settings/settings';
@@ -110,8 +110,8 @@ export class WorkflowStepLinkModalComponent {
 
         return intersection(
             this.baseDocuments.map(document => {
-                return this.projectConfiguration.getAllowedRelationRangeCategories(
-                    Relation.Workflow.IS_EXECUTION_TARGET_OF,
+                return this.projectConfiguration.getAllowedRelationDomainCategories(
+                    Relation.Workflow.IS_EXECUTED_ON,
                     document.resource.category
                 );
             })
@@ -133,18 +133,19 @@ export class WorkflowStepLinkModalComponent {
 
     private async getAvailableWorkflowSteps(): Promise<Array<WorkflowStepDocument>> {
 
-        const targetIds: string[] = this.selectedDocument.resource.relations
-            ?.[Relation.Workflow.IS_EXECUTION_TARGET_OF]
-            ?.filter(targetId => !this.baseDocuments.find(document => {
-                return document.resource.relations?.[Relation.Workflow.IS_EXECUTION_TARGET_OF]?.includes(targetId);
-            }));
+        const workflowSteps: Array<WorkflowStepDocument> = (await this.datastore.find({
+            constraints: { 'isExecutedOn:contain': this.selectedDocument.resource.id }
+        })).documents as Array<WorkflowStepDocument>;
 
-        const workflowSteps: Array<WorkflowStepDocument> = targetIds?.length
-            ? await this.datastore.getMultiple(targetIds) as Array<WorkflowStepDocument>
-            : [];
+        const linkedWorkflowSteps: Array<WorkflowStepDocument> = (await this.datastore.find({
+            constraints: { 'isExecutedOn:contain': this.baseDocuments.map(document => document.resource.id) }
+        })).documents as Array<WorkflowStepDocument>;
 
         return workflowSteps.filter(workflowStep => {
-            return this.allowedWorkflowStepCategories.map(to(Named.NAME)).includes(workflowStep.resource.category);
+            return !linkedWorkflowSteps.map(linkedWorkflowStep => {
+                return linkedWorkflowStep.resource.id;
+            }).includes(workflowStep.resource.id)
+                && this.allowedWorkflowStepCategories.map(to(Named.NAME)).includes(workflowStep.resource.category);
         });
     }
 

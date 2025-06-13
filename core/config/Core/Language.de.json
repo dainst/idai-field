@@ -10,11 +10,17 @@
     "shortDescription": {
       "label": "Kurzbeschreibung"
     },
+    "includesStratigraphicalUnits": {
+      "label": "Umfasst stratigraphische Einheiten"
+    },
     "hasChildren": {
       "label": "Untergeordnete Ressourcen"
     },
-    "includesStratigraphicalUnits": {
-      "label": "Umfasst stratigraphische Einheiten"
+    "isExecutionTargetOf": {
+      "label": "Durchführungsziel von"
+    },
+    "isResultOf": {
+      "label": "Ergebnis von"
     }
   },
   "categories": {
@@ -123,14 +129,8 @@
     "isExecutedOn": {
       "label": "Wurde durchgeführt an"
     },
-    "executionTargetOf": {
-      "label": "Durchführungsziel von"
-    },
     "resultsIn": {
       "label": "Ergibt"
-    },
-    "isResultOf": {
-      "label": "Ergebnis von"
     }
   }
 }

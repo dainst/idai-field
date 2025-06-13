@@ -10,4 +10,10 @@ relation-picker-group {
   .relation-picker-group-space {
     height: 5px;
   }
+
+  .disabled-info {
+    font-size: 14px;
+    font-style: italic;
+    user-select: none;
+  }
 }

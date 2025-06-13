@@ -17,6 +17,7 @@ export class RelationPickerGroupComponent implements OnChanges, AfterViewChecked
     @Input() resource: Resource;
     @Input() relationDefinition: Relation;
     @Input() createIfEmpty: boolean = false;
+    @Input() disabled: boolean = false;
 
     @ViewChild('plusButton') plusButtonElement: ElementRef;
 
@@ -76,6 +77,8 @@ export class RelationPickerGroupComponent implements OnChanges, AfterViewChecked
 
 
     public isPlusButtonAvailable(): boolean {
+
+        if (this.disabled) return false;
 
         return !this.relations[this.relationDefinition.name]
             || isEmpty(this.relations[this.relationDefinition.name])

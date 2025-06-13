@@ -256,10 +256,10 @@ export module Validations {
     /**
      * @throws [MISSING_PROPERTY]
      */
-    export function assertNoFieldsMissing(document: Document|NewDocument,
-                                          projectConfiguration: ProjectConfiguration): void {
+    export function assertNoFieldsMissing(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
+                                          allowEmptyFields: string[] = []): void {
 
-        const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration);
+        const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration, allowEmptyFields);
 
         if (missingProperties.length > 0) {
             throw [
@@ -346,13 +346,15 @@ export module Validations {
     }
 
 
-    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration) {
+    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
+                                         allowEmptyFields: string[]) {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<Field>
             = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
 
         for (let fieldDefinition of fieldDefinitions) {
+            if (allowEmptyFields.includes(fieldDefinition.name)) continue;
             if (CategoryForm.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)
                     && !Field.isFilled(fieldDefinition, resource as Resource)) {
                 missingFields.push(fieldDefinition.name);

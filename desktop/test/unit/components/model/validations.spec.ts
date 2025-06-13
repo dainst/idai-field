@@ -392,6 +392,20 @@ describe('Validations', () => {
     });
 
 
+    test('should not report error when omitting mandatory field if it is allowed to be empty via parameter', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                relations: {},
+            }
+        };
+
+        Validations.assertNoFieldsMissing(doc as any, projectConfiguration, ['mandatory']);
+    });
+
+
     test('should report invalid numeric field', () => {
 
         const doc = {

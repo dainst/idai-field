@@ -58,18 +58,21 @@ export class WorkflowEditorModalComponent {
     public async createWorkflowStep(category: CategoryForm, createMultiple: boolean) {
 
         const newWorkflowSteps: Array<WorkflowStepDocument> = await this.openWorkflowStepEditorModal(
-            WorkflowEditorModalComponent.buildWorkflowStepDocument(category) as WorkflowStepDocument,
+            WorkflowEditorModalComponent.buildWorkflowStepDocument(
+                category,
+                createMultiple ? [] : this.documents
+            ) as WorkflowStepDocument,
             createMultiple ? this.documents.length - 1 : undefined
         );
         if (!newWorkflowSteps) return;
 
         if (createMultiple) {
             for (let i = 0; i < newWorkflowSteps.length; i++) {
-                await this.linkWorkflowStep(newWorkflowSteps[i], [this.documents[i]]);
+                await this.setRelation(newWorkflowSteps[i], [this.documents[i]]);
             }
-        } else {
-            await this.linkWorkflowStep(newWorkflowSteps[0], this.documents);
         }
+
+        await this.updateWorkflowSteps();
     }
 
 
@@ -110,7 +113,8 @@ export class WorkflowEditorModalComponent {
             DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
-        modalRef.componentInstance.setDocument(workflowStep);
+        modalRef.componentInstance.setDocument(workflowStep, ['isExecutedOn']);
+        modalRef.componentInstance.disabledRelationFields = ['isExecutedOn'];
         if (numberOfDuplicates) modalRef.componentInstance.fixedNumberOfDuplicates = numberOfDuplicates;
 
         try {
@@ -147,14 +151,17 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    private static buildWorkflowStepDocument(category: CategoryForm): NewDocument {
+    private static buildWorkflowStepDocument(category: CategoryForm,
+                                             executedOnTargets: Array<FieldDocument>): NewDocument {
 
         return {
             resource: {
                 identifier: '',
                 category: category.name,
                 state: 'in progress',
-                relations: {}
+                relations: {
+                    isExecutedOn: executedOnTargets.map(target => target.resource.id)
+                }
             }
         };
     }

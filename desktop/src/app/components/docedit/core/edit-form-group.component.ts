@@ -30,6 +30,7 @@ export class EditFormGroup implements OnChanges {
     @Input() originalDocument: Document;
     @Input() languages: Map<Language>;
     @Input() scrollTargetField: string;
+    @Input() disabledRelationFields: string[];
 
     // Detects changes in fields of input types "dropdown", "radio", "checkboxes" and "boolean"
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
@@ -52,6 +53,8 @@ export class EditFormGroup implements OnChanges {
 
 
     public getFieldId = (field: Field) => 'edit-form-element-' + field.name.replace(':', '-');
+
+    public isDisabled = (field: Field) => this.disabledRelationFields?.includes(field.name);
 
 
     public shouldShow(field: Field): boolean {

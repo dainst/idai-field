@@ -43,6 +43,7 @@ export class DoceditComponent {
     public identifierPrefix: string|undefined;
     public scrollTargetField: string;
     public fixedNumberOfDuplicates: number|undefined = undefined;
+    public disabledRelationFields: string[];
 
     public parentLabel: string|undefined = undefined;
     public resourceLabel: string;
@@ -136,9 +137,10 @@ export class DoceditComponent {
     }
 
 
-    public async setDocument(document: FieldDocument|ImageDocument) {
+    public async setDocument(document: FieldDocument|ImageDocument, allowEmptyFields?: string[]) {
 
         this.documentHolder.setDocument(document);
+        if (allowEmptyFields) this.documentHolder.allowEmptyFields = allowEmptyFields;
 
         this.getFieldLabel = (fieldName: string) =>
             this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);

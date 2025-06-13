@@ -29,6 +29,8 @@ export class DocumentHolder {
 
     public oldVersion: Document;
 
+    public allowEmptyFields: string[];
+
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private relationsManager: RelationsManager,
@@ -135,7 +137,7 @@ export class DocumentHolder {
 
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
-        Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
+        Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration, this.allowEmptyFields);
         Validations.assertMaxCharactersRespected(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration, true,
             this.oldVersion);

@@ -42,6 +42,7 @@
                              [field]="field"
                              [languages]="languages"
                              [identifierPrefix]="identifierPrefix"
+                             [disabled]="isDisabled(field)"
                              (onChanged)="onChanged.emit()"></edit-form-field>
         </div>
         <div *ngIf="!isValidFieldData(field)" class="card-block">

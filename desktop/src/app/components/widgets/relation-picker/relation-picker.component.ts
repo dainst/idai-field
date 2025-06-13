@@ -22,12 +22,13 @@ export class RelationPickerComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() relationDefinition: Relation;
     @Input() relationIndex: number;
+    @Input() disabled: boolean = false;
 
     @Output() onTargetSelected: EventEmitter<Document|undefined> = new EventEmitter<Document|undefined>();
 
     public availableTargets: Array<Document>;
     public selectedTarget: Document|undefined;
-    public disabled: boolean = false;
+    public inError: boolean = false;
 
     private searchTerm: string = '';
     private offset: number = 0;
@@ -46,7 +47,7 @@ export class RelationPickerComponent implements OnChanges {
         try {
             await this.updateSelectedTarget();
         } catch (err) {
-            this.disabled = true;
+            this.inError = true;
             console.error(err);
         }
 
@@ -119,6 +120,8 @@ export class RelationPickerComponent implements OnChanges {
 
 
     public async editTarget() {
+
+        if (this.disabled) return;
 
         this.selectedTarget = undefined;
         this.availableTargets = await this.fetchAvailableTargets();

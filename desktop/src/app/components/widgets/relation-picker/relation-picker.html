@@ -1,4 +1,6 @@
-<div *ngIf="!disabled" class="relation-picker">
+<div *ngIf="!inError"
+     class="relation-picker"
+     [class.disabled]="disabled">
     <div *ngIf="!selectedTarget && availableTargets">
         <searchable-select [selectedValue]="selectedTarget?.resource.id"
                            [values]="getAvailableTargetIds()"
@@ -13,7 +15,9 @@
         <document-teaser [document]="selectedTarget" (click)="editTarget()"></document-teaser>
     </div>
 
-    <div *ngIf="selectedTarget" class="delete-relation small-circular-button red-button" (click)="deleteRelation()">
+    <div *ngIf="selectedTarget && !disabled"
+         class="delete-relation small-circular-button red-button"
+         (click)="deleteRelation()">
         <span class="mdi mdi-delete"></span>
     </div>
 </div>

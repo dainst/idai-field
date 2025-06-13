@@ -19,8 +19,7 @@
             <workflow-step-state [workflowStep]="workflowStep"></workflow-step-state>
         </div>
         <div class="workflow-step-executed-on">
-            <workflow-relations [workflowStep]="workflowStep"
-                                [relationName]="'isExecutedOn'"
+            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'isExecutedOn')"
                                 [mandatory]="true"
                                 (onChanges)="onChanged.emit()"></workflow-relations>
         </div>
@@ -29,8 +28,7 @@
         <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
         <div class="workflow-step-results-in">
             <workflow-relations *ngIf="isResultsInRelationAvailable(workflowStep)"
-                                [workflowStep]="workflowStep"
-                                [relationName]="'resultsIn'"
+                                [relationTargets]="getRelationTargets(workflowStep, 'resultsIn')"
                                 [mandatory]="false"></workflow-relations>
         </div>
         <div class="workflow-step-buttons input-group">

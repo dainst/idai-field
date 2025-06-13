@@ -1,10 +1,5 @@
-import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Datastore, Document, ProjectConfiguration, Relation } from 'idai-field-core';
-import { MenuContext } from '../../../../services/menu-context';
-import { Menus } from '../../../../services/menus';
-import { AngularUtility } from '../../../../angular/angular-utility';
-import { WorkflowRelationsModalComponent } from './workflow-relations-modal.component';
+import { Component, Input, OnChanges } from '@angular/core';
+import { Document } from 'idai-field-core';
 
 
 type RelationTargetCategoryInfo = { categoryName: string, count: number };
@@ -20,25 +15,18 @@ type RelationTargetCategoryInfo = { categoryName: string, count: number };
  */
 export class WorkflowRelationsComponent implements OnChanges {
 
-    @Input() workflowStep: Document;
-    @Input() relationName: 'isExecutedOn'|'resultsIn';
+    @Input() relationTargets: Array<Document>;
     @Input() mandatory: boolean;
 
-    @Output() onChanges: EventEmitter<void> = new EventEmitter<void>();
-
-    public relationTargets: Array<Document>;
     public categoryInfos: Array<RelationTargetCategoryInfo>;
 
 
-    constructor(private modalService: NgbModal,
-                private menuService: Menus,
-                private datastore: Datastore,
-                private projectConfiguration: ProjectConfiguration) {}
+    constructor() {}
 
 
     async ngOnChanges() {
 
-        await this.update();
+        this.categoryInfos = this.buildCategoryInfos();
     }
 
 
@@ -47,48 +35,6 @@ export class WorkflowRelationsComponent implements OnChanges {
         return this.categoryInfos.slice(2).reduce((result, info) => {
             return result + info.count;
         }, 0);
-    }
-
-
-    public async edit() {
-
-        try {
-            this.menuService.setContext(MenuContext.MODAL);
-
-            const modalRef: NgbModalRef = this.modalService.open(
-                WorkflowRelationsModalComponent,
-                { animation: false, backdrop: 'static', keyboard: false }
-            );
-            modalRef.componentInstance.workflowStep = this.workflowStep;
-            modalRef.componentInstance.relationDefinition = this.getRelationDefinition();
-            modalRef.componentInstance.mandatory = this.mandatory;
-            await modalRef.componentInstance.initialize();
-            AngularUtility.blurActiveElement();
-            await modalRef.result;
-            await this.update();
-            this.onChanges.emit();
-        } catch (err) {
-            if (err !== 'cancel') console.error(err);
-        } finally {
-            this.menuService.setContext(MenuContext.WORKFLOW_EDITOR);
-        }
-    }
-
-
-    private async update() {
-
-        this.relationTargets = await this.fetchRelationTargets();
-        this.categoryInfos = this.buildCategoryInfos();
-    }
-
-
-    private async fetchRelationTargets(): Promise<Array<Document>> {
-
-        const targetIds: string[] = this.workflowStep.resource.relations[this.relationName];
-
-        return targetIds
-            ? this.datastore.getMultiple(targetIds)
-            : [];
     }
 
 
@@ -104,12 +50,5 @@ export class WorkflowRelationsComponent implements OnChanges {
             }
             return result;
         }, []);
-    }
-
-
-    private getRelationDefinition(): Relation {
-
-        return this.projectConfiguration.getRelationsForDomainCategory(this.workflowStep.resource.category)
-            .find(relation => relation.name === this.relationName);
     }
 }

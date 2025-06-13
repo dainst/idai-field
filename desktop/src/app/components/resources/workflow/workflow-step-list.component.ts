@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MenuContext } from '../../../services/menu-context';
+import { Map } from 'tsfun';
 import { Document, RelationsManager, Relation, Resource, Labels, ProjectConfiguration, DateSpecification,
-    WorkflowStepDocument } from 'idai-field-core';
+    WorkflowStepDocument, Datastore } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { Settings } from '../../../services/settings/settings';
@@ -20,11 +21,13 @@ import { Menus } from '../../../services/menus';
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepListComponent {
+export class WorkflowStepListComponent implements OnChanges {
 
     @Input() workflowSteps: Array<WorkflowStepDocument>;
 
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
+
+    private relationTargets: Map<Map<Array<Document>>> = {};
 
 
     constructor(private menus: Menus,
@@ -32,7 +35,8 @@ export class WorkflowStepListComponent {
                 private relationsManager: RelationsManager,
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private datastore: Datastore) {}
 
 
     public getCategoryLabel = (workflowStep: WorkflowStepDocument) =>
@@ -42,9 +46,23 @@ export class WorkflowStepListComponent {
         Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
 
 
+    ngOnChanges() {
+        
+        this.workflowSteps.forEach(workflowStep => this.updateRelationTargets(workflowStep));
+    }
+    
+    
+    public getRelationTargets(workflowStep: WorkflowStepDocument,
+                              relationName: 'isExecutedOn'|'resultsIn'): Array<Document> {
+
+        return this.relationTargets[workflowStep.resource.id]?.[relationName];
+    }
+
+
     public async editWorkflowStep(workflowStep: WorkflowStepDocument) {
 
         if (await this.openWorkflowStepEditorModal(workflowStep)) {
+            this.updateRelationTargets(workflowStep);
             this.onChanged.emit();
         }
     }
@@ -120,5 +138,27 @@ export class WorkflowStepListComponent {
             AngularUtility.blurActiveElement();
             this.menus.setContext(context);
         }
+    }
+
+
+    private async updateRelationTargets(workflowStep: WorkflowStepDocument) {
+
+        if (!this.relationTargets[workflowStep.resource.id]) this.relationTargets[workflowStep.resource.id] = {};
+
+        for (let relationName of ['isExecutedOn', 'resultsIn']) {
+            const targets: Array<Document> = await this.fetchRelationTargets(workflowStep, relationName);
+            this.relationTargets[workflowStep.resource.id][relationName] = targets;
+        }
+    }
+
+
+    private async fetchRelationTargets(workflowStep: WorkflowStepDocument,
+                                       relationName: string): Promise<Array<Document>> {
+
+        const targetIds: string[] = workflowStep.resource.relations[relationName];
+
+        return targetIds
+            ? this.datastore.getMultiple(targetIds)
+            : [];
     }
 }

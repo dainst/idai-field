@@ -1,10 +1,5 @@
 <div *ngIf="relationTargets"
      class="workflow-relations-container">
-    <div *ngIf="!relationTargets.length"
-         class="circular-button add-relation">
-        <span class="mdi mdi-plus"></span>
-    </div>
-
     <document-teaser *ngIf="relationTargets.length === 1"
                      [document]="relationTargets[0]"
                      [showShortDescription]="false"></document-teaser>

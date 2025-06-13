@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MenuContext } from '../../../services/menu-context';
 import { Map } from 'tsfun';
-import { Document, RelationsManager, Relation, Resource, Labels, ProjectConfiguration, DateSpecification,
-    WorkflowStepDocument, Datastore } from 'idai-field-core';
+import { Document, RelationsManager, Resource, Labels, ProjectConfiguration, DateSpecification, WorkflowStepDocument,
+    Datastore } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { Settings } from '../../../services/settings/settings';
@@ -88,15 +88,6 @@ export class WorkflowStepListComponent implements OnChanges {
             AngularUtility.blurActiveElement();
             this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
         }
-    }
-
-
-    public isResultsInRelationAvailable(workflowStep: WorkflowStepDocument): boolean {
-
-        return this.projectConfiguration.getAllowedRelationRangeCategories(
-            Relation.Workflow.RESULTS_IN,
-            workflowStep.resource.category
-        ).length > 0;
     }
 
 

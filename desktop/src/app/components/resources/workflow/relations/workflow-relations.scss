@@ -15,20 +15,6 @@ workflow-relations {
       }
     }
 
-    .add-relation {
-      position: absolute !important;
-      left: 0;
-      background-color: $primary-button-color !important;
-
-      &:hover {
-        background-color: $primary-highlight-color !important;
-      }
-
-      .mdi {
-        color: white !important;
-      }
-    }
-
     .category-info {
       width: 35px;
       float: left;

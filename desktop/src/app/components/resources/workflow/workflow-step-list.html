@@ -19,17 +19,15 @@
             <workflow-step-state [workflowStep]="workflowStep"></workflow-step-state>
         </div>
         <div class="workflow-step-executed-on">
-            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'isExecutedOn')"
-                                [mandatory]="true"
-                                (onChanges)="onChanged.emit()"></workflow-relations>
+            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'isExecutedOn')">
+            </workflow-relations>
         </div>
         <div class="workflow-step-date">{{getDateLabel(workflowStep)}}</div>
         <div class="workflow-step-identifier">{{workflowStep.resource.identifier}}</div>
         <div class="workflow-step-category">{{getCategoryLabel(workflowStep)}}</div>
         <div class="workflow-step-results-in">
-            <workflow-relations *ngIf="isResultsInRelationAvailable(workflowStep)"
-                                [relationTargets]="getRelationTargets(workflowStep, 'resultsIn')"
-                                [mandatory]="false"></workflow-relations>
+            <workflow-relations [relationTargets]="getRelationTargets(workflowStep, 'resultsIn')">
+            </workflow-relations>
         </div>
         <div class="workflow-step-buttons input-group">
             <button class="btn btn-danger" (click)="deleteWorkflowStep(workflowStep)">

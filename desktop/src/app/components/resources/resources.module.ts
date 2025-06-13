@@ -57,7 +57,6 @@ import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
 import { WorkflowStepPlusButtonComponent } from './actions/edit-workflow/plus-button/workflow-step-plus-button.component';
 import { WorkflowRelationsComponent } from './workflow/relations/workflow-relations.component';
-import { WorkflowRelationsModalComponent } from './workflow/relations/workflow-relations-modal.component';
 import { WorkflowStepLinkButtonComponent } from './actions/edit-workflow/link-button/workflow-step-link-button.component';
 import { WorkflowStepLinkModalComponent } from './actions/edit-workflow/link-button/workflow-step-link-modal.component';
 import { DeleteWorkflowStepModalComponent } from './workflow/delete/delete-workflow-step-modal.component';
@@ -112,7 +111,6 @@ const remote = window.require('@electron/remote');
         WorkflowEditorModalComponent,
         WorkflowStepPlusButtonComponent,
         WorkflowRelationsComponent,
-        WorkflowRelationsModalComponent,
         WorkflowStepLinkButtonComponent,
         WorkflowStepLinkModalComponent,
         WorkflowStepStateComponent,

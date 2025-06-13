@@ -16,7 +16,6 @@ type RelationTargetCategoryInfo = { categoryName: string, count: number };
 export class WorkflowRelationsComponent implements OnChanges {
 
     @Input() relationTargets: Array<Document>;
-    @Input() mandatory: boolean;
 
     public categoryInfos: Array<RelationTargetCategoryInfo>;
 
@@ -26,7 +25,7 @@ export class WorkflowRelationsComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.categoryInfos = this.buildCategoryInfos();
+        if (this.relationTargets) this.categoryInfos = this.buildCategoryInfos();
     }
 
 

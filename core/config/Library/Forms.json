@@ -1628,12 +1628,12 @@
           "fields": ["identifier", "category", "shortDescription"]
         },
         {
-          "name": "properties",
-          "fields": ["description", "literature"]
-        },
-        {
           "name": "identification",
           "fields": ["hasInstance"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "literature"]
         }
       ]
     },

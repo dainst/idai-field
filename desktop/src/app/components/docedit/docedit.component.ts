@@ -140,7 +140,7 @@ export class DoceditComponent {
     public async setDocument(document: FieldDocument|ImageDocument, allowEmptyFields?: string[]) {
 
         this.documentHolder.setDocument(document);
-        if (allowEmptyFields) this.documentHolder.allowEmptyFields = allowEmptyFields;
+        this.documentHolder.allowEmptyFields = allowEmptyFields ?? [];
 
         this.getFieldLabel = (fieldName: string) =>
             this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);

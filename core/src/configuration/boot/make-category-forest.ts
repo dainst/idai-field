@@ -138,8 +138,12 @@ function getGroupNameForUnassaginedField(fieldName: string): string {
         return Groups.TIME;
     } else if (Relation.Type.ALL.includes(fieldName)) {
         return Groups.IDENTIFICATION;
+    } else if (Relation.Inventory.ALL.includes(fieldName)) {
+        return Groups.INVENTORY;
     } else if (['hasChildren', 'includesStratigraphicalUnits'].includes(fieldName)) {
         return Groups.HIERARCHY;
+    } else if (['isExecutionTargetOf', 'isResultOf'].includes(fieldName)) {
+        return Groups.WORKFLOW;
     } else {
         return Groups.OTHER;
     }

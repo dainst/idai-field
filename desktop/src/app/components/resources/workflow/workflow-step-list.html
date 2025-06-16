@@ -13,8 +13,8 @@
             i18n="@@resources.workflowEditorModal.resultsIn">Ergibt</div>
     <div class="workflow-step-buttons"></div>
 </div>
-<div class="workflow-steps-body">
-    <div *ngFor="let workflowStep of workflowSteps" class="workflow-step">
+<cdk-virtual-scroll-viewport class="workflow-steps-body" [itemSize]="itemSize">
+    <div *cdkVirtualFor="let workflowStep of workflowSteps; trackBy: trackWorkflowStep" class="workflow-step">
         <div class="workflow-step-state">
             <workflow-step-state [workflowStep]="workflowStep"></workflow-step-state>
         </div>
@@ -40,4 +40,4 @@
             </button>
         </div>
     </div>
-</div>
+</cdk-virtual-scroll-viewport>

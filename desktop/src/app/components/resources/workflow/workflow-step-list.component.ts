@@ -28,6 +28,8 @@ export class WorkflowStepListComponent implements OnChanges {
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
     @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
 
+    public readonly itemSize: number = 55;
+
     private relationTargets: Map<Map<Array<Document>>> = {};
 
 
@@ -45,6 +47,8 @@ export class WorkflowStepListComponent implements OnChanges {
     
     public getShortDescriptionLabel = (workflowStep: WorkflowStepDocument) =>
         Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
+
+    public trackWorkflowStep = (_: number, workflowStep: WorkflowStepDocument) => workflowStep.resource.id;
 
 
     ngOnChanges() {

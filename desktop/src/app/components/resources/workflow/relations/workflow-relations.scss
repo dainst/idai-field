@@ -51,6 +51,7 @@ workflow-relations {
       .relation-targets-container {
         max-width: 300px;
         max-height: 200px;
+        padding: 5px 0;
         overflow-x: hidden;
         overflow-y: auto;
 
@@ -77,10 +78,6 @@ workflow-relations {
   .single-workflow-relation-target {
     .document-teaser {
       height: 100%;
-
-      .teasercontent {
-        width: 100%;
-      }
     }
   }
 }

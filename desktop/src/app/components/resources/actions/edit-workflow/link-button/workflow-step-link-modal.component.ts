@@ -23,12 +23,11 @@ import { UtilTranslations } from '../../../../../util/util-translations';
 export class WorkflowStepLinkModalComponent {
 
     public baseDocuments: Array<Document>;
+    public allowedWorkflowStepCategories: Array<CategoryForm>;
 
     public filterOptions: Array<CategoryForm> = [];
     public selectedDocument: Document;
     public availableWorkflowSteps: Array<WorkflowStepDocument>;
-
-    private allowedWorkflowStepCategories: Array<CategoryForm>;
 
 
     constructor(public activeModal: NgbActiveModal,

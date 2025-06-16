@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../../../../services/menus';
-import { FieldDocument, WorkflowStepDocument } from 'idai-field-core';
+import { CategoryForm, FieldDocument, WorkflowStepDocument } from 'idai-field-core';
 import { MenuContext } from '../../../../../services/menu-context';
 import { WorkflowStepLinkModalComponent } from './workflow-step-link-modal.component';
 import { AngularUtility } from '../../../../../angular/angular-utility';
@@ -18,6 +18,7 @@ import { AngularUtility } from '../../../../../angular/angular-utility';
 export class WorkflowStepLinkButtonComponent {
 
     @Input() baseDocuments: Array<FieldDocument>;
+    @Input() allowedWorkflowStepCategories: Array<CategoryForm>;
 
     @Output() onWorkflowStepSelected: EventEmitter<WorkflowStepDocument> = new EventEmitter<WorkflowStepDocument>();
 
@@ -36,6 +37,7 @@ export class WorkflowStepLinkButtonComponent {
                 { animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.baseDocuments = this.baseDocuments;
+            modalRef.componentInstance.allowedWorkflowStepCategories = this.allowedWorkflowStepCategories;
             await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
             const selectedWorkflowStep: WorkflowStepDocument = await modalRef.result;

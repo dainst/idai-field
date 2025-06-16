@@ -1,4 +1,4 @@
-<div *ngIf="topLevelCategoriesArray">
+<div *ngIf="allowedCategories">
     <div *ngIf="hasMultipleCategoryOptions()"
          class="circular-button green-button"
          [ngbPopover]="categoryPickerMenu"
@@ -13,7 +13,7 @@
 
     <div *ngIf="!hasMultipleCategoryOptions()"
         class="circular-button category-button"
-        (click)="baseDocuments.length === 1 && selectCategory(topLevelCategoriesArray[0])"
+        (click)="baseDocuments.length === 1 && selectCategory(allowedCategories[0])"
         [ngbPopover]="categoryPickerMenu"
         #popover="ngbPopover"
         triggers="manual"
@@ -21,7 +21,7 @@
         (click)="popover.toggle();"
         (hidden)="reset()"
         placement="top">
-        <category-icon [category]="topLevelCategoriesArray[0].name" size="41"></category-icon>
+        <category-icon [category]="allowedCategories[0].name" size="41"></category-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>
@@ -58,7 +58,7 @@
                 <div class="popover-custom-title">
                     <span i18n="@@resources.plusButton.selectCategory">Bitte wählen Sie eine Kategorie aus.</span>
                 </div>
-                <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
+                <category-picker [topLevelCategoriesArray]="allowedCategories"
                                  (onCategoryPicked)="selectCategory($event)"></category-picker>
             </div>
         </div>

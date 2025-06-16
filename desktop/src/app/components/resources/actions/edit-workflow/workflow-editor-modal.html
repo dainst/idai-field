@@ -9,11 +9,14 @@
     <workflow-step-list [workflowSteps]="workflowSteps"
                         (onChanged)="updateWorkflowSteps()"
                         (onRelationTargetSelected)="jumpToRelationTarget($event)"></workflow-step-list>
-    <div id="workflow-step-plus-button-container">
+    <div *ngIf="allowedWorkflowStepCategories?.length"
+         id="workflow-step-plus-button-container">
         <workflow-step-plus-button [baseDocuments]="documents"
+                                   [allowedCategories]="allowedWorkflowStepCategories"
                                    (onSubmit)="createWorkflowStep($event.category, $event.createMultiple)">
         </workflow-step-plus-button>
         <workflow-step-link-button [baseDocuments]="documents"
+                                   [allowedWorkflowStepCategories]="allowedWorkflowStepCategories"
                                    (onWorkflowStepSelected)="linkWorkflowStep($event, documents)">
         </workflow-step-link-button>
     </div>

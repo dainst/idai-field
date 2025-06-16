@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { set } from 'tsfun';
+import { intersection, set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Datastore,
-    WorkflowStepDocument, SortUtil } from 'idai-field-core';
+    WorkflowStepDocument, SortUtil, ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -28,6 +28,7 @@ export class WorkflowEditorModalComponent {
     public documents: Array<FieldDocument>;
 
     public workflowSteps: Array<WorkflowStepDocument>;
+    public allowedWorkflowStepCategories: Array<CategoryForm>;
 
 
     constructor(private activeModal: NgbActiveModal,
@@ -36,7 +37,8 @@ export class WorkflowEditorModalComponent {
                 private relationsManager: RelationsManager,
                 private datastore: Datastore,
                 private messages: Messages,
-                private routing: Routing) {}
+                private routing: Routing,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public cancel = () => this.activeModal.close();
@@ -52,6 +54,7 @@ export class WorkflowEditorModalComponent {
 
     public async initialize() {
 
+        this.allowedWorkflowStepCategories = this.getAllowedWorkflowStepCategories();
         this.sortDocuments();
         await this.updateWorkflowSteps();
     }
@@ -99,6 +102,19 @@ export class WorkflowEditorModalComponent {
 
         this.activeModal.close();
         this.routing.jumpToResource(relationTarget);
+    }
+
+
+    private getAllowedWorkflowStepCategories(): Array<CategoryForm> {
+
+        return intersection(
+            this.documents.map(document => {
+                return this.projectConfiguration.getAllowedRelationDomainCategories(
+                    Relation.Workflow.IS_EXECUTED_ON,
+                    document.resource.category
+                );
+            })
+        );
     }
 
 

@@ -108,8 +108,8 @@
                                 CouchService.extract_most_recent_change_info(change) %>
                               <tr>                                
                                 <td>
-                                  { change["doc"]["resource"]["identifier"]  |>  String.slice(0..18) }
-                                  <div class="tooltip" :if={ String.length(change["doc"]["resource"]["identifier"]) > 18 } >
+                                  { change["doc"]["resource"]["identifier"]  |>  String.slice(0..20) }
+                                  <div class="tooltip" :if={ String.length(change["doc"]["resource"]["identifier"]) > 20 } >
                                   ... 
                                   <span class="tooltiptext tooltiptextleftcolumn">{ change["doc"]["resource"]["identifier"] } </span>
                                   </div>

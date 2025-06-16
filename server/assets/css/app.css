@@ -315,12 +315,10 @@ nav {
   visibility: hidden;
   width: 1000px;
   background-color: rgb(242, 248, 249);
-  text-emphasis:unset;
-  
+  text-emphasis:unset;  
   border-radius: 6px;
   position: absolute;
-  z-index: 1;
-  margin-left: -12em;
+  z-index: 1; 
   margin-top:-1em;
   opacity: 0;
   transition: opacity 0.7s;
@@ -328,6 +326,7 @@ nav {
 
 .tooltiptextleftcolumn {
   text-align: left;
+  margin-left: -13em;
 }
 
 .tooltiptextrigthcolumn {
@@ -362,7 +361,7 @@ nav {
 }
 
 .scrolldown tbody {
-  max-height: 100px;
+  max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
   color: #3f4246;

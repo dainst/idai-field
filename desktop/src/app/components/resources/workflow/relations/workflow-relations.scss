@@ -49,13 +49,14 @@ workflow-relations {
       padding: 0;
       
       .relation-targets-container {
-        max-width: 300px;
+        max-width: 400px;
         max-height: 200px;
         padding: 5px 0;
         overflow-x: hidden;
         overflow-y: auto;
 
         .dropdown-item {
+          padding: 5px 16px;
           cursor: default;
 
           .teasercontent {

@@ -44,7 +44,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
-          |> assign(:n_changes_to_display, 5)
+          |> assign(:n_changes_to_display, 100)
           |> assign(:page_title, project)
           |> read_project_doc()
         }

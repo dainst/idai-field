@@ -308,28 +308,65 @@ nav {
 .tooltip {
   position: relative;
   display: inline-table;
+   
 }
 
-.tooltip .tooltiptext {
+.tooltiptext {
   visibility: hidden;
-  width:max-content;
-  background-color: #165f55;
-  color: #fff;
+  width: 1000px;
+  background-color: rgb(242, 248, 249);
   text-emphasis:unset;
-  text-align: center;
+  
   border-radius: 6px;
-  padding: 5px 0;
   position: absolute;
   z-index: 1;
-  bottom: 120%;
-  left: 5%;
-  margin-left: 2em;
+  margin-left: -12em;
+  margin-top:-1em;
   opacity: 0;
   transition: opacity 0.7s;
+}
+
+.tooltiptextleftcolumn {
+  text-align: left;
+}
+
+.tooltiptextrigthcolumn {
+  text-align: center;
+  transform: translate(-50%, 0%);
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
   padding: 1em;
+}
+
+.scrolldown {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.scrolldown thead , .scrolldown tbody {
+  display: block;
+}
+
+.scrolldown tbody tr, .scrolldown thead tr {
+  display: grid;
+  grid-template-columns: 1.2fr 0.6fr 1.2fr 1fr; 
+}
+
+.scrolldown thead {
+  color: #3f4246;
+  font-size: small;
+}
+
+.scrolldown tbody {
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #3f4246;
+  line-height: 0%;
+  font-size: small;
+  table-layout: fixed;
 }

@@ -124,19 +124,6 @@ defmodule FieldHubWeb.Live.ProjectShow do
     {:noreply, assign(socket, :new_password, password)}
   end
 
-  def handle_event("change_count_select", %{"n-last-changes" => n} = _values, socket) do
-    {n_integer, _remainder} = Integer.parse(n)
-
-    stats = Project.evaluate_project(socket.assigns.project, n_integer)
-
-    socket =
-      socket
-      |> assign(:stats, stats)
-      |> assign(:n_changes_to_display, n_integer)
-
-    {:noreply, socket}
-  end
-
   def handle_event("delete_cache", _values, %{assigns: %{project: project}} = socket) do
     {:ok, true} = FieldHub.FileStore.clear_cache(project)
 

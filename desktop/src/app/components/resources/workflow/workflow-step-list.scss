@@ -7,6 +7,10 @@ workflow-step-list {
   font-size: 14px;
   user-select: none;
 
+  .cdk-virtual-scroll-content-wrapper {
+    min-height: 100%;
+  }
+
   .workflow-steps-headings,
   .workflow-steps-body {
     overflow-x: hidden;

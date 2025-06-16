@@ -1,7 +1,6 @@
 import { AfterViewChecked, Component, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { FieldDocument } from 'idai-field-core';
-import { ResourcesComponent } from './resources.component';
 import { Loading } from '../widgets/loading';
 import { PlusButtonStatus } from './plus-button.component';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
@@ -36,8 +35,7 @@ export class BaseList implements AfterViewChecked {
     private lastSelectedSegment: NavigationPathSegment;
 
 
-    constructor(public resourcesComponent: ResourcesComponent,
-                public viewFacade: ViewFacade,
+    constructor(public viewFacade: ViewFacade,
                 protected loading: Loading,
                 protected menuService: Menus) {
 

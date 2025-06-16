@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { set } from 'tsfun';
 import { FieldDocument, CategoryForm, ProjectConfiguration, FieldResource, Valuelist, Labels } from 'idai-field-core';
-import { ResourcesComponent } from '../resources.component';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
@@ -35,12 +34,11 @@ export class ListComponent extends BaseList implements OnChanges {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
-                resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
                 menuService: Menus) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService);
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();

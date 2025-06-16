@@ -40,14 +40,14 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     private lastSelectedDocument: FieldDocument|undefined;
 
 
-    constructor(private navigationService: NavigationService,
+    constructor(public resourcesComponent: ResourcesComponent,
+                private navigationService: NavigationService,
                 private warningsService: WarningsService,
-                resourcesComponent: ResourcesComponent,
                 loading: Loading,
                 viewFacade: ViewFacade,
                 menuService: Menus) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService);
 
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();

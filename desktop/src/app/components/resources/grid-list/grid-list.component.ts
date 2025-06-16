@@ -80,12 +80,12 @@ export class GridListComponent extends BaseList implements OnChanges {
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private warningsService: WarningsService,
-                resourcesComponent: ResourcesComponent,
+                private resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
                 menuService: Menus) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService);
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
         this.syncService.statusNotifications().subscribe(() => this.update(this.documents));
     }

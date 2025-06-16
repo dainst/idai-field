@@ -118,7 +118,7 @@ export class Routing {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
             await this.viewFacade.setSelectedDocument(documentToSelect.resource.id, true, fromLink);
-            if (['types', 'inventory'].includes(viewName)) {
+            if (['types', 'inventory', 'workflow'].includes(viewName)) {
                 await this.viewFacade.moveInto(documentToSelect.resource.id, false, fromLink);
             }
         }
@@ -152,17 +152,22 @@ export class Routing {
     }
 
 
-    private getViewName(document: Document): 'project'|'types'|'inventory'|string {
+    private getViewName(document: Document): 'project'|'types'|'inventory'|'workflow'|string {
 
-        return this.projectConfiguration.getOverviewCategories().map(Named.toName).includes(document.resource.category)
-            ? 'project'
-            : this.projectConfiguration.getTypeManagementCategories()
-                    .map(Named.toName).includes(document.resource.category)
-                ? 'types'
-                : this.projectConfiguration.getInventoryCategories()
-                        .map(Named.toName).includes(document.resource.category)
-                    ? 'inventory'
-                    : document.resource.relations['isRecordedIn'][0];
+        if (this.projectConfiguration.getOverviewCategories().map(Named.toName).includes(document.resource.category)) {
+            return 'project';
+        } else if (this.projectConfiguration.getTypeManagementCategories()
+                .map(Named.toName).includes(document.resource.category)) {
+            return 'types';
+        } else if (this.projectConfiguration.getInventoryCategories()
+                .map(Named.toName).includes(document.resource.category)) {
+            return 'inventory';
+        } else if (this.projectConfiguration.getWorkflowCategories()
+                .map(Named.toName).includes(document.resource.category)) {
+            return 'workflow';
+        } else {
+            return document.resource.relations['isRecordedIn'][0];
+        }
     }
 
 

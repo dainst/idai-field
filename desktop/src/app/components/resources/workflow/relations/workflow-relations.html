@@ -1,7 +1,6 @@
 <div *ngIf="relationTargets?.length === 1" class="single-workflow-relation-target">
     <document-teaser [document]="relationTargets[0]"
-                        [showShortDescription]="false"
-                        (click)="selectRelationTarget(relationTargets[0])"></document-teaser>
+                     (click)="selectRelationTarget(relationTargets[0])"></document-teaser>
 </div>
 <div *ngIf="relationTargets?.length > 1" class="dropdown workflow-relations-dropdown"
     ngbDropdown
@@ -29,7 +28,7 @@
             <button *ngFor="let relationTarget of relationTargets"
                     class="dropdown-item"
                     (click)="selectRelationTarget(relationTarget)">
-                <document-teaser [document]="relationTarget" [showShortDescription]="false"></document-teaser>
+                <document-teaser [document]="relationTarget"></document-teaser>
             </button>
         </div>
     </div>

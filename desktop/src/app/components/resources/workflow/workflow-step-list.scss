@@ -15,14 +15,16 @@ workflow-step-list {
 
   .workflow-steps-body {
     height: calc(100% - 48px);
+
+    .workflow-step {
+      height: 59px;
+    }
   }
 
   .workflow-step {
     display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
-    .workflow-step-executed-on,
-    .workflow-step-results-in,
     .workflow-step-state-header,
     .workflow-step-date,
     .workflow-step-identifier,
@@ -47,15 +49,6 @@ workflow-step-list {
     .workflow-step-executed-on,
     .workflow-step-results-in {
       flex: 0 0 149px;
-
-      .teasercontent {
-        width: 100%;
-
-        .title {
-          display: block;
-          width: calc(100% - 35px);
-        }
-      }
     }
 
     .workflow-step-state-header,
@@ -94,10 +87,17 @@ workflow-step-list {
       }
     }
 
-    &.workflow-steps-headings div {
-      height: 48px;
-      line-height: 28px;
-      font-weight: 600;
+    &.workflow-steps-headings {
+      .workflow-step-executed-on,
+      .workflow-step-results-in {
+        padding: 10px;
+      }
+  
+      div {
+        height: 48px;
+        line-height: 28px;
+        font-weight: 600;
+      }
     }
   }
 }

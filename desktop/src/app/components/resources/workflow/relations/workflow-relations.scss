@@ -1,6 +1,6 @@
 workflow-relations {
-  display: block;
-  height: 35px;
+  display: flex;
+  height: 100%;
 
   .dropdown {
     position: relative;
@@ -10,6 +10,7 @@ workflow-relations {
 
     .workflow-relations-toggle {
       height: 100%;
+      padding-top: 12px;
 
       .category-info {
         width: 35px;
@@ -69,6 +70,16 @@ workflow-relations {
 
       .category-count {
         filter: brightness(120%);
+      }
+    }
+  }
+
+  .single-workflow-relation-target {
+    .document-teaser {
+      height: 100%;
+
+      .teasercontent {
+        width: 100%;
       }
     }
   }

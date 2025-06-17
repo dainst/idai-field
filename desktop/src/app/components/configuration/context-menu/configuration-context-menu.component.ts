@@ -70,11 +70,14 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
     public isDeleteOptionAvailable(): boolean {
 
-        if (this.contextMenu.valuelist) return this.contextMenu.valuelist.source === 'custom';
-
-        return (!this.contextMenu.field
-            || this.contextMenu.category.customFields.includes(this.contextMenu.field.name))
-        && (this.contextMenu.field !== undefined || this.contextMenu.group !== undefined
-            || !this.contextMenu.category.required);
+        if (this.contextMenu.valuelist) {
+            return this.contextMenu.valuelist.source === 'custom';
+        } else if (this.contextMenu.field) {
+            return this.contextMenu.category.customFields.includes(this.contextMenu.field.name)
+                && !this.contextMenu.field.required;
+        } else {
+            return this.contextMenu.group !== undefined
+                || !this.contextMenu.category.required;
+        }
     }
 }

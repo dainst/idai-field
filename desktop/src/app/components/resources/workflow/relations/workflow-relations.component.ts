@@ -1,4 +1,6 @@
-import { Component, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnChanges, EventEmitter, Output, ViewChild, AfterViewChecked } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from 'idai-field-core';
 
 
@@ -13,10 +15,13 @@ type RelationTargetCategoryInfo = { categoryName: string, count: number };
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowRelationsComponent implements OnChanges {
+export class WorkflowRelationsComponent implements OnChanges, AfterViewChecked {
 
     @Input() relationTargets: Array<Document>;
     @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
+
+    @ViewChild('dropdownMenu', { static:false, read: NgbDropdown}) dropdownMenu: NgbDropdown;
+    @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
     public categoryInfos: Array<RelationTargetCategoryInfo>;
 
@@ -26,10 +31,20 @@ export class WorkflowRelationsComponent implements OnChanges {
 
     public selectRelationTarget = (relationTarget: Document) => this.onRelationTargetSelected.emit(relationTarget);
 
+    public trackRelationTarget = (_: number, relationTarget: Document) => relationTarget.resource.id;
+
 
     async ngOnChanges() {
 
         if (this.relationTargets) this.categoryInfos = this.buildCategoryInfos();
+    }
+
+
+    ngAfterViewChecked() {
+        
+        if (this.dropdownMenu?.isOpen() && this.scrollViewport) {
+            this.scrollViewport.checkViewportSize();
+        }
     }
 
 

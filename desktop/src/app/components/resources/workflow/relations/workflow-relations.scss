@@ -52,8 +52,22 @@ workflow-relations {
         max-width: 400px;
         max-height: 200px;
         padding: 5px 0;
+      }
+
+      .relation-targets-scroll-viewport {
+        width: 400px;
+        height: 200px;
+        overflow-y: scroll;
+
+        .cdk-virtual-scroll-content-wrapper {
+          width: 100%;
+          padding: 5px 0;
+        }
+      }
+
+      .relation-targets-container,
+      .relation-targets-scroll-viewport {
         overflow-x: hidden;
-        overflow-y: auto;
 
         .dropdown-item {
           padding: 5px 16px;
@@ -68,7 +82,7 @@ workflow-relations {
             }
           }
         }
-      } 
+      }
     }
   }
 

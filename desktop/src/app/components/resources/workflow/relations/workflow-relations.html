@@ -2,9 +2,10 @@
     <document-teaser [document]="relationTargets[0]"
                      (click)="selectRelationTarget(relationTargets[0])"></document-teaser>
 </div>
-<div *ngIf="relationTargets?.length > 1" class="dropdown workflow-relations-dropdown"
-    ngbDropdown
-    placement="bottom-left top-left">
+<div *ngIf="relationTargets?.length > 1"
+     #dropdownMenu ngbDropdown
+     class="dropdown workflow-relations-dropdown"
+     placement="bottom-left top-left">
     <div class="workflow-relations-toggle" ngbDropdownToggle>
         <div *ngIf="categoryInfos.length < 4">
             <div *ngFor="let info of categoryInfos" class="category-info">
@@ -24,12 +25,21 @@
         </div>
     </div>
     <div class="dropdown-menu" ngbDropdownMenu>
-        <div class="relation-targets-container">
+        <div *ngIf="relationTargets.length < 5" class="relation-targets-container">
             <button *ngFor="let relationTarget of relationTargets"
                     class="dropdown-item"
                     (click)="selectRelationTarget(relationTarget)">
                 <document-teaser [document]="relationTarget"></document-teaser>
             </button>
         </div>
+        <cdk-virtual-scroll-viewport *ngIf="relationTargets.length >= 5"
+                                     class="relation-targets-scroll-viewport"
+                                     itemSize="47">
+            <button *cdkVirtualFor="let relationTarget of relationTargets; trackBy: trackRelationTarget"
+                    class="dropdown-item"
+                    (click)="selectRelationTarget(relationTarget)">
+                <document-teaser [document]="relationTarget"></document-teaser>
+            </button>
+        </cdk-virtual-scroll-viewport>
     </div>
 </div>

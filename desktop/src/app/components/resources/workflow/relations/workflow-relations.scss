@@ -49,14 +49,11 @@ workflow-relations {
       padding: 0;
       
       .relation-targets-container {
-        max-width: 400px;
-        max-height: 200px;
         padding: 5px 0;
       }
 
       .relation-targets-scroll-viewport {
-        width: 400px;
-        height: 200px;
+        height: 194px;
         overflow-y: scroll;
 
         .cdk-virtual-scroll-content-wrapper {
@@ -67,6 +64,7 @@ workflow-relations {
 
       .relation-targets-container,
       .relation-targets-scroll-viewport {
+        width: 400px;
         overflow-x: hidden;
 
         .dropdown-item {

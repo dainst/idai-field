@@ -322,16 +322,17 @@ nav {
   margin-top:-1em;
   opacity: 0;
   transition: opacity 0.7s;
+  text-align: center;
 }
 
 .tooltiptextleftcolumn {
-  text-align: left;
-  margin-left: -13em;
+  
+  transform:translate(-50%,0);
 }
 
 .tooltiptextrigthcolumn {
-  text-align: center;
-  transform: translate(-50%, 0%);
+  
+  transform: translate(-48%, 0%);
 }
 
 .tooltip:hover .tooltiptext {

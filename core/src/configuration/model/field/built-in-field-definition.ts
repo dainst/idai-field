@@ -8,6 +8,7 @@ export interface BuiltInFieldDefinition extends LibraryFieldDefinition {
     editable?: boolean;
     selectable?: boolean;
     required?: boolean;
+    onlySubcategory?: boolean;
     fixedInputType?: true;
     valuelistFromProjectField?: string;
     allowOnlyValuesOfParent?: boolean;

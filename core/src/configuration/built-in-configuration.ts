@@ -941,10 +941,12 @@ export class BuiltInConfiguration {
                 },
                 isExecutedOn: {
                     inputType: Field.InputType.RELATION,
-                    required: true
+                    onlySubcategory: true,
+                    required: true,
                 },
                 resultsIn: {
-                    inputType: Field.InputType.RELATION
+                    inputType: Field.InputType.RELATION,
+                    onlySubcategory: true
                 }
             },
             minimalForm: {

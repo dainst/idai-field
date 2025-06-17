@@ -96,7 +96,8 @@ export class AddFieldModalComponent {
         ).concat(this.configurationIndex.findFields(this.searchTerm, 'commons'))
             .concat(this.configurationIndex.findFields(this.searchTerm, 'customRelations'))
             .filter(field => (field.visible || field.editable)
-                && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name))
+                && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name)
+                && !field.onlySubcategory || this.category.parentCategory)
             .sort((field1, field2) => SortUtil.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
 
         this.selectedField = this.fields?.[0];

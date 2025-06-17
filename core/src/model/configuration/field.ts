@@ -30,6 +30,7 @@ export interface Field extends BaseField {
     defaultConstraintIndexed?: boolean;
     mandatory?: boolean;
     required?: boolean;
+    onlySubcategory?: boolean;
     fixedInputType?: true;
     allowOnlyValuesOfParent?: true;
     maxCharacters?: number;

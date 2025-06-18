@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, equal, intersection, isArray, isEmpty, Map, set, subsetOf, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
-    CustomFieldDefinition, DateConfiguration, Condition } from 'idai-field-core';
+    CustomFieldDefinition, DateConfiguration, Condition, Relation } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -81,7 +81,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
-    public isRelationSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.RELATION;
+    public isRelationSectionVisible = () => this.getInputType() === Field.InputType.RELATION
+        && (this.isCustomField() || Relation.Workflow.ALL.includes(this.field.name));
 
     public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
 

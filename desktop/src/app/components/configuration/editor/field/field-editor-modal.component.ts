@@ -84,6 +84,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isRelationSectionVisible = () => this.getInputType() === Field.InputType.RELATION
         && (this.isCustomField() || Relation.Workflow.ALL.includes(this.field.name));
 
+    public isInverseRelationVisible = () => this.isRelationSectionVisible() && this.isCustomField();
+
     public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
 
     public isCustomField = () => this.field.source === 'custom';

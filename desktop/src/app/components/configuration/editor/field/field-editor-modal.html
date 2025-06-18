@@ -202,7 +202,7 @@
         </div>
     </div>
 
-    <div *ngIf="isRelationSectionVisible()" class="configuration-editor-section">
+    <div *ngIf="isInverseRelationVisible()" class="configuration-editor-section">
         <div class="configuration-editor-section-title"
              i18n="@@configuration.relation.inverse">Gegenrelation</div>
         <select id="inverse-relation-select" (change)="setInverseRelation($event.target.value)"

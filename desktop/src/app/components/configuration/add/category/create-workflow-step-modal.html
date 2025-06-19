@@ -53,6 +53,9 @@
 </div>
 
 <div class="modal-footer bg-light">
+    <div *ngIf="isExecutedOnSelected" class="btn btn-primary" (click)="isExecutedOnSelected = false">
+        <span i18n="@@buttons.back">Zurück</span>
+    </div>
     <div class="btn btn-primary"
          [class.disabled]="!validate()"
          (click)="confirm()">

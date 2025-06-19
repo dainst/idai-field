@@ -5,6 +5,7 @@ import { TransientCategoryDefinition } from '../../../src/configuration/model/ca
 import { applyLanguagesToCategory, applyLanguagesToForm, applyLanguagesToRelations } from '../../../src/configuration/boot/apply-languages-configurations';
 import { TransientFormDefinition } from '../../../src/configuration/model/form/transient-form-definition';
 import { LanguageConfiguration } from '../../../src/configuration/model/language/language-configuration';
+import { Field } from '../../../src/model/configuration/field';
 
 
 /**
@@ -17,7 +18,7 @@ describe('applyLanguageConfigurations', () => {
         
         const categories: Map<TransientCategoryDefinition> = {
             A: { name: 'A', fields: { a: { subfields: [{ name: 'aSubfield' }] }, a1: {}, a2: {} } } as any,
-            B: { name: 'B', fields: { b: {} } } as any,
+            B: { name: 'B', fields: { relation: { inputType: Field.InputType.RELATION} } } as any,
             C: { name: 'C', fields: {} } as any
         };
 
@@ -72,6 +73,9 @@ describe('applyLanguageConfigurations', () => {
                 relations: {
                     isRecordedIn: {
                         label: 'isRecordedIn_'
+                    },
+                    relation: {
+                        label: 'relation_'
                     }
                 }
             }]
@@ -98,6 +102,7 @@ describe('applyLanguageConfigurations', () => {
         expect(categories['A'].fields['a1'].label.en).toBeUndefined();
         expect(categories['A'].fields['a'].description).toEqual({});
         expect(categories['A'].fields['a1'].description.en).toEqual('a1_desc');
+        expect(categories['B'].fields['relation'].label.en).toEqual('relation_');
         expect(forms['A:form'].label.en).toEqual('A_');
         expect(forms['A:form'].fields['a'].label.en).toEqual('a_form');
         expect(forms['A:form'].fields['a1'].label.en).toBeUndefined();

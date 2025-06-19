@@ -151,7 +151,7 @@ export class AddCategoryFormModalComponent {
         const result: Map<string[]> = await this.openCreateWorkflowStepModal(category);
         for (let relationName of Object.keys(result)) {
             if (!result[relationName].length) continue;
-                category.groups[0].fields.push({
+            category.groups[0].fields.push({
                 name: relationName,
                 inputType: Field.InputType.RELATION,
                 range: result[relationName]
@@ -173,7 +173,12 @@ export class AddCategoryFormModalComponent {
         componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.initialize();
 
-        return result;
+        return new Promise(resolve => {
+            this.modals.awaitResult(result,
+                targetCategories => resolve(targetCategories),
+                () => AngularUtility.blurActiveElement()
+            );
+        });
     }
 
 

@@ -4,25 +4,47 @@
     </h5>
 </div>
 
-<div class="modal-body row create-workflow-step-modal-body bg-light">
+<div class="modal-body bg-light">
    <div *ngIf="!isExecutedOnSelected" class="target-category-section">
+        <div class="target-category-info">
+            <p i18n="configuration.createWorkflowStep.info.isExecutedOn.1">
+                Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Arbeitsschritt
+                <b>durchgeführt</b> werden kann.
+            </p>
+            <p i18n="configuration.createWorkflowStep.info.isExecutedOn.2">
+                Sie können diese Auswahl später anpassen, indem Sie das Feld "Wurde durchgeführt an" editieren.
+            </p>
+        </div>
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableCategories"
-                            [selectedCategories]="selectedCategories.isExecutedOn"
-                            [customProjectConfiguration]="clonedProjectConfiguration"
-                            [allowPickingAbstractCategories]="true"
-                            (onCategoryPicked)="toggleCategory($event, 'isExecutedOn')">
+                             [selectedCategories]="selectedCategories.isExecutedOn"
+                             [customProjectConfiguration]="clonedProjectConfiguration"
+                             [allowPickingAbstractCategories]="true"
+                             (onCategoryPicked)="toggleCategory($event, 'isExecutedOn')">
             </category-picker>
         </div>
     </div>
 
     <div *ngIf="isExecutedOnSelected" class="target-category-section">
+        <div class="target-category-info">
+            <p i18n="configuration.createWorkflowStep.info.resultsIn.1">
+                Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <b>Ergebnis</b>
+                dieses Arbeitsschritts sein können.
+            </p>
+            <p i18n="configuration.createWorkflowStep.info.resultsIn.2">
+                Sie können diese Auswahl später anpassen, indem Sie das Feld "Ergibt" editieren.
+            </p>
+            <p i18n="configuration.createWorkflowStep.info.resultsIn.3">
+                Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld "Ergibt" jederzeit nachträglich
+                zur Kategorie hinzufügen.
+            </p>
+        </div>
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableCategories"
-                            [selectedCategories]="selectedCategories.resultsIn"
-                            [customProjectConfiguration]="clonedProjectConfiguration"
-                            [allowPickingAbstractCategories]="true"
-                            (onCategoryPicked)="toggleCategory($event, 'resultsIn')">
+                             [selectedCategories]="selectedCategories.resultsIn"
+                             [customProjectConfiguration]="clonedProjectConfiguration"
+                             [allowPickingAbstractCategories]="true"
+                             (onCategoryPicked)="toggleCategory($event, 'resultsIn')">
             </category-picker>
         </div>
     </div>

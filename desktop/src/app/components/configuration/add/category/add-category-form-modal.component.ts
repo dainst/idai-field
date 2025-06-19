@@ -165,7 +165,8 @@ export class AddCategoryFormModalComponent {
         const [result, componentInstance] = this.modals.make<CreateWorkflowStepModalComponent>(
             CreateWorkflowStepModalComponent,
             MenuContext.CONFIGURATION_MODAL,
-            'lg'
+            undefined,
+            'create-workflow-step-modal'
         );
 
         componentInstance.category = category;

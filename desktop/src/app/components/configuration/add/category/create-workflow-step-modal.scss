@@ -1,13 +1,26 @@
-.create-workflow-step-modal-body {
-  height: calc(100vh - 209px);
+.create-workflow-step-modal {
+  .modal-dialog {
+    width: 700px;
+    max-width: 700px;
 
-  .target-category-section {
-    height: 100%;
+    .modal-body {
+      .target-category-section {
+        .target-category-info {
+          font-size: 15px;
+          user-select: none;
+          margin-bottom: 16px;
 
-    .target-category-picker-container {
-      width: 100%;
-      height: 100%;
-      overflow-y: scroll;
+          p {
+            margin-bottom: 5px;
+          }
+        }
+
+        .target-category-picker-container {
+          width: 100%;
+          height: 400px;
+          overflow-y: scroll;
+        }
+      }
     }
   }
 }

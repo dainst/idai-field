@@ -133,7 +133,6 @@ function applyLanguagesToFormOrCategoryFields(languageConfigurations: LanguageCo
 
     for (const fieldName of Object.keys(fields)) {
         const field: TransientFieldDefinition = fields[fieldName];
-        if (field.name === 'resultsIn') console.log('field:', field);
         applyLanguagesToFormOrCategoryField(
             languageConfigurations, field, fieldName, formOrCategoryName, section, parentName, onlyCustom
         );

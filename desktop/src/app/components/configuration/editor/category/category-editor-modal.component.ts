@@ -452,7 +452,6 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         category.groups.forEach(group => {
             group.fields.filter(field => !ConfigurationUtil.isParentField(category, field))
                 .forEach(field => {
-                    console.log('!!! FIELD:', field);
                     const fieldDefinition: CustomFieldDefinition = {
                         inputType: field.inputType
                     };

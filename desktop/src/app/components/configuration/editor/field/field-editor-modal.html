@@ -93,7 +93,7 @@
 
     <condition-section *ngIf="isConditionSectionVisible()"
                        [type]="'field'"
-                       [condition]="getClonedFieldDefinition().condition"
+                       [condition]="getClonedFieldDefinition()?.condition"
                        [field]="clonedField"
                        [availableFields]="getAvailableConditionFields()"
                        [disabled]="hidden"></condition-section>

@@ -4,8 +4,8 @@
     </h5>
 </div>
 
-<div class="modal-body row add-category-modal-body bg-light">
-   <div *ngIf="!isExecutedOnSelected">
+<div class="modal-body row create-workflow-step-modal-body bg-light">
+   <div *ngIf="!isExecutedOnSelected" class="target-category-section">
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableCategories"
                             [selectedCategories]="selectedCategories.isExecutedOn"
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div *ngIf="isExecutedOnSelected">
+    <div *ngIf="isExecutedOnSelected" class="target-category-section">
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableCategories"
                             [selectedCategories]="selectedCategories.resultsIn"

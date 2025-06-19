@@ -6,6 +6,7 @@ import { TransientCategoryDefinition } from '../model/category/transient-categor
 import { TransientFieldDefinition, TransientSubfieldDefinition } from '../model/field/transient-field-definition';
 import { LanguageConfiguration } from '../model/language/language-configuration';
 import { LanguageConfigurations } from '../model/language/language-configurations';
+import { Field } from '../../model/configuration/field';
 
 
 export function applyLanguagesToCategory(languageConfigurations: LanguageConfigurations,
@@ -18,8 +19,8 @@ export function applyLanguagesToCategory(languageConfigurations: LanguageConfigu
 
 
 export function applyLanguagesToForm(languageConfigurations: LanguageConfigurations,
-                                     formDefinition: TransientFormDefinition,
-                                     parentCategoryName?: string, parentFormName?: string) {
+                                     formDefinition: TransientFormDefinition, parentCategoryName?: string,
+                                     parentFormName?: string) {
 
     applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, 'categories', formDefinition.categoryName);
     applyLanguagesToFormOrCategory(languageConfigurations, formDefinition, 'forms', formDefinition.name);
@@ -34,8 +35,7 @@ export function applyLanguagesToForm(languageConfigurations: LanguageConfigurati
 
 
 export function applyLanguagesToFields(languageConfigurations: LanguageConfigurations,
-                                       fields: Map<TransientFieldDefinition>,
-                                       section: 'fields'|'commons') {
+                                       fields: Map<TransientFieldDefinition>, section: 'fields'|'commons') {
 
     for (const fieldName of Object.keys(fields)) {
         const field = fields[fieldName];
@@ -133,6 +133,7 @@ function applyLanguagesToFormOrCategoryFields(languageConfigurations: LanguageCo
 
     for (const fieldName of Object.keys(fields)) {
         const field: TransientFieldDefinition = fields[fieldName];
+        if (field.name === 'resultsIn') console.log('field:', field);
         applyLanguagesToFormOrCategoryField(
             languageConfigurations, field, fieldName, formOrCategoryName, section, parentName, onlyCustom
         );
@@ -154,6 +155,22 @@ function applyLanguagesToFormOrCategoryField(languageConfigurations: LanguageCon
                                              formOrCategoryName: string, section: 'categories'|'forms',
                                              parentName?: string, onlyCustom?: boolean, subfieldName?: string) {
             
+    if (section === 'categories' && field.inputType === Field.InputType.RELATION) {
+        field.label = I18N.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(
+            languageConfigurations.complete, 'relations', fieldName, false, 'label'
+        ));
+        field.defaultLabel = I18N.mergeI18nStrings(field.defaultLabel, LanguageConfiguration.getI18nString(
+            languageConfigurations.default, 'relations', fieldName, false, 'label'
+        ));
+        field.description = I18N.mergeI18nStrings(field.description, LanguageConfiguration.getI18nString(
+            languageConfigurations.complete, 'relations', fieldName, false, 'description'
+        ));
+        field.defaultDescription = I18N.mergeI18nStrings(field.defaultDescription, LanguageConfiguration.getI18nString(
+            languageConfigurations.default, 'relations', fieldName, false, 'description'
+        ));
+    }
+
+
     applyLanguagesToField(
         languageConfigurations, field, fieldName, formOrCategoryName, section, onlyCustom, subfieldName
     );
@@ -166,9 +183,8 @@ function applyLanguagesToFormOrCategoryField(languageConfigurations: LanguageCon
 }
 
 
-function applyLanguagesToField(languageConfigurations: LanguageConfigurations,
-                               field: TransientSubfieldDefinition, fieldName: string,
-                               formOrCategoryName: string, section: 'categories'|'forms',
+function applyLanguagesToField(languageConfigurations: LanguageConfigurations, field: TransientSubfieldDefinition,
+                               fieldName: string, formOrCategoryName: string, section: 'categories'|'forms',
                                onlyCustom: boolean = false, subfieldName?: string) {
 
     field.label = I18N.mergeI18nStrings(field.label, LanguageConfiguration.getI18nString(

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map } from 'tsfun';
-import { CategoryForm, ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, Field, Labels, ProjectConfiguration } from 'idai-field-core';
+import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 
 
 @Component({
@@ -27,7 +28,9 @@ export class CreateWorkflowStepModalComponent {
     public isExecutedOnSelected: boolean = false;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private configurationIndex: ConfigurationIndex,
+                private labels: Labels) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -63,6 +66,13 @@ export class CreateWorkflowStepModalComponent {
     public cancel() {
 
         this.activeModal.dismiss('cancel');
+    }
+
+
+    public getFieldLabel(fieldName: string) {
+        
+        const field: Field = this.configurationIndex.findFields(fieldName, 'WorkflowStep')?.[0];
+        return field ? this.labels.get(field) : '';
     }
 
 

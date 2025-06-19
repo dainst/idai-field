@@ -56,7 +56,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getFieldLabel = (fieldName: string) => this.labels.get(
         CategoryForm.getField(this.category, fieldName)
-    )
+    );
 
     public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
         relationName, this.clonedProjectConfiguration.getRelations()

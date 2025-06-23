@@ -85,8 +85,7 @@
               [selectedDocument]="viewFacade.getSelectedDocument()"></list>
         <grid-list *ngIf="viewFacade.getMode() === 'grid'"
                    [documents]="viewFacade.getDocuments()"></grid-list>
-        <workflow-step-list *ngIf="viewFacade.getMode() === 'workflow'"
-                            [workflowSteps]="viewFacade.getDocuments()"
-                            (onRelationTargetSelected)="jumpToResource($event)"></workflow-step-list>
+        <workflow-overview *ngIf="viewFacade.getMode() === 'workflow'"
+                           [documents]="viewFacade.getDocuments()"></workflow-overview>
     </div>
 </div>

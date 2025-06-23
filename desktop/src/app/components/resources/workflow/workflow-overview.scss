@@ -1,0 +1,6 @@
+workflow-overview {
+  workflow-step-list {
+    height: calc(100vh - #{$navbar-height + $toolbar-height + 7px});
+    margin-bottom: 7px;
+  }
+}

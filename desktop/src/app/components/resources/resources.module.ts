@@ -62,6 +62,7 @@ import { WorkflowStepLinkModalComponent } from './actions/edit-workflow/link-but
 import { DeleteWorkflowStepModalComponent } from './workflow/delete/delete-workflow-step-modal.component';
 import { WorkflowStepStateComponent } from './workflow/state/workflow-step-state.component';
 import { WorkflowStepListComponent } from './workflow/workflow-step-list.component';
+import { WorkflowOverviewComponent } from './workflow/workflow-overview.component';
 
 
 const remote = window.require('@electron/remote');
@@ -108,6 +109,7 @@ const remote = window.require('@electron/remote');
         CreatePrintSettingsProfileModalComponent,
         DeleteQrCodeModalComponent,
         ScanStoragePlaceModalComponent,
+        WorkflowOverviewComponent,
         WorkflowEditorModalComponent,
         WorkflowStepPlusButtonComponent,
         WorkflowRelationsComponent,

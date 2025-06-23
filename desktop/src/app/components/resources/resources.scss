@@ -27,6 +27,7 @@
 @import 'widgets/list-button-group';
 @import 'widgets/popover-menu';
 @import 'actions/edit-workflow/workflow-editor-modal';
+@import 'workflow/workflow-overview';
 @import 'workflow/workflow-step-list';
 @import 'workflow/relations/workflow-relations';
 @import 'workflow/delete/delete-workflow-step-modal';
@@ -169,12 +170,5 @@ $deactivated-button-color: lightgray;
     padding-left: $item-horizontal-padding;
     padding-right: 0;
     flex-grow: 1;
-  }
-}
-
-.resources-container {
-  workflow-step-list {
-    height: calc(100vh - #{$navbar-height + $toolbar-height + 7px});
-    margin-bottom: 7px;
   }
 }

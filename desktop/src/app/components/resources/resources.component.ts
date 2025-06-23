@@ -103,8 +103,6 @@ export class ResourcesComponent implements OnDestroy {
     public scanStoragePlace = (documents: Array<FieldDocument>) =>
         this.storagePlaceScanner.scanStoragePlace(documents);
 
-    public jumpToResource = (document: Document) => this.routingService.jumpToResource(document);
-
 
     ngOnDestroy() {
 

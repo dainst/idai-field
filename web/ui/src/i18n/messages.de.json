@@ -113,6 +113,19 @@
       "synchronization": "Synchronisation",
       "tableView": "Tabellenansicht",
       "nesting": "Hierarchisierung"
+    },
+    "installation": {
+      "header": "Hinweise zur Installation",
+      "update": {
+        "header": "Update einer bestehenden Version",
+        "body": "Sie können die Installation auch dann durchführen, wenn bereits eine ältere Version der Anwendung installiert ist. In diesem Fall wird Field Desktop auf die neue Version aktualisiert. Existierende Projekte bleiben im Normalfall erhalten. Es wird dennoch dringend empfohlen, vor dem Update Backup-Dateien aller wichtigen Projekte anzulegen, da es in Ausnahmefällen zu Datenverlust kommen kann."
+      },
+      "linux": {
+        "header": "Installation unter Linux",
+        "info1": "Bei einigen Linux-Betriebssystemen (z. B. neueren Ubuntu-Versionen) kann es bei der Ausführung von AppImage-Dateien zu Fehlern kommen. Hinweise zur Problemlösung finden Sie in der ",
+        "link": "Troubleshooting-Sektion der AppImage-Homepage",
+        "info2": "."
+      }
     }
   },
   "contact": {

@@ -38,6 +38,8 @@
     margin-left: 2px;
 }
 
-.download-view h3 {
+.download-view h3,
+.download-view h4 {
     margin-bottom: 18px;
+    text-align: center;
 }

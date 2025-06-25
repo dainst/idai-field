@@ -127,6 +127,19 @@ const getDownloadSection = (latestVersion: string, t: TFunction): ReactNode => {
                 </a>
             </p>
             <hr className="m-5" />
+            <h3>{ t('download.installation.header') }</h3>
+            <h4>{ t('download.installation.update.header') }</h4>
+            <p className="mb-5" style={ installationInfoStyle }>{ t('download.installation.update.body') }</p>
+            <h4>{ t('download.installation.linux.header') }</h4>
+            <p className="mb-5" style={ installationInfoStyle }>
+                { t('download.installation.linux.info1') }
+                <a href="https://docs.appimage.org/user-guide/troubleshooting"
+                   target="_blank" rel="noopener noreferrer">
+                    { t('download.installation.linux.link') }
+                </a>
+                { t('download.installation.linux.info2') }
+            </p>
+            <hr className="m-5" />
             <p className="mb-5">
                 <a className="btn btn-secondary" href="https://github.com/dainst/idai-field"
                    target="_blank" rel="noopener noreferrer">
@@ -161,4 +174,10 @@ const downloadContainerStyle: CSSProperties = {
 
 const osInfoStyle: CSSProperties = {
     marginBottom: '1rem'
+};
+
+const installationInfoStyle: CSSProperties = {
+    textAlign: 'left',
+    width: '1000px',
+    margin: 'auto'
 };

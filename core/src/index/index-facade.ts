@@ -125,6 +125,12 @@ export class IndexFacade {
         return ConstraintIndex.getCount(this.constraintIndex, constraintIndexName, matchTerm);
     }
 
+    
+    public getCategoryCount(categoryName: string): number {
+
+        return FulltextIndex.getCategoryCount(this.fulltextIndex, categoryName);
+    }
+
 
     public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
 

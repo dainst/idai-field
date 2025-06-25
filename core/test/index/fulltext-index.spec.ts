@@ -291,4 +291,27 @@ describe('FulltextIndex', () => {
         expect(results.length).toBe(1);
         expect(results[0]).toEqual('1');
     });
+
+
+    it('get category count', () => {
+
+        const d1 = doc('1', 'identifier1', 'category1');
+        const d2 = doc('2', 'identifier2', 'category2');
+        const d3 = doc('3', 'identifier3', 'category3');
+        const d4 = doc('4', 'identifier4', 'category1');
+        const d5 = doc('5', 'identifier5', 'category1');
+        const d6 = doc('6', 'identifier6', 'category2');
+
+        FulltextIndex.put(fulltextIndex, d1, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d2, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d3, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d4, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d5, fieldsToIndex);
+        FulltextIndex.put(fulltextIndex, d6, fieldsToIndex);
+
+        expect(FulltextIndex.getCategoryCount(fulltextIndex, 'category1')).toBe(3);
+        expect(FulltextIndex.getCategoryCount(fulltextIndex, 'category2')).toBe(2);
+        expect(FulltextIndex.getCategoryCount(fulltextIndex, 'category3')).toBe(1);
+        expect(FulltextIndex.getCategoryCount(fulltextIndex, 'category4')).toBe(0);
+    });
 });

@@ -1,5 +1,5 @@
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
-import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints } from 'idai-field-core';
+import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints, IndexFacade } from 'idai-field-core';
 import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';
 
 const IS_CHILD_OF_CONTAIN = 'isChildOf:contain';
@@ -27,12 +27,9 @@ export module ExportRunner {
     export type ExportContext = undefined | 'project' | Resource.Id;
 
 
-    export async function performExport(find: Find,
-                                        getIdentifierForId: GetIdentifierForId,
-                                        context: ExportContext,
-                                        selectedCategory: CategoryForm,
-                                        relations: string[],
-                                        performExport: PerformExport) {
+    export async function performExport(find: Find, getIdentifierForId: GetIdentifierForId,
+                                        context: ExportContext, selectedCategory: CategoryForm,
+                                        relations: string[], performExport: PerformExport) {
 
         const documents = [];
         if (context !== undefined) {
@@ -53,30 +50,31 @@ export module ExportRunner {
     }
 
 
-    export async function determineCategoryCounts(find: Find,
-                                                  context: ExportContext,
+    export async function determineCategoryCounts(indexFacade: IndexFacade, context: ExportContext,
                                                   categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
 
         if (!context) return determineCategoryCountsForSchema(categoriesList);
 
         return (await determineCategoryCountsForSelectedOperation(
-            find, context, categoriesList
+            indexFacade, context, categoriesList
         )).filter(([_category, count]) => count > 0);
     }
 
 
-    async function determineCategoryCountsForSelectedOperation(find: Find,
+    async function determineCategoryCountsForSelectedOperation(indexFacade: IndexFacade,
                                                                selectedOperationId: string|undefined,
-                                                               categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
+                                                               categoriesList: Array<CategoryForm>)
+            : Promise<Array<CategoryCount>> {
 
-        const categories = getCategoriesWithoutExcludedCategories(categoriesList, EXCLUDED_CATEGORIES);
+        const categories: Array<CategoryForm> = getCategoriesWithoutExcludedCategories(
+            categoriesList, EXCLUDED_CATEGORIES
+        );
 
         const counts: Array<CategoryCount> = [];
         for (let category of categories) {
-            const query = getQuery(category.name, selectedOperationId, 0);
             counts.push([
                 category,
-                (await find(query)).totalCount
+                indexFacade.getCategoryCount(category.name)
             ]);
         }
         return counts;
@@ -97,8 +95,7 @@ export module ExportRunner {
      * @param selectedOperationId
      * @param selectedCategory
      */
-    async function fetchDocuments(find: Find,
-                                  selectedOperationId: string,
+    async function fetchDocuments(find: Find, selectedOperationId: string,
                                   selectedCategory: CategoryForm): Promise<Array<FieldDocument>> {
 
         try {
@@ -136,13 +133,12 @@ export module ExportRunner {
     }
 
 
-    function getQuery(category: Name, selectedOperationId: string, limit?: number) {
+    function getQuery(category: Name, selectedOperationId: string) {
 
         const query: Query = {
             categories: [category],
             constraints: {}
         };
-        if (limit) query.limit = limit;
 
         if (selectedOperationId !== PROJECT_CONTEXT) {
             (query.constraints as Constraints)[IS_CHILD_OF_CONTAIN] =

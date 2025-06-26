@@ -31,4 +31,14 @@ export class WorkflowOverviewComponent extends BaseList {
 
 
     public jumpToResource = (document: WorkflowStepDocument) => this.routingService.jumpToResource(document);
+
+
+    public getCurrentFilterCategory(): string {
+
+        const categoryName: string = super.getCurrentFilterCategory();
+
+        return categoryName !== 'WorkflowStep'
+            ? categoryName
+            : undefined;
+    }
 }

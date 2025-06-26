@@ -100,10 +100,14 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         this.selectableTargetCategories = this.getSelectableTargetCategories();
 
         if (this.new) {
-            this.getClonedFormDefinition().fields[this.field.name] = {
+            
+            const newFieldDefinition: CustomFieldDefinition = {
                 inputType: this.field.inputType,
-                constraintIndexed: false
             };
+            if (this.availableInputTypes.find(inputType => inputType.name === this.field.inputType)?.searchable) {
+                newFieldDefinition.constraintIndexed = false;
+            }
+            this.getClonedFormDefinition().fields[this.field.name] = newFieldDefinition;
             this.clonedConfigurationDocument = ConfigurationDocument.addField(
                 this.clonedConfigurationDocument, this.category, this.permanentlyHiddenFields,
                 this.groupName, this.field.name

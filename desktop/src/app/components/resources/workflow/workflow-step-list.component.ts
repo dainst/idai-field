@@ -31,6 +31,7 @@ export class WorkflowStepListComponent implements OnChanges {
     public readonly itemSize: number = 55;
 
     private relationTargets: Map<Map<Array<Document>>> = {};
+    private dateLabels: Map<string> = {};
 
 
     constructor(private menus: Menus,
@@ -48,12 +49,16 @@ export class WorkflowStepListComponent implements OnChanges {
     public getShortDescriptionLabel = (workflowStep: WorkflowStepDocument) =>
         Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
 
+    public getDateLabel = (workflowStep: Document) => this.dateLabels[workflowStep.resource.id];
+
     public trackWorkflowStep = (_: number, workflowStep: WorkflowStepDocument) => workflowStep.resource.id;
 
 
-    ngOnChanges() {
+    async ngOnChanges() {
         
-        this.workflowSteps.forEach(workflowStep => this.updateRelationTargets(workflowStep));
+        for (let workflowStep of this.workflowSteps) {
+            await this.updateListEntry(workflowStep);
+        }
     }
     
     
@@ -67,7 +72,7 @@ export class WorkflowStepListComponent implements OnChanges {
     public async editWorkflowStep(workflowStep: WorkflowStepDocument) {
 
         if (await this.openWorkflowStepEditorModal(workflowStep)) {
-            this.updateRelationTargets(workflowStep);
+            await this.updateListEntry(workflowStep);
             this.onChanged.emit();
         }
     }
@@ -96,23 +101,6 @@ export class WorkflowStepListComponent implements OnChanges {
     }
 
 
-    public getDateLabel(workflowStep: Document): string {
-
-        if (!workflowStep.resource.date) return '';
-
-        const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
-
-        return DateSpecification.generateLabel(
-            workflowStep.resource.date,
-            getSystemTimezone(),
-            timeSuffix,
-            Settings.getLocale(),
-            (term: string) => this.utilTranslations.getTranslation(term),
-            false
-        );
-    }
-
-
     private async openWorkflowStepEditorModal(workflowStep: WorkflowStepDocument): Promise<boolean> {
     
         const context: MenuContext = this.menus.getContext();
@@ -137,6 +125,13 @@ export class WorkflowStepListComponent implements OnChanges {
     }
 
 
+    private async updateListEntry(workflowStep: WorkflowStepDocument) {
+
+        await this.updateRelationTargets(workflowStep);
+        this.updateDateLabel(workflowStep);
+    }
+
+
     private async updateRelationTargets(workflowStep: WorkflowStepDocument) {
 
         if (!this.relationTargets[workflowStep.resource.id]) this.relationTargets[workflowStep.resource.id] = {};
@@ -145,6 +140,26 @@ export class WorkflowStepListComponent implements OnChanges {
             const targets: Array<Document> = await this.fetchRelationTargets(workflowStep, relationName);
             this.relationTargets[workflowStep.resource.id][relationName] = targets;
         }
+    }
+
+
+    private updateDateLabel(workflowStep: WorkflowStepDocument) {
+
+        if (!workflowStep.resource.date) {
+            delete this.dateLabels[workflowStep.resource.id];
+            return;
+        }
+
+        const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
+
+        this.dateLabels[workflowStep.resource.id] = DateSpecification.generateLabel(
+            workflowStep.resource.date,
+            getSystemTimezone(),
+            timeSuffix,
+            Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term),
+            false
+        );
     }
 
 

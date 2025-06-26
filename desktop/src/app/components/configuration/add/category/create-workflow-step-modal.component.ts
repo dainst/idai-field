@@ -58,7 +58,7 @@ export class CreateWorkflowStepModalComponent {
         if (!this.isExecutedOnSelected) {
             this.isExecutedOnSelected = true;
         } else {
-            this.activeModal.close(this.selectedCategories);
+            this.activeModal.close(this.getTargetCategories());
         }
     }
 
@@ -98,5 +98,22 @@ export class CreateWorkflowStepModalComponent {
             return !['Project', 'TypeCatalog', 'Type', 'StoragePlace', 'WorkflowStep', 'Image']
                 .includes(category.name);
         });
-    } 
+    }
+
+
+    private getTargetCategories(): Map<string[]> {
+
+        return {
+            isExecutedOn: this.getSelectedSupercategories(this.selectedCategories.isExecutedOn),
+            resultsIn: this.getSelectedSupercategories(this.selectedCategories.resultsIn)
+        };
+    }
+
+
+    private getSelectedSupercategories(selectedCategories: string[]): string[] {
+
+        return selectedCategories.filter(categoryName => {
+            return this.selectableCategories.find(category => category.name === categoryName);
+        });
+    }
 }

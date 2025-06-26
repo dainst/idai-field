@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels, ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels, ProjectConfiguration,
+    Relation } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field/field-editor-modal.component';
@@ -141,7 +142,7 @@ export class AddFieldModalComponent {
             defaultDescription: template?.defaultDescription ?? {},
             editable: true,
             visible: true,
-            source: 'custom'
+            source: template?.name === Relation.Workflow.RESULTS_IN ? 'common' : 'custom'
         };
         componentInstance.groupName = this.groupName;
         componentInstance.availableInputTypes = this.availableInputTypes;

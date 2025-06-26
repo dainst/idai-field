@@ -130,6 +130,55 @@ describe('ConfigurationIndex', () => {
     });
 
 
+    test('find common fields', () => {
+
+        const commonFields = [
+            {
+                name: 'field1',
+                selectable: true,
+                inputType: Field.InputType.TEXT as Field.InputType,
+                label: {
+                    de: 'Erstes Feld',
+                    en: 'First field'
+                },
+                defaultLabel: {
+                    de: 'Erstes Feld',
+                    en: 'First field'
+                }
+            },
+            {
+                name: 'field2',
+                selectable: false,
+                inputType: Field.InputType.TEXT as Field.InputType,
+                label: {
+                    de: 'Zweites Feld',
+                    en: 'Second field'
+                },
+                defaultLabel: {
+                    de: 'Zweites Feld',
+                    en: 'Second field'
+                }
+            }
+        ];
+
+       
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
+        index.createSubIndices([], [], [], commonFields, [], []);
+
+        expect(index.findFields('', 'commons')[0].name).toEqual('field1');
+        expect(index.findFields('field', 'commons')[0].name).toEqual('field1');
+        expect(index.findFields('field1', 'commons')[0].name).toEqual('field1');
+        expect(index.findFields('Erstes', 'commons')[0].name).toEqual('field1');
+        expect(index.findFields('Feld', 'commons')[0].name).toEqual('field1');
+        expect(index.findFields('First', 'commons')[0].name).toEqual('field1');
+        expect(index.findFields('field', 'commons')[0].name).toEqual('field1');
+        expect(index.findFields('field2', 'commons').length).toBe(0);
+        expect(index.findFields('Zweites', 'commons').length).toBe(0);
+        expect(index.findFields('Second', 'commons').length).toBe(0);
+        expect(index.findFields('Abc', 'commons').length).toBe(0);
+    });
+
+
     test('find custom relations', () => {
 
         const relations: Array<Relation> = [

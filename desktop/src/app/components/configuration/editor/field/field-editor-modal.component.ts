@@ -100,14 +100,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         this.selectableTargetCategories = this.getSelectableTargetCategories();
 
         if (this.new) {
-            
-            const newFieldDefinition: CustomFieldDefinition = {
-                inputType: this.field.inputType,
-            };
-            if (this.availableInputTypes.find(inputType => inputType.name === this.field.inputType)?.searchable) {
-                newFieldDefinition.constraintIndexed = false;
-            }
-            this.getClonedFormDefinition().fields[this.field.name] = newFieldDefinition;
+            this.getClonedFormDefinition().fields[this.field.name] = this.buildFieldDefinition(this.field);
             this.clonedConfigurationDocument = ConfigurationDocument.addField(
                 this.clonedConfigurationDocument, this.category, this.permanentlyHiddenFields,
                 this.groupName, this.field.name
@@ -653,5 +646,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         return this.clonedProjectConfiguration.getTopLevelCategories()
             .filter(category => category.name !== 'Project');
+    }
+
+
+    private buildFieldDefinition(field: Field): CustomFieldDefinition {
+
+        const fieldDefinition: CustomFieldDefinition = {
+            inputType: field.inputType
+        };
+
+        if (this.availableInputTypes.find(inputType => inputType.name === field.inputType)?.searchable) {
+            fieldDefinition.constraintIndexed = false;
+        }
+
+        return fieldDefinition;
     }
 }

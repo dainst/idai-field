@@ -61,14 +61,14 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    public getCurrentFilterCategory()  {
+    public getCurrentFilterCategory(): string {
 
         const filterCategories = this.viewFacade.getFilterCategories();
         return filterCategories && filterCategories.length > 0 ? filterCategories[0] : undefined;
     }
 
 
-    public getSelectedSegmentDoc() {
+    public getSelectedSegmentDoc(): FieldDocument {
 
         const segment = NavigationPath.getSelectedSegment(this.navigationPath);
         return segment ? segment.document : undefined;

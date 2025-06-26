@@ -1,6 +1,11 @@
 workflow-overview {
   workflow-step-list {
-    height: calc(100vh - #{$navbar-height + $toolbar-height + 7px});
+    height: calc(100vh - #{$navbar-height + $toolbar-height + 25px});
     margin-bottom: 7px;
+  }
+
+  plus-button .circular-button {
+    bottom: -13px;
+    left: calc(50% - 20px);
   }
 }

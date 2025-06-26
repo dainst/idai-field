@@ -1,2 +1,11 @@
 <workflow-step-list [workflowSteps]="documents"
                     (onRelationTargetSelected)="jumpToResource($event)"></workflow-step-list>
+
+<plus-button *ngIf="isPlusButtonShown()"
+             id="create-document-button"
+             [placement]="'top'"
+             [preselectedGeometryType]="'none'"
+             [preselectedCategory]="getCurrentFilterCategory()"
+             [liesWithin]="getSelectedSegmentDoc()"
+             [isRecordedIn]="viewFacade.getCurrentOperation()"
+             [status]="'enabled'"></plus-button>

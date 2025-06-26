@@ -210,11 +210,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
                 return false;
             }
         } else {
-            const categories: Array<CategoryForm> = this.viewFacade.isInOverview()
-                ? this.projectConfiguration.getConcreteOverviewCategories()
-                : this.viewFacade.isInTypesManagement()
-                    ? this.projectConfiguration.getTypeManagementCategories()
-                    : this.projectConfiguration.getInventoryCategories();
+            const categories: Array<CategoryForm> = this.getCategories();
             if (!categories.map(Named.toName).includes(category.name)) return false;
         }
 
@@ -234,6 +230,23 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         return true;
+    }
+
+
+    private getCategories(): Array<CategoryForm> {
+
+        if (this.viewFacade.isInOverview()) {
+            return this.projectConfiguration.getConcreteOverviewCategories();
+        } else if (this.viewFacade.isInTypesManagement()) {
+            return this.projectConfiguration.getTypeManagementCategories();
+        } else if (this.viewFacade.isInInventoryManagement()) {
+            this.projectConfiguration.getInventoryCategories();
+        } else if (this.viewFacade.isInWorkflowManagement()) {
+            return this.projectConfiguration.getCategory('WorkflowStep').children;
+        } else {
+            console.error('Invalid view:', this.viewFacade.getView());
+            return [];
+        }
     }
 
 

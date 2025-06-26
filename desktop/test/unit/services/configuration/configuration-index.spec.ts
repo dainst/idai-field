@@ -179,6 +179,40 @@ describe('ConfigurationIndex', () => {
     });
 
 
+    test('do not index field as category field if it is an extended common field', () => {
+
+        const commonFields = [
+            {
+                name: 'field1',
+                inputType: Field.InputType.TEXT as Field.InputType,
+            }
+        ];
+
+        const categories = [
+            {
+                name: 'A',
+                label: {},
+                description: {},
+                fields: {
+                    field1: {
+                        name: 'field1',
+                        selectable: true,
+                        required: true,
+                        mandatory: true,
+                        inputType: Field.InputType.TEXT as Field.InputType,
+                        label: {},
+                        defaultLabel: {}
+                    }
+                }
+            }
+        ];
+        const index = new ConfigurationIndex(undefined, undefined, undefined, undefined);
+        index.createSubIndices([], categories, [], commonFields, [], []);
+
+        expect(index.findFields('field1', 'A').length).toBe(0);
+    });
+
+
     test('find custom relations', () => {
 
         const relations: Array<Relation> = [

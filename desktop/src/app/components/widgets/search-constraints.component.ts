@@ -74,6 +74,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getExistsLabel = (value: string) => this.getValueLabel(value, true);
 
+    public isConstraintsMenuButtonVisible = () => this.fields?.length || this.constraintListItems?.length;
+
 
     async ngOnChanges() {
 

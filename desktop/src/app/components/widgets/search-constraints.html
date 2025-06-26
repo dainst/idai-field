@@ -1,4 +1,4 @@
-<div *ngIf="fields?.length" id="constraints-menu-button"
+<div *ngIf="isConstraintsMenuButtonVisible()" id="constraints-menu-button"
      class="btn btn-outline-primary" [class.focused]="searchBarComponent.focused"
      ngbTooltip="{{getTooltip()}}"
      placement="left" container="body" triggers="manual" #tooltip="ngbTooltip"

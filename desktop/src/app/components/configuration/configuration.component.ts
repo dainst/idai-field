@@ -77,7 +77,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'survey', isRecordedInCategory: 'Survey', label: $localize `:@@configuration.categoriesFilter.survey:Survey` },
         { name: 'images', label: $localize `:@@configuration.categoriesFilter.images:Bilderverwaltung` },
         { name: 'types', label: $localize `:@@navbar.tabs.types:Typenverwaltung` },
-        { name: 'inventory', label: $localize `:@@navbar.tabs.inventory:Inventarisierung` }
+        { name: 'inventory', label: $localize `:@@navbar.tabs.inventory:Inventarisierung` },
+        { name: 'workflow', label: $localize `:@@navbar.tabs.workflow:Arbeitsgang` }
     ];
 
     public availableInputTypes: Array<InputType> = [

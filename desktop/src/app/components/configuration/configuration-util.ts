@@ -56,6 +56,8 @@ export module ConfigurationUtil {
                     return ['Type', 'TypeCatalog'].includes(category.name);
                 case 'inventory':
                     return category.name === 'StoragePlace';
+                case 'workflow':
+                    return category.name === 'WorkflowStep';
                 default:
                     return filter.isRecordedInCategory
                         ? Relation.isAllowedRelationDomainCategory(

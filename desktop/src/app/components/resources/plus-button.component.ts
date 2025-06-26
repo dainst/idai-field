@@ -240,7 +240,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
         } else if (this.viewFacade.isInTypesManagement()) {
             return this.projectConfiguration.getTypeManagementCategories();
         } else if (this.viewFacade.isInInventoryManagement()) {
-            this.projectConfiguration.getInventoryCategories();
+            return this.projectConfiguration.getInventoryCategories();
         } else if (this.viewFacade.isInWorkflowManagement()) {
             return this.projectConfiguration.getCategory('WorkflowStep').children;
         } else {

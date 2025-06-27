@@ -11,7 +11,7 @@ export function createMockProjectConfiguration(): any {
 
     const projectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategory', 'getCategories', 'getTypeCategories']
+        ['getCategory', 'getCategories', 'getTypeCategories', 'getWorkflowCategories']
     );
 
     const defaultCategoryConfiguration = {
@@ -43,6 +43,7 @@ export function createMockProjectConfiguration(): any {
     ]);
 
     projectConfiguration.getTypeCategories.and.returnValue([{ name: 'Type' }]);
+    projectConfiguration.getWorkflowCategories.and.returnValue([{ name: 'WorkflowStep' }]);
 
     return projectConfiguration;
 }

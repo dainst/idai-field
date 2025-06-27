@@ -45,6 +45,8 @@ export enum SortMode {
 
     Alphanumeric = 'alphanumeric',  // default
     AlphanumericDescending = 'alphanumericDescending',
+    Date = 'date',  // only available for resources of WorkflowStep subcategories
+    DateDescending = 'dateDescending',  // only available for resources of WorkflowStep subcategories
     ExactMatchFirst = 'exactMatchFirst',
     None = 'none'
 }

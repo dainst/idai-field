@@ -2,6 +2,7 @@
  * Implements utility methods for sorting
  *
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export module SortUtil {
 
@@ -47,6 +48,19 @@ export module SortUtil {
         if (arrayB.length > arrayA.length) return -1;
         // a and b are equal
         return 0;
+    }
+
+
+    export function numberCompare(a: number, b: number): number {
+
+        if (a === undefined) a = 0;
+        if (b === undefined) b = 0;
+
+        if (a === b) {
+            return 0;
+        } else {
+            return a > b ? 1 : -1;
+        }
     }
 
 

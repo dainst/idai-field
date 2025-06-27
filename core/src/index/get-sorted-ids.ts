@@ -118,6 +118,10 @@ const rankRegularIndexItems = (sortMode: SortMode): (indexItems: Array<IndexItem
                 return SortUtil.alnumCompare(a.identifier, b.identifier);
             case SortMode.AlphanumericDescending:
                 return SortUtil.alnumCompare(a.identifier, b.identifier) * -1;
+            case SortMode.Date:
+                return SortUtil.numberCompare(a.date, b.date);
+            case SortMode.DateDescending:
+                return SortUtil.numberCompare(a.date, b.date) * -1;
         }
     });
 

@@ -107,4 +107,38 @@ describe('getSortedIds', () => {
         }, []);
         expect(result1).toEqual(['b', 'c', 'd', 'a']);
     });
+
+
+    it('sort by date ascending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A', date: 1751038414531 },
+            { id: 'b', identifier: 'B', date: 1751038414534 },
+            { id: 'c', identifier: 'C', date: 1751038414533 },
+            { id: 'd', identifier: 'D', date: 1751038414532 }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.Date }
+        }, []);
+        expect(result1).toEqual(['a', 'd', 'c', 'b']);
+    });
+
+
+    it('sort by date descending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A', date: 1751038414531 },
+            { id: 'b', identifier: 'B', date: 1751038414534 },
+            { id: 'c', identifier: 'C', date: 1751038414533 },
+            { id: 'd', identifier: 'D', date: 1751038414532 }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.DateDescending }
+        }, []);
+        expect(result1).toEqual(['b', 'c', 'd', 'a']);
+    });
 });

@@ -3,10 +3,11 @@ import { SortUtil } from '../../src/tools/sort-util';
 
 /**
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 describe('SortUtil', () => {
 
-    it('should sort strings alphanumerically', () => {
+    it('sort strings alphanumerically', () => {
 
         expect(SortUtil.alnumCompare('abc', 'abd')).toEqual(-1);
         expect(SortUtil.alnumCompare('abd', 'abc')).toEqual(1);
@@ -32,4 +33,12 @@ describe('SortUtil', () => {
         expect(SortUtil.alnumCompare('a1b2c3d4', 'asdfghjkl')).toEqual(-1);
         expect(SortUtil.alnumCompare('asdfghjkl', 'a1b2c3d4')).toEqual(1);
     });
+
+
+    it('sort numbers', () => {
+
+        expect(SortUtil.numberCompare(1, 2)).toEqual(-1);
+        expect(SortUtil.numberCompare(2, 2)).toEqual(0);
+        expect(SortUtil.numberCompare(2, 1)).toEqual(1);
+    })
 });

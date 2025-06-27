@@ -246,9 +246,9 @@ describe('IndexFacade', () => {
 
     it('should not sort', () => {
 
-        const doc1 = doc('1', '1', 'category1','id1');
-        const doc2 = doc('2', '2', 'category2','id2');
-        const doc3 = doc('3', '3', 'category2','id3');
+        const doc1 = doc('1', '1', 'category1', 'id1');
+        const doc2 = doc('2', '2', 'category2', 'id2');
+        const doc3 = doc('3', '3', 'category2', 'id3');
         doc1.resource.relations['isDepictedIn'] = ['id3', 'id2'];
 
         const q: Query = {
@@ -266,6 +266,33 @@ describe('IndexFacade', () => {
 
         const result = indexFacade.find(q);
         expect(result).toEqual(['id3', 'id2']);
+    });
+
+
+    it('sort workflow steps by date', () => {
+
+        const doc1 = doc('1', '1', 'WorkflowStep', 'id1');
+        doc1.resource.date = { value: '01.03.2025', isRange: false };
+
+        const doc2 = doc('2', '2', 'category2', 'id2');
+        doc2.resource.date = { value: '01.01.2025', isRange: false };
+
+        const doc3 = doc('3', '3', 'category2', 'id3');
+        doc3.resource.date = { value: '01.02.2025', isRange: false };
+
+        const q: Query = {
+            constraints: {},
+            sort: {
+                mode: SortMode.Date
+            }
+        };
+
+        indexFacade.put(doc1);
+        indexFacade.put(doc2);
+        indexFacade.put(doc3);
+
+        const result = indexFacade.find(q);
+        expect(result).toEqual(['id2', 'id3', 'id1']);
     });
 
 

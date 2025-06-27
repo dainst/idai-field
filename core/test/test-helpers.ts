@@ -39,7 +39,8 @@ export function createMockProjectConfiguration(): any {
         { item: update('name', 'category2', defaultCategoryConfiguration), trees: [] },
         { item: update('name', 'category3', defaultCategoryConfiguration), trees: [] },
         { item: update('name', 'Find', defaultCategoryConfiguration), trees: [] },
-        { item: update('name', 'Type', defaultCategoryConfiguration), trees: [] }
+        { item: update('name', 'Type', defaultCategoryConfiguration), trees: [] },
+        { item: update('name', 'WorkflowStep', defaultCategoryConfiguration), trees: [] },
     ]);
 
     projectConfiguration.getTypeCategories.and.returnValue([{ name: 'Type' }]);

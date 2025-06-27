@@ -4,6 +4,10 @@ workflow-step-plus-button {
     width: 41px;
     height: 41px;
 
+    &.category-button {
+      top: -1px;
+    }
+
     .category-icon {
       position: relative;
       right: 1px;

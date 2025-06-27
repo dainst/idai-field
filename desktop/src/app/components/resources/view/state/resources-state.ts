@@ -1,5 +1,5 @@
 import { flow, forEach, keys, lookup, map, values } from 'tsfun';
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, SortMode } from 'idai-field-core';
 import { ViewState } from './view-state';
 import { NavigationPath } from './navigation-path';
 import { ViewContext } from './view-context';
@@ -46,6 +46,12 @@ export module ResourcesState {
         return getViewState(state).bypassHierarchy
             ? getViewState(state).customConstraints
             : {};
+    }
+
+
+    export function getSortMode(state: ResourcesState): SortMode {
+
+        return getViewState(state).sortMode;
     }
 
 
@@ -132,6 +138,12 @@ export module ResourcesState {
                                          constraints: { [name: string]: string}) {
 
         getViewState(state).customConstraints = constraints;
+    }
+
+
+    export function setSortMode(state: ResourcesState, sortMode: SortMode) {
+
+        getViewState(state).sortMode = sortMode;
     }
 
 

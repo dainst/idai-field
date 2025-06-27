@@ -1,6 +1,6 @@
 import { Observer, Observable } from 'rxjs';
 import { to } from 'tsfun';
-import { FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named } from 'idai-field-core'
+import { FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named, SortMode } from 'idai-field-core'
 import { ResourcesState } from './state/resources-state';
 import { StateSerializer } from '../../../services/state-serializer';
 import { ViewState } from './state/view-state';
@@ -160,9 +160,15 @@ export class ResourcesStateManager {
     }
 
 
-    public setCustomConstraints(constraints: { [name: string]: string}) {
+    public setCustomConstraints(constraints: { [name: string]: string }) {
 
         ResourcesState.setCustomConstraints(this.resourcesState, constraints);
+    }
+
+
+    public setSortMode(sortMode: SortMode) {
+
+        ResourcesState.setSortMode(this.resourcesState, sortMode);
     }
 
 

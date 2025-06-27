@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { WorkflowStepDocument } from 'idai-field-core';
+import { SortMode, WorkflowStepDocument } from 'idai-field-core';
 import { Routing } from '../../../services/routing';
 import { BaseList } from '../base-list';
 import { ViewFacade } from '../view/view-facade';
@@ -41,6 +41,9 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
     ngAfterViewInit() {
 
         this.scrollViewport = this.workflowStepListComponent.scrollViewport;
+
+        // TODO Allow switching sort mode via buttons
+        this.viewFacade.setSortMode(SortMode.DateDescending);
     }
 
 

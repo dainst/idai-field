@@ -1,4 +1,4 @@
-import { ChangesStream, Datastore, Document, FieldDocument, IndexFacade, SyncService,
+import { ChangesStream, Datastore, Document, FieldDocument, IndexFacade, SortMode, SyncService,
     SyncStatus } from 'idai-field-core';
 import { M } from '../../../components/messages/m';
 import { Messages } from '../../../components/messages/messages';
@@ -65,6 +65,8 @@ export class ViewFacade {
 
     public getCustomConstraints = () => ResourcesState.getCustomConstraints(this.resourcesStateManager.get());
 
+    public getSortMode = () => ResourcesState.getSortMode(this.resourcesStateManager.get());
+
     public getDocuments = () => this.documentsManager.getDocuments();
 
     public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
@@ -91,7 +93,9 @@ export class ViewFacade {
 
     public setFilterCategories = (categories: string[]) => this.documentsManager.setCategoryFilters(categories);
 
-    public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
+    public setCustomConstraints = (constraints: { [name: string]: string }) => this.documentsManager.setCustomConstraints(constraints);
+
+    public setSortMode = (sortMode: SortMode) => this.documentsManager.setSortMode(sortMode);
 
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 

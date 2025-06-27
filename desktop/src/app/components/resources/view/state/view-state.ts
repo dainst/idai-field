@@ -1,4 +1,4 @@
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, SortMode } from 'idai-field-core';
 import { NavigationPath } from './navigation-path';
 import { ViewContext } from './view-context';
 import { ResourcesViewMode } from '../view-facade';
@@ -22,7 +22,8 @@ export interface ViewState {
     limitSearchResults: boolean;
     expandAllGroups: boolean;
     searchContext: ViewContext;
-    customConstraints: { [name: string]: string }
+    customConstraints: { [name: string]: string };
+    sortMode?: SortMode;
 }
 
 

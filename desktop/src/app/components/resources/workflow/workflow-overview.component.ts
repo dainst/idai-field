@@ -32,6 +32,8 @@ export class WorkflowOverviewComponent extends BaseList {
 
     public jumpToResource = (document: WorkflowStepDocument) => this.routingService.jumpToResource(document);
 
+    public populateDocumentList = () => this.viewFacade.populateDocumentList();
+
 
     public getCurrentFilterCategory(): string {
 

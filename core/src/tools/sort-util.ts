@@ -50,33 +50,6 @@ export module SortUtil {
     }
 
 
-    /**
-     * Compares two objects with standard comparison operators.
-     *
-     * @param a
-     * @param b
-     * @returns {number}
-     */
-    export function compare(a: any, b: any): number {
-
-        if (a > b) return 1;
-        if (a < b) return -1;
-        return 0;
-    }
-
-
-    /**
-     * Wraps a compare function in order to reverse sorting.
-     *
-     * @param compareFunction the compare function to wrap
-     * @returns {(a:any, b:any)=>number} the new compare function
-     */
-    export function compareDescending(compareFunction: Function) {
-
-        return (a: any, b: any) => compareFunction(a, b) * -1;
-    }
-
-
     // split string and convert numbers to be able to sort alphabetic
     // and numeric parts of the string separately
     function makeAlNumArray(s: any) {

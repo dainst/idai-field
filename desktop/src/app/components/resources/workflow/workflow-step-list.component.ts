@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MenuContext } from '../../../services/menu-context';
 import { Map } from 'tsfun';
@@ -27,8 +28,10 @@ export class WorkflowStepListComponent implements OnChanges {
 
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
     @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
+    
+    @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
-    public readonly itemSize: number = 55;
+    public readonly itemSize: number = 59;
 
     private relationTargets: Map<Map<Array<Document>>> = {};
     private dateLabels: Map<string> = {};

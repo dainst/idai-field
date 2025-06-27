@@ -86,6 +86,7 @@
         <grid-list *ngIf="viewFacade.getMode() === 'grid'"
                    [documents]="viewFacade.getDocuments()"></grid-list>
         <workflow-overview *ngIf="viewFacade.getMode() === 'workflow'"
-                           [documents]="viewFacade.getDocuments()"></workflow-overview>
+                           [documents]="viewFacade.getDocuments()"
+                           [selectedDocument]="viewFacade.getSelectedDocument()"></workflow-overview>
     </div>
 </div>

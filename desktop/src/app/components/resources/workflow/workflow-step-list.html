@@ -14,7 +14,9 @@
     <div class="workflow-step-buttons"></div>
 </div>
 <cdk-virtual-scroll-viewport class="workflow-steps-body" [itemSize]="itemSize">
-    <div *cdkVirtualFor="let workflowStep of workflowSteps; trackBy: trackWorkflowStep" class="workflow-step">
+    <div *cdkVirtualFor="let workflowStep of workflowSteps; trackBy: trackWorkflowStep"
+         [id]="'resource-' + workflowStep.resource.identifier"
+         class="workflow-step">
         <div class="workflow-step-state">
             <workflow-step-state [workflowStep]="workflowStep"></workflow-step-state>
         </div>

@@ -1,6 +1,6 @@
 import { AfterViewChecked, Component, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { FieldDocument } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { PlusButtonStatus } from './plus-button.component';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
@@ -29,7 +29,7 @@ export class BaseList implements AfterViewChecked {
     
     public readonly itemSize: number;
 
-    private scrollTarget: FieldDocument;
+    private scrollTarget: Document;
     private scrollToBottomElement: boolean = false;
     private scrollOnlyIfInvisible: boolean = false;
     private lastSelectedSegment: NavigationPathSegment;
@@ -68,7 +68,7 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    public getSelectedSegmentDoc(): FieldDocument {
+    public getSelectedSegmentDoc(): Document {
 
         const segment = NavigationPath.getSelectedSegment(this.navigationPath);
         return segment ? segment.document : undefined;
@@ -97,7 +97,7 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    protected scrollTo(scrollTarget: FieldDocument, scrollToBottomElement: boolean = false,
+    protected scrollTo(scrollTarget: Document, scrollToBottomElement: boolean = false,
                        scrollOnlyIfInvisible: boolean = true, waitForScroll: boolean = false) {
 
         if (!scrollTarget) return;

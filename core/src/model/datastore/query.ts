@@ -43,7 +43,8 @@ export interface SortOptions {
 
 export enum SortMode {
 
-    Default = 'default',
+    Alphanumeric = 'alphanumeric',  // default
+    AlphanumericDescending = 'alphanumericDescending',
     ExactMatchFirst = 'exactMatchFirst',
     None = 'none'
 }

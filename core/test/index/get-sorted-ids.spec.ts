@@ -13,11 +13,11 @@ describe('getSortedIds', () => {
             { id: 'a', identifier: 'AB-C1' },
             { id: 'b', identifier: 'AB-C2' },
             { id: 'c', identifier: 'C2' }
-            ];
+        ];
 
         const result1 = getSortedIds(as as any, {
             q: 'C2',
-            sort: { mode: SortMode.Default }
+            sort: { mode: SortMode.Alphanumeric }
         }, ['Type']);
         expect(result1).toEqual(['a', 'b', 'c']);
 
@@ -72,5 +72,39 @@ describe('getSortedIds', () => {
             ['Type']
         );
         expect(result1).toEqual(['a', 'b']);
+    });
+
+
+    it('sort alphanumerically ascending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A1' },
+            { id: 'b', identifier: 'B1' },
+            { id: 'c', identifier: 'A11' },
+            { id: 'd', identifier: 'A2' }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.Alphanumeric }
+        }, []);
+        expect(result1).toEqual(['a', 'd', 'c', 'b']);
+    });
+
+
+    it('sort alphanumerically descending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A1' },
+            { id: 'b', identifier: 'B1' },
+            { id: 'c', identifier: 'A11' },
+            { id: 'd', identifier: 'A2' }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.AlphanumericDescending }
+        }, []);
+        expect(result1).toEqual(['b', 'c', 'd', 'a']);
     });
 });

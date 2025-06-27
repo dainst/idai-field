@@ -82,7 +82,7 @@ describe('subsystem/datastore', () => {
         await app.datastore.create(doc3);
 
         const { documents: documents1, totalCount: totalCount1 } = await app.datastore.find(
-            { q: 'B-100', sort: { mode: SortMode.Default } },
+            { q: 'B-100', sort: { mode: SortMode.Alphanumeric } },
             { includeResourcesWithoutValidParent: true }
         );
 

@@ -2,7 +2,7 @@ import { is, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, si
     separate, cond, pairWith, left, subsetOf } from 'tsfun';
 import { Resource } from '../model/document/resource';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
-import { Query } from '../model/datastore/query';
+import { Query, SortMode } from '../model/datastore/query';
 import { SortUtil } from '../tools/sort-util';
 import { Name } from '../tools/named';
 
@@ -38,13 +38,12 @@ export function getSortedIds(indexItems: Array<IndexItem>, query: Query,
 
     const rankEntries = shouldRankCategories(query, typeCategories)
         ? rankTypeResourceIndexItems(query.sort.matchCategory)
-        : rankRegularIndexItems;
+        : rankRegularIndexItems(query.sort?.mode ?? SortMode.Alphanumeric);
 
-    const handleExactMatchIfQuerySaysSo =
-        cond(
-            shouldHandleExactMatch(query),
-            handleExactMatch(query.q)
-        );
+    const handleExactMatchIfQuerySaysSo = cond(
+        shouldHandleExactMatch(query),
+        handleExactMatch(query.q)
+    );
 
     return flow(
         indexItems,
@@ -57,7 +56,7 @@ export function getSortedIds(indexItems: Array<IndexItem>, query: Query,
 
 function shouldHandleExactMatch(query: Query) {
 
-    return query.sort?.mode === 'exactMatchFirst' && !isUndefinedOrEmpty(query.q)
+    return query.sort?.mode === SortMode.ExactMatchFirst && !isUndefinedOrEmpty(query.q)
 }
 
 
@@ -112,10 +111,15 @@ const handleExactMatch = (q: string)
         flatten() as any);
 
 
-const rankRegularIndexItems
-    : (indexItems: Array<IndexItem>) => Array<IndexItem> =
-    sort((a: IndexItem, b: IndexItem) =>
-        SortUtil.alnumCompare(a.identifier, b.identifier));
+const rankRegularIndexItems = (sortMode: SortMode): (indexItems: Array<IndexItem>) => Array<IndexItem> =>
+    sort((a: IndexItem, b: IndexItem) => {
+        switch (sortMode) {
+            case SortMode.Alphanumeric:
+                return SortUtil.alnumCompare(a.identifier, b.identifier);
+            case SortMode.AlphanumericDescending:
+                return SortUtil.alnumCompare(a.identifier, b.identifier) * -1;
+        }
+    });
 
 
 /**

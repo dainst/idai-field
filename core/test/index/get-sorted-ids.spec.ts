@@ -1,4 +1,5 @@
 import { getSortedIds } from '../../src/index/get-sorted-ids';
+import { SortMode } from '../../src/model/datastore/query';
 
 
 /**
@@ -16,13 +17,13 @@ describe('getSortedIds', () => {
 
         const result1 = getSortedIds(as as any, {
             q: 'C2',
-            sort: { mode: 'default' }
+            sort: { mode: SortMode.Default }
         }, ['Type']);
         expect(result1).toEqual(['a', 'b', 'c']);
 
         const result2 = getSortedIds(as as any, {
             q: 'C2',
-            sort: { mode: 'exactMatchFirst' }
+            sort: { mode: SortMode.ExactMatchFirst }
         }, ['Type']);
         expect(result2).toEqual(['c', 'a', 'b']);
     });

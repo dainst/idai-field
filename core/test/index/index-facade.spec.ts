@@ -1,5 +1,9 @@
-import { basicIndexConfiguration, ConstraintIndex, createMockProjectConfiguration, doc, Query, Tree } from '../..';
-import { IndexFacade } from '../../src/index';
+import { basicIndexConfiguration } from '../../src/basic-index-configuration';
+import { ConstraintIndex } from '../../src/index/constraint-index';
+import { IndexFacade } from '../../src/index/index-facade';
+import { Query, SortMode } from '../../src/model/datastore/query';
+import { Tree } from '../../src/tools/forest';
+import { createMockProjectConfiguration, doc } from '../test-helpers';
 
 
 /**
@@ -252,7 +256,7 @@ describe('IndexFacade', () => {
                 'isDepictedIn:links': 'id1'
             },
             sort: {
-                mode: 'none'
+                mode: SortMode.None
             }
         };
 

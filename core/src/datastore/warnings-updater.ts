@@ -9,7 +9,7 @@ import { ImageResource } from '../model/document/image-resource';
 import { RelationTargetWarnings, OutlierWarnings, Warnings } from '../model/document/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
-import { Query } from '../model/datastore/query';
+import { Query, SortMode } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
 import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/document/field-resource';
@@ -116,7 +116,7 @@ export module WarningsUpdater {
 
         const query: Query = {
             categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         };
 
         if (resourceLimit !== undefined && indexFacade.find(query).length  > resourceLimit) {
@@ -142,7 +142,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         })).documents;
 
         for (let document of documents) {
@@ -382,7 +382,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'identifier:match': identifier },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -396,7 +396,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'missingRelationTargetIds:contain': id },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -411,7 +411,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'invalidRelationTargetIds:contain': id },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -429,7 +429,7 @@ export module WarningsUpdater {
         }).map(to(Named.NAME));
 
         const documents: Array<Document> = (await datastore.find(
-            { categories: categoryNames, sort: { mode: 'none' } },
+            { categories: categoryNames, sort: { mode: SortMode.None } },
             { includeResourcesWithoutValidParent: true }
         )).documents;
 
@@ -448,7 +448,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'isChildOf:contain': document.resource.id },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -470,7 +470,7 @@ export module WarningsUpdater {
                 'isChildOf:contain': { value: document.resource.id, searchRecursively: true },
                 'missingOrInvalidParent:exist': 'KNOWN'
             },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {

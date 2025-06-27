@@ -68,7 +68,7 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    public getSelectedSegmentDoc(): Document {
+    public getSelectedSegmentDocument(): Document {
 
         const segment = NavigationPath.getSelectedSegment(this.navigationPath);
         return segment ? segment.document : undefined;

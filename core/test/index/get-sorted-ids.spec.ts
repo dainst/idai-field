@@ -160,7 +160,7 @@ describe('getSortedIds', () => {
     });
 
 
-    it('sort alphanumerically if date is identical in sort mode "descending"', () => {
+    it('sort alphanumerically if date is identical in sort mode "date descending"', () => {
 
         const indexItems = [
             { id: 'd', identifier: 'D', date: 1751038414531 },

@@ -99,11 +99,11 @@ workflow-step-list {
 
       .workflow-step-date,
       .workflow-step-identifier {
-        transition: color 0.15s ease-in-out;
+        transition: color 0.05s ease-in-out;
 
         .mdi {
           opacity: 0;
-          transition: opacity 0.15s ease-in-out;
+          transition: opacity 0.05s ease-in-out;
           margin-left: 5px;
           font-size: 15px;
 

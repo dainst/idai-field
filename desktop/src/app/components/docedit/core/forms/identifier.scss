@@ -16,7 +16,7 @@ form-field-identifier {
     user-select: none;
 
     &.focused {
-      border-color: #7998cb;
+      border-color: $input-field-focus-color ;
     }
   }
 

@@ -65,7 +65,7 @@ ngb-datepicker {
   height: 33px;
   line-height: 18px;
   font-size: 14px;
-  border-color: #7998cb !important;
+  border-color: $input-field-focus-color  !important;
   z-index: 5 !important;
 
   &:hover,

@@ -33,7 +33,7 @@
     }
 
     &.ng-select-focused .ng-select-container {
-      border-color: #7998cb !important;
+      border-color: $input-field-focus-color !important;
       box-shadow: none !important;
     }
   }

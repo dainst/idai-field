@@ -14,7 +14,7 @@ time-input {
     }
 
     &:focus {
-      border-color: #7998cb !important;
+      border-color: $input-field-focus-color  !important;
     }
   }
 
@@ -44,7 +44,7 @@ time-input {
     user-select: none;
 
     &.focused {
-      border-color: #7998cb;
+      border-color: #9bacc7;
     }
   }
 

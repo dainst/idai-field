@@ -110,7 +110,7 @@ workflow-step-list {
           }
 
           &:hover {
-            color: #777;
+            color: $text-hover-color;
 
             .mdi {
               display: inline;

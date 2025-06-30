@@ -29,9 +29,10 @@ export interface ViewState {
 
 export module ViewState {
 
-    export function build(mode: ResourcesViewMode = 'map', bypassHierarchy: boolean = false): ViewState {
+    export function build(mode: ResourcesViewMode = 'map', sortMode?: SortMode,
+                          bypassHierarchy: boolean = false): ViewState {
 
-        return {
+        const viewState: ViewState = {
             operation: undefined,
             bypassHierarchy,
             expandAllGroups: false,
@@ -41,6 +42,10 @@ export module ViewState {
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };
+
+        if (sortMode) viewState.sortMode = sortMode;
+
+        return viewState;
     }
 
 

@@ -45,7 +45,6 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
     ngAfterViewInit() {
 
         this.scrollViewport = this.workflowStepListComponent.scrollViewport;
-        this.viewFacade.setSortMode(SortMode.DateDescending);
     }
 
 

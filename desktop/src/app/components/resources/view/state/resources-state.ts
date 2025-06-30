@@ -250,7 +250,7 @@ export module ResourcesState {
             overviewState: ViewState.build(),
             typesManagementState: ViewState.build('grid'),
             inventoryState: ViewState.build('grid'),
-            workflowState: ViewState.build('workflow', true),
+            workflowState: ViewState.build('workflow', SortMode.DateDescending, true),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined

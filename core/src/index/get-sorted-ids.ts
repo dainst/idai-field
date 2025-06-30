@@ -119,11 +119,21 @@ const rankRegularIndexItems = (sortMode: SortMode): (indexItems: Array<IndexItem
             case SortMode.AlphanumericDescending:
                 return SortUtil.alnumCompare(a.identifier, b.identifier) * -1;
             case SortMode.Date:
-                return SortUtil.numberCompare(a.date, b.date);
+                return rankIndexItemsByDateAndIdentifier(a, b, false);
             case SortMode.DateDescending:
-                return SortUtil.numberCompare(a.date, b.date) * -1;
+                return rankIndexItemsByDateAndIdentifier(a, b, true);
         }
     });
+
+
+function rankIndexItemsByDateAndIdentifier(a: IndexItem, b: IndexItem, descending: boolean): number {
+
+    const result: number = SortUtil.numberCompare(a.date, b.date);
+
+    return result !== 0
+        ? result * (descending ? -1 : 1)
+        : SortUtil.alnumCompare(a.identifier, b.identifier);
+}
 
 
 /**

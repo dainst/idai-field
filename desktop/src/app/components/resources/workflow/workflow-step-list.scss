@@ -79,6 +79,23 @@ workflow-step-list {
       flex-grow: 1;
     }
 
+    .workflow-step-date,
+    .workflow-step-identifier {
+      .mdi {
+        display: none;
+
+        &.selected {
+          display: inline;
+        }
+      }
+
+      &:hover {
+        .mdi {
+          display: inline;
+        }
+      }
+    }
+
     .workflow-step-category {
       flex: 0 0 190px;
     }

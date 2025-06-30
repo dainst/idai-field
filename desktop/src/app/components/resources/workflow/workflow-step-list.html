@@ -5,13 +5,17 @@
          i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
     <div class="workflow-step-date" (click)="toggleSortMode('date')">
         <span i18n="@@resources.workflowEditorModal.date">Datum</span>
-        <span *ngIf="sortMode === 'date'" class="mdi mdi-arrow-down-thin"></span>
-        <span *ngIf="sortMode === 'dateDescending'" class="mdi mdi-arrow-up-thin"></span>
+        <span class="mdi"
+              [class.mdi-arrow-down-thin]="sortMode !== 'dateDescending'"
+              [class.mdi-arrow-up-thin]="sortMode === 'dateDescending'"
+              [class.selected]="sortMode === 'date' || sortMode === 'dateDescending'"></span>
     </div>
     <div class="workflow-step-identifier" (click)="toggleSortMode('identifier')">
          <span i18n="@@resources.workflowEditorModal.identifier">Bezeichner</span>
-         <span *ngIf="sortMode === 'alphanumeric'" class="mdi mdi-arrow-down-thin"></span>
-         <span *ngIf="sortMode === 'alphanumericDescending'" class="mdi mdi-arrow-up-thin"></span>
+         <span class="mdi"
+              [class.mdi-arrow-down-thin]="sortMode !== 'alphanumericDescending'"
+              [class.mdi-arrow-up-thin]="sortMode === 'alphanumericDescending'"
+              [class.selected]="sortMode === 'alphanumeric' || sortMode === 'alphanumericDescending'"></span>
     </div>
     <div class="workflow-step-category"
          i18n="@@resources.workflowEditorModal.category">Kategorie</div>

@@ -43,10 +43,15 @@ export interface SortOptions {
 
 export enum SortMode {
 
+    // Sorting by identifier alphanumerically
     Alphanumeric = 'alphanumeric',  // default
     AlphanumericDescending = 'alphanumericDescending',
-    Date = 'date',  // only available for resources of WorkflowStep subcategories
-    DateDescending = 'dateDescending',  // only available for resources of WorkflowStep subcategories
+
+    // Sorting by date first and identifier second
+    // (only available for resources of WorkflowStep subcategories)
+    Date = 'date',
+    DateDescending = 'dateDescending',
+
     ExactMatchFirst = 'exactMatchFirst',
     None = 'none'
 }

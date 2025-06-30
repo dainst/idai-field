@@ -1,16 +1,22 @@
 <div class="workflow-steps-headings workflow-step">
     <div class="workflow-step-state-header"
-            i18n="@@resources.workflowEditorModal.state">Status</div>
+         i18n="@@resources.workflowEditorModal.state">Status</div>
     <div class="workflow-step-executed-on"
-            i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
-    <div class="workflow-step-date"
-            i18n="@@resources.workflowEditorModal.date">Datum</div>
-    <div class="workflow-step-identifier"
-            i18n="@@resources.workflowEditorModal.identifier">Bezeichner</div>
+         i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
+    <div class="workflow-step-date" (click)="toggleSortMode('date')">
+        <span i18n="@@resources.workflowEditorModal.date">Datum</span>
+        <span *ngIf="sortMode === 'date'" class="mdi mdi-arrow-down-thin"></span>
+        <span *ngIf="sortMode === 'dateDescending'" class="mdi mdi-arrow-up-thin"></span>
+    </div>
+    <div class="workflow-step-identifier" (click)="toggleSortMode('identifier')">
+         <span i18n="@@resources.workflowEditorModal.identifier">Bezeichner</span>
+         <span *ngIf="sortMode === 'alphanumeric'" class="mdi mdi-arrow-down-thin"></span>
+         <span *ngIf="sortMode === 'alphanumericDescending'" class="mdi mdi-arrow-up-thin"></span>
+    </div>
     <div class="workflow-step-category"
-            i18n="@@resources.workflowEditorModal.category">Kategorie</div>
+         i18n="@@resources.workflowEditorModal.category">Kategorie</div>
     <div class="workflow-step-results-in"
-            i18n="@@resources.workflowEditorModal.resultsIn">Ergibt</div>
+         i18n="@@resources.workflowEditorModal.resultsIn">Ergibt</div>
     <div class="workflow-step-buttons"></div>
 </div>
 <cdk-virtual-scroll-viewport class="workflow-steps-body" [itemSize]="itemSize">

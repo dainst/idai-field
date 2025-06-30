@@ -4,7 +4,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MenuContext } from '../../../services/menu-context';
 import { Map } from 'tsfun';
 import { Document, RelationsManager, Resource, Labels, ProjectConfiguration, DateSpecification, WorkflowStepDocument,
-    Datastore } from 'idai-field-core';
+    Datastore, SortMode } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { Settings } from '../../../services/settings/settings';
@@ -25,9 +25,11 @@ import { Menus } from '../../../services/menus';
 export class WorkflowStepListComponent implements OnChanges {
 
     @Input() workflowSteps: Array<WorkflowStepDocument>;
+    @Input() sortMode: SortMode;
 
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
     @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
+    @Output() onSortModeChanged: EventEmitter<SortMode> = new EventEmitter<SortMode>();
     
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
@@ -62,6 +64,22 @@ export class WorkflowStepListComponent implements OnChanges {
         for (let workflowStep of this.workflowSteps) {
             await this.updateListEntry(workflowStep);
         }
+    }
+
+
+    public toggleSortMode(fieldName: 'identifier'|'date') {
+
+        if (fieldName === 'identifier') {
+            this.sortMode = this.sortMode === SortMode.Alphanumeric
+                ? SortMode.AlphanumericDescending
+                : SortMode.Alphanumeric;
+        } else {
+            this.sortMode = this.sortMode === SortMode.Date
+                ? SortMode.DateDescending
+                : SortMode.Date;
+        }
+
+        this.onSortModeChanged.emit(this.sortMode);
     }
     
     

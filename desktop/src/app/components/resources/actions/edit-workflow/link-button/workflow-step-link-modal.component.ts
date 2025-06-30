@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
 import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named, DateSpecification,
-    WorkflowStepDocument } from 'idai-field-core';
+    WorkflowStepDocument, SortMode } from 'idai-field-core';
 import { sortWorkflowSteps } from '../sort-workflow-steps';
 import { getSystemTimezone } from '../../../../../util/timezones';
 import { Settings } from '../../../../../services/settings/settings';
@@ -60,7 +60,7 @@ export class WorkflowStepLinkModalComponent {
 
         this.selectedDocument = document;
         this.availableWorkflowSteps = await this.getAvailableWorkflowSteps();
-        sortWorkflowSteps(this.availableWorkflowSteps);
+        sortWorkflowSteps(this.availableWorkflowSteps, SortMode.Date);
     }
 
 

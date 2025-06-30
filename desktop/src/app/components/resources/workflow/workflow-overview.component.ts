@@ -37,12 +37,14 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
 
     public populateDocumentList = () => this.viewFacade.populateDocumentList();
 
+    public getSortMode = () => this.viewFacade.getSortMode();
+
+    public setSortMode = (sortMode: SortMode) => this.viewFacade.setSortMode(sortMode);
+
 
     ngAfterViewInit() {
 
         this.scrollViewport = this.workflowStepListComponent.scrollViewport;
-
-        // TODO Allow switching sort mode via buttons
         this.viewFacade.setSortMode(SortMode.DateDescending);
     }
 

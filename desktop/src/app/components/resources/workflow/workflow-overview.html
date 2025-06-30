@@ -1,6 +1,8 @@
 <workflow-step-list [workflowSteps]="documents"
+                    [sortMode]="getSortMode()"
+                    (onChanged)="populateDocumentList()"
                     (onRelationTargetSelected)="jumpToResource($event)"
-                    (onChanged)="populateDocumentList()"></workflow-step-list>
+                    (onSortModeChanged)="setSortMode($event)"></workflow-step-list>
 
 <plus-button *ngIf="isPlusButtonShown()"
              id="create-document-button"

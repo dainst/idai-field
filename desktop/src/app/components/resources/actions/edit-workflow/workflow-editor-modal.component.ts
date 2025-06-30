@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Datastore,
-    WorkflowStepDocument, SortUtil, ProjectConfiguration } from 'idai-field-core';
+    WorkflowStepDocument, SortUtil, ProjectConfiguration, SortMode } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -29,6 +29,7 @@ export class WorkflowEditorModalComponent {
 
     public workflowSteps: Array<WorkflowStepDocument>;
     public allowedWorkflowStepCategories: Array<CategoryForm>;
+    public sortMode: SortMode = SortMode.Date;
 
 
     constructor(private activeModal: NgbActiveModal,
@@ -56,6 +57,13 @@ export class WorkflowEditorModalComponent {
 
         this.allowedWorkflowStepCategories = this.getAllowedWorkflowStepCategories();
         this.sortDocuments();
+        await this.updateWorkflowSteps();
+    }
+
+
+    public async setSortMode(sortMode: SortMode) {
+
+        this.sortMode = sortMode;
         await this.updateWorkflowSteps();
     }
 
@@ -94,7 +102,7 @@ export class WorkflowEditorModalComponent {
             constraints: { 'isExecutedOn:contain': this.documents.map(document => document.resource.id) }
         })).documents as Array<WorkflowStepDocument>;
 
-        sortWorkflowSteps(this.workflowSteps);
+        sortWorkflowSteps(this.workflowSteps, this.sortMode);
     }
 
 
@@ -124,6 +132,7 @@ export class WorkflowEditorModalComponent {
             return SortUtil.alnumCompare(document1.resource.identifier, document2.resource.identifier);
         });
     }
+
 
     /**
      * @returns edited document if changes have been saved, undefined if the modal has been canceled

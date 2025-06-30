@@ -98,26 +98,29 @@ workflow-step-list {
       }
 
       .workflow-step-date,
-        .workflow-step-identifier {
-          .mdi {
-            display: none;
-            margin-left: 5px;
-            font-size: 15px;
+      .workflow-step-identifier {
+        transition: color 0.15s ease-in-out;
 
-            &.selected {
-              display: inline;
-            }
-          }
+        .mdi {
+          opacity: 0;
+          transition: opacity 0.15s ease-in-out;
+          margin-left: 5px;
+          font-size: 15px;
 
-          &:hover {
-            color: $text-hover-color;
-
-            .mdi {
-              display: inline;
-            }
+          &.selected {
+            opacity: 1;
           }
         }
-  
+
+        &:hover {
+          color: $text-hover-color;
+
+          .mdi {
+            opacity: 1;
+          }
+        }
+      }
+
       div {
         height: 48px;
         line-height: 28px;

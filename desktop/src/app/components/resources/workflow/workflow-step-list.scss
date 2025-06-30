@@ -79,23 +79,6 @@ workflow-step-list {
       flex-grow: 1;
     }
 
-    .workflow-step-date,
-    .workflow-step-identifier {
-      .mdi {
-        display: none;
-
-        &.selected {
-          display: inline;
-        }
-      }
-
-      &:hover {
-        .mdi {
-          display: inline;
-        }
-      }
-    }
-
     .workflow-step-category {
       flex: 0 0 190px;
     }
@@ -113,6 +96,27 @@ workflow-step-list {
       .workflow-step-results-in {
         padding: 10px;
       }
+
+      .workflow-step-date,
+        .workflow-step-identifier {
+          .mdi {
+            display: none;
+            margin-left: 5px;
+            font-size: 15px;
+
+            &.selected {
+              display: inline;
+            }
+          }
+
+          &:hover {
+            color: #777;
+
+            .mdi {
+              display: inline;
+            }
+          }
+        }
   
       div {
         height: 48px;

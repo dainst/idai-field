@@ -91,6 +91,8 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
+        const currentMode: ResourcesViewMode = this.getMode();
+        
         this.resourcesState.view = viewName;
 
         if (!this.isInSpecialView()) {
@@ -100,7 +102,7 @@ export class ResourcesStateManager {
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
             if (!state.operation) state.operation = (await this.datastore.get(viewName)) as FieldDocument;
-            if (!this.tabManager.isOpen('resources', viewName)) state.mode = this.getViewModeForNewTab();
+            if (!this.tabManager.isOpen('resources', viewName)) state.mode = this.getViewModeForNewTab(currentMode);
 
             this.serialize();
         }
@@ -338,16 +340,14 @@ export class ResourcesStateManager {
     }
 
 
-    private getViewModeForNewTab(): ResourcesViewMode {
+    private getViewModeForNewTab(currentMode: ResourcesViewMode): ResourcesViewMode {
 
-        const mode: ResourcesViewMode = this.getMode();
-
-        if ((mode === 'grid' && !this.isInGridListView())
-                || (mode === 'workflow' && !this.isInWorkflowManagement())) {
+        if ((currentMode === 'grid' && !this.isInGridListView())
+                || (currentMode === 'workflow' && !this.isInWorkflowManagement())) {
             return 'map';
         }
 
-        return mode;
+        return currentMode;
     }
 
 

@@ -91,10 +91,10 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
+        this.resourcesState.view = viewName;
+
         let currentMode: ResourcesViewMode = this.getMode();
         if (currentMode === 'grid' && !this.isInGridListView()) currentMode = 'map';
-
-        this.resourcesState.view = viewName;
 
         if (!this.isInSpecialView()) {
             if (!this.resourcesState.operationViewStates[viewName]) {

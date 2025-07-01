@@ -49,6 +49,9 @@ global.setConfigDefaults = config => {
     if (config.highlightCustomElements === undefined) config.highlightCustomElements = true;
     setLanguages(config);
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
+    if (!config.keepBackups) {
+        config.keepBackups = { custom: 0, customInterval: 0, daily: 0, weekly: 0, monthly: 0 };
+    }
 
     return config;
 };
@@ -244,6 +247,7 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
+            nodeIntegrationInWorker: true,
             enableRemoteModule: true,
             contextIsolation: false,
             preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),

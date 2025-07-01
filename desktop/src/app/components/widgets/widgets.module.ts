@@ -32,6 +32,7 @@ import { SearchableSelectComponent } from './searchable-select.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { RelationPickerGroupComponent } from './relation-picker/relation-picker-group.component';
 import { RelationPickerComponent } from './relation-picker/relation-picker.component';
+import { QuittingModalComponent } from './quitting-modal.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { RelationPickerComponent } from './relation-picker/relation-picker.compo
         LanguagesListComponent,
         QrCodeScannerModalComponent,
         DeletionInProgressModalComponent,
+        QuittingModalComponent,
         SearchableSelectComponent,
         RelationPickerGroupComponent,
         RelationPickerComponent,
@@ -89,6 +91,7 @@ import { RelationPickerComponent } from './relation-picker/relation-picker.compo
         PagingButtonsComponent,
         EditSaveDialogComponent,
         QrCodeScannerModalComponent,
+        QuittingModalComponent,
         LanguagesListComponent,
         SearchableSelectComponent,
         RelationPickerGroupComponent,

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { Datastore } from 'idai-field-core';
+import { Datastore, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -12,6 +12,10 @@ import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
+import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
+import { QuittingModalComponent } from './widgets/quitting-modal.component';
+import { Modals } from '../services/modals';
+import { MenuContext } from '../services/menu-context';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -31,6 +35,9 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
+    private closing: boolean = false;
+
+
     constructor(router: Router,
                 menuNavigator: MenuNavigator,
                 appController: AppController,
@@ -43,7 +50,10 @@ export class AppComponent {
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
                 private menuModalLauncher: MenuModalLauncher,
-                private datastore: Datastore) {
+                private datastore: Datastore,
+                private autoBackupService: AutoBackupService,
+                private modals: Modals,
+                private syncService: SyncService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -72,12 +82,14 @@ export class AppComponent {
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
             this.menuModalLauncher.openUpdateUsernameModal(true);
         }
+
+        this.autoBackupService.start();
     }
 
 
     private listenToSettingsChangesFromMenu() {
 
-        ipcRenderer.on('settingChanged', async (event: any, setting: string, newValue: boolean) => {
+        ipcRenderer.on('settingChanged', async (_: any, setting: string, newValue: boolean) => {
             const settings: Settings = this.settingsProvider.getSettings();
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
@@ -88,9 +100,26 @@ export class AppComponent {
 
     private handleCloseRequests() {
 
-        ipcRenderer.on('requestClose', () => {
-            if (!this.datastore.updating) ipcRenderer.send('close');
+        ipcRenderer.on('requestClose', async () => {
+            if (this.closing || this.datastore.updating) return;
+
+            this.closing = true;
+            this.syncService.stopSync();
+            this.openQuittingModal();
+            await this.autoBackupService.requestBackupCreation();
+
+            ipcRenderer.send('close');
         });
+    }
+
+
+    private openQuittingModal() {
+
+        setTimeout(() => {
+            this.modals.make<QuittingModalComponent>(
+                QuittingModalComponent, MenuContext.MODAL, undefined, undefined, false
+            )
+        }, 200);
     }
 
 

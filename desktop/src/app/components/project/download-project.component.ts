@@ -13,6 +13,7 @@ import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
+import { getFileSizeLabel } from '../../util/get-file-size-label';
 
 const PouchDB = window.require('pouchdb-browser');
 const address = window.require('address');
@@ -188,10 +189,10 @@ export class DownloadProjectComponent {
             const sizes = ImageStore.getFileSizeSums(fileList);
 
             if (this.getFileSizesStart === startDate) {
-                this.originalImagesSize = `(${ImageStore.byteCountToDescription(
+                this.originalImagesSize = `(${getFileSizeLabel(
                     sizes.original_image, (value) => this.decimalPipe.transform(value)
                 )})`;
-                this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(
+                this.thumbnailImagesSize = `(${getFileSizeLabel(
                     sizes.thumbnail_image, (value) => this.decimalPipe.transform(value)
                 )})`;
             }

@@ -8,7 +8,7 @@ import { BackupCreationModalComponent } from './backup-creation-modal.component'
 import { BackupLoadingModalComponent } from './backup-loading-modal.component';
 import { DialogProvider } from './dialog-provider';
 import { ConcreteDialogProvider } from './concrete-dialog-provider';
-import { BackupProvider } from './backup-provider';
+import { BackupService } from '../../services/backup/backup-service';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { BackupProvider } from './backup-provider';
     ],
     providers: [
         { provide: DialogProvider, useClass: ConcreteDialogProvider },
-        BackupProvider
+        BackupService
     ]
 })
 

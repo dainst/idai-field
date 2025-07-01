@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
-    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N,
-    validateUrl } from 'idai-field-core';
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N, validateUrl,
+    ObserverUtil } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server';
@@ -35,6 +36,9 @@ type validationMode = 'settings'|'synchronization'|'none';
  */
 export class SettingsService {
 
+    private changesObservers: Array<Observer<void>> = [];
+
+
     constructor(private imagestore: ImageStore,
                 private pouchdbDatastore: PouchdbDatastore,
                 private expressServer: ExpressServer,
@@ -46,8 +50,10 @@ export class SettingsService {
                 private configReader: ConfigReader) {}
 
 
-    public async bootProjectDb(selectedProject: string,
-                               projectDocument?: Document,
+    public changesNotifications = (): Observable<void> => ObserverUtil.register(this.changesObservers);
+
+
+    public async bootProjectDb(selectedProject: string, projectDocument?: Document,
                                destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {
@@ -102,6 +108,8 @@ export class SettingsService {
         this.expressServer.setAllowLargeFileUploads(settings.allowLargeFileUploads);
 
         await this.settingsProvider.setSettingsAndSerialize(settings);
+
+        ObserverUtil.notify(this.changesObservers, null);
 
         return settings;
     }

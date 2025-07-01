@@ -21,7 +21,8 @@ describe('ImageSyncService', () => {
     let remoteImageStore: RemoteImageStore;
 
     const mockImage: Buffer = fs.readFileSync(process.cwd() + '/test/test-data/logo.png');
-    const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
+    const imagestorePath = process.cwd() + '/test/test-temp/imagestore/';
+    const backupDirectoryPath = process.cwd() + '/test/test-temp/backups/';
     const testProjectIdentifier = 'test_tmp_project';
 
     const ajv = new Ajv();
@@ -61,8 +62,16 @@ describe('ImageSyncService', () => {
         username: 'not_relevant_for_the_tests',
         dbs: [],
         selectedProject: 'not_relevant_for_the_tests',
-        imagestorePath: testFilePath,
-        isAutoUpdateActive: true
+        imagestorePath: imagestorePath,
+        backupDirectoryPath,
+        isAutoUpdateActive: true,
+        keepBackups: {
+            custom: 0,
+            customInterval: 0,
+            daily: 0,
+            weekly: 0,
+            monthly: 0
+        }
     };
 
     const settingsProviderMock = new SettingsProvider();
@@ -73,7 +82,7 @@ describe('ImageSyncService', () => {
         settingsProviderMock.setSettings(settingsMock);
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
-        await imageStore.init(testFilePath, testProjectIdentifier);
+        await imageStore.init(imagestorePath, testProjectIdentifier);
 
         remoteImageStore = new RemoteImageStore(settingsProviderMock, null);
     });
@@ -82,7 +91,7 @@ describe('ImageSyncService', () => {
     // Re-initialize image store data for each test.
     beforeEach(async () => {
 
-        await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
+        await imageStore.init(`${imagestorePath}imagestore/`, testProjectIdentifier);
 
         await axios({
             method: 'post',
@@ -107,7 +116,7 @@ describe('ImageSyncService', () => {
 
     afterAll(() => {
 
-        fs.rmSync(testFilePath, { recursive: true });
+        fs.rmSync(imagestorePath, { recursive: true });
     });
 
 

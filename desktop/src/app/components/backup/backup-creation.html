@@ -5,7 +5,7 @@
                 <button id="createBackupButton"
                         class="btn btn-primary"
                         [ngClass]="{ 'disabled': running }"
-                        (click)="createBackup()">
+                        (click)="startBackupCreation()">
                     <span class="mdi mdi-database-export"></span>
                     <span class="button-label" i18n="@@backup.creation.createBackup">Backup erstellen</span>
                 </button>

@@ -15,8 +15,13 @@ import { ConfigurationIndex } from '../services/configuration/index/configuratio
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
 import { createDisplayVariant } from '../services/imagestore/create-display-variant';
+import { Backup } from '../services/backup/model/backup';
+import { BackupService, RestoreBackupResult } from '../services/backup/backup-service';
+import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = window.require('@electron/remote');
+const fs = window.require('fs');
 
 
 interface Services {
@@ -165,7 +170,8 @@ const setProjectNameInProgress = async (settings: Settings, progress: Initializa
 };
 
 
-const setUpDatabase = async (settingsService: SettingsService, settings: Settings, progress: InitializationProgress) => {
+const setUpDatabase = async (settingsService: SettingsService, settings: Settings,
+                             progress: InitializationProgress) => {
 
     await progress.setPhase('settingUpDatabase');
     try {
@@ -177,8 +183,14 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
             settings.selectedProject === 'test'
         );
     } catch (msgWithParams) {
-        await progress.setError('databaseError');
-        return Promise.reject('Database error');
+        const success: boolean = await restoreLatestBackup(settingsService, settings);
+        if (success) {
+            await setUpDatabase(settingsService, settings, progress);
+        } else {
+            console.error(msgWithParams);
+            await progress.setError('databaseError');
+            return Promise.reject('Database error');
+        }
     }
 };
 
@@ -312,3 +324,25 @@ const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: P
         console.warn('Failed to create display variant for image ' + imageId, err);
     }
 };
+
+
+const restoreLatestBackup = async (settingsService: SettingsService, settings: Settings): Promise<boolean> => {
+
+    const backupFilePath: string = getPathToLatestBackupFile(settings);
+
+    const result: RestoreBackupResult = await new BackupService().restore(
+        backupFilePath, settings.selectedProject, settingsService
+    );
+
+    return result.success;
+}
+
+
+const getPathToLatestBackupFile = (settings: Settings): string|undefined => {
+
+    const backups: Array<Backup> = getExistingBackups(settings.backupDirectoryPath)[settings.selectedProject] ?? [];
+
+    return backups.reverse()
+        .map(backup => backup.filePath)
+        .find(filePath => fs.existsSync(filePath));
+}

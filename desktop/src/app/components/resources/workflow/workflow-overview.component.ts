@@ -35,8 +35,6 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
 
     public jumpToResource = (document: WorkflowStepDocument) => this.routingService.jumpToResource(document);
 
-    public populateDocumentList = () => this.viewFacade.populateDocumentList();
-
     public getSortMode = () => this.viewFacade.getSortMode();
 
     public setSortMode = (sortMode: SortMode) => this.viewFacade.setSortMode(sortMode);
@@ -51,6 +49,17 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
     ngOnChanges(changes: SimpleChanges) {
     
         if (changes['selectedDocument']) this.scrollTo(this.selectedDocument);
+    }
+
+
+    public async onChanged(editedWorkflowStep?: WorkflowStepDocument) {
+
+        if (editedWorkflowStep) {
+            this.selectedDocument = editedWorkflowStep;
+            this.scrollTo(this.selectedDocument);
+        }
+
+        await this.viewFacade.populateDocumentList();
     }
 
 

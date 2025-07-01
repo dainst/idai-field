@@ -1,6 +1,6 @@
 <workflow-step-list [workflowSteps]="documents"
                     [sortMode]="getSortMode()"
-                    (onChanged)="populateDocumentList()"
+                    (onChanged)="onChanged($event)"
                     (onRelationTargetSelected)="jumpToResource($event)"
                     (onSortModeChanged)="setSortMode($event)"></workflow-step-list>
 

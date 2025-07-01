@@ -28,7 +28,7 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() workflowSteps: Array<WorkflowStepDocument>;
     @Input() sortMode: SortMode;
 
-    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onChanged: EventEmitter<WorkflowStepDocument|void> = new EventEmitter<WorkflowStepDocument|void>();
     @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
     @Output() onSortModeChanged: EventEmitter<SortMode> = new EventEmitter<SortMode>();
     
@@ -113,7 +113,7 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
 
         if (await this.openWorkflowStepEditorModal(workflowStep)) {
             await this.updateListEntry(workflowStep);
-            this.onChanged.emit();
+            this.onChanged.emit(workflowStep);
         }
     }
 

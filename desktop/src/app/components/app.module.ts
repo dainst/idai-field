@@ -8,7 +8,7 @@ import localeUk from '@angular/common/locales/uk';
 import { LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
     IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
@@ -248,8 +248,8 @@ registerLocaleData(localeUk, 'uk');
                     async (path: string[]) => {
                         await router.navigate(path);
                     });
-                router.events.subscribe(async () => {
-                    await tabManager.routeChanged(router.url);
+                router.events.subscribe(async event => {
+                    if (event instanceof NavigationEnd) await tabManager.routeChanged(event.url);
                 });
                 return tabManager;
             },

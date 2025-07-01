@@ -100,13 +100,7 @@ export class ResourcesStateManager {
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
             if (!state.operation) state.operation = (await this.datastore.get(viewName)) as FieldDocument;
-            
-            let mode: ResourcesViewMode = this.getMode();
-            if ((mode === 'grid' && !this.isInGridListView())
-                    || (mode === 'workflow' && !this.isInWorkflowManagement())) {
-                mode = 'map';
-            }
-            if (!this.tabManager.isOpen('resources', viewName)) state.mode = mode;
+            if (!this.tabManager.isOpen('resources', viewName)) state.mode = this.getViewModeForNewTab();
 
             this.serialize();
         }
@@ -341,6 +335,19 @@ export class ResourcesStateManager {
         return ['TypeCatalog']
             .concat(this.projectConfiguration.getCategoryWithSubcategories('Place').map(to(Named.NAME)))
             .concat(this.projectConfiguration.getInventoryCategories().map(to(Named.NAME)));
+    }
+
+
+    private getViewModeForNewTab(): ResourcesViewMode {
+
+        const mode: ResourcesViewMode = this.getMode();
+
+        if ((mode === 'grid' && !this.isInGridListView())
+                || (mode === 'workflow' && !this.isInWorkflowManagement())) {
+            return 'map';
+        }
+
+        return mode;
     }
 
 

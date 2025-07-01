@@ -188,7 +188,7 @@ export class RowComponent implements AfterViewInit {
     private setValueAsString(fieldName: string, newValue: string) {
 
         if (newValue) {
-            this.document.resource[fieldName] = newValue;
+            this.document.resource[fieldName] = newValue.trim();
         } else {
             this.document.resource[fieldName] = '';
         }
@@ -245,7 +245,7 @@ export class RowComponent implements AfterViewInit {
 
     private hasMandatoryValues(): boolean {
 
-        if (!this.document.resource.identifier || this.document.resource.identifier.trim() === '') return false;
+        if (!this.document.resource.identifier) return false;
         if (this.isShortDescriptionMandatory() && !this.document.resource.shortDescription) return false;
         
         return true;

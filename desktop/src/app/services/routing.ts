@@ -9,7 +9,6 @@ import { ViewFacade } from '../components/resources/view/view-facade';
 import { MenuContext } from './menu-context';
 import { Menus } from './menus';
 import { DoceditComponent } from '../components/docedit/docedit.component';
-import { M } from '../components/messages/m';
 
 
 @Injectable()

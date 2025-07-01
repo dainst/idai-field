@@ -216,7 +216,7 @@ export class RowComponent implements AfterViewInit {
 
     private async save() {
 
-        if (!this.document.resource.identifier || this.document.resource.identifier.trim() === '') {
+        if (!this.hasMandatoryValues()) {
             if (!this.isNewResource()) await this.restoreIdentifier(this.document);
             return;
         }
@@ -240,6 +240,15 @@ export class RowComponent implements AfterViewInit {
         }
 
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    private hasMandatoryValues(): boolean {
+
+        if (!this.document.resource.identifier || this.document.resource.identifier.trim() === '') return false;
+        if (this.isShortDescriptionMandatory() && !this.document.resource.shortDescription) return false;
+        
+        return true;
     }
 
 
@@ -274,5 +283,11 @@ export class RowComponent implements AfterViewInit {
 
         return !this.selectedLanguage
             || (this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE && this.availableLanguages.length === 1);
+    }
+
+
+    private isShortDescriptionMandatory(): boolean {
+
+        return CategoryForm.getField(this.category, FieldResource.SHORTDESCRIPTION)?.mandatory;
     }
 }

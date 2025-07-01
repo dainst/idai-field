@@ -16,6 +16,7 @@ import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-se
 import { QuittingModalComponent } from './widgets/quitting-modal.component';
 import { Modals } from '../services/modals';
 import { MenuContext } from '../services/menu-context';
+import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -45,6 +46,7 @@ export class AppComponent {
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
                 appState: AppState,
+                imageToolLauncher: ImageToolLauncher,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
@@ -73,6 +75,7 @@ export class AppComponent {
         appController.initialize();
         menuNavigator.initialize();
         configurationChangeNotifications.initialize();
+        imageToolLauncher.update();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();

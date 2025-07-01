@@ -38,10 +38,10 @@ export class AppState {
     }
 
 
-    public async setFolderPath(fileOrFolderPath: string, context: string) {
-
+    public async setFolderPath(fileOrFolderPath: string, context: string, isFolder: boolean = false) {
+        
         if (!this.folderPaths) this.folderPaths = {};
-        this.folderPaths[context] = path.dirname(fileOrFolderPath);
+        this.folderPaths[context] = isFolder ? fileOrFolderPath : path.dirname(fileOrFolderPath);
         await this.store();
     }
 

@@ -1,6 +1,5 @@
 <div class="image-overview row">
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
-
         <div class="row bg-light image-overview-nav">
             <div *ngIf="!hasSelectedImages() && getQuery()" class="col image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
@@ -28,7 +27,7 @@
                 <image-overview-taskbar [imageGrid]="imageGrid"></image-overview-taskbar>
             </div>
 
-            <div class="col-auto text-end slider-container">
+            <div *ngIf="getQuery() && getDocuments()" class="col-auto text-end slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
                       (click)="decreaseNrImagesPerRow()"></span>
                 <input id="grid-size-slider" #gridSize type="range" min="{{getMinNrImagesPerRow()}}"

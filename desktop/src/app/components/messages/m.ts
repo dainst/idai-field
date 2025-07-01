@@ -84,7 +84,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_READER_INVALID_OPERATION_RESOURCE = 'M.Import.ReaderErrors.invalidOperationResource';
     public static IMPORT_READER_SHAPEFILE_READ_ERROR = 'M.Import.ReaderErrors.shapefile.readError';
 
-
     // ImportPackage ValidationErrors
     public static IMPORT_VALIDATION_MISSING_PROPERTY = 'M.Import.ValidationErrors.missingProperty';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'M.Import.ValidationErrors.noRecordedin';
@@ -209,10 +208,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
     public static IMAGES_SUCCESS_WLD_FILE_UPLOADED = 'images.success.wldFileUploaded';
     public static IMAGES_SUCCESS_WLD_FILES_UPLOADED = 'images.success.wldFilesUploaded';
+    public static IMAGES_SUCCESS_IMAGES_EXPORTED_SINGLE = 'images.success.imagesExported.single';
+    public static IMAGES_SUCCESS_IMAGES_EXPORTED_MULTIPLE = 'images.success.imagesExported.multiple';
+    public static IMAGES_SUCCESS_IMAGES_DOWNLOADED_SINGLE = 'images.success.imagesDownloaded.single';
+    public static IMAGES_SUCCESS_IMAGES_DOWNLOADED_MULTIPLE = 'images.success.imagesDownloaded.multiple';
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
     public static IMAGES_ERROR_UNMATCHED_WLD_FILES = 'images.error.unmatchedWldFiles';
+    public static IMAGES_ERROR_EXPORT_FAILED = 'images.error.exportFailed';
+    public static IMAGES_ERROR_DOWNLOAD_FAILED = 'images.error.downloadFailed';
 
     // Imagestore Package
     public static IMAGESTORE_ERROR_INVALID_PATH = 'imagestore.error.invalidPath';
@@ -940,6 +945,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.images.success.wldFilesUploaded:Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.`,
             level: 'success'
         };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_EXPORTED_SINGLE] = {
+            content: $localize `:@@messages.images.success.imagesExported.single:Das Bild wurde erfolgreich exportiert.`,
+            level: 'success'
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_EXPORTED_MULTIPLE] = {
+            content: $localize `:@@messages.images.success.imagesExported.multiple:[0] Bilder wurden erfolgreich exportiert.`,
+            level: 'success'
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_SINGLE] = {
+            content: $localize `:@@messages.images.success.imagesDownloaded.single:Das Originalbild wurde erfolgreich heruntergeladen.`,
+            level: 'success'
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_MULTIPLE] = {
+            content: $localize `:@@messages.images.success.imagesDownloaded.multiple:[0] Originalbilder wurden erfolgreich heruntergeladen.`,
+            level: 'success'
+        };
         this.msgs[M.IMAGES_ERROR_FILEREADER] = {
             content: $localize `:@@messages.images.error.fileReader:Datei \'[0]\' konnte nicht vom lokalen Dateisystem gelesen werden.`,
             level: 'danger'
@@ -954,6 +975,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_UNMATCHED_WLD_FILES] = {
             content: $localize `:@@messages.images.error.unmachtedWldFiles:Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_EXPORT_FAILED] = {
+            content: $localize `:@@messages.images.error.exportFailed:Beim Export der Bilder ist ein Fehler aufgetreten.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_DOWNLOAD_FAILED] = {
+            content: $localize `:@@messages.images.error.downloadFailed:Beim Versuch, das Bild \'[0]\' herunterzuladen, ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH] = {

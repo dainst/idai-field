@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, ImageDocument } from 'idai-field-core';
 import { LinkModalComponent } from './link-modal.component';
 import { RemoveLinkModalComponent } from './remove-link-modal.component';
-import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from './view/image-overview-facade';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
-import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { MenuContext } from '../../../services/menu-context';
@@ -14,6 +13,7 @@ import { ImageRelationsManager, ImageRelationsManagerErrors } from '../../../ser
 import { AngularUtility } from '../../../angular/angular-utility';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
 import { DeletionInProgressModalComponent } from '../../widgets/deletion-in-progress-modal.component';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
 
 
 @Component({
@@ -33,18 +33,30 @@ export class ImageOverviewTaskbarComponent {
 
     @Input() imageGrid: any;
 
-    public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
-    public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
-
-    constructor(public viewFacade: ViewFacade,
-                private modalService: NgbModal,
+    constructor(private modalService: NgbModal,
                 private messages: Messages,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageRelationsManager: ImageRelationsManager,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private imageToolLauncher: ImageToolLauncher) {}
 
 
+    public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
+
+    public isDownloadButtonVisible = () =>
+        this.imageToolLauncher.isDownloadPossible(this.imageOverviewFacade.getSelected());
+
+    public isExportButtonVisible = () =>
+        this.imageToolLauncher.isExportPossible(this.imageOverviewFacade.getSelected());
+
+    public downloadImages = () => this.imageToolLauncher.downloadImages(this.imageOverviewFacade.getSelected());
+
+    public exportImages = () => this.imageToolLauncher.exportImages(this.imageOverviewFacade.getSelected());
+
+    public clearSelection = () => this.imageOverviewFacade.clearSelection();
+    
+    
     public onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
@@ -110,6 +122,19 @@ export class ImageOverviewTaskbarComponent {
             this.menuService.setContext(MenuContext.DEFAULT);
             AngularUtility.blurActiveElement();
         }
+    }
+
+
+    public getDownloadTooltip() {
+
+        const selectedImages: Array<ImageDocument> = this.imageOverviewFacade.getSelected();
+        const sizeLabel: string = this.imageToolLauncher.getDownloadSizeLabel(selectedImages);
+        
+        const baseTooltip: string = selectedImages.length === 1
+            ? $localize `:@@images.download.tooltip.single:Originalbild herunterladen`
+            : $localize `:@@images.download.tooltip.multiple:Originalbilder herunterladen`;
+
+        return baseTooltip + ' (' + sizeLabel + ')';
     }
 
 

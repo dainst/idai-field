@@ -4,6 +4,7 @@ import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { SettingsProvider } from '../settings/settings-provider';
 import { SyncTarget } from '../settings/sync-target';
+import { Settings } from '../settings/settings';
 
 const axios = window.require('axios');
 
@@ -88,11 +89,13 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
      */
     public async getFileInfos(project: string, types: ImageVariant[]): Promise<{ [uuid: string]: FileInfo }> {
 
-        const settings = this.settingsProvider.getSettings();
+        const settings: Settings = this.settingsProvider.getSettings();
 
-        const syncTarget = settings.syncTargets[project];
-        const url = SyncTarget.getAddress(syncTarget);
-        const password = syncTarget.password;
+        const syncTarget: SyncTarget = settings.syncTargets[project];
+        if (!syncTarget?.address || !syncTarget?.password || !syncTarget.isSyncActive) return {};
+
+        const url: string = SyncTarget.getAddress(syncTarget);
+        const password: string = syncTarget.password;
 
         return this.runFileInfoQuery(url, password, project, types);
     }

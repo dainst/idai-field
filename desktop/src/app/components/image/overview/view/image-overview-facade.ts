@@ -1,9 +1,12 @@
+import { Injectable } from '@angular/core';
 import { clone, equal }  from 'tsfun';
 import { ImageDocument, Named, Query, ProjectConfiguration } from 'idai-field-core';
 import { ImagesState } from './images-state';
 import { ImageDocumentsManager } from './image-documents-manager';
+import { ImageToolLauncher } from '../../../../services/imagestore/image-tool-launcher';
 
 
+@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -19,7 +22,8 @@ export class ImageOverviewFacade {
 
     constructor(private imageDocumentsManager: ImageDocumentsManager,
                 private imagesState: ImagesState,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private imageToolLauncher: ImageToolLauncher) {}
 
 
     public getMaxNrImagesPerRow = () => this.maxNrImagesPerRow;
@@ -103,22 +107,22 @@ export class ImageOverviewFacade {
 
     public async turnPage() {
 
-        if (this.canTurnPage()) {
+        if (!this.canTurnPage()) return;
 
-            this.imageDocumentsManager.clearSelection();
-            this.currentOffset = this.currentOffset + this.getNrImagesPerPage();
-            await this.fetchDocuments();
-        }
+        this.imageDocumentsManager.clearSelection();
+        this.currentOffset = this.currentOffset + this.getNrImagesPerPage();
+        await this.fetchDocuments();
     }
 
 
     public async turnPageBack() {
 
-        if (this.canTurnPageBack()) {
-            this.currentOffset = this.currentOffset - this.getNrImagesPerPage();
-            if (this.currentOffset < 0) this.currentOffset = 0;
-        }
+        if (!this.canTurnPageBack()) return;
+
+        this.currentOffset = this.currentOffset - this.getNrImagesPerPage();
+        if (this.currentOffset < 0) this.currentOffset = 0;
         await this.fetchDocuments();
+    
     }
 
 
@@ -172,11 +176,14 @@ export class ImageOverviewFacade {
     }
 
 
-    public fetchDocuments() {
+    public async fetchDocuments() {
 
-        return this.imageDocumentsManager.fetchDocuments(
+        await this.imageDocumentsManager.fetchDocuments(
             this.getLimit(),
-            this.currentOffset);
+            this.currentOffset
+        );
+
+        this.imageToolLauncher.update();
     }
 
 

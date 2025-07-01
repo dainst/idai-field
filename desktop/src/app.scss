@@ -384,6 +384,7 @@ label {
   left: 10px;
 }
 
-#file-path-input {
+.file-path-input {
   height: 38px;
+  z-index: 1 !important;
 }

@@ -10,6 +10,7 @@ import { Menus } from '../../../../../services/menus';
 import { ImagePickerComponent } from '../../../../docedit/widgets/image-picker.component';
 import { LayerUtility } from './layer-utility';
 import { Loading } from '../../../../widgets/loading';
+import { ImageToolLauncher } from '../../../../../services/imagestore/image-tool-launcher';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
     @Output() onAddOrRemoveLayers = new EventEmitter<void>();
     @Output() onChangeLayersOrder = new EventEmitter<void>();
+    @Output() onImagesDownloaded = new EventEmitter<void>();
 
     public dragging: boolean = false;
 
@@ -42,9 +44,10 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
                 private modalService: NgbModal,
                 private loading: Loading,
                 private projectConfiguration: ProjectConfiguration,
+                private labels: Labels,
+                private imageToolLauncher: ImageToolLauncher,
                 renderer: Renderer2,
-                menuService: Menus,
-                private labels: Labels) {
+                menuService: Menus) {
 
         super(renderer, menuService, 'layer-button', 'layer-menu');
     }
@@ -159,6 +162,31 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
     public toggleDefaultLayer(layer: ImageDocument) {
 
         this.layerManager.toggleDefaultLayer(layer);
+    }
+
+
+    public isDownloadImagesButtonVisible(group: LayerGroup): boolean {
+
+        return this.imageToolLauncher.isDownloadPossible(group.layers);
+    }
+
+
+    public async downloadImages(group: LayerGroup) {
+
+        await this.imageToolLauncher.downloadImages(group.layers);
+        this.onImagesDownloaded.emit();
+    }
+
+
+    public getDownloadTooltip(group: LayerGroup) {
+
+        const sizeLabel: string = this.imageToolLauncher.getDownloadSizeLabel(group.layers);
+        
+        const baseTooltip: string = group.layers.length === 1
+            ? $localize `:@@images.download.tooltip.single:Originalbild herunterladen`
+            : $localize `:@@images.download.tooltip.multiple:Originalbilder herunterladen`;
+
+        return baseTooltip + ' (' + sizeLabel + ')';
     }
 
 

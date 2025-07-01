@@ -4,7 +4,7 @@ import { AppConfigurator, ChangesStream, ConfigLoader, ConfigReader, createDocum
     ImageSyncService, Indexer } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
-import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/image-overview-facade';
 import { ImagesState } from '../../../src/app/components/image/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../src/app/components/import/import/utils';
 import { ImageRelationsManager } from '../../../src/app/services/image-relations-manager';
@@ -122,7 +122,8 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         settingsService,
         projectConfiguration,
         settingsProvider,
-        imageStore
+        imageStore,
+        remoteImageStore
     } = await setupSettingsService(pouchdbDatastore, projectIdentifier);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
@@ -218,7 +219,17 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
 
     const imagesState = new ImagesState(projectConfiguration, stateSerializer);
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, datastore);
-    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
+
+    const imageToolLauncher: any = {
+        update: jest.fn()
+    };
+
+    const imageOverviewFacade = new ImageOverviewFacade(
+        imageDocumentsManager,
+        imagesState,
+        projectConfiguration,
+        imageToolLauncher
+    );
 
     return {
         remoteChangesStream,

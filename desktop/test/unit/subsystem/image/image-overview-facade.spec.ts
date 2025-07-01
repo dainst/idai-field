@@ -1,5 +1,5 @@
 import { fieldDoc } from 'idai-field-core';
-import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../../../../src/app/components/image/overview/view/image-overview-facade';
 import { cleanUp, createApp } from '../subsystem-helper';
 
 

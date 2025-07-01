@@ -111,7 +111,7 @@ export class Routing {
 
     private async jumpToFieldCategoryResource(documentToSelect: Document, fromLink: boolean) {
 
-        const viewName: 'project'|'types'|'inventory'|string = this.getViewName(documentToSelect);
+        const viewName: 'project'|'types'|'inventory'|'workflow'|string = this.getViewName(documentToSelect);
 
         if (!this.router.url.startsWith('/resources/') || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);

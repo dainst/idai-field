@@ -217,7 +217,7 @@ export class RowComponent implements AfterViewInit {
     private async save() {
 
         if (!this.hasMandatoryValues()) {
-            if (!this.isNewResource()) await this.restoreIdentifier(this.document);
+            if (!this.isNewResource()) await this.restorePreviousVersion();
             return;
         }
 
@@ -225,7 +225,7 @@ export class RowComponent implements AfterViewInit {
             await this.validator.assertIdentifierIsUnique(this.document);
         } catch(msgWithParams) {
             this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration, this.labels));
-            if (!this.isNewResource()) await this.restoreIdentifier(this.document);
+            if (!this.isNewResource()) await this.restorePreviousVersion();
             this.changeDetectorRef.detectChanges();
             return;
         }
@@ -252,12 +252,12 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    private async restoreIdentifier(document: FieldDocument): Promise<any> {
+    private async restorePreviousVersion(): Promise<any> {
 
         try {
             Object.assign(
                 this.document,
-                await this.datastore.get(document.resource.id as any, { skipCache: true })
+                await this.datastore.get(this.document.resource.id as any, { skipCache: true })
             );
         } catch(_) {
             this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);

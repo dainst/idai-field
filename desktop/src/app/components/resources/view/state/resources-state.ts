@@ -24,7 +24,6 @@ export interface ResourcesState { // 'the' resources state
 
 export module ResourcesState {
 
-
     export function getQueryString(state: ResourcesState) {
 
         return getViewState(state).bypassHierarchy

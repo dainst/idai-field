@@ -113,7 +113,7 @@ export class NavbarComponent implements DoCheck {
         } else if (this.activeRoute.startsWith('/resources/inventory')) {
             return $localize `:@@navbar.tabs.inventory:Inventarisierung`;
         } else if (this.activeRoute.startsWith('/resources/workflow')) {
-            return $localize `:@@navbar.tabs.workflow:Arbeitsgang-Verwaltung`;
+            return $localize `:@@navbar.tabs.workflow:Arbeitsgangverwaltung`;
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
         } else if (this.activeRoute.startsWith('/downloadProject')) {

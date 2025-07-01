@@ -224,7 +224,8 @@ export module ResourcesState {
                 limitSearchResults: true,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
-                customConstraints: {}
+                customConstraints: {},
+                sortMode: SortMode.DateDescending
             },
             operationViewStates: {
                 't1': {

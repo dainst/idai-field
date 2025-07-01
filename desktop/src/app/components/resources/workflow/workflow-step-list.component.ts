@@ -120,6 +120,7 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
 
     public async deleteWorkflowStep(workflowStep: WorkflowStepDocument) {
 
+        const context: MenuContext = this.menus.getContext();
         this.menus.setContext(MenuContext.DOCEDIT);
 
         const modalRef: NgbModalRef = this.modalService.open(
@@ -136,7 +137,7 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
             if (err !== 'cancel') console.error(err);
         } finally {
             AngularUtility.blurActiveElement();
-            this.menus.setContext(MenuContext.WORKFLOW_EDITOR);
+            this.menus.setContext(context);
         }
     }
 

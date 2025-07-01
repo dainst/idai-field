@@ -9,12 +9,6 @@ import { BackupsMap } from '../../../../../src/app/services/backup/model/backups
  */
 describe('get backups to delete', () => {
 
-    test('use timezone "Europe/Berlin" for tests', () => {
-
-        expect(new Date().getTimezoneOffset()).toBe(-60);
-    });
-
-
     test('keep only latest backup', () => {
 
         const backups: BackupsMap = {

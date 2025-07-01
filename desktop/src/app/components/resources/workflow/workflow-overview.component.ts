@@ -54,11 +54,7 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
 
     public async onChanged(editedWorkflowStep?: WorkflowStepDocument) {
 
-        if (editedWorkflowStep) {
-            this.selectedDocument = editedWorkflowStep;
-            this.scrollTo(this.selectedDocument);
-        }
-
+        if (editedWorkflowStep) this.scrollTo(editedWorkflowStep);
         await this.viewFacade.populateDocumentList();
     }
 

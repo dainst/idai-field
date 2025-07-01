@@ -452,7 +452,6 @@ describe('get backups to delete', () => {
         };
 
         const result: Array<Backup> = getBackupsToDelete(backups, recentlyCreatedBackups, settings);
-        console.log(result);
         expect(result.length).toBe(4);
         expect(result[0].filePath).toBe('file1.jsonl');
         expect(result[1].filePath).toBe('file2.jsonl');

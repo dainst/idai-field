@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { MenuContext } from '../../../services/menu-context';
 import { Map } from 'tsfun';
 import { Document, RelationsManager, Resource, Labels, ProjectConfiguration, DateSpecification, WorkflowStepDocument,
-    Datastore, SortMode } from 'idai-field-core';
+    Datastore, SortMode, ChangesStream } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { Settings } from '../../../services/settings/settings';
@@ -22,7 +23,7 @@ import { Menus } from '../../../services/menus';
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepListComponent implements OnChanges {
+export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() workflowSteps: Array<WorkflowStepDocument>;
     @Input() sortMode: SortMode;
@@ -37,6 +38,7 @@ export class WorkflowStepListComponent implements OnChanges {
 
     private relationTargets: Map<Map<Array<Document>>> = {};
     private dateLabels: Map<string> = {};
+    private changesSubscription: Subscription;
 
 
     constructor(private menus: Menus,
@@ -45,7 +47,8 @@ export class WorkflowStepListComponent implements OnChanges {
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
                 private utilTranslations: UtilTranslations,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private changesStream: ChangesStream) {}
 
 
     public getCategoryLabel = (workflowStep: WorkflowStepDocument) =>
@@ -57,6 +60,22 @@ export class WorkflowStepListComponent implements OnChanges {
     public getDateLabel = (workflowStep: Document) => this.dateLabels[workflowStep.resource.id];
 
     public trackWorkflowStep = (_: number, workflowStep: WorkflowStepDocument) => workflowStep.resource.id;
+
+
+    ngOnInit() {
+        
+        this.changesSubscription = this.changesStream.changesNotifications().subscribe(async document => {
+            if (this.workflowSteps.find(workflowStep => workflowStep.resource.id === document.resource.id)) {
+                await this.updateListEntry(document as WorkflowStepDocument);
+            }
+        })
+    }
+
+
+    ngOnDestroy() {
+        
+        this.changesSubscription.unsubscribe();
+    }
 
 
     async ngOnChanges() {

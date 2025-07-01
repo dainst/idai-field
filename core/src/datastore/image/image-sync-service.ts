@@ -31,6 +31,7 @@ export class ImageSyncService {
     };
     private inProcess: { [variant in ImageVariant]?: boolean } = {};
 
+
     constructor(private imageStore: ImageStore,
                 private remoteImageStore: RemoteImageStoreInterface,
                 datastore: PouchdbDatastore) {
@@ -52,6 +53,7 @@ export class ImageSyncService {
      public startSync(preference: FileSyncPreference) {
 
         console.log(`Starting sync for ${preference.variant}.`);
+
         if (!this.isVariantSyncActive(preference.variant)) {
             this.active.push(preference);
         }
@@ -259,6 +261,6 @@ export class ImageSyncService {
 
     private isVariantSyncActive(variant: ImageVariant) {
 
-        return this.active.find(val => val.variant === variant)
+        return this.active.find(val => val.variant === variant);
     }
 }

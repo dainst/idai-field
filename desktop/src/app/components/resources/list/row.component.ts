@@ -173,6 +173,12 @@ export class RowComponent implements AfterViewInit {
     }
 
 
+    public isShortDescriptionMandatory(): boolean {
+
+        return CategoryForm.getField(this.category, FieldResource.SHORTDESCRIPTION)?.mandatory;
+    }
+
+
     private setValue(fieldName: string, newValue: string) {
 
         const currentValue: any = this.document.resource[fieldName];
@@ -283,11 +289,5 @@ export class RowComponent implements AfterViewInit {
 
         return !this.selectedLanguage
             || (this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE && this.availableLanguages.length === 1);
-    }
-
-
-    private isShortDescriptionMandatory(): boolean {
-
-        return CategoryForm.getField(this.category, FieldResource.SHORTDESCRIPTION)?.mandatory;
     }
 }

@@ -76,6 +76,7 @@
         <searchable-select [selectedValue]="getSelectedShortDescriptionValue()"
                            [values]="shortDescriptionValues"
                            [getLabel]="getValueLabel"
+                           [clearable]="!isShortDescriptionMandatory()"
                            customPanelClass="row-select-panel"
                            (onValueSelected)="onShortDescriptionValueChanged($event)"
                            (dblclick)="$event.stopPropagation();"></searchable-select>

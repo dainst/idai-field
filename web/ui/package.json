@@ -39,7 +39,7 @@
     "react-leaflet": "^2.8.0",
     "react-markdown": "^7.0.1",
     "react-modal": "^3.12.1",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^7.5.2",
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.1",
     "rehype-raw": "^6.1.0",

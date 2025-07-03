@@ -170,6 +170,9 @@ export class GridListComponent extends BaseList implements OnChanges {
             case 'edit-qr-code':
                 await this.resourcesComponent.editQRCode(document);
                 break;
+            case 'edit-workflow':
+                await this.resourcesComponent.editWorkflow([document]);
+                break;
             case 'warnings':
                 await this.warningsService.openModal(document);
                 break;

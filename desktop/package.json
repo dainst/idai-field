@@ -61,7 +61,7 @@
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
       "mergeASARs": false,
-      "x64ArchFiles": "**/node_modules/@img/*"
+      "x64ArchFiles": "*"
     },
     "win": {
       "target": "zip",

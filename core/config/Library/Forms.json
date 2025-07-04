@@ -1822,7 +1822,11 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "state", "date"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "state", "date"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "notes"]
         }
       ]
     }

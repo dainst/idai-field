@@ -111,7 +111,8 @@ export class CreateWorkflowStepModalComponent {
     private getSelectedSupercategories(selectedCategories: string[]): string[] {
 
         return selectedCategories.filter(categoryName => {
-            return this.selectableCategories.find(category => category.name === categoryName);
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            return (!category.parentCategory || !selectedCategories.includes(category.parentCategory.name));
         });
     }
 }

@@ -94,10 +94,8 @@ export class CreateWorkflowStepModalComponent {
 
     private getSelectableCategories(): Array<CategoryForm> {
 
-        return this.clonedProjectConfiguration.getTopLevelCategories().filter(category => {
-            return !['Project', 'TypeCatalog', 'Type', 'StoragePlace', 'WorkflowStep', 'Image']
-                .includes(category.name);
-        });
+        return this.clonedProjectConfiguration.getTopLevelCategories()
+            .filter(category => category.name !== 'Project');
     }
 
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, ProjectConfiguration, Relation, SortUtil } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, Groups, ProjectConfiguration, Relation, SortUtil } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -148,10 +148,12 @@ export class AddCategoryFormModalComponent {
 
     private async addWorkflowRelations(category: CategoryForm) {
 
+        category.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [] });
+
         const result: Map<string[]> = await this.openCreateWorkflowStepModal(category);
         for (let relationName of Object.keys(result)) {
             if (!result[relationName].length) continue;
-            category.groups[0].fields.push({
+            category.groups[1].fields.push({
                 name: relationName,
                 inputType: Field.InputType.RELATION,
                 range: result[relationName]

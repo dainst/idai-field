@@ -61,6 +61,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED;
         if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_SET) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET;
         if (msg === ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE;
+        if (msg === ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS;
 
         if (msg === ImportErrors.INVALID_CATEGORY) replacement = M.IMPORT_VALIDATION_INVALID_CATEGORY;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;

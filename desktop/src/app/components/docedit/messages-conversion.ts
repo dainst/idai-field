@@ -1,4 +1,4 @@
-import { DatastoreErrors, Name, ProjectConfiguration, Labels } from 'idai-field-core';
+import { DatastoreErrors, Name, ProjectConfiguration, Labels, Relation } from 'idai-field-core';
 import { ValidationErrors } from '../../model/validation-errors';
 import { M } from '../messages/m';
 import { MsgWithParams } from '../messages/msg-with-params';
@@ -140,6 +140,16 @@ export module MessagesConversion {
         if (msg === ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE) {
             msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE;
             msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+        }
+
+        if (msg === ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS;
+            msgWithParams[1] = labels.getRelationLabel(
+                Relation.Workflow.IS_EXECUTED_ON, projectConfiguration.getRelations()
+            );
+            msgWithParams[2] = labels.getRelationLabel(
+                Relation.Workflow.RESULTS_IN, projectConfiguration.getRelations()
+            );
         }
 
         return msgWithParams;

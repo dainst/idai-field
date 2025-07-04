@@ -113,6 +113,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUES = 'M.Import.ValidationErrors.invalidCompositeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidMapLayerRelationTargets';
+    public static IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidWorkflowRelationTargets';
     public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
     public static IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED = 'M.Import.ValidationErrors.resourceLimitExceeded';
 
@@ -198,6 +199,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'docedit.validation.error.invalidDimensionValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS = 'docedit.validation.error.invalidDecimalSeparators';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS = 'docedit.validation.error.invalidWorkflowRelationTargets';
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTIES = 'docedit.validation.error.missingProperties';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
@@ -697,6 +699,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.validation.error.invalidMapLayerRelationTargets:Die Relation \'hasDefaultMapLayer\' einer Ressource der Kategorie \'[0]\' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation \'hasMapLayer\' verwiesen wird.`,
             level: 'danger'
         };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS] = {
+            content: $localize `:@@messages.import.validation.error.invalidWorkflowRelationTargets:Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation \'isExecutedOn\' als auch der Relation \'resultsIn\' angegeben werden.`,
+            level: 'danger'
+        };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
             content: $localize `:@@messages.import.validation.error.missingProperty:Folgende Felder einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.`,
             level: 'danger'
@@ -911,6 +917,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS] = {
             content: $localize `:@@messages.docedit.validation.error.invalidDecimalSeparators:Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidWorkflowRelationTargets:Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation \'[0]\' als auch der Relation \'[1]\' an.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY] = {

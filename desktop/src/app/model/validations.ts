@@ -1,4 +1,4 @@
-import { is, isArray, isString, and, isObject, to, equal } from 'tsfun';
+import { is, isArray, isString, and, isObject, to, equal, intersect } from 'tsfun';
 import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, validateUrl, validateInt, Composite,  DateSpecification,
@@ -296,6 +296,17 @@ export module Validations {
                 ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES,
                 document.resource.category
             ];
+        }
+    }
+
+
+    export function assertWorkflowRelations(document: Document|NewDocument) {
+
+        const executedOnTargetIds: string[] = document.resource.relations[Relation.Workflow.IS_EXECUTED_ON] ?? [];
+        const resultsInTargetIds: string[] = document.resource.relations[Relation.Workflow.RESULTS_IN] ?? [];
+
+        if (intersect(executedOnTargetIds)(resultsInTargetIds).length) {
+            throw [ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS];
         }
     }
 

@@ -85,6 +85,16 @@ describe('ImportValidator', () => {
                 name: 'T5',
                 resourceLimit: 3
         }, []
+        ],
+            [ {
+                name: 'T6',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'category' },
+                    { name: 'isExecutedOn' },
+                    { name: 'resultsIn' }
+                ]}]
+        }, []
         ]] as any),
         categories: {},
         relations: [
@@ -119,6 +129,24 @@ describe('ImportValidator', () => {
                 name: 'hasDefaultMapLayer',
                 domain: ['T'],
                 range: ['T2'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'isExecutedOn',
+                domain: ['T5'],
+                range: ['T'],
+                inverse: 'NO-INVERSE',
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            },
+            {
+                name: 'resultsIn',
+                domain: ['T5'],
+                range: ['T'],
                 inverse: 'NO-INVERSE',
                 editable: false,
                 visible: false,
@@ -565,6 +593,25 @@ describe('ImportValidator', () => {
             throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES, 'T']);
+        }
+    });
+
+
+    test('invalid workflow relations', async () => {
+        
+        const document1 = {
+            resource: {
+                id: '1', identifier: 'A', category: 'T6', relations: { isExecutedOn: ['1', '2'], resultsIn: ['2', '3'] }
+            }
+        };
+
+        const validator: ImportValidator = new ImportValidator(projectConfiguration, undefined);
+
+        try {
+            await validator.assertIsWellformed(document1);
+            throw new Error('Test failure');
+        } catch (expected) {
+            expect(expected).toEqual([ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS]);
         }
     });
 

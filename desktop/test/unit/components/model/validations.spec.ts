@@ -1124,4 +1124,23 @@ describe('Validations', () => {
         expect(Validations.validateConditionalFields(document.resource as any, projectConfiguration))
             .toEqual(['conditional']);
     });
+
+
+    test('should report invalid workflow relations', async () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'A',
+                relations: { isExecutedOn: ['1', '2'], resultsIn: ['2', '3'] }
+            }
+        };
+
+        try {
+            Validations.assertWorkflowRelations(document as any);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS]);
+        }
+    });
 });

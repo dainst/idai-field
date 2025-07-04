@@ -142,7 +142,7 @@ export class AddFieldModalComponent {
             defaultDescription: template?.defaultDescription ?? {},
             editable: true,
             visible: true,
-            source: template?.name === Relation.Workflow.RESULTS_IN ? 'common' : 'custom'
+            source: Relation.Workflow.ALL.includes(template?.name) ? 'common' : 'custom'
         };
         componentInstance.groupName = this.groupName;
         componentInstance.availableInputTypes = this.availableInputTypes;

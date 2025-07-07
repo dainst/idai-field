@@ -19,7 +19,7 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
                                 relations: Array<Relation>, parentForm?: CustomFormDefinition,
                                 extendedForm?: TransientFormDefinition): TransientFormDefinition {
 
-    const fieldNames: string[] = getFieldNames(form, categories, extendedForm);
+    const fieldNames: string[] = getFieldNames(form, categories, parentForm, extendedForm);
 
     const clonedForm: TransientFormDefinition = clone(form);
     if (extendedForm) Object.assign(clonedForm.fields, extendedForm.fields);
@@ -47,17 +47,11 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
 
 
 function getFieldNames(form: TransientFormDefinition, categories: Map<TransientCategoryDefinition>,
-                       extendedForm?: TransientFormDefinition): string[] {
+                       parentForm?: CustomFormDefinition, extendedForm?: TransientFormDefinition): string[] {
 
     if (!form.groups) return [];
 
     const minimalForm: BuiltInFormDefinition|undefined = categories[form.categoryName]?.minimalForm;
-
-    const parentForm: BuiltInFormDefinition|undefined = categories[form.categoryName]?.parent
-        ? categories[categories[form.categoryName].parent].minimalForm
-        : form.parent
-            ? categories[form.parent].minimalForm
-            : undefined;
 
     return set(
         flatten(form.groups.map(to('fields')))

@@ -4,7 +4,7 @@ import { ConfigurationResource } from './configuration-resource';
 import { CategoryForm } from '../configuration/category-form';
 import { CustomFormDefinition } from '../../configuration/model/form/custom-form-definition';
 import { CustomLanguageConfigurations } from '../configuration/custom-language-configurations';
-import { Group } from '../configuration/group';
+import { Group, GroupDefinition, Groups } from '../configuration/group';
 import { Field } from '../configuration/field';
 import { Resource } from './resource';
 import { FieldResource } from './field-resource';
@@ -15,6 +15,7 @@ import { getConfigurationName } from '../../configuration/project-configuration-
 import { sampleDataLabels } from '../../datastore/sampledata/sample-data-labels';
 import { ScanCodeConfiguration } from '../configuration/scan-code-configuration';
 import { ConfigurationMigrator } from '../../configuration/configuration-migrator';
+import { Relation } from '../configuration/relation';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -191,12 +192,32 @@ export namespace ConfigurationDocument {
                 fields: {},
                 hidden: []
             };
+
             if (form.source === 'custom' && form.parentCategory) {
                 formDefinition.parent = form.parentCategory.name;
                 formDefinition.groups = CategoryForm.getGroupsConfiguration(
                     newForm, getPermanentlyHiddenFields(newForm)
                 );
+
+                const currentCategoryDefinition: CustomFormDefinition = getCustomCategoryDefinition(
+                    configurationDocument, form
+                );
+
+                for (let relationName of Relation.Workflow.ALL) {
+                    if (currentCategoryDefinition.fields[relationName]) {
+                        formDefinition.fields[relationName] = currentCategoryDefinition.fields[relationName];
+                        const workflowGroup: GroupDefinition = formDefinition.groups.find(group => {
+                            return group.name === Groups.WORKFLOW;
+                        });
+                        if (!workflowGroup) {
+                            formDefinition.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [relationName] });
+                        } else {
+                            workflowGroup.fields.push(relationName);
+                        }
+                    }
+                }
             }
+
             clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;
         });
 

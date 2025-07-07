@@ -2048,9 +2048,10 @@ describe('buildRawProjectConfiguration', () => {
             customForms
         );
 
-        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
-        expect(result['A'].groups[1].fields[0].inputType).toBe('boolean');
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
+        expect(result['A'].groups[1].name).toBe(Groups.OTHER);
+        expect(result['A'].groups[0].fields[0].name).toBe('field1');
+        expect(result['A'].groups[1].fields[0].name).toBe('field2');
     });
 
 

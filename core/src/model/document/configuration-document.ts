@@ -222,6 +222,24 @@ export namespace ConfigurationDocument {
         
         if (parentForm) addCustomParentFields(categoryForm, parentForm, clonedConfigurationDocument);
 
+        if (categoryForm.parentCategory?.name === 'WorkflowStep') {
+            for (let relationName of Relation.Workflow.ALL) {
+                const relation: Relation = CategoryForm.getField(categoryForm, relationName) as Relation;
+                if (!relation) continue;
+                clonedConfigurationDocument.resource.forms[categoryForm.libraryId].fields[relationName] = {
+                    inputType: Field.InputType.RELATION,
+                    range: relation.range
+                };
+                addFieldToGroup(
+                    clonedConfigurationDocument,
+                    categoryForm,
+                    getPermanentlyHiddenFields(categoryForm),
+                    Groups.WORKFLOW,
+                    relationName
+                );
+            }
+        }
+
         return addToCategoriesOrder(
             clonedConfigurationDocument, categoryForm.name, categoryForm.parentCategory?.name
         );

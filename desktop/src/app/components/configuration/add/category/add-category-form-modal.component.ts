@@ -74,7 +74,7 @@ export class AddCategoryFormModalComponent {
     }
 
 
-    public confirmSelection() {
+    public async confirmSelection() {
 
         if (!this.selectedForm) return;
 
@@ -82,6 +82,7 @@ export class AddCategoryFormModalComponent {
                 this.configurationDocument, this.categoryFormToReplace, true)) {
             this.showSwapConfirmationModal();
         } else {
+            if (this.parentCategory?.name === 'WorkflowStep') await this.addWorkflowRelations(this.selectedForm);
             this.addSelectedCategory();
         }
     }

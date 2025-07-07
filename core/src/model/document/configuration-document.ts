@@ -198,24 +198,7 @@ export namespace ConfigurationDocument {
                 formDefinition.groups = CategoryForm.getGroupsConfiguration(
                     newForm, getPermanentlyHiddenFields(newForm)
                 );
-
-                const currentCategoryDefinition: CustomFormDefinition = getCustomCategoryDefinition(
-                    configurationDocument, form
-                );
-
-                for (let relationName of Relation.Workflow.ALL) {
-                    if (currentCategoryDefinition.fields[relationName]) {
-                        formDefinition.fields[relationName] = currentCategoryDefinition.fields[relationName];
-                        const workflowGroup: GroupDefinition = formDefinition.groups.find(group => {
-                            return group.name === Groups.WORKFLOW;
-                        });
-                        if (!workflowGroup) {
-                            formDefinition.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [relationName] });
-                        } else {
-                            workflowGroup.fields.push(relationName);
-                        }
-                    }
-                }
+                addWorkflowRelations(configurationDocument, form, formDefinition);
             }
 
             clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;
@@ -370,6 +353,29 @@ export namespace ConfigurationDocument {
                     configurationDocument.resource.languages, {}, {}, category, field, subfield
                 );
             });
+        }
+    }
+
+
+    function addWorkflowRelations(configurationDocument: ConfigurationDocument, form: CategoryForm,
+                                  formDefinition: CustomFormDefinition) {
+
+        const currentCategoryDefinition: CustomFormDefinition = getCustomCategoryDefinition(
+            configurationDocument, form
+        );
+
+        for (let relationName of Relation.Workflow.ALL) {
+            if (currentCategoryDefinition.fields[relationName]) {
+                formDefinition.fields[relationName] = currentCategoryDefinition.fields[relationName];
+                const workflowGroup: GroupDefinition = formDefinition.groups.find(group => {
+                    return group.name === Groups.WORKFLOW;
+                });
+                if (!workflowGroup) {
+                    formDefinition.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [relationName] });
+                } else {
+                    workflowGroup.fields.push(relationName);
+                }
+            }
         }
     }
 }

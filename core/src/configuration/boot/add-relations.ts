@@ -3,14 +3,13 @@ import { Relation } from '../../model/configuration/relation';
 import { TransientFormDefinition } from '../model/form/transient-form-definition';
 import { Field } from '../../model/configuration/field';
 import { getParentForm } from './get-parent-form';
-import { CustomFormDefinition } from '../model/form/custom-form-definition';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function addRelations(builtInRelations: Array<Relation>, customForms?:  Map<CustomFormDefinition>) {
+export function addRelations(builtInRelations: Array<Relation>) {
 
     return (configuration: [Map<TransientFormDefinition>, Array<Relation>]) => {
 

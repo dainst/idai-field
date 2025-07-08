@@ -89,7 +89,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
         cond(isDefined(customForms), hideFields),
         applyLanguagesToForms(languageConfigurations, categories, selectedForms),
         prepareRawProjectConfiguration,
-        addRelations(relationDefinitions, customForms),
+        addRelations(relationDefinitions),
         applyLanguagesToRelationFields(languageConfigurations),
         removeCustomRelationFields,
         processForms(

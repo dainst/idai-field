@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, equal, intersection, isArray, isEmpty, Map, set, subsetOf, to } from 'tsfun';
+import { clone, equal, intersection, isArray, isEmpty, Map, sameset, set, subsetOf, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
     CustomFieldDefinition, DateConfiguration, Condition, Relation } from 'idai-field-core';
@@ -358,7 +358,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isConditionChanged()
             || this.isDateConfigurationChanged()
             || this.isSubfieldsChanged()
-            || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
+            || !sameset(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
             || this.getCustomFieldDefinition()?.inverse !== this.inverseRelation
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))

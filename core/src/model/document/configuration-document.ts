@@ -193,12 +193,20 @@ export namespace ConfigurationDocument {
                 hidden: []
             };
 
-            if (form.source === 'custom' && form.parentCategory) {
-                formDefinition.parent = form.parentCategory.name;
-                formDefinition.groups = CategoryForm.getGroupsConfiguration(
-                    newForm, getPermanentlyHiddenFields(newForm)
-                );
-                addWorkflowRelations(configurationDocument, form, formDefinition);
+            if (form.parentCategory) {
+                if (form.source === 'custom') formDefinition.parent = form.parentCategory.name;
+                if (form.source === 'custom' || form.parentCategory.name === 'WorkflowStep') {
+                    formDefinition.groups = CategoryForm.getGroupsConfiguration(
+                        newForm, getPermanentlyHiddenFields(newForm)
+                    );
+                }
+                if (form.parentCategory.name === 'WorkflowStep') {
+                    addWorkflowRelations(
+                        configurationDocument,
+                        form.name === currentForm.name ? currentForm : form,
+                        formDefinition
+                    );
+                }
             }
 
             clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;

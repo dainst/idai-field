@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map } from 'tsfun';
+import { flatten, Map, set } from 'tsfun';
 import { CategoryForm, Field, Labels, ProjectConfiguration } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 
@@ -19,12 +19,9 @@ export class CreateWorkflowStepModalComponent {
 
     public category: CategoryForm;
     public clonedProjectConfiguration: ProjectConfiguration;
+    public selectedCategories: Map<string[]>;
 
-    public selectableCategories: Array<CategoryForm>;
-    public selectedCategories: Map<string[]> = {
-        isExecutedOn: [],
-        resultsIn: []
-    };
+    public selectableSupercategories: Array<CategoryForm>;
     public isExecutedOnSelected: boolean = false;
 
 
@@ -41,7 +38,8 @@ export class CreateWorkflowStepModalComponent {
     
     public initialize() {
 
-        this.selectableCategories = this.getSelectableCategories();
+        this.selectableSupercategories = this.getSelectableSupercategories();
+        this.initializeSelectedCategories();
     }
 
 
@@ -92,7 +90,7 @@ export class CreateWorkflowStepModalComponent {
     }
 
 
-    private getSelectableCategories(): Array<CategoryForm> {
+    private getSelectableSupercategories(): Array<CategoryForm> {
 
         return this.clonedProjectConfiguration.getTopLevelCategories()
             .filter(category => !['Project', 'WorkflowStep'].includes(category.name));
@@ -114,5 +112,43 @@ export class CreateWorkflowStepModalComponent {
             const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
             return (!category.parentCategory || !selectedCategories.includes(category.parentCategory.name));
         });
+    }
+
+
+    private initializeSelectedCategories() {
+
+        if (this.selectedCategories) {
+            for (let [relationName, categories] of Object.entries(this.selectedCategories)) {
+                categories = this.removeUnselectableCategories(categories);
+                this.selectedCategories[relationName] = this.addSubcategories(categories);
+            }
+        } else {
+            this.selectedCategories = {
+                isExecutedOn: [],
+                resultsIn: []
+            };
+        }
+    }
+
+
+    private removeUnselectableCategories(categoryNames: string[]): string[] {
+
+        const selectableCategoryNames: string[] = this.selectableSupercategories.map(category => category.name);
+        return categoryNames.filter(categoryName => {
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            return selectableCategoryNames.includes(category?.parentCategory?.name ?? categoryName);
+        });
+    }
+
+
+    private addSubcategories(categoryNames: string[]): string[] {
+
+        const subcategoryNames: string[] = flatten(
+            categoryNames.map(category => {
+                return this.clonedProjectConfiguration.getCategory(category)?.children.map(child => child.name);
+            })
+        );
+
+        return set(categoryNames.concat(subcategoryNames));
     }
 }

@@ -174,6 +174,7 @@ export class AddCategoryFormModalComponent {
 
         componentInstance.category = category;
         componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
+        componentInstance.selectedCategories = category.defaultRange;
         componentInstance.initialize();
 
         return new Promise(resolve => {

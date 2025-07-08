@@ -47,6 +47,8 @@ export interface CategoryForm {
     identifierPrefix?: string;
     resourceLimit?: number;
     scanCodes?: ScanCodeConfiguration;
+
+    defaultRange?: { [relationName: string]: string[] };
 }
 
 

@@ -34,6 +34,7 @@ function mergeCategories(builtInCategory: BuiltInCategoryDefinition,
     
     result.description = libraryCategory.description;
     result.color = libraryCategory.color;
+    result.defaultRange = libraryCategory.defaultRange;
     if (libraryCategory.minimalForm) result.minimalForm = libraryCategory.minimalForm as TransientFormDefinition;
     if (libraryCategory.fields) {
         result.fields = mergeFields(builtInCategory.fields, libraryCategory.fields);

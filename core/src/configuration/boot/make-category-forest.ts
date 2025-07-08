@@ -186,6 +186,7 @@ function buildCategoryFromDefinition(formDefinition: TransientFormDefinition,
     category.isAbstract = categoryDefinition?.abstract || false;
     category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
     category.scanCodesAllowed = categoryDefinition?.scanCodesAllowed || false;
+    category.defaultRange = categoryDefinition?.defaultRange;
     category.required = categoryDefinition?.required || false;
 
     category.libraryId = formDefinition.name;

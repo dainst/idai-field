@@ -3,7 +3,7 @@ import { Warnings } from '../../src/model/document/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 import { CategoryForm } from '../../src/model/configuration/category-form';
-import { DateConfiguration } from '../../src/model';
+import { DateConfiguration } from '../../src/model/configuration/date-configuration';
 
 
 const createDocument = (id: string, category: string = 'Category') => doc('sd', 'identifier' + id, category, id);

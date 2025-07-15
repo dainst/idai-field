@@ -1154,7 +1154,6 @@
       }
     },
     "ProcessUnit": {
-      "label": "",
       "fields": {
         "operationClassification": {
           "label": ""

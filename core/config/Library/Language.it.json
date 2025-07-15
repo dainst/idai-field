@@ -1157,7 +1157,6 @@
       }
     },
     "ProcessUnit": {
-      "label": "Operazione",
       "fields": {
         "operationClassification": {
           "label": "Classificazione dell'operazione"

@@ -1082,7 +1082,6 @@
       }
     },
     "ProcessUnit": {
-      "label": "Process unit",
       "fields": {
         "operationClassification": {
           "label": "Operation classification"

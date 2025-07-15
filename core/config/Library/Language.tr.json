@@ -1157,7 +1157,6 @@
       }
     },
     "ProcessUnit": {
-      "label": "Operasyon",
       "fields": {
         "operationClassification": {
           "label": "Operasyon sınıflandırması"

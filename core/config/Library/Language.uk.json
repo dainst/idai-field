@@ -1157,7 +1157,6 @@
       }
     },
     "ProcessUnit": {
-      "label": "Робочий захід",
       "fields": {
         "operationClassification": {
           "label": "Класифікація заходу"

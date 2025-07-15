@@ -6248,8 +6248,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.backups.path.info" datatype="html">
-        <source> Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden. </source>
-        <target state="final"> Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden. </target>
+        <source> Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projektdatenbanken. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden. </source>
+        <target state="final"> Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projektdatenbanken. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">166,170</context>

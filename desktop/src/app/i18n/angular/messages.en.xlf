@@ -9504,7 +9504,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.single" datatype="html">
         <source>Originalbild wird geladen...</source>
-        <target state="needs-translation">Originalbild wird geladen...</target>
+        <target state="translated">Loading original image...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">12</context>
@@ -9512,7 +9512,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> original images loaded... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">14,16</context>
@@ -9520,7 +9520,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField.notAllowedForRequiredField" datatype="html">
         <source>Dieses Feld ist grundsätzlich ein Pflichtfeld.</source>
-        <target state="needs-translation">Dieses Feld ist grundsätzlich ein Pflichtfeld.</target>
+        <target state="translated">This field is always mandatory.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">277</context>
@@ -9528,7 +9528,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField.notAllowedForInputType" datatype="html">
         <source>Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.</source>
-        <target state="needs-translation">Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.</target>
+        <target state="translated">Fields of this input type cannot be configured as mandatory fields.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">279</context>

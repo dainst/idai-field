@@ -51,5 +51,6 @@
   "info.close": "Close",
   "menu.tools.inventory": "Inventory",
   "menu.configuration.exportConfiguration": "Export configuration...",
-  "autoUpdate.available.warning": "Attention: Please create a backup of all important projects before starting the update process."
+  "autoUpdate.available.warning": "Attention: Please create a backup of all important projects before starting the update process.",
+  "menu.tools.workflow": "Workflow"
 }

@@ -1156,13 +1156,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "fields": {
-        "operationClassification": {
-          "label": "Класифікація заходу"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Теракотовий",
       "fields": {

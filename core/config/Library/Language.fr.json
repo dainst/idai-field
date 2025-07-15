@@ -879,13 +879,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "fields": {
-        "operationClassification": {
-          "label": "Classification de l'opération"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Terracotta",
       "fields": {

@@ -1153,13 +1153,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "fields": {
-        "operationClassification": {
-          "label": ""
-        }
-      }
-    },
     "Terracotta": {
       "label": "",
       "fields": {

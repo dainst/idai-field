@@ -1156,13 +1156,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "fields": {
-        "operationClassification": {
-          "label": "Operasyon sınıflandırması"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Terrakotta",
       "fields": {

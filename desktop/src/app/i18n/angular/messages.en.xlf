@@ -9362,7 +9362,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidProcessState" datatype="html">
         <source>Der für diesen Prozess angegebene Status <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> widerspricht dem eingetragenen Datum <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </source>
-        <target state="needs-translation">Der für diesen Prozess angegebene Status <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> widerspricht dem eingetragenen Datum <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </target>
+        <target state="translated">The state <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> specified for this process contradicts the entered date <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">230,233</context>
@@ -9370,7 +9370,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.export" datatype="html">
         <source>Exportieren</source>
-        <target state="needs-translation">Exportieren</target>
+        <target state="translated">Export</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.html</context>
           <context context-type="linenumber">36</context>
@@ -9378,7 +9378,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.plusButton.multiple.header" datatype="html">
         <source>Bitte wählen Sie die Anzahl der zu erstellenden Prozesse.</source>
-        <target state="needs-translation">Bitte wählen Sie die Anzahl der zu erstellenden Prozesse.</target>
+        <target state="translated">Please select the number of processes to be created.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/plus-button/process-plus-button.html</context>
           <context context-type="linenumber">36,38</context>
@@ -9386,7 +9386,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.question" datatype="html">
         <source>Möchten Sie den Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie den Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <target state="translated">Do you really want to delete the process <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">6,8</context>
@@ -9394,7 +9394,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.path.info" datatype="html">
         <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
-        <target state="needs-translation">Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</target>
+        <target state="translated">Field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">166,170</context>
@@ -9518,7 +9518,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.multipleValues.info" datatype="html">
         <source>Bitte wählen Sie die korrekten Werte aus der Werteliste aus.</source>
-        <target state="needs-translation">Bitte wählen Sie die korrekten Werte aus der Werteliste aus.</target>
+        <target state="translated">Please select the correct values from the valuelist.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -9526,7 +9526,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.singleValue.info" datatype="html">
         <source>Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</source>
-        <target state="needs-translation">Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</target>
+        <target state="translated">Please select the correct value from the valuelist.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">22,24</context>
@@ -9534,7 +9534,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.allSingleValue.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValues[0])}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValues[0])}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </target>
+        <target state="translated">Please note: This action replaces the value <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> not contained in the valuelist in all fields of all <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> resources with the selected value <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValues[0])}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">59,61</context>
@@ -9542,7 +9542,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.allMultipleValues.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte <x id="START_BLOCK_FOR" equiv-text="@for (value of selectedValues; track value; let isLast = $last) {"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_2" equiv-text="e)}}"/><x id="START_BLOCK_IF" equiv-text=", }&lt;/b&gt;"/>, <x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/><x id="CLOSE_BLOCK_FOR" equiv-text="e"/> ersetzt. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte <x id="START_BLOCK_FOR" equiv-text="@for (value of selectedValues; track value; let isLast = $last) {"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_2" equiv-text="e)}}"/><x id="START_BLOCK_IF" equiv-text=", }&lt;/b&gt;"/>, <x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/><x id="CLOSE_BLOCK_FOR" equiv-text="e"/> ersetzt. </target>
+        <target state="translated">Please note: This action replaces the value <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> not contained in the valuelist in all fields of all <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> resources that allow multiple selection in this field with the selected values <x id="START_BLOCK_FOR" equiv-text="@for (value of selectedValues; track value; let isLast = $last) {"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_2" equiv-text="e)}}"/><x id="START_BLOCK_IF" equiv-text=", }&lt;/b&gt;"/>, <x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/><x id="CLOSE_BLOCK_FOR" equiv-text="e"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">64,68</context>
@@ -9550,7 +9550,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unfulfilledConditionField" datatype="html">
         <source>Nicht erfüllte Anzeigebedingung des Feldes <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Nicht erfüllte Anzeigebedingung des Feldes <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Unfulfilled display condition of the field <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">62,64</context>
@@ -9558,7 +9558,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidProcessState" datatype="html">
         <source>Ungültiger Status <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Ungültiger Status <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Invalid state <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,112</context>
@@ -9566,7 +9566,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unfulfilledConditionField" datatype="html">
         <source>Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.</source>
-        <target state="needs-translation">Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.</target>
+        <target state="translated">Data has been entered although the display condition of this field is not fulfilled.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">165,167</context>
@@ -9574,7 +9574,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.condition" datatype="html">
         <source>Bedingung für Anzeige des Feldes:</source>
-        <target state="needs-translation">Bedingung für Anzeige des Feldes:</target>
+        <target state="translated">Display condition of the field:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">236</context>
@@ -9582,7 +9582,7 @@
       </trans-unit>
       <trans-unit id="buttons.selectFolder" datatype="html">
         <source>Verzeichnis auswählen</source>
-        <target state="needs-translation">Verzeichnis auswählen</target>
+        <target state="translated">Select directory</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -9590,7 +9590,7 @@
       </trans-unit>
       <trans-unit id="imageExport.header.single" datatype="html">
         <source>Bild exportieren</source>
-        <target state="needs-translation">Bild exportieren</target>
+        <target state="translated">Export image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">2,4</context>
@@ -9598,7 +9598,7 @@
       </trans-unit>
       <trans-unit id="imageExport.header.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{images.length}}"/> Bilder exportieren </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{images.length}}"/> Bilder exportieren </target>
+        <target state="translated">Export <x id="INTERPOLATION" equiv-text="{{images.length}}"/> images </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">5,7</context>
@@ -9606,7 +9606,7 @@
       </trans-unit>
       <trans-unit id="imageExport.targetDirectory" datatype="html">
         <source>Zielverzeichnis</source>
-        <target state="needs-translation">Zielverzeichnis</target>
+        <target state="translated">Target directory</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">11</context>
@@ -9614,7 +9614,7 @@
       </trans-unit>
       <trans-unit id="imageExport.namingOptions" datatype="html">
         <source>Benennung</source>
-        <target state="needs-translation">Benennung</target>
+        <target state="translated">Naming</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -9622,7 +9622,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.isRelationTargetCategory" datatype="html">
         <source>Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie als Zielkategorie einer Relation konfiguriert ist. </source>
-        <target state="needs-translation">Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie als Zielkategorie einer Relation konfiguriert ist. </target>
+        <target state="translated">The category <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> cannot be deleted as long as it is configured as a target category of a relation. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">42,45</context>
@@ -9630,7 +9630,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.chooseResource" datatype="html">
         <source>Ressource wählen:</source>
-        <target state="needs-translation">Ressource wählen:</target>
+        <target state="translated">Select resource:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">3</context>
@@ -9638,7 +9638,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.selectedResource" datatype="html">
         <source>Ausgewählte Ressource:</source>
-        <target state="needs-translation">Ausgewählte Ressource:</target>
+        <target state="translated">Selected resource:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -9646,7 +9646,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.chooseProcessToLink" datatype="html">
         <source>Zu verknüpfenden Prozess wählen:</source>
-        <target state="needs-translation">Zu verknüpfenden Prozess wählen:</target>
+        <target state="translated">Select process to link:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">17,19</context>
@@ -9654,7 +9654,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.noAvailableProcesses" datatype="html">
         <source>Keine verknüpfbaren Prozesse gefunden.</source>
-        <target state="needs-translation">Keine verknüpfbaren Prozesse gefunden.</target>
+        <target state="translated">No linkable processes found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">32,34</context>
@@ -9662,7 +9662,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.plusButton.multiple.false" datatype="html">
         <source>Ein gemeinsamer Prozess für alle ausgewählten Ressourcen</source>
-        <target state="needs-translation">Ein gemeinsamer Prozess für alle ausgewählten Ressourcen</target>
+        <target state="translated">One common process for all selected resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/plus-button/process-plus-button.html</context>
           <context context-type="linenumber">44,46</context>
@@ -9670,7 +9670,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.plusButton.multiple.true" datatype="html">
         <source>Ein eigener Prozess pro Ressource (insgesamt <x id="INTERPOLATION" equiv-text="{{baseDocuments.length}}"/>) </source>
-        <target state="needs-translation">Ein eigener Prozess pro Ressource (insgesamt <x id="INTERPOLATION" equiv-text="{{baseDocuments.length}}"/>) </target>
+        <target state="translated">One process per resource (<x id="INTERPOLATION" equiv-text="{{baseDocuments.length}}"/> in total) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/plus-button/process-plus-button.html</context>
           <context context-type="linenumber">51,53</context>
@@ -9678,7 +9678,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.carriedOutOn" datatype="html">
         <source>Durchgeführt an</source>
-        <target state="needs-translation">Durchgeführt an</target>
+        <target state="translated">Carried out on</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/process-list.html</context>
           <context context-type="linenumber">5</context>
@@ -9686,7 +9686,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.header" datatype="html">
         <source>Prozess löschen?</source>
-        <target state="needs-translation">Prozess löschen?</target>
+        <target state="translated">Delete process?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -9694,7 +9694,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.warning" datatype="html">
         <source>Der Prozess wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </source>
-        <target state="needs-translation">Der Prozess wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </target>
+        <target state="translated">The process will be deleted for all <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> linked resources. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">12,14</context>
@@ -9702,7 +9702,7 @@
       </trans-unit>
       <trans-unit id="settings.backups" datatype="html">
         <source>Automatische Backups</source>
-        <target state="needs-translation">Automatische Backups</target>
+        <target state="translated">Automatic backups</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">149</context>
@@ -9710,7 +9710,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.path" datatype="html">
         <source>Pfad</source>
-        <target state="needs-translation">Pfad</target>
+        <target state="translated">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">153,155</context>
@@ -9978,7 +9978,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.1" datatype="html">
         <source>Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Ergebnis<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dieses Prozesses sein können. </source>
-        <target state="needs-translation">Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Ergebnis<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dieses Prozesses sein können. </target>
+        <target state="translated">Please select the allowed categories of resources which can be a <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>result<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> of this process. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">31,34</context>
@@ -9986,7 +9986,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.isCarriedOutOn.1" datatype="html">
         <source>Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>durchgeführt<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> werden kann. </source>
-        <target state="needs-translation">Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>durchgeführt<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> werden kann. </target>
+        <target state="translated">Please select the allowed categories of resources on which the process can be <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>carried out on<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">10,13</context>
@@ -9994,7 +9994,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.isCarriedOutOn.2" datatype="html">
         <source>Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </source>
-        <target state="needs-translation">Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </target>
+        <target state="translated">You can adjust this selection at a later point in time by editing the field <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">14,17</context>
@@ -10002,7 +10002,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.2" datatype="html">
         <source>Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </source>
-        <target state="needs-translation">Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </target>
+        <target state="translated">You can adjust this selection at a later point in time by editing the field <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">35,38</context>
@@ -10010,7 +10010,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.3" datatype="html">
         <source>Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </source>
-        <target state="needs-translation">Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </target>
+        <target state="translated">If you do not make a selection at this point, you can add the field <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> to the new category at any time. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">39,42</context>

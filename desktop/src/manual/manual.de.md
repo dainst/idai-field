@@ -1932,12 +1932,12 @@ Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konf
 * Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.
 
 ### Ungültiger Status
-Der Status eines Arbeitsschritts widerspricht dem angegebenen Datum. Dies ist beispielsweise der Fall, wenn das Datum eines Arbeitsschritts mit dem Status "Geplant" in der Vergangenheit liegt oder das Datum eines Arbeitsschritts mit dem Status "Abgeschlossen" in der Zukunft.
+Der Status eines Prozesses widerspricht dem angegebenen Datum. Dies ist beispielsweise der Fall, wenn das Datum eines Prozesses mit dem Status "Geplant" in der Vergangenheit liegt oder das Datum eines Prozesses mit dem Status "Abgeschlossen" in der Zukunft.
 
 #### Mögliche Ursachen
 * Der Status wurde nicht angepasst, nachdem der Arbeitsgang begonnen, abgeschlossen oder abgebrochen wurde.
-* Ein geplanter Arbeitsschritt wurde zum angegebenen Datum noch nicht durchgeführt.
+* Ein geplanter Prozess wurde zum angegebenen Datum noch nicht durchgeführt.
 
 #### Mögliche Lösungen
-* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Status oder das Datum des Arbeitsschritts anzupassen.
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Status oder das Datum des Prozesses anzupassen.
 

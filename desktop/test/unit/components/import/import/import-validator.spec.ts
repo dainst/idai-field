@@ -91,7 +91,7 @@ describe('ImportValidator', () => {
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' },
-                    { name: 'isExecutedOn' },
+                    { name: 'isCarriedOutOn' },
                     { name: 'resultsIn' }
                 ]}]
         }, []
@@ -135,7 +135,7 @@ describe('ImportValidator', () => {
                 inputType: 'relation'
             },
             {
-                name: 'isExecutedOn',
+                name: 'isCarriedOutOn',
                 domain: ['T5'],
                 range: ['T'],
                 inverse: 'NO-INVERSE',
@@ -601,7 +601,7 @@ describe('ImportValidator', () => {
         
         const document1 = {
             resource: {
-                id: '1', identifier: 'A', category: 'T6', relations: { isExecutedOn: ['1', '2'], resultsIn: ['2', '3'] }
+                id: '1', identifier: 'A', category: 'T6', relations: { isCarriedOutOn: ['1', '2'], resultsIn: ['2', '3'] }
             }
         };
 

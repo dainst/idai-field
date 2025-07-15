@@ -16,8 +16,8 @@
     "hasChildren": {
       "label": "Untergeordnete Ressourcen"
     },
-    "isExecutionTargetOf": {
-      "label": "Durchführungsziel von"
+    "isSubjectOf": {
+      "label": "Gegenstand von"
     },
     "isResultOf": {
       "label": "Ergebnis von"
@@ -126,8 +126,8 @@
     "isStoragePlaceOf": {
       "label": "Ist Aufbewahrungsort von"
     },
-    "isExecutedOn": {
-      "label": "Wurde durchgeführt an"
+    "isCarriedOutOn": {
+      "label": "Durchgeführt an"
     },
     "resultsIn": {
       "label": "Ergibt"

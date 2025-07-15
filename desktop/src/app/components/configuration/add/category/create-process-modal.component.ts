@@ -22,7 +22,7 @@ export class CreateProcessModalComponent {
     public selectedCategories: Map<string[]>;
 
     public selectableSupercategories: Array<CategoryForm>;
-    public isExecutedOnSelected: boolean = false;
+    public isCarriedOutOnSelected: boolean = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -45,7 +45,7 @@ export class CreateProcessModalComponent {
 
     public validate(): boolean {
 
-        return this.selectedCategories.isExecutedOn.length > 0;
+        return this.selectedCategories.isCarriedOutOn.length > 0;
     }
 
 
@@ -53,8 +53,8 @@ export class CreateProcessModalComponent {
 
         if (!this.validate()) return;
     
-        if (!this.isExecutedOnSelected) {
-            this.isExecutedOnSelected = true;
+        if (!this.isCarriedOutOnSelected) {
+            this.isCarriedOutOnSelected = true;
         } else {
             this.activeModal.close(this.getTargetCategories());
         }
@@ -100,7 +100,7 @@ export class CreateProcessModalComponent {
     private getTargetCategories(): Map<string[]> {
 
         return {
-            isExecutedOn: this.getSelectedSupercategories(this.selectedCategories.isExecutedOn),
+            isCarriedOutOn: this.getSelectedSupercategories(this.selectedCategories.isCarriedOutOn),
             resultsIn: this.getSelectedSupercategories(this.selectedCategories.resultsIn)
         };
     }
@@ -124,7 +124,7 @@ export class CreateProcessModalComponent {
             }
         } else {
             this.selectedCategories = {
-                isExecutedOn: [],
+                isCarriedOutOn: [],
                 resultsIn: []
             };
         }

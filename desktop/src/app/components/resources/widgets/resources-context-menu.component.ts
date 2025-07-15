@@ -149,7 +149,7 @@ export class ResourcesContextMenuComponent implements OnChanges {
             && this.contextMenu.documents.find(document => {
                 return processCategories.find(category => {
                     return this.projectConfiguration.isAllowedRelationDomainCategory(
-                        category.name, document.resource.category, Relation.Workflow.IS_EXECUTED_ON
+                        category.name, document.resource.category, Relation.Workflow.IS_CARRIED_OUT_ON
                     );
                 }) !== undefined;
             }) !== undefined;

@@ -1132,7 +1132,7 @@ describe('Validations', () => {
             resource: {
                 id: '1',
                 category: 'A',
-                relations: { isExecutedOn: ['1', '2'], resultsIn: ['2', '3'] }
+                relations: { isCarriedOutOn: ['1', '2'], resultsIn: ['2', '3'] }
             }
         };
 

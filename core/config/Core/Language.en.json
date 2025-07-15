@@ -16,11 +16,11 @@
     "hasChildren": {
       "label": "Child resources"
     },
-    "isExecutionTargetOf": {
-      "label": "Is execution target of"
+    "isSubjectOf": {
+      "label": "Subject of"
     },
     "isResultOf": {
-      "label": "Is result of"
+      "label": "Result of"
     }
   },
   "categories": {
@@ -126,8 +126,8 @@
     "isStoragePlaceOf": {
       "label": "Is storage place of"
     },
-    "isExecutedOn": {
-      "label": "Is executed on"
+    "isCarriedOutOn": {
+      "label": "Carried out on"
     },
     "resultsIn": {
       "label": "Results in"

@@ -2,7 +2,7 @@
     <div class="process-state-header"
          i18n="@@resources.workflowEditorModal.state">Status</div>
     <div class="process-executed-on"
-         i18n="@@resources.workflowEditorModal.executedOn">Durchgeführt an</div>
+         i18n="@@resources.workflowEditorModal.carriedOutOn">Durchgeführt an</div>
     <div class="process-date" (click)="toggleSortMode('date')">
         <span i18n="@@resources.workflowEditorModal.date">Datum</span>
         <span class="mdi"
@@ -31,7 +31,7 @@
             <process-state [process]="process"></process-state>
         </div>
         <div class="process-executed-on">
-            <workflow-relations [relationTargets]="getRelationTargets(process, 'isExecutedOn')"
+            <workflow-relations [relationTargets]="getRelationTargets(process, 'isCarriedOutOn')"
                                 (onRelationTargetSelected)="onRelationTargetSelected.emit($event)">
             </workflow-relations>
         </div>

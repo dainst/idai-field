@@ -99,7 +99,7 @@ export class WorkflowEditorModalComponent {
     public async updateProcesses() {
 
         this.processes = (await this.datastore.find({
-            constraints: { 'isExecutedOn:contain': this.documents.map(document => document.resource.id) }
+            constraints: { 'isCarriedOutOn:contain': this.documents.map(document => document.resource.id) }
         })).documents as Array<ProcessDocument>;
 
         sortProcesses(this.processes, this.sortMode);
@@ -118,7 +118,7 @@ export class WorkflowEditorModalComponent {
         return intersection(
             this.documents.map(document => {
                 return this.projectConfiguration.getAllowedRelationDomainCategories(
-                    Relation.Workflow.IS_EXECUTED_ON,
+                    Relation.Workflow.IS_CARRIED_OUT_ON,
                     document.resource.category
                 );
             })
@@ -147,8 +147,8 @@ export class WorkflowEditorModalComponent {
             DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
-        modalRef.componentInstance.setDocument(process, ['isExecutedOn']);
-        modalRef.componentInstance.disabledRelationFields = ['isExecutedOn'];
+        modalRef.componentInstance.setDocument(process, ['isCarriedOutOn']);
+        modalRef.componentInstance.disabledRelationFields = ['isCarriedOutOn'];
         if (numberOfDuplicates) modalRef.componentInstance.fixedNumberOfDuplicates = numberOfDuplicates;
 
         try {
@@ -166,9 +166,9 @@ export class WorkflowEditorModalComponent {
 
         const oldVersion: ProcessDocument = Document.clone(process);
 
-        const currentTargetIds: string[] = process.resource.relations?.[Relation.Workflow.IS_EXECUTED_ON] ?? [];
+        const currentTargetIds: string[] = process.resource.relations?.[Relation.Workflow.IS_CARRIED_OUT_ON] ?? [];
         const newTargetIds: string[] = targets.map(document => document.resource.id);
-        process.resource.relations[Relation.Workflow.IS_EXECUTED_ON] = set(currentTargetIds.concat(newTargetIds));
+        process.resource.relations[Relation.Workflow.IS_CARRIED_OUT_ON] = set(currentTargetIds.concat(newTargetIds));
 
         await this.applyRelationChanges(process, oldVersion);
     }
@@ -186,7 +186,7 @@ export class WorkflowEditorModalComponent {
 
 
     private static buildProcessDocument(category: CategoryForm,
-                                             executedOnTargets: Array<FieldDocument>): NewDocument {
+                                        carriedOutOnTargets: Array<FieldDocument>): NewDocument {
 
         return {
             resource: {
@@ -194,7 +194,7 @@ export class WorkflowEditorModalComponent {
                 category: category.name,
                 state: 'in progress',
                 relations: {
-                    isExecutedOn: executedOnTargets.map(target => target.resource.id)
+                    isCarriedOutOn: carriedOutOnTargets.map(target => target.resource.id)
                 }
             }
         };

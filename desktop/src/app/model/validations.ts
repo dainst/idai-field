@@ -302,10 +302,10 @@ export module Validations {
 
     export function assertWorkflowRelations(document: Document|NewDocument) {
 
-        const executedOnTargetIds: string[] = document.resource.relations[Relation.Workflow.IS_EXECUTED_ON] ?? [];
+        const carriedOutOnTargetIds: string[] = document.resource.relations[Relation.Workflow.IS_CARRIED_OUT_ON] ?? [];
         const resultsInTargetIds: string[] = document.resource.relations[Relation.Workflow.RESULTS_IN] ?? [];
 
-        if (intersect(executedOnTargetIds)(resultsInTargetIds).length) {
+        if (intersect(carriedOutOnTargetIds)(resultsInTargetIds).length) {
             throw [ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS];
         }
     }

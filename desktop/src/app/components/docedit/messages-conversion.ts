@@ -145,7 +145,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS) {
             msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS;
             msgWithParams[1] = labels.getRelationLabel(
-                Relation.Workflow.IS_EXECUTED_ON, projectConfiguration.getRelations()
+                Relation.Workflow.IS_CARRIED_OUT_ON, projectConfiguration.getRelations()
             );
             msgWithParams[2] = labels.getRelationLabel(
                 Relation.Workflow.RESULTS_IN, projectConfiguration.getRelations()

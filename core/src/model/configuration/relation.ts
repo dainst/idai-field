@@ -134,9 +134,9 @@ export namespace Relation {
 
     export module Workflow {
 
-        export const IS_EXECUTED_ON = 'isExecutedOn';
+        export const IS_CARRIED_OUT_ON = 'isCarriedOutOn';
         export const RESULTS_IN = 'resultsIn';
-        export const ALL = [IS_EXECUTED_ON, RESULTS_IN];
+        export const ALL = [IS_CARRIED_OUT_ON, RESULTS_IN];
     }
 
 

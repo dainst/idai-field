@@ -5,32 +5,32 @@
 </div>
 
 <div class="modal-body bg-light">
-   <div *ngIf="!isExecutedOnSelected" class="target-category-section">
+   <div *ngIf="!isCarriedOutOnSelected" class="target-category-section">
         <div class="target-category-info">
-            <p i18n="configuration.createProcess.info.isExecutedOn.1">
+            <p i18n="configuration.createProcess.info.isCarriedOutOn.1">
                 Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess
                 <b>durchgeführt</b> werden kann.
             </p>
-            <p i18n="configuration.createProcess.info.isExecutedOn.2">
-                Sie können diese Auswahl später anpassen, indem Sie das Feld <b>"{{getFieldLabel('isExecutedOn')}}"</b>
+            <p i18n="configuration.createProcess.info.isCarriedOutOn.2">
+                Sie können diese Auswahl später anpassen, indem Sie das Feld <b>"{{getFieldLabel('isCarriedOutOn')}}"</b>
                 editieren.
             </p>
         </div>
         <div class="target-category-picker-container">
             <category-picker [topLevelCategoriesArray]="selectableSupercategories"
-                             [selectedCategories]="selectedCategories.isExecutedOn"
+                             [selectedCategories]="selectedCategories.isCarriedOutOn"
                              [customProjectConfiguration]="clonedProjectConfiguration"
                              [allowPickingAbstractCategories]="true"
-                             (onCategoryPicked)="toggleCategory($event, 'isExecutedOn')">
+                             (onCategoryPicked)="toggleCategory($event, 'isCarriedOutOn')">
             </category-picker>
         </div>
     </div>
 
-    <div *ngIf="isExecutedOnSelected" class="target-category-section">
+    <div *ngIf="isCarriedOutOnSelected" class="target-category-section">
         <div class="target-category-info">
             <p i18n="configuration.createProcess.info.resultsIn.1">
                 Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <b>Ergebnis</b>
-                dieses Prozesses sein können.
+                dieses Pro sein können.
             </p>
             <p i18n="configuration.createProcess.info.resultsIn.2">
                 Sie können diese Auswahl später anpassen, indem Sie das Feld <b>"{{getFieldLabel('resultsIn')}}"</b>
@@ -53,14 +53,14 @@
 </div>
 
 <div class="modal-footer bg-light">
-    <div *ngIf="isExecutedOnSelected" class="btn btn-primary" (click)="isExecutedOnSelected = false">
+    <div *ngIf="isCarriedOutOnSelected" class="btn btn-primary" (click)="isCarriedOutOnSelected = false">
         <span i18n="@@buttons.back">Zurück</span>
     </div>
     <div class="btn btn-primary"
          [class.disabled]="!validate()"
          (click)="confirm()">
-        <span *ngIf="!isExecutedOnSelected" i18n="@@buttons.next">Weiter</span>
-        <span *ngIf="isExecutedOnSelected" i18n="@@buttons.ok">OK</span>
+        <span *ngIf="!isCarriedOutOnSelected" i18n="@@buttons.next">Weiter</span>
+        <span *ngIf="isCarriedOutOnSelected" i18n="@@buttons.ok">OK</span>
     </div>
     <div class="btn btn-secondary"
          (click)="cancel()">

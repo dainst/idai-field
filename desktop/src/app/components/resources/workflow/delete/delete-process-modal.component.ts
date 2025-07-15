@@ -22,7 +22,7 @@ export class DeleteProcessModalComponent {
 
 
     public getNumberOfLinkedResources = () => this.process.resource.relations
-        ?.[Relation.Workflow.IS_EXECUTED_ON]?.length;
+        ?.[Relation.Workflow.IS_CARRIED_OUT_ON]?.length;
 
 
     public onKeyDown(event: KeyboardEvent) {

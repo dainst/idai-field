@@ -199,7 +199,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -223,7 +223,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -247,7 +247,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -271,7 +271,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -295,7 +295,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -314,7 +314,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -333,7 +333,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -363,7 +363,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.PROPERTIES,
@@ -387,7 +387,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     }
                 ]
             }
@@ -408,7 +408,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -434,7 +434,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -459,7 +459,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -483,7 +483,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -506,7 +506,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -531,7 +531,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -556,7 +556,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -579,7 +579,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -602,7 +602,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -627,7 +627,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -648,7 +648,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -673,7 +673,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -698,7 +698,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.STRATIGRAPHY,
@@ -732,7 +732,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -758,7 +758,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.POSITION,
@@ -784,7 +784,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.IDENTIFICATION,
@@ -818,7 +818,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.IDENTIFICATION,
@@ -851,7 +851,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.INVENTORY,
@@ -939,7 +939,7 @@ export class BuiltInConfiguration {
                 date: {
                     required: true
                 },
-                isExecutedOn: {
+                isCarriedOutOn: {
                     inputType: Field.InputType.RELATION,
                     onlySubcategory: true,
                     required: true,
@@ -988,7 +988,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.WORKFLOW,
-                        fields: ['isExecutionTargetOf', 'isResultOf']
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.PROPERTIES,
@@ -1033,11 +1033,11 @@ export class BuiltInConfiguration {
             editable: false,
             constraintName: 'isPresentIn:contain'
         },
-        isExecutionTargetOf: {
+        isSubjectOf: {
             inputType: Field.InputType.DERIVED_RELATION,
             visible: true,
             editable: false,
-            constraintName: 'isExecutedOn:contain'
+            constraintName: 'isCarriedOutOn:contain'
         },
         isResultOf: {
             inputType: Field.InputType.DERIVED_RELATION,

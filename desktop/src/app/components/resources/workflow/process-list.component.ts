@@ -103,7 +103,7 @@ export class ProcessListComponent implements OnInit, OnChanges, OnDestroy {
     
     
     public getRelationTargets(process: ProcessDocument,
-                              relationName: 'isExecutedOn'|'resultsIn'): Array<Document> {
+                              relationName: 'isCarriedOutOn'|'resultsIn'): Array<Document> {
 
         return this.relationTargets[process.resource.id]?.[relationName];
     }
@@ -177,7 +177,7 @@ export class ProcessListComponent implements OnInit, OnChanges, OnDestroy {
 
         if (!this.relationTargets[process.resource.id]) this.relationTargets[process.resource.id] = {};
 
-        for (let relationName of ['isExecutedOn', 'resultsIn']) {
+        for (let relationName of ['isCarriedOutOn', 'resultsIn']) {
             const targets: Array<Document> = await this.fetchRelationTargets(process, relationName);
             this.relationTargets[process.resource.id][relationName] = targets;
         }

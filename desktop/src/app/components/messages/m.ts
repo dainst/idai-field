@@ -700,7 +700,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS] = {
-            content: $localize `:@@messages.import.validation.error.invalidWorkflowRelationTargets:Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation \'isExecutedOn\' als auch der Relation \'resultsIn\' angegeben werden.`,
+            content: $localize `:@@messages.import.validation.error.invalidWorkflowRelationTargets:Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation \'isCarriedOutOn\' als auch der Relation \'resultsIn\' angegeben werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {

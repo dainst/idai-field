@@ -15,7 +15,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -51,7 +51,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -87,7 +87,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -137,7 +137,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -173,7 +173,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -209,7 +209,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -259,7 +259,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -291,7 +291,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -529,7 +529,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -561,7 +561,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -589,7 +589,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -623,7 +623,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -667,7 +667,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -745,7 +745,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -783,7 +783,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -834,7 +834,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -862,7 +862,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -905,7 +905,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -946,7 +946,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -975,7 +975,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -995,7 +995,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1090,7 +1090,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1126,7 +1126,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1260,7 +1260,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "identification",
@@ -1328,7 +1328,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "identification",
@@ -1368,7 +1368,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "inventory",
@@ -1452,7 +1452,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1480,7 +1480,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1531,7 +1531,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "inventory",
@@ -1581,7 +1581,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "inventory",
@@ -1707,7 +1707,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1746,7 +1746,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1770,7 +1770,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1802,7 +1802,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isExecutionTargetOf", "isResultOf"]
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",

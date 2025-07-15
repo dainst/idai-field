@@ -110,7 +110,7 @@ export class LinkProcessModalComponent {
         return intersection(
             this.baseDocuments.map(document => {
                 return this.projectConfiguration.getAllowedRelationDomainCategories(
-                    Relation.Workflow.IS_EXECUTED_ON,
+                    Relation.Workflow.IS_CARRIED_OUT_ON,
                     document.resource.category
                 );
             })
@@ -123,7 +123,7 @@ export class LinkProcessModalComponent {
         return this.allowedProcessCategories.reduce((result, subcategory) => {
             return result.concat(
                 this.projectConfiguration.getAllowedRelationRangeCategories(
-                    Relation.Workflow.IS_EXECUTED_ON, subcategory.name
+                    Relation.Workflow.IS_CARRIED_OUT_ON, subcategory.name
                 )
             );
         }, []);
@@ -133,11 +133,11 @@ export class LinkProcessModalComponent {
     private async getAvailableProcesses(): Promise<Array<ProcessDocument>> {
 
         const processes: Array<ProcessDocument> = (await this.datastore.find({
-            constraints: { 'isExecutedOn:contain': this.selectedDocument.resource.id }
+            constraints: { 'isCarriedOutOn:contain': this.selectedDocument.resource.id }
         })).documents as Array<ProcessDocument>;
 
         const linkedProcesses: Array<ProcessDocument> = (await this.datastore.find({
-            constraints: { 'isExecutedOn:contain': this.baseDocuments.map(document => document.resource.id) }
+            constraints: { 'isCarriedOutOn:contain': this.baseDocuments.map(document => document.resource.id) }
         })).documents as Array<ProcessDocument>;
 
         return processes.filter(process => {

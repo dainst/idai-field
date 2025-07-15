@@ -142,7 +142,7 @@ function getGroupNameForUnassaginedField(fieldName: string): string {
         return Groups.INVENTORY;
     } else if (['hasChildren', 'includesStratigraphicalUnits'].includes(fieldName)) {
         return Groups.HIERARCHY;
-    } else if (['isExecutionTargetOf', 'isResultOf'].includes(fieldName)) {
+    } else if (['isSubjectOf', 'isResultOf'].includes(fieldName)) {
         return Groups.WORKFLOW;
     } else {
         return Groups.OTHER;

@@ -1925,7 +1925,7 @@ The state of a process contradicts the specified date. This is the case, for exa
 
 #### Possible causes
 * The state has not been updated after the process has been started, completed or canceled.
-* A planned process has not yet been executed on the specified date.
+* A planned process has not yet been carried out on the specified date.
 
 #### Possible solutions
 * Button *Edit*: Open the resource editor to adjust the state or date of the process.

@@ -1,338 +1,335 @@
 {
-    "groups": {
-        "stem": "Datos maestros",
-        "time": "Cronología",
-        "position": "Ubicación / contexto",
-        "dimension": "Medidas",
-        "identification": "Clasificación"
+  "groups": {
+    "stem": "Datos maestros",
+    "time": "Cronología",
+    "position": "Ubicación / contexto",
+    "dimension": "Medidas",
+    "identification": "Clasificación"
+  },
+  "commons": {
+    "dimensionLength": {
+      "label": "Longitud"
     },
-    "commons": {
-        "dimensionLength": {
-            "label": "Longitud"
-        },
-        "dimensionWidth": {
-            "label": "Anchura"
-        },
-        "dimensionHeight": {
-            "label": "Altura"
-        },
-        "dimensionVerticalExtent": {
-            "label": "Nivel"
-        },
-        "processor": {
-            "label": "Responsable"
-        },
-        "campaign": {
-            "label": "Campaña"
-        },
-        "description": {
-            "label": "Descripción"
-        },
-        "period": {
-            "label": "Época"
-        },
-        "date": {
-            "label": "Fecha"
-        },
-        "orientation": {
-            "label": "Orientación"
-        },
-        "spatialLocation": {
-            "label": "Descripción de la ubicación"
-        },
-        "provenance": {
-            "label": "Procedencia"
-        }
+    "dimensionWidth": {
+      "label": "Anchura"
     },
-    "categories": {
-        "Place": {
-            "label": "Sitio",
-            "fields": {
-                "placeName": {
-                    "label": "Yacimiento"
-                },
-                "excavationHistory": {
-                    "label": "Historia de la excavación"
-                },
-                "siteClassification": {
-                    "label": "Clasificación del yacimiento"
-                }
-            }
-        },
-        "Trench": {
-            "label": "Corte",
-            "fields": {
-                "researchQuestion": {
-                    "label": "Planteamiento"
-                }
-            }
-        },
-        "Drawing": {
-            "label": "Dibujo",
-            "fields": {
-                "drawingType": {
-                    "label": "Tipo de dibujo"
-                }
-            }
-        },
-        "Find": {
-            "label": "Hallazgo",
-            "fields": {
-                "amount": {
-                    "label": "Número (total)"
-                },
-                "conditionComment": {
-                    "label": "Comentario sobre estado de conservación"
-                },
-                "conditionPercent": {
-                    "label": "Estado de conservación - porcentaje"
-                },
-                "storagePlace": {
-                    "label": "Deposito - ciudad"
-                },
-                "hasRestoration": {
-                    "label": "Restauración"
-                },
-                "conditionAmount": {
-                    "label": "Porcentaje conservado"
-                },
-                "weight": {
-                    "label": "Peso (g)"
-                }
-            }
-        },
-        "Feature": {
-            "label": "Unidad estratigráfica",
-            "fields": {
-                "color": {
-                    "label": "Color y intensidad"
-                }
-            }
-        },
-        "Grave": {
-            "label": "Tumba",
-            "fields": {
-                "graveType": {
-                    "label": "Tipo de tumba"
-                },
-                "specificType": {
-                    "label": "Tipo de tumba especial"
-                }
-            }
-        },
-        "Layer": {
-            "label": "Estrato",
-            "fields": {
-                "layerClassification": {
-                    "label": "Clasificación de la unidad estratigráfica"
-                }
-            }
-        },
-        "Wood": {
-            "label": "Madera",
-            "fields": {
-                "objectType": {
-                    "label": "Clasificación del objeto"
-                }
-            }
-        },
-        "Pottery": {
-            "label": "Cerámica",
-            "fields": {
-                "amountSherdsRim": {
-                    "label": "Número de fragmentos de borde"
-                },
-                "amountSherdsBase": {
-                    "label": "Número de fragmentos de fondo"
-                },
-                "amountSherdsHandles": {
-                    "label": "Número de fragmentos de asa"
-                },
-                "amountSherdsWall": {
-                    "label": "Número de fragmentos de cuerpo"
-                },
-                "objectType": {
-                    "label": "Clasificación del material"
-                },
-                "vesselForm": {
-                    "label": "Descripción de forma"
-                },
-                "vesselFormSpecific": {
-                    "label": "Forma"
-                },
-                "purpose": {
-                    "label": "Función"
-                },
-                "specificType": {
-                    "label": "Tipo de cerámica"
-                }
-            }
-        },
-        "Bone": {
-            "label": "Resto óseo",
-            "fields": {
-                "biologicalAge": {
-                    "label": "Grupo de edad"
-                },
-                "boneClassification": {
-                    "label": "Clasificación de los huesos"
-                },
-                "boneType": {
-                    "label": "Tipo de huesos"
-                },
-                "burningGrade": {
-                    "label": "Grado de cremación del hueso"
-                },
-                "sex": {
-                    "label": "Sexo"
-                }
-            }
-        },
-        "Sample": {
-            "label": "Muestra",
-            "fields": {
-                "sampleType": {
-                    "label": "Clasificación"
-                },
-                "weight": {
-                    "label": "Peso (g)"
-                }
-            }
-        },
-        "Glass": {
-            "label": "Vidrio",
-            "fields": {
-                "objectType": {
-                    "label": "Tipo del objeto"
-                }
-            }
-        },
-        "Stone": {
-            "label": "Lítica",
-            "fields": {
-                "objectType": {
-                    "label": "Tipo de lítica"
-                }
-            }
-        },
-        "Mollusk": {
-            "label": "Malacofauna",
-            "fields": {
-                "classification": {
-                    "label": "Clasificación malacológica"
-                }
-            }
-        },
-        "Burial": {
-            "label": "Sepultura",
-            "fields": {
-                "amountIndividuals": {
-                    "label": "Número de individuos"
-                },
-                "graveFeature": {
-                    "label": "Tipo de enterramiento"
-                },
-                "ageDetermination": {
-                    "label": "Determinación de la edad"
-                },
-                "ageDeterminationBasis": {
-                    "label": "Base de la determinación de la edad"
-                },
-                "palaeopathologicalReport": {
-                    "label": "Diagnóstico paleopatológico"
-                },
-                "conditionComment": {
-                    "label": "Comentario sobre estado de conservación"
-                },
-                "sexDetermination": {
-                    "label": "Determinación del sexo"
-                },
-                "sexDeterminationBasis": {
-                    "label": "Base de la determinación del sexo"
-                }
-            }
-        },
-        "Planum": {
-            "label": "Planta"
-        },
-        "Brick": {
-            "label": "Adobe / Teja / Ladrillo"
-        },
-        "Building": {
-            "label": "Edificio"
-        },
-        "SurveyUnit": {
-            "label": "Cuadrante de prospección"
-        },
-        "Survey": {
-            "label": "Área de prospección"
-        },
-        "Architecture": {
-            "label": "Arquitectura"
-        },
-        "Operation": {
-            "label": "Intervención"
-        },
-        "Floor": {
-            "label": "Suelo"
-        },
-        "Inscription": {
-            "label": "Inscripción"
-        },
-        "RoomFloor": {
-            "label": "Suelo"
-        },
-        "RoomWall": {
-            "label": "Muralla"
-        },
-        "RoomCeiling": {
-            "label": "Techo"
-        },
-        "Room": {
-            "label": "Habitación"
-        },
-        "ProcessUnit": {
-            "label": "Proceso de trabajo"
-        },
-        "Terracotta": {
-            "label": "Terracota"
-        },
-        "Other": {
-            "label": "Otro"
-        },
-        "Coin": {
-            "label": "Moneda"
-        },
-        "PlasterFragment": {
-            "label": "Fragmento de enfoscado"
-        },
-        "Image": {
-            "fields": {
-                "imageRights": {
-                    "label": "Derechos de autor de la imagen"
-                }
-            }
-        },
-        "Photo": {
-            "label": "Fotografía"
-        },
-        "Profile": {
-            "label": "Perfil"
-        },
-        "Metal": {
-            "label": "Metal"
-        },
-        "BuildingPart": {
-            "label": "Parte de edificio"
-        },
-        "Area": {
-            "label": "Área"
-        },
-        "Excavation": {
-            "label": "Excavación"
-        },
-        "Type": {
-            "label": "Tipo"
-        }
+    "dimensionHeight": {
+      "label": "Altura"
+    },
+    "dimensionVerticalExtent": {
+      "label": "Nivel"
+    },
+    "processor": {
+      "label": "Responsable"
+    },
+    "campaign": {
+      "label": "Campaña"
+    },
+    "description": {
+      "label": "Descripción"
+    },
+    "period": {
+      "label": "Época"
+    },
+    "date": {
+      "label": "Fecha"
+    },
+    "orientation": {
+      "label": "Orientación"
+    },
+    "spatialLocation": {
+      "label": "Descripción de la ubicación"
+    },
+    "provenance": {
+      "label": "Procedencia"
     }
+  },
+  "categories": {
+    "Place": {
+      "label": "Sitio",
+      "fields": {
+        "placeName": {
+          "label": "Yacimiento"
+        },
+        "excavationHistory": {
+          "label": "Historia de la excavación"
+        },
+        "siteClassification": {
+          "label": "Clasificación del yacimiento"
+        }
+      }
+    },
+    "Trench": {
+      "label": "Corte",
+      "fields": {
+        "researchQuestion": {
+          "label": "Planteamiento"
+        }
+      }
+    },
+    "Drawing": {
+      "label": "Dibujo",
+      "fields": {
+        "drawingType": {
+          "label": "Tipo de dibujo"
+        }
+      }
+    },
+    "Find": {
+      "label": "Hallazgo",
+      "fields": {
+        "amount": {
+          "label": "Número (total)"
+        },
+        "conditionComment": {
+          "label": "Comentario sobre estado de conservación"
+        },
+        "conditionPercent": {
+          "label": "Estado de conservación - porcentaje"
+        },
+        "storagePlace": {
+          "label": "Deposito - ciudad"
+        },
+        "hasRestoration": {
+          "label": "Restauración"
+        },
+        "conditionAmount": {
+          "label": "Porcentaje conservado"
+        },
+        "weight": {
+          "label": "Peso (g)"
+        }
+      }
+    },
+    "Feature": {
+      "label": "Unidad estratigráfica",
+      "fields": {
+        "color": {
+          "label": "Color y intensidad"
+        }
+      }
+    },
+    "Grave": {
+      "label": "Tumba",
+      "fields": {
+        "graveType": {
+          "label": "Tipo de tumba"
+        },
+        "specificType": {
+          "label": "Tipo de tumba especial"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Estrato",
+      "fields": {
+        "layerClassification": {
+          "label": "Clasificación de la unidad estratigráfica"
+        }
+      }
+    },
+    "Wood": {
+      "label": "Madera",
+      "fields": {
+        "objectType": {
+          "label": "Clasificación del objeto"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Cerámica",
+      "fields": {
+        "amountSherdsRim": {
+          "label": "Número de fragmentos de borde"
+        },
+        "amountSherdsBase": {
+          "label": "Número de fragmentos de fondo"
+        },
+        "amountSherdsHandles": {
+          "label": "Número de fragmentos de asa"
+        },
+        "amountSherdsWall": {
+          "label": "Número de fragmentos de cuerpo"
+        },
+        "objectType": {
+          "label": "Clasificación del material"
+        },
+        "vesselForm": {
+          "label": "Descripción de forma"
+        },
+        "vesselFormSpecific": {
+          "label": "Forma"
+        },
+        "purpose": {
+          "label": "Función"
+        },
+        "specificType": {
+          "label": "Tipo de cerámica"
+        }
+      }
+    },
+    "Bone": {
+      "label": "Resto óseo",
+      "fields": {
+        "biologicalAge": {
+          "label": "Grupo de edad"
+        },
+        "boneClassification": {
+          "label": "Clasificación de los huesos"
+        },
+        "boneType": {
+          "label": "Tipo de huesos"
+        },
+        "burningGrade": {
+          "label": "Grado de cremación del hueso"
+        },
+        "sex": {
+          "label": "Sexo"
+        }
+      }
+    },
+    "Sample": {
+      "label": "Muestra",
+      "fields": {
+        "sampleType": {
+          "label": "Clasificación"
+        },
+        "weight": {
+          "label": "Peso (g)"
+        }
+      }
+    },
+    "Glass": {
+      "label": "Vidrio",
+      "fields": {
+        "objectType": {
+          "label": "Tipo del objeto"
+        }
+      }
+    },
+    "Stone": {
+      "label": "Lítica",
+      "fields": {
+        "objectType": {
+          "label": "Tipo de lítica"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "Malacofauna",
+      "fields": {
+        "classification": {
+          "label": "Clasificación malacológica"
+        }
+      }
+    },
+    "Burial": {
+      "label": "Sepultura",
+      "fields": {
+        "amountIndividuals": {
+          "label": "Número de individuos"
+        },
+        "graveFeature": {
+          "label": "Tipo de enterramiento"
+        },
+        "ageDetermination": {
+          "label": "Determinación de la edad"
+        },
+        "ageDeterminationBasis": {
+          "label": "Base de la determinación de la edad"
+        },
+        "palaeopathologicalReport": {
+          "label": "Diagnóstico paleopatológico"
+        },
+        "conditionComment": {
+          "label": "Comentario sobre estado de conservación"
+        },
+        "sexDetermination": {
+          "label": "Determinación del sexo"
+        },
+        "sexDeterminationBasis": {
+          "label": "Base de la determinación del sexo"
+        }
+      }
+    },
+    "Planum": {
+      "label": "Planta"
+    },
+    "Brick": {
+      "label": "Adobe / Teja / Ladrillo"
+    },
+    "Building": {
+      "label": "Edificio"
+    },
+    "SurveyUnit": {
+      "label": "Cuadrante de prospección"
+    },
+    "Survey": {
+      "label": "Área de prospección"
+    },
+    "Architecture": {
+      "label": "Arquitectura"
+    },
+    "Operation": {
+      "label": "Intervención"
+    },
+    "Floor": {
+      "label": "Suelo"
+    },
+    "Inscription": {
+      "label": "Inscripción"
+    },
+    "RoomFloor": {
+      "label": "Suelo"
+    },
+    "RoomWall": {
+      "label": "Muralla"
+    },
+    "RoomCeiling": {
+      "label": "Techo"
+    },
+    "Room": {
+      "label": "Habitación"
+    },
+    "Terracotta": {
+      "label": "Terracota"
+    },
+    "Other": {
+      "label": "Otro"
+    },
+    "Coin": {
+      "label": "Moneda"
+    },
+    "PlasterFragment": {
+      "label": "Fragmento de enfoscado"
+    },
+    "Image": {
+      "fields": {
+        "imageRights": {
+          "label": "Derechos de autor de la imagen"
+        }
+      }
+    },
+    "Photo": {
+      "label": "Fotografía"
+    },
+    "Profile": {
+      "label": "Perfil"
+    },
+    "Metal": {
+      "label": "Metal"
+    },
+    "BuildingPart": {
+      "label": "Parte de edificio"
+    },
+    "Area": {
+      "label": "Área"
+    },
+    "Excavation": {
+      "label": "Excavación"
+    },
+    "Type": {
+      "label": "Tipo"
+    }
+  }
 }

@@ -1575,14 +1575,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Processo de trabalho",
-      "fields": {
-        "operationClassification": {
-          "label": "Classificação do processo de trabalho"
-        }
-      }
-    },
     "PlanDrawing": {
       "fields": {
         "scale": {

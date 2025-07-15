@@ -1156,14 +1156,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Operazione",
-      "fields": {
-        "operationClassification": {
-          "label": "Classificazione dell'operazione"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Terracotta",
       "fields": {

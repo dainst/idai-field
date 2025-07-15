@@ -57,7 +57,7 @@ export module ConfigurationUtil {
                 case 'inventory':
                     return category.name === 'StoragePlace';
                 case 'workflow':
-                    return category.name === 'WorkflowStep';
+                    return category.name === 'Process';
                 default:
                     return filter.isRecordedInCategory
                         ? Relation.isAllowedRelationDomainCategory(
@@ -65,10 +65,10 @@ export module ConfigurationUtil {
                             category.name,
                             filter.isRecordedInCategory,
                             Relation.Hierarchy.RECORDEDIN
-                        ) || category.name === 'WorkflowStep'
+                        ) || category.name === 'Process'
                         : !projectConfiguration.getRelationsForDomainCategory(category.name)
                                 .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace', 'WorkflowStep']
+                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace', 'Process']
                                 .includes(category.name);
             }
         });

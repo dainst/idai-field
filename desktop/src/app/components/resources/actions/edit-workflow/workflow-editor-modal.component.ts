@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Datastore,
-    WorkflowStepDocument, SortUtil, ProjectConfiguration, SortMode } from 'idai-field-core';
+    SortUtil, ProjectConfiguration, SortMode, ProcessDocument } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { AngularUtility } from '../../../../angular/angular-utility';
-import { sortWorkflowSteps } from './sort-workflow-steps';
+import { sortProcesses } from './sort-processes';
 import { Routing } from '../../../../services/routing';
 
 
@@ -27,8 +27,8 @@ export class WorkflowEditorModalComponent {
 
     public documents: Array<FieldDocument>;
 
-    public workflowSteps: Array<WorkflowStepDocument>;
-    public allowedWorkflowStepCategories: Array<CategoryForm>;
+    public processes: Array<ProcessDocument>;
+    public allowedProcessCategories: Array<CategoryForm>;
     public sortMode: SortMode = SortMode.Date;
 
 
@@ -55,54 +55,54 @@ export class WorkflowEditorModalComponent {
 
     public async initialize() {
 
-        this.allowedWorkflowStepCategories = this.getAllowedWorkflowStepCategories();
+        this.allowedProcessCategories = this.getAllowedProcessCategories();
         this.sortDocuments();
-        await this.updateWorkflowSteps();
+        await this.updateProcesses();
     }
 
 
     public async setSortMode(sortMode: SortMode) {
 
         this.sortMode = sortMode;
-        await this.updateWorkflowSteps();
+        await this.updateProcesses();
     }
 
 
-    public async createWorkflowStep(category: CategoryForm, createMultiple: boolean) {
+    public async createProcess(category: CategoryForm, createMultiple: boolean) {
 
-        const newWorkflowSteps: Array<WorkflowStepDocument> = await this.openWorkflowStepEditorModal(
-            WorkflowEditorModalComponent.buildWorkflowStepDocument(
+        const newProcesses: Array<ProcessDocument> = await this.openProcessEditorModal(
+            WorkflowEditorModalComponent.buildProcessDocument(
                 category,
                 createMultiple ? [] : this.documents
-            ) as WorkflowStepDocument,
+            ) as ProcessDocument,
             createMultiple ? this.documents.length - 1 : undefined
         );
-        if (!newWorkflowSteps) return;
+        if (!newProcesses) return;
 
         if (createMultiple) {
-            for (let i = 0; i < newWorkflowSteps.length; i++) {
-                await this.setRelation(newWorkflowSteps[i], [this.documents[i]]);
+            for (let i = 0; i < newProcesses.length; i++) {
+                await this.setRelation(newProcesses[i], [this.documents[i]]);
             }
         }
 
-        await this.updateWorkflowSteps();
+        await this.updateProcesses();
     }
 
 
-    public async linkWorkflowStep(workflowStep: WorkflowStepDocument, targets: Array<FieldDocument>) {
+    public async linkProcess(process: ProcessDocument, targets: Array<FieldDocument>) {
 
-        await this.setRelation(workflowStep, targets);
-        await this.updateWorkflowSteps();
+        await this.setRelation(process, targets);
+        await this.updateProcesses();
     }
 
 
-    public async updateWorkflowSteps() {
+    public async updateProcesses() {
 
-        this.workflowSteps = (await this.datastore.find({
+        this.processes = (await this.datastore.find({
             constraints: { 'isExecutedOn:contain': this.documents.map(document => document.resource.id) }
-        })).documents as Array<WorkflowStepDocument>;
+        })).documents as Array<ProcessDocument>;
 
-        sortWorkflowSteps(this.workflowSteps, this.sortMode);
+        sortProcesses(this.processes, this.sortMode);
     }
 
 
@@ -113,7 +113,7 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    private getAllowedWorkflowStepCategories(): Array<CategoryForm> {
+    private getAllowedProcessCategories(): Array<CategoryForm> {
 
         return intersection(
             this.documents.map(document => {
@@ -137,8 +137,8 @@ export class WorkflowEditorModalComponent {
     /**
      * @returns edited document if changes have been saved, undefined if the modal has been canceled
      */
-    private async openWorkflowStepEditorModal(workflowStep: WorkflowStepDocument, numberOfDuplicates?: number)
-            : Promise<Array<WorkflowStepDocument>|undefined> {
+    private async openProcessEditorModal(process: ProcessDocument, numberOfDuplicates?: number)
+            : Promise<Array<ProcessDocument>|undefined> {
     
         const context: MenuContext = this.menus.getContext();
         this.menus.setContext(MenuContext.DOCEDIT);
@@ -147,7 +147,7 @@ export class WorkflowEditorModalComponent {
             DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
-        modalRef.componentInstance.setDocument(workflowStep, ['isExecutedOn']);
+        modalRef.componentInstance.setDocument(process, ['isExecutedOn']);
         modalRef.componentInstance.disabledRelationFields = ['isExecutedOn'];
         if (numberOfDuplicates) modalRef.componentInstance.fixedNumberOfDuplicates = numberOfDuplicates;
 
@@ -162,22 +162,22 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    private async setRelation(workflowStep: WorkflowStepDocument, targets: Array<FieldDocument>) {
+    private async setRelation(process: ProcessDocument, targets: Array<FieldDocument>) {
 
-        const oldVersion: WorkflowStepDocument = Document.clone(workflowStep);
+        const oldVersion: ProcessDocument = Document.clone(process);
 
-        const currentTargetIds: string[] = workflowStep.resource.relations?.[Relation.Workflow.IS_EXECUTED_ON] ?? [];
+        const currentTargetIds: string[] = process.resource.relations?.[Relation.Workflow.IS_EXECUTED_ON] ?? [];
         const newTargetIds: string[] = targets.map(document => document.resource.id);
-        workflowStep.resource.relations[Relation.Workflow.IS_EXECUTED_ON] = set(currentTargetIds.concat(newTargetIds));
+        process.resource.relations[Relation.Workflow.IS_EXECUTED_ON] = set(currentTargetIds.concat(newTargetIds));
 
-        await this.applyRelationChanges(workflowStep, oldVersion);
+        await this.applyRelationChanges(process, oldVersion);
     }
 
 
-    private async applyRelationChanges(workflowStep: WorkflowStepDocument, oldVersion: WorkflowStepDocument) {
+    private async applyRelationChanges(process: ProcessDocument, oldVersion: ProcessDocument) {
 
         try {
-            await this.relationsManager.update(workflowStep, oldVersion);
+            await this.relationsManager.update(process, oldVersion);
         } catch (err) {
             console.error(err);
             this.messages.add([M.DOCEDIT_ERROR_SAVE]);
@@ -185,7 +185,7 @@ export class WorkflowEditorModalComponent {
     }
 
 
-    private static buildWorkflowStepDocument(category: CategoryForm,
+    private static buildProcessDocument(category: CategoryForm,
                                              executedOnTargets: Array<FieldDocument>): NewDocument {
 
         return {

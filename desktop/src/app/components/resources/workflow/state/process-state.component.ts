@@ -1,19 +1,19 @@
 import { Map } from 'tsfun';
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryForm, Field, Labels, ProjectConfiguration, Valuelist, WorkflowStepDocument } from 'idai-field-core';
+import { CategoryForm, Field, Labels, ProjectConfiguration, Valuelist, ProcessDocument } from 'idai-field-core';
 
 
 @Component({
-    selector: 'workflow-step-state',
-    templateUrl: './workflow-step-state.html',
+    selector: 'process-state',
+    templateUrl: './process-state.html',
     standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepStateComponent implements OnInit {
+export class ProcessStateComponent implements OnInit {
 
-    @Input() workflowStep: WorkflowStepDocument;
+    @Input() process: ProcessDocument;
 
     public valuelist: Valuelist;
 
@@ -29,7 +29,7 @@ export class WorkflowStepStateComponent implements OnInit {
                 private labels: Labels) {}
 
 
-    public getState = () => this.workflowStep.resource.state;
+    public getState = () => this.process.resource.state;
 
     public getValues = () => this.valuelist.order;
 
@@ -47,7 +47,7 @@ export class WorkflowStepStateComponent implements OnInit {
     private getValuelist(): Valuelist {
 
         const stateField: Field = CategoryForm.getField(
-            this.projectConfiguration.getCategory('WorkflowStep'),
+            this.projectConfiguration.getCategory('Process'),
             'state'
         );
 

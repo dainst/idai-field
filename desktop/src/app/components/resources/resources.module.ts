@@ -55,13 +55,13 @@ import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/sca
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
-import { WorkflowStepPlusButtonComponent } from './actions/edit-workflow/plus-button/workflow-step-plus-button.component';
+import { ProcessPlusButtonComponent } from './actions/edit-workflow/plus-button/process-plus-button.component';
 import { WorkflowRelationsComponent } from './workflow/relations/workflow-relations.component';
-import { WorkflowStepLinkButtonComponent } from './actions/edit-workflow/link-button/workflow-step-link-button.component';
-import { WorkflowStepLinkModalComponent } from './actions/edit-workflow/link-button/workflow-step-link-modal.component';
-import { DeleteWorkflowStepModalComponent } from './workflow/delete/delete-workflow-step-modal.component';
-import { WorkflowStepStateComponent } from './workflow/state/workflow-step-state.component';
-import { WorkflowStepListComponent } from './workflow/workflow-step-list.component';
+import { LinkProcessButtonComponent } from './actions/edit-workflow/link-button/link-process-button.component';
+import { LinkProcessModalComponent } from './actions/edit-workflow/link-button/link-process-modal.component';
+import { DeleteProcessModalComponent } from './workflow/delete/delete-process-modal.component';
+import { ProcessStateComponent } from './workflow/state/process-state.component';
+import { ProcessListComponent } from './workflow/process-list.component';
 import { WorkflowOverviewComponent } from './workflow/workflow-overview.component';
 
 
@@ -111,13 +111,13 @@ const remote = window.require('@electron/remote');
         ScanStoragePlaceModalComponent,
         WorkflowOverviewComponent,
         WorkflowEditorModalComponent,
-        WorkflowStepPlusButtonComponent,
+        ProcessPlusButtonComponent,
         WorkflowRelationsComponent,
-        WorkflowStepLinkButtonComponent,
-        WorkflowStepLinkModalComponent,
-        WorkflowStepStateComponent,
-        DeleteWorkflowStepModalComponent,
-        WorkflowStepListComponent
+        LinkProcessButtonComponent,
+        LinkProcessModalComponent,
+        ProcessStateComponent,
+        DeleteProcessModalComponent,
+        ProcessListComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

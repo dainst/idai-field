@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { SortMode, WorkflowStepDocument } from 'idai-field-core';
+import { SortMode, ProcessDocument } from 'idai-field-core';
 import { Routing } from '../../../services/routing';
 import { BaseList } from '../base-list';
 import { ViewFacade } from '../view/view-facade';
 import { Loading } from '../../widgets/loading';
 import { Menus } from '../../../services/menus';
-import { WorkflowStepListComponent } from './workflow-step-list.component';
+import { ProcessListComponent } from './process-list.component';
 
 
 @Component({
@@ -18,10 +18,10 @@ import { WorkflowStepListComponent } from './workflow-step-list.component';
  */
 export class WorkflowOverviewComponent extends BaseList implements AfterViewInit, OnChanges {
 
-    @Input() documents: Array<WorkflowStepDocument>;
-    @Input() selectedDocument: WorkflowStepDocument;
+    @Input() documents: Array<ProcessDocument>;
+    @Input() selectedDocument: ProcessDocument;
 
-    @ViewChild(WorkflowStepListComponent) workflowStepListComponent: WorkflowStepListComponent;
+    @ViewChild(ProcessListComponent) processListComponent: ProcessListComponent;
 
 
     constructor(private routingService: Routing,
@@ -33,7 +33,7 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
     }
 
 
-    public jumpToResource = (document: WorkflowStepDocument) => this.routingService.jumpToResource(document);
+    public jumpToResource = (document: ProcessDocument) => this.routingService.jumpToResource(document);
 
     public getSortMode = () => this.viewFacade.getSortMode();
 
@@ -42,7 +42,7 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
 
     ngAfterViewInit() {
 
-        this.scrollViewport = this.workflowStepListComponent.scrollViewport;
+        this.scrollViewport = this.processListComponent.scrollViewport;
     }
 
 
@@ -52,9 +52,9 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
     }
 
 
-    public async onChanged(editedWorkflowStep?: WorkflowStepDocument) {
+    public async onChanged(editedProcess?: ProcessDocument) {
 
-        if (editedWorkflowStep) this.scrollTo(editedWorkflowStep);
+        if (editedProcess) this.scrollTo(editedProcess);
         await this.viewFacade.populateDocumentList();
     }
 
@@ -63,7 +63,7 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
 
         const categoryName: string = super.getCurrentFilterCategory();
 
-        return categoryName !== 'WorkflowStep'
+        return categoryName !== 'Process'
             ? categoryName
             : undefined;
     }

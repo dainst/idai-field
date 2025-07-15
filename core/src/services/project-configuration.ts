@@ -201,7 +201,7 @@ export class ProjectConfiguration {
 
     public getWorkflowCategories(): Array<CategoryForm> {
 
-        return this.getCategoryWithSubcategories('WorkflowStep');
+        return this.getCategoryWithSubcategories('Process');
     }
 
 
@@ -311,7 +311,7 @@ export class ProjectConfiguration {
     private filterRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'WorkflowStep', 'Image', 'Operation'),
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Process', 'Image', 'Operation'),
             Tree.flatten
         );
     }
@@ -320,7 +320,7 @@ export class ProjectConfiguration {
     private filterFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'WorkflowStep'),
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Process'),
             Tree.flatten
         );
     }

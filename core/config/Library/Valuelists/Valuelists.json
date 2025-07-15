@@ -13,7 +13,7 @@
       "EPSG3857 (WGS 84 Web Mercator)"
     ]
   },
-  "workflow-step-state-default": {
+  "process-state-default": {
     "createdBy": "",
     "creationDate": "",
     "values": {

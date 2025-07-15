@@ -148,7 +148,7 @@ export class ResourcesComponent implements OnDestroy {
         } else if (this.viewFacade.isInInventoryManagement()) {
             this.filterOptions = this.projectConfiguration.getInventorySupercategories();
         } else if (this.viewFacade.isInWorkflowManagement()) {
-            this.filterOptions = [this.projectConfiguration.getCategory('WorkflowStep')];
+            this.filterOptions = [this.projectConfiguration.getCategory('Process')];
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',

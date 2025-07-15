@@ -15,7 +15,7 @@ import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/document/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { Relation } from '../model/configuration/relation';
-import { WorkflowStepResource } from '../model/document/workflow-step-resource';
+import { ProcessResource } from '../model/document/process-resource';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Condition } from '../model/configuration/condition';
 
@@ -494,9 +494,9 @@ export module WarningsUpdater {
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
-        if (category.parentCategory?.name === 'WorkflowStep'
-                && !WorkflowStepResource.validateState(document.resource as WorkflowStepResource)) {
-            warnings.invalidWorkflowStepState = true;
+        if (category.parentCategory?.name === 'Process'
+                && !ProcessResource.validateState(document.resource as ProcessResource)) {
+            warnings.invalidProcessState = true;
         }
 
         return Object.keys(document.resource)

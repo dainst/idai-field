@@ -925,7 +925,7 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        WorkflowStep: {
+        Process: {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
             abstract: true,
@@ -933,7 +933,7 @@ export class BuiltInConfiguration {
                 state: {
                     inputType: Field.InputType.DROPDOWN,
                     required: true,
-                    valuelistId: 'workflow-step-state-default',
+                    valuelistId: 'process-state-default',
                     constraintIndexed: true
                 },
                 date: {

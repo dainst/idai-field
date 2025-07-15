@@ -1610,8 +1610,8 @@
       "label": "Tüte",
       "fields": {}
     },
-    "WorkflowStep": {
-      "label": "Arbeitsschritt",
+    "Process": {
+      "label": "Prozess",
       "fields": {
         "state": {
           "label": "Status"

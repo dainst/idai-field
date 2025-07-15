@@ -105,7 +105,7 @@ export class DoceditComponent {
                 this.documentHolder.clonedDocument.resource.category, 'Image'
             )
             && !this.projectConfiguration.isSubcategory(
-                this.documentHolder.clonedDocument.resource.category, 'WorkflowStep'
+                this.documentHolder.clonedDocument.resource.category, 'Process'
             )
             && (this.documentHolder.isNewDocument()
                 ? this.maxNumberOfDuplicates > 1

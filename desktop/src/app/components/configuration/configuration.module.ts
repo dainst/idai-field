@@ -54,7 +54,7 @@ import { I18nSwitchComponent } from './editor/field/widgets/i18n-switch.componen
 import { ValuelistSelectorComponent } from './editor/field/widgets/valuelist-selector.component';
 import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-section.component';
 import { ConditionSectionComponent } from './editor/field/widgets/condition-section.component';
-import { CreateWorkflowStepModalComponent } from './add/category/create-workflow-step-modal.component';
+import { CreateProcessModalComponent } from './add/category/create-process-modal.component';
 
 
 @NgModule({
@@ -113,7 +113,7 @@ import { CreateWorkflowStepModalComponent } from './add/category/create-workflow
         ValuelistSelectorComponent,
         SubfieldsSectionComponent,
         ConditionSectionComponent,
-        CreateWorkflowStepModalComponent
+        CreateProcessModalComponent
     ],
     providers: [
         ConfigurationChangeNotifications,

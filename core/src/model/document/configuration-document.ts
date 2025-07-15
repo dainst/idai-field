@@ -195,12 +195,12 @@ export namespace ConfigurationDocument {
 
             if (form.parentCategory) {
                 if (form.source === 'custom') formDefinition.parent = form.parentCategory.name;
-                if (form.source === 'custom' || form.parentCategory.name === 'WorkflowStep') {
+                if (form.source === 'custom' || form.parentCategory.name === 'Process') {
                     formDefinition.groups = CategoryForm.getGroupsConfiguration(
                         newForm, getPermanentlyHiddenFields(newForm)
                     );
                 }
-                if (form.parentCategory.name === 'WorkflowStep') {
+                if (form.parentCategory.name === 'Process') {
                     addWorkflowRelations(
                         configurationDocument,
                         form.name === currentForm.name ? currentForm : form,
@@ -230,7 +230,7 @@ export namespace ConfigurationDocument {
         
         if (parentForm) addCustomParentFields(categoryForm, parentForm, clonedConfigurationDocument);
 
-        if (categoryForm.parentCategory?.name === 'WorkflowStep') {
+        if (categoryForm.parentCategory?.name === 'Process') {
             for (let relationName of Relation.Workflow.ALL) {
                 const relation: Relation = CategoryForm.getField(categoryForm, relationName) as Relation;
                 if (!relation) continue;

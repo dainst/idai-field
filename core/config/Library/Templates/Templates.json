@@ -247,7 +247,7 @@
           "hidden": [],
           "fields": {}
         },
-        "WorkflowStep:default": {
+        "Process:default": {
           "hidden": [],
           "fields": {}
         }
@@ -302,7 +302,7 @@
         "FindCollection",
         "Inscription",
         "Sample",
-        "WorkflowStep",
+        "Process",
         "Image",
         "Drawing",
         "Photo",
@@ -358,7 +358,7 @@
           "hidden": [],
           "fields": {}
         },
-        "WorkflowStep": {
+        "Process": {
           "hidden": [],
           "fields": {}
         }
@@ -370,7 +370,7 @@
         "Place",
         "Feature",
         "Find",
-        "WorkflowStep",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -445,7 +445,7 @@
           "hidden": [],
           "fields": {}
         },
-        "WorkflowStep": {
+        "Process": {
           "hidden": [],
           "fields": {}
         }
@@ -464,7 +464,7 @@
         "Roof",
         "Opening",
         "Stairs",
-        "WorkflowStep",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -519,7 +519,7 @@
           "hidden": [],
           "fields": {}
         },
-        "WorkflowStep": {
+        "Process": {
           "hidden": [],
           "fields": {}
         }
@@ -533,7 +533,7 @@
         "SurveyUnit",
         "Excavation",
         "Find",
-        "WorkflowStep",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -626,7 +626,7 @@
           "identifierPrefix": "PRZ",
           "color": "#00ff00"
         },
-        "WorkflowStep:default": {
+        "Process:default": {
           "hidden": [],
           "fields": {}
         }
@@ -641,7 +641,7 @@
         "FeatureSegment",
         "Find",
         "Sample",
-        "WorkflowStep",
+        "Process",
         "Image",
         "Photo",
         "PlanDrawing",

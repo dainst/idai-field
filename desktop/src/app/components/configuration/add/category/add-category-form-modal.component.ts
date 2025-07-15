@@ -12,7 +12,7 @@ import { Menus } from '../../../../services/menus';
 import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Naming } from '../naming';
-import { CreateWorkflowStepModalComponent } from './create-workflow-step-modal.component';
+import { CreateProcessModalComponent } from './create-process-modal.component';
 
 
 @Component({
@@ -82,7 +82,7 @@ export class AddCategoryFormModalComponent {
                 this.configurationDocument, this.categoryFormToReplace, true)) {
             this.showSwapConfirmationModal();
         } else {
-            if (this.parentCategory?.name === 'WorkflowStep') await this.addWorkflowRelations(this.selectedForm);
+            if (this.parentCategory?.name === 'Process') await this.addWorkflowRelations(this.selectedForm);
             this.addSelectedCategory();
         }
     }
@@ -142,7 +142,7 @@ export class AddCategoryFormModalComponent {
     private async createNewSubcategory() {
 
         const newCategory: CategoryForm = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
-        if (this.parentCategory?.name === 'WorkflowStep') await this.addWorkflowRelations(newCategory);
+        if (this.parentCategory?.name === 'Process') await this.addWorkflowRelations(newCategory);
         await this.openCategoryEditorModal(newCategory);
     }
 
@@ -151,7 +151,7 @@ export class AddCategoryFormModalComponent {
 
         category.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [] });
 
-        const result: Map<string[]> = await this.openCreateWorkflowStepModal(category);
+        const result: Map<string[]> = await this.openCreateProcessModal(category);
         for (let relationName of Object.keys(result)) {
             if (!result[relationName].length) continue;
             category.groups[1].fields.push({
@@ -163,13 +163,13 @@ export class AddCategoryFormModalComponent {
     }
 
 
-    private async openCreateWorkflowStepModal(category: CategoryForm): Promise<Map<string[]>> {
+    private async openCreateProcessModal(category: CategoryForm): Promise<Map<string[]>> {
 
-        const [result, componentInstance] = this.modals.make<CreateWorkflowStepModalComponent>(
-            CreateWorkflowStepModalComponent,
+        const [result, componentInstance] = this.modals.make<CreateProcessModalComponent>(
+            CreateProcessModalComponent,
             MenuContext.CONFIGURATION_MODAL,
             undefined,
-            'create-workflow-step-modal'
+            'create-process-modal'
         );
 
         componentInstance.category = category;

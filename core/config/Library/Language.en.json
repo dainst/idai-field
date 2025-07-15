@@ -1496,8 +1496,8 @@
     "StorageBag": {
       "label": "Bag"
     },
-    "WorkflowStep": {
-      "label": "Workflow step",
+    "Process": {
+      "label": "Process",
       "fields": {
         "state": {
           "label": "State"

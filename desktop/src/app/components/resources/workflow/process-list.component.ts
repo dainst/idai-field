@@ -4,31 +4,31 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { MenuContext } from '../../../services/menu-context';
 import { Map } from 'tsfun';
-import { Document, RelationsManager, Resource, Labels, ProjectConfiguration, DateSpecification, WorkflowStepDocument,
+import { Document, RelationsManager, Resource, Labels, ProjectConfiguration, DateSpecification, ProcessDocument,
     Datastore, SortMode, ChangesStream } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { DoceditComponent } from '../../docedit/docedit.component';
 import { Settings } from '../../../services/settings/settings';
 import { getSystemTimezone } from '../../../util/timezones';
-import { DeleteWorkflowStepModalComponent } from './delete/delete-workflow-step-modal.component';
+import { DeleteProcessModalComponent } from './delete/delete-process-modal.component';
 import { UtilTranslations } from '../../../util/util-translations';
 import { Menus } from '../../../services/menus';
 
 
 @Component({
-    selector: 'workflow-step-list',
-    templateUrl: './workflow-step-list.html',
+    selector: 'process-list',
+    templateUrl: './process-list.html',
     standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
+export class ProcessListComponent implements OnInit, OnChanges, OnDestroy {
 
-    @Input() workflowSteps: Array<WorkflowStepDocument>;
+    @Input() processes: Array<ProcessDocument>;
     @Input() sortMode: SortMode;
 
-    @Output() onChanged: EventEmitter<WorkflowStepDocument|void> = new EventEmitter<WorkflowStepDocument|void>();
+    @Output() onChanged: EventEmitter<ProcessDocument|void> = new EventEmitter<ProcessDocument|void>();
     @Output() onRelationTargetSelected: EventEmitter<Document> = new EventEmitter<Document>();
     @Output() onSortModeChanged: EventEmitter<SortMode> = new EventEmitter<SortMode>();
     
@@ -51,22 +51,22 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
                 private changesStream: ChangesStream) {}
 
 
-    public getCategoryLabel = (workflowStep: WorkflowStepDocument) =>
-        this.labels.get(this.projectConfiguration.getCategory(workflowStep));
+    public getCategoryLabel = (process: ProcessDocument) =>
+        this.labels.get(this.projectConfiguration.getCategory(process));
     
-    public getShortDescriptionLabel = (workflowStep: WorkflowStepDocument) =>
-        Resource.getShortDescriptionLabel(workflowStep.resource, this.labels, this.projectConfiguration);
+    public getShortDescriptionLabel = (process: ProcessDocument) =>
+        Resource.getShortDescriptionLabel(process.resource, this.labels, this.projectConfiguration);
 
-    public getDateLabel = (workflowStep: Document) => this.dateLabels[workflowStep.resource.id];
+    public getDateLabel = (process: Document) => this.dateLabels[process.resource.id];
 
-    public trackWorkflowStep = (_: number, workflowStep: WorkflowStepDocument) => workflowStep.resource.id;
+    public trackProcess = (_: number, process: ProcessDocument) => process.resource.id;
 
 
     ngOnInit() {
         
         this.changesSubscription = this.changesStream.changesNotifications().subscribe(async document => {
-            if (this.workflowSteps.find(workflowStep => workflowStep.resource.id === document.resource.id)) {
-                await this.updateListEntry(document as WorkflowStepDocument);
+            if (this.processes.find(process => process.resource.id === document.resource.id)) {
+                await this.updateListEntry(document as ProcessDocument);
             }
         })
     }
@@ -80,8 +80,8 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
 
     async ngOnChanges() {
         
-        for (let workflowStep of this.workflowSteps) {
-            await this.updateListEntry(workflowStep);
+        for (let process of this.processes) {
+            await this.updateListEntry(process);
         }
     }
 
@@ -102,36 +102,36 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
     }
     
     
-    public getRelationTargets(workflowStep: WorkflowStepDocument,
+    public getRelationTargets(process: ProcessDocument,
                               relationName: 'isExecutedOn'|'resultsIn'): Array<Document> {
 
-        return this.relationTargets[workflowStep.resource.id]?.[relationName];
+        return this.relationTargets[process.resource.id]?.[relationName];
     }
 
 
-    public async editWorkflowStep(workflowStep: WorkflowStepDocument) {
+    public async editProcess(process: ProcessDocument) {
 
-        if (await this.openWorkflowStepEditorModal(workflowStep)) {
-            await this.updateListEntry(workflowStep);
-            this.onChanged.emit(workflowStep);
+        if (await this.openProcessEditorModal(process)) {
+            await this.updateListEntry(process);
+            this.onChanged.emit(process);
         }
     }
 
 
-    public async deleteWorkflowStep(workflowStep: WorkflowStepDocument) {
+    public async deleteProcess(process: ProcessDocument) {
 
         const context: MenuContext = this.menus.getContext();
         this.menus.setContext(MenuContext.DOCEDIT);
 
         const modalRef: NgbModalRef = this.modalService.open(
-            DeleteWorkflowStepModalComponent,
+            DeleteProcessModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
         );
-        modalRef.componentInstance.workflowStep = workflowStep;
+        modalRef.componentInstance.process = process;
 
         try {
             await modalRef.result;
-            await this.relationsManager.remove(workflowStep);
+            await this.relationsManager.remove(process);
             this.onChanged.emit();
         } catch(err) {
             if (err !== 'cancel') console.error(err);
@@ -142,7 +142,7 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    private async openWorkflowStepEditorModal(workflowStep: WorkflowStepDocument): Promise<boolean> {
+    private async openProcessEditorModal(process: ProcessDocument): Promise<boolean> {
     
         const context: MenuContext = this.menus.getContext();
         this.menus.setContext(MenuContext.DOCEDIT);
@@ -151,7 +151,7 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
             DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false, animation: false }
         );
-        modalRef.componentInstance.setDocument(workflowStep);
+        modalRef.componentInstance.setDocument(process);
 
         try {
             await modalRef.result;
@@ -166,35 +166,35 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    private async updateListEntry(workflowStep: WorkflowStepDocument) {
+    private async updateListEntry(process: ProcessDocument) {
 
-        await this.updateRelationTargets(workflowStep);
-        this.updateDateLabel(workflowStep);
+        await this.updateRelationTargets(process);
+        this.updateDateLabel(process);
     }
 
 
-    private async updateRelationTargets(workflowStep: WorkflowStepDocument) {
+    private async updateRelationTargets(process: ProcessDocument) {
 
-        if (!this.relationTargets[workflowStep.resource.id]) this.relationTargets[workflowStep.resource.id] = {};
+        if (!this.relationTargets[process.resource.id]) this.relationTargets[process.resource.id] = {};
 
         for (let relationName of ['isExecutedOn', 'resultsIn']) {
-            const targets: Array<Document> = await this.fetchRelationTargets(workflowStep, relationName);
-            this.relationTargets[workflowStep.resource.id][relationName] = targets;
+            const targets: Array<Document> = await this.fetchRelationTargets(process, relationName);
+            this.relationTargets[process.resource.id][relationName] = targets;
         }
     }
 
 
-    private updateDateLabel(workflowStep: WorkflowStepDocument) {
+    private updateDateLabel(process: ProcessDocument) {
 
-        if (!workflowStep.resource.date) {
-            delete this.dateLabels[workflowStep.resource.id];
+        if (!process.resource.date) {
+            delete this.dateLabels[process.resource.id];
             return;
         }
 
         const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
 
-        this.dateLabels[workflowStep.resource.id] = DateSpecification.generateLabel(
-            workflowStep.resource.date,
+        this.dateLabels[process.resource.id] = DateSpecification.generateLabel(
+            process.resource.date,
             getSystemTimezone(),
             timeSuffix,
             Settings.getLocale(),
@@ -204,10 +204,10 @@ export class WorkflowStepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    private async fetchRelationTargets(workflowStep: WorkflowStepDocument,
+    private async fetchRelationTargets(process: ProcessDocument,
                                        relationName: string): Promise<Array<Document>> {
 
-        const targetIds: string[] = workflowStep.resource.relations[relationName];
+        const targetIds: string[] = process.resource.relations[relationName];
 
         return targetIds
             ? this.datastore.getMultiple(targetIds)

@@ -6,20 +6,20 @@
     </button>
 </div>
 <div id="view-modal-body" class="modal-body bg-light workflow-editor-modal-body">
-    <workflow-step-list [workflowSteps]="workflowSteps"
-                        [sortMode]="sortMode"
-                        (onChanged)="updateWorkflowSteps()"
-                        (onRelationTargetSelected)="jumpToRelationTarget($event)"
-                        (onSortModeChanged)="setSortMode($event)"></workflow-step-list>
-    <div *ngIf="allowedWorkflowStepCategories?.length"
-         id="workflow-step-plus-button-container">
-        <workflow-step-plus-button [baseDocuments]="documents"
-                                   [allowedCategories]="allowedWorkflowStepCategories"
-                                   (onSubmit)="createWorkflowStep($event.category, $event.createMultiple)">
-        </workflow-step-plus-button>
-        <workflow-step-link-button [baseDocuments]="documents"
-                                   [allowedWorkflowStepCategories]="allowedWorkflowStepCategories"
-                                   (onWorkflowStepSelected)="linkWorkflowStep($event, documents)">
-        </workflow-step-link-button>
+    <process-list [processes]="processes"
+                  [sortMode]="sortMode"
+                  (onChanged)="updateProcesses()"
+                  (onRelationTargetSelected)="jumpToRelationTarget($event)"
+                  (onSortModeChanged)="setSortMode($event)"></process-list>
+    <div *ngIf="allowedProcessCategories?.length"
+         id="process-plus-button-container">
+        <process-plus-button [baseDocuments]="documents"
+                             [allowedCategories]="allowedProcessCategories"
+                             (onSubmit)="createProcess($event.category, $event.createMultiple)">
+        </process-plus-button>
+        <link-process-button [baseDocuments]="documents"
+                             [allowedProcessCategories]="allowedProcessCategories"
+                             (onProcessSelected)="linkProcess($event, documents)">
+        </link-process-button>
     </div>
 </div>

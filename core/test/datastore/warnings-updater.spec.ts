@@ -64,7 +64,7 @@ describe('WarningsUpdater', () => {
     it('update index independent warnings', () => {
 
         const parentCategoryDefinition = {
-            name: 'WorkflowStep',
+            name: 'Process',
             groups: []
         } as any;
 
@@ -155,7 +155,7 @@ describe('WarningsUpdater', () => {
             unfulfilledConditionFields: ['conditionalField'],
             conflicts: true,
             missingIdentifierPrefix: true,
-            invalidWorkflowStepState: true
+            invalidProcessState: true
         });
         expect(documents[1].warnings).toEqual({
             unconfiguredFields: [],

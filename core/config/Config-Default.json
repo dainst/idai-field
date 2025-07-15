@@ -244,7 +244,7 @@
       "hidden": [],
       "fields": {}
     },
-    "WorkflowStep:default": {
+    "Process:default": {
       "hidden": [],
       "fields": {}
     }
@@ -299,7 +299,7 @@
     "FindCollection",
     "Inscription",
     "Sample",
-    "WorkflowStep",
+    "Process",
     "Image",
     "Drawing",
     "Photo",

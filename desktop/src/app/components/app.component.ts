@@ -232,8 +232,8 @@ export class AppComponent {
             $localize `:@@util.warnings.resourceLimitExceeded:Ressourcenlimit überschritten`
         );
         this.utilTranslations.addTranslation(
-            'warnings.invalidWorkflowStepState',
-            $localize `:@@util.warnings.invalidWorkflowStepState:Ungültiger Status`
+            'warnings.invalidProcessState',
+            $localize `:@@util.warnings.invalidProcessState:Ungültiger Status`
         );
         this.utilTranslations.addTranslation(
             'inventoryRegister',

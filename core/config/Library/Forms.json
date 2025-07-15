@@ -1814,11 +1814,11 @@
         }
       ]
     },
-    "WorkflowStep:default": {
+    "Process:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "categoryName": "WorkflowStep",
+      "categoryName": "Process",
       "groups": [
         {
           "name": "stem",

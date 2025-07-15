@@ -103,10 +103,10 @@ export module WarningFilters {
                 type: 'resourceLimitExceeded'
             },
             {
-                label: translations.getTranslation('warnings.invalidWorkflowStepState'),
-                constraintName: 'invalidWorkflowStepState:exist',
+                label: translations.getTranslation('warnings.invalidProcessState'),
+                constraintName: 'invalidProcessState:exist',
                 count: 0,
-                type: 'invalidWorkflowStepState'
+                type: 'invalidProcessState'
             }
         ];
 

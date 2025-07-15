@@ -142,12 +142,12 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
     public isEditWorkflowOptionAvailable(): boolean {
 
-        const workflowStepCategories: Array<CategoryForm> = this.projectConfiguration.getCategory('WorkflowStep')
+        const processCategories: Array<CategoryForm> = this.projectConfiguration.getCategory('Process')
             ?.children ?? [];
 
         return this.contextMenu.documents.length
             && this.contextMenu.documents.find(document => {
-                return workflowStepCategories.find(category => {
+                return processCategories.find(category => {
                     return this.projectConfiguration.isAllowedRelationDomainCategory(
                         category.name, document.resource.category, Relation.Workflow.IS_EXECUTED_ON
                     );

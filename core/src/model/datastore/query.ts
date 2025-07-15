@@ -48,7 +48,7 @@ export enum SortMode {
     AlphanumericDescending = 'alphanumericDescending',
 
     // Sorting by date first and identifier second
-    // (only available for resources of WorkflowStep subcategories)
+    // (only available for resources of Process subcategories)
     Date = 'date',
     DateDescending = 'dateDescending',
 

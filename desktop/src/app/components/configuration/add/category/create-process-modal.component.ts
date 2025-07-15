@@ -6,7 +6,7 @@ import { ConfigurationIndex } from '../../../../services/configuration/index/con
 
 
 @Component({
-    templateUrl: './create-workflow-step-modal.html',
+    templateUrl: './create-process-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
     },
@@ -15,7 +15,7 @@ import { ConfigurationIndex } from '../../../../services/configuration/index/con
 /**
  * @author Thomas Kleinke
  */
-export class CreateWorkflowStepModalComponent {
+export class CreateProcessModalComponent {
 
     public category: CategoryForm;
     public clonedProjectConfiguration: ProjectConfiguration;
@@ -69,7 +69,7 @@ export class CreateWorkflowStepModalComponent {
 
     public getFieldLabel(fieldName: string) {
         
-        const field: Field = this.configurationIndex.findFields(fieldName, 'WorkflowStep')?.[0];
+        const field: Field = this.configurationIndex.findFields(fieldName, 'Process')?.[0];
         return field ? this.labels.get(field) : '';
     }
 
@@ -93,7 +93,7 @@ export class CreateWorkflowStepModalComponent {
     private getSelectableSupercategories(): Array<CategoryForm> {
 
         return this.clonedProjectConfiguration.getTopLevelCategories()
-            .filter(category => !['Project', 'WorkflowStep'].includes(category.name));
+            .filter(category => !['Project', 'Process'].includes(category.name));
     }
 
 

@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
 import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named, DateSpecification,
-    WorkflowStepDocument, SortMode } from 'idai-field-core';
-import { sortWorkflowSteps } from '../sort-workflow-steps';
+    SortMode, ProcessDocument } from 'idai-field-core';
+import { sortProcesses } from '../sort-processes';
 import { getSystemTimezone } from '../../../../../util/timezones';
 import { Settings } from '../../../../../services/settings/settings';
 import { UtilTranslations } from '../../../../../util/util-translations';
 
 
 @Component({
-    selector: 'workflow-step-link-modal',
-    templateUrl: './workflow-step-link-modal.html',
+    selector: 'link-process-modal',
+    templateUrl: './link-process-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     },
@@ -20,14 +20,14 @@ import { UtilTranslations } from '../../../../../util/util-translations';
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepLinkModalComponent {
+export class LinkProcessModalComponent {
 
     public baseDocuments: Array<Document>;
-    public allowedWorkflowStepCategories: Array<CategoryForm>;
+    public allowedProcessCategories: Array<CategoryForm>;
 
     public filterOptions: Array<CategoryForm> = [];
     public selectedDocument: Document;
-    public availableWorkflowSteps: Array<WorkflowStepDocument>;
+    public availableProcesses: Array<ProcessDocument>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -37,8 +37,8 @@ export class WorkflowStepLinkModalComponent {
                 private utilTranslations: UtilTranslations) {}
 
 
-    public getCategoryLabel = (workflowStep: Document) =>
-        this.labels.get(this.projectConfiguration.getCategory(workflowStep));
+    public getCategoryLabel = (process: Document) =>
+        this.labels.get(this.projectConfiguration.getCategory(process));
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
@@ -51,7 +51,7 @@ export class WorkflowStepLinkModalComponent {
 
     public initialize() {
 
-        this.allowedWorkflowStepCategories = this.getAllowedWorkflowStepCategories();
+        this.allowedProcessCategories = this.getAllowedProcessCategories();
         this.filterOptions = this.getFilterOptions();
     }
 
@@ -59,21 +59,21 @@ export class WorkflowStepLinkModalComponent {
     public async selectDocument(document: Document) {
 
         this.selectedDocument = document;
-        this.availableWorkflowSteps = await this.getAvailableWorkflowSteps();
-        sortWorkflowSteps(this.availableWorkflowSteps, SortMode.Date);
+        this.availableProcesses = await this.getAvailableProcesses();
+        sortProcesses(this.availableProcesses, SortMode.Date);
     }
 
 
-    public selectWorkflowStep(workflowStep: WorkflowStepDocument) {
+    public selectProcess(process: ProcessDocument) {
 
-        this.activeModal.close(workflowStep);
+        this.activeModal.close(process);
     }
 
 
     public reset() {
 
         this.selectedDocument = undefined;
-        this.availableWorkflowSteps = undefined;
+        this.availableProcesses = undefined;
     }
 
 
@@ -88,14 +88,14 @@ export class WorkflowStepLinkModalComponent {
     }
 
 
-    public getDateLabel(workflowStep: WorkflowStepDocument): string {
+    public getDateLabel(process: ProcessDocument): string {
     
-        if (!workflowStep.resource.date) return '';
+        if (!process.resource.date) return '';
 
         const timeSuffix: string = $localize `:@@revisionLabel.timeSuffix:Uhr`;
 
         return DateSpecification.generateLabel(
-            workflowStep.resource.date,
+            process.resource.date,
             getSystemTimezone(),
             timeSuffix,
             Settings.getLocale(),
@@ -105,7 +105,7 @@ export class WorkflowStepLinkModalComponent {
     }
 
 
-    private getAllowedWorkflowStepCategories(): Array<CategoryForm> {
+    private getAllowedProcessCategories(): Array<CategoryForm> {
 
         return intersection(
             this.baseDocuments.map(document => {
@@ -120,7 +120,7 @@ export class WorkflowStepLinkModalComponent {
 
     private getFilterOptions(): Array<CategoryForm> {
 
-        return this.allowedWorkflowStepCategories.reduce((result, subcategory) => {
+        return this.allowedProcessCategories.reduce((result, subcategory) => {
             return result.concat(
                 this.projectConfiguration.getAllowedRelationRangeCategories(
                     Relation.Workflow.IS_EXECUTED_ON, subcategory.name
@@ -130,21 +130,21 @@ export class WorkflowStepLinkModalComponent {
     }
 
 
-    private async getAvailableWorkflowSteps(): Promise<Array<WorkflowStepDocument>> {
+    private async getAvailableProcesses(): Promise<Array<ProcessDocument>> {
 
-        const workflowSteps: Array<WorkflowStepDocument> = (await this.datastore.find({
+        const processes: Array<ProcessDocument> = (await this.datastore.find({
             constraints: { 'isExecutedOn:contain': this.selectedDocument.resource.id }
-        })).documents as Array<WorkflowStepDocument>;
+        })).documents as Array<ProcessDocument>;
 
-        const linkedWorkflowSteps: Array<WorkflowStepDocument> = (await this.datastore.find({
+        const linkedProcesses: Array<ProcessDocument> = (await this.datastore.find({
             constraints: { 'isExecutedOn:contain': this.baseDocuments.map(document => document.resource.id) }
-        })).documents as Array<WorkflowStepDocument>;
+        })).documents as Array<ProcessDocument>;
 
-        return workflowSteps.filter(workflowStep => {
-            return !linkedWorkflowSteps.map(linkedWorkflowStep => {
-                return linkedWorkflowStep.resource.id;
-            }).includes(workflowStep.resource.id)
-                && this.allowedWorkflowStepCategories.map(to(Named.NAME)).includes(workflowStep.resource.category);
+        return processes.filter(process => {
+            return !linkedProcesses.map(linkedProcess => {
+                return linkedProcess.resource.id;
+            }).includes(process.resource.id)
+                && this.allowedProcessCategories.map(to(Named.NAME)).includes(process.resource.category);
         });
     }
 

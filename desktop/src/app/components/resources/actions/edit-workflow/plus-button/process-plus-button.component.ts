@@ -2,26 +2,26 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { CategoryForm, FieldDocument, ProjectConfiguration } from 'idai-field-core';
 
 
-export type WorkflowStepPlusButtonResult = {
+export type ProcessPlusButtonResult = {
     category: CategoryForm;
     createMultiple?: boolean;
 };
 
 
 @Component({
-    selector: 'workflow-step-plus-button',
-    templateUrl: './workflow-step-plus-button.html',
+    selector: 'process-plus-button',
+    templateUrl: './process-plus-button.html',
     standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepPlusButtonComponent {
+export class ProcessPlusButtonComponent {
 
     @Input() baseDocuments: Array<FieldDocument>;
     @Input() allowedCategories: Array<CategoryForm>;
 
-    @Output() onSubmit: EventEmitter<WorkflowStepPlusButtonResult> = new EventEmitter<WorkflowStepPlusButtonResult>();
+    @Output() onSubmit: EventEmitter<ProcessPlusButtonResult> = new EventEmitter<ProcessPlusButtonResult>();
 
     @ViewChild('popover') popover: any;
 
@@ -55,7 +55,7 @@ export class WorkflowStepPlusButtonComponent {
 
     public selectCategory(category: CategoryForm) {
 
-        const result: WorkflowStepPlusButtonResult = { category };
+        const result: ProcessPlusButtonResult = { category };
         if (this.createMultiple !== undefined) result.createMultiple = this.createMultiple;
 
         this.onSubmit.emit(result);

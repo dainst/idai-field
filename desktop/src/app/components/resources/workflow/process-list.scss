@@ -1,4 +1,4 @@
-workflow-step-list {
+process-list {
   display: block;
   width: 100%;
   background-color: white;
@@ -11,79 +11,79 @@ workflow-step-list {
     min-height: 100%;
   }
 
-  .workflow-steps-headings,
-  .workflow-steps-body {
+  .processes-headings,
+  .processes-body {
     overflow-x: hidden;
     overflow-y: scroll;
   }
 
-  .workflow-steps-body {
+  .processes-body {
     height: calc(100% - 48px);
 
-    .workflow-step {
+    .process {
       height: 59px;
     }
   }
 
-  .workflow-step {
+  .process {
     display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
-    .workflow-step-state-header,
-    .workflow-step-date,
-    .workflow-step-identifier,
-    .workflow-step-category {
+    .process-state-header,
+    .process-date,
+    .process-identifier,
+    .process-category {
       padding: 10px;
     }
 
-    .workflow-step-date,
-    .workflow-step-identifier,
-    .workflow-step-category {
+    .process-date,
+    .process-identifier,
+    .process-category {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
 
-    .workflow-step-date,
-    .workflow-step-identifier,
-    .workflow-step-category {
+    .process-date,
+    .process-identifier,
+    .process-category {
       line-height: 35px;
     }
 
-    .workflow-step-executed-on,
-    .workflow-step-results-in {
+    .process-executed-on,
+    .process-results-in {
       flex: 0 0 149px;
     }
 
-    .workflow-step-state-header,
-    .workflow-step-state,
-    .workflow-step-date {
+    .process-state-header,
+    .process-state,
+    .process-date {
       display: flex;
       align-items: center;
     }
 
 
-    .workflow-step-state-header,
-    .workflow-step-state {
+    .process-state-header,
+    .process-state {
       flex: 0 0 70px;
       justify-content: center;
     }
 
-    .workflow-step-date {
+    .process-date {
       flex: 0 0 250px;
       line-height: 17px;
       white-space: break-spaces;
     }
 
-    .workflow-step-identifier {
+    .process-identifier {
       flex-grow: 1;
     }
 
-    .workflow-step-category {
+    .process-category {
       flex: 0 0 190px;
     }
 
-    .workflow-step-buttons {
+    .process-buttons {
       flex: 0 0 83px;
 
       button {
@@ -91,14 +91,14 @@ workflow-step-list {
       }
     }
 
-    &.workflow-steps-headings {
-      .workflow-step-executed-on,
-      .workflow-step-results-in {
+    &.processes-headings {
+      .process-executed-on,
+      .process-results-in {
         padding: 10px;
       }
 
-      .workflow-step-date,
-      .workflow-step-identifier {
+      .process-date,
+      .process-identifier {
         transition: color 0.05s ease-in-out;
 
         .mdi {

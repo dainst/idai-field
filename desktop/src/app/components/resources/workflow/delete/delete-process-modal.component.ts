@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Relation, WorkflowStepDocument } from 'idai-field-core';
+import { Relation, ProcessDocument } from 'idai-field-core';
 
 
 @Component({
-    templateUrl: './delete-workflow-step-modal.html',
+    templateUrl: './delete-process-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     },
@@ -13,15 +13,15 @@ import { Relation, WorkflowStepDocument } from 'idai-field-core';
 /**
  * @author Thomas Kleinke
  */
-export class DeleteWorkflowStepModalComponent {
+export class DeleteProcessModalComponent {
 
-    public workflowStep: WorkflowStepDocument;
+    public process: ProcessDocument;
 
 
     constructor(public activeModal: NgbActiveModal) {}
 
 
-    public getNumberOfLinkedResources = () => this.workflowStep.resource.relations
+    public getNumberOfLinkedResources = () => this.process.resource.relations
         ?.[Relation.Workflow.IS_EXECUTED_ON]?.length;
 
 

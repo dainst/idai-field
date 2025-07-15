@@ -585,7 +585,7 @@ export class WarningsModalComponent {
 
         if (type === 'missingIdentifierPrefix' || type === 'nonUniqueIdentifier') {
             section.fieldName = Resource.IDENTIFIER;
-        } else if (type === 'invalidWorkflowStepState') {
+        } else if (type === 'invalidProcessState') {
             section.fieldName = 'state';
         } else if (fieldName) {
             section.fieldName = fieldName;

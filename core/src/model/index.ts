@@ -15,8 +15,8 @@ export { BaseGroup, Group, Groups, GroupDefinition } from './configuration/group
 export { ImageDocument } from './document/image-document';
 export { ImageGeoreference } from './document/image-georeference';
 export { ImageResource } from './document/image-resource';
-export { WorkflowStepDocument } from './document/workflow-step-document';
-export { WorkflowStepResource } from './document/workflow-step-resource';
+export { ProcessDocument } from './document/process-document';
+export { ProcessResource } from './document/process-resource';
 export { Literature } from './input-types/literature';
 export { Composite } from './input-types/composite';
 export { NewDocument } from './document/document';

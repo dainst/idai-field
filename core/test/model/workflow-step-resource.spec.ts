@@ -1,50 +1,50 @@
-import { WorkflowStepResource } from '../../src/model/document/workflow-step-resource';
+import { ProcessResource } from '../../src/model/document/process-resource';
 
 
 /**
  * @author Thomas Kleinke
  */
-describe('WorkflowStepResource', () => {
+describe('ProcessResource', () => {
 
     it('validate state "planned" as valid', () => {
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '01.02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-01-01')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-02-15')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-06-01')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-01-01')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-02-15')
         )).toBe(true);
     });
@@ -53,34 +53,34 @@ describe('WorkflowStepResource', () => {
     it('validate state "planned" as invalid', () => {
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '01.02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-03-01')
         )).toBe(false);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-03-01')
         )).toBe(false);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2026-01-01')
         )).toBe(false);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'planned',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-04-01')
         )).toBe(false);
     });
@@ -89,58 +89,58 @@ describe('WorkflowStepResource', () => {
     it('validate state "in progress" as valid', () => {
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '01.02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-03-01')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-02-15')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-06-01')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-03-01')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-02-15')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '02.2025', endValue: '03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-02-15')
         )).toBe(true);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '02.2025', endValue: '03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-03-15')
         )).toBe(true);
     });
@@ -149,42 +149,42 @@ describe('WorkflowStepResource', () => {
     it('validate state "in progress" as invalid', () => {
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '01.02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-01-01')
         )).toBe(false);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '02.2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-01-01')
         )).toBe(false);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '2025', isRange: false }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2024-12-01')
         )).toBe(false);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-01-01')
         )).toBe(false);
 
         expect(
-            WorkflowStepResource.validateState({
+            ProcessResource.validateState({
                 state: 'in progress',
                 date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-            } as WorkflowStepResource,
+            } as ProcessResource,
             new Date('2025-04-01')
         )).toBe(false);
     });
@@ -196,34 +196,34 @@ describe('WorkflowStepResource', () => {
         
         for (let state of states) {
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '01.02.2025', isRange: false }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-03-01')
             )).toBe(true);
 
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '02.2025', isRange: false }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-02-15')
             )).toBe(true);
 
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '2025', isRange: false }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-06-01')
             )).toBe(true);
 
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-04-01')
             )).toBe(true);
         }
@@ -236,42 +236,42 @@ describe('WorkflowStepResource', () => {
         
         for (let state of states) {
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '01.02.2025', isRange: false }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-01-01')
             )).toBe(false);
 
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '02.2025', isRange: false }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-01-01')
             )).toBe(false);
 
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '2025', isRange: false }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2024-12-01')
             )).toBe(false);
 
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-01-01')
             )).toBe(false);
 
             expect(
-                WorkflowStepResource.validateState({
+                ProcessResource.validateState({
                     state,
                     date: { value: '01.02.2025', endValue: '01.03.2025', isRange: true }
-                } as WorkflowStepResource,
+                } as ProcessResource,
                 new Date('2025-02-15')
             )).toBe(false);
         }

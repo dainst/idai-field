@@ -1,26 +1,26 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../../../../services/menus';
-import { CategoryForm, FieldDocument, WorkflowStepDocument } from 'idai-field-core';
+import { CategoryForm, FieldDocument, ProcessDocument } from 'idai-field-core';
 import { MenuContext } from '../../../../../services/menu-context';
-import { WorkflowStepLinkModalComponent } from './workflow-step-link-modal.component';
+import { LinkProcessModalComponent } from './link-process-modal.component';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 
 
 @Component({
-    selector: 'workflow-step-link-button',
-    templateUrl: './workflow-step-link-button.html',
+    selector: 'link-process-button',
+    templateUrl: './link-process-button.html',
     standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowStepLinkButtonComponent {
+export class LinkProcessButtonComponent {
 
     @Input() baseDocuments: Array<FieldDocument>;
-    @Input() allowedWorkflowStepCategories: Array<CategoryForm>;
+    @Input() allowedProcessCategories: Array<CategoryForm>;
 
-    @Output() onWorkflowStepSelected: EventEmitter<WorkflowStepDocument> = new EventEmitter<WorkflowStepDocument>();
+    @Output() onProcessSelected: EventEmitter<ProcessDocument> = new EventEmitter<ProcessDocument>();
 
 
     constructor(private menus: Menus,
@@ -33,15 +33,15 @@ export class WorkflowStepLinkButtonComponent {
             this.menus.setContext(MenuContext.MODAL);
 
             const modalRef: NgbModalRef = this.modalService.open(
-                WorkflowStepLinkModalComponent,
+                LinkProcessModalComponent,
                 { animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.baseDocuments = this.baseDocuments;
-            modalRef.componentInstance.allowedWorkflowStepCategories = this.allowedWorkflowStepCategories;
+            modalRef.componentInstance.allowedProcessCategories = this.allowedProcessCategories;
             await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
-            const selectedWorkflowStep: WorkflowStepDocument = await modalRef.result;
-            this.onWorkflowStepSelected.emit(selectedWorkflowStep);
+            const selectedProcess: ProcessDocument = await modalRef.result;
+            this.onProcessSelected.emit(selectedProcess);
         } catch (err) {
             if (err !== 'cancel') console.error(err);
         } finally {

@@ -1,4 +1,4 @@
-#workflow-step-link-modal-body {
+#link-process--modal-body {
   p {
     margin-bottom: 5px;
   }
@@ -22,7 +22,7 @@
     }
   }
 
-  #available-workflow-steps {
+  #available-processes {
     max-height: calc(100vh - 350px);
     overflow-x: hidden;
     overflow-y: auto;
@@ -46,7 +46,7 @@
     }
   }
 
-  #no-available-workflow-steps-info {
+  #no-available-processes-info {
     width: 100%;
     height: 32px;
     margin-top: 23px;

@@ -1,35 +1,35 @@
-<div id="workflow-step-link-modal-body" class="modal-body">
+<div id="link-process-modal-body" class="modal-body">
     <div *ngIf="!selectedDocument">
-        <p i18n="@@resources.workflowStepLinkModal.chooseResource">Ressource wählen:</p>
+        <p i18n="@@resources.processLinkModal.chooseResource">Ressource wählen:</p>
         <document-picker [filterOptions]="filterOptions"
                          [getConstraints]="getConstraints"
                          (documentSelected)="selectDocument($event)"></document-picker>
     </div>
     <div *ngIf="selectedDocument">
-        <p i18n="@@resources.workflowStepLinkModal.selectedResource">
+        <p i18n="@@resources.processLinkModal.selectedResource">
             Ausgewählte Ressource:
         </p>
         <div id="selected-document-button" (click)="reset()">
             <document-teaser [document]="selectedDocument"></document-teaser>
             <span class="mdi mdi-close-circle"></span>
         </div>
-        <div *ngIf="availableWorkflowSteps?.length">
-            <p i18n="@@resources.workflowStepLinkModal.chooseWorkflowStepToLink">
+        <div *ngIf="availableProcesses?.length">
+            <p i18n="@@resources.processLinkModal.chooseProcessToLink">
                 Zu verknüpfenden Arbeitsgang wählen:
             </p>
-            <ul id="available-workflow-steps" class="list-group">
-                <li *ngFor="let workflowStep of availableWorkflowSteps"
-                    (click)="selectWorkflowStep(workflowStep)"
+            <ul id="available-processes" class="list-group">
+                <li *ngFor="let process of availableProcesses"
+                    (click)="selectProcess(process)"
                     class="list-group-item">
-                    <div>{{workflowStep.resource.identifier}}</div>
-                    <div>{{getCategoryLabel(workflowStep)}}</div>
-                    <div>{{getDateLabel(workflowStep)}}</div>
+                    <div>{{process.resource.identifier}}</div>
+                    <div>{{getCategoryLabel(process)}}</div>
+                    <div>{{getDateLabel(process)}}</div>
                 </li>
             </ul>
         </div>
-        <div *ngIf="!availableWorkflowSteps?.length"
-             id="no-available-workflow-steps-info"
-             i18n="@@resources.workflowStepLinkModal.noAvailableWorkflowSteps">
+        <div *ngIf="!availableProcesses?.length"
+             id="no-available-processes-info"
+             i18n="@@resources.processLinkModal.noAvailableProcesses">
             Keine verknüpfbaren Arbeitsschritte gefunden.
         </div>
     </div>

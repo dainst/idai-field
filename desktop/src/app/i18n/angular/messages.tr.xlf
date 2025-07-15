@@ -8977,14 +8977,6 @@
           <context context-type="linenumber">153,155</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.workflowStepLinkModal.chooseWorkflowStepToLink" datatype="html">
-        <source>Zu verknüpfenden Arbeitsgang wählen:</source>
-        <target state="needs-translation">Zu verknüpfenden Arbeitsgang wählen:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
-          <context context-type="linenumber">17,19</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.workflowEditorModal.state" datatype="html">
         <source>Status</source>
         <target state="needs-translation">Status</target>
@@ -9283,14 +9275,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">14,17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.workflowRelationsModal.heading.resultsIn" datatype="html">
-        <source>Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ergibt:     &lt;"/> ergibt: </source>
-        <target state="needs-translation">Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ergibt:     &lt;"/> ergibt: </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/relations/workflow-relations-modal.html</context>
-          <context context-type="linenumber">7,9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.date.to" datatype="html">

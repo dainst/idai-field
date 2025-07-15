@@ -8,6 +8,7 @@ process-list {
   user-select: none;
 
   .cdk-virtual-scroll-content-wrapper {
+    width: 100%;
     min-height: 100%;
   }
 

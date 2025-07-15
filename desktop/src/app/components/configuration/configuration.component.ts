@@ -78,7 +78,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'images', label: $localize `:@@configuration.categoriesFilter.images:Bilderverwaltung` },
         { name: 'types', label: $localize `:@@navbar.tabs.types:Typenverwaltung` },
         { name: 'inventory', label: $localize `:@@navbar.tabs.inventory:Inventarisierung` },
-        { name: 'workflow', label: $localize `:@@navbar.tabs.workflow:Arbeitsgangverwaltung` }
+        { name: 'workflow', label: $localize `:@@navbar.tabs.workflow:Workflow` }
     ];
 
     public availableInputTypes: Array<InputType> = [

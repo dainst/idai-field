@@ -149,7 +149,7 @@
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="eturn this._max"/></source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="barConfig);  pu"/><x id="INTERPOLATION"/></target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="barConfig);  pu"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/progressbar/progressbar.ts</context>
           <context context-type="linenumber">28</context>
@@ -9393,8 +9393,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.backups.path.info" datatype="html">
-        <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
-        <target state="translated">Field</target>
+        <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projektdatenbanken. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
+        <target state="translated">Field Desktop automatically creates backups of all project databases on this computer at regular intervals. This path specifies the directory in which the created backup files are stored.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">166,170</context>
@@ -9402,7 +9402,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info" datatype="html">
         <source>Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</source>
-        <target state="needs-translation">Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</target>
+        <target state="translated">Based on the currently configured rules, the following files are stored in the backup directory for each project:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">220,222</context>
@@ -9410,7 +9410,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.single" datatype="html">
         <source>Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </source>
-        <target state="needs-translation">Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </target>
+        <target state="translated">One backup file <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>every<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> hour </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">230,232</context>
@@ -9418,7 +9418,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.size.info" datatype="html">
         <source>Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Currently used disk space: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">257,259</context>
@@ -9426,7 +9426,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </target>
+        <target state="translated">(the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>most recent<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> file) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -9434,7 +9434,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionalFieldInfo.tooltip.multiple" datatype="html">
         <source>Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" einer der folgenden Werte eingetragen ist: <x id="PH_1" equiv-text="conditionLabel"/></source>
-        <target state="needs-translation">Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" einer der folgenden Werte eingetragen ist: <x id="PH_1" equiv-text="conditionLabel"/></target>
+        <target state="translated">This field is displayed because one of the following values is entered in the field "<x id="PH" equiv-text="fieldLabel"/>": <x id="PH_1" equiv-text="conditionLabel"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">147</context>
@@ -9442,7 +9442,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionalFieldInfo.tooltip.single" datatype="html">
         <source>Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" der Wert "<x id="PH_1" equiv-text="conditionLabel"/>" eingetragen ist.</source>
-        <target state="needs-translation">Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" der Wert "<x id="PH_1" equiv-text="conditionLabel"/>" eingetragen ist.</target>
+        <target state="translated">This field is displayed because the value "<x id="PH_1" equiv-text="conditionLabel"/>" has been entered in the field "<x id="PH" equiv-text="fieldLabel"/>".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">149</context>
@@ -9450,7 +9450,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.error.automaticFileCreationFaile" datatype="html">
         <source>Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.</source>
-        <target state="needs-translation">Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.</target>
+        <target state="translated">No automatic backups could be created. Please check the settings and make sure that there is sufficient disk space available.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">374</context>
@@ -9458,7 +9458,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</source>
-        <target state="needs-translation">Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</target>
+        <target state="translated">The same resources may not be specified as targets of both the relation 'isCarriedOutOn' and the relation 'resultsIn'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">703</context>
@@ -9466,7 +9466,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.downloadFailed" datatype="html">
         <source>Beim Versuch, das Bild '[0]' herunterzuladen, ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Versuch, das Bild '[0]' herunterzuladen, ist ein Fehler aufgetreten.</target>
+        <target state="translated">An error occurred while trying to download the image '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">995</context>
@@ -9474,7 +9474,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.workflow" datatype="html">
         <source>Workflow</source>
-        <target state="needs-translation">Workflow</target>
+        <target state="translated">Workflow</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">81</context>
@@ -9718,7 +9718,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.time" datatype="html">
         <source>Backups nach Uhrzeit aufbewahren</source>
-        <target state="needs-translation">Backups nach Uhrzeit aufbewahren</target>
+        <target state="translated">Keep backups according to time</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">172</context>
@@ -9726,7 +9726,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.customInterval" datatype="html">
         <source>Abstand in Stunden</source>
-        <target state="needs-translation">Abstand in Stunden</target>
+        <target state="translated">Interval in hours</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">180</context>
@@ -9734,7 +9734,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.custom" datatype="html">
         <source>Anzahl</source>
-        <target state="needs-translation">Anzahl</target>
+        <target state="translated">Number</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">188</context>
@@ -9742,7 +9742,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.date" datatype="html">
         <source>Backups nach Datum aufbewahren</source>
-        <target state="needs-translation">Backups nach Datum aufbewahren</target>
+        <target state="translated">Keep backups according to date</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">192</context>
@@ -9750,7 +9750,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.daily" datatype="html">
         <source>Tag</source>
-        <target state="needs-translation">Tag</target>
+        <target state="translated">Day</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">200</context>
@@ -9758,7 +9758,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.weekly" datatype="html">
         <source>Woche</source>
-        <target state="needs-translation">Woche</target>
+        <target state="translated">Week</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">208</context>
@@ -9766,7 +9766,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.monthly" datatype="html">
         <source>Monat</source>
-        <target state="needs-translation">Monat</target>
+        <target state="translated">Month</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">216</context>
@@ -9774,7 +9774,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.current" datatype="html">
         <source>Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</source>
-        <target state="needs-translation">Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</target>
+        <target state="translated">One backup file of the latest version of each project database</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">225,227</context>
@@ -9782,7 +9782,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.multiple" datatype="html">
         <source>Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </source>
-        <target state="needs-translation">Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </target>
+        <target state="translated">One backup file every <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> hours </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">234,236</context>
@@ -9790,7 +9790,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.daily" datatype="html">
         <source>Eine Backup-Datei pro Tag</source>
-        <target state="needs-translation">Eine Backup-Datei pro Tag</target>
+        <target state="translated">One backup file per day</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">241</context>
@@ -9798,7 +9798,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.weekly" datatype="html">
         <source>Eine Backup-Datei pro Woche</source>
-        <target state="needs-translation">Eine Backup-Datei pro Woche</target>
+        <target state="translated">One backup file per week</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">246</context>
@@ -9806,7 +9806,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.monthly" datatype="html">
         <source>Eine Backup-Datei pro Monat</source>
-        <target state="needs-translation">Eine Backup-Datei pro Monat</target>
+        <target state="translated">One backup file per month</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">251</context>
@@ -9814,7 +9814,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.estimatedSize.info" datatype="html">
         <source>Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Disk space used in the future (estimated): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">261,263</context>
@@ -9822,7 +9822,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.warning" datatype="html">
         <source>Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.</target>
+        <target state="translated">Please note that existing backup files are automatically deleted after saving the settings if they do not comply with the new rules.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">266,269</context>
@@ -9830,7 +9830,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </target>
+        <target state="translated">(the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> most recent files) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>
@@ -9838,7 +9838,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unfulfilledConditionFields" datatype="html">
         <source>Nicht erfüllte Anzeigebedingungen</source>
-        <target state="needs-translation">Nicht erfüllte Anzeigebedingungen</target>
+        <target state="translated">Unfulfilled display conditions</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">204</context>
@@ -9846,7 +9846,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.invalidProcessState" datatype="html">
         <source>Ungültiger Status</source>
-        <target state="needs-translation">Ungültiger Status</target>
+        <target state="translated">Invalid state</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -9854,7 +9854,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionInfo.tooltip.single" datatype="html">
         <source>Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab.</source>
-        <target state="needs-translation">Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab.</target>
+        <target state="translated">The visibility of another field depends on the data entered in this field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.html</context>
           <context context-type="linenumber">16</context>
@@ -9862,7 +9862,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionInfo.tooltip.multiple" datatype="html">
         <source>Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab.</source>
-        <target state="needs-translation">Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab.</target>
+        <target state="translated">The visibility of other fields depends on the data entered in this field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.html</context>
           <context context-type="linenumber">22</context>
@@ -9870,7 +9870,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.error.invalidAutoBackupDirectory" datatype="html">
         <source>Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.</source>
-        <target state="needs-translation">Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.</target>
+        <target state="translated">No automatic backups could be created. The directory path specified in the settings in invalid.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">370</context>
@@ -9878,7 +9878,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation '[0]' als auch der Relation '[1]' an.</source>
-        <target state="needs-translation">Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation '[0]' als auch der Relation '[1]' an.</target>
+        <target state="translated">Please do not select the same resources as targets of both the relation '[0]' and the relation '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">923</context>
@@ -9886,7 +9886,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.single" datatype="html">
         <source>Das Bild wurde erfolgreich exportiert.</source>
-        <target state="needs-translation">Das Bild wurde erfolgreich exportiert.</target>
+        <target state="translated">The image has been exported successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">959</context>
@@ -9894,7 +9894,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.multiple" datatype="html">
         <source>[0] Bilder wurden erfolgreich exportiert.</source>
-        <target state="needs-translation">[0] Bilder wurden erfolgreich exportiert.</target>
+        <target state="translated">[0] images have been exported successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">963</context>
@@ -9902,7 +9902,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.single" datatype="html">
         <source>Das Originalbild wurde erfolgreich heruntergeladen.</source>
-        <target state="needs-translation">Das Originalbild wurde erfolgreich heruntergeladen.</target>
+        <target state="translated">The original image has been downloaded successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">967</context>
@@ -9910,7 +9910,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.multiple" datatype="html">
         <source>[0] Originalbilder wurden erfolgreich heruntergeladen.</source>
-        <target state="needs-translation">[0] Originalbilder wurden erfolgreich heruntergeladen.</target>
+        <target state="translated">[0] original images have been downloaded successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">971</context>
@@ -9918,7 +9918,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.exportFailed" datatype="html">
         <source>Beim Export der Bilder ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Export der Bilder ist ein Fehler aufgetreten.</target>
+        <target state="translated">An error occurred while exporting the images.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">991</context>
@@ -9926,7 +9926,7 @@
       </trans-unit>
       <trans-unit id="widgets.quittingModal.info" datatype="html">
         <source>Field Desktop wird beendet...</source>
-        <target state="needs-translation">Field Desktop wird beendet...</target>
+        <target state="translated">Closing Field Desktop...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">5,7</context>
@@ -9934,7 +9934,7 @@
       </trans-unit>
       <trans-unit id="docedit.relations.automaticallyFilled" datatype="html">
         <source>Dieses Feld wird automatisch ausgefüllt.</source>
-        <target state="needs-translation">Dieses Feld wird automatisch ausgefüllt.</target>
+        <target state="translated">This field is filled in automatically.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/relation-picker/relation-picker-group.html</context>
           <context context-type="linenumber">23</context>
@@ -9942,7 +9942,7 @@
       </trans-unit>
       <trans-unit id="image.export" datatype="html">
         <source>Bild exportieren</source>
-        <target state="needs-translation">Bild exportieren</target>
+        <target state="translated">Export image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.html</context>
           <context context-type="linenumber">30</context>
@@ -9950,7 +9950,7 @@
       </trans-unit>
       <trans-unit id="images.download.tooltip.single" datatype="html">
         <source>Originalbild herunterladen</source>
-        <target state="needs-translation">Originalbild herunterladen</target>
+        <target state="translated">Download original image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">134</context>
@@ -9966,7 +9966,7 @@
       </trans-unit>
       <trans-unit id="images.download.tooltip.multiple" datatype="html">
         <source>Originalbilder herunterladen</source>
-        <target state="needs-translation">Originalbilder herunterladen</target>
+        <target state="translated">Download original images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">135</context>

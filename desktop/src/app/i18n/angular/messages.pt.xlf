@@ -8325,28 +8325,12 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="navbar.taskbar.fixOutliers.info" datatype="html">
-        <source>Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</source>
-        <target state="translated">Por favor selecionar o valor correto da lista de valores.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.all" datatype="html">
         <source>Alle Vorkommnisse dieses Werts ersetzen</source>
         <target state="translated">Substituir todas as ocorrências deste valor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="navbar.taskbar.fixOutliers.all.info" datatype="html">
-        <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </source>
-        <target state="translated">Por favor note que através desta ação vai ser substituído o valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> , não contido na lista de valores, pelo valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValue)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> em todos os campos <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> de todos os recursos. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
-          <context context-type="linenumber">50,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fixingDataInProgress.single" datatype="html">
@@ -8933,14 +8917,6 @@
           <context context-type="linenumber">4,6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.workflow.range.isExecutedOn" datatype="html">
-        <source>Durchführbar an</source>
-        <target state="needs-translation">Durchführbar an</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
-          <context context-type="linenumber">188</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.workflow.range.resultsIn" datatype="html">
         <source>Ergibt</source>
         <target state="needs-translation">Ergibt</target>
@@ -9021,14 +8997,6 @@
           <context context-type="linenumber">10,12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteWorkflowStepModal.warning" datatype="html">
-        <source>Der Arbeitsschritt wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </source>
-        <target state="needs-translation">Der Arbeitsschritt wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/delete/delete-workflow-step-modal.html</context>
-          <context context-type="linenumber">12,14</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.workflowStepLinkModal.chooseResource" datatype="html">
         <source>Ressource wählen:</source>
         <target state="needs-translation">Ressource wählen:</target>
@@ -9037,28 +9005,12 @@
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.workflowStepLinkModal.selectedResource" datatype="html">
-        <source>Ausgewählte Ressource:</source>
-        <target state="needs-translation">Ausgewählte Ressource:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
-          <context context-type="linenumber">9,11</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.workflowStepLinkModal.chooseWorkflowStepToLink" datatype="html">
         <source>Zu verknüpfenden Arbeitsgang wählen:</source>
         <target state="needs-translation">Zu verknüpfenden Arbeitsgang wählen:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
           <context context-type="linenumber">17,19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.workflowStepLinkModal.noAvailableWorkflowSteps" datatype="html">
-        <source>Keine verknüpfbaren Arbeitsschritte gefunden.</source>
-        <target state="needs-translation">Keine verknüpfbaren Arbeitsschritte gefunden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/workflow-step-link-modal.html</context>
-          <context context-type="linenumber">32,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.state" datatype="html">
@@ -9285,14 +9237,6 @@
           <context context-type="linenumber">14,17</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteWorkflowStepModal.header" datatype="html">
-        <source>Arbeitsschritt löschen?</source>
-        <target state="needs-translation">Arbeitsschritt löschen?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/delete/delete-workflow-step-modal.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.deleteWorkflowStepModal.question" datatype="html">
         <source>Möchten Sie den Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{workflowStep.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
         <target state="needs-translation">Möchten Sie den Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{workflowStep.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
@@ -9301,28 +9245,12 @@
           <context context-type="linenumber">6,8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.workflowRelationsModal.heading.isExecutedOn" datatype="html">
-        <source>Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wurde durchge"/> wurde durchgeführt an: </source>
-        <target state="needs-translation">Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wurde durchge"/> wurde durchgeführt an: </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/relations/workflow-relations-modal.html</context>
-          <context context-type="linenumber">3,5</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.workflowRelationsModal.heading.resultsIn" datatype="html">
         <source>Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ergibt:     &lt;"/> ergibt: </source>
         <target state="needs-translation">Der Arbeitsschritt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ergibt:     &lt;"/> ergibt: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/relations/workflow-relations-modal.html</context>
           <context context-type="linenumber">7,9</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.workflowEditorModal.executedOn" datatype="html">
-        <source>Durchgeführt an</source>
-        <target state="needs-translation">Durchgeführt an</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
-          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.identifier" datatype="html">

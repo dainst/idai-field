@@ -15,7 +15,7 @@
         </div>
         <div *ngIf="availableProcesses?.length">
             <p i18n="@@resources.processLinkModal.chooseProcessToLink">
-                Zu verknüpfenden Arbeitsgang wählen:
+                Zu verknüpfenden Prozess wählen:
             </p>
             <ul id="available-processes" class="list-group">
                 <li *ngFor="let process of availableProcesses"
@@ -30,7 +30,7 @@
         <div *ngIf="!availableProcesses?.length"
              id="no-available-processes-info"
              i18n="@@resources.processLinkModal.noAvailableProcesses">
-            Keine verknüpfbaren Arbeitsschritte gefunden.
+            Keine verknüpfbaren Prozesse gefunden.
         </div>
     </div>
 </div>

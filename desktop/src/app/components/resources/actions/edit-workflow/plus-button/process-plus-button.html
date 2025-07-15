@@ -34,7 +34,7 @@
             <div *ngIf="baseDocuments.length > 1 && createMultiple === undefined">
                 <div class="popover-custom-title">
                     <span i18n="@@resources.workflowEditorModal.plusButton.multiple.header">
-                        Bitte wählen Sie die Anzahl der zu erstellenden Arbeitsschritte.
+                        Bitte wählen Sie die Anzahl der zu erstellenden Prozesse.
                     </span>
                 </div>
                 <ul id="multiple-select-buttons" class="list-group">
@@ -42,14 +42,14 @@
                         (click)="selectCreateMultipleOption(false)">
                         <span class="button-label"
                               i18n="@@resources.workflowEditorModal.plusButton.multiple.false">
-                            Ein gemeinsamer Arbeitsschritt für alle ausgewählten Ressourcen
+                            Ein gemeinsamer Prozess für alle ausgewählten Ressourcen
                         </span>
                     </li>
                     <li class="list-group-item popover-item"
                         (click)="selectCreateMultipleOption(true)">
                         <span class="button-label"
                               i18n="@@resources.workflowEditorModal.plusButton.multiple.true">
-                            Ein eigener Arbeitsschritt pro Ressource (insgesamt {{baseDocuments.length}})
+                            Ein eigener Prozess pro Ressource (insgesamt {{baseDocuments.length}})
                         </span>
                     </li>
                 </ul>

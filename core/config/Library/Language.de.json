@@ -1160,14 +1160,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Arbeitsgang",
-      "fields": {
-        "operationClassification": {
-          "label": "Klassifikation Arbeitsgang"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Terrakotta",
       "fields": {

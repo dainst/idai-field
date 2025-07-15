@@ -7,11 +7,11 @@
 <div class="modal-body bg-light">
    <div *ngIf="!isCarriedOutOnSelected" class="target-category-section">
         <div class="target-category-info">
-            <p i18n="configuration.createProcess.info.isCarriedOutOn.1">
+            <p i18n="@@configuration.createProcess.info.isCarriedOutOn.1">
                 Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess
                 <b>durchgeführt</b> werden kann.
             </p>
-            <p i18n="configuration.createProcess.info.isCarriedOutOn.2">
+            <p i18n="@@configuration.createProcess.info.isCarriedOutOn.2">
                 Sie können diese Auswahl später anpassen, indem Sie das Feld <b>"{{getFieldLabel('isCarriedOutOn')}}"</b>
                 editieren.
             </p>
@@ -28,15 +28,15 @@
 
     <div *ngIf="isCarriedOutOnSelected" class="target-category-section">
         <div class="target-category-info">
-            <p i18n="configuration.createProcess.info.resultsIn.1">
+            <p i18n="@@configuration.createProcess.info.resultsIn.1">
                 Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <b>Ergebnis</b>
                 dieses Prozesses sein können.
             </p>
-            <p i18n="configuration.createProcess.info.resultsIn.2">
+            <p i18n="@@configuration.createProcess.info.resultsIn.2">
                 Sie können diese Auswahl später anpassen, indem Sie das Feld <b>"{{getFieldLabel('resultsIn')}}"</b>
                 editieren.
             </p>
-            <p i18n="configuration.createProcess.info.resultsIn.3">
+            <p i18n="@@configuration.createProcess.info.resultsIn.3">
                 Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld
                 <b>"{{getFieldLabel('resultsIn')}}"</b> jederzeit nachträglich zur neuen Kategorie hinzufügen.
             </p>

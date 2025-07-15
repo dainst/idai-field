@@ -51,7 +51,7 @@ process-list {
       line-height: 35px;
     }
 
-    .process-executed-on,
+    .process-carried-out-on,
     .process-results-in {
       flex: 0 0 149px;
     }
@@ -93,7 +93,7 @@ process-list {
     }
 
     &.processes-headings {
-      .process-executed-on,
+      .process-carried-out-on,
       .process-results-in {
         padding: 10px;
       }

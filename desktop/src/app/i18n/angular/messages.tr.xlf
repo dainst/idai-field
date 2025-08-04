@@ -8915,7 +8915,7 @@
       </trans-unit>
       <trans-unit id="configuration.condition.none" datatype="html">
         <source>- Keine -</source>
-        <target state="needs-translation">- Keine -</target>
+        <target state="translated">- Yok -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
           <context context-type="linenumber">17</context>
@@ -8923,7 +8923,7 @@
       </trans-unit>
       <trans-unit id="configuration.conditionalField" datatype="html">
         <source>Bedingung für Anzeige des Feldes</source>
-        <target state="needs-translation">Bedingung für Anzeige des Feldes</target>
+        <target state="translated">Alanın görüntülenme koşulu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
           <context context-type="linenumber">4,6</context>
@@ -9067,7 +9067,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.missingMandatoryFields" datatype="html">
         <source>Nicht ausgefüllte Pflichtfelder</source>
-        <target state="needs-translation">Nicht ausgefüllte Pflichtfelder</target>
+        <target state="translated">Zorunlu alanlar doldurulmadı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">168</context>
@@ -9075,7 +9075,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.dataType" datatype="html">
         <source>Angabe der Uhrzeit</source>
-        <target state="needs-translation">Angabe der Uhrzeit</target>
+        <target state="translated">Zaman göstergesi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">57</context>
@@ -9087,7 +9087,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.time.optional" datatype="html">
         <source>Optional</source>
-        <target state="needs-translation">Optional</target>
+        <target state="translated">Tercihe bağlı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">59</context>
@@ -9099,7 +9099,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.time.mandatory" datatype="html">
         <source>Verpflichtend</source>
-        <target state="needs-translation">Verpflichtend</target>
+        <target state="translated">Zorunlu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">61</context>
@@ -9111,7 +9111,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.time.no" datatype="html">
         <source>Nicht erlaubt</source>
-        <target state="needs-translation">Nicht erlaubt</target>
+        <target state="translated">İzin verilmiyor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">63</context>
@@ -9123,7 +9123,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.inputMode" datatype="html">
         <source>Eingabemodus</source>
-        <target state="needs-translation">Eingabemodus</target>
+        <target state="translated">Giriş modu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">66</context>
@@ -9135,7 +9135,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.optional" datatype="html">
         <source>Wählbar</source>
-        <target state="needs-translation">Wählbar</target>
+        <target state="translated">Seçilebilir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">68</context>
@@ -9147,7 +9147,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.single" datatype="html">
         <source>Einzeldatum</source>
-        <target state="needs-translation">Einzeldatum</target>
+        <target state="translated">Tekil tarih</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">70</context>
@@ -9159,7 +9159,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.range" datatype="html">
         <source>Datumsbereich</source>
-        <target state="needs-translation">Datumsbereich</target>
+        <target state="translated">Tarih aralığı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">72</context>
@@ -9171,7 +9171,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.singleNotAllowed" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin '[1]' alanında geçersiz tarih: Bu alanda tekil tarih belirtilmesine izin verilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">630</context>
@@ -9179,7 +9179,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDates" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].</target>
+        <target state="translated">Lütfen aşağıdaki alanlara geçerli tarihler girin: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">854</context>
@@ -9187,7 +9187,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.singleNotAllowed" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Lütfen '[1]' alanındaki tarihi düzeltin: Bu alana tekil tarih girilmesine izin verilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">862</context>
@@ -9195,7 +9195,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotSet" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</target>
+        <target state="translated">Lütfen '[1]' alanındaki tarihi düzeltin: Bu alan için saat bilgisi gerekir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">870</context>
@@ -9203,7 +9203,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.missingProperties" datatype="html">
         <source>Bitte füllen Sie die folgenden Felder aus: [1]</source>
-        <target state="needs-translation">Bitte füllen Sie die folgenden Felder aus: [1]</target>
+        <target state="translated">Lütfen aşağıdaki alanları doldurun: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">906</context>
@@ -9211,7 +9211,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.fieldConditionViolation.valuelists" datatype="html">
         <source>Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
+        <target state="translated">Bu alanın değer listesi, "[0]" alanı için koşullu bir alan olarak konfigüre edildiği için kaldırılamaz veya değiştirilemez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1115</context>
@@ -9219,7 +9219,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.fieldConditionViolation.inputType" datatype="html">
         <source>Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
+        <target state="translated">Bu alanın giriş türü değiştirilemez çünkü "[0]" alanı için koşullu alan olarak konfigüre edilmiştir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1119</context>
@@ -9227,7 +9227,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField" datatype="html">
         <source>Pflichtfeld</source>
-        <target state="needs-translation">Pflichtfeld</target>
+        <target state="translated">Zorunlu alan</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">24</context>
@@ -9239,7 +9239,7 @@
       </trans-unit>
       <trans-unit id="configuration.field.condition" datatype="html">
         <source>Bedingung</source>
-        <target state="needs-translation">Bedingung</target>
+        <target state="translated">Koşul</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">31</context>
@@ -9279,7 +9279,7 @@
       </trans-unit>
       <trans-unit id="util.date.to" datatype="html">
         <source>bis</source>
-        <target state="needs-translation">bis</target>
+        <target state="needs-translation">...'e kadar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">136</context>
@@ -9287,7 +9287,7 @@
       </trans-unit>
       <trans-unit id="util.date.unspecified" datatype="html">
         <source>Unbestimmtes Datum</source>
-        <target state="needs-translation">Unbestimmtes Datum</target>
+        <target state="translated">Belirsiz tarih</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">139</context>
@@ -9295,7 +9295,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.rangeNotAllowed" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin '[1]' alanında geçersiz tarih: Bu alanda tarih aralığı belirtilmesine izin verilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">626</context>
@@ -9303,7 +9303,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.timeNotAllowed" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin '[1]' alanında geçersiz tarih: Bu alanda saat belirtilmesine izin verilmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">634</context>
@@ -9311,7 +9311,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.timeNotSet" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin '[1]' alanında geçersiz tarih: Bu alanda saat bilgisi gereklidir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">638</context>
@@ -9319,7 +9319,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.warning.fieldDataDeletion" datatype="html">
         <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
-        <target state="needs-translation">Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</target>
+        <target state="translated">Lütfen aşağıdaki alanlardaki verilerin kaydedilirken kaybolacağını unutmayın: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">818</context>
@@ -9327,7 +9327,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Datumsangabe ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Datumsangabe ein.</target>
+        <target state="translated">Lütfen '[1]' alanına geçerli bir tarih girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">850</context>
@@ -9335,7 +9335,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.rangeNotAllowed" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Lütfen '[1]' alanındaki tarihi düzeltin: Bu alan için tarih aralığı belirtilmesine izin verilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">858</context>
@@ -9343,7 +9343,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotAllowed" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Lütfen '[1]' alanındaki tarihi düzeltin: Bu alana saat girilmesine izin verilmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">866</context>
@@ -9351,7 +9351,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.deletion" datatype="html">
         <source>Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
+        <target state="translated">Alt alan, "[0]" alt alanı için bir koşul alanı olarak konfigüre edildiği için silinemiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1131</context>
@@ -9383,7 +9383,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.error.invalidAutoBackupDirectory" datatype="html">
         <source>Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.</source>
-        <target state="needs-translation">Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.</target>
+        <target state="translated">Otomatik yedekleme oluşturulamadı. Ayarlarda belirtilen dizin yolu geçersiz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">370</context>
@@ -9391,7 +9391,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.error.automaticFileCreationFaile" datatype="html">
         <source>Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.</source>
-        <target state="needs-translation">Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.</target>
+        <target state="translated">Otomatik yedekleme oluşturulamadı. Lütfen ayarlarınızı kontrol edin ve yeterli depolama alanı olduğundan emin olun.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">374</context>
@@ -9407,7 +9407,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation '[0]' als auch der Relation '[1]' an.</source>
-        <target state="needs-translation">Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation '[0]' als auch der Relation '[1]' an.</target>
+        <target state="translated">Lütfen hem '[0]' ilişkisinin hem de '[1]' ilişkisinin hedefleri olarak aynı girdileri belirtmeyin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">923</context>
@@ -9415,7 +9415,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.exportFailed" datatype="html">
         <source>Beim Export der Bilder ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Export der Bilder ist ein Fehler aufgetreten.</target>
+        <target state="translated">Görüntüler dışa aktarılırken bir hata oluştu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">991</context>
@@ -9423,7 +9423,7 @@
       </trans-unit>
       <trans-unit id="widgets.quittingModal.info" datatype="html">
         <source>Field Desktop wird beendet...</source>
-        <target state="needs-translation">Field Desktop wird beendet...</target>
+        <target state="translated">Field Desktop kapanıyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">5,7</context>
@@ -9431,7 +9431,7 @@
       </trans-unit>
       <trans-unit id="docedit.relations.automaticallyFilled" datatype="html">
         <source>Dieses Feld wird automatisch ausgefüllt.</source>
-        <target state="needs-translation">Dieses Feld wird automatisch ausgefüllt.</target>
+        <target state="translated">Bu alan otomatik olarak doldurulacaktır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/relation-picker/relation-picker-group.html</context>
           <context context-type="linenumber">23</context>
@@ -9439,7 +9439,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.single" datatype="html">
         <source>Originalbild wird geladen...</source>
-        <target state="needs-translation">Originalbild wird geladen...</target>
+        <target state="translated">Orijinal görüntü yükleniyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">12</context>
@@ -9447,7 +9447,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Orijinal görüntü yüklendi... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">14,16</context>
@@ -9455,7 +9455,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField.notAllowedForRequiredField" datatype="html">
         <source>Dieses Feld ist grundsätzlich ein Pflichtfeld.</source>
-        <target state="needs-translation">Dieses Feld ist grundsätzlich ein Pflichtfeld.</target>
+        <target state="translated">Bu alan zorunludur.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">277</context>
@@ -9463,7 +9463,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField.notAllowedForInputType" datatype="html">
         <source>Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.</source>
-        <target state="needs-translation">Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.</target>
+        <target state="translated">Bu girdi türündeki alanlar zorunlu alan olarak konfigüre edilemez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">279</context>
@@ -9791,7 +9791,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unfulfilledConditionFields" datatype="html">
         <source>Nicht erfüllte Anzeigebedingungen</source>
-        <target state="needs-translation">Nicht erfüllte Anzeigebedingungen</target>
+        <target state="translated">Görüntüleme koşulları karşılanmadı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">204</context>
@@ -9799,7 +9799,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.invalidProcessState" datatype="html">
         <source>Ungültiger Status</source>
-        <target state="needs-translation">Ungültiger Status</target>
+        <target state="translated">Geçersiz durum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -9807,7 +9807,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionalFieldInfo.tooltip.multiple" datatype="html">
         <source>Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" einer der folgenden Werte eingetragen ist: <x id="PH_1" equiv-text="conditionLabel"/></source>
-        <target state="needs-translation">Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" einer der folgenden Werte eingetragen ist: <x id="PH_1" equiv-text="conditionLabel"/></target>
+        <target state="translated">Bu alan, "<x id="PH" equiv-text="fieldLabel"/>" alanının aşağıdaki değerlerden birini içermesi nedeniyle görüntülenir: <x id="PH_1" equiv-text="conditionLabel"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">147</context>
@@ -9815,7 +9815,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionalFieldInfo.tooltip.single" datatype="html">
         <source>Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" der Wert "<x id="PH_1" equiv-text="conditionLabel"/>" eingetragen ist.</source>
-        <target state="needs-translation">Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" der Wert "<x id="PH_1" equiv-text="conditionLabel"/>" eingetragen ist.</target>
+        <target state="translated">Bu alan, "<x id="PH_1" equiv-text="conditionLabel"/>" değerinin "<x id="PH" equiv-text="fieldLabel"/>" alanına girilmesi nedeniyle görüntülenir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">149</context>
@@ -9823,7 +9823,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionInfo.tooltip.single" datatype="html">
         <source>Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab.</source>
-        <target state="needs-translation">Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab.</target>
+        <target state="translated">Başka bir alanın görünürlüğü bu alana girilen verilere bağlıdır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.html</context>
           <context context-type="linenumber">16</context>
@@ -9831,7 +9831,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionInfo.tooltip.multiple" datatype="html">
         <source>Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab.</source>
-        <target state="needs-translation">Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab.</target>
+        <target state="translated">Diğer alanların görünürlüğü bu alana girilen verilere bağlıdır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.html</context>
           <context context-type="linenumber">22</context>
@@ -9839,7 +9839,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.single" datatype="html">
         <source>Das Bild wurde erfolgreich exportiert.</source>
-        <target state="needs-translation">Das Bild wurde erfolgreich exportiert.</target>
+        <target state="translated">Görüntü başarıyla dışa aktarıldı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">959</context>
@@ -9847,7 +9847,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.multiple" datatype="html">
         <source>[0] Bilder wurden erfolgreich exportiert.</source>
-        <target state="needs-translation">[0] Bilder wurden erfolgreich exportiert.</target>
+        <target state="translated">[0] Görüntüler başarıyla dışa aktarıldı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">963</context>
@@ -9855,7 +9855,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.single" datatype="html">
         <source>Das Originalbild wurde erfolgreich heruntergeladen.</source>
-        <target state="needs-translation">Das Originalbild wurde erfolgreich heruntergeladen.</target>
+        <target state="translated">Orijinal görsel başarıyla indirildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">967</context>
@@ -9863,7 +9863,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.multiple" datatype="html">
         <source>[0] Originalbilder wurden erfolgreich heruntergeladen.</source>
-        <target state="needs-translation">[0] Originalbilder wurden erfolgreich heruntergeladen.</target>
+        <target state="translated">[0] Orijinal görsel başarıyla indirildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">971</context>
@@ -9871,7 +9871,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.downloadFailed" datatype="html">
         <source>Beim Versuch, das Bild '[0]' herunterzuladen, ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Versuch, das Bild '[0]' herunterzuladen, ist ein Fehler aufgetreten.</target>
+        <target state="translated">'[0]' görseli indirilirken bir hata oluştu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">995</context>
@@ -9879,7 +9879,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.workflow" datatype="html">
         <source>Workflow</source>
-        <target state="needs-translation">Workflow</target>
+        <target state="translated">İş Akışı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">81</context>
@@ -9891,7 +9891,7 @@
       </trans-unit>
       <trans-unit id="image.export" datatype="html">
         <source>Bild exportieren</source>
-        <target state="needs-translation">Bild exportieren</target>
+        <target state="translated">Görüntüyü dışa aktar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.html</context>
           <context context-type="linenumber">30</context>
@@ -9899,7 +9899,7 @@
       </trans-unit>
       <trans-unit id="images.download.tooltip.single" datatype="html">
         <source>Originalbild herunterladen</source>
-        <target state="needs-translation">Originalbild herunterladen</target>
+        <target state="translated">Orijinal görseli indir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">134</context>
@@ -9915,7 +9915,7 @@
       </trans-unit>
       <trans-unit id="images.download.tooltip.multiple" datatype="html">
         <source>Originalbilder herunterladen</source>
-        <target state="needs-translation">Originalbilder herunterladen</target>
+        <target state="translated">Orijinal görselleri indir</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">135</context>
@@ -9927,7 +9927,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.multipleValues.info" datatype="html">
         <source>Bitte wählen Sie die korrekten Werte aus der Werteliste aus.</source>
-        <target state="needs-translation">Bitte wählen Sie die korrekten Werte aus der Werteliste aus.</target>
+        <target state="translated">Lütfen değer listesinden doğru değerleri seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -9935,7 +9935,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.singleValue.info" datatype="html">
         <source>Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</source>
-        <target state="needs-translation">Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</target>
+        <target state="translated">Lütfen değerler listesinden doğru değeri seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">22,24</context>
@@ -9975,7 +9975,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.isCarriedOutOn.2" datatype="html">
         <source>Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </source>
-        <target state="needs-translation">Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </target>
+        <target state="translated">Bu seçimi daha sonra <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> alanını düzenleyerek ayarlayabilirsiniz. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">14,17</context>
@@ -9983,7 +9983,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.1" datatype="html">
         <source>Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Ergebnis<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dieses Prozesses sein können. </source>
-        <target state="needs-translation">Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Ergebnis<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dieses Prozesses sein können. </target>
+        <target state="translated">Lütfen isteğe bağlı olarak bu sürecin bir <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>sonucu<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> olabilecek izin verilen girdi kategorilerini seçin. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">31,34</context>
@@ -9991,7 +9991,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.2" datatype="html">
         <source>Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </source>
-        <target state="needs-translation">Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </target>
+        <target state="translated">Bu seçimi daha sonra <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> alanını düzenleyerek ayarlayabilirsiniz. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">35,38</context>
@@ -9999,7 +9999,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.3" datatype="html">
         <source>Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </source>
-        <target state="needs-translation">Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </target>
+        <target state="translated">Burada bir seçim yapmazsanız, istediğiniz zaman <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> alanını yeni kategoriye ekleyebilirsiniz. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">39,42</context>
@@ -10007,7 +10007,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.isCarriedOutOn.1" datatype="html">
         <source>Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>durchgeführt<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> werden kann. </source>
-        <target state="needs-translation">Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>durchgeführt<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> werden kann. </target>
+        <target state="translated">Lütfen işlemin <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>gerçekleştirilebileceği<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> izin verilen girdi kategorilerini seçin. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">10,13</context>

@@ -9,7 +9,8 @@
     "other": "Diğer",
     "hierarchy": "Hiyerarşi",
     "stratigraphy": "Stratigrafi",
-    "inventory": "Envanter"
+    "inventory": "Envanter",
+    "workflow": "İş Akışı"
   },
   "commons": {
     "dimensionLength": {
@@ -1588,6 +1589,14 @@
     },
     "StorageBag": {
       "label": "Poşet"
+    },
+    "Process": {
+      "label": "İşlem",
+      "fields": {
+        "state": {
+          "label": "Durum"
+        }
+      }
     }
   },
   "forms": {

@@ -51,5 +51,6 @@
   "info.close": "Kapat",
   "menu.tools.inventory": "Envanter",
   "menu.configuration.exportConfiguration": "Konfigürasyonu dışa aktar...",
-  "autoUpdate.available.warning": "Dikkat: Güncellemeyi gerçekleştirmeden önce tüm önemli projelerin yedeğini oluşturun."
+  "autoUpdate.available.warning": "Dikkat: Güncellemeyi gerçekleştirmeden önce tüm önemli projelerin yedeğini oluşturun.",
+  "menu.tools.workflow": "İş Akışı"
 }

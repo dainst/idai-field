@@ -17,10 +17,10 @@
       "label": "Alt Girdiler"
     },
     "isResultOf": {
-      "label": "… sonucu"
+      "label": "Bunun oluşumu"
     },
     "isSubjectOf": {
-      "label": "… konusu"
+      "label": "Öznesi"
     }
   },
   "categories": {
@@ -127,10 +127,10 @@
       "label": "-de saklanır"
     },
     "resultsIn": {
-      "label": "… 'deki sonuçlar"
+      "label": "Çıktıları"
     },
     "isCarriedOutOn": {
-      "label": "… üzerine"
+      "label": "Buna ilişkin uygulandı"
     }
   }
 }

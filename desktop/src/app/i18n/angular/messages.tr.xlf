@@ -8931,7 +8931,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingMandatoryField" datatype="html">
         <source>Nicht ausgefülltes Pflichtfeld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Nicht ausgefülltes Pflichtfeld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Eksik zorunlu alan <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">58,60</context>
@@ -8939,7 +8939,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField.date" datatype="html">
         <source>Die in diesem Feld eingetragene Datumsangabe ist ungültig.</source>
-        <target state="needs-translation">Die in diesem Feld eingetragene Datumsangabe ist ungültig.</target>
+        <target state="translated">Bu alana girilen tarih geçersizdir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">128,130</context>
@@ -8947,7 +8947,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.rangeNotAllowed" datatype="html">
         <source>Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Bu alan için tarih aralığı belirtilmesine izin verilmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">132,134</context>
@@ -8955,7 +8955,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.singleNotAllowed" datatype="html">
         <source>Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Bu alan için tekil bir tarih belirtilmesine izin verilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">136,138</context>
@@ -8963,7 +8963,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.timeNotAllowed" datatype="html">
         <source>Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Bu alan için zaman belirtilmesine izin verilmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">140,142</context>
@@ -8971,7 +8971,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.missingMandatoryField" datatype="html">
         <source>In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.</source>
-        <target state="needs-translation">In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.</target>
+        <target state="translated">İstenilen şekilde konfigüre edilmiş bir alana veri girilmedi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">153,155</context>
@@ -8979,7 +8979,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.state" datatype="html">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Durum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
           <context context-type="linenumber">12</context>
@@ -8987,7 +8987,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.date" datatype="html">
         <source>Datum</source>
-        <target state="needs-translation">Datum</target>
+        <target state="translated">Tarih</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
           <context context-type="linenumber">16</context>
@@ -8995,7 +8995,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.identifier" datatype="html">
         <source>Bezeichner</source>
-        <target state="needs-translation">Bezeichner</target>
+        <target state="translated">Tanımlayıcı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -9003,7 +9003,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.category" datatype="html">
         <source>Kategorie</source>
-        <target state="needs-translation">Kategorie</target>
+        <target state="translated">Kategori</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -9011,15 +9011,15 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.resultsIn" datatype="html">
         <source>Ergibt</source>
-        <target state="needs-translation">Ergibt</target>
+        <target state="translated">Çıktıları</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editWorkflow" datatype="html">
-        <source>Arbeitsschritte dokumentieren</source>
-        <target state="needs-translation">Arbeitsschritte dokumentieren</target>
+        <source>Workflow dokumentieren</source>
+        <target state="translated">İş akışını belgele</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">53</context>
@@ -9027,7 +9027,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.now.tooltip" datatype="html">
         <source>Aktuelles Datum verwenden</source>
-        <target state="needs-translation">Aktuelles Datum verwenden</target>
+        <target state="translated">Mevcut tarihi kullan</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
           <context context-type="linenumber">28</context>
@@ -9035,7 +9035,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.select.single" datatype="html">
         <source>Einzeldatum</source>
-        <target state="needs-translation">Einzeldatum</target>
+        <target state="translated">Tekil tarih</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">4</context>
@@ -9043,7 +9043,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.select.range" datatype="html">
         <source>Datumsbereich</source>
-        <target state="needs-translation">Datumsbereich</target>
+        <target state="translated">Tarih aralığı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">6</context>
@@ -9051,7 +9051,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.from" datatype="html">
         <source>Von:</source>
-        <target state="needs-translation">Von:</target>
+        <target state="translated">İtibaren:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">30</context>
@@ -9059,7 +9059,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.to" datatype="html">
         <source>Bis:</source>
-        <target state="needs-translation">Bis:</target>
+        <target state="translated">...'e kadar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">33</context>
@@ -9247,7 +9247,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.timeNotSet" datatype="html">
         <source>Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</source>
-        <target state="needs-translation">Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</target>
+        <target state="translated">Bu alan için zaman bilgisi gereklidir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">144,146</context>
@@ -9255,7 +9255,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField.date.endDateBeforeBeginningDate" datatype="html">
         <source>Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.</source>
-        <target state="needs-translation">Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.</target>
+        <target state="translated">Tarih aralığının bitiş tarihi başlangıç tarihinden öncedir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">148,150</context>
@@ -9263,7 +9263,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.body.notAllowed.inverseRelation" datatype="html">
         <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </source>
-        <target state="needs-translation">Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird. </target>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> alanı, karşı ilişki olarak kullanıldığı sürece silinemez. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">10,12</context>
@@ -9271,7 +9271,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.body.notAllowed.conditionalField" datatype="html">
         <source>Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> kann nicht gelöscht werden, solange es als Bedingungsfeld für das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="ldName()}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> konfiguriert ist. </source>
-        <target state="needs-translation">Das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> kann nicht gelöscht werden, solange es als Bedingungsfeld für das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="ldName()}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> konfiguriert ist. </target>
+        <target state="translated">Alan <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="ldName()}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="konfiguriert"/> alan için bir koşul alanı olarak konfigüre edildiği sürece silinemez. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.html</context>
           <context context-type="linenumber">14,17</context>
@@ -9279,7 +9279,7 @@
       </trans-unit>
       <trans-unit id="util.date.to" datatype="html">
         <source>bis</source>
-        <target state="needs-translation">...'e kadar</target>
+        <target state="translated">...'e kadar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">136</context>
@@ -9359,7 +9359,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.question" datatype="html">
         <source>Möchten Sie den Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie den Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </target>
+        <target state="translated">Bu <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> işlemi silmek istediğinizden emin misiniz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">6,8</context>
@@ -9367,7 +9367,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.multiple" datatype="html">
         <source>Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </source>
-        <target state="needs-translation">Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </target>
+        <target state="translated">Her <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> saatte bir yedekleme dosyası </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">234,236</context>
@@ -9375,7 +9375,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </target>
+        <target state="translated">(<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> en son dosyalar) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>
@@ -9399,7 +9399,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</source>
-        <target state="needs-translation">Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</target>
+        <target state="translated">Aynı girdiler hem 'isCarriedOutOn' hem de 'resultsIn' ilişkisinin hedefleri olarak belirtilemez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">703</context>
@@ -9471,7 +9471,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unfulfilledConditionField" datatype="html">
         <source>Nicht erfüllte Anzeigebedingung des Feldes <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Nicht erfüllte Anzeigebedingung des Feldes <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Alanın yerine getirilmemiş görüntüleme koşulu <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">62,64</context>
@@ -9479,7 +9479,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unfulfilledConditionField" datatype="html">
         <source>Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.</source>
-        <target state="needs-translation">Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.</target>
+        <target state="translated">Alanın görüntülenme koşulu sağlanmadığı halde veri girildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">165,167</context>
@@ -9487,7 +9487,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidProcessState" datatype="html">
         <source>Der für diesen Prozess angegebene Status <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> widerspricht dem eingetragenen Datum <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </source>
-        <target state="needs-translation">Der für diesen Prozess angegebene Status <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> widerspricht dem eingetragenen Datum <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </target>
+        <target state="translated">Bu işlem için belirtilen durum <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> girilen tarihle çelişiyor <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">230,233</context>
@@ -9495,7 +9495,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.condition" datatype="html">
         <source>Bedingung für Anzeige des Feldes:</source>
-        <target state="needs-translation">Bedingung für Anzeige des Feldes:</target>
+        <target state="translated">Alanın görüntülenmesi için koşul:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">236</context>
@@ -9503,7 +9503,7 @@
       </trans-unit>
       <trans-unit id="buttons.selectFolder" datatype="html">
         <source>Verzeichnis auswählen</source>
-        <target state="needs-translation">Verzeichnis auswählen</target>
+        <target state="translated">Dizin seçin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.component.ts</context>
           <context context-type="linenumber">85</context>
@@ -9511,7 +9511,7 @@
       </trans-unit>
       <trans-unit id="imageExport.header.single" datatype="html">
         <source>Bild exportieren</source>
-        <target state="needs-translation">Bild exportieren</target>
+        <target state="translated">Görüntüyü dışa aktar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">2,4</context>
@@ -9519,7 +9519,7 @@
       </trans-unit>
       <trans-unit id="imageExport.header.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{images.length}}"/> Bilder exportieren </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{images.length}}"/> Bilder exportieren </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{images.length}}"/> görüntüleri dışa aktar </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">5,7</context>
@@ -9527,7 +9527,7 @@
       </trans-unit>
       <trans-unit id="imageExport.targetDirectory" datatype="html">
         <source>Zielverzeichnis</source>
-        <target state="needs-translation">Zielverzeichnis</target>
+        <target state="translated">Hedef dizin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">11</context>
@@ -9535,7 +9535,7 @@
       </trans-unit>
       <trans-unit id="imageExport.namingOptions" datatype="html">
         <source>Benennung</source>
-        <target state="needs-translation">Benennung</target>
+        <target state="translated">Adlandırma</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">23</context>
@@ -9543,7 +9543,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.export" datatype="html">
         <source>Exportieren</source>
-        <target state="needs-translation">Exportieren</target>
+        <target state="translated">Dışa aktar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.html</context>
           <context context-type="linenumber">36</context>
@@ -9551,7 +9551,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.chooseResource" datatype="html">
         <source>Ressource wählen:</source>
-        <target state="needs-translation">Ressource wählen:</target>
+        <target state="translated">Girdi seçin:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">3</context>
@@ -9559,7 +9559,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.selectedResource" datatype="html">
         <source>Ausgewählte Ressource:</source>
-        <target state="needs-translation">Ausgewählte Ressource:</target>
+        <target state="translated">Seçili girdi:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -9567,7 +9567,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.chooseProcessToLink" datatype="html">
         <source>Zu verknüpfenden Prozess wählen:</source>
-        <target state="needs-translation">Zu verknüpfenden Prozess wählen:</target>
+        <target state="translated">İlişkilendirilecek işlemi seçin:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">17,19</context>
@@ -9575,7 +9575,7 @@
       </trans-unit>
       <trans-unit id="resources.processLinkModal.noAvailableProcesses" datatype="html">
         <source>Keine verknüpfbaren Prozesse gefunden.</source>
-        <target state="needs-translation">Keine verknüpfbaren Prozesse gefunden.</target>
+        <target state="translated">İlişkilendirilecek işlem bulunamadı.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/link-button/link-process-modal.html</context>
           <context context-type="linenumber">32,34</context>
@@ -9583,7 +9583,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.plusButton.multiple.header" datatype="html">
         <source>Bitte wählen Sie die Anzahl der zu erstellenden Prozesse.</source>
-        <target state="needs-translation">Bitte wählen Sie die Anzahl der zu erstellenden Prozesse.</target>
+        <target state="translated">Lütfen oluşturulacak işlem sayısını seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/plus-button/process-plus-button.html</context>
           <context context-type="linenumber">36,38</context>
@@ -9591,7 +9591,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.plusButton.multiple.false" datatype="html">
         <source>Ein gemeinsamer Prozess für alle ausgewählten Ressourcen</source>
-        <target state="needs-translation">Ein gemeinsamer Prozess für alle ausgewählten Ressourcen</target>
+        <target state="translated">Seçilen tüm girdiler için ortak bir işlem</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/plus-button/process-plus-button.html</context>
           <context context-type="linenumber">44,46</context>
@@ -9599,7 +9599,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.plusButton.multiple.true" datatype="html">
         <source>Ein eigener Prozess pro Ressource (insgesamt <x id="INTERPOLATION" equiv-text="{{baseDocuments.length}}"/>) </source>
-        <target state="needs-translation">Ein eigener Prozess pro Ressource (insgesamt <x id="INTERPOLATION" equiv-text="{{baseDocuments.length}}"/>) </target>
+        <target state="translated">Girdi başına bir işlem (toplam <x id="INTERPOLATION" equiv-text="{{baseDocuments.length}}"/>) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/plus-button/process-plus-button.html</context>
           <context context-type="linenumber">51,53</context>
@@ -9607,7 +9607,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.carriedOutOn" datatype="html">
         <source>Durchgeführt an</source>
-        <target state="needs-translation">Durchgeführt an</target>
+        <target state="translated">Buna ilişkin uygulandı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/process-list.html</context>
           <context context-type="linenumber">5</context>
@@ -9615,7 +9615,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.header" datatype="html">
         <source>Prozess löschen?</source>
-        <target state="needs-translation">Prozess löschen?</target>
+        <target state="translated">İşlem silinsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -9623,7 +9623,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.warning" datatype="html">
         <source>Der Prozess wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </source>
-        <target state="needs-translation">Der Prozess wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </target>
+        <target state="translated">İşlem, tüm <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> bağlantılı girdi için kaldırılır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">12,14</context>
@@ -9631,7 +9631,7 @@
       </trans-unit>
       <trans-unit id="settings.backups" datatype="html">
         <source>Automatische Backups</source>
-        <target state="needs-translation">Automatische Backups</target>
+        <target state="translated">Otomatik yedeklemeler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">149</context>
@@ -9639,15 +9639,15 @@
       </trans-unit>
       <trans-unit id="settings.backups.path" datatype="html">
         <source>Pfad</source>
-        <target state="needs-translation">Pfad</target>
+        <target state="translated">Dosya yolu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">153,155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.backups.path.info" datatype="html">
-        <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
-        <target state="needs-translation">Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</target>
+        <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projektdatenbanken. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
+        <target state="translated">Field Desktop, bu bilgisayardaki tüm projelerin yedeklerini düzenli aralıklarla otomatik olarak oluşturur. Bu yol, yedekleme dosyalarının depolandığı dizini belirtir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">166,170</context>
@@ -9655,7 +9655,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.time" datatype="html">
         <source>Backups nach Uhrzeit aufbewahren</source>
-        <target state="needs-translation">Backups nach Uhrzeit aufbewahren</target>
+        <target state="translated">Yedeklemeleri zamana göre depola</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">172</context>
@@ -9663,7 +9663,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.customInterval" datatype="html">
         <source>Abstand in Stunden</source>
-        <target state="needs-translation">Abstand in Stunden</target>
+        <target state="translated">Saat cinsinden aralık</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">180</context>
@@ -9671,7 +9671,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.custom" datatype="html">
         <source>Anzahl</source>
-        <target state="needs-translation">Anzahl</target>
+        <target state="translated">Sayı</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">188</context>
@@ -9679,7 +9679,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.date" datatype="html">
         <source>Backups nach Datum aufbewahren</source>
-        <target state="needs-translation">Backups nach Datum aufbewahren</target>
+        <target state="translated">Yedeklemeleri tarihe göre depola</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">192</context>
@@ -9687,7 +9687,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.daily" datatype="html">
         <source>Tag</source>
-        <target state="needs-translation">Tag</target>
+        <target state="translated">Gün</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">200</context>
@@ -9695,7 +9695,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.weekly" datatype="html">
         <source>Woche</source>
-        <target state="needs-translation">Woche</target>
+        <target state="translated">Hafta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">208</context>
@@ -9703,7 +9703,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.monthly" datatype="html">
         <source>Monat</source>
-        <target state="needs-translation">Monat</target>
+        <target state="translated">Ay</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">216</context>
@@ -9711,7 +9711,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info" datatype="html">
         <source>Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</source>
-        <target state="needs-translation">Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</target>
+        <target state="translated">Yedekleme dizini, her proje için şu anda konfigüre edilmiş kurallara göre aşağıdaki dosyaları depolar:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">220,222</context>
@@ -9719,7 +9719,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.current" datatype="html">
         <source>Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</source>
-        <target state="needs-translation">Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</target>
+        <target state="translated">Her proje veri tabanının en son sürümünün yedek dosyası</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">225,227</context>
@@ -9727,7 +9727,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.single" datatype="html">
         <source>Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </source>
-        <target state="needs-translation">Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Saat başı<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> bir yedekleme dosyası </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">230,232</context>
@@ -9735,7 +9735,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.daily" datatype="html">
         <source>Eine Backup-Datei pro Tag</source>
-        <target state="needs-translation">Eine Backup-Datei pro Tag</target>
+        <target state="translated">Günlük yedekleme dosyası</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">241</context>
@@ -9743,7 +9743,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.weekly" datatype="html">
         <source>Eine Backup-Datei pro Woche</source>
-        <target state="needs-translation">Eine Backup-Datei pro Woche</target>
+        <target state="translated">Haftalık yedekleme dosyası</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">246</context>
@@ -9751,7 +9751,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.monthly" datatype="html">
         <source>Eine Backup-Datei pro Monat</source>
-        <target state="needs-translation">Eine Backup-Datei pro Monat</target>
+        <target state="translated">Aylık yedekleme dosyası</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">251</context>
@@ -9759,7 +9759,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.size.info" datatype="html">
         <source>Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Şu anda kullanılan sabit disk alanı: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">257,259</context>
@@ -9767,7 +9767,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.estimatedSize.info" datatype="html">
         <source>Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Gelecekte ihtiyaç duyulacak sabit disk alanı (tahmini):<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">261,263</context>
@@ -9775,7 +9775,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.warning" datatype="html">
         <source>Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.</target>
+        <target state="translated">Ayarlar kaydedildikten sonra mevcut yedekleme dosyalarının yeni kurallara uymaması durumunda otomatik olarak silineceğini lütfen unutmayın.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">266,269</context>
@@ -9783,7 +9783,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </target>
+        <target state="translated">(<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>en sonuncu<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dosya) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -9943,7 +9943,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.allSingleValue.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValues[0])}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> Ressourcen durch den ausgewählten Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValues[0])}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> ersetzt. </target>
+        <target state="translated">Lütfen dikkat: Bu işlem, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> tüm girdilerin tüm alanlarındaki <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> değer listesinde bulunmayan değeri <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_2" equiv-text="ctedValues[0])}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="ersetzt."/> seçili değerle değiştirecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">59,61</context>
@@ -9951,7 +9951,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.allMultipleValues.info" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte <x id="START_BLOCK_FOR" equiv-text="@for (value of selectedValues; track value; let isLast = $last) {"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_2" equiv-text="e)}}"/><x id="START_BLOCK_IF" equiv-text=", }&lt;/b&gt;"/>, <x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/><x id="CLOSE_BLOCK_FOR" equiv-text="e"/> ersetzt. </source>
-        <target state="needs-translation">Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> in sämtlichen Feldern aller <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte <x id="START_BLOCK_FOR" equiv-text="@for (value of selectedValues; track value; let isLast = $last) {"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_2" equiv-text="e)}}"/><x id="START_BLOCK_IF" equiv-text=", }&lt;/b&gt;"/>, <x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/><x id="CLOSE_BLOCK_FOR" equiv-text="e"/> ersetzt. </target>
+        <target state="translated">Lütfen dikkat: Bu işlem, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> bu alanda çoklu seçime izin veren tüm girdilerin tüm alanlarında, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/> değer listesinde bulunmayan değeri <x id="START_BLOCK_FOR" equiv-text="@for (value of selectedValues; track value; let isLast = $last) {"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{getValueLabel(v"/><x id="INTERPOLATION_2" equiv-text="e)}}"/><x id="START_BLOCK_IF" equiv-text=", }&lt;/b&gt;"/>, <x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="}"/><x id="CLOSE_BLOCK_FOR" equiv-text="e"/> seçili değerlerle değiştirecektir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">64,68</context>
@@ -9959,7 +9959,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidProcessState" datatype="html">
         <source>Ungültiger Status <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Ungültiger Status <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Geçersiz durum <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,112</context>
@@ -9967,7 +9967,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.isRelationTargetCategory" datatype="html">
         <source>Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie als Zielkategorie einer Relation konfiguriert ist. </source>
-        <target state="needs-translation">Die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange sie als Zielkategorie einer Relation konfiguriert ist. </target>
+        <target state="translated"><x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kategorisi, bir ilişkinin hedef kategorisi olarak konfigüre edildiği sürece silinemez. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">42,45</context>

@@ -26178,6 +26178,11 @@
           "http://uri.gbv.de/terminology/amh_befunde/5ab1af4d-dfd0-4ed8-a40c-2e7554f31663"
         ]
       },
+      "e1e53f64-a03e-47ba-9ce7-faea7b5c9c76": {
+        "references": [
+          "http://uri.gbv.de/terminology/amh_befunde/e1e53f64-a03e-47ba-9ce7-faea7b5c9c76"
+        ]
+      },
       "55e3f6b1-5f7c-48be-85ad-b3c352c69b49": {
         "references": [
           "http://uri.gbv.de/terminology/amh_befunde/55e3f6b1-5f7c-48be-85ad-b3c352c69b49"

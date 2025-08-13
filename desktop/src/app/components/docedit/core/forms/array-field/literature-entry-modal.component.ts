@@ -33,6 +33,8 @@ export class LiteratureEntryModalComponent {
 
         if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
             this.activeModal.dismiss();
+        } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
+            this.confirm();
         }
     }
 

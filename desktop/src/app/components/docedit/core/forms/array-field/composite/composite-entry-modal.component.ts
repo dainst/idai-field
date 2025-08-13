@@ -50,6 +50,8 @@ export class CompositeEntryModalComponent {
 
         if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
             this.activeModal.dismiss();
+        } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
+            this.confirm();
         }
     }
 
@@ -64,6 +66,8 @@ export class CompositeEntryModalComponent {
 
 
     public confirm() {
+
+        if (this.isEmpty()) return;
 
         const cleanedUpEntry: any = this.cleanUpEntry(this.entry);
 

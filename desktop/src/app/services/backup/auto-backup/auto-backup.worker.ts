@@ -25,6 +25,8 @@ const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {};
 const idleWorkers: Array<Worker> = [];
 const activeWorkers: Array<Worker> = [];
 
+const databases: { [projectName: string]: any } = {};
+
 
 addEventListener('message', ({ data }) => {
 
@@ -38,7 +40,6 @@ addEventListener('message', ({ data }) => {
             error = false;
             break;
         case 'createBackups':
-            if (runTimeout) clearTimeout(runTimeout);
             run();
     }
 });
@@ -102,6 +103,8 @@ function onWorkerFinished(worker: Worker) {
 async function run() {
 
     await updateBackups();
+
+    if (runTimeout) clearTimeout(runTimeout);
 
     runTimeout = setTimeout(() => {
         runTimeout = undefined;
@@ -233,5 +236,15 @@ function updateListOfRecentlyUpdatedBackups() {
 
 async function getUpdateSequence(project: string): Promise<number|undefined> {
 
-    return (await new PouchDb(project).info()).update_seq;
+    const database = getDatabase(project);
+    
+    return (await database.info()).update_seq;
+}
+
+
+function getDatabase(project: string): any {
+
+    if (!databases[project]) databases[project] = new PouchDb(project);
+
+    return databases[project];
 }

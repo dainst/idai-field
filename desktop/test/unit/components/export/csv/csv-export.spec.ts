@@ -503,10 +503,10 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
         ];
         resources[0]['dimensionX'] = [
-            { inputValue: 100, inputUnit: 'cm', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
+            { inputValue: 100, inputUnit: 'mm', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
             { inputValue: 200, inputUnit: 'cm', measurementComment: { en: 'Comment 2' }, measurementPosition: 'def' }];
         resources[1]['dimensionX'] = [
-            { inputValue: 300, inputUnit: 'cm', inputRangeEndValue: 400 }];
+            { inputValue: 300, inputUnit: 'm', inputRangeEndValue: 400 }];
         resources[1]['custom'] = 'custom';
 
         const result = CSVExport.createExportable(resources, t, [], ['en'], ',').csvData.map(row => row.split(','));
@@ -528,26 +528,52 @@ describe('CSVExport', () => {
         expect(result[0][15]).toBe('"custom"');
 
         expect(result[1][1]).toBe('"100"');
+        expect(result[1][2]).toBe('""');
+        expect(result[1][3]).toBe('"mm"');
+        expect(result[1][4]).toBe('""');
         expect(result[1][5]).toBe('"Comment 1"');
         expect(result[1][6]).toBe('"Kommentar 1"');
+        expect(result[1][7]).toBe('""');
         expect(result[1][8]).toBe('"200"');
+        expect(result[1][9]).toBe('""');
+        expect(result[1][10]).toBe('"cm"');
         expect(result[1][11]).toBe('"def"');
         expect(result[1][12]).toBe('"Comment 2"');
         expect(result[1][13]).toBe('""');
+        expect(result[1][14]).toBe('""');
+        expect(result[1][15]).toBe('""');
 
         expect(result[2][1]).toBe('"300"');
         expect(result[2][2]).toBe('"400"');
+        expect(result[2][3]).toBe('"m"');
+        expect(result[2][4]).toBe('""');
         expect(result[2][5]).toBe('""');
         expect(result[2][6]).toBe('""');
+        expect(result[2][7]).toBe('""');
+        expect(result[2][8]).toBe('""');
+        expect(result[2][9]).toBe('""');
+        expect(result[2][10]).toBe('""');
+        expect(result[2][11]).toBe('""');
         expect(result[2][12]).toBe('""');
         expect(result[2][13]).toBe('""');
+        expect(result[2][14]).toBe('""');
         expect(result[2][15]).toBe('"custom"');
 
         expect(result[3][1]).toBe('""');
+        expect(result[3][2]).toBe('""');
+        expect(result[3][3]).toBe('""');
+        expect(result[3][4]).toBe('""');
         expect(result[3][5]).toBe('""');
         expect(result[3][6]).toBe('""');
+        expect(result[3][7]).toBe('""');
+        expect(result[3][8]).toBe('""');
+        expect(result[3][9]).toBe('""');
+        expect(result[3][10]).toBe('""');
+        expect(result[3][11]).toBe('""');
         expect(result[3][12]).toBe('""');
         expect(result[3][13]).toBe('""');
+        expect(result[3][14]).toBe('""');
+        expect(result[3][15]).toBe('""');
     });
 
 

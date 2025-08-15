@@ -1,6 +1,12 @@
+import { isString } from 'tsfun';
 import { DateConfiguration } from '../model/configuration/date-configuration';
 import { Field } from '../model/configuration/field';
+import { Reference } from '../model/configuration/reference';
 import { ConfigurationResource } from '../model/document/configuration-resource';
+import { CustomFieldDefinition } from './model/field/custom-field-definition';
+import { Valuelist } from '../model/configuration/valuelist';
+import { ValuelistValue } from '../model/configuration/valuelist-value';
+import { CustomFormDefinition } from './model/form/custom-form-definition';
 
 
 /**
@@ -11,6 +17,7 @@ export module ConfigurationMigrator {
     export function migrate(configurationResource: ConfigurationResource) {
 
         migrateDates(configurationResource);
+        migrateReferences(configurationResource);
     }
 
 
@@ -46,5 +53,56 @@ export module ConfigurationMigrator {
                     }
                 });
         });
+    }
+
+
+    function migrateReferences(configurationResource: ConfigurationResource) {
+
+        Object.values(configurationResource.forms).forEach(form => {
+            migrateReferencesInObject(form);
+
+            Object.values(form.fields).forEach(field => {
+                migrateReferencesInObject(field);
+
+                if (field.subfields) {
+                    Object.values(field.subfields).forEach(subfield => {
+                        migrateReferencesInObject(subfield);
+                    })
+                }
+            })
+        });
+
+        Object.values(configurationResource.valuelists).forEach(valuelist => {
+            migrateReferencesInObject(valuelist);
+
+            Object.values(valuelist.values).forEach(value => {
+                migrateReferencesInObject(value);
+            });
+        });
+    }
+
+
+    function migrateReferencesInObject(object: CustomFormDefinition|CustomFieldDefinition|Valuelist|ValuelistValue) {
+
+        if (object.references) object.references = getReferences(object.references);
+    }
+
+
+    function getReferences(references: any[]): Array<Reference> {
+
+        return references.map(entry => {
+            return isString(entry)
+                ? getReference(entry)
+                : entry;
+            });
+    }
+
+
+    function getReference(uri: string): Reference {
+
+        return {
+            predicate: 'idw:unknownMatch',
+            uri
+        };
     }
 }

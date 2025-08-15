@@ -904,6 +904,13 @@ describe('WarningsUpdater', () => {
                             }
                         },
                         {
+                            name: 'weight',
+                            inputType: Field.InputType.WEIGHT,
+                            valuelist: {
+                                values: { 'valueWeight': {} }
+                            }
+                        },
+                        {
                             name: 'composite',
                             inputType: Field.InputType.COMPOSITE,
                             subfields: [
@@ -943,8 +950,9 @@ describe('WarningsUpdater', () => {
         documents[1].resource.dropdown = 'outlierValue2';
         documents[1].resource.checkboxes = ['outlierValue3'];
         documents[1].resource.dimension = [{ measurementPosition: 'outlierValue4', inputValue: 1, inputUnit: 'cm' }];
+        documents[1].resource.weight = [{ measurementScale: 'outlierValue5', inputValue: 1, inputUnit: 'g' }];
         documents[1].resource.composite = [
-            { dropdown: 'outlierValue5', checkboxes: ['outlierValue6'], url: 'http://www.example.de' }
+            { dropdown: 'outlierValue6', checkboxes: ['outlierValue7'], url: 'http://www.example.de' }
         ];
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
@@ -965,11 +973,12 @@ describe('WarningsUpdater', () => {
                 dropdown: ['outlierValue2'],
                 checkboxes: ['outlierValue3'],
                 dimension: ['outlierValue4'],
-                composite: { dropdown: ['outlierValue5'], checkboxes: ['outlierValue6'] }
+                weight: ['outlierValue5'],
+                composite: { dropdown: ['outlierValue6'], checkboxes: ['outlierValue7'] }
             });
         expect(documents[1].warnings?.outliers?.values)
             .toEqual(['outlierValue1', 'outlierValue2', 'outlierValue3', 'outlierValue4', 'outlierValue5',
-                'outlierValue6']);
+                'outlierValue6', 'outlierValue7']);
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
@@ -1057,6 +1066,13 @@ describe('WarningsUpdater', () => {
                             }
                         },
                         {
+                            name: 'weight',
+                            inputType: Field.InputType.WEIGHT,
+                            valuelist: {
+                                values: { 'valueWeight': {} }
+                            }
+                        },
+                        {
                             name: 'composite',
                             inputType: Field.InputType.COMPOSITE,
                             subfields: [
@@ -1095,6 +1111,7 @@ describe('WarningsUpdater', () => {
                 dropdown: ['outlierValue'],
                 checkboxes: ['outlierValue'],
                 dimension: ['outlierValue'],
+                weight: ['outlierValue'],
                 composite: { dropdown: ['outlierValue'], checkboxes: ['outlierValue'] }
             },
             values: ['outlierValue']
@@ -1103,6 +1120,7 @@ describe('WarningsUpdater', () => {
         documents[1].resource.dropdown = 'valueDropdown';
         documents[1].resource.checkboxes = ['valueCheckboxes'];
         documents[1].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
+        documents[1].resource.weight = [{ measurementPosition: 'valueWeight', inputValue: 1, inputUnit: 'g'}];
         documents[1].resource.composite = [
             { dropdown: 'valueSubfieldDropdown', checkboxes: ['valueSubfieldCheckboxes'] }
         ];

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map } from 'tsfun';
-import { Dimension, Labels, ProjectConfiguration, Valuelist } from 'idai-field-core';
+import { Measurement, Labels, ProjectConfiguration, Valuelist } from 'idai-field-core';
 import { Language, Languages } from '../../../../../services/languages';
 import { SettingsProvider } from '../../../../../services/settings/settings-provider';
 import { Menus } from '../../../../../services/menus';
@@ -10,7 +10,7 @@ import { MenuContext } from '../../../../../services/menu-context';
 
 
 @Component({
-    templateUrl: './dimension-entry-modal.html',
+    templateUrl: './measurement-entry-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     },
@@ -20,9 +20,10 @@ import { MenuContext } from '../../../../../services/menu-context';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class DimensionEntryModalComponent {
+export class MeasurementEntryModalComponent {
 
-    public entry: Dimension;
+    public entry: Measurement;
+    public inputType: 'dimension'|'weight'|'volume';
     public isNew: boolean;
     public languages: Map<Language>;
     public valuelist: Valuelist;
@@ -39,7 +40,7 @@ export class DimensionEntryModalComponent {
     
     public cancel = () => this.activeModal.dismiss();
     
-    public validate = () => Dimension.isValid(this.entry);
+    public validate = () => Measurement.isValid(this.entry, this.inputType);
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -54,20 +55,20 @@ export class DimensionEntryModalComponent {
 
     public async initialize() {
 
-        if (this.isNew) this.entry = DimensionEntryModalComponent.createEmptyEntry();
+        if (this.isNew) this.entry = this.createEmptyEntry();
 
         this.fieldLanguages = await this.getFieldLanguages();
         this.isRange = this.entry.inputRangeEndValue !== undefined ? true : false;
     }
 
 
-    public getPositionValues(): string[] {
+    public getValuelistValues(): string[] {
 
         return Object.keys(this.valuelist.values);
     }
 
 
-    public getPositionValueLabel(valueId: string): string {
+    public getValueLabel(valueId: string): string {
 
         return this.labels.getValueLabel(this.valuelist, valueId);
     }
@@ -105,7 +106,7 @@ export class DimensionEntryModalComponent {
     private cleanUp() {
 
         delete this.entry.isRange;
-        Dimension.addNormalizedValues(this.entry);
+        Measurement.addNormalizedValues(this.entry);
     }
 
 
@@ -121,14 +122,27 @@ export class DimensionEntryModalComponent {
     }
 
 
-    private static createEmptyEntry(): Dimension {
+    private createEmptyEntry(): Measurement {
 
         return  {
             value: 0,
             inputValue: 0,
             measurementPosition: '',
-            inputUnit: 'cm',
+            inputUnit: this.getDefaultInputUnit(),
             isImprecise: false
         };
+    }
+
+
+    private getDefaultInputUnit(): Measurement.InputUnit {
+
+        switch (this.inputType) {
+            case 'dimension':
+                return 'cm';
+            case 'weight':
+                return 'g';
+            case 'volume':
+                return 'ml';
+        }
     }
 }

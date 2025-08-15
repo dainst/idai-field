@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { equal, flatten, isArray, isObject, isString, set } from 'tsfun';
-import { CategoryForm, Datastore, Dimension, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
+import { CategoryForm, Datastore, Measurement, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
      Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -200,8 +200,11 @@ export class FixOutliersModalComponent {
             }
         } else if (isObject(entry)) {
             if (field.inputType === Field.InputType.DIMENSION
-                    && entry[Dimension.MEASUREMENTPOSITION] === this.outlierValue) {
+                    && entry.measurementPosition === this.outlierValue) {
                 entry.measurementPosition = this.selectedValues[0];
+            } else if (field.inputType === Field.InputType.WEIGHT
+                    && entry.measurementScale === this.outlierValue) {
+                entry.measurementScale = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.VALUE] === this.outlierValue) {
                 entry.value = this.selectedValues[0];

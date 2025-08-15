@@ -41,7 +41,7 @@
     [fieldContainer]="fieldContainer" [field]="field"></form-field-date>
 
 <form-field-object-array *ngIf="field.inputType === 'dating' || field.inputType === 'dimension'
-        || field.inputType === 'literature'"
+        || field.inputType === 'weight' || field.inputType === 'volume' || field.inputType === 'literature'"
     [fieldContainer]="fieldContainer" [field]="field" [inputType]="field.inputType"
     [languages]="languages"></form-field-object-array>
 

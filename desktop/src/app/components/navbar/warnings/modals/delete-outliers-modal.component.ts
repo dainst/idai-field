@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
-import { BaseField, CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
+import { BaseField, CategoryForm, Datastore, Measurement, Document, Field,
+    ProjectConfiguration } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { AffectedDocument } from '../affected-document';
@@ -152,8 +153,13 @@ export class DeleteOutliersModalComponent {
     private removeValueFromArray(array: any[], field: BaseField, document: Document): any[] {
 
         if (field.inputType === Field.InputType.DIMENSION) {
-            array.forEach((entry: Dimension) => {
+            array.forEach((entry: Measurement) => {
                 if (entry.measurementPosition === this.outlierValue) delete entry.measurementPosition;
+            });
+            return array;
+        } else if (field.inputType === Field.InputType.WEIGHT) {
+            array.forEach((entry: Measurement) => {
+                if (entry.measurementScale === this.outlierValue) delete entry.measurementScale;
             });
             return array;
         } else if (field.inputType === Field.InputType.COMPOSITE) {

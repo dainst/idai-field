@@ -138,6 +138,16 @@ export module MessagesConversion {
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES
                 : M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE
         }
+        if (msg === ValidationErrors.INVALID_WEIGHT_VALUES) {
+            replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
+                ? M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES
+                : M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE
+        }
+        if (msg === ValidationErrors.INVALID_VOLUME_VALUES) {
+            replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
+                ? M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUES
+                : M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUE
+        }
         if (msg === ValidationErrors.INVALID_LITERATURE_VALUES) {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES

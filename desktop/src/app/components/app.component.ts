@@ -147,6 +147,9 @@ export class AppComponent {
             'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an`
         );
         this.utilTranslations.addTranslation(
+            'measuredWith', $localize `:@@util.dimension.measuredWith:gemessen mit`
+        );
+        this.utilTranslations.addTranslation(
             'zenonId', $localize `:@@util.literature.zenonId:Zenon-ID`
         );
         this.utilTranslations.addTranslation(
@@ -306,6 +309,14 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'inputTypes.dimension',
             $localize `:@@config.inputType.dimension:Maßangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.weight',
+            $localize `:@@config.inputType.weight:Gewichtsangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.volume',
+            $localize `:@@config.inputType.volume:Volumenangabe`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.literature',

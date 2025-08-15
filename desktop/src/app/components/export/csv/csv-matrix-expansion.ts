@@ -1,5 +1,6 @@
 import { flow, left, reverse, isString, isArray } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Field, I18N, Subfield, DateSpecification } from 'idai-field-core';
+import { Dating, Measurement, Literature, OptionalRange, Field, I18N, Subfield,
+    DateSpecification } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
 import { CsvExportConsts, HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
@@ -15,7 +16,13 @@ export module CSVMatrixExpansion {
         rowsWithI18nStringExpanded(languages), languages.length
     );
     const expandDimensionItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
-        rowsWithDimensionElementsExpanded(languages), 5 + languages.length
+        rowsWithMeasurementElementsExpanded(languages, 'dimension'), 5 + languages.length
+    );
+    const expandWeightItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithMeasurementElementsExpanded(languages, 'weight'), 5 + languages.length
+    );
+    const expandVolumeItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithMeasurementElementsExpanded(languages, 'volume'), 4 + languages.length
     );
     const expandDatingItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
         rowsWithDatingElementsExpanded(languages), 8 + languages.length
@@ -145,9 +152,51 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
-                    Dimension.MEASUREMENTCOMMENT,
+                    Measurement.MEASUREMENTCOMMENT,
                     CSVHeadingsExpansion.expandDimensionHeadings,
                     expandDimensionItems
+                )
+            );
+        };
+    }
+
+
+    export function expandWeight(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.WEIGHT),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    Measurement.MEASUREMENTCOMMENT,
+                    CSVHeadingsExpansion.expandWeightHeadings,
+                    expandWeightItems
+                )
+            );
+        };
+    }
+
+
+    export function expandVolume(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.VOLUME),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    Measurement.MEASUREMENTCOMMENT,
+                    CSVHeadingsExpansion.expandVolumeHeadings,
+                    expandVolumeItems
                 )
             );
         };
@@ -251,19 +300,23 @@ export module CSVMatrixExpansion {
     }
 
 
-    function rowsWithDimensionElementsExpanded(languages: string[]) {
+    function rowsWithMeasurementElementsExpanded(languages: string[], inputType: 'dimension'|'weight'|'volume') {
         
-        return (dimension: Dimension): string[] => {
+        return (measurement: Measurement): string[] => {
 
-            const { inputValue, inputRangeEndValue, measurementPosition, measurementComment,
-                inputUnit, isImprecise } = dimension;
+            const { inputValue, inputRangeEndValue, measurementPosition, measurementScale, measurementComment,
+                inputUnit, isImprecise } = measurement;
 
             const expandedDimension = [
                 (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
                 (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
-                inputUnit ?? '',
-                measurementPosition ?? ''
-            ].concat(measurementComment
+                inputUnit ?? ''
+            ].concat(inputType === 'dimension'
+                    ? [measurementPosition ?? '']
+                    : inputType === 'weight'
+                        ? [measurementScale ?? '']
+                        : []
+            ).concat(measurementComment
                 ? rowsWithI18nStringExpanded(languages)(measurementComment)
                 : languages.map(_ => '')
             );

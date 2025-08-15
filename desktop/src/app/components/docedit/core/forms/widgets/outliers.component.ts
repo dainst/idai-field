@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Dimension, Field, Valuelist, ValuelistUtil } from 'idai-field-core';
+import { Measurement, Field, Valuelist, ValuelistUtil } from 'idai-field-core';
 
 
 @Component({
@@ -42,6 +42,8 @@ export class OutliersComponent {
 
         if (this.field.inputType === Field.InputType.DIMENSION) {
             this.removeFromDimensionArray(outlier);
+        } else if (this.field.inputType === Field.InputType.WEIGHT) {
+            this.removeFromWeightArray(outlier);
         } else {
             this.removeFromStringArray(outlier);
         }
@@ -50,8 +52,16 @@ export class OutliersComponent {
 
     private removeFromDimensionArray(outlier: string) {
 
-        this.fieldContainer[this.field.name].forEach((dimension: Dimension) => {
+        this.fieldContainer[this.field.name].forEach((dimension: Measurement) => {
             if (dimension.measurementPosition === outlier) delete dimension.measurementPosition;
+        });
+    }
+
+
+    private removeFromWeightArray(outlier: string) {
+
+        this.fieldContainer[this.field.name].forEach((weight: Measurement) => {
+            if (weight.measurementScale === outlier) delete weight.measurementScale;
         });
     }
 

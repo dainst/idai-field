@@ -95,6 +95,30 @@ export module MessagesConversion {
             }
         }
 
+        if (msg === ValidationErrors.INVALID_WEIGHT_VALUES) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE;
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            }
+        }
+
+        if (msg === ValidationErrors.INVALID_VOLUME_VALUES) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUES;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUE;
+                msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+                msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+            }
+        }
+
         if (msg === ValidationErrors.INVALID_DECIMAL_SEPARATORS) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS;

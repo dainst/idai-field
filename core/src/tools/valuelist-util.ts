@@ -5,8 +5,10 @@ import { Valuelist } from '../model/configuration/valuelist';
 import { OptionalRange } from '../model/input-types/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
-import { CategoryForm, Dimension, EditableValue } from '../model';
-import { ProjectConfiguration } from '../services';
+import { Measurement } from '../model/input-types/measurement';
+import { ProjectConfiguration } from '../services/project-configuration';
+import { EditableValue } from '../model/input-types/editable-value';
+import { CategoryForm } from '../model/configuration/category-form';
 
 
 /**
@@ -20,7 +22,9 @@ export module ValuelistUtil {
         if (!fieldContent || !valuelist) return undefined;
         
         const valuesToCheck: string[] = isArray(fieldContent)
-            ? fieldContent.map(entry => entry?.[Dimension.MEASUREMENTPOSITION] ?? entry)
+            ? fieldContent.map(entry => entry?.[Measurement.MEASUREMENTPOSITION]
+                    ?? entry?.[Measurement.MEASUREMENTSCALE]
+                    ?? entry)
                 .filter(entry => isString(entry))
             : fieldContent[OptionalRange.VALUE]
                 ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]

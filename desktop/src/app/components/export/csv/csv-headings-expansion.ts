@@ -81,28 +81,6 @@ export module CSVHeadingsExpansion {
     }
 
 
-    export function expandDimensionHeadings(languages: string[]) {
-        
-        return (n: number) => {
-
-            return (fieldName: string) => {
-
-                return flatMap(i => [
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition'
-                ].concat(languages.map(language => {
-                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'
-                        + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
-                })).concat([
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise'
-                ]))(range(n));
-            }
-        }
-    }
-
-
     export function expandLiteratureHeadings(_: string[]) {
         
         return (n: number) => {
@@ -139,6 +117,50 @@ export module CSVHeadingsExpansion {
                     }
                     return result;
                 }, []))(range(n));
+            }
+        }
+    }
+
+
+    export function expandDimensionHeadings(languages: string[]) {
+        
+        return expandMeasurementHeadings(languages, 'dimension');
+    }
+
+
+    export function expandWeightHeadings(languages: string[]) {
+        
+        return expandMeasurementHeadings(languages, 'weight');
+    }
+
+
+    export function expandVolumeHeadings(languages: string[]) {
+        
+        return expandMeasurementHeadings(languages, 'volume');
+    }
+
+
+    function expandMeasurementHeadings(languages: string[], inputType: 'dimension'|'weight'|'volume') {
+        
+        return (n: number) => {
+
+            return (fieldName: string) => {
+
+                return flatMap(i => [
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit'
+                ].concat(inputType === 'dimension'
+                        ? [fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition']
+                        : inputType === 'weight'
+                            ? [fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementScale']
+                            : []
+                ).concat(languages.map(language => {
+                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'
+                        + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
+                })).concat([
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise'
+                ]))(range(n));
             }
         }
     }

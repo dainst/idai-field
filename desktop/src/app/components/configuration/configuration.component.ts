@@ -100,6 +100,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'date', customFields: true },
         { name: 'dating', customFields: true },
         { name: 'dimension', customFields: true },
+        { name: 'weight', customFields: true },
+        { name: 'volume', customFields: true },
         { name: 'literature', customFields: true },
         { name: 'composite', customFields: true },
         { name: 'relation', customFields: true },

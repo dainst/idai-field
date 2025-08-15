@@ -2,7 +2,7 @@ import { is, isArray, isObject, isString, Map, on } from 'tsfun';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
 import { Dating } from '../model/input-types/dating';
-import { Dimension } from '../model/input-types/dimension';
+import { Measurement } from '../model/input-types/measurement';
 import { Document } from '../model/document/document';
 import { BaseGroup, Group } from '../model/configuration/group';
 import { Literature } from '../model/input-types/literature';
@@ -119,13 +119,19 @@ export module FieldsViewUtil {
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value)
             );
-        } else if (field?.definition?.inputType === Field.InputType.DIMENSION && field.valuelist) {
-            return object.label ?? Dimension.generateLabel(
+        } else if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(field?.definition?.inputType)
+                && (field.valuelist || field.definition.inputType === Field.InputType.VOLUME)) {
+            return object.label ?? Measurement.generateLabel(
                 object,
+                field.definition.inputType,
                 formatDecimal,
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value),
-                labels.getValueLabel(field.valuelist, object.measurementPosition)
+                field.definition.inputType === Field.InputType.DIMENSION
+                    ? labels.getValueLabel(field.valuelist, object.measurementPosition)
+                    : field.definition.inputType === Field.InputType.WEIGHT
+                        ? labels.getValueLabel(field.valuelist, object.measurementScale)
+                        : undefined
             );
         } else if (field?.definition?.inputType === Field.InputType.LITERATURE) {
             return Literature.generateLabel(

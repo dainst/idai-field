@@ -3,7 +3,7 @@
     <h5 *ngIf="!isNew" i18n="@@docedit.editEntry">Eintrag bearbeiten</h5>
 </div>
 
-<div *ngIf="entry" class="modal-body bg-light dimension-entry-modal-body">
+<div *ngIf="entry" class="modal-body bg-light measurement-entry-modal-body">
 	<select class="form-control w100 mb-2"
 			[(ngModel)]="isRange"
 			(ngModelChange)="toggleRange($event)"
@@ -21,21 +21,45 @@
 				[(ngModel)]="entry.inputRangeEndValue" type="number"
 				step="0.001" min="0" size="6" name="inputRangeEndValue"
 				class="form-control range-end-input">
-		<select [(ngModel)]="entry.inputUnit"
+		<select *ngIf="inputType === 'dimension'" [(ngModel)]="entry.inputUnit"
 				class="form-control input-unit-select"
 				name="inputUnit">
 			<option value="cm">cm</option>
 			<option value="m">m</option>
 			<option value="mm">mm</option>
 		</select>
+		<select *ngIf="inputType === 'weight'" [(ngModel)]="entry.inputUnit"
+				class="form-control input-unit-select"
+				name="inputUnit">
+			<option value="mg">mg</option>
+			<option value="g">g</option>
+			<option value="kg">kg</option>
+		</select>
+		<select *ngIf="inputType === 'volume'" [(ngModel)]="entry.inputUnit"
+				class="form-control input-unit-select"
+				name="inputUnit">
+			<option value="ml">ml</option>
+			<option value="l">l</option>
+		</select>
 	</div>
-	<div class="d-flex flex-row align-items-center flex-wrap mb-3">
+	<div *ngIf="inputType === 'dimension'" class="d-flex flex-row align-items-center flex-wrap mb-3">
 		<label class="measured-by-label" i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an</label>
 		<select [(ngModel)]="entry.measurementPosition"
 				class="ms-2 form-control measurement-position-select">
 			<option value=""></option>
-			<option *ngFor="let value of getPositionValues()" value="{{value}}">
-				{{getPositionValueLabel(value)}}
+			<option *ngFor="let value of getValuelistValues()" value="{{value}}">
+				{{getValueLabel(value)}}
+			</option>
+		</select>
+	</div>
+
+	<div *ngIf="inputType === 'weight'" class="d-flex flex-row align-items-center flex-wrap mb-3">
+		<label class="measured-with-label" i18n="@@docedit.forms.weight.measuredWith">Gemessen mit</label>
+		<select [(ngModel)]="entry.measurementScale"
+				class="ms-2 form-control measurement-scale-select">
+			<option value=""></option>
+			<option *ngFor="let value of getValuelistValues()" value="{{value}}">
+				{{getValueLabel(value)}}
 			</option>
 		</select>
 	</div>

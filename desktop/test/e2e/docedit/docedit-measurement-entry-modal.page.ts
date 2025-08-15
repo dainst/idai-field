@@ -4,7 +4,7 @@ import { click, selectOption, typeIn } from '../app';
 /**
  * @author Thomas Kleinke
  */
-export class DoceditDimensionEntryModalPage {
+export class DoceditMeasurementEntryModalPage {
 
     // click
 
@@ -16,7 +16,7 @@ export class DoceditDimensionEntryModalPage {
 
     public static async clickMeasurementPositionOption(optionValue: string) {
 
-        return selectOption('.dimension-entry-modal-body .measurement-position-select', optionValue);
+        return selectOption('.measurement-entry-modal-body .measurement-position-select', optionValue);
     }
 
     
@@ -24,6 +24,6 @@ export class DoceditDimensionEntryModalPage {
 
     public static async typeInInputValue(text: string) {
 
-        return typeIn(('.dimension-entry-modal-body .value-input'), text);
+        return typeIn(('.measurement-entry-modal-body .value-input'), text);
     }
 }

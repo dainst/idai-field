@@ -2,14 +2,14 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { is, remove, clone, Map } from 'tsfun';
-import { Literature, Field, Dating, I18N, Labels, Dimension, ValuelistUtil, Valuelist, Datastore,
+import { Literature, Field, Dating, I18N, Labels, Measurement, ValuelistUtil, Valuelist, Datastore,
     ProjectConfiguration } from 'idai-field-core';
 import { UtilTranslations } from '../../../../../util/util-translations';
 import { LiteratureEntryModalComponent } from './literature-entry-modal.component';
 import { MenuContext } from '../../../../../services/menu-context';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { Menus } from '../../../../../services/menus';
-import { DimensionEntryModalComponent } from './dimension-entry-modal.component';
+import { MeasurementEntryModalComponent } from './measurement-entry-modal.component';
 import { Language } from '../../../../../services/languages';
 import { DatingEntryModalComponent } from './dating-entry-modal.component';
 
@@ -53,7 +53,9 @@ export class ObjectArrayComponent implements OnChanges {
             case Field.InputType.DATING:
                 return this.getDatingLabel(entry);
             case Field.InputType.DIMENSION:
-                return this.getDimensionLabel(entry);
+            case Field.InputType.WEIGHT:
+            case Field.InputType.VOLUME:
+                return this.getMeasurementLabel(entry);
             case Field.InputType.LITERATURE:
                 return this.getLiteratureLabel(entry);
         }
@@ -115,12 +117,16 @@ export class ObjectArrayComponent implements OnChanges {
         modalReference.componentInstance.entry = clone(entry);
         modalReference.componentInstance.isNew = isNew;
 
-        if (this.inputType !== Field.InputType.LITERATURE) {
-            modalReference.componentInstance.languages = this.languages;
+        if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(this.inputType)) {
+            modalReference.componentInstance.inputType = this.inputType;
         }
 
-        if (this.inputType === Field.InputType.DIMENSION) {
+        if (this.inputType === Field.InputType.DIMENSION || this.inputType === Field.InputType.WEIGHT) {
             modalReference.componentInstance.valuelist = this.valuelist;
+        }
+
+        if (this.inputType !== Field.InputType.LITERATURE) {
+            modalReference.componentInstance.languages = this.languages;
         }
 
         await modalReference.componentInstance.initialize();
@@ -155,16 +161,21 @@ export class ObjectArrayComponent implements OnChanges {
     }
 
 
-    private getDimensionLabel(dimension: Dimension): string {
+    private getMeasurementLabel(measurement: Measurement): string {
 
-        if (dimension.label) return dimension.label;
+        if (measurement.label) return measurement.label;
 
-        return Dimension.generateLabel(
-            dimension,
+        return Measurement.generateLabel(
+            measurement,
+            this.field.inputType,
             (value: any) => this.decimalPipe.transform(value),
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: I18N.String|string) => this.labels.getFromI18NString(value),
-            this.labels.getValueLabel(this.field['valuelist'], dimension.measurementPosition)
+            this.field.inputType === Field.InputType.DIMENSION
+                ? this.labels.getValueLabel(this.field.valuelist, measurement.measurementPosition)
+                : this.field.inputType === Field.InputType.WEIGHT
+                    ? this.labels.getValueLabel(this.field.valuelist, measurement.measurementScale)
+                    : undefined
         );
     }
 
@@ -181,7 +192,9 @@ export class ObjectArrayComponent implements OnChanges {
             case Field.InputType.DATING:
                 return DatingEntryModalComponent;
             case Field.InputType.DIMENSION:
-                return DimensionEntryModalComponent;
+            case Field.InputType.WEIGHT:
+            case Field.InputType.VOLUME:
+                return MeasurementEntryModalComponent;
             case Field.InputType.LITERATURE:
                 return LiteratureEntryModalComponent;
         }

@@ -107,6 +107,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'M.Import.ValidationErrors.invalidDimensionValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE = 'M.Import.ValidationErrors.invalidWeightValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES = 'M.Import.ValidationErrors.invalidWeightValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUE = 'M.Import.ValidationErrors.invalidVolumeValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUES = 'M.Import.ValidationErrors.invalidVolumeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE = 'M.Import.ValidationErrors.invalidLiteratureValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES = 'M.Import.ValidationErrors.invalidLiteratureValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUE = 'M.Import.ValidationErrors.invalidCompositeValue';
@@ -197,6 +201,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'docedit.validation.error.invalidDatingValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'docedit.validation.error.invalidDimensionValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'docedit.validation.error.invalidDimensionValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE = 'docedit.validation.error.invalidWeightValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES = 'docedit.validation.error.invalidWeightValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUE = 'docedit.validation.error.invalidVolumeValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUES = 'docedit.validation.error.invalidVolumeValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS = 'docedit.validation.error.invalidDecimalSeparators';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS = 'docedit.validation.error.invalidWorkflowRelationTargets';
@@ -675,6 +683,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.validation.error.invalidDimensionValues:Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE] = {
+            content: $localize `:@@messages.import.validation.error.invalidWeightValue:Ungültige Gewichtsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES] = {
+            content: $localize `:@@messages.import.validation.error.invalidWeightValues:Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUE] = {
+            content: $localize `:@@messages.import.validation.error.invalidVolumeValue:Ungültige Volumenangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUES] = {
+            content: $localize `:@@messages.import.validation.error.invalidVolumeValues:Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
+            level: 'danger'
+        };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE] = {
             content: $localize `:@@messages.import.validation.error.invalidLiteratureValue:Ungültiger Literaturverweis im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
@@ -909,6 +933,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
             content: $localize `:@@messages.docedit.validation.error.invalidDimensionValues:Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidWeightValue:Bitte tragen Sie im Feld \'[1]\' eine gültige Gewichtsangabe ein.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidWeightValues:Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUE] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidVolumeValue:Bitte tragen Sie im Feld \'[1]\' eine gültige Volumenangabe ein.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUES] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidVolumeValues:Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR] = {

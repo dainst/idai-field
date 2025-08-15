@@ -19,7 +19,7 @@ import { BooleanComponent } from './core/forms/boolean.component';
 import { CheckboxesComponent } from './core/forms/checkboxes.component';
 import { DateComponent } from './core/forms/date/date.component';
 import { DatingEntryModalComponent } from './core/forms/array-field/dating-entry-modal.component';
-import { DimensionEntryModalComponent } from './core/forms/array-field/dimension-entry-modal.component';
+import { MeasurementEntryModalComponent } from './core/forms/array-field/measurement-entry-modal.component';
 import { DropdownRangeComponent } from './core/forms/dropdown-range.component';
 import { DropdownComponent } from './core/forms/dropdown.component';
 import { GeometryComponent } from './core/forms/geometry.component';
@@ -103,7 +103,7 @@ import { DateParserFormatter } from './core/forms/date/date-parser-formatter';
         TypeRelationComponent,
         TypeRowComponent,
         TypeRelationPickerComponent,
-        DimensionEntryModalComponent,
+        MeasurementEntryModalComponent,
         DropdownRangeComponent,
         GeometryComponent,
         OutliersComponent,

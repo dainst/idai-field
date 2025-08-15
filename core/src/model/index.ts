@@ -2,7 +2,7 @@ export { Action } from './document/action';
 export { CategoryForm } from './configuration/category-form';
 export { Constraint } from './datastore/constraint';
 export { Dating, DatingElement, DatingType } from './input-types/dating';
-export { Dimension } from './input-types/dimension';
+export { Measurement } from './input-types/measurement';
 export { Document, toResourceId } from './document/document';
 export { FeatureDocument } from './document/feature-document';
 export { FeatureResource } from './document/feature-resource';

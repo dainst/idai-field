@@ -9,7 +9,7 @@ import { createCategory, createField } from './helpers';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-modal.page';
-import { DoceditDimensionEntryModalPage } from '../docedit/docedit-dimension-entry-modal.page';
+import { DoceditMeasurementEntryModalPage } from '../docedit/docedit-measurement-entry-modal.page';
 import { AddFieldModalPage } from '../configuration/add-field-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 
@@ -194,9 +194,9 @@ export async function createDimensionOutlierValuesWarnings(resourceIdentifiers: 
         await ResourcesPage.performCreateResource(identifier, 'place');
         await ResourcesPage.openEditByDoubleClickResource(identifier);
         await DoceditPage.clickCreateNewObjectArrayEntryButton(completeFieldName);
-        await DoceditDimensionEntryModalPage.typeInInputValue('1');
-        await DoceditDimensionEntryModalPage.clickMeasurementPositionOption('Oberkante');
-        await DoceditDimensionEntryModalPage.clickConfirm();
+        await DoceditMeasurementEntryModalPage.typeInInputValue('1');
+        await DoceditMeasurementEntryModalPage.clickMeasurementPositionOption('Oberkante');
+        await DoceditMeasurementEntryModalPage.clickConfirm();
         await DoceditPage.clickSaveDocument();
     }
 

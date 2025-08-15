@@ -18,6 +18,8 @@ export module ValidationErrors {
     export const INVALID_DECIMAL_SEPARATORS = 'validationerror/invaliddecimalseparators';
     export const INVALID_DATING_VALUES = 'validationerror/invaliddatingvalues';
     export const INVALID_DIMENSION_VALUES = 'validationerror/invaliddimensionvalues';
+    export const INVALID_WEIGHT_VALUES = 'validationerror/invalidweightvalues';
+    export const INVALID_VOLUME_VALUES = 'validationerror/invalidvolumevalues';
     export const INVALID_LITERATURE_VALUES = 'validationerror/invalidliteraturevalues';
     export const INVALID_COMPOSITE_VALUES = 'validationerror/invalidcompositevalues';
     export const INVALID_OPTIONALRANGE_VALUES = 'validationerror/invalidoptionalrange';

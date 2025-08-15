@@ -1,5 +1,5 @@
 import { is, isArray, isString, and, isObject, to, equal, intersect } from 'tsfun';
-import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
+import { Dating, Measurement, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, validateUrl, validateInt, Composite,  DateSpecification,
     DateValidationResult, Condition } from 'idai-field-core';
@@ -187,7 +187,42 @@ export module Validations {
             Field.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, _: Field, options?: any) =>
-                Dimension.isDimension(dimension) && Dimension.isValid(dimension, options),
+                Measurement.isMeasurement(dimension)
+                    && Measurement.isValid(dimension, Field.InputType.DIMENSION, options),
+            previousDocumentVersion
+        );
+    }
+
+
+    export function assertCorrectnessOfWeightValues(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration,
+                                                    previousDocumentVersion?: Document) {
+
+        assertValidityOfObjectArrays(
+            document,
+            projectConfiguration,
+            Field.InputType.WEIGHT,
+            ValidationErrors.INVALID_DIMENSION_VALUES,
+            (dimension: any, _: Field, options?: any) =>
+                Measurement.isMeasurement(dimension)
+                    && Measurement.isValid(dimension, Field.InputType.WEIGHT, options),
+            previousDocumentVersion
+        );
+    }
+
+
+    export function assertCorrectnessOfVolumeValues(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration,
+                                                    previousDocumentVersion?: Document) {
+
+        assertValidityOfObjectArrays(
+            document,
+            projectConfiguration,
+            Field.InputType.VOLUME,
+            ValidationErrors.INVALID_DIMENSION_VALUES,
+            (dimension: any, _: Field, options?: any) =>
+                Measurement.isMeasurement(dimension)
+                    && Measurement.isValid(dimension, Field.InputType.VOLUME, options),
             previousDocumentVersion
         );
     }
@@ -224,8 +259,8 @@ export module Validations {
 
 
     function assertValidityOfObjectArrays(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
-                                          inputType: 'dating'|'dimension'|'literature'|'composite', error: string,
-                                          isValid: (object: any, field: Field, option?: any) => boolean,
+                                          inputType: 'dating'|'dimension'|'weight'|'volume'|'literature'|'composite',
+                                          error: string, isValid: (object: any, field: Field, option?: any) => boolean,
                                           previousDocumentVersion?: Document) {
 
         const previousInvalidFields: string[] = previousDocumentVersion
@@ -682,7 +717,7 @@ export module Validations {
 
     export function validateObjectArrayFields(resource: Resource|NewResource,
                                               projectConfiguration: ProjectConfiguration,
-                                              inputType: 'dating'|'dimension'|'literature'|'composite',
+                                              inputType: 'dating'|'dimension'|'weight'|'volume'|'literature'|'composite',
                                               isValid: (object: any, field: Field, option?: any) => boolean): string[] {
 
         return validateFields(resource, projectConfiguration, inputType, (fieldContent: any, field: Field, options) =>

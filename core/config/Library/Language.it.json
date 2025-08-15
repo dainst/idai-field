@@ -1242,9 +1242,6 @@
           "label": "Numero di laboratorio",
           "description": "Numero del campione assegnato dal laboratorio di analisi"
         },
-        "weight": {
-          "description": "Peso in grammi"
-        },
         "sampleType": {
           "label": "Tipo di campione",
           "description": "Quale campione verrà prelevato? Quali sono le analisi da effettuare?"
@@ -1434,9 +1431,6 @@
           "label": "Numero inventario",
           "description": "Numero assegnato durante l'inventario in una collezione o in un deposito"
         },
-        "weight": {
-          "description": "Peso in grammi"
-        },
         "condition": {
           "label": "Stato di conservazione",
           "description": "Descrizione dello stato di conservazione"
@@ -1460,9 +1454,6 @@
         },
         "bibliography": {
           "label": "Bibliografia"
-        },
-        "weight": {
-          "description": "Peso in grammi"
         },
         "storagePlace": {
           "label": "Luogo di conservazione",

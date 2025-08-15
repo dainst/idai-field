@@ -1243,9 +1243,6 @@
           "label": "Laboratuvar numarası",
           "description": "İnceleme laboratuvarında atanan numune numarası"
         },
-        "weight": {
-          "description": "Gram cinsinden ağırlık"
-        },
         "sampleType": {
           "label": "Numune tipi",
           "description": "Hangi örnek alınacak? Hangi tetkik yapılacak?"
@@ -1435,9 +1432,6 @@
           "label": "Envanter numarası",
           "description": "Bir koleksiyon veya depodaki envanter sırasında atanan numara"
         },
-        "weight": {
-          "description": "Gram cinsinden ağırlık"
-        },
         "condition": {
           "label": "Durumu",
           "description": "Koruma durumunun açıklaması"
@@ -1461,9 +1455,6 @@
         },
         "bibliography": {
           "label": "Kaynakça"
-        },
-        "weight": {
-          "description": "Gram cinsinden ağırlık"
         },
         "storagePlace": {
           "label": "Depolandığı yer",

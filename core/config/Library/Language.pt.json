@@ -471,9 +471,6 @@
           "label": "Laboratory number",
           "description": "Número da amostra, atribuída pelo laboratório de análises"
         },
-        "weight": {
-          "description": "Peso em gramas"
-        },
         "sampleType": {
           "label": "Tipo de amostra",
           "description": "Qual a amostra retirada? Quais as análises são para ser efetuadas?"
@@ -1158,9 +1155,6 @@
           "label": "Número de inventariação",
           "description": "Número atribuído durante a inventariação de uma coleção ou depósito"
         },
-        "weight": {
-          "description": "Peso em gramas"
-        },
         "storagePlace": {
           "label": "Depósito",
           "description": "depósito do achado"
@@ -1447,9 +1441,6 @@
         "amount": {
           "label": "Número (total)",
           "description": "Número de achados guardados ou inventariados"
-        },
-        "weight": {
-          "description": "Peso em gramas"
         },
         "storagePlace": {
           "description": "Depósito da coleção de achados",

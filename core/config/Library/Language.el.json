@@ -1239,9 +1239,6 @@
           "label": "",
           "description": ""
         },
-        "weight": {
-          "description": ""
-        },
         "sampleType": {
           "label": "",
           "description": ""
@@ -1431,9 +1428,6 @@
           "label": "",
           "description": ""
         },
-        "weight": {
-          "description": ""
-        },
         "condition": {
           "label": "",
           "description": ""
@@ -1457,9 +1451,6 @@
         },
         "bibliography": {
           "label": ""
-        },
-        "weight": {
-          "description": ""
         },
         "storagePlace": {
           "label": "",

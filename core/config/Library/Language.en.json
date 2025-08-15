@@ -1159,9 +1159,6 @@
         "labNumber": {
           "label": "Laboratory number"
         },
-        "weight": {
-          "description": "Weight in grams"
-        },
         "sampleType": {
           "label": "Sample type"
         },
@@ -1334,9 +1331,6 @@
           "label": "Inventory number",
           "description": "Number assigned during inventory in a collection or depot"
         },
-        "weight": {
-          "description": "Weight in grams"
-        },
         "condition": {
           "label": "Condition",
           "description": "Description of the state of preservation"
@@ -1360,9 +1354,6 @@
         },
         "bibliography": {
           "label": "Bibliography"
-        },
-        "weight": {
-          "description": "Weight in grams"
         },
         "storagePlace": {
           "label": "Storage place",

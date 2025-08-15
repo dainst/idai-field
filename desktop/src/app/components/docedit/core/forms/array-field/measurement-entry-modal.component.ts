@@ -127,7 +127,6 @@ export class MeasurementEntryModalComponent {
         return  {
             value: 0,
             inputValue: 0,
-            measurementPosition: '',
             inputUnit: this.getDefaultInputUnit(),
             isImprecise: false
         };

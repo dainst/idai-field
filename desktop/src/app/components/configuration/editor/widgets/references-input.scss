@@ -5,6 +5,15 @@ references-input {
     .reference-input {
       border-right: none;
     }
+
+    input,
+    select {
+      position: relative;
+
+      &:focus {
+        z-index: 1000;
+      }
+    }
   }
 
   .btn-danger {

@@ -308,7 +308,7 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'inputTypes.dimension',
-            $localize `:@@config.inputType.dimension:Maßangabe`
+            $localize `:@@config.inputType.dimension:Längenangabe`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.weight',

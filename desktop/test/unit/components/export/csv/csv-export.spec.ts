@@ -13,6 +13,8 @@ export function makeFieldDefinitions(fieldNames: string[]) {
         if (fieldName.startsWith('multiInput')) inputType = Field.InputType.MULTIINPUT;
         if (fieldName.startsWith('date')) inputType = Field.InputType.DATE;
         if (fieldName.startsWith('dimension')) inputType = Field.InputType.DIMENSION;
+        if (fieldName.startsWith('weight')) inputType = Field.InputType.WEIGHT;
+        if (fieldName.startsWith('volume')) inputType = Field.InputType.VOLUME;
         if (fieldName.startsWith('dating')) inputType = Field.InputType.DATING;
         if (fieldName.startsWith('literature')) inputType = Field.InputType.LITERATURE;
         if (fieldName.startsWith('period')) inputType = Field.InputType.DROPDOWNRANGE;
@@ -36,6 +38,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('CSVExport', () => {
 
@@ -621,6 +624,170 @@ describe('CSVExport', () => {
         expect(result[2][9]).toBe('"400"');
         expect(result[2][12]).toBe('""');
         expect(result[2][13]).toBe('"B"');
+    });
+
+
+    test('expand weight', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'weight', 'custom']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
+        ];
+        resources[0]['weight'] = [
+            { inputValue: 100, inputUnit: 'mg', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
+            { inputValue: 200, inputUnit: 'g', measurementComment: { en: 'Comment 2' }, measurementScale: 'abc' }
+        ];
+        resources[1]['weight'] = [
+            { inputValue: 300, inputUnit: 'kg', inputRangeEndValue: 400 }
+        ];
+        resources[1]['custom'] = 'custom';
+
+        const result = CSVExport.createExportable(resources, t, [], ['en'], ',').csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"weight.0.inputValue"');
+        expect(result[0][2]).toBe('"weight.0.inputRangeEndValue"');
+        expect(result[0][3]).toBe('"weight.0.inputUnit"');
+        expect(result[0][4]).toBe('"weight.0.measurementScale"');
+        expect(result[0][5]).toBe('"weight.0.measurementComment.en"');
+        expect(result[0][6]).toBe('"weight.0.measurementComment.de"');
+        expect(result[0][7]).toBe('"weight.0.isImprecise"');
+        expect(result[0][8]).toBe('"weight.1.inputValue"');
+        expect(result[0][9]).toBe('"weight.1.inputRangeEndValue"');
+        expect(result[0][10]).toBe('"weight.1.inputUnit"');
+        expect(result[0][11]).toBe('"weight.1.measurementScale"');
+        expect(result[0][12]).toBe('"weight.1.measurementComment.en"');
+        expect(result[0][13]).toBe('"weight.1.measurementComment.de"');
+        expect(result[0][14]).toBe('"weight.1.isImprecise"');
+        expect(result[0][15]).toBe('"custom"');
+
+        expect(result[1][1]).toBe('"100"');
+        expect(result[1][2]).toBe('""');
+        expect(result[1][3]).toBe('"mg"');
+        expect(result[1][4]).toBe('""');
+        expect(result[1][5]).toBe('"Comment 1"');
+        expect(result[1][6]).toBe('"Kommentar 1"');
+        expect(result[1][7]).toBe('""');
+        expect(result[1][8]).toBe('"200"');
+        expect(result[1][9]).toBe('""');
+        expect(result[1][10]).toBe('"g"');
+        expect(result[1][11]).toBe('"abc"');
+        expect(result[1][12]).toBe('"Comment 2"');
+        expect(result[1][13]).toBe('""');
+        expect(result[1][14]).toBe('""');
+        expect(result[1][15]).toBe('""');
+
+        expect(result[2][1]).toBe('"300"');
+        expect(result[2][2]).toBe('"400"');
+        expect(result[2][3]).toBe('"kg"');
+        expect(result[2][4]).toBe('""');
+        expect(result[2][5]).toBe('""');
+        expect(result[2][6]).toBe('""');
+        expect(result[2][7]).toBe('""');
+        expect(result[2][8]).toBe('""');
+        expect(result[2][9]).toBe('""');
+        expect(result[2][10]).toBe('""');
+        expect(result[2][11]).toBe('""');
+        expect(result[2][12]).toBe('""');
+        expect(result[2][13]).toBe('""');
+        expect(result[2][14]).toBe('""');
+        expect(result[2][15]).toBe('"custom"');
+
+        expect(result[3][1]).toBe('""');
+        expect(result[3][2]).toBe('""');
+        expect(result[3][3]).toBe('""');
+        expect(result[3][4]).toBe('""');
+        expect(result[3][5]).toBe('""');
+        expect(result[3][6]).toBe('""');
+        expect(result[3][7]).toBe('""');
+        expect(result[3][8]).toBe('""');
+        expect(result[3][9]).toBe('""');
+        expect(result[3][10]).toBe('""');
+        expect(result[3][11]).toBe('""');
+        expect(result[3][12]).toBe('""');
+        expect(result[3][13]).toBe('""');
+        expect(result[3][14]).toBe('""');
+        expect(result[3][15]).toBe('""');
+    });
+
+
+    test('expand volume', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'volume', 'custom']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+            ifResource('i3', 'identifier3', { en: 'shortDescription3' }, 'category'),
+        ];
+        resources[0]['volume'] = [
+            { inputValue: 100, inputUnit: 'ml', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
+            { inputValue: 200, inputUnit: 'ml', measurementComment: { en: 'Comment 2' } }
+        ];
+        resources[1]['volume'] = [
+            { inputValue: 300, inputUnit: 'l', inputRangeEndValue: 400 }
+        ];
+        resources[1]['custom'] = 'custom';
+
+        const result = CSVExport.createExportable(resources, t, [], ['en'], ',').csvData.map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"volume.0.inputValue"');
+        expect(result[0][2]).toBe('"volume.0.inputRangeEndValue"');
+        expect(result[0][3]).toBe('"volume.0.inputUnit"');
+        expect(result[0][4]).toBe('"volume.0.measurementComment.en"');
+        expect(result[0][5]).toBe('"volume.0.measurementComment.de"');
+        expect(result[0][6]).toBe('"volume.0.isImprecise"');
+        expect(result[0][7]).toBe('"volume.1.inputValue"');
+        expect(result[0][8]).toBe('"volume.1.inputRangeEndValue"');
+        expect(result[0][9]).toBe('"volume.1.inputUnit"');
+        expect(result[0][10]).toBe('"volume.1.measurementComment.en"');
+        expect(result[0][11]).toBe('"volume.1.measurementComment.de"');
+        expect(result[0][12]).toBe('"volume.1.isImprecise"');
+        expect(result[0][13]).toBe('"custom"');
+
+        expect(result[1][1]).toBe('"100"');
+        expect(result[1][2]).toBe('""');
+        expect(result[1][3]).toBe('"ml"');
+        expect(result[1][4]).toBe('"Comment 1"');
+        expect(result[1][5]).toBe('"Kommentar 1"');
+        expect(result[1][6]).toBe('""');
+        expect(result[1][7]).toBe('"200"');
+        expect(result[1][8]).toBe('""');
+        expect(result[1][9]).toBe('"ml"');
+        expect(result[1][10]).toBe('"Comment 2"');
+        expect(result[1][11]).toBe('""');
+        expect(result[1][12]).toBe('""');
+        expect(result[1][13]).toBe('""');
+
+        expect(result[2][1]).toBe('"300"');
+        expect(result[2][2]).toBe('"400"');
+        expect(result[2][3]).toBe('"l"');
+        expect(result[2][4]).toBe('""');
+        expect(result[2][5]).toBe('""');
+        expect(result[2][6]).toBe('""');
+        expect(result[2][7]).toBe('""');
+        expect(result[2][8]).toBe('""');
+        expect(result[2][9]).toBe('""');
+        expect(result[2][10]).toBe('""');
+        expect(result[2][11]).toBe('""');
+        expect(result[2][12]).toBe('""');
+        expect(result[2][13]).toBe('"custom"');
+
+        expect(result[3][1]).toBe('""');
+        expect(result[3][2]).toBe('""');
+        expect(result[3][3]).toBe('""');
+        expect(result[3][4]).toBe('""');
+        expect(result[3][5]).toBe('""');
+        expect(result[3][6]).toBe('""');
+        expect(result[3][7]).toBe('""');
+        expect(result[3][8]).toBe('""');
+        expect(result[3][9]).toBe('""');
+        expect(result[3][10]).toBe('""');
+        expect(result[3][11]).toBe('""');
+        expect(result[3][12]).toBe('""');
+        expect(result[3][13]).toBe('""');
     });
 
 

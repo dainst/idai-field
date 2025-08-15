@@ -49,6 +49,10 @@
       "label": "Andere Maße",
       "description": "Andere Maße können hier eingegeben werden; bitte kommentieren"
     },
+    "weight": {
+      "label": "Gewicht",
+      "description": "Angabe des Gewichts"
+    },
     "area": {
       "label": "Fläche in m2",
       "description": "Flächenangabe in Quadratmetern"
@@ -1246,10 +1250,6 @@
           "label": "Labornummer",
           "description": "Nummer der Probe, vergeben im untersuchenden Labor"
         },
-        "weight": {
-          "label": "Gewicht (g)",
-          "description": "Gewicht in Gramm"
-        },
         "sampleType": {
           "label": "Art der Probe",
           "description": "Welche Probe wird genommen? Welche Untersuchungen sollen vorgenommen werden?"
@@ -1439,10 +1439,6 @@
           "label": "Inventarnummer",
           "description": "Vergebene Nummer während der Inventarisierung in einer Sammlung oder einem Depot"
         },
-        "weight": {
-          "label": "Gewicht (g)",
-          "description": "Gewicht in Gramm"
-        },
         "condition": {
           "label": "Erhaltungszustand",
           "description": "Beschreibung des Erhaltungszustandes"
@@ -1466,10 +1462,6 @@
         },
         "bibliography": {
           "label": "Bibliographie"
-        },
-        "weight": {
-          "label": "Gewicht (g)",
-          "description": "Gewicht in Gramm"
         },
         "storagePlace": {
           "label": "Aufbewahrungsort",

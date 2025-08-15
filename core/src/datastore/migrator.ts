@@ -1,10 +1,11 @@
-import { isArray, isObject, isString } from 'tsfun';
+import { isArray, isNumber, isObject, isString } from 'tsfun';
 import { Document } from '../model/document/document';
 import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
 import { DateSpecification } from '../model/input-types/date-specification';
+import { Measurement } from '../model/input-types/measurement';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -29,6 +30,7 @@ export module Migrator {
         migrateGeneralFieldsAndRelations(document);
         migratePeriodFields(document);
         migrateSingleToMultipleValues(document);
+        migrateWeightFields(document);
         migrateDatings(document, projectConfiguration);
         migrateDates(document, projectConfiguration);
         migrateProjectValuelistFields(document);
@@ -71,6 +73,20 @@ export module Migrator {
                document.resource[fieldName] = [document.resource[fieldName]];
            }
         });
+    }
+
+
+    function migrateWeightFields(document: Document) {
+
+        if (document.resource.weight !== undefined && isNumber(document.resource.weight)) {
+            const weight: Measurement = {
+                inputValue: document.resource.weight,
+                inputUnit: 'g',
+                isImprecise: false
+            };
+            Measurement.addNormalizedValues(weight);
+            document.resource.weight = [weight];
+        }
     }
 
 

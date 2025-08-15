@@ -1338,9 +1338,6 @@
         "inputType": "input",
         "constraintIndexed": true
       },
-      "weight": {
-        "inputType": "unsignedFloat"
-      },
       "condition": {
         "inputType": "dropdown",
         "constraintIndexed": true,
@@ -1365,9 +1362,6 @@
       "amount": {
         "inputType": "unsignedInt",
         "constraintIndexed": true
-      },
-      "weight": {
-        "inputType": "unsignedFloat"
       },
       "storagePlace": {
         "inputType": "radio",
@@ -1586,9 +1580,6 @@
       "labNumber": {
         "inputType": "input",
         "constraintIndexed": true
-      },
-      "weight": {
-        "inputType": "unsignedFloat"
       },
       "sampleType": {
         "inputType": "radio",

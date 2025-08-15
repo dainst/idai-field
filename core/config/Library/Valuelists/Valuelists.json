@@ -64,6 +64,15 @@
       "At the back/shaft"
     ]
   },
+  "weight-scale-values-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "values": {
+      "Kofferwaage": {},
+      "Küchenwaage": {},
+      "Präzisionswaage": {}
+    }
+  },
   "orientation-default-1": {
     "createdBy": "",
     "creationDate": "",

@@ -26,6 +26,13 @@
       "Unterkante": "Unterkante"
     }
   },
+  "weight-scale-values-default": {
+    "values": {
+      "Kofferwaage": "Kofferwaage",
+      "Küchenwaage": "Küchenwaage",
+      "Präzisionswaage": "Präzisionswaage"
+    }
+  },
   "orientation-default-1": {
     "values": {
       "N-S": "N-S",

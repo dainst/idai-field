@@ -472,7 +472,6 @@
           "description": "Número da amostra, atribuída pelo laboratório de análises"
         },
         "weight": {
-          "label": "Peso (g)",
           "description": "Peso em gramas"
         },
         "sampleType": {
@@ -1160,7 +1159,6 @@
           "description": "Número atribuído durante a inventariação de uma coleção ou depósito"
         },
         "weight": {
-          "label": "Peso (g)",
           "description": "Peso em gramas"
         },
         "storagePlace": {
@@ -1451,7 +1449,6 @@
           "description": "Número de achados guardados ou inventariados"
         },
         "weight": {
-          "label": "Peso (g)",
           "description": "Peso em gramas"
         },
         "storagePlace": {

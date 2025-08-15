@@ -95,9 +95,6 @@
         },
         "conditionAmount": {
           "label": "Porcentaje conservado"
-        },
-        "weight": {
-          "label": "Peso (g)"
         }
       }
     },
@@ -193,9 +190,6 @@
       "fields": {
         "sampleType": {
           "label": "Clasificación"
-        },
-        "weight": {
-          "label": "Peso (g)"
         }
       }
     },

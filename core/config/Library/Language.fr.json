@@ -955,9 +955,6 @@
         "labNumber": {
           "label": "Numéro de laboratoire"
         },
-        "weight": {
-          "label": "Poids (en gr.)"
-        },
         "sampleType": {
           "label": "Type d'échantillon"
         }
@@ -1095,9 +1092,6 @@
         },
         "storageInventoryNumber": {
           "label": "Numéro d'inventaire"
-        },
-        "weight": {
-          "label": "Poids (en gr.)"
         },
         "condition": {
           "label": "Etat"

@@ -1243,7 +1243,6 @@
           "description": "Numero del campione assegnato dal laboratorio di analisi"
         },
         "weight": {
-          "label": "Peso (g)",
           "description": "Peso in grammi"
         },
         "sampleType": {
@@ -1436,7 +1435,6 @@
           "description": "Numero assegnato durante l'inventario in una collezione o in un deposito"
         },
         "weight": {
-          "label": "Peso (g)",
           "description": "Peso in grammi"
         },
         "condition": {
@@ -1464,7 +1462,6 @@
           "label": "Bibliografia"
         },
         "weight": {
-          "label": "Peso (g)",
           "description": "Peso in grammi"
         },
         "storagePlace": {

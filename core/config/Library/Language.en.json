@@ -1160,7 +1160,6 @@
           "label": "Laboratory number"
         },
         "weight": {
-          "label": "Weight (g)",
           "description": "Weight in grams"
         },
         "sampleType": {
@@ -1336,7 +1335,6 @@
           "description": "Number assigned during inventory in a collection or depot"
         },
         "weight": {
-          "label": "Weight (g)",
           "description": "Weight in grams"
         },
         "condition": {
@@ -1364,7 +1362,6 @@
           "label": "Bibliography"
         },
         "weight": {
-          "label": "Weight (g)",
           "description": "Weight in grams"
         },
         "storagePlace": {

@@ -1244,7 +1244,6 @@
           "description": "İnceleme laboratuvarında atanan numune numarası"
         },
         "weight": {
-          "label": "Ağırlık (gr.)",
           "description": "Gram cinsinden ağırlık"
         },
         "sampleType": {
@@ -1437,7 +1436,6 @@
           "description": "Bir koleksiyon veya depodaki envanter sırasında atanan numara"
         },
         "weight": {
-          "label": "Ağırlık (gr.)",
           "description": "Gram cinsinden ağırlık"
         },
         "condition": {
@@ -1465,7 +1463,6 @@
           "label": "Kaynakça"
         },
         "weight": {
-          "label": "Ağırlık (gr.)",
           "description": "Gram cinsinden ağırlık"
         },
         "storagePlace": {

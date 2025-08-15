@@ -1240,7 +1240,6 @@
           "description": ""
         },
         "weight": {
-          "label": "",
           "description": ""
         },
         "sampleType": {
@@ -1433,7 +1432,6 @@
           "description": ""
         },
         "weight": {
-          "label": "",
           "description": ""
         },
         "condition": {
@@ -1461,7 +1459,6 @@
           "label": ""
         },
         "weight": {
-          "label": "",
           "description": ""
         },
         "storagePlace": {

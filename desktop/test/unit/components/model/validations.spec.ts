@@ -674,7 +674,7 @@ describe('Validations', () => {
                 dimension6: [{ inputValue: 15, inputRangeEndValue: '25', inputUnit: 'mm' }],
                 // No array
                 dimension7: 'Dimension',
-                // Invalid input value
+                // Invalid input unit
                 dimension8: [{ inputValue: 15, inputUnit: 'invalid' }],
                 // Invalid field
                 dimension9: [{ inputValue: 50.25, inputUnit: 'mm', invalidField: 'asdf' }],

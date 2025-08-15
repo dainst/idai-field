@@ -1,4 +1,5 @@
 import { Field } from '../../../model/configuration/field';
+import { Reference } from '../../../model/configuration/reference';
 import { Valuelists } from '../../../model/configuration/valuelist';
 
 
@@ -7,7 +8,7 @@ export interface BaseFormDefinition {
     groups?: Array<BaseGroupDefinition>;
     valuelists?: Valuelists;
     source?: Field.SourceType;
-    references?: string[];
+    references?: Array<Reference>;
 }
 
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, is, isArray, on, subsetOf } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Named, Subfield, Condition,
-    Valuelist } from 'idai-field-core';
+import { clone, isArray, subsetOf } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Subfield, Condition, Valuelist,
+    Reference } from 'idai-field-core';
 import { InputType } from '../../configuration-util';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
@@ -14,7 +14,7 @@ export type SubfieldEditorData = {
     label: I18N.String;
     description: I18N.String;
     inputType: Field.InputType;
-    references: string[];
+    references: Array<Reference>;
     valuelist: Valuelist;
     condition?: Condition;
 }
@@ -35,7 +35,7 @@ export class SubfieldEditorModalComponent {
     public subfield: Subfield;
     public parentField: Field;
     public category: CategoryForm;
-    public references: string[];
+    public references: Array<Reference>;
     public new: boolean;
     public subfields: Array<Subfield>;
     public availableInputTypes: Array<InputType>;

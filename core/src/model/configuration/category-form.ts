@@ -6,6 +6,7 @@ import { Field } from './field';
 import { Group, GroupDefinition } from './group';
 import { Valuelist } from './valuelist';
 import { ScanCodeConfiguration } from './scan-code-configuration';
+import { Reference } from './reference';
 
 
 export interface CategoryForm {
@@ -39,7 +40,7 @@ export interface CategoryForm {
     
     createdBy?: string,
     creationDate?: Date;
-    references?: string[];
+    references?: Array<Reference>;
 
     color?: CategoryForm.Color; // TODO make sure it is always set and make non-optional
     defaultColor?: CategoryForm.Color;

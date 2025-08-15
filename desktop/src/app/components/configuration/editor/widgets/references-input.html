@@ -1,9 +1,12 @@
 <div *ngFor="let reference of references; let i = index; trackBy: getTrackingIndex">
     <div class="input-group mb-2">
+        <select class="form-control" [(ngModel)]="reference.predicate">
+            <option *ngFor="let predicate of getAvailablePredicates()" [value]="predicate">{{predicate}}</option>
+        </select>
         <div class="reference-input-container">
             <input type="text"
                    class="form-control reference-input"
-                   [(ngModel)]="references[i]">
+                   [(ngModel)]="reference.uri">
         </div>
         <button class="btn btn-danger"
                 type="button"

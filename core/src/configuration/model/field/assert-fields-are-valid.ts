@@ -24,8 +24,8 @@ export function assertFieldsAreValid(fields: Map<LibraryFieldDefinition>|Map<Cus
 function assertInputTypesAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomFieldDefinition>) {
 
     const isIllegal = and(
-                isDefined,
-                isNot(includedIn(VALID_INPUT_TYPES))
+        isDefined,
+        isNot(includedIn(VALID_INPUT_TYPES))
     );
 
     flow(

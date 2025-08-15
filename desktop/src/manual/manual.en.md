@@ -616,8 +616,18 @@ Specification of one or more datings. Possible dating types are: Period, Single 
 <p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
 
 #### Dimension
-Specification of one or more dimensions. Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
+Specification of one or more dimension measurements. The units of measurement available are "mm", "cm" and "m". Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
 <p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
+
+#### Weight
+Specification of one or more weight measurements. The units of measurement available are "mg", "g" and "kg". Either a single value or a range can be specified. The selection options for the dropdown subfield "Measured with" are taken from the specified valuelist.
+
+<p align="center"><img src="images/en/configuration/input_type_weight.png" alt="Input type 'Weight'"/></p>
+
+#### Volume
+Specification of one or more volume measurements. The units of measurement available are "ml" and "l". Either a single value or a range can be specified.
+
+<p align="center"><img src="images/en/configuration/input_type_volume.png" alt="Input type 'Volume'"/></p>
 
 #### Bibliographic reference
 Specification of one or more bibliographic references. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
@@ -1059,7 +1069,7 @@ A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the
 
 For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon without space between values (e.g. "Granite;Limestone;Slate").
 
-For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+For fields of the input types "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
 
 *Example of a field of the input type "Single line text (List)" with input in multiple languages:*
 
@@ -1238,14 +1248,15 @@ The year specifications *begin* and *end* consist of two subfields:
 </div>
 
 
-##### Dimensions
+##### Dimensions, weights and volumes
 
-Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
+Fields of the input types "Dimension", "Weight" and "Volume" are list fields, each of which can contain several entries. An entry consists of the following subfields, for which a separate column is created for each entry:
 
 * *inputValue*: The measured numerical value.
-* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension.
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*.
-* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
+* *inputRangeEndValue*: The second measured numerical value, if it is a range.
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m* (Dimension) / *mg*, *g*, *kg* (Weight) / *ml*, *l* (Volume).
+* *measurementPosition*: Field "As measured by" (only for dimensions). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementScale*: Field "Measured with" (only for weights). The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 
@@ -1640,7 +1651,7 @@ A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the
 
 ##### List fields
 
-Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Dimension", "Bibliographic reference" and "Composite field" can contain several entries. An array is therefore entered for these fields.
+Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference" and "Composite field" can contain several entries. An array is therefore entered for these fields.
 
 
 ##### Datings
@@ -1675,14 +1686,15 @@ The year specifications *begin* and *end* consist of two subfields:
     }
 
 
-##### Dimensions
+##### Dimensions, weights and volumes
 
-Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry is an object that consists of the following subfields:
+Fields of the input types "Dimension", "Weight" and "Volume" are list fields, each of which can contain several objects consisting of the following subfields:
 
 * *inputValue*: The measured numerical value.
 * *inputRangeEndValue*: The second measured numerical value, if it is a range dimension.
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*.
-* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m* (Dimension) / *mg*, *g*, *kg* (Weight) / *ml*, *l* (Volume).
+* *measurementPosition*: Field "As measured by" (only for dimension specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementScale*: Field "Measured with" (only for weight specifications). The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 

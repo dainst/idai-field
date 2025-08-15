@@ -629,9 +629,19 @@ Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch ledi
 Angabe einer oder mehrerer Datierungen. Mögliche Datierungstypen sind: Zeitraum, Exakt, Vor, Nach, Naturwissenschaftlich.
 <p align="center"><img src="images/de/configuration/input_type_dating.png" alt="Eingabetyp 'Datierungsangabe'"/></p>
 
-#### Maßangabe
-Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
-<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
+#### Längenangabe
+Angabe einer oder mehrerer Längenmessungen. Zur Auswahl stehen die Maßeinheiten "mm", "cm" und "m". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
+<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Längenangabe'"/></p>
+
+#### Gewichtsangabe
+Angabe einer oder mehrerer Gewichtsmessungen. Zur Auswahl stehen die Maßeinheiten "mg", "g" und "kg". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen mit" entnommen.
+
+<p align="center"><img src="images/de/configuration/input_type_weight.png" alt="Eingabetyp 'Gewichtsangabe'"/></p>
+
+#### Volumenangabe
+Angabe einer oder mehrerer Volumenmessungen. Zur Auswahl stehen die Maßeinheiten "ml" und "l". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden.
+
+<p align="center"><img src="images/de/configuration/input_type_volume.png" alt="Eingabetyp 'Volumenangabe'"/></p>
 
 #### Literaturangabe
 Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
@@ -1082,7 +1092,7 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT
 
 Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
-Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
+Bei Feldern der Eingabetypen "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
 
 *Beispiel für ein Feld des Eingabetyps "Einzeiliger Text (Liste)" mit Mehrsprachigkeit:*
 <div class="table-container">
@@ -1258,14 +1268,15 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 </div>
 
 
-##### Maßangaben
+##### Längen-, Gewichts- und Volumenangaben
 
-Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe besteht aus folgenden Unterfeldern, für die jeweils pro Maßangabe eine eigene Spalte angelegt wird:
+Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Ein Eintrag besteht aus folgenden Unterfeldern, für die jeweils pro Eintrag eine eigene Spalte angelegt wird:
 
 * *inputValue*: Der gemessene Zahlenwert.
 * *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
-* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*.
-* *measurementPosition*: Feld "Gemessen an". Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
+* *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementScale*: Feld "Gemessen mit" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 
@@ -1652,7 +1663,7 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT
 
 ##### Listenfelder
 
-Felder der Eingabetypen "Einzeiliger Text (Liste)", "Checkboxen", "Datierungsangabe", "Maßangabe", "Literaturangabe" und "Kompositfeld" können mehrere Einträge enthalten. Für diese Felder wird daher ein Array eingetragen.
+Felder der Eingabetypen "Einzeiliger Text (Liste)", "Checkboxen", "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe" und "Kompositfeld" können mehrere Einträge enthalten. Für diese Felder wird daher ein Array eingetragen.
 
 
 ##### Datierungsangaben
@@ -1687,14 +1698,15 @@ Die Jahresangaben *begin* und *end* sind wiederum Objekte, die aus zwei Unterfel
     }
 
 
-##### Maßangaben
+##### Längen-, Gewichts- und Volumenangaben
 
-Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe ist ein Objekt, das aus folgenden Unterfeldern besteht:
+Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" sind Listenfelder, die jeweils mehrere Objekte mit den folgenden Unterfeldern enthalten können:
 
 * *inputValue*: Der gemessene Zahlenwert.
 * *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
-* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*.
-* *measurementPosition*: Feld "Gemessen an". Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
+* *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementScale*: Feld "Gemessen mit" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 

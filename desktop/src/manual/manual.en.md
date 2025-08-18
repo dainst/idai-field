@@ -474,7 +474,7 @@ Via the context menu or by double-clicking on an entry in the category list, the
 
 You can also specify the following properties for project-specific categories:
 * *Description*: A description text that informs in which contexts the category should be used.
-* *References*: Specify URLs here if you want to reference more information about the category or category definitions in other systems.
+* *References*: Specify references consisting of a predicate and a URL here if you want to reference more information about the category or category definitions in other systems.
 
 #### QR codes
 
@@ -545,7 +545,7 @@ Via the context menu or by double-clicking on an entry in the field list, the fi
 
 * *Label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
 * *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field label and is intended to help with data entry.
-* *References*: Specify URLs here to reference more information about the field or field definitions in other systems.
+* *References*: Specify references consisting of a predicate and a URL here to reference more information about the field or field definitions in other systems.
 
 
 ### Change input type
@@ -744,7 +744,7 @@ Right-clicking on a project specific valuelist brings up a context menu that pro
 Via the context menu or by double-clicking on a valuelist, an editor can be opened in which the properties of the list can be edited:
 
 * *Valuelist description*: A description text where you can specify more detailed information about the valuelist. This text is displayed in valuelist management when the list is selected.
-* *References*: Specify URLs here to reference more information about the valuelist or definitions in other systems.
+* *References*: Specify references consisting of a predicate and a URL here to reference more information about the valuelist or definitions in other systems.
 * *Values*: Use the text field "New value" to enter the desired identifier of a new value to be included in the valuelist. The value editor opens in each case, which can also be called later by clicking on the edit button next to each value (see section *Edit values*).
 * *Automatic sorting*: If this option is enabled, the values will always be displayed in alphanumeric order. You can deactivate the option in order to subsequently drag and drop the values into the desired order.
 
@@ -755,7 +755,7 @@ The value editor allows you to customize the properties of a value:
 
 * *Label*: The display label of the value. You can enter labels for different languages.
 * *Description*: A description text where you can specify more detailed information about the value. This text is displayed in the configuration editor as a tooltip for the corresponding value.
-* *References*: Specify URLs here to reference definitions in other systems.
+* *References*: Specify references consisting of a predicate and a URL here to reference definitions in other systems.
 
 
 ## Select project languages

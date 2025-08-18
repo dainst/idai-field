@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, isArray, subsetOf } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Subfield, Condition, Valuelist,
     Reference } from 'idai-field-core';
-import { InputType } from '../../configuration-util';
+import { ConfigurationUtil, InputType } from '../../configuration-util';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
 import { Menus } from '../../../../services/menus';
@@ -96,6 +96,7 @@ export class SubfieldEditorModalComponent {
 
         try {
             this.assertChangesDoNotViolateConditionalSubfields();
+            ConfigurationUtil.cleanUpAndValidateReferences(this.data);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }

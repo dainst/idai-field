@@ -14,7 +14,7 @@ export type SubfieldEditorData = {
     label: I18N.String;
     description: I18N.String;
     inputType: Field.InputType;
-    references: Array<Reference>;
+    references?: Array<Reference>;
     valuelist: Valuelist;
     condition?: Condition;
 }

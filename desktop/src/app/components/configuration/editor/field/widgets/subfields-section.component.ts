@@ -227,7 +227,7 @@ export class SubfieldsSectionComponent {
         subfieldDefinition.inputType = editedSubfieldData.inputType;
         clonedSubfield.inputType = editedSubfieldData.inputType;
 
-        if (editedSubfieldData.references.length > 0) {
+        if (editedSubfieldData.references?.length) {
             subfieldDefinition.references = editedSubfieldData.references;
         } else {
             delete subfieldDefinition.references;

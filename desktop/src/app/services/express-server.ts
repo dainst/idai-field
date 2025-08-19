@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigurationDocument,
-    ConfigReader, Datastore, Query, CategoryForm, ProjectConfiguration } from 'idai-field-core';
+    ConfigReader, Datastore, Query, CategoryForm, ProjectConfiguration, Document } from 'idai-field-core';
 import { SettingsProvider } from './settings/settings-provider';
 import { ExportResult, ExportRunner } from '../components/export/export-runner';
 import { CsvExporter } from '../components/export/csv/csv-exporter';
@@ -197,16 +197,26 @@ export class ExpressServer {
             try {
                 const format: 'csv'|'geojson' = request.params.format === 'geojson' ? 'geojson' : 'csv';
                 const categoryName: string = request.query.category ?? 'Project';
+                let context: string = request.query.context; 
                 const csvSeparator: string = request.query.separator ?? ',';
                 const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
 
                 const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+
+                if (context && context !== 'project') {
+                    const documents: Array<Document> = (await this.datastore.find(
+                        { constraints: { 'identifier:match': context } }
+                    )).documents;
+                    context = documents.length === 1
+                        ? documents[0].resource.id
+                        : undefined;
+                }
                    
                 if (format === 'csv') {
                     const result: ExportResult = await ExportRunner.performExport(
                         (query: Query) => this.datastore.find(query),
                         (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
-                        'project',
+                        context,
                         category,
                         this.projectConfiguration
                             .getRelationsForDomainCategory(categoryName)
@@ -223,8 +233,7 @@ export class ExpressServer {
                         .send(result.exportData.join('\n'));
                 } else {
                     const geojsonData: string = await GeoJsonExporter.performExport(
-                        this.datastore,
-                        'project'
+                        this.datastore, context
                     );
 
                     response.header('Content-Type', 'application/geo+json')

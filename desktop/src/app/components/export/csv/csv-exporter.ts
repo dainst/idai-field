@@ -1,8 +1,9 @@
 import { CategoryForm, FieldResource } from 'idai-field-core';
-import { CSVExport, CSVExportResult } from './csv-export';
 import { M } from '../../../components/messages/m';
 import { PerformExport } from '../export-helper';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
+import { ExportResult } from '../export-runner';
+import { CSVExport } from './csv-export';
 
 /**
  * Small wrapper to separate async and file handling, including
@@ -15,20 +16,21 @@ export module CsvExporter {
     /**
      * @param outputFilePath
      */
-    export function performExport(outputFilePath: string, projectLanguages: string[], separator: string,
-                                  combineHierarchicalRelations: boolean): PerformExport {
+    export function performExport(projectLanguages: string[], separator: string,
+                                  combineHierarchicalRelations: boolean, outputFilePath?: string): PerformExport {
 
         return (category: CategoryForm, relations: string[]) => {
 
             return async (resources: Array<FieldResource>) => {
 
-                const result: CSVExportResult = CSVExport.createExportable(
+                const result: ExportResult = CSVExport.createExportable(
                     resources, CategoryForm.getFields(category), relations, projectLanguages,
                     separator, combineHierarchicalRelations, category.scanCodes !== undefined
                 );
-                await writeFile(outputFilePath, result.csvData);
 
-                return result.invalidFields;
+                if (outputFilePath) await writeFile(outputFilePath, result.exportData);
+
+                return result;
             }
         }
     }

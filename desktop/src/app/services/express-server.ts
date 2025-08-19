@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigurationDocument,
-    ConfigReader } from 'idai-field-core';
+    ConfigReader, Datastore, Query, CategoryForm, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from './settings/settings-provider';
+import { ExportResult, ExportRunner } from '../components/export/export-runner';
+import { CsvExporter } from '../components/export/csv/csv-exporter';
+import { GeoJsonExporter } from '../components/export/geojson-exporter';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -17,6 +20,8 @@ export class ExpressServer {
     private password: string;
     private allowLargeFileUploads: boolean;
     private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '1gb' });
+    private datastore: Datastore;
+    private projectConfiguration: ProjectConfiguration;
 
 
     constructor(private imagestore: ImageStore,
@@ -34,6 +39,11 @@ export class ExpressServer {
     public setAllowLargeFileUploads = (allow: boolean) => this.allowLargeFileUploads = allow;
 
     public getPouchDB = () => PouchDB;
+
+    public setDatastore = (datastore: Datastore) => this.datastore = datastore;
+
+    public setProjectConfiguration = (projectConfiguration: ProjectConfiguration) =>
+        this.projectConfiguration = projectConfiguration;
 
 
     /**
@@ -175,6 +185,51 @@ export class ExpressServer {
                     response.header('Content-Type', 'application/json')
                         .status(200)
                         .send(JSON.stringify(result, null, formatted ? 2 : undefined));
+                }
+            } catch (err) {
+                console.error(err);
+                response.status(500).send({ reason: 'An unknown error occurred.' });
+            }
+        });
+
+        app.get('/export/:format', async (request: any, response: any) => {
+
+            try {
+                const format: 'csv'|'geojson' = request.params.format === 'geojson' ? 'geojson' : 'csv';
+                const categoryName: string = request.query.category ?? 'Project';
+                const csvSeparator: string = request.query.separator ?? ',';
+                const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
+
+                const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+                   
+                if (format === 'csv') {
+                    const result: ExportResult = await ExportRunner.performExport(
+                        (query: Query) => this.datastore.find(query),
+                        (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
+                        'project',
+                        category,
+                        this.projectConfiguration
+                            .getRelationsForDomainCategory(categoryName)
+                            .map(_ => _.name),
+                        CsvExporter.performExport(
+                            this.projectConfiguration.getProjectLanguages(),
+                            csvSeparator,
+                            combineHierarchicalRelations
+                        )
+                    );
+                    
+                    response.header('Content-Type', 'text/csv')
+                        .status(200)
+                        .send(result.exportData.join('\n'));
+                } else {
+                    const geojsonData: string = await GeoJsonExporter.performExport(
+                        this.datastore,
+                        'project'
+                    );
+
+                    response.header('Content-Type', 'application/geo+json')
+                        .status(200)
+                        .send(geojsonData);
                 }
             } catch (err) {
                 console.error(err);

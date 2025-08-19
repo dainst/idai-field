@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { Datastore, SyncService } from 'idai-field-core';
+import { Datastore, ProjectConfiguration, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -17,6 +17,7 @@ import { QuittingModalComponent } from './widgets/quitting-modal.component';
 import { Modals } from '../services/modals';
 import { MenuContext } from '../services/menu-context';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
+import { ExpressServer } from '../services/express-server';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -47,6 +48,8 @@ export class AppComponent {
                 settingsService: SettingsService,
                 appState: AppState,
                 imageToolLauncher: ImageToolLauncher,
+                expressServer: ExpressServer,
+                projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
@@ -69,6 +72,9 @@ export class AppComponent {
                 this.messages.removeAllMessages();
             }
         });
+
+        expressServer.setDatastore(this.datastore);
+        expressServer.setProjectConfiguration(projectConfiguration);
 
         appState.load();
         settingsService.setupSync();

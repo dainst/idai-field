@@ -12,14 +12,19 @@ const geojsonRewind = window.require('@mapbox/geojson-rewind');
  */
 export module GeoJsonExporter {
 
-    export async function performExport(datastore: Datastore, outputFilePath: string, operationId: string,
+    export async function performExport(datastore: Datastore, operationId: string, outputFilePath?: string,
                                         explodeShortDescription: boolean = false,
-                                        geometryTypes?: Array<FieldGeometryType>) {
+                                        geometryTypes?: Array<FieldGeometryType>): Promise<string> {
 
         const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId, geometryTypes);
-        const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(documents, explodeShortDescription);
+        const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(
+            documents, explodeShortDescription
+        );
+        const json: string = JSON.stringify(featureCollection, null, 2);
 
-        return writeFile(outputFilePath, featureCollection);
+        if (outputFilePath) await writeFile(outputFilePath, json);
+
+        return json;
     }
 
 
@@ -75,10 +80,7 @@ export module GeoJsonExporter {
     }
 
 
-    async function writeFile(outputFilePath: string,
-                             featureCollection: FeatureCollection<GeometryObject>) {
-
-        const json: string = JSON.stringify(featureCollection, null, 2);
+    async function writeFile(outputFilePath: string, json: string) {        
 
         try {
             await getAsynchronousFs().writeFile(outputFilePath, json);

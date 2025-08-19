@@ -202,6 +202,7 @@ export class ExpressServer {
                 const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
 
                 const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+                if (!category) throw 'Unconfigured category: ' + categoryName;
 
                 if (context && context !== 'project') {
                     const documents: Array<Document> = (await this.datastore.find(
@@ -242,7 +243,8 @@ export class ExpressServer {
                 }
             } catch (err) {
                 console.error(err);
-                response.status(500).send({ reason: 'An unknown error occurred.' });
+                const errorMessage: string = err?.message ?? err;
+                response.status(400).send({ error: errorMessage });
             }
         });
 

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { Datastore, ProjectConfiguration, SyncService } from 'idai-field-core';
+import { Datastore, ProjectConfiguration, RelationsManager, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -50,6 +50,7 @@ export class AppComponent {
                 imageToolLauncher: ImageToolLauncher,
                 expressServer: ExpressServer,
                 projectConfiguration: ProjectConfiguration,
+                relationsManager: RelationsManager,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
@@ -74,6 +75,7 @@ export class AppComponent {
         });
 
         expressServer.setDatastore(this.datastore);
+        expressServer.setRelationsManager(relationsManager);
         expressServer.setProjectConfiguration(projectConfiguration);
 
         appState.load();

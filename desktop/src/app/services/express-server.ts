@@ -7,7 +7,7 @@ import { SettingsProvider } from './settings/settings-provider';
 import { ExportResult, ExportRunner } from '../components/export/export-runner';
 import { CsvExporter } from '../components/export/csv/csv-exporter';
 import { GeoJsonExporter } from '../components/export/geojson-exporter';
-import { Importer, ImporterOptions, ImporterReport } from '../components/import/importer';
+import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../components/import/importer';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -264,6 +264,10 @@ export class ExpressServer {
                 const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
                 if (!category) throw 'Unconfigured category: ' + categoryName;
 
+                let format: string = request.params.format;
+                if (!['geojson', 'csv', 'jsonl'].includes(format)) throw 'Unsupported format: ' + format;
+                if (format === 'jsonl') format = 'native';
+
                 let operationId: string;
                 if (operationIdentifier) {
                     const documents: Array<Document> = (await this.datastore.find(
@@ -277,7 +281,7 @@ export class ExpressServer {
                 const fileContent: string = request.body;
 
                 const options: ImporterOptions = {
-                    format: request.params.format === 'geojson' ? 'geojson' : 'csv',
+                    format: format as ImporterFormat,
                     mergeMode: request.query.mergeMode === 'true',
                     permitDeletions: request.query.permitDeletions === 'true',
                     selectedOperationId: operationId,

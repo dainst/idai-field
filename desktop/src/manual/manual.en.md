@@ -1776,6 +1776,77 @@ The following option is available when exporting catalog files:
 <hr>
 
 
+# Backups
+
+To avoid data loss, it is important to regularly create backup copies of the project databases. Field Desktop offers extensive options for automatically or manually creating backup files in JSONL format.
+
+**Important**: The backup files created in this way contain all data entered in the project, but **no images**. The image files are located in the image directory, the path to which can be found in the settings under "Advanced settings". It is recommended to create regular backup copies of the image directory in addition to the database backups. Also, database and image data can be backed up by synchronizing with a Field Hub server.
+
+Please note that the JSONL files created by the backup function are not suitable for importing into existing projects, but can only be restored as a separate project via the menu "Project" ➝ "Import backup...".
+
+
+## Automatic backups
+
+After every change to the project data, Field Desktop automatically creates a backup file for the corresponding project. By default, only the most recent backup per project is retained, while older backups are deleted. However, this behaviour can be adjusted in the settings (see section *Storage of backups*).
+
+The file name contains the project identifier as well as the date and time when the backup was created (for example, "example-project.2025-05-14.11-28-25.jsonl" for a project named "example-project" that was backed up on the 14th of May 2025 at 11:28:25).
+
+Please note that (regardless of the settings chosen) a new backup is only created if changes have been made to the project data since the last backup was created. The aim is to avoid identical copies in order to save storage space.
+
+**Important**: Backups are only created when the application is open. Backups are then created for all projects, not just the project currently open in the application.
+
+The options for configuring automatic backups can be found in the settings under "Advanced settings".
+
+
+### Change directory path
+
+You can view and change the path of the directory in which automatically created backup files are stored using the input field "Path". Please note that existing backup files are not automatically moved to the new directory when the backup directory is changed. The files in the old directory remain in place, while the backup files are recreated in the new directory for all projects.
+
+
+### Storage of backups
+
+In addition to the backup of the latest version of each project (which is always retained), additional backup files can be stored. To do this, you can configure the rules "Keep backups according to time" and "Keep backups according to date" in the settings.
+
+
+#### Keep backups by time
+
+This rule allows you to keep backup files at a specific time interval (every X hours).
+
+* *Interval in hours*: Specifies the time interval at which backup files should be kept. For example, if the value entered is "3", a backup file is kept every three hours.
+* *Number*: Specifies how many backup files should be kept. For example, if the value entered is "5", the five most recently created backup files will be kept.
+
+
+#### Keep backups by date
+
+This rule allows you to keep one backup file per day, week or month.
+
+* *Day*: Specifies how many daily backup files should be retained. For example, if the value entered is "7", the seven most recent daily backups will be kept. The first backup created each day will be kept.
+* *Week*: Specifies how many weekly backup files should be retained. For example, if the value entered is "4", the four most recent weekly backups are kept. The first backup created each week (starting with Monday) is kept.
+* *Month*: Specifies how many monthly backup files should be retained. If the value entered is "12", for example, the twelve most recent monthly backups are kept. The first backup created in each month is kept.
+
+Please note that backup files are only created if the application is open and changes have been made to the project data since the last backup. Therefore, a setting of "7" for daily backups does not necessarily mean that a backup file is available for each project for every day of the past week. This is only the case if the application was open every day of the week and the corresponding project was edited every day.
+
+
+#### Hard disk space required
+
+The more backups you keep, the more storage space you will need in the selected backup directory. In the settings, you can view the hard disk space currently occupied by automatic backups. In addition, the estimated disk space required in the future is displayed: This is the disk space that will be required if the maximum number of backup files is retained (in accordance with the specified rules) for the projects currently on the computer. This estimate may differ from the actual storage space required if projects are deleted or newly created, or if the size of existing projects changes.
+
+
+## Creating a manual backup
+
+Backup files for the currently opened project can be created manually via the menu "Project" ➝ "Create backup...". Use the "Create backup" button and select a directory and a name for the backup file to be created.
+
+
+## Restoring a backup
+
+To restore a project from a backup file, open the menu "Project" ➝ "Restore backup...". First, select the desired backup file using the file selection field "Path". The selected file must be a JSONL file created by automatic or manual backup in Field Desktop. In the input field "Project identifier", you can then enter a unique identifier for the new project that will be created from the backup file. This can be either the identifier of the original project or a different one. If the entered identifier differs significantly from the original one, a warning appears to alert you to the possibility of accidentally restoring the wrong backup.
+
+**Important**: If you enter the identifier of an existing project, this project will be overwritten during the restoration process.
+
+
+<hr>
+
+
 # Warnings
 
 For various reasons, such as changes to the project configuration, inconsistent or otherwise incorrect data may occur in a project. In these cases, the application displays a warning and provides options for solving the problem. Faulty resources are marked with a red bar next to the list entry of the corresponding resource. Furthermore, an icon is displayed in the navigation bar at the top right, indicating the number of resources for which there are warnings due to data problems:

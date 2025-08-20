@@ -107,7 +107,7 @@ Unterstützte Bildformate sind *jpg/jpeg*, *png* und *tif/tiff*.
 
 ## Bildvarianten
 
-Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Einstellungen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
+Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Optionen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
 
 Insgesamt verwaltet die Anwendung für jedes Bild bis zu drei verschiedene Varianten:
 * *Originalbild*: Die unveränderte Bilddatei, wie sie in das Projekt importiert wurde
@@ -1783,6 +1783,78 @@ Bitte beachten Sie, dass beim Import von Typenkatalogen in ein anderes Projekt e
 Beim Export von Katalogdateien steht die folgende Option zur Verfügung:
 
 * *Katalog*: Wählen Sie hier den zu exportierenden Typenkatalog aus. Diese Option wird nur angezeigt, wenn im aktuell geöffneten Projekt Typenkataloge vorhanden sind. Aus anderen Projekten importierte Kataloge stehen nicht zur Auswahl.
+
+
+<hr>
+
+
+# Backups
+
+Um Datenverlust zu vermeiden, ist es wichtig, regelmäßig Sicherungskopien der Projektdatenbanken anzulegen. Field Desktop bietet dazu umfangreiche Optionen zur automatischen oder manuellen Erstellung von Backup-Dateien im JSONL-Format an.
+
+**Wichtig**: Die so angelegten Backup-Dateien enthalten sämtliche im Projekt eingetragenen Daten, allerdings **keine Bilder**. Die Bilddateien befinden sich im Bilderverzeichnis, dessen Verzeichnispfad in den Einstellungen unter "Erweiterte Optionen" eingesehen werden kann. Es wird empfohlen, zusätzlich zu den Datenbank-Backups regelmäßig Sicherungskopien des Bilderverzeichnisses anzulegen. Darüber hinaus können Datenbank- sowie Bilddaten durch die Synchronisation mit einem Field-Hub-Server gesichert werden.
+
+Bitte beachten Sie, dass die JSONL-Dateien, die durch die Backup-Funktion angelegt werden, nicht für den Import in bestehende Projekte geeignet sind, sondern ausschließlich über das Menü "Projekt" ➝ "Backup einlesen..." als eigenes Projekt wiederhergestellt werden können.
+
+
+## Automatische Backups
+
+Field Desktop erstellt nach jeder Änderung an den Projektdaten automatisch eine Backup-Datei des entsprechenden Projekts. Standardmäßig wird dabei nur das aktuellste Backup pro Projekt vorgehalten, während ältere Backups gelöscht werden. Dieses Verhalten kann allerdings in den Einstellungen angepasst werden (siehe Abschnitt *Aufbewahrung von Backups*).
+
+Der Dateiname enthält die Projektkennung sowie das Datum und die Uhrzeit, zu der das Backup erstellt wurde (beispielsweise "example-project.2025-05-14.11-28-25.jsonl" für ein Projekt "example-project", das am 14. Mai 2025 um 11:28:25 Uhr gesichert wurde.)
+
+Bitte beachten Sie, dass (unabhängig von den gewählten Einstellungen) stets nur dann ein neues Backup angelegt wird, wenn sich seit der Erstellung des letzten Backups Änderungen an den Projektdaten ergeben haben. Ziel ist die Vermeidung von identischen Kopien zur Einsparung von Speicherplatz.
+
+**Wichtig**: Es werden nur dann Backups angelegt, wenn die Anwendung geöffnet ist. Bei geöffneter Anwendung werden Backups aller Projekte erstellt, nicht nur des aktuell in der Anwendung aufgerufenen Projekts.
+
+Die Optionen zur Konfiguration der automatischen Backups finden Sie in den Einstellungen unter "Erweiterte Optionen".
+
+
+### Verzeichnispfad ändern
+
+Den Pfad des Verzeichnisses, in dem automatisch erstellte Backup-Dateien aufbewahrt werden, können Sie über das Eingabefeld "Pfad" einsehen und ändern. Bitte beachten Sie, dass bestehende Backup-Dateien bei einem Wechsel des Backup-Verzeichnisses nicht automatisch in das neue Verzeichnis verschoben werden. Die Dateien im alten Verzeichnis bleiben bestehen, während die Backup-Dateien im neuen Verzeichnis für alle Projekte neu angelegt werden.
+
+
+### Aufbewahrung von Backups
+
+Zusätzlich zum grundsätzlich gesicherten Backup der aktuellsten Version jedes Projekts können weitere Backup-Dateien aufbewahrt werden. Dazu können in den Einstellungen die Regeln "Backups nach Uhrzeit aufbewahren" und "Backups nach Datum aufbewahren" konfiguriert werden.
+
+
+#### Backups nach Uhrzeit aufbewahren
+
+Diese Regel erlaubt es, Backup-Dateien in einem zeitlichen Abstand (alle X Stunden) aufzubewahren.
+
+* *Abstand in Stunden*: Gibt an, in welchem zeitlichen Abstand Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "3" wird beispielsweise alle drei Stunden eine Backup-Datei aufbewahrt.
+* *Anzahl*: Gibt an, wieviele Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "5" werden beispielsweise die fünf zuletzt erstellten Backup-Dateien aufbewahrt.
+
+
+#### Backups nach Datum aufbewahren
+
+Diese Regel erlaubt es, eine Backup-Datei pro Tag, Woche oder Monat aufzubewahren.
+
+* *Tag*: Gibt an, wieviele tägliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "7" werden beispielsweise die sieben aktuellsten täglichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup des Tages aufbewahrt.
+* *Woche*: Gibt an, wieviele wöchentliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "4" werden beispielsweise die vier aktuellsten wöchentlichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup der Woche (beginnend am Montag) aufbewahrt.
+* *Monat*: Gibt an, wieviele monatliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "12" werden beispielsweise die zwölf aktuellsten monatlichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup des Monats aufbewahrt.
+
+Bitte berücksichtigen Sie, dass Backup-Dateien nur angelegt werden, wenn die Anwendung geöffnet ist und sich seit dem letzten Backup Änderungen an den Projektdaten ergeben haben. Daher bedeutet etwa eine Einstellung von "7" bei den täglichen Backups nicht zwingend, dass für jedes Projekt ein Backup-File für jeden Tag der vergangenen Woche vorliegt. Dies ist nur dann der Fall, wenn die Anwendung an jedem Tag der Woche geöffnet war und das entsprechende Projekt an jedem Tag bearbeitet wurde.
+
+
+#### Benötiger Festplattenspeicher
+
+Je mehr Backups aufbewahrt werden, desto größer wird der erforderliche Speicherplatz im ausgewählten Backup-Verzeichnis. In den Einstellungen können Sie den aktuell durch automatische Backups belegten Festplattenspeicher einsehen. Darüber hinaus wird der voraussichtlich in Zukunft beanspruchte Speicherplatz angezeigt: Dabei handelt es sich um den Speicherplatz, der benötigt wird, wenn für die aktuell auf dem Rechner vorhandenen Projekte die maximale Anzahl von Backup-Dateien gemäß der eingestellten Regeln vorgehalten werden. Diese Prognose kann vom tatsächlich nötigen Speicherplatz abweichen, wenn Projekte gelöscht oder neu erstellt werden bzw. wenn sich die Größe bestehender Projekte verändert.
+
+
+## Manuelles Backup anlegen
+
+Über das Menü "Projekt" ➝ "Backup erstellen..." können Backup-Dateien manuell für das aktuell geöffnete Projekt angelegt werden. Verwenden Sie dazu den Button "Backup erstellen" und wählen Sie ein Verzeichnis sowie einen Namen für die zu erstellende Backup-Datei.
+
+
+## Backup einlesen
+
+Um ein Projekt aus einer Backup-Datei wiederherzustellen, rufen Sie das Menü "Projekt" ➝ "Backup einlesen..." auf. Wählen Sie hier zunächst über das Dateiauswahlfeld "Pfad" die gewünschte Backup-Datei aus. Dabei muss es sich um eine per automatischem oder manuellem Backup in Field Desktop erstellte JSONL-Datei handeln. Im Eingabefeld "Projektkennung" können Sie anschließend eine eindeutige Kennung für das neue Projekt angeben, das aus der Backup-Datei erstellt wird. Dabei kann es sich sowohl um die Kennung des ursprünglichen Projekts als auch um eine andere Kennung handeln. Bei einer deutlich abweichenden Projektkennung erscheint eine Warnung, um auf eine mögliche versehentliche Wiederherstellung eines falschen Backups aufmerksam zu machen.
+
+**Wichtig**: Geben Sie die Kennung eines bereits bestehenden Projekts an, so wird dieses Projekt beim Wiederherstellungsprozess überschrieben.
+
 
 <hr>
 

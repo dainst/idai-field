@@ -12,9 +12,6 @@ In order to work with Field Desktop productively and create your own project, yo
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
 these lists at any time.
 
-Use the menu option **Create backup...**, which is accessible via the menu "Project", to create backup files of
-your project data regularly.
-
 
 <hr>
 

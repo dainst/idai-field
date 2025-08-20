@@ -60,7 +60,9 @@
       "gatekeeperAssess": false,
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
-      "mergeASARs": false
+      "mergeASARs": false,
+      "singleArchFiles": "*",
+      "x64ArchFiles": "*"
     },
     "win": {
       "target": "zip",

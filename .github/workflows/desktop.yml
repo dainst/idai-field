@@ -69,14 +69,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 22
-    - name: Install sharp for x64 architecture
-      run: npm install --cpu=x64 --os=darwin sharp
-      if: runner.os == 'macOS'
-      working-directory: desktop
-    - name: Install sharp for arm64 architecture
-      run: npm install --cpu=arm64 --os=darwin sharp
-      if: runner.os == 'macOS'
-      working-directory: desktop
     - name: Install root node modules
       run: npm i
     - name: Install and link package node modules 

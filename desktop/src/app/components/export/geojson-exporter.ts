@@ -13,14 +13,14 @@ const geojsonRewind = window.require('@mapbox/geojson-rewind');
 export module GeoJsonExporter {
 
     export async function performExport(datastore: Datastore, operationId: string, outputFilePath?: string,
-                                        explodeShortDescription: boolean = false,
+                                        formatted: boolean = true, explodeShortDescription: boolean = false,
                                         geometryTypes?: Array<FieldGeometryType>): Promise<string> {
 
         const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId, geometryTypes);
         const featureCollection: FeatureCollection<GeometryObject> = createFeatureCollection(
             documents, explodeShortDescription
         );
-        const json: string = JSON.stringify(featureCollection, null, 2);
+        const json: string = JSON.stringify(featureCollection, null, formatted ? 2 : undefined);
 
         if (outputFilePath) await writeFile(outputFilePath, json);
 

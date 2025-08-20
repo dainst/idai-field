@@ -208,6 +208,7 @@ export class ExpressServer {
                 let context: string = request.query.context; 
                 const csvSeparator: string = request.query.separator ?? ',';
                 const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
+                const formatted: boolean = request.query.formatted !== 'false';
 
                 const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
                 if (!category) throw 'Unconfigured category: ' + categoryName;
@@ -242,7 +243,7 @@ export class ExpressServer {
                         .send(result.exportData.join('\n'));
                 } else {
                     const geojsonData: string = await GeoJsonExporter.performExport(
-                        this.datastore, context
+                        this.datastore, context, undefined, formatted
                     );
 
                     response.header('Content-Type', 'application/geo+json')

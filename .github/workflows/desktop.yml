@@ -74,7 +74,7 @@ jobs:
       if: runner.os == 'macOS'
       working-directory: desktop
     - name: Install sharp for arm64 architecture
-      run: npm install --cpu=arm64 --os=darwin sharp
+      run: npm install @img/sharp-darwin-arm64
       if: runner.os == 'macOS'
       working-directory: desktop
     - name: Install root node modules

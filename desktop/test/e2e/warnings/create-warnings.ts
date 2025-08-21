@@ -103,6 +103,23 @@ export async function createMissingIdentifierPrefixWarning(resourceIdentifier: s
 }
 
 
+export async function createMissingMandatoryFieldWarning(resourceIdentifier: string) {
+
+    await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
+
+    await navigateTo('configuration');
+    await CategoryPickerPage.clickSelectCategory('Place');
+    await ConfigurationPage.clickSelectGroup('properties');
+    await ConfigurationPage.clickOpenContextMenuForField('placeName');
+    await ConfigurationPage.clickContextMenuEditOption();
+    await EditConfigurationPage.clickToggleMandatorySlider();
+    await EditConfigurationPage.clickConfirm();
+    await ConfigurationPage.save();
+
+    await NavbarPage.clickCloseNonResourcesTab();
+}
+
+
 export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, 
                                                   inputType: Field.InputType = Field.InputType.CHECKBOXES,
                                                   categoryName: string = 'Place', supercategoryName?: string) {

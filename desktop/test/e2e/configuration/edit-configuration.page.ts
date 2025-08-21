@@ -39,6 +39,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickToggleMandatorySlider() {
+
+        return click('#toggle-mandatory-slider');
+    }
+
+
     public static clickToggleMultiLanguageSlider() {
 
         return click('#toggle-multi-language-slider');

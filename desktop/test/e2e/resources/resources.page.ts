@@ -45,6 +45,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickContextMenuEditWorkflowButton() {
+
+        return click('#context-menu-edit-workflow-button');
+    }
+
+
     public static clickContextMenuAddQrCodeButton() {
 
         return click('#context-menu-add-qr-code-button');

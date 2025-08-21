@@ -83,6 +83,12 @@ export class ConfigurationPage {
         return click('#delete-field-button');
     }
 
+
+    public static clickNextInCreateProcessModal() {
+
+        return click('#create-process-modal-next-button');
+    }
+
     
     // get
 

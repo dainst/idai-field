@@ -1,5 +1,5 @@
 import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
-    selectSearchableSelectOption } from '../app';
+    selectSearchableSelectOption, pressKey } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -389,6 +389,15 @@ export class DoceditPage {
         const element = await elements.nth(await elements.count() - 1);
 
         return typeIn(element, text);
+    }
+
+
+    public static async typeInDateInputField(fieldName: string, date: string) {
+
+        const element = (await this.getField(fieldName)).locator('input');
+
+        await typeIn(element, date);
+        return pressKey(element, 'Enter');
     }
 
 

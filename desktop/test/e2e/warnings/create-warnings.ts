@@ -12,6 +12,8 @@ import { ManageValuelistsModalPage } from '../configuration/manage-valuelists-mo
 import { DoceditMeasurementEntryModalPage } from '../docedit/docedit-measurement-entry-modal.page';
 import { AddFieldModalPage } from '../configuration/add-field-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
+import { WorkflowEditorModalPage } from '../widgets/workflow-editor-modal.page';
+import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
 
 
 export async function createResourceLimitWarnings(resourceIdentifiers: string[]) {
@@ -139,6 +141,34 @@ export async function createUnfulfilledConditionWarning(resourceIdentifier: stri
     await ConfigurationPage.save();
 
     await NavbarPage.clickCloseNonResourcesTab();
+}
+
+
+export async function createInvalidProcessStateWarning(resourceIdentifier: string) {
+
+    await navigateTo('configuration');
+    await ConfigurationPage.clickSelectCategoriesFilter('all');
+    await ConfigurationPage.clickCreateSubcategory('Process');
+    await AddCategoryFormModalPage.typeInSearchFilterInput('NewProcess');
+    await AddCategoryFormModalPage.clickCreateNewCategory();
+    await CategoryPickerPage.clickSelectCategory('Trench', 'Operation', 'is-carried-out-on-target-container');
+    await ConfigurationPage.clickNextInCreateProcessModal();
+    await ConfigurationPage.clickNextInCreateProcessModal();
+    await EditConfigurationPage.clickConfirm();
+    await ConfigurationPage.save();
+
+    await NavbarPage.clickCloseNonResourcesTab();
+
+    await ResourcesPage.clickOpenContextMenu('S1');
+    await ResourcesPage.clickContextMenuEditWorkflowButton();
+    await WorkflowEditorModalPage.clickPlusButton();
+
+    await DoceditPage.typeInInputField('identifier', resourceIdentifier);
+    await DoceditPage.clickSelectOption('state', 'Geplant');
+    await DoceditPage.typeInDateInputField('date', '01.01.2000');
+    await DoceditPage.clickSaveDocument();
+
+    await WorkflowEditorModalPage.clickCancel();
 }
 
 

@@ -772,6 +772,43 @@ test.describe('configuration', () => {
     });
 
 
+    test('set field conditions', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('properties');
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureForm');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('hasDisturbance', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('comparison');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('featureForm', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickSelectGroup('properties');
+        
+        await waitForExist(await DoceditPage.getField('hasDisturbance'));
+        await waitForNotExist(await DoceditPage.getField('featureForm'));
+        await waitForNotExist(await DoceditPage.getField('comparison'));
+
+        await DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
+        await waitForExist(await DoceditPage.getField('featureForm'));
+
+        await DoceditPage.clickCheckbox('featureForm', 0);
+        await waitForExist(await DoceditPage.getField('comparison'));
+
+        await DoceditPage.clickCloseEdit('cancel');
+    });
+
+
     test('create composite field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');

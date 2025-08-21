@@ -12,7 +12,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe.only('warnings/missing mandatory fields', () => {
+test.describe('warnings/missing mandatory fields', () => {
 
     test.beforeAll(async () => {
 

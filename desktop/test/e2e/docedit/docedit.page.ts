@@ -1,5 +1,5 @@
 import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
-    selectSearchableSelectOption, selectOption } from '../app';
+    selectSearchableSelectOption } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 

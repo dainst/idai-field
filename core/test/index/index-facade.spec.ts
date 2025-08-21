@@ -269,7 +269,7 @@ describe('IndexFacade', () => {
     });
 
 
-    it('sort workflow steps by date', () => {
+    it('sort processes by date', () => {
 
         const doc1 = doc('1', '1', 'Process', 'id1');
         doc1.resource.date = { value: '01.03.2025', isRange: false };

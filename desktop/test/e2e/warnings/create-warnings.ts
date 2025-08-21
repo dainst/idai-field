@@ -120,6 +120,28 @@ export async function createMissingMandatoryFieldWarning(resourceIdentifier: str
 }
 
 
+export async function createUnfulfilledConditionWarning(resourceIdentifier: string) {
+
+    await ResourcesPage.performCreateResource(resourceIdentifier, 'place');
+    await ResourcesPage.openEditByDoubleClickResource(resourceIdentifier);
+    await DoceditPage.clickSelectGroup('properties');
+    await DoceditPage.typeInInputField('modernIntervention', 'Text');
+    await DoceditPage.clickSaveDocument();
+
+    await navigateTo('configuration');
+    await CategoryPickerPage.clickSelectCategory('Place');
+    await ConfigurationPage.clickSelectGroup('properties');
+    await ConfigurationPage.clickOpenContextMenuForField('modernIntervention');
+    await ConfigurationPage.clickContextMenuEditOption();
+    await EditConfigurationPage.clickSelectConditionField('findspotClassification', 'field');
+    await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+    await EditConfigurationPage.clickConfirm();
+    await ConfigurationPage.save();
+
+    await NavbarPage.clickCloseNonResourcesTab();
+}
+
+
 export async function createOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string, 
                                                   inputType: Field.InputType = Field.InputType.CHECKBOXES,
                                                   categoryName: string = 'Place', supercategoryName?: string) {

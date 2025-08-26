@@ -3,11 +3,12 @@ import { GeoJsonExporter } from '../../../components/export/geojson-exporter';
 import { CsvExporter } from '../../../components/export/csv/csv-exporter';
 import { ExportResult, ExportRunner } from '../../../components/export/export-runner';
 
+
 interface RequestParameters {
     format: string;
     categoryName: string;
     context: string;
-    csvSeparator: string;
+    separator: string;
     combineHierarchicalRelations: boolean;
     formatted: boolean;
 } 
@@ -20,7 +21,7 @@ export async function exportData(request: any, response: any, projectConfigurati
                                  datastore: Datastore) {
     
     try {
-        const { format, categoryName, csvSeparator, combineHierarchicalRelations,
+        const { format, categoryName, separator, combineHierarchicalRelations,
             formatted, context } = await getRequestParameters(request, datastore);
 
         const category: CategoryForm = projectConfiguration.getCategory(categoryName);
@@ -28,7 +29,7 @@ export async function exportData(request: any, response: any, projectConfigurati
             
         if (format === 'csv') {
             const result: ExportResult = await performCsvExport(projectConfiguration, datastore, context, category,
-                csvSeparator, combineHierarchicalRelations
+                separator, combineHierarchicalRelations
             );
             
             response.header('Content-Type', 'text/csv')
@@ -53,12 +54,12 @@ async function getRequestParameters(request: any, datastore: Datastore): Promise
 
     const format: 'csv'|'geojson' = request.params.format === 'geojson' ? 'geojson' : 'csv';
     const categoryName: string = request.query.category ?? 'Project';
-    const csvSeparator: string = request.query.separator ?? ',';
+    const separator: string = request.query.separator ?? ',';
     const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
     const formatted: boolean = request.query.formatted !== 'false';
     const context: string = await getContext(request, datastore);
 
-    return { format, categoryName, csvSeparator, combineHierarchicalRelations, formatted, context };
+    return { format, categoryName, separator, combineHierarchicalRelations, formatted, context };
 }
 
 
@@ -81,7 +82,7 @@ async function getContext(request: any, datastore: Datastore): Promise<string> {
 
 
 async function performCsvExport(projectConfiguration: ProjectConfiguration, datastore: Datastore, context: string,
-                                category: CategoryForm, csvSeparator: string,
+                                category: CategoryForm, separator: string,
                                 combineHierarchicalRelations: boolean): Promise<ExportResult> {
 
     return ExportRunner.performExport(
@@ -94,7 +95,7 @@ async function performCsvExport(projectConfiguration: ProjectConfiguration, data
             .map(relation => relation.name),
         CsvExporter.performExport(
             projectConfiguration.getProjectLanguages(),
-            csvSeparator,
+            separator,
             combineHierarchicalRelations
         )
     );

@@ -21,8 +21,8 @@ export async function exportData(request: any, response: any, projectConfigurati
                                  datastore: Datastore) {
     
     try {
-        const { format, categoryName, separator, combineHierarchicalRelations,
-            formatted, context } = await getRequestParameters(request, datastore);
+        const { format, categoryName, context, separator, combineHierarchicalRelations,
+            formatted } = await getRequestParameters(request, datastore);
 
         if (!['geojson', 'csv'].includes(format)) throw 'Unsupported format: ' + format;
 

@@ -6,9 +6,9 @@ import { Settings } from '../../settings/settings';
 
 
 interface RequestParameters {
+    format: ImporterFormat;
     operationIdentifier: string;
     categoryName: string;
-    format: ImporterFormat;
     mergeMode: boolean;
     permitDeletions: boolean;
     ignoreUnconfiguredFields: boolean;
@@ -25,7 +25,7 @@ export async function importData(request: any, response: any, projectConfigurati
 
     try {
         const { operationIdentifier, categoryName, mergeMode, permitDeletions, ignoreUnconfiguredFields,
-        separator, format } = getRequestParameters(request);
+            separator, format } = getRequestParameters(request);
 
         const category: CategoryForm = projectConfiguration.getCategory(categoryName);
         if (!category) throw 'Unconfigured category: ' + categoryName;

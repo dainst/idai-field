@@ -3,6 +3,8 @@ import { CategoryForm, Datastore, Document, IdGenerator, Named, ProjectConfigura
     RelationsManager } from 'idai-field-core';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../../components/import/importer';
 import { Settings } from '../../settings/settings';
+import { MD } from '../../../components/messages/md';
+import { getErrorMessage } from './util/get-error-message';
 
 
 interface RequestParameters {
@@ -21,7 +23,7 @@ interface RequestParameters {
  */
 export async function importData(request: any, response: any, projectConfiguration: ProjectConfiguration,
                                  datastore: Datastore, relationsManager: RelationsManager, idGenerator: IdGenerator,
-                                 settings: Settings) {
+                                 settings: Settings, messagesDictionary: MD) {
 
     try {
         const { operationIdentifier, categoryName, mergeMode, permitDeletions, ignoreUnconfiguredFields,
@@ -38,7 +40,10 @@ export async function importData(request: any, response: any, projectConfigurati
         );
 
         if (report.errors?.length) {
-            response.status(400).send({ error: 'Import failed', importErrors: report.errors })
+            response.status(400).send({
+                error: 'Import failed',
+                importErrors: report.errors?.map(error => getErrorMessage(error, messagesDictionary))
+            })
         } else {
             response.status(200).send({
                 successfulImports: report.successfulImports,
@@ -46,9 +51,7 @@ export async function importData(request: any, response: any, projectConfigurati
             });
         }
     } catch (err) {
-        console.error(err);
-        const errorMessage: string = err?.message ?? err;
-        response.status(400).send({ error: errorMessage });
+        response.status(400).send({ error: getErrorMessage(err, messagesDictionary) });
     }
 }
 

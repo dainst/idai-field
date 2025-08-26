@@ -2,6 +2,8 @@ import { CategoryForm, Datastore, Document, ProjectConfiguration, Query } from '
 import { GeoJsonExporter } from '../../../components/export/geojson-exporter';
 import { CsvExporter } from '../../../components/export/csv/csv-exporter';
 import { ExportResult, ExportRunner } from '../../../components/export/export-runner';
+import { MD } from '../../../components/messages/md';
+import { getErrorMessage } from './util/get-error-message';
 
 
 interface RequestParameters {
@@ -18,7 +20,7 @@ interface RequestParameters {
  * @author Thomas Kleinke
  */
 export async function exportData(request: any, response: any, projectConfiguration: ProjectConfiguration,
-                                 datastore: Datastore) {
+                                 datastore: Datastore, messagesDictionary: MD) {
     
     try {
         const { format, categoryName, context, separator, combineHierarchicalRelations,
@@ -45,9 +47,7 @@ export async function exportData(request: any, response: any, projectConfigurati
                 .send(geojsonData);
         }
     } catch (err) {
-        console.error(err);
-        const errorMessage: string = err?.message ?? err;
-        response.status(400).send({ error: errorMessage });
+        response.status(400).send({ error: getErrorMessage(err, messagesDictionary) });
     }
 }
 

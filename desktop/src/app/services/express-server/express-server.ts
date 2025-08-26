@@ -6,6 +6,7 @@ import { exportConfiguration } from './endpoints/configuration';
 import { exportData } from './endpoints/export';
 import { importData } from './endpoints/import';
 import { Settings } from '../settings/settings';
+import { MD } from '../../components/messages/md';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -31,7 +32,8 @@ export class ExpressServer {
                 private configurationSerializer: ConfigurationSerializer,
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
-                private idGenerator: IdGenerator) {}
+                private idGenerator: IdGenerator,
+                private messagesDictionary: MD) {}
 
 
     public getPassword = () => this.password;
@@ -178,13 +180,13 @@ export class ExpressServer {
 
         app.get('/export/:format', async (request: any, response: any) => {
 
-            await exportData(request, response, this.projectConfiguration, this.datastore);
+            await exportData(request, response, this.projectConfiguration, this.datastore, this.messagesDictionary);
         });
 
         app.post('/import/:format', this.textBodyParser, async (request: any, response: any) => {
 
             await importData(request, response, this.projectConfiguration, this.datastore, this.relationsManager,
-                this.idGenerator, this.settingsProvider.getSettings()
+                this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
             );
         });
 

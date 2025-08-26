@@ -5,6 +5,7 @@ import { SettingsProvider } from '../settings/settings-provider';
 import { exportConfiguration } from './endpoints/configuration';
 import { exportData } from './endpoints/export';
 import { importData } from './endpoints/import';
+import { Settings } from '../settings/settings';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -185,6 +186,26 @@ export class ExpressServer {
             await importData(request, response, this.projectConfiguration, this.datastore, this.relationsManager,
                 this.idGenerator, this.settingsProvider.getSettings()
             );
+        });
+
+        app.get('/info/',  async (_: any, response: any) => {
+
+            try {
+                const settings: Settings = this.settingsProvider.getSettings();
+
+                const infoData = {
+                    version: remote.app.getVersion(),
+                    projects: settings.dbs,
+                    activeProject: settings.selectedProject,
+                    user: settings.username
+                };
+
+                response.header('Content-Type', 'application/json')
+                    .status(200)
+                    .send(infoData);
+            } catch (err) {
+                response.status(500).send({ reason: err });
+            }
         });
 
         let conditionalParameters = {};

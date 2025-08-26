@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import { to } from 'tsfun';
-import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigurationDocument,
-    ConfigReader, Datastore, Query, CategoryForm, ProjectConfiguration, Document, 
-    Named, RelationsManager, IdGenerator } from 'idai-field-core';
+import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer,
+    ConfigReader, Datastore, ProjectConfiguration, RelationsManager, IdGenerator } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
-import { ExportResult, ExportRunner } from '../../components/export/export-runner';
-import { CsvExporter } from '../../components/export/csv/csv-exporter';
-import { GeoJsonExporter } from '../../components/export/geojson-exporter';
-import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
 import { exportConfiguration } from './endpoints/configuration';
 import { exportData } from './endpoints/export';
 import { importData } from './endpoints/import';

@@ -101,7 +101,7 @@ async function getImporterOptions(format: ImporterFormat, mergeMode: boolean, pe
 }
 
 
-async function getOperationId(operationIdentifier: string, datastore: Datastore): string|undefined {
+async function getOperationId(operationIdentifier: string, datastore: Datastore): Promise<string|undefined> {
 
     if (!operationIdentifier) return undefined;
 

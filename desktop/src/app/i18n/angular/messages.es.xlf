@@ -10013,6 +10013,110 @@
           <context context-type="linenumber">39,42</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="config.inputType.weight" datatype="html">
+        <source>Gewichtsangabe</source>
+        <target state="needs-translation">Gewichtsangabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">315</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.weight.measurementDevice" datatype="html">
+        <source>Messgerät:</source>
+        <target state="needs-translation">Messgerät:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.dimension.measurementDevice" datatype="html">
+        <source>Messgerät:</source>
+        <target state="needs-translation">Messgerät:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidVolumeValue" datatype="html">
+        <source>Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="needs-translation">Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">695</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidVolumeValues" datatype="html">
+        <source>Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="needs-translation">Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">699</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidWeightValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</source>
+        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">939</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidWeightValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</source>
+        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">943</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidVolumeValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</source>
+        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">947</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidVolumeValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</source>
+        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">951</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valuelistForWeightSubfield" datatype="html">
+        <source>Werteliste (Unterfeld "Messgerät")</source>
+        <target state="needs-translation">Werteliste (Unterfeld "Messgerät")</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">138,140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.volume" datatype="html">
+        <source>Volumenangabe</source>
+        <target state="needs-translation">Volumenangabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">319</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidWeightValue" datatype="html">
+        <source>Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="needs-translation">Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">687</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidWeightValues" datatype="html">
+        <source>Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="needs-translation">Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">691</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

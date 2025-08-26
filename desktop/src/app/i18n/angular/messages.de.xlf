@@ -274,7 +274,7 @@
         <target state="final">Ja</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">174</context>
+          <context context-type="linenumber">177</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
@@ -310,7 +310,7 @@
         <target state="final">Nein</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">180</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
@@ -1295,12 +1295,20 @@
           <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.valuelistForWeightSubfield" datatype="html">
+        <source> Werteliste (Unterfeld "Messgerät") </source>
+        <target state="final"> Werteliste (Unterfeld "Messgerät") </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">138,140</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.relation.inverse.none" datatype="html">
         <source>Keine Gegenrelation</source>
         <target state="final">Keine Gegenrelation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">210</context>
+          <context context-type="linenumber">213</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.editSubfield" datatype="html">
@@ -1388,7 +1396,7 @@
         <target state="final">Einzeiliger Text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">244</context>
+          <context context-type="linenumber">247</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedInt" datatype="html">
@@ -1396,7 +1404,7 @@
         <target state="final">Positive Ganzzahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">264</context>
+          <context context-type="linenumber">267</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.float" datatype="html">
@@ -1404,7 +1412,7 @@
         <target state="final">Kommazahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">268</context>
+          <context context-type="linenumber">271</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedFloat" datatype="html">
@@ -1412,7 +1420,7 @@
         <target state="final">Positive Kommazahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">272</context>
+          <context context-type="linenumber">275</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.url" datatype="html">
@@ -1420,7 +1428,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">276</context>
+          <context context-type="linenumber">279</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.multiInput" datatype="html">
@@ -1428,7 +1436,7 @@
         <target state="final">Einzeiliger Text (Liste)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">248</context>
+          <context context-type="linenumber">251</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.valuelistMultiInput" datatype="html">
@@ -1436,7 +1444,7 @@
         <target state="final">Projekt-Werteliste</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">252</context>
+          <context context-type="linenumber">255</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.text" datatype="html">
@@ -1444,7 +1452,7 @@
         <target state="final">Mehrzeiliger Text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">256</context>
+          <context context-type="linenumber">259</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.int" datatype="html">
@@ -1452,7 +1460,7 @@
         <target state="final">Ganzzahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">260</context>
+          <context context-type="linenumber">263</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdown" datatype="html">
@@ -1460,7 +1468,7 @@
         <target state="final">Dropdown-Liste</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">280</context>
+          <context context-type="linenumber">283</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdownRange" datatype="html">
@@ -1468,7 +1476,7 @@
         <target state="final">Dropdown-Liste (Bereich)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">284</context>
+          <context context-type="linenumber">287</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.radio" datatype="html">
@@ -1476,7 +1484,7 @@
         <target state="final">Radiobutton</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">288</context>
+          <context context-type="linenumber">291</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.boolean" datatype="html">
@@ -1484,7 +1492,7 @@
         <target state="final">Ja / Nein</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">292</context>
+          <context context-type="linenumber">295</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.checkboxes" datatype="html">
@@ -1492,7 +1500,7 @@
         <target state="final">Checkboxen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">296</context>
+          <context context-type="linenumber">299</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dating" datatype="html">
@@ -1500,7 +1508,7 @@
         <target state="final">Datierungsangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">300</context>
+          <context context-type="linenumber">303</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.date" datatype="html">
@@ -1508,15 +1516,31 @@
         <target state="final">Datum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">304</context>
+          <context context-type="linenumber">307</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
-        <source>Maßangabe</source>
-        <target state="final">Maßangabe</target>
+        <source>Längenangabe</source>
+        <target state="final">Längenangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">308</context>
+          <context context-type="linenumber">311</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.weight" datatype="html">
+        <source>Gewichtsangabe</source>
+        <target state="final">Gewichtsangabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">315</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.volume" datatype="html">
+        <source>Volumenangabe</source>
+        <target state="final">Volumenangabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">319</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.literature" datatype="html">
@@ -1524,7 +1548,7 @@
         <target state="final">Literaturangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">312</context>
+          <context context-type="linenumber">323</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.composite" datatype="html">
@@ -1532,7 +1556,7 @@
         <target state="final">Kompositfeld</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">316</context>
+          <context context-type="linenumber">327</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.geometry" datatype="html">
@@ -1540,7 +1564,7 @@
         <target state="final">Geometrie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">320</context>
+          <context context-type="linenumber">331</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/widgets/invalid-resource-view.component.ts</context>
@@ -1552,7 +1576,7 @@
         <target state="final">Typenauswahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">324</context>
+          <context context-type="linenumber">335</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.relation" datatype="html">
@@ -1560,7 +1584,7 @@
         <target state="final">Relation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">328</context>
+          <context context-type="linenumber">339</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.derivedRelation" datatype="html">
@@ -1568,7 +1592,7 @@
         <target state="final">Abgeleitete Relation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">332</context>
+          <context context-type="linenumber">343</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.category" datatype="html">
@@ -1576,7 +1600,7 @@
         <target state="final">Kategorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">336</context>
+          <context context-type="linenumber">347</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/widgets/invalid-resource-view.component.ts</context>
@@ -1588,7 +1612,7 @@
         <target state="final">Bezeichner</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">340</context>
+          <context context-type="linenumber">351</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/widgets/invalid-resource-view.component.ts</context>
@@ -1600,7 +1624,7 @@
         <target state="final">Field-Konfigurationsdatei</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">343</context>
+          <context context-type="linenumber">354</context>
         </context-group>
       </trans-unit>
       <trans-unit id="openFileDialog.select" datatype="html">
@@ -1632,7 +1656,7 @@
         <target state="final">An der Konfiguration wurden Änderungen vorgenommen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
-          <context context-type="linenumber">550</context>
+          <context context-type="linenumber">552</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.conflicts.changed" datatype="html">
@@ -2071,11 +2095,11 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/literature-entry-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/literature-entry-modal.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -2091,11 +2115,11 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/literature-entry-modal.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/literature-entry-modal.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
@@ -5328,7 +5352,7 @@
         <target state="final">Inventarverzeichnis</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">240</context>
+          <context context-type="linenumber">243</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.html</context>
@@ -5923,7 +5947,7 @@
         <source>Einzelwert</source>
         <target state="final">Einzelwert</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
@@ -5931,7 +5955,7 @@
         <source>Bereich</source>
         <target state="final">Bereich</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
@@ -5939,24 +5963,32 @@
         <source>Gemessen an</source>
         <target state="final">Gemessen an</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.weight.measurementDevice" datatype="html">
+        <source>Messgerät:</source>
+        <target state="final">Messgerät:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
         <source>Ungenau</source>
         <target state="final">Ungenau</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
         <source>Kommentar:</source>
         <target state="final">Kommentar:</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -6699,12 +6731,20 @@
           <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="util.dimension.measurementDevice" datatype="html">
+        <source>Messgerät:</source>
+        <target state="final">Messgerät:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="util.literature.zenonId" datatype="html">
         <source>Zenon-ID</source>
         <target state="final">Zenon-ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.literature.doi" datatype="html">
@@ -6712,7 +6752,7 @@
         <target state="final">DOI</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.literature.page" datatype="html">
@@ -6720,7 +6760,7 @@
         <target state="final">Seite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.literature.figure" datatype="html">
@@ -6728,7 +6768,7 @@
         <target state="final">Abbildung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.optionalRange.from" datatype="html">
@@ -6736,7 +6776,7 @@
         <target state="final">Von: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.optionalRange.to" datatype="html">
@@ -6744,7 +6784,7 @@
         <target state="final">, bis: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.date.to" datatype="html">
@@ -6752,7 +6792,7 @@
         <target state="final">bis</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">171</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.date.unspecified" datatype="html">
@@ -6760,7 +6800,7 @@
         <target state="final">Unbestimmtes Datum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">171</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.all" datatype="html">
@@ -6768,7 +6808,7 @@
         <target state="final">Alle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">180</context>
+          <context context-type="linenumber">183</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.conflicts" datatype="html">
@@ -6776,7 +6816,7 @@
         <target state="final">Konflikte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">184</context>
+          <context context-type="linenumber">187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.unconfiguredCategories" datatype="html">
@@ -6784,7 +6824,7 @@
         <target state="final">Unkonfigurierte Kategorien</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.unconfiguredFields" datatype="html">
@@ -6792,7 +6832,7 @@
         <target state="final">Unkonfigurierte Felder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">192</context>
+          <context context-type="linenumber">195</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.invalidFieldData" datatype="html">
@@ -6800,7 +6840,7 @@
         <target state="final">Ungültige Felddaten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">196</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.missingMandatoryFields" datatype="html">
@@ -6808,7 +6848,7 @@
         <target state="final">Nicht ausgefüllte Pflichtfelder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">200</context>
+          <context context-type="linenumber">203</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.unfulfilledConditionFields" datatype="html">
@@ -6816,7 +6856,7 @@
         <target state="final">Nicht erfüllte Anzeigebedingungen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.outlierValues" datatype="html">
@@ -6824,7 +6864,7 @@
         <target state="final">Nicht in Werteliste enthaltene Werte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">208</context>
+          <context context-type="linenumber">211</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.missingRelationTargets" datatype="html">
@@ -6832,7 +6872,7 @@
         <target state="final">Fehlende Zielressourcen von Relationen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">212</context>
+          <context context-type="linenumber">215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.invalidRelationTargets" datatype="html">
@@ -6840,7 +6880,7 @@
         <target state="final">Ungültige Zielressourcen von Relationen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">219</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.missingOrInvalidParent" datatype="html">
@@ -6848,7 +6888,7 @@
         <target state="final">Fehlende oder ungültige übergeordnete Ressource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">220</context>
+          <context context-type="linenumber">223</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.missingIdentifierPrefixes" datatype="html">
@@ -6856,7 +6896,7 @@
         <target state="final">Fehlende Bezeichner-Präfixe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">224</context>
+          <context context-type="linenumber">227</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.nonUniqueIdentifiers" datatype="html">
@@ -6864,7 +6904,7 @@
         <target state="final">Uneindeutige Bezeichner</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">228</context>
+          <context context-type="linenumber">231</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.resourceLimitExceeded" datatype="html">
@@ -6872,7 +6912,7 @@
         <target state="final">Ressourcenlimit überschritten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">235</context>
         </context-group>
       </trans-unit>
       <trans-unit id="util.warnings.invalidProcessState" datatype="html">
@@ -6880,7 +6920,7 @@
         <target state="final">Ungültiger Status</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">239</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.categoriesFilter.all" datatype="html">
@@ -7072,7 +7112,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.relation.inverse" datatype="html">
@@ -7084,7 +7124,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">207</context>
+          <context context-type="linenumber">210</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.dataType" datatype="html">
@@ -7096,7 +7136,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.time.optional" datatype="html">
@@ -7108,7 +7148,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.time.mandatory" datatype="html">
@@ -7120,7 +7160,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.time.no" datatype="html">
@@ -7132,7 +7172,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.inputMode" datatype="html">
@@ -7144,7 +7184,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.optional" datatype="html">
@@ -7156,7 +7196,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">171</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.single" datatype="html">
@@ -7168,7 +7208,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">173</context>
+          <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.range" datatype="html">
@@ -7180,7 +7220,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuation.hierarchicalRelationsInfo.liesWithin" datatype="html">
@@ -7236,11 +7276,11 @@
         <target state="final">Ohne Sprachangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dating-entry-modal.component.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">126</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.component.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.component.ts</context>
+          <context context-type="linenumber">120</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/input.component.ts</context>
@@ -7424,7 +7464,7 @@
         <target state="final">Fehlgeschlagene Zuordnung per Bezeichner '[0]'. Ressource nicht vorhanden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">298</context>
+          <context context-type="linenumber">306</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
@@ -7432,7 +7472,7 @@
         <target state="final">Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">302</context>
+          <context context-type="linenumber">310</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.generic" datatype="html">
@@ -7440,7 +7480,7 @@
         <target state="final">Fehler beim Auswerten eines Konfigurationsobjektes.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">306</context>
+          <context context-type="linenumber">314</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configReader.error.invalidJson" datatype="html">
@@ -7448,7 +7488,7 @@
         <target state="final">Fehler beim Parsen der Konfigurationsdatei '[0]': Das JSON ist nicht valide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">310</context>
+          <context context-type="linenumber">318</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.all.error.find" datatype="html">
@@ -7456,7 +7496,7 @@
         <target state="final">Beim Laden von Ressourcen ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">314</context>
+          <context context-type="linenumber">322</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.settings.success" datatype="html">
@@ -7464,7 +7504,7 @@
         <target state="final">Die Einstellungen wurden erfolgreich aktiviert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">318</context>
+          <context context-type="linenumber">326</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.settings.error.malformedAddress" datatype="html">
@@ -7472,7 +7512,7 @@
         <target state="final">Bitte geben Sie als Adresse eine gültige URL ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">322</context>
+          <context context-type="linenumber">330</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.settings.error.missingUsername" datatype="html">
@@ -7480,7 +7520,7 @@
         <target state="final">Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">326</context>
+          <context context-type="linenumber">334</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.projects.deleteSuccess" datatype="html">
@@ -7488,7 +7528,7 @@
         <target state="final">Das Projekt "[0]" wurde erfolgreich gelöscht.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">330</context>
+          <context context-type="linenumber">338</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.app.appControllerSuccess" datatype="html">
@@ -7496,7 +7536,7 @@
         <target state="final">Erfolgreich ausgeführt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">334</context>
+          <context context-type="linenumber">342</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.write.success" datatype="html">
@@ -7504,7 +7544,7 @@
         <target state="final">Die Datenbank wurde erfolgreich gesichert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">338</context>
+          <context context-type="linenumber">346</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.read.success" datatype="html">
@@ -7512,7 +7552,7 @@
         <target state="final">Das Backup wurde erfolgreich eingelesen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">342</context>
+          <context context-type="linenumber">350</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.write.error.generic" datatype="html">
@@ -7520,7 +7560,7 @@
         <target state="final">Beim Sichern der Datenbank ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">346</context>
+          <context context-type="linenumber">354</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.read.error.generic" datatype="html">
@@ -7528,7 +7568,7 @@
         <target state="final">Beim Einlesen der Backup-Datei ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">350</context>
+          <context context-type="linenumber">358</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.read.error.fileNotFound" datatype="html">
@@ -7536,7 +7576,7 @@
         <target state="final">Die angegebene Datei konnte nicht gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">354</context>
+          <context context-type="linenumber">362</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
@@ -7544,7 +7584,7 @@
         <target state="final">Geben Sie eine Projektkennung an, um fortzufahren.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">358</context>
+          <context context-type="linenumber">366</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.read.error.sameProjectIdentifier" datatype="html">
@@ -7552,7 +7592,7 @@
         <target state="final">Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">362</context>
+          <context context-type="linenumber">370</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.read.warning.unsimilarProjectIdentifier" datatype="html">
@@ -7560,7 +7600,7 @@
         <target state="final">Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">366</context>
+          <context context-type="linenumber">374</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.error.invalidAutoBackupDirectory" datatype="html">
@@ -7568,7 +7608,7 @@
         <target state="final">Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">370</context>
+          <context context-type="linenumber">378</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.backup.error.automaticFileCreationFaile" datatype="html">
@@ -7576,7 +7616,7 @@
         <target state="final">Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">374</context>
+          <context context-type="linenumber">382</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.model.validation.error.identifierExists" datatype="html">
@@ -7584,7 +7624,7 @@
         <target state="final">Der Ressourcen-Bezeichner [0] existiert bereits.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">378</context>
+          <context context-type="linenumber">386</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.model.validation.error.identifierPrefix" datatype="html">
@@ -7592,7 +7632,7 @@
         <target state="final">Der Ressourcen-Bezeichner '[0]' beginnt nicht mit dem für die Kategorie '[1]' konfigurierten Bezeichner-Präfix '[2]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">382</context>
+          <context context-type="linenumber">390</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.model.validation.error.missingCoordinates" datatype="html">
@@ -7600,7 +7640,7 @@
         <target state="final">Die Koordinaten einer Geometrie sind nicht definiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">386</context>
+          <context context-type="linenumber">394</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.model.validation.error.invalidCoordinates" datatype="html">
@@ -7608,7 +7648,7 @@
         <target state="final">Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">390</context>
+          <context context-type="linenumber">398</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.model.validation.error.missingGeometryType" datatype="html">
@@ -7616,7 +7656,7 @@
         <target state="final">Der Typ einer Geometrie ist nicht definiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">394</context>
+          <context context-type="linenumber">402</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.model.validation.error.unsupportedGeometryType" datatype="html">
@@ -7624,7 +7664,7 @@
         <target state="final">Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">398</context>
+          <context context-type="linenumber">406</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.initialSync.targetDbNotEmpty" datatype="html">
@@ -7632,7 +7672,7 @@
         <target state="final">Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser Field-Desktop-Installation.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">402</context>
+          <context context-type="linenumber">410</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.initialSync.genericError" datatype="html">
@@ -7640,7 +7680,7 @@
         <target state="final">Download fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">406</context>
+          <context context-type="linenumber">414</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.initialSync.couldNotStartGenericError" datatype="html">
@@ -7648,7 +7688,7 @@
         <target state="final">Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">410</context>
+          <context context-type="linenumber">418</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.initialSync.invalidCredentials" datatype="html">
@@ -7656,7 +7696,7 @@
         <target state="final">Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">414</context>
+          <context context-type="linenumber">422</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.success.single" datatype="html">
@@ -7664,7 +7704,7 @@
         <target state="final">Eine Ressource wurde erfolgreich importiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">418</context>
+          <context context-type="linenumber">426</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.success.multiple" datatype="html">
@@ -7672,7 +7712,7 @@
         <target state="final">[0] Ressourcen wurden erfolgreich importiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">422</context>
+          <context context-type="linenumber">430</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.warning.empty" datatype="html">
@@ -7680,7 +7720,7 @@
         <target state="final">Die Import-Datei enthält keine Einträge.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">426</context>
+          <context context-type="linenumber">434</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredExistingIdentifier" datatype="html">
@@ -7688,7 +7728,7 @@
         <target state="final">Die Ressource '[0]' wurde nicht importiert, weil bereits eine Ressource mit dem gleichen Bezeichner existiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">430</context>
+          <context context-type="linenumber">438</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredExistingIdentifiers" datatype="html">
@@ -7696,7 +7736,7 @@
         <target state="final">[0] Ressourcen wurden nicht importiert, weil bereits Ressourcen mit dem jeweiligen Bezeichner existieren (vollständige Auflistung unten).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">434</context>
+          <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredMissingIdentifier" datatype="html">
@@ -7704,7 +7744,7 @@
         <target state="final">Die Ressource '[0]' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">438</context>
+          <context context-type="linenumber">446</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredMissingIdentifiers" datatype="html">
@@ -7712,7 +7752,7 @@
         <target state="final">[0] Ressourcen wurden nicht importiert, weil keine Ressourcen mit dem jeweiligen Bezeichner gefunden wurden (vollständige Auflistung unten).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">442</context>
+          <context context-type="linenumber">450</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.genericStartError" datatype="html">
@@ -7720,7 +7760,7 @@
         <target state="final">Import kann nicht gestartet werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">446</context>
+          <context context-type="linenumber">454</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.fileUnreadable" datatype="html">
@@ -7728,7 +7768,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die Datei [0] konnte nicht gelesen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">450</context>
+          <context context-type="linenumber">458</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.invalidJson" datatype="html">
@@ -7736,7 +7776,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">454</context>
+          <context context-type="linenumber">462</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.invalidJsonl" datatype="html">
@@ -7744,7 +7784,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile [0] ist nicht valide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">458</context>
+          <context context-type="linenumber">466</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.invalidGeojsonImportStruct" datatype="html">
@@ -7752,7 +7792,7 @@
         <target state="final">Fehlerhafte GeoJSON-Importstruktur. Grund: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">462</context>
+          <context context-type="linenumber">470</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.missingIdentifier" datatype="html">
@@ -7760,7 +7800,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">466</context>
+          <context context-type="linenumber">474</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
@@ -7768,7 +7808,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">470</context>
+          <context context-type="linenumber">478</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.identifierFormat" datatype="html">
@@ -7776,7 +7816,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">474</context>
+          <context context-type="linenumber">482</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.invalidCsv" datatype="html">
@@ -7784,7 +7824,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">478</context>
+          <context context-type="linenumber">486</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.csvInvalidHeading" datatype="html">
@@ -7792,7 +7832,7 @@
         <target state="final">Ungültiger CSV-Header: Siehe [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">482</context>
+          <context context-type="linenumber">490</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.csvHeadingEmptyEntry" datatype="html">
@@ -7800,7 +7840,7 @@
         <target state="final">CSV-Header darf keine leeren Einträge haben.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">486</context>
+          <context context-type="linenumber">494</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.parser.error.csvHeadingPathItemTypeMismatch" datatype="html">
@@ -7808,7 +7848,7 @@
         <target state="final">CSV-Header: Array Indices und Object keys dürfen nicht gemischt werden: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">490</context>
+          <context context-type="linenumber">498</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.csvHeadingArrayIndicesInvalidSequence" datatype="html">
@@ -7816,7 +7856,7 @@
         <target state="final">Ungültige Sequenz für Array Indices in CSV-Header: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">494</context>
+          <context context-type="linenumber">502</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.csvRowsLengthMismatch" datatype="html">
@@ -7824,7 +7864,7 @@
         <target state="final">Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">498</context>
+          <context context-type="linenumber">506</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notaboolean" datatype="html">
@@ -7832,7 +7872,7 @@
         <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">502</context>
+          <context context-type="linenumber">510</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notanumber" datatype="html">
@@ -7840,7 +7880,7 @@
         <target state="final">CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">506</context>
+          <context context-type="linenumber">514</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.genericCsvError" datatype="html">
@@ -7848,7 +7888,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">510</context>
+          <context context-type="linenumber">518</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.mandatoryCsvFieldMissing" datatype="html">
@@ -7856,7 +7896,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">514</context>
+          <context context-type="linenumber">522</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.invalidOperationResource" datatype="html">
@@ -7864,7 +7904,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Ressourcen der Kategorie [0] können der gewählten Maßnahme der Kategorie [1] nicht zugeordnet werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">518</context>
+          <context context-type="linenumber">526</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.operationsNotAllowed" datatype="html">
@@ -7872,7 +7912,7 @@
         <target state="final">Wenn die Option 'Daten einer Maßnahme zuordnen' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">522</context>
+          <context context-type="linenumber">530</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.onlyplaceandoperationwithoutrecordedinallowed" datatype="html">
@@ -7880,7 +7920,7 @@
         <target state="final">Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'isChildOf'-Zuordnungen haben.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">526</context>
+          <context context-type="linenumber">534</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.duplicateidentifier" datatype="html">
@@ -7888,7 +7928,7 @@
         <target state="final">Mehrfach vorhandener Identifier in Importdatei: '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">530</context>
+          <context context-type="linenumber">538</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.genericDatastoreError" datatype="html">
@@ -7896,7 +7936,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">534</context>
+          <context context-type="linenumber">542</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.rollbackError" datatype="html">
@@ -7904,7 +7944,7 @@
         <target state="final">Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">539</context>
+          <context context-type="linenumber">547</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.missingRelationTarget" datatype="html">
@@ -7912,7 +7952,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">543</context>
+          <context context-type="linenumber">551</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.notInterrelated" datatype="html">
@@ -7920,7 +7960,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Verknüpfung bei '[0]' fehlerhaft.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">547</context>
+          <context context-type="linenumber">555</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptyRelation" datatype="html">
@@ -7928,7 +7968,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Leere Relation bei '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">551</context>
+          <context context-type="linenumber">559</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.liesWithinRecordedInMismatch" datatype="html">
@@ -7936,7 +7976,7 @@
         <target state="final">'parent' zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">555</context>
+          <context context-type="linenumber">563</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.importerrors.parentassignmenttooperationnotallowed" datatype="html">
@@ -7944,7 +7984,7 @@
         <target state="final">Wenn der Modus 'Daten einer Maßnahme zuordnen gewählt ist', dürfen keine Zuordnungen zu Maßnahmen per 'parent' vorgenommen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">559</context>
+          <context context-type="linenumber">567</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.Import.ImportErrors.parentMustNotBeArray" datatype="html">
@@ -7952,7 +7992,7 @@
         <target state="final">Fehler bei Ressource mit Bezeichner '[0]'. Die 'parent'-Relation darf kein Array sein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">563</context>
+          <context context-type="linenumber">571</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.Import.ImportErrors.relationMustBeArray" datatype="html">
@@ -7960,7 +8000,7 @@
         <target state="final">Fehler bei Ressource mit Bezeichner '[0]'. Relationen ausser 'isChildOf' müssen Arrays sein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">567</context>
+          <context context-type="linenumber">575</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.prevalidation.missingRelationTarget" datatype="html">
@@ -7968,7 +8008,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">571</context>
+          <context context-type="linenumber">579</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.noOperationAssignable" datatype="html">
@@ -7976,7 +8016,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner '[0]' zugeordnet werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">575</context>
+          <context context-type="linenumber">583</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.noFeatureAssignable" datatype="html">
@@ -7984,7 +8024,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">579</context>
+          <context context-type="linenumber">587</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.shapefile.readError" datatype="html">
@@ -7992,7 +8032,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">583</context>
+          <context context-type="linenumber">591</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.catalog.generic" datatype="html">
@@ -8000,7 +8040,7 @@
         <target state="final">Beim Import ist ein Fehler aufgetreten: Der Katalog konnte nicht importiert werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">587</context>
+          <context context-type="linenumber">595</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCategory" datatype="html">
@@ -8008,7 +8048,7 @@
         <target state="final">Ungültige Kategoriedefinition: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">591</context>
+          <context context-type="linenumber">599</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
@@ -8016,7 +8056,7 @@
         <target state="final">Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">595</context>
+          <context context-type="linenumber">603</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.targetCategoryRangeMismatch" datatype="html">
@@ -8024,7 +8064,7 @@
         <target state="final">Eine Ressource der Kategorie '[2]' darf nicht mittels '[1]' mit '[0]' verknüpft werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">599</context>
+          <context context-type="linenumber">607</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
@@ -8032,7 +8072,7 @@
         <target state="final">Fehlende Felddefinition für das Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">603</context>
+          <context context-type="linenumber">611</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidFields" datatype="html">
@@ -8040,7 +8080,7 @@
         <target state="final">Fehlende Felddefinitionen für die Felder '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">607</context>
+          <context context-type="linenumber">615</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationField" datatype="html">
@@ -8048,7 +8088,7 @@
         <target state="final">Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">611</context>
+          <context context-type="linenumber">619</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationFields" datatype="html">
@@ -8056,7 +8096,7 @@
         <target state="final">Fehlende Definitionen für die Relationen '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">615</context>
+          <context context-type="linenumber">623</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValue" datatype="html">
@@ -8064,7 +8104,7 @@
         <target state="final">Ungültiger Zahlenwert im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">619</context>
+          <context context-type="linenumber">627</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValues" datatype="html">
@@ -8072,7 +8112,7 @@
         <target state="final">Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">623</context>
+          <context context-type="linenumber">631</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidUrl" datatype="html">
@@ -8080,7 +8120,7 @@
         <target state="final">Ungültige URL im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">627</context>
+          <context context-type="linenumber">635</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidUrls" datatype="html">
@@ -8088,7 +8128,7 @@
         <target state="final">Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">631</context>
+          <context context-type="linenumber">639</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate" datatype="html">
@@ -8096,7 +8136,7 @@
         <target state="final">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">635</context>
+          <context context-type="linenumber">643</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDates" datatype="html">
@@ -8104,7 +8144,7 @@
         <target state="final">Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">639</context>
+          <context context-type="linenumber">647</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.rangeNotAllowed" datatype="html">
@@ -8112,7 +8152,7 @@
         <target state="final">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">643</context>
+          <context context-type="linenumber">651</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.singleNotAllowed" datatype="html">
@@ -8120,7 +8160,7 @@
         <target state="final">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">647</context>
+          <context context-type="linenumber">655</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.timeNotAllowed" datatype="html">
@@ -8128,7 +8168,7 @@
         <target state="final">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">651</context>
+          <context context-type="linenumber">659</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.timeNotSet" datatype="html">
@@ -8136,7 +8176,7 @@
         <target state="final">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">655</context>
+          <context context-type="linenumber">663</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDatingValue" datatype="html">
@@ -8144,7 +8184,7 @@
         <target state="final">Ungültige Datierung im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">663</context>
+          <context context-type="linenumber">671</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDatingValues" datatype="html">
@@ -8152,7 +8192,7 @@
         <target state="final">Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">667</context>
+          <context context-type="linenumber">675</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValue" datatype="html">
@@ -8160,7 +8200,7 @@
         <target state="final">Ungültige Maßangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">671</context>
+          <context context-type="linenumber">679</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValues" datatype="html">
@@ -8168,7 +8208,39 @@
         <target state="final">Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">675</context>
+          <context context-type="linenumber">683</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidWeightValue" datatype="html">
+        <source>Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">687</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidWeightValues" datatype="html">
+        <source>Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="final">Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">691</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidVolumeValue" datatype="html">
+        <source>Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">695</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidVolumeValues" datatype="html">
+        <source>Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="final">Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">699</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidLiteratureValue" datatype="html">
@@ -8176,7 +8248,7 @@
         <target state="final">Ungültiger Literaturverweis im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">679</context>
+          <context context-type="linenumber">703</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidLiteratureValues" datatype="html">
@@ -8184,7 +8256,7 @@
         <target state="final">Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">683</context>
+          <context context-type="linenumber">707</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValue" datatype="html">
@@ -8192,7 +8264,7 @@
         <target state="final">Ungültiger Kompositfeld-Eintrag im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">687</context>
+          <context context-type="linenumber">711</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidCompositeValues" datatype="html">
@@ -8200,7 +8272,7 @@
         <target state="final">Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">691</context>
+          <context context-type="linenumber">715</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
@@ -8208,7 +8280,7 @@
         <target state="final">Ungültiger Bereich im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">695</context>
+          <context context-type="linenumber">719</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidMapLayerRelationTargets" datatype="html">
@@ -8216,7 +8288,7 @@
         <target state="final">Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">699</context>
+          <context context-type="linenumber">723</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWorkflowRelationTargets" datatype="html">
@@ -8224,7 +8296,7 @@
         <target state="final">Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">703</context>
+          <context context-type="linenumber">727</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.endDateBeforeBeginningDate" datatype="html">
@@ -8232,7 +8304,7 @@
         <target state="final">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">659</context>
+          <context context-type="linenumber">667</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
@@ -8240,7 +8312,7 @@
         <target state="final">Folgende Felder einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">707</context>
+          <context context-type="linenumber">731</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.maxCharactersExceeded" datatype="html">
@@ -8248,7 +8320,7 @@
         <target state="final">Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">711</context>
+          <context context-type="linenumber">735</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.resourceLimitExceeded" datatype="html">
@@ -8256,7 +8328,7 @@
         <target state="final">In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">715</context>
+          <context context-type="linenumber">739</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.categoryNotAllowed" datatype="html">
@@ -8264,7 +8336,7 @@
         <target state="final">Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">719</context>
+          <context context-type="linenumber">743</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.categoryOnlyAllowedOnUpdate" datatype="html">
@@ -8272,7 +8344,7 @@
         <target state="final">Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">723</context>
+          <context context-type="linenumber">747</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
@@ -8280,7 +8352,7 @@
         <target state="final">Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">727</context>
+          <context context-type="linenumber">751</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
@@ -8288,7 +8360,7 @@
         <target state="final">Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">731</context>
+          <context context-type="linenumber">755</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
@@ -8296,7 +8368,7 @@
         <target state="final">Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">735</context>
+          <context context-type="linenumber">759</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
@@ -8304,7 +8376,7 @@
         <target state="final">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">739</context>
+          <context context-type="linenumber">763</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.invalidFileFormat" datatype="html">
@@ -8312,7 +8384,7 @@
         <target state="final">Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">743</context>
+          <context context-type="linenumber">767</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptyObjectInResource" datatype="html">
@@ -8320,7 +8392,7 @@
         <target state="final">Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">747</context>
+          <context context-type="linenumber">771</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.warningsExist" datatype="html">
@@ -8328,7 +8400,7 @@
         <target state="final">Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">751</context>
+          <context context-type="linenumber">775</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.connected_type_deleted" datatype="html">
@@ -8336,7 +8408,7 @@
         <target state="final">Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">755</context>
+          <context context-type="linenumber">779</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.identifier_clash" datatype="html">
@@ -8344,7 +8416,7 @@
         <target state="final">Katalogimport abgebrochen. Identifier-Konflikte mit Dokumenten der Datenbank. Identifier: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">759</context>
+          <context context-type="linenumber">783</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.owner_must_not_reimport_catalog" datatype="html">
@@ -8352,7 +8424,7 @@
         <target state="final">Katalogimport abgebrochen. Löschen Sie den Katalog '[0]', bevor Sie ihn erneut importieren.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">763</context>
+          <context context-type="linenumber">787</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.owner_must_not_overwrite_existing_images" datatype="html">
@@ -8360,7 +8432,7 @@
         <target state="final">Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">767</context>
+          <context context-type="linenumber">791</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.differentProjectEntries" datatype="html">
@@ -8368,7 +8440,7 @@
         <target state="final">Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">771</context>
+          <context context-type="linenumber">795</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.noOrTooManyTypeCatalogDocuments" datatype="html">
@@ -8376,7 +8448,7 @@
         <target state="final">Katalogimport abgebrochen. Keine oder zu viele TypeCatalog-Dokumente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">775</context>
+          <context context-type="linenumber">799</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.invalidRelations" datatype="html">
@@ -8384,7 +8456,7 @@
         <target state="final">Katalogimport abgebrochen. Ungültige Relationen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">779</context>
+          <context context-type="linenumber">803</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.unconfiguredCategory" datatype="html">
@@ -8392,7 +8464,7 @@
         <target state="final">Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">783</context>
+          <context context-type="linenumber">807</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
@@ -8400,7 +8472,7 @@
         <target state="final">Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">787</context>
+          <context context-type="linenumber">811</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedInTarget" datatype="html">
@@ -8408,7 +8480,7 @@
         <target state="final">Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">791</context>
+          <context context-type="linenumber">815</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.success" datatype="html">
@@ -8416,7 +8488,7 @@
         <target state="final">Die Exportdatei wurde erfolgreich erstellt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">795</context>
+          <context context-type="linenumber">819</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.error.generic" datatype="html">
@@ -8424,7 +8496,7 @@
         <target state="final">Beim Export ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">799</context>
+          <context context-type="linenumber">823</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.geojson.error.write" datatype="html">
@@ -8432,7 +8504,7 @@
         <target state="final">Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">803</context>
+          <context context-type="linenumber">827</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.error.catalog.images-not-exclusive-to-catalog" datatype="html">
@@ -8440,7 +8512,7 @@
         <target state="final">Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressourcen verbunden sein. Bilder: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">807</context>
+          <context context-type="linenumber">831</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.error.catalog.failedToCopyImages" datatype="html">
@@ -8448,7 +8520,7 @@
         <target state="final">Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">811</context>
+          <context context-type="linenumber">835</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.shapefile.error.zipFileCreation" datatype="html">
@@ -8456,7 +8528,7 @@
         <target state="final">Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">819</context>
+          <context context-type="linenumber">843</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.shapefile.error.write" datatype="html">
@@ -8464,7 +8536,7 @@
         <target state="final">Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">815</context>
+          <context context-type="linenumber">839</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.csv.warning.invalidFieldData.single" datatype="html">
@@ -8472,7 +8544,7 @@
         <target state="final">Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">823</context>
+          <context context-type="linenumber">847</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.csv.warning.invalidFieldData.multiple" datatype="html">
@@ -8480,7 +8552,7 @@
         <target state="final">Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">827</context>
+          <context context-type="linenumber">851</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.datastore.error.notFound" datatype="html">
@@ -8488,7 +8560,7 @@
         <target state="final">Die Ressource konnte nicht gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">831</context>
+          <context context-type="linenumber">855</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.warning.saveConflict" datatype="html">
@@ -8496,7 +8568,7 @@
         <target state="final">Beim Speichern der Ressource ist ein Konflikt aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">835</context>
+          <context context-type="linenumber">859</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.warning.fieldDataDeletion" datatype="html">
@@ -8504,7 +8576,7 @@
         <target state="final">Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">839</context>
+          <context context-type="linenumber">863</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.error.save" datatype="html">
@@ -8512,7 +8584,7 @@
         <target state="final">Beim Speichern der Ressource ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">843</context>
+          <context context-type="linenumber">867</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.error.delete" datatype="html">
@@ -8520,7 +8592,7 @@
         <target state="final">Beim Löschen der Ressource ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">847</context>
+          <context context-type="linenumber">871</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.error.resolveConflict" datatype="html">
@@ -8528,7 +8600,7 @@
         <target state="final">Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">851</context>
+          <context context-type="linenumber">875</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidNumericValue" datatype="html">
@@ -8536,7 +8608,7 @@
         <target state="final">Bitte tragen Sie im Feld '[1]' einen gültigen Zahlenwert ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">855</context>
+          <context context-type="linenumber">879</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidNumericValues" datatype="html">
@@ -8544,7 +8616,7 @@
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">859</context>
+          <context context-type="linenumber">883</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidUrl" datatype="html">
@@ -8552,7 +8624,7 @@
         <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige URL ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">863</context>
+          <context context-type="linenumber">887</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidUrls" datatype="html">
@@ -8560,7 +8632,7 @@
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">867</context>
+          <context context-type="linenumber">891</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate" datatype="html">
@@ -8568,7 +8640,7 @@
         <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Datumsangabe ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">871</context>
+          <context context-type="linenumber">895</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDates" datatype="html">
@@ -8576,7 +8648,7 @@
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">875</context>
+          <context context-type="linenumber">899</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.rangeNotAllowed" datatype="html">
@@ -8584,7 +8656,7 @@
         <target state="final">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">879</context>
+          <context context-type="linenumber">903</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.singleNotAllowed" datatype="html">
@@ -8592,7 +8664,7 @@
         <target state="final">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">883</context>
+          <context context-type="linenumber">907</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotAllowed" datatype="html">
@@ -8600,7 +8672,7 @@
         <target state="final">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">887</context>
+          <context context-type="linenumber">911</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotSet" datatype="html">
@@ -8608,7 +8680,7 @@
         <target state="final">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">891</context>
+          <context context-type="linenumber">915</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDatingValue" datatype="html">
@@ -8616,7 +8688,7 @@
         <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Datierung ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">899</context>
+          <context context-type="linenumber">923</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDatingValues" datatype="html">
@@ -8624,7 +8696,7 @@
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">903</context>
+          <context context-type="linenumber">927</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDimensionValue" datatype="html">
@@ -8632,7 +8704,7 @@
         <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Maßangabe ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">907</context>
+          <context context-type="linenumber">931</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDimensionValues" datatype="html">
@@ -8640,7 +8712,39 @@
         <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">911</context>
+          <context context-type="linenumber">935</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidWeightValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</source>
+        <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">939</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidWeightValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</source>
+        <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">943</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidVolumeValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</source>
+        <target state="final">Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">947</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidVolumeValues" datatype="html">
+        <source>Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</source>
+        <target state="final">Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">951</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparator" datatype="html">
@@ -8648,7 +8752,7 @@
         <target state="final">Bitte verwenden Sie im Feld '[1]' den Punkt als Dezimaltrennzeichen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">915</context>
+          <context context-type="linenumber">955</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDecimalSeparators" datatype="html">
@@ -8656,7 +8760,7 @@
         <target state="final">Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">919</context>
+          <context context-type="linenumber">959</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWorkflowRelationTargets" datatype="html">
@@ -8664,7 +8768,7 @@
         <target state="final">Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation '[0]' als auch der Relation '[1]' an.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">923</context>
+          <context context-type="linenumber">963</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.missingProperty" datatype="html">
@@ -8672,7 +8776,7 @@
         <target state="final">Bitte füllen Sie das Feld '[1]' aus.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">927</context>
+          <context context-type="linenumber">967</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.missingProperties" datatype="html">
@@ -8680,7 +8784,7 @@
         <target state="final">Bitte füllen Sie die folgenden Felder aus: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">931</context>
+          <context context-type="linenumber">971</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.maxCharactersExceeded" datatype="html">
@@ -8688,7 +8792,7 @@
         <target state="final">Im Feld '[1]' dürfen maximal [2] Zeichen eingetragen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">935</context>
+          <context context-type="linenumber">975</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.noRecordedIn" datatype="html">
@@ -8696,7 +8800,7 @@
         <target state="final">Bitte wählen Sie eine Zielressource für die Relation 'Aufgenommen in Maßnahme' aus.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">939</context>
+          <context context-type="linenumber">979</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.noRecordedInTarget" datatype="html">
@@ -8704,7 +8808,7 @@
         <target state="final">Die Zielressource [0] der Relation 'Aufgenommen in Maßnahme' konnte nicht gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">943</context>
+          <context context-type="linenumber">983</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.endDateBeforeBeginningDate" datatype="html">
@@ -8712,7 +8816,7 @@
         <target state="final">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">895</context>
+          <context context-type="linenumber">919</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.success.imagesUploaded" datatype="html">
@@ -8720,7 +8824,7 @@
         <target state="final">[0] Bilder wurden erfolgreich importiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">947</context>
+          <context context-type="linenumber">987</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.success.wldFileUploaded" datatype="html">
@@ -8728,7 +8832,7 @@
         <target state="final">Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">951</context>
+          <context context-type="linenumber">991</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.success.wldFilesUploaded" datatype="html">
@@ -8736,7 +8840,7 @@
         <target state="final">Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">955</context>
+          <context context-type="linenumber">995</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.single" datatype="html">
@@ -8744,7 +8848,7 @@
         <target state="final">Das Bild wurde erfolgreich exportiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">959</context>
+          <context context-type="linenumber">999</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.multiple" datatype="html">
@@ -8752,7 +8856,7 @@
         <target state="final">[0] Bilder wurden erfolgreich exportiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">963</context>
+          <context context-type="linenumber">1003</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.single" datatype="html">
@@ -8760,7 +8864,7 @@
         <target state="final">Das Originalbild wurde erfolgreich heruntergeladen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">967</context>
+          <context context-type="linenumber">1007</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.multiple" datatype="html">
@@ -8768,7 +8872,7 @@
         <target state="final">[0] Originalbilder wurden erfolgreich heruntergeladen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">971</context>
+          <context context-type="linenumber">1011</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.error.fileReader" datatype="html">
@@ -8776,7 +8880,7 @@
         <target state="final">Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">975</context>
+          <context context-type="linenumber">1015</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.error.duplicateFilename" datatype="html">
@@ -8784,7 +8888,7 @@
         <target state="final">Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen existiert bereits.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">979</context>
+          <context context-type="linenumber">1019</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.error.duplicateFilenames" datatype="html">
@@ -8792,7 +8896,7 @@
         <target state="final">Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">983</context>
+          <context context-type="linenumber">1023</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.error.unmachtedWldFiles" datatype="html">
@@ -8800,7 +8904,7 @@
         <target state="final">Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">987</context>
+          <context context-type="linenumber">1027</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.error.exportFailed" datatype="html">
@@ -8808,7 +8912,7 @@
         <target state="final">Beim Export der Bilder ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">991</context>
+          <context context-type="linenumber">1031</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.images.error.downloadFailed" datatype="html">
@@ -8816,7 +8920,7 @@
         <target state="final">Beim Versuch, das Bild '[0]' herunterzuladen, ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">995</context>
+          <context context-type="linenumber">1035</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath" datatype="html">
@@ -8824,7 +8928,7 @@
         <target state="final">Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">999</context>
+          <context context-type="linenumber">1039</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.read" datatype="html">
@@ -8832,7 +8936,7 @@
         <target state="final">Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1003</context>
+          <context context-type="linenumber">1043</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.write" datatype="html">
@@ -8840,7 +8944,7 @@
         <target state="final">Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1007</context>
+          <context context-type="linenumber">1047</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.delete" datatype="html">
@@ -8848,7 +8952,7 @@
         <target state="final">Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1011</context>
+          <context context-type="linenumber">1051</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.upload" datatype="html">
@@ -8856,7 +8960,7 @@
         <target state="final">Die Datei '[0]' konnte nicht gelesen werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1015</context>
+          <context context-type="linenumber">1055</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.upload.pixelLimitExceeded" datatype="html">
@@ -8864,7 +8968,7 @@
         <target state="final">Die Datei '[0]' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1019</context>
+          <context context-type="linenumber">1059</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.write" datatype="html">
@@ -8872,7 +8976,7 @@
         <target state="final">Die Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1023</context>
+          <context context-type="linenumber">1063</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.delete" datatype="html">
@@ -8880,7 +8984,7 @@
         <target state="final">Fehler beim Löschen des Bilds '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1027</context>
+          <context context-type="linenumber">1067</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidWorldfile" datatype="html">
@@ -8888,7 +8992,7 @@
         <target state="final">Die Datei '[0]' ist kein gültiges World-File.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1031</context>
+          <context context-type="linenumber">1071</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.dropArea.error.unsupportedExtensions" datatype="html">
@@ -8896,7 +9000,7 @@
         <target state="final">Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1035</context>
+          <context context-type="linenumber">1075</context>
         </context-group>
       </trans-unit>
       <trans-unit id="remoteimagestore.warning.largeFileUploadBlockedByPeer" datatype="html">
@@ -8904,7 +9008,7 @@
         <target state="final">Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1039</context>
+          <context context-type="linenumber">1079</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.success.imagesUploaded" datatype="html">
@@ -8912,7 +9016,7 @@
         <target state="final">[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1043</context>
+          <context context-type="linenumber">1083</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">
@@ -8920,7 +9024,7 @@
         <target state="final">Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1047</context>
+          <context context-type="linenumber">1087</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.multiple" datatype="html">
@@ -8928,7 +9032,7 @@
         <target state="final">Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1052</context>
+          <context context-type="linenumber">1092</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeSaved" datatype="html">
@@ -8936,7 +9040,7 @@
         <target state="final">Der neu generierte QR-Code wurde erfolgreich gespeichert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1057</context>
+          <context context-type="linenumber">1097</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.success.existingQrCodeSaved" datatype="html">
@@ -8944,7 +9048,7 @@
         <target state="final">Der eingescannte QR-Code wurde erfolgreich gespeichert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1061</context>
+          <context context-type="linenumber">1101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.success.qrCodeDeleted" datatype="html">
@@ -8952,7 +9056,7 @@
         <target state="final">Der QR-Code wurde erfolgreich gelöscht.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1065</context>
+          <context context-type="linenumber">1105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.single" datatype="html">
@@ -8960,7 +9064,7 @@
         <target state="final">Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1069</context>
+          <context context-type="linenumber">1109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.multiple" datatype="html">
@@ -8968,7 +9072,7 @@
         <target state="final">Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1074</context>
+          <context context-type="linenumber">1114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.noStoragePlaceCategory" datatype="html">
@@ -8976,7 +9080,7 @@
         <target state="final">Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1079</context>
+          <context context-type="linenumber">1119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.warning.projectIdentifierNotSame" datatype="html">
@@ -8984,7 +9088,7 @@
         <target state="final">Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1084</context>
+          <context context-type="linenumber">1124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.oneProjectMustExist" datatype="html">
@@ -8992,7 +9096,7 @@
         <target state="final">Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1088</context>
+          <context context-type="linenumber">1128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.resourceDeleted" datatype="html">
@@ -9000,7 +9104,7 @@
         <target state="final">Die Ressource '[0]' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1092</context>
+          <context context-type="linenumber">1132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.unknownResourceDeleted" datatype="html">
@@ -9008,7 +9112,7 @@
         <target state="final">Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1096</context>
+          <context context-type="linenumber">1136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.resourceMissingDuringSyncing" datatype="html">
@@ -9016,7 +9120,7 @@
         <target state="final">Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1100</context>
+          <context context-type="linenumber">1140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveChildren" datatype="html">
@@ -9024,7 +9128,7 @@
         <target state="final">Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1104</context>
+          <context context-type="linenumber">1144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeScanningFailure" datatype="html">
@@ -9032,7 +9136,7 @@
         <target state="final">Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1108</context>
+          <context context-type="linenumber">1148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeResourceNotFound" datatype="html">
@@ -9040,7 +9144,7 @@
         <target state="final">Für diesen QR-Code konnte keine Ressource gefunden werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1112</context>
+          <context context-type="linenumber">1152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.qrCodeAlreadyAssigned" datatype="html">
@@ -9048,7 +9152,7 @@
         <target state="final">Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1116</context>
+          <context context-type="linenumber">1156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.parentResourceDeleted" datatype="html">
@@ -9056,7 +9160,7 @@
         <target state="final">Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1120</context>
+          <context context-type="linenumber">1160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.missingIdentifier" datatype="html">
@@ -9064,7 +9168,7 @@
         <target state="final">Bitte geben Sie eine Kennung für das neue Projekt ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1124</context>
+          <context context-type="linenumber">1164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierExists" datatype="html">
@@ -9072,7 +9176,7 @@
         <target state="final">Ein Projekt mit der Kennung '[0]' existiert bereits.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1128</context>
+          <context context-type="linenumber">1168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierLength" datatype="html">
@@ -9080,7 +9184,7 @@
         <target state="final">Die angegebene Projektkennung ist um [0] Zeichen zu lang.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1132</context>
+          <context context-type="linenumber">1172</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
@@ -9088,7 +9192,7 @@
         <target state="final">Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1136</context>
+          <context context-type="linenumber">1176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierStartingCharacter" datatype="html">
@@ -9096,7 +9200,7 @@
         <target state="final">Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1140</context>
+          <context context-type="linenumber">1180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.nameLength" datatype="html">
@@ -9104,7 +9208,7 @@
         <target state="final">Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1144</context>
+          <context context-type="linenumber">1184</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.success.import" datatype="html">
@@ -9112,7 +9216,7 @@
         <target state="final">Die Projektkonfiguration wurde erfolgreich importiert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1148</context>
+          <context context-type="linenumber">1188</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.noValuesInValuelist" datatype="html">
@@ -9120,7 +9224,7 @@
         <target state="final">Bitte tragen Sie mindestens einen Wert ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1152</context>
+          <context context-type="linenumber">1192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.noValuelist" datatype="html">
@@ -9128,7 +9232,7 @@
         <target state="final">Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1156</context>
+          <context context-type="linenumber">1196</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.noSubfields" datatype="html">
@@ -9136,7 +9240,7 @@
         <target state="final">Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1160</context>
+          <context context-type="linenumber">1200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.fieldConditionViolation.valuelists" datatype="html">
@@ -9144,7 +9248,7 @@
         <target state="final">Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1164</context>
+          <context context-type="linenumber">1204</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.fieldConditionViolation.inputType" datatype="html">
@@ -9152,7 +9256,7 @@
         <target state="final">Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1168</context>
+          <context context-type="linenumber">1208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.valuelists" datatype="html">
@@ -9160,7 +9264,7 @@
         <target state="final">Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1172</context>
+          <context context-type="linenumber">1212</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.inputType" datatype="html">
@@ -9168,7 +9272,7 @@
         <target state="final">Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1176</context>
+          <context context-type="linenumber">1216</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.deletion" datatype="html">
@@ -9176,7 +9280,7 @@
         <target state="final">Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1180</context>
+          <context context-type="linenumber">1220</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.valueUsedInSubfieldCondition" datatype="html">
@@ -9184,7 +9288,7 @@
         <target state="final">Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1184</context>
+          <context context-type="linenumber">1224</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidReference" datatype="html">
@@ -9192,7 +9296,7 @@
         <target state="final">"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1188</context>
+          <context context-type="linenumber">1228</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.notANumber" datatype="html">
@@ -9200,7 +9304,7 @@
         <target state="final">Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1192</context>
+          <context context-type="linenumber">1232</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.invalidResourceLimit.tooLow" datatype="html">
@@ -9208,7 +9312,7 @@
         <target state="final">Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1196</context>
+          <context context-type="linenumber">1236</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.importFailure" datatype="html">
@@ -9216,7 +9320,7 @@
         <target state="final">Die Projektkonfiguration konnte nicht importiert werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1200</context>
+          <context context-type="linenumber">1240</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.unsupportedVersion" datatype="html">
@@ -9224,7 +9328,7 @@
         <target state="final">Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1204</context>
+          <context context-type="linenumber">1244</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.configuration.error.noProjectLanguages" datatype="html">
@@ -9232,7 +9336,7 @@
         <target state="final">Bitte wählen Sie mindestens eine Projektsprache aus.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1208</context>
+          <context context-type="linenumber">1248</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedTargetCategories" datatype="html">
@@ -9240,7 +9344,7 @@
         <target state="final">Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1212</context>
+          <context context-type="linenumber">1252</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.matrix.error.generic" datatype="html">
@@ -9248,7 +9352,7 @@
         <target state="final">Bei der Generierung der Matrix ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1216</context>
+          <context context-type="linenumber">1256</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.tabs.images" datatype="html">
@@ -9619,12 +9723,12 @@
           <context context-type="linenumber">126</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/literature-entry-modal.html</context>
           <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.html</context>
@@ -10107,12 +10211,12 @@
           <context context-type="linenumber">122</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/dimension-entry-modal.html</context>
-          <context context-type="linenumber">67</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/literature-entry-modal.html</context>
           <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">91</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>

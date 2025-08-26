@@ -8,7 +8,8 @@
   }
 
   .input-unit-select,
-  .measurement-position-select {
+  .measurement-position-select,
+  .measurement-device-select {
     width: unset;
   }
 
@@ -28,7 +29,8 @@
     }
   }
 
-  .measured-by-label {
+  .measured-by-label,
+  .measured-with-label {
     position: relative;
     bottom: 1px;
     margin-bottom: 0;

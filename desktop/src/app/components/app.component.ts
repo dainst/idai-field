@@ -17,7 +17,7 @@ import { QuittingModalComponent } from './widgets/quitting-modal.component';
 import { Modals } from '../services/modals';
 import { MenuContext } from '../services/menu-context';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
-import { ExpressServer } from '../services/express-server';
+import { ExpressServer } from '../services/express-server/express-server';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;

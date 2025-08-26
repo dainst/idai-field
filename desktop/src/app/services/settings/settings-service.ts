@@ -6,7 +6,7 @@ import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationN
     ObserverUtil } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
-import { ExpressServer } from '../express-server';
+import { ExpressServer } from '../express-server/express-server';
 import { Settings } from './settings';
 import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';

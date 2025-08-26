@@ -10,7 +10,7 @@ import { SettingsService } from '../services/settings/settings-service';
 import { SettingsSerializer } from '../services/settings/settings-serializer';
 import { Settings } from '../services/settings/settings';
 import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
-import { ExpressServer } from '../services/express-server';
+import { ExpressServer } from '../services/express-server/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';

@@ -2,7 +2,7 @@ import { sameset } from 'tsfun';
 import { AppConfigurator, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource, SyncService, ImageStore,
     ImageSyncService, Indexer } from 'idai-field-core';
-import { ExpressServer } from '../../../src/app/services/express-server';
+import { ExpressServer } from '../../../src/app/services/express-server/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/image-overview-facade';
 import { ImagesState } from '../../../src/app/components/image/overview/view/images-state';

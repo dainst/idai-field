@@ -24,6 +24,8 @@ export async function exportData(request: any, response: any, projectConfigurati
         const { format, categoryName, separator, combineHierarchicalRelations,
             formatted, context } = await getRequestParameters(request, datastore);
 
+        if (!['geojson', 'csv'].includes(format)) throw 'Unsupported format: ' + format;
+
         const category: CategoryForm = projectConfiguration.getCategory(categoryName);
         if (!category) throw 'Unconfigured category: ' + categoryName;
             
@@ -52,7 +54,7 @@ export async function exportData(request: any, response: any, projectConfigurati
 
 async function getRequestParameters(request: any, datastore: Datastore): Promise<RequestParameters> {
 
-    const format: 'csv'|'geojson' = request.params.format === 'geojson' ? 'geojson' : 'csv';
+    const format: string = request.params.format;
     const categoryName: string = request.query.category ?? 'Project';
     const separator: string = request.query.separator ?? ',';
     const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';

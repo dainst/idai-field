@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
+import { to } from 'tsfun';
 import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigurationDocument,
-    ConfigReader } from 'idai-field-core';
+    ConfigReader, Datastore, Query, CategoryForm, ProjectConfiguration, Document, 
+    Named, RelationsManager, IdGenerator } from 'idai-field-core';
 import { SettingsProvider } from './settings/settings-provider';
+import { ExportResult, ExportRunner } from '../components/export/export-runner';
+import { CsvExporter } from '../components/export/csv/csv-exporter';
+import { GeoJsonExporter } from '../components/export/geojson-exporter';
+import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../components/import/importer';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -17,12 +23,17 @@ export class ExpressServer {
     private password: string;
     private allowLargeFileUploads: boolean;
     private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '1gb' });
+    private textBodyParser = bodyParser.text({ type: '*/*', limit: '1gb' });
+    private datastore: Datastore;
+    private relationsManager: RelationsManager;
+    private projectConfiguration: ProjectConfiguration;
 
 
     constructor(private imagestore: ImageStore,
                 private configurationSerializer: ConfigurationSerializer,
                 private settingsProvider: SettingsProvider,
-                private configReader: ConfigReader) {}
+                private configReader: ConfigReader,
+                private idGenerator: IdGenerator) {}
 
 
     public getPassword = () => this.password;
@@ -34,6 +45,13 @@ export class ExpressServer {
     public setAllowLargeFileUploads = (allow: boolean) => this.allowLargeFileUploads = allow;
 
     public getPouchDB = () => PouchDB;
+
+    public setDatastore = (datastore: Datastore) => this.datastore = datastore;
+
+    public setRelationsManager = (relationsManager: RelationsManager) => this.relationsManager = relationsManager;
+
+    public setProjectConfiguration = (projectConfiguration: ProjectConfiguration) =>
+        this.projectConfiguration = projectConfiguration;
 
 
     /**
@@ -179,6 +197,135 @@ export class ExpressServer {
             } catch (err) {
                 console.error(err);
                 response.status(500).send({ reason: 'An unknown error occurred.' });
+            }
+        });
+
+        app.get('/export/:format', async (request: any, response: any) => {
+
+            try {
+                const format: 'csv'|'geojson' = request.params.format === 'geojson' ? 'geojson' : 'csv';
+                const categoryName: string = request.query.category ?? 'Project';
+                let context: string = request.query.context; 
+                const csvSeparator: string = request.query.separator ?? ',';
+                const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
+                const formatted: boolean = request.query.formatted !== 'false';
+
+                const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+                if (!category) throw 'Unconfigured category: ' + categoryName;
+
+                if (context && context !== 'project') {
+                    const documents: Array<Document> = (await this.datastore.find(
+                        { constraints: { 'identifier:match': context } }
+                    )).documents;
+                    context = documents.length === 1
+                        ? documents[0].resource.id
+                        : undefined;
+                }
+                   
+                if (format === 'csv') {
+                    const result: ExportResult = await ExportRunner.performExport(
+                        (query: Query) => this.datastore.find(query),
+                        (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
+                        context,
+                        category,
+                        this.projectConfiguration
+                            .getRelationsForDomainCategory(categoryName)
+                            .map(_ => _.name),
+                        CsvExporter.performExport(
+                            this.projectConfiguration.getProjectLanguages(),
+                            csvSeparator,
+                            combineHierarchicalRelations
+                        )
+                    );
+                    
+                    response.header('Content-Type', 'text/csv')
+                        .status(200)
+                        .send(result.exportData.join('\n'));
+                } else {
+                    const geojsonData: string = await GeoJsonExporter.performExport(
+                        this.datastore, context, undefined, formatted
+                    );
+
+                    response.header('Content-Type', 'application/geo+json')
+                        .status(200)
+                        .send(geojsonData);
+                }
+            } catch (err) {
+                console.error(err);
+                const errorMessage: string = err?.message ?? err;
+                response.status(400).send({ error: errorMessage });
+            }
+        });
+
+        app.post('/import/:format', this.textBodyParser, async (request: any, response: any) => {
+
+            try {
+                const operationIdentifier: string = request.query.operation;
+                const categoryName: string = request.query.category ?? 'Project';
+                const category: CategoryForm = this.projectConfiguration.getCategory(categoryName);
+                if (!category) throw 'Unconfigured category: ' + categoryName;
+
+                let format: string = request.params.format;
+                if (!['geojson', 'csv', 'jsonl'].includes(format)) throw 'Unsupported format: ' + format;
+                if (format === 'jsonl') format = 'native';
+
+                let operationId: string;
+                if (operationIdentifier) {
+                    const documents: Array<Document> = (await this.datastore.find(
+                        { constraints: { 'identifier:match': operationIdentifier } }
+                    )).documents;
+                    operationId = documents.length === 1
+                        ? documents[0].resource.id
+                        : undefined;
+                }
+
+                const fileContent: string = request.body;
+
+                const options: ImporterOptions = {
+                    format: format as ImporterFormat,
+                    mergeMode: request.query.mergeMode === 'true',
+                    permitDeletions: request.query.permitDeletions === 'true',
+                    selectedOperationId: operationId,
+                    ignoreUnconfiguredFields: request.query.ignoreUnconfiguredFields === 'true',
+                    selectedCategory: category,
+                    separator: request.query.separator ?? ',',
+                    sourceType: 'file'
+                };
+                if (options.mergeMode === true) options.selectedOperationId = '';
+
+                const documents: Array<Document> = await Importer.doParse(options,fileContent);
+
+                const report: ImporterReport = await Importer.doImport(
+                    {
+                        datastore: this.datastore,
+                        relationsManager: this.relationsManager,
+                        imageRelationsManager: undefined,
+                        imagestore: undefined
+                    },
+                    {
+                        settings: this.settingsProvider.getSettings(),
+                        projectConfiguration: this.projectConfiguration,
+                        operationCategories: this.projectConfiguration.getOperationCategories().map(Named.toName)
+                    },
+                    () => this.idGenerator.generateId(),
+                    options,
+                    documents,
+                    this.projectConfiguration.getTypeCategories().map(to(Named.NAME)),
+                    this.projectConfiguration.getImageCategories().map(to(Named.NAME))
+                );
+
+                if (report.errors?.length) {
+                    response.status(400).send({ error: 'Import failed', importErrors: report.errors })
+                } else {
+                    response.status(200).send({
+                        successfulImports: report.successfulImports,
+                        ignoredIdentifiers: report.ignoredIdentifiers
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+                const errorMessage: string = err?.message ?? err;
+                response.status(400).send({ error: errorMessage });
             }
         });
 

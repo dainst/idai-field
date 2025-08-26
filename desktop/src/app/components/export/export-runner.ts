@@ -1,8 +1,22 @@
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
-import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints, IndexFacade } from 'idai-field-core';
+import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints,
+    IndexFacade } from 'idai-field-core';
 import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';
 
 const IS_CHILD_OF_CONTAIN = 'isChildOf:contain';
+
+
+export type ExportResult = {
+    exportData: string[];
+    invalidFields: Array<InvalidField>;
+};
+
+
+export type InvalidField = {
+    identifier: string;
+    fieldName: string;
+};
+
 
 /**
  * Fetches documents, rewrites identifiers in relations, triggering the export of the transformed docs.
@@ -29,7 +43,7 @@ export module ExportRunner {
 
     export async function performExport(find: Find, getIdentifierForId: GetIdentifierForId,
                                         context: ExportContext, selectedCategory: CategoryForm,
-                                        relations: string[], performExport: PerformExport) {
+                                        relations: string[], performExport: PerformExport): Promise<ExportResult> {
 
         const documents = [];
         if (context !== undefined) {

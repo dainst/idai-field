@@ -8,7 +8,7 @@ import { Settings } from '../../settings/settings';
 interface RequestParameters {
     operationIdentifier: string;
     categoryName: string;
-    format: string;
+    format: ImporterFormat;
     mergeMode: boolean;
     permitDeletions: boolean;
     ignoreUnconfiguredFields: boolean;
@@ -30,7 +30,7 @@ export async function importData(request: any, response: any, projectConfigurati
         const category: CategoryForm = projectConfiguration.getCategory(categoryName);
         if (!category) throw 'Unconfigured category: ' + categoryName;
 
-        const options: ImporterOptions = await getImporterOptions(format as ImporterFormat, mergeMode, permitDeletions,
+        const options: ImporterOptions = await getImporterOptions(format, mergeMode, permitDeletions,
             operationIdentifier, ignoreUnconfiguredFields, category, separator, datastore);
         const documents: Array<Document> = await Importer.doParse(options, request.body);
         const report: ImporterReport = await performImport(projectConfiguration, datastore, relationsManager,
@@ -61,21 +61,21 @@ function getRequestParameters(request: any): RequestParameters {
     const permitDeletions: boolean = request.query.permitDeletions === 'true';
     const ignoreUnconfiguredFields: boolean = request.query.ignoreUnconfiguredFields === 'true';
     const separator: string = request.query.separator ?? ',';
-    const format = getFormat(request);
+    const format: ImporterFormat = getFormat(request);
 
     return { operationIdentifier, categoryName, mergeMode, permitDeletions, ignoreUnconfiguredFields,
         separator, format };
 }
 
 
-function getFormat(request: any): string {
+function getFormat(request: any): ImporterFormat {
 
     let format: string = request.params.format;
     if (!['geojson', 'csv', 'jsonl'].includes(format)) throw 'Unsupported format: ' + format;
 
     if (format === 'jsonl') format = 'native';
 
-    return format;
+    return format as ImporterFormat;
 }
 
 

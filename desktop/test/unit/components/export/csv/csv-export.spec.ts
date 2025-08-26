@@ -664,7 +664,7 @@ describe('CSVExport', () => {
         ];
         resources[0]['weight'] = [
             { inputValue: 100, inputUnit: 'mg', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
-            { inputValue: 200, inputUnit: 'g', measurementComment: { en: 'Comment 2' }, measurementScale: 'abc' }
+            { inputValue: 200, inputUnit: 'g', measurementComment: { en: 'Comment 2' }, measurementDevice: 'abc' }
         ];
         resources[1]['weight'] = [
             { inputValue: 300, inputUnit: 'kg', inputRangeEndValue: 400 }
@@ -676,14 +676,14 @@ describe('CSVExport', () => {
         expect(result[0][1]).toBe('"weight.0.inputValue"');
         expect(result[0][2]).toBe('"weight.0.inputRangeEndValue"');
         expect(result[0][3]).toBe('"weight.0.inputUnit"');
-        expect(result[0][4]).toBe('"weight.0.measurementScale"');
+        expect(result[0][4]).toBe('"weight.0.measurementDevice"');
         expect(result[0][5]).toBe('"weight.0.measurementComment.en"');
         expect(result[0][6]).toBe('"weight.0.measurementComment.de"');
         expect(result[0][7]).toBe('"weight.0.isImprecise"');
         expect(result[0][8]).toBe('"weight.1.inputValue"');
         expect(result[0][9]).toBe('"weight.1.inputRangeEndValue"');
         expect(result[0][10]).toBe('"weight.1.inputUnit"');
-        expect(result[0][11]).toBe('"weight.1.measurementScale"');
+        expect(result[0][11]).toBe('"weight.1.measurementDevice"');
         expect(result[0][12]).toBe('"weight.1.measurementComment.en"');
         expect(result[0][13]).toBe('"weight.1.measurementComment.de"');
         expect(result[0][14]).toBe('"weight.1.isImprecise"');

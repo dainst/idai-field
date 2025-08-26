@@ -94,7 +94,7 @@ const convertArray = (field: DifferingField, languages: Map<Language>, getTransl
         } else if (field.inputType === Field.InputType.WEIGHT && Measurement.isMeasurement(element)) {
             return Measurement.generateLabel(element, Field.InputType.WEIGHT, transform, getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value),
-                labels.getValueLabel(field.valuelist, element.measurementScale));
+                labels.getValueLabel(field.valuelist, element.measurementDevice));
         } else if (field.inputType === Field.InputType.VOLUME && Measurement.isMeasurement(element)) {
             return Measurement.generateLabel(element, Field.InputType.VOLUME, transform, getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value));

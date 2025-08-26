@@ -130,7 +130,7 @@ export module FieldsViewUtil {
                 field.definition.inputType === Field.InputType.DIMENSION
                     ? labels.getValueLabel(field.valuelist, object.measurementPosition)
                     : field.definition.inputType === Field.InputType.WEIGHT
-                        ? labels.getValueLabel(field.valuelist, object.measurementScale)
+                        ? labels.getValueLabel(field.valuelist, object.measurementDevice)
                         : undefined
             );
         } else if (field?.definition?.inputType === Field.InputType.LITERATURE) {

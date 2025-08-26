@@ -153,7 +153,7 @@ export module CSVHeadingsExpansion {
                 ].concat(inputType === 'dimension'
                         ? [fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition']
                         : inputType === 'weight'
-                            ? [fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementScale']
+                            ? [fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementDevice']
                             : []
                 ).concat(languages.map(language => {
                     return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'

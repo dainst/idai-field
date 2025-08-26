@@ -304,7 +304,7 @@ export module CSVMatrixExpansion {
         
         return (measurement: Measurement): string[] => {
 
-            const { inputValue, inputRangeEndValue, measurementPosition, measurementScale, measurementComment,
+            const { inputValue, inputRangeEndValue, measurementPosition, measurementDevice, measurementComment,
                 inputUnit, isImprecise } = measurement;
 
             const expandedDimension = [
@@ -314,7 +314,7 @@ export module CSVMatrixExpansion {
             ].concat(inputType === 'dimension'
                     ? [measurementPosition ?? '']
                     : inputType === 'weight'
-                        ? [measurementScale ?? '']
+                        ? [measurementDevice ?? '']
                         : []
             ).concat(measurementComment
                 ? rowsWithI18nStringExpanded(languages)(measurementComment)

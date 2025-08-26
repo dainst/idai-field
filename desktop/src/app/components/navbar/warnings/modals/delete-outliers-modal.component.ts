@@ -159,7 +159,7 @@ export class DeleteOutliersModalComponent {
             return array;
         } else if (field.inputType === Field.InputType.WEIGHT) {
             array.forEach((entry: Measurement) => {
-                if (entry.measurementScale === this.outlierValue) delete entry.measurementScale;
+                if (entry.measurementDevice === this.outlierValue) delete entry.measurementDevice;
             });
             return array;
         } else if (field.inputType === Field.InputType.COMPOSITE) {

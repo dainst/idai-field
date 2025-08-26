@@ -1273,7 +1273,7 @@ Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" si
 * *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
 * *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
 * *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
-* *measurementScale*: Feld "Gemessen mit" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 
@@ -1703,7 +1703,7 @@ Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" si
 * *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
 * *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
 * *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
-* *measurementScale*: Feld "Gemessen mit" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 

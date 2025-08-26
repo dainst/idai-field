@@ -61,7 +61,7 @@ export class OutliersComponent {
     private removeFromWeightArray(outlier: string) {
 
         this.fieldContainer[this.field.name].forEach((weight: Measurement) => {
-            if (weight.measurementScale === outlier) delete weight.measurementScale;
+            if (weight.measurementDevice === outlier) delete weight.measurementDevice;
         });
     }
 

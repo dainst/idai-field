@@ -147,7 +147,7 @@ export class AppComponent {
             'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an`
         );
         this.utilTranslations.addTranslation(
-            'measuredWith', $localize `:@@util.dimension.measuredWith:gemessen mit`
+            'measurementDevice', $localize `:@@util.dimension.measurementDevice:Messgerät:`
         );
         this.utilTranslations.addTranslation(
             'zenonId', $localize `:@@util.literature.zenonId:Zenon-ID`

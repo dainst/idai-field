@@ -24,7 +24,7 @@ export interface Measurement {
     inputUnit: Measurement.InputUnit;
 
     measurementPosition?: string; // Dimension only
-    measurementScale?: string; // Weight only
+    measurementDevice?: string; // Weight only
     measurementComment?: I18N.String|string;
     isImprecise: boolean;
 
@@ -44,15 +44,15 @@ export module Measurement {
     export const INPUTRANGEENDVALUE = 'inputRangeEndValue';
     export const INPUTUNIT = 'inputUnit';
     export const MEASUREMENTPOSITION = 'measurementPosition';
-    export const MEASUREMENTSCALE = 'measurementScale';
+    export const MEASUREMENTDEVICE = 'measurementDevice';
     export const MEASUREMENTCOMMENT = 'measurementComment';
     export const ISIMPRECISE = 'isImprecise';
 
     export type InputUnit = 'mm'|'cm'|'m'|'mg'|'g'|'kg'|'ml'|'l';
-    export type Translations = 'asMeasuredBy'|'measuredWith';
+    export type Translations = 'asMeasuredBy'|'measurementDevice';
 
     const VALID_FIELDS = [VALUE, LABEL, ISRANGE, RANGEMIN, RANGEMAX,
-        INPUTVALUE, INPUTRANGEENDVALUE, INPUTUNIT, MEASUREMENTPOSITION, MEASUREMENTSCALE, MEASUREMENTCOMMENT,
+        INPUTVALUE, INPUTRANGEENDVALUE, INPUTUNIT, MEASUREMENTPOSITION, MEASUREMENTDEVICE, MEASUREMENTCOMMENT,
         ISIMPRECISE];
 
     export const VALID_INPUT_UNITS = {
@@ -69,7 +69,7 @@ export module Measurement {
             if (!VALID_FIELDS.includes(fieldName)) return false;
         }
         if (measurement.measurementPosition && !isString(measurement.measurementPosition)) return false;
-        if (measurement.measurementScale && !isString(measurement.measurementScale)) return false;
+        if (measurement.measurementDevice && !isString(measurement.measurementDevice)) return false;
         if (measurement.measurementComment && !isObject(measurement.measurementComment)
             && !isString(measurement.measurementComment)) {
                 return false;
@@ -90,7 +90,7 @@ export module Measurement {
         if (!VALID_INPUT_UNITS[inputType]?.includes(measurement.inputUnit)) return false;
 
         if (measurement.measurementPosition && inputType !== Field.InputType.DIMENSION) return false;
-        if (measurement.measurementScale && inputType !== Field.InputType.WEIGHT) return false;
+        if (measurement.measurementDevice && inputType !== Field.InputType.WEIGHT) return false;
 
         if (measurement.inputRangeEndValue !== undefined) {
             if (!isNumber(measurement.inputRangeEndValue)) return false;
@@ -157,9 +157,9 @@ export module Measurement {
             if (inputType === Field.InputType.DIMENSION && measurement.measurementPosition) {
                 label += ', ' + translate('asMeasuredBy') +  ' ' 
                       + (valueLabel ?? measurement.measurementPosition);
-            } else if (inputType === Field.InputType.WEIGHT && measurement.measurementScale) {
-                label += ', ' + translate('measuredWith') +  ' ' 
-                      + (valueLabel ?? measurement.measurementScale);
+            } else if (inputType === Field.InputType.WEIGHT && measurement.measurementDevice) {
+                label += ', ' + translate('measurementDevice') +  ' ' 
+                      + (valueLabel ?? measurement.measurementDevice);
             }
             if (measurement.measurementComment) {
                 label += ' (' + getFromI18NString(measurement.measurementComment) + ')';

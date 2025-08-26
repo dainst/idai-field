@@ -950,7 +950,7 @@ describe('WarningsUpdater', () => {
         documents[1].resource.dropdown = 'outlierValue2';
         documents[1].resource.checkboxes = ['outlierValue3'];
         documents[1].resource.dimension = [{ measurementPosition: 'outlierValue4', inputValue: 1, inputUnit: 'cm' }];
-        documents[1].resource.weight = [{ measurementScale: 'outlierValue5', inputValue: 1, inputUnit: 'g' }];
+        documents[1].resource.weight = [{ measurementDevice: 'outlierValue5', inputValue: 1, inputUnit: 'g' }];
         documents[1].resource.composite = [
             { dropdown: 'outlierValue6', checkboxes: ['outlierValue7'], url: 'http://www.example.de' }
         ];

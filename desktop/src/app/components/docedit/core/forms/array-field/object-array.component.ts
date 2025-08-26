@@ -174,7 +174,7 @@ export class ObjectArrayComponent implements OnChanges {
             this.field.inputType === Field.InputType.DIMENSION
                 ? this.labels.getValueLabel(this.field.valuelist, measurement.measurementPosition)
                 : this.field.inputType === Field.InputType.WEIGHT
-                    ? this.labels.getValueLabel(this.field.valuelist, measurement.measurementScale)
+                    ? this.labels.getValueLabel(this.field.valuelist, measurement.measurementDevice)
                     : undefined
         );
     }

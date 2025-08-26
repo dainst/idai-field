@@ -23,7 +23,7 @@ export module ValuelistUtil {
         
         const valuesToCheck: string[] = isArray(fieldContent)
             ? fieldContent.map(entry => entry?.[Measurement.MEASUREMENTPOSITION]
-                    ?? entry?.[Measurement.MEASUREMENTSCALE]
+                    ?? entry?.[Measurement.MEASUREMENTDEVICE]
                     ?? entry)
                 .filter(entry => isString(entry))
             : fieldContent[OptionalRange.VALUE]

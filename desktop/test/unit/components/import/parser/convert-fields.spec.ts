@@ -181,7 +181,7 @@ describe('convertFields', () => {
                 rangeMax: '3',
                 inputValue: '4',
                 inputRangeEndValue: '5',
-                measurementScale: 'a',
+                measurementDevice: 'a',
                 measurementComment: 'b',
                 inputUnit: 'mg',
                 isImprecise: 'true'
@@ -196,7 +196,7 @@ describe('convertFields', () => {
         expect(weight.rangeMax).toBe(3);
         expect(weight.inputValue).toBe(4);
         expect(weight.inputRangeEndValue).toBe(5);
-        expect(weight.measurementScale).toBe('a');
+        expect(weight.measurementDevice).toBe('a');
         expect(weight.measurementComment).toBe('b');
         expect(weight.inputUnit).toBe('mg');
         expect(weight.isImprecise).toBe(true);

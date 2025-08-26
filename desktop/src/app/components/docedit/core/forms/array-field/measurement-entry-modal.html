@@ -54,9 +54,9 @@
 	</div>
 
 	<div *ngIf="inputType === 'weight'" class="d-flex flex-row align-items-center flex-wrap mb-3">
-		<label class="measured-with-label" i18n="@@docedit.forms.weight.measuredWith">Gemessen mit</label>
-		<select [(ngModel)]="entry.measurementScale"
-				class="ms-2 form-control measurement-scale-select">
+		<label class="measured-with-label" i18n="@@docedit.forms.weight.measurementDevice">Messgerät:</label>
+		<select [(ngModel)]="entry.measurementDevice"
+				class="ms-2 form-control measurement-device-select">
 			<option value=""></option>
 			<option *ngFor="let value of getValuelistValues()" value="{{value}}">
 				{{getValueLabel(value)}}

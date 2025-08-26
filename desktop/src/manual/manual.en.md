@@ -617,7 +617,7 @@ Specification of one or more dimension measurements. The units of measurement av
 <p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
 
 #### Weight
-Specification of one or more weight measurements. The units of measurement available are "mg", "g" and "kg". Either a single value or a range can be specified. The selection options for the dropdown subfield "Measured with" are taken from the specified valuelist.
+Specification of one or more weight measurements. The units of measurement available are "mg", "g" and "kg". Either a single value or a range can be specified. The selection options for the dropdown subfield "Measurement device" are taken from the specified valuelist.
 
 <p align="center"><img src="images/en/configuration/input_type_weight.png" alt="Input type 'Weight'"/></p>
 

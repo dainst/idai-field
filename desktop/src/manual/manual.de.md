@@ -631,7 +631,7 @@ Angabe einer oder mehrerer Längenmessungen. Zur Auswahl stehen die Maßeinheite
 <p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Längenangabe'"/></p>
 
 #### Gewichtsangabe
-Angabe einer oder mehrerer Gewichtsmessungen. Zur Auswahl stehen die Maßeinheiten "mg", "g" und "kg". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen mit" entnommen.
+Angabe einer oder mehrerer Gewichtsmessungen. Zur Auswahl stehen die Maßeinheiten "mg", "g" und "kg". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Messgerät" entnommen.
 
 <p align="center"><img src="images/de/configuration/input_type_weight.png" alt="Eingabetyp 'Gewichtsangabe'"/></p>
 

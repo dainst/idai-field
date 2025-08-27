@@ -11,7 +11,7 @@ interface RequestParameters {
     format: ImporterFormat;
     operationIdentifier: string;
     categoryName: string;
-    mergeMode: boolean;
+    merge: boolean;
     permitDeletions: boolean;
     ignoreUnconfiguredFields: boolean;
     separator: string;
@@ -26,13 +26,13 @@ export async function importData(request: any, response: any, projectConfigurati
                                  settings: Settings, messagesDictionary: MD) {
 
     try {
-        const { operationIdentifier, categoryName, mergeMode, permitDeletions, ignoreUnconfiguredFields,
+        const { operationIdentifier, categoryName, merge, permitDeletions, ignoreUnconfiguredFields,
             separator, format } = getRequestParameters(request);
 
         const category: CategoryForm = projectConfiguration.getCategory(categoryName);
         if (!category) throw 'Unconfigured category: ' + categoryName;
 
-        const options: ImporterOptions = await getImporterOptions(format, mergeMode, permitDeletions,
+        const options: ImporterOptions = await getImporterOptions(format, merge, permitDeletions,
             operationIdentifier, ignoreUnconfiguredFields, category, separator, datastore);
         const documents: Array<Document> = await Importer.doParse(options, request.body);
         const report: ImporterReport = await performImport(projectConfiguration, datastore, relationsManager,
@@ -60,13 +60,13 @@ function getRequestParameters(request: any): RequestParameters {
 
     const operationIdentifier: string = request.query.operation;
     const categoryName: string = request.query.category ?? 'Project';
-    const mergeMode: boolean = request.query.mergeMode === 'true';
+    const merge: boolean = request.query.mergeMode === 'true';
     const permitDeletions: boolean = request.query.permitDeletions === 'true';
     const ignoreUnconfiguredFields: boolean = request.query.ignoreUnconfiguredFields === 'true';
     const separator: string = request.query.separator ?? ',';
     const format: ImporterFormat = getFormat(request);
 
-    return { operationIdentifier, categoryName, mergeMode, permitDeletions, ignoreUnconfiguredFields,
+    return { operationIdentifier, categoryName, merge, permitDeletions, ignoreUnconfiguredFields,
         separator, format };
 }
 

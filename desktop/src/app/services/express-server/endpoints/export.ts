@@ -8,6 +8,7 @@ import { getErrorMessage } from './util/get-error-message';
 
 interface RequestParameters {
     format: string;
+    schemaOnly: boolean;
     categoryName: string;
     context: string;
     separator: string;
@@ -23,7 +24,7 @@ export async function exportData(request: any, response: any, projectConfigurati
                                  datastore: Datastore, messagesDictionary: MD) {
     
     try {
-        const { format, categoryName, context, separator, combineHierarchicalRelations,
+        const { format, schemaOnly, categoryName, context, separator, combineHierarchicalRelations,
             formatted } = await getRequestParameters(request, datastore);
 
         if (!['geojson', 'csv'].includes(format)) throw 'Unsupported format: ' + format;
@@ -32,8 +33,8 @@ export async function exportData(request: any, response: any, projectConfigurati
         if (!category) throw 'Unconfigured category: ' + categoryName;
             
         if (format === 'csv') {
-            const result: ExportResult = await performCsvExport(projectConfiguration, datastore, context, category,
-                separator, combineHierarchicalRelations
+            const result: ExportResult = await performCsvExport(projectConfiguration, datastore, context, schemaOnly,
+                category, separator, combineHierarchicalRelations
             );
             
             response.header('Content-Type', 'text/csv')
@@ -55,13 +56,14 @@ export async function exportData(request: any, response: any, projectConfigurati
 async function getRequestParameters(request: any, datastore: Datastore): Promise<RequestParameters> {
 
     const format: string = request.params.format;
+    const schemaOnly: boolean = request.query.schemaOnly === 'true';
     const categoryName: string = request.query.category ?? 'Project';
     const separator: string = request.query.separator ?? ',';
     const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
     const formatted: boolean = request.query.formatted !== 'false';
     const context: string = await getContext(request, datastore);
 
-    return { format, categoryName, separator, combineHierarchicalRelations, formatted, context };
+    return { format, schemaOnly, categoryName, separator, combineHierarchicalRelations, formatted, context };
 }
 
 
@@ -84,13 +86,13 @@ async function getContext(request: any, datastore: Datastore): Promise<string> {
 
 
 async function performCsvExport(projectConfiguration: ProjectConfiguration, datastore: Datastore, context: string,
-                                category: CategoryForm, separator: string,
+                                schemaOnly: boolean, category: CategoryForm, separator: string,
                                 combineHierarchicalRelations: boolean): Promise<ExportResult> {
 
     return ExportRunner.performExport(
         (query: Query) => datastore.find(query),
         (async resourceId => (await datastore.get(resourceId)).resource.identifier),
-        context,
+        schemaOnly ? undefined : context,
         category,
         projectConfiguration
             .getRelationsForDomainCategory(category.name)

@@ -113,6 +113,10 @@
     },
     "phase": {
       "label": "Phase"
+    },
+    "weight": {
+      "label": "Weight",
+      "description": "Weight specification"
     }
   },
   "categories": {

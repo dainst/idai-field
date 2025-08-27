@@ -781,21 +781,6 @@ Use the menu option "Project configuration" ➝ "Export configuration..." to sav
 The file can then be imported again via the menu option "Project configuration" ➝ "Import configuration..." in order to transfer the configuration to another project or restore the saved configuration state in the same project.
 
 
-## JSON export API
-
-The project configuration can be retrieved in JSON format via an API endpoint. While the configuration files that can be created via the menu option "Export configuration..." only contain the project-specific part of the configuration, the API endpoint outputs the complete configuration, including all configuration elements from the Field libraries (standard forms, valuelists, etc.) used in the project.
-
-The endpoint is available via the following URL when the application is open:
-
-http://localhost:3000/configuration/PROJECT
-
-Replace "PROJECT" with the name of the project whose configuration you want to access.
-
-When accessing the API endpoint, the password that is entered as "Your password" in the section "Synchronization" of the menu "Settings" must be entered. The password is transmitted via *Basic Auth*; when the URL is entered in the browser, an input dialog appears. It is not necessary to enter the user name, the corresponding field can remain empty.
-
-Please note that the JSON output of the API endpoint **cannot** be imported via the menu option "Import configuration...". Use the menu option "Export configuration..." to obtain a configuration file suitable for this purpose.
-
-
 <hr>
 
 
@@ -2009,3 +1994,69 @@ The state of a process contradicts the specified date. This is the case, for exa
 
 #### Possible solutions
 * Button *Edit*: Open the resource editor to adjust the state or date of the process.
+
+
+# API
+
+Field Desktop provides a REST API that can be used to access and import data via HTTP. When the application is open, you can use the API via the following URL:
+
+http://localhost:3000
+
+When accessing each of the API endpoints, the password entered as "Your password" in the menu "Settings" under "Synchronization" must be given via *Basic Auth*. It is not necessary to enter a user name.
+
+
+## Endpoints
+
+### GET /info
+
+This API endpoint returns some information about the running instance of Field Desktop in JSON format.
+
+Return:
+* *version (string)*: The version of the running application
+* *projects (string array)*: The identifiers of all projects currently stored on this computer
+* *activeProject (string)*: The identifier of the project currently opened in the application
+* *user (string)*: The name entered in Field Desktop as "User name"
+
+
+### GET /configuration/{project}
+
+This API endpoint can be used to retrieve the project configuration in JSON format. While the configuration files that can be created via the menu "Project configuration" ➝ "Export configuration..." contain only the project-specific part of the configuration, this API endpoint outputs the complete configuration, including all configuration elements used in the project from the Field libraries (default forms, valuelists, etc.).
+
+Please note that the JSON output of the API endpoint **cannot** be imported via the menu "Project configuration" ➝ "Import configuration...". Use the menu option "Project configuration" ➝ "Export configuration..." to obtain a configuration file suitable for this purpose.
+
+Parameters:
+* *project*: The name of the project whose configuration is to be retrieved
+
+
+### POST /import/{format}
+
+This API endpoint can be used to import data into the project currently opened in the application. The functionality corresponds to that of the import tool that can be accessed via the menu "Tools" ➝ "Import". Detailed explanations of the options and formats can be found in the chapter "Import and Export".
+
+The data to be imported must be included in the request body.
+
+Parameters:
+* *format*: The format of the data to be imported. Supported formats: *csv*, *geojson*, *jsonl*
+
+Query parameters:
+* *merge (boolean)*: Updates existing resources instead of creating new ones. Corresponds to the option "Update existing resources" in the user interface. (Default value: false)
+* *permitDeletions (boolean)*: Allows fields to be removed during import. Corresponds to the checkbox "Permit deletions" in the user interface. (Default value: false)
+* *ignoreUnconfiguredFields (boolean)*: Does not abort the import if unconfigured fields are found. Corresponds to the checkbox "Ignore unconfigured fields" in the user interface. (Default value: false)
+* *categoryName (string)*: The name of the category to which the data to be imported belongs. Only required for CSV import. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
+* *operationIdentifier (string)*: The identifier of an operation to which the imported resources are to be assigned. Corresponds to the dropdown field "Assign data to an operation" in the user interface. (Default value: not set)
+* *separator (string)*: The separator used in the CSV data. Only required for CSV import. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
+
+
+### GET /export/{format}
+
+This API endpoint can be used to export data from the project currently opened in the application. The functionality corresponds to that of the export tool that can be accessed via the menu "Tools" ➝ "Export". Detailed explanations of the options and formats can be found in the chapter "Import and Export".
+
+Parameters:
+* *format*: The format in which the data is to be exported. Supported formats: *csv*, *geojson*
+
+Query parameters:
+* *schemaOnly (boolean)*: Outputs only the header of the CSV table. Only available for CSV export. (Default value: false)
+* *context (string)*: Specifies the context from which resources are to be exported. Possible values are "project" for the entire project or the identifier of an operation. Corresponds to the dropdown field "Context" in the user interface. (Default value: "project")
+* *categoryName (string)*: The name of the category whose data is to be exported. Only required for CSV export. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
+* *separator (string)*: The separator to be used in the exported CSV data. Only required for CSV export. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
+* *combineHierarchicalRelations (boolean)*: Combines hierarchical relations into the simplified relation "isChildOf". Only available for CSV export. Corresponds to the checkbox "Combine hierarchical relations" in the user interface. (Default value: true)
+* *formatted (boolean)*: Sets indentations for formatted output of the exported data. Only available for GeoJSON export. (Default value: true)

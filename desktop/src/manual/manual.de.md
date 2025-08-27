@@ -794,21 +794,6 @@ Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren.
 Über die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." kann die Datei anschließend wieder importiert werden, um die Konfiguration in ein anderes Projekt zu übernehmen oder den gespeicherten Stand der Konfiguration im gleichen Projekt wiederherzustellen.
 
 
-## JSON-Export-API
-
-Über einen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Während die Konfigurationsdateien, die über die Menüoption "Konfiguration exportieren..." erstellt werden können, ausschließlich den projektspezifischen Teil der Konfiguration enthalten, wird über den API-Endpunkt die komplette Konfiguration inklusive aller im Projekt verwendeten Konfigurationselemente aus den Field-Bibliotheken (Standardformulare, Wertelisten usw.) ausgegeben.
-
-Der Endpunkt ist bei geöffneter Anwendung über die folgende URL verfügbar:
-
-http://localhost:3000/configuration/PROJECT
-
-Ersetzen Sie "PROJECT" mit dem Namen des Projekts, auf dessen Konfiguration Sie zugreifen möchten.
-
-Beim Zugriff auf den API-Endpunkt muss dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe des Passworts erfoglt per *Basic Auth*, beim Aufruf im Browser erscheint dazu ein Eingabefenster. Die Eingabe des Usernamens ist nicht erforderlich, das entsprechende Feld kann leer bleiben.
-
-Bitte beachten Sie, dass die JSON-Ausgabe des API-Endpunkts **nicht** über die Menüoption "Konfiguration importieren..." eingelesen werden kann. Verwenden Sie die Menüoption "Konfiguration exportieren...", um eine für diesen Zweck geeignete Konfigurationsdatei zu erhalten.
-
-
 <hr>
 
 
@@ -2021,4 +2006,69 @@ Der Status eines Prozesses widerspricht dem angegebenen Datum. Dies ist beispiel
 
 #### Mögliche Lösungen
 * Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Status oder das Datum des Prozesses anzupassen.
+
+
+# API
+
+Field Desktop stellt eine REST-API bereit, über die Daten per HTTP abgefragt und in die Anwendung eingespielt werden können. Bei geöffneter Anwendung erreichen Sie die API über die folgende URL:
+
+http://localhost:3000
+
+Beim Zugriff auf jeden der API-Endpunkte muss per *Basic Auth* dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe eines Usernamens ist nicht erforderlich.
+
+## Endpunkte
+
+### GET /info
+
+Dieser API-Endpoint liefert einige Informationen zur laufenden Instanz von Field Desktop im JSON-Format zurück.
+
+Rückgabe:
+* *version (String)*: Die Programmversion der laufenden Anwendung
+* *projects (String-Array)*: Die Kennungen aller Projekte, die auf diesem Rechner derzeit gespeichert sind
+* *activeProject (String)*: Die Kennung des derzeit in der Anwendung geöffneten Projekts
+* *user (String)*: Der Name, der in Field Desktop als "Name der Benutzerin/des Benutzers" eingetragen wurde
+
+
+### GET /configuration/{project}
+
+Über diesen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Während die Konfigurationsdateien, die über das Menü "Projektkonfiguration" ➝ "Konfiguration exportieren..." erstellt werden können, ausschließlich den projektspezifischen Teil der Konfiguration enthalten, wird über den API-Endpunkt die komplette Konfiguration inklusive aller im Projekt verwendeten Konfigurationselemente aus den Field-Bibliotheken (Standardformulare, Wertelisten usw.) ausgegeben.
+
+Bitte beachten Sie, dass die JSON-Ausgabe des API-Endpunkts **nicht** über das Menü "Projektkonfiguration" ➝ "Konfiguration importieren..." eingelesen werden kann. Verwenden Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren...", um eine für diesen Zweck geeignete Konfigurationsdatei zu erhalten.
+
+Parameter:
+* *project*: Der Name des Projekts, dessen Konfiguration abgerufen werden soll
+
+
+### POST /import/{format}
+
+Über diesen API-Endpunkt können Daten in das aktuell in der Anwendung geöffnete Projekt importiert werden. Die Funktionalität entspricht dabei derjenigen des Import-Tools, das über das Menü "Werkzeuge" ➝ "Import" erreicht werden kann. Detaillierte Erklärungen zu den Optionen und Formaten finden Sie im Kapitel "Import und Export".
+
+Die zu importierenden Daten müssen im Request-Body mitgeliefert werden.
+
+Parameter:
+* *format*: Das Format der zu importierenden Daten. Unterstützte Formate: *csv*, *geojson*, *jsonl*
+
+Query-Parameter:
+* *merge (Boolean)*: Ergänzt bestehende Ressourcen statt neue Ressourcen anzulegen. Entspricht der Option "Vorhandene Ressourcen ergänzen" in der Benutzeroberfläche. (Standardwert: false)
+* *permitDeletions (Boolean)*: Erlaubt es, Felder beim Import zu entfernen. Entspricht der Checkbox "Löschen erlauben" in der Benutzeroberfläche. (Standardwert: false)
+* *ignoreUnconfiguredFields (Boolean)*: Bricht den Import nicht ab, wenn unkonfigurierte Felder gefunden werden. Entspricht der Checkbox "Nicht konfigurierte Felder ignorieren" in der Benutzeroberfläche. (Standardwert: false)
+* *categoryName (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entpricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *operationIdentifier (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
+* *separator (String)*: Das Trennzeichen, das in den CSV-Daten verwendet wird. Nur erforderlich beim CSV-Import. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+
+
+### GET /export/{format}
+
+Über diesen API-Endpunkt können Daten aus dem aktuell in der Anwendung geöffneten Projekt exportiert werden. Die Funktionalität entspricht dabei derjenigen des Export-Tools, das über das Menü "Werkzeuge" ➝ "Export" erreicht werden kann. Detaillierte Erklärungen zu den Optionen und Formaten finden Sie im Kapitel "Import und Export".
+
+Parameter:
+* *format*: Das Format, in das die Daten exportiert werden sollen. Unterstützte Formate: *csv*, *geojson*
+
+Query-Parameter:
+* *schemaOnly (Boolean)*: Gibt ausschließlich die Kopfzeile der CSV-Tabelle aus. Nur verfügbar beim CSV-Export. (Standardwert: false)
+* *context (String)*: Gibt den Kontext an, aus dem Ressourcen exportiert werden sollen. Mögliche Werte sind "project" für das gesamte Projekt oder der Bezeichner einer Maßnahme. Entspricht dem Auswahlfeld "Kontext" in der Benutzeroberfläche. (Standardwert: "project")
+* *categoryName (String)*: Der Name der Kategorie, deren Daten exportiert werden sollen. Nur erforderlich beim CSV-Export. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *separator (String)*: Das Trennzeichen, das in den exportierten CSV-Daten verwendet werden soll. Nur erforderlich beim CSV-Export. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+* *combineHierarchicalRelations (Boolean)*: Fasst hierarchische Relationen zur vereinfachten Relation "isChildOf" zusammen. Nur verfügbar beim CSV-Export. Entspricht der Checkbox "Hierarchische Relationen zusammenfassen" in der Benutzeroberfläche. (Standardwert: true)
+* *formatted (Boolean)*: Setzt Einrückungen zur formatierten Ausgabe der exportierten Daten. Nur verfügbar beim GeoJSON-Export. (Standardwert: true)
 

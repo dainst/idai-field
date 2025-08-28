@@ -73,6 +73,7 @@ erreichbar)
 Ressource unterzuordnen
 * *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
 die ausschließlich mit den zu löschenden Ressourcen verknüpft sind)
+* *Workflow dokumentieren*: Zeigt die mit den ausgewählten Ressourcen verknüpften Prozesse an und ermöglicht es, neue Prozesse anzulegen (nur verfügbar für Kategorien, die als Zielkategorie der Relation "Durchgeführt an" einer Prozess-Kategorie konfiguriert wurden)
 * *Aufbewahrungsort scannen*: Setzt einen neuen Aufbewahrungsort für die Ressource, indem der QR-Code des Aufbewahrungsortes per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorien "Fund", "Fundkollektion" und "Probe" sowie der entsprechenden Unterkategorien)
 
 Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit. Bitte beachten Sie,
@@ -131,6 +132,21 @@ Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die e
 <p align="center"><img src="images/de/images/delete_button.png" alt="Button 'Löschen'"/></p>
 
 Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis des Projekts gelöscht werden (bei einer bestehenden Synchronisationsverbindung auch auf anderen Rechnern). Verknüpfungen mit Ressourcen gehen beim Löschen verloren.
+
+
+### Originalbilder herunterladen
+
+Sollte die Originaldatei eines Bildes nicht auf dem Rechner vorhanden sein, können Sie sie auch einzeln herunterladen, ohne das Herunterladen von Originalbildern für das gesamte Projekt zu aktivieren. Selektieren Sie die gewünschten Bilder dazu in der Bilderverwaltung (oder rufen Sie sie aus einem anderen Teil der Anwendung heraus auf) und klicken Sie den Button "Originalbilder herunterladen". Die Bilddateien werden nun geladen.
+
+Bitte beachten Sie, dass diese Funktion nur dann zur Verfügung steht, wenn über das Menü "Projekt" ➝ "Synchronisieren..." ein gültiges Synchronisationsziel für das Projekt eingetragen wurde (siehe Kapitel *Synchronisation*).
+
+
+### Originalbilder exportieren
+
+Um die Original-Bilddateien aus Field Desktop zu exportieren, selektieren Sie die Bilder zunächst in der Bilderverwaltung (oder rufen Sie sie aus einem anderen Teil der Anwendung heraus auf) und klicken Sie den Button "Exportieren". Es erscheint ein Fenster, in dem Sie das Verzeichnis auswählen können, in das die Bilddateien exportiert werden sollen. Sie haben außerdem die Wahl zwischen zwei verschiedenen Optionen zur Benennung der Dateien:
+
+* *Bezeichner*: Die Dateien erhalten den Bezeichner als Dateinamen, den die entsprechenden Bilder derzeit im Projekt haben.
+* *Ursprünglicher Dateiname*: Die Dateien werden unter denjenigen Namen exportiert, unter denen sie ursprünglich in das Projekt importiert wurden.
 
 
 ## Bilder mit Ressourcen verknüpfen
@@ -619,7 +635,7 @@ Auswahl eines oder mehrerer Werte aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_checkboxes.png" alt="Eingabetyp 'Checkboxen'"/></p>
 
 #### Datum
-Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden.
+Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden. Optional kann auch eine Uhrzeit angegeben werden. Zu den weiteren Konfigurationsmöglichkeiten siehe den Abschnitt *Konfiguration von Datumsfeldern*.
 <p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
 
 #### Datierungsangabe
@@ -658,6 +674,11 @@ Verweis auf eine oder mehrere andere Ressourcen, die einer der konfigurierten Zi
 Felder können versteckt werden, indem die Einstellung *Feld anzeigen* im Feldeditor deaktiviert wird. Das Feld wird daraufhin weder in der Ressourcenansicht noch im Ressourceneditor angezeigt. Ob versteckte Felder im Konfigurationseditor angezeigt werden, hängt von der Einstellung "Versteckte Felder anzeigen" im Menü "Projektkonfiguration" ab. Bereits eingetragene Daten bleiben auch nach dem Verstecken weiterhin erhalten und werden beim erneuten Aktivieren der Option *Feld anzeigen* wieder eingeblendet. Einige Felder, die für die Funktionalität der Anwendung wesentlich sind, können nicht versteckt werden (etwa der Bezeichner); in diesen Fällen wird die Option nicht angezeigt.
 
 
+### Pflichtfelder
+
+Ein Feld kann als Pflichtfeld konfiguriert werden, indem die Option *Pflichtfeld* im Feldeditor aktiviert wird. Pflichtfelder müssen ausgefüllt werden, bevor die entsprechende Ressource gespeichert werden kann. Sind beim Aktivieren der Option bereits Ressourcen der Kategorie vorhanden, wird jeweils eine Warnung angezeigt, die auf das auszufüllende Pflichtfeld hinweist.
+
+
 ### Eingabe in mehreren Sprachen erlauben
 
 Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede der konfigurierten Projektsprachen ein eigener Text in das Feld eingegeben werden. Die Einstellung kann nur für Felder der Eingabetypen "Einzeiliger Text", "Einzeiliger Text mit Mehrfachauswahl" und "Mehrzeiliger Text" ausgewählt werden und ist standardmäßig aktiviert.
@@ -668,11 +689,43 @@ Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede
 Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für ein Feld eine feldspezifische Suche im erweiterten Suchmodus durchgeführt werden kann (siehe Abschnitt *Erweiterter Suchmodus* im Kapitel *Suche*). Für Felder der Kategorie "Projekt" sowie für Felder einiger Eingabetypen kann diese Einstellung nicht aktiviert werden; in diesen Fällen ist sie ausgegraut.
 
 
+### Anzeigebedingungen
+
+Über die Einstellung "Bedingung für Anzeige des Feldes" kann die Anzeige des Feldes an ein Bedingung geknüpft werden. Ist eine Bedingung gesetzt, steht das Feld bei der Dateneingabe nur dann zur Verfügung, wenn bei einem anderen Feld der gleichen Ressource ein bestimmter Wert (oder einer von mehreren Werten) gesetzt ist.
+
+Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Feldes" zunächst ein anderes Feld der gleichen Kategorie aus. Zur Auswahl stehen dabei Felder der Eingabetypen "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" und "Checkboxen". Die möglichen Werte des gewählten Feldes werden nun angezeigt und können selektiert werden. Das aktuelle Feld wird bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Feld mindestens einer der selektierten Werte gesetzt ist.
+
+Bitte beachten Sie, dass keine Anzeigebedingung für ein Feld gesetzt werden kann, solange es als Pflichtfeld konfiguriert ist.
+
+
 ### Werteliste wechseln
 
 Die aktuell ausgewählte Werteliste kann per Klick auf den Button "Werteliste wechseln" durch eine andere Werteliste ausgetauscht werden. Dabei kann entweder eine bestehende Werteliste ausgewählt oder eine neue Liste angelegt werden (siehe Abschnitt *Wertelisten*).
 
 Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden; darüber hinaus wird eine entsprechende Warnung für die Ressource angezeigt.
+
+
+### Konfiguration von Datumsfeldern
+
+Ist der Eingabetyp "Datum" gewählt, erscheinen zwei zusätzliche Auswahlfelder, die eine weitere Anpassung des Datumsfeldes erlauben.
+
+
+#### Angabe der Uhrzeit
+
+Legen Sie hier fest, ob die Angabe einer Uhrzeit im Datumsfeld erlaubt ist oder nicht.
+
+* *Optional*: Bei der Eingabe kann eine Uhrzeit eingetragen werden, es kann jedoch auch lediglich ein Datum gesetzt werden.
+* *Verpflichtend*: Das Feld kann nur ausgefüllt werden, wenn zusätzlich zum Datum eine Uhrzeit eingetragen wird.
+* *Nicht erlaubt*: Die Eingabe einer Uhrzeit ist nicht möglich. Es kann lediglich ein Datum gesetzt werden.
+
+
+#### Eingabemodus
+
+Legen Sie hier fest, ob in das Feld ein Einzeldatum oder ein Datumsbereich eingetragen werden soll. Ein Datumsbereich besteht aus einem Start- und einem Enddatum.
+
+* *Wählbar*: Bei der Eingabe kann sowohl ein Einzeldatum als auch ein Datumsbereich eingetragen werden.
+* *Einzeldatum*: Es kann ausschließlich ein Einzeldatum eingetragen werden.
+* *Datumsbereich*: Es kann ausschließlich ein Datumsbereich eingetragen werden.
 
 
 ### Unterfelder

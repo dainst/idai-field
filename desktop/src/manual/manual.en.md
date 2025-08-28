@@ -69,6 +69,7 @@ providing the following options:
 * *Move*: Allows removing resources from their current context and assigning them to another parent resource
 * *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
 exclusively linked to the resources you want to delete)
+* *Document workflow*: Displays the processes linked to the selected resources and allows creating new processes (only available for categories that have been configured as the target category of the relation "Carried out on" of a process category).
 * *Scan storage place*: Sets a new storage place for the resource by scanning the QR code of the storage place via camera scan (only available for resources of the categories "Find", "Find collection" and "Sample" as well as the respective subcategories)
 
 Furthermore, the context menu contains options for creating and editing geometries. Please note that when
@@ -126,6 +127,21 @@ To remove imported images from the project, select the corresponding images in t
 <p align="center"><img src="images/en/images/delete_button.png" alt="Button 'Delete'"/></p>
 
 Please note that this will also delete the corresponding files in the project's images directory (and on other computers if a synchronization connection is established). Links to resources will be lost when deleting an image.
+
+
+### Download original images
+
+If the original file of an image is not available on your computer, you can also download it individually without activating the download of original images for the entire project. To do this, select the desired images in the image management (or call them up from another part of the application) and click the button "Download original images". The image files will now be loaded.
+
+Please note that this function is only available if a valid synchronization target for the project has been entered via the menu "Project" ➝ "Synchronize..." (see chapter *Synchronization*).
+
+
+### Export original images
+
+To export the original image files from Field Desktop, first select the images in the image management (or call them up from another part of the application) and click the button "Export". A window will appear in which you can select the directory to which the image files are to be exported. You also can choose between two different options for naming the files:
+
+* *Identifier*: The identifier that the corresponding images currently have in the project is used as a file name for the exported image files.
+* *Original file name*: The files are exported under the names under which they were originally imported into the project.
 
 
 ## Link images to resources
@@ -605,7 +621,7 @@ Selection of one or more values from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
 
 #### Date
-Selection of a date from a calendar. The input field can also be used to enter only month or year information.
+Selection of a date from a calendar. The input field can also be used to enter only month or year information. Optionally, you can specify a time as well. For further configuration options, see the section *Configuration of date fields*.
 <p align="center"><img src="images/en/configuration/input_type_date.png" alt="Input type 'Date'"/></p>
 
 #### Dating
@@ -645,6 +661,11 @@ Reference to one or more other resources that belong to one of the configured ta
 Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.
 
 
+### Mandatory fields
+
+A field can be configured as mandatory by activating the option *Mandatory field* in the field editor. Mandatory fields must be filled in before the corresponding resource can be saved. If there are already existing resources of the category when the option is activated, a warning is displayed making the user aware of the mandatory field that must be filled in.
+
+
 ### Allow input in multiple languages
 
 If the option *Allow input in multiple languages* is enabled, a separate text can be entered in the field for each of the configured project languages. The setting is only available for fields of the input types "Single line text", "Single line text with multiple selection" and "Multiline text" and is activated by default.
@@ -655,11 +676,43 @@ If the option *Allow input in multiple languages* is enabled, a separate text ca
 The setting *Allow field specific search* in the field editor determines whether a field specific search can be performed for a field in extended search mode (see the *Extended search mode* section in the *Search* chapter). For fields of the category "Project" as well as for fields of some input types this setting cannot be activated; in these cases it is grayed out.
 
 
+### Display conditions
+
+The setting "Condition for display of field" can be used to define a condition for displaying the field. If a condition is set, the field is only available during data entry if a specific value (or one of several values) is set in another field of the same resource.
+
+To set a condition, first select another field from the same category in the dropdown field "Condition for displaying the field". You can choose from fields of the input types "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes/No" and "Checkboxes". The possible values for the chosen field are now displayed and can be selected. The current field is only displayed during data entry if at least one of the selected values is set in the field used as the condition.
+
+Please note that no display condition can be set for a field as long as it is configured as a mandatory field.
+
+
 ### Replace valuelist
 
 The currently selected valuelist can be replaced by another one by clicking the "Replace valuelist" button. Either an existing valuelist can be selected or a new list can be created (see section *Valuelists*).
 
 If data has already been entered for the field, it will continue to be displayed even if the values entered are not included in the new valuelist. In this case, the corresponding values are marked as incompatible in the resource editor and can be deleted there.
+
+
+### Configuration of date fields
+
+If the input type "Date" is selected, two additional selection fields appear, allowing further customization of the date field.
+
+
+#### Time specification
+
+Here you can specify whether or not it is permitted to enter a time in the date field.
+
+* *Optional*: A time can be entered, but it's also possibly to enter only a date.
+* *Mandatory*: The field can only be filled in if a time is entered in addition to the date.
+* *Not allowed*: It is not possible to enter a time. Only a date can be set.
+
+
+#### Input mode
+
+Here you can specify whether a single date or a date range should be entered in the field. A date range consists of a start and end date.
+
+* *Arbitrary*: Both a single date and a date range can be entered.
+* *Single date*: Only a single date can be entered.
+* *Date range*: Only a date range can be entered.
 
 
 ### Subfields

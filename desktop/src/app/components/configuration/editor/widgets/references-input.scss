@@ -1,19 +1,22 @@
 references-input {
   .reference-input-container {
-    width: calc(100% - 214px);
+    width: calc(100% - 240px);
 
     .reference-input {
       border-right: none;
     }
 
-    input,
-    select {
+    input {
       position: relative;
 
       &:focus {
         z-index: 1000;
       }
     }
+  }
+
+  select {
+    width: 200px;
   }
 
   .btn-danger {

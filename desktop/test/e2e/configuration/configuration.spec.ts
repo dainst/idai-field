@@ -805,7 +805,7 @@ test.describe('configuration', () => {
         await DoceditPage.clickCheckbox('featureForm', 0);
         await waitForExist(await DoceditPage.getField('comparison'));
 
-        await DoceditPage.clickCloseEdit('cancel');
+        await DoceditPage.clickCloseEdit('discard');
     });
 
 

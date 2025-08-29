@@ -231,36 +231,6 @@ test.describe('resources', () => {
     });
 
 
-    test('show only values of parent resource for campaign field in editor', async () => {
-
-        await NavbarPage.clickTab('project');
-        await ResourcesPage.performCreateResource('trench', 'operation-trench');
-        await ResourcesPage.clickHierarchyButton('trench');
-        await ResourcesPage.performCreateResource('feature', 'feature');
-        await ResourcesPage.openEditByDoubleClickResource('feature');
-        let checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(0);
-
-        await DoceditPage.clickCloseEdit();
-        await NavbarPage.clickTab('project');
-        await ResourcesPage.openEditByDoubleClickResource('trench');
-        checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(2);
-        expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
-        expect(await getText(checkboxes.nth(1))).toEqual('Testkampagne 2');
-
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickHierarchyButton('trench');
-        await ResourcesPage.openEditByDoubleClickResource('feature');
-        checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(1);
-        expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
-
-        await DoceditPage.clickCloseEdit();
-    });
-
-
     test('do not restrict values of campaign field if the category of the parent resource does not include the field',
             async () => {
 

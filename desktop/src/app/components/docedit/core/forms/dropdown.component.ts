@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Datastore, Labels, Field, Valuelist, ValuelistUtil, Hierarchy, Resource,
-    ProjectConfiguration } from 'idai-field-core';
+import { Datastore, Labels, Field, Valuelist, ValuelistUtil, Resource } from 'idai-field-core';
 
 
 @Component({
@@ -25,8 +24,7 @@ export class DropdownComponent implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private labels: Labels,
-                private projectConfiguration: ProjectConfiguration) {}
+                private labels: Labels) {}
 
 
     public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
@@ -39,8 +37,6 @@ export class DropdownComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
-            this.projectConfiguration,
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource),
             this.fieldContainer[this.field.name]
         );
     }

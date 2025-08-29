@@ -80,7 +80,6 @@ export class BuiltInConfiguration {
         campaign: {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
-            allowOnlyValuesOfParent: true,
             constraintIndexed: true,
             fixedInputType: true
         },

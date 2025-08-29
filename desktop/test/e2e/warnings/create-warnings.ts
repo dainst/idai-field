@@ -230,27 +230,6 @@ export async function createProjectOutlierValuesWarning(resourceIdentifier: stri
 }
 
 
-export async function createParentOutlierValuesWarning(parentResourceIdentifier: string,
-                                                       childResourceIdentifier: string) {
-
-    await ResourcesPage.performCreateResource(parentResourceIdentifier, 'operation-trench');
-    await ResourcesPage.openEditByDoubleClickResource(parentResourceIdentifier);
-    await DoceditPage.clickCheckbox('campaign', 0);
-    await DoceditPage.clickSaveDocument();
-
-    await ResourcesPage.clickHierarchyButton(parentResourceIdentifier);
-    await ResourcesPage.performCreateResource(childResourceIdentifier, 'feature');
-    await ResourcesPage.openEditByDoubleClickResource(childResourceIdentifier);
-    await DoceditPage.clickCheckbox('campaign', 0);
-    await DoceditPage.clickSaveDocument();
-
-    await NavbarPage.clickTab('project');
-    await ResourcesPage.openEditByDoubleClickResource(parentResourceIdentifier);
-    await DoceditPage.clickCheckbox('campaign', 0);
-    await DoceditPage.clickSaveDocument();
-}
-
-
 export async function createDimensionOutlierValuesWarnings(resourceIdentifiers: string[], fieldName: string) {
 
     await navigateTo('configuration');

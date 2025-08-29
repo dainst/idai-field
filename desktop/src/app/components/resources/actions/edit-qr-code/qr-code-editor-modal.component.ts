@@ -234,7 +234,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         const field: Field = CategoryForm.getField(this.category, fieldName);
         const fieldContent: any = this.document.resource[fieldName];
         const fieldsViewField: FieldsViewField = await FieldsViewUtil.makeField(
-            field, fieldContent, this.document.resource, this.projectConfiguration, {}, this.labels, this.datastore
+            field, fieldContent, this.projectConfiguration, {}, this.labels, this.datastore
         );
 
         return FieldsViewUtil.getLabel(

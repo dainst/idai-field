@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { equal, flatten, isArray, isObject, isString, set } from 'tsfun';
-import { CategoryForm, Datastore, Measurement, Document, Field, Hierarchy, Labels, OptionalRange, ProjectConfiguration,
-     Valuelist, ValuelistUtil, BaseField } from 'idai-field-core';
+import { CategoryForm, Datastore, Document, Field, Labels, OptionalRange, ProjectConfiguration, Valuelist,
+    ValuelistUtil, BaseField } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { AffectedDocument } from '../affected-document';
@@ -250,8 +250,6 @@ export class FixOutliersModalComponent {
         return ValuelistUtil.getValuelist(
             valuelistField,
             this.projectDocument,
-            this.projectConfiguration,
-            await Hierarchy.getParentResource(this.datastore.get, document.resource),
             undefined,
             true
         );

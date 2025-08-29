@@ -32,7 +32,6 @@ export interface Field extends BaseField {
     required?: boolean;
     onlySubcategory?: boolean;
     fixedInputType?: true;
-    allowOnlyValuesOfParent?: true;
     maxCharacters?: number;
     source?: Field.SourceType;
     dateConfiguration?: DateConfiguration;  // For input type "date"

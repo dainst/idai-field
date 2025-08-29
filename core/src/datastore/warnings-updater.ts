@@ -280,12 +280,11 @@ export module WarningsUpdater {
             return Field.InputType.VALUELIST_INPUT_TYPES.concat([Field.InputType.COMPOSITE])
                 .includes(field.inputType);
         });
-        const parent: Document = getParentDocument(document, documentCache);
         const outlierWarnings: OutlierWarnings = { fields: {}, values: [] };
 
         for (let field of fields) {
             const outlierValues: Map<string[]>|string[] = getOutlierValues(
-                document.resource, field, documentCache.get('project'), parent?.resource, projectConfiguration
+                document.resource, field, documentCache.get('project')
             );
             if (isArray(outlierValues) && !outlierValues.length) continue;
             if (isObject(outlierValues) && !Object.keys(outlierValues).length) continue;
@@ -312,42 +311,31 @@ export module WarningsUpdater {
             }
         }
 
-        if (updateAll) {
-            if (document.resource.category === 'Project') {
-                await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
-            }
-            await updateOutlierWarningsForChildren(
-                document, datastore, documentCache, indexFacade, projectConfiguration
-            );
+        if (updateAll && document.resource.category === 'Project') {
+            await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
         }
     }
 
 
-    function getOutlierValues(fieldContainer: any, field: BaseField, projectDocument: Document,
-                              parentResource: Resource,
-                              projectConfiguration: ProjectConfiguration): Map<string[]>|string[] {
+    function getOutlierValues(fieldContainer: any, field: BaseField,
+                              projectDocument: Document): Map<string[]>|string[] {
 
         const fieldContent: any = fieldContainer[field.name];
         if (!fieldContent) return [];
 
         if (field.inputType === Field.InputType.COMPOSITE) {
-            return getOutlierValuesForCompositeField(
-                field, fieldContent, projectDocument, parentResource, projectConfiguration
-            );
+            return getOutlierValuesForCompositeField(field, fieldContent, projectDocument);
         }
 
-        const valuelist: Valuelist = ValuelistUtil.getValuelist(
-            field, projectDocument, projectConfiguration, parentResource, [], true
-        );
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, [], true);
         return valuelist
             ? set(ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])
             : [];
     }
 
 
-    function getOutlierValuesForCompositeField(field: Field, fieldContent: any, projectDocument: Document,
-                                               parentResource: Resource,
-                                               projectConfiguration: ProjectConfiguration): Map<string[]> {
+    function getOutlierValuesForCompositeField(field: Field, fieldContent: any,
+                                               projectDocument: Document): Map<string[]> {
 
         if (!isArray(fieldContent)) return {};
 
@@ -359,9 +347,7 @@ export module WarningsUpdater {
             for (let subfield of field.subfields) {
                 if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(subfield.inputType)) continue;
 
-                const subfieldOutliers: string[] = getOutlierValues(
-                    entry, subfield, projectDocument, parentResource, projectConfiguration
-                ) as string[];
+                const subfieldOutliers: string[] = getOutlierValues(entry, subfield, projectDocument) as string[];
                 if (!subfieldOutliers.length) continue;
 
                 if (outliers[subfield.name]) {
@@ -431,24 +417,6 @@ export module WarningsUpdater {
             { categories: categoryNames, sort: { mode: SortMode.None } },
             { includeResourcesWithoutValidParent: true }
         )).documents;
-
-        for (let document of documents) {
-            const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-            if (!category) continue;
-
-            await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache, datastore);
-        }
-    }
-
-
-    async function updateOutlierWarningsForChildren(document: Document, datastore: Datastore,
-                                                    documentCache: DocumentCache, indexFacade: IndexFacade,
-                                                    projectConfiguration: ProjectConfiguration) {
-
-        const documents: Array<Document> = (await datastore.find({
-            constraints: { 'isChildOf:contain': document.resource.id },
-            sort: { mode: SortMode.None }
-        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);

@@ -161,16 +161,11 @@ export module FieldsViewUtil {
     }
 
 
-    export async function makeField(field: Field, fieldContent: any, resource: Resource,
-                                    projectConfiguration: ProjectConfiguration, relationTargets: Map<Array<Document>>,
-                                    labels: Labels, datastore: Datastore): Promise<FieldsViewField> {
+    export async function makeField(field: Field, fieldContent: any, projectConfiguration: ProjectConfiguration,
+                                    relationTargets: Map<Array<Document>>, labels: Labels,
+                                    datastore: Datastore): Promise<FieldsViewField> {
         
-        const valuelist: Valuelist = ValuelistUtil.getValuelist(
-            field,
-            await datastore.get('project'),
-            projectConfiguration,
-            await Hierarchy.getParentResource(datastore.get, resource)
-        );
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, await datastore.get('project'));
 
         switch (field.inputType) {
             case Field.InputType.RELATION:
@@ -334,7 +329,7 @@ async function createFieldsViewGroup(group: Group, resource: Resource, projectCo
                 || field.inputType === Field.InputType.DERIVED_RELATION) {
             fields.push(
                 await FieldsViewUtil.makeField(
-                    field, fieldContent, resource, projectConfiguration, relationTargets, labels, datastore
+                    field, fieldContent, projectConfiguration, relationTargets, labels, datastore
                 )
             );
         }

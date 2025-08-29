@@ -9,7 +9,7 @@ import { FixOutliersModalPage } from './fix-outliers-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 import { expectFieldValuesInGroup, expectResourcesInWarningsModal, expectSectionTitles } from './helpers';
 import { createCompositeOutlierValuesWarnings, createDimensionOutlierValuesWarnings,
-    createDropdownRangeOutlierValuesWarnings, createOutlierValuesWarnings, createParentOutlierValuesWarning,
+    createDropdownRangeOutlierValuesWarnings, createOutlierValuesWarnings,
     createProjectOutlierValuesWarning } from './create-warnings';
 
 const { test, expect } = require('@playwright/test');
@@ -399,76 +399,6 @@ test.describe('warnings/outlier values', () => {
         await DoceditPage.clickSaveDocument();
 
         await waitForNotExist(await NavbarPage.getWarnings());
-    });
-
-
-    test('solve warning for parent outlier values by updating parent document', async () => {
-
-        await waitForNotExist(await NavbarPage.getWarnings());
-        await createParentOutlierValuesWarning('1', '2');
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
-
-        await ResourcesPage.openEditByDoubleClickResource('1');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-
-        await waitForNotExist(await NavbarPage.getWarnings());
-    });
-
-
-    test('solve multiple warnings for parent outlier values via warnings modal', async () => {
-
-        await waitForNotExist(await NavbarPage.getWarnings());
-        
-        await ResourcesPage.performCreateResource('T1', 'operation-trench');
-        await ResourcesPage.openEditByDoubleClickResource('T1');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickCheckbox('campaign', 1);
-        await DoceditPage.clickSaveDocument();
-        await ResourcesPage.performCreateResource('T2', 'operation-trench');
-        await ResourcesPage.openEditByDoubleClickResource('T2');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-
-        await ResourcesPage.clickHierarchyButton('T1');
-        await ResourcesPage.performCreateResource('F1', 'feature');
-        await ResourcesPage.openEditByDoubleClickResource('F1');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-        await ResourcesPage.performCreateResource('F2', 'feature');
-        await ResourcesPage.openEditByDoubleClickResource('F2');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-
-        await NavbarPage.clickTab('project');
-        await ResourcesPage.clickHierarchyButton('T2');
-        await ResourcesPage.performCreateResource('F3', 'feature');
-        await ResourcesPage.openEditByDoubleClickResource('F3');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-
-        await NavbarPage.clickTab('project');
-        await ResourcesPage.openEditByDoubleClickResource('T1');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-        await ResourcesPage.openEditByDoubleClickResource('T2');
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('3');
-
-        await NavbarPage.clickWarningsButton();
-        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('F1');
-        await WarningsModalPage.clickFixOutliersButton(0);
-        await FixOutliersModalPage.clickCheckboxesValue(0);
-        await FixOutliersModalPage.clickMultipleSwitch();
-        await FixOutliersModalPage.clickConfirmReplacementButton();
-
-        await waitForNotExist(await WarningsModalPage.getFixingDataInProgressModal());
-        // The new value 'Testkampagne 2' must not be set for F3 as it is not set in the parent resource of F3
-        expect(await WarningsModalPage.getSelectedResourceIdentifier()).toEqual('F3');
-        await WarningsModalPage.clickCloseButton();
-        expect(await NavbarPage.getNumberOfWarnings()).toBe('1');
     });
 
 

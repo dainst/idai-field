@@ -2,8 +2,8 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { is, remove, clone, Map } from 'tsfun';
-import { Literature, Field, Dating, I18N, Labels, Measurement, ValuelistUtil, Valuelist, Datastore,
-    ProjectConfiguration } from 'idai-field-core';
+import { Literature, Field, Dating, I18N, Labels, Measurement, ValuelistUtil, Valuelist,
+    Datastore } from 'idai-field-core';
 import { UtilTranslations } from '../../../../../util/util-translations';
 import { LiteratureEntryModalComponent } from './literature-entry-modal.component';
 import { MenuContext } from '../../../../../services/menu-context';
@@ -37,7 +37,6 @@ export class ObjectArrayComponent implements OnChanges {
                 private labels: Labels,
                 private decimalPipe: DecimalPipe,
                 private menus: Menus,
-                private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore) {}
 
 
@@ -205,8 +204,7 @@ export class ObjectArrayComponent implements OnChanges {
 
         return ValuelistUtil.getValuelist(
             this.field,
-            await this.datastore.get('project'),
-            this.projectConfiguration
+            await this.datastore.get('project')
         );
     }
 }

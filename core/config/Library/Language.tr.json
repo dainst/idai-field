@@ -113,6 +113,10 @@
     },
     "phase": {
       "label": "Dönem"
+    },
+    "weight": {
+      "label": "Ağırlık",
+      "description": "Ağırlık birimi"
     }
   },
   "categories": {

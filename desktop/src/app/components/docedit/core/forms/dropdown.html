@@ -1,5 +1,7 @@
-<searchable-select [selectedValue]="fieldContainer[field.name]"
+<searchable-select *ngIf="valuelist"
+                   [selectedValue]="fieldContainer[field.name]"
                    [values]="getValues()"
+                   [valuelist]="valuelist"
                    [getLabel]="getLabel"
                    (onValueSelected)="updateValue($event)"></searchable-select>
 

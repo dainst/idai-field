@@ -7,11 +7,24 @@
            [readonly]="disabled"
            [clearable]="clearable && selectedValue !== ''"
            [placeholder]="placeholder"
+           [preventToggleOnRightClick]="true"
+           #valueInfoPopover="ngbPopover"
+           [ngbPopover]="infoPopover"
+           triggers="manual"
+           [popoverTitle]="getLabel(selectedValue)"
+           (contextmenu)="openPopover(valueInfoPopover)"
+           [autoClose]="'outside'"
+           [popoverContext]="{ value: valuelist?.values[selectedValue] }"
            (open)="onOpen()"
            (close)="stopListeningToScrollAndResizeEvents()"
            (change)="emitChanges()"
            (blur)="onBlur.emit()"
            (scrollToEnd)="onScrollToEnd.emit()"
            (search)="onSearchTermChanged.emit($event.term)">
-    <ng-option *ngFor="let value of values" [value]="value">{{getLabel(value)}}</ng-option>
+    <ng-option *ngFor="let valueId of values"
+               [value]="valueId">{{getLabel(valueId)}}</ng-option>
 </ng-select>
+
+<ng-template #infoPopover let-value="value">
+    <value-info [value]="value"></value-info>
+</ng-template>

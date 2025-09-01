@@ -1,13 +1,18 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild, EventEmitter, OnInit,
     Renderer2, OnChanges } from '@angular/core';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { Valuelist } from 'idai-field-core';
 import { ComponentHelpers } from '../component-helpers';
 import { AngularUtility } from '../../angular/angular-utility';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
     selector: 'searchable-select',
     templateUrl: './searchable-select.html',
+    host: {
+        '(window:contextmenu)': 'closePopover($event)'
+    },
     standalone: false
 })
 /**
@@ -18,6 +23,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     @Input() selectedValue: string;
     @Input() values: string[];
     @Input() getLabel: (value: string) => string;
+    @Input() valuelist: Valuelist;
     @Input() placeholder: string;
     @Input() customPanelClass: string;
     @Input() clearable: boolean = true;
@@ -35,6 +41,8 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     public onScrollListener: any;
     public onResizeListener: any;
     public scrollListenerInitialized: boolean = false;
+
+    public valueInfoPopover: NgbPopover;
 
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
@@ -97,6 +105,23 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
         await AngularUtility.refresh();
         this.renderer.addClass(document.querySelector('.ng-dropdown-panel'), this.customPanelClass);
+    }
+
+
+    public async openPopover(popover: NgbPopover) {
+
+        if (!this.valuelist || !this.selectedValue) return;
+
+        await AngularUtility.refresh();
+        this.valueInfoPopover = popover;
+        this.valueInfoPopover.open();
+    }
+
+
+    public closePopover() {
+
+        if (this.valueInfoPopover) this.valueInfoPopover.close();
+        this.valueInfoPopover = undefined;
     }
 
 

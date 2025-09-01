@@ -1,9 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { AngularUtility } from '../../../../angular/angular-utility';
 import { Datastore, Valuelist, ValuelistUtil, Labels, Resource, Field } from 'idai-field-core';
 
 @Component({
     selector: 'form-field-checkboxes',
     templateUrl: './checkboxes.html',
+    host: {
+        '(window:contextmenu)': 'closePopover()'
+    },
     standalone: false
 })
 
@@ -19,6 +24,8 @@ export class CheckboxesComponent implements OnChanges {
     @Input() field: Field;
 
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
+
+    public valueInfoPopover: NgbPopover;
 
     public valuelist: Valuelist;
 
@@ -55,6 +62,21 @@ export class CheckboxesComponent implements OnChanges {
     public hasEmptyValuelist(): boolean {
 
         return this.valuelist && Object.keys(this.valuelist.values).length === 0
+    }
+
+
+    public async openPopover(popover: NgbPopover) {
+
+        await AngularUtility.refresh();
+        this.valueInfoPopover = popover;
+        this.valueInfoPopover.open();
+    }
+
+
+    public closePopover() {
+
+        if (this.valueInfoPopover) this.valueInfoPopover.close();
+        this.valueInfoPopover = undefined;
     }
 
 

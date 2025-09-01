@@ -1,0 +1,15 @@
+<div class="value-info-container">
+    <div *ngIf="!getDescription(value) && !value.references?.length"
+         class="value-info-none-available"
+         i18n="@@widgets.valueInfo.noInformationAvailable">
+        Keine Informationen verfügbar.
+    </div>
+    <div class="value-info-description">{{getDescription(value)}}</div>
+    <div *ngIf="value.references" class="value-info-references-container">
+        <div class="value-info-references-title">Verweise:</div>
+        <div *ngFor="let reference of value.references" class="value-info-reference">
+            <div class="value-info-reference-predicate">{{reference.predicate}}</div>
+            <a class="value-info-reference-uri" href="{{reference.uri}}" target="_blank">{{reference.uri}}</a>
+        </div>
+    </div>
+</div>

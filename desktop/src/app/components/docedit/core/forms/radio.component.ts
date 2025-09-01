@@ -1,10 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { AngularUtility } from '../../../../angular/angular-utility';
 import { Datastore, Resource, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
 
 
 @Component({
     selector: 'form-field-radio',
     templateUrl: `./radio.html`,
+    host: {
+        '(window:contextmenu)': 'closePopover()'
+    },
     standalone: false
 })
 
@@ -22,6 +27,8 @@ export class RadioComponent implements OnChanges {
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public valuelist: Valuelist;
+
+    public valueInfoPopover: NgbPopover;
 
 
     constructor(private datastore: Datastore,
@@ -60,5 +67,20 @@ export class RadioComponent implements OnChanges {
     public hasEmptyValuelist(): boolean {
 
         return this.valuelist && Object.keys(this.valuelist.values).length === 0
+    }
+
+
+    public async openPopover(popover: NgbPopover) {
+
+        await AngularUtility.refresh();
+        this.valueInfoPopover = popover;
+        this.valueInfoPopover.open();
+    }
+
+
+    public closePopover() {
+
+        if (this.valueInfoPopover) this.valueInfoPopover.close();
+        this.valueInfoPopover = undefined;
     }
 }

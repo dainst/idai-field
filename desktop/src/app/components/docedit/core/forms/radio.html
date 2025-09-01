@@ -1,10 +1,18 @@
-<div *ngFor="let item of getValues()" class="radio form-check form-check-inline">
+<div *ngFor="let valueId of getValues()"
+     class="radio form-check form-check-inline"
+     #valueInfoPopover="ngbPopover"
+     [ngbPopover]="infoPopover"
+     triggers="manual"
+     [popoverTitle]="getLabel(valueId)"
+     (contextmenu)="openPopover(valueInfoPopover)"
+     [autoClose]="'outside'"
+     [popoverContext]="{ value: valuelist.values[valueId] }">
     <label class="form-check-label">
-        <input class="form-check-input" value="{{item}}" type="radio"
+        <input class="form-check-input" value="{{valueId}}" type="radio"
                name="{{field.name}}"
-               (click)="setValue(item)"
-               [checked]="item === fieldContainer[field.name]">
-        {{getLabel(item)}}
+               (click)="setValue(valueId)"
+               [checked]="valueId === fieldContainer[field.name]">
+        {{getLabel(valueId)}}
     </label>
 </div>
 
@@ -21,3 +29,7 @@
 <empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>
 
 <outliers [fieldContainer]="fieldContainer" [field]="field" [valuelist]="valuelist"></outliers>
+
+<ng-template #infoPopover let-value="value">
+    <value-info [value]="value"></value-info>
+</ng-template>

@@ -1,0 +1,34 @@
+value-info {
+  .value-info-container {
+    padding: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+
+    .value-info-none-available {
+      font-style: italic;
+      user-select: none;
+    }
+
+    .value-info-description {
+      user-select: none;
+    }
+
+    .value-info-references-container {
+      margin-top: 15px;
+
+      .value-info-references-title {
+        font-weight: 600;
+        user-select: none;
+      }
+
+      .value-info-reference {
+        margin-top: 7px;
+
+        .value-info-reference-predicate {
+          font-style: italic;
+          user-select: none;
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@
      triggers="manual"
      [popoverTitle]="getLabel(valueId)"
      popoverClass="value-info-popover"
+     container="body"
      (contextmenu)="openPopover(valueInfoPopover)"
      [autoClose]="'outside'"
      [popoverContext]="{ value: valuelist.values[valueId] }">

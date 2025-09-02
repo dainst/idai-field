@@ -221,7 +221,7 @@ export async function getSearchableSelectOption(element, optionValueLabel) {
     await scrollTo(element);
     await click(element);
     
-    return getLocator('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
+    return getLocator('.ng-dropdown-panel .ng-option div:has-text("' + optionValueLabel + '")');
 }
 
 

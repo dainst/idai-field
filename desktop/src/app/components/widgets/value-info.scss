@@ -14,7 +14,9 @@ value-info {
     }
 
     .value-info-references-container {
-      margin-top: 15px;
+      &.with-description {
+        margin-top: 15px;
+      }
 
       .value-info-references-title {
         font-weight: 600;

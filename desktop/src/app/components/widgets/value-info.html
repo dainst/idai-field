@@ -5,7 +5,9 @@
         Keine Informationen verfügbar.
     </div>
     <div class="value-info-description">{{getDescription(value)}}</div>
-    <div *ngIf="value.references" class="value-info-references-container">
+    <div *ngIf="value.references"
+         class="value-info-references-container"
+         [class.with-description]="getDescription(value)">
         <div class="value-info-references-title">Verweise:</div>
         <div *ngFor="let reference of value.references" class="value-info-reference">
             <div class="value-info-reference-predicate">{{reference.predicate}}</div>

@@ -139,8 +139,6 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.valueInfoPopover) this.valueInfoPopover.close();
         this.valueInfoPopover = undefined;
-
-        this.stopListeningToScrollAndResizeEvents();
     }
 
 

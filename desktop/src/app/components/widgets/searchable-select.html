@@ -22,6 +22,7 @@
            (open)="onOpen()"
            (close)="closePopover(); stopListeningToScrollAndResizeEvents();"
            (change)="emitChanges()"
+           (search)="closePopover()"
            (click)="onClick()"
            (contextmenu)="openPopover(valueInfoPopover, selectedValue); $event.preventDefault();"
            (blur)="onBlur.emit()"

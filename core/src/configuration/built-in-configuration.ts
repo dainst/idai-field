@@ -886,6 +886,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isSubjectOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.IDENTIFICATION,
                         fields: ['criterion']
                     }
@@ -904,6 +908,10 @@ export class BuiltInConfiguration {
                         fields: ['identifier', 'category', 'shortDescription']
                     },
                     {
+                        name: Groups.WORKFLOW,
+                        fields: ['isSubjectOf', 'isResultOf']
+                    },
+                    {
                         name: Groups.IDENTIFICATION,
                         fields: ['hasInstance']
                     }
@@ -920,6 +928,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.STEM,
                         fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.WORKFLOW,
+                        fields: ['isSubjectOf', 'isResultOf']
                     },
                     {
                         name: Groups.INVENTORY,

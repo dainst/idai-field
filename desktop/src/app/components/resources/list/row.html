@@ -75,6 +75,7 @@
     <div *ngIf="shortDescriptionValuelist" class="input-field dropdown-input-field">
         <searchable-select [selectedValue]="getSelectedShortDescriptionValue()"
                            [values]="shortDescriptionValues"
+                           [valuelist]="shortDescriptionValuelist"
                            [getLabel]="getValueLabel"
                            [clearable]="!isShortDescriptionMandatory()"
                            customPanelClass="row-select-panel"

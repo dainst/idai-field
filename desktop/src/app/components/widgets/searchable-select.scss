@@ -55,6 +55,15 @@
 
   .ng-option {
     cursor: default !important;
+    user-select: none;
+
+    .option-element {
+      padding: 8px 10px;
+    }
+
+    &:not(.ng-option-disabled) {
+      padding: 0 !important;
+    }
 
     &.ng-option-marked,
     &.ng-option-selected {

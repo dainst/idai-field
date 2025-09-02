@@ -3,7 +3,7 @@
      [class.disabled]="disabled">
     <div *ngIf="!selectedTarget && availableTargets">
         <searchable-select [selectedValue]="selectedTarget?.resource.id"
-                           [values]="getAvailableTargetIds()"
+                           [values]="availableTargetIds"
                            [getLabel]="getTargetLabel"
                            [initiallyOpened]="true"
                            (onValueSelected)="selectTarget($event)"

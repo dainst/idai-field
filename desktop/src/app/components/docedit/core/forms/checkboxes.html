@@ -4,6 +4,7 @@
      [ngbPopover]="infoPopover"
      triggers="manual"
      [popoverTitle]="getLabel(valueId)"
+     popoverClass="value-info-popover"
      (contextmenu)="openPopover(valueInfoPopover)"
      [autoClose]="'outside'"
      [popoverContext]="{ value: valuelist.values[valueId] }">

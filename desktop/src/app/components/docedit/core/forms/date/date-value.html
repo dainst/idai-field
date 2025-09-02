@@ -44,11 +44,11 @@
 
 <div class="timezone-selector">
     <searchable-select *ngIf="isTimeInputVisible()"
-                        [selectedValue]="selectedTimezone"
-                        [values]="getAvailableTimezones()"
-                        [getLabel]="getTimezoneLabel"
-                        [clearable]="false"
-                        (onValueSelected)="selectTimezone($event)"></searchable-select>
+                       [selectedValue]="selectedTimezone"
+                       [values]="availableTimezones"
+                       [getLabel]="getTimezoneLabel"
+                       [clearable]="false"
+                       (onValueSelected)="selectTimezone($event)"></searchable-select>
 </div>
 
 <div *ngIf="!isDatePickerVisible()"

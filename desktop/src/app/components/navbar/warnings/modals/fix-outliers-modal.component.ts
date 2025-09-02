@@ -25,6 +25,7 @@ export class FixOutliersModalComponent {
     public outlierValue: string;
     
     public valuelist: Valuelist;
+    public availableValues: string[];
     public selectedValues: string[];
     public replaceAll: boolean;
 
@@ -38,14 +39,13 @@ export class FixOutliersModalComponent {
                 private projectConfiguration: ProjectConfiguration,
                 private labels: Labels) {}
 
-    
-    public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
 
     public getValueLabel = (value: string) => this.labels.getValueLabel(this.valuelist, value);
     
     public cancel = () => this.activeModal.dismiss('cancel');
 
     public isValid = () => this.selectedValues.length > 0;
+
 
     public async onKeyDown(event: KeyboardEvent) {
 
@@ -59,6 +59,7 @@ export class FixOutliersModalComponent {
         this.valuelist = await this.getValuelist(this.document, this.field);
         this.affectedDocuments = { complete: [], onlyCheckboxFields: [] };
         this.selectedValues = [];
+        this.availableValues = this.getAvailableValues();
 
         const foundDocuments: Array<Document> = (await this.datastore.find({
             constraints: { ['outlierValues:contain']: this.outlierValue }
@@ -253,5 +254,13 @@ export class FixOutliersModalComponent {
             undefined,
             true
         );
+    }
+
+
+    private getAvailableValues() {
+        
+        return this.valuelist
+            ? this.labels.orderKeysByLabels(this.valuelist)
+            : [];
     }
 }

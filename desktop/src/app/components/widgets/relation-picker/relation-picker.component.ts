@@ -27,6 +27,7 @@ export class RelationPickerComponent implements OnChanges {
     @Output() onTargetSelected: EventEmitter<Document|undefined> = new EventEmitter<Document|undefined>();
 
     public availableTargets: Array<Document>;
+    public availableTargetIds: string[];
     public selectedTarget: Document|undefined;
     public inError: boolean = false;
 
@@ -37,9 +38,6 @@ export class RelationPickerComponent implements OnChanges {
     constructor(private datastore: Datastore,
                 private labels: Labels,
                 private projectConfiguration: ProjectConfiguration) {}
-
-    
-    public getAvailableTargetIds = () => this.availableTargets?.map(target => target.resource.id);
 
 
     public async ngOnChanges() {
@@ -114,6 +112,7 @@ export class RelationPickerComponent implements OnChanges {
 
         if (!this.availableTargets) this.availableTargets = [];
         this.availableTargets = this.availableTargets.concat(newTargets);
+        this.availableTargetIds = this.availableTargets.map(target => target.resource.id);
 
         this.offset += SUGGESTIONS_CHUNK_SIZE;
     }
@@ -125,6 +124,7 @@ export class RelationPickerComponent implements OnChanges {
 
         this.selectedTarget = undefined;
         this.availableTargets = await this.fetchAvailableTargets();
+        this.availableTargetIds = this.availableTargets?.map(target => target.resource.id);
     }
 
 

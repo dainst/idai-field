@@ -11,7 +11,7 @@
         </div>
 
         <div class="replacement-values-container">
-            <span *ngFor="let value of getValues()" class="checkbox form-check form-check-inline">
+            <span *ngFor="let value of availableValues" class="checkbox form-check form-check-inline">
                 <label class="form-check-label">
                     <input class="form-check-input" [value]="value" type="checkbox" (click)="toggleCheckboxValue(value)">
                     {{getValueLabel(value)}}
@@ -24,7 +24,8 @@
         </div>
         <div class="replacement-values-container">
             <searchable-select [selectedValue]="selectedValues[0]" 
-                               [values]="getValues()" 
+                               [values]="availableValues"
+                               [valuelist]="valuelist"
                                [getLabel]="getValueLabel"
                                (onValueSelected)="selectedValues = [$event]">
             </searchable-select>

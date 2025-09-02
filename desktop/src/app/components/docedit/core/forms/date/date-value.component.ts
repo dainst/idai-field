@@ -29,6 +29,7 @@ export class DateValueComponent implements OnInit {
 
     public dateStruct: NgbDateStruct;
     public time: TimeSpecification;
+    public availableTimezones: string[];
 
     public editing: boolean = false;
     public selectedTimezone: string;
@@ -56,6 +57,7 @@ export class DateValueComponent implements OnInit {
         this.setSystemTimezone();
         this.updateDateStruct();
         this.updateTime();
+        this.availableTimezones = this.getAvailableTimezones();
     }
 
 
@@ -178,18 +180,18 @@ export class DateValueComponent implements OnInit {
     }
 
 
-    public getAvailableTimezones(): string[] {
-
-        return Intl.supportedValuesOf('timeZone');
-    }
-
-
     public remove() {
 
         this.dateStruct = {} as NgbDateStruct;
         this.time = {};
         this.value = undefined;
         this.onChanged.emit(undefined);
+    }
+
+
+    private getAvailableTimezones(): string[] {
+
+        return Intl.supportedValuesOf('timeZone');
     }
 
 

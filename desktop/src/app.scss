@@ -388,3 +388,8 @@ label {
   height: 38px;
   z-index: 1 !important;
 }
+
+.value-info-popover {
+  max-width: 500px;
+  z-index: 2000;
+}

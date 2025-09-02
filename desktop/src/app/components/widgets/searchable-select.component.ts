@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild, EventEmitter, OnInit,
-    Renderer2, OnChanges } from '@angular/core';
-import { NgSelectComponent } from '@ng-select/ng-select';
+    Renderer2, OnChanges, SimpleChanges } from '@angular/core';
+import { NgOption, NgSelectComponent } from '@ng-select/ng-select';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { Valuelist } from 'idai-field-core';
 import { ComponentHelpers } from '../component-helpers';
 import { AngularUtility } from '../../angular/angular-utility';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -38,11 +38,17 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('selectElement', { static: false }) private selectElement: NgSelectComponent;
 
-    public onScrollListener: any;
+    public options: Array<NgOption> = [];
+
+    public onScrollAndContextMenuListener: any;
     public onResizeListener: any;
     public scrollListenerInitialized: boolean = false;
 
     public valueInfoPopover: NgbPopover;
+    public popoverValue: string;
+
+    public inputFieldClicked: boolean;
+    public inputFieldRightClicked: boolean;
 
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
@@ -58,11 +64,13 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
 
         if (this.values?.length && !this.values.includes(this.selectedValue)) {
             this.selectedValue = '';
         }
+
+        if (changes['values']) this.options = this.buildOptions();
     }
 
 
@@ -89,9 +97,10 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     
     public stopListeningToScrollAndResizeEvents() {
 
-        if (this.onScrollListener) {
-            window.removeEventListener('scroll', this.onScrollListener, true);
-            this.onScrollListener = undefined;
+        if (this.onScrollAndContextMenuListener) {
+            window.removeEventListener('scroll', this.onScrollAndContextMenuListener, true);
+            window.removeEventListener('contextmenu', this.onScrollAndContextMenuListener, true);
+            this.onScrollAndContextMenuListener = undefined;
         }
 
         if (this.onResizeListener) {
@@ -108,13 +117,21 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    public async openPopover(popover: NgbPopover) {
+    public async openPopover(popover: NgbPopover, value: string, optionElement?: HTMLElement) {
 
-        if (!this.valuelist || !this.selectedValue) return;
+        if (!this.valuelist || !value) return;
+
+        this.popoverValue = value;
 
         await AngularUtility.refresh();
+
         this.valueInfoPopover = popover;
+        this.valueInfoPopover.positionTarget = optionElement ?? this.selectElement.element;
         this.valueInfoPopover.open();
+
+        this.inputFieldRightClicked = true;
+
+        this.listenToScrollAndResizeEvents();
     }
 
 
@@ -122,6 +139,27 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.valueInfoPopover) this.valueInfoPopover.close();
         this.valueInfoPopover = undefined;
+
+        this.stopListeningToScrollAndResizeEvents();
+    }
+
+
+    public onClick() {
+
+        // This fixes a bug where the ng-select menu would not open on click after it had been right-clicked once
+        if (this.inputFieldRightClicked && !this.inputFieldClicked) {
+            this.selectElement.open();
+        }
+        
+        this.inputFieldClicked = true;
+    }
+
+
+    private buildOptions(): Array<NgOption> {
+
+        return this.values.map(value => {
+            return { value, label: this.getLabel(value) };
+        });
     }
 
 
@@ -129,24 +167,30 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
         this.scrollListenerInitialized = false;
 
-        this.onScrollListener = this.onScroll.bind(this);
-        window.addEventListener('scroll', this.onScrollListener, true);
+        this.onScrollAndContextMenuListener = this.onScrollAndContextmenu.bind(this);
+        window.addEventListener('scroll', this.onScrollAndContextMenuListener, true);
+        window.addEventListener('contextmenu', this.onScrollAndContextMenuListener, true);
 
         this.onResizeListener = this.onResize.bind(this);
         window.addEventListener('resize', this.onResizeListener, true);
     }
 
 
-    private onScroll(event: MouseEvent) {
+    private onScrollAndContextmenu(event: MouseEvent) {
 
         if (!this.scrollListenerInitialized) {
             this.scrollListenerInitialized = true;
             return;
         }
 
-        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'ng-dropdown-panel')) { 
+        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'ng-dropdown-panel')
+                && !ComponentHelpers.isInside(event.target, target => target.localName === 'value-info')) { 
             this.selectElement.close();
             this.changeDetectorRef.detectChanges();
+        }
+
+        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'value-info')) {
+            this.closePopover();
         }
     }
 
@@ -154,6 +198,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     private onResize() {
 
         this.selectElement.close();
+        this.closePopover();
         this.changeDetectorRef.detectChanges();
     }
 }

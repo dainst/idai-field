@@ -4,7 +4,7 @@
     </label>
 
     <searchable-select [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['value']"
-                       [values]="getValues()"
+                       [values]="values"
                        [valuelist]="valuelist"
                        [getLabel]="getLabel"
                        [closeOnClear]="showEndElements()"
@@ -16,7 +16,7 @@
 
     <searchable-select *ngIf="showEndElements()"
                         [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['endValue']"
-                        [values]="getValues()"
+                        [values]="values"
                         [valuelist]="valuelist"
                         [getLabel]="getLabel"
                         [disabled]="!fieldContainer[field.name]

@@ -22,6 +22,7 @@ export class DropdownRangeComponent {
     @Input() field: any;
 
     public valuelist: Valuelist;
+    public values: string[];
 
     private endActivated: boolean = false;
 
@@ -29,8 +30,6 @@ export class DropdownRangeComponent {
     constructor(private datastore: Datastore,
                 private labels: Labels) {}
 
-
-    public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
 
     public getLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
 
@@ -40,6 +39,7 @@ export class DropdownRangeComponent {
     async ngOnChanges() {
 
         this.valuelist = await this.getValuelist();
+        this.values = this.getValues();
     }
 
 
@@ -92,5 +92,13 @@ export class DropdownRangeComponent {
             await this.datastore.get(PROJECT),
             existingValues
         );
+    }
+
+
+    private getValues(): string[] {
+        
+        return this.valuelist
+            ? this.labels.orderKeysByLabels(this.valuelist)
+            : [];
     }
 }

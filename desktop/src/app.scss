@@ -390,6 +390,11 @@ label {
 }
 
 .value-info-popover {
-  max-width: 500px;
+  max-width: 450px;
   z-index: 2000;
+
+  .popover-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
 }

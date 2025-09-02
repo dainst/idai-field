@@ -1,15 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
-import { AngularUtility } from '../../../../angular/angular-utility';
 import { Datastore, Resource, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { ComponentHelpers } from '../../../component-helpers';
 
 
 @Component({
     selector: 'form-field-radio',
-    templateUrl: `./radio.html`,
-    host: {
-        '(window:contextmenu)': 'closePopover()'
-    },
+    templateUrl: './radio.html',
     standalone: false
 })
 
@@ -27,8 +25,9 @@ export class RadioComponent implements OnChanges {
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public valuelist: Valuelist;
-
     public valueInfoPopover: NgbPopover;
+
+    private listener: any;
 
 
     constructor(private datastore: Datastore,
@@ -75,6 +74,7 @@ export class RadioComponent implements OnChanges {
         await AngularUtility.refresh();
         this.valueInfoPopover = popover;
         this.valueInfoPopover.open();
+        this.initializeListeners();
     }
 
 
@@ -82,5 +82,36 @@ export class RadioComponent implements OnChanges {
 
         if (this.valueInfoPopover) this.valueInfoPopover.close();
         this.valueInfoPopover = undefined;
+        this.removeListeners();
+    }
+
+
+    private initializeListeners() {
+    
+        this.listener = this.onMouseEvent.bind(this);
+        window.addEventListener('click', this.listener, true);
+        window.addEventListener('scroll', this.listener, true);
+        window.addEventListener('contextmenu', this.listener, true);
+        window.addEventListener('resize', this.listener, true);
+    }
+
+
+    private removeListeners() {
+
+        if (this.listener) {
+            window.removeEventListener('click', this.listener, true);
+            window.removeEventListener('scroll', this.listener, true);
+            window.removeEventListener('contextmenu', this.listener, true);
+            window.removeEventListener('resize', this.listener, true);
+            this.listener = undefined;
+        }
+    }
+
+
+    private onMouseEvent(event: MouseEvent) {
+
+        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'value-info')) {
+            this.closePopover();
+        }
     }
 }

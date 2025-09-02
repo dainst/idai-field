@@ -7,7 +7,7 @@
      popoverClass="value-info-popover"
      container="body"
      (contextmenu)="openPopover(valueInfoPopover)"
-     [autoClose]="'outside'"
+     [autoClose]="false"
      [popoverContext]="{ value: valuelist.values[valueId] }">
     <label class="form-check-label">
         <input class="form-check-input" value="{{valueId}}" type="checkbox"

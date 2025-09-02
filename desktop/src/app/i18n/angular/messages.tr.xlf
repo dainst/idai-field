@@ -10015,7 +10015,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistForWeightSubfield" datatype="html">
         <source>Werteliste (Unterfeld "Messgerät")</source>
-        <target state="needs-translation">Werteliste (Unterfeld "Messgerät")</target>
+        <target state="translated">Değer listesi ("Ölçüm cihazı" alt alanı)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">138,140</context>
@@ -10023,7 +10023,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.weight" datatype="html">
         <source>Gewichtsangabe</source>
-        <target state="needs-translation">Gewichtsangabe</target>
+        <target state="translated">Ağırlık</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">315</context>
@@ -10031,7 +10031,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.volume" datatype="html">
         <source>Volumenangabe</source>
-        <target state="needs-translation">Volumenangabe</target>
+        <target state="translated">Hacim</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">319</context>
@@ -10039,7 +10039,7 @@
       </trans-unit>
       <trans-unit id="util.dimension.measurementDevice" datatype="html">
         <source>Messgerät:</source>
-        <target state="needs-translation">Messgerät:</target>
+        <target state="translated">Ölçüm cihazı:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">150</context>
@@ -10047,7 +10047,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWeightValues" datatype="html">
         <source>Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin aşağıdaki alanlarında geçersiz ağırlık değerleri var: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">691</context>
@@ -10055,7 +10055,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidVolumeValues" datatype="html">
         <source>Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin aşağıdaki alanlarında geçersiz hacim değerleri var: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">699</context>
@@ -10063,7 +10063,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWeightValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</target>
+        <target state="translated">Lütfen '[1]' alanına geçerli bir ağırlık girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">939</context>
@@ -10071,7 +10071,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWeightValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</target>
+        <target state="translated">Lütfen aşağıdaki alanlara geçerli ağırlık bilgilerini girin: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">943</context>
@@ -10079,7 +10079,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidVolumeValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</target>
+        <target state="translated">Lütfen '[1]' alanına geçerli bir hacim değeri girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">947</context>
@@ -10087,7 +10087,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidVolumeValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</target>
+        <target state="translated">Lütfen aşağıdaki alanlara geçerli hacim bilgilerini girin: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">951</context>
@@ -10095,7 +10095,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWeightValue" datatype="html">
         <source>Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin'[1]' alanında geçersiz ağırlık değeri.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">687</context>
@@ -10103,7 +10103,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidVolumeValue" datatype="html">
         <source>Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">'[0]' kategorisindeki bir girdinin '[1]' alanında geçersiz birim değeri.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">695</context>

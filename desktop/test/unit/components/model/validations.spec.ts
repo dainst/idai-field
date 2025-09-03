@@ -1,4 +1,4 @@
-import { Field, ProjectConfiguration, Forest, DateConfiguration } from 'idai-field-core';
+import { Field, ProjectConfiguration, Forest, DateConfiguration, FieldGeometry } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validations } from '../../../../src/app/model/validations';
 
@@ -1142,5 +1142,215 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS]);
         }
+    });
+
+
+    test('should report invalid point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Point', coordinates: 12.5 },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as unknown as FieldGeometry))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'Point']);
+    });
+
+
+    test('should report invalid line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'LineString', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'LineString']);
+    });
+
+
+    test('should report invalid polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Polygon', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'Polygon']);
+    });
+
+
+    test('should report invalid multi point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPoint']);
+    });
+
+
+    test('should report invalid multi line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiLineString', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiLineString']);
+    });
+
+
+    test('should report invalid multi polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPolygon', coordinates: [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6]]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPolygon']);
+    });
+
+
+    test('should not report valid point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Point', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toBeNull();
+    });
+
+
+    test('should not report valid line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'LineString', coordinates: [[10.5, 25.3], [10.7, 25.4], [11.5, 26.6]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toBeNull();
+    });
+
+
+    test('should not report valid polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Polygon', coordinates: [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6], [10.5, 25.3]]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toBeNull();
+    });
+
+
+    test('should not report valid multi point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [[10.5, 25.3], [11.0, 30.4]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toBeNull();
+    });
+
+
+    test('should not report valid multi line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiLineString', coordinates: [
+                    [[10.5, 25.3], [10.7, 25.4], [11.5, 26.6]],
+                    [[11.5, 26.3], [11.7, 26.4], [12.5, 27.6]]
+                ] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toBeNull();
+    });
+
+
+    test('should not report valid multi polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPolygon', coordinates: [
+                    [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6], [10.5, 25.3]]],
+                    [[[11.5, 26.3], [11.7, 26.4], [12.5, 27.6], [11.5, 26.3]]]
+                ] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+            .toBeNull();
     });
 });

@@ -652,7 +652,7 @@ export module Validations {
 
     export function validatePointCoordinates(coordinates: number[]): boolean {
 
-        if (coordinates.length < 2 || coordinates.length > 3) return false;
+        if (!isArray(coordinates) || coordinates.length < 2 || coordinates.length > 3) return false;
         if (isNaN(coordinates[0])) return false;
         if (isNaN(coordinates[1])) return false;
         if (coordinates.length === 3 && isNaN(coordinates[2])) return false;
@@ -663,31 +663,34 @@ export module Validations {
 
     export function validateMultiPointCoordinates(coordinates: number[][]): boolean {
 
-        return coordinates.length !== 0
+        return isArray(coordinates)
+            && coordinates.length !== 0
             && coordinates.every(validatePointCoordinates);
     }
 
 
     export function validatePolylineCoordinates(coordinates: number[][]): boolean {
 
-        return coordinates.length >= 2
+        return isArray(coordinates)
+            && coordinates.length >= 2
             && coordinates.every(validatePointCoordinates);
     }
 
 
     export function validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
-        return coordinates.length !== 0
+        return isArray(coordinates)
+            && coordinates.length !== 0
             && coordinates.every(validatePolylineCoordinates);
     }
 
 
     export function validatePolygonCoordinates(coordinates: number[][][]): boolean {
 
-        if (coordinates.length === 0) return false;
+        if (!isArray(coordinates) || coordinates.length === 0) return false;
 
         for (let i in coordinates) {
-            if (coordinates[i].length < 3) return false;
+            if (!isArray(coordinates[i]) || coordinates[i].length < 3) return false;
 
             for (let j in coordinates[i]) {
                 if (!validatePointCoordinates(coordinates[i][j])) return false;
@@ -700,7 +703,8 @@ export module Validations {
 
     export function validateMultiPolygonCoordinates(coordinates: number[][][][]): boolean {
 
-        return coordinates.length !== 0
+        return isArray(coordinates)
+            && coordinates.length !== 0
             && coordinates.every(validatePolygonCoordinates);
     }
 

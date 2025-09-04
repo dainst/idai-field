@@ -6,6 +6,7 @@ import { Field } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
 import { DateSpecification } from '../model/input-types/date-specification';
 import { Measurement } from '../model/input-types/measurement';
+import { FieldGeometry } from '../model/document/field-geometry';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -34,6 +35,7 @@ export module Migrator {
         migrateDatings(document, projectConfiguration);
         migrateDates(document, projectConfiguration);
         migrateProjectValuelistFields(document);
+        fixGeometry(document);
     }
 
 
@@ -159,5 +161,13 @@ export module Migrator {
                 const date: any = document.resource[field.name];
                 if (date && isString(date)) document.resource[field.name] = { value: date, isRange: false };
             });
+    }
+
+
+    function fixGeometry(document: Document) {
+
+        if (document.resource.geometry) {
+            FieldGeometry.closeRings(document.resource.geometry);
+        }
     }
 }

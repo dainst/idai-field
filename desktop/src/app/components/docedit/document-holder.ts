@@ -1,6 +1,6 @@
 import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
 import { CategoryForm, Document, Datastore, Field, NewDocument, Resource, ProjectConfiguration,
-    RelationsManager, IdGenerator } from 'idai-field-core';
+    RelationsManager, IdGenerator, FieldGeometry } from 'idai-field-core';
 import { Validations } from '../../model/validations';
 import { Validator } from '../../model/validator';
 import { trimFields } from '../../util/trim-fields';
@@ -81,6 +81,7 @@ export class DocumentHolder {
 
         await this.performAssertions();
         this.convertStringsToNumbers();
+        this.closeGeometryRings();
 
         const savedDocument: Document = await this.relationsManager.update(
             this.cleanup(this.clonedDocument),
@@ -168,6 +169,14 @@ export class DocumentHolder {
             } else if (field.inputType === 'float' || field.inputType === 'unsignedFloat') {
                 this.clonedDocument.resource[fieldName] = parseFloat(this.clonedDocument.resource[fieldName]);
             }
+        }
+    }
+
+
+    private closeGeometryRings() {
+
+        if (this.clonedDocument.resource.geometry) {
+            FieldGeometry.closeRings(this.clonedDocument.resource.geometry);
         }
     }
 

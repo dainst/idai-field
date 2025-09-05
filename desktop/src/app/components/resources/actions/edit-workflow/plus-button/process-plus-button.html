@@ -38,14 +38,14 @@
                     </span>
                 </div>
                 <ul id="multiple-select-buttons" class="list-group">
-                    <li class="list-group-item popover-item"
+                    <li id="create-single-process-button" class="list-group-item popover-item"
                         (click)="selectCreateMultipleOption(false)">
                         <span class="button-label"
                               i18n="@@resources.workflowEditorModal.plusButton.multiple.false">
                             Ein gemeinsamer Prozess für alle ausgewählten Ressourcen
                         </span>
                     </li>
-                    <li class="list-group-item popover-item"
+                    <li id="create-multiple-processes-button" class="list-group-item popover-item"
                         (click)="selectCreateMultipleOption(true)">
                         <span class="button-label"
                               i18n="@@resources.workflowEditorModal.plusButton.multiple.true">

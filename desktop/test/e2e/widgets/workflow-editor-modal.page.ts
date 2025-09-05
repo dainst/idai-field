@@ -20,6 +20,18 @@ export class WorkflowEditorModalPage {
     }
 
 
+    public static clickCreateSingleProcessButton() {
+
+        return click('#create-single-process-button');
+    }
+
+
+    public static clickCreateMultipleProcessesButton() {
+
+        return click('#create-multiple-processes-button');
+    }
+
+
     public static editProcess(index: number) {
 
         return click(getLocator('.edit-process-button').nth(index));

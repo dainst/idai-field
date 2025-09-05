@@ -26,7 +26,7 @@
 <cdk-virtual-scroll-viewport class="processes-body" [itemSize]="itemSize">
     <div *cdkVirtualFor="let process of processes; trackBy: trackProcess"
          [id]="'resource-' + process.resource.identifier"
-         class="process">
+         class="process process-item">
         <div class="process-state">
             <process-state [process]="process"></process-state>
         </div>

@@ -837,6 +837,77 @@ The file can then be imported again via the menu option "Project configuration" 
 <hr>
 
 
+# Workflow
+
+The workflow functionality in Field Desktop enables you to document the processes carried out in a project (e.g. sampling, restoration, the creation of drawings, etc.).
+
+
+## Configuration
+
+A process is represented by a resource of the supercategory "Process". The category "Process" itself is abstract, meaning that only resources of its subcategories can be created. To work with workflow documentation, one or more subcategories of the category "Process" must first be configured for the project. The subcategory determines the type of process.
+
+To add a subcategory, open the configuration editor via the menu "Tools" ➝ "Project Configuration", set the category filter to the option "Workflow" or "All", and then click on the plus button next to the category "Process". A window opens showing all process subcategories contained in the Field category library. Select the desired form for one of these categories or, alternatively, enter the name of a new category to create your own process subcategory.
+
+In both cases, you can now set up the allowed target categories for the relations "Carried out on" and "Results in" .
+
+The relation "Carried out on" is used to link the process to the resources on which it is **carried out on**. This relation is a mandatory field, which is why you have to select at least one target category at this point. For example, if you select the category "Find" here, this means that processes of this category can be carried out on finds.
+
+The relation "Results in" is used to link the process to resources that are a **result** of the process. Specifying this relation is optional. If you do not select any target categories at this point, the relation will not be available for this process subcategory at first. However, you can add the relation to the form at any later point in time (see section *Add fields* of chapter *Project configuration*).
+
+The allowed target categories for both relations can be adjusted later by editing the corresponding relation field ("Carried out on" or "Results in") for the category. By default, both relation fields are located in the group "Workflow".
+
+For more information on adding subcategories, see the section *Categories and forms* of chapter *Project configuration*.
+
+
+## Documentation
+
+Processes can be created and viewed in two different ways: via the workflow overview and via the "Document workflow" option in the resource context menu.
+
+
+### Overview
+
+An overview of all processes documented in the project can be accessed via the menu "Tools" ➝ "Workflow". The processes can be sorted either by identifier or date of execution. In addition, the usual options for filtering by category and identifier as well as field specific search are available (see chapter *Search*). New processes can be created using the plus button at the bottom of the screen.
+
+
+### Document workflow for selected resources
+
+To view only the processes carried out on specific resources, select the desired resources (hold down the Ctrl/Cmd or Shift key to select multiple resources at once) and open the context menu by right-clicking. By selecting the option "Document workflow", you can now open a window listing all processes that have been carried out on one or more of the selected resources. The window also provides advanced options for creating and linking processes.
+
+
+#### Create processes
+
+You can create new processes using the plus button at the bottom of the window. First, select the desired process subcategory. Only process subcategories that can be performed on all selected resources are available. If there is no corresponding intersection, the plus button will not be displayed. If multiple resources are selected, you can choose between two options after clicking the plus button:
+
+* *One common process for all selected resources*: A single new process is created. This process is linked to all selected resources via the relation "Carried out on".
+* *One process per resource*: A separate new process is created for each of the selected resources and linked to the corresponding resource via the relation "Carried out on".
+
+
+#### Link processes
+
+You can link existing processes to the selected resources using the blue link button at the bottom of the window. After clicking the button, a window opens in which you can search for a resource. Once you have selected a resource, all processes that are currently linked to this resource via the relation "Carried out on" are displayed. Select one of the processes to link it to all selected resources. Existing links for the process are retained.
+
+Only processes from those subcategories that can be performed on all selected resources are available for selection. If there is no corresponding intersection, the link button will not be displayed.
+
+
+### Fields of a process
+
+Each process has two mandatory fields, "State" and "Date", which must be filled in for each process.
+
+The field "State" is a dropdown field in which one of the following values can be selected:
+
+* *Planned*: The process has not yet been carried out, but is planned for the future.
+* *In progress*: The process is currently being carried out but has not yet been completed.
+* *Completed*: The process has been completed.
+* *Canceled*: The process was started but cancelled.
+
+The field "Date" specifies the date of execution (which may be in the past, present or future, depending on the state). The type of date specification can be adjusted in the configuration editor by editing the field "Date". By default, a time can also be specified in addition to the day, and it is possible to specify both a single date and a date range. For more information on the customization options for date fields, see section *Configuration of date fields* of chapter *Project configuration*.
+
+Please note that the date entered must match the selected state. If this is not the case (for example, because the state "Completed" was selected, but the date entered is in the future), a corresponding warning will appear (see section *Invalid state* of chapter *Warnings*).
+
+
+<hr>
+
+
 # Matrix
 
 The **Matrix** view (accessible via the menu "Tools") displays a matrix for each trench of the project,

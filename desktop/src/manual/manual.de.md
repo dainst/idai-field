@@ -850,6 +850,77 @@ Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren.
 <hr>
 
 
+# Workflow
+
+Die Workflow-Funktionalitäten von Field Desktop ermöglichen es, die in einem Projekt durchgeführten Prozesse (z. B. Probenentnahme, Restaurierungsarbeiten, die Anfertigung von Zeichnungen usw.) zu dokumentieren.
+
+
+## Konfiguration
+
+Ein Prozess wird durch eine Ressource der Oberkategorie "Prozess" abgebildet. Die Kategorie "Prozess" selbst ist abstrakt, das heißt es können ausschließlich Ressourcen ihrer Unterkategorien angelegt werden. Um mit der Workflow-Dokumentation zu arbeiten, müssen für das Projekt daher zunächst eine oder mehrere Unterkategorien der Kategorie "Prozess" konfiguriert werden. Die Unterkategorie bestimmt, um welche Art von Prozess es sich handelt.
+
+Um eine Unterkategorie hinzuzufügen, öffnen Sie den Konfigurationseditor über das Menü "Werkzeuge" ➝ "Projektkonfiguration", stellen Sie den Kategoriefilter auf die Option "Workflow" oder "Alle" ein und klicken Sie anschließend auf den Plus-Button neben der Kategorie "Prozess". Es öffnet sich ein Fenster, in dem alle Prozess-Unterkategorien angezeigt werden, die in der Field-Kategoriebibliothek enthalten sind. Wählen Sie das gewünschte Formular einer dieser Kategorien aus oder geben Sie alternativ den Namen einer neuen Kategorie ein, um eine eigene Prozess-Unterkategorie anzulegen.
+
+In beiden Fällen haben Sie nun die Möglichkeit, die erlaubten Zielkategorien für die Relationen "Durchgeführt an" und "Ergibt" einzurichten.
+
+Die Relation "Durchgeführt an" dient zur Verknüpfung des Prozesses mit denjenigen Ressourcen, an denen er **durchgeführt** wird. Diese Relation ist ein Pflichtfeld, weshalb an dieser Stelle die Auswahl mindestens einer Zielkategorie verpflichtend ist. Wählen Sie hier beispielsweise die Kategorie "Fund" aus, dann bedeutet dies, dass Prozesse dieser Kategorie an Funden durchgeführt werden können.
+
+Die Relation "Ergibt" dient zur Verknüpfung des Prozesses mit Ressourcen, die ein **Ergebnis** des Prozesses sind. Die Angabe dieser Relation ist optional. Wenn Sie an dieser Stelle keine Zielkategorien auswählen, dann ist die Relation für diese Prozess-Unterkategorie zunächst nicht verfügbar. Sie können die Relation aber jederzeit später zum Formular hinzufügen (siehe Abschnitt *Hinzufügen von Feldern* im Kapitel *Projektkonfiguration*).
+
+Die erlaubten Zielkategorien der beiden Relationen können nachträglich angepasst werden, indem das entsprechende Relationsfeld ("Durchgeführt an" bzw. "Ergibt") der Kategorie editiert wird. Die beiden Relationsfelder befinden sich standardmäßig in der Gruppe "Workflow".
+
+Weitere Informationen zum Hinzufügen von Unterkategorien finden Sie im Abschnitt *Kategorien und Formulare* des Kapitels *Projektkonfiguration*.
+
+
+## Dokumentation
+
+Prozesse können über zwei verschiedene Wege angelegt und eingesehen werden: über die Workflow-Gesamtübersicht sowie über die Option "Workflow dokumentieren" des Ressourcen-Kontextmenüs.
+
+
+### Gesamtübersicht
+
+Eine Übersicht aller im Projekt dokumentierten Prozesse kann über das Menü "Werkzeuge" ➝ "Workflow" aufgerufen werden. Die Prozesse können wahlweise per Bezeichner oder Datum der Durchführung sortiert werden. Darüber hinaus stehen die gewohnten Möglichkeiten zum Filtern per Kategorie und Bezeichner sowie die feldspezifische Suche zur Verfügung (siehe Kapitel *Suche*). Über den Plus-Button am unteren Bildschirmrand können neue Prozesse angelegt werden.
+
+
+### Workflow für ausgewählte Ressourcen dokumentieren
+
+Um lediglich die an bestimmten Ressourcen durchgeführten Prozesse einzusehen, selektieren Sie die gewünschten Ressourcen (bei gedrückter Strg/Cmd- oder Shift-Taste auch mehrere Ressourcen gleichzeitig) und öffnen Sie per Rechtsklick das Kontextmenü. Über die Option "Workflow dokumentieren" können Sie nun ein Fenster aufrufen, in dem alle Prozesse aufgelistet werden, die an einer oder mehrerer der selektierten Ressourcen durchgeführt wurden. Das Fenster stellt außerdem erweiterte Möglichkeiten zum Anlegen und Verknüpfen von Prozessen bereit.
+
+
+#### Prozesse anlegen
+
+Über den Plus-Button am unteren Rand des Fensters können Sie neue Prozesse anlegen. Wählen Sie dabei zunächst die gewünschte Prozess-Unterkategorie aus. Zur Auswahl stehen ausschließlich Prozess-Unterkategorien, die an allen selektierten Ressourcen durchgeführt werden können. Gibt es keine entsprechende Schnittmenge, wird der Plus-Button nicht angezeigt. Sind mehrere Ressourcen selektiert, können Sie beim Klick auf den Plus-Button zwischen zwei Optionen wählen:
+
+* *Ein gemeinsamer Prozess für alle ausgewählten Ressourcen*: Es wird ein einziger neuer Prozess angelegt. Dieser Prozess wird über die Relation "Durchgeführt an" mit allen ausgewählten Ressourcen verknüpft.
+* *Ein eigener Prozess pro Ressource*: Es wird für jede der selektierten Ressourcen ein eigener neuer Prozess angelegt und jeweils über die Relation "Durchgeführt an" mit der entsprechenden Ressource verknüpft.
+
+
+#### Prozesse verknüpfen
+
+Über den blauen Link-Button am unteren Rand des Fensters können Sie bereits bestehende Prozesse mit den selektierten Ressourcen verknüpfen. Nach dem Klick auf den Button öffnet sich ein Fenster, in dem Sie nach einer Ressource suchen können. Haben Sie eine Ressource ausgewählt, erscheinen alle Prozesse, die über die Relation "Durchgeführt an" mit dieser Ressource verknüpft sind. Wählen Sie einen der Prozesse aus, um ihn mit allen selektierten Ressourcen zu verknüpfen. Bestehende Verknüpfungen des Prozesses bleiben erhalten.
+
+Zur Auswahl stehen ausschließlich Prozesse derjenigen Unterkategorien, die an allen selektierten Ressourcen durchgeführt werden können. Gibt es keine entsprechende Schnittmenge, wird der Link-Button nicht angezeigt.
+
+
+### Felder eines Prozesses
+
+Jeder Prozess verfügt über die beiden Pflichtfelder "Status" und "Datum", die für jeden Prozess ausgefüllt werden müssen.
+
+Das Feld "Status" ist ein Dropdown-Feld, in dem einer der folgenden Werte ausgewählt werden kann:
+
+* *Geplant*: Der Prozess wurde noch nicht durchgeführt, ist aber für die Zukunft geplant.
+* *Laufend*: Der Prozess wird aktuell durchgeführt, ist aber noch nicht abgeschlossen.
+* *Abgeschlossen*: Der Prozess wurde vollständig durchgeführt.
+* *Abgebrochen*: Der Prozess wurde begonnen, aber abgebrochen.
+
+Im Feld "Datum" wird das Datum der Durchführung angegeben (das sich je nach Status in der Vergangenheit, Gegenwart oder Zukunft befinden kann). Die Art der Datumsangabe kann im Konfigurationseditor angepasst werden, indem das Feld "Datum" bearbeitet wird. Standardmäßig kann optional zusätzlich zum Tag auch eine Uhrzeit angegeben werden und es ist sowohl die Angabe eines Einzeldatums als auch eines Datumsbereichs möglich. Weitere Informationen zu den Anpassungsmöglichkeiten für Datumsfelder finden Sie im Abschnitt *Konfiguration von Datumsfeldern* des Kapitels *Projektkonfiguration*.
+
+Bitte beachten Sie, dass das eingetragene Datum zum ausgewählten Status passen muss. Ist dies nicht der Fall (weil etwa der Status "Abgeschlossen" gewählt wurde, aber das eingetragene Datum in der Zukunft liegt), erscheint eine entsprechende Warnung (siehe Abschnitt *Ungültiger Status* im Kapitel *Warnungen*).
+
+
+<hr>
+
+
 # Matrix
 
 In der Ansicht **Matrix** (erreichbar über das Menu "Werkzeuge") finden Sie für jeden Schnitt des Projekts

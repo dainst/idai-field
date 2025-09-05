@@ -17,6 +17,8 @@ export class DeleteProcessModalComponent {
 
     public process: ProcessDocument;
 
+    public confirmDeletionIdentifier: string;
+
 
     constructor(public activeModal: NgbActiveModal) {}
 
@@ -28,5 +30,19 @@ export class DeleteProcessModalComponent {
     public onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+    }
+
+
+    public checkConfirmDeletionIdentifier(): boolean {
+
+        return this.process.resource.identifier === this.confirmDeletionIdentifier;
+    }
+
+
+    public confirmDeletion() {
+
+        if (!this.checkConfirmDeletionIdentifier()) return;
+
+        this.activeModal.close();
     }
 }

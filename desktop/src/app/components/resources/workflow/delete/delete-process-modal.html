@@ -1,21 +1,33 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@resources.deleteProcessModal.header">Prozess löschen?</h5>
+    <h5 class="modal-title" i18n="@@resources.deleteProcessModal.header">
+        Prozess <b>{{process.resource.identifier}}</b> löschen?
+    </h5>
 </div>
 
 <div id="delete-process-modal-body" class="modal-body">
-    <p i18n="@@resources.deleteProcessModal.question">
-        Möchten Sie den Prozess <b>{{process.resource.identifier}}</b> wirklich löschen?
-    </p>
-
     <div *ngIf="getNumberOfLinkedResources() > 1"
          class="alert alert-warning"
          i18n="@@resources.deleteProcessModal.warning">
         Der Prozess wird für alle {{getNumberOfLinkedResources()}} verknüpften Ressourcen entfernt.
     </div>
+
+    <div id="confirm-delete-process-info" >
+        <span i18n="@@resources.deleteProcessModal.confirmDeleteInfo">
+            Bitte geben Sie den Bezeichner des Prozesses ein, um den Löschvorgang zu bestätigen.
+        </span>
+    </div>
+    <div>
+        <input id="delete-process-input"
+               type="text"
+               class="form-control"
+               [(ngModel)]="confirmDeletionIdentifier"
+               (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+    </div>
 </div>
 <div class="modal-footer">
     <button type="button" id="delete-process-confirm" class="btn btn-danger"
-            (click)="activeModal.close()" i18n="@@buttons.delete">Löschen</button>
+            [class.disabled]="!this.checkConfirmDeletionIdentifier()"
+            (click)="confirmDeletion()" i18n="@@buttons.delete">Löschen</button>
     <button type="button" id="delete-process-cancel" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
 </div>

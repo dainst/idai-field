@@ -1,6 +1,10 @@
 #delete-process-modal-body {
-  p:last-child,
-  .alert {
-    margin-bottom: 0;
+  div,
+  span {
+    user-select: none;
+  }
+
+  #confirm-delete-process-info {
+    margin-bottom: 10px;
   }
 }

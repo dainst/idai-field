@@ -42,7 +42,13 @@ export class ValuelistSelectorComponent implements OnChanges {
         this.updateValuelist();
     }
 
+
+    public isSwapValuelistButtonVisible(): boolean {
+     
+        return this.category.name !== 'Process' || this.clonedField.name !== 'state';
+    }
     
+
     public isEditValuelistButtonVisible(): boolean {
      
         return this.getSelectedValuelist() !== undefined

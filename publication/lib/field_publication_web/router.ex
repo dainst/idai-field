@@ -1,8 +1,6 @@
 defmodule FieldPublicationWeb.Router do
   use FieldPublicationWeb, :router
 
-  alias FieldPublicationWeb.IIIFHelper
-
   import FieldPublicationWeb.UserAuth
   import FieldPublicationWeb.Gettext.Plug
 
@@ -27,15 +25,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through :ensure_image_published
 
     scope "/iiif" do
-      forward("/3", IIIFImagePlug.V3, %{
-        identifier_to_path_callback: &IIIFHelper.identifier_to_path/1,
-        scheme: &IIIFHelper.get_endpoint_scheme/0,
-        host: &IIIFHelper.get_endpoint_host/0,
-        port: &IIIFHelper.get_endpoint_port/0,
-        status_callbacks: %{
-          404 => &IIIFHelper.handle_404/2
-        }
-      })
+      forward("/3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
     get "/raw/:project_name/:uuid", FieldPublicationWeb.Api.Image, :raw

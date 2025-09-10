@@ -131,7 +131,7 @@
     "address": "1.2.1",
     "archiver": "5.1.0",
     "assert": "^2.0.0",
-    "axios": "0.30.0",
+    "axios": "1.11.0",
     "bootstrap": "5.3.3",
     "buffer": "^6.0.3",
     "camelcase": "6.3.0",

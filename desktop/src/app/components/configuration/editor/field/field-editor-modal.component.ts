@@ -644,8 +644,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private getSelectableTargetCategories(): Array<CategoryForm> {
 
-        const unallowedCategories: string[] = ['Project'];
-        if (Relation.Workflow.ALL.includes(this.field.name)) unallowedCategories.push('Process');
+        let unallowedCategories: string[] = ['Project'];
+        if (Relation.Workflow.ALL.includes(this.field.name)) {
+            unallowedCategories = unallowedCategories.concat(['Process', 'TypeCatalog', 'Type', 'StoragePlace']);
+        }
 
         return this.clonedProjectConfiguration.getTopLevelCategories()
             .filter(category => !unallowedCategories.includes(category.name));

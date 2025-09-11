@@ -93,7 +93,9 @@ export class CreateProcessModalComponent {
     private getSelectableSupercategories(): Array<CategoryForm> {
 
         return this.clonedProjectConfiguration.getTopLevelCategories()
-            .filter(category => !['Project', 'Process'].includes(category.name));
+            .filter(category => {
+                return !['Project', 'Process', 'TypeCatalog', 'Type', 'StoragePlace'].includes(category.name);
+            });
     }
 
 

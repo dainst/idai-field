@@ -1608,10 +1608,6 @@
           "fields": ["identifier", "category", "shortDescription"]
         },
         {
-          "name": "workflow",
-          "fields": ["isSubjectOf", "isResultOf"]
-        },
-        {
           "name": "identification",
           "fields": ["criterion"]
         },
@@ -1632,10 +1628,6 @@
           "fields": ["identifier", "category", "shortDescription"]
         },
         {
-          "name": "workflow",
-          "fields": ["isSubjectOf", "isResultOf"]
-        },
-        {
           "name": "identification",
           "fields": ["hasInstance"]
         },
@@ -1654,10 +1646,6 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription"]
-        },
-        {
-          "name": "workflow",
-          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "inventory",

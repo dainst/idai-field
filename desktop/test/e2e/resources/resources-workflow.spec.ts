@@ -1,4 +1,4 @@
-import { navigateTo, resetApp, start, stop, click, clickWithControlKey } from '../app';
+import { navigateTo, resetApp, start, stop, click, clickWithControlKey, pause } from '../app';
 import { ResourcesPage } from './resources.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
@@ -200,6 +200,7 @@ test.describe('resources/workflow', () => {
         await DoceditPage.clickSelectOption('state', 'Abgeschlossen');
         await DoceditPage.typeInDateInputField('date', '01.01.2025');
         await DoceditPage.clickSaveDocument();
+        await pause(1000);
 
         expect(await (await ProcessListPage.getProcesses()).count()).toBe(3);
         expect(await ProcessListPage.getProcessIdentifier(0)).toEqual('1');

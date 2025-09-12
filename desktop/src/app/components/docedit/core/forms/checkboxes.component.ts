@@ -120,7 +120,7 @@ export class CheckboxesComponent implements OnChanges, OnDestroy {
 
     private onMouseEvent(event: MouseEvent) {
 
-         if (!ComponentHelpers.isInside(event.target, target => target.localName === 'value-info')) {
+         if (!ComponentHelpers.isInside(event.target, target => target.localName === 'configuration-info')) {
             this.closePopover();
          }
     }

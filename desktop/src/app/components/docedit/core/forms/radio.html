@@ -4,7 +4,7 @@
      [ngbPopover]="infoPopover"
      triggers="manual"
      [popoverTitle]="getLabel(valueId)"
-     popoverClass="value-info-popover"
+     popoverClass="configuration-info-popover"
      container="body"
      (contextmenu)="openPopover(valueInfoPopover)"
      [autoClose]="false"
@@ -33,5 +33,5 @@
 <outliers [fieldContainer]="fieldContainer" [field]="field" [valuelist]="valuelist"></outliers>
 
 <ng-template #infoPopover let-value="value">
-    <value-info [value]="value"></value-info>
+    <configuration-info [configurationItem]="value"></configuration-info>
 </ng-template>

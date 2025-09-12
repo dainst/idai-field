@@ -33,7 +33,7 @@ import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.c
 import { RelationPickerGroupComponent } from './relation-picker/relation-picker-group.component';
 import { RelationPickerComponent } from './relation-picker/relation-picker.component';
 import { QuittingModalComponent } from './quitting-modal.component';
-import { ValueInfoComponent } from './value-info.component';
+import { ConfigurationInfoComponent } from './configuration-info.component';
 
 
 @NgModule({
@@ -72,7 +72,7 @@ import { ValueInfoComponent } from './value-info.component';
         SearchableSelectComponent,
         RelationPickerGroupComponent,
         RelationPickerComponent,
-        ValueInfoComponent,
+        ConfigurationInfoComponent,
         SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],
     providers: [
@@ -98,7 +98,7 @@ import { ValueInfoComponent } from './value-info.component';
         SearchableSelectComponent,
         RelationPickerGroupComponent,
         RelationPickerComponent,
-        ValueInfoComponent
+        ConfigurationInfoComponent
     ]
 })
 

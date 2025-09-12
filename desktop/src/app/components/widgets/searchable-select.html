@@ -16,7 +16,7 @@
            container="body"
            triggers="manual"
            [popoverTitle]="getLabel(popoverValue)"
-           popoverClass="value-info-popover"
+           popoverClass="configuration-info-popover"
            [autoClose]="true"
            [popoverContext]="{ value: valuelist?.values[popoverValue] }"
            (open)="onOpen()"
@@ -36,5 +36,5 @@
 </ng-select>
 
 <ng-template #infoPopover let-value="value">
-    <value-info [value]="value"></value-info>
+    <configuration-info [configurationItem]="value"></configuration-info>
 </ng-template>

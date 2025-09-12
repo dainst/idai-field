@@ -1,0 +1,17 @@
+<div class="configuration-info-container">
+    <div *ngIf="!getDescription() && !configurationItem.references?.length"
+         class="configuration-info-none-available"
+         i18n="@@widgets.configurationInfo.noInformationAvailable">
+        Keine Informationen verfügbar.
+    </div>
+    <div class="configuration-info-description">{{getDescription()}}</div>
+    <div *ngIf="configurationItem.references"
+         class="configuration-info-references-container"
+         [class.with-description]="getDescription()">
+        <div class="configuration-info-references-title">Verweise:</div>
+        <div *ngFor="let reference of configurationItem.references" class="configuration-info-reference">
+            <div class="configuration-info-reference-predicate">{{reference.predicate}}</div>
+            <a class="configuration-info-reference-uri" href="{{reference.uri}}" target="_blank">{{reference.uri}}</a>
+        </div>
+    </div>
+</div>

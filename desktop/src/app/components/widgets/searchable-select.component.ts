@@ -182,12 +182,12 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (!ComponentHelpers.isInside(event.target, target => target.localName === 'ng-dropdown-panel')
-                && !ComponentHelpers.isInside(event.target, target => target.localName === 'value-info')) { 
+                && !ComponentHelpers.isInside(event.target, target => target.localName === 'configuration-info')) { 
             this.selectElement.close();
             this.changeDetectorRef.detectChanges();
         }
 
-        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'value-info')) {
+        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'configuration-info')) {
             this.closePopover();
         }
     }

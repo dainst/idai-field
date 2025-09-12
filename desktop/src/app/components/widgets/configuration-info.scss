@@ -1,32 +1,32 @@
-value-info {
-  .value-info-container {
+configuration-info {
+  .configuration-info-container {
     padding: 10px;
     max-height: 350px;
     overflow-y: auto;
 
-    .value-info-none-available {
+    .configuration-info-none-available {
       font-style: italic;
       user-select: none;
     }
 
-    .value-info-description {
+    .configuration-info-description {
       user-select: none;
     }
 
-    .value-info-references-container {
+    .configuration-info-references-container {
       &.with-description {
         margin-top: 15px;
       }
 
-      .value-info-references-title {
+      .configuration-info-references-title {
         font-weight: 600;
         user-select: none;
       }
 
-      .value-info-reference {
+      .configuration-info-reference {
         margin-top: 7px;
 
-        .value-info-reference-predicate {
+        .configuration-info-reference-predicate {
           font-style: italic;
           user-select: none;
         }

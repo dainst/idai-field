@@ -19,6 +19,14 @@ Using Field, archaeologists can:
 * manage types and inventories
 * sync & publish their excavation data
 
+## Field Day on 4th December 2025
+
+We invite excavation projects, researchers, and teams to showcase how you use Field in your work. Whether you've solved tricky documentation challenges, integrated Field into a complex workflow, or simply use it for your digital documentation: we want to hear from you!
+
+The event is organized by the Forum for Digital Archaeology and Infrastructure (FdAI). It will take place on Thursday, 4th December 2025 (online).
+
+Please take a look at our [announcement](https://github.com/dainst/idai-field/discussions/354) to learn more about how to participate.
+
 ## Information for users and interested projects
 We are always happy to hear about your Field projects! If you are using Field in your research, consider [signing up for the Field users mailing list](https://lists.fu-berlin.de/listinfo/idaifield2-user) ([idaifield2-user@dainst.de](mailto:idaifield2-user@dainst.de)), where you can exchange tips and tricks with other users and get updates about new releases. Feel free to also join in the [Discussions](https://github.com/dainst/idai-field/discussions) in this repository.
 

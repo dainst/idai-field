@@ -13,6 +13,7 @@ import { LibraryCategoryDefinition } from '../model/category/library-category-de
 import { BuiltInFieldDefinition } from '../model/field/built-in-field-definition';
 import { Valuelist } from '../../model/configuration/valuelist';
 import { Template } from '../../model/configuration/template';
+import { ValuelistValue } from '../../model/configuration/valuelist-value';
 
 
 const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it', 'pt', 'tr', 'uk'];
@@ -203,7 +204,7 @@ export class ConfigLoader {
             Object.keys(languages[section]).forEach(language => {
                 Object.keys(languages[section][language]).forEach(valuelistId => {
                     this.setValuelistDescription(valuelists, section, language, valuelistId, languages);
-                    this.setValueLabels(valuelists, section, language, valuelistId, languages);
+                    this.setValueLabelsAndDescriptions(valuelists, section, language, valuelistId, languages);
                 });
             });
         })
@@ -220,19 +221,20 @@ export class ConfigLoader {
     }
 
 
-    private setValueLabels(valuelists: Map<Valuelist>, section: 'default'|'project', language: string,
-                           valuelistId: string, languages: any) {
+    private setValueLabelsAndDescriptions(valuelists: Map<Valuelist>, section: 'default'|'project', language: string,
+                                          valuelistId: string, languages: any) {
 
         if (!languages[section][language][valuelistId].values) return; 
 
         Object.keys(languages[section][language][valuelistId].values)
-            .filter(valueId => languages[section][language][valuelistId].values[valueId]?.length)
             .forEach(valueId => {
-                if (!valuelists[valuelistId].values[valueId].label) {
-                    valuelists[valuelistId].values[valueId].label = {};
-                }
-                valuelists[valuelistId].values[valueId].label[language]
-                    = languages[section][language][valuelistId].values[valueId];
+                const languagesConfiguration: any = languages[section][language][valuelistId].values[valueId];
+                const value: ValuelistValue = valuelists[valuelistId].values[valueId];
+                ['label', 'description'].forEach(fieldName => {
+                    if (!languagesConfiguration[fieldName]?.length) return;
+                    if (!value[fieldName]) value[fieldName] = {};
+                    value[fieldName][language] = languagesConfiguration[fieldName];
+                });
             });
     }
 

@@ -110,6 +110,8 @@ export class CreateProcessModalComponent {
 
     private getSelectedSupercategories(selectedCategories: string[]): string[] {
 
+        if (!selectedCategories) return [];
+
         return selectedCategories.filter(categoryName => {
             const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
             return (!category.parentCategory || !selectedCategories.includes(category.parentCategory.name));

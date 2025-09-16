@@ -10,6 +10,7 @@ import { Valuelist } from '../model';
 
 
 export interface RawProjectConfiguration {
+
     forms: Forest<CategoryForm>;
     categories: Map<Category>;
     relations: Array<Relation>;
@@ -17,6 +18,7 @@ export interface RawProjectConfiguration {
     valuelists: Map<Valuelist>;
     projectLanguages: string[];
 };
+
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';

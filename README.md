@@ -7,6 +7,16 @@
 
 Field is a modern take on flexible field and find recording for archaeological excavations. It is developed as a cooperation between the German Archaeological Institute ([DAI](https://www.dainst.org)) and the Head Office of the GBV Common Library Network ([GBV](https://en.gbv.de/)). Field is completely Open Source and free to use!
 
+## Field Day on 4th December 2025
+
+We invite excavation projects, researchers, and teams to showcase how you use Field in your work. Whether you've solved tricky documentation challenges, integrated Field into a complex workflow, or simply use it for your digital documentation: we want to hear from you!
+
+The event is organized by the Forum for Digital Archaeology and Infrastructure (FdAI). It will take place on Thursday, 4th December 2025 (online).
+
+Please take a look at our [announcement](https://github.com/dainst/idai-field/discussions/354) to learn more about how to participate.
+
+## About Field
+
 For an overview of the genesis and the idea behind Field, check out one of our latest articles: 
 
 S. Hohl – T. Kleinke – F. Riebschläger – J. Watson, **iDAI.field: developing software for the documentation of archaeological fieldwork**, AeC 34, 1, 2023, 85–94, doi: [10.19282/ac.34.1.2023.10](https://doi.org/10.19282/ac.34.1.2023.10).

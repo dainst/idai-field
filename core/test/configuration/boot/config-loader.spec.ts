@@ -5,6 +5,7 @@ import { ConfigLoader, ConfigurationErrors } from '../../../src/configuration/bo
 import { CategoryForm } from '../../../src/model/configuration/category-form';
 import { Groups } from '../../../src/model/configuration/group';
 import { Named, Tree } from '../../../src/tools';
+import { Valuelist } from '../../../src/model/configuration/valuelist';
 
 
 /**
@@ -18,12 +19,13 @@ describe('ConfigLoader', () => {
 
     function applyConfig(libraryCategories: Map<LibraryCategoryDefinition> = {},
                          libraryForms: Map<LibraryFormDefinition> = {},
+                         libraryValuelists: Map<Valuelist> = {},
                          languageConfiguration = {}) {
 
         configReader.read.and.returnValues(
             libraryCategories,
             libraryForms,
-            {},
+            libraryValuelists,
             languageConfiguration,
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
@@ -144,6 +146,7 @@ describe('ConfigLoader', () => {
 
         applyConfig(
             libraryCategories,
+            {},
             {},
             {
                 commons: {
@@ -286,6 +289,7 @@ describe('ConfigLoader', () => {
         };
 
         applyConfig(
+            {},
             {},
             {},
             {
@@ -1149,5 +1153,86 @@ describe('ConfigLoader', () => {
         expect(pconf.getRelations()[1].name).toEqual('isSimilarTo');
 
         done();
+    });
+
+
+    it('read valuelists', async () => {
+
+        const valuelists: Map<Valuelist> = {
+            valuelistDefault: {
+                values: {
+                    valueDefault: {}
+                }
+            },
+            valuelistProject: {
+                values: {
+                    valueProject: {}
+                }
+            }
+        };
+
+        const valuelistsLanguages = {
+            default: {
+                de: {
+                    valuelistDefault: {
+                        description: 'Valuelist Default Deutsch',
+                        values: {
+                            valueDefault: {
+                                label: 'Value Default Deutsch',
+                                description: 'Description Default Deutsch'
+                            }
+                        }
+                    }
+                },
+                en: {
+                    valuelistDefault: {
+                        description: 'Valuelist Default English',
+                        values: {
+                            valueDefault: {
+                                label: 'Value Default English',
+                                description: 'Description Default English'
+                            }
+                        }
+                    }
+                }
+            },
+            projects: {
+                de: {
+                    valuelistProject: {
+                        description: 'Valuelist Project Deutsch',
+                        values: {
+                            valueProject: {
+                                label: 'Value Project Deutsch',
+                                description: 'Description Project Deutsch'
+                            }
+                        }
+                    }
+                },
+                en: {
+                    valuelistProject: {
+                        description: 'Valuelist Project English',
+                        values: {
+                            valueProject: {
+                                label: 'Value Project English',
+                                description: 'Description Project English'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        configReader.read.and.returnValue(valuelists);
+        configReader.getValuelistsLanguages.and.returnValue(valuelistsLanguages);
+
+        const result: Map<Valuelist> = configLoader.readValuelists();
+        expect(result.valuelistDefault.description.de).toEqual('Valuelist Default Deutsch');
+        expect(result.valuelistDefault.description.en).toEqual('Valuelist Default English');
+        expect(result.valuelistDefault.values.valueDefault.label.de).toEqual('Value Default Deutsch');
+        expect(result.valuelistDefault.values.valueDefault.label.en).toEqual('Value Default English');
+        expect(result.valuelistProject.description.de).toEqual('Valuelist Project Deutsch');
+        expect(result.valuelistProject.description.en).toEqual('Valuelist Project English');
+        expect(result.valuelistProject.values.valueProject.label.de).toEqual('Value Project Deutsch');
+        expect(result.valuelistProject.values.valueProject.label.en).toEqual('Value Project English');
     });
 });

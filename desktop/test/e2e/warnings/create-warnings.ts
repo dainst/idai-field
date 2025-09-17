@@ -152,8 +152,8 @@ export async function createInvalidProcessStateWarning(resourceIdentifier: strin
     await AddCategoryFormModalPage.typeInSearchFilterInput('NewProcess');
     await AddCategoryFormModalPage.clickCreateNewCategory();
     await CategoryPickerPage.clickSelectCategory('Trench', 'Operation', 'is-carried-out-on-target-container');
-    await ConfigurationPage.clickNextInCreateProcessModal();
-    await ConfigurationPage.clickNextInCreateProcessModal();
+    await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+    await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
     await EditConfigurationPage.clickConfirm();
     await ConfigurationPage.save();
 

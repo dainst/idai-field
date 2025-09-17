@@ -6,7 +6,7 @@ import { ConfigurationIndex } from '../../../../services/configuration/index/con
 
 
 @Component({
-    templateUrl: './create-process-modal.html',
+    templateUrl: './add-process-subcategory-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
     },
@@ -15,7 +15,7 @@ import { ConfigurationIndex } from '../../../../services/configuration/index/con
 /**
  * @author Thomas Kleinke
  */
-export class CreateProcessModalComponent {
+export class AddProcessSubcategoryModalComponent {
 
     public category: CategoryForm;
     public clonedProjectConfiguration: ProjectConfiguration;

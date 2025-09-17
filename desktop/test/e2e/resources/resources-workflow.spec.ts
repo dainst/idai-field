@@ -47,9 +47,9 @@ test.describe('resources/workflow', () => {
         await AddCategoryFormModalPage.typeInSearchFilterInput('TestProcess');
         await AddCategoryFormModalPage.clickCreateNewCategory();
         await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'is-carried-out-on-target-container');
-        await ConfigurationPage.clickNextInCreateProcessModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
         await CategoryPickerPage.clickSelectCategory('Find', undefined, 'results-in-target-container');
-        await ConfigurationPage.clickNextInCreateProcessModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
         await EditConfigurationPage.typeInTranslation(0, 0, 'Test-Prozess', 'category');
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();

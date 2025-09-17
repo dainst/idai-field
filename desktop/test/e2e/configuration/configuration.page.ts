@@ -84,9 +84,9 @@ export class ConfigurationPage {
     }
 
 
-    public static clickNextInCreateProcessModal() {
+    public static clickNextInAddProcessSubcategoryModal() {
 
-        return click('#create-process-modal-next-button');
+        return click('#add-process-subcategory-modal-next-button');
     }
 
     

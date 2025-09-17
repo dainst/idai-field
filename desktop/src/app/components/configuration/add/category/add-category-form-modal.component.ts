@@ -12,7 +12,7 @@ import { Menus } from '../../../../services/menus';
 import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Naming } from '../naming';
-import { CreateProcessModalComponent } from './create-process-modal.component';
+import { AddProcessSubcategoryModalComponent } from './add-process-subcategory-modal.component';
 
 
 @Component({
@@ -149,7 +149,7 @@ export class AddCategoryFormModalComponent {
 
     private async addWorkflowRelations(category: CategoryForm) {
 
-        const result: Map<string[]> = await this.openCreateProcessModal(category);
+        const result: Map<string[]> = await this.openAddProcessSubcategoryModal(category);
         category.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [] });
 
         for (let relationName of Object.keys(result)) {
@@ -163,13 +163,13 @@ export class AddCategoryFormModalComponent {
     }
 
 
-    private async openCreateProcessModal(category: CategoryForm): Promise<Map<string[]>> {
+    private async openAddProcessSubcategoryModal(category: CategoryForm): Promise<Map<string[]>> {
 
-        const [result, componentInstance] = this.modals.make<CreateProcessModalComponent>(
-            CreateProcessModalComponent,
+        const [result, componentInstance] = this.modals.make<AddProcessSubcategoryModalComponent>(
+            AddProcessSubcategoryModalComponent,
             MenuContext.CONFIGURATION_MODAL,
             undefined,
-            'create-process-modal'
+            'add-process-subcategory-modal'
         );
 
         componentInstance.category = category;

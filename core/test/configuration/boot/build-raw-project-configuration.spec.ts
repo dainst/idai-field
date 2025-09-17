@@ -2567,7 +2567,141 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-   it('return categories, common fields and relations with correct labels', () => {
+    it('allow overwriting condition set in library form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    fieldA: { 
+                        inputType: 'boolean'
+                    },
+                    fieldB: {
+                        inputType: 'text'
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                    ]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                fields: {
+                    fieldB: {
+                        condition: {
+                            fieldName: 'fieldA',
+                            values: true
+                        }
+                    }
+                },
+                groups: [
+                    { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                ],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    fieldB: {
+                        condition: {
+                            fieldName: 'fieldA',
+                            values: false
+                        }
+                    }
+                },
+                color: 'red'
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].groups[0].fields[1].condition.fieldName).toEqual('fieldA');
+        expect(result['A'].groups[0].fields[1].condition.values).toBe(false);
+        expect(result['A'].groups[0].fields[1].defaultCondition.fieldName).toEqual('fieldA');
+        expect(result['A'].groups[0].fields[1].defaultCondition.values).toBe(true);
+    });
+
+
+    it('allow removing condition set in library form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    fieldA: { 
+                        inputType: 'boolean'
+                    },
+                    fieldB: {
+                        inputType: 'text'
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                    ]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                fields: {
+                    fieldB: {
+                        condition: {
+                            fieldName: 'fieldA',
+                            values: true
+                        }
+                    }
+                },
+                groups: [
+                    { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                ],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    fieldB: {
+                        condition: null
+                    }
+                },
+                color: 'red'
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].groups[0].fields[1].condition).toBeUndefined();
+        expect(result['A'].groups[0].fields[1].defaultCondition.fieldName).toEqual('fieldA');
+        expect(result['A'].groups[0].fields[1].defaultCondition.values).toBe(true);
+    });
+
+
+    it('return categories, common fields and relations with correct labels', () => {
 
         const commonFields: Map<BuiltInFieldDefinition> = {
             aCommon: { inputType: Field.InputType.TEXT }

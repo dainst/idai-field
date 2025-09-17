@@ -65,7 +65,8 @@ export module Condition {
     }
 
 
-    export function generateLabel(condition: Condition, translate: (term: string) => string) {
+    export function generateLabel(condition: Condition, translate: (term: string) => string,
+                                  getValueLabel: (valueId: string) => string) {
 
         if (!condition) return '';
 
@@ -74,7 +75,7 @@ export module Condition {
         } else if (condition.values === false) {
             return translate('false');
         } else {
-            return condition.values.join(', ');
+            return condition.values.map(valueId => getValueLabel(valueId)).join(', ');
         }
     }
 }

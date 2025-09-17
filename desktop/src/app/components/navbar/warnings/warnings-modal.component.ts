@@ -3,7 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, flatten, intersect, isArray, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
-    RelationTargetWarnings, DateValidationResult, DateSpecification, Condition } from 'idai-field-core';
+    RelationTargetWarnings, DateValidationResult, DateSpecification, Condition, Valuelist,
+    ValuelistUtil } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -40,7 +41,8 @@ type WarningSection = {
     outlierValues?: string[];
     relationTargets?: Array<Document>;
     dateValidationError?: DateValidationResult;
-    condition?: Condition;
+    conditionFieldLabel?: string;
+    conditionValuesLabel?: string;
 }
 
 
@@ -144,21 +146,6 @@ export class WarningsModalComponent {
             Settings.getLocale(),
             (term: string) => this.utilTranslations.getTranslation(term),
             true
-        );
-    }
-
-
-    public getConditionFieldLabel(section: WarningSection): string {
-
-        return this.labels.getFieldLabel(section.category, section.condition.fieldName);
-    }
-
-    
-    public getConditionValuesLabel(section: WarningSection): string {
-
-        return Condition.generateLabel(
-            section.condition, 
-            (term: string) => this.utilTranslations.getTranslation(term)
         );
     }
 
@@ -619,7 +606,9 @@ export class WarningsModalComponent {
         }
 
         if (type === 'unfulfilledConditionFields') {
-            section.condition = CategoryForm.getField(section.category, fieldName).condition;
+            const condition: Condition = CategoryForm.getField(section.category, fieldName).condition;
+            section.conditionFieldLabel = this.generateConditionFieldLabel(condition, section.category);
+            section.conditionValuesLabel = await this.generateConditionValuesLabel(condition, section.category);
         }
 
         if (section.isRelationField) {
@@ -676,6 +665,27 @@ export class WarningsModalComponent {
             $localize `:@@revisionLabel.timeSuffix:Uhr`,
             Settings.getLocale(),
             (term: string) => this.utilTranslations.getTranslation(term)
+        );
+    }
+
+
+    private generateConditionFieldLabel(condition: Condition, category: CategoryForm): string {
+
+        return this.labels.getFieldLabel(category, condition.fieldName);
+    }
+
+    
+    private async generateConditionValuesLabel(condition: Condition, category: CategoryForm): Promise<string> {
+
+        const conditionField: Field = CategoryForm.getField(category, condition.fieldName);
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(
+            conditionField, await this.datastore.get('project')
+        );
+
+        return Condition.generateLabel(
+            condition, 
+            (term: string) => this.utilTranslations.getTranslation(term),
+            valueId => this.labels.getValueLabel(valuelist, valueId)
         );
     }
 

@@ -235,7 +235,7 @@
                     <div *ngIf="section.type === 'unfulfilledConditionFields'" class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.condition">Bedingung für Anzeige des Feldes:</b></div>
                         <div class="data-info-content">
-                            <i>{{getConditionFieldLabel(section)}}:</i> {{getConditionValuesLabel(section)}}
+                            <i>{{section.conditionFieldLabel}}:</i> {{section.conditionValuesLabel}}
                         </div>
                     </div>
                     <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'

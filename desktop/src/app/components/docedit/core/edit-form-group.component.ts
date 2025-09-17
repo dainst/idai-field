@@ -1,7 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { isArray, Map } from 'tsfun';
-import { Condition, Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
+import { Condition, Datastore, Document, Field, Labels, ProjectConfiguration, Relation, Valuelist, ValuelistUtil,
+    compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -41,18 +42,22 @@ export class EditFormGroup implements OnChanges {
     public descriptions: { [name: string]: string };
     public valueInfoPopover: NgbPopover;
 
+    private conditionFieldValuelists: { [fieldName: string]: Valuelist };
+
     private listener: any;
 
 
     constructor(private labelsService: Labels,
                 private projectConfiguration: ProjectConfiguration,
                 private elementRef: ElementRef,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private datastore: Datastore) {}
 
 
-    ngOnChanges() {
+    async ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
+        await this.updateConditionFieldValuelists();
         this.autoScroll();
     }
 
@@ -136,16 +141,19 @@ export class EditFormGroup implements OnChanges {
 
     public getConditionalFieldTooltip(field: Field): string {
 
-        if (!field.condition) return '';
+        if (!field.condition || !this.conditionFieldValuelists) return '';
 
         const fieldLabel: string = this.labelsService.getFieldLabel(
             this.projectConfiguration.getCategory(this.document.resource.category),
             field.condition.fieldName
         );
 
-        const conditionLabel: string =Condition.generateLabel(
+        const conditionLabel: string = Condition.generateLabel(
             field.condition,
-            key => this.utilTranslations.getTranslation(key)
+            key => this.utilTranslations.getTranslation(key),
+            valueId => this.labelsService.getValueLabel(
+                this.conditionFieldValuelists[field.condition.fieldName], valueId
+            )
         );
 
         if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
@@ -204,6 +212,22 @@ export class EditFormGroup implements OnChanges {
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;
         });
+    }
+
+
+    private async updateConditionFieldValuelists() {
+
+        this.conditionFieldValuelists = {};
+
+        for (let field of this.groupFields) {
+            if (!field.condition) continue;
+            const conditionField: Field = this.categoryFields.find(categoryField => {
+                return categoryField.name === field.condition.fieldName;
+            });
+            this.conditionFieldValuelists[conditionField.name] = ValuelistUtil.getValuelist(
+                conditionField, await this.datastore.get('project')
+            );
+        }
     }
 
 

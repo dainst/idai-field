@@ -92,11 +92,20 @@ export class ConditionSectionComponent {
 
     private isValidConditionField(field: BaseField): boolean {
 
+        const processedFieldNames: string[] = [];
+
         do {
             field = field.condition
                 ? this.availableFields.find(s => s.name === field.condition[this.type + 'Name'])
                 : undefined;
-            if (field === this.field) return false;
+
+            if (field && processedFieldNames.includes(field.name)) {
+                console.warn('Invalid self reference in condition of field:', field.name)
+                return false;
+            }
+
+            if (field?.name === this.field.name) return false;
+            if (field) processedFieldNames.push(field.name);
         } while (field);
 
         return true;
@@ -105,7 +114,7 @@ export class ConditionSectionComponent {
 
     private getConditionField(): BaseField {
 
-        const fieldName: string = this.condition[this.type + 'Name']
+        const fieldName: string = this.condition[this.type + 'Name'];
         return fieldName
             ? this.getField(fieldName)
             : undefined;

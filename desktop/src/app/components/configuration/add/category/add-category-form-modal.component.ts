@@ -149,9 +149,9 @@ export class AddCategoryFormModalComponent {
 
     private async addWorkflowRelations(category: CategoryForm) {
 
+        const result: Map<string[]> = await this.openCreateProcessModal(category);
         category.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [] });
 
-        const result: Map<string[]> = await this.openCreateProcessModal(category);
         for (let relationName of Object.keys(result)) {
             if (!result[relationName].length) continue;
             category.groups[1].fields.push({

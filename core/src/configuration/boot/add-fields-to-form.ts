@@ -25,7 +25,7 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
     if (extendedForm) Object.assign(clonedForm.fields, extendedForm.fields);
 
     clonedForm.fields = fieldNames.reduce((fields, fieldName) => {
-        const field = getField(
+        const field: Field = getField(
             fieldName, form, categories, builtInFields, commonFields, relations,
             parentForm, extendedForm
         );
@@ -100,11 +100,13 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
 
 
 function applyFormChanges(clonedForm: TransientFormDefinition, form: TransientFormDefinition,
-                          parentForm?: CustomFormDefinition, extendedForm?: CustomFormDefinition) {
+                          parentForm?: CustomFormDefinition, extendedForm?: TransientFormDefinition) {
 
     if (extendedForm?.fields) {
         Object.keys(extendedForm.fields).forEach(fieldName => {
-            applyFieldChanges(clonedForm.fields[fieldName], extendedForm.fields[fieldName]);
+            const clonedFormField: TransientFieldDefinition = clonedForm.fields[fieldName];
+            applyFieldChanges(clonedFormField, extendedForm.fields[fieldName]);
+            if (clonedFormField.condition) clonedFormField.defaultCondition = clonedFormField.condition;
         });
     }
 
@@ -140,6 +142,8 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
 
     if (changedField.condition) {
         field.condition = changedField.condition;
+    } else if (changedField.condition === null) {
+        delete field.condition;
     }
 
     if (changedField.dateConfiguration) {

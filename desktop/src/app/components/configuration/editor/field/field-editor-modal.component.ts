@@ -141,8 +141,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             return this.messages.add(errWithParams);
         }
 
-        if (this.isMandatory() || !Condition.isValid(this.getClonedFieldDefinition().condition, 'field')) {
+        const hasValidCondition: boolean = Condition.isValid(this.getClonedFieldDefinition().condition, 'field');
+        if (this.isMandatory() || !hasValidCondition) {
             delete this.getClonedFieldDefinition().condition;
+        }
+
+        if (this.field.defaultCondition) {
+            if (!hasValidCondition) {
+                this.getClonedFieldDefinition().condition = null;
+            } else if (equal(this.getClonedFieldDefinition().condition)(this.field.defaultCondition)) {
+                delete this.getClonedFieldDefinition().condition;
+            }
         }
 
         if (!this.isDateSectionVisible()) {

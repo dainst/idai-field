@@ -34,6 +34,7 @@ export interface Field extends BaseField {
     onlySubcategory?: boolean;
     fixedInputType?: true;
     maxCharacters?: number;
+    defaultCondition?: Condition;
     source?: Field.SourceType;
     references?: Array<Reference>;
     dateConfiguration?: DateConfiguration;  // For input type "date"

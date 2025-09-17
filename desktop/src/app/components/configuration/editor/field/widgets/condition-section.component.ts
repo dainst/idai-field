@@ -96,8 +96,9 @@ export class ConditionSectionComponent {
 
         do {
             field = field.condition
-                ? this.availableFields.find(s => s.name === field.condition[this.type + 'Name'])
-                : undefined;
+                ? this.availableFields.find(availableField => {
+                    return availableField.name === field.condition[this.type + 'Name'];
+                }) : undefined;
 
             if (field && processedFieldNames.includes(field.name)) {
                 console.warn('Invalid self reference in condition of field:', field.name)

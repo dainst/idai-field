@@ -112,7 +112,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (!this.getClonedFieldDefinition().references) this.getClonedFieldDefinition().references = [];
         if (!this.getClonedFieldDefinition().subfields) this.getClonedFieldDefinition().subfields = [];
         if (!this.getClonedFieldDefinition().condition) {
-            this.getClonedFieldDefinition().condition = Condition.getEmpty('field');
+            this.getClonedFieldDefinition().condition = clone(this.field.condition) ?? Condition.getEmpty('field');
         }
 
         this.clonedField = clone(this.field);
@@ -386,9 +386,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private isConditionChanged(): boolean {
 
-        const condition: Condition = Condition.isValid(this.getCustomFieldDefinition()?.condition, 'field')
-            ? this.getCustomFieldDefinition().condition
-            : Condition.getEmpty('field');
+        let condition: Condition = this.getCustomFieldDefinition()?.condition ?? this.field.condition;
+        if (!Condition.isValid(condition, 'field')) condition = Condition.getEmpty('field');
 
         const clonedCondition: Condition = Condition.isValid(this.getClonedFieldDefinition()?.condition, 'field')
             ? this.getClonedFieldDefinition().condition

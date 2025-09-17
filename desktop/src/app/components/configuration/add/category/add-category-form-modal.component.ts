@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Map } from 'tsfun';
+import { clone, Map } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Groups, ProjectConfiguration, Relation, SortUtil } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
@@ -174,7 +174,7 @@ export class AddCategoryFormModalComponent {
 
         componentInstance.category = category;
         componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
-        componentInstance.selectedCategories = category.defaultRange;
+        componentInstance.selectedCategories = category.defaultRange ? clone(category.defaultRange) : undefined;
         componentInstance.initialize();
 
         return new Promise(resolve => {

@@ -80,12 +80,13 @@ export class CreateProcessModalComponent {
             category.children ? category.children.map(childCategory => childCategory.name) : []
         );
 
-        if (this.selectedCategories?.[relationName]?.includes(category.name)) {
+        if (this.selectedCategories[relationName]?.includes(category.name)) {
             this.selectedCategories[relationName] = this.selectedCategories[relationName].filter(categoryName => {
                 return !categoryNames.includes(categoryName) && category.parentCategory?.name !== categoryName;
             });
         } else {
-            this.selectedCategories[relationName] = this.selectedCategories[relationName].concat(categoryNames);
+            this.selectedCategories[relationName] = (this.selectedCategories[relationName] ?? [])
+                .concat(categoryNames);
         }
     }
 

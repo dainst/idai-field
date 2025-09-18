@@ -2786,23 +2786,44 @@
   },
   "SampleProcessingSieving-sievingMeshes-default": {
     "values": {
+      "8ORG": {
+        "label": "8 ORG"
+      },
       "4ORG": {
         "label": "4 ORG"
+      },
+      "2ORG": {
+        "label": "2 ORG"
       },
       "0,5ORG": {
         "label": "0,5 ORG"
       },
+      "0,35ORG": {
+        "label": "0,35 ORG"
+      },
       "0,25ORG": {
         "label": "0,25 ORG"
+      },
+      "0,125ORG": {
+        "label": "0,125 ORG"
       },
       "8MIN": {
         "label": "8 MIN"
       },
+      "4MIN": {
+        "label": "4 MIN"
+      },
       "2MIN": {
         "label": "2 MIN"
       },
+      "1MIN": {
+        "label": "1 MIN"
+      },
       "0,5MIN": {
         "label": "0,5 MIN"
+      },
+      "strainORG": {
+        "label": "Strain (unknown width) ORG"
       },
       "strainMIN": {
         "label": "Strain (unknown width) MIN"

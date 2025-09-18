@@ -1638,5 +1638,241 @@
     "parent": "StoragePlace",
     "description": {},
     "fields": {}
+  },
+  "SampleCollection": {
+    "parent": "Process",
+    "description": {},
+    "fields": {
+      "samplingStrategy": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleCollection-samplingStrategy-default"
+      },
+      "horizontalSamplingStrategy": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleCollection-horizontalSamplingStrategy-default"
+      },
+      "systematicSamplingStrategy": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleCollection-systematicSamplingStrategy-default"
+      },
+      "proportionSystematicSampling": {
+        "inputType": "unsignedFloat"
+      },
+      "quadrantDimensionsSystematicSampling": {
+        "inputType": "unsignedFloat"
+      },
+      "verticalSamplingStrategy": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleCollection-verticalSamplingStrategy-default"
+      },
+      "profileSamplingStrategy": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleCollection-profileSamplingStrategy-default"
+      }
+    },
+    "defaultRange": {
+      "isCarriedOutOn": ["Feature", "Profile", "Area", "Find"],
+      "resultsIn": ["Sample"]
+    }
+  },
+  "SampleProcessingSieving": {
+    "parent": "Process",
+    "description": {},
+    "fields": {
+      "waterOrigin": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingSieving-waterOrigin-default"
+      },
+      "waterChangeInterval": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingSieving-waterChangeInterval-default"
+      },
+      "samplePretreated": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "pretreatmentType": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingSieving-pretreatmentType-default"
+      },
+      "pretreatmentChemicals": {
+        "inputType": "multiInput"
+      },
+      "sievingMethod": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingSieving-sievingMethod-default"
+      },
+      "sievingMeshes": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingSieving-sievingMeshes-default"
+      }
+    },
+    "defaultRange": {
+      "isCarriedOutOn": ["Sample"]
+    }
+  },
+  "SampleProcessingPostsieving": {
+    "parent": "Process",
+    "description": {},
+    "fields": {
+      "minFractionKept": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "minFractionMeasured": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "minFractionMeasurementUnit": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-measurementUnit-default"
+      },
+      "fractionMeasurement8Min": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement4Min": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement2Min": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement1Min": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement05Min": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurementStrainMin": {
+        "inputType": "unsignedFloat"
+      },
+      "minFractionSubsampled": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "minSubsamplingTechnique": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-subsamplingTechnique-default"
+      },
+      "minFractionSubsampledList": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-minFractionSubsampledList-default"
+      },
+      "multiplyingFactor8Min": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor4Min": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor2Min": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor1Min": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor05Min": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactorStrainMin": {
+        "inputType": "unsignedFloat"
+      },
+      "orgFractionTreatmentType": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-orgFractionTreatmentType-default"
+      },
+      "orgFractionMeasured": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "orgFractionMeasurementUnit": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-measurementUnit-default"
+      },
+      "orgFractionVolumeMeasurementTechnique": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-volumeMeasurementTechnique-default"
+      },
+      "fractionMeasurement8Org": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement4Org": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement2Org": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement05Org": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement035Org": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement025Org": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurement0125Org": {
+        "inputType": "unsignedFloat"
+      },
+      "fractionMeasurementStrainOrg": {
+        "inputType": "unsignedFloat"
+      },
+      "orgFractionSubsampled": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "orgSubsamplingTechnique": {
+        "inputType": "dropdown",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-subsamplingTechnique-default"
+      },
+      "orgFractionSubsampledList": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SampleProcessingPostsieving-orgFractionSubsampledList-default"
+      },
+      "multiplyingFactor8Org": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor4Org": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor2Org": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor05Org": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor035Org": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor025Org": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactor0125Org": {
+        "inputType": "unsignedFloat"
+      },
+      "multiplyingFactorStrainOrg": {
+        "inputType": "unsignedFloat"
+      }
+    },
+    "defaultRange": {
+      "isCarriedOutOn": ["Sample"],
+      "resultsIn": ["Sample", "FindCollection"]
+    }
   }
 }

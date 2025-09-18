@@ -5698,5 +5698,271 @@
         "label": "Farbe"
       }
     }
+  },
+  "SampleCollection-samplingStrategy-default": {
+    "values": {
+      "horizontal": {
+        "label": "Horizontal",
+        "description": "Horizontal aufgenommen – z. B. Oberfläche oder Boden (Flächenproben)"
+      },
+      "vertical": {
+        "label": "Vertikal",
+        "description": "Vertikal aufgenommen – z. B. Profil"
+      }
+    }
+  },
+  "SampleCollection-horizontalSamplingStrategy-default": {
+    "values": {
+      "grabSample": {
+        "label": "Direkt entnommene Proben",
+        "description": "Nicht-strategische, opportunistische Probenahme ohne vordefinierten Plan. Sie umfasst Zufallsfunde."
+      },
+      "systematicSample": {
+        "label": "Systematische Probenentnahme",
+        "description": "Entnahme der Proben in regelmäßigen Abständen, um einen definierten Bereich gleichmäßig abzudecken"
+      },
+      "judgementSample": {
+        "label": "Subjektive Probenentnahme",
+        "description": "Selektive Probenentnahmestrategie basierend auf Vorwissen, Experteninterpretationen oder fundierten Annahmen über den Kontext der Stichprobe"
+      }
+    }
+  },
+  "SampleCollection-systematicSamplingStrategy-default": {
+    "values": {
+      "fixedVolume": {
+        "label": "Feste Quantität",
+        "description": "Probenahmestrategie, bei der von jeder Probenahmeeinheit ein gleichbleibendes, vorgegebenes Sedimentvolumen gesammelt wird, um die Einheitlichkeit zu gewährleisten"
+      },
+      "probabilistic": {
+        "label": "Probabilistisch",
+        "description": "Stichprobenstrategie, bei der die Wahrscheinlichkeit, dass die Stichprobe die Population widerspiegelt, aus der sie stammt, statistisch bewertet werden kann"
+      },
+      "random": {
+        "label": "Zufällig",
+        "description": "Stichprobenstrategie, bei der die Stichproben rein zufällig ausgewählt werden, um sicherzustellen, dass jede Einheit in der Population die gleiche Wahrscheinlichkeit hat, ausgewählt zu werden"
+      },
+      "eachQuadrant": {
+        "label": "Jeder Quadrant",
+        "description": "Probenahmestrategie, bei der die Proben aus jedem definierten Quadranten innerhalb des Standortrasters entnommen werden, um eine systematische Abdeckung aller Bereiche zu gewährleisten"
+      },
+      "everyOtherQuadrant": {
+        "label": "Jeder andere Quadrant",
+        "description": "Probenahmestrategie, bei der die Proben in abwechselnden Quadranten innerhalb des Standortrasters gesammelt werden, nach einem Schachbrettmuster, um eine systematische und dennoch gleichmäßige Abdeckung zu erreichen"
+      },
+      "100%": {
+        "label": "100%",
+        "description": "Probenahmestrategie, bei der das gesamte Sediment innerhalb der definierten Einheit gesammelt oder analysiert wird"
+      }
+    }
+  },
+  "SampleCollection-verticalSamplingStrategy-default": {
+    "values": {
+      "profile": {
+        "label": "Profil",
+        "description": "Probe aus einem freigelegten stratigraphischen Abschnitt während der Ausgrabung"
+      },
+      "core": {
+        "label": "Bohrkern",
+        "description": "Mit einem Kernbohrgerät entnommene Probe, normalerweise ohne vollständige Ausgrabung, um eine kontinuierliche vertikale Sedimentsäule zu erhalten"
+      }
+    }
+  },
+  "SampleCollection-profileSamplingStrategy-default": {
+    "values": {
+      "sondage": {
+        "label": "Sondage",
+        "description": "Eine kleine Testgrabung, die zur Untersuchung der Stratigraphie und zur Entnahme einzelner Sedimentproben aus bestimmten Schichten durchgeführt wird, ohne das Ziel zu verfolgen, die archäologischen Zusammenhänge zu verstehen, die zu den Ablagerungen geführt haben"
+      },
+      "monolith": {
+        "label": "Monolith",
+        "description": "Ein kontinuierlicher, ungestörter Sedimentblock, der extrahiert und in einem festen Behälter aufbewahrt wird, um die Stratigraphie für mikromorphologische oder Laboranalysen zu erhalten"
+      }
+    }
+  },
+  "SampleProcessingSieving-waterOrigin-default": {
+    "values": {
+      "regular": {
+        "label": "Regulär",
+        "description": "Normales Leitungswasser"
+      },
+      "recycledSystem": {
+        "label": "Recyceltes System",
+        "description": "Wasser, das bereits verwendet und zur Wiederverwendung in einem geschlossenen oder halbgeschlossenen System gefiltert wurde"
+      },
+      "riverPondWell": {
+        "label": "Fluss, Teich oder Brunnen",
+        "description": "Natürliches Wasser aus nahegelegenen Flüssen, Teichen, Brunnen oder ähnlichen Quellen"
+      }
+    }
+  },
+  "SampleProcessingSieving-waterChangeInterval-default": {
+    "values": {
+      "everySU": {
+        "label": "Jede stratigraphische Einheit"
+      },
+      "everyFewSU": {
+        "label": "Alle paar stratigraphischen Einheiten"
+      },
+      "daily": {
+        "label": "Einmal am Tag"
+      },
+      "afterFewDays": {
+        "label": "Nach ein paar Tagen"
+      }
+    }
+  },
+  "SampleProcessingSieving-pretreatmentType-default": {
+    "values": {
+      "freezing": {
+        "label": "Einfrieren",
+        "description": "Die Probe wurde eingefroren"
+      },
+      "soaking": {
+        "label": "Einweichen",
+        "description": "Die Probe wurde in Wasser getaucht"
+      },
+      "soakingSoap": {
+        "label": "Einweichen mit Seife",
+        "description": "Die Probe wurde in eine Lösung aus Wasser und mildem Reinigungsmittel getaucht"
+      },
+      "soakingChemicals": {
+        "label": "Einweichen mit anderen Chemikalien",
+        "description": "Die Probe wurde in eine Wasser-Chemikalien-Lösung getaucht"
+      },
+      "sundryingSoaking": {
+        "label": "Sonnentrocknen und Einweichen",
+        "description": "Die Probe wurde im Sonnenlicht getrocknet und anschließend rehydriert"
+      }
+    }
+  },
+  "SampleProcessingSieving-sievingMethod-default": {
+    "values": {
+      "flotation": {
+        "label": "Flotation",
+        "description": "Ein Flotationstank (mit einem Fassungsvermögen von mindestens 80 Litern) mit einem oberen Abfluss wird mit Wasser gefüllt und die Probe in den Tank eingebracht. Ein Sieb oder Netz verhindert, dass die Probe auf den Boden sinkt. Das Sediment verbleibt im Tank, bis organisches Material (verkohlt) an die Oberfläche steigt. Anschließend wird vorsichtig mit den Händen umgerührt. Ein Sieb, mehrere Siebe oder ein Netz dienen dazu, die leichte organische Fraktion, die mit dem aus dem Abfluss austretenden Wasser absinkt, aufzufangen. Das verbleibende Sediment im Tank ist die schwere Fraktion."
+      },
+      "flotationAirCompressor": {
+        "label": "Flotation mit Luftkompressor",
+        "description": "Ähnlich wie bei der Flotation wird bei diesem System Druckluft verwendet, um in der Flotationsmaschine einen Strudeleffekt zu erzeugen, der die Auflösung der Sedimentklumpen und die Flotation des verkohlten Materials unterstützt"
+      },
+      "bucketFlotation": {
+        "label": "Eimerflotation",
+        "description": "Das Sediment wird in eine Schüssel mit Wasser gegeben, von Hand umgerührt und der Überstand auf ein Sieb oder Netz gegossen. Der Vorgang wird so oft wiederholt, bis kein organisches Material mehr aufschwimmt."
+      },
+      "washOver": {
+        "label": "Halbflotation",
+        "description": "Trennverfahren, bei dem kleine Sedimentmengen in einer Schüssel mit Wasser vorsichtig geschwenkt werden. Das suspendierte (überstehende) Material wird anschließend über einen Siebstapel gegossen, um leichtere Partikel zu isolieren. Der verbleibende schwere Rückstand in der Schüssel bleibt als schwere Fraktion der Probe erhalten, während das suspendierte Material zur leichten Fraktion wird."
+      },
+      "waterScreening": {
+        "label": "Nasssieben",
+        "description": "Schnelle Sedimentverarbeitungsmethode, bei der Wasser aus einem Schlauch auf einen Siebstapel gegossen wird"
+      },
+      "drySieving": {
+        "label": "Trockensieben",
+        "description": "Verarbeitungstechnik, bei der trockene Erde ohne Verwendung von Wasser durch eine Reihe ineinander liegender Siebe gesiebt wird"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-orgFractionTreatmentType-default": {
+    "values": {
+      "airDrying": {
+        "label": "Lufttrocknen",
+        "description": "Die Probe wurde auf natürlichem Weg trocknen gelassen, der Luft ausgesetzt"
+      },
+      "putIntoWater": {
+        "label": "In Wasser",
+        "description": "Die Probe wurde in Wasser aufbewahrt"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-subsamplingTechnique-default": {
+    "values": {
+      "gridMethod": {
+        "label": "Gitternetz-Methode",
+        "description": "Teilstichprobenverfahren, bei dem die Stichprobe gleichmäßig verteilt und in ein markiertes Raster aufgeteilt wird. Teilstichproben werden dann aus bestimmten oder zufällig ausgewählten Rasterabschnitten entnommen, um räumliche Repräsentativität zu gewährleisten und Stichprobenverzerrungen zu reduzieren."
+      },
+      "riffleBox": {
+        "label": "Probenteiler",
+        "description": "Mechanisches Teilprobenwerkzeug, das eine Probe mithilfe abwechselnder Rutschen in gleiche, repräsentative Portionen aufteilt"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-measurementUnit-default": {
+    "values": {
+      "litres": {
+        "label": "Liter"
+      },
+      "millilitres": {
+        "label": "Milliliter"
+      },
+      "kilograms": {
+        "label": "Kilogramm"
+      },
+      "grams": {
+        "label": "Gramm"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-volumeMeasurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "Schüttvolumen",
+        "description": "Das Probenvolumen wird durch einfaches Schütten in einen Messbehälter gemessen"
+      },
+      "displacement": {
+        "label": "Verdrängungsvolumen",
+        "description": "Das Probenvolumen wird gemessen, indem man eine bekannte Menge Wasser in einen Messbehälter gibt und dann die Probe hinzugibt, um das verdrängte Volumen zu messen"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-orgFractionSubsampledList-default": {
+    "values": {
+      "8Org": {
+        "label": "8 ORG"
+      },
+      "4Org": {
+        "label": "4 ORG"
+      },
+      "2Org": {
+        "label": "2 ORG"
+      },
+      "05Org": {
+        "label": "0,5 ORG"
+      },
+      "035Org": {
+        "label": "0,35 ORG"
+      },
+      "0125Org": {
+        "label": "0,125 ORG"
+      },
+      "025Org": {
+        "label": "0,25 ORG"
+      },
+      "strainOrg": {
+        "label": "Strain (unbekannte Maschenbreite) ORG"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-minFractionSubsampledList-default": {
+    "values": {
+      "8Min": {
+        "label": "8 MIN"
+      },
+      "4Min": {
+        "label": "4 MIN"
+      },
+      "2Min": {
+        "label": "2 MIN"
+      },
+      "1Min": {
+        "label": "1 MIN"
+      },
+      "05Min": {
+        "label": "0,5 MIN"
+      },
+      "strainMin": {
+        "label": "Strain (unbekannte Maschenbreite) MIN"
+      }
+    }
   }
 }

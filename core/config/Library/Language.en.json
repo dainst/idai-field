@@ -10,7 +10,9 @@
     "inventory": "Inventory",
     "hierarchy": "Hierarchy",
     "stratigraphy": "Stratigraphy",
-    "workflow": "Workflow"
+    "workflow": "Workflow",
+    "mineralFraction": "Mineral fraction",
+    "organicFraction": "Organic fraction"
   },
   "commons": {
     "dimensionLength": {
@@ -1486,6 +1488,243 @@
       "fields": {
         "state": {
           "label": "State"
+        }
+      }
+    },
+    "Testing:SampleProcessingSieving": {
+      "Testing:SampleCollection": {
+        "label": "Sample collection",
+        "fields": {
+          "samplingStrategy": {
+            "label": "Type of sampling strategy",
+            "description": "Main category to classify the type of the sediment sample collected, i.e. prioritizing the vertical or the horizonal distribution of remains"
+          },
+          "horizontalSamplingStrategy": {
+            "label": "Type of horizontal sampling strategy",
+            "description": "Strategy used to collect samples across the surface of an archaeological context/site"
+          },
+          "systematicSamplingStrategy": {
+            "label": "Type of systematic sampling strategy",
+            "description": "Specific approach applied when collecting sediment samples following a structured, patterned method"
+          },
+          "proportionSystematicSampling": {
+            "label": "Proportion (%)",
+            "description": "Percentage of the area/sediment sampled in a probabilistic systematic strategy"
+          },
+          "quadrantDimensionsSystematicSampling": {
+            "label": "Quadrant dimensions (m2)",
+            "description": "Size of the sampling quadrant in a systematic grid"
+          },
+          "verticalSamplingStrategy": {
+            "label": "Type of vertical sampling strategy",
+            "description": "Method used to collect sediment samples along the vertical axis of an archaeological context"
+          },
+          "profileSamplingStrategy": {
+            "label": "Type of profile sampling strategy",
+            "description": "Specific technique used to collect sediment from an exposed stratigraphic section"
+          }
+        }
+      },
+      "SampleProcessingSieving": {
+        "label": "Sample processing: Sieving",
+        "fields": {
+          "waterOrigin": {
+            "label": "Water origin",
+            "description": "Source of the water used during sample processing"
+          },
+          "waterChangeInterval": {
+            "label": "Water change interval",
+            "description": "Frequency at which the water used during sample processing is replaced"
+          },
+          "samplePretreated": {
+            "label": "Pretreated before sieving",
+            "description": "States whether the sediment sample underwent any processing steps before sieving"
+          },
+          "pretreatmentType": {
+            "label": "Type of pretreatment performed",
+            "description": "Specific method applied to the sediment sample before sieving"
+          },
+          "pretreatmentChemicals": {
+            "label": "Chemicals used",
+            "description": "Names of the chemical substances used"
+          },
+          "sievingMethod": {
+            "label": "Sieving method",
+            "description": "Technique used to sieve and separate the light organic fraction from the sample"
+          },
+          "sievingMeshes": {
+            "label": "Sieving meshes used",
+            "description": "Mesh sizes used to separate material during sieving"
+          }
+        }
+      },
+      "SampleProcessingPostsieving": {
+        "label": "Sample processing: Post-sieving",
+        "fields": {
+          "orgFractionTreatmentType": {
+            "label": "Type of treatment applied to the organic fraction",
+            "description": "Treatment applied to the sieved organic fractions after sieving"
+          },
+          "orgFractionSubsampled": {
+            "label": "Organic fraction subsampled",
+            "description": "States whether the different organic fractions were either analyzed completely or subsampled"
+          },
+          "orgSubsamplingTechnique": {
+            "label": "Subsampling technique performed (Organic fraction)",
+            "description": "Method used to divide the sieved organic fractions into smaller and representative portions for analysis"
+          },
+          "orgFractionMeasured": {
+            "label": "Organic fraction measured",
+            "description": "Statement on whether the volume/weight of the organic fractions has been recorded"
+          },
+          "fractionMeasurement8Org": {
+            "label": "8 ORG fraction measurement",
+            "description": "Quantity of organic material retained in the 8 mm sieve"
+          },
+          "fractionMeasurement4Org": {
+            "label": "4 ORG fraction measurement",
+            "description": "Quantity of organic material retained in the 4 mm sieve"
+          },
+          "fractionMeasurement2Org": {
+            "label": "2 ORG fraction measurement",
+            "description": "Quantity of organic material retained in the 2 mm sieve"
+          },
+          "fractionMeasurement05Org": {
+            "label": "0,5 ORG fraction measurement",
+            "description": "Quantity of organic material retained in the 0,5 mm sieve"
+          },
+          "fractionMeasurement035Org": {
+            "label": "0,35 ORG fraction measurement",
+            "description": "Quantity of organic material retained in the 0,35 mm sieve"
+          },
+          "fractionMeasurement025Org": {
+            "label": "0,25 ORG fraction measurement",
+            "description": "Quantity of organic material retained in the 0,25 mm sieve"
+          },
+          "fractionMeasurement0125Org": {
+            "label": "0,125 ORG fraction measurement",
+            "description": "Quantity of organic material retained in the 0,125 mm sieve"
+          },
+          "fractionMeasurementStrainOrg": {
+            "label": "Strain (unknown width) fraction measurement",
+            "description": "Quantity of organic material retained in the strain"
+          },
+          "minFractionKept": {
+            "label": "Mineral fraction kept",
+            "description": "Statement on whether the mineral fraction was kept or discarded"
+          },
+          "minFractionMeasured": {
+            "label": "Mineral fraction measured",
+            "description": "Statement on whether the volume/weight of the mineral fractions has been recorded"
+          },
+          "minFractionMeasurementUnit": {
+            "label": "Measurement unit used (Mineral fraction)",
+            "description": "Unit used to express the mineral fraction amount"
+          },
+          "fractionMeasurement8Min": {
+            "label": "8 MIN fraction measurement",
+            "description": "Quantity of mineral material retained in the 8 mm sieve"
+          },
+          "fractionMeasurement4Min": {
+            "label": "4 MIN fraction measurement",
+            "description": "Quantity of mineral material retained in the 4 mm sieve"
+          },
+          "fractionMeasurement2Min": {
+            "label": "2 MIN fraction measurement",
+            "description": "Quantity of mineral material retained in the 2 mm sieve"
+          },
+          "fractionMeasurement1Min": {
+            "label": "1 MIN fraction measurement",
+            "description": "Quantity of mineral material retained in the 1 mm sieve"
+          },
+          "fractionMeasurement05Min": {
+            "label": "0,5 MIN fraction measurement",
+            "description": "Quantity of mineral material retained in the 0,5 mm sieve"
+          },
+          "fractionMeasurementStrainMin": {
+            "label": "Strain (unknown width) MIN fraction measurement",
+            "description": "Quantity of mineral material retained in the strain"
+          },
+          "minFractionSubsampled": {
+            "label": "Mineral fraction subsampled",
+            "description": "States whether the different mineral fractions were either analyzed completely or subsampled"
+          },
+          "minSubsamplingTechnique": {
+            "label": "Subsampling technique performed (Mineral fraction)",
+            "description": "Method used to divide the sieved mineral fractions into smaller and representative portions for analysis"
+          },
+          "minFractionSubsampledList": {
+            "label": "List of subsampled mineral fractions",
+            "description": "Indicates the mineral fractions that were subsampled"
+          },
+          "multiplyingFactor8Min": {
+            "label": "Multiplying factor resulting from the subsampling of the 8 MIN fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 8 MIN fraction"
+          },
+          "multiplyingFactor4Min": {
+            "label": "Multiplying factor resulting from the subsampling of the 4 MIN fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 4 MIN fraction"
+          },
+          "multiplyingFactor2Min": {
+            "label": "Multiplying factor resulting from the subsampling of the 2 MIN fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 2 MIN fraction"
+          },
+          "multiplyingFactor1Min": {
+            "label": "Multiplying factor resulting from the subsampling of the 1 MIN fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 1 MIN fraction"
+          },
+          "multiplyingFactor05Min": {
+            "label": "Multiplying factor resulting from the subsampling of the 0,5 MIN fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,5 MIN fraction"
+          },
+          "multiplyingFactorStrainMin": {
+            "label": "Multiplying factor resulting from the subsampling of the strain (unknown width) MIN fraction",
+            "description": "Multiplying factor that has to be used when estimating the total mineral remains in the strain fraction"
+          },
+          "orgFractionMeasurementUnit": {
+            "label": "Measurement unit (Organic fraction)",
+            "description": "Unit used to express the organic fraction amount"
+          },
+          "orgFractionVolumeMeasurementTechnique": {
+            "label": "Volume measurement technique",
+            "description": "Method used to determine the volume of the organic fraction"
+          },
+          "orgFractionSubsampledList": {
+            "label": "List of subsampled organic fractions",
+            "description": "Indicates the organic fractions that were subsampled"
+          },
+          "multiplyingFactor8Org": {
+            "label": "Multiplying factor resulting from the subsampling of the 8 ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 8 ORG fraction"
+          },
+          "multiplyingFactor4Org": {
+            "label": "Multiplying factor resulting from the subsampling of the 4 ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 4 ORG fraction"
+          },
+          "multiplyingFactor2Org": {
+            "label": "Multiplying factor resulting from the subsampling of the 2 ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 2 ORG fraction"
+          },
+          "multiplyingFactor05Org": {
+            "label": "Multiplying factor resulting from the subsampling of the 0,5 ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,5 ORG fraction"
+          },
+          "multiplyingFactor035Org": {
+            "label": "Multiplying factor resulting from the subsampling of the 0,35 ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,35 ORG fraction"
+          },
+          "multiplyingFactor025Org": {
+            "label": "Multiplying factor resulting from the subsampling of the 0,25 ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,25 ORG fraction"
+          },
+          "multiplyingFactor0125Org": {
+            "label": "Multiplying factor resulting from the subsampling of the 0,125 ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,125 ORG fraction"
+          },
+          "multiplyingFactorStrainOrg": {
+            "label": "Multiplying factor resulting from the subsampling of the strain (unknown width) ORG fraction",
+            "description": "Multiplying factor that has to be used when estimating the total organic remains in the strain fraction"
+          }
         }
       }
     }

@@ -2619,5 +2619,317 @@
         "label": "Canceled"
       }
     }
+  },
+  "SampleCollection-samplingStrategy-default": {
+    "values": {
+      "horizontal": {
+        "label": "Horizontal",
+        "description": "Taken horizontally – e.g. surface or floor"
+      },
+      "vertical": {
+        "label": "Vertical",
+        "description": "Taken vertically – e.g. profile"
+      }
+    }
+  },
+  "SampleCollection-horizontalSamplingStrategy-default": {
+    "values": {
+      "grabSample": {
+        "label": "Grab sample",
+        "description": "Non-strategic, opportunistic sampling carried out without a predefined plan. It includes chance finds."
+      },
+      "systematicSample": {
+        "label": "Systematic sample",
+        "description": "Sampling strategy at regular intervals to evenly cover a defined space"
+      },
+      "judgementSample": {
+        "label": "Judgement sample",
+        "description": "Selective sampling strategy based on prior knowledge, expert interpretation, or informed assumptions about the context being sampled"
+      }
+    }
+  },
+  "SampleCollection-systematicSamplingStrategy-default": {
+    "values": {
+      "fixedVolume": {
+        "label": "Fixed volume",
+        "description": "Sampling strategy in which a consistent, predetermined volume of sediment is collected from each sampling unit to ensure uniformity"
+      },
+      "probabilistic": {
+        "label": "Probabilistic",
+        "description": "Sampling strategy in which the probability that the sample reflects the population it comes from can be statistically assessed"
+      },
+      "random": {
+        "label": "Random",
+        "description": "Sampling strategy in which samples are selected purely by chance, ensuring that every unit in the population has an equal probability of being chosen"
+      },
+      "eachQuadrant": {
+        "label": "Each quadrant",
+        "description": "Sampling strategy where samples are collected from each defined quadrant within the site grid, ensuring systematic coverage of all areas"
+      },
+      "everyOtherQuadrant": {
+        "label": "Every other quadrant",
+        "description": "Sampling strategy where samples are collected in alternating quadrants within the site grid, following a checkerboard pattern to achieve systematic yet spaced coverage"
+      },
+      "100%": {
+        "label": "100%",
+        "description": "Sampling strategy in which the entire sediment within the defined unit is collected or analyzed"
+      }
+    }
+  },
+  "SampleCollection-verticalSamplingStrategy-default": {
+    "values": {
+      "profile": {
+        "label": "Profile",
+        "description": "Sample taken from an exposed stratigraphic section during excavation"
+      },
+      "core": {
+        "label": "Core",
+        "description": "Sample extracted using a coring device, typically without full excavation, to obtain a continuous vertical column of sediment"
+      }
+    }
+  },
+  "SampleCollection-profileSamplingStrategy-default": {
+    "values": {
+      "sondage": {
+        "label": "Sondage",
+        "description": "A small test excavation or trench made to investigate the stratigraphy and recover discrete sediment samples from specific layers without aiming to understand the archaeological contexts that originated the deposits"
+      },
+      "monolith": {
+        "label": "Monolith",
+        "description": "A continuous, undisturbed block of sediment extracted and kept in a fix container to preserve stratigraphy for micromorphological or laboratory analysis"
+      }
+    }
+  },
+  "SampleProcessingSieving-waterOrigin-default": {
+    "values": {
+      "regular": {
+        "label": "Regular",
+        "description": "Standard tap water"
+      },
+      "recycledSystem": {
+        "label": "Recycled system",
+        "description": "Water that has been previously used and filtered for reuse within a closed or semi-closed system"
+      },
+      "riverPondWell": {
+        "label": "River, pond, or well",
+        "description": "Natural water taken from nearby rivers, ponds, wells, or similar sources"
+      }
+    }
+  },
+  "SampleProcessingSieving-waterChangeInterval-default": {
+    "values": {
+      "everySU": {
+        "label": "Every stratigraphical unit"
+      },
+      "everyFewSU": {
+        "label": "Every few stratigraphical units"
+      },
+      "daily": {
+        "label": "Once a day"
+      },
+      "afterFewDays": {
+        "label": "After a few days"
+      }
+    }
+  },
+  "SampleProcessingSieving-pretreatmentType-default": {
+    "values": {
+      "freezing": {
+        "label": "Freezing",
+        "description": "The sample was frozen"
+      },
+      "soaking": {
+        "label": "Soaking",
+        "description": "The sample was immersed in water"
+      },
+      "soakingSoap": {
+        "label": "Soaking with soap",
+        "description": "The sample was immersed in a solution of water and mild detergent"
+      },
+      "soakingChemicals": {
+        "label": "Soaking with other chemicals",
+        "description": "The sample was immersed in a water-and-chemical solution"
+      },
+      "sundryingSoaking": {
+        "label": "Sun-drying and soaking",
+        "description": "The sample was dried in the sunlight and then rehydrated"
+      }
+    }
+  },
+  "SampleProcessingSieving-sievingMethod-default": {
+    "values": {
+      "flotation": {
+        "label": "Flotation",
+        "description": "A flotation tank (of 80 litres of capacity or more) with an outflow at the top is filled up with water and the sample is introduced into the tank, using a sieve or a net to prevent it to fall to the bottom of the tank. The sediment is left in the tank as long as organic material (charred) floats to the surface and it is gently stirred with the hands. A sieve, several sieves or a net is used to recover the light organic fraction that falls with the water coming out of the outflow. The remaining sediment in the tank is the heavy fraction."
+      },
+      "flotationAirCompressor": {
+        "label": "Flotation with air compressor",
+        "description": "Similar to flotation, this system uses compressed air to generate a whirlpool effect in the flotation machine to aid the disaggregation of the sediment lumps and the flotation of charred material"
+      },
+      "bucketFlotation": {
+        "label": "Bucket flotation",
+        "description": "Sediment is poured into a bucket with water, hand-stirred and the supernatant is poured on a sieve or net. The process is repeated as many times as considered necessary until no more organic material floats."
+      },
+      "washOver": {
+        "label": "Wash-over",
+        "description": "Separation technique in which small amounts of sediment are gently swirled in a bowl with water. The suspended (supernatant) material is then poured over a stack of sieves to isolate lighter particles. The remaining heavy residue inside the bowl is kept as heavy fraction of the sample, while the suspended material becomes the light fraction."
+      },
+      "waterScreening": {
+        "label": "Water-screening",
+        "description": "Rapid sediment processing method where water is poured from a hose onto a stack of sieves"
+      },
+      "drySieving": {
+        "label": "Dry-sieving",
+        "description": "Processing technique in which dry soil is sifted through a series of nested sieves without the use of water"
+      }
+    }
+  },
+  "SampleProcessingSieving-sievingMeshes-default": {
+    "values": {
+      "8ORG": {
+        "label": "8 ORG"
+      },
+      "4ORG": {
+        "label": "4 ORG"
+      },
+      "2ORG": {
+        "label": "2 ORG"
+      },
+      "0,5ORG": {
+        "label": "0,5 ORG"
+      },
+      "0,35ORG": {
+        "label": "0,35 ORG"
+      },
+      "0,25ORG": {
+        "label": "0,25 ORG"
+      },
+      "0,125ORG": {
+        "label": "0,125 ORG"
+      },
+      "8MIN": {
+        "label": "8 MIN"
+      },
+      "4MIN": {
+        "label": "4 MIN"
+      },
+      "2MIN": {
+        "label": "2 MIN"
+      },
+      "1MIN": {
+        "label": "1 MIN"
+      },
+      "0,5MIN": {
+        "label": "0,5 MIN"
+      },
+      "strainORG": {
+        "label": "Strain (unknown width) ORG"
+      },
+      "strainMIN": {
+        "label": "Strain (unknown width) MIN"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-orgFractionTreatmentType-default": {
+    "values": {
+      "airDrying": {
+        "label": "Air-drying",
+        "description": "The sample was left to dry naturally, exposed to air"
+      },
+      "putIntoWater": {
+        "label": "Put into water",
+        "description": "The sample was kept in water"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-subsamplingTechnique-default": {
+    "values": {
+      "gridMethod": {
+        "label": "Grid method",
+        "description": "Subsampling technique in which the sample is evenly spread out and divided into a marked grid. Subsamples are then taken from specific or randomly selected grid sections to ensure spatial representativeness and reduce sampling bias."
+      },
+      "riffleBox": {
+        "label": "Riffle-box",
+        "description": "Mechanical subsampling tool that divides a sample into equal, representative portions using alternating chutes"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-measurementUnit-default": {
+    "values": {
+      "litres": {
+        "label": "Litres"
+      },
+      "millilitres": {
+        "label": "Millilitres"
+      },
+      "kilograms": {
+        "label": "Kilograms"
+      },
+      "grams": {
+        "label": "Grams"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-volumeMeasurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "Classical",
+        "description": "The sample volume is measured by simply pouring it into a measuring container"
+      },
+      "displacement": {
+        "label": "Displacement",
+        "description": "The sample volume is measured by having a known amount of water in a measuring container and then adding the sample to measure the displaced volume"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-orgFractionSubsampledList-default": {
+    "values": {
+      "8Org": {
+        "label": "8 ORG"
+      },
+      "4Org": {
+        "label": "4 ORG"
+      },
+      "2Org": {
+        "label": "2 ORG"
+      },
+      "05Org": {
+        "label": "0,5 ORG"
+      },
+      "035Org": {
+        "label": "0,35 ORG"
+      },
+      "0125Org": {
+        "label": "0,125 ORG"
+      },
+      "025Org": {
+        "label": "0,25 ORG"
+      },
+      "strainOrg": {
+        "label": "Strain (unknown width) ORG"
+      }
+    }
+  },
+  "SampleProcessingPostsieving-minFractionSubsampledList-default": {
+    "values": {
+      "8Min": {
+        "label": "8 MIN"
+      },
+      "4Min": {
+        "label": "4 MIN"
+      },
+      "2Min": {
+        "label": "2 MIN"
+      },
+      "1Min": {
+        "label": "1 MIN"
+      },
+      "05Min": {
+        "label": "0,5 MIN"
+      },
+      "strainMin": {
+        "label": "Strain (unknown width) MIN"
+      }
+    }
   }
 }

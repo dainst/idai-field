@@ -2973,6 +2973,259 @@
       "Spuren": {}
     }
   },
+  "SampleCollection-samplingStrategy-default": {
+    "values": {
+      "horizontal": {},
+      "vertical": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025"
+  },
+  "SampleCollection-horizontalSamplingStrategy-default": {
+    "values": {
+      "grabSample": {},
+      "systematicSample": {},
+      "judgementSample": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025"
+  },
+  "SampleCollection-systematicSamplingStrategy-default": {
+    "values": {
+      "fixedVolume": {},
+      "probabilistic": {},
+      "random": {},
+      "eachQuadrant": {},
+      "everyOtherQuadrant": {},
+      "100%": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "fixedVolume",
+      "probabilistic",
+      "100%",
+      "random",
+      "eachQuadrant",
+      "everyOtherQuadrant"
+    ]
+  },
+  "SampleCollection-verticalSamplingStrategy-default": {
+    "values": {
+      "profile": {},
+      "core": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "profile",
+      "core"
+    ]
+  },
+  "SampleCollection-profileSamplingStrategy-default": {
+    "values": {
+      "sondage": {},
+      "monolith": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "monolith",
+      "sondage"
+    ]
+  },
+  "SampleProcessingSieving-waterOrigin-default": {
+    "values": {
+      "regular": {},
+      "recycledSystem": {},
+      "riverPondWell": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "regular",
+      "riverPondWell",
+      "recycledSystem"
+    ]
+  },
+  "SampleProcessingSieving-waterChangeInterval-default": {
+    "values": {
+      "everySU": {},
+      "everyFewSU": {},
+      "daily": {},
+      "afterFewDays": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "everySU",
+      "everyFewSU",
+      "daily",
+      "afterFewDays"
+    ]
+  },
+  "SampleProcessingSieving-pretreatmentType-default": {
+    "values": {
+      "freezing": {},
+      "soaking": {},
+      "soakingSoap": {},
+      "soakingChemicals": {},
+      "sundryingSoaking": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "freezing",
+      "soaking",
+      "soakingSoap",
+      "soakingChemicals",
+      "sundryingSoaking"
+    ]
+  },
+  "SampleProcessingSieving-sievingMethod-default": {
+    "values": {
+      "flotation": {},
+      "flotationAirCompressor": {},
+      "bucketFlotation": {},
+      "washOver": {},
+      "waterScreening": {},
+      "drySieving": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "flotation",
+      "flotationAirCompressor",
+      "bucketFlotation",
+      "washOver",
+      "waterScreening",
+      "drySieving"
+    ]
+  },
+  "SampleProcessingSieving-sievingMeshes-default": {
+    "values": {
+      "8ORG": {},
+      "4ORG": {},
+      "2ORG": {},
+      "0,5ORG": {},
+      "0,35ORG": {},
+      "0,25ORG": {},
+      "0,125ORG": {},
+      "8MIN": {},
+      "4MIN": {},
+      "2MIN": {},
+      "1MIN": {},
+      "0,5MIN": {},
+      "strainORG": {},
+      "strainMIN": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "8MIN",
+      "4MIN",
+      "2MIN",
+      "1MIN",
+      "0,5MIN",
+      "strainMIN",
+      "8ORG",
+      "4ORG",
+      "2ORG",
+      "0,5ORG",
+      "0,35ORG",
+      "0,25ORG",
+      "0,125ORG",
+      "strainORG"
+    ]
+  },
+  "SampleProcessingPostsieving-orgFractionTreatmentType-default": {
+    "values": {
+      "airDrying": {},
+      "putIntoWater": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025"
+  },
+  "SampleProcessingPostsieving-subsamplingTechnique-default": {
+    "values": {
+      "gridMethod": {},
+      "riffleBox": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "gridMethod",
+      "riffleBox"
+    ]
+  },
+  "SampleProcessingPostsieving-measurementUnit-default": {
+    "values": {
+      "litres": {},
+      "kilograms": {},
+      "millilitres": {},
+      "grams": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "litres",
+      "millilitres",
+      "kilograms",
+      "grams"
+    ]
+  },
+  "SampleProcessingPostsieving-volumeMeasurementTechnique-default": {
+    "values": {
+      "classical": {},
+      "displacement": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025"
+  },
+  "SampleProcessingPostsieving-orgFractionSubsampledList-default": {
+    "values": {
+      "8Org": {},
+      "4Org": {},
+      "2Org": {},
+      "05Org": {},
+      "035Org": {},
+      "0125Org": {},
+      "025Org": {},
+      "strainOrg": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "8Org",
+      "4Org",
+      "2Org",
+      "05Org",
+      "035Org",
+      "025Org",
+      "0125Org",
+      "strainOrg"
+    ]
+  },
+  "SampleProcessingPostsieving-minFractionSubsampledList-default": {
+    "values": {
+      "8Min": {},
+      "4Min": {},
+      "2Min": {},
+      "1Min": {},
+      "05Min": {},
+      "strainMin": {}
+    },
+    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "creationDate": "2025",
+    "order": [
+      "8Min",
+      "4Min",
+      "2Min",
+      "1Min",
+      "05Min",
+      "strainMin"
+    ]
+  },
   "Feature-stratigraphicReliability-Boha": {
     "createdBy": "",
     "creationDate": "",

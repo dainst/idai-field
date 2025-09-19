@@ -152,7 +152,7 @@ export class AppComponent {
             'after', $localize `:@@util.dating.after:Nach`
         );
         this.utilTranslations.addTranslation(
-            'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an`
+            'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an:`
         );
         this.utilTranslations.addTranslation(
             'measurementDevice', $localize `:@@util.dimension.measurementDevice:Messgerät:`

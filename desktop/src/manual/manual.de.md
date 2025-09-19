@@ -652,7 +652,7 @@ Angabe einer oder mehrerer Gewichtsmessungen. Zur Auswahl stehen die Maßeinheit
 <p align="center"><img src="images/de/configuration/input_type_weight.png" alt="Eingabetyp 'Gewichtsangabe'"/></p>
 
 #### Volumenangabe
-Angabe einer oder mehrerer Volumenmessungen. Zur Auswahl stehen die Maßeinheiten "ml" und "l". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden.
+Angabe einer oder mehrerer Volumenmessungen. Zur Auswahl stehen die Maßeinheiten "ml" und "l". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Messverfahren" entnommen.
 
 <p align="center"><img src="images/de/configuration/input_type_volume.png" alt="Eingabetyp 'Volumenangabe'"/></p>
 
@@ -1383,6 +1383,7 @@ Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" si
 * *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
 * *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementTechnique*: Feld "Messverfahren" (nur bei Volumenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 
@@ -1813,6 +1814,7 @@ Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" si
 * *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
 * *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementTechnique*: Feld "Messverfahren" (nur bei Volumenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 

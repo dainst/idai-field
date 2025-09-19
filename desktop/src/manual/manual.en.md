@@ -638,7 +638,7 @@ Specification of one or more weight measurements. The units of measurement avail
 <p align="center"><img src="images/en/configuration/input_type_weight.png" alt="Input type 'Weight'"/></p>
 
 #### Volume
-Specification of one or more volume measurements. The units of measurement available are "ml" and "l". Either a single value or a range can be specified.
+Specification of one or more volume measurements. The units of measurement available are "ml" and "l". Either a single value or a range can be specified. The selection options for the dropdown subfield "Measurement technique" are taken from the specified valuelist.
 
 <p align="center"><img src="images/en/configuration/input_type_volume.png" alt="Input type 'Volume'"/></p>
 
@@ -1361,8 +1361,9 @@ Fields of the input types "Dimension", "Weight" and "Volume" are list fields, ea
 * *inputValue*: The measured numerical value.
 * *inputRangeEndValue*: The second measured numerical value, if it is a range.
 * *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m* (Dimension) / *mg*, *g*, *kg* (Weight) / *ml*, *l* (Volume).
-* *measurementPosition*: Field "As measured by" (only for dimensions). The identifier of a value from the valuelist configured for the field must be entered.
-* *measurementDevice*: Field "Measurement device" (only for weights). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementPosition*: Field "As measured by" (only for dimension specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementDevice*: Field "Measurement device" (only for weight specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementTechnique*: Field "Measurement technique" (only for volume specifications). The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 
@@ -1801,6 +1802,7 @@ Fields of the input types "Dimension", "Weight" and "Volume" are list fields, ea
 * *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m* (Dimension) / *mg*, *g*, *kg* (Weight) / *ml*, *l* (Volume).
 * *measurementPosition*: Field "As measured by" (only for dimension specifications). The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementDevice*: Field "Measurement device" (only for weight specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementTechnique*: Field "Measurement technique" (only for volume specifications). The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 

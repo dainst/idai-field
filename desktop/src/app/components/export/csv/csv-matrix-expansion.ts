@@ -22,7 +22,7 @@ export module CSVMatrixExpansion {
         rowsWithMeasurementElementsExpanded(languages, 'weight'), 5 + languages.length
     );
     const expandVolumeItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
-        rowsWithMeasurementElementsExpanded(languages, 'volume'), 4 + languages.length
+        rowsWithMeasurementElementsExpanded(languages, 'volume'), 5 + languages.length
     );
     const expandDatingItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
         rowsWithDatingElementsExpanded(languages), 8 + languages.length
@@ -304,19 +304,19 @@ export module CSVMatrixExpansion {
         
         return (measurement: Measurement): string[] => {
 
-            const { inputValue, inputRangeEndValue, measurementPosition, measurementDevice, measurementComment,
-                inputUnit, isImprecise } = measurement;
+            const { inputValue, inputRangeEndValue, measurementPosition, measurementDevice, measurementTechnique,
+                measurementComment, inputUnit, isImprecise } = measurement;
+
+            const valuelistSubfieldValue: string = getMeasurementValuelistSubfieldValue(
+                inputType, measurementPosition, measurementDevice, measurementTechnique
+            );
 
             const expandedDimension = [
                 (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
                 (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
-                inputUnit ?? ''
-            ].concat(inputType === 'dimension'
-                    ? [measurementPosition ?? '']
-                    : inputType === 'weight'
-                        ? [measurementDevice ?? '']
-                        : []
-            ).concat(measurementComment
+                inputUnit ?? '',
+                valuelistSubfieldValue ?? ''
+            ].concat(measurementComment
                 ? rowsWithI18nStringExpanded(languages)(measurementComment)
                 : languages.map(_ => '')
             );
@@ -373,5 +373,22 @@ export module CSVMatrixExpansion {
         });
 
         return subfields.length - i18nStringSubfields.length + i18nStringSubfields.length * languages.length;
+    }
+
+
+    function getMeasurementValuelistSubfieldValue(inputType: 'dimension'|'weight'|'volume',
+                                                  measurementPosition: string, measurementDevice: string,
+                                                  measurementTechnique: string): string|undefined {
+
+        switch (inputType) {
+            case 'dimension':
+                return measurementPosition;
+            case 'weight':
+                return measurementDevice;
+            case 'volume':
+                return measurementTechnique;
+            default:
+                return undefined;
+        }
     }
  }

@@ -158,6 +158,9 @@ export class AppComponent {
             'measurementDevice', $localize `:@@util.dimension.measurementDevice:Messgerät:`
         );
         this.utilTranslations.addTranslation(
+            'measurementTechnique', $localize `:@@util.volume.measurementTechnique:Messverfahren:`
+        );
+        this.utilTranslations.addTranslation(
             'zenonId', $localize `:@@util.literature.zenonId:Zenon-ID`
         );
         this.utilTranslations.addTranslation(

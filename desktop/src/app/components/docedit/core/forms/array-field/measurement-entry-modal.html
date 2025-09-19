@@ -64,6 +64,17 @@
 		</select>
 	</div>
 
+	<div *ngIf="inputType === 'volume'" class="d-flex flex-row align-items-center flex-wrap mb-3">
+		<label class="measurement-technique-label" i18n="@@util.dimension.measurementTechnique">Messverfahren:</label>
+		<select [(ngModel)]="entry.measurementTechnique"
+				class="ms-2 form-control measurement-technique-select">
+			<option value=""></option>
+			<option *ngFor="let value of getValuelistValues()" value="{{value}}">
+				{{getValueLabel(value)}}
+			</option>
+		</select>
+	</div>
+
 	<div class="mb-3">
 		<div class="checkbox form-check form-check-inline">
 			<label class="form-check-label">

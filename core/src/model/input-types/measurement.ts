@@ -25,6 +25,7 @@ export interface Measurement {
 
     measurementPosition?: string; // Dimension only
     measurementDevice?: string; // Weight only
+    measurementTechnique?: string; // Volume only
     measurementComment?: I18N.String|string;
     isImprecise: boolean;
 
@@ -45,15 +46,16 @@ export module Measurement {
     export const INPUTUNIT = 'inputUnit';
     export const MEASUREMENTPOSITION = 'measurementPosition';
     export const MEASUREMENTDEVICE = 'measurementDevice';
+    export const MEASUREMENTTECHNIQUE = 'measurementTechnique';
     export const MEASUREMENTCOMMENT = 'measurementComment';
     export const ISIMPRECISE = 'isImprecise';
 
     export type InputUnit = 'mm'|'cm'|'m'|'mg'|'g'|'kg'|'ml'|'l';
-    export type Translations = 'asMeasuredBy'|'measurementDevice';
+    export type Translations = 'asMeasuredBy'|'measurementDevice'|'measurementTechnique';
 
     const VALID_FIELDS = [VALUE, LABEL, ISRANGE, RANGEMIN, RANGEMAX,
-        INPUTVALUE, INPUTRANGEENDVALUE, INPUTUNIT, MEASUREMENTPOSITION, MEASUREMENTDEVICE, MEASUREMENTCOMMENT,
-        ISIMPRECISE];
+        INPUTVALUE, INPUTRANGEENDVALUE, INPUTUNIT, MEASUREMENTPOSITION, MEASUREMENTDEVICE, MEASUREMENTTECHNIQUE,
+        MEASUREMENTCOMMENT, ISIMPRECISE];
 
     export const VALID_INPUT_UNITS = {
         dimension: ['mm', 'cm', 'm'],
@@ -70,6 +72,7 @@ export module Measurement {
         }
         if (measurement.measurementPosition && !isString(measurement.measurementPosition)) return false;
         if (measurement.measurementDevice && !isString(measurement.measurementDevice)) return false;
+        if (measurement.measurementTechnique && !isString(measurement.measurementTechnique)) return false;
         if (measurement.measurementComment && !isObject(measurement.measurementComment)
             && !isString(measurement.measurementComment)) {
                 return false;
@@ -91,6 +94,7 @@ export module Measurement {
 
         if (measurement.measurementPosition && inputType !== Field.InputType.DIMENSION) return false;
         if (measurement.measurementDevice && inputType !== Field.InputType.WEIGHT) return false;
+        if (measurement.measurementTechnique && inputType !== Field.InputType.VOLUME) return false;
 
         if (measurement.inputRangeEndValue !== undefined) {
             if (!isNumber(measurement.inputRangeEndValue)) return false;
@@ -160,6 +164,9 @@ export module Measurement {
             } else if (inputType === Field.InputType.WEIGHT && measurement.measurementDevice) {
                 label += ', ' + translate('measurementDevice') +  ' ' 
                       + (valueLabel ?? measurement.measurementDevice);
+            } else if (inputType === Field.InputType.VOLUME && measurement.measurementTechnique) {
+                label += ', ' + translate('measurementTechnique') +  ' ' 
+                      + (valueLabel ?? measurement.measurementTechnique);
             }
             if (measurement.measurementComment) {
                 label += ' (' + getFromI18NString(measurement.measurementComment) + ')';
@@ -167,6 +174,21 @@ export module Measurement {
             return label;
         } else {
             return JSON.stringify(measurement);
+        }
+    }
+
+
+    export function getValuelistSubfieldName(inputType: Field.InputType): string {
+
+        switch (inputType) {
+            case Field.InputType.DIMENSION:
+                return Measurement.MEASUREMENTPOSITION;
+            case Field.InputType.WEIGHT:
+                return Measurement.MEASUREMENTDEVICE;
+            case Field.InputType.VOLUME:
+                return Measurement.MEASUREMENTTECHNIQUE;
+            default:
+                return undefined;
         }
     }
 

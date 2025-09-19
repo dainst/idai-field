@@ -129,7 +129,7 @@
          id="field-editor-valuelist-section"
          class="configuration-editor-section">
         <div class="configuration-editor-section-title">
-            <span *ngIf="!['dimension', 'weight'].includes(getInputType())" i18n="@@configuration.valuelist">
+            <span *ngIf="!['dimension', 'weight', 'volume'].includes(getInputType())" i18n="@@configuration.valuelist">
                 Werteliste
             </span>
             <span *ngIf="getInputType() === 'dimension'" i18n="@@configuration.valuelistForDimensionSubfield">
@@ -137,6 +137,9 @@
             </span>
             <span *ngIf="getInputType() === 'weight'" i18n="@@configuration.valuelistForWeightSubfield">
                 Werteliste (Unterfeld "Messgerät")
+            </span>
+            <span *ngIf="getInputType() === 'volume'" i18n="@@configuration.valuelistForVolumeSubfield">
+                Werteliste (Unterfeld "Messtechnik")
             </span>
         </div>
         <valuelist-selector [inputType]="getInputType()"

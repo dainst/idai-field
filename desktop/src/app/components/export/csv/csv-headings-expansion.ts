@@ -1,5 +1,5 @@
 import { flatMap, range } from 'tsfun';
-import { DateSpecification, Field, I18N, OptionalRange, Subfield } from 'idai-field-core';
+import { DateSpecification, Field, I18N, Measurement, OptionalRange, Subfield } from 'idai-field-core';
 import { CsvExportConsts } from './csv-export-consts';
 
 
@@ -141,6 +141,8 @@ export module CSVHeadingsExpansion {
 
 
     function expandMeasurementHeadings(languages: string[], inputType: 'dimension'|'weight'|'volume') {
+
+        const valuelistSubfieldName: string = Measurement.getValuelistSubfieldName(inputType);
         
         return (n: number) => {
 
@@ -150,12 +152,8 @@ export module CSVHeadingsExpansion {
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit'
-                ].concat(inputType === 'dimension'
-                        ? [fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition']
-                        : inputType === 'weight'
-                            ? [fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementDevice']
-                            : []
-                ).concat(languages.map(language => {
+                ].concat([fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + valuelistSubfieldName])
+                .concat(languages.map(language => {
                     return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'
                         + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
                 })).concat([

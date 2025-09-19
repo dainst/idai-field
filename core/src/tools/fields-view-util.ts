@@ -127,11 +127,9 @@ export module FieldsViewUtil {
                 formatDecimal,
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value),
-                field.definition.inputType === Field.InputType.DIMENSION
-                    ? labels.getValueLabel(field.valuelist, object.measurementPosition)
-                    : field.definition.inputType === Field.InputType.WEIGHT
-                        ? labels.getValueLabel(field.valuelist, object.measurementDevice)
-                        : undefined
+                labels.getValueLabel(
+                    field.valuelist, object[Measurement.getValuelistSubfieldName(field.definition.inputType)]
+                )
             );
         } else if (field?.definition?.inputType === Field.InputType.LITERATURE) {
             return Literature.generateLabel(

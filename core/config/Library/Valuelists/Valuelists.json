@@ -73,6 +73,15 @@
       "Präzisionswaage": {}
     }
   },
+  "volume-measurementTechnique-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "values": {
+      "classical": {},
+      "displacement": {},
+      "calculated": {}
+    }
+  },
   "orientation-default-1": {
     "createdBy": "",
     "creationDate": "",

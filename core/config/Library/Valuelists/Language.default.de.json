@@ -61,6 +61,22 @@
       }
     }
   },
+  "volume-measurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "Schüttvolumen",
+        "description": "Das Volumen wird durch einfaches Schütten in einen Messbehälter gemessen"
+      },
+      "displacement": {
+        "label": "Verdrängungsvolumen",
+        "description": "Das Volumen wird gemessen, indem eine bekannte Menge Wasser in einen Messbehälter gegeben und anschließend das zu untersuchende Objekt hinzugegeben wird, um das verdrängte Volumen zu messen"
+      },
+      "calculated": {
+        "label": "Berechnet aus Ausdehnung",
+        "description": "Das Volumen wird anhand der relevanten Maße errechnet"
+      }
+    }
+  },
   "orientation-default-1": {
     "values": {
       "N-S": {

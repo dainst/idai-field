@@ -750,7 +750,7 @@ describe('CSVExport', () => {
         ];
         resources[0]['volume'] = [
             { inputValue: 100, inputUnit: 'ml', measurementComment: { en: 'Comment 1', de: 'Kommentar 1' } },
-            { inputValue: 200, inputUnit: 'ml', measurementComment: { en: 'Comment 2' } }
+            { inputValue: 200, inputUnit: 'ml', measurementComment: { en: 'Comment 2' }, measurementTechnique: 'abc' }
         ];
         resources[1]['volume'] = [
             { inputValue: 300, inputUnit: 'l', inputRangeEndValue: 400 }
@@ -762,30 +762,34 @@ describe('CSVExport', () => {
         expect(result[0][1]).toBe('"volume.0.inputValue"');
         expect(result[0][2]).toBe('"volume.0.inputRangeEndValue"');
         expect(result[0][3]).toBe('"volume.0.inputUnit"');
-        expect(result[0][4]).toBe('"volume.0.measurementComment.en"');
-        expect(result[0][5]).toBe('"volume.0.measurementComment.de"');
-        expect(result[0][6]).toBe('"volume.0.isImprecise"');
-        expect(result[0][7]).toBe('"volume.1.inputValue"');
-        expect(result[0][8]).toBe('"volume.1.inputRangeEndValue"');
-        expect(result[0][9]).toBe('"volume.1.inputUnit"');
-        expect(result[0][10]).toBe('"volume.1.measurementComment.en"');
-        expect(result[0][11]).toBe('"volume.1.measurementComment.de"');
-        expect(result[0][12]).toBe('"volume.1.isImprecise"');
-        expect(result[0][13]).toBe('"custom"');
+        expect(result[0][4]).toBe('"volume.0.measurementTechnique"');
+        expect(result[0][5]).toBe('"volume.0.measurementComment.en"');
+        expect(result[0][6]).toBe('"volume.0.measurementComment.de"');
+        expect(result[0][7]).toBe('"volume.0.isImprecise"');
+        expect(result[0][8]).toBe('"volume.1.inputValue"');
+        expect(result[0][9]).toBe('"volume.1.inputRangeEndValue"');
+        expect(result[0][10]).toBe('"volume.1.inputUnit"');
+        expect(result[0][11]).toBe('"volume.1.measurementTechnique"');
+        expect(result[0][12]).toBe('"volume.1.measurementComment.en"');
+        expect(result[0][13]).toBe('"volume.1.measurementComment.de"');
+        expect(result[0][14]).toBe('"volume.1.isImprecise"');
+        expect(result[0][15]).toBe('"custom"');
 
         expect(result[1][1]).toBe('"100"');
         expect(result[1][2]).toBe('""');
         expect(result[1][3]).toBe('"ml"');
-        expect(result[1][4]).toBe('"Comment 1"');
-        expect(result[1][5]).toBe('"Kommentar 1"');
-        expect(result[1][6]).toBe('""');
-        expect(result[1][7]).toBe('"200"');
-        expect(result[1][8]).toBe('""');
-        expect(result[1][9]).toBe('"ml"');
-        expect(result[1][10]).toBe('"Comment 2"');
-        expect(result[1][11]).toBe('""');
-        expect(result[1][12]).toBe('""');
+        expect(result[1][4]).toBe('""');
+        expect(result[1][5]).toBe('"Comment 1"');
+        expect(result[1][6]).toBe('"Kommentar 1"');
+        expect(result[1][7]).toBe('""');
+        expect(result[1][8]).toBe('"200"');
+        expect(result[1][9]).toBe('""');
+        expect(result[1][10]).toBe('"ml"');
+        expect(result[1][11]).toBe('"abc"');
+        expect(result[1][12]).toBe('"Comment 2"');
         expect(result[1][13]).toBe('""');
+        expect(result[1][14]).toBe('""');
+        expect(result[1][15]).toBe('""');
 
         expect(result[2][1]).toBe('"300"');
         expect(result[2][2]).toBe('"400"');
@@ -799,7 +803,9 @@ describe('CSVExport', () => {
         expect(result[2][10]).toBe('""');
         expect(result[2][11]).toBe('""');
         expect(result[2][12]).toBe('""');
-        expect(result[2][13]).toBe('"custom"');
+        expect(result[2][13]).toBe('""');
+        expect(result[2][14]).toBe('""');
+        expect(result[2][15]).toBe('"custom"');
 
         expect(result[3][1]).toBe('""');
         expect(result[3][2]).toBe('""');
@@ -814,6 +820,8 @@ describe('CSVExport', () => {
         expect(result[3][11]).toBe('""');
         expect(result[3][12]).toBe('""');
         expect(result[3][13]).toBe('""');
+        expect(result[3][14]).toBe('""');
+        expect(result[3][15]).toBe('""');
     });
 
 

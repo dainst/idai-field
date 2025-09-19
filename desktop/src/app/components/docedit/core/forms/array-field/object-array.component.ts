@@ -118,9 +118,6 @@ export class ObjectArrayComponent implements OnChanges {
 
         if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(this.inputType)) {
             modalReference.componentInstance.inputType = this.inputType;
-        }
-
-        if (this.inputType === Field.InputType.DIMENSION || this.inputType === Field.InputType.WEIGHT) {
             modalReference.componentInstance.valuelist = this.valuelist;
         }
 
@@ -170,11 +167,9 @@ export class ObjectArrayComponent implements OnChanges {
             (value: any) => this.decimalPipe.transform(value),
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: I18N.String|string) => this.labels.getFromI18NString(value),
-            this.field.inputType === Field.InputType.DIMENSION
-                ? this.labels.getValueLabel(this.field.valuelist, measurement.measurementPosition)
-                : this.field.inputType === Field.InputType.WEIGHT
-                    ? this.labels.getValueLabel(this.field.valuelist, measurement.measurementDevice)
-                    : undefined
+            this.labels.getValueLabel(
+                this.field.valuelist, measurement[Measurement.getValuelistSubfieldName(this.field.inputType)]
+            )
         );
     }
 

@@ -225,7 +225,7 @@ export module Field {
         export const DEFAULT = 'default';
 
         export const VALUELIST_INPUT_TYPES: Array<InputType> = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION,
-            WEIGHT];
+            WEIGHT, VOLUME];
         export const NUMBER_INPUT_TYPES: Array<InputType> = [UNSIGNEDINT, UNSIGNEDFLOAT, INT, FLOAT];
         export const I18N_COMPATIBLE_INPUT_TYPES: Array<InputType> = [INPUT, SIMPLE_INPUT, TEXT, MULTIINPUT,
             SIMPLE_MULTIINPUT];

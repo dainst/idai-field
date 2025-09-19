@@ -72,7 +72,8 @@ export class BuiltInConfiguration {
             valuelistId: 'weight-scale-values-default'
         },
         volume: {
-            inputType: Field.InputType.VOLUME
+            inputType: Field.InputType.VOLUME,
+            valuelistId: 'volume-measurementTechnique-default'
         },
         processor: {
             inputType: Field.InputType.CHECKBOXES,

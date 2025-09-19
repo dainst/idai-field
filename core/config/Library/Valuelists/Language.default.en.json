@@ -165,6 +165,22 @@
       }
     }
   },
+  "volume-measurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "Classical",
+        "description": "The volume is measured by simply pouring it into a measuring container"
+      },
+      "displacement": {
+        "label": "Displacement",
+        "description": "The volume is measured by having a known amount of water in a measuring container and then adding the object to be examined to measure the displaced volume"
+      },
+      "calculated": {
+        "label": "Calculated from expansion",
+        "description": "The volume is calculated based on the relevant dimensions"
+      }
+    }
+  },
   "orientation-default-1": {
     "values": {
       "N-S": {

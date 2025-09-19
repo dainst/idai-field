@@ -9,7 +9,8 @@
 
   .input-unit-select,
   .measurement-position-select,
-  .measurement-device-select {
+  .measurement-device-select,
+  .measurement-technique-select {
     width: unset;
   }
 
@@ -30,7 +31,8 @@
   }
 
   .measured-by-label,
-  .measured-with-label {
+  .measured-with-label,
+  .measurement-technique-label {
     position: relative;
     bottom: 1px;
     margin-bottom: 0;

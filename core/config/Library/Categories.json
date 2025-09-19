@@ -1590,10 +1590,6 @@
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "storagePlace-default"
-      },
-      "amount": {
-        "inputType": "unsignedInt",
-        "constraintIndexed": true
       }
     }
   },

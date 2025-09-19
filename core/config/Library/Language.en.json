@@ -1174,9 +1174,6 @@
         },
         "storagePlace": {
           "label": "Storage place"
-        },
-        "amount": {
-          "label": "Total number"
         }
       }
     },

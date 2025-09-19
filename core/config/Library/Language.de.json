@@ -1262,9 +1262,6 @@
         },
         "storagePlace": {
           "label": "Aufbewahrungsort"
-        },
-        "amount": {
-          "label": "Anzahl"
         }
       }
     },

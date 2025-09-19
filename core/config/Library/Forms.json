@@ -1539,7 +1539,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "sampleType", "labNumber", "amount", "weight", "volume"]
+          "fields": ["description", "sampleType", "labNumber", "weight", "volume"]
         },
         {
           "name": "position",

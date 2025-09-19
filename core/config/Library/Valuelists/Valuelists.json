@@ -68,9 +68,9 @@
     "createdBy": "",
     "creationDate": "",
     "values": {
-      "Kofferwaage": {},
-      "Küchenwaage": {},
-      "Präzisionswaage": {}
+      "Luggage scale": {},
+      "Kitchen scale": {},
+      "Precision scale": {}
     }
   },
   "volume-measurementTechnique-default": {

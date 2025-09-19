@@ -165,6 +165,19 @@
       }
     }
   },
+  "weight-scale-values-default": {
+    "values": {
+      "Luggage scale": {
+        "label": "Luggage scale"
+      },
+      "Kitchen scale": {
+        "label": "Kitchen scale"
+      },
+      "Precision scale": {
+        "label": "Precision scale"
+      }
+    }
+  },
   "volume-measurementTechnique-default": {
     "values": {
       "classical": {

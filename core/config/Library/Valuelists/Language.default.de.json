@@ -50,13 +50,13 @@
   },
   "weight-scale-values-default": {
     "values": {
-      "Kofferwaage": {
+      "Luggage scale": {
         "label": "Kofferwaage"
       },
-      "Küchenwaage": {
+      "Kitchen scale": {
         "label": "Küchenwaage"
       },
-      "Präzisionswaage": {
+      "Precision scale": {
         "label": "Präzisionswaage"
       }
     }

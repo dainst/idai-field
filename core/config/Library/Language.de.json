@@ -1628,7 +1628,7 @@
           "description": "Prozentsatz der Fläche/des Sediments, die/das in einer probabilistischen systematischen Strategie beprobt wird"
         },
         "quadrantDimensionsSystematicSampling": {
-          "label": "Quadrantenabmessungen (m2:",
+          "label": "Quadrantenabmessungen (m2)",
           "description": "Größe des Stichprobenquadranten in einem systematischen Raster"
         },
         "verticalSamplingStrategy": {

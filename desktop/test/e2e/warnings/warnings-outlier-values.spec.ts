@@ -454,7 +454,7 @@ test.describe('warnings/outlier values', () => {
         await waitForNotExist(await NavbarPage.getWarnings());
 
         await expectFieldValuesInGroup(
-            '1', 0, ['Kategorie', 'test:field'], ['Ort', '1 cm, gemessen an Maximale Ausdehnung']
+            '1', 0, ['Kategorie', 'test:field'], ['Ort', '1 cm, gemessen an: Maximale Ausdehnung']
         );
     });
 

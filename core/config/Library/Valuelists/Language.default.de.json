@@ -5746,7 +5746,7 @@
         "description": "Probenahmestrategie, bei der die Proben aus jedem definierten Quadranten innerhalb des Standortrasters entnommen werden, um eine systematische Abdeckung aller Bereiche zu gewährleisten"
       },
       "everyOtherQuadrant": {
-        "label": "Jeder andere Quadrant",
+        "label": "Jeder zweite Quadrant",
         "description": "Probenahmestrategie, bei der die Proben in abwechselnden Quadranten innerhalb des Standortrasters gesammelt werden, nach einem Schachbrettmuster, um eine systematische und dennoch gleichmäßige Abdeckung zu erreichen"
       },
       "100%": {

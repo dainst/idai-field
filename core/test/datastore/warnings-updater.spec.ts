@@ -911,6 +911,13 @@ describe('WarningsUpdater', () => {
                             }
                         },
                         {
+                            name: 'volume',
+                            inputType: Field.InputType.VOLUME,
+                            valuelist: {
+                                values: { 'valueVolume': {} }
+                            }
+                        },
+                        {
                             name: 'composite',
                             inputType: Field.InputType.COMPOSITE,
                             subfields: [
@@ -951,8 +958,9 @@ describe('WarningsUpdater', () => {
         documents[1].resource.checkboxes = ['outlierValue3'];
         documents[1].resource.dimension = [{ measurementPosition: 'outlierValue4', inputValue: 1, inputUnit: 'cm' }];
         documents[1].resource.weight = [{ measurementDevice: 'outlierValue5', inputValue: 1, inputUnit: 'g' }];
+        documents[1].resource.volume = [{ measurementTechnique: 'outlierValue6', inputValue: 1, inputUnit: 'l' }];
         documents[1].resource.composite = [
-            { dropdown: 'outlierValue6', checkboxes: ['outlierValue7'], url: 'http://www.example.de' }
+            { dropdown: 'outlierValue7', checkboxes: ['outlierValue8'], url: 'http://www.example.de' }
         ];
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
@@ -974,11 +982,12 @@ describe('WarningsUpdater', () => {
                 checkboxes: ['outlierValue3'],
                 dimension: ['outlierValue4'],
                 weight: ['outlierValue5'],
-                composite: { dropdown: ['outlierValue6'], checkboxes: ['outlierValue7'] }
+                volume: ['outlierValue6'],
+                composite: { dropdown: ['outlierValue7'], checkboxes: ['outlierValue8'] }
             });
         expect(documents[1].warnings?.outliers?.values)
             .toEqual(['outlierValue1', 'outlierValue2', 'outlierValue3', 'outlierValue4', 'outlierValue5',
-                'outlierValue6', 'outlierValue7']);
+                'outlierValue6', 'outlierValue7', 'outlierValue8']);
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');

@@ -55,6 +55,10 @@
       "label": "Gewicht",
       "description": "Angabe des Gewichts"
     },
+    "volume": {
+      "label": "Volumen",
+      "description": "Angabe des Volumens"
+    },
     "area": {
       "label": "Fläche in m2",
       "description": "Flächenangabe in Quadratmetern"
@@ -1258,6 +1262,9 @@
         },
         "storagePlace": {
           "label": "Aufbewahrungsort"
+        },
+        "amount": {
+          "label": "Anzahl"
         }
       }
     },

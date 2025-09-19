@@ -119,6 +119,10 @@
     "weight": {
       "label": "Weight",
       "description": "Weight specification"
+    },
+    "volume": {
+      "label": "Volume",
+      "description": "Volume specification"
     }
   },
   "categories": {
@@ -1170,6 +1174,9 @@
         },
         "storagePlace": {
           "label": "Storage place"
+        },
+        "amount": {
+          "label": "Total number"
         }
       }
     },

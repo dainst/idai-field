@@ -71,6 +71,9 @@ export class BuiltInConfiguration {
             inputType: Field.InputType.WEIGHT,
             valuelistId: 'weight-scale-values-default'
         },
+        volume: {
+            inputType: Field.InputType.VOLUME
+        },
         processor: {
             inputType: Field.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',

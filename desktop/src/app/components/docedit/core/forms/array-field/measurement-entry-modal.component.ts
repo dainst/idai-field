@@ -64,7 +64,7 @@ export class MeasurementEntryModalComponent {
 
     public getValuelistValues(): string[] {
 
-        return Object.keys(this.valuelist.values);
+        return this.labels.orderKeysByLabels(this.valuelist);
     }
 
 

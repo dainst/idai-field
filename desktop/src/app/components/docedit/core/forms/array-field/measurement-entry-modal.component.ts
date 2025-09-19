@@ -30,14 +30,17 @@ export class MeasurementEntryModalComponent {
 
     public fieldLanguages: Array<Language>;
     public isRange: boolean;
+    public valueIds: string[];
 
     constructor(private labels: Labels,
                 private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
                 private activeModal: NgbActiveModal,
                 private menus: Menus) {}
-    
-    
+
+
+    public getValueLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
+
     public cancel = () => this.activeModal.dismiss();
     
     public validate = () => Measurement.isValid(this.entry, this.inputType);
@@ -59,18 +62,7 @@ export class MeasurementEntryModalComponent {
 
         this.fieldLanguages = await this.getFieldLanguages();
         this.isRange = this.entry.inputRangeEndValue !== undefined ? true : false;
-    }
-
-
-    public getValuelistValues(): string[] {
-
-        return this.labels.orderKeysByLabels(this.valuelist);
-    }
-
-
-    public getValueLabel(valueId: string): string {
-
-        return this.labels.getValueLabel(this.valuelist, valueId);
+        this.valueIds = this.labels.orderKeysByLabels(this.valuelist);
     }
 
 

@@ -43,36 +43,30 @@
 		</select>
 	</div>
 	<div *ngIf="inputType === 'dimension'" class="d-flex flex-row align-items-center flex-wrap mb-3">
-		<label class="measured-by-label" i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an</label>
-		<select [(ngModel)]="entry.measurementPosition"
-				class="ms-2 form-control measurement-position-select">
-			<option value=""></option>
-			<option *ngFor="let value of getValuelistValues()" value="{{value}}">
-				{{getValueLabel(value)}}
-			</option>
-		</select>
+		<label class="valuelist-subfield-label" i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an:</label>
+		<searchable-select [selectedValue]="entry.measurementPosition"
+						   [values]="valueIds"
+						   [getLabel]="getValueLabel"
+						   [valuelist]="valuelist"
+						   (onValueSelected)="entry.measurementPosition = $event"></searchable-select>
 	</div>
 
 	<div *ngIf="inputType === 'weight'" class="d-flex flex-row align-items-center flex-wrap mb-3">
-		<label class="measured-with-label" i18n="@@util.dimension.measurementDevice">Messgerät:</label>
-		<select [(ngModel)]="entry.measurementDevice"
-				class="ms-2 form-control measurement-device-select">
-			<option value=""></option>
-			<option *ngFor="let value of getValuelistValues()" value="{{value}}">
-				{{getValueLabel(value)}}
-			</option>
-		</select>
+		<label class="valuelist-subfield-label" i18n="@@util.dimension.measurementDevice">Messgerät:</label>
+		<searchable-select [selectedValue]="entry.measurementDevice"
+						   [values]="valueIds"
+						   [getLabel]="getValueLabel"
+						   [valuelist]="valuelist"
+						   (onValueSelected)="entry.measurementDevice = $event"></searchable-select>
 	</div>
 
 	<div *ngIf="inputType === 'volume'" class="d-flex flex-row align-items-center flex-wrap mb-3">
-		<label class="measurement-technique-label" i18n="@@util.dimension.measurementTechnique">Messverfahren:</label>
-		<select [(ngModel)]="entry.measurementTechnique"
-				class="ms-2 form-control measurement-technique-select">
-			<option value=""></option>
-			<option *ngFor="let value of getValuelistValues()" value="{{value}}">
-				{{getValueLabel(value)}}
-			</option>
-		</select>
+		<label class="valuelist-subfield-label" i18n="@@util.volume.measurementTechnique">Messverfahren:</label>
+		<searchable-select [selectedValue]="entry.measurementTechnique"
+						   [values]="valueIds"
+						   [getLabel]="getValueLabel"
+						   [valuelist]="valuelist"
+						   (onValueSelected)="entry.measurementTechnique = $event"></searchable-select>
 	</div>
 
 	<div class="mb-3">

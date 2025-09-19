@@ -7,10 +7,7 @@
     left: 4px;
   }
 
-  .input-unit-select,
-  .measurement-position-select,
-  .measurement-device-select,
-  .measurement-technique-select {
+  .input-unit-select {
     width: unset;
   }
 
@@ -30,12 +27,15 @@
     }
   }
 
-  .measured-by-label,
-  .measured-with-label,
-  .measurement-technique-label {
+  .valuelist-subfield-label {
+    display: block;
     position: relative;
     bottom: 1px;
-    margin-bottom: 0;
+    margin-bottom: 8px;
+  }
+
+  searchable-select {
+    width: 100%;
   }
 
   .form-check {

@@ -1,12 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { Component, ElementRef, EventEmitter, Input, Output, OnChanges, OnDestroy } from '@angular/core';
 import { isArray, Map } from 'tsfun';
 import { Condition, Datastore, Document, Field, Labels, ProjectConfiguration, Relation, Valuelist, ValuelistUtil,
     compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { UtilTranslations } from '../../../util/util-translations';
-import { ComponentHelpers } from '../../component-helpers';
+import { ConfigurationInfoProvider } from '../../widgets/configuration-info-provider';
 
 
 type StratigraphicalRelationInfo = {
@@ -24,7 +23,7 @@ type StratigraphicalRelationInfo = {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class EditFormGroup implements OnChanges {
+export class EditFormGroup extends ConfigurationInfoProvider implements OnChanges, OnDestroy {
 
     @Input() groupFields: Array<Field>;
     @Input() categoryFields: Array<Field>;
@@ -40,18 +39,18 @@ export class EditFormGroup implements OnChanges {
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };
-    public valueInfoPopover: NgbPopover;
 
     private conditionFieldValuelists: { [fieldName: string]: Valuelist };
-
-    private listener: any;
 
 
     constructor(private labelsService: Labels,
                 private projectConfiguration: ProjectConfiguration,
                 private elementRef: ElementRef,
                 private utilTranslations: UtilTranslations,
-                private datastore: Datastore) {}
+                private datastore: Datastore) {
+
+        super();
+    }
 
 
     async ngOnChanges() {
@@ -59,6 +58,12 @@ export class EditFormGroup implements OnChanges {
         this.updateLabelsAndDescriptions();
         await this.updateConditionFieldValuelists();
         this.autoScroll();
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
     }
 
 
@@ -163,23 +168,6 @@ export class EditFormGroup implements OnChanges {
         }
     }
 
-
-    public async openPopover(popover: NgbPopover) {
-
-        await AngularUtility.refresh();
-        this.valueInfoPopover = popover;
-        this.valueInfoPopover.open();
-        this.initializeListeners();
-    }
-
-
-    public closePopover() {
-
-        if (this.valueInfoPopover) this.valueInfoPopover.close();
-        this.valueInfoPopover = undefined;
-        this.removeListeners();
-    }
-
     
     public isValidFieldData(field: Field): boolean {
 
@@ -279,35 +267,5 @@ export class EditFormGroup implements OnChanges {
 
         const inputElements = fieldElement.getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
-    }
-
-
-    private initializeListeners() {
-    
-        this.listener = this.onMouseEvent.bind(this);
-        window.addEventListener('click', this.listener, true);
-        window.addEventListener('scroll', this.listener, true);
-        window.addEventListener('contextmenu', this.listener, true);
-        window.addEventListener('resize', this.listener, true);
-    }
-
-
-    private removeListeners() {
-
-        if (this.listener) {
-            window.removeEventListener('click', this.listener, true);
-            window.removeEventListener('scroll', this.listener, true);
-            window.removeEventListener('contextmenu', this.listener, true);
-            window.removeEventListener('resize', this.listener, true);
-            this.listener = undefined;
-        }
-    }
-
-
-    private onMouseEvent(event: MouseEvent) {
-
-        if (!ComponentHelpers.isInside(event.target, target => target.localName === 'configuration-info')) {
-            this.closePopover();
-        }
     }
 }

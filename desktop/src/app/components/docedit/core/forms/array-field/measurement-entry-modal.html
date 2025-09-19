@@ -42,7 +42,8 @@
 			<option value="l">l</option>
 		</select>
 	</div>
-	<div *ngIf="inputType === 'dimension'" class="d-flex flex-row align-items-center flex-wrap mb-3">
+	<div *ngIf="inputType === 'dimension'"
+		 class="d-flex flex-row align-items-center flex-wrap mb-3 measurement-position-select">
 		<label class="valuelist-subfield-label" i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an:</label>
 		<searchable-select [selectedValue]="entry.measurementPosition"
 						   [values]="valueIds"
@@ -51,7 +52,8 @@
 						   (onValueSelected)="entry.measurementPosition = $event"></searchable-select>
 	</div>
 
-	<div *ngIf="inputType === 'weight'" class="d-flex flex-row align-items-center flex-wrap mb-3">
+	<div *ngIf="inputType === 'weight'"
+		 class="d-flex flex-row align-items-center flex-wrap mb-3 measurement-device-select">
 		<label class="valuelist-subfield-label" i18n="@@util.dimension.measurementDevice">Messgerät:</label>
 		<searchable-select [selectedValue]="entry.measurementDevice"
 						   [values]="valueIds"
@@ -60,7 +62,8 @@
 						   (onValueSelected)="entry.measurementDevice = $event"></searchable-select>
 	</div>
 
-	<div *ngIf="inputType === 'volume'" class="d-flex flex-row align-items-center flex-wrap mb-3">
+	<div *ngIf="inputType === 'volume'"
+		 class="d-flex flex-row align-items-center flex-wrap mb-3 measurement-volume-select">
 		<label class="valuelist-subfield-label" i18n="@@util.volume.measurementTechnique">Messverfahren:</label>
 		<searchable-select [selectedValue]="entry.measurementTechnique"
 						   [values]="valueIds"

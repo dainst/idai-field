@@ -1,4 +1,4 @@
-import { click, selectOption, typeIn } from '../app';
+import { click, selectSearchableSelectOption, typeIn } from '../app';
 
 
 /**
@@ -14,9 +14,12 @@ export class DoceditMeasurementEntryModalPage {
     }
 
 
-    public static async clickMeasurementPositionOption(optionValue: string) {
+    public static async clickMeasurementPositionOption(optionLabel: string) {
 
-        return selectOption('.measurement-entry-modal-body .measurement-position-select', optionValue);
+        return selectSearchableSelectOption(
+            '.measurement-entry-modal-body .measurement-position-select searchable-select',
+            optionLabel
+        );
     }
 
     

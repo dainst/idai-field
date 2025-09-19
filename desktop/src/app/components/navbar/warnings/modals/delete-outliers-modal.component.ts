@@ -162,6 +162,11 @@ export class DeleteOutliersModalComponent {
                 if (entry.measurementDevice === this.outlierValue) delete entry.measurementDevice;
             });
             return array;
+        } else if (field.inputType === Field.InputType.VOLUME) {
+            array.forEach((entry: Measurement) => {
+                if (entry.measurementTechnique === this.outlierValue) delete entry.measurementTechnique;
+            });
+            return array;
         } else if (field.inputType === Field.InputType.COMPOSITE) {
             array.forEach(entry => this.removeValueFromCompositeEntry(entry, field, document));
             return array.filter(entry => !isEmpty(entry));

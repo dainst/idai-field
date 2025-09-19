@@ -206,6 +206,9 @@ export class FixOutliersModalComponent {
             } else if (field.inputType === Field.InputType.WEIGHT
                     && entry.measurementDevice === this.outlierValue) {
                 entry.measurementDevice = this.selectedValues[0];
+            } else if (field.inputType === Field.InputType.VOLUME
+                    && entry.measurementTechnique === this.outlierValue) {
+                entry.measurementTechnique = this.selectedValues[0];
             } else if (field.inputType === Field.InputType.DROPDOWNRANGE
                     && entry[OptionalRange.VALUE] === this.outlierValue) {
                 entry.value = this.selectedValues[0];

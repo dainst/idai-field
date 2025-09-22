@@ -1887,6 +1887,18 @@
       "creationDate": "2025",
       "categoryName": "Sieving",
       "fields": {
+        "waterOrigin": {
+          "condition": {
+              "values": [
+                "flotation",
+                "flotationAirCompressor",
+                "bucketFlotation",
+                "washOver",
+                "waterScreening"
+              ],
+              "fieldName": "sievingMethod"
+            }
+        },
         "waterChangeInterval": {
           "condition": {
             "fieldName": "waterOrigin",

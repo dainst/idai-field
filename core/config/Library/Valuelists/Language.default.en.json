@@ -2649,7 +2649,7 @@
       }
     }
   },
-  "SampleCollection-samplingStrategy-default": {
+  "Sampling-samplingStrategy-default": {
     "values": {
       "horizontal": {
         "label": "Horizontal",
@@ -2661,7 +2661,7 @@
       }
     }
   },
-  "SampleCollection-horizontalSamplingStrategy-default": {
+  "Sampling-horizontalSamplingStrategy-default": {
     "values": {
       "grabSample": {
         "label": "Grab sample",
@@ -2677,7 +2677,7 @@
       }
     }
   },
-  "SampleCollection-systematicSamplingStrategy-default": {
+  "Sampling-systematicSamplingStrategy-default": {
     "values": {
       "fixedVolume": {
         "label": "Fixed volume",
@@ -2705,7 +2705,7 @@
       }
     }
   },
-  "SampleCollection-verticalSamplingStrategy-default": {
+  "Sampling-verticalSamplingStrategy-default": {
     "values": {
       "profile": {
         "label": "Profile",
@@ -2717,7 +2717,7 @@
       }
     }
   },
-  "SampleCollection-profileSamplingStrategy-default": {
+  "Sampling-profileSamplingStrategy-default": {
     "values": {
       "sondage": {
         "label": "Sondage",
@@ -2729,7 +2729,7 @@
       }
     }
   },
-  "SampleProcessingSieving-waterOrigin-default": {
+  "Sieving-waterOrigin-default": {
     "values": {
       "regular": {
         "label": "Regular",
@@ -2745,7 +2745,7 @@
       }
     }
   },
-  "SampleProcessingSieving-waterChangeInterval-default": {
+  "Sieving-waterChangeInterval-default": {
     "values": {
       "everySU": {
         "label": "Every stratigraphical unit"
@@ -2761,7 +2761,7 @@
       }
     }
   },
-  "SampleProcessingSieving-pretreatmentType-default": {
+  "Sieving-pretreatmentType-default": {
     "values": {
       "freezing": {
         "label": "Freezing",
@@ -2785,7 +2785,7 @@
       }
     }
   },
-  "SampleProcessingSieving-sievingMethod-default": {
+  "Sieving-sievingMethod-default": {
     "values": {
       "flotation": {
         "label": "Flotation",
@@ -2813,7 +2813,7 @@
       }
     }
   },
-  "SampleProcessingSieving-sievingMeshes-default": {
+  "Sieving-sievingMeshes-default": {
     "values": {
       "8ORG": {
         "label": "8 ORG"
@@ -2859,7 +2859,7 @@
       }
     }
   },
-  "SampleProcessingPostsieving-orgFractionTreatmentType-default": {
+  "SievedFractionProcessing-orgFractionTreatmentType-default": {
     "values": {
       "airDrying": {
         "label": "Air-drying",
@@ -2871,7 +2871,7 @@
       }
     }
   },
-  "SampleProcessingPostsieving-subsamplingTechnique-default": {
+  "SievedFractionProcessing-subsamplingTechnique-default": {
     "values": {
       "gridMethod": {
         "label": "Grid method",
@@ -2883,7 +2883,7 @@
       }
     }
   },
-  "SampleProcessingPostsieving-measurementUnit-default": {
+  "SievedFractionProcessing-measurementUnit-default": {
     "values": {
       "litres": {
         "label": "Litres"
@@ -2899,7 +2899,7 @@
       }
     }
   },
-  "SampleProcessingPostsieving-volumeMeasurementTechnique-default": {
+  "SievedFractionProcessing-volumeMeasurementTechnique-default": {
     "values": {
       "classical": {
         "label": "Classical",
@@ -2911,7 +2911,7 @@
       }
     }
   },
-  "SampleProcessingPostsieving-orgFractionSubsampledList-default": {
+  "SievedFractionProcessing-orgFractionSubsampledList-default": {
     "values": {
       "8Org": {
         "label": "8 ORG"
@@ -2939,7 +2939,7 @@
       }
     }
   },
-  "SampleProcessingPostsieving-minFractionSubsampledList-default": {
+  "SievedFractionProcessing-minFractionSubsampledList-default": {
     "values": {
       "8Min": {
         "label": "8 MIN"

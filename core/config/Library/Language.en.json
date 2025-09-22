@@ -1495,8 +1495,8 @@
         }
       }
     },
-    "SampleCollection": {
-      "label": "Sample collection",
+    "Sampling": {
+      "label": "Sampling",
       "fields": {
         "samplingStrategy": {
           "label": "Type of sampling strategy",
@@ -1528,8 +1528,8 @@
         }
       }
     },
-    "SampleProcessingSieving": {
-      "label": "Sample processing: Sieving",
+    "Sieving": {
+      "label": "Sieving",
       "fields": {
         "waterOrigin": {
           "label": "Water origin",
@@ -1561,8 +1561,8 @@
         }
       }
     },
-    "SampleProcessingPostsieving": {
-      "label": "Sample processing: Post-sieving",
+    "SievedFractionProcessing": {
+      "label": "Sieved fraction processing",
       "fields": {
         "orgFractionTreatmentType": {
           "label": "Type of treatment applied to the organic fraction",

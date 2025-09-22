@@ -1608,8 +1608,8 @@
         }
       }
     },
-    "SampleCollection": {
-      "label": "Probensammlung",
+    "Sampling": {
+      "label": "Probenahme",
       "fields": {
         "samplingStrategy": {
           "label": "Art der Probenentnahme",
@@ -1641,8 +1641,8 @@
         }
       }
     },
-    "SampleProcessingSieving": {
-      "label": "Probenverarbeitung: Siebung",
+    "Sieving": {
+      "label": "Siebung",
       "fields": {
         "waterOrigin": {
           "label": "Wasserherkunft",
@@ -1674,8 +1674,8 @@
         }
       }
     },
-    "SampleProcessingPostsieving": {
-      "label": "Probenverarbeitung: Nachsiebung",
+    "SievedFractionProcessing": {
+      "label": "Siebfraktionsverarbeitung",
       "fields": {
         "orgFractionTreatmentType": {
           "label": "Art der Behandlung der organischen Fraktion",

@@ -1639,24 +1639,24 @@
     "description": {},
     "fields": {}
   },
-  "SampleCollection": {
+  "Sampling": {
     "parent": "Process",
     "description": {},
     "fields": {
       "samplingStrategy": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleCollection-samplingStrategy-default"
+        "valuelistId": "Sampling-samplingStrategy-default"
       },
       "horizontalSamplingStrategy": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleCollection-horizontalSamplingStrategy-default"
+        "valuelistId": "Sampling-horizontalSamplingStrategy-default"
       },
       "systematicSamplingStrategy": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleCollection-systematicSamplingStrategy-default"
+        "valuelistId": "Sampling-systematicSamplingStrategy-default"
       },
       "proportionSystematicSampling": {
         "inputType": "unsignedFloat"
@@ -1667,12 +1667,12 @@
       "verticalSamplingStrategy": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleCollection-verticalSamplingStrategy-default"
+        "valuelistId": "Sampling-verticalSamplingStrategy-default"
       },
       "profileSamplingStrategy": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleCollection-profileSamplingStrategy-default"
+        "valuelistId": "Sampling-profileSamplingStrategy-default"
       }
     },
     "defaultRange": {
@@ -1680,19 +1680,19 @@
       "resultsIn": ["Sample"]
     }
   },
-  "SampleProcessingSieving": {
+  "Sieving": {
     "parent": "Process",
     "description": {},
     "fields": {
       "waterOrigin": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingSieving-waterOrigin-default"
+        "valuelistId": "Sieving-waterOrigin-default"
       },
       "waterChangeInterval": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingSieving-waterChangeInterval-default"
+        "valuelistId": "Sieving-waterChangeInterval-default"
       },
       "samplePretreated": {
         "inputType": "boolean",
@@ -1701,7 +1701,7 @@
       "pretreatmentType": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingSieving-pretreatmentType-default"
+        "valuelistId": "Sieving-pretreatmentType-default"
       },
       "pretreatmentChemicals": {
         "inputType": "multiInput"
@@ -1709,19 +1709,19 @@
       "sievingMethod": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingSieving-sievingMethod-default"
+        "valuelistId": "Sieving-sievingMethod-default"
       },
       "sievingMeshes": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingSieving-sievingMeshes-default"
+        "valuelistId": "Sieving-sievingMeshes-default"
       }
     },
     "defaultRange": {
       "isCarriedOutOn": ["Sample"]
     }
   },
-  "SampleProcessingPostsieving": {
+  "SievedFractionProcessing": {
     "parent": "Process",
     "description": {},
     "fields": {
@@ -1736,7 +1736,7 @@
       "minFractionMeasurementUnit": {
         "inputType": "radio",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-measurementUnit-default"
+        "valuelistId": "SievedFractionProcessing-measurementUnit-default"
       },
       "fractionMeasurement8Min": {
         "inputType": "unsignedFloat"
@@ -1763,12 +1763,12 @@
       "minSubsamplingTechnique": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-subsamplingTechnique-default"
+        "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
       },
       "minFractionSubsampledList": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-minFractionSubsampledList-default"
+        "valuelistId": "SievedFractionProcessing-minFractionSubsampledList-default"
       },
       "multiplyingFactor8Min": {
         "inputType": "unsignedFloat"
@@ -1791,7 +1791,7 @@
       "orgFractionTreatmentType": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-orgFractionTreatmentType-default"
+        "valuelistId": "SievedFractionProcessing-orgFractionTreatmentType-default"
       },
       "orgFractionMeasured": {
         "inputType": "boolean",
@@ -1800,12 +1800,12 @@
       "orgFractionMeasurementUnit": {
         "inputType": "radio",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-measurementUnit-default"
+        "valuelistId": "SievedFractionProcessing-measurementUnit-default"
       },
       "orgFractionVolumeMeasurementTechnique": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-volumeMeasurementTechnique-default"
+        "valuelistId": "SievedFractionProcessing-volumeMeasurementTechnique-default"
       },
       "fractionMeasurement8Org": {
         "inputType": "unsignedFloat"
@@ -1838,12 +1838,12 @@
       "orgSubsamplingTechnique": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-subsamplingTechnique-default"
+        "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
       },
       "orgFractionSubsampledList": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SampleProcessingPostsieving-orgFractionSubsampledList-default"
+        "valuelistId": "SievedFractionProcessing-orgFractionSubsampledList-default"
       },
       "multiplyingFactor8Org": {
         "inputType": "unsignedFloat"

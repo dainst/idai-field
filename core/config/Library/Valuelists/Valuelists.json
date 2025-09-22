@@ -2982,7 +2982,7 @@
       "Spuren": {}
     }
   },
-  "SampleCollection-samplingStrategy-default": {
+  "Sampling-samplingStrategy-default": {
     "values": {
       "horizontal": {},
       "vertical": {}
@@ -2990,7 +2990,7 @@
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
-  "SampleCollection-horizontalSamplingStrategy-default": {
+  "Sampling-horizontalSamplingStrategy-default": {
     "values": {
       "grabSample": {},
       "systematicSample": {},
@@ -2999,7 +2999,7 @@
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
-  "SampleCollection-systematicSamplingStrategy-default": {
+  "Sampling-systematicSamplingStrategy-default": {
     "values": {
       "fixedVolume": {},
       "probabilistic": {},
@@ -3019,7 +3019,7 @@
       "everyOtherQuadrant"
     ]
   },
-  "SampleCollection-verticalSamplingStrategy-default": {
+  "Sampling-verticalSamplingStrategy-default": {
     "values": {
       "profile": {},
       "core": {}
@@ -3031,7 +3031,7 @@
       "core"
     ]
   },
-  "SampleCollection-profileSamplingStrategy-default": {
+  "Sampling-profileSamplingStrategy-default": {
     "values": {
       "sondage": {},
       "monolith": {}
@@ -3043,7 +3043,7 @@
       "sondage"
     ]
   },
-  "SampleProcessingSieving-waterOrigin-default": {
+  "Sieving-waterOrigin-default": {
     "values": {
       "regular": {},
       "recycledSystem": {},
@@ -3057,7 +3057,7 @@
       "recycledSystem"
     ]
   },
-  "SampleProcessingSieving-waterChangeInterval-default": {
+  "Sieving-waterChangeInterval-default": {
     "values": {
       "everySU": {},
       "everyFewSU": {},
@@ -3073,7 +3073,7 @@
       "afterFewDays"
     ]
   },
-  "SampleProcessingSieving-pretreatmentType-default": {
+  "Sieving-pretreatmentType-default": {
     "values": {
       "freezing": {},
       "soaking": {},
@@ -3091,7 +3091,7 @@
       "sundryingSoaking"
     ]
   },
-  "SampleProcessingSieving-sievingMethod-default": {
+  "Sieving-sievingMethod-default": {
     "values": {
       "flotation": {},
       "flotationAirCompressor": {},
@@ -3111,7 +3111,7 @@
       "drySieving"
     ]
   },
-  "SampleProcessingSieving-sievingMeshes-default": {
+  "Sieving-sievingMeshes-default": {
     "values": {
       "8ORG": {},
       "4ORG": {},
@@ -3147,7 +3147,7 @@
       "strainORG"
     ]
   },
-  "SampleProcessingPostsieving-orgFractionTreatmentType-default": {
+  "SievedFractionProcessing-orgFractionTreatmentType-default": {
     "values": {
       "airDrying": {},
       "putIntoWater": {}
@@ -3155,7 +3155,7 @@
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
-  "SampleProcessingPostsieving-subsamplingTechnique-default": {
+  "SievedFractionProcessing-subsamplingTechnique-default": {
     "values": {
       "gridMethod": {},
       "riffleBox": {}
@@ -3167,7 +3167,7 @@
       "riffleBox"
     ]
   },
-  "SampleProcessingPostsieving-measurementUnit-default": {
+  "SievedFractionProcessing-measurementUnit-default": {
     "values": {
       "litres": {},
       "kilograms": {},
@@ -3183,7 +3183,7 @@
       "grams"
     ]
   },
-  "SampleProcessingPostsieving-volumeMeasurementTechnique-default": {
+  "SievedFractionProcessing-volumeMeasurementTechnique-default": {
     "values": {
       "classical": {},
       "displacement": {}
@@ -3191,7 +3191,7 @@
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
-  "SampleProcessingPostsieving-orgFractionSubsampledList-default": {
+  "SievedFractionProcessing-orgFractionSubsampledList-default": {
     "values": {
       "8Org": {},
       "4Org": {},
@@ -3215,7 +3215,7 @@
       "strainOrg"
     ]
   },
-  "SampleProcessingPostsieving-minFractionSubsampledList-default": {
+  "SievedFractionProcessing-minFractionSubsampledList-default": {
     "values": {
       "8Min": {},
       "4Min": {},

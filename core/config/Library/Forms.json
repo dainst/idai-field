@@ -1830,11 +1830,11 @@
         }
       ]
     },
-    "SampleCollection:default": {
+    "Sampling:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "2025",
-      "categoryName": "SampleCollection",
+      "categoryName": "Sampling",
       "fields": {
         "horizontalSamplingStrategy": {
           "condition": {
@@ -1881,11 +1881,11 @@
         }
       ]
     },
-    "SampleProcessingSieving:default": {
+    "Sieving:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "2025",
-      "categoryName": "SampleProcessingSieving",
+      "categoryName": "Sieving",
       "fields": {
         "waterChangeInterval": {
           "condition": {
@@ -1914,11 +1914,11 @@
         }
       ]
     },
-    "SampleProcessingPostsieving:default": {
+    "SievedFractionProcessing:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "2025",
-      "categoryName": "SampleProcessingPostsieving",
+      "categoryName": "SievedFractionProcessing",
       "fields": {
         "orgSubsamplingTechnique": {
           "condition": {

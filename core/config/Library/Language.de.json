@@ -1722,8 +1722,8 @@
           "description": "Menge an organischem Material, das im 0,125-mm-Sieb zurückgehalten wird"
         },
         "fractionMeasurementStrainOrg": {
-          "label": "Strain (unbekannte Maschenbreite) ORG-Fraktionsmessung",
-          "description": "Menge an organischem Material, das im Sieb zurückgehalten wird"
+          "label": "Siebung (unbekannte Maschenbreite) ORG-Fraktionsmessung",
+          "description": "Menge an organischem Material, das im Siebrückstand zurückgehalten wird"
         },
         "minFractionKept": {
           "label": "Mineralfraktion aufbewahrt",
@@ -1759,7 +1759,7 @@
         },
         "fractionMeasurementStrainMin": {
           "label": "Siebung (unbekannte Breite) MIN-Fraktionsmessung",
-          "description": "Menge des im Siebrückstand zurückgehaltenen mineralischen Materials"
+          "description": "Menge des mineralischen Materials, das im Siebrückstand zurückgehalten wird"
         },
         "minFractionSubsampled": {
           "label": "Stichprobenentnahme der Mineralfraktion",
@@ -1774,27 +1774,27 @@
           "description": "Gibt die Mineralfraktionen an, die einer Stichprobenentnahme unterzogen wurden"
         },
         "multiplyingFactor8Min": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 8-MIN-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 8 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 8-MIN-Fraktion zu verwenden ist"
         },
         "multiplyingFactor4Min": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 4-MIN-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 4 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 4-MIN-Fraktion zu verwenden ist"
         },
         "multiplyingFactor2Min": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 2-MIN-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 2 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 2-MIN-Fraktion zu verwenden ist"
         },
         "multiplyingFactor1Min": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 1-MIN-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 1 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 1-MIN-Fraktion zu verwenden ist"
         },
         "multiplyingFactor05Min": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 0,5-MIN-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 0,5 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,5-MIN-Fraktion zu verwenden ist"
         },
         "multiplyingFactorStrainMin": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der Siebfraktion MIN (unbekannte Maschenbreite) ergibt",
+          "label": "Multiplikationsfaktor Siebfraktion MIN (unbekannte Maschenbreite)",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an mineralischen Rückständen in der Siebfraktion zu verwenden ist"
         },
         "orgFractionMeasurementUnit": {
@@ -1810,35 +1810,35 @@
           "description": "Gibt die organischen Fraktionen an, die einer Teilprobenahme unterzogen wurden"
         },
         "multiplyingFactor8Org": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 8-ORG-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 8 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 8-ORG-Fraktion zu verwenden ist"
         },
         "multiplyingFactor4Org": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 4 ORG-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 4 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 4-ORG-Fraktion zu verwenden ist"
         },
         "multiplyingFactor2Org": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 2-ORG-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 2 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 2-ORG-Fraktion zu verwenden ist"
         },
         "multiplyingFactor05Org": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 0,5-ORG-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 0,5 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,5-ORG-Fraktion zu verwenden ist"
         },
         "multiplyingFactor035Org": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 0,35-ORG-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 0,35 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,35-ORG-Fraktion zu verwenden ist"
         },
         "multiplyingFactor025Org": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 0,25-ORG-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 0,25 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,25-ORG-Fraktion zu verwenden ist"
         },
         "multiplyingFactor0125Org": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der 0,125-ORG-Fraktion ergibt",
+          "label": "Multiplikationsfaktor 0,125 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,125-ORG-Fraktion zu verwenden ist"
         },
         "multiplyingFactorStrainOrg": {
-          "label": "Multiplikationsfaktor, der sich aus der Stichprobenentnahme der Siebfraktion ORG (unbekannte Maschenbreite) ergibt",
+          "label": "Multiplikationsfaktor Siebfraktion ORG (unbekannte Maschenbreite)",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an organischen Rückständen in der Siebfraktion zu verwenden ist"
         }
       }

@@ -1909,8 +1909,8 @@
       "groups": [
         {
           "name": "properties",
-          "fields": ["waterOrigin", "waterChangeInterval", "samplePretreated", "pretreatmentType",
-            "pretreatmentChemicals", "sievingMethod", "sievingMeshes"]
+          "fields": ["sievingMethod", "sievingMeshes", "waterOrigin", "waterChangeInterval", "samplePretreated",
+            "pretreatmentType", "pretreatmentChemicals"]
         }
       ]
     },

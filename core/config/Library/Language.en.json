@@ -1621,7 +1621,7 @@
           "description": "Statement on whether the volume/weight of the mineral fractions has been recorded"
         },
         "mineralFractionMeasurementUnit": {
-          "label": "Measurement unit used (Mineral fraction)",
+          "label": "Measurement unit (Mineral fraction)",
           "description": "Unit used to express the mineral fraction amount"
         },
         "mineralFractionMeasurement8": {

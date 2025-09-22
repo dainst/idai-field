@@ -5855,7 +5855,7 @@
     "values": {
       "flotation": {
         "label": "Flotation",
-        "description": "Ein Flotationstank (mit einem Fassungsvermögen von mindestens 80 Litern) mit einem oberen Abfluss wird mit Wasser gefüllt und die Probe in den Tank eingebracht. Ein Sieb oder Netz verhindert, dass die Probe auf den Boden sinkt. Das Sediment verbleibt im Tank, bis organisches Material (verkohlt) an die Oberfläche steigt. Anschließend wird vorsichtig mit den Händen umgerührt. Ein Sieb, mehrere Siebe oder ein Netz dienen dazu, die leichte organische Fraktion, die mit dem aus dem Abfluss austretenden Wasser absinkt, aufzufangen. Das verbleibende Sediment im Tank ist die schwere Fraktion."
+        "description": "Ein Flotationstank (mit einem Fassungsvermögen von mindestens 80 Litern) mit einem oberen Abfluss wird mit Wasser gefüllt und die Probe in den Tank eingebracht. Ein Sieb oder Netz verhindert, dass die Probe auf den Boden sinkt. Das Sediment verbleibt im Tank, bis organisches Material (verkohlt) an die Oberfläche steigt. Anschließend wird vorsichtig mit den Händen umgerührt. Ein Sieb, mehrere Siebe oder ein Netz dienen dazu, die organische Fraktion, die mit dem aus dem Abfluss austretenden Wasser absinkt, aufzufangen. Das verbleibende Sediment im Tank ist die mineralische Fraktion."
       },
       "flotationAirCompressor": {
         "label": "Flotation mit Luftkompressor",
@@ -5867,7 +5867,7 @@
       },
       "washOver": {
         "label": "Halbflotation",
-        "description": "Trennverfahren, bei dem kleine Sedimentmengen in einer Schüssel mit Wasser vorsichtig geschwenkt werden. Das suspendierte (überstehende) Material wird anschließend über einen Siebstapel gegossen, um leichtere Partikel zu isolieren. Der verbleibende schwere Rückstand in der Schüssel bleibt als schwere Fraktion der Probe erhalten, während das suspendierte Material zur leichten Fraktion wird."
+        "description": "Trennverfahren, bei dem kleine Sedimentmengen in einer Schüssel mit Wasser vorsichtig geschwenkt werden. Das suspendierte (überstehende) Material wird anschließend über einen Siebstapel gegossen, um leichtere Partikel zu isolieren. Der verbleibende schwere Rückstand in der Schüssel bleibt als mineralische Fraktion der Probe erhalten, während das suspendierte Material zur organischen Fraktion wird."
       },
       "waterScreening": {
         "label": "Nasssieben",

@@ -2789,7 +2789,7 @@
     "values": {
       "flotation": {
         "label": "Flotation",
-        "description": "A flotation tank (of 80 litres of capacity or more) with an outflow at the top is filled up with water and the sample is introduced into the tank, using a sieve or a net to prevent it to fall to the bottom of the tank. The sediment is left in the tank as long as organic material (charred) floats to the surface and it is gently stirred with the hands. A sieve, several sieves or a net is used to recover the light organic fraction that falls with the water coming out of the outflow. The remaining sediment in the tank is the heavy fraction."
+        "description": "A flotation tank (of 80 litres of capacity or more) with an outflow at the top is filled up with water and the sample is introduced into the tank, using a sieve or a net to prevent it to fall to the bottom of the tank. The sediment is left in the tank as long as organic material (charred) floats to the surface and it is gently stirred with the hands. A sieve, several sieves or a net is used to recover the organic fraction that falls with the water coming out of the outflow. The remaining sediment in the tank is the mineral fraction."
       },
       "flotationAirCompressor": {
         "label": "Flotation with air compressor",
@@ -2801,7 +2801,7 @@
       },
       "washOver": {
         "label": "Wash-over",
-        "description": "Separation technique in which small amounts of sediment are gently swirled in a bowl with water. The suspended (supernatant) material is then poured over a stack of sieves to isolate lighter particles. The remaining heavy residue inside the bowl is kept as heavy fraction of the sample, while the suspended material becomes the light fraction."
+        "description": "Separation technique in which small amounts of sediment are gently swirled in a bowl with water. The suspended (supernatant) material is then poured over a stack of sieves to isolate lighter particles. The remaining heavy residue inside the bowl is kept as mineral fraction of the sample, while the suspended material becomes the organic fraction."
       },
       "waterScreening": {
         "label": "Water-screening",

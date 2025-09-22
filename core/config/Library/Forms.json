@@ -1889,17 +1889,17 @@
       "fields": {
         "waterOrigin": {
           "condition": {
-              "values": [
-                "flotation",
-                "flotationAirCompressor",
-                "bucketFlotation",
-                "washOver",
-                "waterScreening"
-              ],
-              "fieldName": "sievingMethod"
-            }
+            "values": [
+              "flotation",
+              "flotationAirCompressor",
+              "bucketFlotation",
+              "washOver",
+              "waterScreening"
+            ],
+            "fieldName": "sievingMethod"
+          }
         },
-        "waterChangeInterval": {
+        "waterChangeFrequency": {
           "condition": {
             "fieldName": "waterOrigin",
             "values": ["recycledSystem"]
@@ -1921,7 +1921,7 @@
       "groups": [
         {
           "name": "properties",
-          "fields": ["sievingMethod", "sievingMeshes", "waterOrigin", "waterChangeInterval", "samplePretreated",
+          "fields": ["sievingMethod", "sievingMeshes", "waterOrigin", "waterChangeFrequency", "samplePretreated",
             "pretreatmentType", "pretreatmentChemicals"]
         }
       ]

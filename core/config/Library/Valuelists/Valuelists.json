@@ -3057,7 +3057,7 @@
       "recycledSystem"
     ]
   },
-  "Sieving-waterChangeInterval-default": {
+  "Sieving-waterChangeFrequency-default": {
     "values": {
       "everySU": {},
       "everyFewSU": {},

@@ -1535,8 +1535,8 @@
           "label": "Water origin",
           "description": "Source of the water used during sample processing"
         },
-        "waterChangeInterval": {
-          "label": "Water change interval",
+        "waterChangeFrequency": {
+          "label": "Water change frequency",
           "description": "Frequency at which the water used during sample processing is replaced"
         },
         "samplePretreated": {

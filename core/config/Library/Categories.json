@@ -1691,10 +1691,10 @@
         "constraintIndexed": true,
         "valuelistId": "Sieving-waterOrigin-default"
       },
-      "waterChangeInterval": {
+      "waterChangeFrequency": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "Sieving-waterChangeInterval-default"
+        "valuelistId": "Sieving-waterChangeFrequency-default"
       },
       "samplePretreated": {
         "inputType": "boolean",

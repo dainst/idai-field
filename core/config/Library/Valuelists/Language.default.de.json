@@ -5811,7 +5811,7 @@
       }
     }
   },
-  "Sieving-waterChangeInterval-default": {
+  "Sieving-waterChangeFrequency-default": {
     "values": {
       "everySU": {
         "label": "Jede stratigraphische Einheit"

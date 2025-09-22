@@ -1648,7 +1648,7 @@
           "label": "Wasserherkunft",
           "description": "Quelle des bei der Probenverarbeitung verwendeten Wassers"
         },
-        "waterChangeInterval": {
+        "waterChangeFrequency": {
           "label": "Häufigkeit des Wasseraustauschs",
           "description": "Häufigkeit, mit der das bei der Probenverarbeitung verwendete Wasser ausgetauscht wird"
         },

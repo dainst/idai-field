@@ -5918,10 +5918,10 @@
         "label": "0,5 MIN"
       },
       "strainORG": {
-        "label": "Strain (unbekannte Maschenbreite) ORG"
+        "label": "Siebung (unbekannte Maschenbreite) ORG"
       },
       "strainMIN": {
-        "label": "Strain (unbekannte Maschenbreite) MIN"
+        "label": "Siebung (unbekannte Maschenbreite) MIN"
       }
     }
   },
@@ -6001,7 +6001,7 @@
         "label": "0,25 ORG"
       },
       "strainOrg": {
-        "label": "Strain (unbekannte Maschenbreite) ORG"
+        "label": "Siebung (unbekannte Maschenbreite) ORG"
       }
     }
   },
@@ -6023,7 +6023,7 @@
         "label": "0,5 MIN"
       },
       "strainMin": {
-        "label": "Strain (unbekannte Maschenbreite) MIN"
+        "label": "Siebung (unbekannte Maschenbreite) MIN"
       }
     }
   }

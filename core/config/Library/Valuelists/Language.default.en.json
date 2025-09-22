@@ -189,7 +189,7 @@
         "description": "The volume is measured by having a known amount of water in a measuring container and then adding the object to be examined to measure the displaced volume"
       },
       "calculated": {
-        "label": "Calculated from expansion",
+        "label": "Calculated from dimensions",
         "description": "The volume is calculated based on the relevant dimensions"
       }
     }
@@ -2745,7 +2745,7 @@
       }
     }
   },
-  "Sieving-waterChangeFrequency-default": {
+  "Sieving-waterChangeInterval-default": {
     "values": {
       "everySU": {
         "label": "Every stratigraphical unit"

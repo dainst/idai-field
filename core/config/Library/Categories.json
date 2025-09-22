@@ -1875,7 +1875,7 @@
     },
     "defaultRange": {
       "isCarriedOutOn": ["Sample"],
-      "resultsIn": ["Sample", "FindCollection"]
+      "resultsIn": ["FindCollection"]
     }
   }
 }

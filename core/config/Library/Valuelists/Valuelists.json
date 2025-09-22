@@ -3113,41 +3113,41 @@
   },
   "Sieving-sievingMeshes-default": {
     "values": {
-      "8ORG": {},
-      "4ORG": {},
-      "2ORG": {},
-      "0,5ORG": {},
-      "0,35ORG": {},
-      "0,25ORG": {},
-      "0,125ORG": {},
-      "8MIN": {},
-      "4MIN": {},
-      "2MIN": {},
-      "1MIN": {},
-      "0,5MIN": {},
-      "strainORG": {},
-      "strainMIN": {}
+      "organic8": {},
+      "organic4": {},
+      "organic2": {},
+      "organic05": {},
+      "organic035": {},
+      "organic025": {},
+      "organic0125": {},
+      "mineral8": {},
+      "mineral4": {},
+      "mineral2": {},
+      "mineral1": {},
+      "mineral05": {},
+      "organicUnknownWidth": {},
+      "mineralUnknownWidth": {}
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
-      "8MIN",
-      "4MIN",
-      "2MIN",
-      "1MIN",
-      "0,5MIN",
-      "strainMIN",
-      "8ORG",
-      "4ORG",
-      "2ORG",
-      "0,5ORG",
-      "0,35ORG",
-      "0,25ORG",
-      "0,125ORG",
-      "strainORG"
+      "mineral8",
+      "mineral4",
+      "mineral2",
+      "mineral1",
+      "mineral05",
+      "mineralUnknownWidth",
+      "organic8",
+      "organic4",
+      "organic2",
+      "organic05",
+      "organic035",
+      "organic025",
+      "organic0125",
+      "organicUnknownWidth"
     ]
   },
-  "SievedFractionProcessing-orgFractionTreatmentType-default": {
+  "SievedFractionProcessing-organicFractionTreatmentType-default": {
     "values": {
       "airDrying": {},
       "putIntoWater": {}
@@ -3191,48 +3191,48 @@
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
-  "SievedFractionProcessing-orgFractionSubsampledList-default": {
+  "SievedFractionProcessing-organicFractionSubsampledList-default": {
     "values": {
-      "8Org": {},
-      "4Org": {},
-      "2Org": {},
-      "05Org": {},
-      "035Org": {},
-      "0125Org": {},
-      "025Org": {},
-      "strainOrg": {}
+      "organic8": {},
+      "organic4": {},
+      "organic2": {},
+      "organic05": {},
+      "organic035": {},
+      "organic0125": {},
+      "organic025": {},
+      "organicUnknownWidth": {}
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
-      "8Org",
-      "4Org",
-      "2Org",
-      "05Org",
-      "035Org",
-      "025Org",
-      "0125Org",
-      "strainOrg"
+      "organic8",
+      "organic4",
+      "organic2",
+      "organic05",
+      "organic035",
+      "organic025",
+      "organic0125",
+      "organicUnknownWidth"
     ]
   },
-  "SievedFractionProcessing-minFractionSubsampledList-default": {
+  "SievedFractionProcessing-mineralFractionSubsampledList-default": {
     "values": {
-      "8Min": {},
-      "4Min": {},
-      "2Min": {},
-      "1Min": {},
-      "05Min": {},
-      "strainMin": {}
+      "mineral8": {},
+      "mineral4": {},
+      "mineral2": {},
+      "mineral1": {},
+      "mineral05": {},
+      "mineralUnknownWidth": {}
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
-      "8Min",
-      "4Min",
-      "2Min",
-      "1Min",
-      "05Min",
-      "strainMin"
+      "mineral8",
+      "mineral4",
+      "mineral2",
+      "mineral1",
+      "mineral05",
+      "mineralUnknownWidth"
     ]
   },
   "Feature-stratigraphicReliability-Boha": {

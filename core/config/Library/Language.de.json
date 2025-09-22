@@ -1677,167 +1677,167 @@
     "SievedFractionProcessing": {
       "label": "Siebfraktionsverarbeitung",
       "fields": {
-        "orgFractionTreatmentType": {
+        "organicFractionTreatmentType": {
           "label": "Art der Behandlung der organischen Fraktion",
           "description": "Behandlung der gesiebten organischen Fraktionen nach dem Sieben"
         },
-        "orgFractionSubsampled": {
+        "organicFractionSubsampled": {
           "label": "Unterprobe der organischen Fraktion",
           "description": "Gibt an, ob die verschiedenen organischen Fraktionen vollständig analysiert oder unterteilt wurden"
         },
-        "orgSubsamplingTechnique": {
+        "organicSubsamplingTechnique": {
           "label": "Durchgeführte Unterprobenentnahmetechnik (Organische Fraktion)",
           "description": "Verfahren zur Aufteilung der gesiebten organischen Fraktionen in kleinere, repräsentative Portionen für die Analyse"
         },
-        "orgFractionMeasured": {
+        "organicFractionMeasured": {
           "label": "Gemessene organische Fraktion",
           "description": "Angabe, ob das Volumen/Gewicht der organischen Anteile erfasst wurde"
         },
-        "fractionMeasurement8Org": {
+        "organicFractionMeasurement8": {
           "label": "8 ORG-Fraktionsmessung",
           "description": "Menge des organischen Materials, das im 8-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement4Org": {
+        "organicFractionMeasurement4": {
           "label": "4 ORG-Fraktionsmessung",
           "description": "Menge des organischen Materials, das im 4-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement2Org": {
+        "organicFractionMeasurement2": {
           "label": "2 ORG-Fraktionsmessung",
           "description": "Menge an organischem Material, das im 2-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement05Org": {
+        "organicFractionMeasurement05": {
           "label": "0,5 ORG-Fraktionsmessung",
           "description": "Menge an organischem Material, das im 0,5-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement035Org": {
+        "organicFractionMeasurement035": {
           "label": "0,35 ORG-Fraktionsmessung",
           "description": "Menge an organischem Material, das im 0,35-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement025Org": {
+        "organicFractionMeasurement025": {
           "label": "0,25 ORG-Fraktionsmessung",
           "description": "Menge an organischem Material, das im 0,25-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement0125Org": {
+        "organicFractionMeasurement0125": {
           "label": "0,125 ORG-Fraktionsmessung",
           "description": "Menge an organischem Material, das im 0,125-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurementStrainOrg": {
+        "organicFractionMeasurementStrain": {
           "label": "Siebung (unbekannte Maschenbreite) ORG-Fraktionsmessung",
           "description": "Menge an organischem Material, das im Siebrückstand zurückgehalten wird"
         },
-        "minFractionKept": {
+        "mineralFractionKept": {
           "label": "Mineralfraktion aufbewahrt",
           "description": "Angabe, ob die Mineralfraktion aufbewahrt oder entsorgt wurde"
         },
-        "minFractionMeasured": {
+        "mineralFractionMeasured": {
           "label": "Gemessene Mineralfraktion",
           "description": "Angabe, ob das Volumen/Gewicht der Mineralfraktionen erfasst wurde"
         },
-        "minFractionMeasurementUnit": {
+        "mineralFractionMeasurementUnit": {
           "label": "Maßeinheit (Mineralfraktion)",
           "description": "Einheit, in der die Menge der Mineralfraktion angegeben wird"
         },
-        "fractionMeasurement8Min": {
+        "mineralFractionMeasurement8": {
           "label": "8-MIN-Fraktionsmessung",
           "description": "Menge des mineralischen Materials, das im 8-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement4Min": {
+        "mineralFractionMeasurement4": {
           "label": "4-MIN-Fraktionsmessung",
           "description": "Menge des mineralischen Materials, das im 4-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement2Min": {
+        "mineralFractionMeasurement2": {
           "label": "2-MIN-Fraktionsmessung",
           "description": "Menge des mineralischen Materials, das im 2-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement1Min": {
+        "mineralFractionMeasurement1": {
           "label": "1-MIN-Fraktionsmessung",
           "description": "Menge des mineralischen Materials, das im 1-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurement05Min": {
+        "mineralFractionMeasurement05": {
           "label": "0,5 MIN-Fraktionsmessung",
           "description": "Menge des mineralischen Materials, das im 0,5-mm-Sieb zurückgehalten wird"
         },
-        "fractionMeasurementStrainMin": {
+        "mineralFractionMeasurementStrain": {
           "label": "Siebung (unbekannte Breite) MIN-Fraktionsmessung",
           "description": "Menge des mineralischen Materials, das im Siebrückstand zurückgehalten wird"
         },
-        "minFractionSubsampled": {
+        "mineralFractionSubsampled": {
           "label": "Stichprobenentnahme der Mineralfraktion",
           "description": "Gibt an, ob die verschiedenen Mineralfraktionen vollständig analysiert oder unterteilt wurden"
         },
-        "minSubsamplingTechnique": {
+        "mineralSubsamplingTechnique": {
           "label": "Durchgeführte Unterprobenentnahmetechnik (Mineralfraktion)",
           "description": "Verfahren zur Aufteilung der gesiebten Mineralfraktionen in kleinere, repräsentative Portionen für die Analyse"
         },
-        "minFractionSubsampledList": {
+        "mineralFractionSubsampledList": {
           "label": "Liste der beprobten mineralischen Fraktionen",
           "description": "Gibt die Mineralfraktionen an, die einer Stichprobenentnahme unterzogen wurden"
         },
-        "multiplyingFactor8Min": {
+        "mineralMultiplicationFactor8": {
           "label": "Multiplikationsfaktor 8 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 8-MIN-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor4Min": {
+        "mineralMultiplicationFactor4": {
           "label": "Multiplikationsfaktor 4 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 4-MIN-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor2Min": {
+        "mineralMultiplicationFactor2": {
           "label": "Multiplikationsfaktor 2 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 2-MIN-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor1Min": {
+        "mineralMultiplicationFactor1": {
           "label": "Multiplikationsfaktor 1 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 1-MIN-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor05Min": {
+        "mineralMultiplicationFactor05": {
           "label": "Multiplikationsfaktor 0,5 MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,5-MIN-Fraktion zu verwenden ist"
         },
-        "multiplyingFactorStrainMin": {
+        "mineralMultiplicationFactorStrain": {
           "label": "Multiplikationsfaktor Siebfraktion MIN (unbekannte Maschenbreite)",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an mineralischen Rückständen in der Siebfraktion zu verwenden ist"
         },
-        "orgFractionMeasurementUnit": {
+        "organicFractionMeasurementUnit": {
           "label": "Maßeinheit (Organische Fraktion)",
           "description": "Einheit, in der die Menge der organischen Fraktion angegeben wird"
         },
-        "orgFractionVolumeMeasurementTechnique": {
+        "organicFractionVolumeMeasurementTechnique": {
           "label": "Volumenmessungstechnik",
           "description": "Methode zur Bestimmung des Volumens der organischen Fraktion"
         },
-        "orgFractionSubsampledList": {
+        "organicFractionSubsampledList": {
           "label": "Liste der organischen Teilproben",
           "description": "Gibt die organischen Fraktionen an, die einer Teilprobenahme unterzogen wurden"
         },
-        "multiplyingFactor8Org": {
+        "organicMultiplicationFactor8": {
           "label": "Multiplikationsfaktor 8 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 8-ORG-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor4Org": {
+        "organicMultiplicationFactor4": {
           "label": "Multiplikationsfaktor 4 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 4-ORG-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor2Org": {
+        "organicMultiplicationFactor2": {
           "label": "Multiplikationsfaktor 2 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 2-ORG-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor05Org": {
+        "organicMultiplicationFactor05": {
           "label": "Multiplikationsfaktor 0,5 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,5-ORG-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor035Org": {
+        "organicMultiplicationFactor035": {
           "label": "Multiplikationsfaktor 0,35 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,35-ORG-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor025Org": {
+        "organicMultiplicationFactor025": {
           "label": "Multiplikationsfaktor 0,25 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,25-ORG-Fraktion zu verwenden ist"
         },
-        "multiplyingFactor0125Org": {
+        "organicMultiplicationFactor0125": {
           "label": "Multiplikationsfaktor 0,125 ORG",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,125-ORG-Fraktion zu verwenden ist"
         },
-        "multiplyingFactorStrainOrg": {
+        "organicMultiplicationFactorStrain": {
           "label": "Multiplikationsfaktor Siebfraktion ORG (unbekannte Maschenbreite)",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an organischen Rückständen in der Siebfraktion zu verwenden ist"
         }

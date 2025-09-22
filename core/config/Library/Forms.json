@@ -1932,244 +1932,244 @@
       "creationDate": "2025",
       "categoryName": "SievedFractionProcessing",
       "fields": {
-        "orgSubsamplingTechnique": {
+        "organicSubsamplingTechnique": {
           "condition": {
-            "fieldName": "orgFractionSubsampled",
+            "fieldName": "organicFractionSubsampled",
             "values": true
           }
         },
-        "fractionMeasurement8Org": {
+        "organicFractionMeasurement8": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement4Org": {
+        "organicFractionMeasurement4": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement2Org": {
+        "organicFractionMeasurement2": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement05Org": {
+        "organicFractionMeasurement05": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement035Org": {
+        "organicFractionMeasurement035": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement025Org": {
+        "organicFractionMeasurement025": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement0125Org": {
+        "organicFractionMeasurement0125": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurementStrainOrg": {
+        "organicFractionMeasurementStrain": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "orgFractionMeasurementUnit": {
+        "organicFractionMeasurementUnit": {
           "condition": {
-            "fieldName": "orgFractionMeasured",
+            "fieldName": "organicFractionMeasured",
             "values": true
           }
         },
-        "orgFractionVolumeMeasurementTechnique": {
+        "organicFractionVolumeMeasurementTechnique": {
           "condition": {
-            "fieldName": "orgFractionMeasurementUnit",
+            "fieldName": "organicFractionMeasurementUnit",
             "values": [
               "litres",
               "millilitres"
             ]
           }
         },
-        "orgFractionSubsampledList": {
+        "organicFractionSubsampledList": {
           "condition": {
-            "fieldName": "orgFractionSubsampled",
+            "fieldName": "organicFractionSubsampled",
             "values": true
           }
         },
-        "fractionMeasurement8Min": {
+        "mineralFractionMeasurement8": {
           "condition": {
-            "fieldName": "minFractionMeasured",
+            "fieldName": "mineralFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement4Min": {
+        "mineralFractionMeasurement4": {
           "condition": {
-            "fieldName": "minFractionMeasured",
+            "fieldName": "mineralFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement2Min": {
+        "mineralFractionMeasurement2": {
           "condition": {
-            "fieldName": "minFractionMeasured",
+            "fieldName": "mineralFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement1Min": {
+        "mineralFractionMeasurement1": {
           "condition": {
-            "fieldName": "minFractionMeasured",
+            "fieldName": "mineralFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurement05Min": {
+        "mineralFractionMeasurement05": {
           "condition": {
-            "fieldName": "minFractionMeasured",
+            "fieldName": "mineralFractionMeasured",
             "values": true
           }
         },
-        "fractionMeasurementStrainMin": {
+        "mineralFractionMeasurementStrain": {
           "condition": {
-            "fieldName": "minFractionMeasured",
+            "fieldName": "mineralFractionMeasured",
             "values": true
           }
         },
-        "minFractionMeasurementUnit": {
+        "mineralFractionMeasurementUnit": {
           "condition": {
-            "fieldName": "minFractionMeasured",
+            "fieldName": "mineralFractionMeasured",
             "values": true
           }
         },
-        "multiplyingFactor4Org": {
+        "organicMultiplicationFactor4": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "4Org"
+              "organic4"
             ]
           }
         },
-        "multiplyingFactor8Org": {
+        "organicMultiplicationFactor8": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "8Org"
+              "organic8"
             ]
           }
         },
-        "multiplyingFactor2Org": {
+        "organicMultiplicationFactor2": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "2Org"
+              "organic2"
             ]
           }
         },
-        "multiplyingFactor05Org": {
+        "organicMultiplicationFactor05": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "05Org"
+              "organic05"
             ]
           }
         },
-        "multiplyingFactor035Org": {
+        "organicMultiplicationFactor035": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "035Org"
+              "organic035"
             ]
           }
         },
-        "multiplyingFactor025Org": {
+        "organicMultiplicationFactor025": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "025Org"
+              "organic025"
             ]
           }
         },
-        "multiplyingFactor0125Org": {
+        "organicMultiplicationFactor0125": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "0125Org"
+              "organic0125"
             ]
           }
         },
-        "multiplyingFactorStrainOrg": {
+        "organicMultiplicationFactorStrain": {
           "condition": {
-            "fieldName": "orgFractionSubsampledList",
+            "fieldName": "organicFractionSubsampledList",
             "values": [
-              "strainOrg"
+              "organicUnknownWidth"
             ]
           }
         },
-        "minSubsamplingTechnique": {
+        "mineralSubsamplingTechnique": {
           "condition": {
-            "fieldName": "minFractionSubsampled",
+            "fieldName": "mineralFractionSubsampled",
             "values": true
           }
         },
-        "minFractionSubsampledList": {
+        "mineralFractionSubsampledList": {
           "condition": {
-            "fieldName": "minFractionSubsampled",
+            "fieldName": "mineralFractionSubsampled",
             "values": true
           }
         },
-        "multiplyingFactor8Min": {
+        "mineralMultiplicationFactor8": {
           "condition": {
-            "fieldName": "minFractionSubsampledList",
+            "fieldName": "mineralFractionSubsampledList",
             "values": [
-              "8Min"
+              "mineral8"
             ]
           }
         },
-        "multiplyingFactor4Min": {
+        "mineralMultiplicationFactor4": {
           "condition": {
-            "fieldName": "minFractionSubsampledList",
+            "fieldName": "mineralFractionSubsampledList",
             "values": [
-              "4Min"
+              "mineral4"
             ]
           }
         },
-        "multiplyingFactor2Min": {
+        "mineralMultiplicationFactor2": {
           "condition": {
-            "fieldName": "minFractionSubsampledList",
+            "fieldName": "mineralFractionSubsampledList",
             "values": [
-              "2Min"
+              "mineral2"
             ]
           }
         },
-        "multiplyingFactor1Min": {
+        "mineralMultiplicationFactor1": {
           "condition": {
-            "fieldName": "minFractionSubsampledList",
+            "fieldName": "mineralFractionSubsampledList",
             "values": [
-              "1Min"
+              "mineral1"
             ]
           }
         },
-        "multiplyingFactor05Min": {
+        "mineralMultiplicationFactor05": {
           "condition": {
-            "fieldName": "minFractionSubsampledList",
+            "fieldName": "mineralFractionSubsampledList",
             "values": [
-              "05Min"
+              "mineral05"
             ]
           }
         },
-        "multiplyingFactorStrainMin": {
+        "mineralMultiplicationFactorStrain": {
           "condition": {
-            "fieldName": "minFractionSubsampledList",
+            "fieldName": "mineralFractionSubsampledList",
             "values": [
-              "strainMin"
+              "mineralUnknownWidth"
             ]
           }
         }
@@ -2178,52 +2178,52 @@
         {
           "name": "mineralFraction",
           "fields": [
-            "minFractionKept",
-            "minFractionMeasured",
-            "minFractionMeasurementUnit",
-            "fractionMeasurement8Min",
-            "fractionMeasurement4Min",
-            "fractionMeasurement2Min",
-            "fractionMeasurement1Min",
-            "fractionMeasurement05Min",
-            "fractionMeasurementStrainMin",
-            "minFractionSubsampled",
-            "minSubsamplingTechnique",
-            "minFractionSubsampledList",
-            "multiplyingFactor8Min",
-            "multiplyingFactor4Min",
-            "multiplyingFactor2Min",
-            "multiplyingFactor1Min",
-            "multiplyingFactor05Min",
-            "multiplyingFactorStrainMin"
+            "mineralFractionKept",
+            "mineralFractionMeasured",
+            "mineralFractionMeasurementUnit",
+            "mineralFractionMeasurement8",
+            "mineralFractionMeasurement4",
+            "mineralFractionMeasurement2",
+            "mineralFractionMeasurement1",
+            "mineralFractionMeasurement05",
+            "mineralFractionMeasurementStrain",
+            "mineralFractionSubsampled",
+            "mineralSubsamplingTechnique",
+            "mineralFractionSubsampledList",
+            "mineralMultiplicationFactor8",
+            "mineralMultiplicationFactor4",
+            "mineralMultiplicationFactor2",
+            "mineralMultiplicationFactor1",
+            "mineralMultiplicationFactor05",
+            "mineralMultiplicationFactorStrain"
           ]
         },
         {
           "name": "organicFraction",
           "fields": [
-            "orgFractionTreatmentType",
-            "orgFractionMeasured",
-            "orgFractionMeasurementUnit",
-            "orgFractionVolumeMeasurementTechnique",
-            "fractionMeasurement8Org",
-            "fractionMeasurement4Org",
-            "fractionMeasurement2Org",
-            "fractionMeasurement05Org",
-            "fractionMeasurement035Org",
-            "fractionMeasurement025Org",
-            "fractionMeasurement0125Org",
-            "fractionMeasurementStrainOrg",
-            "orgFractionSubsampled",
-            "orgSubsamplingTechnique",
-            "orgFractionSubsampledList",
-            "multiplyingFactor8Org",
-            "multiplyingFactor4Org",
-            "multiplyingFactor2Org",
-            "multiplyingFactor05Org",
-            "multiplyingFactor035Org",
-            "multiplyingFactor025Org",
-            "multiplyingFactor0125Org",
-            "multiplyingFactorStrainOrg"
+            "organicFractionTreatmentType",
+            "organicFractionMeasured",
+            "organicFractionMeasurementUnit",
+            "organicFractionVolumeMeasurementTechnique",
+            "organicFractionMeasurement8",
+            "organicFractionMeasurement4",
+            "organicFractionMeasurement2",
+            "organicFractionMeasurement05",
+            "organicFractionMeasurement035",
+            "organicFractionMeasurement025",
+            "organicFractionMeasurement0125",
+            "organicFractionMeasurementStrain",
+            "organicFractionSubsampled",
+            "organicSubsamplingTechnique",
+            "organicFractionSubsampledList",
+            "organicMultiplicationFactor8",
+            "organicMultiplicationFactor4",
+            "organicMultiplicationFactor2",
+            "organicMultiplicationFactor05",
+            "organicMultiplicationFactor035",
+            "organicMultiplicationFactor025",
+            "organicMultiplicationFactor0125",
+            "organicMultiplicationFactorStrain"
           ]
         }
       ]

@@ -5881,51 +5881,51 @@
   },
   "Sieving-sievingMeshes-default": {
     "values": {
-      "8ORG": {
+      "organic8": {
         "label": "8 ORG"
       },
-      "4ORG": {
+      "organic4": {
         "label": "4 ORG"
       },
-      "2ORG": {
+      "organic2": {
         "label": "2 ORG"
       },
-      "0,5ORG": {
+      "organic05": {
         "label": "0,5 ORG"
       },
-      "0,35ORG": {
+      "organic035": {
         "label": "0,35 ORG"
       },
-      "0,25ORG": {
+      "organic025": {
         "label": "0,25 ORG"
       },
-      "0,125ORG": {
+      "organic0125": {
         "label": "0,125 ORG"
       },
-      "8MIN": {
+      "mineral8": {
         "label": "8 MIN"
       },
-      "4MIN": {
+      "mineral4": {
         "label": "4 MIN"
       },
-      "2MIN": {
+      "mineral2": {
         "label": "2 MIN"
       },
-      "1MIN": {
+      "mineral1": {
         "label": "1 MIN"
       },
-      "0,5MIN": {
+      "mineral05": {
         "label": "0,5 MIN"
       },
-      "strainORG": {
+      "organicUnknownWidth": {
         "label": "Siebung (unbekannte Maschenbreite) ORG"
       },
-      "strainMIN": {
+      "mineralUnknownWidth": {
         "label": "Siebung (unbekannte Maschenbreite) MIN"
       }
     }
   },
-  "SievedFractionProcessing-orgFractionTreatmentType-default": {
+  "SievedFractionProcessing-organicFractionTreatmentType-default": {
     "values": {
       "airDrying": {
         "label": "Lufttrocknen",
@@ -5977,52 +5977,52 @@
       }
     }
   },
-  "SievedFractionProcessing-orgFractionSubsampledList-default": {
+  "SievedFractionProcessing-organicFractionSubsampledList-default": {
     "values": {
-      "8Org": {
+      "organic8": {
         "label": "8 ORG"
       },
-      "4Org": {
+      "organic4": {
         "label": "4 ORG"
       },
-      "2Org": {
+      "organic2": {
         "label": "2 ORG"
       },
-      "05Org": {
+      "organic05": {
         "label": "0,5 ORG"
       },
-      "035Org": {
+      "organic035": {
         "label": "0,35 ORG"
       },
-      "0125Org": {
+      "organic0125": {
         "label": "0,125 ORG"
       },
-      "025Org": {
+      "organic025": {
         "label": "0,25 ORG"
       },
-      "strainOrg": {
+      "organicUnknownWidth": {
         "label": "Siebung (unbekannte Maschenbreite) ORG"
       }
     }
   },
-  "SievedFractionProcessing-minFractionSubsampledList-default": {
+  "SievedFractionProcessing-mineralFractionSubsampledList-default": {
     "values": {
-      "8Min": {
+      "mineral8": {
         "label": "8 MIN"
       },
-      "4Min": {
+      "mineral4": {
         "label": "4 MIN"
       },
-      "2Min": {
+      "mineral2": {
         "label": "2 MIN"
       },
-      "1Min": {
+      "mineral1": {
         "label": "1 MIN"
       },
-      "05Min": {
+      "mineral05": {
         "label": "0,5 MIN"
       },
-      "strainMin": {
+      "mineralUnknownWidth": {
         "label": "Siebung (unbekannte Maschenbreite) MIN"
       }
     }

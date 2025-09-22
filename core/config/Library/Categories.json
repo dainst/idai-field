@@ -1728,148 +1728,148 @@
     "color": "#0025b8",
     "description": {},
     "fields": {
-      "minFractionKept": {
+      "mineralFractionKept": {
         "inputType": "boolean",
         "constraintIndexed": true
       },
-      "minFractionMeasured": {
+      "mineralFractionMeasured": {
         "inputType": "boolean",
         "constraintIndexed": true
       },
-      "minFractionMeasurementUnit": {
+      "mineralFractionMeasurementUnit": {
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-measurementUnit-default"
       },
-      "fractionMeasurement8Min": {
+      "mineralFractionMeasurement8": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement4Min": {
+      "mineralFractionMeasurement4": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement2Min": {
+      "mineralFractionMeasurement2": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement1Min": {
+      "mineralFractionMeasurement1": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement05Min": {
+      "mineralFractionMeasurement05": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurementStrainMin": {
+      "mineralFractionMeasurementStrain": {
         "inputType": "unsignedFloat"
       },
-      "minFractionSubsampled": {
+      "mineralFractionSubsampled": {
         "inputType": "boolean",
         "constraintIndexed": true
       },
-      "minSubsamplingTechnique": {
+      "mineralSubsamplingTechnique": {
         "inputType": "dropdown",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
       },
-      "minFractionSubsampledList": {
+      "mineralFractionSubsampledList": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SievedFractionProcessing-minFractionSubsampledList-default"
+        "valuelistId": "SievedFractionProcessing-mineralFractionSubsampledList-default"
       },
-      "multiplyingFactor8Min": {
+      "mineralMultiplicationFactor8": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor4Min": {
+      "mineralMultiplicationFactor4": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor2Min": {
+      "mineralMultiplicationFactor2": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor1Min": {
+      "mineralMultiplicationFactor1": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor05Min": {
+      "mineralMultiplicationFactor05": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactorStrainMin": {
+      "mineralMultiplicationFactorStrain": {
         "inputType": "unsignedFloat"
       },
-      "orgFractionTreatmentType": {
+      "organicFractionTreatmentType": {
         "inputType": "dropdown",
         "constraintIndexed": true,
-        "valuelistId": "SievedFractionProcessing-orgFractionTreatmentType-default"
+        "valuelistId": "SievedFractionProcessing-organicFractionTreatmentType-default"
       },
-      "orgFractionMeasured": {
+      "organicFractionMeasured": {
         "inputType": "boolean",
         "constraintIndexed": true
       },
-      "orgFractionMeasurementUnit": {
+      "organicFractionMeasurementUnit": {
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-measurementUnit-default"
       },
-      "orgFractionVolumeMeasurementTechnique": {
+      "organicFractionVolumeMeasurementTechnique": {
         "inputType": "dropdown",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-volumeMeasurementTechnique-default"
       },
-      "fractionMeasurement8Org": {
+      "organicFractionMeasurement8": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement4Org": {
+      "organicFractionMeasurement4": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement2Org": {
+      "organicFractionMeasurement2": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement05Org": {
+      "organicFractionMeasurement05": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement035Org": {
+      "organicFractionMeasurement035": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement025Org": {
+      "organicFractionMeasurement025": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurement0125Org": {
+      "organicFractionMeasurement0125": {
         "inputType": "unsignedFloat"
       },
-      "fractionMeasurementStrainOrg": {
+      "organicFractionMeasurementStrain": {
         "inputType": "unsignedFloat"
       },
-      "orgFractionSubsampled": {
+      "organicFractionSubsampled": {
         "inputType": "boolean",
         "constraintIndexed": true
       },
-      "orgSubsamplingTechnique": {
+      "organicSubsamplingTechnique": {
         "inputType": "dropdown",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
       },
-      "orgFractionSubsampledList": {
+      "organicFractionSubsampledList": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "SievedFractionProcessing-orgFractionSubsampledList-default"
+        "valuelistId": "SievedFractionProcessing-organicFractionSubsampledList-default"
       },
-      "multiplyingFactor8Org": {
+      "organicMultiplicationFactor8": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor4Org": {
+      "organicMultiplicationFactor4": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor2Org": {
+      "organicMultiplicationFactor2": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor05Org": {
+      "organicMultiplicationFactor05": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor035Org": {
+      "organicMultiplicationFactor035": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor025Org": {
+      "organicMultiplicationFactor025": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactor0125Org": {
+      "organicMultiplicationFactor0125": {
         "inputType": "unsignedFloat"
       },
-      "multiplyingFactorStrainOrg": {
+      "organicMultiplicationFactorStrain": {
         "inputType": "unsignedFloat"
       }
     },

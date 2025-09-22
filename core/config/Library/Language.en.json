@@ -1661,28 +1661,28 @@
           "description": "Indicates the mineral fractions that were subsampled"
         },
         "mineralMultiplicationFactor8": {
-          "label": "Multiplying factor resulting from the subsampling of the 8 MIN fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 8 MIN fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 8 MIN fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 8 MIN fraction"
         },
         "mineralMultiplicationFactor4": {
-          "label": "Multiplying factor resulting from the subsampling of the 4 MIN fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 4 MIN fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 4 MIN fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 4 MIN fraction"
         },
         "mineralMultiplicationFactor2": {
-          "label": "Multiplying factor resulting from the subsampling of the 2 MIN fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 2 MIN fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 2 MIN fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 2 MIN fraction"
         },
         "mineralMultiplicationFactor1": {
-          "label": "Multiplying factor resulting from the subsampling of the 1 MIN fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 1 MIN fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 1 MIN fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 1 MIN fraction"
         },
         "mineralMultiplicationFactor05": {
-          "label": "Multiplying factor resulting from the subsampling of the 0,5 MIN fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,5 MIN fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 0,5 MIN fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 0,5 MIN fraction"
         },
         "mineralMultiplicationFactorStrain": {
-          "label": "Multiplying factor resulting from the subsampling of the strain (unknown width) MIN fraction",
-          "description": "Multiplying factor that has to be used when estimating the total mineral remains in the strain fraction"
+          "label": "Multiplication factor resulting from the subsampling of the strain (unknown width) MIN fraction",
+          "description": "Multiplication factor that has to be used when estimating the total mineral remains in the strain fraction"
         },
         "organicFractionMeasurementUnit": {
           "label": "Measurement unit (Organic fraction)",
@@ -1697,36 +1697,36 @@
           "description": "Indicates the organic fractions that were subsampled"
         },
         "organicMultiplicationFactor8": {
-          "label": "Multiplying factor resulting from the subsampling of the 8 ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 8 ORG fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 8 ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 8 ORG fraction"
         },
         "organicMultiplicationFactor4": {
-          "label": "Multiplying factor resulting from the subsampling of the 4 ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 4 ORG fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 4 ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 4 ORG fraction"
         },
         "organicMultiplicationFactor2": {
-          "label": "Multiplying factor resulting from the subsampling of the 2 ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 2 ORG fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 2 ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 2 ORG fraction"
         },
         "organicMultiplicationFactor05": {
-          "label": "Multiplying factor resulting from the subsampling of the 0,5 ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,5 ORG fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 0,5 ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 0,5 ORG fraction"
         },
         "organicMultiplicationFactor035": {
-          "label": "Multiplying factor resulting from the subsampling of the 0,35 ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,35 ORG fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 0,35 ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 0,35 ORG fraction"
         },
         "organicMultiplicationFactor025": {
-          "label": "Multiplying factor resulting from the subsampling of the 0,25 ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,25 ORG fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 0,25 ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 0,25 ORG fraction"
         },
         "organicMultiplicationFactor0125": {
-          "label": "Multiplying factor resulting from the subsampling of the 0,125 ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total of remains in the 0,125 ORG fraction"
+          "label": "Multiplication factor resulting from the subsampling of the 0,125 ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total of remains in the 0,125 ORG fraction"
         },
         "organicMultiplicationFactorStrain": {
-          "label": "Multiplying factor resulting from the subsampling of the strain (unknown width) ORG fraction",
-          "description": "Multiplying factor that has to be used when estimating the total organic remains in the strain fraction"
+          "label": "Multiplication factor resulting from the subsampling of the strain (unknown width) ORG fraction",
+          "description": "Multiplication factor that has to be used when estimating the total organic remains in the strain fraction"
         }
       }
     }

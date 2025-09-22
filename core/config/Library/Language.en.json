@@ -1511,7 +1511,7 @@
           "description": "Specific approach applied when collecting sediment samples following a structured, patterned method"
         },
         "proportionSystematicSampling": {
-          "label": "Proportion (%)",
+          "label": "Proportion of area sampled (%)",
           "description": "Percentage of the area/sediment sampled in a probabilistic systematic strategy"
         },
         "quadrantDimensionsSystematicSampling": {
@@ -1553,7 +1553,7 @@
         },
         "sievingMethod": {
           "label": "Sieving method",
-          "description": "Technique used to sieve and separate the light organic fraction from the sample"
+          "description": "Technique used to sieve and separate the mineral and organic fractions from the sample"
         },
         "sievingMeshes": {
           "label": "Sieving meshes used",

@@ -1624,7 +1624,7 @@
           "description": "Spezifischer Ansatz beim Sammeln von Sedimentproben nach einer strukturierten, gemusterten Methode"
         },
         "proportionSystematicSampling": {
-          "label": "Anteil (%)",
+          "label": "Anteil des Bereichs, der beprobt wird (%)",
           "description": "Prozentsatz der Fläche/des Sediments, die/das in einer probabilistischen systematischen Strategie beprobt wird"
         },
         "quadrantDimensionsSystematicSampling": {
@@ -1666,7 +1666,7 @@
         },
         "sievingMethod": {
           "label": "Siebmethode",
-          "description": "Technik zum Sieben und Trennen der leichten organischen Fraktion von der Probe"
+          "description": "Technik zum Sieben und Trennen der mineralischen und organischen Fraktionen von der Probe"
         },
         "sievingMeshes": {
           "label": "Verwendete Siebe",

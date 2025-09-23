@@ -32,8 +32,6 @@
                       ngbTooltip="Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab."
                       i18n-ngbTooltip="@@docedit.conditionInfo.tooltip.multiple"
                       class="mdi {{getConditionFieldIconClass(field)}}"></span>
-                <span *ngIf="descriptions[field.name] || field.references?.length"
-                      class="mdi mdi-information-outline"></span>
             </span>
             <img *ngIf="getStratigraphicalRelationInfo(field)"
                  class="relation-image"

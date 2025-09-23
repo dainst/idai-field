@@ -1730,7 +1730,7 @@
           "description": "Angabe, ob die Mineralfraktion aufbewahrt oder entsorgt wurde"
         },
         "mineralFractionMeasured": {
-          "label": "Gemessene Mineralfraktion",
+          "label": "Mineralfraktion gemessen",
           "description": "Angabe, ob das Volumen/Gewicht der Mineralfraktionen erfasst wurde"
         },
         "mineralFractionMeasurementUnit": {

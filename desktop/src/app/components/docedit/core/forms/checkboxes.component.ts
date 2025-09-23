@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
-import { Datastore, Valuelist, ValuelistUtil, Labels, Resource, Field } from 'idai-field-core';
+import { Datastore, Valuelist, ValuelistUtil, Labels, Resource, Field, ValuelistValue } from 'idai-field-core';
 import { ConfigurationInfoProvider } from '../../../widgets/configuration-info-provider';
 
 
@@ -51,6 +51,13 @@ export class CheckboxesComponent extends ConfigurationInfoProvider implements On
     public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
 
     public getLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
+
+
+    public hasInfo(valueId: string): boolean {
+        
+        const value: ValuelistValue = this.valuelist?.values[valueId];
+        return value && !!(this.labels.getDescription(value) || value.references?.length);
+    }
 
 
     public toggleCheckbox(item: string) {

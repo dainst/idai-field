@@ -6,10 +6,10 @@
      [popoverTitle]="getLabel(valueId)"
      popoverClass="configuration-info-popover"
      container="body"
-     (contextmenu)="openPopover(valueInfoPopover)"
+     (contextmenu)="hasInfo(valueId) && openPopover(valueInfoPopover)"
      [autoClose]="false"
      [popoverContext]="{ value: valuelist.values[valueId] }">
-    <label class="form-check-label">
+    <label class="form-check-label" [class.with-info]="hasInfo(valueId)">
         <input class="form-check-input" value="{{valueId}}" type="checkbox"
                (click)="toggleCheckbox(valueId)"
                [checked]="fieldContainer[field.name] && fieldContainer[field.name].indexOf(valueId) > -1">

@@ -80,6 +80,12 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
     }
 
 
+    public hasInfo(field: Field): boolean {
+        
+        return !!(this.labelsService.getDescription(field) || field.references?.length);
+    }
+
+
     public isConditionField(field: Field): 'single'|'multiple'|'none' {
 
         const conditionalFields: Array<Field> = this.categoryFields.filter(categoryField => {

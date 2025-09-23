@@ -6,11 +6,13 @@
      [popoverTitle]="getLabel(valueId)"
      popoverClass="configuration-info-popover"
      container="body"
-     (contextmenu)="openPopover(valueInfoPopover)"
+     (contextmenu)="hasInfo(valueId) && openPopover(valueInfoPopover)"
      [autoClose]="false"
      [popoverContext]="{ value: valuelist.values[valueId] }">
-    <label class="form-check-label">
-        <input class="form-check-input" value="{{valueId}}" type="radio"
+    <label class="form-check-label" [class.with-info]="hasInfo(valueId)">
+        <input class="form-check-input"
+               value="{{valueId}}"
+               type="radio"
                name="{{field.name}}"
                (click)="setValue(valueId)"
                [checked]="valueId === fieldContainer[field.name]">

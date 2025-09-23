@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
-import { Datastore, Resource, Valuelist, ValuelistUtil, Labels } from 'idai-field-core';
+import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, ValuelistValue } from 'idai-field-core';
 import { ConfigurationInfoProvider } from '../../../widgets/configuration-info-provider';
 
 
@@ -50,6 +50,13 @@ export class RadioComponent extends ConfigurationInfoProvider implements OnChang
     ngOnDestroy() {
         
         this.removeListeners();
+    }
+
+
+    public hasInfo(valueId: string): boolean {
+        
+        const value: ValuelistValue = this.valuelist?.values[valueId];
+        return value && !!(this.labels.getDescription(value) || value.references?.length);
     }
 
 

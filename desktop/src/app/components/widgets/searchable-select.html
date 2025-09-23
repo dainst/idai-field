@@ -1,4 +1,5 @@
 <ng-select [(ngModel)]="selectedValue"
+           [class.with-info]="hasInfo(selectedValue)"
            #selectElement
            clearAllText=""
            notFoundText="Wert nicht gefunden"
@@ -24,14 +25,18 @@
            (change)="emitChanges()"
            (search)="closePopover()"
            (click)="onClick()"
-           (contextmenu)="openPopover(valueInfoPopover, selectedValue); $event.preventDefault();"
+           (contextmenu)="hasInfo(selectedValue) && openPopover(valueInfoPopover, selectedValue);
+                $event.preventDefault();"
            (blur)="onBlur.emit()"
            (scrollToEnd)="onScrollToEnd.emit()"
            (search)="onSearchTermChanged.emit($event.term)">
     <ng-template ng-option-tmp let-item="item" let-index="index">
         <div #optionElement
-            class="option-element"
-            (contextmenu)="openPopover(valueInfoPopover, item.value, optionElement)">{{item.label}}</div>
+             class="option-element"
+             [class.with-info]="hasInfo(item.value)"
+             (contextmenu)="hasInfo(item.value) && openPopover(valueInfoPopover, item.value, optionElement)">
+            {{item.label}}
+        </div>
     </ng-template>
 </ng-select>
 

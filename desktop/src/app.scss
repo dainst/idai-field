@@ -398,3 +398,9 @@ label {
     border-top-right-radius: 5px;
   }
 }
+
+.with-info:hover,
+.with-info:hover .ng-value {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}

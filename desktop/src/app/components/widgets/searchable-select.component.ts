@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnDestroy, Output, ViewChild, Even
     Renderer2, OnChanges, SimpleChanges } from '@angular/core';
 import { NgOption, NgSelectComponent } from '@ng-select/ng-select';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
-import { Valuelist } from 'idai-field-core';
+import { Labels, Valuelist, ValuelistValue } from 'idai-field-core';
 import { ComponentHelpers } from '../component-helpers';
 import { AngularUtility } from '../../angular/angular-utility';
 
@@ -52,7 +52,8 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
-                private renderer: Renderer2) {}
+                private renderer: Renderer2,
+                private labels: Labels) {}
 
 
     async ngOnInit() {
@@ -77,6 +78,13 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     ngOnDestroy() {
         
         this.stopListeningToScrollAndResizeEvents();
+    }
+
+
+    public hasInfo(valueId: string): boolean {
+        
+        const value: ValuelistValue = this.valuelist?.values[valueId];
+        return value && !!(this.labels.getDescription(value) || value.references?.length);
     }
 
 
@@ -156,7 +164,10 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     private buildOptions(): Array<NgOption> {
 
         return this.values.map(value => {
-            return { value, label: this.getLabel(value) };
+            return {
+                value,
+                label: this.getLabel(value)
+            };
         });
     }
 

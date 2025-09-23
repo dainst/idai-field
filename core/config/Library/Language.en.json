@@ -1570,7 +1570,7 @@
         },
         "organicFractionSubsampled": {
           "label": "Organic fraction subsampled",
-          "description": "States whether the different organic fractions were either analyzed completely or subsampled"
+          "description": "States whether the different organic fractions were subsampled instead of being analyzed completely"
         },
         "organicSubsamplingTechnique": {
           "label": "Subsampling technique performed (Organic fraction)",
@@ -1650,7 +1650,7 @@
         },
         "mineralFractionSubsampled": {
           "label": "Mineral fraction subsampled",
-          "description": "States whether the different mineral fractions were either analyzed completely or subsampled"
+          "description": "States whether the different mineral fractions were subsampled instead of being analyzed completely"
         },
         "mineralSubsamplingTechnique": {
           "label": "Subsampling technique performed (Mineral fraction)",

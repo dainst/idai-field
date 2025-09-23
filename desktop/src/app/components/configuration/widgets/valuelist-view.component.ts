@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { clone, Map } from 'tsfun';
-import { Labels, Valuelist } from 'idai-field-core';
+import { Labels, Valuelist, ValuelistValue } from 'idai-field-core';
 import { ConfigurationInfoProvider } from '../../widgets/configuration-info-provider';
 
 
@@ -48,6 +48,14 @@ export class ValuelistViewComponent extends ConfigurationInfoProvider implements
     public getValuelistDescription = (valuelist: Valuelist) => this.labels.getDescription(valuelist);
 
     public getValueIds = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
+
+
+    public hasInfo(valueId: string): boolean {
+
+        const value: ValuelistValue = this.valuelist.values[valueId];
+
+        return this.valueDescriptions[valueId] !== undefined || (value.references && value.references?.length > 0);
+    }
 
 
     private getLabelAndDescription(valueId: string): { label: string, description?: string } {

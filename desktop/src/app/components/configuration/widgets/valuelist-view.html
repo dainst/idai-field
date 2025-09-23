@@ -7,6 +7,7 @@
          [class.col-12]="largeList"
          class="value-col">
         <span class="badge bg-light value-badge"
+              [class.with-info]="hasInfo(valueId)"
               #valueInfoPopover="ngbPopover"
               [ngbPopover]="infoPopover"
               triggers="manual"

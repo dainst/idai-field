@@ -344,7 +344,7 @@ export namespace ConfigurationDocument {
             group = { name: groupName, fields: [] };
             form.groups.push(group);
         }
-        group.fields.push(fieldName);
+        if (!group.fields.includes(fieldName)) group.fields.push(fieldName);
     }
 
 

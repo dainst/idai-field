@@ -165,6 +165,11 @@
 
         .category-item {
           transition: background-color .25s ease;
+          padding-right: 0;
+
+          &.short-category-item {
+            padding-right: 25px;
+          }
         }
 
         .selected-category .category-item {

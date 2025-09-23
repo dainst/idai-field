@@ -1683,7 +1683,7 @@
         },
         "organicFractionSubsampled": {
           "label": "Unterprobe der organischen Fraktion",
-          "description": "Gibt an, ob die verschiedenen organischen Fraktionen vollständig analysiert oder unterteilt wurden"
+          "description": "Gibt an, ob die verschiedenen organischen Fraktionen unterteilt wurden, anstatt vollständig analysiert zu werden"
         },
         "organicSubsamplingTechnique": {
           "label": "Durchgeführte Unterprobenentnahmetechnik (Organische Fraktion)",
@@ -1763,7 +1763,7 @@
         },
         "mineralFractionSubsampled": {
           "label": "Stichprobenentnahme der Mineralfraktion",
-          "description": "Gibt an, ob die verschiedenen Mineralfraktionen vollständig analysiert oder unterteilt wurden"
+          "description": "Gibt an, ob die verschiedenen Mineralfraktionen unterteilt wurden, anstatt vollständig analysiert zu werden"
         },
         "mineralSubsamplingTechnique": {
           "label": "Durchgeführte Unterprobenentnahmetechnik (Mineralfraktion)",

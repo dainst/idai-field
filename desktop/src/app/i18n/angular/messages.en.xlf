@@ -4071,8 +4071,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
-        <source>Gemessen an</source>
-        <target state="translated">As measured by</target>
+        <source>Gemessen an:</source>
+        <target state="translated">As measured by:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">142</context>
@@ -4781,8 +4781,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
-        <source>gemessen an</source>
-        <target state="translated">as measured by</target>
+        <source>gemessen an:</source>
+        <target state="translated">as measured by:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4933,8 +4933,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.valuelistFromProjectField" datatype="html">
-        <source> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> der Projekteinstellungen. </source>
-        <target state="translated">The valuelist for this field corresponds to the entries in field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> of the project settings. </target>
+        <source>Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="omProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="der Projek"/> der Projekteinstellungen. </source>
+        <target state="translated">The valuelist for this field corresponds to the entries in field <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="omProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="der Projek"/> of the project settings. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -9384,14 +9384,6 @@
           <context context-type="linenumber">36,38</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteProcessModal.question" datatype="html">
-        <source>Möchten Sie den Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="translated">Do you really want to delete the process <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
-          <context context-type="linenumber">6,8</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="settings.backups.path.info" datatype="html">
         <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projektdatenbanken. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
         <target state="translated">Field Desktop automatically creates backups of all project databases on this computer at regular intervals. This path specifies the directory in which the created backup files are stored.</target>
@@ -9685,8 +9677,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.header" datatype="html">
-        <source>Prozess löschen?</source>
-        <target state="translated">Delete process?</target>
+        <source>Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen? </source>
+        <target state="translated">Delete process <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -10110,6 +10102,34 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">947</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.valuelistForVolumeSubfield" datatype="html">
+        <source>Werteliste (Unterfeld "Messverfahren")</source>
+        <target state="translated">Valuelist (Subfield "Measurement technique")</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">141,143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteProcessModal.confirmDeleteInfo" datatype="html">
+        <source>Bitte geben Sie den Bezeichner des Prozesses ein, um den Löschvorgang zu bestätigen.</source>
+        <target state="translated">Please enter the identifier of the process to confirm the deletion.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.volume.measurementTechnique" datatype="html">
+        <source>Messverfahren:</source>
+        <target state="translated">Measurement technique:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/measurement-entry-modal.html</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
     </body>

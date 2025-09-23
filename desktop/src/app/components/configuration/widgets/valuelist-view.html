@@ -14,7 +14,7 @@
               [popoverTitle]="valueLabels[valueId]"
               popoverClass="configuration-info-popover"
               container="body"
-              (contextmenu)="openPopover(valueInfoPopover); $event.stopPropagation()"
+              (contextmenu)="hasInfo(valueId) && openPopover(valueInfoPopover); $event.stopPropagation()"
               [autoClose]="false"
               [popoverContext]="{ value: valuelist.values[valueId], description: valueDescriptions[valueId] }">
             {{valueLabels[valueId]}}

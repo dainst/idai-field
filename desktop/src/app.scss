@@ -399,9 +399,20 @@ label {
   }
 }
 
-.with-info:hover,
-.with-info:hover .ng-value {
+.with-info,
+.with-info .ng-value {
   text-decoration: underline;
   text-decoration-style: dotted;
+  text-decoration-color:rgba(0, 0, 0, 0);
+  transition: text-decoration-color 0.15s ease-in-out;
+
+  &.option-element,
+  &.ng-value {
+    transition: none;
+  }
+}
+
+.with-info:hover,
+.with-info:hover .ng-value {
   text-decoration-color: $text-hover-color;
 }

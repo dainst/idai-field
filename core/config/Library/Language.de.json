@@ -1690,7 +1690,7 @@
           "description": "Verfahren zur Aufteilung der gesiebten organischen Fraktionen in kleinere, repräsentative Portionen für die Analyse"
         },
         "organicFractionMeasured": {
-          "label": "Gemessene organische Fraktion",
+          "label": "Organische Fraktion gemessen",
           "description": "Angabe, ob das Volumen/Gewicht der organischen Anteile erfasst wurde"
         },
         "organicFractionMeasurement8": {

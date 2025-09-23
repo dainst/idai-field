@@ -407,7 +407,7 @@ label {
   transition: text-decoration-color 0.15s ease-in-out;
 
   &.option-element,
-  &.ng-value {
+  &.value-badge {
     transition: none;
   }
 }

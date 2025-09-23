@@ -1,9 +1,4 @@
 <div class="configuration-info-container">
-    <div *ngIf="!getDescription() && !configurationItem.references?.length"
-         class="configuration-info-none-available"
-         i18n="@@widgets.configurationInfo.noInformationAvailable">
-        Keine Informationen verfügbar.
-    </div>
     <div class="configuration-info-description">{{getDescription()}}</div>
     <div *ngIf="configurationItem.references"
          class="configuration-info-references-container"

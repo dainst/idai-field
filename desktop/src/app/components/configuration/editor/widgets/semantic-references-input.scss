@@ -5,10 +5,6 @@ semantic-references-input {
     .reference-input {
       position: relative;
       border-right: none;
-
-      &:focus {
-        z-index: 1000;
-      }
     }
   }
 

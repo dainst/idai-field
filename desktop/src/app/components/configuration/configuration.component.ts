@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
@@ -46,7 +46,8 @@ import { M } from '../messages/m';
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
         '(window:click)': 'onClick($event, false)',
-        '(window:contextmenu)': 'onClick($event, true)'
+        '(window:contextmenu)': 'onClick($event, true)',
+        '(window:resize)': 'closeContextMenu()'
     },
     standalone: false
 })
@@ -63,6 +64,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public configurationDocument: ConfigurationDocument;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
     public clonedProjectConfiguration: ProjectConfiguration;
+    public scrollListener: any;
     
     public ready: boolean = false;
     public dragging: boolean = false;
@@ -137,7 +139,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private utilTranslations: UtilTranslations,
-                private appState: AppState) {}
+                private appState: AppState,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
@@ -165,6 +168,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.menuSubscription = this.menuNavigator.configurationMenuNotifications()
             .subscribe(menuItem => this.onMenuItemClicked(menuItem));
 
+        this.scrollListener = this.closeContextMenu.bind(this);
+        window.addEventListener('scroll', this.scrollListener, true);
+
         this.ready = true;
     }
 
@@ -173,6 +179,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.menus.setContext(MenuContext.DEFAULT);
         if (this.menuSubscription) this.menuSubscription.unsubscribe();
+        window.removeEventListener('scroll', this.scrollListener, true);
     }
 
 
@@ -201,7 +208,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public onClick(event: any, rightClick: boolean = false) {
 
-        if (!this.contextMenu.position) return;
+        if (!this.contextMenu.isOpen()) return;
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
             || rightClick && target.id && (
@@ -211,8 +218,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 || target.id.startsWith('field-')
             )) || ComponentHelpers.isInside(event.target, target => rightClick
                 && (target.classList?.contains('valuelist')))) {
-            this.contextMenu.close();
+            this.closeContextMenu();
         }
+    }
+
+    
+    public closeContextMenu() {
+
+        this.contextMenu.close();
+        this.changeDetectorRef.detectChanges();
     }
 
 
@@ -250,7 +264,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public performContextMenuAction(action: ConfigurationContextMenuAction) {
 
-        this.contextMenu.close();
+        this.closeContextMenu();
 
         switch(action) {
             case 'edit':

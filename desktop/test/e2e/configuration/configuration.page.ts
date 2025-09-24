@@ -20,7 +20,8 @@ export class ConfigurationPage {
 
     public static async clickOpenContextMenuForField(fieldName: string) {
 
-        return rightClick(await this.getField(fieldName));
+        const element = (await this.getField(fieldName)).locator('.card-header');
+        return rightClick(element);
     }
 
 

@@ -209,8 +209,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 || target.id.startsWith('category-')
                 || target.id.startsWith('group-')
                 || target.id.startsWith('field-')
-            ))) {
-
+            )) || ComponentHelpers.isInside(event.target, target => rightClick
+                && (target.classList?.contains('valuelist')))) {
             this.contextMenu.close();
         }
     }

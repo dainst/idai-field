@@ -3690,8 +3690,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
-        <source>Gemessen an</source>
-        <target state="translated">Ölçüldüğü kadarıyla</target>
+        <source>Gemessen an:</source>
+        <target state="translated">Ölçüldüğü kadarıyla:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">142</context>
@@ -4202,8 +4202,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
-        <source>gemessen an</source>
-        <target state="translated">ölçüldüğü gibi</target>
+        <source>gemessen an:</source>
+        <target state="translated">ölçüldüğü gibi:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4354,8 +4354,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.valuelistFromProjectField" datatype="html">
-        <source>Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> der Projekteinstellungen. </source>
-        <target state="translated">Bu alanın <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> değer listesi, proje ayarları alanındaki girişlere karşılık gelir. </target>
+        <source>Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="omProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="der Projek"/> der Projekteinstellungen. </source>
+        <target state="translated">Bu alan için değer listesi, proje ayarlarının <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="omProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="der Projek"/> alanındaki girdilere karşılık gelir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -9606,8 +9606,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.header" datatype="html">
-        <source>Prozess löschen?</source>
-        <target state="translated">İşlem silinsin mi?</target>
+        <source>Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen? </source>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> işlemi silinsin mi? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -10103,7 +10103,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistForVolumeSubfield" datatype="html">
         <source>Werteliste (Unterfeld "Messverfahren")</source>
-        <target state="needs-translation">Werteliste (Unterfeld "Messverfahren")</target>
+        <target state="translated">Değer listesi ("Ölçüm yöntemi" alt alanı)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">141,143</context>
@@ -10111,7 +10111,7 @@
       </trans-unit>
       <trans-unit id="util.volume.measurementTechnique" datatype="html">
         <source>Messverfahren:</source>
-        <target state="needs-translation">Messverfahren:</target>
+        <target state="translated">Ölçüm yöntemi:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">161</context>
@@ -10123,7 +10123,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.confirmDeleteInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner des Prozesses ein, um den Löschvorgang zu bestätigen.</source>
-        <target state="needs-translation">Bitte geben Sie den Bezeichner des Prozesses ein, um den Löschvorgang zu bestätigen.</target>
+        <target state="translated">Silmeyi onaylamak için lütfen işlem tanımlayıcısını girin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">15,17</context>

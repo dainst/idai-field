@@ -10,7 +10,9 @@
     "hierarchy": "Hiyerarşi",
     "stratigraphy": "Stratigrafi",
     "inventory": "Envanter",
-    "workflow": "İş Akışı"
+    "workflow": "İş Akışı",
+    "mineralFraction": "Mineral taneciği",
+    "organicFraction": "Organik parçacık/katkı"
   },
   "commons": {
     "dimensionLength": {
@@ -117,6 +119,10 @@
     "weight": {
       "label": "Ağırlık",
       "description": "Ağırlık birimi"
+    },
+    "volume": {
+      "label": "Hacim",
+      "description": "Hacim göstergesi"
     }
   },
   "categories": {
@@ -1589,6 +1595,126 @@
           "label": "Durum"
         }
       }
+    },
+    "SievedFractionProcessing": {
+      "fields": {
+        "organicFractionMeasurement05": {
+          "description": "0,5 mm elekte kalan organik madde miktarı",
+          "label": "Parçacık ölçümü 0,5 ORG"
+        },
+        "organicFractionMeasurementStrain": {
+          "label": "Parçacık ölçüm elemesi (bilinmeyen gözenek genişliği) ORG",
+          "description": "Elek kalıntısında tutulan organik madde miktarı"
+        },
+        "organicFractionTreatmentType": {
+          "label": "Organik parçacığa uygulanan işlem türü",
+          "description": "Eleme işleminden sonra ayrıştırılan organik parçacığa uygulanan işlem"
+        },
+        "organicFractionSubsampled": {
+          "label": "Organik parçacığın alt örneklemesi",
+          "description": "Farklı organik parçacıkların tamamen analizi yerine alt örnekleme yoluyla mı alındığını belirtir"
+        },
+        "organicSubsamplingTechnique": {
+          "label": "Kullanılan alt örnekleme tekniği (organik parçacık)",
+          "description": "Elenmiş organik parçacıkların analiz için daha küçük, temsili porsiyonlara bölünme yöntemi"
+        },
+        "organicFractionMeasured": {
+          "label": "Ölçülen organik parçacık",
+          "description": "Organik bileşenlerin hacim/ağırlığının kaydedilip kaydedilmediğinin belirtilmesi"
+        },
+        "organicFractionMeasurement8": {
+          "label": "Parçacık ölçümü 8 ORG",
+          "description": "8 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement4": {
+          "label": "Parçacık ölçümü 4 ORG",
+          "description": "4 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement2": {
+          "label": "Parçacık ölçümü 2 ORG",
+          "description": "2 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement035": {
+          "label": "Parçacık ölçümü 0,35 ORG",
+          "description": "0,35 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement025": {
+          "label": "Parçacık ölçümü 0,25 ORG",
+          "description": "0,25 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement0125": {
+          "label": "Parçacık ölçümü 0,125 ORG",
+          "description": "0,125 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurementUnit": {
+          "label": "Ölçü birimi (Organik parçacık)",
+          "description": "Organik parçacık miktarının belirtildiği birim"
+        },
+        "organicFractionVolumeMeasurementTechnique": {
+          "label": "Hacim ölçüm tekniği",
+          "description": "Organik parçacığın hacmini belirlemek için kullanılan yöntem"
+        },
+        "organicFractionSubsampledList": {
+          "label": "Organik alt örneklerin listesi",
+          "description": "Alt örnekleme yapılan organik parçacıkları gösterir"
+        },
+        "organicMultiplicationFactor8": {
+          "label": "Çarpım katsayısı 8 ORG",
+          "description": "8-ORG parçacıklarında toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor4": {
+          "label": "Çarpım katsayısı 4 ORG",
+          "description": "4-ORG parçacıklarında toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor2": {
+          "label": "Çarpım katsayısı 2 ORG",
+          "description": "2-ORG parçacıklarında toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor05": {
+          "label": "Çarpım katsayısı 0,5 ORG",
+          "description": "0,5-ORG parçacıklarında toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactorStrain": {
+          "label": "Çarpım katsayısı elek ORG (bilinmeyen gözenek genişliği)",
+          "description": "Elek parçacıklarında toplam organik kalıntı miktarının tahmininde kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor035": {
+          "label": "Çarpım katsayısı 0,35 ORG",
+          "description": "0,35-ORG parçacıklarında toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor025": {
+          "label": "Çarpım katsayısı 0,25 ORG",
+          "description": "0,25-ORG parçacıklarında toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor0125": {
+          "label": "Çarpım katsayısı 0,125 ORG",
+          "description": "0,125-ORG parçacıklarında toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        }
+      }
+    },
+    "Sampling": {
+      "fields": {
+        "systematicSamplingStrategy": {
+          "description": "Yapılandırılmış, örüntülü bir yöntem kullanılarak tortu örneklerinin toplanmasına yönelik özel yaklaşım",
+          "label": "Sistematik örnekleme türü"
+        },
+        "samplingStrategy": {
+          "label": "Örnekleme türü",
+          "description": "Tortu örnekleme stratejisinin türünü sınıflandırmak için ana kategoriye, yani kalıntıların dikey veya yatay dağılımına öncelik vermek"
+        },
+        "horizontalSamplingStrategy": {
+          "label": "Yatay örnekleme türü",
+          "description": "Arkeolojik bir tabakanın/alanın yüzeyinden örnek toplama stratejisi"
+        },
+        "proportionSystematicSampling": {
+          "label": "Örnekleme yapılan alanın oranı (%)",
+          "description": "Olasılıksal sistematik bir stratejide örneklenen alan/tortu yüzdesi"
+        },
+        "verticalSamplingStrategy": {
+          "label": "Dikey örnekleme türü"
+        }
+      },
+      "label": "Örnekleme"
     }
   },
   "forms": {

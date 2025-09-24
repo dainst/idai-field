@@ -110,6 +110,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
 
         if (!this.getClonedFieldDefinition().references) this.getClonedFieldDefinition().references = [];
+        if (!this.getClonedFieldDefinition().semanticReferences) {
+            this.getClonedFieldDefinition().semanticReferences = [];
+        }
         if (!this.getClonedFieldDefinition().subfields) this.getClonedFieldDefinition().subfields = [];
         if (!this.getClonedFieldDefinition().condition) {
             this.getClonedFieldDefinition().condition = clone(this.field.condition) ?? Condition.getEmpty('field');
@@ -137,6 +140,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         try {
             this.assertChangesAreValid();
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
@@ -371,8 +375,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.getCustomFieldDefinition()?.inverse !== this.inverseRelation
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
-            || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
-                    this.getClonedFieldDefinition()));
+            || (this.isCustomField() && (
+                ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
+                    this.getClonedFieldDefinition())
+                || ConfigurationUtil.isSemanticReferencesArrayChanged(this.getCustomFieldDefinition(),
+                    this.getClonedFieldDefinition())))
     }
 
 

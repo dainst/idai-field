@@ -160,6 +160,7 @@ export class SubfieldsSectionComponent {
         componentInstance.parentField = this.clonedField;
         componentInstance.category = this.category;
         componentInstance.references = subfieldDefinition.references;
+        componentInstance.semanticReferences = subfieldDefinition.semanticReferences;
         componentInstance.subfields = this.clonedField.subfields;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.projectLanguages = this.projectLanguages;
@@ -231,6 +232,12 @@ export class SubfieldsSectionComponent {
             subfieldDefinition.references = editedSubfieldData.references;
         } else {
             delete subfieldDefinition.references;
+        }
+
+        if (editedSubfieldData.semanticReferences?.length) {
+            subfieldDefinition.semanticReferences = editedSubfieldData.semanticReferences;
+        } else {
+            delete subfieldDefinition.semanticReferences;
         }
 
         if (Condition.isValid(editedSubfieldData.condition, 'subfield')) {

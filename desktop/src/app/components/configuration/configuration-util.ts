@@ -1,6 +1,6 @@
-import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
-import { CategoryForm, Field, Named, ProjectConfiguration, Reference, Relation } from 'idai-field-core';
-import { validateReferences } from './validation/validate-references';
+import { equal, flatten, isEmpty, to } from 'tsfun';
+import { CategoryForm, Field, Named, ProjectConfiguration, SemanticReference, Relation } from 'idai-field-core';
+import { validateReferences, validateSemanticReferences } from './validation/validate-references';
 
 
 export type InputType = {
@@ -80,21 +80,47 @@ export module ConfigurationUtil {
      */
     export function cleanUpAndValidateReferences(object: any) {
 
-        object.references = object.references.filter(reference => !isEmpty(reference.uri));
+        object.references = object.references.filter(reference => reference.length);
         validateReferences(object.references);
 
         if (isEmpty(object.references)) delete object.references;
     }
 
 
+    /**
+     * @throws M.CONFIGURATION_ERROR_INVALID_REFERENCE if validation fails
+     */
+    export function cleanUpAndValidateSemanticReferences(object: any) {
+
+        object.semanticReferences = object.semanticReferences.filter(reference => reference.uri?.length);
+        validateSemanticReferences(object.semanticReferences);
+
+        if (isEmpty(object.semanticReferences)) delete object.semanticReferences;
+    }
+
+
     export function isReferencesArrayChanged(object: any, editedObject: any): boolean {
 
-        const originalReferences: Array<Reference> = object.references
-            ? clone(object.references).filter(reference => !isEmpty(reference.uri))
+        const originalReferences: string[] = object.references
+            ? object.references.filter(reference => reference.length)
             : [];
         
-        const editedReferences: Array<Reference> = editedObject.references
-            ? clone(editedObject.references).filter(reference => !isEmpty(reference.uri))
+        const editedReferences: string[] = editedObject.references
+            ? editedObject.references.filter(reference => reference.length)
+            : [];
+
+        return !equal(originalReferences)(editedReferences);
+    }
+
+
+    export function isSemanticReferencesArrayChanged(object: any, editedObject: any): boolean {
+
+        const originalReferences: Array<SemanticReference> = object.semanticReferences
+            ? object.semanticReferences.filter(reference => reference.uri?.length)
+            : [];
+        
+        const editedReferences: Array<SemanticReference> = editedObject.semanticReferences
+            ? editedObject.semanticReferences.filter(reference => reference.uri?.length)
             : [];
 
         return !equal(originalReferences)(editedReferences);

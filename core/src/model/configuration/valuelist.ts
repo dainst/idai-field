@@ -1,7 +1,7 @@
 import { clone, Map } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { ValuelistValue } from './valuelist-value';
-import { Reference } from './reference';
+import { SemanticReference } from './semantic-reference';
 
 
 export type ValuelistId = string;
@@ -23,7 +23,8 @@ export interface Valuelist {
     description?: { [language: string]: string };
     createdBy?: string;
     creationDate?: string;
-    references?: Array<Reference>;
+    references?: string[];
+    semanticReferences?: Array<SemanticReference>;
 
     extendedValuelist?: string;
     hidden?: string[];

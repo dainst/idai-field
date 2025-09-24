@@ -75,6 +75,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         this.printableFields = this.getPrintableFields();
 
         if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
+        if (!this.getClonedFormDefinition().semanticReferences) this.getClonedFormDefinition().semanticReferences = [];
     }
 
 
@@ -86,6 +87,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.getClonedFormDefinition().resourceLimit
             );
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFormDefinition());
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.getClonedFormDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
@@ -125,6 +127,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || this.hasScanCodesConfigurationChanged()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
+                this.getClonedFormDefinition())
+            || ConfigurationUtil.isSemanticReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }
 

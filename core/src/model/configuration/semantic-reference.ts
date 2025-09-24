@@ -1,4 +1,4 @@
-export interface Reference {
+export interface SemanticReference {
     predicate: Predicate;
     uri: string;
 }
@@ -19,5 +19,3 @@ export module Predicate {
         'idw:unknownMatch'
     ];
 }
-
-

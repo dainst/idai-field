@@ -1,6 +1,4 @@
-import { isEmpty } from 'tsfun';
 import { Component, Input } from '@angular/core';
-import { Reference, Predicate } from 'idai-field-core';
 
 
 @Component({
@@ -13,10 +11,7 @@ import { Reference, Predicate } from 'idai-field-core';
  */
 export class ReferencesInputComponent {
 
-    @Input() references: Array<Reference>;
-
-
-    public getAvailablePredicates = () => Predicate.ALL;
+    @Input() references: string[];
 
 
     public getTrackingIndex = (index, _) => index;
@@ -24,8 +19,8 @@ export class ReferencesInputComponent {
 
     public addReference() {
 
-        if (this.references.length > 0 && isEmpty(this.references[this.references.length - 1]?.uri)) return;
-        this.references.push({ predicate: 'skos:exactMatch', uri: '' });
+        if (this.references.length > 0 && !this.references[this.references.length - 1]?.length) return;
+        this.references.push('');
     }
 
 

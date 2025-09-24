@@ -38,9 +38,16 @@
     </div>
     <div *ngIf="isCustomCategory()" class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.references">
-            Verweise
+            Allgemeine Verweise
         </div>
         <references-input [references]="getClonedFormDefinition().references"></references-input>
+    </div>
+    <div *ngIf="isCustomCategory()" class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.semanticReferences">
+            Semantische Verweise
+        </div>
+        <semantic-references-input [references]="getClonedFormDefinition().semanticReferences">
+        </semantic-references-input>
     </div>
     <div class="configuration-editor-section">
         <div class="configuration-editor-section-title" i18n="@@configuration.color">

@@ -39,6 +39,7 @@ export class ValueEditorModalComponent {
         if (!this.clonedValue.label) this.clonedValue.label = {};
         if (!this.clonedValue.description) this.clonedValue.description = {};
         if (!this.clonedValue.references) this.clonedValue.references = [];
+        if (!this.clonedValue.semanticReferences) this.clonedValue.semanticReferences = [];
     }
 
 
@@ -52,6 +53,7 @@ export class ValueEditorModalComponent {
 
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(this.clonedValue);
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.clonedValue);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }

@@ -6,7 +6,7 @@ import { Field } from './field';
 import { Group, GroupDefinition } from './group';
 import { Valuelist } from './valuelist';
 import { ScanCodeConfiguration } from './scan-code-configuration';
-import { Reference } from './reference';
+import { SemanticReference } from './semantic-reference';
 
 
 export interface CategoryForm {
@@ -40,7 +40,8 @@ export interface CategoryForm {
     
     createdBy?: string,
     creationDate?: Date;
-    references?: Array<Reference>;
+    references?: string[];
+    semanticReferences?: Array<SemanticReference>;
 
     color?: CategoryForm.Color; // TODO make sure it is always set and make non-optional
     defaultColor?: CategoryForm.Color;

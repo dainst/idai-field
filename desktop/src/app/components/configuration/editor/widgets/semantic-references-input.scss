@@ -1,11 +1,19 @@
-references-input {
+semantic-references-input {
   .reference-input-container {
-    width: calc(100% - 41px);
+    width: calc(100% - 240px);
 
     .reference-input {
       position: relative;
       border-right: none;
+
+      &:focus {
+        z-index: 1000;
+      }
     }
+  }
+
+  select {
+    width: 200px;
   }
 
   .btn-danger {

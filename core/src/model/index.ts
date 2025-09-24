@@ -43,4 +43,4 @@ export { Template } from './configuration/template';
 export { ScanCodeConfiguration, PrintedField } from './configuration/scan-code-configuration';
 export { DateSpecification, DateValidationResult } from './input-types/date-specification';
 export { DateConfiguration } from './configuration/date-configuration';
-export { Reference, Predicate } from './configuration/reference';
+export { SemanticReference, Predicate } from './configuration/semantic-reference';

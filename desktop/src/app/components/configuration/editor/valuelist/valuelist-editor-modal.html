@@ -38,6 +38,13 @@
         </div>
         <references-input [references]="getClonedValuelistDefinition().references"></references-input>
     </div>
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.semanticReferences">
+            Semantische Verweise
+        </div>
+        <semantic-references-input [references]="getClonedValuelistDefinition().semanticReferences">
+        </semantic-references-input>
+    </div>
     <div class="configuration-editor-section mb-3">
         <div class="configuration-editor-section-title" i18n="@@configuration.values">Werte</div>
         <div>

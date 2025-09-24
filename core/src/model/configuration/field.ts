@@ -12,7 +12,7 @@ import { DateConfiguration } from './date-configuration';
 import { DateSpecification, DateValidationResult } from '../input-types/date-specification';
 import { Condition } from './condition';
 import { Resource } from '../document/resource';
-import { Reference } from './reference';
+import { SemanticReference } from './semantic-reference';
 
 
 /**
@@ -36,7 +36,8 @@ export interface Field extends BaseField {
     maxCharacters?: number;
     defaultCondition?: Condition;
     source?: Field.SourceType;
-    references?: Array<Reference>;
+    references?: string[];
+    semanticReferences?: Array<SemanticReference>;
     dateConfiguration?: DateConfiguration;  // For input type "date"
     subfields?: Array<Subfield>;            // For input type "composite"
     constraintName?: string;                // For input type "derivedRelation"

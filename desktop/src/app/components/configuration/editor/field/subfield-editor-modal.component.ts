@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, isArray, subsetOf } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Subfield, Condition, Valuelist,
-    Reference } from 'idai-field-core';
+    SemanticReference } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../../configuration-util';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
@@ -14,7 +14,8 @@ export type SubfieldEditorData = {
     label: I18N.String;
     description: I18N.String;
     inputType: Field.InputType;
-    references?: Array<Reference>;
+    references?: string[];
+    semanticReferences?: Array<SemanticReference>;
     valuelist: Valuelist;
     condition?: Condition;
 }
@@ -35,7 +36,8 @@ export class SubfieldEditorModalComponent {
     public subfield: Subfield;
     public parentField: Field;
     public category: CategoryForm;
-    public references: Array<Reference>;
+    public references: string[];
+    public semanticReferences: Array<SemanticReference>;
     public new: boolean;
     public subfields: Array<Subfield>;
     public availableInputTypes: Array<InputType>;
@@ -82,6 +84,7 @@ export class SubfieldEditorModalComponent {
             description: clone(this.subfield.description) ?? {},
             inputType: this.subfield.inputType,
             references: clone(this.references) ?? [],
+            semanticReferences: clone(this.semanticReferences) ?? [],
             valuelist: clone(this.subfield.valuelist),
             condition: clone(this.subfield.condition) ?? Condition.getEmpty('subfield')
         };
@@ -97,6 +100,7 @@ export class SubfieldEditorModalComponent {
         try {
             this.assertChangesDoNotViolateConditionalSubfields();
             ConfigurationUtil.cleanUpAndValidateReferences(this.data);
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.data);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }

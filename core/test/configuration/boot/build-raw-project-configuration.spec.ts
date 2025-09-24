@@ -1666,7 +1666,7 @@ describe('buildRawProjectConfiguration', () => {
             '123': {
                 values: {
                     'one': { label: { de: 'Eins', en: 'One' } },
-                    'two': { references: [{ predicate: 'skos:exactMatch', uri: 'https://xyz.de/1234567' }] },
+                    'two': { semanticReferences: [{ predicate: 'skos:exactMatch', uri: 'https://xyz.de/1234567' }] },
                     'three': {}
                 },
                 id: '123',
@@ -1693,7 +1693,7 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['A'].groups[0].fields[0].valuelist.values).toEqual({
             one: { label: { de: 'Eins', en: 'One' } },
-            two: { references: [{ predicate: 'skos:exactMatch', uri: 'https://xyz.de/1234567' }] },
+            two: { semanticReferences: [{ predicate: 'skos:exactMatch', uri: 'https://xyz.de/1234567' }] },
             three: {}
         });
     });

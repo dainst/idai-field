@@ -24,8 +24,8 @@ export interface CustomFormDefinition extends BaseFormDefinition {
 
 
 const VALID_CUSTOM_FORM_PROPERTIES = [
-    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix', 'resourceLimit',
-    'scanCodes', 'range'
+    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'semanticReferences',
+    'identifierPrefix', 'resourceLimit', 'scanCodes', 'range'
 ];
 
 

@@ -2,6 +2,7 @@ valuelist-view {
   .valuelist-description {
     margin: 0 0.2rem 0.7rem;
     font-size: 0.8rem;
+    user-select: none;
   }
 
   .valuelist {
@@ -21,6 +22,7 @@ valuelist-view {
 
       code {
         font-size: 11px;
+        user-select: none;
       }
 
       &:hover {

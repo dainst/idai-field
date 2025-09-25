@@ -201,7 +201,10 @@ export namespace ConfigurationDocument {
                         form, getPermanentlyHiddenFields(newForm)
                     );
                 } else if (form.parentCategory.name === 'Process') {
-                    formDefinition.groups = mergeGroupsConfigurations(newForm.originalGroups, form.originalGroups);
+                    formDefinition.groups = mergeGroupsConfigurations(
+                        parentForm ? parentForm.originalGroups : newForm.originalGroups,
+                        form.originalGroups
+                    );
                     addWorkflowRelations(
                         configurationDocument,
                         form.name === currentForm.name ? currentForm : form,

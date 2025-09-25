@@ -1876,8 +1876,9 @@
       "groups": [
         {
           "name": "properties",
-          "fields": ["samplingStrategy", "horizontalSamplingStrategy", "systematicSamplingStrategy", "proportionSystematicSampling",
-            "quadrantDimensionsSystematicSampling", "verticalSamplingStrategy", "profileSamplingStrategy"]
+          "fields": ["samplingStrategy", "horizontalSamplingStrategy", "systematicSamplingStrategy",
+            "proportionSystematicSampling", "quadrantDimensionsSystematicSampling", "verticalSamplingStrategy",
+            "profileSamplingStrategy", "description", "notes"]
         }
       ]
     },
@@ -1922,7 +1923,7 @@
         {
           "name": "properties",
           "fields": ["sievingMethod", "sievingMeshes", "waterOrigin", "waterChangeFrequency", "samplePretreated",
-            "pretreatmentType", "pretreatmentChemicals"]
+            "pretreatmentType", "pretreatmentChemicals", "description", "notes"]
         }
       ]
     },

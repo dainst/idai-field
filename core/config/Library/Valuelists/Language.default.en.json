@@ -2851,10 +2851,10 @@
       "mineral05": {
         "label": "0,5 MIN"
       },
-      "organicUnknownWidth": {
+      "organicStrain": {
         "label": "Strain (unknown width) ORG"
       },
-      "mineralUnknownWidth": {
+      "mineralStrain": {
         "label": "Strain (unknown width) MIN"
       }
     }
@@ -2934,7 +2934,7 @@
       "organic025": {
         "label": "0,25 ORG"
       },
-      "organicUnknownWidth": {
+      "organicStrain": {
         "label": "Strain (unknown width) ORG"
       }
     }
@@ -2956,7 +2956,7 @@
       "mineral05": {
         "label": "0,5 MIN"
       },
-      "mineralUnknownWidth": {
+      "mineralStrain": {
         "label": "Strain (unknown width) MIN"
       }
     }

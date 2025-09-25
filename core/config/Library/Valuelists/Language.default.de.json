@@ -5917,10 +5917,10 @@
       "mineral05": {
         "label": "0,5 MIN"
       },
-      "organicUnknownWidth": {
+      "organicStrain": {
         "label": "Siebung (unbekannte Maschenbreite) ORG"
       },
-      "mineralUnknownWidth": {
+      "mineralStrain": {
         "label": "Siebung (unbekannte Maschenbreite) MIN"
       }
     }
@@ -6000,7 +6000,7 @@
       "organic025": {
         "label": "0,25 ORG"
       },
-      "organicUnknownWidth": {
+      "organicStrain": {
         "label": "Siebung (unbekannte Maschenbreite) ORG"
       }
     }
@@ -6022,7 +6022,7 @@
       "mineral05": {
         "label": "0,5 MIN"
       },
-      "mineralUnknownWidth": {
+      "mineralStrain": {
         "label": "Siebung (unbekannte Maschenbreite) MIN"
       }
     }

@@ -2109,7 +2109,7 @@
           "condition": {
             "fieldName": "organicFractionSubsampledList",
             "values": [
-              "organicUnknownWidth"
+              "organicStrain"
             ]
           }
         },
@@ -2169,7 +2169,7 @@
           "condition": {
             "fieldName": "mineralFractionSubsampledList",
             "values": [
-              "mineralUnknownWidth"
+              "mineralStrain"
             ]
           }
         }

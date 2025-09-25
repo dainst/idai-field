@@ -1645,17 +1645,17 @@
     "description": {},
     "fields": {
       "samplingStrategy": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sampling-samplingStrategy-default"
       },
       "horizontalSamplingStrategy": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sampling-horizontalSamplingStrategy-default"
       },
       "systematicSamplingStrategy": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sampling-systematicSamplingStrategy-default"
       },
@@ -1666,12 +1666,12 @@
         "inputType": "unsignedFloat"
       },
       "verticalSamplingStrategy": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sampling-verticalSamplingStrategy-default"
       },
       "profileSamplingStrategy": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sampling-profileSamplingStrategy-default"
       }
@@ -1687,12 +1687,12 @@
     "description": {},
     "fields": {
       "waterOrigin": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sieving-waterOrigin-default"
       },
       "waterChangeFrequency": {
-        "inputType": "checkboxes",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sieving-waterChangeFrequency-default"
       },
@@ -1709,7 +1709,7 @@
         "inputType": "multiInput"
       },
       "sievingMethod": {
-        "inputType": "checkboxes",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "Sieving-sievingMethod-default"
       },
@@ -1764,7 +1764,7 @@
         "constraintIndexed": true
       },
       "mineralSubsamplingTechnique": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
       },
@@ -1792,7 +1792,7 @@
         "inputType": "unsignedFloat"
       },
       "organicFractionTreatmentType": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-organicFractionTreatmentType-default"
       },
@@ -1806,7 +1806,7 @@
         "valuelistId": "SievedFractionProcessing-measurementUnit-default"
       },
       "organicFractionVolumeMeasurementTechnique": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-volumeMeasurementTechnique-default"
       },
@@ -1839,7 +1839,7 @@
         "constraintIndexed": true
       },
       "organicSubsamplingTechnique": {
-        "inputType": "dropdown",
+        "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
       },

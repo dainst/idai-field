@@ -45,4 +45,29 @@ describe('mergeGroupsConfigurations', () => {
             }
         ]);
     });
+
+
+    it('allow overwriting field order in child group', () => {
+
+        const parentGroups: Array<BaseGroupDefinition> = [
+            {
+                name: 'group1',
+                fields: ['fieldA', 'fieldB', 'fieldC']
+            }
+        ];
+
+        const childGroups: Array<BaseGroupDefinition> = [
+            {
+                name: 'group1',
+                fields: ['fieldD', 'fieldB', 'fieldA', 'fieldC']
+            }
+        ];
+
+        expect(mergeGroupsConfigurations(parentGroups, childGroups)).toEqual([
+            {
+                name: 'group1',
+                fields: ['fieldD', 'fieldB', 'fieldA', 'fieldC']
+            },
+        ]);
+    });
 });

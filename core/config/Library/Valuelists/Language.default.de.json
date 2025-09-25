@@ -5871,11 +5871,11 @@
       },
       "waterScreening": {
         "label": "Nasssieben",
-        "description": "Schnelle Sedimentverarbeitungsmethode, bei der Wasser aus einem Schlauch auf einen Siebstapel gegossen wird."
+        "description": "Schnelle Sedimentverarbeitungsmethode, bei der Wasser aus einem Schlauch auf einen Siebstapel gegossen wird"
       },
       "drySieving": {
         "label": "Trockensieben",
-        "description": "Verarbeitungstechnik, bei der trockene Erde ohne Verwendung von Wasser durch eine Reihe ineinander liegender Siebe gesiebt wird."
+        "description": "Verarbeitungstechnik, bei der trockene Erde ohne Verwendung von Wasser durch eine Reihe ineinander liegender Siebe gesiebt wird"
       }
     }
   },

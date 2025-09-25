@@ -2805,11 +2805,11 @@
       },
       "waterScreening": {
         "label": "Water-screening",
-        "description": "Rapid sediment processing method where water is poured from a hose onto a stack of sieves."
+        "description": "Rapid sediment processing method where water is poured from a hose onto a stack of sieves"
       },
       "drySieving": {
         "label": "Dry-sieving",
-        "description": "Processing technique in which dry soil is sifted through a series of nested sieves without the use of water."
+        "description": "Processing technique in which dry soil is sifted through a series of nested sieves without the use of water"
       }
     }
   },

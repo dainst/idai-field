@@ -19,10 +19,10 @@ valuelist-view {
       border: 1px solid white;
       border-radius: 5px;
       color: black;
+      user-select: none;
 
       code {
         font-size: 11px;
-        user-select: none;
       }
 
       &:hover {

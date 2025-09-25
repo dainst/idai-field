@@ -1791,6 +1791,12 @@
       "mineralMultiplicationFactorStrain": {
         "inputType": "unsignedFloat"
       },
+      "mineralDescription": {
+        "inputType": "text"
+      },
+      "mineralNotes": {
+        "inputType": "text"
+      },
       "organicFractionTreatmentType": {
         "inputType": "radio",
         "constraintIndexed": true,
@@ -1871,6 +1877,12 @@
       },
       "organicMultiplicationFactorStrain": {
         "inputType": "unsignedFloat"
+      },
+      "organicDescription": {
+        "inputType": "text"
+      },
+      "organicNotes": {
+        "inputType": "text"
       }
     },
     "defaultRange": {

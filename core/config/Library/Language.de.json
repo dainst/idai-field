@@ -1797,6 +1797,12 @@
           "label": "Multiplikationsfaktor Siebung (unbekannte Maschenbreite) MIN",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an mineralischen Rückständen in der Siebfraktion zu verwenden ist"
         },
+        "mineralDescription": {
+          "label": "Beschreibung (Mineralfraktion)"
+        },
+        "mineralNotes": {
+          "label": "Notizen (Mineralfraktion)"
+        },
         "organicFractionMeasurementUnit": {
           "label": "Maßeinheit (Organische Fraktion)",
           "description": "Einheit, in der die Menge der organischen Fraktion angegeben wird"
@@ -1840,6 +1846,12 @@
         "organicMultiplicationFactorStrain": {
           "label": "Multiplikationsfaktor Siebung ORG (unbekannte Maschenbreite)",
           "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an organischen Rückständen in der Siebfraktion zu verwenden ist"
+        },
+        "organicDescription": {
+          "label": "Beschreibung (Organische Fraktion)"
+        },
+        "organicNotes": {
+          "label": "Notizen (Organische Fraktion)"
         }
       }
     }

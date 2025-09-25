@@ -1684,6 +1684,12 @@
           "label": "Multiplication factor strain (unknown width) MIN",
           "description": "Multiplication factor that has to be used when estimating the total mineral remains in the strain fraction"
         },
+        "mineralDescription": {
+          "label": "Description (Mineral fraction)"
+        },
+        "mineralNotes": {
+          "label": "Notes (Mineral fraction)"
+        },
         "organicFractionMeasurementUnit": {
           "label": "Measurement unit (Organic fraction)",
           "description": "Unit used to express the organic fraction amount"
@@ -1727,6 +1733,12 @@
         "organicMultiplicationFactorStrain": {
           "label": "Multiplication factor strain (unknown width) ORG",
           "description": "Multiplication factor that has to be used when estimating the total organic remains in the strain fraction"
+        },
+        "organicDescription": {
+          "label": "Description (Organic fraction)"
+        },
+        "organicNotes": {
+          "label": "Notes (Organic fraction)"
         }
       }
     }

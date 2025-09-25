@@ -2195,7 +2195,9 @@
             "mineralMultiplicationFactor2",
             "mineralMultiplicationFactor1",
             "mineralMultiplicationFactor05",
-            "mineralMultiplicationFactorStrain"
+            "mineralMultiplicationFactorStrain",
+            "mineralDescription",
+            "mineralNotes"
           ]
         },
         {
@@ -2223,7 +2225,9 @@
             "organicMultiplicationFactor035",
             "organicMultiplicationFactor025",
             "organicMultiplicationFactor0125",
-            "organicMultiplicationFactorStrain"
+            "organicMultiplicationFactorStrain",
+            "organicDescription",
+            "organicNotes"
           ]
         }
       ]

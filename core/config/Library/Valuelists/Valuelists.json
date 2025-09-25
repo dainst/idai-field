@@ -3059,17 +3059,17 @@
   },
   "Sieving-waterChangeFrequency-default": {
     "values": {
-      "everySU": {},
-      "everyFewSU": {},
-      "daily": {},
+      "everyStratigraphicalUnit": {},
+      "everyFewStratigraphicalUnits": {},
+      "onceADay": {},
       "afterFewDays": {}
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
-      "everySU",
-      "everyFewSU",
-      "daily",
+      "everyStratigraphicalUnit",
+      "everyFewStratigraphicalUnits",
+      "onceADay",
       "afterFewDays"
     ]
   },
@@ -3077,18 +3077,18 @@
     "values": {
       "freezing": {},
       "soaking": {},
-      "soakingSoap": {},
-      "soakingChemicals": {},
-      "sundryingSoaking": {}
+      "soakingWithSoap": {},
+      "soakingWithChemicals": {},
+      "sundryingAndSoaking": {}
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "freezing",
       "soaking",
-      "soakingSoap",
-      "soakingChemicals",
-      "sundryingSoaking"
+      "soakingWithSoap",
+      "soakingWithChemicals",
+      "sundryingAndSoaking"
     ]
   },
   "Sieving-sievingMethod-default": {

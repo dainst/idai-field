@@ -1914,7 +1914,7 @@
         "pretreatmentChemicals": {
           "condition": {
             "fieldName": "pretreatmentType",
-            "values": ["soakingChemicals"]
+            "values": ["soakingWithChemicals"]
           }
         }
       },

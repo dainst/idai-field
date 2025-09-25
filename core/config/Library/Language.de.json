@@ -1654,7 +1654,7 @@
         },
         "samplePretreated": {
           "label": "Vorbehandlung der Probe",
-          "description": "Gibt an, ob die Sedimentprobe vor dem Sieben irgendwelchen Verarbeitungsschritten unterzogen wurde"
+          "description": "Gibt an, ob die Sedimentprobe vor dem Sieben irgendwelchen Verarbeitungsschritten unterzogen wurde."
         },
         "pretreatmentType": {
           "label": "Art der durchgeführten Vorbehandlung",
@@ -1683,7 +1683,7 @@
         },
         "organicFractionSubsampled": {
           "label": "Unterprobe der organischen Fraktion",
-          "description": "Gibt an, ob die verschiedenen organischen Fraktionen unterteilt wurden, anstatt vollständig analysiert zu werden"
+          "description": "Gibt an, ob die verschiedenen organischen Fraktionen unterteilt wurden, anstatt vollständig analysiert zu werden."
         },
         "organicSubsamplingTechnique": {
           "label": "Durchgeführte Unterprobenentnahmetechnik (Organische Fraktion)",
@@ -1691,7 +1691,7 @@
         },
         "organicFractionMeasured": {
           "label": "Organische Fraktion gemessen",
-          "description": "Angabe, ob das Volumen/Gewicht der organischen Anteile erfasst wurde"
+          "description": "Gibt an, ob das Volumen/Gewicht der organischen Anteile erfasst wurde."
         },
         "organicFractionMeasurement8": {
           "label": "Fraktionsmessung 8 ORG",
@@ -1703,35 +1703,35 @@
         },
         "organicFractionMeasurement2": {
           "label": "Fraktionsmessung 2 ORG",
-          "description": "Menge an organischem Material, das im 2-mm-Sieb zurückgehalten wird"
+          "description": "Menge des organischen Materials, das im 2-mm-Sieb zurückgehalten wird"
         },
         "organicFractionMeasurement05": {
           "label": "Fraktionsmessung 0,5 ORG",
-          "description": "Menge an organischem Material, das im 0,5-mm-Sieb zurückgehalten wird"
+          "description": "Menge des organischen Materials, das im 0,5-mm-Sieb zurückgehalten wird"
         },
         "organicFractionMeasurement035": {
           "label": "Fraktionsmessung 0,35 ORG",
-          "description": "Menge an organischem Material, das im 0,35-mm-Sieb zurückgehalten wird"
+          "description": "Menge des organischen Materials, das im 0,35-mm-Sieb zurückgehalten wird"
         },
         "organicFractionMeasurement025": {
           "label": "Fraktionsmessung 0,25 ORG",
-          "description": "Menge an organischem Material, das im 0,25-mm-Sieb zurückgehalten wird"
+          "description": "Menge des organischen Materials, das im 0,25-mm-Sieb zurückgehalten wird"
         },
         "organicFractionMeasurement0125": {
           "label": "Fraktionsmessung 0,125 ORG",
-          "description": "Menge an organischem Material, das im 0,125-mm-Sieb zurückgehalten wird"
+          "description": "Menge des organischen Materials, das im 0,125-mm-Sieb zurückgehalten wird"
         },
         "organicFractionMeasurementStrain": {
           "label": "Fraktionsmessung Siebung (unbekannte Maschenbreite) ORG",
-          "description": "Menge an organischem Material, das im Siebrückstand zurückgehalten wird"
+          "description": "Menge des organischen Materials, das im Siebrückstand zurückgehalten wird"
         },
         "mineralFractionKept": {
           "label": "Mineralfraktion aufbewahrt",
-          "description": "Angabe, ob die Mineralfraktion aufbewahrt oder entsorgt wurde"
+          "description": "Gibt an, ob die Mineralfraktion aufbewahrt wurde."
         },
         "mineralFractionMeasured": {
           "label": "Mineralfraktion gemessen",
-          "description": "Angabe, ob das Volumen/Gewicht der Mineralfraktionen erfasst wurde"
+          "description": "Gibt an, ob das Volumen/Gewicht der Mineralfraktionen erfasst wurde."
         },
         "mineralFractionMeasurementUnit": {
           "label": "Maßeinheit (Mineralfraktion)",
@@ -1763,7 +1763,7 @@
         },
         "mineralFractionSubsampled": {
           "label": "Stichprobenentnahme der Mineralfraktion",
-          "description": "Gibt an, ob die verschiedenen Mineralfraktionen unterteilt wurden, anstatt vollständig analysiert zu werden"
+          "description": "Gibt an, ob die verschiedenen Mineralfraktionen unterteilt wurden, anstatt vollständig analysiert zu werden."
         },
         "mineralSubsamplingTechnique": {
           "label": "Durchgeführte Unterprobenentnahmetechnik (Mineralfraktion)",
@@ -1771,7 +1771,7 @@
         },
         "mineralFractionSubsampledList": {
           "label": "Liste der beprobten mineralischen Fraktionen",
-          "description": "Gibt die Mineralfraktionen an, die einer Stichprobenentnahme unterzogen wurden"
+          "description": "Gibt die Mineralfraktionen an, die einer Stichprobenentnahme unterzogen wurden."
         },
         "mineralMultiplicationFactor8": {
           "label": "Multiplikationsfaktor 8 MIN",
@@ -1807,7 +1807,7 @@
         },
         "organicFractionSubsampledList": {
           "label": "Liste der organischen Teilproben",
-          "description": "Gibt die organischen Fraktionen an, die einer Teilprobenahme unterzogen wurden"
+          "description": "Gibt die organischen Fraktionen an, die einer Teilprobenahme unterzogen wurden."
         },
         "organicMultiplicationFactor8": {
           "label": "Multiplikationsfaktor 8 ORG",

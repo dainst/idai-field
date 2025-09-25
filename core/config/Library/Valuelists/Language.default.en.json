@@ -2747,13 +2747,13 @@
   },
   "Sieving-waterChangeFrequency-default": {
     "values": {
-      "everySU": {
+      "everyStratigraphicalUnit": {
         "label": "Every stratigraphical unit"
       },
-      "everyFewSU": {
+      "everyFewStratigraphicalUnits": {
         "label": "Every few stratigraphical units"
       },
-      "daily": {
+      "onceADay": {
         "label": "Once a day"
       },
       "afterFewDays": {
@@ -2765,23 +2765,23 @@
     "values": {
       "freezing": {
         "label": "Freezing",
-        "description": "The sample was frozen"
+        "description": "The sample was frozen."
       },
       "soaking": {
         "label": "Soaking",
-        "description": "The sample was immersed in water"
+        "description": "The sample was immersed in water."
       },
-      "soakingSoap": {
+      "soakingWithSoap": {
         "label": "Soaking with soap",
-        "description": "The sample was immersed in a solution of water and mild detergent"
+        "description": "The sample was immersed in a solution of water and mild detergent."
       },
-      "soakingChemicals": {
+      "soakingWithChemicals": {
         "label": "Soaking with other chemicals",
-        "description": "The sample was immersed in a water-and-chemical solution"
+        "description": "The sample was immersed in a water-and-chemical solution."
       },
-      "sundryingSoaking": {
+      "sundryingAndSoaking": {
         "label": "Sun-drying and soaking",
-        "description": "The sample was dried in the sunlight and then rehydrated"
+        "description": "The sample was dried in the sunlight and then rehydrated."
       }
     }
   },
@@ -2793,7 +2793,7 @@
       },
       "flotationAirCompressor": {
         "label": "Flotation with air compressor",
-        "description": "Similar to flotation, this system uses compressed air to generate a whirlpool effect in the flotation machine to aid the disaggregation of the sediment lumps and the flotation of charred material"
+        "description": "Similar to flotation, this system uses compressed air to generate a whirlpool effect in the flotation machine to aid the disaggregation of the sediment lumps and the flotation of charred material."
       },
       "bucketFlotation": {
         "label": "Bucket flotation",
@@ -2805,11 +2805,11 @@
       },
       "waterScreening": {
         "label": "Water-screening",
-        "description": "Rapid sediment processing method where water is poured from a hose onto a stack of sieves"
+        "description": "Rapid sediment processing method where water is poured from a hose onto a stack of sieves."
       },
       "drySieving": {
         "label": "Dry-sieving",
-        "description": "Processing technique in which dry soil is sifted through a series of nested sieves without the use of water"
+        "description": "Processing technique in which dry soil is sifted through a series of nested sieves without the use of water."
       }
     }
   },
@@ -2863,11 +2863,11 @@
     "values": {
       "airDrying": {
         "label": "Air-drying",
-        "description": "The sample was left to dry naturally, exposed to air"
+        "description": "The sample was left to dry naturally, exposed to air."
       },
       "putIntoWater": {
         "label": "Put into water",
-        "description": "The sample was kept in water"
+        "description": "The sample was kept in water."
       }
     }
   },
@@ -2903,11 +2903,11 @@
     "values": {
       "classical": {
         "label": "Classical",
-        "description": "The sample volume is measured by simply pouring it into a measuring container"
+        "description": "The sample volume is measured by simply pouring it into a measuring container."
       },
       "displacement": {
         "label": "Displacement",
-        "description": "The sample volume is measured by having a known amount of water in a measuring container and then adding the sample to measure the displaced volume"
+        "description": "The sample volume is measured by having a known amount of water in a measuring container and then adding the sample to measure the displaced volume."
       }
     }
   },

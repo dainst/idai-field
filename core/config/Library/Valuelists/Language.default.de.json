@@ -5813,13 +5813,13 @@
   },
   "Sieving-waterChangeFrequency-default": {
     "values": {
-      "everySU": {
+      "everyStratigraphicalUnit": {
         "label": "Jede stratigraphische Einheit"
       },
-      "everyFewSU": {
+      "everyFewStratigraphicalUnits": {
         "label": "Alle paar stratigraphischen Einheiten"
       },
-      "daily": {
+      "onceADay": {
         "label": "Einmal am Tag"
       },
       "afterFewDays": {
@@ -5831,23 +5831,23 @@
     "values": {
       "freezing": {
         "label": "Einfrieren",
-        "description": "Die Probe wurde eingefroren"
+        "description": "Die Probe wurde eingefroren."
       },
       "soaking": {
         "label": "Einweichen",
-        "description": "Die Probe wurde in Wasser getaucht"
+        "description": "Die Probe wurde in Wasser getaucht."
       },
-      "soakingSoap": {
+      "soakingWithSoap": {
         "label": "Einweichen mit Seife",
-        "description": "Die Probe wurde in eine Lösung aus Wasser und mildem Reinigungsmittel getaucht"
+        "description": "Die Probe wurde in eine Lösung aus Wasser und mildem Reinigungsmittel getaucht."
       },
-      "soakingChemicals": {
+      "soakingWithChemicals": {
         "label": "Einweichen mit anderen Chemikalien",
-        "description": "Die Probe wurde in eine Wasser-Chemikalien-Lösung getaucht"
+        "description": "Die Probe wurde in eine Wasser-Chemikalien-Lösung getaucht."
       },
-      "sundryingSoaking": {
+      "sundryingAndSoaking": {
         "label": "Sonnentrocknen und Einweichen",
-        "description": "Die Probe wurde im Sonnenlicht getrocknet und anschließend rehydriert"
+        "description": "Die Probe wurde im Sonnenlicht getrocknet und anschließend rehydriert."
       }
     }
   },
@@ -5859,7 +5859,7 @@
       },
       "flotationAirCompressor": {
         "label": "Flotation mit Luftkompressor",
-        "description": "Ähnlich wie bei der Flotation wird bei diesem System Druckluft verwendet, um in der Flotationsmaschine einen Strudeleffekt zu erzeugen, der die Auflösung der Sedimentklumpen und die Flotation des verkohlten Materials unterstützt"
+        "description": "Ähnlich wie bei der Flotation wird bei diesem System Druckluft verwendet, um in der Flotationsmaschine einen Strudeleffekt zu erzeugen, der die Auflösung der Sedimentklumpen und die Flotation des verkohlten Materials unterstützt."
       },
       "bucketFlotation": {
         "label": "Eimerflotation",
@@ -5871,11 +5871,11 @@
       },
       "waterScreening": {
         "label": "Nasssieben",
-        "description": "Schnelle Sedimentverarbeitungsmethode, bei der Wasser aus einem Schlauch auf einen Siebstapel gegossen wird"
+        "description": "Schnelle Sedimentverarbeitungsmethode, bei der Wasser aus einem Schlauch auf einen Siebstapel gegossen wird."
       },
       "drySieving": {
         "label": "Trockensieben",
-        "description": "Verarbeitungstechnik, bei der trockene Erde ohne Verwendung von Wasser durch eine Reihe ineinander liegender Siebe gesiebt wird"
+        "description": "Verarbeitungstechnik, bei der trockene Erde ohne Verwendung von Wasser durch eine Reihe ineinander liegender Siebe gesiebt wird."
       }
     }
   },
@@ -5929,11 +5929,11 @@
     "values": {
       "airDrying": {
         "label": "Lufttrocknen",
-        "description": "Die Probe wurde auf natürlichem Weg trocknen gelassen, der Luft ausgesetzt"
+        "description": "Die Probe wurde auf natürlichem Weg trocknen gelassen, der Luft ausgesetzt."
       },
       "putIntoWater": {
         "label": "In Wasser",
-        "description": "Die Probe wurde in Wasser aufbewahrt"
+        "description": "Die Probe wurde in Wasser aufbewahrt."
       }
     }
   },
@@ -5969,11 +5969,11 @@
     "values": {
       "classical": {
         "label": "Schüttvolumen",
-        "description": "Das Probenvolumen wird durch einfaches Schütten in einen Messbehälter gemessen"
+        "description": "Das Probenvolumen wird durch einfaches Schütten in einen Messbehälter gemessen."
       },
       "displacement": {
         "label": "Verdrängungsvolumen",
-        "description": "Das Probenvolumen wird gemessen, indem man eine bekannte Menge Wasser in einen Messbehälter gibt und dann die Probe hinzugibt, um das verdrängte Volumen zu messen"
+        "description": "Das Probenvolumen wird gemessen, indem man eine bekannte Menge Wasser in einen Messbehälter gibt und dann die Probe hinzugibt, um das verdrängte Volumen zu messen."
       }
     }
   },

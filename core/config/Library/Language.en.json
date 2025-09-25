@@ -1541,7 +1541,7 @@
         },
         "samplePretreated": {
           "label": "Pretreated before sieving",
-          "description": "States whether the sediment sample underwent any processing steps before sieving"
+          "description": "States whether the sediment sample underwent any processing steps before sieving."
         },
         "pretreatmentType": {
           "label": "Type of pretreatment performed",
@@ -1570,7 +1570,7 @@
         },
         "organicFractionSubsampled": {
           "label": "Organic fraction subsampled",
-          "description": "States whether the different organic fractions were subsampled instead of being analyzed completely"
+          "description": "States whether the different organic fractions were subsampled instead of being analyzed completely."
         },
         "organicSubsamplingTechnique": {
           "label": "Subsampling technique performed (Organic fraction)",
@@ -1578,7 +1578,7 @@
         },
         "organicFractionMeasured": {
           "label": "Organic fraction measured",
-          "description": "Statement on whether the volume/weight of the organic fractions has been recorded"
+          "description": "States whether the volume/weight of the organic fractions has been recorded."
         },
         "organicFractionMeasurement8": {
           "label": "Fraction measurement 8 ORG",
@@ -1614,11 +1614,11 @@
         },
         "mineralFractionKept": {
           "label": "Mineral fraction kept",
-          "description": "Statement on whether the mineral fraction was kept or discarded"
+          "description": "States whether the mineral fraction was kept."
         },
         "mineralFractionMeasured": {
           "label": "Mineral fraction measured",
-          "description": "Statement on whether the volume/weight of the mineral fractions has been recorded"
+          "description": "States whether the volume/weight of the mineral fractions has been recorded."
         },
         "mineralFractionMeasurementUnit": {
           "label": "Measurement unit (Mineral fraction)",
@@ -1650,7 +1650,7 @@
         },
         "mineralFractionSubsampled": {
           "label": "Mineral fraction subsampled",
-          "description": "States whether the different mineral fractions were subsampled instead of being analyzed completely"
+          "description": "States whether the different mineral fractions were subsampled instead of being analyzed completely."
         },
         "mineralSubsamplingTechnique": {
           "label": "Subsampling technique performed (Mineral fraction)",
@@ -1658,7 +1658,7 @@
         },
         "mineralFractionSubsampledList": {
           "label": "List of subsampled mineral fractions",
-          "description": "Indicates the mineral fractions that were subsampled"
+          "description": "Indicates the mineral fractions that were subsampled."
         },
         "mineralMultiplicationFactor8": {
           "label": "Multiplication factor 8 MIN",
@@ -1694,7 +1694,7 @@
         },
         "organicFractionSubsampledList": {
           "label": "List of subsampled organic fractions",
-          "description": "Indicates the organic fractions that were subsampled"
+          "description": "Indicates the organic fractions that were subsampled."
         },
         "organicMultiplicationFactor8": {
           "label": "Multiplication factor 8 ORG",

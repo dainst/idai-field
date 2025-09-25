@@ -193,7 +193,7 @@
     "electron-builder": "26.0.18",
     "file-api": "0.10.4",
     "file-url": "2.0.2",
-    "gulp": "5.0.1",
+    "gulp": "4.0.2",
     "jasmine": "2.5.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",

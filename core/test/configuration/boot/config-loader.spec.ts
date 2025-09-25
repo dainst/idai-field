@@ -1235,4 +1235,65 @@ describe('ConfigLoader', () => {
         expect(result.valuelistProject.values.valueProject.label.de).toEqual('Value Project Deutsch');
         expect(result.valuelistProject.values.valueProject.label.en).toEqual('Value Project English');
     });
+
+
+    it('save original groups', async done => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    fieldA1: { inputType: 'text '},
+                    fieldA2: { inputType: 'text '}
+                },
+                minimalForm: {
+                    groups: []
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    fieldA3: { inputType: 'text' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA2', 'fieldA1', 'fieldA3'] }
+                ],
+            }
+        };
+
+        applyConfig({}, libraryForms);
+
+        let pconf;
+        try {
+            pconf = await configLoader.go({},
+                builtInCategories,
+                [], {},
+                getConfigurationDocument(customForms)
+            );
+
+            expect(pconf.getCategory('A').originalGroups).toEqual([
+                { name: Groups.STEM, fields: ['fieldA1', 'fieldA2'] }
+            ])
+        } catch(err) {
+            fail(err);
+        }
+
+        done();
+    });
 });

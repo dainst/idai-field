@@ -180,6 +180,7 @@ export const createCategory = (name: string): Tree<CategoryForm> => ({
                 ]
             }
         ],
+        originalGroups: [],
         mustLieWithin: undefined
     },
     trees: []

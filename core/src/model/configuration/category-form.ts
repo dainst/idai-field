@@ -31,6 +31,7 @@ export interface CategoryForm {
     parentCategory: CategoryForm|undefined; // = undefined;
     
     groups: Array<Group>;
+    originalGroups: Array<GroupDefinition>;
     
     label: I18N.String;
     description: I18N.String;

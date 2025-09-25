@@ -53,8 +53,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltInCateg
                                              builtInFieldDefinitions: Map<BuiltInFieldDefinition> = {},
                                              relationDefinitions: Array<Relation> = [],
                                              languageConfigurations: LanguageConfigurations = { default: {}, custom: {}, complete: {} },
-                                             projectLanguages: string[] = [],
-                                             categoriesOrder: string[] = [],
+                                             projectLanguages: string[] = [], categoriesOrder: string[] = [],
                                              validateFields: any = identity,    // TODO Check if this has to be a parameter
                                              selectedParentForms?: string[],
                                              includeAllRelations: boolean = false): RawProjectConfiguration {

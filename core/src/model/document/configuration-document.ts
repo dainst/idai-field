@@ -16,6 +16,7 @@ import { sampleDataLabels } from '../../datastore/sampledata/sample-data-labels'
 import { ScanCodeConfiguration } from '../configuration/scan-code-configuration';
 import { ConfigurationMigrator } from '../../configuration/configuration-migrator';
 import { Relation } from '../configuration/relation';
+import { mergeGroupsConfigurations } from '../../configuration/boot/merge-groups-configurations';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -194,13 +195,13 @@ export namespace ConfigurationDocument {
             };
 
             if (form.parentCategory) {
-                if (form.source === 'custom') formDefinition.parent = form.parentCategory.name;
-                if (form.source === 'custom' || form.parentCategory.name === 'Process') {
+                if (form.source === 'custom') {
+                    formDefinition.parent = form.parentCategory.name;
                     formDefinition.groups = CategoryForm.getGroupsConfiguration(
-                        newForm, getPermanentlyHiddenFields(newForm)
+                        form, getPermanentlyHiddenFields(newForm)
                     );
-                }
-                if (form.parentCategory.name === 'Process') {
+                } else if (form.parentCategory.name === 'Process') {
+                    formDefinition.groups = mergeGroupsConfigurations(newForm.originalGroups, form.originalGroups);
                     addWorkflowRelations(
                         configurationDocument,
                         form.name === currentForm.name ? currentForm : form,

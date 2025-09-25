@@ -198,7 +198,8 @@ function buildCategoryFromDefinition(formDefinition: TransientFormDefinition,
     category.defaultLabel = formDefinition.defaultLabel;
     category.defaultDescription = formDefinition.defaultDescription;
     category.groups = [];
-        category.color = formDefinition.color ?? CategoryForm.generateColorForCategory(category.name);
+    category.originalGroups = formDefinition.originalGroups;
+    category.color = formDefinition.color ?? CategoryForm.generateColorForCategory(category.name);
     category.defaultColor = formDefinition.defaultColor ?? (category.libraryId
         ? CategoryForm.generateColorForCategory(category.name)
         : category.color

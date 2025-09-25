@@ -95,6 +95,7 @@ function setGroups(form: TransientFormDefinition, forms: Array<TransientFormDefi
                    selectedForms: string[]): TransientFormDefinition|undefined {
 
     const clonedForm: TransientFormDefinition = clone(form);
+    clonedForm.originalGroups = clone(clonedForm.groups);
     if (!clonedForm.parent) return clonedForm;
         
     const parentForm = getParentForm(clonedForm, forms, selectedForms);

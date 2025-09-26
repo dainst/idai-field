@@ -487,7 +487,8 @@ Via the context menu or by double-clicking on an entry in the category list, the
 
 You can also specify the following properties for project-specific categories:
 * *Description*: A description text that informs in which contexts the category should be used.
-* *References*: Specify references consisting of a predicate and a URL here if you want to reference more information about the category or category definitions in other systems.
+* *General references*: URLs to websites where further information on the category can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
 
 #### QR codes
 
@@ -558,7 +559,8 @@ Via the context menu or by double-clicking on an entry in the field list, the fi
 
 * *Label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
 * *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field label and is intended to help with data entry.
-* *References*: Specify references consisting of a predicate and a URL here to reference more information about the field or field definitions in other systems.
+* *General references*: URLs to websites where further information on the field can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
 
 
 ### Change input type
@@ -794,7 +796,8 @@ Right-clicking on a project specific valuelist brings up a context menu that pro
 Via the context menu or by double-clicking on a valuelist, an editor can be opened in which the properties of the list can be edited:
 
 * *Valuelist description*: A description text where you can specify more detailed information about the valuelist. This text is displayed in valuelist management when the list is selected.
-* *References*: Specify references consisting of a predicate and a URL here to reference more information about the valuelist or definitions in other systems.
+* *General references*: URLs to websites where further information on the valuelist can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
 * *Values*: Use the text field "New value" to enter the desired identifier of a new value to be included in the valuelist. The value editor opens in each case, which can also be called later by clicking on the edit button next to each value (see section *Edit values*).
 * *Automatic sorting*: If this option is enabled, the values will always be displayed in alphanumeric order. You can deactivate the option in order to subsequently drag and drop the values into the desired order.
 
@@ -805,7 +808,28 @@ The value editor allows you to customize the properties of a value:
 
 * *Label*: The display label of the value. You can enter labels for different languages.
 * *Description*: A description text where you can specify more detailed information about the value. This text is displayed in the configuration editor as a tooltip for the corresponding value.
-* *References*: Specify references consisting of a predicate and a URL here to reference definitions in other systems.
+* *General references*: URLs to websites where further information on the value can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
+
+
+### References
+
+Forms, fields, valuelists as well as their values can be linked to external resources via references. A distinction is made between general and semantic references.
+
+**General references** are URLs to web pages where further information on the respective element of the project configuration can be accessed. These URLs are displayed in the information pop-up that can be displayed in the resource editor by right-clicking on a field or value, and can thus serve as an aid for data entry.
+
+**Semantic references** represent links to related concepts in other systems (vocabularies, ontologies, etc.) and consist of a predicate and a URI. One of the following relations can be selected as the predicate:
+
+*Simple Knowledge Organization System*:
+* skos:exactMatch
+* skos:closeMatch
+* skos:broadMatch
+* skos:narrowMatch
+* skos:relatedMatch
+
+*iDAI.world*:
+* idw:unknownMatch
+
 
 
 ## Select project languages

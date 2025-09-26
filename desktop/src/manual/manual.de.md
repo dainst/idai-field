@@ -23,11 +23,7 @@ Verwenden Sie den grünen Plus-Button unten in der Ressourcenliste, um eine neue
 
 <p align="center"><img src="images/de/resources/create_operation.png" alt="Maßnahmen-Ressource erstellen"/></p>
 
-Dabei wählen Sie in einem ersten Schritt die Kategorie der Maßnahme aus und können anschließend optional eine
-Geometrie für die neue Ressource anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der
-Maßnahme eintragen können. Je nach gewählter Maßnahmenkategorie stehen unterschiedliche Felder zur Auswahl,
-die jeweils in Gruppen aufgeteilt sind. Zwischen den Feldgruppen können Sie jederzeit per Klick auf einen der
-Buttons auf der linken Seite wechseln.
+Dabei wählen Sie in einem ersten Schritt die Kategorie der Maßnahme aus (z. B. "Schnitt" oder "Bauwerk") und können anschließend optional eine Geometrie für die neue Ressource auf der Karte anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der Maßnahme eintragen können. Je nach gewählter Maßnahmenkategorie stehen dabei unterschiedliche Felder zur Auswahl (siehe Abschnitt *Ressourcen bearbeiten*).
 
 Bevor die Maßnahme über den grünen Speichern-Button gesichert werden kann, muss in jedem Fall das Feld
 **Bezeichner** in der Gruppe "Stammdaten" ausgefüllt werden.
@@ -64,8 +60,7 @@ sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf ein
 Ressourcen öffnet sich ein Kontextmenü, das die folgenden Optionen bereitstellt:
 
 * *Warnungen anzeigen*: Zeigt die für diese Ressource vorliegenden Warnungen an (nur verfügbar für Ressourcen mit Warnungen, siehe Kapitel *Warnungen*)
-* *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
-erreichbar)
+* *Bearbeiten*: Öffnet den Ressourceneditor (siehe Abschnitt *Ressourcen bearbeiten*). Der Editor ist alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste aufrufbar.
 * *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können
 * *QR-Code hinzufügen*: Öffnet ein Fenster, in dem ein neuer QR-Code für die Ressource generiert werden bzw. ein bestehender QR-Code per Kamera-Scan übernommen werden kann
 * *QR-Code verwalten*: Zeigt den QR-Code der Ressource an und erlaubt den Druck eines QR-Code-Etiketts (alternativ auch über den QR-Code-Button rechts im Listenelement der Ressource erreichbar)
@@ -80,6 +75,58 @@ Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten v
 dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind. Optionen zum Hinzufügen oder Verwalten von QR-Codes sind ausschließlich verfügbar, wenn die Verwendung von QR-Codes für die entsprechende Kategorie im Konfigurationseditor eingerichtet wurde (siehe Abschnitt *Kategorien bearbeiten* im Kapitel *Konfiguration*).
 
 <p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+
+## Ressourcen bearbeiten
+
+Über das Kontextmenü oder einen Doppelklick auf einen Eintrag in der Ressourcenliste kann der Editor aufgerufen werden, in dem die Daten der ausgewählten Ressource bearbeitet werden können. Das Eingabeformular richtet sich dabei nach der Kategorie der Ressource (z. B. "Schnitt" oder "Fund") und kann im Konfigurationseditor festgelegt werden (siehe Kapitel *Projektkonfiguration*).
+
+Die für die Kategorie zur Verfügung stehenden Felder sind in mehrere Gruppen eingeteilt (z. B. "Stammdaten", "Maße", "Lage/Kontext"). Klicken Sie auf einen der Gruppen-Buttons im linken Bereich des Editors, werden im rechten Bereich des Editors die Felder der jeweiligen Gruppe angezeigt. Jedem Feld ist in der Projektkonfiguration ein bestimmter Eingabetyp zugeordnet, der bestimmt, welche Art von Daten in das Feld eingetragen werden können (z. B. "Einzeiliges Textfeld", "Datum", "Längenangabe"). Eine Auflistung aller Eingabetypen finden Sie im Unterkapitel *Felder* des Kapitels *Projektkonfiguration*.
+
+Alle Änderungen, die Sie im Editor vornehmen, werden erst gesichert, nachdem Sie den Button "Speichern" betätigt haben.
+
+
+### Informationen über Felder und Werte einsehen
+
+Zu Feldern und Wertelisten können in der Projektkonfiguration Beschreibungstexte sowie Verweise auf Webseiten mit zusätzlichen Informationen hinterlegt werden, die als Hilfestellung bei der Dateneingabe dienen können. Sind solche zusätzlichen Informationen für ein Feld oder einen Wert innerhalb einer Werteliste verfügbar, wird dies durch eine gepunktete Linie angezeigt, die erscheint, wenn Sie mit dem Mauszeiger auf den entsprechenden Feld bzw. Wert zeigen.
+
+<p align="center"><img src="images/de/resources/information_underline.png" alt="Informationen einsehen"/></p>
+
+Durch einen **Rechtsklick** können Sie ein Popup-Fenster öffnen, in dem der Beschreibungstext und/oder als Verweise eingetragene Links zu externen Webseiten angezeigt werden.
+
+
+### Kategorie wechseln
+
+Links in der Kopfzeile des Editors wird das Symbol der Kategorie angezeigt, der die ausgewählte Ressource angehört. Handelt es sich bei der Kategorie um eine Oberkategorie oder eine ihrer Unterkategorien, so können Sie an dieser Stelle zu einer anderen Unterkategorie oder zur Oberkategorie selbst wechseln. Angezeigt wird diese Möglichkeit durch einen kleinen blauen Button mit einem Pfeil-Symbol.
+
+<p align="center"><img src="images/de/resources/change_category.png" alt="Kategorie wechseln"/></p>
+
+Klicken Sie auf den Button, um aus einer Liste die gewünschte Kategorie auszuwählen. Im Editor wird nun das Formular der neu ausgewählten Kategorie angezeigt. Der Wechsel selbst wird allerdings erst beim Klick auf den "Speichern"-Button vollzogen.
+
+*Beispiel*: Die Oberkategorie "Fund" verfügt unter anderem über die Unterkategorien "Ziegel", "Münze" und "Keramik". Gehört eine Ressource der Kategorie "Ziegel" an, können Sie jederzeit zur Oberkategorie "Fund" oder einer der anderen Unterkategorien ("Münze" oder "Keramik") wechseln. Ein Wechsel zu einer anderen Kategorie (z. B. "Schnitt") ist dagegen nicht möglich.
+
+**Wichtig**: Bitte beachten Sie, dass bereits eingetragene Felddaten beim Wechsel der Kategorie verloren gehen können, wenn das entsprechende Feld für das Formular der neu ausgewählten Kategorie nicht konfiguriert ist. In diesem Fall wird beim Wechsel eine Warnung angezeigt. Wechseln Sie vor dem Speichern zur ursprünglichen Kategorie zurück, bleiben alle Felddaten erhalten.
+
+Ein Kategoriewechsel ist nicht möglich, wenn die Kategorie zur Oberkategorie "Maßnahme" oder "Prozess" gehört.
+
+
+### Ressourcen mehrfach erstellen
+
+Beim Anlegen einer neuen Ressource haben Sie die Möglichkeit, mehrere Ressourcen gleichzeitig zu erstellen. Klicken Sie dazu auf den Button mit dem "Pfeil nach unten"-Symbol rechts neben dem "Speichern"-Button und wählen Sie in dem sich öffnenden Dropdown-Menü die Option "Mehrfach erstellen". Geben Sie nun die Anzahl der insgesamt zu erstellenden Ressourcen ein und bestätigen Sie Ihre Eingabe mit einem Klick auf den Button "Ressourcen erstellen".
+
+Bei der mehrfachen Erstellung von Ressourcen werden für jede Ressource diejenigen Felddaten eingetragen, die Sie im Formular des Ressourceneditors eingetragen haben. Eingetragene Relationen werden lediglich für die erste erstellte Ressource gespeichert und **nicht** für angelegte Kopien übernommen.
+
+Der eingetragene Wert im Feld "Bezeichner" wird bei den zusätzlich angelegten Kopien jeweils um einen Zähler ergänzt, um sicherzustellen, dass jede Ressource einen einzigartigen Bezeichner besitzt. Haben Sie im Feld "Bezeichner" bereits einen Wert eingetragen, der einen Zähler enthält, so wird dieser fortgeführt.
+
+*Beispiel*: Sie haben im Feld "Bezeichner" den Wert "ABC" eingegeben und möchten drei Ressourcen anlegen. Die weiteren angelegten Ressourcen erhalten automatisch die Bezeichner "ABC2" und "ABC3".
+Haben Sie dagegen den Wert "ABC15" eingegeben, erhalten die weiteren angelegten Ressourcen die Bezeichner "ABC16" und "ABC17".
+
+
+### Ressourcen vervielfältigen
+
+Sie können Kopien einer bereits bestehenden Ressource anlegen, indem Sie im Ressourceneditor den Button mit dem "Pfeil nach unten"-Symbol rechts neben dem "Speichern"-Button anklicken und in dem sich öffnenden Dropdown-Menü die Option "Vervielfältigen" wählen. Geben Sie nun die Anzahl der anzulegenden Kopien an (die bereits existierende Ressource wird nicht mitgezählt) und bestätigen Sie Ihre Eingabe mit einem Klick auf den Button "Ressourcen speichern".
+
+Wie bei der mehrfachen Erstellung von Ressourcen werden mit Ausnahme von Relationen alle eingetragene Felddaten für die angelegten Kopien übernommen. Der Bezeichner wird entsprechend um einen Zähler ergänzt bzw. ein bereits vorhandener Zähler fortgeführt (siehe Abschnitt *Ressourcen mehrfach erstellen*).
 
 
 <hr>

@@ -25,10 +25,8 @@ Use the green plus button at the bottom of the resources list to create a new op
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
 
-In the process, you firstly choose the category of the operation, before you may optionally create a geometry
-for the new resource. Afterwards the editor is opened, where all data of the operation can be filled in.
-Depending on the chosen operation category, different fields are available, which are arranged in multiple
-groups. You can switch between field groups by clicking the buttons on the left side.
+In the process, you firstly choose the category of the operation (e.g. "Trench" or "Building"), before you may optionally create a geometry for the new resource on the map. Afterwards the editor is opened, where all data of the operation can be filled in.
+Depending on the chosen operation category, different fields are available here (see section *Edit resources*).
 
 Before the resource can be saved via the green save button, at the very least the **identifier** field in the
 core section has to be filled in.
@@ -58,11 +56,11 @@ switch to another level by clicking one of the buttons of the navigation path.
 ## Manage resources
 
 Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd or Shift key, multiple resources
-can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
+can be selected simultaneously. Right-clicking one or more selected resources in the list opens a context menu
 providing the following options:
 
 * *Show warnings*: Displays the warnings available for this resource (only available for resources with warnings, see chapter *Warnings*)
-* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
+* *Edit*: Opens the resource editor (see section *Edit resources*). Alternatively, the editor can also be opened by double-clicking on the resource entry in the list.
 * *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed
 * *Add QR code*: Opens a window in which a new QR code can be generated for the resource or an existing QR code can be linked via camera scan
 * *Manage QR code*: Displays the QR code of the resource and allows printing a QR code label (alternatively also accessible via the QR code button on the right side of the list element of the resource)
@@ -76,6 +74,59 @@ Furthermore, the context menu contains options for creating and editing geometri
 multiple resources are selected, only the *Move* and *Delete* options are available. Options for adding or managing QR codes are only available if the use of QR codes has been set up for the corresponding category in the configuration editor (see section *Edit categories* in chapter *Configuration*).
 
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+
+
+## Edit resources
+
+The resource editor can be opened via the context menu or by double-clicking on an entry in the resource list. Here, you can edit the data of the selected resource. The input form depends on the category of the resource (e.g. "Trench" or "Find") and can be defined in the configuration editor (see chapter *Project configuration*).
+
+The fields available for the category are divided into several groups (e.g. "Core", "Dimensions", "Position / Context"). If you click on one of the group buttons in the left-hand section of the editor, the fields for the respective group will be displayed in the right-hand section of the editor. Each field is assigned a specific input type in the project configuration, which determines the type of data that can be entered in the field (e.g. "Single line text", "Date", "Dimension"). A list of all input types can be found in the subchapter *Fields* of the chapter *Project configuration*.
+
+Any changes you make in the editor are only saved after you click the "Save" button.
+
+
+### View information about fields and values
+
+In the project configuration, you can store descriptive texts and links to websites with additional information for fields and valuelists, which can be helpful when entering data. If such additional information is available for a field or a value within a valuelist, this is indicated by a dotted line that appears when you point the mouse pointer at the corresponding field or value.
+
+<p align="center"><img src="images/en/resources/information_underline.png" alt="View information"/></p>
+
+By **right-clicking**, you can open a pop-up window in which the description text and/or links to external websites entered as references are displayed.
+
+
+### Change category
+
+The symbol for the category to which the selected resource belongs is displayed at the left of the editor header. If the category is a supercategory or one of its subcategories, you can switch to another subcategory or to the supercategory itself. This option is indicated by a small blue button with an arrow symbol.
+
+<p align="center"><img src="images/en/resources/change_category.png" alt="Change category"/></p>
+
+Click on the button to select the desired category from a list. The editor will now display the form for the newly selected category. However, the change will only be actually performed when you click the "Save" button.
+
+*Example*: The supercategory "Find" has the subcategories "Brick", "Coin" and "Pottery", among others. If a resource belongs to the category "Brick", you can switch to the supercategory "Find" or one of the other subcategories ("Coin" or "Pottery") at any time. However, it is not possible to switch to another category (e.g. "Trench").
+
+**Important**: Please note that field data that has already been entered may be lost when changing categories if the corresponding field is not part of the form of the newly selected category. In this case, a warning will be displayed when changing categories. If you switch back to the original category before saving, all field data will be retained.
+
+A category change is not possible if the category belongs to the supercategory "Operation" or "Process".
+
+
+### Create multiple instances of a resource
+
+When creating a new resource, you have the option of creating multiple instances at the same time. To do this, click on the button with the "arrow down" symbol to the right of the "Save" button and select the option "Create multiple instances" from the dropdown menu that opens. Now enter the total number of resources to be created and confirm your entry by clicking the button "Create resources".
+
+When creating multiple resources, the field data you entered in the resource editor form is added to each resource. However, entered relations are only saved for the first resource created and are **not** included in the copies created.
+
+A counter is added to the value entered in the field "Identifier" for each additional copy created to ensure that each resource has a unique identifier. If you have already entered a value containing a counter in the field "Identifier", this one will be continued.
+
+*Example*: You have entered the value "ABC" in the "Identifier" field and want to create three resources. The additional resources created are automatically given the identifiers "ABC2" and "ABC3".
+However, if you have entered the value "ABC15", the additional resources created are given the identifiers "ABC16" and "ABC17".
+
+
+### Duplicate resources
+
+You can create copies of an existing resource by clicking the button with the "arrow down" symbol to the right of the "Save" button in the resource editor and selecting the option "Duplicate" from the dropdown menu that opens. Now enter the number of copies to be created (the existing resource is not counted) and confirm your entry by clicking the button "Save resources".
+
+As with the creation of multiple instances of a resource, all entered field data is added to the created copies, with the exception of relations. The identifier is supplemented by a counter or an existing counter is continued (see section *Creating multiple resources*).
 
 
 <hr>

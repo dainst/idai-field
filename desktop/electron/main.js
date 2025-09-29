@@ -1,6 +1,8 @@
 'use strict';
 
 const electron = require('electron');
+electron.app.disableHardwareAcceleration();
+
 const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');
 const os = require('os');

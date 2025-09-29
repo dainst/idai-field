@@ -40,6 +40,7 @@ export module ImageManipulation {
                                           targetJpegQuality: number): Promise<Buffer> {
 
         try {
+            console.log('Starting thumbnail creation...');
             const sharpImage = getSharpImage(buffer);
             console.log('Resizing image to target height: ' + targetHeight);
             const resizedImage = sharpImage.resize(undefined, targetHeight);

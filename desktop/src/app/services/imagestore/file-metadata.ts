@@ -24,17 +24,24 @@ export type ImageMetadata = {
 export async function extendMetadataByFileData(existingMetadata: ImageMetadata, data: Buffer,
                                                parseDraughtsmenFromMetadata: boolean): Promise<ImageMetadata> {
 
+    console.log('Reading file metadata...');
     const { width, height } = await ImageManipulation.getSharpImage(data).metadata();
+    console.log('Loading metadata via exif reader...');
     const internalMetadata: ExifReader.ExpandedTags = ExifReader.load(data.buffer, { expanded: true });
+    console.log('Got metadata:', internalMetadata);
 
     existingMetadata.width = width;
     existingMetadata.height = height;
+    console.log('Reading creation date...');
     existingMetadata.date = getCreationDate(internalMetadata);
+    console.log('Got creation date');
     if (parseDraughtsmenFromMetadata) {
         existingMetadata.draughtsmen = [];
         const creator: string = getCreator(internalMetadata);
         if (creator) existingMetadata.draughtsmen.push(creator);
     }
+
+    console.log('Finished reading file metadata');
 
     return existingMetadata;
 }

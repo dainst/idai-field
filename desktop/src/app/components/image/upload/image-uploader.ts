@@ -147,15 +147,20 @@ export class ImageUploader {
         const duplicateFilenames: string[] = [];
 
         for (const filePath of filePaths) {
+            console.log('Performing import process for file path:', filePath);
             if (ExtensionUtil.ofUnsupportedExtension(path.basename(filePath), ImageUploader.supportedImageFileTypes)) {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
             } else {
                 try {
+                    console.log('Performing find query...');
                     const result = await this.findImageByFilename(path.basename(filePath));
                     if (result.totalCount > 0) {
+                        console.log('Found duplicate file');
                         duplicateFilenames.push(path.basename(filePath));
                     } else {
+                        console.log('Starting import...');
                         await this.uploadFile(filePath, metadata, depictsRelationTarget);
+                        console.log('Finished import');
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch (e) {
@@ -164,12 +169,16 @@ export class ImageUploader {
             }
         }
 
+        console.log('Updating upload result...');
+
         uploadResult.uploadedImages = this.uploadStatus.getHandledImages() - duplicateFilenames.length;
         if (duplicateFilenames.length === 1) {
             uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAME, duplicateFilenames[0]]);
         } else if (duplicateFilenames.length > 1) {
             uploadResult.messages.push([M.IMAGES_ERROR_DUPLICATE_FILENAMES, duplicateFilenames.join(', ')]);
         }
+
+        console.log('Returning upload result...');
 
         return uploadResult;
     }
@@ -228,9 +237,13 @@ export class ImageUploader {
     private async uploadFile(filePath: string, metadata: ImageMetadata,
                              depictsRelationTarget?: Document): Promise<any> {
 
+        console.log('Uploading file:', filePath);
         const buffer: Buffer = await this.readFile(filePath);
+        console.log('Finished reading file');
         
         let document: ImageDocument;
+
+        console.log('Creating image document...');
         
         try {
             document = await this.createImageDocument(
@@ -245,10 +258,15 @@ export class ImageUploader {
             }
         }
 
+        console.log('Storing file in imagestore...');
+
         try {
             await this.imagestore.store(document.resource.id, buffer);
+            console.log('Creating thumbnail...');
             await this.imagestore.createThumbnail(document.resource.id, buffer);
+            console.log('Creating display variant if necessary...');
             await createDisplayVariant(document, this.imagestore, buffer);
+            console.log('Finished uploading file');
         } catch (err) {
             console.error(err);
             throw [M.IMAGESTORE_ERROR_WRITE, path.basename(filePath)];
@@ -289,16 +307,22 @@ export class ImageUploader {
             }
         };
 
+        console.log('Setting optional metadata...');
+
         await this.setOptionalMetadata(document, extendedMetadata);
 
         if (depictsRelationTarget && depictsRelationTarget.resource.id) {
             document.resource.relations.depicts = [depictsRelationTarget.resource.id];
         }
 
+        console.log('Fetching georeference from geotiff...');
+
         const georeference: ImageGeoreference = ExtensionUtil.getExtension(fileName).includes('tif')
             ? await getGeoreferenceFromGeotiff(buffer)
             : undefined;
         if (georeference) document.resource.georeference = georeference;
+
+        console.log('Updating document via relations manager...');
 
         return await this.relationsManager.update(document);
     }

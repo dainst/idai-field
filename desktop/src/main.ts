@@ -6,11 +6,12 @@ import { Settings } from './app/services/settings/settings';
 import { environment } from './environments/environment';
 
 const detectPort = window.require('detect-port');
+const log = window.require('electron-log');
 
 
 if (environment.production) enableProdMode();
 
-suppressWarnings();
+initializeLogging();
 start();
 
 
@@ -37,6 +38,14 @@ function showAlreadyOpenError() {
     const progress = new InitializationProgress(null);
     progress.setLocale(Settings.getLocale());
     progress.setError('alreadyOpenError');
+}
+
+
+function initializeLogging() {
+
+    Object.assign(console, log.functions);
+
+    suppressWarnings();
 }
 
 

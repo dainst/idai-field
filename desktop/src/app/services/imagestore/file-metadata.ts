@@ -1,5 +1,5 @@
 import ExifReader from 'exifreader';
-import { ImageManipulation } from './image-manipulation';
+import { imageSize } from 'image-size';
 
 
 /**
@@ -25,7 +25,13 @@ export async function extendMetadataByFileData(existingMetadata: ImageMetadata, 
                                                parseDraughtsmenFromMetadata: boolean): Promise<ImageMetadata> {
 
     console.log('Reading file metadata...');
-    const { width, height } = await ImageManipulation.getSharpImage(data).metadata();
+
+    console.log('Reading image size...');
+    const { width, height } = imageSize(data as any);
+
+    console.log('Width:', width);
+    console.log('Height:', height);
+    
     console.log('Loading metadata via exif reader...');
     const internalMetadata: ExifReader.ExpandedTags = ExifReader.load(data.buffer, { expanded: true });
     console.log('Got metadata:', internalMetadata);

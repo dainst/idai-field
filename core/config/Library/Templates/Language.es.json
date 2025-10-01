@@ -1,24 +1,24 @@
 {
-    "default": {
-        "label": ""
-    },
-    "minimalExcavation": {
-        "label": ""
-    },
-    "minimalBuilding": {
-        "label": ""
-    },
-    "minimalSurvey": {
-        "label": ""
-    },
-    "archaeoDox": {
-        "label": "archaeoDox",
-        "languageConfiguration": {
-            "relations": {
-                "isPresentIn": {
-                    "label": ""
-                }
-            }
+  "default": {
+    "label": "Predeterminado/Por defecto"
+  },
+  "minimalExcavation": {
+    "label": "Básico (Excavación)"
+  },
+  "minimalBuilding": {
+    "label": "Básico (Levantamiento arquitectónico)"
+  },
+  "minimalSurvey": {
+    "label": "Básico (Prospección)"
+  },
+  "archaeoDox": {
+    "label": "archaeoDox",
+    "languageConfiguration": {
+      "relations": {
+        "isPresentIn": {
+          "label": "Está presente en el dibujo del perfil/planum"
         }
+      }
     }
+  }
 }

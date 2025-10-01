@@ -2992,21 +2992,66 @@
   },
   "Sampling-horizontalSamplingStrategy-default": {
     "values": {
-      "grabSample": {},
-      "systematicSample": {},
-      "judgementSample": {}
+      "grabSample": {
+        "references": [
+          "https://zenon.dainst.org/Record/000079164?sid=181706612",
+          "https://doi.org/10.2307/j.ctt20p56hs.6"
+        ]
+      },
+      "systematicSample": {
+        "references": [
+          "https://zenon.dainst.org/Record/000079164?sid=181706612",
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.2307/j.ctt20p56hs.6"
+        ]          
+      },
+      "judgementSample": {
+        "references": [
+          "https://zenon.dainst.org/Record/000079164?sid=181706612",
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.2307/j.ctt20p56hs.6",
+          "https://en.wikipedia.org/wiki/Judgment_sample"
+        ]
+      }
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
   "Sampling-systematicSamplingStrategy-default": {
     "values": {
-      "fixedVolume": {},
-      "probabilistic": {},
-      "random": {},
-      "eachQuadrant": {},
-      "everyOtherQuadrant": {},
-      "100%": {}
+      "fixedVolume": {
+        "references": [
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://doi.org/10.2307/j.ctt20p56hs.6"
+        ]
+      },
+      "probabilistic": {
+        "references": [
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://doi.org/10.2307/j.ctt20p56hs.6"
+        ]
+      },
+      "random": {
+        "references": [
+          "https://zenon.dainst.org/Record/000086684/Details"
+        ]
+      },
+      "eachQuadrant": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417"
+        ]
+      },
+      "everyOtherQuadrant": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417"
+        ]
+      },
+      "100%": {
+        "references": [
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://doi.org/10.2307/j.ctt20p56hs.6"
+        ]
+      }
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
@@ -3034,7 +3079,12 @@
   "Sampling-profileSamplingStrategy-default": {
     "values": {
       "sondage": {},
-      "monolith": {}
+      "monolith": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://cotswoldarchaeology.co.uk/science-week-5/"
+        ]
+      }
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
@@ -3046,7 +3096,11 @@
   "Sieving-waterOrigin-default": {
     "values": {
       "regular": {},
-      "recycledSystem": {},
+      "recycledSystem": {
+        "references": [
+          "https://doi.org/10.4324/9781315423098"
+        ] 
+      },
       "riverPondWell": {}
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
@@ -3075,11 +3129,36 @@
   },
   "Sieving-pretreatmentType-default": {
     "values": {
-      "freezing": {},
-      "soaking": {},
-      "soakingWithSoap": {},
-      "soakingWithChemicals": {},
-      "sundryingAndSoaking": {}
+      "freezing": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.1179/174963107x226462"
+        ]
+      },
+      "soaking": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.1179/174963107x226462"
+        ]
+      },
+      "soakingWithSoap": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.1179/174963107x226462"
+        ]
+      },
+      "soakingWithChemicals": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.1179/174963107x226462"
+        ]
+      },
+      "sundryingAndSoaking": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.1179/174963107x226462"
+        ]
+      }
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
@@ -3093,12 +3172,45 @@
   },
   "Sieving-sievingMethod-default": {
     "values": {
-      "flotation": {},
-      "flotationAirCompressor": {},
-      "bucketFlotation": {},
-      "washOver": {},
-      "waterScreening": {},
-      "drySieving": {}
+      "flotation": {
+        "references": [
+          "https://doi.org/10.4324/9781315423098",
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://doi.org/10.2307/j.ctt20p56hs.6",
+          "https://en.wikipedia.org/wiki/Glossary_of_archaeology#flotation"
+        ]
+      },
+      "flotationAirCompressor": {
+        "references": [
+          "https://doi.org/10.4324/9781315423098",
+          "https://zenon.dainst.org/Record/000086684/Details"
+        ]
+      },
+      "bucketFlotation": {
+        "references": [
+          "https://doi.org/10.4324/9781315423098",
+          "https://zenon.dainst.org/Record/000086684/Details"
+        ]
+      },
+      "washOver": {
+        "references": [
+          "https://www.researchgate.net/publication/238168605_A_tested_set_of_techniques_for_the_extraction_of_plant_and_animal_macrofossils_from_waterlogged_arch"
+        ]
+      },
+      "waterScreening": {
+        "references": [
+          "https://doi.org/10.4324/9781315423098",
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://doi.org/10.2307/j.ctt20p56hs.6",
+          "https://en.wikipedia.org/wiki/Glossary_of_archaeology#wet_sieving"
+        ]
+      },
+      "drySieving": {
+        "references": [
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://en.wikipedia.org/wiki/Glossary_of_archaeology#dry_sieving"
+        ]
+      }
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
@@ -3157,8 +3269,18 @@
   },
   "SievedFractionProcessing-subsamplingTechnique-default": {
     "values": {
-      "gridMethod": {},
-      "riffleBox": {}
+      "gridMethod": {
+        "references": [
+          "https://doi.org/10.1016/0305-4403(82)90024-3",
+          "https://zenon.dainst.org/Record/000048669?sid=181708417"
+        ]
+      },
+      "riffleBox": {
+        "references": [
+          "https://doi.org/10.1016/0305-4403(82)90024-3",
+          "https://zenon.dainst.org/Record/000048669?sid=181708417"
+        ]
+      }
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025",
@@ -3185,8 +3307,18 @@
   },
   "SievedFractionProcessing-volumeMeasurementTechnique-default": {
     "values": {
-      "classical": {},
-      "displacement": {}
+      "classical": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.1016/j.jas.2015.04.019"
+        ]
+      },
+      "displacement": {
+        "references": [
+          "https://zenon.dainst.org/Record/000048669?sid=181708417",
+          "https://doi.org/10.1016/j.jas.2015.04.019"
+        ]
+      }
     },
     "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
     "creationDate": "2025"

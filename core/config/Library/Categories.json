@@ -1711,12 +1711,21 @@
       "sievingMethod": {
         "inputType": "radio",
         "constraintIndexed": true,
-        "valuelistId": "Sieving-sievingMethod-default"
+        "valuelistId": "Sieving-sievingMethod-default",
+        "references": [
+          "https://doi.org/10.4324/9781315423098"
+        ]
       },
       "sievingMeshes": {
         "inputType": "checkboxes",
         "constraintIndexed": true,
-        "valuelistId": "Sieving-sievingMeshes-default"
+        "valuelistId": "Sieving-sievingMeshes-default",
+        "references": [
+          "https://doi.org/10.4324/9781315423098",
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://en.wikipedia.org/wiki/Mesh_(scale)",
+          "https://blog.certifiedmtp.com/sieve-size-chart-understanding-mesh-and-particle-sizes"
+        ]
       }
     },
     "defaultRange": {

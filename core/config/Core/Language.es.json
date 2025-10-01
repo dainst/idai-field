@@ -9,6 +9,18 @@
     },
     "shortDescription": {
       "label": "Breve descripción"
+    },
+    "isResultOf": {
+      "label": "Resultado de"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Incluye unidades estratigráficas"
+    },
+    "hasChildren": {
+      "label": "Recursos hijos"
+    },
+    "isSubjectOf": {
+      "label": "Objeto de"
     }
   },
   "categories": {
@@ -16,7 +28,10 @@
       "label": "Proyecto",
       "fields": {
         "coordinateReferenceSystem": {
-          "label": "Sistema de referencia de coordenadas"
+          "label": "Sistema de coordenadas de referencia"
+        },
+        "shortName": {
+          "label": "Nombre del proyecto"
         }
       }
     },
@@ -49,7 +64,7 @@
       "label": "Debajo de"
     },
     "isSameAs": {
-      "label": "Lo mismo que"
+      "label": "Igual que"
     },
     "cuts": {
       "label": "Corta"
@@ -89,6 +104,33 @@
     },
     "hasInstance": {
       "label": "Hallazgos relacionados"
+    },
+    "isPresentIn": {
+      "label": "Está presente en el perfil/planum"
+    },
+    "fills": {
+      "label": "Relleno"
+    },
+    "isFilledBy": {
+      "label": "Rellenado por"
+    },
+    "resultsIn": {
+      "label": "Resulta en"
+    },
+    "isMapLayerOf": {
+      "label": "Capa cartográfica de"
+    },
+    "hasMapLayer": {
+      "label": "Tiene capa cartográfica"
+    },
+    "isCarriedOutOn": {
+      "label": "Llevado a cabo en"
+    },
+    "isStoredIn": {
+      "label": "Se almacena en"
+    },
+    "isStoragePlaceOf": {
+      "label": "Es el lugar de almacenamiento de"
     }
   }
 }

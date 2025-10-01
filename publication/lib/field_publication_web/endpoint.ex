@@ -14,6 +14,12 @@ defmodule FieldPublicationWeb.Endpoint do
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
+  # Serve at "/custom" the static files from FileService directory.
+  plug Plug.Static,
+    at: "/custom",
+    from: FileService.custom_assets_path(),
+    only: ["images", "css"]
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest
@@ -23,11 +29,6 @@ defmodule FieldPublicationWeb.Endpoint do
     from: :field_publication,
     gzip: false,
     only: FieldPublicationWeb.static_paths()
-
-  # Serve at "/logos" the static files from FileService directory.
-  plug Plug.Static,
-    at: "/uploads",
-    from: FileService.logo_path()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

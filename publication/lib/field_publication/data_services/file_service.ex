@@ -1,7 +1,7 @@
 defmodule FieldPublication.FileService do
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
-  @admin_upload_dir "admin_uploads"
-  @logo_path "#{@file_store_path}/#{@admin_upload_dir}/logos"
+  @custom_assets_path "#{@file_store_path}/custom_assets/"
+  @custom_images_path "#{@custom_assets_path}/images"
   require Logger
 
   @moduledoc """
@@ -9,25 +9,19 @@ defmodule FieldPublication.FileService do
   currently means all image data variants.
   """
   def initial_setup() do
-    File.mkdir_p!(@logo_path)
+    File.mkdir_p!("#{@custom_assets_path}/images")
   end
 
-  def logo_path() do
-    @logo_path
-  end
-
-  def favicon_path() do
-    @logo_path
-  end
+  def custom_assets_path(), do: @custom_assets_path
 
   def list_uploaded_logos() do
-    @logo_path
+    @custom_images_path
     |> File.ls!()
-    |> Enum.map(fn file_name -> {file_name, "#{@logo_path}/#{file_name}"} end)
+    |> Enum.map(fn file_name -> {file_name, "#{@custom_images_path}/#{file_name}"} end)
   end
 
-  def store_logo(input_path, target_file_name) do
-    target_path = "#{@logo_path}/#{target_file_name}"
+  def store_admin_image_upload(input_path, target_file_name) do
+    target_path = "#{@custom_images_path}/#{target_file_name}"
 
     if File.exists?(target_path) do
       {:error, :exists}
@@ -36,9 +30,8 @@ defmodule FieldPublication.FileService do
     end
   end
 
-  def delete_logo(file_name) do
-    "#{@logo_path}/#{file_name}"
-    |> IO.inspect()
+  def delete_admin_image_upload(file_name) do
+    "#{@custom_images_path}/#{file_name}"
     |> File.rm()
   end
 

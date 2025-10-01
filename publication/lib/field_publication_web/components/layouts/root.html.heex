@@ -19,7 +19,7 @@
       {title}
     </.live_title>
     <!-- The Opengraph meta tags are set only once on the initial HTTP page load, later websocket navigation leaves
-    them unchanged. See also https://github.com/phoenixframework/phoenix_live_view/issues/1194. Appropriate values have to 
+    them unchanged. See also https://github.com/phoenixframework/phoenix_live_view/issues/1194. Appropriate values have to
     be set on mount in the different live views. -->
     <meta property="og:title" content={title} />
     <meta property="og:url" content={Phoenix.Controller.current_url(@conn)} />
@@ -31,6 +31,10 @@
     <% end %>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/ol.css"} />
+
+    <style>
+      <%= FieldPublication.Settings.get_customized_css() %>
+    </style>
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>

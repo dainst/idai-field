@@ -36,6 +36,20 @@ defmodule FieldPublication.Publications.Data do
     ]
   end
 
+  defmodule DocumentPreview do
+    @derive Jason.Encoder
+
+    @enforce_keys [:id, :identifier, :category, :project, :publication]
+    defstruct [
+      :id,
+      :identifier,
+      :project,
+      :publication,
+      :category,
+      image_uuids: []
+    ]
+  end
+
   defmodule Category do
     @derive Jason.Encoder
     @enforce_keys [:name, :labels, :color]
@@ -317,6 +331,61 @@ defmodule FieldPublication.Publications.Data do
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 
+  def get_preview_documents(
+        uuids,
+        %Publication{database: db} = publication
+      ) do
+    pub_id = Publications.get_doc_id(publication)
+
+    cached =
+      Cachex.get(:publication_document_previews, pub_id)
+      |> case do
+        {:ok, documents} when is_list(documents) ->
+          documents
+
+        _ ->
+          []
+      end
+      |> Enum.filter(fn %Document{id: id} ->
+        id in uuids
+      end)
+
+    cached_ids =
+      Enum.map(cached, fn %Document{id: id} -> id end)
+
+    other_ids =
+      Enum.reject(uuids, fn uuid -> uuid in cached_ids end)
+
+    config = Publications.get_configuration(publication)
+
+    loaded =
+      if other_ids != [] do
+        CouchService.get_document_stream(
+          %{
+            selector: %{_id: %{"$in": other_ids}},
+            fields: [
+              "resource.id",
+              "resource.identifier",
+              "resource.relations.depicts",
+              "resource.category",
+              "resource.shortDescription"
+            ]
+          },
+          db
+        )
+        |> Enum.map(&apply_project_configuration(&1, config, publication))
+      else
+        []
+      end
+
+    Cachex.get_and_update(:publication_document_previews, pub_id, fn
+      nil -> {:commit, loaded}
+      existing -> {:commit, existing ++ loaded}
+    end)
+
+    loaded ++ cached
+  end
+
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
       when is_list(categories) do
     query =
@@ -562,9 +631,9 @@ defmodule FieldPublication.Publications.Data do
     resource_keys = Map.keys(resource)
 
     category_configuration["groups"]
-    |> Enum.map(fn group ->
+    |> Stream.map(fn group ->
       group["fields"]
-      |> Enum.map(&extend_field(&1, resource_keys, resource))
+      |> Stream.map(&extend_field(&1, resource_keys, resource))
       |> Enum.reject(fn val -> val == nil end)
       |> case do
         [] ->
@@ -593,8 +662,8 @@ defmodule FieldPublication.Publications.Data do
           field
           |> Map.get("valuelist", %{})
           |> Map.get("values", %{})
-          |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
-          |> Enum.filter(fn {key, _val} ->
+          |> Stream.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+          |> Stream.filter(fn {key, _val} ->
             cond do
               is_list(resource[field["name"]]) ->
                 if field["inputType"] == "dimension" do
@@ -631,7 +700,7 @@ defmodule FieldPublication.Publications.Data do
       relations
       |> Map.values()
       |> List.flatten()
-      |> get_extended_documents(publication, false)
+      |> get_preview_documents(publication)
 
     # ...then sort them into their respective relation groups, including the translated labels for those groups.
     relation_types = Map.keys(relations)
@@ -682,7 +751,7 @@ defmodule FieldPublication.Publications.Data do
         |> Publications.get_hierarchy()
         |> Map.get(uuid, %{})
         |> Map.get("children", [])
-        |> get_extended_documents(publication)
+        |> get_preview_documents(publication)
     }
   end
 

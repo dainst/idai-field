@@ -15,6 +15,12 @@
     },
     "includesStratigraphicalUnits": {
       "label": "Inclui unidades estratigráficas"
+    },
+    "isResultOf": {
+      "label": "é resultado de"
+    },
+    "isSubjectOf": {
+      "label": "é objecto de"
     }
   },
   "categories": {
@@ -119,6 +125,12 @@
     },
     "bondsWith": {
       "label": "Une-se a"
+    },
+    "resultsIn": {
+      "label": "resulta em"
+    },
+    "isCarriedOutOn": {
+      "label": "é levado a cabo em"
     }
   }
 }

@@ -2,13 +2,13 @@
   "coordinate-reference-system-default-1": {
     "values": {
       "Eigenes Koordinatenbezugssystem": {
-        "label": ""
+        "label": "Sistema de referencia de coordenadas personalizado"
       },
       "EPSG4326 (WGS 84)": {
-        "label": ""
+        "label": "EPSG4326 (WGS 84)"
       },
       "EPSG3857 (WGS 84 Web Mercator)": {
-        "label": ""
+        "label": "EPSG3857 (WGS 84 Web Mercator)"
       }
     }
   },
@@ -5655,6 +5655,13 @@
       },
       "Farbe": {
         "label": ""
+      }
+    }
+  },
+  "process-state-default": {
+    "values": {
+      "planned": {
+        "label": "Planificado"
       }
     }
   }

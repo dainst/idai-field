@@ -1,5 +1,4 @@
 const sharp = window.require('sharp');
-sharp.cache(false);
 
 
 export module ImageManipulationErrors {
@@ -43,7 +42,6 @@ export module ImageManipulation {
         try {
             console.log('Starting thumbnail creation...');
             console.log('Sharp status:', sharp.counters());
-            sharp.concurrency(1);
             console.log('Max sharp threads:', sharp.concurrency());
             const sharpImage = getSharpImage(buffer);
             console.log('Resizing image to target height: ' + targetHeight);

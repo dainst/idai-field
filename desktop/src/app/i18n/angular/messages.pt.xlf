@@ -8863,7 +8863,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField" datatype="html">
         <source>Pflichtfeld</source>
-        <target state="needs-translation">Pflichtfeld</target>
+        <target state="translated">campo obrigatório</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">24</context>
@@ -8875,7 +8875,7 @@
       </trans-unit>
       <trans-unit id="configuration.field.condition" datatype="html">
         <source>Bedingung</source>
-        <target state="needs-translation">Bedingung</target>
+        <target state="translated">condição</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">31</context>
@@ -9307,7 +9307,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.single" datatype="html">
         <source>Originalbild wird geladen...</source>
-        <target state="needs-translation">Originalbild wird geladen...</target>
+        <target state="translated">Carregando imagem original...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">12</context>
@@ -9315,7 +9315,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> imagens originais carregadas... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">14,16</context>
@@ -9731,7 +9731,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.workflow" datatype="html">
         <source>Workflow</source>
-        <target state="needs-translation">Workflow</target>
+        <target state="translated">fluxo de trabalho</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">81</context>

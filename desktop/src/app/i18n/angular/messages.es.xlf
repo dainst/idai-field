@@ -449,7 +449,7 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
-        <target state="needs-translation">Formatos de archivo compatibles<x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/>Los formatos de imagen se pueden importar a través de<x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>gestión de imágenes<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> </target>
+        <target state="translated">Formatos de archivo compatibles: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Los formatos de imagen se pueden importar a través de<x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>gestión de imágenes<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -8599,7 +8599,7 @@
       </trans-unit>
       <trans-unit id="import.csv.info" datatype="html">
         <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
-        <target state="needs-translation">Todos los recursos definidos en el archivo CSV deben pertenecer a la misma categoría. Tenga en cuenta que los encabezados de columna deben corresponder a los nombres de los campos que se han configurado para la categoría respectiva. Se puede generar un archivo de esquema como plantilla en el<x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>menú de exportación<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> </target>
+        <target state="translated">Todos los recursos definidos en el archivo CSV deben pertenecer a la misma categoría. Tenga en cuenta que los encabezados de columna deben corresponder a los nombres de los campos que se han configurado para la categoría respectiva. Se puede generar un archivo de esquema como plantilla en el <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>menú de exportación<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>
@@ -9383,7 +9383,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> imágenes originales cargadas... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> imágenes originales cargadas... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">14,16</context>

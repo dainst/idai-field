@@ -5669,5 +5669,50 @@
         "label": "Cor"
       }
     }
+  },
+  "weight-scale-values-default": {
+    "values": {
+      "Luggage scale": {
+        "label": "balança de mala"
+      },
+      "Kitchen scale": {
+        "label": "balança de cozinha"
+      },
+      "Precision scale": {
+        "label": "balança de precisão"
+      }
+    }
+  },
+  "volume-measurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "clássico",
+        "description": "O volume é calculado por um simples vertir em um recipiente de medida"
+      },
+      "displacement": {
+        "label": "repressão",
+        "description": "O volume é medido ao ter uma quantia sabida de água num recipiente de medida e adicionando o objecto a ser examinado para medir o volume de repressão"
+      },
+      "calculated": {
+        "description": "O volume é calculado baseado nas dimensões relevantes",
+        "label": "calculado com base nas dimensões"
+      }
+    }
+  },
+  "process-state-default": {
+    "values": {
+      "planned": {
+        "label": "planeado"
+      },
+      "in progress": {
+        "label": "em curso"
+      },
+      "completed": {
+        "label": "completado"
+      },
+      "canceled": {
+        "label": "cancelado"
+      }
+    }
   }
 }

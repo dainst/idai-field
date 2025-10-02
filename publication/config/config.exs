@@ -9,6 +9,7 @@ import Config
 
 # Configures the endpoint
 config :field_publication, FieldPublicationWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   render_errors: [
     formats: [html: FieldPublicationWeb.ErrorHTML, json: FieldPublicationWeb.ErrorJSON],

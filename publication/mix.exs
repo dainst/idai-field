@@ -51,7 +51,7 @@ defmodule FieldPublication.MixProject do
       {:telemetry_poller, "~> 1.1"},
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.4"},
-      {:plug_cowboy, "~> 2.7"},
+      {:bandit, "~> 1.8"},
       {:iso639_elixir, "~> 0.2.1"},
       {:cachex, "~> 4.0"},
       {:vix, "~> 0.33.0"},

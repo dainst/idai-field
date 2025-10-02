@@ -2814,7 +2814,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
         <source>Verschieben</source>
-        <target state="needs-translation">Verschieben</target>
+        <target state="translated">Mover</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">104</context>
@@ -2822,7 +2822,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.delete" datatype="html">
         <source>Löschen</source>
-        <target state="needs-translation">Löschen</target>
+        <target state="translated">Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2830,7 +2830,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.header" datatype="html">
         <source>Kategorie löschen?</source>
-        <target state="needs-translation">Kategorie löschen?</target>
+        <target state="translated">¿Eliminar categoría?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -2838,7 +2838,6 @@
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
         <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</source>
-        <target state="needs-translation">Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich löschen?</target>
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
@@ -2847,7 +2846,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteCategory.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Namen der Kategorie ein, um den Löschvorgang zu bestätigen.</source>
-        <target state="needs-translation">Bitte geben Sie den Namen der Kategorie ein, um den Löschvorgang zu bestätigen.</target>
+        <target state="translated">Por favor, introduzca el nombre de la categoría para confirmar la eliminación.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.html</context>
           <context context-type="linenumber">17</context>
@@ -2855,7 +2854,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.images" datatype="html">
         <source>Bilder verknüpfen</source>
-        <target state="needs-translation">Bilder verknüpfen</target>
+        <target state="translated">Vincular imágenes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -2863,7 +2862,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polygon" datatype="html">
         <source>Polygon anlegen</source>
-        <target state="needs-translation">Polygon anlegen</target>
+        <target state="translated">Crear polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2871,7 +2870,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polyline" datatype="html">
         <source>Polyline anlegen</source>
-        <target state="needs-translation">Polyline anlegen</target>
+        <target state="translated">Crear polilínea</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2879,7 +2878,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.point" datatype="html">
         <source>Punkt anlegen</source>
-        <target state="needs-translation">Punkt anlegen</target>
+        <target state="translated">Crear punto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2887,7 +2886,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
         <source>Polygon bearbeiten</source>
-        <target state="needs-translation">Polygon bearbeiten</target>
+        <target state="translated">Editar polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2895,7 +2894,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
         <source>Multipolygon bearbeiten</source>
-        <target state="needs-translation">Multipolygon bearbeiten</target>
+        <target state="translated">Editar multipolígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2903,7 +2902,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polyline" datatype="html">
         <source>Polyline bearbeiten</source>
-        <target state="needs-translation">Polyline bearbeiten</target>
+        <target state="translated">Editar polilínea</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2911,7 +2910,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolyline" datatype="html">
         <source>Multipolyline bearbeiten</source>
-        <target state="needs-translation">Multipolyline bearbeiten</target>
+        <target state="translated">Editar multipolilínea</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2919,7 +2918,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.point" datatype="html">
         <source>Punkt bearbeiten</source>
-        <target state="needs-translation">Punkt bearbeiten</target>
+        <target state="translated">Editar punto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2927,7 +2926,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipoint" datatype="html">
         <source>Multipunkt bearbeiten</source>
-        <target state="needs-translation">Multipunkt bearbeiten</target>
+        <target state="translated">Editar multipuntos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -2935,7 +2934,7 @@
       </trans-unit>
       <trans-unit id="resources.sidebarList.expandAllGroups" datatype="html">
         <source>Alle Gruppen ausklappen</source>
-        <target state="needs-translation">Alle Gruppen ausklappen</target>
+        <target state="translated">Expandir todos los grupos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -2943,7 +2942,7 @@
       </trans-unit>
       <trans-unit id="resources.sidebarList.parentInfo" datatype="html">
         <source>Übergeordnete Ressource</source>
-        <target state="needs-translation">Übergeordnete Ressource</target>
+        <target state="translated">Recurso padre/independiente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/document-info.component.ts</context>
           <context context-type="linenumber">90</context>
@@ -2951,7 +2950,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
         <source>Bitte wählen Sie einen Geometrietyp aus.</source>
-        <target state="needs-translation">Bitte wählen Sie einen Geometrietyp aus.</target>
+        <target state="translated">Por favor, seleccione un tipo de geometría.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">97</context>
@@ -2959,7 +2958,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
         <source>Polygon</source>
-        <target state="needs-translation">Polygon</target>
+        <target state="translated">Polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">131</context>
@@ -2967,7 +2966,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
         <source>Polyline</source>
-        <target state="needs-translation">Polyline</target>
+        <target state="translated">Polilínea</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">161</context>
@@ -2975,7 +2974,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
         <source>Punkt</source>
-        <target state="needs-translation">Punkt</target>
+        <target state="translated">Punto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">183</context>
@@ -2983,7 +2982,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
         <source>Keine Geometriedaten</source>
-        <target state="needs-translation">Keine Geometriedaten</target>
+        <target state="translated">Sin datos geométricos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">208</context>
@@ -2991,7 +2990,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
         <source>Kategorie</source>
-        <target state="needs-translation">Kategorie</target>
+        <target state="translated">Categoría</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">42</context>
@@ -2999,7 +2998,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.identifier" datatype="html">
         <source>Bezeichner</source>
-        <target state="needs-translation">Bezeichner</target>
+        <target state="translated">Identificador</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">69</context>
@@ -3007,7 +3006,7 @@
       </trans-unit>
       <trans-unit id="resources.list.headers.shortDescription" datatype="html">
         <source>Kurzbeschreibung</source>
-        <target state="needs-translation">Kurzbeschreibung</target>
+        <target state="translated">Descripción breve</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">93</context>
@@ -3015,7 +3014,7 @@
       </trans-unit>
       <trans-unit id="resources.moveIntoButton.tooltip" datatype="html">
         <source>Untergeordnete Ressourcen ansehen</source>
-        <target state="needs-translation">Untergeordnete Ressourcen ansehen</target>
+        <target state="translated">Mostrar recursos hijos/dependientes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">51</context>
@@ -3023,7 +3022,7 @@
       </trans-unit>
       <trans-unit id="resources.showInContext.tooltip" datatype="html">
         <source>Im Kontext anzeigen</source>
-        <target state="needs-translation">Im Kontext anzeigen</target>
+        <target state="translated">Mostrar en contexto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">69</context>
@@ -3035,7 +3034,7 @@
       </trans-unit>
       <trans-unit id="resources.showInOperationContext.tooltip" datatype="html">
         <source>Im Kontext der Maßnahme anzeigen</source>
-        <target state="needs-translation">Im Kontext der Maßnahme anzeigen</target>
+        <target state="translated">Mostrar en el contexto de la operación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">100</context>
@@ -3047,7 +3046,7 @@
       </trans-unit>
       <trans-unit id="resources.jumpToView.tooltip" datatype="html">
         <source>Zur Maßnahme wechseln</source>
-        <target state="needs-translation">Zur Maßnahme wechseln</target>
+        <target state="translated">Cambiar a operación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">136</context>
@@ -3059,7 +3058,7 @@
       </trans-unit>
       <trans-unit id="resources.list.editButton.tooltip" datatype="html">
         <source>Bearbeiten</source>
-        <target state="needs-translation">Bearbeiten</target>
+        <target state="translated">Editar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">169</context>
@@ -3067,7 +3066,7 @@
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
         <source>Verschieben</source>
-        <target state="needs-translation">Verschieben</target>
+        <target state="translated">Mover</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">195</context>
@@ -3075,7 +3074,7 @@
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
         <source>Löschen</source>
-        <target state="needs-translation">Löschen</target>
+        <target state="translated">Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.component.ts</context>
           <context context-type="linenumber">218</context>
@@ -3083,7 +3082,6 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="needs-translation">Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -3091,7 +3089,7 @@
       </trans-unit>
       <trans-unit id="resources.showChildResources.tooltip" datatype="html">
         <source>Untergeordnete Ressourcen anzeigen</source>
-        <target state="needs-translation">Untergeordnete Ressourcen anzeigen</target>
+        <target state="translated">Mostrar recursos hijos/dependientes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -3099,7 +3097,7 @@
       </trans-unit>
       <trans-unit id="resources.navigation.project" datatype="html">
         <source>Projekt</source>
-        <target state="needs-translation">Projekt</target>
+        <target state="translated">Proyecto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
           <context context-type="linenumber">37</context>
@@ -3107,7 +3105,7 @@
       </trans-unit>
       <trans-unit id="resources.navigation.typeCatalogs" datatype="html">
         <source>Typenkataloge</source>
-        <target state="needs-translation">Typenkataloge</target>
+        <target state="translated">Catálogos de tipos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
           <context context-type="linenumber">61</context>
@@ -3115,7 +3113,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.resultsInOtherContexts" datatype="html">
         <source>Suchergebnisse in anderen Kontexten</source>
-        <target state="needs-translation">Suchergebnisse in anderen Kontexten</target>
+        <target state="translated">Resultados de búsqueda en otros contextos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
           <context context-type="linenumber">39</context>
@@ -3123,7 +3121,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.noResourcesFound" datatype="html">
         <source>Keine Ressourcen gefunden.</source>
-        <target state="needs-translation">Keine Ressourcen gefunden.</target>
+        <target state="translated">No se encontraron recursos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -3131,7 +3129,7 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImage" datatype="html">
         <source>Bild verknüpfen</source>
-        <target state="needs-translation">Bild verknüpfen</target>
+        <target state="translated">Vincular imagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -3139,7 +3137,7 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayer" datatype="html">
         <source>Bild als Kartenhintergrund verknüpfen</source>
-        <target state="needs-translation">Bild als Kartenhintergrund verknüpfen</target>
+        <target state="translated">Vincular imagen como capa del mapa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.component.ts</context>
           <context context-type="linenumber">68</context>
@@ -3147,7 +3145,6 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.component.ts</context>
           <context context-type="linenumber">117</context>
@@ -3155,7 +3152,6 @@
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
           <context context-type="linenumber">38</context>
@@ -3163,7 +3159,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.editLayers" datatype="html">
         <source>Kartenhintergründe bearbeiten</source>
-        <target state="needs-translation">Kartenhintergründe bearbeiten</target>
+        <target state="translated">Editar capas del mapa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -3171,7 +3167,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
         <source>Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als Kartenhintergründe hinzuzufügen.</source>
-        <target state="needs-translation">Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als Kartenhintergründe hinzuzufügen.</target>
+        <target state="translated">Haz clic en el botón de editar para añadir imágenes georeferenciadas como capas del mapa.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">180</context>
@@ -3179,7 +3175,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
         <source>Kartenhintergrund ein-/ausblenden</source>
-        <target state="needs-translation">Kartenhintergrund ein-/ausblenden</target>
+        <target state="translated">Mostrar/ocultar capa del mapa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">190</context>
@@ -3187,7 +3183,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
         <source>Kartenhintergrund fokussieren</source>
-        <target state="needs-translation">Kartenhintergrund fokussieren</target>
+        <target state="translated">Enfocar capa del mapa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">190</context>
@@ -3195,7 +3191,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.setAsDefaultMapLayer" datatype="html">
         <source>Als Standard-Kartenhintergrund festlegen</source>
-        <target state="needs-translation">Als Standard-Kartenhintergrund festlegen</target>
+        <target state="translated">Establecer como capa de mapa predeterminada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">190</context>
@@ -3203,7 +3199,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
         <source>Kartenhintergrund entfernen</source>
-        <target state="needs-translation">Kartenhintergrund entfernen</target>
+        <target state="translated">Eliminar capa del mapa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">190</context>
@@ -3211,7 +3207,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
         <source>Kartenhintergrund hinzufügen</source>
-        <target state="needs-translation">Kartenhintergrund hinzufügen</target>
+        <target state="translated">Añadir capa del mapa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">141</context>
@@ -3219,7 +3215,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.setMainImage" datatype="html">
         <source>Als Hauptbild festlegen</source>
-        <target state="needs-translation">Als Hauptbild festlegen</target>
+        <target state="translated">Establecer como imagen principal</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">51</context>
@@ -3227,7 +3223,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.deselect" datatype="html">
         <source>Auswahl aufheben</source>
-        <target state="needs-translation">Auswahl aufheben</target>
+        <target state="translated">Deseleccionar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">72</context>
@@ -3235,7 +3231,7 @@
       </trans-unit>
       <trans-unit id="viewModal.noImages" datatype="html">
         <source>Mit dieser Ressource sind keine Bilder verknüpft.</source>
-        <target state="needs-translation">Mit dieser Ressource sind keine Bilder verknüpft.</target>
+        <target state="translated">No hay imágenes vinculadas a este recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">91</context>
@@ -3247,7 +3243,7 @@
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.add-images" datatype="html">
         <source>Neue Bilder hinzufügen</source>
-        <target state="needs-translation">Neue Bilder hinzufügen</target>
+        <target state="translated">Añadir nuevas imágenes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.component.ts</context>
           <context context-type="linenumber">22</context>
@@ -3255,7 +3251,7 @@
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.link-images" datatype="html">
         <source>Existierende Bilder verknüpfen</source>
-        <target state="needs-translation">Existierende Bilder verknüpfen</target>
+        <target state="translated">Vincular imágenes existentes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.component.ts</context>
           <context context-type="linenumber">22</context>
@@ -3263,7 +3259,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
         <source>Alle Konflikte wurden gelöst.</source>
-        <target state="needs-translation">Alle Konflikte wurden gelöst.</target>
+        <target state="translated">Todos los conflictos han sido resueltos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">41</context>
@@ -3271,7 +3267,6 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.oneConflict" datatype="html">
         <source>Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Konflikt. </source>
-        <target state="needs-translation">Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Konflikt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">41</context>
@@ -3279,7 +3274,6 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.multipleConflicts" datatype="html">
         <source>Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Konflikte. </source>
-        <target state="needs-translation">Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Konflikte. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
           <context context-type="linenumber">23</context>
@@ -3287,7 +3281,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.currentVersion" datatype="html">
         <source>Aktuelle Version:</source>
-        <target state="needs-translation">Aktuelle Version:</target>
+        <target state="translated">Versión actual:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
           <context context-type="linenumber">25</context>
@@ -3295,7 +3289,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.competingVersion" datatype="html">
         <source>Konkurrierende Version:</source>
-        <target state="needs-translation">Konkurrierende Version:</target>
+        <target state="translated">Versión en conflicto:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.html</context>
           <context context-type="linenumber">40</context>
@@ -3303,7 +3297,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.notSet" datatype="html">
         <source>Nicht gesetzt</source>
-        <target state="needs-translation">Nicht gesetzt</target>
+        <target state="translated">No establecido/definido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">43</context>
@@ -3339,7 +3333,6 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometryOfType" datatype="html">
         <source>Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </source>
-        <target state="needs-translation">Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">70</context>
@@ -3351,7 +3344,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.georeferenceData" datatype="html">
         <source>Georeferenzdaten</source>
-        <target state="needs-translation">Georeferenzdaten</target>
+        <target state="translated">Datos de georreferencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
           <context context-type="linenumber">55</context>
@@ -3363,7 +3356,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.resolveConflict" datatype="html">
         <source>Konflikt lösen</source>
-        <target state="needs-translation">Konflikt lösen</target>
+        <target state="translated">Resolver conflicto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
@@ -3375,7 +3368,7 @@
       </trans-unit>
       <trans-unit id="configuration.contextMenu.edit" datatype="html">
         <source>Bearbeiten</source>
-        <target state="needs-translation">Bearbeiten</target>
+        <target state="translated">Editar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
           <context context-type="linenumber">44</context>
@@ -3383,7 +3376,7 @@
       </trans-unit>
       <trans-unit id="configuration.contextMenu.extend" datatype="html">
         <source>Werteliste erweitern</source>
-        <target state="needs-translation">Werteliste erweitern</target>
+        <target state="translated">Ampliar lista de valores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
           <context context-type="linenumber">77</context>
@@ -3391,7 +3384,7 @@
       </trans-unit>
       <trans-unit id="configuration.contextMenu.delete" datatype="html">
         <source>Löschen</source>
-        <target state="needs-translation">Löschen</target>
+        <target state="translated">Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/context-menu/configuration-context-menu.component.ts</context>
           <context context-type="linenumber">81</context>
@@ -3399,7 +3392,7 @@
       </trans-unit>
       <trans-unit id="docedit.categorySwitcherButton.changeCategory" datatype="html">
         <source>Kategorie ändern</source>
-        <target state="needs-translation">Kategorie ändern</target>
+        <target state="translated">Cambiar categoría</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/category-switcher-button.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -3407,7 +3400,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.outliersInfo" datatype="html">
         <source>Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge:</source>
-        <target state="needs-translation">Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge:</target>
+        <target state="translated">El campo contiene entradas que no están incluidas en la lista de valores correspondiente:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/outliers.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -3415,7 +3408,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.invalidFieldData.info" datatype="html">
         <source>Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp:</source>
-        <target state="needs-translation">Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp:</target>
+        <target state="translated">Los datos introducidos en este campo no corresponden al tipo de entrada configurado:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/invalid-field-data.component.ts</context>
           <context context-type="linenumber">46</context>
@@ -3423,7 +3416,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.invalidFieldData.delete" datatype="html">
         <source>Feldinhalte löschen</source>
-        <target state="needs-translation">Feldinhalte löschen</target>
+        <target state="translated">Eliminar datos de campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/invalid-field-data.component.ts</context>
           <context context-type="linenumber">46</context>
@@ -3431,7 +3424,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.literature.quotation" datatype="html">
         <source>Literaturzitat:</source>
-        <target state="needs-translation">Literaturzitat:</target>
+        <target state="translated">Cita bibliográfica:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -3439,7 +3432,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
         <source>Zenon-ID:</source>
-        <target state="needs-translation">Zenon-ID:</target>
+        <target state="translated">ID de Zenon:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
           <context context-type="linenumber">110</context>
@@ -3447,7 +3440,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.literature.doi" datatype="html">
         <source>DOI:</source>
-        <target state="needs-translation">DOI:</target>
+        <target state="translated">DOI:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
           <context context-type="linenumber">115</context>
@@ -3455,7 +3448,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.literature.page" datatype="html">
         <source>Seite:</source>
-        <target state="needs-translation">Seite:</target>
+        <target state="translated">Página:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
           <context context-type="linenumber">115</context>
@@ -3463,7 +3456,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.literature.figure" datatype="html">
         <source>Abbildung:</source>
-        <target state="needs-translation">Abbildung:</target>
+        <target state="translated">Figura:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.component.ts</context>
           <context context-type="linenumber">115</context>
@@ -3471,7 +3464,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
         <source>v. Chr.</source>
-        <target state="needs-translation">v. Chr.</target>
+        <target state="translated">a.EC.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">42</context>
@@ -3479,7 +3472,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.ce" datatype="html">
         <source>n. Chr.</source>
-        <target state="needs-translation">n. Chr.</target>
+        <target state="translated">EC.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">67</context>
@@ -3487,7 +3480,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bp" datatype="html">
         <source>BP</source>
-        <target state="needs-translation">BP</target>
+        <target state="translated">AP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -3495,7 +3488,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.imprecise" datatype="html">
         <source>Ungenau</source>
-        <target state="needs-translation">Ungenau</target>
+        <target state="translated">Impreciso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3503,7 +3496,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.uncertain" datatype="html">
         <source>Unsicher</source>
-        <target state="needs-translation">Unsicher</target>
+        <target state="translated">Incierto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3511,7 +3504,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.period" datatype="html">
         <source>Zeitraum</source>
-        <target state="needs-translation">Zeitraum</target>
+        <target state="translated">Período</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3519,7 +3512,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.before" datatype="html">
         <source>Vor</source>
-        <target state="needs-translation">Vor</target>
+        <target state="translated">Antes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3527,7 +3520,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.after" datatype="html">
         <source>Nach</source>
-        <target state="needs-translation">Nach</target>
+        <target state="translated">Después</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3535,7 +3528,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.scientific" datatype="html">
         <source>Naturwissenschaftlich</source>
-        <target state="needs-translation">Naturwissenschaftlich</target>
+        <target state="translated">Ciencias naturales</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3543,7 +3536,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.until" datatype="html">
         <source>bis</source>
-        <target state="needs-translation">bis</target>
+        <target state="translated">hasta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3551,7 +3544,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.source" datatype="html">
         <source>Grundlage:</source>
-        <target state="needs-translation">Grundlage:</target>
+        <target state="translated">Fuente:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -3559,7 +3552,7 @@
       </trans-unit>
       <trans-unit id="docedit.catalogCriteria.none" datatype="html">
         <source>Kein Kriterium</source>
-        <target state="needs-translation">Kein Kriterium</target>
+        <target state="translated">Sin criterio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
           <context context-type="linenumber">93</context>
@@ -3567,7 +3560,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.missingValuelistInfo.configuration" datatype="html">
         <source>Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.</source>
-        <target state="needs-translation">Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.</target>
+        <target state="translated">La lista de valores especificada en la configuración del proyecto está vacía.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -3575,7 +3568,6 @@
       </trans-unit>
       <trans-unit id="docedit.forms.missingValuelistInfo.projectDocumentField" datatype="html">
         <source>Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>) ein. </source>
-        <target state="needs-translation">Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>) ein. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
           <context context-type="linenumber">68</context>
@@ -3583,7 +3575,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.missingValuelistInfo.parent" datatype="html">
         <source>Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource nicht ausgefüllt ist.</source>
-        <target state="needs-translation">Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource nicht ausgefüllt ist.</target>
+        <target state="translated">No se pueden elegir valores para este campo porque el campo correspondiente del recurso padre no está completado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.html</context>
           <context context-type="linenumber">13</context>
@@ -3591,7 +3583,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.typeRelationPicker.allCatalogs" datatype="html">
         <source>Alle Kataloge</source>
-        <target state="needs-translation">Alle Kataloge</target>
+        <target state="translated">Todos los Catálogos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
           <context context-type="linenumber">59</context>
@@ -3599,7 +3591,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.singleValue" datatype="html">
         <source>Einzelwert</source>
-        <target state="needs-translation">Einzelwert</target>
+        <target state="translated">Valor único</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -3607,15 +3599,15 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.range" datatype="html">
         <source>Bereich</source>
-        <target state="needs-translation">Bereich</target>
+        <target state="translated">Rango/intervalo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
-        <source>Gemessen an</source>
-        <target state="needs-translation">Gemessen an</target>
+        <source>Gemessen an:</source>
+        <target state="translated">Medido por:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">142</context>
@@ -3623,7 +3615,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
         <source>Ungenau</source>
-        <target state="needs-translation">Ungenau</target>
+        <target state="translated">Impreciso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">168</context>
@@ -3631,7 +3623,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
         <source>Kommentar:</source>
-        <target state="needs-translation">Kommentar:</target>
+        <target state="translated">Comentario:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">185</context>
@@ -3639,7 +3631,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
         <source>von</source>
-        <target state="needs-translation">von</target>
+        <target state="translated">desde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dropdown-range.component.ts</context>
           <context context-type="linenumber">76</context>
@@ -3647,7 +3639,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.to" datatype="html">
         <source>bis</source>
-        <target state="needs-translation">bis</target>
+        <target state="translated">hasta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dropdown-range.component.ts</context>
           <context context-type="linenumber">76</context>
@@ -3655,7 +3647,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.tooltip" datatype="html">
         <source>Start- und Endzeitraum angeben</source>
-        <target state="needs-translation">Start- und Endzeitraum angeben</target>
+        <target state="translated">Especificar período de inicio y fin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dropdown-range.component.ts</context>
           <context context-type="linenumber">46</context>
@@ -3663,7 +3655,7 @@
       </trans-unit>
       <trans-unit id="geometry.none" datatype="html">
         <source>Keine Geometrie</source>
-        <target state="needs-translation">Keine Geometrie</target>
+        <target state="translated">Sin geometría</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">43</context>
@@ -3671,7 +3663,7 @@
       </trans-unit>
       <trans-unit id="geometry.point" datatype="html">
         <source>Punkt</source>
-        <target state="needs-translation">Punkt</target>
+        <target state="translated">Punto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">66</context>
@@ -3679,7 +3671,7 @@
       </trans-unit>
       <trans-unit id="geometry.multiPoint" datatype="html">
         <source>Multipunkt</source>
-        <target state="needs-translation">Multipunkt</target>
+        <target state="translated">Multipunto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3687,7 +3679,7 @@
       </trans-unit>
       <trans-unit id="geometry.polyline" datatype="html">
         <source>Polyline</source>
-        <target state="needs-translation">Polyline</target>
+        <target state="translated">Polilínea</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3695,7 +3687,7 @@
       </trans-unit>
       <trans-unit id="geometry.multiPolyline" datatype="html">
         <source>Multipolyline</source>
-        <target state="needs-translation">Multipolyline</target>
+        <target state="translated">Multipolilínea</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3703,7 +3695,7 @@
       </trans-unit>
       <trans-unit id="geometry.polygon" datatype="html">
         <source>Polygon</source>
-        <target state="needs-translation">Polygon</target>
+        <target state="translated">Polígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3711,7 +3703,7 @@
       </trans-unit>
       <trans-unit id="geometry.multiPolygon" datatype="html">
         <source>Multipolygon</source>
-        <target state="needs-translation">Multipolygon</target>
+        <target state="translated">Multipolígono</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/geometry.component.ts</context>
           <context context-type="linenumber">88</context>
@@ -3719,7 +3711,6 @@
       </trans-unit>
       <trans-unit id="docedit.forms.invalidIdentifier" datatype="html">
         <source>Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Bitte tragen Sie einen neuen Bezeichner ein. </source>
-        <target state="needs-translation">Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Bitte tragen Sie einen neuen Bezeichner ein. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/identifier.component.ts</context>
           <context context-type="linenumber">66</context>
@@ -3727,7 +3718,7 @@
       </trans-unit>
       <trans-unit id="settings.applySettings" datatype="html">
         <source>Einstellungen übernehmen</source>
-        <target state="needs-translation">Einstellungen übernehmen</target>
+        <target state="translated">Aplicar configuración</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">77</context>
@@ -3739,7 +3730,7 @@
       </trans-unit>
       <trans-unit id="settings.general" datatype="html">
         <source>Allgemeine Einstellungen</source>
-        <target state="needs-translation">Allgemeine Einstellungen</target>
+        <target state="translated">Configuración general</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -3747,7 +3738,7 @@
       </trans-unit>
       <trans-unit id="settings.languages" datatype="html">
         <source>Sprachen</source>
-        <target state="needs-translation">Sprachen</target>
+        <target state="translated">Idiomas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">113</context>
@@ -3755,7 +3746,7 @@
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
         <source>Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein.</source>
-        <target state="needs-translation">Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein.</target>
+        <target state="translated">Los idiomas se pueden ordenar por prioridad. Una interfaz de usuario traducida está disponible para los idiomas en negrita. Además, en la configuración del proyecto, pueden estar disponibles traducciones de nombres de categorías y campos, así como listas de valores, para otros idiomas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -3763,7 +3754,7 @@
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
         <source>Name der Benutzerin/des Benutzers</source>
-        <target state="needs-translation">Name der Benutzerin/des Benutzers</target>
+        <target state="translated">Nombre de usuario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -3771,7 +3762,7 @@
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
         <source>Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können.</source>
-        <target state="needs-translation">Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können.</target>
+        <target state="translated">Este nombre se guarda en historial de edición para permitir que los cambios en el conjunto de datos sean atribuibles a una persona.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">143</context>
@@ -3779,7 +3770,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
         <source>Synchronisation</source>
-        <target state="needs-translation">Synchronisation</target>
+        <target state="translated">Sincronización</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">59</context>
@@ -3787,7 +3778,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.activate" datatype="html">
         <source>Synchronisation aktivieren</source>
-        <target state="needs-translation">Synchronisation aktivieren</target>
+        <target state="translated">Activar sincronización</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">187</context>
@@ -3795,7 +3786,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.address" datatype="html">
         <source>Adresse</source>
-        <target state="needs-translation">Adresse</target>
+        <target state="translated">Dirección</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">133</context>
@@ -3803,7 +3794,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
         <source>Passwort</source>
-        <target state="needs-translation">Passwort</target>
+        <target state="translated">Contraseña</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/synchronization-modal.component.ts</context>
           <context context-type="linenumber">164</context>
@@ -3811,7 +3802,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
         <source>Eigene Adresse</source>
-        <target state="needs-translation">Eigene Adresse</target>
+        <target state="translated">Tu dirección</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">73</context>
@@ -3819,7 +3810,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.hostPassword" datatype="html">
         <source>Eigenes Passwort</source>
-        <target state="needs-translation">Eigenes Passwort</target>
+        <target state="translated">Tu contraseña</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">86</context>
@@ -3827,7 +3818,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads" datatype="html">
         <source>Originalbilder empfangen</source>
-        <target state="needs-translation">Originalbilder empfangen</target>
+        <target state="translated">Recibir imágenes originales</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">126</context>
@@ -3835,7 +3826,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.allowUploads.info" datatype="html">
         <source>Der Empfang von Originalbildern ist standardmäßig deaktiviert, da diese aufgrund ihrer Größe viel Festplattenspeicher belegen können und für die Nutzung der Anwendung nicht zwingend nötig sind.</source>
-        <target state="needs-translation">Der Empfang von Originalbildern ist standardmäßig deaktiviert, da diese aufgrund ihrer Größe viel Festplattenspeicher belegen können und für die Nutzung der Anwendung nicht zwingend nötig sind.</target>
+        <target state="translated">Las cargas de imágenes originales a este ordenador por parte de otros están bloqueadas por defecto porque su tamaño puede ser problemático en cuanto al espacio en disco y no son estrictamente necesarias para usar la aplicación.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">144</context>
@@ -3843,7 +3834,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
         <source>Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann.</source>
-        <target state="needs-translation">Diese Adresse und dieses Passwort müssen in anderen Field-Desktop-Installationen eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann.</target>
+        <target state="translated">Esta dirección y contraseña deben configurarse en otras instalaciones de Field Desktop para poder sincronizar datos con este equipo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">105</context>
@@ -3851,7 +3842,7 @@
       </trans-unit>
       <trans-unit id="settings.images" datatype="html">
         <source>Bilder</source>
-        <target state="needs-translation">Bilder</target>
+        <target state="translated">Imágenes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3859,7 +3850,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
         <source>Pfad</source>
-        <target state="needs-translation">Pfad</target>
+        <target state="translated">Ruta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3867,7 +3858,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
         <source>Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.</source>
-        <target state="needs-translation">Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.</target>
+        <target state="translated">En la mayoría de los casos, esta ruta puede mantenerse en su configuración original. Puede ser necesario cambiarla si el directorio de imágenes que utiliza Field está almacenado en un dispositivo de red (NAS) compartido entre varios usuarios. Dentro de este directorio, la aplicación crea un subdirectorio para cada proyecto. Los archivos de imagen almacenados en estos directorios son gestionados por Field. Los archivos de imagen no deben colocarse allí manualmente, sino importarse en la vista general de imágenes o en la pestaña de imágenes de la vista del recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3875,7 +3866,7 @@
       </trans-unit>
       <trans-unit id="settings.showAdvanced" datatype="html">
         <source>Erweiterte Optionen</source>
-        <target state="needs-translation">Erweiterte Optionen</target>
+        <target state="translated">Configuración avanzada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3883,7 +3874,7 @@
       </trans-unit>
       <trans-unit id="settings.hideAdvanced" datatype="html">
         <source>Erweiterte Optionen ausblenden</source>
-        <target state="needs-translation">Erweiterte Optionen ausblenden</target>
+        <target state="translated">Ocultar opciones avanzadas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3891,7 +3882,7 @@
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
         <source>Update</source>
-        <target state="needs-translation">Update</target>
+        <target state="translated">Actualizar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3899,7 +3890,7 @@
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
         <source>Automatische Prüfung auf Updates aktivieren</source>
-        <target state="needs-translation">Automatische Prüfung auf Updates aktivieren</target>
+        <target state="translated">Activar comprobación automática de actualizaciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">165</context>
@@ -3907,7 +3898,7 @@
       </trans-unit>
       <trans-unit id="image-view-modal.modal.view" datatype="html">
         <source>Ansicht</source>
-        <target state="needs-translation">Ansicht</target>
+        <target state="translated">Ver</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -3915,7 +3906,7 @@
       </trans-unit>
       <trans-unit id="image-view-modal.modal-edit" datatype="html">
         <source>Bearbeiten</source>
-        <target state="needs-translation">Bearbeiten</target>
+        <target state="translated">Editar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">30</context>
@@ -3923,7 +3914,7 @@
       </trans-unit>
       <trans-unit id="settings.addLanguage" datatype="html">
         <source>Sprache hinzufügen</source>
-        <target state="needs-translation">Sprache hinzufügen</target>
+        <target state="translated">Añadir idioma</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -3939,7 +3930,6 @@
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
         <source>Sprache entfernen</source>
-        <target state="needs-translation">Sprache entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">73</context>
@@ -6931,7 +6921,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dropdown.notFound" datatype="html">
         <source>Wert nicht gefunden</source>
-        <target state="needs-translation">Wert nicht gefunden</target>
+        <target state="translated">Valor no encontrado</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/searchable-select.component.ts</context>
           <context context-type="linenumber">60</context>
@@ -6994,7 +6984,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
+        <source>Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. Gültige Daten bleiben erhalten. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">56,36</context>
@@ -7200,7 +7190,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.unconfigured" datatype="html">
-        <source> Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </source>
+        <source>Bitte beachten Sie: Durch diese Aktion werden bei allen Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sämtliche eingetragenen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> gelöscht. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">63,30</context>
@@ -7252,7 +7242,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dating.single" datatype="html">
         <source>Einzelnes Jahr</source>
-        <target state="needs-translation">Einzelnes Jahr</target>
+        <target state="translated">Año único</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
           <context context-type="linenumber">105</context>
@@ -7415,7 +7405,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.addQrCode" datatype="html">
         <source>QR-Code hinzufügen</source>
-        <target state="needs-translation">QR-Code hinzufügen</target>
+        <target state="translated">Añadir código QR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">106,115</context>
@@ -7423,7 +7413,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.editQrCode" datatype="html">
         <source>QR-Code verwalten</source>
-        <target state="needs-translation">QR-Code verwalten</target>
+        <target state="translated">Gestionar código QR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">137,150</context>
@@ -7431,7 +7421,7 @@
       </trans-unit>
       <trans-unit id="util.inventoryRegister" datatype="html">
         <source>Inventarverzeichnis</source>
-        <target state="needs-translation">Inventarverzeichnis</target>
+        <target state="translated">Registro de inventario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.component.ts</context>
           <context context-type="linenumber">97,105</context>
@@ -7548,7 +7538,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.scanStoragePlace" datatype="html">
         <source>Aufbewahrungsort scannen</source>
-        <target state="needs-translation">Aufbewahrungsort scannen</target>
+        <target state="translated">Escanear lugar de almacenamiento</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -7831,7 +7821,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.showWarnings" datatype="html">
         <source>Warnungen anzeigen</source>
-        <target state="needs-translation">Warnungen anzeigen</target>
+        <target state="translated">Mostrar advertencias</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -8142,7 +8132,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteValues.single" datatype="html">
         <source>Wert löschen</source>
-        <target state="needs-translation">Wert löschen</target>
+        <target state="translated">Eliminar valor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8150,7 +8140,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.deleteValues.multiple" datatype="html">
         <source>Werte löschen</source>
-        <target state="needs-translation">Werte löschen</target>
+        <target state="translated">Eliminar valores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">261</context>
@@ -8704,7 +8694,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.objectArray.add" datatype="html">
         <source>Hinzufügen...</source>
-        <target state="needs-translation">Hinzufügen...</target>
+        <target state="translated">Añadir...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/array-field/object-array.html</context>
           <context context-type="linenumber">14</context>
@@ -8712,7 +8702,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.valuelistMultiInput.selectable" datatype="html">
         <source>Dieser Wert steht bei der Dateneingabe zur Auswahl.</source>
-        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe zur Auswahl.</target>
+        <target state="translated">Este valor está disponible para su selección al ingresar datos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
           <context context-type="linenumber">6</context>
@@ -8720,7 +8710,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.valuelistMultiInput.unselectable" datatype="html">
         <source>Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</source>
-        <target state="needs-translation">Dieser Wert steht bei der Dateneingabe nicht zur Auswahl.</target>
+        <target state="translated">Este valor no está disponible para su selección al ingresar datos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/valuelist-multi-input.html</context>
           <context context-type="linenumber">16</context>
@@ -8736,7 +8726,7 @@
       </trans-unit>
       <trans-unit id="viewModal.noProjectImages" datatype="html">
         <source>Mit dem Projekt sind keine Bilder verknüpft.</source>
-        <target state="needs-translation">Mit dem Projekt sind keine Bilder verknüpft.</target>
+        <target state="translated">No hay imágenes vinculadas al proyecto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
           <context context-type="linenumber">74,76</context>
@@ -8922,8 +8912,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editWorkflow" datatype="html">
-        <source>Arbeitsschritte dokumentieren</source>
-        <target state="needs-translation">Arbeitsschritte dokumentieren</target>
+        <source>Workflow dokumentieren</source>
+        <target state="translated">Documentar flujo de trabajo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">53</context>
@@ -8931,7 +8921,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.now.tooltip" datatype="html">
         <source>Aktuelles Datum verwenden</source>
-        <target state="needs-translation">Aktuelles Datum verwenden</target>
+        <target state="translated">Usar fecha actual</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date-value.html</context>
           <context context-type="linenumber">28</context>
@@ -8939,7 +8929,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.select.single" datatype="html">
         <source>Einzeldatum</source>
-        <target state="needs-translation">Einzeldatum</target>
+        <target state="translated">Fecha única</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">4</context>
@@ -8947,7 +8937,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.select.range" datatype="html">
         <source>Datumsbereich</source>
-        <target state="needs-translation">Datumsbereich</target>
+        <target state="translated">Intervalo de fechas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">6</context>
@@ -8955,7 +8945,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.from" datatype="html">
         <source>Von:</source>
-        <target state="needs-translation">Von:</target>
+        <target state="translated">Desde:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">30</context>
@@ -8963,7 +8953,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.date.to" datatype="html">
         <source>Bis:</source>
-        <target state="needs-translation">Bis:</target>
+        <target state="translated">Hasta:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/date/date.html</context>
           <context context-type="linenumber">33</context>
@@ -9401,7 +9391,6 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.header" datatype="html">
         <source>Prozess löschen?</source>
-        <target state="needs-translation">Prozess löschen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -9409,7 +9398,6 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.warning" datatype="html">
         <source>Der Prozess wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </source>
-        <target state="needs-translation">Der Prozess wird für alle <x id="INTERPOLATION" equiv-text="{{getNumberOfLinkedResources()}}"/> verknüpften Ressourcen entfernt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">12,14</context>
@@ -9417,15 +9405,15 @@
       </trans-unit>
       <trans-unit id="settings.backups.path" datatype="html">
         <source>Pfad</source>
-        <target state="needs-translation">Pfad</target>
+        <target state="translated">Ruta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">153,155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.backups.path.info" datatype="html">
-        <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
-        <target state="needs-translation">Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projekte. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</target>
+        <source>Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller auf diesem Rechner vorliegenden Projektdatenbanken. Dieser Pfad gibt das Verzeichnis an, in dem die erstellten Backup-Dateien abgelegt werden.</source>
+        <target state="translated">Field Desktop crea automáticamente copias de seguridad de todas las bases de datos de proyectos en este equipo a intervalos regulares. Esta ruta especifica el directorio donde se almacenan los archivos de copia de seguridad creados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">166,170</context>
@@ -9433,7 +9421,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.time" datatype="html">
         <source>Backups nach Uhrzeit aufbewahren</source>
-        <target state="needs-translation">Backups nach Uhrzeit aufbewahren</target>
+        <target state="translated">Conservar copias de seguridad por tiempo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">172</context>
@@ -9441,7 +9429,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.customInterval" datatype="html">
         <source>Abstand in Stunden</source>
-        <target state="needs-translation">Abstand in Stunden</target>
+        <target state="translated">Intervalo en horas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">180</context>
@@ -9449,7 +9437,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.custom" datatype="html">
         <source>Anzahl</source>
-        <target state="needs-translation">Anzahl</target>
+        <target state="translated">Número</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">188</context>
@@ -9457,7 +9445,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.date" datatype="html">
         <source>Backups nach Datum aufbewahren</source>
-        <target state="needs-translation">Backups nach Datum aufbewahren</target>
+        <target state="translated">Conservar copias de seguridad por fecha</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">192</context>
@@ -9465,7 +9453,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.daily" datatype="html">
         <source>Tag</source>
-        <target state="needs-translation">Tag</target>
+        <target state="translated">Día</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">200</context>
@@ -9473,7 +9461,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.weekly" datatype="html">
         <source>Woche</source>
-        <target state="needs-translation">Woche</target>
+        <target state="translated">Semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">208</context>
@@ -9481,7 +9469,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.monthly" datatype="html">
         <source>Monat</source>
-        <target state="needs-translation">Monat</target>
+        <target state="translated">Mes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">216</context>
@@ -9489,7 +9477,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info" datatype="html">
         <source>Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</source>
-        <target state="needs-translation">Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</target>
+        <target state="translated">Según las reglas configuradas actualmente, los siguientes archivos se almacenan en el directorio de copias de seguridad para cada proyecto:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">220,222</context>
@@ -9497,7 +9485,6 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.single" datatype="html">
         <source>Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </source>
-        <target state="needs-translation">Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">230,232</context>
@@ -9505,7 +9492,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.daily" datatype="html">
         <source>Eine Backup-Datei pro Tag</source>
-        <target state="needs-translation">Eine Backup-Datei pro Tag</target>
+        <target state="translated">Un archivo de copia de seguridad por día</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">241</context>
@@ -9513,7 +9500,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.weekly" datatype="html">
         <source>Eine Backup-Datei pro Woche</source>
-        <target state="needs-translation">Eine Backup-Datei pro Woche</target>
+        <target state="translated">Un archivo de copia de seguridad por semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">246</context>
@@ -9521,7 +9508,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.monthly" datatype="html">
         <source>Eine Backup-Datei pro Monat</source>
-        <target state="needs-translation">Eine Backup-Datei pro Monat</target>
+        <target state="translated">Un archivo de copia de seguridad por mes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">251</context>
@@ -9529,7 +9516,6 @@
       </trans-unit>
       <trans-unit id="settings.backups.size.info" datatype="html">
         <source>Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">257,259</context>
@@ -9537,7 +9523,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.warning" datatype="html">
         <source>Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.</target>
+        <target state="translated">Por favor, tenga en cuenta que los archivos de copia de seguridad existentes se eliminan automáticamente después de guardar la configuración si no cumplen con las nuevas reglas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">266,269</context>
@@ -9545,7 +9531,6 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -9769,7 +9754,7 @@
       </trans-unit>
       <trans-unit id="settings.backups" datatype="html">
         <source>Automatische Backups</source>
-        <target state="needs-translation">Automatische Backups</target>
+        <target state="translated">Copias de seguridad automáticas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">149</context>
@@ -9777,7 +9762,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.current" datatype="html">
         <source>Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</source>
-        <target state="needs-translation">Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</target>
+        <target state="translated">Un archivo de copia de seguridad de la última versión de cada base de datos del proyecto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">225,227</context>
@@ -9785,7 +9770,6 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.multiple" datatype="html">
         <source>Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </source>
-        <target state="needs-translation">Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">234,236</context>
@@ -9793,7 +9777,6 @@
       </trans-unit>
       <trans-unit id="settings.backups.estimatedSize.info" datatype="html">
         <source>Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">261,263</context>
@@ -9801,7 +9784,6 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>
@@ -9956,7 +9938,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.confirmDeleteInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner des Prozesses ein, um den Löschvorgang zu bestätigen.</source>
-        <target state="needs-translation">Bitte geben Sie den Bezeichner des Prozesses ein, um den Löschvorgang zu bestätigen.</target>
+        <target state="translated">Por favor, introduzca el identificador del proceso para confirmar la eliminación.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">15,17</context>

@@ -15,264 +15,276 @@
   "position-values-expansion-default": {
     "values": {
       "Maximale Ausdehnung": {
-        "label": ""
+        "label": "Expansión máxima"
       },
       "Minimale Ausdehnung": {
-        "label": ""
+        "label": "Expansión mínima"
       }
     }
   },
   "position-values-edge-default": {
     "values": {
       "Oberkante": {
-        "label": ""
+        "label": "Extremo superior"
       },
       "Unterkante": {
-        "label": ""
+        "label": "Extremo inferior"
       }
     }
   },
   "orientation-default-1": {
     "values": {
       "N-S": {
-        "label": ""
+        "label": "N-S"
       },
       "NNO - SSW": {
-        "label": ""
+        "label": "NNE - SSO"
       },
       "NNW-SSO": {
-        "label": ""
+        "label": "NNO-SSE"
       },
       "NO-SW": {
-        "label": ""
+        "label": "NE-SO"
       },
       "NW-SO": {
-        "label": ""
+        "label": "NO-SE"
       },
       "W-O": {
-        "label": ""
+        "label": "O-E"
       },
       "WNW-OSO": {
-        "label": ""
+        "label": "ONO-ESE"
       },
       "WSW-ONO": {
-        "label": ""
+        "label": "OSO-ENE"
       }
     }
   },
   "provenance-default-1": {
     "values": {
       "Anatolien": {
-        "label": ""
+        "label": "Anatolia"
       },
       "Antiochia (Antakya)": {
-        "label": ""
+        "label": "Antioquía (Antakya)"
       },
       "Athen": {
-        "label": ""
+        "label": "Atenas"
       },
       "Ägypten": {
-        "label": ""
+        "label": "Egipto"
       },
       "Attisch": {
-        "label": ""
+        "label": "Ático"
       },
       "Britannien": {
-        "label": ""
+        "label": "Gran Bretaña"
       },
       "Chios": {
-        "label": ""
+        "label": "Quíos"
       },
       "Deutschland": {
-        "label": ""
+        "label": "Alemania"
       },
       "Ephesos": {
-        "label": ""
+        "label": "Éfeso"
       },
       "Etruskisch": {
-        "label": ""
+        "label": "etrusco"
       },
       "Gallien": {
-        "label": ""
+        "label": "Galia"
       },
       "Ionien": {
-        "label": ""
+        "label": "Jonia"
       },
       "Irland": {
-        "label": ""
+        "label": "Irlanda"
       },
       "Italien": {
-        "label": ""
+        "label": "Italia"
       },
       "Kampanisch": {
-        "label": ""
+        "label": "campano"
       },
       "Karthagisch": {
-        "label": ""
+        "label": "cartaginés"
       },
       "Kleinasien": {
-        "label": ""
+        "label": "Asia Menor"
       },
       "Knidos": {
-        "label": ""
+        "label": "Cnido"
       },
       "Korinth": {
-        "label": ""
+        "label": "Corinto"
       },
       "Kos": {
-        "label": ""
+        "label": "Cos"
       },
       "Lesbos": {
-        "label": ""
+        "label": "Lesbos"
       },
       "Levante": {
-        "label": ""
+        "label": "Levante"
       },
       "Lokal": {
-        "label": ""
+        "label": "local"
       },
       "Lokal/Regional": {
-        "label": ""
+        "label": "local/regional"
       },
       "Milet": {
-        "label": ""
+        "label": "Mileto"
       },
       "Mäandertal": {
-        "label": ""
+        "label": "Valle del Meandro"
       },
       "Nordafrika": {
-        "label": ""
+        "label": "África del Norte"
       },
       "Nordafrikanisch": {
-        "label": ""
+        "label": "norteafricano"
       },
       "Palästina": {
-        "label": ""
+        "label": "Palestina"
       },
       "Pannonien": {
-        "label": ""
+        "label": "Panonia"
       },
       "Peloponnes": {
-        "label": ""
+        "label": "Peloponeso"
       },
       "Regional": {
-        "label": ""
+        "label": "regional"
       },
       "Rhodos": {
-        "label": ""
+        "label": "Rodas"
       },
       "Samos": {
-        "label": ""
+        "label": "Samos"
       },
       "Sizilien": {
-        "label": ""
+        "label": "Sicilia"
       },
       "Skandinavien": {
-        "label": ""
+        "label": "Escandinavia"
       },
       "Slawisch": {
-        "label": ""
+        "label": "eslavo"
       },
       "Spanien": {
-        "label": ""
+        "label": "España"
       },
       "Syrien": {
-        "label": ""
+        "label": "Siria"
       },
       "Südtunesisch": {
-        "label": ""
+        "label": "Sur de Túnez"
       },
       "Südägäis": {
-        "label": ""
+        "label": "Egeo meridional"
       }
     }
   },
   "periods-default-1": {
     "values": {
       "Archaisch": {
-        "label": ""
+        "label": "Arcaico"
       },
       "Bronzezeitlich": {
-        "label": ""
+        "label": "Edad del Bronce"
       },
       "Byzantinisch": {
-        "label": ""
+        "label": "bizantino"
       },
       "Eisenzeitlich": {
-        "label": ""
+        "label": "Edad del hierro"
       },
       "Frühbronzezeitlich": {
-        "label": ""
+        "label": "Edad del Bronce temprana/Bronce temprano"
       },
       "Frühbyzantinisch": {
-        "label": ""
+        "label": "Bizantino temprano"
       },
       "Frühhellenistisch": {
-        "label": ""
+        "label": "Helenístico temprano"
       },
       "Frühkaiserzeitlich": {
-        "label": ""
+        "label": "Imperial temprano"
       },
       "Frühklassisch": {
-        "label": ""
+        "label": "Clásico temprano"
       },
       "Geometrisch": {
-        "label": ""
+        "label": "Geométrico"
       },
       "Hellenistisch": {
-        "label": ""
+        "label": "Helenístico"
       },
       "Kaiserzeitlich": {
-        "label": ""
+        "label": "Imperio romano"
       },
       "Klassisch": {
-        "label": ""
+        "label": "Clásico"
       },
       "Neolithisch": {
-        "label": ""
+        "label": "Neolítico"
       },
       "Neuzeitlich": {
-        "label": ""
+        "label": "Primera Edad Moderna"
       },
       "Osmanisch": {
-        "label": ""
+        "label": "Otomano"
       },
       "Pleistozän": {
         "label": "Pleistoceno"
       },
       "Rezent": {
-        "label": ""
+        "label": "Reciente"
       },
       "Römisch": {
-        "label": ""
+        "label": "romano"
       },
       "Spätantik": {
-        "label": ""
+        "label": "Antigüedad tardía"
       },
       "Spätbronzezeitlich": {
-        "label": ""
+        "label": "Edad del Bronce tardía"
       },
       "Spätbyzantinisch": {
-        "label": ""
+        "label": "Bizantino tardío"
       },
       "Späthellenistisch": {
-        "label": ""
+        "label": "Helenismo tardío"
       },
       "Spätkaiserzeitlich": {
-        "label": ""
+        "label": "Imperial tardío/Final del Imperio"
       },
       "Spätklassisch": {
-        "label": ""
+        "label": "Clásico tardío"
+      },
+      "Frühmittelalter": {
+        "label": "Alta Edad Media/Edad Media temprana"
+      },
+      "Mittelalter": {
+        "label": "Edad Media"
+      },
+      "Spätmittelalter": {
+        "label": "Baja Edad Media/Edad Media tardía"
+      },
+      "Hochmittelalter": {
+        "label": "Alta Edad Media"
       }
     }
   },
   "colors-default-1": {
     "values": {
       "beige": {
-        "label": ""
+        "label": "beige"
       },
       "blass-": {
-        "label": ""
+        "label": "pálido-"
       },
       "blau": {
         "label": "azul"
@@ -284,428 +296,428 @@
         "label": "crema"
       },
       "dunkel-": {
-        "label": "oscuro"
+        "label": "oscuro-"
       },
       "gelb": {
         "label": "amarillo"
       },
       "grau": {
-        "label": ""
+        "label": "gris"
       },
       "grün": {
-        "label": ""
+        "label": "verde"
       },
       "hell-": {
-        "label": ""
+        "label": "claro-"
       },
       "leuchtend-": {
-        "label": ""
+        "label": "brillante-"
       },
       "ocker": {
-        "label": ""
+        "label": "ocre"
       },
       "orange": {
-        "label": ""
+        "label": "naranja"
       },
       "rosa": {
-        "label": ""
+        "label": "rosa"
       },
       "rot": {
-        "label": ""
+        "label": "rojo"
       },
       "schwarz": {
-        "label": ""
+        "label": "negro"
       },
       "türkis": {
-        "label": ""
+        "label": "turquesa"
       },
       "violett": {
-        "label": ""
+        "label": "violeta/morado"
       },
       "weiß": {
-        "label": ""
+        "label": "blanco"
       }
     },
-    "description": ""
+    "description": "Conjunto de colores 1, diversas aplicaciones; Departamento de TI, 2019"
   },
   "colors-default-2": {
     "values": {
       "beige": {
-        "label": ""
+        "label": "beige"
       },
       "dunkelbraun": {
-        "label": ""
+        "label": "marrón oscuro"
       },
       "dunkelrot": {
-        "label": ""
+        "label": "rojo oscuro"
       },
       "gelb": {
-        "label": ""
+        "label": "amarillo"
       },
       "hellbraun": {
-        "label": ""
+        "label": "marrón claro"
       },
       "hellgrau": {
-        "label": ""
+        "label": "gris claro"
       },
       "mittelbraun": {
-        "label": ""
+        "label": "marrón medio"
       },
       "ocker": {
-        "label": ""
+        "label": "ocre"
       },
       "orange": {
-        "label": ""
+        "label": "naranja"
       },
       "orangerot": {
-        "label": ""
+        "label": "naranja rojizo"
       },
       "rosa": {
-        "label": ""
+        "label": "rosa"
       },
       "rot": {
-        "label": ""
+        "label": "rojo"
       },
       "rotbraun": {
-        "label": ""
+        "label": "rojo-marrón"
       },
       "schwarz": {
-        "label": ""
+        "label": "negro"
       },
       "weiß": {
-        "label": ""
+        "label": "blanco"
       }
     },
-    "description": ""
+    "description": "Conjunto de colores 2, diversas aplicaciones"
   },
   "glass-decorationTechnique-default": {
     "values": {
       "Bemalung": {
-        "label": ""
+        "label": "decoración pintada"
       },
       "Diatretdekor": {
-        "label": ""
+        "label": "decoración reticulada/diatretum"
       },
       "Emaille": {
-        "label": ""
+        "label": "esmalte vítreo"
       },
       "Facettschliffdekor": {
-        "label": ""
+        "label": "facetado"
       },
       "Fadendekor (aufgelegt)": {
-        "label": ""
+        "label": "decoración en hilo (aplicada)"
       },
       "Fadendekor (verschmolzen)": {
-        "label": ""
+        "label": "decoración en hilo (fusionada)"
       },
       "Mosaikdekor": {
-        "label": ""
+        "label": "decoración con mosaicos"
       },
       "Reliefdekor": {
-        "label": ""
+        "label": "decoración en relieve"
       },
       "Reticelladekor": {
-        "label": ""
+        "label": "decoración reticulada"
       },
       "Riefeldekor": {
-        "label": ""
+        "label": "decoración acanalada"
       },
       "Ritzungen": {
-        "label": ""
+        "label": "incisiones"
       },
       "Schlangenfadendekor": {
-        "label": ""
+        "label": "decoración de hilo serpenteante"
       },
       "Schliffrillendekor": {
-        "label": ""
+        "label": "decoración de estrías por abrasión"
       },
       "Stempeldekor": {
-        "label": ""
+        "label": "decoración estampillada"
       },
       "Tupfendekor": {
-        "label": ""
+        "label": "decoración punteada"
       },
       "Warzendekor": {
-        "label": ""
+        "label": "decoración verrugosa"
       },
       "Zwischengoldglas": {
-        "label": ""
+        "label": "vidrio con pan de oro entre capas"
       },
       "figürlicher Schliffdekor": {
-        "label": ""
+        "label": "decoración pulida figurativa"
       }
     }
   },
   "glass-formDescription-default": {
     "values": {
       "ausladend": {
-        "label": ""
+        "label": "protuberante"
       },
       "bauchig": {
-        "label": ""
+        "label": "globular"
       },
       "breitoval": {
-        "label": ""
+        "label": "ovalado ancho"
       },
       "doppelkonisch": {
-        "label": ""
+        "label": "cónica doble"
       },
       "halbkugelig": {
-        "label": ""
+        "label": "semiesférico"
       },
       "hochoval": {
-        "label": ""
+        "label": "ovalado alto"
       },
       "konisch": {
-        "label": ""
+        "label": "cónico"
       },
       "kugelförmig": {
-        "label": ""
+        "label": "esférico"
       },
       "quadratisch": {
-        "label": ""
+        "label": "cuadrado"
       },
       "rechteckig": {
-        "label": ""
+        "label": "rectangular"
       },
       "rund": {
-        "label": ""
+        "label": "redondo"
       },
       "schlank": {
-        "label": ""
+        "label": "delgado"
       },
       "schmal": {
-        "label": ""
+        "label": "estrecho"
       },
       "spindelförmig": {
-        "label": ""
+        "label": "fusiforme/en forma de huso"
       },
       "tonnenförmig": {
-        "label": ""
+        "label": "toneliforme/en forma de tonel"
       },
       "zylinderförmig": {
-        "label": ""
+        "label": "cilíndrico"
       }
     }
   },
   "glass-manufacturingMethod-default": {
     "values": {
       "Formgeblasen (mit Reliefdekor)": {
-        "label": ""
+        "label": "Soplado en molde (con decoración en relieve)"
       },
       "Formgeschmolzen": {
-        "label": ""
+        "label": "fundido en molde"
       },
       "Freigeblasen": {
-        "label": ""
+        "label": "soplado libre"
       },
       "In Vorformen geblasen": {
-        "label": ""
+        "label": "soplado en preformas"
       },
       "In offene Halbformen geblasen": {
-        "label": ""
+        "label": "soplado en semimoldes abiertos"
       },
       "Kerngeformt": {
-        "label": ""
+        "label": "formado sobre núcleo"
       },
       "Sandkerngeschmolzen": {
-        "label": ""
+        "label": "fundido sobre núcleo de arena"
       },
       "gedreht (auf Drehscheibe)": {
-        "label": ""
+        "label": "torneado (en torno)"
       }
     }
   },
   "glass-objectType-default": {
     "values": {
       "Anhänger": {
-        "label": ""
+        "label": "colgante"
       },
       "Armreif": {
-        "label": ""
+        "label": "brazalete"
       },
       "Einlage": {
-        "label": ""
+        "label": "inserción"
       },
       "Fensterglas": {
-        "label": ""
+        "label": "vidrio para ventanas"
       },
       "Gefäß": {
-        "label": ""
+        "label": "vasija"
       },
       "Gemme": {
-        "label": ""
+        "label": "gema"
       },
       "Gerät": {
-        "label": ""
+        "label": "herramienta/instrumento"
       },
       "Glasschlacke": {
-        "label": ""
+        "label": "escoria vítrea"
       },
       "Lampe": {
-        "label": ""
+        "label": "lámpara"
       },
       "Löffel": {
-        "label": ""
+        "label": "cuchara"
       },
       "Perle": {
-        "label": ""
+        "label": "cuenta"
       },
       "Produktionsfragment": {
-        "label": ""
+        "label": "fragmento/resto de producción"
       },
       "Ring": {
-        "label": ""
+        "label": "anillo"
       },
       "Rohglas": {
-        "label": ""
+        "label": "vidrio en bruto/sin trabajar"
       },
       "Rührstab": {
-        "label": ""
+        "label": "varilla para remover"
       },
       "Scheiben": {
-        "label": ""
+        "label": "discos"
       },
       "Schmuck": {
-        "label": ""
+        "label": "joyas"
       },
       "Spielstein": {
-        "label": ""
+        "label": "ficha de juego"
       },
       "Tessera": {
-        "label": ""
+        "label": "tesela"
       },
       "Unsicher bzw. unbestimmbar": {
-        "label": ""
+        "label": "incierto o indeterminado"
       },
       "Weinheber": {
-        "label": ""
+        "label": "copa de vino/cáliz para vino"
       }
     }
   },
   "glass-transparency-default": {
     "values": {
       "durchscheinend": {
-        "label": ""
+        "label": "translúcido"
       },
       "durchsichtig": {
-        "label": ""
+        "label": "transparente"
       },
       "opak": {
-        "label": ""
+        "label": "opaco"
       },
       "versintert": {
-        "label": ""
+        "label": "sinterizado/cubierto de crosta calcárea"
       }
     }
   },
   "glass-vesselForm-default": {
     "values": {
       "Aschenurne": {
-        "label": ""
+        "label": "urna funeraria"
       },
       "Becher": {
-        "label": ""
+        "label": "vaso/copa"
       },
       "Deckel": {
-        "label": ""
+        "label": "tapa"
       },
       "Deckelgefäß": {
-        "label": ""
+        "label": "vasija/recipiente con tapa"
       },
       "Flasche": {
-        "label": ""
+        "label": "botella"
       },
       "Krug": {
-        "label": ""
+        "label": "jarra/cántaro"
       },
       "Napf": {
-        "label": ""
+        "label": "cuenco/tazón"
       },
       "Schale": {
-        "label": ""
+        "label": "cuenco/plato hondo"
       },
       "Schüssel": {
-        "label": ""
+        "label": "ensaladera"
       },
       "Tasse": {
-        "label": ""
+        "label": "taza"
       },
       "Teller": {
-        "label": ""
+        "label": "plato"
       },
       "Topf": {
-        "label": ""
+        "label": "olla/cazo"
       },
       "Unbestimmt": {
-        "label": ""
+        "label": "indeterminado"
       },
       "Vorratsgefäß": {
-        "label": ""
+        "label": "recipiente/vasija de almacenamiento"
       }
     }
   },
   "glass-vesselFormSpecific-default": {
     "values": {
       "Alabastron": {
-        "label": ""
+        "label": "alabastrón"
       },
       "Amphoriskos": {
-        "label": ""
+        "label": "ámporisco"
       },
       "Aryballos": {
-        "label": ""
+        "label": "aríbalo"
       },
       "Balsamarium": {
-        "label": ""
+        "label": "balsamario"
       },
       "Dattelflasche": {
-        "label": ""
+        "label": "botella datiliforme"
       },
       "Faltenbecher": {
-        "label": ""
+        "label": "vaso con pliegues"
       },
       "Hydria": {
-        "label": ""
+        "label": "hidria"
       },
       "Kopfflasche": {
-        "label": ""
+        "label": "botella con cabeza"
       },
       "Kotyle": {
-        "label": ""
+        "label": "cotilo"
       },
       "Kragenschale": {
-        "label": ""
+        "label": "cuenco con labio sobresaliente"
       },
       "Krater": {
-        "label": ""
+        "label": "crátera"
       },
       "Kylix": {
-        "label": ""
+        "label": "cílice"
       },
       "Lekythos": {
-        "label": ""
+        "label": "lekythos"
       },
       "Luterion": {
-        "label": ""
+        "label": "luterión"
       },
       "Oinochoe": {
-        "label": ""
+        "label": "oinochoe"
       },
       "Pelike": {
-        "label": ""
+        "label": "péliké"
       },
       "Rippenschale": {
-        "label": ""
+        "label": "cuenco con costillas"
       },
       "Schliffrillenschale": {
-        "label": ""
+        "label": "cuenco con franja pulida"
       },
       "Schöpfer": {
-        "label": ""
+        "label": "cucharón"
       },
       "Skyphos": {
-        "label": ""
+        "label": "escifo"
       },
       "Spitzamphora": {
         "label": ""
@@ -5662,6 +5674,44 @@
     "values": {
       "planned": {
         "label": "Planificado"
+      },
+      "in progress": {
+        "label": "En curso"
+      },
+      "completed": {
+        "label": "Completado"
+      },
+      "canceled": {
+        "label": "Cancelado"
+      }
+    }
+  },
+  "weight-scale-values-default": {
+    "values": {
+      "Luggage scale": {
+        "label": "Báscula para equipaje"
+      },
+      "Kitchen scale": {
+        "label": "Báscula de cocina"
+      },
+      "Precision scale": {
+        "label": "Báscula de precisión"
+      }
+    }
+  },
+  "volume-measurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "Clásico",
+        "description": "El volumen se mide simplemente vertiéndolo en un recipiente medidor"
+      },
+      "displacement": {
+        "label": "Desplazamiento",
+        "description": "El volumen se mide colocando una cantidad conocida de agua en un recipiente medidor y añadiendo luego el objeto que se desea examinar para medir el volumen desplazado"
+      },
+      "calculated": {
+        "label": "Calculado a partir de las dimensiones",
+        "description": "El volumen se calcula en función de las dimensiones pertinentes"
       }
     }
   }

@@ -2,6 +2,9 @@
 
 const electron = require('electron');
 electron.app.disableHardwareAcceleration();
+electron.crashReporter.start({
+    uploadToServer: false
+});
 
 const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');

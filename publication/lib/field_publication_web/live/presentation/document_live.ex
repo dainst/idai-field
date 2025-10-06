@@ -117,7 +117,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       ) do
     {
       :noreply,
-      redirect(socket, to: ~p"/search?#{%{q: q, filter: %{project_name: project_name}}}")
+      redirect(socket, to: ~p"/search?#{%{q: q, filters: %{project_name: project_name}}}")
     }
   end
 

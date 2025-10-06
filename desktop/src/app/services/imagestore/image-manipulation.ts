@@ -1,4 +1,5 @@
 const sharp = window.require('sharp');
+sharp.simd(false);
 
 
 export module ImageManipulationErrors {

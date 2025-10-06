@@ -6870,7 +6870,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.info.invalid" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> sämtliche ungültigen Daten im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="gelöscht. G"/> gelöscht. Gültige Daten bleiben erhalten. </source>
-        <target state="translated">Nota: esta acción elimina todos los datos no válidos del campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> para todos los <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> recursos de la categoría  <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se conservarán los datos válidos. </target>
+        <target state="translated">Nota: esta acción elimina todos los datos no válidos del campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> para todos los <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche ungül"/> recursos de la categoría <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Se conservarán los datos válidos. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">56,36</context>
@@ -6926,6 +6926,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.resourceLimitExceeded" datatype="html">
         <source>Ressourcenlimit für Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ection)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="überschritten"/> überschritten </source>
+        <target state="translated">Límite de recursos para la categoría <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> superado </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">90,81</context>
@@ -7982,7 +7983,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.multiple.info.unconfigured" datatype="html">
         <source>Bitte beachten Sie: Durch diese Aktion werden bei allen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> Ressourcen der Kategorie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> sämtliche eingetragenen Daten aus dem Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> in das Feld <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="verschoben."/> verschoben. </source>
-        <target state="translated">Nota: Esta acción mueve todos los datos introducidos del campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> al campo  <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> para todos <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> los recursos de la categoría <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated">Nota: Esta acción mueve todos los datos introducidos del campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> al campo <x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(selectedFieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> para todos <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sämtliche einge"/> los recursos de la categoría <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.html</context>
           <context context-type="linenumber">66,38</context>
@@ -9583,6 +9584,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.invalidProcessState" datatype="html">
         <source>Ungültiger Status <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="translated">Estado no válido <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,112</context>
@@ -9712,7 +9714,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.3" datatype="html">
         <source>Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </source>
-        <target state="translated">Si no realiza ninguna selección en este momento, puede añadir el campo  <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> a la nueva categoría en cualquier momento. </target>
+        <target state="translated">Si no realiza ninguna selección en este momento, puede añadir el campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> a la nueva categoría en cualquier momento. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">39,42</context>

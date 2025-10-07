@@ -3,7 +3,8 @@
     <div *ngIf="configurationItem.references"
          class="configuration-info-references-container"
          [class.with-description]="getDescription()">
-        <div class="configuration-info-references-title">Verweise:</div>
+        <div class="configuration-info-references-title"
+             i18n="references">Verweise:</div>
         <div *ngFor="let reference of configurationItem.references" class="configuration-info-reference">
             <a class="configuration-info-reference" href="{{reference}}" target="_blank">{{reference}}</a>
         </div>

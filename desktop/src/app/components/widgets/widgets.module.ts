@@ -34,6 +34,7 @@ import { RelationPickerGroupComponent } from './relation-picker/relation-picker-
 import { RelationPickerComponent } from './relation-picker/relation-picker.component';
 import { QuittingModalComponent } from './quitting-modal.component';
 import { ConfigurationInfoComponent } from './configuration-info.component';
+import { ReferencesInfoComponent } from './references-info.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { ConfigurationInfoComponent } from './configuration-info.component';
         RelationPickerGroupComponent,
         RelationPickerComponent,
         ConfigurationInfoComponent,
+        ReferencesInfoComponent,
         SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],
     providers: [

@@ -13,19 +13,8 @@ configuration-info {
       user-select: none;
     }
 
-    .configuration-info-references-container {
-      &.with-description {
-        margin-top: 15px;
-      }
-
-      .configuration-info-references-title {
-        font-weight: 600;
-        user-select: none;
-      }
-
-      .configuration-info-reference {
-        margin-top: 3px;
-      }
+    .configuration-info-references-container.with-description {
+      margin-top: 15px;
     }
   }
 }

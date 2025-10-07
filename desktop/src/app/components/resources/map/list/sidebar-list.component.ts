@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges, OnDestroy,
+    ChangeDetectorRef } from '@angular/core';
 import { to } from 'tsfun';
 import { FieldDocument } from 'idai-field-core';
 import { ResourcesComponent } from '../../resources.component';
@@ -18,7 +19,8 @@ import { WarningsService } from '../../../../services/warnings/warnings-service'
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
     host: {
-        '(window:contextmenu)': 'handleClick($event, true)'
+        '(window:contextmenu)': 'handleClick($event, true)',
+        '(window:resize)': 'closeContextMenu()'
     },
     standalone: false
 })
@@ -27,7 +29,7 @@ import { WarningsService } from '../../../../services/warnings/warnings-service'
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges {
+export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges, OnDestroy {
 
     @Input() selectedDocument: FieldDocument;
 
@@ -38,11 +40,13 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public readonly itemSize: number = 59;
 
     private lastSelectedDocument: FieldDocument|undefined;
+    private scrollListener: any;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
                 private navigationService: NavigationService,
                 private warningsService: WarningsService,
+                private changeDetectorRef: ChangeDetectorRef,
                 loading: Loading,
                 viewFacade: ViewFacade,
                 menuService: Menus) {
@@ -55,6 +59,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         });
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
+
+        this.scrollListener = this.closeContextMenu.bind(this);
+        window.addEventListener('scroll', this.scrollListener, true);
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             this.contextMenu.close();
@@ -75,6 +82,12 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         this.resourcesComponent.additionalSelectedDocuments = [];
         this.scrollTo(this.selectedDocument, this.isScrolledToBottomElement());
         this.lastSelectedDocument = this.selectedDocument;
+    }
+
+
+    ngOnDestroy() {
+
+        window.removeEventListener('scroll', this.scrollListener, true);
     }
 
 
@@ -192,12 +205,19 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
                 || rightClick && target.id && target.id.startsWith('resource-'))) {
-            this.contextMenu.close();
+            this.closeContextMenu();
         }
     }
 
 
     public trackDocument = (_: number, document: FieldDocument) => document.resource.id;
+
+    
+    public closeContextMenu() {
+
+        this.contextMenu.close();
+        this.changeDetectorRef.detectChanges();
+    }
 
 
     private selectBetween(document1: FieldDocument, document2: FieldDocument) {

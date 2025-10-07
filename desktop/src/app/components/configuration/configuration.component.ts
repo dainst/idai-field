@@ -64,7 +64,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     public configurationDocument: ConfigurationDocument;
     public contextMenu: ConfigurationContextMenu = new ConfigurationContextMenu();
     public clonedProjectConfiguration: ProjectConfiguration;
-    public scrollListener: any;
     
     public ready: boolean = false;
     public dragging: boolean = false;
@@ -119,6 +118,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         this.updateProjectConfiguration(configurationDocument, reindexConfiguration);
 
     private menuSubscription: Subscription;
+    private scrollListener: any;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,

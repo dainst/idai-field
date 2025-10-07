@@ -56,6 +56,15 @@ configuration-field {
       .list-group {
         color: initial;
       }
+
+      references-info {
+        display: block;
+        margin-bottom: 15px;
+
+        .references-info-entry {
+          font-size: 14px;
+        }
+      }
     }
 
     b {

@@ -100,7 +100,8 @@ import { ReferencesInfoComponent } from './references-info.component';
         SearchableSelectComponent,
         RelationPickerGroupComponent,
         RelationPickerComponent,
-        ConfigurationInfoComponent
+        ConfigurationInfoComponent,
+        ReferencesInfoComponent
     ]
 })
 

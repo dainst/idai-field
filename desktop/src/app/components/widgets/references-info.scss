@@ -1,10 +1,19 @@
 references-info {
   .references-info-title {
-    font-weight: 600;
+    font-weight: 500;
     user-select: none;
   }
 
   .references-info-entry {
     margin-top: 3px;
+
+    .references-info-predicate {
+      font-style: italic;
+      user-select: none;
+    }
+
+    &.semantic-reference {
+      margin-top: 6px;
+    }
   }
 }

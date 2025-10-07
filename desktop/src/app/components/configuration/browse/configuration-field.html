@@ -19,6 +19,9 @@
 
     <div *ngIf="opened" class="card-body">
         <p *ngIf="description" class="card-text">{{description}}</p>
+        <references-info [references]="field.references"
+                         [semanticReferences]="field.semanticReferences"
+                         [context]="'configuration'"></references-info>
         <ul class="list-group list-group-flush">
             <li *ngIf="field.mandatory" class="list-group-item">
                 <b i18n="@@configuration.mandatoryField">Pflichtfeld</b>

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { SemanticReference } from 'idai-field-core';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { Component, Input } from '@angular/core';
 export class ReferencesInfoComponent {
 
     @Input() references: string[];
-
+    @Input() semanticReferences: Array<SemanticReference>;
+    @Input() context: 'editor'|'configuration' = 'editor';
 
     constructor() {}
 }

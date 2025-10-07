@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges,
+    ViewChild } from '@angular/core';
 import { SortMode, ProcessDocument } from 'idai-field-core';
 import { Routing } from '../../../services/routing';
 import { BaseList } from '../base-list';
@@ -16,7 +17,7 @@ import { ProcessListComponent } from './process-list.component';
 /**
  * @author Thomas Kleinke
  */
-export class WorkflowOverviewComponent extends BaseList implements AfterViewInit, OnChanges {
+export class WorkflowOverviewComponent extends BaseList implements AfterViewInit, OnChanges, OnDestroy {
 
     @Input() documents: Array<ProcessDocument>;
     @Input() selectedDocument: ProcessDocument;
@@ -27,9 +28,10 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
     constructor(private routingService: Routing,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                menuService: Menus) {
+                menuService: Menus,
+                changeDetectorRef: ChangeDetectorRef) {
         
-        super(viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
     }
 
 
@@ -49,6 +51,12 @@ export class WorkflowOverviewComponent extends BaseList implements AfterViewInit
     ngOnChanges(changes: SimpleChanges) {
     
         if (changes['selectedDocument']) this.scrollTo(this.selectedDocument);
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
     }
 
 

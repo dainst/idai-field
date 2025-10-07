@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Document } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
@@ -10,6 +10,7 @@ import { Menus } from '../../services/menus';
 import { scrollTo } from '../../angular/scrolling';
 import { NavigationPathSegment } from './view/state/navigation-path-segment';
 import { AngularUtility } from '../../angular/angular-utility';
+import { ContextMenuProvider } from '../widgets/context-menu-provider';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { AngularUtility } from '../../angular/angular-utility';
  * @author Philipp Gerth
  * @author Thomas Kleinke
  */
-export class BaseList implements AfterViewChecked {
+export class BaseList extends ContextMenuProvider implements AfterViewChecked {
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
@@ -37,7 +38,10 @@ export class BaseList implements AfterViewChecked {
 
     constructor(public viewFacade: ViewFacade,
                 protected loading: Loading,
-                protected menuService: Menus) {
+                protected menuService: Menus,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
 
         this.navigationPath = this.viewFacade.getNavigationPath();
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { set } from 'tsfun';
 import { FieldDocument, CategoryForm, ProjectConfiguration, FieldResource, Valuelist, Labels } from 'idai-field-core';
 import { Loading } from '../../widgets/loading';
@@ -19,7 +19,7 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
  * @author Thomas Kleinke
  * @author Philipp Gerth
  */
-export class ListComponent extends BaseList implements OnChanges {
+export class ListComponent extends BaseList implements OnChanges, OnDestroy {
 
     @Input() documents: Array<FieldDocument>;
     @Input() selectedDocument: FieldDocument;
@@ -36,9 +36,10 @@ export class ListComponent extends BaseList implements OnChanges {
                 private labels: Labels,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                menuService: Menus) {
+                menuService: Menus,
+                changeDetectorRef: ChangeDetectorRef) {
 
-        super(viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();
@@ -64,6 +65,12 @@ export class ListComponent extends BaseList implements OnChanges {
             this.updateAvailableLanguages();
             this.updateShortDescriptionValuelists();
         }
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
     }
 
 

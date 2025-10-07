@@ -40,18 +40,17 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public readonly itemSize: number = 59;
 
     private lastSelectedDocument: FieldDocument|undefined;
-    private scrollListener: any;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
                 private navigationService: NavigationService,
                 private warningsService: WarningsService,
-                private changeDetectorRef: ChangeDetectorRef,
+                changeDetectorRef: ChangeDetectorRef,
                 loading: Loading,
                 viewFacade: ViewFacade,
                 menuService: Menus) {
 
-        super(viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
 
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
@@ -59,9 +58,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         });
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
-
-        this.scrollListener = this.closeContextMenu.bind(this);
-        window.addEventListener('scroll', this.scrollListener, true);
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             this.contextMenu.close();
@@ -87,7 +83,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     ngOnDestroy() {
 
-        window.removeEventListener('scroll', this.scrollListener, true);
+        this.removeListeners();
     }
 
 
@@ -211,13 +207,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
 
     public trackDocument = (_: number, document: FieldDocument) => document.resource.id;
-
-    
-    public closeContextMenu() {
-
-        this.contextMenu.close();
-        this.changeDetectorRef.detectChanges();
-    }
 
 
     private selectBetween(document1: FieldDocument, document2: FieldDocument) {

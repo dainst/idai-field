@@ -1612,7 +1612,7 @@
         },
         "organicFractionSubsampled": {
           "label": "Organik parçacığın alt örneklemesi",
-          "description": "Farklı organik parçacıkların tamamen analizi yerine alt örnekleme yoluyla mı alındığını belirtir"
+          "description": "Farklı organik parçacıkların tamamen analizi yerine alt örnekleme yoluyla mı alındığını belirtir."
         },
         "organicSubsamplingTechnique": {
           "label": "Kullanılan alt örnekleme tekniği (organik parçacık)",
@@ -1620,7 +1620,7 @@
         },
         "organicFractionMeasured": {
           "label": "Ölçülen organik parçacık",
-          "description": "Organik bileşenlerin hacim/ağırlığının kaydedilip kaydedilmediğinin belirtilmesi"
+          "description": "Organik bileşenlerin hacim/ağırlığının kaydedilip kaydedilmediğini gösterir."
         },
         "organicFractionMeasurement8": {
           "label": "Parçacık ölçümü 8 ORG",
@@ -1656,7 +1656,7 @@
         },
         "organicFractionSubsampledList": {
           "label": "Organik alt örneklerin listesi",
-          "description": "Alt örnekleme yapılan organik parçacıkları gösterir"
+          "description": "Alt örnekleme yapılan organik parçacıkları gösterir."
         },
         "organicMultiplicationFactor8": {
           "label": "Çarpım katsayısı 8 ORG",
@@ -1712,9 +1712,29 @@
         },
         "verticalSamplingStrategy": {
           "label": "Dikey örnekleme türü"
+        },
+        "profileSamplingStrategy": {
+          "description": "Açığa çıkarılmış bir stratigrafik kesitten tortu toplamak için özel bir teknik",
+          "label": "Profil örnekleme türü"
         }
       },
       "label": "Örnekleme"
+    },
+    "Sieving": {
+      "label": "Eleme",
+      "fields": {
+        "waterOrigin": {
+          "label": "Su kaynağı",
+          "description": "Örnek işlemede kullanılan suyun kaynağı"
+        },
+        "waterChangeFrequency": {
+          "label": "Su değişim sıklığı",
+          "description": "Örnek işlemede kullanılan suyun değiştirilme sıklığı"
+        },
+        "samplePretreated": {
+          "label": "Örneğin ön işlemi"
+        }
+      }
     }
   },
   "forms": {

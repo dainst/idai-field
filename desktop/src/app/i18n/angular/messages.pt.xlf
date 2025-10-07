@@ -4102,8 +4102,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
-        <source>Gemessen an</source>
-        <target state="translated">Medido na</target>
+        <source>Gemessen an:</source>
+        <target state="translated">Medido na:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">144</context>
@@ -5702,8 +5702,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="util.dimension.asMeasuredBy" datatype="html">
-        <source>gemessen an</source>
-        <target state="translated">medido na</target>
+        <source>gemessen an:</source>
+        <target state="translated">medido na:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -6598,16 +6598,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate" datatype="html">
-        <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</source>
-        <target state="translated">Data inválida no campo '[1]' de um recurso da categoria '[0]'. Formato para datas: "dia.mês.ano", por exemplo.: 01.01.2010</target>
+        <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="translated">Data inválida no campo '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDates" datatype="html">
-        <source>Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010</source>
-        <target state="translated">Datas inválidas nos seguintes campos de um recurso da categoria '[0]': [1]. Formato para datas: "dia.mês.ano", por exemplo.: 01.01.2010</target>
+        <source>Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="translated">Datas inválidas nos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8883,7 +8883,7 @@
       </trans-unit>
       <trans-unit id="configuration.condition.none" datatype="html">
         <source>- Keine -</source>
-        <target state="needs-translation">- Keine -</target>
+        <target state="translated">- nenhum -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
           <context context-type="linenumber">17</context>
@@ -8891,7 +8891,7 @@
       </trans-unit>
       <trans-unit id="configuration.conditionalField" datatype="html">
         <source>Bedingung für Anzeige des Feldes</source>
-        <target state="needs-translation">Bedingung für Anzeige des Feldes</target>
+        <target state="translated">condição para mostrar o campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/condition-section.html</context>
           <context context-type="linenumber">4,6</context>
@@ -9323,7 +9323,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField.notAllowedForInputType" datatype="html">
         <source>Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.</source>
-        <target state="needs-translation">Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.</target>
+        <target state="translated">Campos deste tipo não podem ser configurados como campos mandatários.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">279</context>
@@ -9331,7 +9331,7 @@
       </trans-unit>
       <trans-unit id="configuration.mandatoryField.notAllowedForRequiredField" datatype="html">
         <source>Dieses Feld ist grundsätzlich ein Pflichtfeld.</source>
-        <target state="needs-translation">Dieses Feld ist grundsätzlich ein Pflichtfeld.</target>
+        <target state="translated">este campo é um campo obrigatório.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">277</context>
@@ -9339,7 +9339,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.multipleValues.info" datatype="html">
         <source>Bitte wählen Sie die korrekten Werte aus der Werteliste aus.</source>
-        <target state="needs-translation">Bitte wählen Sie die korrekten Werte aus der Werteliste aus.</target>
+        <target state="translated">Por favor selecione os valores corretos da lista de valores.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -9347,7 +9347,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.singleValue.info" datatype="html">
         <source>Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</source>
-        <target state="needs-translation">Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</target>
+        <target state="translated">Por favor selecione o valor correto da lista de valores.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">22,24</context>
@@ -9498,8 +9498,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteProcessModal.header" datatype="html">
-        <source>Prozess löschen?</source>
-        <target state="needs-translation">Prozess löschen?</target>
+        <source>Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> löschen? </source>
+        <target state="translated">Apagar o processo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{process.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/workflow/delete/delete-process-modal.html</context>
           <context context-type="linenumber">2</context>
@@ -9915,7 +9915,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.2" datatype="html">
         <source>Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </source>
-        <target state="needs-translation">Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </target>
+        <target state="translated">Pode alterar a seleção mais tarde ao editar o campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">35,38</context>
@@ -9923,7 +9923,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.isCarriedOutOn.1" datatype="html">
         <source>Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>durchgeführt<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> werden kann. </source>
-        <target state="needs-translation">Bitte wählen Sie die erlaubten Kategorien von Ressourcen aus, an denen der Prozess <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>durchgeführt<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> werden kann. </target>
+        <target state="translated">Por favor selecione as categorias de recursos permitidas em que o processo pode ser <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>executado<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">10,13</context>
@@ -9931,7 +9931,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.isCarriedOutOn.2" datatype="html">
         <source>Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </source>
-        <target state="needs-translation">Sie können diese Auswahl später anpassen, indem Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> editieren. </target>
+        <target state="translated">Pode alterar a seleção mais tarde ao editar o campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('isCarriedOutOn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">14,17</context>
@@ -9939,7 +9939,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.1" datatype="html">
         <source>Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Ergebnis<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dieses Prozesses sein können. </source>
-        <target state="needs-translation">Bitte wählen Sie optional die erlaubten Kategorien von Ressourcen aus, die ein <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Ergebnis<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dieses Prozesses sein können. </target>
+        <target state="translated">Por favor selecione as categorias permitidas que possam ser <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>resultado<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> deste processo. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">31,34</context>
@@ -9947,7 +9947,7 @@
       </trans-unit>
       <trans-unit id="configuration.createProcess.info.resultsIn.3" datatype="html">
         <source>Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </source>
-        <target state="needs-translation">Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </target>
+        <target state="translated">Se não fizer uma escolha neste momento, pode adicionar a qualquer momento o campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> à nova categoria. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">39,42</context>
@@ -9955,7 +9955,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistForWeightSubfield" datatype="html">
         <source>Werteliste (Unterfeld "Messgerät")</source>
-        <target state="needs-translation">Werteliste (Unterfeld "Messgerät")</target>
+        <target state="translated">lista de valores (campo inferior "instrumento de medição")</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">138,140</context>
@@ -9963,7 +9963,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.weight" datatype="html">
         <source>Gewichtsangabe</source>
-        <target state="needs-translation">Gewichtsangabe</target>
+        <target state="translated">peso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">315</context>
@@ -10035,7 +10035,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.volume" datatype="html">
         <source>Volumenangabe</source>
-        <target state="needs-translation">Volumenangabe</target>
+        <target state="translated">volume</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">319</context>
@@ -10051,7 +10051,7 @@
       </trans-unit>
       <trans-unit id="configuration.valuelistForVolumeSubfield" datatype="html">
         <source>Werteliste (Unterfeld "Messverfahren")</source>
-        <target state="needs-translation">Werteliste (Unterfeld "Messverfahren")</target>
+        <target state="translated">lista de valores (campo inferior"método de medição")</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">141,143</context>
@@ -10079,7 +10079,7 @@
       </trans-unit>
       <trans-unit id="configuration.generalReferences" datatype="html">
         <source>Allgemeine Verweise</source>
-        <target state="needs-translation">Allgemeine Verweise</target>
+        <target state="translated">Referências gerais</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">40,42</context>
@@ -10103,7 +10103,7 @@
       </trans-unit>
       <trans-unit id="configuration.semanticReferences" datatype="html">
         <source>Semantische Verweise</source>
-        <target state="needs-translation">Semantische Verweise</target>
+        <target state="translated">Referências semânticas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">46,48</context>

@@ -5669,5 +5669,42 @@
         "label": "Rengi"
       }
     }
+  },
+  "weight-scale-values-default": {
+    "values": {
+      "Luggage scale": {
+        "label": "El tartısı"
+      },
+      "Kitchen scale": {
+        "label": "Mutfak tartısı"
+      },
+      "Precision scale": {
+        "label": "Hassas tartı"
+      }
+    }
+  },
+  "volume-measurementTechnique-default": {
+    "values": {
+      "classical": {
+        "description": "Hacim, bir ölçüm kabına dökülerek ölçülür",
+        "label": "Toplu hacim"
+      }
+    }
+  },
+  "process-state-default": {
+    "values": {
+      "planned": {
+        "label": "Planlanmış"
+      },
+      "in progress": {
+        "label": "Devam ediyor"
+      },
+      "completed": {
+        "label": "Tamamlanmış"
+      },
+      "canceled": {
+        "label": "İptal edildi"
+      }
+    }
   }
 }

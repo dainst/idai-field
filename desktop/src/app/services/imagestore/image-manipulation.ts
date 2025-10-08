@@ -29,9 +29,7 @@ export module ImageManipulation {
      */
     export function getSharpImage(buffer: Buffer): any {
 
-        console.log('Generating sharp image...');
         const sharpImage = sharp(buffer, { limitInputPixels: MAX_INPUT_PIXELS });
-        console.log('Finished generating sharp image');
         return sharpImage;
     }
 
@@ -40,17 +38,10 @@ export module ImageManipulation {
                                           targetJpegQuality: number): Promise<Buffer> {
 
         try {
-            console.log('Starting thumbnail creation...');
-            console.log('Sharp status:', sharp.counters());
-            console.log('Max sharp threads:', sharp.concurrency());
             const sharpImage = getSharpImage(buffer);
-            console.log('Resizing image to target height: ' + targetHeight);
             const resizedImage = sharpImage.resize(undefined, targetHeight);
-            console.log('Converting to JPEG...');
             const jpegImage = resizedImage.jpeg({ quality: targetJpegQuality });
-            console.log('Converting to buffer...');
             const result = await jpegImage.toBuffer();
-            console.log('Finished generating thumbnail');
             return result;
         } catch (err) {
             console.error('Failed to generate thumbnail:', err);

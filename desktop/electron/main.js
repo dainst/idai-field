@@ -1,7 +1,6 @@
 'use strict';
 
 const electron = require('electron');
-electron.app.disableHardwareAcceleration();
 electron.crashReporter.start({
     uploadToServer: false
 });

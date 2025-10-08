@@ -10162,7 +10162,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.references" datatype="html">
         <source>Verweise:</source>
-        <target state="needs-translation">Verweise:</target>
+        <target state="translated">References:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">3</context>
@@ -10170,7 +10170,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.generalReferences" datatype="html">
         <source>Allgemeine Verweise:</source>
-        <target state="needs-translation">Allgemeine Verweise:</target>
+        <target state="translated">General references:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">5</context>
@@ -10178,7 +10178,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.semanticReferences" datatype="html">
         <source>Semantische Verweise:</source>
-        <target state="needs-translation">Semantische Verweise:</target>
+        <target state="translated">Semantic references:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">12</context>

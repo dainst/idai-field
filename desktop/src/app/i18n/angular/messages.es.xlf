@@ -5241,23 +5241,23 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidMapLayerRelationTargets" datatype="html">
         <source>Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</source>
-        <target state="needs-translation">Die Relation 'hasDefaultMapLayer' einer Ressource der Kategorie '[0]' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation 'hasMapLayer' verwiesen wird.</target>
+        <target state="translated">La relación 'hasDefaultMapLayer' de un recurso de la categoría '[0]' hace referencia a uno o varios recursos que no se mencionan en la relación 'hasMapLayer'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.endDateBeforeBeginningDate" datatype="html">
-        <source>Das Enddatum einer Ressource der Kategorie '[0]' liegt vor dem Startdatum.</source>
-        <target state="needs-translation">Das Enddatum einer Ressource der Kategorie '[0]' liegt vor dem Startdatum.</target>
+        <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.</source>
+        <target state="translated">Fecha no válida en el campo '[1]' de un recurso de la categoría '[0]': La fecha de finalización es anterior a la fecha de inicio.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
-        <source>Eigenschaft(en) einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</source>
-        <target state="needs-translation">Eigenschaft(en) einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</target>
+        <source>Folgende Felder einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</source>
+        <target state="translated">Los siguientes campos de un recurso de la categoría '[0]' deben estar presentes: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5265,7 +5265,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.maxCharactersExceeded" datatype="html">
         <source>Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</source>
-        <target state="needs-translation">Im Feld '[1]' der Kategorie '[0]' dürfen maximal [2] Zeichen eingetragen werden.</target>
+        <target state="translated">Se puede introducir un máximo de [2] caracteres en el campo '[1]' de la categoría '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5273,7 +5273,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryNotAllowed" datatype="html">
         <source>Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</source>
-        <target state="needs-translation">Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</target>
+        <target state="translated">No se permiten recursos de la siguiente categoría en la importación: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5281,7 +5281,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryOnlyAllowedOnUpdate" datatype="html">
         <source>Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
-        <target state="needs-translation">Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
+        <target state="translated">La importación de recursos de la siguiente categoría solo está permitida en modo de actualización: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5289,7 +5289,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
-        <target state="needs-translation">Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</target>
+        <target state="translated">La categoría no se puede cambiar durante la importación. Identificador del recurso: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5297,7 +5297,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
         <source>Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</source>
-        <target state="needs-translation">Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</target>
+        <target state="translated">No se permiten campos de matriz vacíos. Identificador del recurso: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5305,7 +5305,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
         <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</source>
-        <target state="needs-translation">Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</target>
+        <target state="translated">Los campos de una matriz deben ser todos del mismo tipo. Identificador del recurso: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5313,7 +5313,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
         <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
-        <target state="needs-translation">Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</target>
+        <target state="translated">No se permiten cadenas vacías como valores.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5321,7 +5321,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidFileFormat" datatype="html">
         <source>Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]</source>
-        <target state="needs-translation">Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]</target>
+        <target state="translated">El archivo seleccionado no se puede importar. Las siguientes extensiones de archivo son válidas: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5329,7 +5329,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptyObjectInResource" datatype="html">
         <source>Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").</source>
-        <target state="needs-translation">Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").</target>
+        <target state="translated">No se permiten objetos vacíos en los registros de datos de importación (excepción: campo «relaciones»).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5337,7 +5337,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.connected_type_deleted" datatype="html">
         <source>Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]</source>
-        <target state="needs-translation">Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]</target>
+        <target state="translated">Actualización de un catálogo existente abortada. La versión actual contiene tipos que están vinculados a hallazgos y que ya no están presentes en el archivo de importación. Por favor, elimine los enlaces y luego reinicie la importación. Tipos afectados: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5345,7 +5345,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.identifier_clash" datatype="html">
         <source>Katalogimport abgebrochen. Identifier-Konflikte mit Dokumenten der Datenbank. Identifier: [0]</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Identifier-Konflikte mit Dokumenten der Datenbank. Identifier: [0]</target>
+        <target state="translated">Importación abortada. Se ha detectado un conflicto de identificador con documentos existentes. Identificador: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5353,7 +5353,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.owner_must_not_reimport_catalog" datatype="html">
         <source>Katalogimport abgebrochen. Löschen Sie den Katalog '[0]', bevor Sie ihn erneut importieren.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Löschen Sie den Katalog '[0]', bevor Sie ihn erneut importieren.</target>
+        <target state="translated">Importación abortada. Elimine el catálogo existente '[0]', antes de importarlo de nuevo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5361,7 +5361,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.owner_must_not_overwrite_existing_images" datatype="html">
         <source>Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.</target>
+        <target state="translated">Importación abortada. El archivo de importación contiene imágenes que ya existen en la base de datos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5369,7 +5369,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.differentProjectEntries" datatype="html">
         <source>Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.</target>
+        <target state="translated">Importación abortada. Todos los documentos del archivo de importación deben tener la misma entrada de proyecto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5377,7 +5377,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.noOrTooManyTypeCatalogDocuments" datatype="html">
         <source>Katalogimport abgebrochen. Keine oder zu viele TypeCatalog-Dokumente.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Keine oder zu viele TypeCatalog-Dokumente.</target>
+        <target state="translated">Importación abortada. No se han encontrado documentos TypeCatalog o se han encontrado demasiados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5385,7 +5385,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.invalidRelations" datatype="html">
         <source>Katalogimport abgebrochen. Ungültige Relationen.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Ungültige Relationen.</target>
+        <target state="translated">Importación abortada. Relaciones no válidas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5393,7 +5393,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
         <source>Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</source>
-        <target state="needs-translation">Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</target>
+        <target state="translated">Falta la definición de 'Registrado en la operación'. Esta asignación es obligatoria.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5401,7 +5401,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedInTarget" datatype="html">
         <source>Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</source>
-        <target state="needs-translation">Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</target>
+        <target state="translated">Objetivo perdido para una relación de tipo 'Grabado en funcionamiento'. ID del objectivo: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5409,7 +5409,7 @@
       </trans-unit>
       <trans-unit id="messages.export.success" datatype="html">
         <source>Die Exportdatei wurde erfolgreich erstellt.</source>
-        <target state="needs-translation">Die Exportdatei wurde erfolgreich erstellt.</target>
+        <target state="translated">El archivo de exportación se ha creado correctamente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5417,7 +5417,7 @@
       </trans-unit>
       <trans-unit id="messages.export.error.generic" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Export ist ein Fehler aufgetreten.</target>
+        <target state="translated">Se ha producido un error al crear el archivo de exportación.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5425,7 +5425,7 @@
       </trans-unit>
       <trans-unit id="messages.export.geojson.error.write" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.</source>
-        <target state="needs-translation">Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.</target>
+        <target state="translated">Se ha producido un error durante la exportación: No se ha podido escribir el archivo GeoJSON.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5433,7 +5433,7 @@
       </trans-unit>
       <trans-unit id="messages.export.error.catalog.images-not-exclusive-to-catalog" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressourcen verbunden sein. Bilder: [0]</source>
-        <target state="needs-translation">Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressourcen verbunden sein. Bilder: [0]</target>
+        <target state="translated">Se ha producido un error durante la exportación: las imágenes del catálogo no deben estar vinculadas a otros recursos. Imágenes: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5441,7 +5441,7 @@
       </trans-unit>
       <trans-unit id="messages.export.error.catalog.failedToCopyImages" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.</source>
-        <target state="needs-translation">Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.</target>
+        <target state="translated">Se ha producido un error durante la exportación: No se han podido exportar las imágenes asociadas al catálogo. Compruebe si los archivos de imagen originales están presentes en el directorio de imágenes.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5873,7 +5873,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
         <source>Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</source>
-        <target state="needs-translation">Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</target>
+        <target state="translated">El identificador de proyecto especificado contiene caracteres no permitidos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5881,7 +5881,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierStartingCharacter" datatype="html">
         <source>Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</source>
-        <target state="needs-translation">Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</target>
+        <target state="translated">El identificador del proyecto debe comenzar con una letra minúscula.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6017,7 +6017,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.fileCount" datatype="html">
         <source>Anzahl: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </source>
-        <target state="needs-translation">Anzahl: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </target>
+        <target state="translated">Cantidad: <x id="INTERPOLATION" equiv-text="{{originalFileCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">76</context>
@@ -6281,7 +6281,7 @@
       </trans-unit>
       <trans-unit id="configuration.newCategory" datatype="html">
         <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="needs-translation">Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</target>
+        <target state="translated">Crear nueva categoría <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/category-listing.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -6297,7 +6297,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
         <source>Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> ersetzen? </source>
-        <target state="needs-translation">Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> ersetzen? </target>
+        <target state="translated">¿De verdad quieres sustituir el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> por el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -6521,7 +6521,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </target>
+        <target state="translated">Crear<x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> en <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -6529,7 +6529,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> bearbeiten </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> bearbeiten </target>
+        <target state="translated">Editar <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">27</context>
@@ -6661,7 +6661,7 @@
       </trans-unit>
       <trans-unit id="configuration.createSpecificValuelist" datatype="html">
         <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> erstellen </source>
-        <target state="needs-translation">Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> erstellen </target>
+        <target state="translated">Crear lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">165</context>
@@ -6669,7 +6669,7 @@
       </trans-unit>
       <trans-unit id="configuration.editSpecificValuelist" datatype="html">
         <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="bearbeiten"/> bearbeiten </source>
-        <target state="needs-translation">Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="bearbeiten"/> bearbeiten </target>
+        <target state="translated">Editar lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="bearbeiten"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist-editor-modal.html</context>
           <context context-type="linenumber">22</context>
@@ -6709,7 +6709,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> imágenes importadas... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -6733,7 +6733,7 @@
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
         <source>Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="urce.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="verknüpf"/> verknüpfte Bilder </source>
-        <target state="needs-translation">Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="urce.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="verknüpf"/> verknüpfte Bilder </target>
+        <target state="translated">Imágenes vinculadas a <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="urce.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="verknüpf"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">89</context>
@@ -6765,7 +6765,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source>Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </target>
+        <target state="translated">¿De verdad quieres eliminar las <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> imágenes seleccionadas? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -7013,7 +7013,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.resourceLimitExceeded" datatype="html">
         <source>In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</source>
-        <target state="needs-translation">In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie '[0]' angelegt werden.</target>
+        <target state="translated">En este proyecto se puede crear un máximo de [1] recursos de la categoría '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8485,7 +8485,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.single" datatype="html">
         <source>Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verschieben?"/> verschieben? </source>
-        <target state="needs-translation">Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verschieben?"/> verschieben? </target>
+        <target state="translated">¿Mover recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verschieben?"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">20,8</context>
@@ -8565,7 +8565,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{documents.length}} Ressourcen&lt;/b&gt; verschieben?     &lt;/h5&gt;     &lt;h5 *ngIf=&quot;documents.length === 1 &amp;&amp; hasVa"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{documents.length}} Ressourcen&lt;/b&gt; verschieben?     &lt;/h5&gt;     &lt;h5 *ngIf=&quot;documents.length === 1 &amp;&amp; hasVa"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+        <target state="translated">¿Mover <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
           <context context-type="linenumber">48</context>
@@ -8713,7 +8713,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.warningsExist" datatype="html">
         <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="needs-translation">Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</target>
+        <target state="translated">Existen advertencias para el recurso [0]. Resuelva los problemas subyacentes y, a continuación, reinicie la importación.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">700</context>
@@ -8885,7 +8885,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.unconfiguredCategory" datatype="html">
         <source>Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</source>
-        <target state="needs-translation">Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</target>
+        <target state="translated">Importación abortada. La categoría '[0]' no es una subcategoría configurada de 'Tipo' o 'Imagen'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">733</context>
@@ -9365,7 +9365,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</source>
-        <target state="needs-translation">Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</target>
+        <target state="translated">Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">703</context>
@@ -10157,7 +10157,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.references" datatype="html">
         <source>Verweise:</source>
-        <target state="needs-translation">Verweise:</target>
+        <target state="translated">Referencias:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">3</context>
@@ -10165,7 +10165,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.generalReferences" datatype="html">
         <source>Allgemeine Verweise:</source>
-        <target state="needs-translation">Allgemeine Verweise:</target>
+        <target state="translated">Referencias generales:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">5</context>
@@ -10173,7 +10173,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.semanticReferences" datatype="html">
         <source>Semantische Verweise:</source>
-        <target state="needs-translation">Semantische Verweise:</target>
+        <target state="translated">Referencias semánticas:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">12</context>

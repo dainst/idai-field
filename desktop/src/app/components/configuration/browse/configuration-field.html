@@ -18,11 +18,13 @@
     </div>
 
     <div *ngIf="opened" class="card-body">
-        <p *ngIf="description" class="card-text">{{description}}</p>
-        <references-info [references]="field.references"
+        <ul class="list-group list-group-flush">
+            <li *ngIf="description" class="list-group-item">{{description}}</li>
+            <li *ngIf="field.references?.length || field.semanticReferences?.length" class="list-group-item">
+                <references-info [references]="field.references"
                          [semanticReferences]="field.semanticReferences"
                          [context]="'configuration'"></references-info>
-        <ul class="list-group list-group-flush">
+            </li>
             <li *ngIf="field.mandatory" class="list-group-item">
                 <b i18n="@@configuration.mandatoryField">Pflichtfeld</b>
             </li>

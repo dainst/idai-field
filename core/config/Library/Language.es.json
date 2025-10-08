@@ -4,44 +4,125 @@
     "time": "Cronología",
     "position": "Ubicación / contexto",
     "dimension": "Medidas",
-    "identification": "Clasificación"
+    "identification": "Clasificación",
+    "mineralFraction": "Fracción mineral",
+    "organicFraction": "Fracción orgánica",
+    "hierarchy": "Jerarquía",
+    "properties": "Propiedades",
+    "workflow": "Flujo de trabajo",
+    "stratigraphy": "Estratigrafía",
+    "inventory": "Inventario",
+    "other": "Otros"
   },
   "commons": {
     "dimensionLength": {
-      "label": "Longitud"
+      "label": "Longitud",
+      "description": "Longitud medida"
     },
     "dimensionWidth": {
-      "label": "Anchura"
+      "label": "Anchura",
+      "description": "Anchura en la máxima/mínima extensión"
     },
     "dimensionHeight": {
-      "label": "Altura"
+      "label": "Altura",
+      "description": "Altura en la máxima/mínima extensión"
     },
     "dimensionVerticalExtent": {
-      "label": "Nivel"
+      "label": "Nivel",
+      "description": "Nivel del límite superior/inferior o del nivel de tránsito"
     },
     "processor": {
-      "label": "Responsable"
+      "label": "Responsable",
+      "description": "El nombre de la persona o personas responsables del recurso u objeto durante la campaña. Nota: los nombres de las personas que editan la entrada de la base de datos se guardan automáticamente y, por lo tanto, no es necesario indicarlos aquí."
     },
     "campaign": {
       "label": "Campaña"
     },
     "description": {
-      "label": "Descripción"
+      "label": "Descripción",
+      "description": "Campo de descripción sin restricciones"
     },
     "period": {
       "label": "Época"
     },
     "date": {
-      "label": "Fecha"
+      "label": "Fecha",
+      "description": "Fecha de registro/realización"
     },
     "orientation": {
-      "label": "Orientación"
+      "label": "Orientación",
+      "description": "Orientación según la dirección de la brújula"
     },
     "spatialLocation": {
-      "label": "Descripción de la ubicación"
+      "label": "Descripción de la ubicación",
+      "description": "Descripción de la posición dentro del yacimiento, XXXXX o la estructura"
     },
     "provenance": {
-      "label": "Procedencia"
+      "label": "Procedencia",
+      "description": "Lugar de origen"
+    },
+    "dimensionPerimeter": {
+      "label": "Perímetro",
+      "description": "Circunferencia de los objetos"
+    },
+    "dimensionOther": {
+      "label": "Otras dimensiones",
+      "description": "Aquí se pueden introducir otras dimensiones; por favor, comente"
+    },
+    "area": {
+      "label": "Área en m2",
+      "description": "Área en metros cuadrados"
+    },
+    "notes": {
+      "label": "Notas"
+    },
+    "damage": {
+      "label": "Daños en porcentaje"
+    },
+    "weight": {
+      "label": "Peso",
+      "description": "Especificaciones de peso"
+    },
+    "geometry": {
+      "label": "Geometría"
+    },
+    "dimensionThickness": {
+      "label": "Espesor",
+      "description": "Espesor del objeto"
+    },
+    "dimensionDiameter": {
+      "label": "Diámetro",
+      "description": "Diámetro de los objetos"
+    },
+    "dimensionDepth": {
+      "description": "Profundidad en la máxima/mínima extensión",
+      "label": "Profundidad"
+    },
+    "diary": {
+      "description": "Referencia al diario de excavación",
+      "label": "Diario"
+    },
+    "dating": {
+      "label": "Datación"
+    },
+    "literature": {
+      "label": "Referencia bibliográfica"
+    },
+    "webGisId": {
+      "label": "ID SIG web"
+    },
+    "shortDescriptionAddendum": {
+      "label": "Breve descripción (Anexo)"
+    },
+    "phase": {
+      "label": "Fase"
+    },
+    "archaeoDox:documentationUnit": {
+      "label": "Unidad de documentación"
+    },
+    "volume": {
+      "label": "Volumen",
+      "description": "Especificaciones del volumen"
     }
   },
   "categories": {
@@ -63,7 +144,12 @@
       "label": "Corte",
       "fields": {
         "researchQuestion": {
-          "label": "Planteamiento"
+          "label": "Planteamiento",
+          "description": "Pregunta de investigación o antecedentes de la zanja, por ejemplo, 'Especificación y datación de la estructura descubierta en el magnetograma para...'"
+        },
+        "trenchComment": {
+          "label": "Comentario sobre la zanja",
+          "description": "Comentario de la zanja para evaluación y documentación, informe para la gestión de la excavación"
         }
       }
     },
@@ -198,6 +284,38 @@
       "fields": {
         "objectType": {
           "label": "Tipo del objeto"
+        },
+        "vesselForm": {
+          "label": "Forma básica de la vasija/recipiente",
+          "description": "Forma básica de la vasija/recipiente"
+        },
+        "transparency": {
+          "description": "¿Qué grado de translucidez tiene el objeto?",
+          "label": "Transparencia"
+        },
+        "manufacturingMethod": {
+          "label": "Método de producción",
+          "description": "Técnica utilizada para producir el objeto; huellas reconocibles del procesamiento"
+        },
+        "formDescription": {
+          "label": "Descripción de la forma",
+          "description": "Descripción más detallada de la forma general"
+        },
+        "vesselFormSpecific": {
+          "label": "Forma específica de la vasija/recipiente",
+          "description": "Forma específica de la vasija/recipiente"
+        },
+        "color": {
+          "label": "Color e intensidad",
+          "description": "Color, en la medida en que sea reconocible"
+        },
+        "decorationTechnique": {
+          "label": "Tratamiento de superfície o técnica decorativa",
+          "description": "Técnica utilizada para aplicar decoraciones al vidrio"
+        },
+        "decorationDescription": {
+          "label": "Descripción de la decoración",
+          "description": "Campo de descripción adicional para una descripción más detallada de la decoración"
         }
       }
     },
@@ -250,7 +368,16 @@
       "label": "Planta"
     },
     "Brick": {
-      "label": "Adobe / Teja / Ladrillo"
+      "label": "Adobe / Teja / Ladrillo",
+      "fields": {
+        "featureText": {
+          "description": "Transcripción del texto del sello",
+          "label": "Texto(s) del sello"
+        },
+        "brickForm": {
+          "label": "Forma del ladrillo"
+        }
+      }
     },
     "Building": {
       "label": "Edificio"
@@ -274,13 +401,28 @@
       "label": "Inscripción"
     },
     "RoomFloor": {
-      "label": "Suelo"
+      "label": "Suelo",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomWall": {
-      "label": "Muralla"
+      "label": "Muralla",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "RoomCeiling": {
-      "label": "Techo"
+      "label": "Techo",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
     },
     "Room": {
       "label": "Habitación"
@@ -324,6 +466,72 @@
     },
     "Type": {
       "label": "Tipo"
+    },
+    "Window": {
+      "label": "Ventana"
+    },
+    "Door": {
+      "label": "Puerta"
+    },
+    "Roof": {
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      },
+      "label": "Techo"
+    },
+    "InnerWall": {
+      "label": "Muro interior"
+    },
+    "ExcavationArea": {
+      "label": "Área de excavación"
+    },
+    "Level": {
+      "label": "Nivel",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "OuterWall": {
+      "label": "Muro exterior"
+    },
+    "DesignElement": {
+      "label": "Elemento de diseño",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Stairs": {
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      },
+      "label": "Escaleras"
+    },
+    "Opening": {
+      "label": "Abertura",
+      "fields": {
+        "material": {
+          "label": "Material"
+        }
+      }
+    },
+    "Damage": {
+      "fields": {
+        "condition": {
+          "label": "Condición"
+        },
+        "damageType": {
+          "label": "Tipo de daño"
+        }
+      },
+      "label": "Daños"
     }
   }
 }

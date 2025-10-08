@@ -30,7 +30,7 @@
   "menu.edit.paste": "Yapıştır",
   "menu.edit.selectAll": "Tümünü seç",
   "menu.tools": "Araçlar",
-  "menu.tools.configuration": "Proje konfigürasyonu",
+  "menu.tools.configuration": "Proje yapılandırması",
   "menu.tools.images": "Görüntü yönetimi",
   "menu.tools.types": "Tip yönetimi",
   "menu.tools.matrix": "Matris",
@@ -38,7 +38,7 @@
   "menu.tools.export": "Dışa aktar",
   "menu.configuration.projectLanguages": "Proje dillerini seç...",
   "menu.configuration.valuelistManagement": "Değer listesi yönetimi",
-  "menu.configuration.importConfiguration": "Konfigürasyonu içe aktar...",
+  "menu.configuration.importConfiguration": "Yapılandırmayı içe aktar...",
   "menu.configuration.showHiddenFields": "Gizlenmiş alanları göster",
   "menu.configuration.highlightProjectSpecificElements": "Özel kategorileri/alanları öne çıkar",
   "menu.view": "Göster",
@@ -50,7 +50,7 @@
   "menu.help": "Yardım",
   "info.close": "Kapat",
   "menu.tools.inventory": "Envanter",
-  "menu.configuration.exportConfiguration": "Konfigürasyonu dışa aktar...",
+  "menu.configuration.exportConfiguration": "Yapılandırmayı dışa aktar...",
   "autoUpdate.available.warning": "Dikkat: Güncellemeyi gerçekleştirmeden önce tüm önemli projelerin yedeğini oluşturun.",
   "menu.tools.workflow": "İş Akışı"
 }

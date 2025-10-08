@@ -6,7 +6,7 @@ Başlangıçta, test projesi etkin olacak ve bir dizi örnek veri kullanarak uyg
 
 Field Desktop ile üretken bir şekilde çalışabilmek ve kendi projenizi oluşturabilmek için öncelikle şu adımları izlemelisiniz:
 
-1. "Proje" menüsünde, kendi projenizi oluşturmak için **Yeni...** menü öğesini seçin. Proje yapılandırması için çeşitli ön ayarlar arasından seçim yapabilirsiniz: Kapsamlı arazi araştırmalarına yönelik varsayılan konfigürasyon için "Standart"ı veya yalnızca ön ayar kategorileri ve alanlarından oluşan temel ayarlarla başlamak istiyorsanız "Temel" seçeneklerinden birini seçin. Ayrıca, proje içinde verilerin girileceği dilleri belirtin. Son olarak, istenen proje tanımlayıcısını ve isteğe bağlı olarak seçilen dillerin her biri için bir proje adı girin.
+1. "Proje" menüsünde, kendi projenizi oluşturmak için **Yeni...** menü öğesini seçin. Proje yapılandırması için çeşitli ön ayarlar arasından seçim yapabilirsiniz: Kapsamlı arazi araştırmalarına yönelik varsayılan yapılandırma için "Standart"ı veya yalnızca ön ayar kategorileri ve alanlarından oluşan temel ayarlarla başlamak istiyorsanız "Temel" seçeneklerinden birini seçin. Ayrıca, proje içinde verilerin girileceği dilleri belirtin. Son olarak, istenen proje tanımlayıcısını ve isteğe bağlı olarak seçilen dillerin her biri için bir proje adı girin.
 
 2. Yeni proje yüklenir yüklenmez, "Proje" ➝ "Özellikler" menüsü üzerinden temel proje verilerini girebilirsiniz. Öncelikle, **personel üyelerinin** listelerini oluşturmalısınız.
 "Proje" bölümünde "Ekip"i ve **sezonları** ("Proje" bölümünün "Sezonlar" alanı) detaylandırabilirsiniz.
@@ -68,20 +68,20 @@ bir içerik menüsü açılır:
 * *Taşı*: Girdilerin geçerli içeriklerinden kaldırılmasına ve başka bir üst girdiye atanmasını sağlar
 * *Sil*: Bir güvenlik kontrolünden sonra girdileri kaldırır (isteğe bağlı olarak, yalnızca silmek istediğiniz girdilere bağlı
 tüm görselleri de silebilirsiniz)
-* *İş akışını belgele*: Seçili girdilere bağlı işlemleri görüntüler ve yeni işlemler oluşturulmasına olanak tanır (yalnızca bir işlem kategorisinin "Buna ilişkin uygulandı" ilişkisinin hedef kategorisi olarak konfigüre edilmiş kategorileri için kullanılabilir).
+* *İş akışını belgele*: Seçili girdilere bağlı işlemleri görüntüler ve yeni işlemler oluşturulmasına olanak tanır (yalnızca bir işlem kategorisinin "Buna ilişkin uygulandı" ilişkisinin hedef kategorisi olarak yapılandırılmış kategorileri için kullanılabilir).
 * *Depolama yerini tara*: Kamera taramasıyla depolama yerinin QR kodunu tarayarak girdi için yeni bir depolama yeri ayarlar (yalnızca "Bul", "Koleksiyonu bul" ve "Örnek" kategorilerinin girdileri ile ilgili alt kategoriler için kullanılabilir)
 
 Ayrıca, içerik menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
-birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kullanılabilir. QR kodlarını ekleme veya yönetme seçenekleri yalnızca konfigürasyon düzenleyicisinde karşılık gelen kategori için QR kodlarının kullanımı ayarlanmışsa kullanılabilir (bkz. *Konfigürasyon* bölümündeki *Kategorileri düzenle* bölümü).
+birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kullanılabilir. QR kodlarını ekleme veya yönetme seçenekleri yalnızca yapılandırma düzenleyicisinde karşılık gelen kategori için QR kodlarının kullanımı ayarlanmışsa kullanılabilir (bkz. *Yapılandırma* bölümündeki *Kategorileri düzenle* bölümü).
 
 <p align="center"><img src="images/tr/resources/context_menu.png" alt="İçerik menüsü"/></p>
 
 
 ## Girdileri düzenle
 
-Girdi düzenleyici, içerik menüsünden veya girdi listesindeki bir kayda çift tıklayarak açılabilir. Burada, seçili girdinin verilerini düzenleyebilirsiniz. Kayıt formu, girdinin kategorisine (örneğin, "Açma" veya "Buluntu") bağlıdır ve konfigürasyon düzenleyicisinde tanımlanabilir (bkz. *Proje konfigürasyonu* bölümü).
+Girdi düzenleyici, içerik menüsünden veya girdi listesindeki bir kayda çift tıklayarak açılabilir. Burada, seçili girdinin verilerini düzenleyebilirsiniz. Kayıt formu, girdinin kategorisine (örneğin, "Açma" veya "Buluntu") bağlıdır ve yapılandırma düzenleyicisinde tanımlanabilir (bkz. *Proje yapılandırması* bölümü).
 
-Kategori için kullanılabilen alanlar birkaç gruba ayrılmıştır (örneğin, "Temel bilgiler", "Ölçüleri", "Pozisyon / Kontekst"). Düzenleyicinin sol tarafındaki grup düğmelerinden birine tıkladığınızda ilgili grubun alanları düzenleyicinin sağ tarafında görüntülenir. Proje konfigürasyonunda, alana girilebilecek veri türünü belirleyen belirli bir giriş türü atanır (örneğin, "Tek satırlık metin", "Tarih", "Boyut"). Tüm giriş türlerinin listesi, *Proje konfigürasyonu* bölümünün *Alanlar* alt bölümünde bulunabilir.
+Kategori için kullanılabilen alanlar birkaç gruba ayrılmıştır (örneğin, "Temel bilgiler", "Ölçüleri", "Pozisyon / Kontekst"). Düzenleyicinin sol tarafındaki grup düğmelerinden birine tıkladığınızda ilgili grubun alanları düzenleyicinin sağ tarafında görüntülenir. Proje yapılandırmasında, alana girilebilecek veri türünü belirleyen belirli bir giriş türü atanır (örneğin, "Tek satırlık metin", "Tarih", "Boyut"). Tüm giriş türlerinin listesi, *Proje yapılandırması* bölümünün *Alanlar* alt bölümünde bulunabilir.
 
 Düzenleyicide yaptığınız değişiklikler ancak "Kaydet" butonuna tıkladıktan sonra kaydedilir.
 
@@ -131,7 +131,7 @@ Görüntüleri yönetmek için "Araçlar" ➝ "Görüntü yönetimi" menüsünü
 
 ### Meta verileri düzenle
 
-İstediğiniz görüntüye çift tıklayarak görüntü ön izlemesini açarak bir görüntünün meta verilerini görüntüleyebilirsiniz. Düzenleyiciyi açmak ve meta verileri eklemek veya değiştirmek için düzenle düğmesine tıklayın. Burada, görüntü kategorisine karşılık gelen bilgiler için konfigürasyon düzenleyicisinde yapılandırılan alanlar mevcuttur.
+İstediğiniz görüntüye çift tıklayarak görüntü ön izlemesini açarak bir görüntünün meta verilerini görüntüleyebilirsiniz. Düzenleyiciyi açmak ve meta verileri eklemek veya değiştirmek için düzenle düğmesine tıklayın. Burada, görüntü kategorisine karşılık gelen bilgiler için yapılandırma düzenleyicisinde yapılandırılan alanlar mevcuttur.
 
 
 ### Görüntüleri sil
@@ -377,7 +377,7 @@ Geçerli bir adres, proje adı ve şifre girdiğinizde, kısa bir hesaplama sür
 Lütfen unutmayın; daha büyük projelerin indirmesi daha uzun sürebilir. İndirilen proje daha sonra otomatik olarak açılacak ve aynı kimlik bilgileri kullanılarak bir senkronizasyon bağlantısı kurulacaktır.
 
 
-## Senkronizasyonu konfigüre etme
+## Senkronizasyonu yapılandırma
 
 Hem indirilen hem de yeni oluşturulan projeler her zaman diğer veritabanlarıyla senkronize edilebilir. Senkronizasyon "Proje" ➝ "Senkronize et..." menüsü üzerinden yapılandırılabilir.
 
@@ -420,7 +420,7 @@ Başkalarının projenizle senkronizasyon bağlantısı kurmasına izin vermek i
 <hr>
 
 
-# Proje konfigürasyonu
+# Proje yapılandırması
 
 Field Desktop ile yönetilen bir veri tabanı, her zaman belirli bir **kategoriye** ait olan bir dizi girdi içerir, örneğin "Yer", "Buluntu" veya "Görüntü". **Üst kategorilerde** (örneğin "Buluntu") ve **alt kategorilerde** (örneğin "Tuğla" veya "Pişmiş Toprak") arasında bir ayrım yapılır. Alt kategorinin bir girdisi her zaman üst kategoriye de aittir (bir tuğla da bir buluntudur).
 
@@ -428,14 +428,14 @@ Her kategoride, girdinin özelliklerini ve meta verilerini tanımlamak için kul
 
 Girdi düzenleyicide bir kategori için hangi alanların özel olarak kullanılabilir olduğu, kullanılabilir alanlardan bir seçim yapan ve bunları **gruplar halinde** sıralayan **form** seçiminde belirlenir. Her kategori için, yalnızca birkaç zorunlu alan içeren aynı adlı temel bir form mevcuttur. Buna ek olarak daha kapsamlı bir alan seçimine sahip (örneğin, "Çanak Çömlek:default", "Çanak Çömlek" kategorisinde Field veri modelinin standart alanlarıyla) bir veya daha fazla form bulunmaktadır. Formlar, alan grupları ile alanları, yapılandırma düzenleyicisi kullanılarak istenildiği gibi özelleştirilebilir ve genişletilebilir. Bir alt kategorinin formu, her zaman ilgili üst kategorinin seçili formunun alanlarını devralır.
 
-**İlişkiler**, girdiler arasındaki (örneğin: "A1" katmanı, "A2" katmanının konumsal olarak altında yer alır) gibi ilişkileri belirtmek için kullanılır. İlişkiler konfigürasyon düzenleyicisinde gizlenebilir, ancak yeni bir tane oluşturulamaz.
+**İlişkiler**, girdiler arasındaki (örneğin: "A1" katmanı, "A2" katmanının konumsal olarak altında yer alır) gibi ilişkileri belirtmek için kullanılır. İlişkiler yapılandırma düzenleyicisinde gizlenebilir, ancak yeni bir tane oluşturulamaz.
 
-Projede bulunan kategorileri, alanları ve değer listelerini ayarlamanıza ve genişletmenize olanak tanıyan yapılandırma düzenleyicisine "Araçlar" ➝ "Proje konfigürasyonu" menüsü üzerinden erişebilirsiniz. Bir senkronizasyon bağlantısı kurulmuş ise konfigürasyondaki değişiklikler "Kaydet" düğmesiyle onaylanır onaylanmaz diğer kullanıcılara aktarılır.
+Projede bulunan kategorileri, alanları ve değer listelerini ayarlamanıza ve genişletmenize olanak tanıyan yapılandırma düzenleyicisine "Araçlar" ➝ "Proje yapılandırması" menüsü üzerinden erişebilirsiniz. Bir senkronizasyon bağlantısı kurulmuş ise yapılandırmadaki değişiklikler "Kaydet" düğmesiyle onaylanır onaylanmaz diğer kullanıcılara aktarılır.
 
 
 ## Tanımlayıcılar ve etiketler
 
-Proje yapılandırmasının tüm öğeleri (kategoriler, alanlar, değer listeleri, vb.) her biri, benzersiz tanımlama için bir **tanımlayıcı**ya sahiptir. Bu tanımlayıcı veri tabanında kaydedilir ve ayrıca girdileri içe veya dışa aktarırken kullanılır. Konfigürasyon düzenleyicisinde fuşya renginde görüntülenir.
+Proje yapılandırmasının tüm öğeleri (kategoriler, alanlar, değer listeleri, vb.) her biri, benzersiz tanımlama için bir **tanımlayıcı**ya sahiptir. Bu tanımlayıcı veri tabanında kaydedilir ve ayrıca girdileri içe veya dışa aktarırken kullanılır. Yapılandırma düzenleyicisinde fuşya renginde görüntülenir.
 
 Ek olarak, yapılandırılmış proje dillerinin her biri için **etiketler** eklenebilir. Bu metinler uygulamanın diğer tüm alanlarında görüntülenmek üzere kullanılır ve yapılandırma düzenleyicisinde siyah olarak da görüntülenir. Etiket yoksa bunun yerine tanımlayıcısı görüntülenir.
 
@@ -453,7 +453,7 @@ Listede bir kategoriyi seçtiğinizde, o kategori için yapılandırılmış for
 
 Listenin altındaki yeşil artı düğmesini kullanarak projeye yeni bir üst kategori ekleyebilirsiniz. Proje için henüz yapılandırılmamış olan Field Desktop kategori listesinden, tüm üst kategoriler arasından seçim yapabileceğiniz yeni bir pencere açılır. Listenin üstündeki metin alanını kullanarak görüntülenen kategorileri ve formları filtreleyebilirsiniz. Her kategori için kullanılabilir formlar listelenir; formlardan birini seçtiğinizde, sağ tarafta karşılık gelen alan gruplarını ve alanları göreceksiniz. "Kategori ekle" düğmesine tıklayarak seçiminizi onaylayın.
 
-Lütfen unutmayın; konfigürasyon düzenleyicisi üzerinden yeni üst kategoriler eklenemeyecektir.
+Lütfen unutmayın; yapılandırma düzenleyicisi üzerinden yeni üst kategoriler eklenemeyecektir.
 
 
 ### Alt kategoriler ekleme
@@ -462,7 +462,7 @@ Mevcut bir üst kategoriye yeni bir alt kategori eklemek istiyorsanız ilgili ü
 
 Üst kategori eklemeye benzer şekilde, her kategori için farklı formlar arasında seçim yapabilirsiniz. Kendi kategorinizi oluşturmak istiyorsanız, listenin üstündeki metin alanına istediğiniz kategori adını girin ve "Yeni kategori oluştur" seçeneğini belirleyin. Kategori düzenleyicisi açılır ve burada kategorinin özelliklerini ayarlayabilirsiniz (bkz. *Kategorileri düzenleme* bölümü). Yeni oluşturulan bir kategoride üst kategorinin seçili form alanlarını devralan yeni bir form otomatik olarak oluşturulur.
 
-"Proje konfigürasyonu" menüsünde "Özel kategorileri/alanları vurgula" seçeneği etkinleştirildiği takdirde, listede proje özel kategorileri mavi renkle vurgulanır.
+"Proje yapılandırması" menüsünde "Özel kategorileri/alanları vurgula" seçeneği etkinleştirildiği takdirde, listede proje özel kategorileri mavi renkle vurgulanır.
 
 
 ### Kategorileri yönetme
@@ -496,7 +496,7 @@ Bir kategori için QR kodlarının kullanımı etkinleştirilirse, kategorinin h
 * Depolama yerine bağlı QR kodunun (girdinin içerik menüsü üzerinden) kamera taraması yoluyla bir girdinin depodaki yerinin ayarlanması
 Lütfen unutmayın; QR kodları yalnızca "Buluntu", "Buluntu Koleksiyonu", "Numune" ve "Depolama yeri" kategorileri ile bunların alt kategorileri için kullanılabilecektir.
 
-QR kodlarını konfigüre etmek için kategori düzenleyicide aşağıdaki seçenekler kullanılabilir:
+QR kodlarını yapılandırmak için kategori düzenleyicide aşağıdaki seçenekler kullanılabilir:
 * *Tanımlama için QR kodlarını kullan*: Kategorinin girdilerinde QR kodlarının kullanılmasına izin vermek için bu seçeneği etkinleştirin
 * *Yeni girdiler için otomatik olarak oluştur*: Her yeni oluşturulan girdi için otomatik olarak bir QR kodu oluşturulması gerekiyorsa bu seçeneği etkinleştirin
 * *Yazdırılacak alanlar*: Girdi tanımlayıcısına ek olarak QR kod etiketinde yazdırılacak en fazla üç alanı seçin. Alan etiketinin yazdırılan etikette, içerik bilgisinden önce görünmesini istiyorsanız "Alan etiketini yazdır" seçeneğini etkinleştirin.
@@ -508,7 +508,7 @@ Kategori, bir girdinin, hiyerarşik olarak nerede oluşturulabileceğini belirle
 
 <p align="center"><img src="images/tr/configuration/hierarchy.png" alt="Hiyerarşi bilgi butonları"/></p>
 
-Kategori hiyerarşisi mevcut konfigürasyon düzenleyicisinde değiştirilemez. Yeni oluşturulan alt kategoriler için, üst kategorinin hiyerarşik kısıtlamaları geçerlidir.
+Kategori hiyerarşisi mevcut yapılandırma düzenleyicisinde değiştirilemez. Yeni oluşturulan alt kategoriler için, üst kategorinin hiyerarşik kısıtlamaları geçerlidir.
 
 
 ## Gruplar
@@ -540,7 +540,7 @@ Grup listesinin sağında, seçili gruba dahil olan alanlar görüntülenir. Ala
 
 Gruba yeni bir alan eklemek için alan listesinin altındaki artı düğmesine tıklayın. Seçili kategori için henüz forma eklenmemiş tüm alanlar arasından seçim yapabilirsiniz. Sağ tarafta alan hakkında bilgi göstermek için listede bir giriş seçin. Yeni bir alan oluşturmak için, listenin üstündeki giriş alanına istediğiniz tanımlayıcıyı girin ve "Yeni alan oluştur" seçeneğini seçin. Alan düzenleyicisi açılır ve burada alanın özelliklerini belirleyebilirsiniz (bkz. *Alanları düzenleme* bölümü).
 
-"Proje konfigürasyonu" menüsünde "Özel kategorileri/alanları vurgula" seçeneği etkinleştirildiği takdirde, listede proje özelindeki alanlar mavi renkle vurgulanır.
+"Proje yapılandırması" menüsünde "Özel kategorileri/alanları vurgula" seçeneği etkinleştirildiği takdirde, listede proje özelindeki alanlar mavi renkle vurgulanır.
 
 
 ### Alanları yönetme
@@ -640,19 +640,19 @@ Bileşik alanlar, her biri herhangi sayıda alt alandan oluşan birden fazla gir
 <p align="center"><img src="images/tr/configuration/input_type_composite_field.png" alt="Giriş türü 'Bileşik alan'"/></p>
 
 #### İlişki
-Konfigüre edilmiş hedef kategorilerinden birine ait bir veya daha fazla başka girdiye bağlantı (bkz. *İzin verilen hedef kategorileri* bölümü). İsteğe bağlı olarak, hedef girdilerde otomatik olarak ayarlanan bir ters ilişki konfigüre edilebilir (bkz. *Ters ilişki* bölümü).
+Yapılandırılmış hedef kategorilerinden birine ait bir veya daha fazla başka girdiye bağlantı (bkz. *İzin verilen hedef kategorileri* bölümü). İsteğe bağlı olarak, hedef girdilerde otomatik olarak ayarlanan bir ters ilişki yapılandırılabilir (bkz. *Ters ilişki* bölümü).
 <p align="center"><img src="images/tr/configuration/input_type_relation.png" alt="Giriş türü 'İlişki'"/></p>
 
 
 
 ### Alanları gizleme
 
-Alanlar, alan düzenleyicisindeki *Alanı göster* ayarı devre dışı bırakılarak gizlenebilir. Alan daha sonra ne girdi görünümünde ne de girdi düzenleyicisinde görüntülenir. Gizli alanların yapılandırma düzenleyicisinde görüntülenip görüntülenmeyeceği, "Proje konfigürasyonu" menüsündeki "Gizlenmiş alanları göster" ayarına bağlıdır. Önceden girilmiş olan veriler gizlendikten sonra bile korunur ve *Alanı göster* seçeneği tekrar etkinleştirildiğinde tekrar görüntülenir. Uygulamanın işlevselliği için önemli olan bazı alanlar (girdi tanımlayıcısı gibi) gizlenemez; bu durumlarda seçenek görüntülenmez.
+Alanlar, alan düzenleyicisindeki *Alanı göster* ayarı devre dışı bırakılarak gizlenebilir. Alan daha sonra ne girdi görünümünde ne de girdi düzenleyicisinde görüntülenir. Gizli alanların yapılandırma düzenleyicisinde görüntülenip görüntülenmeyeceği, "Proje yapılandırması" menüsündeki "Gizlenmiş alanları göster" ayarına bağlıdır. Önceden girilmiş olan veriler gizlendikten sonra bile korunur ve *Alanı göster* seçeneği tekrar etkinleştirildiğinde tekrar görüntülenir. Uygulamanın işlevselliği için önemli olan bazı alanlar (girdi tanımlayıcısı gibi) gizlenemez; bu durumlarda seçenek görüntülenmez.
 
 
 ### Birden fazla dilde girişe izin verme
 
-*Birden fazla dilde girişe izin ver* seçeneği etkinleştirilirse, konfigüre edilmiş proje dillerinin her biri için alana ayrı bir metin girilebilir. Ayar varsayılan olarak etkindir ve yalnızca "Tek satır metin", "Çoklu seçimli tek satır metin" ve "Çok satırlı metin" giriş türlerinin alanları için kullanılabilir.
+*Birden fazla dilde girişe izin ver* seçeneği etkinleştirilirse, yapılandırılmış proje dillerinin her biri için alana ayrı bir metin girilebilir. Ayar varsayılan olarak etkindir ve yalnızca "Tek satır metin", "Çoklu seçimli tek satır metin" ve "Çok satırlı metin" giriş türlerinin alanları için kullanılabilir.
 
 
 ### Alana özel arama
@@ -671,7 +671,7 @@ Alana daha önce veri girilmişse, girilen değerler yeni değer listesine dahil
 
 Bu bölüm yalnızca "Bileşik alan" giriş türü seçildiğinde görünür ve bileşik alanın her girişinin hangi alt alanlardan oluştuğunu tanımlamaya izin verir. Alt alanların sıralaması sürükle ve bırak yoluyla değiştirilebilir.
 
-Yeni bir alt alan oluşturmak için, giriş alanına istediğiniz adı girin ve artı düğmesine tıklayarak onaylayın. Alt alanı normal bir alana benzer şekilde  (giriş türü, etiket, açıklama, vb.) konfigüre edebileceğiniz yeni bir düzenleyici penceresi açılacaktır.
+Yeni bir alt alan oluşturmak için, giriş alanına istediğiniz adı girin ve artı düğmesine tıklayarak onaylayın. Alt alanı normal bir alana benzer şekilde  (giriş türü, etiket, açıklama, vb.) yapılandırabileceğiniz yeni bir düzenleyici penceresi açılacaktır.
 
 
 #### Alt alan koşulları
@@ -697,7 +697,7 @@ Bu bölüm yalnızca "İlişki" giriş türü seçildiğinde görünür. İsteğ
 *Ters ilişki* seçim alanında yalnızca daha önce oluşturulmuş ve aşağıdaki ölçütleri karşılayan alanlar görünür:
 
 * Söz konusu alanın giriş tipi "İlişki" olmalıdır.
-* Düzenlenen alanın tüm izin verilen hedef kategorileri, söz konusu alanın aynı tanımlayıcısı altında konfigüre edilmesi gerekir.
+* Düzenlenen alanın tüm izin verilen hedef kategorileri, söz konusu alanın aynı tanımlayıcısı altında yapılandırması gerekir.
 * Düzenlenen alanın ait olduğu kategori, söz konusu alan için izin verilen hedef kategori olarak ayarlanmalıdır.
 * Düzenlenmekte olan alanın, bu kriterlere uygun olarak söz konusu alanın tüm izin verilen hedef kategorileri için ters ilişki olarak girilmesine izin verilmesi gerekmektedir.
 
@@ -717,13 +717,13 @@ Alanlar aynı şekilde başka bir gruba da atanabilir: Alanı grup listesindeki 
 
 ## Değer Listeleri
 
-"Proje konfigürasyonu" ➝ "Değer listesi yönetimi" menüsü, Field ile birlikte gelen tüm değer listelerinin genel görünümünü açar. Burada listelenen değer listeleri, standart formların alanları tarafından kullanılır veya Field'da daha önce kullanmış projeler bağlamında oluşturulmuştur.
+"Proje yapılandırması" ➝ "Değer listesi yönetimi" menüsü, Field ile birlikte gelen tüm değer listelerinin genel görünümünü açar. Burada listelenen değer listeleri, standart formların alanları tarafından kullanılır veya Field'da daha önce kullanmış projeler bağlamında oluşturulmuştur.
 
 Listenin üstündeki metin alanını kullanarak değer listelerini herhangi bir arama terimine göre filtreleyin. Aramada değer listesi tanımlayıcılarının yanı sıra tanımlayıcıları ve tekil değerlerin görüntüleme etiketlerini de bulunacaktır. Arama alanının sağındaki düğmeyi kullanarak, yalnızca projeye özgü (yani yeni oluşturulmuş) değer listelerini ve/veya projede şu anda kullanılan değer listelerini seçilebilir halde görüntülemenize olanak tanıyan filtre menüsünü açabilirsiniz.
 
 <p align="center"><img src="images/tr/configuration/valuelists_filter.png" alt="Değer listesi filtre menüsü"/></p>
 
-Lütfen unutmayın; değer listesi yönetim penceresinde yapılan tüm değişiklikler projeye uygulanması için konfigürasyon düzenleyicisinin "Kaydet" butonuna tıklanarak onaylanması gerekmektedir.
+Lütfen unutmayın; değer listesi yönetim penceresinde yapılan tüm değişiklikler projeye uygulanması için yapılandırma düzenleyicisinin "Kaydet" butonuna tıklanarak onaylanması gerekmektedir.
 
 
 ### Değer listeleri oluşturma ve genişletme
@@ -756,39 +756,39 @@ Projeye özgü bir değer listesine sağ tıklandığında aşağıdaki seçenek
 Değer düzenleyici, bir değeri özelleştirmenize olanak tanır:
 
 * *Etiket*: Değerin görüntü etiketi. Farklı diller için etiketler girebilirsiniz.
-* *Açıklama*: Değer hakkında daha ayrıntılı bilgi belirtebileceğiniz bir açıklama metni. Bu metin, konfigürasyon düzenleyicisinde ilgili değer için bir araç ipucu olarak görüntülenir.
+* *Açıklama*: Değer hakkında daha ayrıntılı bilgi belirtebileceğiniz bir açıklama metni. Bu metin, yapılandırma düzenleyicisinde ilgili değer için bir araç ipucu olarak görüntülenir.
 * *Referanslar*: Diğer sistemlerdeki tanımlara referans vermek için burada URL'leri belirtin.
 
 
 ## Proje dillerini değiştirme
 
-"Proje konfigürasyonu" ➝ "Proje dillerini seç..." menüsü, projeye veri girilecek dilleri belirtmenize olanak tanır. Konfigürasyon düzenleyicisinde "Birden fazla dilde girişe izin ver" seçeneğinin etkinleştirildiği metin alanlarında, her proje dili için ayrı bir metin girilebilir.
-Ayrıca her proje dili için kategori, alan, grup, değer listesi ile değerlerin etiketleri ve açıklamaları için boş giriş alanları otomatik olarak konfigürasyon düzenleyicisinde görüntülenir.
+"Proje yapılandırması" ➝ "Proje dillerini seç..." menüsü, projeye veri girilecek dilleri belirtmenize olanak tanır. Yapılandırma düzenleyicisinde "Birden fazla dilde girişe izin ver" seçeneğinin etkinleştirildiği metin alanlarında, her proje dili için ayrı bir metin girilebilir.
+Ayrıca her proje dili için kategori, alan, grup, değer listesi ile değerlerin etiketleri ve açıklamaları için boş giriş alanları otomatik olarak yapılandırma düzenleyicisinde görüntülenir.
 
 Lütfen unutmayın; daha önce girilmiş olan metinler, ilgili proje dilleri listesinden kaldırılırsa artık görüntülenmeyecektir. Ancak bunlar veri tabanında kalacaklar ve söz konusu dil daha sonra bir kez daha proje dili olarak seçilirse tekrar görüntüleneceklerdir.
 
 
-## Konfigürasyonu içe aktarma
+## Yapılandırmayı içe aktarma
 
-Mevcut bir konfigürasyonu başka bir projeden içe aktarmak için "Proje konfigürasyonu" ➝ "Konfigürasyonu içe aktar..." menü seçeneğini kullanın .
+Mevcut bir yapılandırmayı başka bir projeden içe aktarmak için "Proje yapılandırması" ➝ "Yapılandırmayı içe aktar..." menü seçeneğini kullanın .
 "Kaynak" açılır menüsünde iki farklı içe aktarma seçeneği arasından seçim yapabilirsiniz:
 
-* *Dosya*: Daha önce başka bir projede oluşturulmuş bir Alan yapılandırma dosyasını (dosya uzantısı *.configuration*) "Proje konfigürasyonu" ➝ "Konfigürasyonu içe aktar..." menüsü üzerinden içe aktarın.
-* *Proje*: Aynı bilgisayarda bulunan başka bir projenin konfigürasyonunu içe aktar.
+* *Dosya*: Daha önce başka bir projede oluşturulmuş bir Alan yapılandırma dosyasını (dosya uzantısı *.configuration*) "Proje yapılandırması" ➝ "Yapılandırmayı içe aktar..." menüsü üzerinden içe aktarın.
+* *Proje*: Aynı bilgisayarda bulunan başka bir projenin yapılandırmasını içe aktar.
 
-İçe aktarmanın sonucu artık düzenleyicide kontrol edilebilir ve "Kaydet" düğmesine tıklanarak kabul edilebilir. Lütfen unutmayın; tüm önceki ayarlar içe aktarılan konfigürasyonla değiştirilecektir.
+İçe aktarmanın sonucu artık düzenleyicide kontrol edilebilir ve "Kaydet" düğmesine tıklanarak kabul edilebilir. Lütfen unutmayın; tüm önceki ayarlar içe aktarılan yapılandırmayla değiştirilecektir.
 
 
-## Konfigürasyonu dışa aktarma
+## Yapılandırmayı dışa aktarma
 
-Açılan projenin konfigürasyonunu Field yapılandırma dosyası (dosya uzantısı *.configuration*) olarak kaydetmek için "Proje konfigürasyonu" ➝ "Konfigürasyonu dışa aktar..." menü seçeneğini kullanın. Bu, yapılandırma düzenleyicisinde mevcut görüntülenen durumu, kaydedilmemiş değişiklikler dahil olmak üzere dışa aktaracaktır. Oluşturulan dosya ayrıca tüm projeye özgü değer listelerini içerir.
+Açılan projenin yapılandırmasını Field yapılandırma dosyası (dosya uzantısı *.configuration*) olarak kaydetmek için "Proje yapılandırması" ➝ "Yapılandırmayı dışa aktar..." menü seçeneğini kullanın. Bu, yapılandırma düzenleyicisinde mevcut görüntülenen durumu, kaydedilmemiş değişiklikler dahil olmak üzere dışa aktaracaktır. Oluşturulan dosya ayrıca tüm projeye özgü değer listelerini içerir.
 
-Daha sonra konfigürasyonu başka bir projeye aktarmak veya aynı projede kaydedilmiş yapılandırma durumunu geri yüklemek için dosya "Proje konfigürasyonu" ➝ "Konfigürasyonu içe aktar..." menü seçeneği üzerinden tekrar içe aktarılabilir.
+Daha sonra yapılandırmayı başka bir projeye aktarmak veya aynı projede kaydedilmiş yapılandırma durumunu geri yüklemek için dosya "Proje yapılandırması" ➝ "Yapılandırmayı içe aktar..." menü seçeneği üzerinden tekrar içe aktarılabilir.
 
 
 ## JSON dışa aktarma API'si
 
-Proje konfigürasyonu bir API erişim noktası aracılığıyla JSON formatında alınabilir. "Konfigürasyonu dışa aktar..." menü seçeneği aracılığıyla oluşturulabilen konfigürasyon dosyaları yalnızca yapılandırmanın projeye özgü kısmını içerir. Öte yandan API erişim noktası, projede kullanılan Field kitaplıklarından (standart formlar, değer listeleri vb.) gelen tüm konfigürasyon öğeleri dahil, tam konfigürasyonu çıktı olarak verir.
+Proje yapılandırması bir API erişim noktası aracılığıyla JSON formatında alınabilir. "Yapılandırmayı dışa aktar..." menü seçeneği aracılığıyla oluşturulabilen yapılandırma dosyaları yalnızca yapılandırmanın projeye özgü kısmını içerir. Öte yandan API erişim noktası, projede kullanılan Field kitaplıklarından (standart formlar, değer listeleri vb.) gelen tüm yapılandırma öğeleri dahil, tam yapılandırmayı çıktı olarak verir.
 
 Uygulama açıkken erişim noktasına aşağıdaki URL üzerinden ulaşılabilir:
 
@@ -798,7 +798,7 @@ http://localhost:3000/configuration/PROJE
 
 API erişim noktasına bağlanırken "Ayarlar" menüsünün "Senkronizasyon" bölümünde "Şifreniz" olarak girilen şifre girilmelidir. Şifre *Temel Kimlik Doğrulama* yoluyla iletilir; tarayıcıya URL girildiğinde bir giriş iletişim kutusu görüntülenir. Kullanıcı adını girmek gerekli değildir, ilgili alan boş kalabilir.
 
-Lütfen unutmayın; API erişim noktasının JSON çıktısı "Konfigürasyonu içe aktar..." menü seçeneği üzerinden içe aktarılamaz. Buna uygun bir konfigürasyon dosyası elde etmek için "Konfigürasyonu dışa aktar..." menü seçeneğini kullanın.
+Lütfen unutmayın; API erişim noktasının JSON çıktısı "Yapılandırmayı içe aktar..." menü seçeneği üzerinden içe aktarılamaz. Buna uygun bir yapılandırma dosyası elde etmek için "Yapılandırmayı dışa aktar..." menü seçeneğini kullanın.
 
 
 <hr>
@@ -958,7 +958,7 @@ CSV dosyaları **coğrafi veri içermez**. Coğrafi verileri dışa aktarmak vey
 
 #### Yapısı
 
-Bir CSV dosyası yalnızca tek bir kategorinin girdilerini içerir. Her sütun, bu kategori için projede kullanılan form için yapılandırılmış alanlardan birine karşılık gelir. Lütfen unutmayın; sütun başlığı, "Proje konfigürasyonu" menüsünde ilgili alan için fuşya renginde görüntülenen benzersiz alan tanımlayıcısına sahip olması zorunludur. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları CSV dosyalarında **kullanılamaz**.
+Bir CSV dosyası yalnızca tek bir kategorinin girdilerini içerir. Her sütun, bu kategori için projede kullanılan form için yapılandırılmış alanlardan birine karşılık gelir. Lütfen unutmayın; sütun başlığı, "Proje yapılandırması" menüsünde ilgili alan için fuşya renginde görüntülenen benzersiz alan tanımlayıcısına sahip olması zorunludur. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları CSV dosyalarında **kullanılamaz**.
 
 *identifier* sütununda tanımlayıcıyı belirtmek zorunludur. Diğer tüm alanlar isteğe bağlıdır.
 
@@ -967,7 +967,7 @@ Veriye hızlı bir genel bakış veya CSV içe aktarma için bir şablon olarak,
 
 ##### Değer listesi alanları
 
-Bir değer listesinden seçim yapılmasına izin veren alanlar için, karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, "Proje konfigürasyonu" menüsündeki ilgili değer listesinin görüntülendiği tüm yerlerde, her değer için fuşya renginde görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
+Bir değer listesinden seçim yapılmasına izin veren alanlar için, karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, "Proje yapılandırması" menüsündeki ilgili değer listesinin görüntülendiği tüm yerlerde, her değer için fuşya renginde görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
 
 
 ##### Evet/Hayır alanları
@@ -1355,7 +1355,7 @@ CSV içe aktarmayı kullanarak yeni girdiler oluşturabilir veya mevcut girdiler
 Aşağıdaki ek seçenekler kullanılabilir:
 
 * *Silmelere izin ver*: Bu seçenek etkinleştirilirse, alanlar yalnızca değiştirilemez, aynı zamanda silinebilir. İçe aktarma dosyasındaki alanın boş olduğu tüm alanlar (ilişkiler dahil) silinir. CSV tablosunda sütun olarak listelenmeyen alanlar değişmeden kalır. Bu seçenek yalnızca *Mevcut girdileri güncelle* tercihi seçildiğinde kullanılabilir.
-* *Konfigüre edilmemiş alanları yoksay*: Bu seçenek etkinleştirilirse içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada konfigüre edilmemiş alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
+* *Yapılandırılmamış alanları göz ardı et*: Bu seçenek etkinleştirilirse içe aktarma dosyasındaki proje yapılandırmanın parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada yapılandırılmamış alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
 * *Kategori seç*: Kategorinin tanımlayıcısı, dosya adının bir parçasıysa (dosya adının geri kalanından noktalarla ayrılmışsa), kategori otomatik olarak tanınır (ör. "Buluntu" kategorisinin girdilerini içeren bir CSV dosyası için "example.find.csv"). Dosya adı bir kategori tanımlayıcısı içermiyorsa, kategori bu açılır menü kullanılarak manuel olarak seçilmelidir.
 * *Bir işleme veri atayın*: Projede oluşturulan ve tüm yeni oluşturulan girdilerin atanacağı işlemlerden birini seçin. CSV dosyasının *relations.isChildOf* sütununda tüm kayıtlar için bir üst girdi zaten belirtilmişse veya kategorinin girdilerinin bir işlem içinde oluşturulması gerekmiyorsa (örneğin "Yer", "İşlem" ve "Görüntü" kategorileri için geçerlidir) bir işlem belirtmeniz gerekmez. Bu seçenek yalnızca *Yeni girdileri içe aktar* seçeneği seçiliyse kullanılabilir.
 * *Alan ayırıcı*: CSV dosyasında alan ayırıcı olarak kullanılan karakteri girin (varsayılan ayar virgüldür). CSV dosyasını oluştururken (örneğin Field Desktop'ta "Dışa Aktar" menüsü aracılığıyla veya bir elektronik tablo uygulamasında) seçtiğiniz karakteri girin. Çoğu durumda, CSV dosyaları için alan ayırıcı olarak virgül veya noktalı virgül kullanılır. Eğer içe aktarma sırasında hata oluşursa, lütfen öncelikle doğru alan ayırıcısını doğru girip girmediğinizi kontrol edin, aksi takdirde dosya doğru okunamaz.
@@ -1366,7 +1366,7 @@ Aşağıdaki ek seçenekler kullanılabilir:
 Önce CSV dışa aktarma türünü seçin. Aşağıdaki iki seçenek arasından seçim yapabilirsiniz:
 
 * *Tümü*: Tüm girdiler, kontekst ve kategori için seçilen ayarlara göre dışa aktarılır (aşağıya bakın).
-* *Yalnızca şema*: Yalnızca seçili kategori için konfigüre edilmiş tüm alanların sütun başlıklarını içeren başlık satırı dışa aktarılacaktır. Dışa aktarılan dosya, bir içe aktarma dosyası oluşturmak için şablon olarak kullanılabilir.
+* *Yalnızca şema*: Yalnızca seçili kategori için yapılandırılmış tüm alanların sütun başlıklarını içeren başlık satırı dışa aktarılacaktır. Dışa aktarılan dosya, bir içe aktarma dosyası oluşturmak için şablon olarak kullanılabilir.
 
 Aşağıdaki ek seçenekler kullanılabilir::
 
@@ -1429,10 +1429,10 @@ Koordinatlar GeoJSON spesifikasyonuna uygun olarak belirtilmiştir.
 
 * *identifier*: Girdinin tanımlayıcısı
 * *category*: Girdi için seçilen kategorinin tanımlayıcısı
-* *shortDescription*: Girdinin kısa açıklaması. Çıktı, ilgili kategorinin *shortDescription* alanının konfigürasyonuna bağlıdır:
+* *shortDescription*: Girdinin kısa açıklaması. Çıktı, ilgili kategorinin *shortDescription* alanının yapılandırmasına bağlıdır:
     * Birden fazla dilde girişi olmayan tek satırlık metin: Kısa açıklamanın "string" olarak metni
     * Birden fazla dilde girişi olan tek satırlık metin / Çok satırlı metin: Alan adları olarak dil kodlarına sahip bir nesne
-    * Açılır liste / Radyo düğmesi: Konfigüre edilmiş değer listesinden seçilen değerin tanımlayıcısı
+    * Açılır liste / Radyo düğmesi: Yapılandırılmış değer listesinden seçilen değerin tanımlayıcısı
 
 İçe aktarma sırasında, veri kayıtları tanımlayıcı aracılığıyla atanır. Bu nedenle, GeoJSON verilerini başarıyla içe aktarmak için nesne *properties*'inde *identifier* alanını ayarlamak zorunludur. *properties* nesnesinin diğer alanları içe aktarma sırasında **dikkate alınmaz**; yalnızca ilgili girdideki geometri güncellenir. Lütfen unutmayın; içe aktarma sırasında mevcut geometrilerin üzerine yazılacaktır. İçe aktarma dosyasındaki atanamayan kayıtlar yok sayılır.
 
@@ -1500,10 +1500,10 @@ Aşağıdaki alanlar, dışa aktarma sırasında Shapefile'ın öznitelik tablos
 
 * *identifier*: Girdinin tanımlayıcısı
 * *category*: Girdi için seçilen kategorinin tanımlayıcısı
-* *sdesc*: Girdinin kısa açıklaması. Çıktı, ilgili kategorinin *short description* alanının konfigürasyonuna bağlıdır:
+* *sdesc*: Girdinin kısa açıklaması. Çıktı, ilgili kategorinin *short description* alanının yapılandırmasına bağlıdır:
     * Birden fazla dilde giriş yapılmayan tek satırlık metin: Kısa açıklamanın metni
     * Birden fazla dilde giriş yapılan tek satırlık metin / Çok satırlı metin: Alan adında dil kodu bulunan ve alt çizgiyle ayrılmış her dil için ayrı bir alan (örn. *sdesc\_de* veya *sdesc\_tr*)
-    * Açılır liste / Radyo düğmesi: Konfigüre edilmiş değer listesinden seçilen değerin tanımlayıcısı
+    * Açılır liste / Radyo düğmesi: Yapılandırılmış değer listesinden seçilen değerin tanımlayıcısı
   
 İçe aktarma sırasında, veri kayıtları tanımlayıcı aracılığıyla atanır. Bu nedenle, Shapefile verilerini başarıyla içe aktarmak için nitelik tablosunda *identifier* alanını ayarlamak zorunludur. Öznitelik tablosundaki diğer alanlar içe aktarma sırasında **dikkate alınmaz**; yalnızca ilgili girdideki geometri güncellenir. Lütfen unutmayın; içe aktarma sırasında mevcut geometrilerin üzerine yazılacaktır. İçe aktarma dosyasındaki atanamayan kayıtlar yok sayılır.
 
@@ -1527,7 +1527,7 @@ Bir nesne ayrıca aşağıdaki isteğe bağlı alanları da içerebilir:
 * *relations*: *İlişki* giriş türünün tüm alanlarını içerir (bkz. *İlişkiler* bölümü)
 * *geometry*: Girdinin geometrisi (bkz. *Geometri* bölümü)
 
-Ek olarak, nesne bu kategoride, projede kullanılan form için yapılandırılmış herhangi bir sayıda alan içerebilir. Lütfen unutmayın; benzersiz alan tanımlayıcısının ilgili alanı, "Proje konfigürasyonu" menüsünde fuşya renginde görüntülendiği şekilde belirtilmelidir. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları JSON Lines dosyalarında alan adı olarak **kullanılamaz**.
+Ek olarak, nesne bu kategoride, projede kullanılan form için yapılandırılmış herhangi bir sayıda alan içerebilir. Lütfen unutmayın; benzersiz alan tanımlayıcısının ilgili alanı, "Proje yapılandırması" menüsünde fuşya renginde görüntülendiği şekilde belirtilmelidir. Uygulamanın diğer alanlarında görüntülenen çok dilli görüntüleme adları JSON Lines dosyalarında alan adı olarak **kullanılamaz**.
 
 Açıklama: aşağıdaki örneklerin her biri birkaç satırda gösterilmektedir. Gerçek içe aktarma dosyalarında, içe aktarma işleminin başarılı olması için her JSON nesnesinin **tam olarak bir satır** olması gerekir.
 
@@ -1536,7 +1536,7 @@ Açıklama: aşağıdaki örneklerin her biri birkaç satırda gösterilmektedir
 
 *İlişki* giriş türündeki alanlar *relations* nesnesinde bir araya getirilir. Nesnenin alan adları ilişkilerin tanımlayıcılarına karşılık gelir; her durumda hedef girdilerin tanımlayıcılarını içeren bir dizi alan değeri olarak girilir.
 
-Proje konfigürasyonunda, ilgili kategori biçiminde listelenen ilişkilere ek olarak aşağıdaki ilişkiler kullanılabilir:
+Proje yapılandırmasında, ilgili kategori biçiminde listelenen ilişkilere ek olarak aşağıdaki ilişkiler kullanılabilir:
 
 * *isChildOf*: Hiyerarşideki doğrudan üst girdiyi belirtir; en üst düzey girdiler boş kalır
 * *depicts* (yalnızca görüntü girdileri için): Görüntüyü bir veya daha fazla girdiye bağlar
@@ -1576,7 +1576,7 @@ Geometriler GeoJSON şartnamesine uygun olarak belirtilebilir. *Geometri* alanı
 
 ##### Değer listesi alanları
 
-Bir değer listesinden seçim yapılmasına izin veren alanlarda, bu alana karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, "Proje konfigürasyonu" menüsündeki ilgili değer listesinin görüntülendiği tüm yerlerde, her değer için fuşya rengi olarak görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
+Bir değer listesinden seçim yapılmasına izin veren alanlarda, bu alana karşılık gelen değerin tanımlayıcısı girilmelidir. Değer tanımlayıcısı, "Proje yapılandırması" menüsündeki ilgili değer listesinin görüntülendiği tüm yerlerde, her değer için fuşya rengi olarak görüntülenir. Çok dilli görüntüleme metinleri (değer tanımlayıcısının dillerden birindeki görüntüleme metniyle aynı olduğu durumlar hariç) **kullanılamaz**.
 
 
 ##### Numerik alanlar
@@ -1738,7 +1738,7 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 
 ##### Bileşik alanlar
 
-"Bileşik alan" giriş türündeki alanlar, her biri birkaç giriş içerebilen liste alanlarıdır. Her giriş, alan adları bileşik alan için konfigüre edilmiş alt alanların tanımlayıcılarına karşılık gelen bir nesnedir.
+"Bileşik alan" giriş türündeki alanlar, her biri birkaç giriş içerebilen liste alanlarıdır. Her giriş, alan adları bileşik alan için yapılandırılmış alt alanların tanımlayıcılarına karşılık gelen bir nesnedir.
 
 
 #### İçe aktarma seçenekleri
@@ -1751,7 +1751,7 @@ JSON Lines içe aktarmayı kullanarak yeni girdiler oluşturabilir veya mevcut g
 Aşağıdaki ek seçenekler kullanılabilir:
 
 * *Silmelere izin ver*: Bu seçenek etkinleştirilirse, alanlar yalnızca değiştirilemez, aynı zamanda silinebilir. İçe aktarma dosyasında *null* değerinin atandığı tüm alanlar (ilişkiler dahil) silinir. Listelenmeyen alanlar değişmeden kalır. Bu seçenek yalnızca *Mevcut girdileri güncelle* seçeneği seçiliyse kullanılabilir.
-* *Konfigüre edilmemiş alanları yoksay*: Bu seçenek etkinleştirilirse, içe aktarma dosyasındaki proje konfigürasyonunun parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada yapılandırılmamış alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
+* *Yapılandırılmamış alanları göz ardı et*: Bu seçenek etkinleştirilirse, içe aktarma dosyasındaki proje yapılandırmasının parçası olmayan alanlar içe aktarma sırasında yok sayılır. Aksi takdirde, dosyada yapılandırılmamış alanlar bulunur bulunmaz içe aktarma işlemi iptal edilir.
 * *Bir işleme veri ata*: Projede oluşturulan tüm girdilerin atanacağı işlemlerden birini seçin. JSON Lines dosyasındaki tüm kayıtlar için *isChildOf* ilişkisi aracılığıyla bir üst girdi zaten belirtilmişse veya kategori girdilerinin bir işlem içinde oluşturulması gerekmiyorsa (örneğin "Yer", "İşlem" ve "Görüntü" kategorileri için geçerlidir) bir işlem belirtmek gerekli değildir. Bu seçenek yalnızca *Yeni girdileri içe aktar* tercihi seçiliyse kullanılabilir.
 
 
@@ -1763,7 +1763,7 @@ Bir tip kataloğu, tüm türleriyle ve bağlantılı görselleriyle birlikte dı
 
 Katalog dosyası başka bir projeye içe aktarıldıktan sonra, tip kataloğu, tip yönetiminde her zamanki gibi görüntülenebilir ve buluntu tanımlaması için kullanılabilir. Başka bir projeden içe aktarılan bir kataloğu düzenlemek **mümkün değildir**: İçe aktarılan tip katalogları ve bunların bağlantılı görselleri projeden bir bütün olarak silinebilir, ancak düzenlenemez, genişletilemez veya (yalnızca belirli bazı türler veya bağlantılı görseller) kısmen silinemez. Ancak, yeni bir katalog dosyası içe aktarılarak tip kataloğunun güncellenmiş bir sürümle değiştirilmesi mümkündür. Buluntulara yönelik önceden oluşturulmuş tüm bağlantılar korunur. Bu kısıtlama, dışa aktarmadan sonra daha sonraki bir tarihte aynı projeye geri aktarılan tip katalogları için de geçerli değildir. Bu durumlarda, katalog tamamen düzenlenebilir ve genişletilebilir.
 
-Lütfen unutmayın; tip kataloglarını başka bir projeye aktarırken, her iki projede de dışa aktarılan girdilerin kategorileri ("Tip kataloğu", "Tip", "Görüntü" veya kullanılan herhangi bir alt kategori) aynı konfigürasyona sahip olmalıdır. Hedef projede konfigüre edilmeyen alanlar **görüntülenmez**. Katalog dosyası hedef projede bulunmayan bir alt kategoriye ait girdiler içeriyorsa, içe aktarma işlemi başarısız olur.
+Lütfen unutmayın; tip kataloglarını başka bir projeye aktarırken, her iki projede de dışa aktarılan girdilerin kategorileri ("Tip kataloğu", "Tip", "Görüntü" veya kullanılan herhangi bir alt kategori) aynı yapılandırmaya sahip olmalıdır. Hedef projede yapılandırılmayan alanlar **görüntülenmez**. Katalog dosyası hedef projede bulunmayan bir alt kategoriye ait girdiler içeriyorsa, içe aktarma işlemi başarısız olur.
 
 
 #### Dışa aktarma seçenekleri
@@ -1778,13 +1778,13 @@ Katalog dosyalarını dışa aktarırken aşağıdaki seçenek kullanılabilir:
 
 # Uyarılar
 
-Proje konfigürasyonunun değiştirilmesi gibi çeşitli nedenlerle, projede tutarsız veya farklı şekillerde yanlış veriler oluşabilir. Bu durumlarda, uygulama bir uyarı görüntüler ve sorunu çözmek için seçenekler sunar. Hatalı girdiler, ilgili girdi kutucuğunun yanında ince kırmızı dik bir çubukla işaretlenir. Ayrıca, sağ üstteki gezinme çubuğunda, veri sorunları nedeniyle uyarı verilen girdi sayısını belirten bir simge görüntülenir:
+Proje yapılandırmasının değiştirilmesi gibi çeşitli nedenlerle, projede tutarsız veya farklı şekillerde yanlış veriler oluşabilir. Bu durumlarda, uygulama bir uyarı görüntüler ve sorunu çözmek için seçenekler sunar. Hatalı girdiler, ilgili girdi kutucuğunun yanında ince kırmızı dik bir çubukla işaretlenir. Ayrıca, sağ üstteki gezinme çubuğunda, veri sorunları nedeniyle uyarı verilen girdi sayısını belirten bir simge görüntülenir:
 
 <p align="center"><img src="images/tr/warnings/warnings_icon.png" alt="Uyarı ikonu"/></p>
 
 Etkilenen bir girdinin simgesine tıklamak veya içerik menüsünü kullanmak sizi "Uyarılar" menüsüne götürür. Burada hatalı girdilerin listesini görüntüleyebilir ve uyarı türüne göre filtreleyebilirsiniz. Ayrıca tanımlayıcıya,  (metin girişi yoluyla) kısa açıklamaya ve kategoriye göre filtreleme seçenekleri kullanılabilir.
 
-Görüntülenen girdilerden birini seçerek söz konusu girdi için mevcut uyarıların listesini görüntüleyin. Çoğu uyarıda hataları çözmek için kullanılabilecek araçlar uygulama tarafından önerilir. Birçok uyarı, proje konfigürasyonunu ayarlayarak da çözülebilir. Her ihtimale karşın, öncelikle lütfen "Proje" ➝ "Yedek oluştur..." menüsü aracılığıyla projenin bir **yedeğini** oluşturun. Aşağıda tekil uyarı türlerine göre nedenleri ve olası çözümleri hakkında daha fazla bilgiye göz atabilirsiniz.
+Görüntülenen girdilerden birini seçerek söz konusu girdi için mevcut uyarıların listesini görüntüleyin. Çoğu uyarıda hataları çözmek için kullanılabilecek araçlar uygulama tarafından önerilir. Birçok uyarı, proje yapılandırmasını ayarlayarak da çözülebilir. Her ihtimale karşın, öncelikle lütfen "Proje" ➝ "Yedek oluştur..." menüsü aracılığıyla projenin bir **yedeğini** oluşturun. Aşağıda tekil uyarı türlerine göre nedenleri ve olası çözümleri hakkında daha fazla bilgiye göz atabilirsiniz.
 
 ## Uyarı türleri
 ### Çakışma
@@ -1797,55 +1797,55 @@ Birbirleriyle çakışan birden fazla girdi sürümü var.
 #### Olası çözümler
 * *Çakışmayı çöz* Butonu: Girdi düzenleyicisindeki çakışmaları çözün (bkz. *Senkronizasyon* bölümünün *Çakışmalar* kısmı).
 
-### Konfigüre edilmemiş kategori
-Bir girdiye proje konfigürasyonunda bulunamayan bir kategori ayarlandı. Bu nedenle girdi görüntülenmiyor.
+### Yapılandırılmamış kategori
+Bir girdiye proje yapılandırmasında bulunamayan bir kategori ayarlandı. Bu nedenle girdi görüntülenmiyor.
 
 #### Olası nedenler
-* Kategori, konfigürasyon düzenleyicisinde silinmiş olabilir.
+* Kategori, yapılandırma düzenleyicisinde silinmiş olabilir.
 
 #### Olası çözümler
-* *Yeni kategori seç* Butonu: Proje için konfigüre edilmiş kategorilerden birini seçin. Seçilen kategori daha sonra etkilenen girdi için ayarlanacaktır. İsteğe bağlı olarak, söz konusu kategorinin belirtildiği tüm girdiler için yeni kategoriyi ayarlayabilirsiniz.
+* *Yeni kategori seç* Butonu: Proje için yapılandırılmış kategorilerden birini seçin. Seçilen kategori daha sonra etkilenen girdi için ayarlanacaktır. İsteğe bağlı olarak, söz konusu kategorinin belirtildiği tüm girdiler için yeni kategoriyi ayarlayabilirsiniz.
 * *Girdiyi sil* Butonu: Etkilenen girdi tamamen silinir.
-* Konfigürasyon düzenleyicisinde aynı adı taşıyan bir kategori ekleyin.
+* Yapılandırma düzenleyicisinde aynı adı taşıyan bir kategori ekleyin.
 
-### Konfigüre edilmemiş alan
-Veriler, proje konfigürasyonunda bulunamayan bir alana girildi. Bu nedenle girilen veriler görüntülenmiyor.
+### Yapılandırılmamış alan
+Veriler, proje yapılandırmasında bulunamayan bir alana girildi. Bu nedenle girilen veriler görüntülenmiyor.
 
 #### Olası nedenler
-* Alan, konfigürasyon düzenleyicisinde silinmiş olabilir.
+* Alan, yapılandırma düzenleyicisinde silinmiş olabilir.
 
 #### Olası çözümler
-* *Yeni alan seç* Butonu: Girdinin kategorisi için konfigüre edilmiş alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın, veriler hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı konfigüre edilmemiş alana veri girilen tüm kayıtlardaki yeni alanı ayarlayabilirsiniz.
-* *Alan verilerini sil* Butonu: Alana girilen veriler tamamen silinir. İsteğe bağlı olarak, aynı konfigüre edilmemiş alana veri girilen tüm kayıtlardaki alan verilerini silebilirsiniz.
-* Konfigürasyon düzenleyicisinde etkilenen girdinin kategorisinde aynı adı taşıyan bir alan ekleyin.
+* *Yeni alan seç* Butonu: Girdinin kategorisi için yapılandırılmış alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın, veriler hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı yapılandırılmamış alana veri girilen tüm kayıtlardaki yeni alanı ayarlayabilirsiniz.
+* *Alan verilerini sil* Butonu: Alana girilen veriler tamamen silinir. İsteğe bağlı olarak, aynı yapılandırılmamış alana veri girilen tüm kayıtlardaki alan verilerini silebilirsiniz.
+* Yapılandırma düzenleyicisinde etkilenen girdinin kategorisinde aynı adı taşıyan bir alan ekleyin.
 
 ### Geçersiz alan verileri
 Bir alana girilen veriler, alan için seçilen giriş türüne uymuyor.
 
 #### Olası nedenler
-* Alanın giriş türü konfigürasyon düzenleyicisinde değiştirilmiş olabilir.
+* Alanın giriş türü yapılandırma düzenleyicisinde değiştirilmiş olabilir.
 
 #### Olası çözümler
 * *Düzenle* Butonu: Geçersiz alan verilerini kaldırmak ve gerekirse yeniden girmek için girdiyi düzenleyicide açın.
 * *Alan verilerini dönüştür* Butonu: Veriler, ilgili giriş türü için otomatik olarak doğru biçime dönüştürülür. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde verilerin dönüştürülmesini sağlayabilirsiniz. Lütfen unutmayın; otomatik dönüştürme her durumda mümkün değildir ve bu nedenle bu düğme her zaman kullanılamaz.
-* *Yeni alan seç* Butonu: Girdi kategorisi için konfigüre edilmiş alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın; veriler, hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde yeni alanı ayarlayabilirsiniz (geçerli veriler orijinal alanda kalır).
+* *Yeni alan seç* Butonu: Girdi kategorisi için yapılandırılmış alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın; veriler, hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde yeni alanı ayarlayabilirsiniz (geçerli veriler orijinal alanda kalır).
 
 ### Değer listesinde yer almayan değer
-Alana girilen, bir veya daha fazla (alan için konfigüre edilmiş) değer listesinde bulunmayan veri. 
+Alana girilen, bir veya daha fazla (alan için yapılandırılmış) değer listesinde bulunmayan veri. 
 
 #### Olası nedenler
-* Alanın değer listesi, konfigürasyon düzenleyicisinde farklı bir değer listesiyle değiştirilmiş olabilir.
+* Alanın değer listesi, yapılandırma düzenleyicisinde farklı bir değer listesiyle değiştirilmiş olabilir.
 * Değerler, değer listesi düzenleyicisinde, projeye özel bir değer listesinden kaldırılmış olabilir.
-* Alanın giriş türü, konfigürasyon düzenleyicisinde metnin serbestçe girilmesine izin veren bir giriş türünden değer listesi olan bir giriş türüne değiştirilmiş olabilir.
+* Alanın giriş türü, yapılandırma düzenleyicisinde metnin serbestçe girilmesine izin veren bir giriş türünden değer listesi olan bir giriş türüne değiştirilmiş olabilir.
 * Proje özelliklerinin *Ekip* ve *Sezonlar* alanlarına girilen değerleri kullanan alanlar için: Proje özelliklerindeki ekip veya sezon alanından girişler kaldırılmış olabilir
 * *Sezon* alanı için: Üst girdide aynı adlı alandan değerler kaldırılmış olabilir (yalnızca üst girdide ayarlanan değerler *Sezon* alanı için seçilebilir).
 
 #### Olası çözümler
 * *Düzenle* Butonu: Değer listesinde yer almayan değerleri kaldırmak ve gerekirse bunları başka değerlerle değiştirmek için, girdiyi, düzenleyicide açın.
-* *Değeri düzelt* Butonu: Alan için konfigüre edilen değer listesinden yeni bir değer seçin. Önceki değer, seçilen değerle değiştirilir. İsteğe bağlı olarak, aynı değerin girildiği ve aynı değer listesini kullanan tüm girdilerin tüm alanları için (toplu olarak) yeni değeri ayarlayabilirsiniz.
+* *Değeri düzelt* Butonu: Alan için yapılandırılan değer listesinden yeni bir değer seçin. Önceki değer, seçilen değerle değiştirilir. İsteğe bağlı olarak, aynı değerin girildiği ve aynı değer listesini kullanan tüm girdilerin tüm alanları için (toplu olarak) yeni değeri ayarlayabilirsiniz.
 * *Değeri sil* Butonu: Alana girilen değer tamamen silinir. İsteğe bağlı olarak, aynı değerin eklendiği tüm girdilerin tüm alanlarından silebilirsiniz.
-* Konfigürasyon düzenleyicisindeki değer listesini, karşılık gelen değeri içeren uygun bir değer listesiyle değiştirin.
-* Değer listesindeki ilgili alana, (konfigürasyon düzenleyicisinde) eksik değeri ekleyin. Projeye özel olmayan değer listelerinde, önce *Değer listesini genişlet* seçeneğini kullanarak bir uzantı listesi oluşturmanız gerekir (bkz. *Proje konfigürasyonu* bölümündeki *Değer listeleri oluşturma ve genişletme*). 
+* Yapılandırma düzenleyicisindeki değer listesini, karşılık gelen değeri içeren uygun bir değer listesiyle değiştirin.
+* Değer listesindeki ilgili alana, (yapılandırma düzenleyicisinde) eksik değeri ekleyin. Projeye özel olmayan değer listelerinde, önce *Değer listesini genişlet* seçeneğini kullanarak bir uzantı listesi oluşturmanız gerekir (bkz. *Proje yapılandırması* bölümündeki *Değer listeleri oluşturma ve genişletme*). 
 * Proje özelliklerinde *Ekip* ve *Sezonlar* alanlarına girilen değerlere bağlı alanlarda: Eksik değeri proje özelliklerindeki ilgili alana ekleyin.
 * *Sezon* alanı için: Değer zaten orada yoksa, ana girdide ayarlayın.
 
@@ -1863,13 +1863,13 @@ Bir ilişkinin hedefi olarak belirtilen bir girdi bulunamadı.
 Bir ilişkinin hedefi olarak belirtilen bir girdinin kategorisi, bu ilişkinin geçerli bir hedef kategorisi değildir.
 
 #### Olası nedenler
-* İlişkinin izin verilen hedef kategori listesi, konfigürasyon düzenleyicisinde düzenlenmiş olabilir.
+* İlişkinin izin verilen hedef kategori listesi, yapılandırma düzenleyicisinde düzenlenmiş olabilir.
 * Girdinin kategorisi değiştirilmiş olabilir.
 
 #### Olası çözümler
 * *Düzenle* Butonu: İlişkide geçersiz hedef girdiye olan bağlantıyı kaldırmak için girdiyi, düzenleyicisinde açın.
 * *İlişkiyi temizle* Butonu: Geçersiz hedef girdilere olan tüm bağlantılar ilişkiden silinir.
-* Hedef girdinin kategorisini, konfigürasyon düzenleyicisinde, söz konusu ilişkinin geçerli bir hedef kategorisi olarak tanımlatın.
+* Hedef girdinin kategorisini, yapılandırma düzenleyicisinde, söz konusu ilişkinin geçerli bir hedef kategorisi olarak tanımlatın.
 
 ### Eksik veya geçersiz üst girdi
 Girdinin geçerli bir üst girdisi yok. Bu, girdi için hiçbir üst girdinin ayarlanmadığı, belirtilen üst girdinin bulunamadığı veya kategorisi nedeniyle geçerli bir üst girdi olmadığı anlamına gelebilir. Bu nedenle girdi görüntülenmiyor.
@@ -1884,10 +1884,10 @@ Girdinin geçerli bir üst girdisi yok. Bu, girdi için hiçbir üst girdinin ay
 * Düğme *Girdiyi sil*: Etkilenen girdi tamamen silinir.
 
 ### Eksik tanımlayıcı öneki
-Girdinin tanımlayıcısı, ilgili kategori için konfigüre edilmiş bir ön ek içermiyor.
+Girdinin tanımlayıcısı, ilgili kategori için yapılandırılmış bir ön ek içermiyor.
 
 #### Olası nedenler
-* Girdi, tanımlayıcı ön eki konfigüre edilmeden önce oluşturulmuş olabilir.
+* Girdi, tanımlayıcı ön eki yapılandırılmadan önce oluşturulmuş olabilir.
 
 #### Olası çözümler
 * *Düzenle* Butonu: Tanımlayıcıyı yeniden girmek için girdi düzenleyicisini açın.
@@ -1902,7 +1902,7 @@ Girdinin tanımlayıcısı bir veya daha fazla başka girdi tarafından kullanı
 * *Düzenle* Butonu: Yeni bir tanımlayıcı girmek için girdi düzenleyicisini açın.
 
 ### Girdi sınırı aşıldı
-Bu kategori için konfigüre edilmiş girdi sınırının izin verdiğinden daha fazla girdi var.
+Bu kategori için yapılandırılmış girdi sınırının izin verdiğinden daha fazla girdi var.
 
 #### Olası nedenler
 * Girdiler, girdi sınırı yapılandırılmadan önce oluşturulmuş olabilir.
@@ -1910,4 +1910,4 @@ Bu kategori için konfigüre edilmiş girdi sınırının izin verdiğinden daha
 
 #### Olası çözümler
 * Girdi sınırı karşılanana kadar ilgili kategorinin girdilerini silin.
-* Konfigürasyon düzenleyicisinde girdi sınırını artırın.
+* Yapılandırma düzenleyicisinde girdi sınırını artırın.

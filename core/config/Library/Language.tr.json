@@ -1802,6 +1802,10 @@
         "profileSamplingStrategy": {
           "description": "Açığa çıkarılmış bir stratigrafik kesitten tortu toplamak için özel bir teknik",
           "label": "Profil örnekleme türü"
+        },
+        "quadrantDimensionsSystematicSampling": {
+          "label": "Kadran ölçüleri (m2)",
+          "description": "Sistematik bir karelajda örnekleme kadranının boyutu"
         }
       },
       "label": "Örnekleme"

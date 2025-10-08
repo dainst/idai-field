@@ -9035,7 +9035,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.missingMandatoryFields" datatype="html">
         <source>Nicht ausgefüllte Pflichtfelder</source>
-        <target state="needs-translation">Nicht ausgefüllte Pflichtfelder</target>
+        <target state="translated">Campos obrigatórios não preenchidos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">168</context>
@@ -9043,7 +9043,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.dataType" datatype="html">
         <source>Angabe der Uhrzeit</source>
-        <target state="needs-translation">Angabe der Uhrzeit</target>
+        <target state="translated">Hora</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">57</context>
@@ -9055,7 +9055,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.time.optional" datatype="html">
         <source>Optional</source>
-        <target state="needs-translation">Optional</target>
+        <target state="translated">Opcional</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">59</context>
@@ -9067,7 +9067,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.time.mandatory" datatype="html">
         <source>Verpflichtend</source>
-        <target state="needs-translation">Verpflichtend</target>
+        <target state="translated">Obrigatório</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">61</context>
@@ -9079,7 +9079,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.time.no" datatype="html">
         <source>Nicht erlaubt</source>
-        <target state="needs-translation">Nicht erlaubt</target>
+        <target state="translated">Não permitido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">63</context>
@@ -9091,7 +9091,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.optional" datatype="html">
         <source>Wählbar</source>
-        <target state="needs-translation">Wählbar</target>
+        <target state="translated">Selecionável</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">68</context>
@@ -9115,7 +9115,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.timeNotAllowed" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Data inválida no campo '[1]' de um recurso da categoria '[0]': Não é permitido uma hora neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">634</context>
@@ -9123,7 +9123,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.timeNotSet" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.</target>
+        <target state="translated">Data inválida no campo '[1]' de um recurso da categoria '[0]': É preciso indicar uma hora neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">638</context>
@@ -9139,7 +9139,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Datumsangabe ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Datumsangabe ein.</target>
+        <target state="translated">Por favor insira no campo '[1]' uma data válida.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">850</context>
@@ -9147,7 +9147,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDates" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos uma data válida: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">854</context>
@@ -9155,7 +9155,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.rangeNotAllowed" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Por favor corriga a data no campo '[1]': Não é permitido um intervalo de data neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">858</context>
@@ -9163,7 +9163,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotAllowed" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Por favor corriga a data no campo '[1]': Não é permitido uma hora neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">866</context>
@@ -9171,7 +9171,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.missingProperties" datatype="html">
         <source>Bitte füllen Sie die folgenden Felder aus: [1]</source>
-        <target state="needs-translation">Bitte füllen Sie die folgenden Felder aus: [1]</target>
+        <target state="translated">Por favor preencha os seguintes campos: [1]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">906</context>
@@ -9179,7 +9179,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.fieldConditionViolation.inputType" datatype="html">
         <source>Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
+        <target state="translated">O tipo de entrada deste campo não pode ser alterada porque é campo condicional para o campo "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1119</context>
@@ -9219,7 +9219,7 @@
       </trans-unit>
       <trans-unit id="util.date.to" datatype="html">
         <source>bis</source>
-        <target state="needs-translation">bis</target>
+        <target state="translated">a</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">136</context>
@@ -9227,7 +9227,7 @@
       </trans-unit>
       <trans-unit id="util.date.unspecified" datatype="html">
         <source>Unbestimmtes Datum</source>
-        <target state="needs-translation">Unbestimmtes Datum</target>
+        <target state="translated">Data não especificada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">139</context>
@@ -9235,7 +9235,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.inputMode" datatype="html">
         <source>Eingabemodus</source>
-        <target state="needs-translation">Eingabemodus</target>
+        <target state="translated">Modo de entrada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">66</context>
@@ -9247,7 +9247,7 @@
       </trans-unit>
       <trans-unit id="configuration.date.inputMode.range" datatype="html">
         <source>Datumsbereich</source>
-        <target state="needs-translation">Datumsbereich</target>
+        <target state="translated">Intervalo de datas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">72</context>
@@ -9259,7 +9259,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.rangeNotAllowed" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Data inválida no campo '[1]' de um recurso da categoria '[0]': Não é permitido um intervalo de data neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">626</context>
@@ -9267,7 +9267,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDate.singleNotAllowed" datatype="html">
         <source>Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Ungültige Datumsangabe im Feld '[1]' einer Ressource der Kategorie '[0]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Data inválida no campo '[1]' de um recurso da categoria '[0]': Não é permitido uma data única neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">630</context>
@@ -9275,7 +9275,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.singleNotAllowed" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.</target>
+        <target state="translated">Por favor corriga a data no campo '[1]': Não é permitido uma data única neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">862</context>
@@ -9283,7 +9283,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidDate.timeNotSet" datatype="html">
         <source>Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</source>
-        <target state="needs-translation">Bitte korrigieren Sie die Datumsangabe im Feld '[1]': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.</target>
+        <target state="translated">Por favor corriga a data no campo '[1]': É preciso indicar uma hora neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">870</context>
@@ -9291,7 +9291,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.fieldConditionViolation.valuelists" datatype="html">
         <source>Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.</target>
+        <target state="translated">A lista de valores deste campo não pode ser removida ou trocada porque é campo condicional para o campo "[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1115</context>
@@ -9299,7 +9299,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.subfieldConditionViolation.deletion" datatype="html">
         <source>Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</source>
-        <target state="needs-translation">Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.</target>
+        <target state="translated">O campo inferior não pode ser apagado poque é campo condicional para o campo inferior"[0]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1131</context>
@@ -9571,7 +9571,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.single" datatype="html">
         <source>Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </source>
-        <target state="needs-translation">Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </target>
+        <target state="translated">Uma cópia d segurança a <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>cada<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> hora </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">230,232</context>
@@ -9579,7 +9579,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.daily" datatype="html">
         <source>Eine Backup-Datei pro Tag</source>
-        <target state="needs-translation">Eine Backup-Datei pro Tag</target>
+        <target state="translated">Uma cópia de segurança cada dia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">241</context>
@@ -9587,7 +9587,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.weekly" datatype="html">
         <source>Eine Backup-Datei pro Woche</source>
-        <target state="needs-translation">Eine Backup-Datei pro Woche</target>
+        <target state="translated">Uma cópia de segurança cada semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">246</context>
@@ -9595,7 +9595,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.monthly" datatype="html">
         <source>Eine Backup-Datei pro Monat</source>
-        <target state="needs-translation">Eine Backup-Datei pro Monat</target>
+        <target state="translated">Uma cópia de segurança cada mês</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">251</context>
@@ -9603,7 +9603,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.size.info" datatype="html">
         <source>Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Aktuell beanspruchter Festplattenspeicher: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Espaço atualmente utilizado no disco rígido: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="zeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">257,259</context>
@@ -9611,7 +9611,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.estimatedSize.info" datatype="html">
         <source>Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Zukünftig beanspruchter Festplattenspeicher (geschätzt): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Espaço utilizado no disco rígido no futuro (estimativa): <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="izeLabel }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">261,263</context>
@@ -9619,7 +9619,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </target>
+        <target state="translated">(o ficheiro <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>mais atual<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -9627,7 +9627,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
         <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="needs-translation">(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </target>
+        <target state="translated">(os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> ficheiros mais atuais) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>
@@ -9635,7 +9635,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.invalidProcessState" datatype="html">
         <source>Ungültiger Status</source>
-        <target state="needs-translation">Ungültiger Status</target>
+        <target state="translated">Estado inválido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -9643,7 +9643,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionalFieldInfo.tooltip.single" datatype="html">
         <source>Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" der Wert "<x id="PH_1" equiv-text="conditionLabel"/>" eingetragen ist.</source>
-        <target state="needs-translation">Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" der Wert "<x id="PH_1" equiv-text="conditionLabel"/>" eingetragen ist.</target>
+        <target state="translated">Esta campo está a ser mostrado porque no campo "<x id="PH" equiv-text="fieldLabel"/>" está registado o valor "<x id="PH_1" equiv-text="conditionLabel"/>".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">149</context>
@@ -9651,7 +9651,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionInfo.tooltip.single" datatype="html">
         <source>Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab.</source>
-        <target state="needs-translation">Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab.</target>
+        <target state="translated">A visibilidade de um outro campo é dependente dos dados inseridos neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.html</context>
           <context context-type="linenumber">16</context>
@@ -9659,7 +9659,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionInfo.tooltip.multiple" datatype="html">
         <source>Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab.</source>
-        <target state="needs-translation">Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab.</target>
+        <target state="translated">A visibilidade de outros campos é dependente dos dados inseridos neste campo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.html</context>
           <context context-type="linenumber">22</context>
@@ -9667,7 +9667,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.error.automaticFileCreationFaile" datatype="html">
         <source>Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.</source>
-        <target state="needs-translation">Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.</target>
+        <target state="translated">Não puderam der guardadas cópias de segurança automáticas. Por favor verifique as definições e assegure-se que haja suficiente espaço no disco.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">374</context>
@@ -9675,7 +9675,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation '[0]' als auch der Relation '[1]' an.</source>
-        <target state="needs-translation">Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation '[0]' als auch der Relation '[1]' an.</target>
+        <target state="translated">Por favor não insira os mesmos recursos como destino da relação [0]' como também da relação '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">923</context>
@@ -9683,7 +9683,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.single" datatype="html">
         <source>Das Bild wurde erfolgreich exportiert.</source>
-        <target state="needs-translation">Das Bild wurde erfolgreich exportiert.</target>
+        <target state="translated">A imagem foi exportada com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">959</context>
@@ -9691,7 +9691,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesExported.multiple" datatype="html">
         <source>[0] Bilder wurden erfolgreich exportiert.</source>
-        <target state="needs-translation">[0] Bilder wurden erfolgreich exportiert.</target>
+        <target state="translated">[0] imagens foram exportadas com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">963</context>
@@ -9699,7 +9699,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.single" datatype="html">
         <source>Das Originalbild wurde erfolgreich heruntergeladen.</source>
-        <target state="needs-translation">Das Originalbild wurde erfolgreich heruntergeladen.</target>
+        <target state="translated">A imagem original foi descarregada com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">967</context>
@@ -9707,7 +9707,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesDownloaded.multiple" datatype="html">
         <source>[0] Originalbilder wurden erfolgreich heruntergeladen.</source>
-        <target state="needs-translation">[0] Originalbilder wurden erfolgreich heruntergeladen.</target>
+        <target state="translated">[0] imagens originais foram descarregadas com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">971</context>
@@ -9715,7 +9715,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.exportFailed" datatype="html">
         <source>Beim Export der Bilder ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Export der Bilder ist ein Fehler aufgetreten.</target>
+        <target state="translated">Ocorreu um erro ao exportar as imagens.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">991</context>
@@ -9723,7 +9723,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.downloadFailed" datatype="html">
         <source>Beim Versuch, das Bild '[0]' herunterzuladen, ist ein Fehler aufgetreten.</source>
-        <target state="needs-translation">Beim Versuch, das Bild '[0]' herunterzuladen, ist ein Fehler aufgetreten.</target>
+        <target state="translated">Ocorreu um erro ao descarregar a imagem'[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">995</context>
@@ -9743,7 +9743,7 @@
       </trans-unit>
       <trans-unit id="widgets.quittingModal.info" datatype="html">
         <source>Field Desktop wird beendet...</source>
-        <target state="needs-translation">Field Desktop wird beendet...</target>
+        <target state="translated">Field Desktop vai ser terminado...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">5,7</context>
@@ -9751,7 +9751,7 @@
       </trans-unit>
       <trans-unit id="docedit.relations.automaticallyFilled" datatype="html">
         <source>Dieses Feld wird automatisch ausgefüllt.</source>
-        <target state="needs-translation">Dieses Feld wird automatisch ausgefüllt.</target>
+        <target state="translated">Este campo é preenchido automaticamente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/relation-picker/relation-picker-group.html</context>
           <context context-type="linenumber">23</context>
@@ -9759,7 +9759,7 @@
       </trans-unit>
       <trans-unit id="image.export" datatype="html">
         <source>Bild exportieren</source>
-        <target state="needs-translation">Bild exportieren</target>
+        <target state="translated">Exportar imagem</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.html</context>
           <context context-type="linenumber">30</context>
@@ -9767,7 +9767,7 @@
       </trans-unit>
       <trans-unit id="images.download.tooltip.single" datatype="html">
         <source>Originalbild herunterladen</source>
-        <target state="needs-translation">Originalbild herunterladen</target>
+        <target state="translated">Descarregar imagem original</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">134</context>
@@ -9783,7 +9783,7 @@
       </trans-unit>
       <trans-unit id="images.download.tooltip.multiple" datatype="html">
         <source>Originalbilder herunterladen</source>
-        <target state="needs-translation">Originalbilder herunterladen</target>
+        <target state="translated">Descarregar imagens originais</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">135</context>
@@ -9851,7 +9851,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info" datatype="html">
         <source>Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</source>
-        <target state="needs-translation">Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:</target>
+        <target state="translated">Os ficheiros seguintes são guardadas no diretório de cópias de segurança, de acordo com as regras atualmente configuradas para cada projeto:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">220,222</context>
@@ -9859,7 +9859,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.current" datatype="html">
         <source>Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</source>
-        <target state="needs-translation">Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank</target>
+        <target state="translated">Uma cópia de segurança da versão mais atual de cada projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">225,227</context>
@@ -9867,7 +9867,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.multiple" datatype="html">
         <source>Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </source>
-        <target state="needs-translation">Eine Backup-Datei alle <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> Stunden </target>
+        <target state="translated">Uma cópia de segurança cada <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ps.customInterval}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Stunden"/> horas </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">234,236</context>
@@ -9891,7 +9891,7 @@
       </trans-unit>
       <trans-unit id="docedit.conditionalFieldInfo.tooltip.multiple" datatype="html">
         <source>Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" einer der folgenden Werte eingetragen ist: <x id="PH_1" equiv-text="conditionLabel"/></source>
-        <target state="needs-translation">Dieses Feld wird angezeigt, weil im Feld "<x id="PH" equiv-text="fieldLabel"/>" einer der folgenden Werte eingetragen ist: <x id="PH_1" equiv-text="conditionLabel"/></target>
+        <target state="translated">Este campo está a ser mostrado porque no campo "<x id="PH" equiv-text="fieldLabel"/>" está registado um dos seguintes valores: <x id="PH_1" equiv-text="conditionLabel"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/edit-form-group.component.ts</context>
           <context context-type="linenumber">147</context>
@@ -9899,7 +9899,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.error.invalidAutoBackupDirectory" datatype="html">
         <source>Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.</source>
-        <target state="needs-translation">Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.</target>
+        <target state="translated">Não puderam der guardadas cópias de segurança automáticas. O caminho do diretório definido nas configurações é inválido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">370</context>
@@ -9907,7 +9907,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</source>
-        <target state="needs-translation">Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</target>
+        <target state="translated">Não podem ser considerados os mesmos recursos como destino da relação 'isCarriedOutOn' e da relação 'resultsIn'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">703</context>
@@ -9971,7 +9971,7 @@
       </trans-unit>
       <trans-unit id="util.dimension.measurementDevice" datatype="html">
         <source>Messgerät:</source>
-        <target state="needs-translation">Messgerät:</target>
+        <target state="translated">Instrumento de medição:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">150</context>
@@ -9979,7 +9979,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWeightValue" datatype="html">
         <source>Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültige Gewichtsangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Peso inválido no campo '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">687</context>
@@ -9987,7 +9987,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWeightValues" datatype="html">
         <source>Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Peso inválido nos seguintes campo de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">691</context>
@@ -9995,7 +9995,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidVolumeValue" datatype="html">
         <source>Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
-        <target state="needs-translation">Ungültige Volumenangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
+        <target state="translated">Volume inválido no campo '[1]' de um recurso da categoria '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">695</context>
@@ -10003,7 +10003,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWeightValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Gewichtsangabe ein.</target>
+        <target state="translated">Por favor insira no campo '[1]' um peso válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">939</context>
@@ -10011,7 +10011,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidWeightValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos um peso válido: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">943</context>
@@ -10019,7 +10019,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidVolumeValue" datatype="html">
         <source>Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</source>
-        <target state="needs-translation">Bitte tragen Sie im Feld '[1]' eine gültige Volumenangabe ein.</target>
+        <target state="translated">Por favor insira no campo '[1]' um volume válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">947</context>
@@ -10027,7 +10027,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.invalidVolumeValues" datatype="html">
         <source>Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</source>
-        <target state="needs-translation">Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].</target>
+        <target state="translated">Por favor insira nos seguintes campos um volume válido: [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">951</context>
@@ -10043,7 +10043,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidVolumeValues" datatype="html">
         <source>Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
-        <target state="needs-translation">Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
+        <target state="translated">Volume inválido nos seguintes campos de um recurso da categoria '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">699</context>
@@ -10067,7 +10067,7 @@
       </trans-unit>
       <trans-unit id="util.volume.measurementTechnique" datatype="html">
         <source>Messverfahren:</source>
-        <target state="needs-translation">Messverfahren:</target>
+        <target state="translated">Método de medição:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">161</context>
@@ -10127,7 +10127,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.references" datatype="html">
         <source>Verweise:</source>
-        <target state="needs-translation">Verweise:</target>
+        <target state="translated">Referências:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">3</context>
@@ -10135,7 +10135,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.generalReferences" datatype="html">
         <source>Allgemeine Verweise:</source>
-        <target state="needs-translation">Allgemeine Verweise:</target>
+        <target state="translated">Referências gerais:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">5</context>
@@ -10143,7 +10143,7 @@
       </trans-unit>
       <trans-unit id="referencesInfo.semanticReferences" datatype="html">
         <source>Semantische Verweise:</source>
-        <target state="needs-translation">Semantische Verweise:</target>
+        <target state="translated">Referências semânticas:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">12</context>

@@ -10,7 +10,9 @@
     "hierarchy": "Hierarquia",
     "stratigraphy": "Estratigrafia",
     "inventory": "Inventariação",
-    "workflow": "fluxo de trabalho"
+    "workflow": "fluxo de trabalho",
+    "mineralFraction": "Fração mineral",
+    "organicFraction": "Fração orgânica"
   },
   "commons": {
     "dimensionLength": {
@@ -113,6 +115,14 @@
     },
     "phase": {
       "label": "Fase"
+    },
+    "weight": {
+      "label": "Peso",
+      "description": "Indicação do peso"
+    },
+    "volume": {
+      "label": "Volume",
+      "description": "Indicação do volume"
     }
   },
   "categories": {
@@ -1577,6 +1587,22 @@
         }
       },
       "label": "Desenho em plano"
+    },
+    "Process": {
+      "label": "Processo",
+      "fields": {
+        "state": {
+          "label": "Estado"
+        }
+      }
+    },
+    "Sampling": {
+      "label": "Amostra",
+      "fields": {
+        "samplingStrategy": {
+          "label": "Método de extração de amostra"
+        }
+      }
     }
   },
   "forms": {

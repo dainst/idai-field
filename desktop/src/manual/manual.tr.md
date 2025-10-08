@@ -1,6 +1,6 @@
 # İlk adımlar
 
-Uygulamayı ilk başlattığınızda adınızı girmeniz istenecektir. Adınızı ve soyadınızı girmeniz önerilir. Girdiğiniz ad, yaptığınız tüm değişiklikler için veritabanında saklanır ve veri senkronizasyonu sırasında değişikliklerin açıkça atanmasına olanak tanıyarak projedeki veri kayıtları üzerinde iş birliği yapmanızı kolaylaştırır. Kullanıcı adını daha sonra gezinme çubuğunun sağ üst köşesindeki ada tıklayarak veya "Alan" (MacOS) veya "Araçlar" (Windows) menüsünden erişebileceğiniz **Ayarlar** alt menüsü aracılığıyla değiştirebilirsiniz.
+Uygulamayı ilk başlattığınızda adınızı girmeniz istenecektir. Adınızı ve soyadınızı girmeniz önerilir. Girdiğiniz ad, yaptığınız tüm değişiklikler için veritabanında saklanır ve veri senkronizasyonu sırasında değişikliklerin açıkça atanmasına olanak tanıyarak projedeki veri kayıtları üzerinde iş birliği yapmanızı kolaylaştırır. Kullanıcı adını daha sonra gezinme çubuğunun sağ üst köşesindeki ada tıklayarak veya "Field" (macOS) veya "Araçlar" (Windows ve Linux) menüsünden erişebileceğiniz **Ayarlar** alt menüsü aracılığıyla değiştirebilirsiniz.
 
 Başlangıçta, test projesi etkin olacak ve bir dizi örnek veri kullanarak uygulamanın işlevselliğini denemenize olanak tanıyacaktır. Lütfen unutmayın; test projesi seçili olduğu sürece, yeni oluşturulan tüm veri kümelerinin silinecek ve uygulama yeniden başlatıldığında tüm değişikliklerin sıfırlanacaktır. Bu nedenle, test projesi için diğer Field Desktop projeleri veya veritabanlarıyla senkronizasyon gerçekleştirilmez.
 

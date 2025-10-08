@@ -12,9 +12,6 @@ Field Desktop ile üretken bir şekilde çalışabilmek ve kendi projenizi oluş
 "Proje" bölümünde "Ekip"i ve **sezonları** ("Proje" bölümünün "Sezonlar" alanı) detaylandırabilirsiniz.
 Bu listeleri istediğiniz zaman değiştirebilirsiniz.
 
-"Proje" menüsü üzerinden erişilebilen **Yedek oluştur...** menü seçeneğini kullanarak yedekleme dosyalarını oluşturun.
-Projenizin verilerini düzenli olarak güncelleyin.
-
 
 <hr>
 
@@ -29,10 +26,8 @@ Yeni bir işlem oluşturmak için girdiler listesinin altındaki yeşil artı bu
 
 <p align="center"><img src="images/tr/resources/create_operation.png" alt="İşlem girdisi oluştur"/></p>
 
-Yeni girdi için, öncelikle işlemin kategorisini seçersiniz, ardından isteğe bağlı olarak bir geometri oluşturabilirsiniz. 
-Daha sonra işlemin tüm verilerinin doldurulabildiği editör açılacaktır.
-Seçilen işlem kategorisine bağlı olarak, gruplar halinde düzenlenmiş farklı alanlar mevcuttur.
-Sol taraftaki butonlara tıklayarak alan grupları arasında geçiş yapabilirsiniz.
+Bu işlem sırasında, öncelikle operasyonun kategorisini (örneğin "Açma" veya "Yapı") seçip, ardından haritada yeni girdi için isteğe bağlı bir geometri oluşturabilirsiniz. Ardından, operasyonun tüm verilerinin doldurulabileceği düzenleyici açılır.
+Seçilen operasyon kategorisine bağlı olarak, farklı alanlar görünecektir. (bkz. *Girdileri düzenle* bölümü).
 
 Girdiyi yeşil kaydet butonuyla kaydetmeden önce, en azından **tanımlayıcı** alanının
 temel bilgiler bölümünün doldurulması gerekmektedir.
@@ -66,13 +61,14 @@ aynı anda seçilebilir. Listedeki bir veya daha fazla seçili girdiye sağ tık
 bir içerik menüsü açılır:
 
 * *Uyarıları göster*: Bu girdi için mevcut uyarıları görüntüler (sadece uyarı içeren girdiler için geçerlidir, *Uyarılar* bölümüne bakın)
-* *Düzenle*: Düzenleyiciyi açar (ayrıca listedeki girdiye çift tıklanarak da kullanılabilir)
+* *Düzenle*: Girdi düzenleyicisini açar (bkz. *Girdileri düzenle* bölümü). Alternatif olarak, listedeki girdi kaydına çift tıklanarak da düzenleyici açılabilir.
 * *Görselleri bağla*: Görsellerin seçili girdiye bağlanabileceği veya bağlı görsellerin kaldırılabileceği bir pencere açar
 * *QR kodu ekle*: Girdi için yeni bir QR kodunun oluşturulabileceği veya mevcut bir QR kodunun kamera taraması yoluyla bağlanabileceği bir pencere açar
 * *QR kodunu yönet*: Girdinin QR kodunu görüntüler ve bir QR kodu etiketi yazdırmaya olanak tanır (alternatif olarak kaynağın liste öğesinin sağ tarafındaki QR kodu düğmesinden de erişilebilir)
 * *Taşı*: Girdilerin geçerli içeriklerinden kaldırılmasına ve başka bir üst girdiye atanmasını sağlar
 * *Sil*: Bir güvenlik kontrolünden sonra girdileri kaldırır (isteğe bağlı olarak, yalnızca silmek istediğiniz girdilere bağlı
 tüm görselleri de silebilirsiniz)
+* *İş akışını belgele*: Seçili girdilere bağlı işlemleri görüntüler ve yeni işlemler oluşturulmasına olanak tanır (yalnızca bir işlem kategorisinin "Buna ilişkin uygulandı" ilişkisinin hedef kategorisi olarak konfigüre edilmiş kategorileri için kullanılabilir).
 * *Depolama yerini tara*: Kamera taramasıyla depolama yerinin QR kodunu tarayarak girdi için yeni bir depolama yeri ayarlar (yalnızca "Bul", "Koleksiyonu bul" ve "Örnek" kategorilerinin girdileri ile ilgili alt kategoriler için kullanılabilir)
 
 Ayrıca, içerik menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
@@ -80,6 +76,21 @@ birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kull
 
 <p align="center"><img src="images/tr/resources/context_menu.png" alt="İçerik menüsü"/></p>
 
+
+## Girdileri düzenle
+
+Girdi düzenleyici, içerik menüsünden veya girdi listesindeki bir kayda çift tıklayarak açılabilir. Burada, seçili girdinin verilerini düzenleyebilirsiniz. Kayıt formu, girdinin kategorisine (örneğin, "Açma" veya "Buluntu") bağlıdır ve konfigürasyon düzenleyicisinde tanımlanabilir (bkz. *Proje konfigürasyonu* bölümü).
+
+Kategori için kullanılabilen alanlar birkaç gruba ayrılmıştır (örneğin, "Temel bilgiler", "Ölçüleri", "Pozisyon / Kontekst"). Düzenleyicinin sol tarafındaki grup düğmelerinden birine tıkladığınızda ilgili grubun alanları düzenleyicinin sağ tarafında görüntülenir. Proje konfigürasyonunda, alana girilebilecek veri türünü belirleyen belirli bir giriş türü atanır (örneğin, "Tek satırlık metin", "Tarih", "Boyut"). Tüm giriş türlerinin listesi, *Proje konfigürasyonu* bölümünün *Alanlar* alt bölümünde bulunabilir.
+
+Düzenleyicide yaptığınız değişiklikler ancak "Kaydet" butonuna tıkladıktan sonra kaydedilir.
+
+
+### Alanlar ve değerler hakkında bilgi görüntüleme
+
+Proje yapılandırmasında, alanlar ve değer listeleri için ek bilgiler içeren açıklayıcı metinler ve web sitesi bağlantılarını kaydedebilirsiniz. Bu bilgiler, veri girerken yardımcı olabilir. Bir alan veya değer listesindeki bir değer için bu tür ek bilgiler mevcutsa fare işaretçisini ilgili alana veya değere getirdiğinizde görünen noktalı bir çizgiyle belirtilir.
+
+<p align="center"><img src="images/tr/resources/information_underline.png" alt="View information"/></p>
 
 <hr>
 
@@ -431,7 +442,7 @@ Ek olarak, yapılandırılmış proje dillerinin her biri için **etiketler** ek
 
 ## Kategoriler ve formlar
 
-Editörün sol kenar çubuğu, proje için mevcut yapılandırılmış kategorileri listeler. Sol üstteki filtre menüsünü kullanarak, görüntülenen kategorilerin seçimini uygulamanın belirli bir kısmıyla (örneğin, bir açma sekmesi içinde oluşturulabilecek kategorilerle filtrelemek için "Açma") sınırlayabilirsiniz. "Tümü" seçeneğini seçerseniz, projenin tüm kategorileri listelenir.
+Düzenleyicinin sol kenar çubuğu, proje için mevcut yapılandırılmış kategorileri listeler. Sol üstteki filtre menüsünü kullanarak, görüntülenen kategorilerin seçimini uygulamanın belirli bir kısmıyla (örneğin, bir açma sekmesi içinde oluşturulabilecek kategorilerle filtrelemek için "Açma") sınırlayabilirsiniz. "Tümü" seçeneğini seçerseniz, projenin tüm kategorileri listelenir.
 
 <p align="center"><img src="images/tr/configuration/categories_filter.png" alt="Kategori filtre menüsü"/></p>
 

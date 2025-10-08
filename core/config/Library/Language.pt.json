@@ -1600,7 +1600,14 @@
       "label": "Amostra",
       "fields": {
         "samplingStrategy": {
-          "label": "Método de extração de amostra"
+          "label": "Método de extração de amostra",
+          "description": "Categoria principal para a classificação do método de extração da amostra, por exemplo a priorização da distribuição vertical ou horizontal dos restos"
+        },
+        "horizontalSamplingStrategy": {
+          "label": "Tipo da extração da amostra vertical"
+        },
+        "verticalSamplingStrategy": {
+          "description": "Categoria principal para a classificação do tipo de método para a extração da amostra, por exemplo priorização da distribuição vertical ou horizontal dos restos"
         }
       }
     }

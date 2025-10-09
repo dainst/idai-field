@@ -610,7 +610,8 @@ Bir alana sağ tıklandığında aşağıdaki seçenekleri sağlayan bir içerik
 
 * *Etiket*: Uygulamanın tüm alanlarında gösterilen etiketi. Farklı diller için etiketler girebilirsiniz.
 * *Açıklama*: Alana hangi verilerin girilmesi gerektiğini bildiren bir açıklama metni. Bu metin, girdi düzenleyicide alan etiketinin yanındaki bilgi simgesinin araç ipucu olarak görüntülenir ve veri girişi konusunda yardımcı olur.
-* *Referanslar*: Diğer sistemlerdeki alan veya alan tanımları hakkında daha fazla bilgiye başvurmak için buraya URL'leri belirtin.
+* *Genel referanslar*: Alana ilişkin daha fazla bilginin bulunabileceği web sitelerinin URL'leri (bkz. *Referanslar* bölümü).
+* *Semantik referanslar*: Diğer sistemlerdeki ilgili kavramlara bağlantılar (bkz. *Referanslar* bölümü).
 
 
 ### Giriş türünü değiştir

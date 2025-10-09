@@ -92,6 +92,43 @@ Proje yapılandırmasında, alanlar ve değer listeleri için ek bilgiler içere
 
 <p align="center"><img src="images/tr/resources/information_underline.png" alt="View information"/></p>
 
+**Sağ tıklayarak**, referans olarak girdiğiniz açıklama metninin ve/veya harici web sitelerine bağlantıların görüntülendiği bir pencere açabilirsiniz.
+
+
+### Kategori değiştirme
+
+Seçilen girdinin ait olduğu kategorinin simgesi, düzenleyici başlığının sol tarafında görüntülenir. Kategori bir üst kategori veya alt kategorilerinden biriyse, başka bir alt kategoriye veya üst kategorinin kendisine geçebilirsiniz. Bu seçenek, ok sembolü bulunan küçük mavi bir düğmeyle gösterilir.
+
+<p align="center"><img src="images/tr/resources/change_category.png" alt="Change category"/></p>
+
+İstediğiniz kategoriyi listeden seçmek için butona tıklayın. Düzenleyicide yeni seçilen kategorinin formu görüntülenecektir. Ancak yaptığınız değişiklikler yalnızca "Kaydet" butonuna tıkladığınızda kaydedilir.
+
+*Örnek*: "Buluntu" üst kategorisi, "Tuğla", "Sikke" ve "Pişmiş Toprak" gibi alt kategorilere sahiptir. Bir girdi "Tuğla" kategorisine aitse, istediğiniz zaman "Buluntu" üst kategorisine veya diğer alt kategorilerden birine ("Sikke" veya "Pişmiş Toprak") geçebilirsiniz. Ancak, başka bir kategoriye (örneğin "Açma") geçmek mümkün değildir.
+
+**Önemli**: İlgili alan, yeni seçilen kategori formunun bir parçası değilse, kategorileri değiştirirken daha önce girilmiş alan verilerinin kaybolabileceğini lütfen unutmayın. Bu durumda, kategorileri değiştirirken bir uyarı görüntülenir. Kaydetmeden önce orijinal kategoriye geri dönerseniz, tüm alan verileri korunur.
+
+Kategori "Operasyon" veya "İşlem" üst kategorisine aitse kategori değişikliği mümkün değildir.
+
+
+### Bir girdinin birden çok örneğini/kopyasını oluşturma
+
+Yeni bir girdi oluştururken, aynı anda birden fazla örnek (kopya) oluşturma seçeneğiniz vardır. Bunu yapmak için, "Kaydet" düğmesinin sağındaki "aşağı ok" sembolüne tıklayın ve açılan açılır menüden "Birden fazla örnek/kopya oluştur" seçeneğini belirleyin. Ardından oluşturulacak toplam girdi sayısını girin ve "Girdi oluştur" düğmesine tıklayarak girişinizi onaylayın.
+
+Birden fazla girdi oluştururken, girdi düzenleyici formuna girdiğiniz alan verileri her kayda eklenir. Ancak girilen ilişkiler yalnızca oluşturulan ilk girdi için kaydedilir ve oluşturulan kopyalara **dahil edilmez**.
+
+Oluşturulan her ek kopya için "Tanımlayıcı" alanına girilen değere bir sayaç eklenir; böylece her girdinin benzersiz bir tanımlayıcısı olur. "Tanımlayıcı" alanına sayaç içeren bir değer girdiyseniz, bu işlem ardışık olarak devam edecektir.
+
+*Örnek*: "Tanımlayıcı" alanına "ABC" değerini girdiniz ve üç girdi oluşturmak istiyorsunuz. Oluşturulan ek girdilere otomatik olarak "ABC2" ve "ABC3" tanımlayıcıları verilir.
+Ancak, "ABC15" değerini girdiyseniz, oluşturulan ek girdilere "ABC16" ve "ABC17" tanımlayıcıları verilir.
+
+
+### Yinelenen girdiler
+
+Girdi düzenleyicide "Kaydet" düğmesinin sağındaki "aşağı ok" sembolüne tıklayıp açılan açılır menüden "Yinele" seçeneğini belirleyerek mevcut bir girdinin kopyalarını oluşturabilirsiniz. Ardından (mevcut girdi hariç) oluşturulacak kopya sayısını girin ve "Girdileri kaydet" düğmesine tıklayarak kaydı onaylayın.
+
+Bir girdinin birden fazla örneğinin oluşturulmasında olduğu gibi, girilen tüm alan verileri, ilişkiler hariç olmak üzere oluşturulan kopyalara eklenir. Tanımlayıcı bir sayaçla güncellenir veya mevcut bir sayaç devam ettirilir (bkz. *Birden fazla girdi oluşturma* bölümü).
+
+
 <hr>
 
 

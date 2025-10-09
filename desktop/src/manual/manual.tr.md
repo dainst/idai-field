@@ -538,7 +538,6 @@ Bir kategoriye sağ tıklandığında aşağıdaki seçenekleri sunan bir içeri
 
 Projeye özel kategoriler için aşağıdaki özellikleri de belirtebilirsiniz:
 * *Açıklama*: Kategorinin hangi bağlamlarda kullanılması gerektiğini belirten bir açıklama metni.
-* *Referanslar*: Kategori veya kategori tanımları hakkında diğer sistemlerde daha fazla bilgiye ulaşmak istiyorsanız, burada kaynak URL'leri belirtin.
 * *Genel referanslar*: Kategori hakkında daha fazla bilginin bulunabileceği web sitelerinin URL'leri (bkz. *Referanslar* bölümü).
 * *Semantik referanslar*: Diğer sistemlerdeki ilgili kavramlara bağlantılar (bkz. *Referanslar* bölümü).
 

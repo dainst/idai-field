@@ -6467,7 +6467,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
         <source>Ressource mehrfach erstellen</source>
-        <target state="translated">Çoklu girdi oluştur</target>
+        <target state="translated">Birden fazla örnek/kopya oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -6539,7 +6539,7 @@
       </trans-unit>
       <trans-unit id="buttons.createMultipleInstances" datatype="html">
         <source>Mehrfach erstellen</source>
-        <target state="translated">Çoklu oluşturun</target>
+        <target state="translated">Birden fazla örnek/kopya oluştur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">29</context>

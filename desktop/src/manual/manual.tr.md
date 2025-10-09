@@ -674,7 +674,7 @@ Bir değer listesinden bir veya daha fazla değerin seçimi
 <p align="center"><img src="images/tr/configuration/input_type_checkboxes.png" alt="Giriş türü 'Onay Kutuları'"/></p>
 
 #### Tarih
-Takvimden bir tarih seçimi. Giriş alanı yalnızca ay veya yıl bilgilerini girmek için de kullanılabilir.
+Takvimden bir tarih seçimi. Giriş alanı yalnızca ay veya yıl bilgilerini girmek için de kullanılabilir. İsteğe bağlı olarak saat bilgisi belirtebilirsiniz. Daha fazla yapılandırma seçeneği için *Tarih alanlarının yapılandırılması* bölümüne bakın.
 <p align="center"><img src="images/tr/configuration/input_type_date.png" alt="Giriş türü 'Tarih'"/></p>
 
 #### Tarihleme

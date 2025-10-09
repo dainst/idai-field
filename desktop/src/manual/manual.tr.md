@@ -180,6 +180,21 @@ Projeden içe aktarılan görüntüleri kaldırmak için, görüntü yönetimind
 Lütfen unutmayın; bu aynı zamanda projenin görüntüler dizinindeki (ve bir senkronizasyon bağlantısı kurulmuşsa diğer bilgisayarlardaki) ilgili dosyaları da **silebilir**. Bir görüntü silindiğinde girdilerle bağlantıları kaybolacaktır.
 
 
+### Orijinal görselleri indirme
+
+Bir görselin orijinal dosyası bilgisayarınızda mevcut değilse, tüm proje için orijinal görüntülerin indirilmesini etkinleştirmeden, teker teker indirebilirsiniz. Bunun için, görüntü yönetiminde istediğiniz görselleri seçin (veya uygulamanın başka bir bölümünden görüntüleyin) ve "Orijinal görselleri indir" düğmesine tıklayın. Görüntü dosyaları artık yüklenecektir.
+
+Bu işlevin yalnızca "Proje" ➝ "Senkronize et..." menüsü üzerinden proje için geçerli bir senkronizasyon hedefi girilmişse kullanılabileceğini lütfen unutmayın (bkz. *Senkronizasyon* bölümü).
+
+
+### Orijinal görselleri dışa aktarma
+
+Orijinal görüntü dosyalarını Field Desktop'tan dışa aktarmak için, önce görüntü yönetiminden görüntüleri seçin (veya uygulamanın başka bir bölümünden görüntüleyin) ve "Dışa Aktar" düğmesine tıklayın. Görüntü dosyalarının dışa aktarılacağı dizini seçebileceğiniz bir pencere açılacaktır. Ayrıca, dosyaları adlandırmak için iki farklı seçenek arasından seçim yapabilirsiniz:
+
+* *Tanımlayıcı*: Projede bulunan ilgili görsellerin şu anda sahip olduğu tanımlayıcı, dışa aktarılan görüntü dosyaları için dosya adı olarak kullanılır.
+* *Orijinal dosya adı*: Dosyalar, projeye ilk olarak hangi adla aktarıldıysa o ad ile dışa aktarılır.
+
+
 ## Görselleri girdilere bağlayın
 
 Bir veya daha fazla görüntüyü bir girdiye bağlamak için, ilgili girdinin içerik menüsünde "Görselleri bağla" seçeneğini seçin ve artı düğmesine tıklayın. Artık iki seçenek arasında seçim yapabilirsiniz:

@@ -714,6 +714,11 @@ Yapılandırılmış hedef kategorilerinden birine ait bir veya daha fazla başk
 Alanlar, alan düzenleyicisindeki *Alanı göster* ayarı devre dışı bırakılarak gizlenebilir. Alan daha sonra ne girdi görünümünde ne de girdi düzenleyicisinde görüntülenir. Gizli alanların yapılandırma düzenleyicisinde görüntülenip görüntülenmeyeceği, "Proje yapılandırması" menüsündeki "Gizlenmiş alanları göster" ayarına bağlıdır. Önceden girilmiş olan veriler gizlendikten sonra bile korunur ve *Alanı göster* seçeneği tekrar etkinleştirildiğinde tekrar görüntülenir. Uygulamanın işlevselliği için önemli olan bazı alanlar (girdi tanımlayıcısı gibi) gizlenemez; bu durumlarda seçenek görüntülenmez.
 
 
+### Zorunlu alanlar
+
+Alan düzenleyicide *Zorunlu alan* seçeneği etkinleştirilerek bir alan zorunlu olarak yapılandırılabilir. İlgili girdi kaydedilmeden önce zorunlu alanların doldurulması gerekir. Seçenek etkinleştirildiğinde kategoride halihazırda mevcut girdiler varsa, kullanıcıya doldurulması gereken zorunlu alan hakkında bilgi veren bir uyarı görüntülenir.
+
+
 ### Birden fazla dilde girişe izin verme
 
 *Birden fazla dilde girişe izin ver* seçeneği etkinleştirilirse, yapılandırılmış proje dillerinin her biri için alana ayrı bir metin girilebilir. Ayar varsayılan olarak etkindir ve yalnızca "Tek satır metin", "Çoklu seçimli tek satır metin" ve "Çok satırlı metin" giriş türlerinin alanları için kullanılabilir.
@@ -724,11 +729,43 @@ Alanlar, alan düzenleyicisindeki *Alanı göster* ayarı devre dışı bırakı
 Alan düzenleyicisindeki *Alana özel aramaya izin ver* ayarı, genişletilmiş arama modundaki bir alan için alana özgü bir arama yapılıp yapılamayacağını belirler (bkz. *Arama* bölümündeki *Detaylı arama modu* bölümü). "Proje" kategorisindeki alanlar ve bazı giriş türlerindeki alanlar için bu ayar etkinleştirilemez; bu durumda gri renktedir.
 
 
+### Görüntüleme koşulları
+
+"Alanın görüntülenme koşulu" ayarı, alanın görüntülenmesi için bir koşul tanımlamak amacıyla kullanılabilir. Bir koşul ayarlandığı takdirde, alan yalnızca aynı girdinin başka bir alanında belirli bir değer (veya birkaç değerden biri) ayarlandığında veri girişi sırasında kullanılabilir.
+
+Bir koşul belirlemek için, önce "Alanın görüntülenme koşulu" açılır menüsünden aynı kategoriden başka bir alan seçin. "Açılır liste", "Açılır liste (aralık)", "Radyo düğmesi", "Evet/Hayır" ve "Onay kutuları" giriş türlerinden birini seçebilirsiniz. Seçilen alan için olası değerler artık görüntülenebilir ve seçilebilir. Geçerli alan, yalnızca koşul olarak kullanılan alanda seçili değerlerden en az biri ayarlanmışsa veri girişi sırasında görüntülenir.
+
+Zorunlu alan olarak yapılandırıldığı sürece bir alan için herhangi bir görüntüleme koşulunun ayarlanamayacağını lütfen unutmayın.
+
+
 ### Değer listesini değiştirme
 
 Halihazırda seçili olan değer listesi, "Değer listesini değiştir" düğmesine tıklanarak başka bir değer listesiyle değiştirilebilir. Hazır bir değer listesi seçilebilir veya yeni bir liste oluşturulabilir (bkz. *Değer Listeleri* bölümü).
 
 Alana daha önce veri girilmişse, girilen değerler yeni değer listesine dahil edilmese bile görüntülenmeye devam edecektir. Bu durumda, çakışan değerler girdi düzenleyicide uyumsuz olarak işaretlenir ve orada silinebilir.
+
+
+### Tarih alanlarının yapılandırılması
+
+Giriş türü "Tarih" olarak seçildiğinde, tarih alanının daha detaylı özelleştirilmesine olanak sağlayan iki ek seçim alanı görünür.
+
+
+#### Zaman göstergesi
+
+Burada tarih alanına saat girilmesine izin verilip verilmeyeceğini belirtebilirsiniz.
+
+* *İsteğe bağlı*: Saat girilebilir, ancak yalnızca tarih girilmesi de mümkündür.
+* *Zorunlu*: Bu alan yalnızca tarihe ek olarak saat girilmesi durumunda doldurulabilir.
+* *İzin verilmez*: Saat girilmesi mümkün değildir. Yalnızca tarih ayarlanabilir.
+
+
+#### Giriş modu
+
+Burada alana tekil bir tarih mi yoksa bir tarih aralığı mı girileceğini belirtebilirsiniz. Tarih aralığı, başlangıç ve bitiş tarihlerinden oluşur.
+
+* *Seçilebilir*: Hem tek bir tarih hem de bir tarih aralığı girilebilir.
+* *Tekil tarih*: Yalnızca tek bir tarih girilebilir.
+* *Tarih aralığı*: Yalnızca bir tarih aralığı girilebilir.
 
 
 ### Alt alanlar

@@ -682,8 +682,18 @@ Bir veya daha fazla tarihlemenin belirtilmesi. Olası tarihleme türleri şunlar
 <p align="center"><img src="images/tr/configuration/input_type_dating.png" alt="Giriş türü 'Tarihleme'"/></p>
 
 #### Boyut
-Bir veya daha fazla boyutun belirtilmesi. Tek bir değer veya bir aralık belirtilebilir. "Ölçüldüğü şekilde" seçeneği açılır alt alanının seçenekleri arasından değerler seçilebilir.
+Bir veya daha fazla boyutsal ölçümün belirtilmesi. Mevcut ölçüm birimleri "mm", "cm" ve "m"dir. Tekil bir değer veya bir değer aralığı belirtilebilir. "Ölçüldüğü şekilde" açılır alt alanının seçim seçenekleri, belirtilen değer listesinden alınır.
 <p align="center"><img src="images/tr/configuration/input_type_dimension.png" alt="Giriş türü 'Boyut'"/></p>
+
+#### Ağırlık
+Bir veya daha fazla ağırlık ölçümünün belirtilmesi. Mevcut ölçüm birimleri "mg", "g" ve "kg"dır. Tekil bir değer veya bir değer aralığı belirtilebilir. "Ölçüm cihazı" açılır alt alanının seçim seçenekleri, belirtilen değer listesinden alınır.
+
+<p align="center"><img src="images/tr/configuration/input_type_weight.png" alt="Input type 'Weight'"/></p>
+
+#### Hacim
+Bir veya daha fazla hacim ölçümünün belirtilmesi. Mevcut ölçüm birimleri "ml" ve "l"dir. Tekil bir değer veya bir değer aralığı belirtilebilir. "Ölçüm tekniği" açılır alt alanının seçim seçenekleri, belirtilen değer listesinden alınır.
+
+<p align="center"><img src="images/tr/configuration/input_type_volume.png" alt="Input type 'Volume'"/></p>
 
 #### Bibliyografik referans
 Bir veya daha fazla bibliyografik referansın belirtilmesi. İsteğe bağlı olarak Zenon ID, DOI, sayfa numarası ve şekil numarası belirtilebilir.

@@ -1594,8 +1594,8 @@
           "description": "Cantidad de materia orgánica retenida en el tamiz de 0,125 mm"
         },
         "organicFractionMeasurementStrain": {
-          "label": "Medición de la fracción tamizada (ancho desconocido) ORG",
-          "description": "Cantidad de materia orgánica retenida en el tamiz"
+          "label": "",
+          "description": ""
         },
         "mineralFractionKept": {
           "label": "Fracción mineral conservada",
@@ -1628,8 +1628,8 @@
           "description": "Cantidad de material mineral retenido en el tamiz de 0,5 mm"
         },
         "mineralFractionMeasurementStrain": {
-          "description": "Cantidad de material mineral retenido en el tamiz de ancho desconocido",
-          "label": "Medición de la fracción del tamizada (ancho desconocido) MIN"
+          "description": "",
+          "label": ""
         },
         "mineralFractionSubsampled": {
           "label": "Fracción mineral submuestreada",
@@ -1664,11 +1664,54 @@
           "label": "Unidad de medida (fracción orgánica)"
         },
         "organicFractionVolumeMeasurementTechnique": {
-          "label": "Técnica de medición del volumen"
+          "label": "Técnica de medición del volumen",
+          "description": "Método utilizado para determinar el volumen de la fracción orgánica"
         },
         "mineralMultiplicationFactor05": {
           "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 0,5 MIN",
           "label": "Factor de multiplicación 0,5 MIN"
+        },
+        "organicMultiplicationFactor05": {
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 0,5 ORG",
+          "label": "Factor de multiplicación 0,5 ORG"
+        },
+        "organicMultiplicationFactor025": {
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 0,25 ORG",
+          "label": "Factor de multiplicación 0,25 ORG"
+        },
+        "organicMultiplicationFactorStrain": {
+          "label": "Factor de multiplicación colador (ancho desconocido) ORG",
+          "description": ""
+        },
+        "organicDescription": {
+          "label": "Descripción (fracción orgánica)"
+        },
+        "organicNotes": {
+          "label": "Notas (fracción orgánica)"
+        },
+        "organicFractionSubsampledList": {
+          "label": "Lista de fracciones orgánicas submuestreadas",
+          "description": "Indica las fracciones orgánicas que fueron submuestreadas."
+        },
+        "organicMultiplicationFactor8": {
+          "label": "Factor de multiplicación 8 ORG",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 8 ORG"
+        },
+        "organicMultiplicationFactor4": {
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 4 ORG",
+          "label": "Factor de multiplicación 4 ORG"
+        },
+        "organicMultiplicationFactor0125": {
+          "label": "Factor de multiplicación 0,125 ORG",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 0,125 ORG"
+        },
+        "organicMultiplicationFactor2": {
+          "label": "Factor de multiplicación 2 ORG",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 2 ORG"
+        },
+        "organicMultiplicationFactor035": {
+          "label": "Factor de multiplicación 0,35 ORG",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 0,35 ORG"
         }
       },
       "label": "Procesamiento de la fracción tamizada"
@@ -1795,6 +1838,85 @@
     },
     "StorageBag": {
       "label": "Bolsa"
+    }
+  },
+  "forms": {
+    "Feature:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Breve descripción (Clasificación)"
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "label": "Criterios distintivos"
+        },
+        "archaeoDox:consistency": {
+          "label": "Consistencia"
+        },
+        "archaeoDox:soilType": {
+          "label": "Tipo de suelo"
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "label": "Sin relevancia arqueológica"
+        },
+        "archaeoDox:isNatural": {
+          "label": "Natural"
+        }
+      },
+      "label": "Estructura"
+    },
+    "FeatureSegment:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Breve descripción (Clasificación)"
+        }
+      }
+    },
+    "Sample:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Breve descripción (Clasificación)"
+        },
+        "archaeoDox:soilProperties": {
+          "label": "Propiedades del suelo"
+        }
+      }
+    },
+    "Profile:archaeoDox": {
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "label": "Dirección de visión"
+        }
+      },
+      "label": "Dibujo del perfil"
+    },
+    "Project:archaeoDox": {
+      "label": "Proceso"
+    },
+    "Place:archaeoDox": {
+      "label": "Lugar del hallazgo"
+    },
+    "Planum:archaeoDox": {
+      "label": "Dibujo del plano"
+    },
+    "Find:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Breve descripción (Clasificación)"
+        },
+        "archaeoDox:material": {
+          "label": "Material"
+        },
+        "archaeoDox:typeOfWare": {
+          "label": "Tipo de pasta cerámica"
+        }
+      }
+    },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "Breve descripción (Clasificación)"
+        }
+      }
     }
   }
 }

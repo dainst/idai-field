@@ -227,6 +227,8 @@ global.manualPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'manual')
     : './manual';
 
+global.imageProcessing = process.argv.includes('--alternativeImageProcessing') ? 'jimp' : 'sharp';
+
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 

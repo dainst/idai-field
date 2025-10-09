@@ -14,7 +14,7 @@ import { ExpressServer } from '../services/express-server/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
-import { createDisplayVariant } from '../services/imagestore/create-display-variant';
+import { createDisplayVariant } from '../services/imagestore/manipulation/create-display-variant';
 import { Backup } from '../services/backup/model/backup';
 import { BackupService, RestoreBackupResult } from '../services/backup/backup-service';
 import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';

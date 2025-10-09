@@ -1,22 +1,12 @@
+import { ImageManipulation } from '../image-manipulation';
+
 const sharp = window.require('sharp');
-
-
-export module ImageManipulationErrors {
-
-    export const MAX_INPUT_PIXELS_EXCEEDED = 'imageManipulation/maxInputPixelsExceeded';
-}
 
 
 /**
  * @author Thomas Kleinke
  */
-export module ImageManipulation {
-
-    export const MAX_INPUT_PIXELS = 2500000000;
-    export const MAX_ORIGINAL_PIXELS = 25000000;
-    export const MAX_DISPLAY_WIDTH = 10000;
-    export const MAX_DISPLAY_HEIGHT = 10000;
-
+export module SharpImageManipulation {
 
     /**
      * Create a sharp image instance based on raw buffer data.
@@ -27,9 +17,9 @@ export module ImageManipulation {
      * @returns A sharp instance or Error for invalid buffer parameters (for example 
      * if the absolute number of pixels exceeds Field Desktop's maximum)
      */
-    export function getSharpImage(buffer: Buffer): any {
+    export function getImageObject(buffer: Buffer): any {
 
-        const sharpImage = sharp(buffer, { limitInputPixels: MAX_INPUT_PIXELS });
+        const sharpImage = sharp(buffer, { limitInputPixels: ImageManipulation.MAX_INPUT_PIXELS });
         return sharpImage;
     }
 
@@ -38,7 +28,7 @@ export module ImageManipulation {
                                           targetJpegQuality: number): Promise<Buffer> {
 
         try {
-            const sharpImage = getSharpImage(buffer);
+            const sharpImage = getImageObject(buffer);
             const resizedImage = sharpImage.resize(undefined, targetHeight);
             const jpegImage = resizedImage.jpeg({ quality: targetJpegQuality });
             const result = await jpegImage.toBuffer();
@@ -57,11 +47,17 @@ export module ImageManipulation {
     }
 
     
-    export async function createDisplayImage(image: any, convertToJpeg: boolean,
-                                             resize: boolean): Promise<Buffer> {
+    export async function createDisplayImage(image: any, convertToJpeg: boolean, resize: boolean): Promise<Buffer> {
 
         if (convertToJpeg) image = image.jpeg();
-        if (resize) image = image.resize(MAX_DISPLAY_WIDTH, MAX_DISPLAY_HEIGHT, { fit: 'inside' });
+
+        if (resize) {
+            image = image.resize(
+                ImageManipulation.MAX_DISPLAY_WIDTH,
+                ImageManipulation.MAX_DISPLAY_HEIGHT,
+                { fit: 'inside' }
+            );
+        }
         
         return image.toBuffer();
     }

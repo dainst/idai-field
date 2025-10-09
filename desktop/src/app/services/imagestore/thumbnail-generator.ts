@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ThumbnailGeneratorInterface, THUMBNAIL_TARGET_HEIGHT } from 'idai-field-core';
-import { ImageManipulation } from './image-manipulation';
+import { ImageManipulation } from './manipulation/image-manipulation';
 
 
 const THUMBNAIL_TARGET_JPEG_QUALITY = 60;

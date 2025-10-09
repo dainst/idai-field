@@ -465,17 +465,18 @@ test.describe('resources', () => {
         await pause(2000);
         const label = await NavbarPage.getActiveNavLinkLabel();
         expect(label).toContain('S2');
-        await pause(2000);
         let elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(7);
         await pause(2000);
 
         await ResourcesPage.clickHierarchyButton('SE0');
+        await pause(1000);
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
+        await pause(1000);
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(0);
     });

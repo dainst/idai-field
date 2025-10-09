@@ -168,8 +168,8 @@ test.describe('resources/multi select', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickSwitchHierarchyMode();
 
-        await click(await ResourcesPage.getListItemEl('SE1'));
-        await clickWithControlKey(await ResourcesPage.getListItemEl('SE2'));
+        await click(await ResourcesPage.getListItemEl('SE2'));
+        await clickWithControlKey(await ResourcesPage.getListItemEl('SE1'));
         await ResourcesPage.clickOpenContextMenu('SE1');
         await ResourcesPage.clickContextMenuMoveButton();
         await MoveModalPage.typeInSearchBarInput('S2');

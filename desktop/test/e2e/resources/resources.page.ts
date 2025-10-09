@@ -23,6 +23,7 @@ export class ResourcesPage {
 
     public static async clickOpenContextMenu(identifier: string) {
 
+        await pause(1000);
         return rightClick(await this.getListItemEl(identifier));
     }
 

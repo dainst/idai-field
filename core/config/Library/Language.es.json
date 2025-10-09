@@ -1600,6 +1600,75 @@
         "mineralFractionKept": {
           "label": "Fracción mineral conservada",
           "description": "Indica si se conservó la fracción mineral."
+        },
+        "mineralDescription": {
+          "label": "Descripción (fracción mineral)"
+        },
+        "mineralNotes": {
+          "label": "Notas (fracción mineral)"
+        },
+        "mineralFractionMeasurement8": {
+          "label": "Medición de la fracción 8 MIN",
+          "description": "Cantidad de material mineral retenido en el tamiz de 8 mm"
+        },
+        "mineralFractionMeasurement4": {
+          "description": "Cantidad de material mineral retenido en el tamiz de 4 mm",
+          "label": "Medición de la fracción 4 MIN"
+        },
+        "mineralFractionMeasurement2": {
+          "description": "Cantidad de material mineral retenido en el tamiz de 2 mm",
+          "label": "Medición de la fracción 2 MIN"
+        },
+        "mineralFractionMeasurement1": {
+          "description": "Cantidad de material mineral retenido en el tamiz de 1 mm",
+          "label": "Medición de la fracción 1 MIN"
+        },
+        "mineralFractionMeasurement05": {
+          "label": "Medición de la fracción 0,5 MIN",
+          "description": "Cantidad de material mineral retenido en el tamiz de 0,5 mm"
+        },
+        "mineralFractionMeasurementStrain": {
+          "description": "Cantidad de material mineral retenido en el tamiz de ancho desconocido",
+          "label": "Medición de la fracción del tamizada (ancho desconocido) MIN"
+        },
+        "mineralFractionSubsampled": {
+          "label": "Fracción mineral submuestreada",
+          "description": "Indica si se tomaron submuestras de las diferentes fracciones minerales en lugar de analizarlas en su totalidad."
+        },
+        "mineralSubsamplingTechnique": {
+          "description": "Método utilizado para dividir las fracciones minerales tamizadas en porciones más pequeñas y representativas para su análisis",
+          "label": "Técnica de submuestreo realizada (fracción mineral)"
+        },
+        "mineralFractionSubsampledList": {
+          "label": "Lista de fracciones minerales submuestreadas",
+          "description": "Indica las fracciones minerales que fueron submuestreadas."
+        },
+        "mineralMultiplicationFactor8": {
+          "label": "Factor de multiplicación 8 MIN",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 8 MIN"
+        },
+        "mineralMultiplicationFactor4": {
+          "label": "Factor de multiplicación 4 MIN",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 4 MIN"
+        },
+        "mineralMultiplicationFactor1": {
+          "label": "Factor de multiplicación 1 MIN",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 1 MIN"
+        },
+        "mineralMultiplicationFactor2": {
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 2 MIN",
+          "label": "Factor de multiplicación 2 MIN"
+        },
+        "organicFractionMeasurementUnit": {
+          "description": "Unidad utilizada para expresar la cantidad de fracción orgánica",
+          "label": "Unidad de medida (fracción orgánica)"
+        },
+        "organicFractionVolumeMeasurementTechnique": {
+          "label": "Técnica de medición del volumen"
+        },
+        "mineralMultiplicationFactor05": {
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 0,5 MIN",
+          "label": "Factor de multiplicación 0,5 MIN"
         }
       },
       "label": "Procesamiento de la fracción tamizada"

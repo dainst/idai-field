@@ -909,19 +909,75 @@ Açılan projenin yapılandırmasını Field yapılandırma dosyası (dosya uzan
 Daha sonra yapılandırmayı başka bir projeye aktarmak veya aynı projede kaydedilmiş yapılandırma durumunu geri yüklemek için dosya "Proje yapılandırması" ➝ "Yapılandırmayı içe aktar..." menü seçeneği üzerinden tekrar içe aktarılabilir.
 
 
-## JSON dışa aktarma API'si
+<hr>
 
-Proje yapılandırması bir API erişim noktası aracılığıyla JSON formatında alınabilir. "Yapılandırmayı dışa aktar..." menü seçeneği aracılığıyla oluşturulabilen yapılandırma dosyaları yalnızca yapılandırmanın projeye özgü kısmını içerir. Öte yandan API erişim noktası, projede kullanılan Field kitaplıklarından (standart formlar, değer listeleri vb.) gelen tüm yapılandırma öğeleri dahil, tam yapılandırmayı çıktı olarak verir.
 
-Uygulama açıkken erişim noktasına aşağıdaki URL üzerinden ulaşılabilir:
+# İş Akışı
 
-http://localhost:3000/configuration/PROJE
+Field Desktop'taki iş akışı işlevi, bir projede gerçekleştirilen işlemleri (örneğin örnekleme, restorasyon, çizim oluşturma vb.) belgelemenizi sağlar.
 
-"PROJE" ifadesini, yapılandırmasına erişmek istediğiniz projenin adıyla değiştirin.
 
-API erişim noktasına bağlanırken "Ayarlar" menüsünün "Senkronizasyon" bölümünde "Şifreniz" olarak girilen şifre girilmelidir. Şifre *Temel Kimlik Doğrulama* yoluyla iletilir; tarayıcıya URL girildiğinde bir giriş iletişim kutusu görüntülenir. Kullanıcı adını girmek gerekli değildir, ilgili alan boş kalabilir.
+## Yapılandırma
 
-Lütfen unutmayın; API erişim noktasının JSON çıktısı "Yapılandırmayı içe aktar..." menü seçeneği üzerinden içe aktarılamaz. Buna uygun bir yapılandırma dosyası elde etmek için "Yapılandırmayı dışa aktar..." menü seçeneğini kullanın.
+Bir işlem, "İşlem" üst kategorisinin bir girdisiyle temsil edilir. "İşlem" kategorisinin kendisi dokunulmazdır, yani yalnızca alt kategorilerinin girdileri oluşturulabilir. İş akışı dokümantasyonu ile çalışmak için, önce proje için "İşlem" kategorisinin bir veya daha fazla alt kategorisinin yapılandırılması gerekir. Alt kategori, işlemin türünü belirler.
+
+Alt kategori eklemek için, "Araçlar" ➝ "Proje Yapılandırması" menüsünden yapılandırma düzenleyicisini açın, kategori filtresini "İş Akışı" veya "Tümü" seçeneğine ayarlayın ve ardından "İşlem" kategorisinin yanındaki artı düğmesine tıklayın. Alan kategori kitaplığında bulunan tüm işlem alt kategorilerini gösteren bir pencere açılır. Bu kategorilerden biri için istediğiniz formu seçin veya alternatif olarak, kendi işlem alt kategorinizi oluşturmak için yeni bir kategorinin adını girin.
+
+Her iki durumda da artık "Buna ilişkin uygulandı" ve "Çıktıları" ilişkileri için izin verilen hedef kategorilerini ayarlayabilirsiniz.
+
+"Buna ilişkin uygulandı" ilişkisi, işlemi **işlemle ilgili** girdilere bağlamak için kullanılır. Bu ilişki zorunlu bir alandır, bu nedenle bu noktada en az bir hedef kategori seçmeniz gerekir. Örneğin, burada "Buluntu" kategorisini seçerseniz, bu kategorideki işlemler buluntular üzerinde gerçekleştirilebilir.
+
+"Çıktıları" ilişkisi, süreci sürecin **sonucu** olan girdilere bağlamak için kullanılır. Bu ilişkinin belirtilmesi isteğe bağlıdır. Bu aşamada herhangi bir hedef kategori seçmezseniz, ilişki başlangıçta bu süreç alt kategorisi için kullanılamaz. Ancak, ilişkiyi daha sonra istediğiniz zaman forma ekleyebilirsiniz (bkz. *Proje yapılandırması* bölümünün *Alan ekleme* bölümü).
+
+Her iki ilişki için de izin verilen hedef kategorileri, kategori için ilgili ilişki alanı ("Buna ilişkin uygulandı" veya "Çıktıları") düzenlenerek daha sonra ayarlanabilir. Varsayılan olarak, her iki ilişki alanı da "İş Akışı" grubunda bulunur.
+
+Alt kategori ekleme hakkında daha fazla bilgi için *Proje yapılandırması* bölümünün *Kategoriler ve formlar* kısmına bakın.
+
+## Dokümantasyon
+
+İşlemler iki farklı şekilde oluşturulabilir ve görüntülenebilir: iş akışı genel bakışı ve girdi içerik menüsündeki "Belge iş akışı" seçeneği.
+
+
+
+### Genel Bakış
+
+Projede belgelenen tüm işlemlerin genel görünümüne "Araçlar" ➝ "İş Akışı" menüsünden erişilebilir. İşlemler, tanımlayıcıya veya yürütme tarihine göre sıralanabilir. Ayrıca, kategori ve tanımlayıcıya göre filtreleme ve alana özel arama seçenekleri de mevcuttur (bkz. *Arama* bölümü). Ekranın alt kısmındaki artı düğmesi kullanılarak yeni işlemler oluşturulabilir.
+
+
+### Seçili girdiler için iş akışı belgeleme
+
+Yalnızca belirli girdilerde gerçekleştirilen işlemleri görüntülemek için, istediğiniz girdileri seçin (birden fazla girdiyi aynı anda seçmek için Ctrl/Cmd veya Shift tuşunu basılı tutun) ve sağ tıklayarak içerik menüsünü açın. "Belge iş akışı" seçeneğini belirleyerek, seçili girdilerden bir veya daha fazlasında gerçekleştirilen tüm işlemleri listeleyen bir pencere açabilirsiniz. Pencere ayrıca, işlemleri oluşturmak ve bağlamak için gelişmiş seçenekler sunar.
+
+
+#### İşlem Oluşturma
+
+Pencerenin alt kısmındaki artı düğmesini kullanarak yeni işlemler oluşturabilirsiniz. İlk olarak, istediğiniz işlem alt kategorisini seçin. Yalnızca seçili tüm girdilerde gerçekleştirilebilecek işlem alt kategorileri kullanılabilir. Karşılık gelen bir işlem bulunmuyorsa artı düğmesi görüntülenmez. Birden fazla girdi seçiliyse, artı düğmesine tıkladıktan sonra iki seçenek arasından seçim yapabilirsiniz:
+
+* *Seçilen tüm girdiler için tek bir ortak işlem*: Tek bir yeni işlem oluşturulur. Bu işlem, "Buna ilişkin uygulandı" ilişkisi aracılığıyla seçilen tüm girdilere bağlanır.
+* *Girdi başına bir işlem*: Seçilen girdilerin her biri için ayrı bir yeni işlem oluşturulur ve ilgili girdiye "Buna ilişkin uygulandı" ilişkisi aracılığıyla bağlanır.
+
+
+#### İşlemleri Bağla
+
+Mevcut işlemleri, pencerenin alt kısmındaki mavi bağlantı düğmesini kullanarak seçili girdilere bağlayabilirsiniz. Düğmeye tıkladıktan sonra, girdi arayabileceğiniz bir pencere açılır. Bir girdi seçtiğinizde, "Buna ilişkin uygulandı" ilişkisi aracılığıyla bu girdiye bağlı olan tüm işlemler görüntülenir. İşlemlerden birini seçerek seçili tüm girdilere bağlayabilirsiniz. İşlemin mevcut bağlantıları korunur.
+
+Yalnızca seçili tüm girdilerde gerçekleştirilebilen alt kategorilerdeki işlemler seçilebilir. Karşılık gelen bir işlem bulunuyorsa bağlantı düğmesi görüntülenmez.
+
+
+### Bir sürecin alanları
+
+Her sürecin, her süreç için doldurulması gereken "Durum" ve "Tarih" olmak üzere iki zorunlu alanı vardır.
+
+"Durum" alanı, aşağıdaki değerlerden birinin seçilebileceği bir açılır alandır:
+
+* *Planlanmış*: İşlem henüz gerçekleştirilmedi, ancak gelecek için planlandı.
+* *Devam Ediyor*: İşlem şu anda gerçekleştiriliyor ancak henüz tamamlanmadı.
+* *Tamamlandı*: İşlem tamamlandı.
+* *İptal Edildi*: İşlem başlatıldı ancak iptal edildi.
+
+"Tarih" alanı, yürütme tarihini belirtir (duruma bağlı olarak geçmiş, şimdiki zaman veya gelecek olabilir). Tarih belirleme türü, yapılandırma düzenleyicisinde "Tarih" alanı düzenlenerek ayarlanabilir. Varsayılan gün bilgisine ek saati de belirtilebilir. Hem tekil bir tarih hem de bir tarih aralığı belirtmek mümkündür. Tarih alanları için özelleştirme seçenekleri hakkında daha fazla bilgi için, *Proje yapılandırması* bölümünün *Tarih alanlarının yapılandırılması* bölümüne bakın.
+
+Lütfen girilen tarihin seçili durumla eşleşmesi gerektiğini unutmayın. Aksi takdirde (örneğin, "Tamamlandı" durumu seçiliyken girilen tarih gelecekteyse), ilgili bir uyarı görüntülenir (bkz. *Uyarılar* bölümünün *Geçersiz Durum* kısmı).
 
 
 <hr>

@@ -1601,13 +1601,245 @@
       "fields": {
         "samplingStrategy": {
           "label": "Método de extração de amostra",
-          "description": "Categoria principal para a classificação do método de extração da amostra, por exemplo a priorização da distribuição vertical ou horizontal dos restos"
+          "description": "Categoria principal para a classificação da estratégia de extração da amostra, por exemplo a priorização da distribuição vertical ou horizontal dos restos"
         },
         "horizontalSamplingStrategy": {
-          "label": "Tipo da extração da amostra vertical"
+          "label": "Tipo da extração da amostra vertical",
+          "description": "Estratégia para a recolha de amostras na superfície de um contexto arqueológico/de um sítio arqueológico"
         },
         "verticalSamplingStrategy": {
-          "description": "Categoria principal para a classificação do tipo de método para a extração da amostra, por exemplo priorização da distribuição vertical ou horizontal dos restos"
+          "description": "Método para a colheita de amostras de sedimento no eixo vertical de um contexto arqueológico",
+          "label": "Tipo de extração de amostra vertical"
+        },
+        "profileSamplingStrategy": {
+          "label": "Tipo de amostragem no perfil",
+          "description": "Técnica especial para a colheita de sedimentos de diferentes seções de estratigrafia exposta"
+        },
+        "systematicSamplingStrategy": {
+          "label": "Tipo de recolha sistemática de amostras",
+          "description": "Abordagem específica na recolha de amostras de sedimento de acordo com um método estruturado padronizado"
+        },
+        "proportionSystematicSampling": {
+          "label": "Parte da área de amostragem (%)",
+          "description": "Percentagem da área/do sedimento que vai ser amostrada por foram probabilística e sistemática"
+        },
+        "quadrantDimensionsSystematicSampling": {
+          "label": "Dimensões do quadrante (m2)",
+          "description": "Tamanho do quadrante de amostragem aleatória em grelha sistemática"
+        }
+      }
+    },
+    "SievedFractionProcessing": {
+      "fields": {
+        "organicMultiplicationFactor05": {
+          "label": "Fator de multiplicação 0,5 ORG",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 0,5 ORG"
+        },
+        "organicMultiplicationFactor035": {
+          "label": "Fator de multiplicação 0,35 ORG",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 0,35 ORG"
+        },
+        "mineralDescription": {
+          "label": "Descrição (fração mineral)"
+        },
+        "mineralNotes": {
+          "label": "Anotação (fração mineral)"
+        },
+        "organicFractionVolumeMeasurementTechnique": {
+          "description": "Método para determinar o volume da fração orgânica",
+          "label": "Técnica de medição do volume"
+        },
+        "organicMultiplicationFactorStrain": {
+          "label": "Medida de fração de peneiramento (malha desconhecida) ORG",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos orgânicos na fração da peneira"
+        },
+        "organicDescription": {
+          "label": "Descrição (fração orgânica)"
+        },
+        "organicNotes": {
+          "label": "Anotação (fração orgânica)"
+        },
+        "mineralFractionMeasurement8": {
+          "description": "Quantia de material mineral retido na peneira de 8 mm",
+          "label": "Medição de fração 8 MIN"
+        },
+        "mineralFractionMeasurement4": {
+          "description": "Quantia de material mineral retido na peneira de 4 mm",
+          "label": "Medição de fração 4 MIN"
+        },
+        "mineralFractionMeasurementStrain": {
+          "description": "Quantia de material mineral retido na peneira",
+          "label": "Medida de fração de peneiramento (malha desconhecida) MIN"
+        },
+        "organicMultiplicationFactor2": {
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 2 ORG",
+          "label": "Fator de multiplicação 2 ORG"
+        },
+        "organicFractionSubsampledList": {
+          "description": "Indica a fração orgânica que recebei tratamento de subamostragem.",
+          "label": "Lista das subamostras orgânicas"
+        },
+        "organicFractionTreatmentType": {
+          "label": "Tipo de tratamento da fração orgânica",
+          "description": "Tratamento das frações orgânicas peneiradas após peneiramento"
+        },
+        "organicFractionSubsampled": {
+          "label": "Subamostras da fração orgânica",
+          "description": "Indica se as frações orgânicas foram divididas em vez de serem analisadas completamente."
+        },
+        "organicSubsamplingTechnique": {
+          "label": "Técnica de subamostra executada (fração orgânica)",
+          "description": "Método para a divisão de frações orgânicas peneiradas em porções mais pequenas e representativas para a análise"
+        },
+        "organicFractionMeasured": {
+          "label": "Fração orgânica medida",
+          "description": "Indica se o volume/peso da fração orgânica foi registada."
+        },
+        "organicFractionMeasurement4": {
+          "label": "Medida de fração 4 ORG",
+          "description": "Quantia de material orgânico retido na peneira de 4 mm"
+        },
+        "organicFractionMeasurement8": {
+          "label": "Medida de fração 8 ORG",
+          "description": "Quantia de material orgânico retido na peneira de 8 mm"
+        },
+        "organicFractionMeasurement2": {
+          "label": "Medida de fração 2 ORG",
+          "description": "Quantia de material orgânico retido na peneira de 2 mm"
+        },
+        "organicFractionMeasurement05": {
+          "label": "Medida de fração 0,5 ORG",
+          "description": "Quantia de material orgânico retido na peneira de 0,5 mm"
+        },
+        "organicFractionMeasurement035": {
+          "label": "Medida de fração 0,35 ORG",
+          "description": "Quantia de material orgânico retido na peneira de 0,35 mm"
+        },
+        "organicFractionMeasurement025": {
+          "label": "Medida de fração 0,25 ORG",
+          "description": "Quantia de material orgânico retido na peneira de 0,25 mm"
+        },
+        "organicFractionMeasurement0125": {
+          "label": "Medida de fração 0,125 ORG",
+          "description": "Quantia de material orgânico retido na peneira de 0,125 mm"
+        },
+        "organicFractionMeasurementStrain": {
+          "description": "Quantia de material orgânico retido na peneira",
+          "label": "Medida de fração de peneiramento (malha desconhecida) ORG"
+        },
+        "mineralFractionKept": {
+          "description": "Indica se a fração mineral foi guardada.",
+          "label": "Fração mineral guardada"
+        },
+        "mineralFractionMeasured": {
+          "label": "Fração mineral medida",
+          "description": "Indica se o volume/peso da fração mineral foi registada."
+        },
+        "mineralFractionMeasurementUnit": {
+          "label": "Unidade de medida (fração mineral)",
+          "description": "Unidade em que a quantia da fração mineral é indicada"
+        },
+        "mineralFractionMeasurement2": {
+          "label": "Medição de fração 2 MIN",
+          "description": "Quantia de material mineral retido na peneira de 2 mm"
+        },
+        "mineralFractionMeasurement1": {
+          "label": "Medição de fração 1 MIN",
+          "description": "Quantia de material mineral retido na peneira de 1 mm"
+        },
+        "mineralFractionMeasurement05": {
+          "label": "Medição de fração 0,5 MIN",
+          "description": "Quantia de material mineral retido na peneira de 0,5 mm"
+        },
+        "mineralFractionSubsampled": {
+          "label": "Subamostra aleatória da fração mineral",
+          "description": "Indica se as frações minerais foram divididas em vez de serem analisadas completamente."
+        },
+        "mineralSubsamplingTechnique": {
+          "label": "Técnica de subamostra executada (fração mineral)",
+          "description": "Método para a divisão de frações minerais peneiradas em porções mais pequenas e representativas para a análise"
+        },
+        "mineralFractionSubsampledList": {
+          "label": "Lista das frações minerais amostradas",
+          "description": "Indica a fração mineral que recebeu tratamento de amostragem aleatória."
+        },
+        "mineralMultiplicationFactor8": {
+          "label": "Fator de multiplicação 8 MIN",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 8 MIN"
+        },
+        "mineralMultiplicationFactor4": {
+          "label": "Fator de multiplicação 4 MIN",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 4 MIN"
+        },
+        "mineralMultiplicationFactor2": {
+          "label": "Fator de multiplicação 2 MIN",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 2 MIN"
+        },
+        "mineralMultiplicationFactor1": {
+          "label": "Fator de multiplicação 1 MIN",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 1 MIN"
+        },
+        "mineralMultiplicationFactor05": {
+          "label": "Fator de multiplicação 0,5 MIN",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 0,5 MIN"
+        },
+        "organicFractionMeasurementUnit": {
+          "description": "Unidade em que a quantia da fração orgânica é indicada",
+          "label": "Unidade de medida (fração orgânica)"
+        },
+        "mineralMultiplicationFactorStrain": {
+          "label": "Medida de fração de peneiramento (malha desconhecida) MIN",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos minerais na fração da peneira"
+        },
+        "organicMultiplicationFactor8": {
+          "label": "Fator de multiplicação 8 ORG",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 8 ORG"
+        },
+        "organicMultiplicationFactor4": {
+          "label": "Fator de multiplicação 4 ORG",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 4 ORG"
+        },
+        "organicMultiplicationFactor025": {
+          "label": "Fator de multiplicação 0,25 ORG",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 0,25 ORG"
+        },
+        "organicMultiplicationFactor0125": {
+          "label": "Fator de multiplicação 0,125 ORG",
+          "description": "Fator de multiplicação utilizado na estimativa da quantia total dos restos da fração de 0,125 ORG"
+        }
+      },
+      "label": "Fração da peneira para processamento"
+    },
+    "Sieving": {
+      "label": "Peneiramento",
+      "fields": {
+        "waterOrigin": {
+          "label": "Origem da água",
+          "description": "Origem da água utilizada na processão da amostra"
+        },
+        "waterChangeFrequency": {
+          "description": "Frequência com que a água utilizada na processão da amostra é trocada",
+          "label": "Frequência de troca da água"
+        },
+        "samplePretreated": {
+          "label": "Pré-tratamento da amostra",
+          "description": "Indica se a amostra de sedimento recebeu processamento antes de peneirar."
+        },
+        "pretreatmentType": {
+          "label": "Tipo de pré-tratamento",
+          "description": "Método específico que foi utilizado na amostra de sedimento antes de peneirar"
+        },
+        "pretreatmentChemicals": {
+          "label": "Químicos utilizados",
+          "description": "Nome das substâncias químicas utilizadas"
+        },
+        "sievingMethod": {
+          "label": "Método de peneiramento",
+          "description": "Técnica utilizada para peneirar e separar as frações minerais e orgânicas da amostra"
+        },
+        "sievingMeshes": {
+          "label": "Peneira utilizada",
+          "description": "Tamanho da malha utilizada para separar materiais ao peneirar"
         }
       }
     }

@@ -1429,14 +1429,16 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
 </div>
 
 
-##### Boyutlar
+##### Boyut, ağırlık ve hacim
 
-"Boyut" giriş türündeki alanlar, her biri birkaç boyut girişi içerebilen liste alanlarıdır. Bir boyut girişi, her boyut için ayrı bir sütun oluşturulan aşağıdaki alt alanlardan oluşur:
+"Boyut", "Ağırlık" ve "Hacim" giriş türlerindeki alanlar, her biri birkaç giriş içerebilen liste alanlarıdır. Bir giriş, her giriş için ayrı bir sütun oluşturulan aşağıdaki alt alanlardan oluşur:
 
 * *inputValue*: Ölçülen sayısal değer
-* *inputRangeEndValue*: Boyutta bir aralık verilecekse ölçülen ikinci sayısal değer
-* *inputUnit*: Ölçüm birimi. Olası değerler: *mm*, *cm*, *m*
-* *measurementPosition*: Alan "Ölçüldüğü gibi". Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *inputRangeEndValue*: Ölçümde bir değer aralığı belirtilecekse ölçülen ikinci sayısal değer.
+* *inputUnit*: Ölçüm birimi. Olası değerler: *mm*, *cm*, *m* (Boyut) / *mg*, *g*, *kg* (Ağırlık) / *ml*, *l* (Hacim).
+* *measurementPosition*: (yalnızca boyut özellikleri için) "Ölçüldüğü gibi" alanı. Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *measurementDevice*: (yalnızca ağırlık özellikleri için) "Ölçüm cihazı" alanı . Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *measurementTechnique*: (yalnızca hacim özellikleri için) "Ölçüm yöntemi" alanı . Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir. 
 * *measurementComment*: Yorum/açıklama, çok dilli metin alanı
 * *isImprecise*: "Hassas olmayan". Olası değerler şunlardır: *true* (evet), *false* (hayır)
 

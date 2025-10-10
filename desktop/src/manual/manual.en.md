@@ -863,24 +863,86 @@ The value editor allows you to customize the properties of a value:
 * *Semantic references*: Links to related concepts in other systems (see section *References*).
 
 
-### References
+## References
 
 Forms, fields, valuelists as well as their values can be linked to external resources via references. A distinction is made between general and semantic references.
 
-**General references** are URLs to web pages where further information on the respective element of the project configuration can be accessed. These URLs are displayed in the information pop-up that can be displayed in the resource editor by right-clicking on a field or value, and can thus serve as an aid for data entry.
 
-**Semantic references** represent links to related concepts in other systems (vocabularies, ontologies, etc.) and consist of a predicate and a URI. One of the following relations can be selected as the predicate:
+### General references
 
-*Simple Knowledge Organization System*:
+General references are URLs to web pages where further information on the respective element of the project configuration can be accessed. These URLs are displayed in the information pop-up that can be displayed in the resource editor by right-clicking on a field or value, and can thus serve as an aid for data entry.
+
+
+### Semantic references
+
+Semantic references represent links to related concepts in other systems (vocabularies, ontologies, etc.) and consist of a predicate and a URI.
+
+
+#### Mapping relations
+
+One of the following relations can be selected as a predicate:
+
 * skos:exactMatch
 * skos:closeMatch
 * skos:broadMatch
 * skos:narrowMatch
 * skos:relatedMatch
-
-*iDAI.world*:
 * idw:unknownMatch
 
+The first five relations are standard mapping relations of the *Simple Knowledge Organization System (SKOS)*. *idw:unknownMatch* is a specifically defined addition. All relations are sub-properties of *skos:mappingRelation* and are intended - by convention - for links between different concept schemes.
+
+The following explanations are based on the [SKOS reference](https://www.w3.org/TR/skos-reference/#mapping), where you can find further information.
+
+
+##### skos:exactMatch
+
+The relation *skos:exactMatch* is used to link two concepts, indicating a high degree of confidence that the concepts can be used interchangeably across a wide range of information retrieval applications.
+
+
+##### skos:closeMatch
+
+The relation *skos:closeMatch* is used to link two concepts that are sufficiently similar that they can be used interchangeably in some information retrieval applications.
+
+
+##### skos:broadMatch
+
+The relation *skos:broadMatch* is used to state a hierarchical mapping link between two concepts, with the target concept being identified as a broader concept (i.e. the linked concept encompasses the concept in the Field project configuration).
+
+If [A] is the element (e.g. field or value) of the Field project configuration and [B] is the concept identified by the URI:
+
+[A] skos:broadMatch [B] = [B] is broader than [A]
+
+
+##### skos:narrowMatch
+
+The relation *skos:narrowMatch* is used to state a hierarchical mapping link between two concepts, with the target concept being identified as a narrower concept (i.e. the concept in the Field project configuration encompasses the linked concept).
+
+If [A] is the element (e.g. field or value) in the Field project configuration and [B] is the concept identified by the URI:
+
+[A] skos:narrowMatch [B] = [B] is narrower than [A]
+
+
+##### skos:relatedMatch
+
+The relation *skos:relatedMatch* is used to state an associative mapping link between two concepts. It should be used when two concepts are related but neither is broader or narrower than the other and they are not equivalent. The relation is appropriate for topical, functional, or contextual associations (e.g. a link between "Amphora" and "Wine trade").
+
+
+##### idw:unknownMatch
+
+The relation *idw:unknownMatch* is used to link two concepts, stating that the type of mapping is not known. It should be used when there is reasonable evidence that two concepts are related, but the exact mapping kind (equivalence, hierarchical, or associative) has not yet been determined.
+
+
+##### Decision guide
+
+Same scope and intent? ➝ *skos:exactMatch*
+
+Very close, but caveats remain? ➝ *skos:closeMatch*
+
+Strictly more general/specific? ➝ *skos:broadMatch* / *skos:narrowMatch*
+
+Only associated, not hierarchical/equivalent? ➝ *skos:relatedMatch*
+
+Unclear; mark for curation? ➝ *idw:unknownMatch*
 
 
 ## Select project languages

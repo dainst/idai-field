@@ -872,23 +872,86 @@ Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
 * *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
 
 
-### Verweise
+## Verweise
 
 Formulare, Felder, Wertelisten sowie deren Werte können durch Verweise mit externen Ressourcen verknüpft werden. Unterschieden wird dabei zwischen allgemeinen und semantischen Verweisen.
 
-**Allgemeine Verweise** sind URLs zu Webseiten, über die weitere Informationen zum jeweiligen Element der Projektkonfiguration abgerufen werden können. Diese URLs werden im Informations-Popup angezeigt, das im Ressourceneditor über einen Rechtsklick auf das Feld oder den Wert eingeblendet werden kann, und können so als Hilfestellung bei der Dateneingabe dienen.
 
-**Semantische Verweise** stellen Verknüpfungen mit verwandten Konzepten in anderen Systemen (Vokabulare, Ontologien etc.) dar und bestehen aus einem Prädikat sowie einem URI. Als Prädikat kann eine der folgenden Relationen ausgewählt werden:
+### Allgemeine Verweise
 
-*Simple Knowledge Organization System*:
+Allgemeine Verweise sind URLs zu Webseiten, über die weitere Informationen zum jeweiligen Element der Projektkonfiguration abgerufen werden können. Diese URLs werden im Informations-Popup angezeigt, das im Ressourceneditor über einen Rechtsklick auf das Feld oder den Wert eingeblendet werden kann, und können so als Hilfestellung bei der Dateneingabe dienen.
+
+
+### Semantische Verweise
+
+Semantische Verweise stellen Verknüpfungen mit verwandten Konzepten in anderen Systemen (Vokabulare, Ontologien etc.) dar und bestehen aus einem Prädikat sowie einem URI.
+
+
+#### Mapping-Relationen
+
+Als Prädikat kann eine der folgenden Relationen ausgewählt werden:
+
 * skos:exactMatch
 * skos:closeMatch
 * skos:broadMatch
 * skos:narrowMatch
 * skos:relatedMatch
-
-*iDAI.world*:
 * idw:unknownMatch
+
+Die ersten fünf Relationen sind Standard-Mapping-Relationen des *Simple Knowledge Organization System (SKOS)*. *idw:unknownMatch* ist eine speziell definierte Ergänzung. Alle Relationen sind Untereigenschaften von *skos:mappingRelation* und sind – gemäß Konvention – für Verknüpfungen zwischen verschiedenen Konzeptschemata vorgesehen.
+
+Die folgenden Erläuterungen orientieren sich an der [SKOS-Referenz](https://www.w3.org/TR/skos-reference/#mapping), in der Sie weitere Informationen finden.
+
+
+##### skos:exactMatch
+
+Die Relation *skos:exactMatch* wird verwendet, um zwei Konzepte zu verknüpfen, wobei ein hohes Maß an Sicherheit angegeben wird, dass die Konzepte in einer Vielzahl von Anwendungen zur Informationsgewinnung austauschbar verwendet werden können.
+
+
+##### skos:closeMatch
+
+Die Relation *skos:closeMatch* wird verwendet, um zwei Konzepte zu verknüpfen, die so ähnlich sind, dass sie in einigen Anwendungen zur Informationsgewinnung austauschbar verwendet werden können.
+
+
+##### skos:broadMatch
+
+Die Relation *skos:broadMatch* wird verwendet, um eine hierarchische Mapping-Verbindung zwischen zwei Konzepten anzugeben, wobei das Zielkonzept als ein weiter gefasstes Konzept ausgewiesen wird (d. h. das verknüpfte Konzept umfasst das Konzept in der Field-Projektkonfiguration).
+
+Wenn [A] das Element (z. B. Feld oder Wert) der Field-Projektkonfiguration ist und [B] das durch den URI identifizierte Konzept:
+
+[A] skos:broadMatch [B] = [B] ist weiter gefasst als [A]
+
+
+##### skos:narrowMatch
+
+Die Relation *skos:narrowMatch* wird verwendet, um eine hierarchische Mapping-Verbindung zwischen zwei Konzepten anzugeben, wobei das Zielkonzept als ein enger gefasstes Konzept ausgewiesen wird (d. h. das Konzept in der Field-Projektkonfiguration umfasst das verknüpfte Konzept).
+
+Wenn [A] das Element (z. B. Feld oder Wert) in der Field-Projektkonfiguration ist und [B] das durch den URI identifizierte Konzept:
+
+[A] skos:narrowMatch [B] = [B] ist enger gefasst als [A]
+
+
+##### skos:relatedMatch
+
+Die Relation *skos:relatedMatch* wird verwendet, um eine assoziative Mapping-Verbindung zwischen zwei Konzepten anzugeben. Sie sollte eingesetzt werden, wenn zwei Konzepte miteinander in Beziehung stehen, aber keines der beiden weiter oder enger gefasst ist und sie nicht gleichwertig sind. Die Relation ist geeignet für thematische, funktionale oder kontextuelle Assoziationen (z. B. eine Verknüpfung zwischen "Amphore" und "Weinhandel").
+
+
+##### idw:unknownMatch
+
+Die Relation *idw:unknownMatch* wird verwendet, um zwei Konzepte zu verknüpfen, wobei angegeben wird, dass die Art der Zuordnung nicht bekannt ist. Sie sollte eingesetzt werden, wenn es hinreichende Anhaltspunkte dafür gibt, dass zwei Konzepte miteinander in Beziehung stehen, die genaue Art der Zuordnung (Äquivalenz, hierarchisch oder assoziativ) jedoch noch nicht festgelegt wurde.
+
+
+##### Entscheidungshilfe
+
+Gleicher Umfang und gleiche Absicht? ➝ *skos:exactMatch*
+
+Sehr ähnlich, aber mit Vorbehalten? ➝ *skos:closeMatch*
+
+Eindeutig allgemeiner/spezifischer? ➝ *skos:broadMatch* / *skos:narrowMatch*
+
+Nur assoziiert, nicht hierarchisch/äquivalent? ➝ *skos:relatedMatch*
+
+Unklar; zur Überprüfung markieren? ➝ *idw:unknownMatch*
 
 
 ## Projektsprachen auswählen

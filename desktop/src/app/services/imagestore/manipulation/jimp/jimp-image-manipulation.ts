@@ -9,7 +9,15 @@ export module JimpImageManipulation {
 
     export function getImageObject(buffer: Buffer): Promise<any> {
 
-        return Jimp.fromBuffer(buffer);
+        return Jimp.fromBuffer(
+            buffer,
+            {
+                'image/jpeg': {
+                    maxResolutionInMP: 1000,
+                    maxMemoryUsageInMB: 2000
+                }
+            }
+        );
     }
 
 

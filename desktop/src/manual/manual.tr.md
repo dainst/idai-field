@@ -847,7 +847,8 @@ Projeye özgü bir değer listesine sağ tıklandığında aşağıdaki seçenek
 İçerik menüsü aracılığıyla veya bir değer listesine çift tıklanarak, listenin özelliklerinin düzenlenebileceği bir düzenleyici açılabilir:
 
 * *Değer listesi açıklaması*: Değer listesi hakkında daha ayrıntılı bilgi belirtebileceğiniz bir açıklama metni. Bu metin, liste seçildiğinde değer listesi yönetiminde görüntülenir.
-* *Referanslar*: Diğer sistemlerdeki değer listesi veya tanımlar hakkında daha fazla bilgiye başvurmak için burada URL'leri belirtin.
+* *Genel referanslar*: Değer listesi hakkında daha fazla bilginin bulunabileceği web sitelerinin URL'leri (bkz. *Referanslar* bölümü).
+* *Semantik referanslar*: Diğer sistemlerdeki ilgili kavramlara bağlantılar (bkz. *Referanslar* bölümü).
 * *Değerler*: Değer listesine dahil edilecek yeni bir değerin istenen tanımlayıcısını girmek için "Yeni değer" metin alanını kullanın. Her durumda değer düzenleyicisi açılır ve bu düzenleyici daha sonra her değerin yanındaki düzenleme düğmesine tıklanarak da çağrılabilir (bkz. *Değerleri düzenleme* bölümü).
 * *Otomatik sıralama*: Bu seçenek etkinleştirilirse, değerler her zaman alfanümerik sırayla görüntülenir. Değerleri daha sonra istediğiniz sıraya sürükleyip bırakmak için bu seçeneği devre dışı bırakabilirsiniz.
 
@@ -858,7 +859,28 @@ Değer düzenleyici, bir değeri özelleştirmenize olanak tanır:
 
 * *Etiket*: Değerin görüntü etiketi. Farklı diller için etiketler girebilirsiniz.
 * *Açıklama*: Değer hakkında daha ayrıntılı bilgi belirtebileceğiniz bir açıklama metni. Bu metin, yapılandırma düzenleyicisinde ilgili değer için bir araç ipucu olarak görüntülenir.
-* *Referanslar*: Diğer sistemlerdeki tanımlara referans vermek için burada URL'leri belirtin.
+* *Genel referanslar*: Değer hakkında daha fazla bilginin bulunabileceği web sitelerinin URL'leri (bkz. *Referanslar* bölümü).
+* *Semantik referanslar*: Diğer sistemlerdeki ilgili kavramlara bağlantılar (bkz. *Referanslar* bölümü).
+
+
+### Referanslar
+
+Formlar, alanlar, değer listeleri ve bunların değerleri referanslar aracılığıyla harici kaynaklara bağlanabilir. Genel ve semantik referanslar olarak ayrılmaktadır.
+
+**Genel referanslar**, proje yapılandırmasının ilgili öğesi hakkında daha fazla bilgiye erişebileceğiniz web sayfalarının URL'leridir. Bu URL'ler, girdi düzenleyicide bir alana veya değere sağ tıklanarak bir açılır pencerede görüntülenir ve veri girişi konusunda yardımcı olabilir.
+
+**Semantik referanslar**, diğer sistemlerdeki ilgili kavramlara (sözlükler, ontolojiler vb.) bağlantıları temsil eder ve bir tanım ve bir URI'den oluşur. Aşağıdaki ilişkilerden biri tanım olarak seçilebilir:
+
+*Simple Knowledge Organization System*:
+* skos:exactMatch
+* skos:closeMatch
+* skos:broadMatch
+* skos:narrowMatch
+* skos:relatedMatch
+
+*iDAI.world*:
+* idw:unknownMatch
+
 
 
 ## Proje dillerini değiştirme

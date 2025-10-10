@@ -259,7 +259,7 @@ export class ImageUploader {
     private async readFile(filePath: string): Promise<Buffer> {
 
         try {
-            return (await getAsynchronousFs().readFile(filePath));
+            return Buffer.from(await getAsynchronousFs().readFile(filePath));
         } catch (err) {
             console.error(err);
             throw [M.IMAGES_ERROR_FILEREADER, path.basename(filePath)];

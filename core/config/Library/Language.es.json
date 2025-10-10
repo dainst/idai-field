@@ -745,13 +745,13 @@
           "label": "Determinación de la edad"
         },
         "ageDeterminationBasis": {
-          "label": "Base de la determinación de la edad"
+          "label": "Elementos para la determinación de la edad"
         },
         "palaeopathologicalReport": {
           "label": "Diagnóstico paleopatológico"
         },
         "conditionComment": {
-          "label": "Comentario sobre estado de conservación"
+          "label": "Comentario sobre el estado de conservación"
         },
         "sexDetermination": {
           "label": "Determinación del sexo"

@@ -23,6 +23,10 @@
             "translation": "src/app/i18n/angular/messages.en.xlf",
             "baseHref": "/"
           },
+          "es": {
+            "translation": "src/app/i18n/angular/messages.es.xlf",
+            "baseHref": "/"
+          },
           "it": {
             "translation": "src/app/i18n/angular/messages.it.xlf",
             "baseHref": "/"
@@ -96,6 +100,9 @@
             "en": {
               "localize": ["en"]
             },
+            "es": {
+              "localize": ["es"]
+            },
             "it": {
               "localize": ["it"]
             },
@@ -138,6 +145,9 @@
           "configurations": {
             "en": {
               "buildTarget": "idai-field:build:en"
+            },
+            "es": {
+              "buildTarget": "idai-field:build:es"
             },
             "it": {
               "buildTarget": "idai-field:build:it"

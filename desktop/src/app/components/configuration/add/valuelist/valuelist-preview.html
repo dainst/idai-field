@@ -23,6 +23,12 @@
             <div class="preview-text">{{getValuelistDescription()}}</div>
         </div>
 
+        <div *ngIf="valuelist.references?.length || valuelist.semanticReferences?.length" class="preview-section">
+            <references-info [references]="valuelist.references"
+                             [semanticReferences]="valuelist.semanticReferences"
+                             [context]="'configuration'"></references-info>
+        </div>
+
         <div *ngIf="valuelist.values" class="preview-section">
             <b i18n="@@configuration.valuesHeading">Werte:</b>
             <valuelist-view [valuelist]="valuelist"

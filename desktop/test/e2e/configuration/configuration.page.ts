@@ -157,6 +157,12 @@ export class ConfigurationPage {
     }
 
 
+    public static getConditionLabel() {
+
+        return getText('.field-condition-label');
+    }
+
+
     // type in
 
     public static typeInConfirmDeletionInput(text: string) {

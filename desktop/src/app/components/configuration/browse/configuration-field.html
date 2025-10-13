@@ -34,7 +34,9 @@
             </li>
             <li *ngIf="field.condition" class="list-group-item">
                 <div><b i18n="@@configuration.field.condition">Bedingung</b><span class="oneliner-colon">:</span></div>
-                <div><i>{{getFieldLabel(field.condition.fieldName)}}:</i> {{getConditionValuesLabel()}}</div>
+                <div class="field-condition-label">
+                    <i>{{getFieldLabel(field.condition.fieldName)}}:</i> {{getConditionValuesLabel()}}
+                </div>
             </li>
             <li *ngIf="field.valuelist" class="list-group-item">
                 <valuelist-view [valuelist]="field.valuelist"></valuelist-view>

@@ -809,6 +809,32 @@ test.describe('configuration', () => {
     });
 
 
+    test('change field condition of library field', async () => {
+
+        await ConfigurationPage.clickCreateSubcategory('Process');
+        await AddCategoryFormModalPage.clickSelectForm('Sampling:default');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'is-carried-out-on-target-container');
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+
+        await ConfigurationPage.clickSelectGroup('properties');
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabel()).toEqual('Art der Probenentnahme: Horizontal');
+
+        await ConfigurationPage.clickOpenContextMenuForField('horizontalSamplingStrategy');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('state', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 2, 'field');
+        await EditConfigurationPage.clickConfirm();
+        
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabel()).toEqual('Status: Abgeschlossen');
+
+        await ConfigurationPage.save();
+    });
+
+
     test('create composite field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');

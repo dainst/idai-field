@@ -142,6 +142,12 @@ export class ConfigurationPage {
     }
 
 
+    public static getFieldConditionLabel() {
+
+        return getLocator('.field-condition-label');
+    }
+
+
     // get text
 
     public static async getValue(index: number) {
@@ -157,9 +163,9 @@ export class ConfigurationPage {
     }
 
 
-    public static getConditionLabel() {
+    public static getConditionLabelText() {
 
-        return getText('.field-condition-label');
+        return getText(this.getFieldConditionLabel());
     }
 
 

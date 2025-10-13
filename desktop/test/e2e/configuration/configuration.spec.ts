@@ -1,6 +1,6 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -790,10 +790,10 @@ test.describe('configuration', () => {
         await EditConfigurationPage.clickConfirm();
 
         await ConfigurationPage.clickSelectField('featureForm');
-        expect(await ConfigurationPage.getConditionLabel()).toEqual('Störung: Ja');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Störung: Ja');
 
         await ConfigurationPage.clickSelectField('comparison');
-        expect(await ConfigurationPage.getConditionLabel()).toEqual('Form der stratigraphischen Einheit: annähernd');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Form der stratigraphischen Einheit: annähernd');
 
         await ConfigurationPage.save();
 
@@ -827,7 +827,7 @@ test.describe('configuration', () => {
 
         await ConfigurationPage.clickSelectGroup('properties');
         await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
-        expect(await ConfigurationPage.getConditionLabel()).toEqual('Art der Probenentnahme: Horizontal');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Art der Probenentnahme: Horizontal');
 
         await ConfigurationPage.clickOpenContextMenuForField('horizontalSamplingStrategy');
         await ConfigurationPage.clickContextMenuEditOption();
@@ -836,7 +836,33 @@ test.describe('configuration', () => {
         await EditConfigurationPage.clickConfirm();
         
         await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
-        expect(await ConfigurationPage.getConditionLabel()).toEqual('Status: Abgeschlossen');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Status: Abgeschlossen');
+
+        await ConfigurationPage.save();
+    });
+
+
+    test('remove field condition of library field', async () => {
+
+        await ConfigurationPage.clickCreateSubcategory('Process');
+        await AddCategoryFormModalPage.clickSelectForm('Sampling:default');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'is-carried-out-on-target-container');
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+
+        await ConfigurationPage.clickSelectGroup('properties');
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Art der Probenentnahme: Horizontal');
+
+        await ConfigurationPage.clickOpenContextMenuForField('horizontalSamplingStrategy');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('', 'field');
+        await EditConfigurationPage.clickConfirm();
+        
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        await pause(1000);
+        waitForNotExist(await ConfigurationPage.getFieldConditionLabel());
 
         await ConfigurationPage.save();
     });

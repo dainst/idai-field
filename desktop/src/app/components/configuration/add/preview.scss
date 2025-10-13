@@ -1,47 +1,64 @@
 .preview {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    border-radius: 10px;
-    user-select: none;
-  
-    #preview-header {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px;
+  user-select: none;
+
+  #preview-header {
+    height: 40px;
+    padding: 8px 10px 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    .preview-item-title {
       position: relative;
-      top: 5px;
-      height: 40px;
-      padding: 0 5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      top: 2px;
       
-      .preview-item-title {
+      b {
+        margin-right: 6px;
+        font-weight: 600;
+      }
+
+      b,
+      code {
         position: relative;
-        top: 2px;
-        
-        b {
-          margin: 6px;
-        }
-  
-        b,
-        code {
-          position: relative;
-          bottom: 2px;
-        }
+        bottom: 2px;
       }
     }
-  
-    ul {
-      list-style: none;
-      padding: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  #preview-body {
+    height: calc(100% - 45px);
+    margin: 0 10px 10px 10px;
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: white;
+
+    .preview-section {
+      padding-bottom: 12px;
     }
-  
-    #preview-body {
-      height: calc(100% - 45px);
-      margin: 5px;
-      overflow: hidden;
-      overflow-y: scroll;
-      background-color: white;
+
+    .preview-text,
+    a {
+      font-size: 14px;
+    }
+
+    valuelist-view {
+      display: block;
+      margin-top: 3px;
     }
   }
+
+  b {
+    font-weight: 500;
+  }
+}
   

@@ -1537,7 +1537,7 @@
         "label": "Vidrio"
       },
       "Holz": {
-        "label": ""
+        "label": "Madera"
       },
       "Holzwerkstoff": {
         "label": ""
@@ -1601,7 +1601,7 @@
         "label": "Vidrio"
       },
       "Holz": {
-        "label": ""
+        "label": "Madera"
       },
       "Holzwerkstoff": {
         "label": ""
@@ -2275,7 +2275,7 @@
         "label": ""
       },
       "Konsistenz": {
-        "label": ""
+        "label": "Consistencia"
       },
       "Komposition": {
         "label": ""
@@ -2611,7 +2611,7 @@
         "label": ""
       },
       "Überzug": {
-        "label": ""
+        "label": "Engobe"
       }
     }
   },

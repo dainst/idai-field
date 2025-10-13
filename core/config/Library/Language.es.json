@@ -1,10 +1,10 @@
 {
   "groups": {
-    "stem": "Datos maestros",
+    "stem": "Datos principales",
     "time": "Cronología",
     "position": "Ubicación / contexto",
-    "dimension": "Medidas",
-    "identification": "Clasificación",
+    "dimension": "Dimensiones",
+    "identification": "Determinación",
     "mineralFraction": "Fracción mineral",
     "organicFraction": "Fracción orgánica",
     "hierarchy": "Jerarquía",
@@ -17,18 +17,18 @@
   "commons": {
     "dimensionLength": {
       "label": "Longitud",
-      "description": "Longitud medida"
+      "description": "Indicación de la longitud"
     },
     "dimensionWidth": {
-      "label": "Anchura",
-      "description": "Anchura en la máxima/mínima extensión"
+      "label": "Ancho",
+      "description": "Ancho en la máxima/mínima extensión"
     },
     "dimensionHeight": {
       "label": "Altura",
       "description": "Altura en la máxima/mínima extensión"
     },
     "dimensionVerticalExtent": {
-      "label": "Nivel",
+      "label": "Extensión vertical",
       "description": "Nivel del límite superior/inferior o del nivel de tránsito"
     },
     "processor": {
@@ -40,10 +40,10 @@
     },
     "description": {
       "label": "Descripción",
-      "description": "Campo de descripción sin restricciones"
+      "description": "Campo de descripción libre"
     },
     "period": {
-      "label": "Época"
+      "label": "Período"
     },
     "date": {
       "label": "Fecha",
@@ -55,7 +55,7 @@
     },
     "spatialLocation": {
       "label": "Descripción de la ubicación",
-      "description": "Descripción de la posición dentro del yacimiento, XXXXX o la estructura"
+      "description": "Descripción de la posición dentro del yacimiento, la zanja o la estructura"
     },
     "provenance": {
       "label": "Procedencia",
@@ -63,7 +63,7 @@
     },
     "dimensionPerimeter": {
       "label": "Perímetro",
-      "description": "Circunferencia de los objetos"
+      "description": "Indicación de la circunferencia de los objetos"
     },
     "dimensionOther": {
       "label": "Otras dimensiones",
@@ -92,7 +92,7 @@
     },
     "dimensionDiameter": {
       "label": "Diámetro",
-      "description": "Diámetro de los objetos"
+      "description": "Indicación del diámetro de los objetos"
     },
     "dimensionDepth": {
       "description": "Profundidad en la máxima/mínima extensión",
@@ -112,7 +112,7 @@
       "label": "ID SIG web"
     },
     "shortDescriptionAddendum": {
-      "label": "Breve descripción (Anexo)"
+      "label": "Descripción breve (Anexo)"
     },
     "phase": {
       "label": "Fase"
@@ -164,16 +164,16 @@
           "label": "Clasificación del yacimiento"
         },
         "gazId": {
-          "label": "ID de Gazetteer",
-          "description": "Número de referencia en el diccionario geográfico"
+          "label": "Gazetteer ID",
+          "description": "Identificador numérico en el diccionario geográfico"
         }
       }
     },
     "Trench": {
-      "label": "Corte",
+      "label": "Zanja",
       "fields": {
         "researchQuestion": {
-          "label": "Planteamiento",
+          "label": "Pregunta de investigación",
           "description": "Pregunta de investigación o antecedentes de la zanja, por ejemplo, 'Especificación y datación de la estructura descubierta en el magnetograma para...'"
         },
         "trenchComment": {
@@ -263,7 +263,7 @@
       "label": "Unidad estratigráfica",
       "fields": {
         "color": {
-          "label": "Color y intensidad",
+          "label": "Color e intensidad",
           "description": "Color, en la medida en que sea reconocible"
         },
         "comparison": {
@@ -371,7 +371,7 @@
       "label": "Madera",
       "fields": {
         "objectType": {
-          "label": "Clasificación del objeto"
+          "label": "Denominación o tipo del objeto"
         },
         "colorBreak": {
           "label": "Color(es) de la madera en el duramen"
@@ -525,7 +525,7 @@
         },
         "decorationDescription": {
           "label": "Descripción de la decoración",
-          "description": "Campo adicional para describir con más detalle la decoración"
+          "description": "Campo de descripción adicional para una descripción más detallada de la decoración"
         },
         "breakStructure": {
           "label": "Observaciones sobre la fractura (estructura, porosidad, etc.)",
@@ -547,7 +547,7 @@
           "label": "Interior: color e intensidad de la arcilla"
         },
         "clayColorOutside": {
-          "label": "Exterior: color e intensidad de la arcilla"
+          "label": "Exterior: Color de la arcilla e intensidad"
         },
         "clayHardness": {
           "label": "Dureza de la arcilla (según escala de Mohs)"
@@ -575,7 +575,7 @@
           "description": "Descripción más detallada de la forma general (ovalada alta, etc.)"
         },
         "manufacturing": {
-          "label": "Fabricación"
+          "label": "Producción"
         },
         "manufacturingMethod": {
           "label": "Técnica de producción"
@@ -619,7 +619,7 @@
           "description": "Sexo de la persona o del animal"
         },
         "objectType": {
-          "label": "Designación o tipo del objeto"
+          "label": "Denominación o tipo del objeto"
         },
         "species": {
           "label": "Especie animal",
@@ -647,18 +647,18 @@
       "label": "Vidrio",
       "fields": {
         "objectType": {
-          "label": "Tipo del objeto"
+          "label": "Denominación o tipo del objeto"
         },
         "vesselForm": {
           "label": "Forma básica del vaso",
-          "description": "Forma básica de la vasija/recipiente"
+          "description": "Forma básica del vaso"
         },
         "transparency": {
           "description": "¿Qué grado de translucidez tiene el objeto?",
           "label": "Transparencia"
         },
         "manufacturingMethod": {
-          "label": "Método de producción",
+          "label": "Técnica de producción",
           "description": "Técnica utilizada para producir el objeto; huellas reconocibles del procesamiento"
         },
         "formDescription": {
@@ -674,7 +674,7 @@
           "description": "Color, en la medida en que sea reconocible"
         },
         "decorationTechnique": {
-          "label": "Tratamiento de superfície o técnica decorativa",
+          "label": "Características de la superficie o de la técnica de decoración",
           "description": "Técnica utilizada para aplicar decoraciones al vidrio"
         },
         "decorationDescription": {
@@ -684,7 +684,7 @@
       }
     },
     "Stone": {
-      "label": "Lítica",
+      "label": "Piedra",
       "fields": {
         "objectType": {
           "label": "Tipo de lítica"
@@ -725,7 +725,7 @@
       }
     },
     "Mollusk": {
-      "label": "Malacofauna",
+      "label": "Molusco",
       "fields": {
         "classification": {
           "label": "Clasificación malacológica"
@@ -745,13 +745,13 @@
           "label": "Determinación de la edad"
         },
         "ageDeterminationBasis": {
-          "label": "Base de la determinación de la edad"
+          "label": "Elementos para la determinación de la edad"
         },
         "palaeopathologicalReport": {
           "label": "Diagnóstico paleopatológico"
         },
         "conditionComment": {
-          "label": "Comentario sobre estado de conservación"
+          "label": "Comentario sobre el estado de conservación"
         },
         "sexDetermination": {
           "label": "Determinación del sexo"
@@ -799,24 +799,24 @@
       }
     },
     "Planum": {
-      "label": "Planta"
+      "label": "Plano"
     },
     "Brick": {
-      "label": "Adobe / Teja / Ladrillo",
+      "label": "Ladrillo",
       "fields": {
         "featureText": {
           "description": "Transcripción del texto del sello",
           "label": "Texto(s) del sello"
         },
         "brickForm": {
-          "label": "Forma del ladrillo"
+          "label": "Forma y uso del ladrillo"
         },
         "specificType": {
           "label": "Formato",
           "description": "Formato de los ladrillos y tejas, si son reconocibles"
         },
         "manufacturingMethod": {
-          "label": "Método de producción"
+          "label": "Técnica de producción"
         },
         "formDescription": {
           "description": "Descripción más detallada de la forma general",
@@ -829,20 +829,20 @@
           "label": "Producción"
         },
         "temper": {
-          "description": "Tipo básico de desgrasante",
+          "description": "Tipo principal de desgrasante",
           "label": "Desgrasante"
         },
         "clayColorOutside": {
           "label": "Exterior: Color de la arcilla e intensidad"
         },
         "coatColorInside": {
-          "label": "Revestimiento (interior): Color e intensidad"
+          "label": "Engobe (interior): Color e intensidad"
         },
         "decorationTechnique": {
-          "label": "Tratamiento de la superfície o técnica decorativa"
+          "label": "Particularidades de la superfície o técnica decorativa"
         },
         "coatColorOutside": {
-          "label": "Revestimiento (exterior): Color e intensidad"
+          "label": "Engobe (exterior): Color e intensidad"
         }
       }
     },
@@ -907,7 +907,7 @@
       }
     },
     "SurveyUnit": {
-      "label": "Cuadrante de prospección"
+      "label": "Unidad de prospección"
     },
     "Survey": {
       "label": "Área de prospección",
@@ -1112,7 +1112,7 @@
       }
     },
     "RoomWall": {
-      "label": "Muralla",
+      "label": "Muro",
       "fields": {
         "material": {
           "label": "Material"
@@ -1167,7 +1167,7 @@
           "label": "Engobe (exterior): Color e intensidad"
         },
         "temper": {
-          "description": "Tipo básico de desgrasante",
+          "description": "Tipo principal de desgrasante",
           "label": "Desgrasante"
         },
         "temperParticles": {
@@ -1316,7 +1316,7 @@
           "label": "Material"
         },
         "objectType": {
-          "label": "Designación o tipo del objeto"
+          "label": "Denominación o tipo del objeto"
         },
         "vesselForm": {
           "label": "Forma básica del vaso"
@@ -1375,7 +1375,7 @@
           "label": "Material"
         }
       },
-      "label": "Techo"
+      "label": "Tejado"
     },
     "InnerWall": {
       "label": "Muro interior"
@@ -1384,7 +1384,7 @@
       "label": "Área de excavación"
     },
     "Level": {
-      "label": "Nivel",
+      "label": "Piso",
       "fields": {
         "material": {
           "label": "Material"
@@ -1408,7 +1408,7 @@
           "label": "Material"
         }
       },
-      "label": "Escaleras"
+      "label": "Escalera"
     },
     "Opening": {
       "label": "Abertura",
@@ -1421,7 +1421,7 @@
     "Damage": {
       "fields": {
         "condition": {
-          "label": "Condición"
+          "label": "Estado"
         },
         "damageType": {
           "label": "Tipo de daño"
@@ -1436,7 +1436,7 @@
           "description": "Especificación del código EPSG (ver http://spatialreference.org/, e. g. 3004)"
         },
         "gazId": {
-          "label": "ID de Gazetteer",
+          "label": "Gazetteer ID",
           "description": "Identificador numérico en el diccionario geográfico"
         },
         "contactPerson": {

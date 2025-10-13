@@ -813,13 +813,13 @@
   "Brick-brickUsage-default": {
     "values": {
       "Dach": {
-        "label": ""
+        "label": "Tejado"
       },
       "Decke": {
-        "label": ""
+        "label": "Techo"
       },
       "Fenster": {
-        "label": ""
+        "label": "Ventana"
       },
       "Fussboden": {
         "label": ""
@@ -1534,7 +1534,7 @@
         "label": ""
       },
       "Glas": {
-        "label": ""
+        "label": "Vidrio"
       },
       "Holz": {
         "label": ""
@@ -1598,7 +1598,7 @@
         "label": ""
       },
       "Glas": {
-        "label": ""
+        "label": "Vidrio"
       },
       "Holz": {
         "label": ""
@@ -1687,7 +1687,7 @@
   "Wood-objectType-default": {
     "values": {
       "Architektur": {
-        "label": ""
+        "label": "Arquitectura"
       },
       "Altar": {
         "label": ""
@@ -2015,7 +2015,7 @@
   "Architecture-mark-default": {
     "values": {
       "A": {
-        "label": ""
+        "label": "A. P."
       },
       "AC": {
         "label": ""
@@ -2149,7 +2149,7 @@
         "label": ""
       },
       "Grab": {
-        "label": ""
+        "label": "Tumba"
       },
       "Nekropole": {
         "label": ""
@@ -2266,10 +2266,10 @@
   "Layer-distinguishingCriteria-default": {
     "values": {
       "Farbe": {
-        "label": ""
+        "label": "Color"
       },
       "Form": {
-        "label": ""
+        "label": "Forma"
       },
       "Grenzen": {
         "label": ""
@@ -2593,7 +2593,7 @@
   "Pottery-coatInsideType-default": {
     "values": {
       "Andere": {
-        "label": ""
+        "label": "Otros"
       },
       "Bemalung": {
         "label": ""
@@ -5254,7 +5254,7 @@
         "label": ""
       },
       "Gewicht": {
-        "label": ""
+        "label": "Peso"
       },
       "Glocke": {
         "label": ""
@@ -5494,10 +5494,10 @@
   "TypeCatalog-criterion-default": {
     "values": {
       "Form": {
-        "label": ""
+        "label": "Forma"
       },
       "Material": {
-        "label": ""
+        "label": "Material"
       },
       "Dekoration": {
         "label": ""
@@ -5638,7 +5638,7 @@
         "label": ""
       },
       "S": {
-        "label": ""
+        "label": "Z."
       },
       "SW": {
         "label": ""
@@ -5666,7 +5666,7 @@
         "label": ""
       },
       "Farbe": {
-        "label": ""
+        "label": "Color"
       }
     }
   },

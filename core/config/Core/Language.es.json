@@ -8,7 +8,7 @@
       "description": "Identificador único de este recurso"
     },
     "shortDescription": {
-      "label": "Breve descripción"
+      "label": "Descripción breve"
     },
     "isResultOf": {
       "label": "Resultado de"
@@ -17,7 +17,7 @@
       "label": "Incluye unidades estratigráficas"
     },
     "hasChildren": {
-      "label": "Recursos hijos"
+      "label": "Recursos subordinados"
     },
     "isSubjectOf": {
       "label": "Objeto de"
@@ -42,14 +42,14 @@
           "label": "Altura"
         },
         "width": {
-          "label": "Anchura"
+          "label": "Ancho"
         }
       }
     }
   },
   "relations": {
     "isRecordedIn": {
-      "label": "Tomada en intervención"
+      "label": "Registrado durante la intervención"
     },
     "liesWithin": {
       "label": "Dentro de/Contenida en"
@@ -79,19 +79,19 @@
       "label": "Se apoya en"
     },
     "isAbuttedBy": {
-      "label": "Se le apoya"
+      "label": "Se le apoya a"
     },
     "bondsWith": {
       "label": "Se une a"
     },
     "isAfter": {
-      "label": "Cronología: después de"
+      "label": "Cronológicamente posterior a"
     },
     "isBefore": {
-      "label": "Cronología: antes de"
+      "label": "Cronológicamente anterior a"
     },
     "isContemporaryWith": {
-      "label": "Cronología: simultáneo con"
+      "label": "Contemporáneo con"
     },
     "depicts": {
       "label": "Representa"
@@ -106,7 +106,7 @@
       "label": "Hallazgos relacionados"
     },
     "isPresentIn": {
-      "label": "Está presente en el perfil/planum"
+      "label": "Está presente en el perfil/plano"
     },
     "fills": {
       "label": "Relleno"
@@ -118,7 +118,7 @@
       "label": "Resulta en"
     },
     "isMapLayerOf": {
-      "label": "Capa cartográfica de"
+      "label": "Mapa de fondo de"
     },
     "hasMapLayer": {
       "label": "Tiene capa cartográfica"

@@ -1,22 +1,22 @@
 {
   "default": {
-    "label": "Predeterminado/Por defecto"
+    "label": "Estándar"
   },
   "minimalExcavation": {
-    "label": "Básico (Excavación)"
+    "label": "Configuración básica (Excavación)"
   },
   "minimalBuilding": {
-    "label": "Básico (Levantamiento arquitectónico)"
+    "label": "Configuración básica (Levantamiento arquitectónico)"
   },
   "minimalSurvey": {
-    "label": "Básico (Prospección)"
+    "label": "Configuración básica (Prospección)"
   },
   "archaeoDox": {
     "label": "archaeoDox",
     "languageConfiguration": {
       "relations": {
         "isPresentIn": {
-          "label": "Está presente en el dibujo del perfil/planum"
+          "label": "Está presente en el dibujo del perfil/plano"
         }
       }
     }

@@ -788,6 +788,13 @@ test.describe('configuration', () => {
         await EditConfigurationPage.clickSelectConditionField('featureForm', 'field');
         await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
         await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickSelectField('featureForm');
+        expect(await ConfigurationPage.getConditionLabel()).toEqual('Störung: Ja');
+
+        await ConfigurationPage.clickSelectField('comparison');
+        expect(await ConfigurationPage.getConditionLabel()).toEqual('Form der stratigraphischen Einheit: annähernd');
+
         await ConfigurationPage.save();
 
         await NavbarPage.clickCloseNonResourcesTab();

@@ -20,7 +20,6 @@ import { BackupService, RestoreBackupResult } from '../services/backup/backup-se
 import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
-const remote = window.require('@electron/remote');
 const fs = window.require('fs');
 
 

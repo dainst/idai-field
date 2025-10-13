@@ -585,7 +585,7 @@
           "description": "¿Cuál es el estilo del objeto encontrado?"
         },
         "FormComparisonCompendia": {
-          "label": "Compendio para compación de formas"
+          "label": "Comparaciones por forma en el manual"
         },
         "Drawing": {
           "label": "Dibujo disponible"
